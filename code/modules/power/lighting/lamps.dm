@@ -2,187 +2,164 @@
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
-	var/base_state = "tube"		// base description and icon_state
-	icon_state = "tube1"
+	icon_state = "tube"
 	desc = "A lighting fixture."
+	layer = LAMPS_LAYER
 	anchored = TRUE
-	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
+
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 0
-	active_power_usage = 20
+	active_power_usage = 20 // will be recalculated based on light intensity
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
-	var/on = 0					// 1 if on, 0 if off
-	var/on_gs = 0
-	var/static_power_used = 0
-	var/brightness_range = 7	// luminosity when on, also used in power calculation
-	var/brightness_power = LAMP_BRIGHTNESS
-	var/brightness_color = "#ffffff"
-	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
-	var/flickering = 0
-	var/light_type = /obj/item/weapon/light/tube		// the type of light item
-	var/fitting = "tube"
-	var/switchcount = 0			// count of number of times switched on/off
-								// this is used to calc the probability the light burns out
 
-	var/rigged = 0				// true if rigged to explode
+	//var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
+	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube/smart // todo: remove me
+	var/fitting = LAMP_FITTING_TUBE
 
-	var/nightshift_enabled = FALSE	//Currently in night shift mode?
-	var/nightshift_allowed = TRUE	//Set to FALSE to never let this light get switched to night mode.
-	var/nightshift_light_range = 8
-	var/nightshift_light_power = 0.8
-	var/nightshift_light_color = "#ffdbb5"
+	var/datum/light_mode/area_light_mode // all lamps have this, but will be used only for lamps with smart bulbs
 
-// the smaller bulb light fixture
+	// for some old stuff on maps and admins varedit
+	var/force_override_color
+	var/force_override_power
+	var/force_override_range
 
-/obj/machinery/light/atom_init()
-	. = ..()
-	if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS)
-		brightness_power = LAMP_BRIGHTNESS_HOLIDAY
+	var/status = LIGHT_OK // LIGHT_OK, _EMPTY, _BURNED or _BROKEN
+
+	var/on = FALSE
+
+	var/flickering = FALSE
+	var/switchcount = 0 // count of number of times switched on/off
+	                    // this is used to calc the probability the light burns out
+
+	var/rigged = FALSE // true if rigged to explode
+
+/obj/machinery/light/smart // todo: replace all old tubes on this
+	inserted_bulb_type = /obj/item/weapon/light/tube/smart
 
 /obj/machinery/light/small
-	icon_state = "bulb1"
-	base_state = "bulb"
-	fitting = "bulb"
-	brightness_range = 4
-	brightness_power = LAMP_BRIGHTNESS
-	brightness_color = "#a0a080"
 	desc = "A small lighting fixture."
-	light_type = /obj/item/weapon/light/bulb
+	icon_state = "bulb"
+	fitting = LAMP_FITTING_BULB
+	inserted_bulb_type = /obj/item/weapon/light/bulb
 
 /obj/machinery/light/small/emergency
-	brightness_range = 6
-	brightness_power = 2
-	brightness_color = "#da0205"
+	inserted_bulb_type = /obj/item/weapon/light/bulb/emergency
 
-/obj/machinery/light/spot
+/obj/machinery/light/spot // no way to construct, centcomm only item
 	name = "spotlight"
-	fitting = "large tube"
-	light_type = /obj/item/weapon/light/tube/large
-	brightness_range = 12
-	brightness_power = 4
+	fitting = LAMP_FITTING_LARGE_TUBE
+	inserted_bulb_type = /obj/item/weapon/light/tube/large
+	flags = NODECONSTRUCT
+
+/obj/machinery/light/atom_init(mapload)
+	..()
+
+	//if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS) // todo do something with this (own preset for smart light?)
+	//	brightness_power = LAMP_BRIGHTNESS_HOLIDAY
+	// ^ changes default 2 (LAMP_BRIGHTNESS) to 1.5 (LAMP_BRIGHTNESS_HOLIDAY)
+
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/built/atom_init()
 	status = LIGHT_EMPTY
-	update(0)
 	. = ..()
 
 /obj/machinery/light/small/built/atom_init()
 	status = LIGHT_EMPTY
-	update(0)
 	. = ..()
-
-// create a new lighting fixture
-/obj/machinery/light/atom_init(mapload)
-	..()
-
-	if(!mapload) //sync up nightshift lighting for player made lights
-		var/area/A = get_area(src)
-		var/obj/machinery/power/apc/temp_apc = A.get_apc()
-		if(temp_apc)
-			nightshift_enabled = temp_apc.nightshift_lights
-			var/list/preset_data = lighting_presets[temp_apc.nightshift_preset]
-			if(preset_data)
-				nightshift_light_range = preset_data["range"]
-				nightshift_light_power = preset_data["power"]
-				nightshift_light_color = preset_data["color"]
-
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/atom_init_late()
 	var/area/A = get_area(src)
 	if(A && !A.requires_power)
-		on = 1
+		on = TRUE
+
+	if(SSticker.current_state >= GAME_STATE_PLAYING)
+		var/obj/machinery/power/apc/area_apc = A.get_apc()
+		if(area_apc)
+			area_light_mode = area_apc.get_light_mode()
 
 	if(is_station_level(z) || is_mining_level(z))
-		switch(fitting)
-			if("tube","bulb")
-				if(prob(2))
-					broken(1)
-	addtimer(CALLBACK(src, .proc/update, 0), 1)
+		if(prob(2))
+			broken(1)
+	update_now(FALSE)
 
-/obj/machinery/light/Destroy()
-	var/area/A = get_area(src)
-	if(A)
-		on = 0
-//		A.update_lights()
-	return ..()
-
-/obj/machinery/light/update_icon()
-
-	switch(status)		// set icon_states
-		if(LIGHT_OK)
-			icon_state = "[base_state][on]"
-		if(LIGHT_EMPTY)
-			icon_state = "[base_state]-empty"
-			on = 0
-		if(LIGHT_BURNED)
-			icon_state = "[base_state]-burned"
-			on = 0
-		if(LIGHT_BROKEN)
-			icon_state = "[base_state]-broken"
-			on = 0
-	return
+// little wrapper to save on init and reduce racing
+/obj/machinery/light/proc/update(trigger = TRUE)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
+		return
+	update_now(trigger)
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(trigger = 1)
-
+/obj/machinery/light/proc/update_now(trigger)
 	update_icon()
-	if(on)
-		var/BR = brightness_range
-		var/PO = brightness_power
-		var/CO = brightness_color
 
-		if (nightshift_enabled)
-			BR = nightshift_light_range
-			PO = nightshift_light_power
-			if(!brightness_color || brightness_color == "#ffffff") // Only white lights are overwritten
-				CO = nightshift_light_color
+	if(on && inserted_bulb_type)
 
-		if(light_range != BR || light_power != PO || light_color != CO)
+		var/datum/light_mode/mode
+		if(initial(inserted_bulb_type.smart) && area_light_mode) // use mode from APC
+			mode = area_light_mode
+		else // or bulb mode if we not smart or if there is no area APC
+			mode = global.light_modes_by_type[initial(inserted_bulb_type.light_mode)]
+
+		if(!mode) // or we bugged for some reason and need emergency fallback to defaults
+			stack_trace("Bad lighting code for [src] [src.type]")
+			mode = global.light_modes_by_type[/datum/light_mode/default]
+
+		var/new_color = force_override_color || mode.color
+		var/new_power = force_override_power || mode.power
+		var/new_range = force_override_range || mode.range
+
+		if(light_range != new_range || light_power != new_power || light_color != new_color)
 			switchcount++
 			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			if(rigged)
-				if(status == LIGHT_OK && trigger)
-
-					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast] [ADMIN_JMP(src)]")
-
-					explode()
-			else if( prob( min(60, switchcount*switchcount*0.01) ) )
-				if(status == LIGHT_OK && trigger)
-					status = LIGHT_BURNED
-					icon_state = "[base_state]-burned"
-					on = 0
-					set_light(0)
+			if(rigged && trigger && status == LIGHT_OK)
+				log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+				message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast] [ADMIN_JMP(src)]")
+				explode()
+				return
+			else if(trigger && status == LIGHT_OK && prob(min(60, switchcount*switchcount*0.01)))
+				status = LIGHT_BURNED
+				icon_state = "[initial(icon_state)]-burned"
+				on = FALSE
+				set_light(0)
 			else
-				set_light(BR, PO, CO)
+				set_light(new_range, new_power, new_color)
 	else
 		set_light(0)
 
-	active_power_usage = ((light_range + light_power) * 20) //20W per unit luminosity
-	if(on != on_gs)
-		on_gs = on
+	active_power_usage = ((light_range + light_power) * 20) // 20W per unit luminosity
+	set_power_use(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
-		if(on)
-			set_power_use(ACTIVE_POWER_USE)
-		else
-			set_power_use(IDLE_POWER_USE)
+/obj/machinery/light/proc/set_light_mode(new_mode)
+	if(area_light_mode == new_mode)
+		return
 
+	area_light_mode = new_mode
 
-// attempt to set the light's on/off status
-// will not switch on if broken/burned/empty
-/obj/machinery/light/proc/seton(s)
-	on = (s && status == LIGHT_OK)
-	update()
+	if(initial(inserted_bulb_type.smart))
+		update()
 
-// examine verb
+/obj/machinery/light/update_icon()
+	switch(status) // set icon_states
+		if(LIGHT_OK)
+			icon_state = "[initial(icon_state)][on ? 1 : 0]"
+		if(LIGHT_EMPTY)
+			icon_state = "[initial(icon_state)]-empty"
+			on = FALSE
+		if(LIGHT_BURNED)
+			icon_state = "[initial(icon_state)]-burned"
+			on = FALSE
+		if(LIGHT_BROKEN)
+			icon_state = "[initial(icon_state)]-broken"
+			on = FALSE
+
 /obj/machinery/light/examine(mob/user)
 	..()
 	if(src in oview(1, user))
 		switch(status)
 			if(LIGHT_OK)
-				to_chat(user, "[desc] It is turned [on? "on" : "off"].")
+				to_chat(user, "[desc] It uses [fitting] fitting. It is turned [on? "on" : "off"].")
 			if(LIGHT_EMPTY)
 				to_chat(user, "[desc] The [fitting] has been removed.")
 			if(LIGHT_BURNED)
@@ -190,98 +167,80 @@
 			if(LIGHT_BROKEN)
 				to_chat(user, "[desc] The [fitting] has been smashed.")
 
-
-
 // attack with item - insert light (if right type), otherwise try to break the light
-
 /obj/machinery/light/attackby(obj/item/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 
-	//Light replacer code
+	// Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
-		var/obj/item/device/lightreplacer/LR = W
-		if(isliving(user))
-			var/mob/living/U = user
-			LR.ReplaceLight(src, U)
+		if(status == LIGHT_OK)
+			to_chat(user, "There is a working [fitting] already inserted.")
 			return
+		var/obj/item/device/lightreplacer/LR = W
+		if(LR.use_tool(src, user, 10, 1))
+			if(status != LIGHT_EMPTY) // drop old bulb first
+				drop_light_bulb(user)
+			status = LIGHT_OK
+			inserted_bulb_type = LR.lamp_type
+			switchcount = 0
+			rigged = 0
+			on = has_power()
+			update()
+		return
 
 	// attempt to insert light
-	if(istype(W, /obj/item/weapon/light))
+	if(istype(W, /obj/item/weapon/light)) // todo: doafter
 		if(status != LIGHT_EMPTY)
 			to_chat(user, "There is a [fitting] already inserted.")
 			return
-		else
-			add_fingerprint(user)
-			var/obj/item/weapon/light/L = W
-			if(istype(L, light_type))
-				status = L.status
-				to_chat(user, "You insert the [L.name].")
-				switchcount = L.switchcount
-				rigged = L.rigged
-				brightness_range = L.brightness_range
-				brightness_power = L.brightness_power
-				brightness_color = L.brightness_color
-				on = has_power()
-				update()
 
-				qdel(L)
+		var/obj/item/weapon/light/L = W
+		if(L.fitting != fitting)
+			to_chat(user, "This type of light requires a [fitting].")
+			return
 
-				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
-				user.SetNextMove(CLICK_CD_INTERACT)
+		add_fingerprint(user)
+		status = L.status
+		inserted_bulb_type = L.type
+		switchcount = L.switchcount
+		rigged = L.rigged
+		on = has_power()
+		update()
 
-				if(on && rigged)
+		qdel(L)
+		to_chat(user, "You insert the [L.name].")
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
 
-					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast] [ADMIN_JMP(src)]")
+		if(on && rigged)
+			log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+			message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast] [ADMIN_JMP(src)]")
+			explode()
 
-					explode()
-			else
-				to_chat(user, "This type of light requires a [fitting].")
-				return
-
-		// attempt to break the light
-		//If xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
-
+	// attempt to break the light
+	// if xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
-
-
 		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(1+W.force * 5))
-
 			user.visible_message("[user.name] smashed the light!", blind_message = "You hear a tinkle of breaking glass", self_message = "You hit the light, and it smashes!")
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
-
 		else
 			to_chat(user, "You hit the light!")
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(isscrewing(W)) //If it's a screwdriver open it.
+		if(isscrewing(W)) // todo: use_tool
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
-			var/obj/machinery/light_construct/newlight = null
-			switch(fitting)
-				if("tube")
-					newlight = new /obj/machinery/light_construct(src.loc)
-					newlight.icon_state = "tube-construct-stage2"
-
-				if("bulb")
-					newlight = new /obj/machinery/light_construct/small(src.loc)
-					newlight.icon_state = "bulb-construct-stage2"
-			newlight.set_dir(src.dir)
-			newlight.stage = 2
-			newlight.fingerprints = src.fingerprints
-			newlight.fingerprintshidden = src.fingerprintshidden
-			newlight.fingerprintslast = src.fingerprintslast
+			deconstruct(TRUE)
 			qdel(src)
 			return
 
-		to_chat(user, "You stick \the [W] into the light socket!")
+		to_chat(user, "You stick [W] into the light socket!")
 		if(has_power() && (W.flags & CONDUCT))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -310,25 +269,27 @@
 /obj/machinery/light/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	var/obj/machinery/light_construct/new_light = null
-	var/current_stage = disassembled ? 2 : 1
-	switch(fitting)
-		if("tube")
-			new_light = new /obj/machinery/light_construct(loc)
-			new_light.icon_state = "tube-construct-stage[current_stage]"
 
-		if("bulb")
-			new_light = new /obj/machinery/light_construct/small(loc)
-			new_light.icon_state = "bulb-construct-stage[current_stage]"
-	new_light.set_dir(dir)
-	new_light.stage = current_stage
-	if(!disassembled)
-		if(status != LIGHT_EMPTY)
-			if(status != LIGHT_BROKEN)
-				broken()
-			drop_light_tube()
-		new /obj/item/stack/cable_coil(loc, 1, COLOR_RED)
-	transfer_fingerprints_to(new_light)
+	var/obj/machinery/light_construct/construct
+
+	switch(fitting)
+		if(LAMP_FITTING_TUBE)
+			construct = new /obj/machinery/light_construct(loc)
+			construct.stage = 2 // coiled
+			icon_state = "tube-construct-stage2"
+		if(LAMP_FITTING_BULB)
+			construct = new /obj/machinery/light_construct/small(loc)
+			construct.stage = 2
+			icon_state = "bulb-construct-stage2"
+
+	construct.set_dir(dir)
+	transfer_fingerprints_to(construct)
+
+	if(disassembled && status != LIGHT_EMPTY)
+		if(status != LIGHT_BROKEN)
+			broken()
+		drop_light_bulb()
+
 	..()
 
 // returns whether this light has power
@@ -338,21 +299,26 @@
 	return A.lightswitch && A.power_light
 
 /obj/machinery/light/proc/flicker(amount = rand(10, 20))
-	if(flickering) return
-	flickering = 1
-	spawn(0)
-		if(on && status == LIGHT_OK)
-			for(var/i = 0; i < amount; i++)
-				if(status != LIGHT_OK) break
-				on = !on
-				update(0)
-				sleep(rand(5, 15))
-			on = (status == LIGHT_OK)
-			update(0)
-		flickering = 0
+	set waitfor = FALSE
+
+	if(flickering)
+		return
+
+	flickering = TRUE
+
+	if(on && status == LIGHT_OK)
+		for(var/i = 0; i < amount; i++)
+			if(status != LIGHT_OK)
+				break
+			on = !on
+			update(FALSE)
+			sleep(rand(5, 15))
+		on = (status == LIGHT_OK)
+		update(FALSE)
+
+	flickering = FALSE
 
 // ai attack - make lights flicker, because why not
-
 /obj/machinery/light/attack_ai(mob/user)
 	flicker(1)
 
@@ -380,9 +346,9 @@
 		..()
 		visible_message("<span class='warning'>[attacker] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
+
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
-
 /obj/machinery/light/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -394,19 +360,19 @@
 		return 1
 
 	// make it burn hands if not wearing fire-insulated gloves
-	if(on)
-		var/prot = 0
+	if(on) // todo: doafter
+		var/protected = 0
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
-					prot = (G.max_heat_protection_temperature > 360)
+					protected = (G.max_heat_protection_temperature > 360)
 		else
-			prot = 1
+			protected = 1
 
-		if(prot > 0 || (COLD_RESISTANCE in user.mutations) || H.species.flags[IS_SYNTHETIC])
+		if(protected > 0 || (COLD_RESISTANCE in user.mutations) || H.species.flags[IS_SYNTHETIC])
 			to_chat(user, "You remove the light [fitting]")
 		else if(TK in user.mutations)
 			to_chat(user, "You telekinetically remove the light [fitting].")
@@ -419,29 +385,26 @@
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	drop_light_tube(user)
+	drop_light_bulb(user)
 
-/obj/machinery/light/proc/drop_light_tube(mob/living/user)
-	var/obj/item/weapon/light/light_object = new light_type(loc)
-	light_object.status = status
-	light_object.rigged = rigged
-	light_object.brightness_range = brightness_range
-	light_object.brightness_power = brightness_power
-	light_object.brightness_color = brightness_color
+/obj/machinery/light/proc/drop_light_bulb(mob/living/user)
+	var/obj/item/weapon/light/dropping_bulb = new inserted_bulb_type(loc)
+	dropping_bulb.status = status
+	dropping_bulb.rigged = rigged
 
 	// light item inherits the switchcount, then zero it
-	light_object.switchcount = switchcount
+	dropping_bulb.switchcount = switchcount
 	switchcount = 0
 
-	light_object.update()
+	dropping_bulb.update()
 
 	if(user) //puts it in our hands
-		light_object.add_fingerprint(user)
-		user.try_take(light_object)
+		dropping_bulb.add_fingerprint(user)
+		user.try_take(dropping_bulb)
 
 	status = LIGHT_EMPTY
+	inserted_bulb_type = null
 	update()
-
 
 // break the light and make sparks if was on
 /obj/machinery/light/proc/broken(skip_sound_and_sparks = 0)
@@ -467,7 +430,6 @@
 
 // explosion effect
 // destroy the whole light fixture or just shatter it
-
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
@@ -481,30 +443,24 @@
 				return
 	broken()
 
-
-// timed process
-// use power
-
-
 // called when area power state changes
 /obj/machinery/light/power_change()
 	var/area/A = get_area(src)
-	if(A) seton(A.lightswitch && A.power_light)
+	if(A)
+		seton(A.lightswitch && A.power_light)
+
+// attempt to set the light's on/off status
+// will not switch on if broken/burned/empty
+/obj/machinery/light/proc/seton(s)
+	on = (s && status == LIGHT_OK)
+	update()
 
 // called when on fire
-
 /obj/machinery/light/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		broken()
 
 // explode the light
-
 /obj/machinery/light/proc/explode()
-	set waitfor = FALSE
-
-	var/turf/T = get_turf(src.loc)
 	broken()	// break it first to give a warning
-	sleep(2)
-	explosion(T, 0, 0, 2, 2)
-	sleep(1)
-	qdel(src)
+	addtimer(CALLBACK(src, .proc/explosion, get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)

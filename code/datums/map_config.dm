@@ -14,6 +14,7 @@
 	var/system_name = "Tau Ceti"
 	var/system_name_ru = "Тау Кита"
 	var/station_image = "exodus"
+	var/smartlight_preset = "default"
 
 	// Config from maps.txt
 	var/config_max_users = 0

@@ -1,86 +1,77 @@
-// the light item
-// can be tube or bulb subtypes
-// will fit into empty /obj/machinery/light of the corresponding type
+// light item
+// will fit into empty /obj/machinery/light of the corresponding ``fitting`` type
 
 /obj/item/weapon/light
+	name = "default light object"
+	desc = "Report to coders if you see this lamp."
 	icon = 'icons/obj/lighting.dmi'
+
 	force = 2
 	throwforce = 5
 	w_class = SIZE_TINY
-	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
-	var/base_state
-	var/switchcount = 0	// number of times switched
-	m_amt = 60
-	var/rigged = 0		// true if rigged to explode
-	var/brightness_range = 2 //how much light it gives off
-	var/brightness_power = 1
-	var/brightness_color = "#ffffff"
+
+	m_amt = 50 // in case of mats change tweak lightreplacer
+
+	var/status = LIGHT_OK // LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/fitting = LAMP_FITTING_TUBE
+	var/switchcount = 0 // number of times switched
+	var/rigged = FALSE // true if rigged to explode
+
+	var/smart = FALSE // should lamp use smart light settings from APC, or bulb light_mode
+	var/datum/light_mode/light_mode = /datum/light_mode/default/dim
 
 /obj/item/weapon/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
 	icon_state = "ltube"
-	base_state = "ltube"
 	item_state = "c_tube"
 	g_amt = 100
-	brightness_range = 8
-	brightness_power = 3
+	fitting = LAMP_FITTING_TUBE
+	light_mode = /datum/light_mode/default
 
-/obj/item/weapon/light/tube/large
+/obj/item/weapon/light/tube/smart // todo: own white colb sprite (+color!)
+	name = "smart light tube"
+	desc = "A replacement smart light tube. Can be used with central lighting control systems!"
+	smart = TRUE
+
+/obj/item/weapon/light/tube/large // we don't really need this...
 	w_class = SIZE_TINY
 	name = "large light tube"
-	brightness_range = 15
-	brightness_power = 4
+	fitting = LAMP_FITTING_LARGE_TUBE
+	light_mode = /datum/light_mode/default/spot
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
-	base_state = "lbulb"
 	item_state = "contvapour"
 	g_amt = 100
-	brightness_range = 5
-	brightness_power = 2
-	brightness_color = "#a0a080"
+	fitting = LAMP_FITTING_BULB
+	light_mode = /datum/light_mode/default/bulb
 
-/obj/item/weapon/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	shatter()
-
-/obj/item/weapon/light/bulb/fire
-	name = "fire bulb"
-	desc = "A replacement fire bulb."
-	icon_state = "fbulb"
-	base_state = "fbulb"
-	item_state = "egg4"
-	g_amt = 100
-	brightness_range = 5
-	brightness_power = 2
-
-// update the icon state and description of the light
-
-/obj/item/weapon/light/proc/update()
-	switch(status)
-		if(LIGHT_OK)
-			icon_state = base_state
-			desc = "A replacement [name]."
-		if(LIGHT_BURNED)
-			icon_state = "[base_state]-burned"
-			desc = "A burnt-out [name]."
-		if(LIGHT_BROKEN)
-			icon_state = "[base_state]-broken"
-			desc = "A broken [name]."
-
+/obj/item/weapon/light/bulb/emergency
+	name = "emergency light bulb"
+	desc = "A replacement emergency bulb."
+	//icon_state = "fbulb" // todo: old icon was lost somewhere
+	//item_state = "egg4"
+	light_mode = /datum/light_mode/default/bulb/emergency
 
 /obj/item/weapon/light/atom_init()
 	. = ..()
-	switch(name)
-		if("light tube")
-			brightness_range = rand(6,9)
-		if("light bulb")
-			brightness_range = rand(4,6)
 	update()
 
+// update the icon state and description of the light
+/obj/item/weapon/light/proc/update()
+	switch(status)
+		if(LIGHT_OK)
+			icon_state = initial(icon_state)
+			desc = "A replacement [name]."
+		if(LIGHT_BURNED)
+			icon_state = "[initial(icon_state)]-burned"
+			desc = "A burnt-out [name]."
+		if(LIGHT_BROKEN)
+			icon_state = "[initial(icon_state)]-broken"
+			desc = "A broken [name]."
 
 // attack bulb/tube with object
 // if a syringe, can inject phoron to make it explode
@@ -95,7 +86,7 @@
 			log_admin("LOG: [key_name(user)] injected a light with phoron, rigging it to explode.")
 			message_admins("LOG: [key_name_admin(user)] injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
-			rigged = 1
+			rigged = TRUE
 
 		S.reagents.clear_reagents()
 
@@ -105,7 +96,6 @@
 // called after an attack with a light item
 // shatter light, unless it was an attempt to put it in a light socket
 // now only shatter if the intent was harm
-
 /obj/item/weapon/light/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(istype(target, /obj/machinery/light))
@@ -113,6 +103,10 @@
 	if(user.a_intent != INTENT_HARM)
 		return
 
+	shatter()
+
+/obj/item/weapon/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	..()
 	shatter()
 
 /obj/item/weapon/light/proc/shatter()
