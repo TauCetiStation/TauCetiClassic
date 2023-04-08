@@ -2623,6 +2623,11 @@
 	dir = 6;
 	network = list("SS13","Security")
 	},
+/obj/machinery/camera{
+	c_tag = "Armory";
+	dir = 6;
+	network = list("SS13","Security")
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4342,6 +4347,10 @@
 /area/station/security/hos)
 "ahF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -22
@@ -6437,6 +6446,10 @@
 	c_tag = "Cargo Recieving Dock";
 	dir = 5
 	},
+/obj/machinery/camera{
+	c_tag = "Cargo Recieving Dock";
+	dir = 5
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -7763,6 +7776,10 @@
 /obj/machinery/photocopier,
 /obj/machinery/newscaster{
 	pixel_x = 30
+	},
+/obj/machinery/camera{
+	c_tag = "Forensic's Office";
+	network = list("SS13","Security")
 	},
 /obj/machinery/camera{
 	c_tag = "Forensic's Office";
@@ -14139,6 +14156,10 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
@@ -14856,6 +14877,7 @@
 /area/station/security/prison)
 "aAI" = (
 /obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -25
@@ -15205,6 +15227,11 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Toxins Launch Room";
+	network = list("SS13","Research");
+	dir = 10
 	},
 /obj/machinery/camera{
 	c_tag = "Toxins Launch Room";
@@ -16014,6 +16041,10 @@
 	},
 /area/station/medical/hallway)
 "aCX" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Hallway West";
+	dir = 5
+	},
 /obj/machinery/camera{
 	c_tag = "Arrival Hallway West";
 	dir = 5
@@ -19701,6 +19732,12 @@
 /area/station/civilian/fitness)
 "aKf" = (
 /turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitehall"
+	},
+/area/station/civilian/fitness)
+"aKf" = (
+/turf/simulated/floor{
 	icon_state = "whitehall"
 	},
 /area/station/civilian/fitness)
@@ -20347,6 +20384,9 @@
 /obj/structure/table,
 /obj/item/device/flash,
 /obj/item/weapon/handcuffs,
+/obj/machinery/newscaster/security_unit{
+	pixel_x = 32
+	},
 /obj/machinery/newscaster/security_unit{
 	pixel_x = 32
 	},
@@ -22905,6 +22945,11 @@
 	network = list("SS13","Research");
 	dir = 6
 	},
+/obj/machinery/camera{
+	c_tag = "Research Director's Office";
+	network = list("SS13","Research");
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warnwhite"
@@ -22949,6 +22994,9 @@
 	},
 /obj/item/weapon/storage/secure/briefcase,
 /obj/item/weapon/changeling_test,
+/obj/machinery/firealarm{
+	pixel_y = 28
+	},
 /obj/machinery/firealarm{
 	pixel_y = 28
 	},
@@ -23801,6 +23849,9 @@
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/flora/deskleaf,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -32
+	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
 	},
@@ -24709,6 +24760,11 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
+/obj/machinery/camera{
+	c_tag = "Research Break";
+	dir = 4;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -25110,6 +25166,9 @@
 	dir = 4
 	},
 /obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
@@ -29236,6 +29295,9 @@
 /obj/machinery/camera{
 	c_tag = "Port Hallway 3"
 	},
+/obj/machinery/camera{
+	c_tag = "Port Hallway 3"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -30638,6 +30700,9 @@
 /obj/machinery/camera{
 	c_tag = "Conference Room"
 	},
+/obj/machinery/camera{
+	c_tag = "Conference Room"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "ben" = (
@@ -31081,7 +31146,7 @@
 "beX" = (
 /obj/machinery/camera{
 	c_tag = "Research Division Mid";
-	dir = 10;
+	dir = 100;
 	network = list("SS13","Research")
 	},
 /obj/structure/cable{
@@ -31433,6 +31498,10 @@
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
+	},
+/obj/machinery/camera{
+	c_tag = "Mining Equpment";
+	dir = 6
 	},
 /obj/machinery/camera{
 	c_tag = "Mining Equpment";
@@ -37074,6 +37143,10 @@
 	pixel_y = 32
 	},
 /obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Research and Development Lab";
+	network = list("SS13","Research")
+	},
 /obj/machinery/camera{
 	c_tag = "Research and Development Lab";
 	network = list("SS13","Research")
@@ -42806,6 +42879,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bAL" = (
@@ -44445,6 +44521,9 @@
 /obj/structure/mirror{
 	pixel_y = 26
 	},
+/obj/structure/mirror{
+	pixel_y = 26
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bDR" = (
@@ -44907,6 +44986,10 @@
 "bEM" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -47973,6 +48056,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bKw" = (
@@ -49702,6 +49788,10 @@
 	c_tag = "Custodial Closet";
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Custodial Closet";
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bNI" = (
@@ -50463,6 +50553,10 @@
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table/glass,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -52508,6 +52602,10 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "bTT" = (
+/obj/machinery/camera{
+	c_tag = "Cargo Bay East";
+	dir = 1
+	},
 /obj/machinery/camera{
 	c_tag = "Cargo Bay East";
 	dir = 1
@@ -57505,6 +57603,7 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Access";
 	network = list("SS13","Engineering");
+	dir = 6;
 	dir = 6
 	},
 /turf/simulated/floor{
@@ -59150,6 +59249,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -59288,6 +59390,11 @@
 /obj/item/device/radio/off,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Teleporter";
+	dir = 8;
+	network = list("MiniSat")
 	},
 /obj/machinery/camera{
 	c_tag = "MiniSat Teleporter";
@@ -61521,6 +61628,11 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics South West";
+	dir = 4;
+	network = list("SS13","Engineering")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
@@ -61875,6 +61987,10 @@
 	pixel_y = -30
 	},
 /obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/machinery/camera{
+	c_tag = "Head of Personnel's Office";
+	dir = 1
+	},
 /obj/machinery/camera{
 	c_tag = "Head of Personnel's Office";
 	dir = 1
@@ -62523,17 +62639,23 @@
 /area/station/hallway/primary/central)
 "cxN" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Central Hallway West";
 	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
+	dir = 8;
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
 "cxO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway South-West";
 	dir = 1
 	},
 /obj/machinery/camera{
@@ -63468,6 +63590,9 @@
 	},
 /area/station/engineering/engine)
 "cAu" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
 	},
@@ -65275,6 +65400,11 @@
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = -28
+	},
+/obj/machinery/camera{
+	c_tag = "Genetics Cloning";
+	dir = 1;
+	network = list("SS13","Medical")
 	},
 /obj/machinery/camera{
 	c_tag = "Genetics Cloning";
@@ -68211,6 +68341,11 @@
 	dir = 5;
 	network = list("MiniSat")
 	},
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat Maintenance";
+	dir = 5;
+	network = list("MiniSat")
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -69013,7 +69148,7 @@
 "eWb" = (
 /obj/structure/closet/wardrobe/chemistry_white,
 /obj/machinery/camera{
-	c_tag = "Chemistry Lab";
+	c_tag = "Chemistry Lab Lab";
 	dir = 8;
 	network = list("SS13","Medical")
 	},
@@ -69488,6 +69623,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -69926,6 +70064,10 @@
 /area/station/engineering/atmos)
 "fZb" = (
 /obj/structure/closet/bombcloset,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -27
+	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -70526,6 +70668,10 @@
 	c_tag = "Aft Primary Hallway 1";
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Aft Primary Hallway 1";
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -70856,6 +71002,15 @@
 	icon_state = "warning"
 	},
 /area/station/engineering/engine)
+"hbH" = (
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("RD","MiniSat")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
 "hbH" = (
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber North";
@@ -71684,6 +71839,10 @@
 	c_tag = "Central Hallway North";
 	dir = 6
 	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway North";
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
@@ -72020,7 +72179,7 @@
 "ivb" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/camera{
-	c_tag = "Hydroponics West";
+	c_tag = "Hydroponics West West";
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -74388,6 +74547,9 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -76535,6 +76697,7 @@
 /obj/machinery/camera{
 	c_tag = "Virology Access South";
 	network = list("SS13","Medical");
+	dir = 6;
 	dir = 6
 	},
 /turf/simulated/floor{
@@ -76760,6 +76923,16 @@
 	icon_state = "warnplate"
 	},
 /area/space)
+"nYO" = (
+/obj/machinery/camera{
+	c_tag = "Brainstorm Center";
+	network = list("SS13","Research");
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/brainstorm_center)
 "nYO" = (
 /obj/machinery/camera{
 	c_tag = "Brainstorm Center";
@@ -77297,6 +77470,9 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
+/obj/machinery/newscaster{
+	pixel_y = -30
+	},
 /obj/machinery/camera{
 	c_tag = "Hydroponics East";
 	dir = 1
@@ -77614,6 +77790,16 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"pdR" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Auxillar Dock's South";
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "peD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77651,6 +77837,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's South 2";
+	dir = 5
 	},
 /obj/machinery/camera{
 	c_tag = "Arrival Dock's South 2";
@@ -78050,6 +78240,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -78123,6 +78314,15 @@
 	icon_state = "whiteyellow"
 	},
 /area/station/medical/chemistry)
+"pRc" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/station/civilian/chapel/mass_driver)
 "pRc" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -81423,6 +81623,10 @@
 	pixel_x = 28;
 	pixel_y = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = 28;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "tMB" = (
@@ -81986,6 +82190,11 @@
 "uUY" = (
 /obj/machinery/telescience_jammer{
 	radius = 5
+	},
+/obj/machinery/camera{
+	c_tag = "Secure Armory";
+	dir = 1;
+	network = list("SS13","Security")
 	},
 /obj/machinery/camera{
 	c_tag = "Secure Armory";
@@ -94742,6 +94951,7 @@ bkB
 bis
 iDb
 bmq
+hXb
 hXb
 bis
 bbT
@@ -109655,6 +109865,7 @@ bHF
 cux
 boW
 bDP
+bDP
 cro
 oYb
 cro
@@ -113529,6 +113740,7 @@ aKU
 czu
 cAk
 cAZ
+bAu
 bAu
 cim
 cBL
