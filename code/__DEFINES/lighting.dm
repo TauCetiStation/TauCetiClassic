@@ -50,3 +50,12 @@
 #define FLASH_LIGHT_DURATION 2
 #define FLASH_LIGHT_POWER 3
 #define FLASH_LIGHT_RANGE 3.8
+
+
+// status values shared between lighting fixtures and items
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+#define LAMP_BRIGHTNESS 2
+#define LAMP_BRIGHTNESS_HOLIDAY 1.5
