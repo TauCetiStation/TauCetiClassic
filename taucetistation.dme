@@ -31,6 +31,7 @@
 #include "code\__DEFINES\bitfields.dm"
 #include "code\__DEFINES\bridge.dm"
 #include "code\__DEFINES\callbacks.dm"
+#include "code\__DEFINES\cargo.dm"
 #include "code\__DEFINES\chat.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\colors.dm"
