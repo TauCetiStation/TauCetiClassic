@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(explosions)
 	init_order = SS_INIT_EXPLOSIONS
 	priority = SS_PRIORITY_EXPLOSIONS
 	wait = SS_WAIT_EXPLOSION
-	flags = SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER | SS_NO_INIT | SS_SHOW_IN_MC_TAB
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_lowturf = 0
@@ -28,48 +28,32 @@ SUBSYSTEM_DEF(explosions)
 
 	var/currentpart = SSAIR_PIPENETS
 
-/// Returns a list of turfs in X range from the epicenter
-/// Returns in a unique order, spiraling outwards
-/// This is done to ensure our progressive cache of blast resistance is always valid
-/// This is quite fast
-/proc/prepare_explosion_turfs(range, turf/epicenter)
-	var/list/outlist = list()
-	// Add in the center
-	outlist += epicenter
+/datum/controller/subsystem/explosions/stat_entry(msg)
+	msg += "C:{"
+	msg += "LT:[round(cost_lowturf, 1)]|"
+	msg += "MT:[round(cost_medturf, 1)]|"
+	msg += "HT:[round(cost_highturf, 1)]|"
 
-	var/our_x = epicenter.x
-	var/our_y = epicenter.y
-	var/our_z = epicenter.z
+	msg += "LO:[round(cost_low_mov_atom, 1)]|"
+	msg += "MO:[round(cost_med_mov_atom, 1)]|"
+	msg += "HO:[round(cost_high_mov_atom, 1)]|"
 
-	var/max_x = world.maxx
-	var/max_y = world.maxy
-	for(var/i in 1 to range)
-		var/lowest_x = our_x - i
-		var/lowest_y = our_y - i
-		var/highest_x = our_x + i
-		var/highest_y = our_y + i
-		// top left to one before top right
-		if(highest_y <= max_y)
-			outlist += block(
-				locate(max(lowest_x, 1), highest_y, our_z),
-				locate(min(highest_x - 1, max_x), highest_y, our_z))
-		// top right to one before bottom right
-		if(highest_x <= max_x)
-			outlist += block(
-				locate(highest_x, min(highest_y, max_y), our_z),
-				locate(highest_x, max(lowest_y + 1, 1), our_z))
-		// bottom right to one before bottom left
-		if(lowest_y >= 1)
-			outlist += block(
-				locate(min(highest_x, max_x), lowest_y, our_z),
-				locate(max(lowest_x + 1, 1), lowest_y, our_z))
-		// bottom left to one before top left
-		if(lowest_x >= 1)
-			outlist += block(
-				locate(lowest_x, max(lowest_y, 1), our_z),
-				locate(lowest_x, min(highest_y - 1, max_y), our_z))
+	msg += "} "
 
-	return outlist
+	msg += "AMT:{"
+	msg += "LT:[lowturf.len]|"
+	msg += "MT:[medturf.len]|"
+	msg += "HT:[highturf.len]|"
+
+	msg += "LO:[low_mov_atom.len]|"
+	msg += "MO:[med_mov_atom.len]|"
+	msg += "HO:[high_mov_atom.len]|"
+
+	msg += "} "
+	return ..()
+
+/datum/controller/subsystem/explosions/proc/is_exploding()
+	return (lowturf.len || medturf.len || highturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
 /**
  * Makes a given atom explode.
@@ -116,6 +100,21 @@ SUBSYSTEM_DEF(explosions)
 	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	return
 
+/**
+ * Handles the effects of an explosion originating from a given point.
+ *
+ * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
+ * Also handles the fireball from the explosion.
+ * Also handles the smoke cloud from the explosion.
+ * Also handles sfx and screenshake.
+ *
+ * Arguments:
+ * - [epicenter][/atom]: The location of the explosion rounded to the nearest turf.
+ * - devastation_range: The range at which the effects of the explosion are at their strongest.
+ * - heavy_impact_range: The range at which the effects of the explosion are relatively severe.
+ * - light_impact_range: The range at which the effects of the explosion are relatively weak.
+ * - flash_range: The range at which the explosion flashes people.
+ */
 /datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
@@ -158,32 +157,48 @@ SUBSYSTEM_DEF(explosions)
 				SSexplosions.lowturf += explode
 				SSexplosions.low_mov_atom += explode.GetAreaAllContents()
 
-/datum/controller/subsystem/explosions/stat_entry(msg)
-	msg += "C:{"
-	msg += "LT:[round(cost_lowturf, 1)]|"
-	msg += "MT:[round(cost_medturf, 1)]|"
-	msg += "HT:[round(cost_highturf, 1)]|"
+/// Returns a list of turfs in X range from the epicenter
+/// Returns in a unique order, spiraling outwards
+/// This is done to ensure our progressive cache of blast resistance is always valid
+/// This is quite fast
+/proc/prepare_explosion_turfs(range, turf/epicenter)
+	var/list/outlist = list()
+	// Add in the center
+	outlist += epicenter
 
-	msg += "LO:[round(cost_low_mov_atom, 1)]|"
-	msg += "MO:[round(cost_med_mov_atom, 1)]|"
-	msg += "HO:[round(cost_high_mov_atom, 1)]|"
+	var/our_x = epicenter.x
+	var/our_y = epicenter.y
+	var/our_z = epicenter.z
 
-	msg += "} "
+	var/max_x = world.maxx
+	var/max_y = world.maxy
+	for(var/i in 1 to range)
+		var/lowest_x = our_x - i
+		var/lowest_y = our_y - i
+		var/highest_x = our_x + i
+		var/highest_y = our_y + i
+		// top left to one before top right
+		if(highest_y <= max_y)
+			outlist += block(
+				locate(max(lowest_x, 1), highest_y, our_z),
+				locate(min(highest_x - 1, max_x), highest_y, our_z))
+		// top right to one before bottom right
+		if(highest_x <= max_x)
+			outlist += block(
+				locate(highest_x, min(highest_y, max_y), our_z),
+				locate(highest_x, max(lowest_y + 1, 1), our_z))
+		// bottom right to one before bottom left
+		if(lowest_y >= 1)
+			outlist += block(
+				locate(min(highest_x, max_x), lowest_y, our_z),
+				locate(max(lowest_x + 1, 1), lowest_y, our_z))
+		// bottom left to one before top left
+		if(lowest_x >= 1)
+			outlist += block(
+				locate(lowest_x, max(lowest_y, 1), our_z),
+				locate(lowest_x, min(highest_y - 1, max_y), our_z))
 
-	msg += "AMT:{"
-	msg += "LT:[lowturf.len]|"
-	msg += "MT:[medturf.len]|"
-	msg += "HT:[highturf.len]|"
-
-	msg += "LO:[low_mov_atom.len]|"
-	msg += "MO:[med_mov_atom.len]|"
-	msg += "HO:[high_mov_atom.len]|"
-
-	msg += "} "
-	return ..()
-
-/datum/controller/subsystem/explosions/proc/is_exploding()
-	return (lowturf.len || medturf.len || highturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
+	return outlist
 
 /datum/controller/subsystem/explosions/fire(resumed = 0)
 	if(!is_exploding())
