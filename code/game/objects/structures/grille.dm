@@ -1,8 +1,9 @@
 /obj/structure/grille
 	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
 	name = "grille"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "grille"
+	icon = 'icons/obj/smooth_structures/grille.dmi'
+	icon_state = "center_8"
+
 	density = TRUE
 	anchored = TRUE
 	flags = CONDUCT
@@ -16,11 +17,28 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
-/obj/structure/grille/atom_init()
+/obj/structure/grille/atom_init(mapload, spawn_unanchored = FALSE)
 	. = ..()
 	if(destroyed)
 		destroyed = FALSE // let atom_break reset destroyed
 		update_integrity(get_integrity() * integrity_failure)
+
+	if(spawn_unanchored)
+		anchored = FALSE
+
+	if(anchored && (locate(/obj/structure/windowsill) in loc))
+		set_smooth(TRUE)
+
+/obj/structure/grille/proc/set_smooth(make_smooth = TRUE)
+	if(make_smooth)
+		smooth = SMOOTH_TRUE
+		canSmoothWith = CAN_SMOOTH_WITH_WALLS
+		queue_smooth(src)
+	else
+		smooth = FALSE
+		canSmoothWith = null
+		icon = initial(icon)
+		icon_state = initial(icon_state)
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -93,12 +111,25 @@
 		if(!shock(user, 90))
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
+
+			var/obj/structure/windowsill/windowsill = locate() in loc
+
+			if(anchored && windowsill)
+				set_smooth(TRUE)
+			else if (!anchored)
+				set_smooth(FALSE)
+
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
+								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] [windowsill ? "\the [windowsill]" : "the floor"].</span>")
 			return
 
 //window placing begin
 	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+		var/obj/structure/windowsill/WS = locate() in loc
+		if(WS) // thats for fulltile window, redirect
+			WS.attackby(W, user)
+			return
+
 		var/obj/item/stack/ST = W
 		if(ST.get_amount() < 1)
 			return
@@ -120,7 +151,7 @@
 			else
 				to_chat(user, "<span class='notice'>You can't reach.</span>")
 				return //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
-		for(var/obj/structure/window/WINDOW in loc)
+		for(var/obj/structure/window/thin/WINDOW in loc)
 			if(WINDOW.dir == dir_to_set)
 				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 				return
@@ -128,21 +159,20 @@
 			return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
 		if(W.use_tool(src, user, 20, volume = 100))
-			for(var/obj/structure/window/WINDOW in loc)
+			for(var/obj/structure/window/thin/WINDOW in loc)
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 					return
 			if(!ST.use(1))
 				return
-			var/obj/structure/window/WD
+			var/obj/structure/window/thin/WD
 			if(istype(W,/obj/item/stack/sheet/rglass))
-				WD = new/obj/structure/window/reinforced(loc) //reinforced window
+				WD = new/obj/structure/window/thin/reinforced(loc) //reinforced window
 			else
-				WD = new/obj/structure/window/basic(loc) //normal window
+				WD = new/obj/structure/window/thin(loc) //normal window
 			WD.set_dir(dir_to_set)
 			WD.ini_dir = dir_to_set
 			WD.anchored = FALSE
-			WD.state = 0
 			to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
 			WD.update_icon()
 		return
@@ -168,16 +198,16 @@
 /obj/structure/grille/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(. && !(destroyed || damaged))
-		icon_state = "grille_damaged_[rand(1, 4)]"
 		damaged = TRUE
+		update_icon()
 
 /obj/structure/grille/atom_break(damage_flag)
 	. = ..()
 	if(destroyed)
 		return
-	icon_state = "brokengrille"
 	density = FALSE
 	destroyed = TRUE
+	update_icon()
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/rods(loc)
 
@@ -186,6 +216,14 @@
 		return ..()
 	new /obj/item/stack/rods(loc, destroyed ? 1 : 2)
 	..()
+
+/obj/structure/grille/update_icon()
+	if(destroyed)
+		add_filter("hole_in_the_grill", 1, alpha_mask_filter(icon = icon('icons/obj/structures.dmi', "grille_broken")))
+	else if(damaged)
+		add_filter("hole_in_the_grill", 1, alpha_mask_filter(icon = icon('icons/obj/structures.dmi', "grille_damaged_[rand(1, 4)]")))
+	else
+		remove_filter("hole_in_the_grill")
 
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise

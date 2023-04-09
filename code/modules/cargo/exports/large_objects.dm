@@ -2,7 +2,7 @@
 
 // Crates, boxes, lockers.
 /datum/export/large/crate
-	cost = 500
+	cost = CARGO_CRATE_COST
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(/obj/structure/closet/crate/large)
@@ -13,7 +13,7 @@
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
 /datum/export/large/crate/wooden
-	cost = 100
+	cost = CARGO_CRATE_COST / 5
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()

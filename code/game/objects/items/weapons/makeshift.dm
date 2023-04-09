@@ -67,7 +67,26 @@
 	force = 3
 	throwforce = 5
 	var/status = 0
-	slot_flags = null
+	slot_flags = SLOT_FLAGS_BACK
+	flags_2 = CANT_BE_INSERTED
+	var/mob/foundmob = "" //Used in throwing proc.
+
+/obj/item/weapon/melee/cattleprod/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if (!prob(50))
+		return
+	if(!ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/H = hit_atom
+	if(status)
+		H.apply_effect(60,AGONY,0)
+		deductcharge(hitcost)
+		var/mob/living/carbon/human/T = ishuman(throwingdatum.thrower) ? throwingdatum.thrower : null
+		if(!T)
+			return
+		H.visible_message("<span class='danger'>[src], thrown by [T.name], strikes [H]!</span>")
+		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+		msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
@@ -156,6 +175,7 @@
 	if(isrobot(M))
 		..()
 		return
+
 
 	if(user.a_intent == INTENT_HARM)
 		if(!..()) return

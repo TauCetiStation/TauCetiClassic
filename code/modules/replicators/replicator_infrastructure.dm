@@ -673,11 +673,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
+	if(ispulsing(I) && !user.is_busy())
+		user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarm [src].</span>")
+		if(do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: (replicators) add a sound here. the sound should be somewhat melancholic and mechanical. even though this web is made by enemies, it still is a magnificent thing
-		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
-		qdel(src)
-		return
+			visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
+			qdel(src)
+			return
 
 	return ..()
 

@@ -33,6 +33,9 @@ var/global/datum/controller/master/Master = new()
 
 	var/sleep_delta = 1
 
+	/// Only run ticker subsystems for the next n ticks.
+	var/skip_ticks = 0
+
 	var/make_runtime = 0
 
 	// The type of the last subsystem to be process()'d.
@@ -305,7 +308,7 @@ var/global/datum/controller/master/Master = new()
 			new/datum/controller/failsafe() // (re)Start the failsafe.
 
 		//now do the actual stuff
-		if (!queue_head || !(iteration % 3))
+		if (!skip_ticks)
 			var/checking_runlevel = current_runlevel
 			if(cached_runlevel != checking_runlevel)
 				//resechedule subsystems
@@ -351,6 +354,8 @@ var/global/datum/controller/master/Master = new()
 
 		iteration++
 		last_run = world.time
+		if (skip_ticks)
+			skip_ticks--
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		current_ticklimit = TICK_LIMIT_RUNNING
 		if (processing * sleep_delta <= world.tick_lag)
@@ -415,6 +420,9 @@ var/global/datum/controller/master/Master = new()
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
 
+			if (!(queue_node_flags & SS_TICKER) && skip_ticks)
+				queue_node = queue_node.queue_next
+				continue
 
 			if (!bg_calc && (queue_node_flags & SS_BACKGROUND))
 				current_tick_budget = queue_priority_count_bg
@@ -528,12 +536,17 @@ var/global/datum/controller/master/Master = new()
 	world.log << "MC: SoftReset: Finished."
 	. = 1
 
+/// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
+/datum/controller/master/proc/laggy_byond_map_update_incoming()
+	if (!skip_ticks)
+		skip_ticks = 1
+
 /datum/controller/master/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time / world.tick_lag]) (TickDrift:[round(Master.tickdrift, 1)]([round((Master.tickdrift / (world.time / world.tick_lag)) * 100, 0.1)]%))")
-	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
+	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time / world.tick_lag]) (TickDrift:[round(Master.tickdrift, 1)]([round((Master.tickdrift / (world.time / world.tick_lag)) * 100, 0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)")
+	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"))
 
 /datum/controller/master/StartLoadingMap()
 	//disallow more than one map to load at once, multithreading it will just cause race conditions

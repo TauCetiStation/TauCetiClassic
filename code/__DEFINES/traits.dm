@@ -127,6 +127,8 @@
 #define TRAIT_IMMOBILIZED "immobilized"
 /// Prevents hands and legs usage
 #define TRAIT_INCAPACITATED "incapacitated"
+/// This mob overrides certian SSlag_switch measures with this special trait
+#define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
 
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
@@ -174,6 +176,7 @@
 #define TRAIT_NATURAL_AGILITY     "natural_agility"
 #define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
 #define TRAIT_STEEL_NERVES        "steel_nerves"
+#define TRAIT_ARIBORN             "ariborn"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -216,3 +219,9 @@
 #define GENETIC_MUTATION_TRAIT "genetic"
 #define QUIRK_TRAIT "quirk"
 #define VIRUS_TRAIT "virus"
+
+// airborn trait surces
+#define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself
+#define TRAIT_ARIBORN_AIRFLOW "trait_ariborn_airflow" // from atmos
+#define TRAIT_ARIBORN_THROWN "trait_ariborn_trown" // if someone thrown it
+//#define TRAIT_ARIBORN_NO_GRAVITY "trait_ariborn_no_gravity" // todo?

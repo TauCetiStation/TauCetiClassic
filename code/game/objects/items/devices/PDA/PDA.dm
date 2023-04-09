@@ -1696,6 +1696,7 @@
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
 		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
+			shopping_cart -= "[package.lot_number]"
 			return
 
 	if(istype(target, /obj/item/smallDelivery))

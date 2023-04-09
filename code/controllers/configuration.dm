@@ -171,8 +171,6 @@ var/global/bridge_secret = null
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/enter_allowed = 1
-
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_overmap = 0
 
@@ -206,6 +204,8 @@ var/global/bridge_secret = null
 	var/load_junkyard = TRUE
 	var/load_mine = TRUE
 	var/load_space_levels = TRUE
+
+	var/auto_lag_switch_pop = FALSE
 
 	var/record_replays = FALSE
 
@@ -662,6 +662,9 @@ var/global/bridge_secret = null
 
 				if("no_space_levels")
 					config.load_space_levels = FALSE
+
+				if("auto_lag_switch_pop")
+					config.auto_lag_switch_pop = text2num(value)
 
 				if("record_replays")
 					config.record_replays = TRUE

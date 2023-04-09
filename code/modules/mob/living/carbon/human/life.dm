@@ -996,7 +996,7 @@ var/global/list/tourette_bad_words= list(
 				get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
 		else
 			get_nutrition_max = NUTRITION_LEVEL_FAT
-		full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+		full_perc = clamp(((get_satiation() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
 		nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
 	//OH cmon...
