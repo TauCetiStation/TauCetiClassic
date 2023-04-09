@@ -367,8 +367,18 @@
 	clawfootstep = FOOTSTEP_SAND
 	can_deconstruct = FALSE
 
-/turf/simulated/floor/plating/ironsand/ex_act()
-	return 0
+/turf/simulated/floor/plating/ironsand/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 /turf/simulated/floor/plating/ironsand/burn_tile()
 	return 0
@@ -388,7 +398,17 @@
 	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
-	return
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 // CATWALKS
 // Space and plating, all in one buggy fucking turf!

@@ -94,9 +94,9 @@ SUBSYSTEM_DEF(explosions)
  * Handles the effects of an explosion originating from a given point.
  *
  * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
- * Also handles the fireball from the explosion.
- * Also handles the smoke cloud from the explosion.
- * Also handles sfx and screenshake.
+ * Also handles the fireball from the explosion. (todo)
+ * Also handles the smoke cloud from the explosion. (todo)
+ * Also handles sfx and screenshake. (todo)
  *
  * Arguments:
  * - [epicenter][/atom]: The location of the explosion rounded to the nearest turf.
@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(explosions)
 	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter)
 	//lists are guaranteed to contain at least 1 turf at this point
 	//we presuppose that we'll be iterating away from the epicenter
-	for(var/turf/explode as anything in affected_turfs)
+	for(var/turf/explode as anything in affected_turfs) // todo: ex resistance
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = HYPOTENUSE(our_x, our_y, x0, y0)
@@ -139,13 +139,10 @@ SUBSYSTEM_DEF(explosions)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += explode
-				SSexplosions.high_mov_atom += explode.GetAreaAllContents()
 			if(EXPLODE_HEAVY)
 				SSexplosions.medturf += explode
-				SSexplosions.med_mov_atom += explode.GetAreaAllContents()
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += explode
-				SSexplosions.low_mov_atom += explode.GetAreaAllContents()
 
 /// Returns a list of turfs in X range from the epicenter
 /// Returns in a unique order, spiraling outwards

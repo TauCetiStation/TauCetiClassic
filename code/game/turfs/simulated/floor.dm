@@ -88,6 +88,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 //	return ..()
 
 /turf/simulated/floor/ex_act(severity)
+	..()
 	//set src in oview(1)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
