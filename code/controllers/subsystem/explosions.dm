@@ -81,16 +81,6 @@ SUBSYSTEM_DEF(explosions)
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
 /datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, z_transfer = TRUE)
-	set waitfor = FALSE
-
-	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
-	//not sleeping causes us to ex_act() the thing that triggered the explosion
-	//doing that might cause it to trigger another explosion
-	//this is bad
-	//I would make this not ex_act the thing that triggered the explosion,
-	//but everything that explodes gives us their loc or a get_turf()
-	//and somethings expect us to ex_act them so they can qdel()
-	stoplag(1) //tldr, let the calling proc call qdel(src) before we explode
 
 	SSStatistics.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
