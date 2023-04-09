@@ -217,6 +217,9 @@ SUBSYSTEM_DEF(explosions)
 			EX_ACT(turf_thing, EXPLODE_DEVASTATE)
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
+		if(low_turf.len || med_turf.len || high_turf.len)
+			Master.laggy_byond_map_update_incoming()
+
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 
 		timer = TICK_USAGE_REAL
