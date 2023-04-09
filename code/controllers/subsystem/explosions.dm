@@ -1,4 +1,4 @@
-/// A wrapper for [/atom/proc/ex_act] to ensure that the explosion propagation and attendant signal are always handled.
+/// A wrapper for [/atom/proc/ex_act] for tg compability, we can need in the future this for signals and contents_explosion
 #define EX_ACT(target, args...)\
 	target.ex_act(##args);
 
