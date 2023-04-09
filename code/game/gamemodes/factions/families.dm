@@ -28,8 +28,6 @@
 	logo_state = gang_id
 	..()
 
-
-
 /datum/faction/gang/forgeObjectives()
 	. = ..()
 	AppendObjective(/datum/objective/gang/points)
