@@ -487,10 +487,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(target)
 				explosion(location, 3, 2, 2)
-				if(isturf(target))
-					SSexplosions.highturf += target
-				else
-					SSexplosions.high_mov_atom += target
+				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
 
@@ -694,7 +691,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
 	if((iswallturf(target)) && (prob(destruction_chance)))
-		SSexplosions.medturf += target
+		target.ex_act(EXPLODE_HEAVY)
+
 
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()

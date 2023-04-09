@@ -182,7 +182,7 @@
 				if(isfloorturf(T))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
-							SSexplosions.med_mov_atom += S
+							S.ex_act(EXPLODE_HEAVY)
 						if(istype(S,/obj/structure/grille))
 							qdel(S)
 				if(iswallturf(T))
@@ -368,7 +368,7 @@
 				M.Weaken(5)
 		for(var/obj/structure/S in range(1, T))
 			if(istype(S,/obj/structure/window))
-				SSexplosions.med_mov_atom += S
+				S.ex_act(EXPLODE_HEAVY)
 			if(istype(S,/obj/structure/grille))
 				qdel(S)
 		sleep(3)
@@ -383,7 +383,7 @@
 		for(var/obj/structure/S in range(2, T))
 			if(prob(40))
 				if(istype(S,/obj/structure/window))
-					SSexplosions.med_mov_atom += S
+					S.ex_act(EXPLODE_HEAVY)
 				if(istype(S,/obj/structure/grille))
 					qdel(S)
 		usr.canmove = 1

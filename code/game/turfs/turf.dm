@@ -87,7 +87,7 @@
 /turf/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		SSexplosions.med_mov_atom += src
+		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 

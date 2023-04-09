@@ -85,7 +85,7 @@
 	attack_generic(user, rand(10, 15), BRUTE, MELEE, TRUE)
 
 /obj/singularity_act()
-	SSexplosions.high_mov_atom += src
+	ex_act(EXPLODE_DEVASTATE)
 	if(!QDELETED(src))
 		qdel(src)
 	return 2

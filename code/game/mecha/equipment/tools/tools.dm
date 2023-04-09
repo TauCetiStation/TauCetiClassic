@@ -147,10 +147,7 @@
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 
 				log_message("Drilled through [target]")
-				if(isturf(target))
-					SSexplosions.medturf += target
-				else
-					SSexplosions.med_mov_atom += target
+				target.ex_act(EXPLODE_HEAVY)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
@@ -186,7 +183,7 @@
 			if(istype(target, /turf/simulated/wall/r_wall))
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
-					SSexplosions.lowturf += target
+					target.ex_act(EXPLODE_LIGHT)
 			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
 				if(istype(target, /turf/simulated/mineral))
 					for(var/turf/simulated/mineral/M in range(chassis, 1))
@@ -216,10 +213,7 @@
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
-				if(isturf(target))
-					SSexplosions.medturf += target
-				else
-					SSexplosions.med_mov_atom += target
+				target.ex_act(EXPLODE_HEAVY)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/can_attach(obj/mecha/M)
@@ -1169,10 +1163,10 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()
-	for(var/atom/T in loc)
+	for(var/atom/movable/T in loc)
 		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
 			if(T.loc != chassis)
-				SSexplosions.high_mov_atom += T
+				T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))

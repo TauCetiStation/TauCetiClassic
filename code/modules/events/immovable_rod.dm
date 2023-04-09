@@ -65,11 +65,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(clong && prob(25))
 		x = clong.x
 		y = clong.y
-	if(clong.density)
-		if(istype(clong, /turf/simulated))
-			SSexplosions.medturf += clong
-		if(isobj(clong))
-			SSexplosions.med_mov_atom += clong
+
+	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
+		clong.ex_act(EXPLODE_HEAVY)
 
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
@@ -80,7 +78,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
 			H.adjustBruteLoss(160)
 		if(clong.density || prob(10))
-			SSexplosions.med_mov_atom += clong
+			clong.ex_act(EXPLODE_HEAVY)
 	else if(istype(clong, type))
 		var/obj/effect/immovablerod/other = clong
 		visible_message("<span class='danger'>[src] collides with [other]!</span>")
