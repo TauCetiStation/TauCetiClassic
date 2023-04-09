@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	var/implanted = null
-	var/mob/imp_in = null
+	var/mob/living/carbon/imp_in = null
 	var/obj/item/organ/external/part = null
 	var/allow_reagents = 0
 	var/malfunction = 0
@@ -374,14 +374,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")
 	if(!src.reagents.total_volume)
 		to_chat(R, "You hear a faint click from your chest.")
-		spawn(0)
-			qdel(src)
+	removeChemImplant(R)
 	return
 
 /obj/item/weapon/implant/chem/emp_act(severity)
@@ -399,6 +399,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
+
+/obj/item/weapon/implant/chem/proc/removeChemImplant(mob/living/carbon/C)
+	set waitfor = FALSE
+	qdel(src)
+	C.sec_hud_set_implants()
 
 var/global/list/death_alarm_stealth_areas = list(
 	/area/shuttle/syndicate,
