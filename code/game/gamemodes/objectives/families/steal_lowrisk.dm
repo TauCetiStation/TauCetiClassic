@@ -24,7 +24,6 @@ var/global/list/possible_lowrisk_items_to_steal = list()
 									 "феска ГП" = /obj/item/clothing/head/fez
 									 )
 
-
 /datum/objective/gang/steal_lowrisk/select_target()
 	var/target = find_and_check_target()
 	explanation_text = "Следующей целью будет [target]."
