@@ -17,6 +17,12 @@
 		return
 	..()
 
+/obj/item/device/radio/electropack/mob_pickup(mob/user, hand_index=null)
+	if(src == user.back)
+		to_chat(user, "<span class='notice'>You need help taking this off!</span>")
+		return
+	..()
+
 /obj/item/device/radio/electropack/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clothing/head/helmet))
 		if(!b_stat)
