@@ -99,7 +99,7 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
 	if(!isliving(target))
 		return 0
 	if(isanimal(target))
@@ -387,8 +387,14 @@
 		result = A
 		bumped = TRUE
 		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/thin))
 		return
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/fulltile))
+		var/obj/structure/window/fulltile/FTW = A
+		if(!FTW.grilled)
+			return
+		else if(checkpass(PASSGRILLE))
+			return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = A

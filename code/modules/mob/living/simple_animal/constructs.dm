@@ -46,6 +46,8 @@
 	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
+
 /mob/living/simple_animal/construct/death()
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(src.loc)
