@@ -8252,8 +8252,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	id = "Detective";
-	icon_state = "gr_window_reinforced_polarized"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "Detective"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -10130,8 +10130,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	id = "Detective";
-	icon_state = "gr_window_reinforced_polarized"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "Detective"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -22794,8 +22794,8 @@
 	},
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	id = "chapel";
-	icon_state = "gr_window_polarized"
+	icon_state = "gr_window_polarized";
+	id = "chapel"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
@@ -38041,8 +38041,8 @@
 /obj/structure/cable,
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	id = "chapel";
-	icon_state = "gr_window_polarized"
+	icon_state = "gr_window_polarized";
+	id = "chapel"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
@@ -39517,8 +39517,8 @@
 	},
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	id = "chapel";
-	icon_state = "gr_window_polarized"
+	icon_state = "gr_window_polarized";
+	id = "chapel"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
@@ -59172,8 +59172,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	id = "kitchen";
-	icon_state = "gr_window_polarized"
+	icon_state = "gr_window_polarized";
+	id = "kitchen"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
@@ -66285,7 +66285,9 @@
 /turf/simulated/floor,
 /area/station/construction)
 "cJn" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/stool/bed/chair/electrotherapy{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cJo" = (
@@ -67688,8 +67690,8 @@
 	},
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	id = "chapel";
-	icon_state = "gr_window_polarized"
+	icon_state = "gr_window_polarized";
+	id = "chapel"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
@@ -73021,7 +73023,6 @@
 	name = "Psychiatrist's Locker";
 	req_access = list(64)
 	},
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/camera{
 	c_tag = "Psychiatric Office";
 	dir = 8;
@@ -74144,8 +74145,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	id = "chapel";
-	icon_state = "gr_window_reinforced_polarized"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "chapel"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
@@ -81757,8 +81758,8 @@
 	},
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	id = "chapel";
-	icon_state = "gr_window_polarized"
+	icon_state = "gr_window_polarized";
+	id = "chapel"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
