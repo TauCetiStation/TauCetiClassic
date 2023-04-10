@@ -206,7 +206,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf
-	for(var/obj/structure/window/W in T)	// window protects grille
+	for(var/obj/structure/window/thin/W in T)	// window protects grille (legacy way to keep station safe with multiobjects windows)
 		W.ex_act(hitpwr)
 		if(!QDELETED(W))
 			return

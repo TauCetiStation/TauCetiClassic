@@ -613,6 +613,60 @@
 		M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
 	data["ticks"]++
 
+/datum/reagent/sanguisacid
+	name = "Sanguis Acid"
+	id = "sanguisacid"
+	description = "A toxin that burns the blood in the body causes hematemesis. Only works on humanoids."
+	reagent_state = LIQUID
+	color = "#861102"
+	custom_metabolism = 0.05
+	taste_message = "bitter blood"
+	restrict_species = list(IPC, DIONA)
+
+
+/datum/reagent/sanguisacid/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(!ishuman(H))
+		return
+	H.blood_remove(2)
+	if(prob(15))
+		H.blood_remove(5)
+		H.adjustHalLoss(10)
+		H.adjustFireLoss(5)
+		to_chat(H,"<span class='warning'><b>You feel a burning sensation inside!</b></span>")
+	else if(prob(5))
+		H.blood_remove(150)
+		H.vomit(vomit_type = VOMIT_BLOOD)
+
+/datum/reagent/bonebreaker
+	name = "BB EX-01"
+	id = "bonebreaker"
+	description = "Experimental poison of unknown origin. When introduced into the body of a living being, the poison relaxes the structure of the bones, and then breaks them."
+	reagent_state = LIQUID
+	color = "#3d3549"
+	custom_metabolism = 0.1
+	taste_message = "something disgusting"
+	restrict_species = list(IPC, DIONA)
+
+
+/datum/reagent/bonebreaker/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(!ishuman(H))
+		return
+	if(data["ticks"])
+		data["ticks"]++
+	else
+		data["ticks"] = 1
+	switch(data["ticks"])
+		if(1 to 30)
+			if(prob(15))
+				to_chat(H, "<span class='warning'>You feel something strange and unpleasant inside of you.</span>")
+		if(30 to INFINITY)
+			holder.remove_reagent("bonebreaker", 100)
+			for(var/obj/item/organ/external/E in H.bodyparts)
+				H.apply_effect(100, AGONY)
+				E.fracture()
+
 /datum/reagent/dioxin
 	name = "Dioxin"
 	id = "dioxin"

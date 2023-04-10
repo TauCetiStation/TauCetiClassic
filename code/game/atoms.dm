@@ -591,7 +591,7 @@
 /atom/proc/isinspace()
 	return isspaceturf(get_turf(src))
 
-/atom/proc/checkpass(passflag)
+/atom/proc/checkpass(passflag) // todo: define as macro
 	return pass_flags&passflag
 
 //This proc is called on the location of an atom when the atom is Destroy()'d

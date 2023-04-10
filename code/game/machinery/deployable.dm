@@ -60,6 +60,7 @@ for reference:
 	density = TRUE
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
+	layer = ABOVE_WINDOW_LAYER
 
 /obj/structure/barricade/wooden
 	name = "wooden barricade"

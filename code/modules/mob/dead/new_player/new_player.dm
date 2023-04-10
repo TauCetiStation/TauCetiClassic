@@ -168,8 +168,8 @@
 		return
 
 	if(href_list["SelectedJob"])
-		if(!enter_allowed)
-			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -211,8 +211,8 @@
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
-	if(!enter_allowed)
-		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
