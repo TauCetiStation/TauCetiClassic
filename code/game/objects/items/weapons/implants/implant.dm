@@ -20,13 +20,13 @@
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
 	implanted = FALSE
-	imp_in = null
 	if(part)
 		part.implants.Remove(src)
 		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
+	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -381,7 +381,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	to_chat(R, "You hear a faint *beep*.")
 	if(!src.reagents.total_volume)
 		to_chat(R, "You hear a faint click from your chest.")
-	removeChemImplant(R)
+		spawn(0)
+			qdel(src)
 	return
 
 /obj/item/weapon/implant/chem/emp_act(severity)
@@ -399,11 +400,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
-
-/obj/item/weapon/implant/chem/proc/removeChemImplant(mob/living/carbon/C)
-	set waitfor = FALSE
-	qdel(src)
-	C.sec_hud_set_implants()
 
 var/global/list/death_alarm_stealth_areas = list(
 	/area/shuttle/syndicate,
