@@ -31,7 +31,7 @@
 /obj/item/weapon/changeling_whip/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated())
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
@@ -78,7 +78,7 @@
 	return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
-	if(T.Adjacent(host) && !host.get_inactive_hand() && !host.lying)
+	if(T.Adjacent(host) && !host.get_inactive_hand())
 		if(iscarbon(T))
 			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
 		else if(isitem(T))

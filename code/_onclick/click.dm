@@ -94,7 +94,7 @@
 	if(RegularClickOn(A, params))
 		return
 
-	if(incapacitated(NONE))
+	if(HAS_TRAIT(usr, TRAIT_IMMOBILIZED))
 		return
 
 	face_atom(A) // change direction to face what you clicked on

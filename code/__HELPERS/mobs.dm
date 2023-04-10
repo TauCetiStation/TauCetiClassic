@@ -114,7 +114,7 @@
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break
 

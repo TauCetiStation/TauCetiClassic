@@ -132,6 +132,10 @@
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
+	if(!user.lying)
+		fire_delay = initial(fire_delay)
+	if(user.lying)
+		fire_delay = 20
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return

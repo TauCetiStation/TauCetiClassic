@@ -899,7 +899,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/mob/M = O
 		M.cut_overlays()
 		M.regenerate_icons()
-	
+
 	return O
 
 
@@ -1211,7 +1211,7 @@ var/global/list/common_tools = list(
 /proc/can_operate(mob/living/carbon/M)
 	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
 		return TRUE
-	if((M.buckled || M.lying || M.incapacitated()) && prob(get_surg_chance(M.loc)))
+	if((M.buckled || M.incapacitated()) && prob(get_surg_chance(M.loc)))
 		return TRUE
 	return FALSE
 
@@ -1593,7 +1593,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 		global.custom_lobby_image = new_screen
 	else
 		custom_lobby_image = null
-		
+
 		if(SSholiday.holidays[NEW_YEAR])
 			lobby_screen = "lobby-ny"
 		else
