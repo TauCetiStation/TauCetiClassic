@@ -3,6 +3,7 @@
 #define STATE_MINE "mine"
 
 /datum/minigame/minesweeper
+	var/firstpress = TRUE
 	var/list/grid
 	var/grid_x = 0
 	var/grid_y = 0
@@ -19,7 +20,11 @@
 	if(grid[y][x]["flag"])
 		return TRUE //We fake pressed a button with a flag
 	if(grid[y][x]["state"] == STATE_MINE)
-		return FALSE //We lost
+		if(firstpress)
+			relocate_mine(y,x)
+			firstpress = FALSE
+		else
+			return FALSE //We lost
 	press_button(x, y)
 	return TRUE //We pressed a button
 
@@ -44,16 +49,26 @@
 			grid_blanks++
 
 	for(var/i = 1 to grid_mines)
-		while(TRUE)
-			var/y = rand(1,grid_y)
-			var/x = rand(1,grid_x)
-			var/list/L = grid[y][x]
-			if(L["state"] == STATE_MINE)
-				continue
-			else
-				L["state"] = STATE_MINE
-				grid_blanks--
-				break
+		populate_mine()
+
+/datum/minigame/minesweeper/proc/populate_mine(exclude_x = 0, exclude_y = 0)
+	while(TRUE)
+		var/y = rand(1,grid_y)
+		var/x = rand(1,grid_x)
+		if(exclude_x == x || exclude_y == y)
+			continue
+		var/list/L = grid[y][x]
+		if(L["state"] == STATE_MINE)
+			continue
+		else
+			L["state"] = STATE_MINE
+			grid_blanks--
+			break
+
+/datum/minigame/minesweeper/proc/relocate_mine(y, x)
+	grid[y][x]["state"] = STATE_BLANK
+	populate_mine(exclude_x = x, exclude_y = y)
+
 
 /datum/minigame/minesweeper/proc/check_in_grid(x, y)
 	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
