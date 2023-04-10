@@ -571,8 +571,8 @@
 	. = ..()
 
 	table_attached_to = Table
-	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
-	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/destroy_lot_holder)
+	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), .proc/destroy_lot_holder)
 
 	held_Item = Item
 	Item.forceMove(src)
@@ -593,7 +593,7 @@
 
 	return ..()
 
-/obj/lot_holder/proc/on_table_destroy()
+/obj/lot_holder/proc/destroy_lot_holder()
 	qdel(src)
 
 /obj/lot_holder/container_resist()

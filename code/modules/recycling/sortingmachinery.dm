@@ -247,6 +247,10 @@
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
 
+/obj/item/device/tagger/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	..()
+
 /obj/item/device/tagger/proc/on_round_start(datum/source)
 	SIGNAL_HANDLER
 	lot_account_number = global.cargo_account.account_number
@@ -396,6 +400,8 @@
 
 	if(user.get_inactive_hand() == target || user.get_active_hand() == target)
 		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
+		if(!(user.get_active_hand() == src || user.get_inactive_hand() == src) || !(user.get_inactive_hand() == target || user.get_active_hand() == target))
+			return
 		if(user.incapacitated())
 			return
 
