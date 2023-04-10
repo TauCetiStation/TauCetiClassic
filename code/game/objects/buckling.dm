@@ -48,13 +48,12 @@
 	M.buckled = src
 	M.set_dir(dir)
 	buckled_mob = M
+	M.update_canmove()
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M)
 
 	M.throw_alert("buckled", /atom/movable/screen/alert/buckled, new_master = src)
-	correct_pixel_shift(M)
-	M.update_canmove()
 	return TRUE
 
 /atom/movable/proc/unbuckle_mob()
@@ -67,15 +66,9 @@
 	buckled_mob.clear_alert("buckled")
 	buckled_mob = null
 
-	correct_pixel_shift(.)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, .)
 
 	post_buckle_mob(.)
-
-/atom/movable/proc/correct_pixel_shift(mob/living/carbon/C)
-	if(!istype(C))
-		return
-	C.update_transform()
 
 /atom/movable/proc/post_buckle_mob(mob/living/M)
 	return

@@ -6,8 +6,7 @@
 
 	updateghostimages()
 
-	if(client.media)
-		client.media.stop_music()
+	client.media?.stop_music()
 
 	if(is_alien_whitelisted(src, "ian") || (client.supporter && !is_alien_whitelisted_banned(src, "ian")))
 		verbs += /mob/dead/observer/proc/ianize

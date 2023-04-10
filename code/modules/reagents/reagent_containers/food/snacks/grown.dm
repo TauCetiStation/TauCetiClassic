@@ -8,6 +8,8 @@
 //Grown foods
 //Subclass so we can pass on values
 /obj/item/weapon/reagent_containers/food/snacks/grown
+	food_type = NATURAL_FOOD
+	food_moodlet = /datum/mood_event/natural_food
 	var/seed_type
 	var/plantname = ""
 	var/species = ""
@@ -386,6 +388,8 @@
 	icon_state = "ambrosiadeus"
 	potency = 10
 	filling_color = "#229e11"
+	food_moodlet = /datum/mood_event/tasty_food
+	food_type = TASTY_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/atom_init()
 	. = ..()
@@ -429,6 +433,8 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	potency = 15
+	food_type = VERY_TASTY_FOOD
+	food_moodlet = /datum/mood_event/very_tasty_food
 	filling_color = "#f5cb42"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple/atom_init()

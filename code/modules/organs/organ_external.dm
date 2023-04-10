@@ -1010,7 +1010,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/l_leg
 	name = "left leg"
 	desc = "Break a leg! Somebody else's leg. With this leg."
-	force = 10
+	force = 9
 	artery_name = "femoral artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -1041,7 +1041,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	desc = "The infamous third leg."
-	force = 10
+	force = 9
 
 	artery_name = "femoral artery"
 

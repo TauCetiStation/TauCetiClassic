@@ -42,7 +42,8 @@
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/wall/fakeglass,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
 /area/mafia)
 "t" = (
 /turf/unsimulated/floor/snow{
@@ -118,7 +119,8 @@
 "S" = (
 /obj/machinery/door/poddoor/mafia,
 /obj/item/decoration/snowflake,
-/turf/unsimulated/wall/fakeglass,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
 /area/mafia)
 "T" = (
 /obj/structure/closet,
