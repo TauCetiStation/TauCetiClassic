@@ -286,3 +286,11 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
 	H.ChangeToHusk()
+
+/datum/quality/negativeish/delicate
+	name = "Quality Food Enjoyer"
+	desc = "Ты всегда ел только самую лучшую еду в секторе и не собираешься останавливатся"
+	requirement = "Нет."
+
+/datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H,TRAIT_DELICATE_EATER, QUALITY_TRAIT)

@@ -52,17 +52,24 @@
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
-		return 0
+		return FALSE
 
-	if(!CanEat(user, M, src, "eat")) return	//tc code
+	if(!CanEat(user, M, src, "eat"))
+		return	//tc code
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
 		if(C == user) // If you're eating it yourself
-			if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
+			if(HAS_TRAIT(C, TRAIT_DELICATE_EATER) && src.food_type != VERY_TASTY_FOOD)
+				to_chat(C, "<span class='rose'>You cant eat this horrible, nasty and cheap food!</span>")
+				return FALSE
+			else if(fullness > NUTRITION_LEVEL_HUNGRY && src.food_type == JUNK_FOOD && !HAS_TRAIT(C, TRAIT_JUNK_EATER)) // check to see if we CAN  eat mroe food
+				to_chat(C, "<span class='rose'>You dont feel like eating more junk food right now.</span>")
+				return FALSE
+			else if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
-				return 0
+				return FALSE
 			else if(fullness > 350)
 				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
 			else if(fullness > 150)
@@ -109,9 +116,9 @@
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
 				On_Consume(M)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/afterattack(atom/target, mob/user, proximity, params)
 	return
@@ -1485,6 +1492,7 @@
 	trash = /obj/item/trash/tray
 	filling_color = "#5c3c11"
 	bitesize = 6
+	food_type = VERY_TASTY_FOOD
 	list_reagents = list("nutriment" = 10, "banana" = 5, "blackpepper" = 1, "sodiumchloride" = 1, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/baguette
@@ -1770,6 +1778,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#f0f2e4"
 	bitesize = 1
+	food_type = VERY_TASTY_FOOD
 	list_reagents = list("nutriment" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/tossedsalad
@@ -2465,6 +2474,7 @@
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
+	food_type = VERY_TASTY_FOOD
 	list_reagents = list("protein" = 2, "toxin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
