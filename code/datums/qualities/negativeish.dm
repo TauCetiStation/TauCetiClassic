@@ -289,7 +289,7 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/delicate
 	name = "Quality Food Enjoyer"
-	desc = "Ты всегда ел только самую лучшую еду в секторе и не собираешься останавливатся"
+	desc = "Ты всегда кушал только самую лучшую еду в секторе и не собираешься останавливаться"
 	requirement = "Нет."
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
