@@ -100,7 +100,7 @@
 
 /datum/quirk/fast_food
 	name = QUIRK_JUNK_EATER
-	desc = "Годы в нищинстве заставилы вас питаться самыми дешевыми продуктами"
+	desc = "Годы в нищете приучили вас питаться самыми дешевыми продуктами"
 	value = 1
 	mob_trait = TRAIT_JUNK_EATER
 	gain_text = "<span class='notice'>Нормальная еда не вызывает у вас какого-либо восхищения</span>"
