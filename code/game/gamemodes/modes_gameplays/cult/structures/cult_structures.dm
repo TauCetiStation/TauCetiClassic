@@ -66,8 +66,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 
 /obj/structure/cult/pylon/atom_init()
 	. = ..()
-	//if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
-	if(global.cult_religion)
+	if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
 		init_healing()
 
 /obj/structure/cult/pylon/proc/init_healing()

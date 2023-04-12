@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(obj)
 	name = "Objects"
-
+	wait = 200
 	priority   = SS_PRIORITY_OBJECTS
 	flags = SS_NO_INIT | SS_SHOW_IN_MC_TAB
 
