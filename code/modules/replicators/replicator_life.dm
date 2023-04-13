@@ -35,6 +35,7 @@
 	var/is_hungry = FALSE
 
 	var/can_starve = FALSE
+	var/breathing_phoron = FALSE
 
 	var/next_jamming_alert = 0
 	var/jamming_alert_cooldown = 30 SECONDS
@@ -45,6 +46,7 @@
 		return
 
 	handle_breath()
+	breathing_phoron()
 	handle_status_updates()
 
 	if(ckey)
@@ -134,6 +136,19 @@
 	can_starve = FALSE
 
 	last_disintegration = world.time
+
+/mob/living/simple_animal/hostile/replicator/proc/breathing_phoron()
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(!environment)
+		breathing_phoron = FALSE
+		return
+
+	if(environment.get_gas("phoron") > 1.0)
+		breathing_phoron = TRUE
+		return
+
+	environment.adjust_gas("phoron", -1.0)
+	breathing_phoron = FALSE
 
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
 	var/color_to_flash = null
