@@ -61,10 +61,10 @@
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
 		if(C == user) // If you're eating it yourself
-			if(HAS_TRAIT(C, TRAIT_DELICATE_EATER) && src.food_type != VERY_TASTY_FOOD)
+			if(HAS_TRAIT(C, TRAIT_PICKY_EATER) && src.food_type != VERY_TASTY_FOOD)
 				to_chat(C, "<span class='rose'>You cant eat this horrible, nasty and cheap food!</span>")
 				return FALSE
-			else if(fullness > NUTRITION_LEVEL_HUNGRY && src.food_type == JUNK_FOOD && !HAS_TRAIT(C, TRAIT_JUNK_EATER)) // check to see if we CAN  eat mroe food
+			else if(fullness > NUTRITION_LEVEL_HUNGRY && src.food_type == JUNK_FOOD && !HAS_TRAIT(C, TRAIT_JUNK_EATER)) // checking to see if we can eat more junk food
 				to_chat(C, "<span class='rose'>You dont feel like eating junk food right now.</span>")
 				return FALSE
 			else if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
