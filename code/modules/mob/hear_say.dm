@@ -273,7 +273,6 @@
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
 	var/runechat_message
-	var/flags = SHOWMSG_VISUAL
 	if(!client)
 		return
 
@@ -287,7 +286,7 @@
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message, SHOWMSG_VISUAL)
-	show_runechat_message(speaker, null, runechat_message, null, flags)
+	show_runechat_message(speaker, null, runechat_message, null, SHOWMSG_VISUAL)
 	show_message(message, SHOWMSG_VISUAL)
 
 	telepathy_eavesdrop(speaker, message, "has seen", language)
