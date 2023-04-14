@@ -27,7 +27,7 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
-	if(!(sdisabilities & DEAF || ear_deaf) && client && client.prefs.show_runechat)
+	if(!(sdisabilities & DEAF || ear_deaf))
 		var/list/span_list = list()
 		if(copytext_char(message, -2) == "!!")
 			span_list.Add("yell")
@@ -272,17 +272,22 @@
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
+	var/runechat_message
+	var/flags = SHOWMSG_VISUAL
 	if(!client)
 		return
 
 	if(say_understands(speaker, language))
+		runechat_message = "[verb], \"[capitalize(message)]\""
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [language.format_message(message, verb)]</span>"
 	else
+		runechat_message = "[verb]."
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>"
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message, SHOWMSG_VISUAL)
+	show_runechat_message(speaker, null, runechat_message, null, flags)
 	show_message(message, SHOWMSG_VISUAL)
 
 	telepathy_eavesdrop(speaker, message, "has seen", language)

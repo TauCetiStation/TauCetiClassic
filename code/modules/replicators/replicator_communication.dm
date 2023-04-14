@@ -73,11 +73,10 @@
 	FR.announce_swarm(last_controller_ckey, message, announcer=src)
 
 /datum/faction/replicators/proc/send_to_chat(mob/target, message, unprocessed_message, mob/speaker=null)
-	if(speaker && target.client && target.client.prefs.show_runechat)
-		var/list/span_list = list()
-		if(copytext_char(message, -2) == "!!")
-			span_list.Add("yell")
-		target.show_runechat_message(speaker, null, capitalize(unprocessed_message), span_list)
+	var/list/span_list = list()
+	if(copytext_char(message, -2) == "!!")
+		span_list.Add("yell")
+	target.show_runechat_message(speaker, null, capitalize(unprocessed_message), span_list)
 
 	to_chat(target, message)
 

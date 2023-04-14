@@ -72,6 +72,11 @@
 
 	emo.do_emote(src, act, intentional)
 
+	var/msg = emo.get_emote_message_3p(src)
+	var/flags = SHOWMSG_VISUAL
+	for(var/mob/M in (viewers(get_turf(src), world.view)))
+		M.show_runechat_message(src, null, msg, null, flags)
+
 // A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
 /mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional = FALSE)
 	log_emote("[key_name(src)] : [message]")
@@ -81,6 +86,10 @@
 		visible_message(msg, ignored_mobs = observer_list)
 	else
 		audible_message(msg, ignored_mobs = observer_list)
+
+	var/flags = SHOWMSG_VISUAL
+	for(var/mob/M in (viewers(get_turf(src), world.view)))
+		M.show_runechat_message(src, null, message, null, flags)
 
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)

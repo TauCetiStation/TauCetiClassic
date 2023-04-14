@@ -226,6 +226,9 @@
 	if(!speaker || isobserver(speaker))
 		return
 
+	if(!client || !client.prefs.show_runechat)
+		return
+
 	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
 		return
 

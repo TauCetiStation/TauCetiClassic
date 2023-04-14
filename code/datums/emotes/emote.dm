@@ -68,7 +68,7 @@ var/global/list/all_emotes
 	if(!msg)
 		return null
 
-	return "<b>[user]</b> <i>[msg]</i>"
+	return msg
 
 /datum/emote/proc/get_cooldown_group()
 	if(isnull(cooldown_group))
@@ -137,7 +137,7 @@ var/global/list/all_emotes
 		I.trigger(emote_key, user)
 
 	var/msg_1p = get_emote_message_1p(user)
-	var/msg_3p = get_emote_message_3p(user)
+	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
 
 	if(!msg_1p)
