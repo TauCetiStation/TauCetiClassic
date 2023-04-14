@@ -33,9 +33,8 @@ var/global/list/possible_lowrisk_items_to_steal = list()
 	if(global.possible_lowrisk_items_to_steal.len == 2)
 		return pick(global.possible_lowrisk_items_to_steal)
 	var/objective = pick(items_to_steal)
-	while(objective in global.possible_lowrisk_items_to_steal)
-		objective = pick(items_to_steal)
 	global.possible_lowrisk_items_to_steal[objective] = items_to_steal[objective]
+	items_to_steal -= objective
 	return objective
 
 /datum/objective/gang/steal_lowrisk/New()
