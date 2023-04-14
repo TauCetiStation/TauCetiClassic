@@ -29,6 +29,9 @@ var/global/list/bicon_cache = list()
 	if (!obj)
 		return
 
+	if(SSlag_switch.measures[DISABLE_BICON] && usr && !HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES)) // todo: bypass for round end stat
+		return
+
 	return "<img [css] src='data:image/png;base64,[bicon_raw(obj, time_stamp)]'>"
 
 /proc/timestamp_cache_add(key, element)

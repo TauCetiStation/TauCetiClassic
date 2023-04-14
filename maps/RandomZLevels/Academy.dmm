@@ -6,9 +6,9 @@
 /turf/simulated/wall/r_wall,
 /area/awaymission/academy/headmaster)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -576,9 +576,9 @@
 	},
 /area/awaymission/academy/headmaster)
 "bP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -661,9 +661,9 @@
 	},
 /area/awaymission/academy/headmaster)
 "cd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -937,9 +937,9 @@
 	},
 /area/awaymission/academy/headmaster)
 "cS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -1333,7 +1333,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "dY" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -1452,14 +1452,14 @@
 	},
 /area/awaymission/academy/classrooms)
 "eo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "ep" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1472,7 +1472,7 @@
 /turf/environment/space,
 /area)
 "er" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1521,7 +1521,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "ey" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -1701,7 +1701,7 @@
 	},
 /area/awaymission/academy)
 "eX" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
 "eY" = (
@@ -1820,7 +1820,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "fj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1829,7 +1829,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "fk" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1878,7 +1878,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "fq" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1970,9 +1970,9 @@
 	},
 /area/awaymission/academy/classrooms)
 "fy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1982,9 +1982,9 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "fz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1994,9 +1994,9 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "fA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2020,9 +2020,9 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academyaft)
 "fE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -2108,7 +2108,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "fP" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2147,9 +2147,9 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "fW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2291,7 +2291,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "gp" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "gq" = (
@@ -2340,7 +2340,7 @@
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
 "gx" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -2391,7 +2391,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "gD" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/ammo_casing,
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -2656,16 +2656,6 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
-"hm" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "hydrofloor"
-	},
-/area/awaymission/academy/academyaft)
 "hn" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2673,14 +2663,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/academy/academyaft)
-"ho" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "hp" = (
 /obj/structure/cable{
@@ -2785,14 +2767,6 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/awaymission/academy/academyaft)
-"hy" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hz" = (
 /obj/structure/cable{
@@ -3246,13 +3220,13 @@
 /area/awaymission/academy/academyaft)
 "iG" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "iH" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/table,
@@ -3263,7 +3237,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "iI" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -3272,9 +3246,9 @@
 	},
 /area/awaymission/academy/academyaft)
 "iJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3297,9 +3271,9 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academyaft)
 "iL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3314,7 +3288,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "iM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -3328,7 +3302,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "iN" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/table,
@@ -3355,9 +3329,9 @@
 /turf/environment/space,
 /area/awaymission/academy/academyaft)
 "iR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -3368,9 +3342,9 @@
 	},
 /area/awaymission/academy/academyaft)
 "iT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3407,9 +3381,9 @@
 	},
 /area/awaymission/academy/academyaft)
 "iW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -3506,7 +3480,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/academy/academyaft)
 "ji" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup,
 /turf/simulated/floor{
@@ -3514,7 +3488,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jj" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -3540,7 +3514,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jn" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/airless{
 	dir = 4;
 	icon_state = "white"
@@ -3548,7 +3522,7 @@
 /area/awaymission/academy/academyaft)
 "jo" = (
 /obj/structure/table,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/device/batterer,
 /turf/simulated/floor/airless{
 	dir = 4;
@@ -3566,13 +3540,13 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "jr" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academyaft)
 "js" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -3583,19 +3557,19 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academyaft)
 "ju" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jv" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -3614,13 +3588,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jy" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
@@ -3680,14 +3654,14 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/academygate)
 "jK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academygate)
 "jL" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/awaymission/academy/academygate)
 "jM" = (
@@ -10061,7 +10035,7 @@ bz
 bz
 gE
 gU
-ho
+gZ
 hr
 gX
 hr
@@ -10191,12 +10165,12 @@ gl
 fW
 fy
 gU
-ho
-ho
+gZ
+gZ
 gX
-ho
+gZ
 gX
-ho
+gZ
 gX
 hk
 hk
@@ -10451,7 +10425,7 @@ bx
 bx
 gS
 gU
-hm
+hb
 hg
 hk
 hk
@@ -11362,7 +11336,7 @@ do
 cY
 fB
 hg
-hy
+hn
 hK
 fB
 ic
@@ -11492,7 +11466,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hL
 fB
 ic
@@ -11622,7 +11596,7 @@ cY
 cY
 fB
 hh
-hy
+hn
 hM
 fB
 id
@@ -11752,7 +11726,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hN
 fB
 ic
@@ -11882,7 +11856,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hO
 fB
 ie
@@ -13312,7 +13286,7 @@ gN
 gf
 fB
 hg
-hy
+hn
 hQ
 fB
 ic
@@ -13442,7 +13416,7 @@ gO
 gf
 fB
 hg
-hy
+hn
 hR
 fB
 ic
@@ -13572,7 +13546,7 @@ gC
 gH
 fB
 hh
-hy
+hn
 hS
 fB
 id
@@ -13702,7 +13676,7 @@ gC
 gH
 fB
 hg
-hy
+hn
 hT
 fB
 ic
@@ -13832,7 +13806,7 @@ gP
 gH
 fB
 hg
-hy
+hn
 hU
 fB
 ic
@@ -14482,7 +14456,7 @@ aN
 aa
 gU
 hk
-hm
+hb
 hV
 ia
 if
@@ -14741,7 +14715,7 @@ aa
 aa
 aa
 gU
-hm
+hb
 hk
 hk
 hk
@@ -14871,7 +14845,7 @@ aa
 aa
 aa
 gU
-hy
+hn
 hg
 hk
 hk
@@ -15001,7 +14975,7 @@ aa
 aa
 aa
 gU
-ho
+gZ
 gX
 gX
 gX

@@ -77,90 +77,6 @@
 	var/sender = FALSE
 	var/recipient = FALSE
 
-/obj/item/weapon/legcuffs
-	name = "legcuffs"
-	desc = "Use this to keep prisoners in line."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "handcuff"
-	flags = CONDUCT
-	throwforce = 0
-	w_class = SIZE_SMALL
-	origin_tech = "materials=1"
-	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
-
-/obj/item/weapon/legcuffs/beartrap
-	name = "bear trap"
-	throw_speed = 2
-	throw_range = 1
-	icon_state = "beartrap0"
-	desc = "A trap used to catch bears and other legged creatures."
-	var/armed = 0
-
-/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS)
-
-/obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
-	..()
-	if(ishuman(user) && user.stat == CONSCIOUS && !user.restrained())
-		armed = !armed
-		icon_state = "beartrap[armed]"
-		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
-
-/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
-	. = ..()
-	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
-				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run" && !H.buckled && H.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
-					armed = 0
-					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
-					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
-
-		icon_state = "beartrap[armed]"
-
-/obj/item/weapon/legcuffs/beartrap/armed
-	icon_state = "beartrap1"
-	armed = TRUE
-
-/obj/item/weapon/legcuffs/bola
-	name = "bola"
-	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
-	icon_state = "bola"
-	breakouttime = 35 //easy to apply, easy to break out of
-	origin_tech = "engineering=3;combat=1"
-	throw_speed = 5
-	var/weaken = 0
-
-/obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
-	..()
-	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
-		return
-	var/mob/living/carbon/C = hit_atom
-	if(C.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
-		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		feedback_add_details("handcuffs","B")
-		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Weaken(weaken)
-
-/obj/item/weapon/legcuffs/bola/tactical//traitor variant
-	name = "reinforced bola"
-	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
-	icon_state = "bola_r"
-	breakouttime = 70
-	origin_tech = "engineering=4;combat=3"
-	weaken = 2
-	throw_range = 5
-
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
@@ -189,10 +105,12 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+// base shard object
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
+	item_state_world = "large_world"
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
@@ -204,6 +122,78 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
+
+/obj/item/weapon/shard/atom_init()
+	if(icon_state == "large") // little hack so we don't overwrite our childs phoron and shrapnel icons
+		icon_state = pick("large", "medium", "small")
+		item_state_world = "[icon_state]_world"
+		switch(icon_state)
+			if("small")
+				pixel_x = rand(-12, 12)
+				pixel_y = rand(-12, 12)
+			if("medium")
+				pixel_x = rand(-8, 8)
+				pixel_y = rand(-8, 8)
+			if("large")
+				pixel_x = rand(-5, 5)
+				pixel_y = rand(-5, 5)
+
+	return ..()
+
+/obj/item/weapon/shard/Bump()
+	if(prob(20))
+		force = 15
+	else
+		force = 4
+	..()
+
+/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
+	if(iswelding(I))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.use(0, user))
+			var/obj/item/stack/sheet/glass/NG = new (user.loc)
+			for(var/obj/item/stack/sheet/glass/G in user.loc)
+				if(G==NG)
+					continue
+				if(G.get_amount() >= G.max_amount)
+					continue
+				G.attackby(NG, user)
+				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.get_amount()] sheets.")
+			qdel(src)
+
+	else
+		return ..()
+
+/obj/item/weapon/shard/Crossed(atom/movable/AM)
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+		var/mob/M = AM
+		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
+		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+
+			if(H.species.flags[IS_SYNTHETIC])
+				return
+
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
+				return
+
+			if(H.species.flags[NO_MINORCUTS])
+				return
+
+			if(H.buckled)
+				return
+
+			if(!H.shoes)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
+				if(BP.is_robotic())
+					return
+				BP.take_damage(5, 0)
+				if(!H.species.flags[NO_PAIN])
+					H.Stun(1)
+					H.Weaken(3)
+				H.updatehealth()
+	. = ..()
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -226,36 +216,55 @@
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)
 
-/*/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = CONDUCT | ONBELT
-	w_class = SIZE_TINY
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"*/
+// phoron shard object
+/obj/item/weapon/shard/phoron
+	name = "phoron shard"
+	desc = "A shard of phoron glass. Considerably tougher then normal glass shards. Apparently not tough enough to be a window."
+	force = 8.0
+	throwforce = 15.0
+	icon_state = "phoronlarge"
+	item_state_world = "phoronlarge_world"
+	sharp = 1
+	edge = 1
 
+/obj/item/weapon/shard/phoron/atom_init()
+	icon_state = pick("phoronlarge", "phoronmedium", "phoronsmall")
+	item_state_world = "[icon_state]_world"
+	switch(icon_state)
+		if("phoronsmall")
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
+		if("phoronmedium")
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
+		if("phoronlarge")
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
+
+	return ..()
+
+/obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
+	if(iswelding(I))
+		var/obj/item/weapon/weldingtool/WT = I
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(WT.use(0, user))
+			new /obj/item/stack/sheet/glass/phoronglass(user.loc, , TRUE)
+			qdel(src)
+			return
+	return ..()
+
+// shrapnel shard object
 /obj/item/weapon/shard/shrapnel
 	name = "shrapnel"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
+	item_state_world = "shrapnellarge_world"
 	desc = "A bunch of tiny bits of shattered metal."
 	on_step_sound = 'sound/effects/metalstep.ogg'
 
 /obj/item/weapon/shard/shrapnel/atom_init()
-	. = ..()
-
 	icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
+	item_state_world = "[icon_state]_world"
 	switch(icon_state)
 		if("shrapnelsmall")
 			pixel_x = rand(-12, 12)
@@ -266,6 +275,8 @@
 		if("shrapnellarge")
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
+
+	return ..()
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"

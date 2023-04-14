@@ -25,69 +25,69 @@
 	name = COIN_GOLD
 	cmineral = "gold"
 	reagent = "gold"
-	icon_state = "coin_gold_heads_inv"
-	item_state_world = "coin_gold_heads"
+	icon_state = "coin_gold_heads"
+	item_state_world = "coin_gold_heads_world"
 
 
 /obj/item/weapon/coin/silver
 	name = COIN_SILVER
 	cmineral = "silver"
 	reagent = "silver"
-	icon_state = "coin_silver_heads_inv"
-	item_state_world = "coin_silver_heads"
+	icon_state = "coin_silver_heads"
+	item_state_world = "coin_silver_heads_world"
 
 /obj/item/weapon/coin/diamond
 	name = COIN_DIAMOND
 	cmineral = "diamond"
 	reagent = "carbon"
-	icon_state = "coin_diamond_heads_inv"
-	item_state_world = "coin_diamond_heads"
+	icon_state = "coin_diamond_heads"
+	item_state_world = "coin_diamond_heads_world"
 
 /obj/item/weapon/coin/iron
 	name = COIN_IRON
 	cmineral = "iron"
 	reagent = "iron"
-	icon_state = "coin_iron_heads_inv"
-	item_state_world = "coin_iron_heads"
+	icon_state = "coin_iron_heads"
+	item_state_world = "coin_iron_heads_world"
 
 /obj/item/weapon/coin/phoron
 	name = COIN_PHORON
 	cmineral = "phoron"
 	reagent = "phoron"
-	icon_state = "coin_phoron_heads_inv"
-	item_state_world = "coin_phoron_heads"
+	icon_state = "coin_phoron_heads"
+	item_state_world = "coin_phoron_heads_world"
 
 /obj/item/weapon/coin/uranium
 	name = COIN_URANIUM
 	cmineral = "uranium"
 	reagent = "uranium"
-	icon_state = "coin_uranium_heads_inv"
-	item_state_world = "coin_uranium_heads"
+	icon_state = "coin_uranium_heads"
+	item_state_world = "coin_uranium_heads_world"
 
 /obj/item/weapon/coin/bananium
 	name = COIN_BANANIUM
 	cmineral = "bananium"
 	reagent = "banana"
-	icon_state = "coin_bananium_heads_inv"
-	item_state_world = "coin_bananium_heads"
+	icon_state = "coin_bananium_heads"
+	item_state_world = "coin_bananium_heads_world"
 
 /obj/item/weapon/coin/platinum
 	name = COIN_PLATINUM
 	cmineral = "platinum"
-	icon_state = "coin_platinum_heads_inv"
-	item_state_world = "coin_platinum_heads"
+	icon_state = "coin_platinum_heads"
+	item_state_world = "coin_platinum_heads_world"
 
 /obj/item/weapon/coin/mythril
 	name = COIN_MYTHRIL
 	cmineral = "mythril"
-	icon_state = "coin_mythril_heads_inv"
-	item_state_world = "coin_mythril_heads"
+	icon_state = "coin_mythril_heads"
+	item_state_world = "coin_mythril_heads_world"
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "silver"
 	reagent = "silver"
-	icon_state = "coin_silver_heads_inv"
-	item_state_world = "coin_silver_heads"
+	icon_state = "coin_silver_heads"
+	item_state_world = "coin_silver_heads_world"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 	coinflip = "heads"
@@ -128,7 +128,7 @@
 			return FALSE //do not flip the coin
 		coinflip = pick(sideslist)
 		cooldown = world.time + 15
-		flick("coin_[cmineral]_flip_inv", src)
+		flick("coin_[cmineral]_flip", src)
 		update_icon()
 		playsound(user, 'sound/items/coinflip.ogg', VOL_EFFECTS_MASTER)
 		var/oldloc = loc
@@ -143,6 +143,6 @@
 
 /obj/item/weapon/coin/update_icon()
 	if(item_state_world && (flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)) // big inventory icon, if we have it
-		icon_state = "coin_[cmineral]_[coinflip]_inv"
-	else // default or small icon
 		icon_state = "coin_[cmineral]_[coinflip]"
+	else // default or small icon
+		icon_state = "coin_[cmineral]_[coinflip]_world"

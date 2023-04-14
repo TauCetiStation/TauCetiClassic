@@ -592,8 +592,10 @@ var/global/const/INGEST = 2
 		qdel(R)
 	reagent_list.Cut()
 	reagent_list = null
-	if(my_atom && my_atom.reagents == src)
-		my_atom.reagents = null
+	if(my_atom)
+		if(my_atom.reagents == src)
+			my_atom.reagents = null
+		my_atom = null
 
 /datum/reagents/proc/create_chempuff(amount, multiplier=1, preserve_data=1, name_from_reagents = TRUE, icon_from_reagents = TRUE)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(my_atom))

@@ -116,6 +116,9 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/four
+	max_ammo = 4
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
 	desc = "Oh god, this shouldn't be here."
@@ -544,6 +547,13 @@
 	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
+	max_ammo = 6
+
+/obj/item/ammo_box/speedloader/c38m
+	name = "speedloader (.38)"
+	caliber = "38"
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6
 
 /obj/item/ammo_box/speedloader/c45rubber

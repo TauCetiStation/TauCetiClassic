@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(vote)
 
 		var/list/poll = list(
 			"name" = poll_inst.name,
-			"ref" = "\ref[poll_inst]", // i hate every line of that
+			"type" = "[poll_path]", // i hate every line of that
 			"adminOnly" = poll_inst.only_admin,
 			"canStart" = poll_inst.can_start(),
 			"forceBlocked" = !!poll_inst.get_force_blocking_reason(),
@@ -97,13 +97,21 @@ SUBSYSTEM_DEF(vote)
 				active_poll.vote(choice, usr.client)
 
 		if("callVote")
-			var/datum/poll/poll = locate(params["pollRef"])
-			if(istype(poll) && (check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start())))
-				start_vote(poll.type)
+			var/poll_path = text2path(params["pollRef"])
+			if(!(poll_path in possible_polls))
+				return TRUE
+
+			var/datum/poll/poll = possible_polls[poll_path]
+			if(check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start()))
+				start_vote(poll)
 
 		if("toggleAdminOnly")
-			var/datum/poll/poll = locate(params["pollRef"])
-			if(istype(poll) && check_rights(R_ADMIN))
+			var/poll_path = text2path(params["pollRef"])
+			if(!(poll_path in possible_polls))
+				return TRUE
+
+			var/datum/poll/poll = possible_polls[poll_path]
+			if(check_rights(R_ADMIN))
 				poll.only_admin = !poll.only_admin
 
 		if("cancelVote")
@@ -112,17 +120,12 @@ SUBSYSTEM_DEF(vote)
 				stop_vote()
 	return TRUE
 
-/datum/controller/subsystem/vote/proc/start_vote(newvote)
+/datum/controller/subsystem/vote/proc/start_vote(datum/poll/poll)
 	if(active_poll)
 		return FALSE
 
-	var/datum/poll/poll
-
-	if(ispath(newvote) && (newvote in possible_polls))
-		poll = possible_polls[newvote]
-
 	//can_start check is done before calling this so that admins can skip it
-	if(!poll)
+	if(!istype(poll))
 		return FALSE
 
 	if(!poll.start())
