@@ -40,6 +40,7 @@
 
 /obj/item/clothing/under/custom
 	name = "Custom uniform"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
