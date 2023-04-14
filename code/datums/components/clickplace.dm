@@ -129,7 +129,7 @@
 		return
 	if(!can_place(source, I, user))
 		return
-	if(istype(I, /obj/item/device/radio/electropack) || I == user.back)
+	if(istype(I, /obj/item/device/radio/electropack) && I == user.back)
 		to_chat(user, "<span class='notice'>You need help taking this off!</span>")
 		return
 
