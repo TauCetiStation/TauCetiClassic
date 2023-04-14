@@ -40,7 +40,6 @@
 
 /obj/item/clothing/under/custom
 	name = "Custom uniform"
-	body_parts_covered = 0
 
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
