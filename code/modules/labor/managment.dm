@@ -11,15 +11,24 @@
 /********** Labor managment computer**********/
 /obj/machinery/computer/labor
 	name = "Labor Management Computer"
+	desc = "Used to issue prisoners id cards and manage labor production priorities."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	state_broken_preset = "securityb"
 	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	req_access = list(access_security)
+	circuit = /obj/item/weapon/circuitboard/labor
 	required_skills = list(/datum/skill/police = SKILL_LEVEL_TRAINED)
-	var/obj/item/weapon/card/id/scan = null		//card that gives access to this console
-	var/obj/item/weapon/card/id/labor/modify = null	//the card we will change
+	var/obj/item/weapon/card/id/scan		//card that gives access to this console
+	var/obj/item/weapon/card/id/labor/modify	//the card we will change
+
+/obj/machinery/computer/labor/atom_init(mapload, obj/item/weapon/circuitboard/C)
+	. = ..()
+	if(!global.labor_rates.len)
+		for(var/T in subtypesof(/datum/labor))
+			var/datum/labor/L = new T()
+			global.labor_rates[L.nametag] = L
 
 /obj/machinery/computer/labor/attackby(obj/item/weapon/card/id/id_card, mob/user)
 	if(!istype(id_card))

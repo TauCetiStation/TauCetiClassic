@@ -190,6 +190,9 @@
 /obj/item/weapon/circuitboard/prisoner
 	name = "Circuit board (Prisoner Management)"
 	build_path = /obj/machinery/computer/prisoner
+/obj/item/weapon/circuitboard/labor
+	name = "Circuit board (Labor Management)"
+	build_path = /obj/machinery/computer/labor
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core

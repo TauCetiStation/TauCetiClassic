@@ -1,13 +1,12 @@
-import { Fragment } from "inferno";
 import { useBackend } from "../backend";
-import { Box, Button, LabeledList, Section, Tabs } from "../components";
+import { Button, LabeledList, Section } from "../components";
 import { Window } from "../layouts";
 
 export const LaborManagment = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
-      <Window.Content scrollable>
+    <Window width={400} height={300}>
+      <Window.Content>
         <Section title="ID Cards">
           <LabeledList>
             <LabeledList.Item label="Security ID">
@@ -41,14 +40,14 @@ export const LaborManagment = (props, context) => {
               <LabeledList.Item label="Labor sentence">
                 <Button
                   icon="pencil-alt"
-                  content={data.target_name ? data.labor_sentence : "-----"}
+                  content={data.target_name ? "" + data.labor_sentence : "-----"}
                   disabled={!data.authenticated}
                   onClick={() => act("set_sentence")} />
               </LabeledList.Item>
               <LabeledList.Item label="Prisoner's balance">
                 <Button
                   icon="pencil-alt"
-                  content={data.target_name ? data.labor_credits : "-----"}
+                  content={data.target_name ? "" + data.labor_credits : "-----"}
                   disabled={!data.authenticated}
                   onClick={() => act("set_credits")} />
               </LabeledList.Item>

@@ -1,3 +1,5 @@
+var/global/list/labor_rates = list()
+
 /datum/labor
 	var/product
 	var/nametag
