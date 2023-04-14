@@ -51,7 +51,7 @@
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/atom_init()
 	. = ..()
@@ -62,7 +62,7 @@
 	name = "police armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage and a custom paintjob in colors of OCD."
 	icon_state = "police_armor"
-	flags = null
+	flags = HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/police/fullbody
 	name = "police fullbody armor"
@@ -154,7 +154,7 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 10, bullet = 80, laser = 20, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
-	flags = null
+	flags = HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
 	. = ..()
