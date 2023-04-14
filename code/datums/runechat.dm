@@ -11,7 +11,7 @@
 /// Approximate height in pixels of an 'average' line, used for height decay
 #define RUNECHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define RUNECHAT_MESSAGE_WIDTH 96
+#define RUNECHAT_MESSAGE_WIDTH 100
 /// Max length of chat message in characters
 #define RUNECHAT_MESSAGE_MAX_LENGTH 110
 
