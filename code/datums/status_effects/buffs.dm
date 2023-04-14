@@ -36,7 +36,5 @@
 	return isreplicator(owner)
 
 /datum/status_effect/swarm_gift/on_remove()
-	owner.sight &= ~SEE_TURFS
-	owner.sight &= ~SEE_MOBS
-	owner.sight &= ~SEE_OBJS
+	owner.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 	return isreplicator(owner)
