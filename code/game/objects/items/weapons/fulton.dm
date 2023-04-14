@@ -17,12 +17,6 @@
 	if(!isturf(extraction_point) && !del_target)
 		to_chat(user, "<span class='notice'>Error... Extraction point not found.</span>")
 		return FALSE
-	if(isitem(AM))
-		for(var/objective in global.possible_lowrisk_items_to_steal)
-			if(global.possible_lowrisk_items_to_steal[objective] != AM.type)
-				continue
-			to_chat(user, "<span class='notice'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
-			return FALSE
 	if(ismob(AM))
 		extract_time = 100
 	if((AM.anchored && !istype(AM, /obj/mecha)) || !isturf(AM.loc))
@@ -161,6 +155,12 @@
 /obj/item/weapon/extraction_pack/dealer/try_use_fulton(atom/movable/target, mob/user)
 	if(!isgundealer(user))
 		return FALSE
+	if(isitem(target))
+		for(var/objective in global.possible_lowrisk_items_to_steal)
+			if(global.possible_lowrisk_items_to_steal[objective] != target.type)
+				continue
+			to_chat(user, "<span class='notice'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
+			return FALSE	
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
 	if(!..())
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
