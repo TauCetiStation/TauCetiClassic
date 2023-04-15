@@ -316,6 +316,7 @@
 "vZ" = (/obj/structure/cable/orange{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/space)
 "wj" = (/turf/simulated/floor{dir = 6; icon_state = "whitepurple"},/area/space)
 "wr" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor/plating,/area/space)
+"wv" = (/turf/simulated/floor/beach/water/waterpool,/area/space)
 "ww" = (/turf/simulated/floor/plating{icon_state = "platebot"},/area/space)
 "wA" = (/turf/simulated/floor{icon_state = "wood-broken3"},/area/space)
 "wB" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space)
@@ -791,8 +792,8 @@ bvepZohsIFuWWbLiNdycycycIzuqycAhpuycQSQOycuRuRwIwIWfWfLPLPwSwSygygYFYFDSDSyc
 nfqDrwUaUSFYubIrGkQjeNQjaAjuqwvyHlzwdYrkfKuRuRwIwIWfWfLPLPwSwSygygYFYFDSDSyc
 GxycdJaYLrPZOOAnMPiSQjlrRwZzbYSwqWiHecZckZHNHNVCVCpMpMigigERERBMBMiyiywNwNyc
 ggDhmasxbNhuMIJLQsQjkuQjntNveLTOByPJxVhEAoHNHNVCVCpMpMigigERERBMBMiyiywNwNyc
-cBZgyctQMdQQeFLRAnZNEnZoHRzjycMEjeycRawWycJebXWTwAoyqKOIPUfMfMycycHyHycbcbyc
-AhCnycXJHLVQebTBAniarKNkobaryclJncIOBSSnycJebXWTwAoyqKOIPUfMfMycycHyHycbcbyc
+cBZgyctQMdQQeFLRAnZNEnZoHRzjycMEjeycRawWycJebXWTwAoyqKOIPUfMfMwvwvHyHycbcbyc
+AhCnycXJHLVQebTBAniarKNkobaryclJncIOBSSnycJebXWTwAoyqKOIPUfMfMwvwvHyHycbcbyc
 nUEBRHCGkSXCYcmQlHjkiidELTsNTxGOJlzHMWmesvIGsXbuycokycHyTgYyvdugHyCvCvSrSryc
 BFUuDOuNVyDFzIzBpdgoycFUBiXFdqHGdTOPtwLrHPUNNdXosHycWHhDLrLrLrLrxZCvCvSrSryc
 uGDnYVdkiCPBbESazvUZKBNHmoadJYhhdlgjlWuuEyxzxzxzycRhycgYLrLrLrLrAxjgjgZPZPyc
