@@ -14,6 +14,9 @@
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	see_invisible = SEE_INVISIBLE_LIVING
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -29,6 +32,7 @@
 	animalistic = FALSE
 	has_head = TRUE
 	has_arm = TRUE
+	can_point = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
 	attack_sound = SOUNDIN_PUNCH_MEDIUM
@@ -109,7 +113,7 @@
 	attack_sound = SOUNDIN_PUNCH_VERYHEAVY
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "strong blood aura", 80, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
+	AddComponent(/datum/component/forcefield, "strong blood aura", 80, 5 SECONDS, 8 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 /mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P, def_zone)
@@ -146,7 +150,6 @@
 	melee_damage = 20
 	attacktext = "slash"
 	speed = -1
-	see_in_dark = 7
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
@@ -154,6 +157,11 @@
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift,
 		)
 
+/mob/living/simple_animal/construct/wraith/atom_init()
+	. = ..()
+	var/obj/effect/effect/forcefield/rune/R = new
+	AddComponent(/datum/component/forcefield, "blood aura", 20, 8 SECONDS, 8 SECONDS, R, TRUE, TRUE)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 /////////////////////////////Artificer/////////////////////////
 /mob/living/simple_animal/construct/builder
@@ -224,8 +232,6 @@
 	attacktext = "prodd"
 	speed = 0
 	environment_smash = 1
-	see_in_dark = 7
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH

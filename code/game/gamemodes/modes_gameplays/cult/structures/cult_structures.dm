@@ -235,6 +235,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 
 	return TRUE
 
+/obj/structure/mineral_door/cult/attack_animal(mob/user)
+	if(user.my_religion && user.a_intent != INTENT_HARM && !isSwitchingStates)
+		add_fingerprint(user)
+		SwitchState()
+		return
+	return ..()
+
 /obj/structure/mineral_door/cult/MechChecks(obj/mecha/user)
 	if(!..())
 		return FALSE
