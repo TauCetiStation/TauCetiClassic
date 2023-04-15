@@ -92,7 +92,11 @@
 	var/attempt_pin = 0
 	if(D)
 		if(D.security_level > 0)
+			var/time_for_pin = world.time
 			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
+			if(world.time - time_for_pin > 300)
+				to_chat(usr, "[bicon(src)]<span class='warning'>Время операции истекло!</span>")
+				return
 			if(isnull(attempt_pin))
 				to_chat(usr, "[bicon(src)]<span class='warning'>Неверный ПИН-код!</span>")
 				return
@@ -105,6 +109,8 @@
 		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/make_transaction(datum/money_account/Acc, amount)
+	if(!src || !Acc)
+		return
 	icon_state = "card-pay-idle"
 	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 	if(amount <= Acc.money)
