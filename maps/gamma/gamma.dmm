@@ -39320,7 +39320,7 @@
 	},
 /area/station/maintenance/eva)
 "lCi" = (
-/obj/structure/coatrack,
+/obj/structure/stool/bed/chair/electrotherapy,
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "lCn" = (

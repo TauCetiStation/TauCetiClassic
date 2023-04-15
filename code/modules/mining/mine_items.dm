@@ -708,6 +708,38 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
 	return TRUE
 
+/obj/item/weapon/gun/energy/laser/cutter/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
+			power_supply.give(1000)
+			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+	else if(istype(A, /obj/item/weapon/ore/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
+			power_supply.give(500)
+			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+	else if(istype(A, /obj/item/weapon/storage/bag/ore))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		var/obj/item/weapon/storage/bag/ore/O = A
+		for(var/obj/item/weapon/ore/phoron/P in O.contents)
+			if(power_supply.charge >= power_supply.maxcharge)
+				return
+			if (P.use_tool(O, user, 10, amount = 1, can_move = TRUE))
+				O.remove_from_storage(P)
+				power_supply.give(500)
+				to_chat(user, "<span class='notice'>You insert [P] in [src], recharging it.</span>")
+			else
+				return
+	else
+		return ..()
+
 /obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
 	emagged = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter/emagged)
