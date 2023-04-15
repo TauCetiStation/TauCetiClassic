@@ -161,6 +161,7 @@
 "ln" = (/turf/simulated/floor{dir = 8; icon_state = "medstairs_middle"},/area/space)
 "lq" = (/turf/simulated/floor{icon_state = "yellowfull"},/area/space)
 "ls" = (/turf/simulated/floor{dir = 9; icon_state = "warndark"},/area/space)
+"lA" = (/turf/simulated/floor/engine/cult/lava,/area/space)
 "lB" = (/turf/simulated/floor{dir = 8; icon_state = "darkblue"},/area/space)
 "lH" = (/turf/simulated/floor{dir = 5; icon_state = "darkpurple"},/area/space)
 "lJ" = (/obj/structure/reagent_dispensers/cleaner{pixel_y = 32},/obj/structure/reagent_dispensers/cleaner{pixel_x = -32},/obj/structure/reagent_dispensers/cleaner{pixel_x = 32},/obj/structure/reagent_dispensers/cleaner{pixel_y = -32},/turf/simulated/floor{icon_state = "white"},/area/space)
@@ -538,6 +539,7 @@
 "Jw" = (/turf/simulated/floor{icon_state = "whitered"},/area/space)
 "Jx" = (/turf/simulated/floor{icon_state = "redyellow"},/area/space)
 "Jz" = (/turf/simulated/floor{dir = 8; icon_state = "red"},/area/space)
+"JJ" = (/turf/simulated/floor/engine/cult,/area/space)
 "JK" = (/obj/machinery/firealarm{dir = 8; pixel_x = -22},/obj/machinery/firealarm{dir = 4; pixel_x = 22},/obj/machinery/firealarm{pixel_y = 22},/obj/machinery/firealarm{dir = 1; pixel_y = -22},/turf/simulated/floor{icon_state = "white"},/area/space)
 "JQ" = (/obj/structure/cable/blue{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating,/area/space)
 "JR" = (/turf/simulated/floor{dir = 1; icon_state = "medstairs_alone"},/area/space)
@@ -786,8 +788,8 @@ zBwMZHMCVFwMzBCezmizrBCezBCRMGaRMGiYqwOGwMOGJsBKZPwMZPiJYAwjwMwjItxmFKwMFKIl
 zBwMwMwMwMwMzBCeCeCeCeCezBoadUoavwoaqwugpmsfJsBKKKfwabiJYAReBPGfItxmypJvKIIl
 zBzBzBzBzBzBzBzBzBzBzBzBzBmDMGGSMGeLwMOVOVOVwMwMsYsYsYwMwMvzvzvzwMwMKfKfKfwM
 WkFcuMXarwwCpKodNjvIvIvIImIQvIaXKVvIuEquvIvIvIvIvIvIvIvIvIvIvIvIvIvIvIvIvIvI
-aPyWeGmiLfQFZjdlNjvIvIvINXMivIfSwKvInEWDvIZmZmspspRSRSSdSdvpvpxIxIvIvIvIvIvI
-UvbqNVlekXpjlsQRoukSdwkSiUhCwchIHTEuBACYLHZmZmspspRSRSSdSdvpvpxIxIvIvIvIvIvI
+aPyWeGmiLfQFZjdlNjvIvIvINXMivIfSwKvInEWDvIZmZmspspRSRSSdSdvpvpxIxIJJJJlAlAvI
+UvbqNVlekXpjlsQRoukSdwkSiUhCwchIHTEuBACYLHZmZmspspRSRSSdSdvpvpxIxIJJJJlAlAvI
 DWvIuQpbSjMzQJzprqAikSbGfgQtkuubJeXkFBKEDvYzYzuNuNYyYyafafxzxztrtrbxbxljljvI
 tHGFdDuZtuwIwJKPBIkSWLkSHKkRqhHpSlfFgIXNqAYzYzuNuNYyYyafafxzxztrtrbxbxljljvI
 aiKVvIopIufxzxbozpNcIMeGBfPLvIDzXtvINeOMvIHHLpClBCCtKSTHbrWXWXvIvIzBzBezezvI
