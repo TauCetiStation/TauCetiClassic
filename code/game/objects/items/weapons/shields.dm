@@ -397,3 +397,24 @@
 		loc:update_icons()
 	..()
 */
+
+/proc/check_shield_dir(mob/shield_bearer, attack_dir)
+	if(istype(shield_bearer.l_hand, /obj/item/weapon/shield))
+		if(shield_bearer.dir == NORTH && (attack_dir in list(SOUTH, EAST)))
+			return TRUE
+		else if(shield_bearer.dir == SOUTH && (attack_dir in list(NORTH, WEST)))
+			return TRUE
+		else if(shield_bearer.dir == EAST && (attack_dir in list(WEST, SOUTH)))
+			return TRUE
+		else if(shield_bearer.dir == WEST && (attack_dir in list(EAST, NORTH)))
+			return TRUE
+	if(istype(shield_bearer.r_hand, /obj/item/weapon/shield))
+		if(shield_bearer.dir == NORTH && (attack_dir in list(SOUTH, WEST)))
+			return TRUE
+		else if(shield_bearer.dir == SOUTH && (attack_dir in list(NORTH, EAST)))
+			return TRUE
+		else if(shield_bearer.dir == EAST && (attack_dir in list(WEST, NORTH)))
+			return TRUE
+		else if(shield_bearer.dir == WEST && (attack_dir in list(EAST, SOUTH)))
+			return TRUE
+	return FALSE

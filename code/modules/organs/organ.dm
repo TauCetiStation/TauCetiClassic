@@ -26,6 +26,10 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
+/obj/item/organ/Destroy()
+	owner = null
+	return ..()
+
 /obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	loc = null
 	owner = H
@@ -200,7 +204,7 @@
 	if(!lying)
 		if(species && !species.flags[NO_PAIN])
 			emote("scream")
-		emote("collapse")
+		Weaken(2)
 
 	if(iszombie(src)) // workaroud for zombie attack without stance
 		if(!crawling)

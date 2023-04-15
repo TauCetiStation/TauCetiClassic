@@ -168,8 +168,8 @@
 		return
 
 	if(href_list["SelectedJob"])
-		if(!enter_allowed)
-			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -211,8 +211,8 @@
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
-	if(!enter_allowed)
-		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
@@ -432,6 +432,9 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
+	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
+	var/old_base_metabolism = new_character.get_metabolism_factor()
+	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

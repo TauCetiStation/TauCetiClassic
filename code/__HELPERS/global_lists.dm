@@ -115,7 +115,7 @@
 
 	// Create list for rituals to determine the value of things
 	var/list/money_type_by_cash_am = list()
-	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash) - /obj/item/weapon/spacecash/ewallet
+	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash)
 	for(var/money_type in type_cash)
 		var/obj/item/weapon/spacecash/cash = money_type
 		var/cash_am = "[initial(cash.worth)]"

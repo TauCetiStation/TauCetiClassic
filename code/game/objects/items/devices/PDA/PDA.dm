@@ -679,8 +679,7 @@
 			if(!Lot)
 				online_shop_lots_latest_frontend[i] = null
 			else
-				var/datum/money_account/Acc = get_account(Lot.account)
-				online_shop_lots_latest_frontend[i] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+				online_shop_lots_latest_frontend[i] = Lot.to_list()
 		data["latest_lots"] = online_shop_lots_latest_frontend
 
 		shop_lots = list()
@@ -692,9 +691,8 @@
 				var/list/Lots = global.online_shop_lots_hashed[index]
 				for(var/datum/shop_lot/Lot in Lots)
 					if(Lot && Lot.category == category && !Lot.sold)
-						var/datum/money_account/Acc = get_account(Lot.account)
 						shop_lots.len++
-						shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+						shop_lots[shop_lots.len] = Lot.to_list()
 						break
 
 		shop_lots_frontend = list()
@@ -732,6 +730,14 @@
 				var/list/Item = shopping_cart[index]
 				shopping_cart_frontend.len++
 				shopping_cart_frontend[shopping_cart_frontend.len] = Item
+				shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "Unknown"
+				if(Item["lot_item_ref"])
+					var/atom/A = locate(Item["lot_item_ref"])
+					var/area/A_area = get_area(A)
+					if(A && A_area)
+						var/dist_str = "([get_dist(A, src)]m)"
+
+						shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "[A_area.name][dist_str]"
 		data["shopping_cart"] = shopping_cart_frontend
 
 		data["shopping_cart_amount"] = shopping_cart_frontend.len
@@ -1136,14 +1142,18 @@
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(!order_item(NewLot, T))
+									if(order_onlineshop_item(owner, owner_account, NewLot, T))
+										shopping_cart["[NewLot.number]"] = Lot.to_list()
+									else
 										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
-									return
+										return
 						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
+
+					else if(order_onlineshop_item(owner, owner_account, Lot, T))
+						shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
-						if(!order_item(Lot, T))
-							to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
 					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
 
@@ -1155,25 +1165,13 @@
 				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
-			var/id = href_list["delivered_item"]
-			var/postpayment = shopping_cart[id]["postpayment"]
-			var/datum/shop_lot/Lot = global.online_shop_lots[id]
-			var/datum/money_account/MA = get_account(owner_account)
-
-			if(!Lot || !MA || postpayment > MA.money)
-				to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+			var/lot_id = href_list["delivered_item"]
+			if(!shopping_cart["[lot_id]"])
+				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[lot_id].</span>")
 				return
-
-			shopping_cart -= id
-			Lot.delivered = TRUE
-
-			if(global.online_shop_discount)
-				charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
-				charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
-
-			charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
-			charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
-			mode = 82
+			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, shopping_cart["[lot_id]"]["postpayment"]))
+				shopping_cart -= "[lot_id]"
+				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1689,7 +1687,26 @@
 				to_chat(user, data_message)
 
 /obj/item/device/pda/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
+
+	if(istype(target, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/package = target
+		if(!shopping_cart["[package.lot_number]"])
+			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
+			return
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
+			shopping_cart -= "[package.lot_number]"
+			return
+
+	if(istype(target, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/package = target
+		if(!shopping_cart["[package.lot_number]"])
+			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
+			return
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
+			return
+
 	switch(scanmode)
 
 		if(3)
@@ -1836,56 +1853,27 @@
 				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
+/obj/item/device/pda/proc/transaction_stock_inform(target, source, department, amount)
+	if(!can_use())
+		return
+	if(message_silent)
+		return
+	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
+	var/mob/living/L = null
+	if(loc && isliving(loc))
+		L = loc
+	if(!L)
+		return
+
+	if(amount > 0)
+		to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount] of [department] stock from [source] was transferred to your account.</span>")
+	else
+		to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount] of [department] stock to [target] account number.</span>")
+	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
-
-/obj/item/device/pda/proc/order_item(datum/shop_lot/Lot, destination)
-	var/datum/money_account/MA = get_account(owner_account)
-	if(!MA || !Lot)
-		return FALSE
-
-	var/discount_price = Lot.get_discounted_price()
-	var/delivery_cost = Lot.get_delivery_cost()
-
-	if(delivery_cost > MA.money)
-		return FALSE
-	Lot.sold = TRUE
-	for(var/i=1, i<=3, i++)
-		if(global.online_shop_lots_latest[i] == Lot)
-			global.online_shop_lots_latest[i] = null
-			break
-	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", discount_price)
-
-	global.shop_categories[Lot.category]--
-
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
-	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
-
-	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
-		if(istype(Console, /obj/machinery/computer/cargo/request))
-			continue
-		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
-
-		P.name = "Заказ предмета №[Lot.number] из магазина"
-		P.info += "Посылка номер №[Lot.number]<br>"
-		P.info += "Наименование: [Lot.name]<br>"
-		P.info += "Цена: [Lot.price]$<br>"
-		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
-		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
-		P.info += "Комментарий: [destination]<br>"
-		P.info += "<hr>"
-		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
-
-		var/obj/item/weapon/pen/Pen = new(src)
-
-		P.parsepencode(P.info, Pen)
-		P.updateinfolinks()
-		qdel(Pen)
-
-		P.update_icon()
-	return TRUE
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())

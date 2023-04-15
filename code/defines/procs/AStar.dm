@@ -180,7 +180,7 @@
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
-	for(var/obj/structure/window/W in src)
+	for(var/obj/structure/window/thin/W in src)
 		if(!W.CanAStarPass(ID, adir))
 			return TRUE
 

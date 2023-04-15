@@ -15,7 +15,7 @@ import { Window } from '../layouts';
 
 type Poll = {
   name: string;
-  ref: string;
+  type: string;
   canStart: BooleanLike;
   forceBlocked: BooleanLike;
   adminOnly: BooleanLike;
@@ -54,9 +54,9 @@ export const Vote = (_, context) => {
 
   const height = Math.min(
     730,
-    135
+    90
     + (!currentPoll || isAdmin ? 45 + 26 * polls.filter(poll => (!poll.adminOnly || !!isAdmin)).length : 0)
-    + (currentPoll ? 100 + 22 * currentPoll.choices.length : 23)
+    + (currentPoll ? 135 + 22 * currentPoll.choices.length : 23)
   );
 
   return (
@@ -65,8 +65,8 @@ export const Vote = (_, context) => {
         <VoteInfoModal />
         <Stack fill vertical>
           <Choices />
-          {(!currentPoll || isAdmin) && <ListPolls />}
-          <Timer />
+          {(!currentPoll || !!isAdmin) && <ListPolls />}
+          {!!currentPoll && <Timer />}
         </Stack>
       </Window.Content>
     </Window>
@@ -235,7 +235,7 @@ const ListPolls = (_, context) => {
                         textAlign="center"
                         onClick={() =>
                           act('toggleAdminOnly', {
-                            pollRef: poll.ref,
+                            pollRef: poll.type,
                           })}>
                         {poll.adminOnly ? 'Только админы' : 'Разрешено всем'}
                       </Button>
@@ -257,7 +257,7 @@ const ListPolls = (_, context) => {
                       content={poll.name}
                       onClick={() =>
                         act('callVote', {
-                          pollRef: poll.ref,
+                          pollRef: poll.type,
                         })} />
                   </Stack.Item>
                 </Stack>
@@ -283,7 +283,7 @@ const Timer = (_, context) => {
           <Box fontSize={1.5}>
             Осталось времени: {currentPoll?.timeRemaining || 0}с
           </Box>
-          {isAdmin && currentPoll && (
+          {!!isAdmin && !!currentPoll && (
             <Button
               color="red"
               disabled={!isAdmin}

@@ -343,3 +343,20 @@
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
 	H.regenerate_icons()
+
+
+/datum/quality/quirkieish/very_special
+	name = "Very Special"
+	desc = "Ты ОЧЕНЬ особенный."
+	requirement = "Да кто его знает!"
+
+/datum/quality/quirkieish/very_special/add_effect(mob/living/carbon/human/H, latespawn)
+	var/list/possible_qualities = subtypesof(/datum/quality) - /datum/quality/quirkieish/very_special
+
+	for(var/i in 1 to 3)
+		var/quality_type = pick(possible_qualities)
+		possible_qualities -= quality_type
+
+		var/datum/quality/quality = SSqualities.qualities_by_type[quality_type]
+		if(quality.satisfies_requirements(H, latespawn))
+			quality.add_effect(H, latespawn)

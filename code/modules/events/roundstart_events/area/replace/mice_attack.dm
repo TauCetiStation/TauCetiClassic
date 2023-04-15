@@ -3,7 +3,7 @@
 	replace_types = list(
 		/obj/item/weapon/reagent_containers/food = null,
 		/obj/machinery/door/window = /obj/item/weapon/shard,
-		/obj/structure/window/reinforced = /obj/item/weapon/shard,
+		/obj/structure/window/thin = /obj/item/weapon/shard,
 	)
 
 /datum/event/feature/area/replace/mice_attack/start()

@@ -663,7 +663,7 @@
 /datum/religion_rites/instant/communicate
 	name = "Общение"
 	desc = "Отправляет телепатическое сообщение всем членам религии!"
-	ritual_length = (5 SECONDS)
+	ritual_length = (1 SECONDS)
 	invoke_msg = "Услышь меня!!!"
 	favor_cost = 50
 
