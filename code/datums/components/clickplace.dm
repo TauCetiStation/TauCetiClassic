@@ -68,6 +68,8 @@
 		return FALSE
 	if(I.swiping)
 		return FALSE
+	if(I.anchored)
+		return FALSE
 	return TRUE
 
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
