@@ -8648,6 +8648,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -26394,6 +26397,7 @@
 /area/station/cargo/office)
 "aWy" = (
 /obj/structure/table/reinforced,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -36353,7 +36357,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/clothing/head/cakehat,
 /obj/item/device/cardpay{
 	dir = 4;
 	pixel_y = 10
@@ -42136,6 +42139,11 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/folder/white,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bzo" = (
@@ -55992,6 +56000,11 @@
 	},
 /obj/item/weapon/bell,
 /obj/machinery/door/firedoor,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/break_room)
 "cfn" = (
@@ -63226,9 +63239,17 @@
 	dir = 1
 	},
 /obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = -4
+	pixel_x = -10
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/teapot,
+/obj/item/weapon/reagent_containers/glass/beaker/teapot{
+	pixel_x = -5
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = 10
+	},
+/obj/item/weapon/pen{
+	pixel_x = 10
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -73476,11 +73497,10 @@
 	dir = 1;
 	name = "Medbay Reception"
 	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -5
-	},
-/obj/item/weapon/pen{
-	pixel_x = -5
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -81784,6 +81804,9 @@
 "ujL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced/stall,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -82422,9 +82445,6 @@
 /obj/item/device/cardpay{
 	dir = 4;
 	pixel_y = 10
-	},
-/obj/item/weapon/storage/fancy/donut_box{
-	pixel_y=8
 	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
