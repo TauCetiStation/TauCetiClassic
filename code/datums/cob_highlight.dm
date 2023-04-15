@@ -72,7 +72,7 @@
 	else if(!is_type_in_list(here, from_recipe.floor_path))
 		. = FALSE
 		to_chat(M, "<span class='warning'>\The [from_recipe.title] must be constructed on the floor!</span>")
-	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.
+	else if(here.contents.len > 20) //we don't want for() thru tons of atoms.
 		. = FALSE
 	else if(!origin.CanPass(null, here, 0))
 		. = FALSE

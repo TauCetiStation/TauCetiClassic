@@ -37739,6 +37739,7 @@
 	c_tag = "Cargo Bay West";
 	dir = 4
 	},
+/obj/machinery/packer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -47829,6 +47830,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/item/weapon/wooden_box/potato,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -67847,6 +67849,7 @@
 	},
 /area/station/engineering/drone_fabrication)
 "dra" = (
+/obj/item/weapon/flora/pottedplant/minitree,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -70666,7 +70669,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "gNe" = (
-/obj/item/weapon/flora/pottedplant/minitree,
+/obj/machinery/packer,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;

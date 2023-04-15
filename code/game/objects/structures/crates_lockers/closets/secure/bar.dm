@@ -9,8 +9,7 @@
 	icon_off = "cabinetdetective_broken"
 
 /obj/structure/closet/secure_closet/bar/PopulateContents()
-	for (var/i in 1 to 10)
-		new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
+	new /obj/item/weapon/wooden_box/beer(src)
 
 /obj/structure/closet/secure_closet/bar/update_icon()
 	if(broken)

@@ -1581,8 +1581,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/snacks/tofu,
 					/obj/item/weapon/reagent_containers/food/snacks/meat,
 					/obj/item/weapon/reagent_containers/food/snacks/meat,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
+					/obj/item/weapon/wooden_box/banana,)
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Food crate"
 	group = "Supply"
