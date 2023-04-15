@@ -655,6 +655,7 @@
 "SK" = (/turf/simulated/floor{dir = 9; icon_state = "greenyellow"},/area/space)
 "SQ" = (/obj/structure/cable/orange{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/space)
 "SR" = (/turf/simulated/floor{dir = 6; icon_state = "wood2_stairs2"},/area/space)
+"SS" = (/turf/simulated/floor/grass,/area/space)
 "SX" = (/turf/simulated/floor{dir = 10; icon_state = "wood2_stairs2"},/area/space)
 "SZ" = (/turf/simulated/floor/engine,/area/space)
 "Ta" = (/turf/simulated/floor{dir = 1; icon_state = "darkredcorners"},/area/space)
@@ -791,8 +792,8 @@ fjuSWJMCIrjGIaofHKyOGFBSUDMNJerzSfeFmyfIUMEmEmqeqexBxBZiZiseseMDMDLMLMfbfbuS
 sQFGQKDhbCElijFbihGFOrGFCAUibVkkkfwiFJWSiEEmEmqeqexBxBZiZiseseMDMDLMLMfbfbuS
 eKqCuSlBxVTnvUUvofaKBwImODbzuSCgZmuSxKqjuSFXCKYBvgLOIdmnxmZhZhuSuSStStwDwDuS
 CwTjuSMcGIUJYolDofKdgxqwrnPguSiQJxyCoRJruSFXCKYBvgLOIdmnxmZhZhuSuSStStwDwDuS
-UqEYOAvPqJtTDQXfzrHkWYZvsRJcCEerNIiLQyTQcpYVwAxPuSKJuSStHfACJajxStSZSZuSuSuS
-KIqMmfaUpmLseAQiVffhuSYLwXGEcIMFfpeeBMIrHRJTLHBcYCuSOfMKIrIrIrIrXjSZSZuSuSuS
+UqEYOAvPqJtTDQXfzrHkWYZvsRJcCEerNIiLQyTQcpYVwAxPuSKJuSStHfACJajxStSZSZSSSSuS
+KIqMmfaUpmLseAQiVffhuSYLwXGEcIMFfpeeBMIrHRJTLHBcYCuSOfMKIrIrIrIrXjSZSZSSSSuS
 unwbtExejUsFBnoBVpfnkAMQTvyFlYQOGpxJHallHXFBFBFBuSGCuShoIrIrIrIrWjOBOBABABuS
 hyRzENoSdomooljwofMjPnuSUYjMrXsrdcoficRVmXuSbSImqwxEuSZoIrIrIrIrswOBOBABABuS
 FlJIFkrxQsIrWkSvofaQWhWAYyrEIrmNTaofbYtQuSzduSVCSnuSBXUnIrIrIrIrdltataGnGnuS
