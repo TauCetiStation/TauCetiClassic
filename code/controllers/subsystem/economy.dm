@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(economy)
 
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.owner_salary && !D.suspended)
-			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
+			charge_to_account(D.account_number, D.account_number, D.owner_salary > 0 ? "Заработная плата" : "Аренда отсека", "CentComm", D.owner_salary)
 
 	monitor_cargo_shop()
 
@@ -114,11 +114,11 @@ SUBSYSTEM_DEF(economy)
 
 		if(total_dividend_payout > 0.0)
 			D.total_dividend_payouts += total_dividend_payout
-			charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
+			charge_to_account(D.account_number, D.account_number, "Выплата дивидендов", "StockBond", total_dividend_payout)
 
 	for(var/department in departmental_payouts)
 		var/datum/money_account/DA = global.department_accounts[department]
-		charge_to_account(DA.account_number, DA.account_number, "Dividend payout to investors", "StockBond", -departmental_payouts[department])
+		charge_to_account(DA.account_number, DA.account_number, "Выплата дивидендов инвесторам", "StockBond", -departmental_payouts[department])
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
