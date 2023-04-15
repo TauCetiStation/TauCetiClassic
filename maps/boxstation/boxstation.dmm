@@ -82421,7 +82421,10 @@
 /obj/item/weapon/bell,
 /obj/item/device/cardpay{
 	dir = 4;
-	pixel_y = 10/obj/structure/table/reinforced/stall,/obj/item/weapon/storage/fancy/donut_box{pixel_y=8
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y=8
 	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
