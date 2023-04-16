@@ -251,7 +251,7 @@
 
 /obj/item/device/tagger/Destroy()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
-	..()
+	return ..()
 
 /obj/item/device/tagger/proc/on_round_start(datum/source)
 	SIGNAL_HANDLER
