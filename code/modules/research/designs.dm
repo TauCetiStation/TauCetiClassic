@@ -1361,7 +1361,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list("Machine")
 
-//obj/item/weapon/circuitboard/chem_dispenser
 /datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
 	desc = "The circuit board for a Chem Master 2999."
