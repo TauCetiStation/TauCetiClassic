@@ -402,7 +402,7 @@
 
 	if(user.get_inactive_hand() == target || user.get_active_hand() == target)
 		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
-		if(!(user.get_active_hand() == src || user.get_inactive_hand() == src) || !(user.get_inactive_hand() == target || user.get_active_hand() == target))
+		if(user.get_active_hand() != src && user.get_active_hand() != target && user.get_inactive_hand() != src && user.get_inactive_hand() != target)
 			return
 		if(user.incapacitated())
 			return
