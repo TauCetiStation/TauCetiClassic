@@ -45,8 +45,7 @@
 	if(!.)
 		return
 
-	breath_fractol()
-	breath_phoron()
+	handle_breath()
 	handle_status_updates()
 
 	if(ckey)
@@ -119,37 +118,22 @@
 	walk(src, 0)
 	process_harvesting()
 
-/mob/living/simple_animal/hostile/replicator/proc/breath_fractol()
+/mob/living/simple_animal/hostile/replicator/proc/handle_breath()
 	if(last_disintegration + 1 MINUTE > world.time)
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
-	if(!environment)
-		can_starve = TRUE
-		return
-
-	if(environment.get_gas("fractol") < 1.0)
-		can_starve = TRUE
-		return
-
-	environment.adjust_gas("fractol", -1.0)
-	can_starve = FALSE
-
-	last_disintegration = world.time
-
-/mob/living/simple_animal/hostile/replicator/proc/breath_phoron()
-	var/datum/gas_mixture/environment = loc.return_air()
-	if(!environment)
-		breath_phoron = FALSE
-		return
-
-	if(environment.get_gas("phoron") > 1.0)
-		breath_phoron = TRUE
-		environment.adjust_gas("phoron", -1.0)
-		return
-
+	can_starve = TRUE
 	breath_phoron = FALSE
-	return
+
+	if(environment && environment.get_gas("fractol") >= 1.0)
+		environment.adjust_gas("fractol", -1.0)
+		can_starve = FALSE
+		last_disintegration = world.time
+
+	if(environment && environment.get_gas("phoron") >= 1.0)
+		environment.adjust_gas("phoron", -1.0)
+		breath_phoron = TRUE
 
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
 	var/color_to_flash = null
