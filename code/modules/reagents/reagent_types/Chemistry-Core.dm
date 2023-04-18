@@ -423,12 +423,13 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
+	custom_metabolism = 0.5
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += 4 * REM
+	M.nutrition += 1
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M)
 	..()
@@ -445,7 +446,7 @@
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(2 * REM,IRRADIATE, 0)
+	irradiate_one_mob(M, 2 * REM)
 	// radium may increase your chances to cure a disease
 	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
@@ -479,6 +480,13 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "metal"
 
+/datum/reagent/iron/on_skrell_digest(mob/living/M)
+	if(prob(15))
+		M.visible_message("<span class='warning'>You feel pain inside you body.</span>")
+	M.adjustToxLoss(1)
+	M.adjustHalLoss(1)
+	return FALSE
+
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"
@@ -509,7 +517,7 @@
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(1, IRRADIATE, 0)
+	irradiate_one_mob(M, 1)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()

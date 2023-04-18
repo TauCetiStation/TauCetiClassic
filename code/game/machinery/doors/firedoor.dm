@@ -6,8 +6,8 @@
 	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
 	density = FALSE
-	layer = FIREDOOR_LAYER
-	base_layer = FIREDOOR_LAYER
+	layer = SAFEDOOR_LAYER
+	base_layer = SAFEDOOR_LAYER
 	glass = 0
 	door_open_sound  = 'sound/machines/firedoor_open.ogg'
 	door_close_sound = 'sound/machines/firedoor_close.ogg'
@@ -278,7 +278,11 @@
 
 /obj/machinery/door/firedoor/do_close()
 	..()
-	layer = base_layer + FIREDOOR_CLOSED_MOD
+	if(locate(/obj/structure/window/fulltile) in loc)
+		alpha = 45
+		layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
+	else
+		layer = base_layer + SAFEDOOR_CLOSED_MOD_BEFORE_DOOR
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
@@ -289,6 +293,7 @@
 
 /obj/machinery/door/firedoor/do_open()
 	..()
+	alpha = initial(alpha)
 	layer = base_layer
 	if(hatch_open)
 		hatch_open = FALSE

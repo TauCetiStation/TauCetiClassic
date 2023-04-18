@@ -10,6 +10,9 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
+
+	var/subname = null // subname for vendor's circuit name
+
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
@@ -51,12 +54,14 @@
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
-	var/obj/item/weapon/spacecash/ewallet/ewallet
+	var/obj/item/weapon/ewallet/ewallet
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
+	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
-/obj/machinery/vending/atom_init(mapload)
+
+/obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -72,9 +77,9 @@
 
 	build_inventory(products)
 	 //Add hidden inventory
-	build_inventory(contraband, mapload, hidden = 1)
-	build_inventory(premium, mapload, req_coin = 1)
-	build_inventory(syndie, mapload, req_emag = 1)
+	build_inventory(contraband, hidden = 1)
+	build_inventory(premium, req_coin = 1)
+	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
 
@@ -103,16 +108,9 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
-			var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-			var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
-
-			var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
-
-			amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
 
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -239,7 +237,7 @@
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
-	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
+	else if (istype(W, /obj/item/weapon/ewallet))
 		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
@@ -303,7 +301,6 @@
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							D.adjust_money(-transaction_amount)
 							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
 							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
@@ -375,7 +372,7 @@
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
 
 	if (ewallet)
-		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
+		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.get_money() : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
@@ -446,8 +443,8 @@
 			vend(R, usr)
 		else
 			if (ewallet)
-				if (R.price <= ewallet.worth)
-					ewallet.worth -= R.price
+				if (R.price <= ewallet.get_money())
+					ewallet.remove_money(R.price)
 					vend(R, usr)
 				else
 					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
@@ -566,25 +563,32 @@
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	//Dropping actual items
-	var/max_drop = rand(1, 3)
-	for(var/i = 1, i < max_drop, i++)
-		var/datum/data/vending_product/R = pick(src.product_records)
-		var/dump_path = R.product_path
-		if(!R.amount)
-			continue
-		new dump_path(src.loc)
-		R.amount--
-
-	//Dropping remaining items in a pack
-	var/refilling = 0
-	for(var/datum/data/vending_product/R in src.product_records)
-		while(R.amount > 0)
-			refilling++
+	if(refill_canister)
+		//Dropping actual items
+		var/max_drop = rand(1, 3)
+		for(var/i = 1, i < max_drop, i++)
+			var/datum/data/vending_product/R = pick(src.product_records)
+			var/dump_path = R.product_path
+			if(!R.amount)
+				continue
+			new dump_path(src.loc)
 			R.amount--
 
-	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
-	Refill.charges = refilling
+		//Dropping remaining items in a pack
+		var/refilling = 0
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				refilling++
+				R.amount--
+
+		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+		Refill.charges = refilling
+	else //If no canister - drop everything
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				var/dump_path = R.product_path
+				new dump_path(src.loc)
+				R.amount--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"

@@ -14,6 +14,8 @@
 
 	handle_combat()
 
+	handle_nutrition()
+
 	if(client)
 		handle_regular_hud_updates()
 
@@ -156,3 +158,6 @@
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
+
+/mob/living/proc/handle_nutrition()
+	return

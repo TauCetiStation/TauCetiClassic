@@ -1,0 +1,6775 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/turf/simulated/floor/beach/sand,
+/area/space)
+"ad" = (
+/turf/simulated/floor{
+	icon_state = "darkbrown"
+	},
+/area/space)
+"am" = (
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/space)
+"ar" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkbrowncorners"
+	},
+/area/space)
+"ay" = (
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"aA" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "orange"
+	},
+/area/space)
+"aG" = (
+/turf/simulated/floor{
+	icon_state = "Stairs2_wide"
+	},
+/area/space)
+"aL" = (
+/turf/simulated/floor{
+	icon_state = "bluechecker"
+	},
+/area/space)
+"aM" = (
+/obj/structure/sign/warning{
+	name = "БЕЗ ВОЗДУХА"
+	},
+/turf/environment/space,
+/area/space)
+"aN" = (
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"aO" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/space)
+"aS" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"aU" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/space)
+"aW" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"aY" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"bd" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"be" = (
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space)
+"bo" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "red"
+	},
+/area/space)
+"bu" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "vault"
+	},
+/area/space)
+"bv" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warningcorner"
+	},
+/area/space)
+"bE" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"bI" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkbluecorners"
+	},
+/area/space)
+"bN" = (
+/turf/simulated/floor{
+	icon_state = "warnwhite"
+	},
+/area/space)
+"bO" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"bX" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken"
+	},
+/area/space)
+"bY" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "orange"
+	},
+/area/space)
+"ca" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteredcorner"
+	},
+/area/space)
+"cb" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"cf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ci" = (
+/obj/structure/cable/cyan{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"cn" = (
+/turf/simulated/floor/plating/airless{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/space)
+"cx" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/space)
+"cB" = (
+/turf/simulated/floor{
+	icon_state = "greencorner"
+	},
+/area/space)
+"cC" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "arrival"
+	},
+/area/space)
+"cJ" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"cL" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"cM" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkblue"
+	},
+/area/space)
+"cR" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "escape"
+	},
+/area/space)
+"cV" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "escape"
+	},
+/area/space)
+"cZ" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"dd" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "Stairs_wide"
+	},
+/area/space)
+"di" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/space)
+"dk" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"dl" = (
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/space)
+"do" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "caution"
+	},
+/area/space)
+"dq" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"dE" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/space)
+"dJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
+/area/space)
+"dL" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warningcorner"
+	},
+/area/space)
+"dM" = (
+/turf/simulated/floor{
+	icon_state = "greenyellowfull"
+	},
+/area/space)
+"dS" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkstairs_wide"
+	},
+/area/space)
+"dT" = (
+/turf/simulated/floor/goonplaque,
+/area/space)
+"dV" = (
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/space)
+"dY" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redblue"
+	},
+/area/space)
+"eb" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkgreencorners"
+	},
+/area/space)
+"ec" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redblue"
+	},
+/area/space)
+"ee" = (
+/turf/simulated/floor{
+	icon_state = "loadingareadirty1"
+	},
+/area/space)
+"eh" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"ei" = (
+/turf/simulated/floor/plating{
+	dir = 9;
+	icon_state = "warnplate"
+	},
+/area/space)
+"em" = (
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space)
+"en" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ep" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warningcorner"
+	},
+/area/space)
+"ev" = (
+/turf/simulated/floor{
+	icon_state = "darkstairs_alone"
+	},
+/area/space)
+"ew" = (
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space)
+"eB" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "loadingareadirty1"
+	},
+/area/space)
+"eF" = (
+/turf/simulated/floor{
+	icon_state = "darkgreencorners"
+	},
+/area/space)
+"eH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "orangecorner"
+	},
+/area/space)
+"eI" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redgreen"
+	},
+/area/space)
+"eL" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "orange"
+	},
+/area/space)
+"eM" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redyellow"
+	},
+/area/space)
+"eN" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "floorgrimecaution"
+	},
+/area/space)
+"eP" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redyellow"
+	},
+/area/space)
+"eU" = (
+/turf/simulated/floor/light{
+	icon_state = "light_on-b"
+	},
+/area/space)
+"eV" = (
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"fb" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "stairs_middle"
+	},
+/area/space)
+"fg" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "escape"
+	},
+/area/space)
+"fk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/space)
+"fm" = (
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space)
+"fu" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "blue"
+	},
+/area/space)
+"fG" = (
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/space)
+"fK" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redblue"
+	},
+/area/space)
+"fM" = (
+/turf/simulated/floor{
+	icon_state = "wooden-3"
+	},
+/area/space)
+"fT" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitebluecorner"
+	},
+/area/space)
+"gg" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "warning"
+	},
+/area/space)
+"gh" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteyellowcorner"
+	},
+/area/space)
+"gj" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "black"
+	},
+/area/space)
+"go" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/space)
+"gv" = (
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = 32
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = -32
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = 32
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"gy" = (
+/turf/simulated/floor{
+	icon_state = "chapel"
+	},
+/area/space)
+"gz" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "caution"
+	},
+/area/space)
+"gF" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/space)
+"gG" = (
+/turf/simulated/floor/plating/airless{
+	dir = 10;
+	icon_state = "warnplate"
+	},
+/area/space)
+"gN" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "escape"
+	},
+/area/space)
+"gO" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkblue"
+	},
+/area/space)
+"gT" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redcorner"
+	},
+/area/space)
+"gW" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"gY" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "medstairs_wide"
+	},
+/area/space)
+"hb" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplefull"
+	},
+/area/space)
+"hd" = (
+/obj/structure/cable/cyan,
+/turf/simulated/floor/plating,
+/area/space)
+"hh" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "black"
+	},
+/area/space)
+"hn" = (
+/obj/structure/cable/pink{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"hq" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteredcorner"
+	},
+/area/space)
+"hs" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warnwhitecorner"
+	},
+/area/space)
+"ht" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "Stairs_alone"
+	},
+/area/space)
+"hu" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"hD" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "medstairs_alone"
+	},
+/area/space)
+"hE" = (
+/turf/simulated/floor{
+	icon_state = "redblue"
+	},
+/area/space)
+"hI" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitered"
+	},
+/area/space)
+"hR" = (
+/turf/simulated/floor{
+	icon_state = "redgreenfull"
+	},
+/area/space)
+"hT" = (
+/turf/simulated/floor{
+	icon_state = "darkyellow"
+	},
+/area/space)
+"ia" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "browncorner"
+	},
+/area/space)
+"ib" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"ig" = (
+/turf/simulated/floor/carpet/black,
+/area/space)
+"ii" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/space)
+"ip" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"is" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"iy" = (
+/turf/simulated/wall/r_wall,
+/area/space)
+"iC" = (
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"iH" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "greenblue"
+	},
+/area/space)
+"iL" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "medstairs_middle"
+	},
+/area/space)
+"iP" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "bluered"
+	},
+/area/space)
+"iS" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "floorgrimecaution"
+	},
+/area/space)
+"iT" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "bluered"
+	},
+/area/space)
+"iW" = (
+/obj/structure/cable/cyan{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"jd" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"je" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blackcorner"
+	},
+/area/space)
+"jg" = (
+/turf/simulated/floor{
+	icon_state = "rockvault"
+	},
+/area/space)
+"jj" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkstairs_middle"
+	},
+/area/space)
+"jk" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/space)
+"jp" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitered"
+	},
+/area/space)
+"jq" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/turf/simulated/floor/plating,
+/area/space)
+"js" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitepurplecorner"
+	},
+/area/space)
+"ju" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "orange"
+	},
+/area/space)
+"jw" = (
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"jy" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space)
+"jz" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"jF" = (
+/obj/machinery/keycard_auth{
+	pixel_y = -28
+	},
+/obj/machinery/keycard_auth{
+	pixel_y = 28
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -28
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"jG" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"jH" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"jI" = (
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"jJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_wide"
+	},
+/area/space)
+"jO" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrivalcorner"
+	},
+/area/space)
+"jS" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "yellow"
+	},
+/area/space)
+"jU" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"kd" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkred"
+	},
+/area/space)
+"ke" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"kf" = (
+/obj/structure/cable/blue{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ki" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bluered"
+	},
+/area/space)
+"kj" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purple"
+	},
+/area/space)
+"kl" = (
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"kn" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/space)
+"kq" = (
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/space)
+"kr" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"ku" = (
+/turf/simulated/floor{
+	icon_state = "floorgrimecaution"
+	},
+/area/space)
+"kz" = (
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"kC" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteyellowcorner"
+	},
+/area/space)
+"kD" = (
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/space)
+"kG" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"kI" = (
+/turf/simulated/floor{
+	icon_state = "darkstairs2_wide"
+	},
+/area/space)
+"kK" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"kM" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"kN" = (
+/turf/simulated/floor{
+	icon_state = "arrival"
+	},
+/area/space)
+"kS" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"kV" = (
+/turf/simulated/floor{
+	icon_state = "darkyellowfull"
+	},
+/area/space)
+"kZ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redblue"
+	},
+/area/space)
+"lb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"lc" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"lf" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "purple"
+	},
+/area/space)
+"lg" = (
+/turf/simulated/floor{
+	icon_state = "greenyellow"
+	},
+/area/space)
+"lh" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_y = -32
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_y = 22
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	name = "Private AI Channel";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"lp" = (
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/area/space)
+"lq" = (
+/turf/simulated/floor{
+	icon_state = "medstairs_alone"
+	},
+/area/space)
+"lr" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "floorgrimecaution"
+	},
+/area/space)
+"lu" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"lv" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"lB" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"lC" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"lG" = (
+/obj/structure/cable/pink{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"lH" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"lI" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"lJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blackcorner"
+	},
+/area/space)
+"lQ" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space)
+"lW" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitehall"
+	},
+/area/space)
+"ma" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "warning"
+	},
+/area/space)
+"me" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitehall"
+	},
+/area/space)
+"mj" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space)
+"mk" = (
+/turf/simulated/floor/plating/airless{
+	dir = 4;
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"ml" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"mo" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"mp" = (
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
+	},
+/area/space)
+"mu" = (
+/obj/structure/cable/pink{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"mQ" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"mR" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redgreen"
+	},
+/area/space)
+"mU" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebotc"
+	},
+/area/space)
+"mZ" = (
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"nc" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blackcorner"
+	},
+/area/space)
+"nd" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhitecorner"
+	},
+/area/space)
+"nf" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warning"
+	},
+/area/space)
+"ng" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"nh" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurplecorner"
+	},
+/area/space)
+"ns" = (
+/turf/simulated/floor{
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"nt" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "orange"
+	},
+/area/space)
+"nE" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"nF" = (
+/obj/structure/cable/blue,
+/turf/simulated/floor/plating,
+/area/space)
+"nG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"nL" = (
+/turf/simulated/floor/plating,
+/area/space)
+"nU" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "green"
+	},
+/area/space)
+"nV" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
+	},
+/area/space)
+"nX" = (
+/obj/machinery/atm{
+	pixel_y = -28
+	},
+/obj/machinery/atm{
+	pixel_x = 28
+	},
+/obj/machinery/atm{
+	pixel_x = -28
+	},
+/obj/machinery/atm{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"ob" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkbrowncorners"
+	},
+/area/space)
+"od" = (
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
+"oi" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ok" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "loadingarea"
+	},
+/area/space)
+"ol" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"ot" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ov" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purplecorner"
+	},
+/area/space)
+"oy" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/space)
+"oA" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"oG" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkstairs2_wide"
+	},
+/area/space)
+"oO" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/space)
+"oW" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "arrival"
+	},
+/area/space)
+"pd" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"pe" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "caution"
+	},
+/area/space)
+"pk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/space)
+"pu" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bluecorner"
+	},
+/area/space)
+"pw" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "red"
+	},
+/area/space)
+"pA" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"pD" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitered"
+	},
+/area/space)
+"pI" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"pM" = (
+/turf/simulated/floor/carpet,
+/area/space)
+"pP" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "neutral"
+	},
+/area/space)
+"pQ" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"pS" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/space)
+"pY" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/space)
+"qa" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellow"
+	},
+/area/space)
+"qh" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingareadirty1"
+	},
+/area/space)
+"qi" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"qq" = (
+/obj/structure/cable/cyan{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"qw" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "orange"
+	},
+/area/space)
+"qD" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/space)
+"qI" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"qK" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken5"
+	},
+/area/space)
+"qQ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "cautioncorner"
+	},
+/area/space)
+"qW" = (
+/turf/simulated/floor{
+	icon_state = "greenbluefull"
+	},
+/area/space)
+"rb" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteredcorner"
+	},
+/area/space)
+"rk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redblue"
+	},
+/area/space)
+"ro" = (
+/obj/structure/cable/cyan{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"rq" = (
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"rr" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redgreen"
+	},
+/area/space)
+"rt" = (
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"rv" = (
+/turf/simulated/floor{
+	icon_state = "whiteyellowfull"
+	},
+/area/space)
+"rw" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warning"
+	},
+/area/space)
+"rG" = (
+/turf/simulated/floor{
+	icon_state = "warndarkcorners"
+	},
+/area/space)
+"rK" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "browncorner"
+	},
+/area/space)
+"rO" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"rR" = (
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/space)
+"rU" = (
+/obj/structure/cable/green,
+/turf/simulated/floor/plating,
+/area/space)
+"sa" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "escape"
+	},
+/area/space)
+"sf" = (
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "bluecorner"
+	},
+/area/space)
+"sm" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"so" = (
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"ss" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/space)
+"sv" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitehall"
+	},
+/area/space)
+"sx" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"sy" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "escape"
+	},
+/area/space)
+"sH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/area/space)
+"sN" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"sX" = (
+/turf/simulated/floor{
+	icon_state = "vault"
+	},
+/area/space)
+"sY" = (
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"tc" = (
+/turf/simulated/floor{
+	icon_state = "purple"
+	},
+/area/space)
+"td" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"tn" = (
+/turf/simulated/floor/bluegrid,
+/area/space)
+"tp" = (
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/space)
+"tq" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs_alone"
+	},
+/area/space)
+"tr" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redgreen"
+	},
+/area/space)
+"tt" = (
+/turf/simulated/floor{
+	icon_state = "Stairs_wide"
+	},
+/area/space)
+"tw" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitehall"
+	},
+/area/space)
+"tx" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "escape"
+	},
+/area/space)
+"tB" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "bluecorner"
+	},
+/area/space)
+"tN" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingareadirty2"
+	},
+/area/space)
+"tP" = (
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/space)
+"tQ" = (
+/turf/simulated/floor{
+	icon_state = "whitegreencorner"
+	},
+/area/space)
+"ub" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warndark"
+	},
+/area/space)
+"ud" = (
+/turf/simulated/floor{
+	icon_state = "medstairs_wide"
+	},
+/area/space)
+"uf" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "escapecorner"
+	},
+/area/space)
+"ug" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "medstairs_alone"
+	},
+/area/space)
+"uk" = (
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/space)
+"um" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"uq" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "orangecorner"
+	},
+/area/space)
+"uu" = (
+/turf/simulated/floor{
+	icon_state = "whitehall"
+	},
+/area/space)
+"ux" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "medstairs_wide"
+	},
+/area/space)
+"uA" = (
+/turf/environment/space,
+/area/space)
+"uC" = (
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"uE" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/space)
+"uG" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "green"
+	},
+/area/space)
+"uH" = (
+/turf/simulated/floor{
+	icon_state = "whiteredcorner"
+	},
+/area/space)
+"uJ" = (
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"uK" = (
+/obj/machinery/vending/wallmed2{
+	pixel_y = -30
+	},
+/obj/machinery/vending/wallmed2{
+	pixel_x = -28
+	},
+/obj/machinery/vending/wallmed2{
+	pixel_y = 28
+	},
+/obj/machinery/vending/wallmed2{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"uN" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"uQ" = (
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 32;
+	pixel_y = -1
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 5;
+	pixel_y = -28
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -24
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 5;
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"uR" = (
+/turf/simulated/floor/carpet/orange,
+/area/space)
+"uW" = (
+/turf/simulated/floor{
+	icon_state = "whitedelivery"
+	},
+/area/space)
+"va" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs2_wide"
+	},
+/area/space)
+"vb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"vd" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "medstairs_wide"
+	},
+/area/space)
+"ve" = (
+/turf/simulated/floor{
+	icon_state = "yellowpatch_inv"
+	},
+/area/space)
+"vf" = (
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"vl" = (
+/turf/simulated/floor/light{
+	icon_state = "light_on-y"
+	},
+/area/space)
+"vp" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "arrival"
+	},
+/area/space)
+"vs" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "caution"
+	},
+/area/space)
+"vy" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "greenblue"
+	},
+/area/space)
+"vH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"vQ" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "medstairs2_wide"
+	},
+/area/space)
+"vU" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"vV" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"vX" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"vZ" = (
+/obj/structure/cable/orange{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"wj" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"wr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"wv" = (
+/turf/simulated/floor/beach/water/waterpool,
+/area/space)
+"ww" = (
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
+/area/space)
+"wA" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken3"
+	},
+/area/space)
+"wB" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"wC" = (
+/turf/simulated/floor{
+	icon_state = "medstairs_middle"
+	},
+/area/space)
+"wG" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"wI" = (
+/turf/simulated/floor/carpet/purple,
+/area/space)
+"wJ" = (
+/obj/structure/cable/pink,
+/turf/simulated/floor/plating,
+/area/space)
+"wK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/space)
+"wN" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"wR" = (
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	name = "smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "smallcell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"wS" = (
+/turf/simulated/floor/carpet/blue2,
+/area/space)
+"wU" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "arrivalcorner"
+	},
+/area/space)
+"wW" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitecorner"
+	},
+/area/space)
+"xe" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"xh" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "redgreen"
+	},
+/area/space)
+"xm" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkredcorners"
+	},
+/area/space)
+"xz" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/space)
+"xC" = (
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/space)
+"xD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"xM" = (
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space)
+"xP" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"xT" = (
+/turf/simulated/floor{
+	icon_state = "floorscorched1"
+	},
+/area/space)
+"xV" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "redblue"
+	},
+/area/space)
+"xW" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/space)
+"xZ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "medstairs2_wide"
+	},
+/area/space)
+"yc" = (
+/turf/simulated/floor,
+/area/space)
+"yf" = (
+/obj/structure/cable/pink{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yg" = (
+/turf/simulated/floor{
+	icon_state = "bar_floor"
+	},
+/area/space)
+"yi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ym" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitebluecorner"
+	},
+/area/space)
+"yp" = (
+/obj/structure/cable/cyan{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yt" = (
+/obj/structure/cable/blue{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yv" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yA" = (
+/turf/simulated/floor{
+	icon_state = "whitered"
+	},
+/area/space)
+"yB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yH" = (
+/turf/simulated/floor{
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"yI" = (
+/obj/structure/cable/pink{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"yK" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "redyellow"
+	},
+/area/space)
+"yO" = (
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"yP" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "bluered"
+	},
+/area/space)
+"zb" = (
+/turf/simulated/floor/bluegrid{
+	icon_state = "ycircuit"
+	},
+/area/space)
+"zj" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkbrowncorners"
+	},
+/area/space)
+"zk" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"zo" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"zr" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "loadingareadirty2"
+	},
+/area/space)
+"zu" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"zv" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"zw" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "greenblue"
+	},
+/area/space)
+"zB" = (
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
+	},
+/area/space)
+"zH" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "black"
+	},
+/area/space)
+"zI" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"zO" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"zT" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "stairs_middle"
+	},
+/area/space)
+"zU" = (
+/turf/simulated/floor{
+	icon_state = "darkstairs_wide"
+	},
+/area/space)
+"zZ" = (
+/obj/structure/cable/pink{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ad" = (
+/turf/simulated/floor/light,
+/area/space)
+"Ah" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "greencorner"
+	},
+/area/space)
+"Al" = (
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/space)
+"An" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"Ao" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "redblue"
+	},
+/area/space)
+"Ar" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"Ax" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "medstairs_middle"
+	},
+/area/space)
+"AA" = (
+/turf/simulated/floor{
+	icon_state = "redgreen"
+	},
+/area/space)
+"AC" = (
+/turf/simulated/floor/light{
+	icon_state = "light_on-p"
+	},
+/area/space)
+"AN" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bluered"
+	},
+/area/space)
+"AP" = (
+/obj/structure/cable/blue{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"AQ" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellowcorner"
+	},
+/area/space)
+"AS" = (
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
+	},
+/area/space)
+"Ba" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "yellow"
+	},
+/area/space)
+"Bi" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"Bv" = (
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/space)
+"By" = (
+/turf/simulated/floor{
+	icon_state = "greenblue"
+	},
+/area/space)
+"Bz" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"BF" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "green"
+	},
+/area/space)
+"BM" = (
+/turf/simulated/floor{
+	icon_state = "arcade_carpet"
+	},
+/area/space)
+"BS" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitecorner"
+	},
+/area/space)
+"BT" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "escapecorner"
+	},
+/area/space)
+"BW" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "blue"
+	},
+/area/space)
+"Ca" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"Ce" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ci" = (
+/turf/simulated/floor{
+	icon_state = "escapecorner"
+	},
+/area/space)
+"Ck" = (
+/obj/structure/cable/cyan{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Cn" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "greencorner"
+	},
+/area/space)
+"Cv" = (
+/turf/simulated/floor/engine,
+/area/space)
+"CB" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"CC" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"CD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/space)
+"CG" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"CK" = (
+/turf/simulated/floor{
+	icon_state = "floorscorched2"
+	},
+/area/space)
+"CR" = (
+/turf/simulated/floor{
+	icon_state = "purplecorner"
+	},
+/area/space)
+"CW" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/space)
+"Dg" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"Dh" = (
+/turf/simulated/floor{
+	icon_state = "warning"
+	},
+/area/space)
+"Dn" = (
+/turf/simulated/floor{
+	icon_state = "green"
+	},
+/area/space)
+"Dp" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"Dw" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warndarkcorners"
+	},
+/area/space)
+"Dy" = (
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/space)
+"DA" = (
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/obj/machinery/light_switch{
+	pixel_x = 28
+	},
+/obj/machinery/light_switch{
+	pixel_x = -28
+	},
+/obj/machinery/light_switch{
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"DF" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"DI" = (
+/turf/simulated/floor{
+	icon_state = "bluefull"
+	},
+/area/space)
+"DK" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"DO" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/space)
+"DS" = (
+/turf/simulated/floor/engine/cult/lava,
+/area/space)
+"DX" = (
+/turf/simulated/floor{
+	icon_state = "red"
+	},
+/area/space)
+"DZ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/space)
+"Ee" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ef" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor/plating,
+/area/space)
+"Eh" = (
+/turf/simulated/floor{
+	icon_state = "wooden"
+	},
+/area/space)
+"Ek" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redyellow"
+	},
+/area/space)
+"En" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/space)
+"Er" = (
+/turf/simulated/floor{
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"Es" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkstairs_wide"
+	},
+/area/space)
+"Ev" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"Ey" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whitehall"
+	},
+/area/space)
+"EA" = (
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"EB" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/space)
+"ED" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blue"
+	},
+/area/space)
+"EF" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/space)
+"EI" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "purple"
+	},
+/area/space)
+"EP" = (
+/obj/structure/cable/pink{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ER" = (
+/turf/simulated/floor/carpet/cyan,
+/area/space)
+"ES" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs_wide"
+	},
+/area/space)
+"EV" = (
+/turf/simulated/floor{
+	icon_state = "warningcorner"
+	},
+/area/space)
+"EY" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "neutral"
+	},
+/area/space)
+"Fd" = (
+/turf/simulated/floor{
+	icon_state = "robar"
+	},
+/area/space)
+"Fe" = (
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"Fj" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkred"
+	},
+/area/space)
+"Fn" = (
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"Fr" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redyellow"
+	},
+/area/space)
+"Fx" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"FA" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"FC" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"FE" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkbluecorners"
+	},
+/area/space)
+"FF" = (
+/turf/simulated/floor{
+	icon_state = "darkstairs_middle"
+	},
+/area/space)
+"FG" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "loadingareadirty1"
+	},
+/area/space)
+"FL" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"FO" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"FQ" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "floorscorched2"
+	},
+/area/space)
+"FU" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/space)
+"FY" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"FZ" = (
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Gb" = (
+/turf/simulated/floor/plating{
+	icon_state = "warnplatecorner"
+	},
+/area/space)
+"Gj" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Gk" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warndark"
+	},
+/area/space)
+"Gn" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "caution"
+	},
+/area/space)
+"Gq" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "caution"
+	},
+/area/space)
+"Gw" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"Gx" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/space)
+"GA" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/space)
+"GC" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"GD" = (
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/space)
+"GG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"GK" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "purplecorner"
+	},
+/area/space)
+"GO" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "black"
+	},
+/area/space)
+"GP" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/space)
+"GS" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "Stairs2_wide"
+	},
+/area/space)
+"GW" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "cautioncorner"
+	},
+/area/space)
+"Hd" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/space)
+"He" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"Hj" = (
+/turf/simulated/floor{
+	icon_state = "Stairs_alone"
+	},
+/area/space)
+"Hl" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "greenblue"
+	},
+/area/space)
+"Hr" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/space)
+"Hu" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"Hw" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"Hy" = (
+/turf/simulated/wall,
+/area/space)
+"HD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"HF" = (
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 4;
+	pixel_y = -30
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -25;
+	pixel_y = -4
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 4;
+	pixel_y = 23
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 34;
+	pixel_y = -4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"HG" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/space)
+"HL" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitegreencorner"
+	},
+/area/space)
+"HM" = (
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 22
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = -32
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"HN" = (
+/turf/simulated/floor/carpet/green,
+/area/space)
+"HO" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"HP" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitehall"
+	},
+/area/space)
+"HQ" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"HR" = (
+/turf/simulated/floor{
+	icon_state = "darkbrowncorners"
+	},
+/area/space)
+"HS" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ia" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "yellow"
+	},
+/area/space)
+"Ib" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplecorners"
+	},
+/area/space)
+"Id" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "Stairs2_wide"
+	},
+/area/space)
+"Ij" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"Ik" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "arrival"
+	},
+/area/space)
+"Ip" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ir" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warndark"
+	},
+/area/space)
+"It" = (
+/turf/simulated/floor{
+	icon_state = "whiteyellowcorner"
+	},
+/area/space)
+"Iw" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitered"
+	},
+/area/space)
+"Iz" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "orangecorner"
+	},
+/area/space)
+"IC" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
+/area/space)
+"IE" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space)
+"IF" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warnwhitecorner"
+	},
+/area/space)
+"IG" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "vault"
+	},
+/area/space)
+"IJ" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"IN" = (
+/obj/structure/reagent_dispensers/virusfood{
+	density = 0;
+	pixel_y = -32
+	},
+/obj/structure/reagent_dispensers/virusfood{
+	density = 0;
+	pixel_y = 32
+	},
+/obj/structure/reagent_dispensers/virusfood{
+	density = 0;
+	pixel_x = 32
+	},
+/obj/structure/reagent_dispensers/virusfood{
+	density = 0;
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"IO" = (
+/turf/simulated/floor{
+	icon_state = "blackchecker"
+	},
+/area/space)
+"IY" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"IZ" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"Je" = (
+/turf/simulated/floor{
+	icon_state = "wood"
+	},
+/area/space)
+"Jg" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurplecorners"
+	},
+/area/space)
+"Ji" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
+	},
+/area/space)
+"Jl" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "black"
+	},
+/area/space)
+"Jv" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/space)
+"Jw" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitered"
+	},
+/area/space)
+"Jz" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"JF" = (
+/turf/simulated/floor{
+	icon_state = "medstairs2_wide"
+	},
+/area/space)
+"JI" = (
+/obj/structure/cable/blue{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"JL" = (
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space)
+"JR" = (
+/turf/simulated/floor{
+	icon_state = "stairs_middle"
+	},
+/area/space)
+"JY" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"Kd" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkpurplecorners"
+	},
+/area/space)
+"Kl" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "loadingareadirty2"
+	},
+/area/space)
+"Ko" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"Kq" = (
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_y = 28
+	},
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_x = -28
+	},
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_x = 28
+	},
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"Kv" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "Stairs_wide"
+	},
+/area/space)
+"Kx" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluered"
+	},
+/area/space)
+"Kz" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "cautioncorner"
+	},
+/area/space)
+"KA" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_alone"
+	},
+/area/space)
+"KB" = (
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/space)
+"KF" = (
+/turf/simulated/floor{
+	icon_state = "caution"
+	},
+/area/space)
+"KN" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/space)
+"KS" = (
+/obj/structure/cable/pink{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"KU" = (
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = 32
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 32
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = -32
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"La" = (
+/turf/simulated/floor/plating/airless{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space)
+"Lc" = (
+/turf/simulated/floor{
+	icon_state = "purplefull"
+	},
+/area/space)
+"Le" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whitered"
+	},
+/area/space)
+"Lg" = (
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Li" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warndarkcorners"
+	},
+/area/space)
+"Lj" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ll" = (
+/obj/structure/cable/yellow,
+/turf/simulated/floor/plating,
+/area/space)
+"Lm" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"Ln" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "blue"
+	},
+/area/space)
+"Lp" = (
+/obj/structure/cable/green{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Lr" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"LH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowcorner"
+	},
+/area/space)
+"LI" = (
+/turf/simulated/floor/plating{
+	dir = 10;
+	icon_state = "warnplate"
+	},
+/area/space)
+"LP" = (
+/turf/simulated/floor/carpet/blue,
+/area/space)
+"LQ" = (
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	name = "mediumcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "mediumcell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"LR" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkgreencorners"
+	},
+/area/space)
+"LS" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "Stairs_alone"
+	},
+/area/space)
+"LT" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"LX" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/space)
+"Md" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitegreencorner"
+	},
+/area/space)
+"Mv" = (
+/turf/simulated/floor/light{
+	icon_state = "light_on-w"
+	},
+/area/space)
+"ME" = (
+/turf/simulated/floor{
+	icon_state = "blackcorner"
+	},
+/area/space)
+"MI" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "warndark"
+	},
+/area/space)
+"MJ" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "neutral"
+	},
+/area/space)
+"MM" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "purplecorner"
+	},
+/area/space)
+"MN" = (
+/obj/structure/cable/blue{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"MO" = (
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_y = 32
+	},
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_x = 32
+	},
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_x = -32
+	},
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"MP" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warndark"
+	},
+/area/space)
+"MU" = (
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"MW" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitehall"
+	},
+/area/space)
+"Nd" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/space)
+"Nk" = (
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/space)
+"Nl" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "purple"
+	},
+/area/space)
+"No" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"Np" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "red"
+	},
+/area/space)
+"Nq" = (
+/turf/simulated/floor{
+	icon_state = "darkpurple"
+	},
+/area/space)
+"Nv" = (
+/turf/simulated/floor{
+	icon_state = "orange"
+	},
+/area/space)
+"Ny" = (
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"NH" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/space)
+"NO" = (
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"NP" = (
+/turf/simulated/floor{
+	icon_state = "whitebluecorner"
+	},
+/area/space)
+"NT" = (
+/obj/structure/cable/blue{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"NY" = (
+/turf/simulated/floor{
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"Ob" = (
+/turf/simulated/floor{
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"Og" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellowcorner"
+	},
+/area/space)
+"Oh" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"Op" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"Ou" = (
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/space)
+"Ov" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"Ox" = (
+/turf/simulated/floor{
+	icon_state = "redyellow"
+	},
+/area/space)
+"OB" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"OD" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
+	},
+/area/space)
+"OE" = (
+/turf/simulated/floor{
+	icon_state = "darkpurplecorners"
+	},
+/area/space)
+"OG" = (
+/turf/simulated/floor{
+	icon_state = "blueyellowfull"
+	},
+/area/space)
+"OI" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken6"
+	},
+/area/space)
+"ON" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "bluered"
+	},
+/area/space)
+"OO" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warndark"
+	},
+/area/space)
+"OP" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/space)
+"OS" = (
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = -28
+	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = 28
+	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"OX" = (
+/turf/simulated/floor{
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"Pa" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "red"
+	},
+/area/space)
+"Pk" = (
+/turf/simulated/floor{
+	icon_state = "redchecker"
+	},
+/area/space)
+"Pl" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "medstairs_alone"
+	},
+/area/space)
+"Po" = (
+/turf/simulated/floor{
+	icon_state = "whiteredfull"
+	},
+/area/space)
+"Pu" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteyellowcorner"
+	},
+/area/space)
+"Pv" = (
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
+/area/space)
+"Pw" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkredcorners"
+	},
+/area/space)
+"PB" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"PC" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"PG" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "escapecorner"
+	},
+/area/space)
+"PI" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "purple"
+	},
+/area/space)
+"PJ" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "greenblue"
+	},
+/area/space)
+"PK" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkstairs_alone"
+	},
+/area/space)
+"PR" = (
+/turf/simulated/floor{
+	icon_state = "loadingareadirty2"
+	},
+/area/space)
+"PS" = (
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"PU" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken7"
+	},
+/area/space)
+"PZ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"Qe" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"Qh" = (
+/turf/simulated/floor/plating/airless{
+	dir = 9;
+	icon_state = "warnplate"
+	},
+/area/space)
+"Qi" = (
+/obj/structure/cable/white,
+/turf/simulated/floor/plating,
+/area/space)
+"Qj" = (
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"Qr" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "arrivalcorner"
+	},
+/area/space)
+"Qs" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "warndark"
+	},
+/area/space)
+"QC" = (
+/turf/simulated/floor/plating{
+	dir = 5;
+	icon_state = "warnplate"
+	},
+/area/space)
+"QD" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"QG" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "red"
+	},
+/area/space)
+"QH" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/space)
+"QI" = (
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
+"QK" = (
+/turf/simulated/floor{
+	icon_state = "bluered"
+	},
+/area/space)
+"QO" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
+/area/space)
+"QQ" = (
+/turf/simulated/floor{
+	icon_state = "greenchecker"
+	},
+/area/space)
+"QS" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
+/area/space)
+"Ra" = (
+/turf/simulated/floor{
+	icon_state = "whitecorner"
+	},
+/area/space)
+"Rb" = (
+/obj/structure/cable/white{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Rg" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/space)
+"Rh" = (
+/turf/simulated/floor{
+	icon_state = "loadingarea"
+	},
+/area/space)
+"Rp" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_middle"
+	},
+/area/space)
+"Rr" = (
+/turf/simulated/floor{
+	icon_state = "redyellowfull"
+	},
+/area/space)
+"Rt" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Rw" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "orange"
+	},
+/area/space)
+"Ry" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Rz" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"RA" = (
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/space)
+"RD" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
+"RE" = (
+/turf/simulated/floor/mech_bay_recharge_floor,
+/area/space)
+"RH" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "green"
+	},
+/area/space)
+"RJ" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "wood2_stairs"
+	},
+/area/space)
+"RK" = (
+/turf/simulated/floor{
+	icon_state = "whitepurplecorner"
+	},
+/area/space)
+"RN" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "blue"
+	},
+/area/space)
+"RV" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "redgreen"
+	},
+/area/space)
+"RW" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"RY" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"Sa" = (
+/turf/simulated/floor{
+	icon_state = "darkgreen"
+	},
+/area/space)
+"Sc" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "caution"
+	},
+/area/space)
+"Sj" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkstairs2_wide"
+	},
+/area/space)
+"Sn" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitecorner"
+	},
+/area/space)
+"Sp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor/plating,
+/area/space)
+"Sr" = (
+/turf/simulated/floor/grass,
+/area/space)
+"Sv" = (
+/obj/machinery/newscaster/security_unit{
+	pixel_y = 28
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_y = -28
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = 28
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -28
+	},
+/obj/structure/sign/warning{
+	name = "SECURITY"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"Sw" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "greenblue"
+	},
+/area/space)
+"Sx" = (
+/turf/simulated/floor{
+	icon_state = "darkbluecorners"
+	},
+/area/space)
+"SD" = (
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = 22
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = -32
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"SE" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/space)
+"SI" = (
+/obj/structure/cable/orange,
+/turf/simulated/floor/plating,
+/area/space)
+"SJ" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "wood_stairs"
+	},
+/area/space)
+"SM" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"SQ" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Td" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"Tg" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "medstairs2_wide"
+	},
+/area/space)
+"Th" = (
+/turf/simulated/floor{
+	icon_state = "yellowpatch"
+	},
+/area/space)
+"Tj" = (
+/turf/simulated/floor/light{
+	icon_state = "light_on-r"
+	},
+/area/space)
+"Tr" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ts" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "stairs_middle"
+	},
+/area/space)
+"Tw" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"Tx" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkbrown"
+	},
+/area/space)
+"Tz" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitered"
+	},
+/area/space)
+"TB" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkgreencorners"
+	},
+/area/space)
+"TD" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkstairs2_wide"
+	},
+/area/space)
+"TE" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/space)
+"TG" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "greenyellow"
+	},
+/area/space)
+"TK" = (
+/turf/simulated/floor{
+	icon_state = "orangecorner"
+	},
+/area/space)
+"TO" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "greenblue"
+	},
+/area/space)
+"TR" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"Ua" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"Um" = (
+/obj/machinery/newscaster{
+	pixel_y = 28
+	},
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
+/obj/machinery/newscaster{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"Uu" = (
+/turf/simulated/floor{
+	icon_state = "greenfull"
+	},
+/area/space)
+"UA" = (
+/turf/simulated/floor{
+	icon_state = "yellowchecker"
+	},
+/area/space)
+"UE" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkyellow"
+	},
+/area/space)
+"UH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/space)
+"UI" = (
+/turf/simulated/floor{
+	icon_state = "arrivalcorner"
+	},
+/area/space)
+"UL" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blue"
+	},
+/area/space)
+"UN" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "vault"
+	},
+/area/space)
+"UO" = (
+/obj/machinery/alarm{
+	pixel_y = 22
+	},
+/obj/machinery/alarm{
+	pixel_y = -32
+	},
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6
+	},
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"US" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warnwhite"
+	},
+/area/space)
+"UY" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"UZ" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/space)
+"Vg" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/space)
+"Vo" = (
+/turf/simulated/floor{
+	icon_state = "darkredcorners"
+	},
+/area/space)
+"Vx" = (
+/turf/simulated/floor/light{
+	icon_state = "light_on-g"
+	},
+/area/space)
+"Vy" = (
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreenfull"
+	},
+/area/space)
+"Vz" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space)
+"VC" = (
+/turf/simulated/floor/carpet/red,
+/area/space)
+"VH" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space)
+"VI" = (
+/turf/simulated/floor{
+	icon_state = "whitebot"
+	},
+/area/space)
+"VJ" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redgreen"
+	},
+/area/space)
+"VM" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "blueyellow"
+	},
+/area/space)
+"VN" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "arrival"
+	},
+/area/space)
+"VP" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/space)
+"VQ" = (
+/turf/simulated/floor{
+	icon_state = "whitegreen_v"
+	},
+/area/space)
+"Wb" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warndarkcorners"
+	},
+/area/space)
+"Wf" = (
+/turf/simulated/floor{
+	icon_state = "bar_floor2"
+	},
+/area/space)
+"Wk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkpurple"
+	},
+/area/space)
+"Wq" = (
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Wt" = (
+/turf/simulated/floor{
+	icon_state = "yellowcorner"
+	},
+/area/space)
+"WH" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/space)
+"WQ" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurplecorner"
+	},
+/area/space)
+"WT" = (
+/turf/simulated/floor{
+	icon_state = "wood-broken2"
+	},
+/area/space)
+"WU" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
+/area/space)
+"Xd" = (
+/turf/simulated/floor{
+	icon_state = "whiteblue_ex"
+	},
+/area/space)
+"Xe" = (
+/turf/simulated/floor{
+	icon_state = "warnwhitecorner"
+	},
+/area/space)
+"Xo" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/space)
+"Xs" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"Xt" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkstairs_middle"
+	},
+/area/space)
+"Xv" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "wood2_stairs2"
+	},
+/area/space)
+"Xz" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/turf/simulated/floor/plating,
+/area/space)
+"XC" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitegreen"
+	},
+/area/space)
+"XF" = (
+/turf/simulated/floor{
+	icon_state = "darkbrownfull"
+	},
+/area/space)
+"XH" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "purple"
+	},
+/area/space)
+"XJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreencorner"
+	},
+/area/space)
+"XO" = (
+/turf/simulated/floor/bluegrid{
+	icon_state = "rcircuit"
+	},
+/area/space)
+"XP" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"XS" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitepurple"
+	},
+/area/space)
+"XU" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/space)
+"XX" = (
+/turf/simulated/floor{
+	icon_state = "cautioncorner"
+	},
+/area/space)
+"XY" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "redyellow"
+	},
+/area/space)
+"Yc" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkgreen"
+	},
+/area/space)
+"Yf" = (
+/turf/simulated/floor{
+	icon_state = "escape"
+	},
+/area/space)
+"Yv" = (
+/turf/simulated/floor{
+	icon_state = "blueyellow"
+	},
+/area/space)
+"Yy" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "medstairs_middle"
+	},
+/area/space)
+"Yz" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "purple"
+	},
+/area/space)
+"YC" = (
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "largecell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/largecell{
+	name = "largecell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "largecell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "largecell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"YD" = (
+/obj/structure/cable/orange{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"YF" = (
+/turf/simulated/floor/engine/cult,
+/area/space)
+"YI" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteyellow"
+	},
+/area/space)
+"YK" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/space)
+"YT" = (
+/obj/structure/cable/white{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"YV" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "green"
+	},
+/area/space)
+"Zc" = (
+/turf/simulated/floor{
+	icon_state = "redbluefull"
+	},
+/area/space)
+"Zf" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Zg" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "greencorner"
+	},
+/area/space)
+"Zh" = (
+/obj/structure/cable/pink{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Zo" = (
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/space)
+"Zz" = (
+/turf/simulated/floor{
+	icon_state = "orangefull"
+	},
+/area/space)
+"ZB" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "arrival"
+	},
+/area/space)
+"ZC" = (
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"ZD" = (
+/turf/simulated/floor/plating/airless{
+	dir = 5;
+	icon_state = "warnplate"
+	},
+/area/space)
+"ZH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkbluecorners"
+	},
+/area/space)
+"ZI" = (
+/turf/simulated/floor{
+	icon_state = "blue"
+	},
+/area/space)
+"ZN" = (
+/turf/simulated/floor{
+	icon_state = "browncorner"
+	},
+/area/space)
+"ZP" = (
+/turf/simulated/floor{
+	icon_state = "sandstonevault"
+	},
+/area/space)
+"ZR" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
+/obj/machinery/ai_status_display{
+	pixel_x = 32
+	},
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"ZT" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redyellow"
+	},
+/area/space)
+"ZV" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkstairs_alone"
+	},
+/area/space)
+
+(1,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+EV
+bv
+nf
+Gx
+gg
+cB
+Ah
+nU
+BF
+uG
+Wt
+Og
+Ia
+IC
+jS
+CR
+MM
+XH
+kj
+lf
+Ou
+QS
+RN
+GA
+Ln
+"}
+(2,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+nL
+nL
+nL
+nL
+nL
+nL
+nL
+nL
+Hy
+dL
+ep
+qD
+yc
+Dh
+Zg
+Cn
+EB
+Uu
+Dn
+LH
+AQ
+LX
+ew
+tP
+ov
+GK
+Yz
+Lc
+tc
+tB
+pu
+UL
+DI
+ZI
+"}
+(3,1,1) = {"
+Hy
+Hy
+lh
+Hy
+Hy
+SD
+Hy
+Hy
+HM
+Hy
+Hy
+ke
+Hy
+Hy
+nL
+aN
+mj
+Gb
+EA
+ei
+od
+LI
+nL
+Hy
+Nk
+Zo
+rw
+dJ
+ma
+yc
+yc
+RH
+DO
+YV
+Th
+ve
+qa
+QH
+Ba
+yc
+yc
+PI
+EI
+Nl
+yc
+yc
+BW
+ED
+fu
+"}
+(4,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+aN
+jy
+Fe
+mZ
+RA
+nL
+Al
+nL
+Hy
+Xe
+hs
+Ua
+aY
+sx
+tQ
+XJ
+CG
+uN
+dk
+It
+kC
+Tw
+eh
+UY
+RK
+nh
+Ko
+XS
+CB
+NP
+aU
+TE
+oA
+Ov
+"}
+(5,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+aN
+Vz
+ay
+ww
+QC
+fm
+kD
+nL
+Hy
+nd
+IF
+US
+Lr
+bN
+Md
+HL
+kS
+Vy
+iC
+gh
+Pu
+xe
+rv
+Ob
+js
+WQ
+XP
+lp
+be
+ym
+fT
+kM
+yO
+GD
+"}
+(6,1,1) = {"
+Hy
+Hy
+wR
+Hy
+Hy
+LQ
+Hy
+Hy
+YC
+Hy
+Hy
+lC
+Hy
+Hy
+nL
+nL
+nL
+nL
+nL
+nL
+nL
+nL
+nL
+Hy
+VI
+uW
+FY
+PZ
+hu
+QQ
+VQ
+XC
+DF
+PB
+UA
+Lr
+FL
+YI
+He
+Bv
+Lr
+rO
+qi
+wj
+Hr
+Xd
+gW
+xP
+lc
+"}
+(7,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+rG
+Wb
+ub
+OO
+MI
+eF
+eb
+Yc
+zI
+bE
+OX
+IY
+UE
+DK
+Op
+OE
+Ib
+kG
+cJ
+RY
+Sx
+bI
+cM
+XU
+Ji
+"}
+(8,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+Hy
+Dw
+Li
+Ir
+An
+JL
+LR
+TB
+mQ
+zB
+Sa
+Dp
+IZ
+aW
+kV
+hT
+Jg
+Kd
+Wk
+hb
+Nq
+ZH
+FE
+fk
+AS
+xC
+"}
+(9,1,1) = {"
+Hy
+Hy
+nX
+Hy
+Hy
+OS
+Hy
+Hy
+Dg
+Hy
+Hy
+pI
+Hy
+Hy
+uA
+cZ
+di
+nE
+mk
+Qh
+QI
+gG
+uA
+Hy
+Nd
+Nd
+Gk
+MP
+Qs
+An
+An
+lH
+pd
+zv
+An
+An
+TR
+RW
+jz
+An
+An
+vV
+qI
+Ar
+An
+An
+uE
+pY
+gO
+"}
+(10,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+aM
+cZ
+kn
+so
+Fn
+rR
+Td
+nV
+uA
+Hy
+yc
+yc
+Qj
+iS
+Qj
+ZN
+ia
+jk
+go
+UZ
+uk
+gT
+pw
+Hd
+Np
+XX
+qQ
+pe
+Sc
+gz
+UI
+jO
+Ik
+cC
+ZB
+"}
+(11,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+uA
+cZ
+xW
+mU
+WU
+ZD
+La
+cn
+uA
+Hy
+yc
+yc
+eN
+Qj
+ku
+En
+rK
+ii
+yc
+KB
+Rg
+QO
+QG
+OD
+DX
+GW
+Kz
+do
+yc
+KF
+wU
+Qr
+vp
+aL
+kN
+"}
+(12,1,1) = {"
+Hy
+Hy
+Sv
+Hy
+Hy
+Um
+Hy
+Hy
+DA
+Hy
+Hy
+UO
+Hy
+Hy
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+Hy
+yc
+yc
+Qj
+lr
+Qj
+Zo
+Nk
+dE
+FU
+NH
+yc
+lQ
+Pa
+pS
+bo
+yc
+yc
+vs
+Gn
+Gq
+yc
+yc
+VN
+oO
+oW
+"}
+(13,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+TK
+Iz
+aA
+Rw
+nt
+HR
+ob
+LT
+Bi
+mo
+uH
+ca
+Iw
+Tz
+hI
+Wt
+Ah
+TG
+Hu
+CC
+Ci
+BT
+gN
+cR
+fg
+"}
+(14,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+cf
+wK
+en
+wK
+GG
+xD
+CD
+PC
+CD
+nG
+eH
+uq
+ju
+Zz
+Nv
+zj
+ar
+sN
+XF
+ad
+rb
+hq
+Jw
+Po
+yA
+Zg
+AQ
+HQ
+dM
+lg
+PG
+uf
+cV
+yc
+Yf
+"}
+(15,1,1) = {"
+Hy
+Hy
+uK
+Hy
+Hy
+Kq
+Hy
+Hy
+ZR
+Hy
+Hy
+ZC
+Hy
+Hy
+yB
+Sp
+yB
+vb
+yB
+ot
+Ef
+ot
+Ce
+ot
+yc
+yc
+qw
+bY
+eL
+yc
+yc
+Tx
+dq
+JY
+Pk
+Lr
+pD
+jp
+Le
+yc
+yc
+ol
+kK
+HO
+yc
+yc
+sy
+sa
+tx
+"}
+(16,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+GC
+wK
+Xz
+wK
+jq
+sm
+CD
+SE
+CD
+aO
+sf
+Ah
+vy
+Sw
+TO
+ME
+lJ
+GO
+HG
+hh
+Vo
+Pw
+Fj
+UH
+Vg
+sf
+Og
+VM
+Qe
+lu
+sf
+gT
+yP
+iT
+iP
+"}
+(17,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+yB
+yr
+yB
+HD
+yB
+ot
+yi
+ot
+um
+ot
+Zg
+pu
+Hl
+qW
+By
+je
+nc
+Jl
+dT
+dl
+CW
+xm
+pk
+em
+Pv
+LH
+pu
+Bz
+OG
+Yv
+Rg
+pu
+ki
+yc
+QK
+"}
+(18,1,1) = {"
+Hy
+Hy
+gv
+Hy
+Hy
+MO
+Hy
+Hy
+IN
+Hy
+Hy
+KU
+Hy
+Hy
+wr
+wK
+lI
+wK
+Ip
+lb
+CD
+yv
+CD
+ml
+yc
+yc
+zw
+iH
+PJ
+yc
+IO
+zH
+OP
+gj
+An
+An
+kd
+VH
+VP
+yc
+yc
+pQ
+td
+vU
+yc
+yc
+AN
+Kx
+ON
+"}
+(19,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+JI
+JI
+JI
+nL
+nL
+Fx
+Fx
+Fx
+nL
+uk
+QS
+dY
+ec
+xV
+Ra
+BS
+MW
+tw
+lW
+tp
+DZ
+pP
+Jv
+GP
+uk
+Og
+Fr
+eP
+XY
+uk
+Ah
+VJ
+eI
+RV
+"}
+(20,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+yt
+MN
+jI
+sY
+nF
+QD
+wB
+SM
+Ry
+dV
+tB
+QO
+rk
+Zc
+hE
+wW
+Sn
+me
+Lr
+uu
+YK
+KN
+EF
+fG
+Dy
+LH
+QO
+Ek
+Rr
+Ox
+Zg
+QO
+tr
+hR
+AA
+"}
+(21,1,1) = {"
+Hy
+Hy
+uQ
+Hy
+Hy
+jF
+Hy
+Hy
+Lr
+Hy
+Hy
+HF
+Hy
+Hy
+yt
+NT
+nL
+NT
+nF
+QD
+Rz
+nL
+Rz
+dV
+yc
+yc
+fK
+kZ
+Ao
+yc
+yc
+sv
+HP
+Ey
+kq
+yc
+MJ
+ss
+EY
+yc
+yc
+eM
+ZT
+yK
+yc
+yc
+rr
+mR
+xh
+"}
+(22,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+yt
+AP
+jI
+eV
+nF
+QD
+zo
+SM
+Lj
+dV
+yc
+uR
+uR
+HN
+HN
+Je
+Je
+IG
+UN
+xz
+yc
+zr
+yc
+Hy
+Oh
+Xv
+No
+Xs
+Hy
+Hy
+FA
+vX
+SJ
+Ca
+Hy
+"}
+(23,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+kf
+kf
+kf
+nL
+nL
+wG
+wG
+wG
+nL
+yc
+uR
+uR
+HN
+HN
+bX
+bX
+sX
+Nd
+xz
+Kl
+yc
+PR
+jd
+am
+am
+am
+am
+yH
+Hw
+Eh
+Eh
+Eh
+Eh
+NY
+"}
+(24,1,1) = {"
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+nL
+ci
+ci
+ci
+nL
+nL
+vf
+vf
+vf
+nL
+yc
+wI
+wI
+VC
+VC
+WT
+WT
+bu
+Xo
+xz
+Zo
+tN
+Zo
+bO
+am
+am
+am
+am
+Er
+Gw
+Eh
+Eh
+Eh
+Eh
+ns
+"}
+(25,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+yp
+ro
+Ny
+PS
+hd
+Lg
+lv
+Ee
+Zf
+rU
+yc
+wI
+wI
+VC
+VC
+wA
+wA
+yc
+sH
+yc
+Nk
+eB
+Nk
+pA
+am
+am
+am
+am
+RJ
+RD
+Eh
+Eh
+Eh
+Eh
+Lm
+"}
+(26,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+yp
+qq
+nL
+qq
+hd
+Lg
+HS
+nL
+HS
+rU
+yc
+Wf
+Wf
+pM
+pM
+oy
+oy
+ok
+yc
+Rh
+FG
+yc
+ee
+jU
+am
+am
+am
+am
+IJ
+ng
+Eh
+Eh
+Eh
+Eh
+bd
+"}
+(27,1,1) = {"
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+yp
+Ck
+Ny
+rt
+hd
+Lg
+FC
+Ee
+cL
+rU
+yc
+Wf
+Wf
+pM
+pM
+qK
+qK
+yc
+WH
+yc
+yc
+qh
+yc
+Hy
+jH
+zO
+Ij
+kr
+Hy
+Hy
+FO
+Ev
+vH
+ib
+Hy
+"}
+(28,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+iW
+iW
+iW
+nL
+nL
+Lp
+Lp
+Lp
+nL
+yc
+LP
+LP
+ig
+ig
+OI
+OI
+Hy
+hD
+gY
+iL
+vQ
+Hy
+Hy
+tq
+dd
+Ts
+Id
+Hy
+Hy
+PK
+jJ
+Xt
+Sj
+Hy
+"}
+(29,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+uC
+uC
+uC
+nL
+nL
+KS
+KS
+KS
+nL
+yc
+LP
+LP
+ig
+ig
+PU
+PU
+Tg
+Lr
+Lr
+Lr
+Lr
+lq
+GS
+yc
+yc
+yc
+yc
+Hj
+TD
+An
+An
+An
+An
+ev
+"}
+(30,1,1) = {"
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+YD
+jw
+zk
+ip
+SI
+zZ
+EP
+Zh
+lG
+wJ
+yc
+wS
+wS
+ER
+ER
+fM
+fM
+Yy
+Lr
+Lr
+Lr
+Lr
+ud
+fb
+yc
+yc
+yc
+yc
+tt
+jj
+An
+An
+An
+An
+zU
+"}
+(31,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+YD
+OB
+nL
+OB
+SI
+zZ
+yf
+nL
+yf
+wJ
+yc
+wS
+wS
+ER
+ER
+fM
+fM
+vd
+Lr
+Lr
+Lr
+Lr
+wC
+Kv
+yc
+yc
+yc
+yc
+JR
+Es
+An
+An
+An
+An
+FF
+"}
+(32,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+YD
+rq
+zk
+Gj
+SI
+zZ
+hn
+Zh
+mu
+wJ
+yc
+yg
+yg
+BM
+BM
+ab
+ab
+ug
+Lr
+Lr
+Lr
+Lr
+JF
+LS
+yc
+yc
+yc
+yc
+aG
+ZV
+An
+An
+An
+An
+kI
+"}
+(33,1,1) = {"
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+nL
+vZ
+vZ
+vZ
+nL
+nL
+yI
+yI
+yI
+nL
+yc
+yg
+yg
+BM
+BM
+wv
+wv
+Hy
+xZ
+Ax
+ux
+Pl
+Hy
+Hy
+va
+zT
+ES
+ht
+Hy
+Hy
+oG
+Rp
+dS
+KA
+Hy
+"}
+(34,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+Rb
+Rb
+Rb
+nL
+nL
+FZ
+FZ
+FZ
+nL
+yc
+YF
+YF
+iy
+iy
+Hy
+Hy
+Cv
+Cv
+jg
+jg
+xM
+xM
+xT
+xT
+Qj
+Qj
+XO
+XO
+tn
+tn
+RE
+RE
+IE
+cx
+"}
+(35,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+kl
+NO
+lB
+Jz
+Qi
+kz
+Rt
+Tr
+SQ
+Ll
+yc
+YF
+YF
+iy
+iy
+Hy
+Hy
+Cv
+Cv
+jg
+jg
+xM
+xM
+xT
+xT
+Qj
+Qj
+XO
+XO
+tn
+tn
+RE
+RE
+gF
+gy
+"}
+(36,1,1) = {"
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Lr
+Hy
+Hy
+Wq
+jG
+nL
+jG
+Qi
+kz
+zu
+nL
+zu
+Ll
+yc
+DS
+DS
+wN
+wN
+cb
+cb
+Sr
+Sr
+ZP
+ZP
+Fd
+Fd
+FQ
+FQ
+CK
+CK
+zb
+zb
+mp
+mp
+AC
+Vx
+eU
+Ad
+"}
+(37,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+kl
+MU
+lB
+is
+Qi
+kz
+oi
+Tr
+aS
+Ll
+yc
+DS
+DS
+wN
+wN
+cb
+cb
+Sr
+Sr
+ZP
+ZP
+Fd
+Fd
+FQ
+FQ
+CK
+CK
+zb
+zb
+mp
+mp
+Tj
+Mv
+vl
+Ad
+"}
+(38,1,1) = {"
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+Hy
+nL
+YT
+YT
+YT
+nL
+nL
+uJ
+uJ
+uJ
+nL
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+"}

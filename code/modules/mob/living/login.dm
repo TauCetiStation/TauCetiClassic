@@ -15,9 +15,7 @@
 		client.guard.trigger_init()
 
 	//Jukebox
-	client.media = new /datum/media_manager(src)
-	client.media.open()
-	client.media.update_music()
+	client.media?.open()
 
 	// unresting mob after ghosting
 	SetCrawling(FALSE)

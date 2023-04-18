@@ -140,7 +140,7 @@
 
 	. = ..()
 
-/obj/item/toy/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/toy/spinningtoy/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
 
 /obj/item/toy/spinningtoy/attack_hand(mob/user)
@@ -329,7 +329,7 @@
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/magazines.dmi'
 	icon_state = "357-7"
 	flags = CONDUCT
 	w_class = SIZE_MINUSCULE
