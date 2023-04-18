@@ -459,10 +459,14 @@
 
 	for(var/r in global.alive_replicators)
 		var/mob/living/simple_animal/hostile/replicator/R = r
-		if(R.ckey || R.incapacitated())
+		if(R.is_controlled() || R.incapacitated())
 			continue
 		var/area/A = get_area(R)
 		pos_areas[A.name] = A
+
+	if(length(pos_areas) <= 0)
+		to_chat(user, "<span class='notice'>No suitable hosts found.</span>")
+		return FALSE
 
 	var/area_name = tgui_input_list(user, "Choose an area with replicators in it.", "Area Transfer", pos_areas)
 	if(!area_name)
