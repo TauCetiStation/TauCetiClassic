@@ -661,7 +661,7 @@ var/global/list/admin_verbs_hideable = list(
 				break
 		disease_type = "[disease_type] ([jointext(D.effects, ", ")])"
 	else
-		D.makerandom(greater)
+		D.makerandom(greater, spread_vector = DISEASE_SPREAD_AIRBORNE)
 		if (!greater)
 			D.infectionchance = 1
 
