@@ -36,3 +36,8 @@
 	name = "alien membrane"
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+
+/turf/unsimulated/wall/syndicate
+	name = "ultrareinforced wall"
+	desc = "Огромный кусок укрепленного металла для разделения комнат. Красноватый оттенок придаёт этой стене зловещий вид."
+	icon = 'icons/turf/walls/has_false_walls/syndicate_wall.dmi'

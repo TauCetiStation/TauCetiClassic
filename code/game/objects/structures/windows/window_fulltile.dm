@@ -45,7 +45,7 @@
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
-	
+
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
@@ -183,6 +183,12 @@
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
+/obj/structure/window/fulltile/reinforced/syndicate
+	smooth_adapters = SMOOTH_ADAPTERS_SYNDI_WALLS
+	smooth_icon_windowstill = 'icons/obj/smooth_structures/windows/syndicate_window_sill.dmi'
+	icon_state = "window_syndicate"
+
+
 /**
  * Fulltile reinforced phoron
  */
@@ -255,3 +261,8 @@
 	resistance_flags = FULL_INDESTRUCTIBLE
 
 	grilled = TRUE
+
+/obj/structure/window/fulltile/reinforced/indestructible/syndicate
+	smooth_adapters = SMOOTH_ADAPTERS_SYNDI_WALLS
+	smooth_icon_windowstill = 'icons/obj/smooth_structures/windows/syndicate_window_sill.dmi'
+	icon_state = "window_syndicate"

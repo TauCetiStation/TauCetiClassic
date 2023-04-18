@@ -316,6 +316,7 @@
 
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
+		/turf/unsimulated/wall/syndicate, \
 		/turf/simulated/wall, \
 		/turf/simulated/wall/r_wall, \
 		/obj/structure/falsewall, \
@@ -332,6 +333,7 @@
 		/obj/structure/window/fulltile/reinforced/tinted, \
 		/obj/structure/window/fulltile/reinforced/polarized, \
 		/obj/structure/window/fulltile/reinforced/indestructible, \
+		/obj/structure/window/fulltile/reinforced/indestructible/syndicate, \
 		/obj/machinery/door/airlock, \
 		/obj/machinery/door/airlock/centcom, \
 		/obj/machinery/door/airlock/command, \
@@ -367,6 +369,12 @@
 		/turf/simulated/wall = "wall", \
 		/obj/structure/falsewall = "wall", \
 		/obj/machinery/door/airlock = "wall", \
+)
+
+#define SMOOTH_ADAPTERS_SYNDI_WALLS list( \
+		/turf/unsimulated/wall/syndicate = "syndi_wall", \
+		/obj/structure/falsewall = "syndi_wall", \
+		/obj/machinery/door/airlock = "syndi_wall", \
 )
 
 // wall don't need adapter with another wall
