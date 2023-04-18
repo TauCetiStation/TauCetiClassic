@@ -507,6 +507,28 @@
 			mob.make_jittery(50)
 			addtimer(CALLBACK(mob, /mob/.proc/gib), 50)
 
+/datum/disease2/effect/vomit
+	name = "Haematemesis's Syndrome"
+	desc = "The virus introduces nanites into the host's digestive system, which multiply and begin to eat the body's tissues, causing bleeding with vomiting."
+	level = 4
+	max_stage = 3
+	cooldown = 60
+
+/datum/disease2/effect/vomit/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			to_chat(mob, "<span class='warning'>Your chest hurts!</span>")
+		if(2)
+			mob.vomit(vomit_type = VOMIT_BLOOD, stun = FALSE)
+			if(ishuman(mob))
+				var/mob/living/carbon/human/H = mob
+				H.blood_remove(2)
+		if(3)
+			mob.vomit(vomit_type = VOMIT_NANITE)
+			if(ishuman(mob))
+				var/mob/living/carbon/human/H = mob
+				H.blood_remove(5)
+
 /datum/disease2/effect/radian
 	name = "Radian's Syndrome"
 	desc = "The virus mutates host's skin cells, increasing exposure to radiation."
@@ -719,6 +741,33 @@
 			to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
 			mob.adjustToxLoss(10)
 
+/datum/disease2/effect/nerve_support
+	name = "Nerve Support"
+	desc = "The virus injects nanites into the host's body, which act as a secondary nervous system, protecting against nerve palsies."
+	level = 3
+	max_stage = 3
+	cooldown = 7
+	var/trait_added = FALSE
+	COOLDOWN_DECLARE(senses_message)
+
+/datum/disease2/effect/nerve_support/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			if(COOLDOWN_FINISHED(src, senses_message))
+				to_chat(mob, "<span class='notice'>You feel your tactile senses intensify.</span>")
+				COOLDOWN_START(src, senses_message, 1 MINUTE)
+		if(2)
+			mob.make_dizzy(min(mob.dizziness + 10, 15))
+			mob.adjustHalLoss(-3)
+		if(3)
+			if(trait_added)
+				return
+			ADD_TRAIT(mob, TRAIT_STEEL_NERVES, VIRUS_TRAIT)
+			trait_added = TRUE
+
+/datum/disease2/effect/nerve_support/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(mob, TRAIT_STEEL_NERVES, VIRUS_TRAIT)
+	trait_added = FALSE
 
 /*/datum/disease2/effect/shakey
 	name = "World Shaking Syndrome"
@@ -880,6 +929,21 @@
 /datum/disease2/effect/groan/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	mob.say("*groan")*/
 ////////////////////////STAGE 2/////////////////////////////////
+
+/datum/disease2/effect/purging_advanced
+	name = "Selective Purification"
+	desc = "The virus purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals."
+	level = 2
+	max_stage = 1
+	cooldown = 30
+
+/datum/disease2/effect/purging_advanced/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!mob.getToxLoss())
+		return
+	if(!mob.reagents)
+		return
+	for(var/datum/reagent/toxin/R in mob.reagents.reagent_list)
+		mob.reagents.remove_reagent(R.id, 1)
 
 /datum/disease2/effect/scream
 	name = "Loudness Syndrome"
@@ -1112,6 +1176,19 @@
 			mob.make_jittery(150)
 
 ////////////////////////STAGE 1/////////////////////////////////
+
+/datum/disease2/effect/monitoring
+	name = "Monitoring"
+	desc = "The virus produces nanites that track the host's vital organs and location, sending them to the station's sensor network."
+	level = 1
+	max_stage = 1
+	cooldown = 600
+
+/datum/disease2/effect/monitoring/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	SSmobs.virus_monitored_mobs |= mob
+
+/datum/disease2/effect/monitoring/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	SSmobs.virus_monitored_mobs -= mob
 
 /datum/disease2/effect/cough
 	name = "Cough"
