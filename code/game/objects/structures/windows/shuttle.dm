@@ -43,6 +43,11 @@
 	dir = SOUTHWEST
 	icon_state = "1"
 
+/obj/structure/window/shuttle/reinforced/labor
+	name = "shuttle window"
+	icon = 'icons/locations/shuttles/sec_labor.dmi'
+	dir = SOUTHWEST
+
 /obj/structure/window/shuttle/reinforced/evac
 	name = "shuttle window"
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
