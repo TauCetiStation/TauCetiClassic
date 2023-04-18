@@ -435,7 +435,7 @@
 
 	if(user.my_religion && user.my_religion.members.len)
 		var/crusading_force = initial(force) + user.my_religion.members.len * 1.2
-		force = FLOOR(crusading_force)
+		force = round(crusading_force)
 		to_chat(user, "<span class='notice'>Ты сжимаешь рукоять меча. Заточенная внутри сила с готовностью отзывается, наполняя лезвие древней мощью.</span>")
 
 /obj/item/weapon/nullrod/sword_of_truth/dropped()
