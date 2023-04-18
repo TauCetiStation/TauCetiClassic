@@ -52,7 +52,8 @@
 					/obj/item/device/pda,
 					/obj/item/weapon/lighter,
 					/obj/item/weapon/storage/fancy/crayons,
-					/obj/item/weapon/paper)
+					/obj/item/weapon/paper,
+					/obj/item/weapon/nullrod)
 
 /obj/item/clothing/suit/hooded/nun
 	name = "nun robe"

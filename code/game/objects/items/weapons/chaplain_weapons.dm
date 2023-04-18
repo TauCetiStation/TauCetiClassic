@@ -7,7 +7,7 @@
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	slot_flags = SLOT_FLAGS_BELT
-	force = 15
+	force = 5
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
@@ -125,6 +125,10 @@
 	next_turf_deconvert = world.time + deconvert_turf_cd
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
+	if(user.a_intent == INTENT_HARM)
+		..()
+		return
+
 	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
 		user.adjustBruteLoss(10)
@@ -409,8 +413,54 @@
 	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
+/obj/item/weapon/nullrod/sword_of_truth
+	name = "Sword of Truth"
+	desc = "Is LARPing even allowed on this station?"
 
-///////////////
+	w_class = SIZE_NORMAL
+	slot_flags = SLOT_FLAGS_BACK
+
+	icon_state = "truth"
+	item_state = "truth"
+
+	var/owner = null
+
+/obj/item/weapon/nullrod/sword_of_truth/proc/get_crusading_force(mob/living/carbon/human/user)
+	if(user.real_name != owner)
+		to_chat(user, "<span class='warning'>Рукоятка меча обжигает твою руку!</span>")
+		var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+		BP.take_damage(force, 1, used_weapon = src)
+		user.drop_item()
+		return
+
+	if(user.my_religion && user.my_religion.members.len)
+		var/crusading_force = initial(force) + user.my_religion.members.len * 1.2
+		force = FLOOR(crusading_force)
+		to_chat(user, "<span class='notice'>Ты сжимаешь рукоять меча. Заточенная внутри сила с готовностью отзывается, наполняя лезвие древней мощью.</span>")
+
+/obj/item/weapon/nullrod/sword_of_truth/dropped()
+	..()
+	force = initial(force)
+
+/obj/item/weapon/nullrod/sword_of_truth/examine(mob/user)
+	..()
+	if(owner)
+		to_chat(user, "<span class='notice'>На лезвии выгравировано имя владельца: [owner].</span>")
+
+/obj/item/weapon/nullrod/sword_of_truth/attack_self(mob/living/carbon/human/user)
+	if(iscultist(user))
+		to_chat(user, "<span class='warning'>Невероятная сила вырывает священный меч из твоих рук!</span>")
+		user.drop_item()
+		throw_at(get_step(loc,pick(1,2,4,8)),16,3)
+		return
+
+	if(!owner)
+		owner = user.real_name
+		to_chat(user, "<span class='notice'>Ты нежно гладишь лезвие меча. На нём проступают буквы: [owner].</span>")
+		return
+
+	get_crusading_force(user)
+
 // EQUIPMENT //
 ///////////////
 /obj/item/weapon/shield/riot/roman/religion

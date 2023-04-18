@@ -396,6 +396,7 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
+	allowed = list(/obj/item/weapon/nullrod, /obj/item/weapon/claymore,/obj/item/weapon/shield)
 
 /obj/item/clothing/suit/armor/vest/surplus
 	name = "surplus armor vest"
