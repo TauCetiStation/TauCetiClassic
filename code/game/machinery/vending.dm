@@ -59,7 +59,7 @@
 	var/scan_id = TRUE
 
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
-
+	var/prison = FALSE // Whether the vending machine accepts prison IDs for payment
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -281,6 +281,10 @@
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
 	if(!currently_vending)
 		return
+	if(prison && istype(I, /obj/item/weapon/card/id/labor))
+		scan_labor_card(I)
+		return
+
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -326,6 +330,39 @@
 			currently_vending = null
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
+
+/*
+* Vending machines located in prisons/labor camps accept payment not only with ordinary credits, but also with labor points.
+* In this case, payment to the cargo account goes from the account of security department.
+* Security department then offsets these costs by selling goods produced by prisoners.
+*/
+/obj/machinery/vending/proc/scan_labor_card(obj/item/weapon/card/id/labor/I)
+	visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+	var/transaction_amount = currently_vending.price
+	if(transaction_amount <= I.labor_credits)
+		var/datum/money_account/security_account = global.department_accounts["Security"]
+		if(!security_account)
+			to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access security department account. Please record the machine ID and call CentComm Support.</span>")
+			return
+		else if(transaction_amount > security_account.money)
+			to_chat(usr, "[bicon(src)]<span class='warning'>Insufficient security department balance! Please contact the security staff or try later.</span>")
+			return
+
+		//transfer the money
+		var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
+
+		I.labor_credits -= transaction_amount
+		//create entries in the two account transaction logs
+		charge_to_account(security_account.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
+		//
+		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
+
+		// Vend the item
+		vend(src.currently_vending, usr)
+		currently_vending = null
+	else
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 
 /obj/machinery/vending/proc/set_extended_inventory(state)
 	extended_inventory = state
