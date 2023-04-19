@@ -342,15 +342,8 @@
 		return
 	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
 		user.drop_from_inventory(W)
-		switch(get_dir(user, src))
-			if(NORTH)
-				W.pixel_y = 24
-			if(SOUTH)
-				W.pixel_y = -24
-			if(EAST)
-				W.pixel_x = 24
-			if(WEST)
-				W.pixel_x = -24
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
 		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
