@@ -42845,6 +42845,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = bar;
 	name = "Bar APC";
 	pixel_y = -30
 	},
