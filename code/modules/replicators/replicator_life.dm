@@ -126,12 +126,15 @@
 	can_starve = TRUE
 	breath_phoron = FALSE
 
-	if(environment && environment.get_gas("fractol") >= 1.0)
+	if(!environment)
+		return
+
+	if(environment.get_gas("fractol") >= 1.0)
 		environment.adjust_gas("fractol", -1.0)
 		can_starve = FALSE
 		last_disintegration = world.time
 
-	if(environment && environment.get_gas("phoron") >= 1.0)
+	if(environment.get_gas("phoron") >= 1.0)
 		environment.adjust_gas("phoron", -1.0)
 		breath_phoron = TRUE
 
