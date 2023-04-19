@@ -306,8 +306,8 @@
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	ranged_cooldown = 5
 	ranged_cooldown_cap = 0
-	maxHealth = 200
-	health = 200
+	maxHealth = 120
+	health = 120
 	melee_damage = 0
 	speed = 0
 	anchored = TRUE
@@ -345,3 +345,7 @@
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
 	return
+
+/mob/living/simple_animal/hostile/pylon/AttackingTarget()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
+	OpenFire(target)

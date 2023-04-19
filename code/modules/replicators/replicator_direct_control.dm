@@ -16,7 +16,7 @@
 		R.set_leader(src)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_leader(mob/living/simple_animal/hostile/replicator/R, alert=TRUE)
-	if(ckey)
+	if(is_controlled())
 		return FALSE
 	if(state == REPLICATOR_STATE_COMBAT)
 		return FALSE
@@ -24,7 +24,7 @@
 		return FALSE
 	if(R.a_intent != INTENT_HARM)
 		return FALSE
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return FALSE
 	if(R.controlling_drones >= REPLICATOR_MAX_CONTROLLED_DRONES)
 		if(alert)

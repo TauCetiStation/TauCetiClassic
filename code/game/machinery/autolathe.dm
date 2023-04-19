@@ -133,7 +133,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/ammo_box/magazine/stechkin, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/colt, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/glock, CATEGORY_AMMO),
-	R(/obj/item/ammo_box/c38m,                    CATEGORY_AMMO),
+	R(/obj/item/ammo_box/speedloader/c38m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO)
 

@@ -232,7 +232,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 			cleaned_item.clean_blood()
 
 /mob/living/simple_animal/hostile/replicator/proc/try_construct(turf/T)
-	if(!ckey)
+	if(!is_controlled())
 		return
 
 	if(!auto_construct_type)
@@ -300,7 +300,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	return TRUE
 
 /mob/living/simple_animal/hostile/replicator/update_icon()
-	if(ckey || stat == DEAD)
+	if(is_controlled() || stat == DEAD)
+		return
+	if(!indicator)
 		return
 	overlays -= indicator
 	indicator.color = state2color[state]
@@ -381,15 +383,15 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	var/list/pos_replicators = global.alive_replicators.Copy()
 	while(length(pos_replicators))
-		var/mob/living/simple_animal/construct/C = pick(pos_replicators)
-		pos_replicators -= C
-		if(C.ckey)
+		var/mob/living/simple_animal/hostile/replicator/R = pick(pos_replicators)
+		pos_replicators -= R
+		if(R.is_controlled())
 			continue
 		playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
-		transfer_control(C, emergency=TRUE)
-		to_chat(C, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
+		transfer_control(R, emergency=TRUE)
+		to_chat(R, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
 		flash_color(src, flash_color="#ff0000", flash_time=1 SECOND)
-		flash_color(C, flash_color="#ff0000", flash_time=1 SECOND)
+		flash_color(R, flash_color="#ff0000", flash_time=1 SECOND)
 
 /mob/living/simple_animal/hostile/replicator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
@@ -405,7 +407,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(!mind)
 		return
 
-	if(target.ckey)
+	if(target.is_controlled())
 		if(alert)
 			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
 		return FALSE
@@ -462,7 +464,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/hostile/replicator/other = r
-			if(other.ckey)
+			if(other.is_controlled())
 				continue
 			if(get_dist(src, other) > 7)
 				continue
@@ -489,7 +491,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		if(incapacitated())
 			to_chat(R, "<span class='warning'>Negative: Unit too weak to self-disintegrate.</span>")
 			return
-		if(ckey)
+		if(is_controlled())
 			to_chat(R, "<span class='warning'>Negative: Unit is affected by another Presence.</span>")
 			return
 		if(excitement > 0)
@@ -517,7 +519,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		if(incapacitated())
 			to_chat(R, "<span class='warning'>Negative: Unit too weak to receive objections.</span>")
 			return
-		if(!ckey)
+		if(!is_controlled())
 			to_chat(R, "<span class='warning'>Negative: No presence to receive objections.</span>")
 			return
 
@@ -543,7 +545,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
 
 /mob/living/simple_animal/hostile/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
-	var/mufflerange = has_swarms_gift() ? -6 : 0
+	var/mufflerange = has_swarms_gift() ? -6.5 : 0
 	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=vol, extrarange=mufflerange)
 
 /mob/living/simple_animal/hostile/replicator/gib()
@@ -618,6 +620,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	s.start()
 
 	Stun(impact * 0.75)
+	Weaken(impact)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_last_controller(ckey, just_spawned=FALSE)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -658,7 +661,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(length(RAI.acquired_upgrades) > 0)
 		to_chat(user, "<span class='notice'>They have the following upgrades:\n[RAI.get_upgrades_string()]</span>")
 
-	if(ckey)
+	if(is_controlled())
 		if(user == src && FR.upgrades_amount > length(RAI.acquired_upgrades))
 			to_chat(user, "<span class='bold notice'><a href='?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")
 		return
@@ -685,7 +688,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 // Whether this mob can choose to move to NewLoc. Return FALSE if not.
 /mob/living/simple_animal/hostile/replicator/proc/can_intentionally_move(atom/NewLoc, movedir)
-	if(!ckey)
+	if(!is_controlled())
 		return TRUE
 
 	if(m_intent != MOVE_INTENT_WALK)
@@ -749,3 +752,17 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/sign_txt = amount >= 0 ? "+" : ""
 
 	show_runechat_message(src, null, "[sign_txt][round(amount, 0.1)]µ", lifespan=REPLICATOR_DISINTEGRATION_MESSAGE_LIFESPAN)
+
+/mob/living/simple_animal/hostile/replicator/proc/is_same_array_as(mob/living/simple_animal/hostile/replicator/other)
+	return last_controller_ckey == other.last_controller_ckey
+
+/mob/living/simple_animal/hostile/replicator/proc/is_controlled()
+	return ckey
+
+/mob/living/simple_animal/hostile/replicator/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+	take_bodypart_damage(0.0, shock_damage)
+	Stun(2)
+
+/mob/living/simple_animal/hostile/replicator/FireBurn(firelevel, last_temperature, air_multiplier)
+	var/mx = 50.0 * firelevel / vsc.fire_firelevel_multiplier * air_multiplier
+	apply_damage(maxHealth * 3.0 * mx, BURN)
