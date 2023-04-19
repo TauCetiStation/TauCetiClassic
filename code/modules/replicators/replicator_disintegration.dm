@@ -250,7 +250,7 @@
 /mob/living/simple_animal/hostile/replicator/proc/try_spawn_node(turf/T)
 	var/spawn_prob = 5
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	if(FR.nodes_to_spawn > 1 || (ckey && has_swarms_gift()))
+	if(FR.nodes_to_spawn > 1 || (is_controlled() && has_swarms_gift()))
 		spawn_prob = 50
 
 	if(!prob(spawn_prob))
