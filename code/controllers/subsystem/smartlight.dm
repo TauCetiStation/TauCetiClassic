@@ -15,7 +15,15 @@ SUBSYSTEM_DEF(smartlight)
 	var/forced_admin_mode = FALSE
 
 /datum/controller/subsystem/smartlight/Initialize(timeofday)
-	smartlight_preset = new /datum/smartlight_preset/default // take me from map_config
+	if(SSmapping.config.smartlight_preset)
+		var/type = smartlight_presets[SSmapping.config.smartlight_preset]
+		if(type)
+			smartlight_preset = new type
+
+	if(!smartlight_preset)
+		stack_trace("Can't load smartlight preset from map config!")
+		smartlight_preset = new /datum/smartlight_preset/default
+
 	if(config.nightshift)
 		check_nightshift()
 	..()
