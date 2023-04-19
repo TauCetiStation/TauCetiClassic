@@ -340,6 +340,18 @@
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && get_dir(user,src) in global.cardinal)
+		user.drop_from_inventory(W)
+		switch(get_dir(user, src))
+			if(NORTH)
+				W.pixel_y = 24
+			if(SOUTH)
+				W.pixel_y = -24
+			if(EAST)
+				W.pixel_x = 24
+			if(WEST)
+				W.pixel_x = -24
+		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)
