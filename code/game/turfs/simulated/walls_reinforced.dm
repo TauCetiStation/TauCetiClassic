@@ -340,7 +340,7 @@
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return
-	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && get_dir(user,src) in global.cardinal)
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
 		user.drop_from_inventory(W)
 		switch(get_dir(user, src))
 			if(NORTH)
