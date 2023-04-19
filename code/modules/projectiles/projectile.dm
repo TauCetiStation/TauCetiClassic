@@ -219,9 +219,9 @@
 				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
 
 
-	if(istype(A,/turf))
-		for(var/mob/Mob in A)
-			Mob.bullet_act(src, def_zone)
+	if(ismob(A))
+		for(var/mob/mob in get_turf(M.loc))
+			mob.bullet_act(src,def_zone)
 
 	//stop flying
 	on_impact(A)
