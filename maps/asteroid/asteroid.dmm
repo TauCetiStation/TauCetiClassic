@@ -136,7 +136,7 @@
 	name = "\improper ISOLATION ROOM FOUR";
 	pixel_x = 32
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -387,7 +387,7 @@
 	dir = 4;
 	network = list("Research","SS13")
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -1061,7 +1061,7 @@
 	},
 /area/asteroid/research_outpost/spectro)
 "cC" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1122,7 +1122,7 @@
 /obj/structure/transit_tube/station{
 	dir = 8
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1146,7 +1146,7 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "cJ" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -1258,7 +1258,7 @@
 	},
 /area/asteroid/research_outpost/anomaly)
 "cZ" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1359,7 +1359,7 @@
 /obj/item/weapon/reagent_containers/dropper{
 	pixel_y = -4
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -1829,7 +1829,7 @@
 /obj/machinery/computer/reconstitutor/animal{
 	dir = 8
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1917,7 +1917,7 @@
 	c_tag = "Research Outpost Lobby";
 	network = list("Research","SS13")
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -2484,7 +2484,7 @@
 /area/asteroid/research_outpost/harvesting)
 "fj" = (
 /obj/machinery/clonepod,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -2522,7 +2522,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2545,7 +2545,7 @@
 "fp" = (
 /obj/structure/table,
 /obj/item/weapon/melee/baton,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/item/weapon/lighter/random,
 /obj/item/device/analyzer,
 /turf/simulated/floor{
@@ -2759,7 +2759,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -2786,7 +2786,7 @@
 	dir = 4;
 	network = list("Research","SS13")
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2909,14 +2909,14 @@
 	layer = 3.3;
 	pixel_y = -27
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "gg" = (
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -3777,7 +3777,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -4045,7 +4045,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -4247,7 +4247,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -4465,7 +4465,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitehall"
@@ -5223,7 +5223,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -5261,7 +5261,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5539,7 +5539,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -5790,7 +5790,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -6047,7 +6047,7 @@
 /area/asteroid/research_outpost/harvesting)
 "mP" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -6076,7 +6076,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -7122,7 +7122,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -7134,7 +7134,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -7171,7 +7171,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -7286,7 +7286,7 @@
 	},
 /area/asteroid/mine/explored)
 "pI" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools,
@@ -7424,7 +7424,7 @@
 /area/asteroid/research_outpost/gearstore)
 "qa" = (
 /obj/machinery/suspension_gen,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -8809,7 +8809,7 @@
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "tU" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -9463,7 +9463,7 @@
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -9655,7 +9655,7 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -9687,7 +9687,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "vW" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -9878,7 +9878,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "ww" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -9941,7 +9941,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/backpack/satchel,
 /obj/item/clothing/glasses/hud/mining,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -10091,7 +10091,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "wU" = (
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/structure/table,
 /obj/random/tools/tech_supply,
 /obj/random/tools/tech_supply,
@@ -10799,7 +10799,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -10990,7 +10990,7 @@
 /area/asteroid/mine/eva)
 "zF" = (
 /obj/structure/closet/secure_closet/miner,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -11111,7 +11111,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -11534,7 +11534,7 @@
 /turf/environment/space,
 /area/space)
 "Bn" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/structure/transit_tube/station,
@@ -11806,7 +11806,7 @@
 	},
 /area/asteroid/mine/production)
 "Ef" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -11986,7 +11986,7 @@
 	dir = 6;
 	id = "mining_internal"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -12078,7 +12078,7 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -12273,7 +12273,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -12368,7 +12368,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Nd" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -12533,7 +12533,7 @@
 	layer = 4;
 	pixel_x = -32
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -12801,7 +12801,7 @@
 	id = "outpost_misc";
 	pixel_y = -28
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Vb" = (
@@ -12841,7 +12841,7 @@
 	id = "mining_internal"
 	},
 /obj/machinery/mineral/input,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "VK" = (
@@ -12877,7 +12877,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/hologram/holopad,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -12965,7 +12965,7 @@
 	},
 /area/asteroid/mine/production)
 "Xf" = (
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
