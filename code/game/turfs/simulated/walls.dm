@@ -438,6 +438,11 @@
 		place_poster(W,user)
 		return
 
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		return
 	else
 		return attack_hand(user)
 
