@@ -33,9 +33,9 @@
 	for(var/path in SLP.available_modes)
 
 		if(path in SLP.disabled_modes)
-			html += "<a class='good' href='?src=\ref[src];enable_mode=[path]'>Enable</a>"
+			html += "<a class='bad' href='?src=\ref[src];enable_mode=[path]'>Disabled</a>"
 		else
-			html += "<a class='bad' href='?src=\ref[src];disable_mode=[path]'>Disable</a>"
+			html += "<a class='good' href='?src=\ref[src];disable_mode=[path]'>Enabled</a>"
 
 		html += " <b>[light_modes_by_type[path].name]</b>"
 
