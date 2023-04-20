@@ -4,7 +4,6 @@ var/global/list/labor_rates = list()
 	var/product
 	var/nametag
 	var/price
-	var/high_priority = FALSE
 
 /*************** Materials **********************/
 /datum/labor/metal
@@ -36,11 +35,6 @@ var/global/list/labor_rates = list()
 	product = /obj/item/stack/sheet/cardboard
 	nametag = "cardboard"
 	price = 1
-
-/datum/labor/cable
-	product = /obj/item/stack/cable_coil
-	nametag = "cable piece"
-	price = 0.1
 
 /datum/labor/bananium
 	product = /obj/item/stack/sheet/mineral/clown
@@ -87,14 +81,9 @@ var/global/list/labor_rates = list()
 	nametag = "platinum"
 	price = 500
 
-/*************** Hydroponics **********************/
+/*************** Misc **********************/
 
-/datum/labor/banana
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
-	nametag = "banana"
-	price = 10
-
-/datum/labor/rice
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-	nametag = "rice"
-	price = 10
+/datum/labor/grown
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown
+	nametag = "grown food"
+	price = 5

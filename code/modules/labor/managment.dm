@@ -13,7 +13,7 @@
 	name = "Labor Management Computer"
 	desc = "Used to issue prisoners id cards and manage labor production priorities."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "explosive"
+	icon_state = "security"
 	state_broken_preset = "securityb"
 	state_nopower_preset = "security0"
 	light_color = "#a91515"

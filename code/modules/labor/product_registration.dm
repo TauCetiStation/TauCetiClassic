@@ -75,7 +75,7 @@
 
 	var/CR = product_income[nametag] ? product_income[nametag] : 0
 	CR += L.price * amount
-	credits += L.price * amount + round(L.high_priority ? L.price * 0.5 * amount : 0) //If high priority is set, giving extra 50%
+	credits += L.price * amount
 	product_income[nametag] = CR
 	SStgui.update_uis(src)
 
