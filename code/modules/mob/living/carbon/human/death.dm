@@ -45,7 +45,6 @@
 
 	if(!gibbed)
 		INVOKE_ASYNC(src, .proc/emote, "deathgasp") //let the world KNOW WE ARE DEAD
-		layer = 3.9
 
 		update_canmove()
 
