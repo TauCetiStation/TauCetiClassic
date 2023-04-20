@@ -2193,6 +2193,21 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"adR" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/bar)
 "adS" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
@@ -34879,6 +34894,16 @@
 	c_tag = "Bar West";
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	dir = 8;
+	name = "Bar APC";
+	pixel_x = -28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -39757,6 +39782,11 @@
 	name = "Bar Door";
 	req_one_access = list(25)
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -42072,6 +42102,11 @@
 /area/station/cargo/storage)
 "bzk" = (
 /obj/machinery/light/smart,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -42087,13 +42122,14 @@
 	},
 /area/station/medical/hallway)
 "bzm" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/civilian/bar)
 "bzn" = (
@@ -42720,15 +42756,12 @@
 /area/station/medical/sleeper)
 "bAu" = (
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "bar";
-	name = "Bar APC";
-	pixel_y = -30
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
@@ -106653,7 +106686,7 @@ vsv
 avN
 bmx
 avN
-avN
+bAu
 bvm
 bzk
 bDn
@@ -106912,7 +106945,7 @@ bmx
 avN
 avN
 bwd
-avN
+bzm
 bDr
 bDO
 bEs
@@ -107169,7 +107202,7 @@ boS
 iJB
 bmn
 bwf
-bzm
+adR
 bDn
 bDU
 bGm
@@ -107426,7 +107459,7 @@ brh
 gTX
 bHL
 gTX
-bAu
+aDx
 bDn
 bDn
 bDn
