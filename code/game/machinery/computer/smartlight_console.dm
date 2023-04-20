@@ -89,6 +89,9 @@
 			updateUsrDialog()
 
 	else if(href_list["sync_apc"])
+		if(SSsmartlight.forced_admin_mode)
+			tgui_alert(usr, "Error: global operations are blocked by CentComm.")
+			return
 		if(!COOLDOWN_FINISHED(src, heavy_operation_cd))
 			tgui_alert(usr, "You must wait at least one minute between each global operation.")
 			return
@@ -97,12 +100,25 @@
 		updateUsrDialog()
 
 	else if(href_list["toggle_nightshift"])
+		if(SSsmartlight.forced_admin_mode)
+			tgui_alert(usr, "Error: global operations are blocked by CentComm.")
+			return
 		if(!COOLDOWN_FINISHED(src, heavy_operation_cd))
 			tgui_alert(usr, "You must wait at least one minute between each global operation.")
 			return
 		COOLDOWN_START(src, heavy_operation_cd, 1 MINUTE)
 		SSsmartlight.toggle_nightshift(!SSsmartlight.nightshift_active)
 		updateUsrDialog()
+
+/obj/machinery/computer/smartlight/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = TRUE
+
+	SSsmartlight.smartlight_preset = new /datum/smartlight_preset/horror_station
+	to_chat(user, "<span class='notice'>You did a factory reset!</span>")
+	SSsmartlight.sync_apc()
+	updateUsrDialog()
 
 /obj/machinery/computer/smartlight/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/disk/smartlight_programm))
@@ -116,7 +132,10 @@
 		if(!global.light_modes_by_type[type])
 			stack_trace("Impossible programm: [type]")
 			return
-		//todo: do_after
+
+		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to install new programm.</span>"))
+			return
+
 		to_chat(usr, "<span class='notice'>You have successfully installed new programm.</span>")
 		SLP.add_mode(type, disabled = TRUE)
 		qdel(D)

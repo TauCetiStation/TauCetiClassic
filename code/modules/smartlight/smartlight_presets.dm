@@ -68,6 +68,16 @@ var/global/list/smartlight_presets
 		/datum/light_mode/hard,
 	)
 
+/datum/smartlight_preset/horror_station // emag preset
+	name = "horror"
+
+	default_mode = /datum/light_mode/horror
+	no_nightshift_mode = TRUE
+
+	available_modes = list(
+		/datum/light_mode/horror,
+	)
+
 /* 
    Local APC presets (will expand global one)
 */

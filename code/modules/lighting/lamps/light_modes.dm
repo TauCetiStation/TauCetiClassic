@@ -1,5 +1,5 @@
-var/global/list/light_modes_by_type
-var/global/list/light_modes_by_name // for admins, may differ in content from light_modes_by_type
+var/global/list/datum/light_mode/light_modes_by_type
+var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ in content from light_modes_by_type
 
 #define DEFAULT_RANGE 8
 #define DEFAULT_POWER 2
@@ -13,10 +13,11 @@ var/global/list/light_modes_by_name // for admins, may differ in content from li
 
 
 /* Defaults for old dumb lamps */
+
 /datum/light_mode/default
 	name = "Default"
 
-	color = "#ffffff" // 6500К - #FFF9FD?
+	color = "#ffffff" // todo: replace with softer light (6500К - #FFF9FD?)
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
@@ -48,6 +49,7 @@ var/global/list/light_modes_by_name // for admins, may differ in content from li
 	range = 4
 
 /* Customs for new smart lamps */
+
 /datum/light_mode/soft
 	name = "Soft"
 

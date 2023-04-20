@@ -33,7 +33,7 @@
 
 	var/rigged = FALSE // true if rigged to explode
 
-/obj/machinery/light/smart // todo: replace all old tubes on this
+/obj/machinery/light/smart
 	inserted_bulb_type = /obj/item/weapon/light/tube/smart
 
 /obj/machinery/light/small
@@ -53,10 +53,6 @@
 
 /obj/machinery/light/atom_init(mapload)
 	..()
-
-	//if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS) // todo do something with this (own preset for smart light?)
-	//	brightness_power = LAMP_BRIGHTNESS_HOLIDAY
-	// ^ changes default 2 (LAMP_BRIGHTNESS) to 1.5 (LAMP_BRIGHTNESS_HOLIDAY)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -108,6 +104,11 @@
 		var/new_color = force_override_color || mode.color
 		var/new_power = force_override_power || mode.power
 		var/new_range = force_override_range || mode.range
+
+		// hack (needs to redo) so new year station will look better with garlands
+		// changes power for standart lamps
+		if(SSholiday.holidays[NEW_YEAR] && new_power == 2 && is_station_level(z))
+			new_power = 1.5
 
 		if(light_range != new_range || light_power != new_power || light_color != new_color)
 			switchcount++
@@ -231,12 +232,12 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(isscrewing(W)) // todo: use_tool
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-			user.visible_message("[user.name] opens [src]'s casing.", \
+		if(isscrewing(W))
+			if(W.use_tool(src, user, 20))
+				user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
-			deconstruct(TRUE)
-			qdel(src)
+				deconstruct(TRUE)
+				qdel(src)
 			return
 
 		to_chat(user, "You stick [W] into the light socket!")
