@@ -1199,6 +1199,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 	category = list("Machine")
 
+/datum/design/board/reagentgrinder
+	name = "All-In-One Grinder Board"
+	desc = "The circuit board for an All-In-One Grinder."
+	id = "reagentgrinder"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/reagentgrinder
+	category = list("Machine")
+
 /datum/design/gas_heater
 	name = "gas heating system"
 	desc = "The circuit board for a heater."
