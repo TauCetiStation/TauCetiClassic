@@ -2876,7 +2876,7 @@
 /area/station/solar/auxport)
 "afa" = (
 /obj/structure/closet/wardrobe/red,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/structure/window/thin/reinforced,
@@ -12889,7 +12889,7 @@
 /obj/item/clothing/under/boxing/red,
 /obj/item/clothing/under/boxing/white,
 /obj/structure/closet,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/structure/window/thin/reinforced{
@@ -20399,7 +20399,7 @@
 /area/station/rnd/misc_lab)
 "aLp" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/structure/window/thin/reinforced{
@@ -25597,7 +25597,7 @@
 /area/station/construction/assembly_line)
 "aVd" = (
 /obj/structure/table/glass,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
@@ -54599,7 +54599,7 @@
 /obj/machinery/conveyor{
 	id = "Assembly Line"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/item/stack/sheet/metal{
