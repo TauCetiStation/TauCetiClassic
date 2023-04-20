@@ -805,7 +805,7 @@
 		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfCanHack" = get_malf_status(user),
 		"nightshiftLights" = nightshift_lights,
-		"nightshiftPreset" = SSsmartlight.forced_admin_mode ? "unknown" : light_mode.name,
+		"smartlightMode" = SSsmartlight.forced_admin_mode ? "unknown" : light_mode.name,
 
 		"powerChannels" = list(
 			list(
@@ -869,7 +869,7 @@
 			return FALSE
 
 	else // Human
-		if(locked && act != "toggle_nightshift" && act != "change_nightshift")
+		if(locked && act != "toggle_nightshift" && act != "change_smartlight")
 			return FALSE
 
 	return TRUE
@@ -905,7 +905,7 @@
 			COOLDOWN_START(src, smartlight_switch, 4 SECONDS)
 			toggle_nightshift(!nightshift_lights)
 			. = TRUE
-		if("change_nightshift")
+		if("change_smartlight")
 			if(SSsmartlight.forced_admin_mode)
 				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
 				return
