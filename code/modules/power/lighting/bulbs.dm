@@ -32,6 +32,7 @@
 /obj/item/weapon/light/tube/smart // todo: own white colb sprite (+color!)
 	name = "smart light tube"
 	desc = "A replacement smart light tube. Can be used with central lighting control systems!"
+	icon_state = "lstube" // coder sprite, temp
 	smart = TRUE
 
 /obj/item/weapon/light/tube/large // we don't really need this...
