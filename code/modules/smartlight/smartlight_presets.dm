@@ -9,14 +9,34 @@ var/global/list/smartlight_presets
 	var/no_nightshift_mode = FALSE // for area APC
 
 	var/list/available_modes = list()
+	var/list/disabled_modes = list()
 
-/datum/smartlight_preset/proc/get_modes_name_list()
+/datum/smartlight_preset/proc/get_user_available_modes()
 	. = list()
-	for(var/type in available_modes)
+	for(var/type in (available_modes - disabled_modes))
 		var/datum/light_mode/LM = global.light_modes_by_type[type]
 		.[LM.name] = LM
 
 	return .
+
+/datum/smartlight_preset/proc/disable_mode(path)
+	if(path in available_modes)
+		disabled_modes += path
+		return TRUE
+
+/datum/smartlight_preset/proc/enable_mode(path)
+	if(path in disabled_modes)
+		disabled_modes -= path
+		return TRUE
+
+/datum/smartlight_preset/proc/add_mode(path, disabled = FALSE)
+	if(path in available_modes)
+		return FALSE
+
+	available_modes += path
+	if(disabled)
+		disabled_modes += path
+	return TRUE
 
 // expand default station preset (base) with custom APC preset (src)
 /datum/smartlight_preset/proc/expand_onto(datum/smartlight_preset/base)
@@ -25,7 +45,8 @@ var/global/list/smartlight_presets
 	default_mode = default_mode ? default_mode : base.default_mode
 	if(!no_nightshift_mode)
 		nightshift_mode = nightshift_mode ? nightshift_mode : base.nightshift_mode
-	available_modes = base.available_modes + available_modes
+	available_modes = base.available_modes | available_modes
+	disabled_modes = base.disabled_modes | disabled_modes
 
 /* 
    Global Map presets
@@ -64,6 +85,7 @@ var/global/list/smartlight_presets
 		/datum/light_mode/neon_dark,
 	)
 
+// todo: maybe need to be replaced with custom_smartlight_preset for APC in areas
 var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))
 
 /datum/smartlight_preset/hardlight_nightshift

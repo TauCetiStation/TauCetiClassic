@@ -71,6 +71,12 @@ SUBSYSTEM_DEF(smartlight)
 			APC.reset_smartlight()
 			CHECK_TICK
 
+/datum/controller/subsystem/smartlight/proc/sync_apc()
+	for(var/obj/machinery/power/apc/APC in apc_list)
+		if (is_station_level(APC.z) || is_mining_level(APC.z))
+			APC.sync_smartlight()
+			CHECK_TICK
+
 /client/proc/add_smartlight_preset()
 	set category = "Debug"
 	set name = "Add Smartlight Preset"

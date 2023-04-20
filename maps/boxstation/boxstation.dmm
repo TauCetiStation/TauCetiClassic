@@ -32580,6 +32580,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
+/obj/machinery/computer/smartlight,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhG" = (

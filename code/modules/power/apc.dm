@@ -910,7 +910,7 @@
 				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
 				return
 
-			var/list/available_modes = smartlight_preset.get_modes_name_list()
+			var/list/available_modes = smartlight_preset.get_user_available_modes()
 			var/mode_name = input(usr, "Please choose lighting mode.") as null|anything in available_modes
 
 			if(!COOLDOWN_FINISHED(src, smartlight_switch))
@@ -1312,7 +1312,7 @@
 	if(custom_smartlight_preset)
 		var/type = smartlight_presets[custom_smartlight_preset]
 		smartlight_preset = new type
-	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist)) // todo: maybe need to be replaced with custom_smartlight_preset for APC in areas
+	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist))
 		smartlight_preset = new /datum/smartlight_preset/hardlight_nightshift
 	else
 		smartlight_preset = new
@@ -1325,6 +1325,11 @@
 	else
 		nightshift_lights = FALSE
 		set_light_mode(global.light_modes_by_type[smartlight_preset.default_mode])
+
+/obj/machinery/power/apc/proc/sync_smartlight()
+	set waitfor = FALSE
+	// todo: need to preserve local user settings (idk how)
+	init_smartlight()
 
 /obj/machinery/power/apc/proc/set_light_mode(datum/light_mode/new_mode, forced = FALSE)
 	set waitfor = FALSE
