@@ -221,7 +221,10 @@
 
 	if(ismob(A))
 		for(var/mob/mob in get_turf(M.loc))
-			mob.bullet_act(src,def_zone)
+			if(check_living_shield(mob) == M)
+				M.bullet_act(src,def_zone)
+			else
+				mob.bullet_act(src,def_zone)
 
 	//stop flying
 	on_impact(A)
