@@ -910,7 +910,7 @@
 				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
 				return
 
-			var/list/available_modes = smartlight_preset.get_user_available_modes()
+			var/list/datum/light_mode/available_modes = smartlight_preset.get_user_available_modes()
 			var/mode_name = input(usr, "Please choose lighting mode.") as null|anything in available_modes
 
 			if(!COOLDOWN_FINISHED(src, smartlight_switch))

@@ -60,7 +60,7 @@
 	var/datum/smartlight_preset/SLP = SSsmartlight.smartlight_preset
 
 	if(href_list["change_default"])
-		var/list/available_modes = SLP.get_user_available_modes()
+		var/list/datum/light_mode/available_modes = SLP.get_user_available_modes()
 		var/mode_name = input(usr, "Please choose new default lighting mode.") as null|anything in available_modes
 		if(mode_name && available_modes[mode_name])
 			SLP.default_mode = available_modes[mode_name].type
