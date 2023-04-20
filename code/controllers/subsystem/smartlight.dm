@@ -21,7 +21,10 @@ SUBSYSTEM_DEF(smartlight)
 			smartlight_preset = new type
 
 	if(!smartlight_preset)
-		stack_trace("Can't load smartlight preset from map config!")
+		var/error = "Can't load smartlight preset from map config!"
+		if(SSmapping.config.smartlight_preset)
+			error += " Wrong preset name: [SSmapping.config.smartlight_preset]"
+		stack_trace(error)
 		smartlight_preset = new /datum/smartlight_preset/default
 
 	if(config.nightshift)

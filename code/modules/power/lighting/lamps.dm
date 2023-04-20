@@ -13,8 +13,7 @@
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
 
-	//var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
-	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube/smart // todo: remove me
+	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
 	var/fitting = LAMP_FITTING_TUBE
 
 	var/datum/light_mode/area_light_mode // all lamps have this, but will be used only for lamps with smart bulbs
