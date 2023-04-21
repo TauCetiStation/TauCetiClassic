@@ -4485,7 +4485,9 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;\topacity = 0;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -9003,7 +9005,9 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;\topacity = 0;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -14300,7 +14304,9 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;\topacity = 0;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -41532,7 +41538,7 @@
 /area/station/cargo/storage)
 "lPl" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#ffff00"
+	color = "#FFFF00"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -47883,7 +47889,9 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;\topacity = 0;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -50385,7 +50393,8 @@
 /area/station/civilian/chapel)
 "ozR" = (
 /obj/machinery/door_control{
-	id = "kitchen_shuttes;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters"
 	},
 /turf/simulated/wall,
 /area/station/civilian/kitchen)
@@ -56179,7 +56188,7 @@
 /area/station/civilian/chapel/office)
 "qjC" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#ffff00";
+	color = "#FFFF00";
 	name = "plasma mixer"
 	},
 /turf/simulated/floor{
@@ -59808,7 +59817,9 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;\topacity = 0;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -82114,7 +82125,9 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;\topacity = 0;\tname = "KitchenShutters
+	id = "kitchen_shuttes;
+	name = "KitchenShutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
