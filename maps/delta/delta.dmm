@@ -41538,7 +41538,7 @@
 /area/station/cargo/storage)
 "lPl" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#FFFF00"
+	color = "#ffff00"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -56188,7 +56188,7 @@
 /area/station/civilian/chapel/office)
 "qjC" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#FFFF00";
+	color = "#ffff00";
 	name = "plasma mixer"
 	},
 /turf/simulated/floor{
