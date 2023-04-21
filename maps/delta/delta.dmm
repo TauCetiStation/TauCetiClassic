@@ -4485,7 +4485,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
 	},
@@ -9005,7 +9005,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
 	},
@@ -14304,7 +14304,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
 	},
@@ -47889,7 +47889,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
 	},
@@ -50393,7 +50393,7 @@
 /area/station/civilian/chapel)
 "ozR" = (
 /obj/machinery/door_control{
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters"
 	},
 /turf/simulated/wall,
@@ -59817,7 +59817,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
 	},
@@ -82125,7 +82125,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = "kitchen_shuttes;
+	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
 	},
