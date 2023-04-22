@@ -131,7 +131,7 @@
 	if(!isturf(loc))
 		return
 
-	if(anchored && check_direction(user))
+	if(anchored && is_the_opposite_dir(src.dir, get_dir(src, user)))
 		tgui_interact(user)
 
 /obj/item/device/cardpay/tgui_interact(mob/user, datum/tgui/ui)
@@ -152,7 +152,7 @@
 	if(.)
 		return
 
-	if(!check_direction(usr))
+	if(!is_the_opposite_dir(src.dir, get_dir(src, user)))
 		SStgui.close_user_uis(usr, src)
 		return
 
@@ -209,6 +209,3 @@
 		holoprice.icon = 'icons/obj/device.dmi'
 		holoprice.icon_state = "holo_overlay"
 	add_overlay(holoprice)
-
-/obj/item/device/cardpay/proc/check_direction(mob/user)
-	return is_the_opposite_dir(src.dir, get_dir(src, user))
