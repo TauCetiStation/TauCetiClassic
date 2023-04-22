@@ -12,7 +12,7 @@
 
 /obj/machinery/computer/smartlight/ui_interact(mob/user)
 
-	var/html = "" // todo: check if in admin forced mode?
+	var/html = ""
 
 	var/datum/smartlight_preset/SLP = SSsmartlight.smartlight_preset
 
