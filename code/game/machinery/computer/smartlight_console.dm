@@ -70,7 +70,7 @@
 		var/list/datum/light_mode/available_modes = SLP.get_user_available_modes()
 		var/mode_name = input(usr, "Please choose new night shift lighting mode.") as null|anything in available_modes
 		if(mode_name && available_modes[mode_name])
-			SLP.default_mode = available_modes[mode_name].type
+			SLP.nightshift_mode = available_modes[mode_name].type
 			updateUsrDialog()
 
 	else if(href_list["enable_mode"])
