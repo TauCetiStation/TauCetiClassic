@@ -172,12 +172,6 @@
 	action_background_icon_state = "bg_cult"
 	range = 3
 
-/obj/effect/proc_holder/spell/no_target/area_conversion/atom_init()
-	if(!SSticker.nar_sie_has_risen)
-		charge_max = 25 SECONDS
-		range = 2
-	return ..()
-
 /obj/effect/proc_holder/spell/no_target/area_conversion/cast(list/targets, mob/user)
 	if(!user.my_religion)
 		return
@@ -186,3 +180,7 @@
 		if(prob(100 - (get_dist(nearby_turf, user) * 25)))
 			playsound(nearby_turf, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 			nearby_turf.atom_religify(user.my_religion)
+
+/obj/effect/proc_holder/spell/no_target/area_conversion/lesser
+	charge_max = 25 SECONDS
+	range = 2
