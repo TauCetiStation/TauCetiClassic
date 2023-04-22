@@ -699,7 +699,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small{
-	brightness_color = "#008000"
+	force_override_color = "#008000"
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)

@@ -119,6 +119,7 @@ What is the naming convention for planes or layers?
   #define BELL_LAYER                      4.20
   #define INFRONT_MOB_LAYER               4.25
   //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define
+  #define LAMPS_LAYER                     5
   #define MOB_ELECTROCUTION_LAYER         5.01
   #define INDICATOR_LAYER                 5.01  // Emotes should be above this as they are shown only temporary.
   #define EMOTE_LAYER                     5.02
