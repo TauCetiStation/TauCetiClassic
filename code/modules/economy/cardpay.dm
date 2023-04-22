@@ -51,8 +51,6 @@
 		scan_card(Card)
 	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
 		var/obj/item/weapon/wrench/Tool = I
-		if(user.is_busy())
-			return
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.SetNextMove(CLICK_CD_INTERACT)
