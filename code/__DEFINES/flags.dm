@@ -22,7 +22,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
 
 #define ABSTRACT               (1<<6)   // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
-#define NODECONSTRUCT          (1<<6)   // For machines and structures that should not break into parts, eg, holodeck stuff.
+#define NODECONSTRUCT          (1<<6)   // For machines and structures that should just dissapear when deconstructed without breaking into parts, eg, holodeck stuff.
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 

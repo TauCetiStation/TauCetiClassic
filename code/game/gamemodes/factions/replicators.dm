@@ -59,6 +59,7 @@
 	var/prelude_announcement
 	var/outbreak_announcement
 	var/quarantine_end_announcement
+	var/fake_quarantine_end_announcement
 
 	var/gas = 0
 
@@ -67,12 +68,16 @@
 	var/destroyed_nodes = 0
 	var/destroyed_catapults = 0
 
+	var/will_do_fake_announcement = FALSE
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
 	vents4spawn = get_vents()
 
 	next_upgrade_at = world.time + first_ugprade_cooldown
+
+	will_do_fake_announcement = prob(50)
 
 /datum/faction/replicators/OnPostSetup()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
@@ -156,9 +161,12 @@
 		outbreak_announcement = 0
 		send_intercept()
 		for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-			var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока на ней присутствует живой Блоб. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
+			var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 			aiPlayer.set_zeroth_law(law)
 		SSshuttle.fake_recall = TRUE //Quarantine
+
+	if(will_do_fake_announcement && length(global.alive_replicators) <= max_roles && SSshuttle.fake_recall)
+		fake_quarantine_end_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 
 	if(replicators_launched < REPLICATORS_CATAPULTED_TO_WIN && length(global.alive_replicators) <= 0 && SSshuttle.fake_recall)
 		for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
@@ -166,8 +174,9 @@
 		SSshuttle.fake_recall = FALSE
 		quarantine_end_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 
-	if(quarantine_end_announcement && world.time >= quarantine_end_announcement)
+	if(quarantine_end_announcement && world.time >= quarantine_end_announcement || fake_quarantine_end_announcement && world.time >= fake_quarantine_end_announcement)
 		quarantine_end_announcement = 0
+		fake_quarantine_end_announcement = 0
 		var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 		announcement.play()
 

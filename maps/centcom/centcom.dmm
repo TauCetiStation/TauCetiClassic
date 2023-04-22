@@ -1744,7 +1744,7 @@
 /area/custom/ninjaspawn)
 "aeA" = (
 /obj/machinery/light/small{
-	brightness_color = "#008000"
+	force_override_color = "#008000"
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -1794,8 +1794,8 @@
 /area/custom/ninjaspawn)
 "aeI" = (
 /obj/machinery/light/small{
-	brightness_color = "#ff0000";
-	dir = 1
+	dir = 1;
+	force_override_color = "#ff0000"
 	},
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
@@ -9245,7 +9245,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
 /obj/machinery/light/small{
-	brightness_color = "#008000"
+	force_override_color = "#008000"
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
@@ -9559,7 +9559,7 @@
 "awN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
-	brightness_color = "#008000"
+	force_override_color = "#008000"
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
@@ -10624,7 +10624,7 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/small{
-	brightness_color = "#008000"
+	force_override_color = "#008000"
 	},
 /obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,

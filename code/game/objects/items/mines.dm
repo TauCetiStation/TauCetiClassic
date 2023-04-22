@@ -40,9 +40,13 @@
 		alpha = 255
 
 /obj/item/mine/Crossed(atom/movable/AM)
+	if(HAS_TRAIT(AM, TRAIT_ARIBORN)) // oh no, he is flying, not stepping. Cheater!
+		return
 	try_trigger(AM)
 
 /obj/item/mine/Bumped(atom/movable/AM)
+	if(HAS_TRAIT(AM, TRAIT_ARIBORN))
+		return
 	try_trigger(AM)
 
 /obj/item/mine/bullet_act(obj/item/projectile/Proj, def_zone)

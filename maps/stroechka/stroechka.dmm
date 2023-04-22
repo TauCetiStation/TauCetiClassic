@@ -170,9 +170,6 @@
 /area/station/engineering/engine)
 "av" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/shutters{
-	id = "Out"
-	},
 /obj/machinery/door_control{
 	id = "Out";
 	name = "Out Door Control";
@@ -180,6 +177,9 @@
 	req_access = list(71)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "Out"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -195,7 +195,7 @@
 /area/station/solar/auxport)
 "ax" = (
 /obj/machinery/space_heater,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -386,7 +386,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -824,7 +824,7 @@
 	dir = 8;
 	id = "stationscrap"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -989,7 +989,7 @@
 /area/station/cargo/storage)
 "cg" = (
 /obj/machinery/pipedispenser/disposal/orderable,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1271,7 +1271,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/item/weapon/storage/briefcase/inflatable{
@@ -1540,7 +1540,7 @@
 	},
 /area/station/cargo/recycler)
 "cT" = (
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -1897,7 +1897,7 @@
 /obj/structure/closet/secure_closet/atmos_personal{
 	req_access = list(71)
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/item/device/radio/off,
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = -28
@@ -2012,7 +2012,7 @@
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2289,7 +2289,7 @@
 	},
 /area/station/cargo/recycler)
 "ek" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2793,6 +2793,14 @@
 	icon_state = "delivery"
 	},
 /area/station/rnd/chargebay)
+"gs" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "gv" = (
 /obj/item/weapon/flora/floorleaf,
 /obj/machinery/firealarm{
@@ -2811,7 +2819,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -2834,9 +2842,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
@@ -3132,7 +3140,7 @@
 	name = "Mech Bay Door Control";
 	pixel_x = -25
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -3219,11 +3227,11 @@
 	},
 /area/station/rnd/chargebay)
 "jR" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
 	name = "Mech Bay"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3344,6 +3352,13 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/lab)
+"lk" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "lw" = (
 /obj/effect/landmark/start/new_player,
 /turf/simulated/floor,
@@ -3588,7 +3603,7 @@
 /turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/rnd/chargebay)
 "ot" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/power/apc{
@@ -3634,9 +3649,9 @@
 "oz" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/science,
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
@@ -3900,6 +3915,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
+"rm" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "rA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -4016,7 +4039,7 @@
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 8
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -4048,9 +4071,9 @@
 /area/station/engineering/equip)
 "sJ" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
@@ -4063,9 +4086,9 @@
 "sS" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/science,
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
@@ -4107,7 +4130,7 @@
 /area/station/engineering/chiefs_office)
 "tD" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -5193,7 +5216,7 @@
 	name = "largecell apc right";
 	pixel_x = 28
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -5246,7 +5269,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -5372,7 +5395,7 @@
 	pixel_y = -28
 	},
 /obj/item/weapon/flora/random,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -5460,6 +5483,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
+"EI" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/station/rnd/lab)
 "EM" = (
 /obj/machinery/conveyor{
 	id = "QMLoad"
@@ -5649,9 +5680,9 @@
 "FL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/engineering,
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
@@ -5669,7 +5700,7 @@
 /area/station/cargo/storage)
 "FR" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -5942,7 +5973,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -6027,7 +6058,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = 32
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor/plating{
@@ -6725,6 +6756,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"PR" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "PS" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 8
@@ -7033,7 +7072,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -7152,9 +7191,6 @@
 /area/station/engineering/equip)
 "Ui" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/shutters{
-	id = "Out"
-	},
 /obj/machinery/door_control{
 	id = "Out";
 	name = "Out Door Control";
@@ -7162,6 +7198,9 @@
 	req_access = list(71)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "Out"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -7567,6 +7606,18 @@
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"Xj" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "Xm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -7742,10 +7793,10 @@
 	dir = 4
 	},
 /obj/structure/fans/tiny,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "Out"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -31980,11 +32031,11 @@ Zw
 as
 MC
 XB
-Wx
+PR
 DJ
 ee
 DJ
-Wx
+PR
 FD
 FD
 FD
@@ -32778,7 +32829,7 @@ SY
 cg
 cs
 cH
-bN
+lk
 dh
 FQ
 dG
@@ -33031,15 +33082,15 @@ aR
 be
 bu
 Pi
-si
+Xj
 Zu
 cs
 cI
-bN
+lk
 di
 FQ
 IQ
-si
+gs
 dS
 lx
 UV
@@ -33802,15 +33853,15 @@ ew
 ew
 ew
 bC
-si
+gs
 ci
 cw
 cK
-bN
+lk
 at
 FQ
 aE
-si
+gs
 RH
 EM
 EM
@@ -34059,15 +34110,15 @@ aS
 bg
 nI
 bE
-si
+gs
 cj
 cx
 cL
-bN
+lk
 YO
 dx
 xk
-si
+gs
 cW
 CV
 Nc
@@ -35587,9 +35638,9 @@ Zi
 Zi
 GM
 Zi
-il
-il
-il
+EI
+EI
+EI
 Zi
 Zi
 qC
@@ -35599,9 +35650,9 @@ Az
 qs
 Gl
 Gl
-Gn
-Gn
-Gn
+rm
+rm
+rm
 Gl
 XG
 XG
@@ -35848,13 +35899,13 @@ jk
 kw
 li
 mK
-il
+EI
 qL
 tk
 wi
 AC
 Ds
-Gn
+rm
 IH
 MH
 PP
@@ -36625,7 +36676,7 @@ tk
 wE
 Bh
 Hi
-Gn
+rm
 Jj
 Nv
 VX
@@ -36876,13 +36927,13 @@ kj
 GF
 LI
 Vi
-il
+EI
 Ri
 ty
 wM
 Bt
 aB
-Gn
+rm
 Jn
 Ny
 Qq
