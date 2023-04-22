@@ -34,39 +34,39 @@
 /obj/item/device/cardpay/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id) && anchored)
 		visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
-		if(enter_account)
-			var/obj/item/weapon/card/id/Card = I
-			var/datum/money_account/D = get_account(Card.associated_account_number)
-			if(D)
-				linked_account = D.account_number
-				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
-			else
-				to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к карте.</span>")
-		else
+		if(!enter_account)
 			scan_card(I)
+			return
+		var/obj/item/weapon/card/id/Card = I
+		var/datum/money_account/D = get_account(Card.associated_account_number)
+		if(!D)
+			to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к карте.</span>")
+			return
+		linked_account = D.account_number
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
 	else if(istype(I, /obj/item/device/pda) && I.GetID())
 		visible_message("<span class='info'>[usr] прикладывает КПК к терминалу.</span>")
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		scan_card(Card)
 	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
 		var/obj/item/weapon/wrench/Tool = I
+		if(user.is_busy())
+			return
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.SetNextMove(CLICK_CD_INTERACT)
-			if(user.is_busy())
-				return
-			if(anchored)
-				to_chat(user, "<span class='notice'>Сканер откручен.</span>")
-				anchored = FALSE
-				update_holoprice(clear = TRUE)
-				SStgui.close_uis(src)
-			else
-				if(locate(/obj/structure/table, get_turf(src)))
-					to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
-					anchored = TRUE
-				else
+			if(!anchored)
+				if(!locate(/obj/structure/table, get_turf(src)))
 					to_chat(user, "<span class='warning'>Сканер можно прикрутить только к столу.</span>")
+					return
+				to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
+				anchored = TRUE
+				return
+			to_chat(user, "<span class='notice'>Сканер откручен.</span>")
+			anchored = FALSE
+			update_holoprice(clear = TRUE)
+			SStgui.close_uis(src)
 	else
 		return ..()
 
@@ -77,11 +77,11 @@
 
 /obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
 	if(!linked_account)
-		visible_message("[bicon(src)]<span class='warning'>Нет подключённого аккаунта.</span>")
+		visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого аккаунта.</span>")
 		return
 	var/datum/money_account/Acc = get_account(linked_account)
 	if(!Acc || Acc.suspended)
-		visible_message("[bicon(src)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+		visible_message("[bicon(src)] [name] <span class='warning'>Подключённый аккаунт заблокирован.</span>")
 		return
 	if(pay_amount <= 0)
 		return
@@ -95,14 +95,16 @@
 			var/time_for_pin = world.time
 			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
 			if(world.time - time_for_pin > 300)
-				to_chat(usr, "[bicon(src)]<span class='warning'>Время операции истекло!</span>")
+				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
+				return
+			if(Acc != get_account(linked_account) || pay_holder != pay_amount || !usr || !usr.Adjacent(src))
 				return
 			if(isnull(attempt_pin))
-				to_chat(usr, "[bicon(src)]<span class='warning'>Неверный ПИН-код!</span>")
+				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
 				return
 			D = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
 			if(!D)
-				to_chat(usr, "[bicon(src)]<span class='warning'>Неверный ПИН-код!</span>")
+				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
 				return
 
 		icon_state = "card-pay-processing"
@@ -121,12 +123,12 @@
 			pay_amount = 0
 			update_holoprice(clear = TRUE)
 	else
-		visible_message("[bicon(src)]<span class='warning'>Недостаточно средств!</span>")
+		visible_message("[bicon(src)] [name] <span class='warning'>Недостаточно средств!</span>")
 		flick("card-pay-error", src)
 
 /obj/item/device/cardpay/attack_hand(mob/user)
 	. = ..()
-	if(!isturf(src.loc))
+	if(!isturf(loc))
 		return
 
 	if(anchored && check_direction(user))
