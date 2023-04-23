@@ -711,7 +711,7 @@
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
-		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
+		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks, target)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks = tool_check))
@@ -761,8 +761,8 @@
 	return !used
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
-/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks, target)
+	return tool_use_check(user, amount, target) && (!extra_checks || extra_checks.Invoke())
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
 //The default action is attack_self().
