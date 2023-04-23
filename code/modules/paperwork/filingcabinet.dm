@@ -16,6 +16,8 @@
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE
+	throwpass = 1	//You can throw objects over this, despite it's density.")
+	climbable = TRUE
 
 	resistance_flags = CAN_BE_HIT
 
