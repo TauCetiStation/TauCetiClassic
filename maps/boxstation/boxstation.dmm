@@ -42061,10 +42061,6 @@
 	},
 /area/station/civilian/bar)
 "byS" = (
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -42113,10 +42109,6 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
 	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -42125,10 +42117,6 @@
 "byX" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
-	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -42197,10 +42185,6 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bze" = (
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -42322,10 +42306,6 @@
 	layer = 3.3;
 	pixel_y = -30;
 	supply_display = 1
-	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -42740,10 +42720,6 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bAe" = (
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -42810,10 +42786,6 @@
 /area/station/bridge)
 "bAk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -42824,10 +42796,6 @@
 	layer = 3.3;
 	pixel_y = -32;
 	supply_display = 1
-	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 10;
