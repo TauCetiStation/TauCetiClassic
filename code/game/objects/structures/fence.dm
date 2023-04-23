@@ -1,6 +1,6 @@
 /obj/structure/fence
 	name = "Fence"
-	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
+	desc = "РЎРїСЂСЏС‡СЊ Р·Р° РІС‹СЃРѕРєРёРј Р·Р°Р±РѕСЂРѕРј С‚Р°СЏСЂСѓ - РІС‹РєСЂР°РґСѓ РІРјРµСЃС‚Рµ СЃ Р·Р°Р±РѕСЂРѕРј!"
 
 	icon = 'icons/obj/fences.dmi'
 	icon_state = "fence_concrete"
@@ -28,7 +28,7 @@
 	if(iswrenching(W))
 		if(user.is_busy(src))
 			return FALSE
-		to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
+		to_chat(user, "<span class='notice'>Р’С‹ РґРµРјРѕРЅС‚РёСЂСѓРµС‚Рµ Р·Р°Р±РѕСЂ.</span>")
 		if(W.use_tool(src, user, 50, volume = 50))
 			deconstruct(TRUE)
 		return TRUE
@@ -89,7 +89,7 @@
 
 /obj/structure/fence/wood
 	name = "Wooden Fence"
-	desc = "Деревянный забор."
+	desc = "Р”РµСЂРµРІСЏРЅРЅС‹Р№ Р·Р°Р±РѕСЂ."
 
 	icon = 'icons/obj/fences.dmi'
 	icon_state = "fence_wood"
@@ -100,7 +100,7 @@
 
 /obj/structure/fence/metal
 	name = "Metal Fence"
-	desc = "Металлический забор."
+	desc = "РњРµС‚Р°Р»Р»РёС‡РµСЃРєРёР№ Р·Р°Р±РѕСЂ."
 
 	icon = 'icons/obj/fences.dmi'
 	icon_state = "fence_metal"
@@ -127,7 +127,7 @@
 	if(!W.can_use(user, 1))
 		return
 
-	var/new_color = input(user, "Выберите цвет!") as color|null
+	var/new_color = input(user, "Р’С‹Р±РµСЂРёС‚Рµ С†РІРµС‚!") as color|null
 
 	if(!new_color)
 		return
@@ -148,7 +148,7 @@
 
 /obj/structure/fence/glass
 	name = "Glass Fence"
-	desc = "Стеклянный забор."
+	desc = "РЎС‚РµРєР»СЏРЅРЅС‹Р№ Р·Р°Р±РѕСЂ."
 
 	icon = 'icons/obj/fences.dmi'
 	icon_state = "fence_glass"
