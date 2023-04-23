@@ -1918,9 +1918,6 @@
 	dir = 1
 	},
 /obj/structure/fence/metal,
-/obj/structure/fence/metal{
-	dir = 4
-	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot";
 	nitrogen = 0.01;
@@ -10543,9 +10540,6 @@
 	pixel_x = -20;
 	pixel_y = -20;
 	req_one_access = list(13,45,1)
-	},
-/obj/structure/fence/metal{
-	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/dormitory)
@@ -27639,7 +27633,6 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYD" = (
-/obj/item/device/flashlight/lamp/fir,
 /obj/structure/fence/metal{
 	color = "#b3863c";
 	dir = 4
@@ -36912,10 +36905,6 @@
 	color = "#b3863c";
 	dir = 8
 	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -37182,9 +37171,6 @@
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/fence/metal{
 	dir = 8
-	},
-/obj/structure/fence/metal{
-	dir = 1
 	},
 /turf/simulated/floor/bluegrid,
 /area/station/rnd/chargebay)
@@ -39745,10 +39731,6 @@
 /obj/structure/fence/metal{
 	color = "#b3863c"
 	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -39804,10 +39786,6 @@
 	},
 /obj/structure/fence/metal{
 	color = "#b3863c"
-	},
-/obj/structure/fence/metal{
-	color = "#b3863c";
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -41443,12 +41421,6 @@
 /area/station/maintenance/chapel)
 "bxP" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/structure/fence/metal{
-	dir = 4
-	},
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -65692,9 +65664,6 @@
 	pixel_y = -25;
 	req_one_access = list(13,45,1)
 	},
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cFu" = (
@@ -68100,9 +68069,6 @@
 /area/station/security/brig)
 "cZM" = (
 /obj/structure/grille,
-/obj/structure/fence/metal{
-	color = "#d0ac2c"
-	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "warnplate"
 	},
@@ -73106,11 +73072,12 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "iSQ" = (
-/obj/structure/fence/metal{
-	dir = 1
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/flashlight/lamp/fir,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/cargo/storage)
 "iTb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -78273,9 +78240,6 @@
 	},
 /obj/structure/fence/metal{
 	dir = 4
-	},
-/obj/structure/fence/metal{
-	dir = 8
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
@@ -99618,7 +99582,7 @@ bEW
 qAF
 bEW
 aFg
-bBm
+iSQ
 aXJ
 gOl
 bxz
@@ -135097,7 +135061,7 @@ bcq
 bZa
 bZa
 bZa
-iSQ
+cak
 aUX
 vuP
 bqR
