@@ -10,6 +10,7 @@
 	density = TRUE
 	opacity = TRUE
 	can_block_air = TRUE
+	var/secured = FALSE
 
 	canSmoothWith = list(
 		/turf/simulated/wall,
@@ -40,6 +41,10 @@
 	return !density
 
 /obj/structure/falsewall/attack_hand(mob/user)
+	if(secured)
+		to_chat(user, "<span class='notice'>Вы толкаете стену, но ничего не происходит!</span>")
+		return
+
 	if(opening)
 		return
 
@@ -90,8 +95,13 @@
 		if(T.density)
 			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
+
 		if(isscrewing(W))
-			user.visible_message("[user] tightens some screws on the wall.", "Вы затягиваете винты на стене.")
+			user.visible_message("[user] затягивает/ослабляет винты на стене.", "Вы затягиваете/ослабляете винты на стене.")
+			secured = !secured
+
+		if(isprying(W))
+			user.visible_message("[user] выламывает подвижную часть стены.", "Вы выламываете подвижную часть стены.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
