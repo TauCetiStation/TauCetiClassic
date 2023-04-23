@@ -283,7 +283,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
 	. = ..()
-	reagents.add_reagent("virusfood", 1000)
+	reagents.add_reagent("virusfood", 15)
 
 /obj/structure/reagent_dispensers/acid
 	name = "Sulphuric Acid Dispenser"

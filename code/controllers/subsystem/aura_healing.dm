@@ -2,4 +2,4 @@
 PROCESSING_SUBSYSTEM_DEF(aura_healing)
 	name = "Aura Healing"
 	flags = SS_NO_INIT | SS_BACKGROUND | SS_KEEP_TIMING
-	wait = 0.3 SECONDS
+	wait = 1 SECOND

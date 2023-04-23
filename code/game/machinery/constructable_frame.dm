@@ -392,6 +392,15 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/capacitor = 2)
 
+
+/obj/item/weapon/circuitboard/reagentgrinder
+	name = "circuit board (All-In-One Grinder)"
+	board_type = "machine"
+	build_path = /obj/machinery/reagentgrinder
+	origin_tech = "biotech=2;engineering=1;materials=2"
+	req_components = list(
+		/obj/item/weapon/stock_parts/manipulator = 1)
+
 /obj/item/weapon/circuitboard/cooler
 	name = "circuit board (Cooler)"
 	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer

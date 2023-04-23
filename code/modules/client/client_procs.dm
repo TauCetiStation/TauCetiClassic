@@ -752,7 +752,7 @@ var/global/list/blacklisted_builds = list(
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
 					communication_hotkeys += key
 				if("Me")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.me")
 					communication_hotkeys += key
 				if("LOOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")
