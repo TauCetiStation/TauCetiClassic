@@ -155,6 +155,7 @@
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift,
 		)
 
+
 /////////////////////////////Artificer/////////////////////////
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
