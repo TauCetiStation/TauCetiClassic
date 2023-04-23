@@ -10,7 +10,7 @@
 
 	throwpass = 1
 
-	max_integrity = 10
+	max_integrity = 15
 	resistance_flags = CAN_BE_HIT
 
 	anchored = TRUE
@@ -21,6 +21,8 @@
 			layer -= 0.01
 		if(SOUTH)
 			layer += 0.01
+
+	. = ..()
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(iswrenching(W))
@@ -34,7 +36,11 @@
 	return ..()
 
 /obj/structure/fence/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover,/obj/item/projectile))
+		return TRUE
 	if(get_dir(loc, target) & dir)
+		if(HAS_TRAIT(mover, TRAIT_ARIBORN) || mover.checkpass(PASSTABLE))
+			return TRUE
 		var/turf/T = loc
 		if(T.density)
 			return FALSE
@@ -61,7 +67,11 @@
 	return TRUE
 
 /obj/structure/fence/CheckExit(atom/movable/O, turf/target)
+	if(istype(O,/obj/item/projectile))
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
+		if(HAS_TRAIT(O, TRAIT_ARIBORN) || O.checkpass(PASSTABLE))
+			return TRUE
 		var/turf/T = get_step(O, dir)
 		if(T.density)
 			return FALSE
