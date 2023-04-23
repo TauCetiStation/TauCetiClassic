@@ -8,6 +8,11 @@
 	flags = ON_BORDER
 	layer = INFRONT_MOB_LAYER
 
+	throwpass = 1
+
+	max_integrity = 10
+	resistance_flags = CAN_BE_HIT
+
 	anchored = TRUE
 
 /obj/structure/fence/atom_init()
