@@ -12625,6 +12625,7 @@
 /area/custom/wizard_station)
 "aDn" = (
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/fence/wood,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -12642,6 +12643,7 @@
 /obj/structure/torch_holder/magic{
 	dir = 8
 	},
+/obj/structure/fence/wood,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -12999,6 +13001,9 @@
 /obj/structure/torch_holder/magic{
 	dir = 4
 	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -13334,6 +13339,7 @@
 /area/centcom/specops)
 "aES" = (
 /obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/fence/wood,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -13357,6 +13363,9 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_x = -32
+	},
+/obj/structure/fence/wood{
+	dir = 1
 	},
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
@@ -22959,14 +22968,14 @@
 	},
 /area/velocity)
 "cqi" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/machinery/vending/clothing{
 	pixel_x = -2
+	},
+/obj/structure/fence/glass{
+	dir = 1
+	},
+/obj/structure/fence/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -23259,11 +23268,11 @@
 	},
 /area/velocity)
 "cRH" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/stool{
 	pixel_y = 3
+	},
+/obj/structure/fence/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -24264,6 +24273,17 @@
 	icon_state = "delivery"
 	},
 /area/velocity)
+"eHJ" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/custom/wizard_station)
 "eIb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -24840,6 +24860,16 @@
 	icon_state = "rampbottom"
 	},
 /area/space)
+"fSp" = (
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/obj/structure/fence/metal,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
+/area/velocity)
 "fTb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -25151,13 +25181,13 @@
 	},
 /area/centcom/specops)
 "gsY" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/stool{
 	airflow_speed = 2;
 	pixel_x = -5;
 	pixel_y = 3
+	},
+/obj/structure/fence/glass{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -26128,6 +26158,15 @@
 	icon_state = "warning"
 	},
 /area/centcom/specops)
+"ijk" = (
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
+/area/velocity)
 "ikb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet2-0"
@@ -27373,6 +27412,16 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
+"lfo" = (
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/custom/wizard_station)
 "lgb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -27512,10 +27561,10 @@
 	},
 /area/centcom/holding)
 "luD" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/closet/wardrobe/mixed,
+/obj/structure/fence/glass{
 	dir = 1
 	},
-/obj/structure/closet/wardrobe/mixed,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -28875,11 +28924,11 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "ouG" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/closet{
 	pixel_x = -4
+	},
+/obj/structure/fence/glass{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -28973,6 +29022,14 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oJz" = (
+/obj/structure/fence/wood,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/custom/wizard_station)
 "oKb" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
@@ -29183,12 +29240,12 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "pnw" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/structure/closet/wardrobe/xenos,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/structure/fence/glass{
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -29668,6 +29725,18 @@
 	},
 /turf/environment/space,
 /area/space)
+"uZX" = (
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
+/area/velocity)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2";
@@ -29767,6 +29836,15 @@
 	icon_state = "neutral"
 	},
 /area/velocity)
+"xzW" = (
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space)
 "xAA" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -29778,11 +29856,11 @@
 	},
 /area/velocity)
 "xLi" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/machinery/atm{
 	pixel_x = -30
+	},
+/obj/structure/fence/glass{
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -34421,7 +34499,7 @@ abi
 abi
 abi
 bbe
-aDg
+oJz
 aDg
 aEV
 abi
@@ -39049,7 +39127,7 @@ abi
 abi
 aDp
 aDg
-aDn
+eHJ
 afR
 abi
 abk
@@ -39563,7 +39641,7 @@ abi
 abi
 aES
 aDg
-aDg
+lfo
 baT
 abi
 abh
@@ -80036,18 +80114,18 @@ aoo
 dCb
 aoo
 aoo
+uZX
 auV
 auV
 auV
+ijk
+ijk
+ijk
+ijk
 auV
 auV
 auV
-auV
-auV
-auV
-auV
-auV
-auV
+fSp
 aoo
 aoo
 dCb
@@ -80058,11 +80136,11 @@ aoo
 aoo
 aoo
 aoo
+xzW
 fob
 fob
 fob
-fob
-fob
+xzW
 fSb
 azi
 aeD
