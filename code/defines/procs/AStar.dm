@@ -184,6 +184,10 @@
 		if(!W.CanAStarPass(ID, adir))
 			return TRUE
 
+	for(var/obj/structure/fence/W in src)
+		if(!W.CanAStarPass(ID, adir))
+			return TRUE
+
 	for(var/obj/machinery/door/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
 			return TRUE
