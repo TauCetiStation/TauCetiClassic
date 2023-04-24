@@ -64,9 +64,6 @@
 			if(HAS_TRAIT(C, TRAIT_PICKY_EATER) && src.food_type != VERY_TASTY_FOOD)
 				to_chat(C, "<span class='rose'>You cant eat this horrible, nasty and cheap food!</span>")
 				return FALSE
-			else if(fullness > NUTRITION_LEVEL_HUNGRY && src.food_type == JUNK_FOOD && !HAS_TRAIT(C, TRAIT_JUNK_EATER)) // checking to see if we can eat more junk food
-				to_chat(C, "<span class='rose'>You dont feel like eating junk food right now.</span>")
-				return FALSE
 			else if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return FALSE
