@@ -175,9 +175,15 @@
 	if(spreadtype != DISEASE_SPREAD_AIRBORNE)
 		return
 	var/check_passed = FALSE
-	//a mushroom
+	//mushroom
 	if(my_tray.myseed?.plant_type == 2)
-		check_passed = TRUE
+		for(var/name in affected_species)
+			var/datum/species/S = all_species[name]
+			if(!S)
+				continue
+			if(!S.flags[IS_PLANT])
+				check_passed = TRUE
+				break
 	else
 		for(var/name in affected_species)
 			var/datum/species/S = all_species[name]
