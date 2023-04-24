@@ -7,16 +7,19 @@
 	var/ticks = 0
 	var/cooldownticks = 0
 
-/datum/disease2/effectholder/proc/runeffect(mob/living/carbon/human/mob,datum/disease2/disease/disease)
+/datum/disease2/effectholder/proc/runeffect(atom/host, datum/disease2/disease/disease)
 	if(cooldownticks > 0)
-		cooldownticks -= 1*disease.cooldown_mul
+		cooldownticks -= 1 * disease.cooldown_mul
 	if(prob(chance))
-		if(ticks > stage*10 && prob(50) && stage < effect.max_stage)
+		if(ticks > stage * 10 && prob(50) && stage < effect.max_stage)
 			stage++
 		if(cooldownticks <= 0)
 			cooldownticks = effect.cooldown
-			effect.activate(mob, src, disease)
-		ticks+=1
+			if(ismob(host))
+				effect.activate_mob(host, src, disease)
+			if(istype(host, /obj/machinery/hydroponics))
+				effect.activate_plant(host, src, disease)
+		ticks += 1
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////EFFECTS/////////////////////////////////
