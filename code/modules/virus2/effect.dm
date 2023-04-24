@@ -35,7 +35,7 @@
 	var/cooldown = 0
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-/datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/tray/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 
@@ -229,13 +229,13 @@
 /datum/disease2/effect/heal/proc/can_heal(mob/living/carbon/A, datum/disease2/disease/disease)
 	return 1
 
-/datum/disease2/effect/heal/proc/can_heal_plant(obj/machinery/hydroponics/tray/A, datum/disease2/disease/disease)
+/datum/disease2/effect/heal/proc/can_heal_plant(obj/machinery/hydroponics/A, datum/disease2/disease/disease)
 	return 1
 
 /datum/disease2/effect/heal/proc/heal(mob/living/carbon/A, datum/disease2/disease/disease, actual_power)
 	return TRUE
 
-/datum/disease2/effect/heal/proc/heal_plant(obj/machinery/hydroponics/tray/A, datum/disease2/disease/disease, actual_power)
+/datum/disease2/effect/heal/proc/heal_plant(obj/machinery/hydroponics/A, datum/disease2/disease/disease, actual_power)
 	return TRUE
 
 /datum/disease2/effect/heal/proc/passive_message_condition(mob/living/carbon/human/A, datum/disease2/disease/disease)
