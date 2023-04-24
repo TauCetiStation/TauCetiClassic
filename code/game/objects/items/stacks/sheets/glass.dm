@@ -150,7 +150,7 @@
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc) // todo: phoron shard types
 	set_amount(get_amount() - rand(5,35))
 
 /obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
@@ -272,79 +272,6 @@
 
 
 	return 0
-
-/*
- * Glass shards - TODO: Move this into code/game/object/item/weapons
- */
-/obj/item/weapon/shard/Bump()
-	if(prob(20))
-		force = 15
-	else
-		force = 4
-	..()
-
-/obj/item/weapon/shard/atom_init()
-	. = ..()
-
-	icon_state = pick("large", "medium", "small")
-	switch(icon_state)
-		if("small")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("medium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("large")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
-
-/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.use(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for(var/obj/item/stack/sheet/glass/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.get_amount() >= G.max_amount)
-					continue
-				G.attackby(NG, user)
-				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.get_amount()] sheets.")
-			qdel(src)
-
-	else
-		return ..()
-
-/obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
-		var/mob/M = AM
-		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
-		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-
-			if(H.species.flags[IS_SYNTHETIC])
-				return
-
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
-				return
-
-			if(H.species.flags[NO_MINORCUTS])
-				return
-
-			if(H.buckled)
-				return
-
-			if(!H.shoes)
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.is_robotic())
-					return
-				BP.take_damage(5, 0)
-				if(!H.species.flags[NO_PAIN])
-					H.Stun(1)
-					H.Weaken(3)
-				H.updatehealth()
-	. = ..()
 
 /*
  * Phoron Glass sheets

@@ -131,6 +131,8 @@
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 		return 1
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	if (flipped)
@@ -504,6 +506,8 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	if (flipped)
@@ -711,6 +715,8 @@
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return 1
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
 	else
 		return 0

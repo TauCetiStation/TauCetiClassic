@@ -691,7 +691,8 @@
 /area/asteroid/mine/abandoned)
 "bE" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -751,7 +752,8 @@
 /area/asteroid/research_outpost/harvesting)
 "bK" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -1300,7 +1302,8 @@
 /area/asteroid/mine/explored)
 "dq" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -2422,7 +2425,8 @@
 "iT" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/gearstore)
@@ -2622,7 +2626,8 @@
 "jG" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
@@ -3190,7 +3195,8 @@
 /area/asteroid/research_outpost/iso2)
 "mg" = (
 /obj/structure/window/fulltile/reinforced/phoron{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced_phoron"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -3204,7 +3210,8 @@
 "mj" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
@@ -3348,7 +3355,8 @@
 "mF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/sample)
@@ -3577,7 +3585,8 @@
 /area/asteroid/research_outpost/power)
 "nJ" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3615,7 +3624,8 @@
 "nP" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
@@ -3694,7 +3704,8 @@
 "of" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost{
@@ -3820,7 +3831,8 @@
 "oF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
@@ -4770,7 +4782,8 @@
 "tF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5087,7 +5100,8 @@
 "ve" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
@@ -5169,7 +5183,8 @@
 "vv" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -5747,7 +5762,8 @@
 	pixel_y = 32
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/sample)
@@ -7360,7 +7376,8 @@
 "Gs" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
@@ -7694,7 +7711,8 @@
 "Ic" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7756,7 +7774,8 @@
 "Iv" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/anomaly)
@@ -8063,7 +8082,8 @@
 "JS" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/maintenance)
@@ -9999,7 +10019,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/medbay/alt,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
@@ -10410,7 +10431,8 @@
 "Vs" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso1)
@@ -10707,7 +10729,8 @@
 /area/asteroid/mine/dwarf)
 "Xi" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -11117,7 +11140,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/barricade/wooden,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)

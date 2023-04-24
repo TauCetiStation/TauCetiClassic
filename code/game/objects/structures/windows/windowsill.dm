@@ -21,6 +21,16 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+/obj/structure/windowsill/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+		return TRUE
+	if(locate(/obj/structure/windowsill) in get_turf(mover))
+		return TRUE
+
+	return ..()
+
 /obj/structure/windowsill/attackby(obj/item/W, mob/user)
 	var/obj/structure/grille/grille_in_loc = locate() in loc
 

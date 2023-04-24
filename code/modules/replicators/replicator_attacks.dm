@@ -90,7 +90,7 @@
 
 	if(isreplicator(A))
 		var/mob/living/simple_animal/hostile/replicator/R = A
-		if(R == src || R.stat == DEAD || !R.ckey)
+		if(R == src || R.stat == DEAD || !R.is_controlled())
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		return
 
@@ -307,7 +307,7 @@
 
 		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/hostile/replicator/other = r
-			if(other.ckey)
+			if(other.is_controlled())
 				continue
 			if(get_dist(src, other) > 7)
 				continue

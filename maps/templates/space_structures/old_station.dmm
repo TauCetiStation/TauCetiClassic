@@ -291,7 +291,8 @@
 /area/space_structures/old_station/right)
 "bC" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/carp_space)
@@ -511,6 +512,7 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
+/obj/structure/alien/air_plant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -711,7 +713,8 @@
 	dir = 4
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -746,8 +749,7 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Warehouse APC";
-	pixel_x = -1;
-	pixel_y = 26
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -962,7 +964,8 @@
 /area/space)
 "fM" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1095,7 +1098,7 @@
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
 "gz" = (
 /obj/item/trash/chips,
@@ -1233,7 +1236,7 @@
 	cell_type = 1000;
 	dir = 1;
 	name = "RnD APC";
-	pixel_y = 25
+	pixel_y = 28
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1259,15 +1262,6 @@
 	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
-"hv" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_y = 8
-	},
-/turf/simulated/floor{
-	icon_state = "yellow"
-	},
-/area/space_structures/old_station/central/solars_c)
 "hz" = (
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -1293,8 +1287,7 @@
 	cell_type = 1000;
 	dir = 1;
 	name = "Brig APC";
-	pixel_x = 3;
-	pixel_y = 30
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1531,7 +1524,8 @@
 /area/space_structures/old_station/right/rnd)
 "iH" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -2634,9 +2628,10 @@
 	icon_state = "0-2"
 	},
 /obj/item/weapon/stock_parts/cell/apc,
-/obj/machinery/power/apc/smallcell{
+/obj/machinery/power/apc/largecell{
+	dir = 1;
 	name = "Medbay APC";
-	pixel_y = 25
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3089,7 +3084,8 @@
 /area/space_structures/old_station/central/brig)
 "tE" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3354,7 +3350,8 @@
 /area/space_structures/old_station/central/brig)
 "vh" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
@@ -3521,7 +3518,8 @@
 /area/space_structures/old_station/left)
 "vU" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/bridge)
@@ -3841,14 +3839,18 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/ammo_box/magazine/smg{
+	pixel_x = -3
+	},
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Armory APC";
 	pixel_y = 25
 	},
 /obj/item/ammo_box/magazine/smg,
-/obj/item/ammo_box/magazine/smg,
-/obj/item/ammo_box/magazine/smg,
+/obj/item/ammo_box/magazine/smg{
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3915,7 +3917,8 @@
 /area/space_structures/old_station/right)
 "ya" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
@@ -4056,6 +4059,7 @@
 /area/space_structures/old_station/central)
 "zd" = (
 /obj/structure/alien/weeds/node,
+/obj/structure/alien/air_plant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4314,7 +4318,8 @@
 /area/space_structures/old_station/central/kitchen)
 "Ay" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central)
@@ -4460,16 +4465,20 @@
 /turf/simulated/floor/plating,
 /area/space_structures/carp_space)
 "By" = (
+/obj/structure/rack,
+/obj/item/weapon/switchblade,
 /obj/machinery/turretid/stun{
 	control_area = "OldStation";
-	dir = 4;
 	name = "Station turret control";
 	pixel_x = -3;
 	pixel_y = 1;
 	req_access = list(73)
 	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/old_station/central/bridge)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bot"
+	},
+/area/space_structures/old_station/armory)
 "BB" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /turf/simulated/floor,
@@ -4534,8 +4543,7 @@
 	cell_type = 1000;
 	dir = 1;
 	name = "R Station APC";
-	pixel_x = 1;
-	pixel_y = 27
+	pixel_y = 28
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -5096,7 +5104,8 @@
 /area/space_structures/old_station/satellite)
 "EB" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/hydro)
@@ -5474,7 +5483,7 @@
 	cell_type = 1000;
 	dir = 1;
 	name = "Hydroponic APC";
-	pixel_y = 25
+	pixel_y = 28
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -5903,16 +5912,15 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central/solars_c)
 "Jg" = (
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Solars Panel Control room APC";
-	pixel_x = 4;
-	pixel_y = 27
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Solars Panel Control room APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5960,7 +5968,8 @@
 /area/space_structures/old_station/right/rnd)
 "Jz" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left/med)
@@ -6011,8 +6020,7 @@
 	cell_type = 1000;
 	dir = 1;
 	name = "Kitchen APC";
-	pixel_x = -3;
-	pixel_y = 30
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6034,6 +6042,14 @@
 "JY" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
+	},
+/obj/machinery/turretid/stun{
+	control_area = "OldStation";
+	dir = 4;
+	name = "Station turret control";
+	pixel_x = 30;
+	pixel_y = 1;
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -6058,7 +6074,8 @@
 /area/space_structures/old_station/central)
 "Ki" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -6366,7 +6383,8 @@
 /area/space_structures/old_station/central)
 "Mc" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/sign/warning/docking,
 /turf/simulated/floor/plating,
@@ -6547,7 +6565,8 @@
 /area/space_structures/old_station/warehouse)
 "Nv" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/whitegreed,
 /area/space_structures/old_station/satellite)
@@ -6889,11 +6908,14 @@
 	},
 /area/space_structures/old_station/right)
 "Pl" = (
+/obj/item/weapon/kitchenknife/combat{
+	pixel_x = -3
+	},
 /obj/structure/rack,
 /obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/switchblade,
+/obj/item/weapon/kitchenknife/combat{
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -7080,6 +7102,7 @@
 "QM" = (
 /obj/structure/alien/weeds/node,
 /obj/item/weapon/circuitboard/telecomms/broadcaster,
+/obj/structure/alien/air_plant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7175,7 +7198,8 @@
 /area/space_structures/old_station/left)
 "Rr" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/brig)
@@ -7516,7 +7540,8 @@
 /area/space_structures/old_station/central/solars_c)
 "Tv" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/kitchen)
@@ -7577,7 +7602,8 @@
 /area/space_structures/old_station/central/solars_c)
 "TE" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right/rnd)
@@ -7716,7 +7742,8 @@
 /area/space_structures/old_station/central/hydro)
 "UA" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/left)
@@ -7732,7 +7759,8 @@
 /area/space_structures/old_station/left/med)
 "UC" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -7967,16 +7995,15 @@
 /area/space)
 "VM" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Bridge APC";
-	pixel_x = 4;
-	pixel_y = 27
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Bridge APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -8221,7 +8248,8 @@
 /area/space_structures/old_station/central/bridge)
 "XB" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8240,15 +8268,6 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
-"XI" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 5;
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurple"
-	},
-/area/space_structures/old_station/right)
 "XJ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/soap,
@@ -8386,7 +8405,7 @@
 	cell_type = 1000;
 	dir = 1;
 	name = "C Station APC";
-	pixel_y = 29
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "purplecorner"
@@ -10485,7 +10504,7 @@ Bf
 VZ
 Af
 uI
-hv
+co
 Ou
 VN
 CG
@@ -11428,7 +11447,7 @@ pn
 pn
 pn
 pn
-By
+pn
 pn
 MA
 bQ
@@ -13113,7 +13132,7 @@ wi
 wi
 mc
 Se
-XI
+hz
 rf
 GY
 KZ
@@ -13914,7 +13933,7 @@ ik
 mc
 wi
 gO
-gO
+wi
 wi
 Fd
 wi
@@ -14210,7 +14229,7 @@ ed
 OZ
 gh
 OD
-pj
+By
 ed
 gO
 Fd

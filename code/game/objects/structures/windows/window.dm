@@ -50,6 +50,7 @@
 
 	var/ratio = get_integrity() / max_integrity
 
+	// we owerwrite integrity_failure because we have multiple break stages and need to trigger atom_break() multiple times to use them
 	switch(ratio)
 		if(0 to 0.25)
 			if(!istype(src, /obj/structure/window/fulltile))
@@ -109,20 +110,20 @@
 
 	return ..()
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
+// almost same take_damage values as for turf/walls and /obj
+// need to reload because for some reason we have stupid parent /obj/structure/ex_act doing nothing
 /obj/structure/window/ex_act(severity)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	if(QDELETED(src))
+		return
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			qdel(src)
 		if(EXPLODE_HEAVY)
-			take_damage(rand(30, 50), BRUTE, BOMB)
+			take_damage(rand(150, 250), BRUTE, BOMB)
 		if(EXPLODE_LIGHT)
-			take_damage(rand(5, 15), BRUTE, BOMB)
+			take_damage(rand(0, 55), BRUTE, BOMB)
 
 /obj/structure/window/airlock_crush_act()
 	take_damage(DOOR_CRUSH_DAMAGE * 2, BRUTE, MELEE)
@@ -156,16 +157,6 @@
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
-
-/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE)
-	if(!damage_amount)
-		return
-	if(damage_amount >= 10)
-		visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-		return ..(user, damage_amount, damage_type, damage_flag, sound_effect)
-
-	visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
-	user.do_attack_animation(src)
 
 /obj/structure/window/attack_slime(mob/user)
 	if(!isslimeadult(user))

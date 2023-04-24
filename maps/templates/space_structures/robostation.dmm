@@ -15,7 +15,8 @@
 /area/space_structures/robostatoin)
 "ad" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
@@ -467,7 +468,8 @@
 /area/space_structures/robostatoin)
 "bR" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /turf/environment/space,
