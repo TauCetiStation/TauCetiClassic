@@ -31,8 +31,14 @@
 				return 2
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
+
 	for(var/obj/O in src)
 		O.forceMove(get_turf(src))
+
+	for(var/mob/M in src)
+		M.forceMove(src.loc)
+		M.instant_vision_update(0)
+
 	icon_state = icon_opened
 	src.opened = 1
 
@@ -49,6 +55,21 @@
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	var/itemcount = 0
+
+	for(var/mob/M in src.loc)
+		if(itemcount >= storage_capacity)
+			break
+		if(istype (M, /mob/dead/observer))
+			continue
+		if(M.buckled)
+			continue
+		if(M.w_class > SIZE_SMALL && !(M.lying || M.crawling))
+			continue
+
+		M.forceMove(src)
+		M.instant_vision_update(1,src)
+		itemcount++
+
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
 			break
