@@ -68,3 +68,13 @@
 #define ATMOS_DEFAULT_VOLUME_FILTER 200 // L.
 #define ATMOS_DEFAULT_VOLUME_MIXER  200 // L.
 #define ATMOS_DEFAULT_VOLUME_PIPE   70  // L.
+
+// status values shared between lighting fixtures and items
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+
+#define LAMP_FITTING_BULB "bulb"
+#define LAMP_FITTING_TUBE "tube"
+#define LAMP_FITTING_LARGE_TUBE "large tube"
