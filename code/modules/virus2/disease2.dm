@@ -157,22 +157,39 @@
 		stage++
 
 /datum/disease2/disease/proc/spread(atom/A, radius = 1)
-	if(spreadtype == DISEASE_SPREAD_BLOOD)
-		return
-	if(iscarbon(A))
-		var/mob/living/carbon/mob = A
-		for(var/mob/living/carbon/M in oview(radius, mob))
-			if(airborne_can_reach(get_turf(mob), get_turf(M)))
-				infect_virus2(M, src)
-				mob.med_hud_set_status()
+	if(ismob(A))
+		spread_mob(A, radius)
 		return
 	if(istype(A, /obj/machinery/hydroponics))
-		if(spreadtype != DISEASE_SPREAD_AIRBORNE)
-			return
-		if(!(DIONA in affected_species))
-			return
-		for(var/obj/machinery/hydroponics/tray in range(radius, A))
-			tray.infect_planttray_virus2(src)
+		spread_plant(A, radius)
+
+/datum/disease2/disease/proc/spread_mob(mob/living/carbon/mob, radius = 1)
+	if(spreadtype == DISEASE_SPREAD_BLOOD)
+		return
+	for(var/mob/living/carbon/M in oview(radius, mob))
+		if(airborne_can_reach(get_turf(mob), get_turf(M)))
+			infect_virus2(M, src)
+			mob.med_hud_set_status()
+
+/datum/disease2/disease/proc/spread_plant(obj/machinery/hydroponics/my_tray, radius = 1)
+	if(spreadtype != DISEASE_SPREAD_AIRBORNE)
+		return
+	var/check_passed = FALSE
+	//a mushroom
+	if(my_tray.myseed?.plant_type == 2)
+		check_passed = TRUE
+	else
+		for(var/name in affected_species)
+			var/datum/species/S = all_species[name]
+			if(!S)
+				continue
+			if(S.flags[IS_PLANT])
+				check_passed = TRUE
+				break
+	if(!check_passed)
+		return
+	for(var/obj/machinery/hydroponics/tray in range(radius, my_tray))
+		tray.infect_planttray_virus2(src)
 
 /datum/disease2/disease/proc/deactivate(atom/A)
 	for(var/datum/disease2/effectholder/e in effects)
