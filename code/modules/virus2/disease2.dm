@@ -174,21 +174,7 @@
 /datum/disease2/disease/proc/spread_plant(obj/machinery/hydroponics/my_tray, radius = 1)
 	if(spreadtype != DISEASE_SPREAD_AIRBORNE)
 		return
-	var/check_passed = FALSE
-	for(var/name in affected_species)
-		var/datum/species/S = all_species[name]
-		if(!S)
-			continue
-		//mushroom
-		if(my_tray.myseed?.plant_type == 2)
-			if(!S.flags[IS_PLANT])
-				check_passed = TRUE
-				break
-		else
-			if(S.flags[IS_PLANT])
-				check_passed = TRUE
-				break
-	if(!check_passed)
+	if(!my_tray.can_be_infected(src))
 		return
 	for(var/obj/machinery/hydroponics/tray in range(radius, my_tray))
 		tray.infect_planttray_virus2(src)

@@ -885,6 +885,20 @@
 		dead = FALSE
 	update_icon()
 
+/obj/machinery/hydroponics/proc/can_be_infected(datum/disease2/disease/virus)
+	for(var/name in virus.affected_species)
+		var/datum/species/S = all_species[name]
+		if(!S)
+			continue
+		//mushroom
+		if(myseed?.plant_type == 2)
+			if(!S.flags[IS_PLANT])
+				return TRUE
+		else
+			if(S.flags[IS_PLANT])
+				return TRUE
+	return FALSE
+
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
 	nutrilevel += adjustamt
