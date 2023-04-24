@@ -551,7 +551,7 @@
 	max_stage = 3
 	cooldown = 60
 
-/datum/disease2/effect/vomit/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/vomit/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			to_chat(mob, "<span class='warning'>Your chest hurts!</span>")
@@ -793,7 +793,7 @@
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(senses_message)
 
-/datum/disease2/effect/nerve_support/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/nerve_support/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			if(COOLDOWN_FINISHED(src, senses_message))
@@ -980,7 +980,7 @@
 	max_stage = 1
 	cooldown = 30
 
-/datum/disease2/effect/purging_advanced/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/purging_advanced/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(!mob.getToxLoss())
 		return
 	if(!mob.reagents)
@@ -1227,7 +1227,7 @@
 	max_stage = 1
 	cooldown = 600
 
-/datum/disease2/effect/monitoring/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/monitoring/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	SSmobs.virus_monitored_mobs |= mob
 
 /datum/disease2/effect/monitoring/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
