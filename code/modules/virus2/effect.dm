@@ -34,7 +34,8 @@
 	var/max_stage = 1
 	var/cooldown = 0
 
-/datum/disease2/effect/proc/activate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/tray/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 
