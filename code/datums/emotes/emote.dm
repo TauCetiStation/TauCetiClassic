@@ -50,6 +50,9 @@ var/global/list/all_emotes
 /datum/emote/proc/get_emote_message_1p(mob/user)
 	return "<i>[message_1p]</i>"
 
+/datum/emote/proc/get_impaired_msg(mob/user)
+	return message_impaired_reception
+
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
 	var/miming = FALSE
@@ -139,6 +142,7 @@ var/global/list/all_emotes
 	var/msg_1p = get_emote_message_1p(user)
 	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
+	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user)]"
 
 	if(!msg_1p)
 		msg_1p = msg_3p
@@ -147,9 +151,9 @@ var/global/list/all_emotes
 
 	if(msg_3p)
 		if(message_type & SHOWMSG_VISUAL)
-			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
+			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user))
 		else if(message_type & SHOWMSG_AUDIO)
-			user.audible_message(msg_3p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+			user.audible_message(msg_3p, msg_1p, deaf_impaired_msg, hearing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user), deaf_runechat_msg = get_impaired_msg(user))
 
 	else
 		to_chat(user, msg_1p)
@@ -171,6 +175,10 @@ var/global/list/all_emotes
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
+
+	for(var/mob/M in (viewers(get_turf(src), world.view)))
+		if(M in observer_list)
+			M.show_runechat_message(src, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
 
 	if(cloud)
 		add_cloud(user)
