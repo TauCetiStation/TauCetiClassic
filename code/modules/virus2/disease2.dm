@@ -103,41 +103,41 @@
 			res += picked
 	return res
 
-/datum/disease2/disease/proc/activate(atom/A)
-	if(iscarbon(A))
-		var/mob/living/carbon/mob = A
-		if(dead)
-			cure(mob)
+/datum/disease2/disease/proc/activate(mob/living/carbon/mob)
+	if(dead)
+		cure(mob)
+		return
+
+	if(mob.stat == DEAD)
+		return
+
+	if(HAS_TRAIT(mob, TRAIT_VACCINATED))
+		return
+
+	if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
+		if(prob(5))
+			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
+
+	//Space antibiotics stop disease completely
+	if(mob.reagents.has_reagent("spaceacillin"))
+		if(!mob.is_infected_with_zombie_virus())
+			if(stage == 1 && prob(20))
+				cure(mob)
 			return
-
-		if(mob.stat == DEAD)
-			return
-
-		if(HAS_TRAIT(mob, TRAIT_VACCINATED))
-			return
-
-		if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
-			if(prob(5))
-				mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
-
-		//Space antibiotics stop disease completely
-		if(mob.reagents.has_reagent("spaceacillin"))
-			if(!mob.is_infected_with_zombie_virus())
-				if(stage == 1 && prob(20))
-					cure(mob)
+		else
+			if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely
 				return
-			else
-				if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely
-					return
 
-		//Virus food speeds up disease progress
-		if(mob.reagents.has_reagent("virusfood"))
-			mob.reagents.remove_reagent("virusfood",0.1)
-			clicks += 10
+	//Virus food speeds up disease progress
+	if(mob.reagents.has_reagent("virusfood"))
+		mob.reagents.remove_reagent("virusfood",0.1)
+		clicks += 10
 
-		//fever
-		mob.adjust_bodytemperature(2 * stage, max_temp = BODYTEMP_NORMAL + 2 * stage)
+	//fever
+	mob.adjust_bodytemperature(2 * stage, max_temp = BODYTEMP_NORMAL + 2 * stage)
+	activate_symptom(mob)
 
+/datum/disease2/disease/proc/activate_symptom(atom/A)
 	//Moving to the next stage
 	if(clicks > stage * 100 && prob(10) && stage < effects.len)
 		stage++
@@ -153,6 +153,9 @@
 		spread(A, 1)
 
 	clicks += speed
+
+/datum/disease2/disease/proc/affect_plants(obj/machinery/hydroponics/tray)
+	activate_symptom(tray)
 
 /datum/disease2/disease/proc/advance_stage()
 	if(stage<effects.len)
