@@ -561,7 +561,7 @@
 		if(3)
 			irradiate_one_mob(A, 20)
 
-/datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/radian/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustMutationmod(holder.stage)
 
 /*/datum/disease2/effect/deaf
