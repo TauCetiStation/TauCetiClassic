@@ -1917,7 +1917,6 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
 	},
-/obj/structure/fence/metal,
 /turf/simulated/floor/plating{
 	icon_state = "platebot";
 	nitrogen = 0.01;
@@ -4615,6 +4614,9 @@
 /area/station/security/brig)
 "ahZ" = (
 /obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "aia" = (
@@ -6027,16 +6029,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aks" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/obj/structure/fence/metal{
+	color = "#76417b";
+	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/grass,
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "akt" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -9498,6 +9496,10 @@
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet{
 	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#76417b";
+	dir = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
@@ -19291,7 +19293,8 @@
 /area/station/rnd/mixing)
 "aJm" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/structure/fence/glass{
+/obj/structure/fence/metal{
+	color = "#76417b";
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -19325,7 +19328,8 @@
 	},
 /obj/item/weapon/crowbar,
 /obj/item/weapon/gun/energy/pyrometer/science_phoron,
-/obj/structure/fence/glass{
+/obj/structure/fence/metal{
+	color = "#76417b";
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -20443,7 +20447,8 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
+	color = "#76417b";
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -21056,7 +21061,8 @@
 /area/station/rnd/storage)
 "aMy" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/structure/fence/glass{
+/obj/structure/fence/metal{
+	color = "#76417b";
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -21937,6 +21943,10 @@
 /area/station/security/prison)
 "aOl" = (
 /obj/structure/closet/secure_closet/scientist,
+/obj/structure/fence/metal{
+	color = "#76417b";
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -22701,9 +22711,6 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -22808,9 +22815,6 @@
 /area/station/civilian/playroom)
 "aPT" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/structure/fence/metal{
-	dir = 4
-	},
 /turf/simulated/floor/bluegrid,
 /area/station/medical/hallway)
 "aPU" = (
@@ -23096,7 +23100,8 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/structure/fence/glass{
+/obj/structure/fence/metal{
+	color = "#76417b";
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -24680,6 +24685,10 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
+/obj/structure/fence/metal{
+	color = "#76417b";
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -25307,6 +25316,9 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/misc_lab)
 "aUz" = (
+/obj/structure/fence/metal{
+	color = "#76417b"
+	},
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "aUA" = (
@@ -27073,7 +27085,8 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/latex,
 /obj/item/weapon/storage/firstaid/toxin,
-/obj/structure/fence/glass{
+/obj/structure/fence/metal{
+	color = "#76417b";
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -28920,6 +28933,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/fence/metal{
+	color = "#d0ac2c"
+	},
 /turf/simulated/floor/plating{
 	dir = 8;
 	icon_state = "warnplate"
@@ -29627,13 +29643,13 @@
 	},
 /area/station/gateway)
 "bcf" = (
-/obj/structure/closet/crate,
-/obj/random/misc/all,
-/obj/random/misc/all,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/obj/machinery/power/emitter,
+/obj/structure/fence/metal{
+	color = "#d0ac2c";
+	dir = 8
 	},
-/area/station/cargo/storage)
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "bcg" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
@@ -32039,7 +32055,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/med_data,
-/obj/structure/fence/glass{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -34844,11 +34860,11 @@
 "blP" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/glass{
 	dir = 4
+	},
+/obj/structure/fence/glass{
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
@@ -37169,9 +37185,6 @@
 /area/station/rnd/chargebay)
 "bqq" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/structure/fence/metal{
-	dir = 8
-	},
 /turf/simulated/floor/bluegrid,
 /area/station/rnd/chargebay)
 "bqr" = (
@@ -39398,9 +39411,6 @@
 /area/station/medical/surgery2)
 "bus" = (
 /obj/structure/morgue,
-/obj/structure/fence/glass{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -46466,19 +46476,10 @@
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "bGW" = (
-/obj/machinery/mech_bay_recharge_port{
-	dir = 1
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/obj/structure/fence/metal,
-/obj/structure/fence/metal{
-	dir = 8
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
-/area/station/rnd/chargebay)
+/area/station/cargo/recycler)
 "bGX" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -56042,6 +56043,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 1
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "ceC" = (
@@ -56426,6 +56428,10 @@
 /area/station/medical/virology)
 "cfK" = (
 /obj/machinery/power/port_gen/pacman,
+/obj/structure/fence/metal{
+	color = "#d0ac2c";
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cfM" = (
@@ -57506,6 +57512,9 @@
 /area/station/cargo/recycler)
 "ciQ" = (
 /obj/machinery/light/small,
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ciR" = (
@@ -59904,9 +59913,6 @@
 /area/station/aisat/ai_chamber)
 "cpv" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/fence/metal{
-	dir = 8
-	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cpw" = (
@@ -62999,6 +63005,10 @@
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 25
 	},
+/obj/structure/fence/metal{
+	color = "#d0ac2c";
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cxI" = (
@@ -64335,6 +64345,9 @@
 /area/station/engineering/engine)
 "cBq" = (
 /obj/item/weapon/crowbar,
+/obj/structure/fence/metal{
+	color = "#d0ac2c"
+	},
 /turf/simulated/floor/plating{
 	dir = 4;
 	icon_state = "warnplate"
@@ -64498,6 +64511,10 @@
 /area/station/civilian/library)
 "cBN" = (
 /obj/machinery/the_singularitygen,
+/obj/structure/fence/metal{
+	color = "#d0ac2c";
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBO" = (
@@ -68051,6 +68068,10 @@
 /area/station/medical/reception)
 "dbs" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
+/obj/structure/fence/metal{
+	color = "#d0ac2c";
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "dbK" = (
@@ -68675,6 +68696,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"dQT" = (
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "dRb" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -73041,7 +73068,9 @@
 /area/station/cargo/office)
 "iSQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/flashlight/lamp/fir,
+/obj/structure/closet/crate,
+/obj/random/misc/all,
+/obj/random/misc/all,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -74678,6 +74707,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "kDT" = (
@@ -75821,8 +75851,16 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
+"lVI" = (
+/obj/machinery/field_generator,
+/obj/structure/fence/metal{
+	color = "#d0ac2c";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "lWb" = (
-/obj/structure/fence/glass{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -80736,6 +80774,12 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"seu" = (
+/obj/item/device/flashlight/lamp/fir,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "sfb" = (
 /obj/structure/table/glass,
 /obj/machinery/alarm{
@@ -81434,6 +81478,7 @@
 	id = "Incinerator";
 	on = 0
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "sQb" = (
@@ -82107,14 +82152,14 @@
 "tRb" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/brflowers,
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/obj/structure/fence/glass{
+	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/glass{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/obj/structure/fence/glass{
+	dir = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
@@ -82129,13 +82174,13 @@
 "tSb" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/glass{
 	dir = 4
 	},
+/obj/structure/fence/glass{
+	dir = 8
+	},
+/obj/structure/fence/glass,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "tSN" = (
@@ -83876,6 +83921,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"xUZ" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
+/area/station/cargo/recycler)
 "xWb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -83925,7 +83976,9 @@
 	dir = 1
 	},
 /obj/structure/fence/metal,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "yab" = (
 /obj/structure/grille,
@@ -99777,7 +99830,7 @@ tPb
 bnL
 uab
 aRn
-aks
+blP
 tPb
 tSb
 bnL
@@ -99807,7 +99860,7 @@ ixO
 qAF
 bEW
 aPD
-bxz
+seu
 rck
 eTT
 eTT
@@ -100064,7 +100117,7 @@ eXg
 qAF
 vdm
 aFg
-bcf
+bxz
 bBm
 bba
 vIi
@@ -106252,14 +106305,14 @@ xWb
 xXb
 lxb
 fBb
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
 ciQ
 cap
 aah
@@ -107017,9 +107070,9 @@ byO
 bwz
 byV
 bzc
+xUZ
 bzf
-bzf
-bzf
+xUZ
 bzf
 xZb
 bZZ
@@ -107536,7 +107589,7 @@ cbe
 cbS
 cfS
 cbS
-bZZ
+bGW
 bZZ
 cbB
 cbC
@@ -107793,7 +107846,7 @@ cbd
 cbS
 cwE
 cgy
-bZZ
+bGW
 bZZ
 cbB
 ciP
@@ -108050,7 +108103,7 @@ cij
 cuZ
 cbf
 cbS
-bZZ
+bGW
 bZZ
 bZZ
 bZZ
@@ -112187,7 +112240,7 @@ chV
 qyj
 wOp
 crH
-lKl
+lVI
 cBN
 cAR
 peD
@@ -112958,8 +113011,8 @@ chV
 uCp
 lru
 crH
-krf
-krf
+bcf
+bcf
 cAR
 cAR
 cAR
@@ -125500,7 +125553,7 @@ lgb
 bEb
 bqq
 bqp
-bGW
+adu
 bJt
 bxJ
 bNx
@@ -128274,7 +128327,7 @@ aaa
 aaa
 aah
 czC
-ckC
+aks
 ceC
 ckC
 aqv
@@ -128531,7 +128584,7 @@ aaa
 aaa
 aah
 czC
-ckC
+aks
 ckC
 ckC
 aqw

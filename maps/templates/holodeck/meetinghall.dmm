@@ -111,11 +111,17 @@
 	icon_state = "carpet5-1"
 	},
 /area/station/civilian/holodeck/source_meetinghall)
+"N" = (
+/obj/structure/fence/glass,
+/turf/simulated/floor/holofloor{
+	icon_state = "wooden"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
 
 (1,1,1) = {"
 a
 a
-a
+N
 f
 k
 k
@@ -127,7 +133,7 @@ k
 (2,1,1) = {"
 a
 a
-a
+N
 f
 p
 q
@@ -139,7 +145,7 @@ k
 (3,1,1) = {"
 a
 c
-a
+N
 f
 m
 n
@@ -151,7 +157,7 @@ e
 (4,1,1) = {"
 a
 d
-a
+N
 f
 m
 n
@@ -163,7 +169,7 @@ k
 (5,1,1) = {"
 a
 e
-a
+N
 f
 m
 n
@@ -175,7 +181,7 @@ k
 (6,1,1) = {"
 a
 c
-a
+N
 f
 m
 n
@@ -187,7 +193,7 @@ k
 (7,1,1) = {"
 a
 d
-a
+N
 f
 m
 n
@@ -199,7 +205,7 @@ k
 (8,1,1) = {"
 a
 a
-a
+N
 f
 h
 i
@@ -211,7 +217,7 @@ e
 (9,1,1) = {"
 a
 a
-a
+N
 f
 k
 k
