@@ -232,7 +232,7 @@
 		dat += "<br />"
 
 		var/insurance_type = get_insurance_type(occupant)
-		if(insurance_type in list(STANDART_INSURANCE, PREMIUM_INSURANCE))
+		if(insurance_type != NONE_INSURANCE)
 			dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill bggood'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
 			dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
 			dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
