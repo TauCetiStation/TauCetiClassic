@@ -87,7 +87,7 @@
 
 	var/dyed_type
 
-	var/flash_protection = 0 //0 - no protection, 1 flashes, 2 for welding flashes and such
+	var/flash_protection = NONE
 	var/can_get_wet = TRUE
 
 /obj/item/atom_init()
