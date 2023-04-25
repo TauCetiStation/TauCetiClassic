@@ -71,6 +71,8 @@
 								Sex: <A href='?src=\ref[src];field=sex'>[active1.fields["sex"]]</A><BR>\n	\
 								Age: <A href='?src=\ref[src];field=age'>[active1.fields["age"]]</A><BR>\n	\
 								Fingerprint: <A href='?src=\ref[src];field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+								Insurance Account Number: <A href='?src=\ref[src];field=insurance_account_number'>[active1.fields["insurance_account_number"]]</A><BR>\n	\
+								Insurance Type: [active1.fields["insurance_type"]]<BR>\n \
 								Physical Status: <A href='?src=\ref[src];field=p_stat'>[active1.fields["p_stat"]]</A><BR>\n	\
 								Mental Status: <A href='?src=\ref[src];field=m_stat'>[active1.fields["m_stat"]]</A><BR></td><td align = center valign = top> \
 								Photo:<br><img src=front.png height=64 width=64 border=5 class=nearest><img src=side.png height=64 width=64 border=5 class=nearest></td></tr></table>"
@@ -78,7 +80,7 @@
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
 						dat += text(
-							"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
+							"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[]</A><BR>\n<<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
 							src.active2.fields["b_type"],
 							src.active2.fields["b_dna"],
 							src.active2.fields["mi_dis"],
@@ -248,7 +250,43 @@
 						var/t1 = sanitize(input("Please input fingerprint hash:", "Med. records", input_default(src.active1.fields["fingerprint"]), null)  as text)
 						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
+						if(t1 != src.active1.fields["fingerprint"])
+							src.active1.fields["insurance_account_number"] = 0
+							src.active1.fields["insurance_type"] = NONE_INSURANCE
+							
+							var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+							announcer.config(list("Medical" = 1))
+							announcer.autosay("[usr] has changed the fingerprint in [src.active1.fields["id"]] record. All record insurance data will be deleted.", "Insurancer", "Medical", freq = radiochannels["Medical"])
+							qdel(announcer)
+
 						src.active1.fields["fingerprint"] = t1
+
+
+				if("insurance_account_number")
+					if (istype(src.active1, /datum/data/record))
+						var/t1 = input("Please input insurance account number:", "Med. records", input_default(src.active1.fields["insurance_account_number"]), null)  as num
+						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
+							return
+						var/datum/data/record/R = find_record("insurance_account_number", t1, data_core.general)
+						var/can_replace = TRUE
+						for(var/i in global.department_accounts)
+							if(t1 == global.department_accounts[i].account_number)
+								tgui_alert(usr, "This is department account, you can't use it.")
+								can_replace = FALSE
+								break
+						
+						if(R)
+							tgui_alert(usr, "This account is already used by [R.fields["id"]] record")
+							can_replace = FALSE
+
+						if(can_replace)
+							src.active1.fields["insurance_account_number"] = t1
+							var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+							announcer.config(list("Medical" = 1))
+							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record.", "Insurancer", "Medical", freq = radiochannels["Medical"])
+							qdel(announcer)
+
+
 				if("sex")
 					if (istype(src.active1, /datum/data/record))
 						if (src.active1.fields["sex"] == "Male")
@@ -490,12 +528,13 @@
 			var/info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			if (record1)
 				info += text(
-					"Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
+					"Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\n<BR>Insurance account number: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
 					record1.fields["name"],
 					record1.fields["id"],
 					record1.fields["sex"],
 					record1.fields["age"],
 					record1.fields["fingerprint"],
+					record1.fields["insurance_account_number"],
 					record1.fields["p_stat"],
 					record1.fields["m_stat"]
 				)
@@ -505,7 +544,7 @@
 				docname = "Medical Record"
 			if (record2)
 				info += text(
-					"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
+					"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
 					record2.fields["b_type"],
 					record2.fields["b_dna"],
 					record2.fields["mi_dis"],
