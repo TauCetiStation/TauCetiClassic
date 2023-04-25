@@ -123,7 +123,7 @@
 		/obj/item/weapon/minihoe,
 		/obj/item/weapon/hatchet,
 		/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
-		/obj/item/weapon/hand_labeler,
+		/obj/item/device/tagger,
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/lighter,
@@ -235,7 +235,6 @@
 		/obj/item/weapon/melee/classic_baton,
 		/obj/item/weapon/melee/telebaton,
 		/obj/item/weapon/wirerod,
-		/obj/item/weapon/melee/cattleprod,
 		/obj/item/weapon/minihoe,
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton
@@ -255,7 +254,7 @@
 	icon_state = "medical_syndie"
 	item_state = "medical_supply"
 
-	storage_slots = 8
+	storage_slots = 9
 	max_w_class = SIZE_SMALL
 
 	startswith = list(
@@ -265,6 +264,7 @@
 		/obj/item/weapon/reagent_containers/hypospray/combat/atoxin,
 		/obj/item/weapon/reagent_containers/hypospray/combat/intdam,
 		/obj/item/weapon/reagent_containers/hypospray/combat/pain,
+		/obj/item/weapon/reagent_containers/hypospray/combat/bone,
 		/obj/item/stack/medical/suture,
 		/obj/item/device/healthanalyzer,
 	)

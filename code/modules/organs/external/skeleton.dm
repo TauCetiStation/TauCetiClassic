@@ -112,6 +112,7 @@
 
 /obj/item/organ/external/head/skeleton
 	name = "skeleton head"
+	desc = "Poor Yorick!"
 	vital = FALSE
 	leaves_stump = FALSE
 	force = 8

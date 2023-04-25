@@ -22,6 +22,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
+	department_stocks = list("Cargo" = 40)
+
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
@@ -39,6 +41,8 @@
 	outfit = /datum/outfit/job/cargo_tech
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
 
+	department_stocks = list("Cargo" = 20)
+
 
 /datum/job/mining
 	title = "Shaft Miner"
@@ -55,6 +59,8 @@
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
+
+	department_stocks = list("Cargo" = 10)
 
 
 /datum/job/recycler
@@ -79,6 +85,8 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA)
+
+	department_stocks = list("Cargo" = 10)
 
 
 //Food
@@ -246,7 +254,7 @@
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		H.mutations.Add(CLUMSY)
+		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 /datum/job/mime
 	title = "Mime"

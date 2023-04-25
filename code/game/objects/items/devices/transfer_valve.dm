@@ -59,12 +59,6 @@
 	else
 		return ..()
 
-
-/obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
-	if(!attached_device)	return
-	attached_device.HasProximity(AM)
-	return
-
 /obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
 	attached_device.hear_talk(M,msg)

@@ -202,6 +202,7 @@
 		/obj/item/robot_parts/l_leg,
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
+		/obj/item/weapon/tank/anesthetic,
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
@@ -304,7 +305,7 @@
 		//Different classes of items give different commodities.
 		if (istype(W,/obj/item/weapon/cigbutt))
 			stored_comms["plastic"]++
-		else if(istype(W,/obj/effect/spider/spiderling))
+		else if(istype(W,/obj/structure/spider/spiderling))
 			stored_comms["wood"]++
 			stored_comms["wood"]++
 			stored_comms["plastic"]++

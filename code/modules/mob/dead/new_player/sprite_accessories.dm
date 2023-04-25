@@ -1227,16 +1227,13 @@
 	name = "Cobra Hood"
 	icon_state = "una_facial_cobrahood"
 	species_allowed = list(UNATHI, PODMAN)
-
-/datum/sprite_accessory/facialhair/una_facial_aquaticfrills
-	name = "Aquatic Frills Full"
-	icon_state = "una_facial_aquaticfrills"
-	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_longdorsal
 	name = "Long Dorsal 4"
 	icon_state = "una_facial_longdorsal"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/una_ramhorn2
 	name = "Ram Horns 2"
@@ -1267,16 +1264,19 @@
 	name = "Hood"
 	icon_state = "una_facial_hood"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_shortfrills2
 	name = "Short Frills 2"
 	icon_state = "una_facial_shortfrills2"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills
 	name = "Drac Frills Full"
 	icon_state = "una_facial_dracfrills"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
@@ -1337,6 +1337,7 @@
 	name = "Long Unathi Frills"
 	icon_state = "una_facial_longfrills"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/una_frills_short
 	name = "Short Unathi Frills"
@@ -1352,31 +1353,37 @@
 	name = "Aquatic Frills"
 	icon_state = "una_facial_aquaticfrills"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_aquaticfrills_webbing
 	name = "Aquatic Frills Webbed"
 	icon_state = "una_facial_aquaticfrills_webbing"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_shortfrills2
 	name = "Short Frills 2"
 	icon_state = "una_facial_shortfrills2"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills
 	name = "Drac Frills"
 	icon_state = "una_facial_dracfrills"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills_webbing
 	name = "Drac Frills Webbed"
 	icon_state = "una_facial_dracfrills_webbing"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_sidefrills
 	name = "Side Frills"
 	icon_state = "una_facial_sidefrills"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/una_demonforward
 	name = "Demon Forward"
@@ -1387,22 +1394,25 @@
 	name = "Dorsa Frills"
 	icon_state = "una_facial_dorsalfrills"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrills_webbing
 	name = "Dorsa Frills Webbed"
 	icon_state = "una_facial_dorsalfrills_webbing"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrill3
 	name = "Dorsa Frills 3"
 	icon_state = "una_facial_dorsalfrill3"
 	species_allowed = list(UNATHI, PODMAN)
-
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/una_hipbraid_beads
 	name = "Bead"
 	icon_state = "una_facial_hipbraid_beads"
 	species_allowed = list(UNATHI, PODMAN)
+	gender = NEUTER
 
 //SKRELL HAIRS
 

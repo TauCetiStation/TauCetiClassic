@@ -67,7 +67,7 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
 				if(!delta_timer_id)
 					delta_alarm()
-		SSnightshift.check_nightshift() // Night shift mode turns off if security level is raised to red or above
+		SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 		code_announce.play()
 	else
 		return

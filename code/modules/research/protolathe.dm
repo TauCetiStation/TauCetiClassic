@@ -102,7 +102,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	if (panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
@@ -163,6 +163,10 @@ Note: Must be placed west/left of and R&D console to function.
 	busy = FALSE
 	if(linked_console)
 		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/protolathe/deconstruct(disassembled)
+	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
+	return ..()
 
 /obj/machinery/r_n_d/protolathe/deconstruction()
 	. = ..()

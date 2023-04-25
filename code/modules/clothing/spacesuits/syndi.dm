@@ -11,6 +11,11 @@
 	species_restricted = list("exclude" , DIONA)
 	var/image/lamp = null
 
+/obj/item/clothing/head/helmet/space/syndicate/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
+
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
@@ -31,8 +36,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
 	. = ..()
 	icon_state = "[initial(icon_state)][lit ? "-lit" : ""]"
-	if(user)
-		user.update_inv_head()
+	update_inv_mob()
 
 /obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
 	. = ..()
@@ -116,6 +120,11 @@
 	item_state = "syndicate-helm-elite"
 	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
 	action_button_name = null
+
+/obj/item/clothing/head/helmet/space/syndicate/elite/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/syndicate/elite/attack_self(mob/user)
 	return

@@ -224,6 +224,7 @@
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
 			module_sprites["Kodiak"] = "kodiak-service"
+			module_sprites["Maid"] = "kerfusMaid"
 
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
@@ -275,6 +276,7 @@
 				module_sprites["Drone"] = "drone-sec"
 				module_sprites["Acheron"] = "mechoid-Security"
 				module_sprites["Kodiak"] = "kodiak-sec"
+				module_sprites["NO ERP"] = "kerfusNoERP"
 			else
 				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
 				return
@@ -292,6 +294,7 @@
 			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
 			module_sprites["Kodiak"] = "kodiak-eng"
+			module_sprites["Flushed"] = "kerfusFlushed"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -308,6 +311,7 @@
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
+			module_sprites["Nanotrasen"] = "kerfusNT"
 
 		if("Combat")
 			build_combat_borg()
@@ -457,7 +461,7 @@
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != DEAD)
-		adjustBruteLoss(60)
+		adjustBruteLoss(35)
 		updatehealth()
 		return 1
 	return 0
@@ -597,6 +601,9 @@
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
+	if (user.a_intent == INTENT_HARM)
+		return ..()
+
 	if(opened) // Are they trying to insert something?
 		for(var/V in components)
 			var/datum/robot_component/C = components[V]
@@ -616,7 +623,7 @@
 
 				return
 
-	if (iswelder(W))
+	if (iswelding(W))
 		if (src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
@@ -647,7 +654,7 @@
 		updatehealth()
 		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
-	else if (iscrowbar(W))	// crowbar means open or close the cover
+	else if (isprying(W))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
@@ -727,17 +734,17 @@
 			C.electronics_damage = 0
 			diag_hud_set_borgcell()
 
-	else if (iswirecutter(W) || ismultitool(W))
+	else if (iscutter(W) || ispulsing(W))
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
-	else if(isscrewdriver(W) && opened && !cell)	// haxing
+	else if(isscrewing(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
-	else if(isscrewdriver(W) && opened && cell)	// radio
+	else if(isscrewing(W) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
@@ -1095,16 +1102,12 @@
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
 								cleaned_human.head.clean_blood()
-								cleaned_human.update_inv_head()
 							if(cleaned_human.wear_suit)
 								cleaned_human.wear_suit.clean_blood()
-								cleaned_human.update_inv_wear_suit()
 							else if(cleaned_human.w_uniform)
 								cleaned_human.w_uniform.clean_blood()
-								cleaned_human.update_inv_w_uniform()
 							if(cleaned_human.shoes)
 								cleaned_human.shoes.clean_blood()
-								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
 							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 

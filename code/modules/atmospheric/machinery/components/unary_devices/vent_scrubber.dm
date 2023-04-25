@@ -267,7 +267,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		if(user.is_busy(src))
 			return
 

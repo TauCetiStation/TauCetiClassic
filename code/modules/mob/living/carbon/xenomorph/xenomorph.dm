@@ -290,12 +290,6 @@ Hit Procs
 	if(density)
 		density = initial(density)
 
-
-/mob/living/carbon/xenomorph/crawl()
-	SetCrawling(!crawling)
-	update_canmove()
-	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
-
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)

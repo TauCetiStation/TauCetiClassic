@@ -61,7 +61,7 @@
 		addtimer(CALLBACK(src, .proc/open_closet, user, user.loc), 70)
 		used = TRUE
 
-	if(istype(user.loc, /obj/effect/spider/cocoon) && !used)
+	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
 		user.loc.visible_message("<span class='warning'>[user.loc] shifts and starts to fall apart!</span>")
 		to_chat(user,"<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>")
 		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, user.loc), 25) //Very short because it's just webs
@@ -91,7 +91,7 @@
 		C.open(TRUE)
 		to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/effect/spider/cocoon/O)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/structure/spider/cocoon/O)
 	if(istype(O) && user.loc == O)
 		qdel(O) //The cocoon's destroy will move the changeling outside of it without interference
 		to_chat(user,"<span class='warning'>We dissolve the cocoon!</span>")

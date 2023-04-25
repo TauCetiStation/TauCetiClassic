@@ -101,8 +101,6 @@
 		return
 	if(SSshuttle.online || SSshuttle.location != 0)
 		return "Шаттл используется"
-	if(security_level >= SEC_LEVEL_RED)
-		return "Код безопасности КРАСНЫЙ или выше"
 
 /datum/poll/crew_transfer/get_vote_power(client/C, datum/vote_choice/choice)
 	return get_vote_power_by_role(C) * choice.vote_weight
@@ -235,7 +233,7 @@
 /datum/poll/nextmap/init_choices()
 	for (var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
-		
+
 		if (!VM.votable)
 			continue
 

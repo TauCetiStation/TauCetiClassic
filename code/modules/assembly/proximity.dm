@@ -16,6 +16,16 @@
 
 	var/range = 2
 
+	var/datum/proximity_monitor/proximity_monitor
+
+/obj/item/device/assembly/prox_sensor/atom_init()
+	. = ..()
+	proximity_monitor = new(src, null, FALSE)
+
+/obj/item/device/assembly/prox_sensor/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
+
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())	return 0//Cooldown check
 	timing = !timing
@@ -63,18 +73,13 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/process()
-	if(scanning)
-		var/turf/mainloc = get_turf(src)
-		for(var/mob/living/A in range(range,mainloc))
-			if (A.move_speed < 12)
-				sense()
-
-	if(timing && (time >= 0))
-		time--
-	if(timing && time <= 0)
-		timing = 0
-		toggle_scan()
-		time = 10
+	if(timing)
+		if(time > 0)
+			time--
+		else
+			timing = FALSE
+			toggle_scan()
+			time = 10
 	return
 
 /obj/item/device/assembly/prox_sensor/dropped()
@@ -85,8 +90,13 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
-	if(!secured)	return 0
+	if(!secured)
+		return
 	scanning = !scanning
+	if(scanning)
+		proximity_monitor.set_range(range)
+	else
+		proximity_monitor.set_range(null)
 	update_icon()
 	return
 

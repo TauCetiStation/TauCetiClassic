@@ -23,7 +23,7 @@
 	density = FALSE
 
 
-/obj/structure/closet/body_bag/attackby(W, mob/user)
+/obj/structure/closet/body_bag/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = sanitize(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != W)
@@ -39,7 +39,7 @@
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
 		return
 
-	else if(iswirecutter(W))
+	else if(iscutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
 		cut_overlays()

@@ -115,6 +115,7 @@
 	icon_state = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
+	can_get_wet = FALSE
 
 
 /obj/item/clothing/under/lawyer
@@ -128,8 +129,8 @@
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/female
-	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
+	icon_state = "black_suit_neck"
+	item_state = "black_suit_neck"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/red

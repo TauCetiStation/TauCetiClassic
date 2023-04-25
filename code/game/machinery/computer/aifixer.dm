@@ -90,6 +90,10 @@
 				cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 				add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 				occupier.add_ai_verbs()
+				var/mob/dead/observer/ghost = occupier.get_ghost()
+				if(ghost)
+					to_chat(ghost, "<span class='ghostalert'>Your AI systems are being restored! Return to your system if you wish to be brought back to artificial life.</span> (Verbs -> Ghost -> Re-enter corpse)")
+					ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			updateUsrDialog()
 			sleep(10)
 		src.active = 0

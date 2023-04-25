@@ -28,13 +28,17 @@
 	user.nutrition -= 6
 	user.overeatduration -= 8
 
-
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
 	var/obj/item/organ/external/groin/G = user.get_bodypart(BP_GROIN)
+
 	if(C)
-		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 7 * C.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	if(G)
-		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 7 * G.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
 	user.update_body()
 
@@ -136,9 +140,13 @@
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
 	if(LA)
-		user.apply_effect(12 * LA.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 12 * LA.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	if(RA)
-		user.apply_effect(12 * RA.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 12 * RA.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
 	user.update_body()
 
@@ -317,7 +325,9 @@
 	if(!BP)
 		return
 
-	H.apply_effect(3 * BP.adjust_pumped(mass, max_pumped), AGONY, 0)
+	var/pain_amount = 3 * BP.adjust_pumped(mass, max_pumped)
+	H.apply_effect(pain_amount, AGONY, 0)
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	H.update_body()
 
 	H.nutrition -= 2 * mass

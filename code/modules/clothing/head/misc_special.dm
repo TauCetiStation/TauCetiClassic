@@ -52,7 +52,7 @@
 			icon_state = "[initial(icon_state)]up"
 			flash_protection = 0
 			to_chat(usr, "You push the [src] up out of your face.")
-		usr.update_inv_head()	//so our mob-overlays update
+		update_inv_mob() //so our mob-overlays update
 
 
 /*
@@ -93,12 +93,12 @@
 	src.onfire = !( src.onfire )
 	if (src.onfire)
 		src.force = 3
-		src.damtype = "fire"
+		src.damtype = BURN
 		src.icon_state = "cake1"
 		START_PROCESSING(SSobj, src)
 	else
 		src.force = null
-		src.damtype = "brute"
+		src.damtype = BRUTE
 		src.icon_state = "cake0"
 	return
 

@@ -53,7 +53,7 @@ var/global/list/fuel_injectors = list()
 
 /obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
 
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fuel Injector", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
@@ -79,7 +79,7 @@ var/global/list/fuel_injectors = list()
 		cur_assembly = W
 		return
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(injecting)
 			to_chat(user, "<span class='warning'>Shut \the [src] off first!</span>")
 			return

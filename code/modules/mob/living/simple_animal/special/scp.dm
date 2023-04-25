@@ -96,7 +96,7 @@
 					Light.update(0)
 				else
 					L.set_light(0)
-			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
+			for(var/obj/structure/glowshroom/G in T.contents) //Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)

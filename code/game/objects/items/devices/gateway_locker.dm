@@ -33,8 +33,8 @@
 			return
 	else
 		war_device_activation_forbidden = TRUE
-	var/obj/effect/landmark/syndie_gateway/Syndie_landmark = locate(/obj/effect/landmark/syndie_gateway) in landmarks_list
-	if(!istype(Syndie_landmark))
+	var/obj/effect/landmark/syndie_gateway/Syndie_landmark = locate("landmark*Syndie gateway")
+	if(QDELETED(Syndie_landmark))
 		to_chat(user,"<span class='danger'>You already perform hack process</span>")
 		return
 	used = TRUE
@@ -64,7 +64,12 @@
 	var/datum/announcement/centcomm/nuclear/gateway/announce = new
 	announce.play()
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
 
 /obj/effect/landmark/syndie_gateway
+	name = "Syndie gateway"
 
 #undef GATEWAY_HACK_TIME

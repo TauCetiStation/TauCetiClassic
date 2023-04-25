@@ -86,6 +86,9 @@
 	// We have something that no one can overlook anymore. Halo
 	var/ascendent = FALSE
 
+	var/mob/camera/eminence/eminence
+	var/research_forbidden = FALSE //If Eminence forbade research for fellow cultist
+
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
@@ -240,6 +243,8 @@
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
 	handle_appearence(M)
+	ADD_TRAIT(M, TRAIT_HEALS_FROM_PYLONS, RELIGION_TRAIT)
+	M.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/my_religion)
 	return TRUE
 
 /datum/religion/cult/proc/handle_appearence(mob/M)
@@ -311,3 +316,4 @@
 		L.RemoveElement(/datum/element/cult_eyes)
 	if(HAS_TRAIT(L, TRAIT_CULT_HALO))
 		L.RemoveElement(/datum/element/cult_halo)
+	M.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/my_religion)

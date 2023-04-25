@@ -275,6 +275,9 @@ var/global/list/ghostteleportlocs = list()
 				else if(E.density)
 					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/open)
 
+/area/proc/airlocks_close(bolt_after = FALSE)
+	for(var/obj/machinery/door/airlock/A in src)
+		A.close_unsafe(bolt_after)
 
 /area/proc/firealert()
 	if(name == "Space") //no fire alarms in space

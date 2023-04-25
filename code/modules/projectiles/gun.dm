@@ -1,3 +1,9 @@
+#define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free"
+#define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
+//Please do not increase power in shake_camera(). It is really not needed for players.
+#define OPTIMAL_POWER_RECOIL 1
+#define DEFAULT_DURATION_RECOIL 1
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -10,6 +16,7 @@
 	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
+	hitsound = list('sound/weapons/genhit1.ogg')
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
@@ -31,9 +38,16 @@
 						// 1 for one bullet after tarrget moves and aim is lowered
 	var/fire_delay = 6
 	var/last_fired = 0
+	var/two_hand_weapon = FALSE
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+
+/obj/item/weapon/gun/examine(mob/user)
+	..()
+	if(two_hand_weapon)
+		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
+
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
@@ -48,6 +62,10 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
 		return FALSE
+	if(two_hand_weapon == ONLY_TWOHAND)
+		if(M.get_inactive_hand())
+			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
+			return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
@@ -56,10 +74,16 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-
-	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
-	if(skill_recoil)
-		shake_camera(user, skill_recoil + 1, skill_recoil)
+	if(recoil > 0)
+		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+		if(two_hand_weapon != DESIRABLE_TWOHAND)
+			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+		if(two_hand_weapon == DESIRABLE_TWOHAND)
+			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
+			if(user.get_inactive_hand())
+				shake_camera(user, recoil + 2, recoil + 1)
+			else
+				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -131,7 +155,7 @@
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
@@ -165,11 +189,7 @@
 		shoot_with_empty_chamber(user)
 	process_chamber()
 	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -244,3 +264,6 @@
 			return
 	else
 		return ..()
+
+#undef OPTIMAL_POWER_RECOIL
+#undef DEFAULT_DURATION_RECOIL

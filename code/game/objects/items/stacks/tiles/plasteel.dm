@@ -2,7 +2,6 @@
 	name = "floor tile"
 	singular_name = "floor tile"
 	desc = "Those could not work as a pretty decent throwing weapon."
-	icon_state = "tile"
 	w_class = SIZE_SMALL
 	force = 6.0
 	m_amt = 937.5

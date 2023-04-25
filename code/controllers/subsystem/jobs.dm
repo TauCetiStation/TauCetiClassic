@@ -450,19 +450,19 @@ SUBSYSTEM_DEF(job)
 	H.job = rank
 
 	if(!joined_late)
-		var/obj/effect/landmark/start/spawn_mark = null
-		for(var/obj/effect/landmark/start/landmark in landmarks_list)
-			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
-				spawn_mark = landmark
-				break
+		var/obj/effect/landmark/start/spawn_mark
+		var/list/rank_landmarks = landmarks_list[rank]
+		if(length(rank_landmarks))
+			for(var/obj/effect/landmark/start/landmark as anything in rank_landmarks)
+				if(!(locate(/mob/living) in landmark.loc))
+					spawn_mark = landmark
+					break
 		if(!spawn_mark)
 			spawn_mark = locate("start*[rank]") // use old stype
 
 		if(!spawn_mark)
 			if(!fallback_landmark)
-				for(var/obj/effect/landmark/start/landmark in landmarks_list)
-					if(landmark.name == "Fallback-Start")
-						fallback_landmark = landmark
+				fallback_landmark = locate("start*Fallback-Start")
 			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
 			spawn_mark = fallback_landmark
 
@@ -470,7 +470,7 @@ SUBSYSTEM_DEF(job)
 			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -582,9 +582,11 @@ SUBSYSTEM_DEF(job)
 		C.assign(H.real_name)
 
 		//put the player's account number onto the ID
-		if(H.mind && H.mind.initial_account)
-			C.associated_account_number = H.mind.initial_account.account_number
-			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
+		if(H.mind)
+			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+			if(MA)
+				C.associated_account_number = MA.account_number
+				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
@@ -595,9 +597,11 @@ SUBSYSTEM_DEF(job)
 		pda.assign(H.real_name)
 		pda.ownrank = C.rank
 		pda.check_rank(C.rank)
-		pda.owner_account = H.mind.initial_account		//bind the account to the pda
-		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
-		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
+
+		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+		pda.owner_account = MA.account_number //bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
+		MA.owner_PDA = pda //add PDA in /datum/money_account
 
 	return TRUE
 

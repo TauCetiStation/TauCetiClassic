@@ -33,14 +33,15 @@
 	log_emote("Ghost/[key_name(src)] : [message]")
 
 	for(var/mob/M in player_list)
+		var/tracker = "[FOLLOW_LINK(M, src)] "
 		if(isnewplayer(M))
 			continue
 
 		if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN) && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to admins
-			to_chat(M, message)
+			to_chat(M, tracker + message)
 
 		else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
-			to_chat(M, message)
+			to_chat(M, tracker + message)
 
 /mob/atom_init()
 	. = ..()

@@ -56,7 +56,7 @@
 			max_number = 6
 			vermstring = "ящериц"
 		if(VERM_SPIDERS)
-			spawn_types = list(/obj/effect/spider/spiderling)
+			spawn_types = list(/obj/structure/spider/spiderling)
 			max_number = 3
 			vermstring = "пауков"
 
@@ -68,7 +68,7 @@
 			num--
 
 			if(vermin == VERM_SPIDERS)
-				var/obj/effect/spider/spiderling/S = new(T)
+				var/obj/structure/spider/spiderling/S = new(T)
 				S.amount_grown = -1
 			else
 				var/spawn_type = pick(spawn_types)

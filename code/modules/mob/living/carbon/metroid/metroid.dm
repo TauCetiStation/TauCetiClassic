@@ -334,6 +334,9 @@
 /mob/living/carbon/slime/is_usable_leg(targetzone = null)
 	return FALSE
 
+/mob/living/carbon/slime/can_pickup(obj/O)
+	return FALSE
+
 /mob/living/carbon/slime/get_species()
 	return SLIME
 
@@ -594,7 +597,7 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = ABSTRACT | DROPDEL | NOSLIP
+	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
 	unacidable = 1
 
 
@@ -743,7 +746,7 @@
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.client)
 			var/area/A = get_area(src)
 			if(A)

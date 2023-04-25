@@ -7,7 +7,7 @@
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = TRUE
-	layer = SHUTTERS_LAYER
+	layer = TRANSIT_TUBE_LAYER
 	anchored = TRUE
 	var/list/tube_dirs = null
 	var/exit_delay = 2
@@ -84,6 +84,10 @@
 		cut_overlay(occupant)
 		occupant = null
 		occupant_angle = initial(occupant_angle)
+
+/obj/structure/transit_tube_pod/deconstruct(disassembled)
+	move_out_content()
+	..()
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

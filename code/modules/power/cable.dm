@@ -34,7 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
-	var/health = 5
+	max_integrity = 5
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
@@ -132,12 +132,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(iswirecutter(W))
+	if(iscutter(W))
 
 		if (shock(user, 50))
 			return
 
-		remove_cable(T, user)
+		deconstruct(TRUE, user)
 
 		return	// not needed, but for clarity
 
@@ -146,7 +146,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(ismultitool(W))
+	else if(ispulsing(W))
 		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
@@ -155,6 +155,11 @@ By design, d1 is the smallest direction and d2 is the highest
 			shock(user, 50, 0.7)
 
 	add_fingerprint(user)
+
+/obj/structure/cable/deconstruct(disassembled, user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	remove_cable(loc, user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
@@ -392,11 +397,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		for(var/obj/machinery/power/P in T1)
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
-
-/obj/structure/cable/proc/take_damage(damage)
-	health -= damage
-	if(health <= 0)
-		qdel(src)
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable

@@ -10,7 +10,7 @@
 /obj/effect/proc_holder/changeling/spiders/sting_action(mob/user)
 	var/turf = get_turf(user)
 	for(var/I in 1 to 2)
-		var/obj/effect/spider/spiderling/Sp = new(turf)
+		var/obj/structure/spider/spiderling/Sp = new(turf)
 		Sp.amount_grown = 1
 
 	feedback_add_details("changeling_powers","SI")

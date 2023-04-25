@@ -46,7 +46,6 @@
 	on = !on
 	last_button_sound = world.time + 3
 	update_brightness(user)
-	action_button_name = null
 	return 1
 
 /obj/item/device/flashlight/get_current_temperature()
@@ -64,7 +63,7 @@
 	add_fingerprint(user)
 	if(on && def_zone == O_EYES)
 
-		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
@@ -228,7 +227,7 @@
 
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
-		src.damtype = "fire"
+		src.damtype = BURN
 		item_state = icon_state
 		update_inv_mob()
 		START_PROCESSING(SSobj, src)

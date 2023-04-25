@@ -22,6 +22,8 @@
 	possible_transfer_amounts = list(5)
 	volume = 5
 	can_be_placed_into = null
+	pickup_sound = null
+	dropped_sound = null
 
 /obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user)
 	return

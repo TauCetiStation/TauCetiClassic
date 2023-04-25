@@ -4,8 +4,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
 	icon_state_arrest = "ed209-c"
-	health = 100
-	maxhealth = 100
+	max_integrity = 100
 
 	layer = INFRONT_MOB_LAYER
 	var/lastfired = 0
@@ -100,7 +99,7 @@
 
 
 /obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewdriver(W) && W.force && !target)
+	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 		if(lasertag_color)//To make up for the fact that lasertag bots don't hunt
@@ -228,8 +227,8 @@
 				var/obj/item/clothing/suit/lasertag/L = I
 				if(L.lasertag_color != lasertag_color)
 					threatcount += 4
-			else if(istype(I, /obj/item/weapon/gun/energy/laser/lasertag))
-				var/obj/item/weapon/gun/energy/laser/lasertag/L = I
+			else if(istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag))
+				var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/L = I
 				if(L.lasertag_color != lasertag_color)
 					threatcount += 4
 
@@ -253,10 +252,10 @@
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
-		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "red")
-		var/obj/item/weapon/gun/energy/laser/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/lasertag/redtag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag(Tsec)
 		G.power_supply.charge = 0
 
 	if(prob(50))
@@ -331,13 +330,7 @@
 	if(severity == 2 && prob(70))
 		..(severity - 1)
 	else
-		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay(loc)
-		pulse2.icon = 'icons/effects/effects.dmi'
-		pulse2.icon_state = "empdisable"
-		pulse2.name = "emp sparks"
-		pulse2.anchored = TRUE
-		pulse2.set_dir(pick(cardinal))
-		QDEL_IN(pulse2, 10)
+		new /obj/effect/overlay/pulse2(loc, 1)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12, src))
 			if(C.stat == DEAD)
@@ -360,8 +353,6 @@
 					if(toarrest)
 						target = toarrest
 						mode = SECBOT_HUNT
-
-
 
 /obj/item/weapon/ed209_assembly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
@@ -405,7 +396,7 @@
 				did_something = TRUE
 
 		if(3)
-			if(iswelder(I))
+			if(iswelding(I))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0,user))
 					build_step++
@@ -447,11 +438,11 @@
 		if(7)
 			switch(lasertag_color)
 				if("blue")
-					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag))
 						return
 					name = "bluetag ED-209 assembly"
 				if("red")
-					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag))
 						return
 					name = "redtag ED-209 assembly"
 				if("")
@@ -468,7 +459,7 @@
 			did_something = TRUE
 
 		if(8)
-			if(isscrewdriver(I))
+			if(isscrewing(I))
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")

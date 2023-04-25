@@ -165,7 +165,7 @@
 		BB.apply_visuals_to(B)
 		bible_info = BB
 
-		chaplain.update_inv_l_hand() // so that it updates the bible's item_state in his hand
+		B.update_inv_mob() // so that it updates the bible's item_state in his hand
 
 		var/like = show_radial_menu(chaplain, chaplain, radial_question, tooltips = TRUE)
 		if(!like)

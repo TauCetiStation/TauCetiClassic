@@ -2,10 +2,12 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "meat"
-	health = 180
+	max_integrity = 180
 	filling_color = "#ff1c1c"
 	bitesize = 3
 	list_reagents = list("protein" = 3)
+	food_type = NATURAL_FOOD
+	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchenknife))

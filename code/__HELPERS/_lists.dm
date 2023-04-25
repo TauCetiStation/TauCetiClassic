@@ -64,6 +64,14 @@
 			return TRUE
 	return FALSE
 
+/proc/is_path_in_list(t, list/L)
+	if(!length(L) || !t)
+		return FALSE
+	for(var/type in L)
+		if(ispath(t, type))
+			return TRUE
+	return FALSE
+
 /proc/get_type_in_list(atom/A, list/L)
 	if(!length(L) || !A)
 		return null

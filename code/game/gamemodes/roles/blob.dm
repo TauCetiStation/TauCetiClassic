@@ -58,7 +58,7 @@
 			C.gib()
 
 	if(blob_client && location)
-		new /obj/effect/blob/core(location, blob_client, 200, 3)
+		new /obj/structure/blob/core(location, blob_client, 200, 3)
 	Drop()
 
 /datum/role/blob_overmind/Greet(greeting,custom)

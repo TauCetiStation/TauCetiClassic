@@ -27,6 +27,9 @@
 	if(.)
 		return
 	var/mob/living/carbon/human/H = user
+	// AI and borgs apparently call attack_hand for some reason :).
+	if(!istype(H))
+		return
 	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return

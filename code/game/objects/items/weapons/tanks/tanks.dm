@@ -14,6 +14,9 @@
 	throw_speed = 1
 	throw_range = 4
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
@@ -208,6 +211,15 @@
 	air_contents.react()
 	check_status()
 
+/obj/item/weapon/tank/deconstruct(disassembled)
+	var/turf/location = get_turf(loc)
+	if(!isturf(location))
+		return ..()
+
+	if(air_contents)
+		location.assume_air(air_contents)
+
+	return ..()
 
 /obj/item/weapon/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank

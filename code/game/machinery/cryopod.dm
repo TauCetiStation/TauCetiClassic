@@ -228,8 +228,7 @@ var/global/list/frozen_items = list()
 
 			// Delete them from datacore.
 
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
+			PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.medical)
 				if ((R.fields["name"] == occupant.real_name))
 					qdel(R)

@@ -2,7 +2,7 @@
 	startswith = list(
 	/obj/item/weapon/reagent_containers/pill/cyanide,
 	/obj/item/weapon/crowbar/red,
-	/obj/item/ammo_box/magazine/m9mm,
+	/obj/item/ammo_box/magazine/stechkin,
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
 	/obj/item/weapon/kitchenknife/combat,
@@ -47,7 +47,7 @@
 	startswith = list(
 	/obj/item/weapon/reagent_containers/pill/cyanide,
 	/obj/item/weapon/crowbar/red,
-	/obj/item/ammo_box/a357,
+	/obj/item/ammo_box/speedloader/a357,
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
 	/obj/item/device/radio/uplink,
@@ -63,15 +63,15 @@
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/revolver
 
 /datum/outfit/nuclear/unathi_equip()
-	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)
+	backpack_contents += list(/obj/item/device/modkit/unathi)
 
 /datum/outfit/nuclear/tajaran_equip()
-	backpack_contents += list(/obj/item/device/modkit/syndie/tajaran)
+	backpack_contents += list(/obj/item/device/modkit/tajaran)
 
 /datum/outfit/nuclear/skrell_equip()
-	backpack_contents += list(/obj/item/device/modkit/syndie/skrell)
+	backpack_contents += list(/obj/item/device/modkit/skrell)
 
 /datum/outfit/nuclear/vox_equip()
-	backpack_contents += list(/obj/item/device/modkit/syndie/vox)
+	backpack_contents += list(/obj/item/device/modkit/vox)
 	l_hand = /obj/item/weapon/tank/nitrogen
 	mask = /obj/item/clothing/mask/gas/vox
