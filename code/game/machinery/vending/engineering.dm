@@ -78,6 +78,11 @@
 	)
 	contraband = list(
 		/obj/item/weapon/stock_parts/cell/potato = 3,
+		/obj/item/weapon/stock_parts/matter_bin/adv = 3,
+		/obj/item/weapon/stock_parts/micro_laser/high = 3,
+		/obj/item/weapon/stock_parts/manipulator/nano = 3,
+		/obj/item/weapon/stock_parts/capacitor/adv = 2,
+		/obj/item/weapon/stock_parts/scanning_module/adv = 2,
 	)
 	premium = list(
 		/obj/item/weapon/storage/belt/utility = 3,
