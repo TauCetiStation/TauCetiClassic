@@ -325,11 +325,11 @@
 		smooth_icon_initial = icon
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		var/icon/I = try_access_persistent_cache("[ckey(cache_string)].dmi", "[smooth_icon_initial]")
+		var/icon/I = try_access_persistent_cache("[ckey(cache_string)].dmi", path2text(smooth_icon_initial))
 		if(!I)
 			// has_false_walls is a file PATH flag, yes
 			I = SliceNDice(icon(smooth_icon_initial), !!findtext("[smooth_icon_initial]", "has_false_walls"))
-			save_persistent_cache(I, "[ckey(cache_string)].dmi", "[smooth_icon_initial]")
+			save_persistent_cache(I, "[ckey(cache_string)].dmi", path2text(smooth_icon_initial))
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]
@@ -355,7 +355,7 @@
 		cache_string += "_grilled"
 
 	if(!global.baked_smooth_icons[cache_string])
-		var/icon/I = try_access_persistent_cache("[ckey(cache_string)].dmi", "[smooth_icon_windowstill]", "[smooth_icon_grille]", "[smooth_icon_window]")
+		var/icon/I = try_access_persistent_cache("[ckey(cache_string)].dmi", path2text(smooth_icon_windowstill), path2text(smooth_icon_grille), path2text(smooth_icon_window))
 		if(!I)
 			var/icon/blended = new(smooth_icon_windowstill)
 
@@ -369,7 +369,7 @@
 			blended.Blend(window,ICON_OVERLAY)
 
 			I = SliceNDice(blended)
-			save_persistent_cache(I, "[ckey(cache_string)].dmi", "[smooth_icon_windowstill]", "[smooth_icon_grille]", "[smooth_icon_window]")
+			save_persistent_cache(I, "[ckey(cache_string)].dmi", path2text(smooth_icon_windowstill), path2text(smooth_icon_grille), path2text(smooth_icon_window))
 
 		global.baked_smooth_icons[cache_string] = I
 
