@@ -252,7 +252,7 @@
 							return
 						if(t1 != src.active1.fields["fingerprint"])
 							src.active1.fields["insurance_account_number"] = 0
-							src.active1.fields["insurance_type"] = NONE_INSURANCE
+							src.active1.fields["insurance_type"] = INSURANCE_NONE
 							
 							var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
 							announcer.config(list("Medical" = 1))
