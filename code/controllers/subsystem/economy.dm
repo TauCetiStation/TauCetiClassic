@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(economy)
 /proc/get_insurance_type(mob/living/carbon/human/H)
 	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
 	if(!R)
-		return "None"
+		return NONE_INSURANCE
 	return R.fields["insurance_type"]
 
 
