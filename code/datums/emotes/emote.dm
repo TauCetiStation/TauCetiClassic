@@ -168,6 +168,9 @@ var/global/list/all_emotes
 		if(!M.client)
 			continue
 
+		if(M in viewers(get_turf(src), world.view))
+			M.show_runechat_message(src, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
+
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
 				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
@@ -175,10 +178,6 @@ var/global/list/all_emotes
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
-
-	for(var/mob/M in (viewers(get_turf(src), world.view)))
-		if(M in observer_list)
-			M.show_runechat_message(src, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
 
 	if(cloud)
 		add_cloud(user)

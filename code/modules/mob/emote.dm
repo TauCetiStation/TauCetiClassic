@@ -86,6 +86,9 @@
 		if(!M.client)
 			continue
 
+		if(M in viewers(get_turf(src), world.view))
+			M.show_runechat_message(src, null, message, null, SHOWMSG_VISUAL)
+
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
 				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
@@ -93,7 +96,3 @@
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
-
-	for(var/mob/M in (viewers(get_turf(src), world.view)))
-		if(M in observer_list)
-			M.show_runechat_message(src, null, msg, null, SHOWMSG_VISUAL)
