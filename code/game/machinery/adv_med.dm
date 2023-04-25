@@ -162,6 +162,7 @@
 
 	if (src.connected) //Is something connected?
 		var/mob/living/carbon/human/occupant = src.connected.occupant
+		var/insurance_type = get_insurance_type(occupant)
 		dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
 		dat += "<font color='blue'><B>Info presented according to occupant's insurance</B></FONT><BR>"
 		if (istype(occupant)) //is there REALLY someone in there?
@@ -184,7 +185,7 @@
 				if(occupant.virus2.len)
 					dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
-				if(occupant.insurance in list("Standart","Premium"))
+				if(insurance_type in list(STANDART_INSURANCE, PREMIUM_INSURANCE))
 					dat += text("<font color='[]'>\t-Brute Damage %: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getBruteLoss())
 					dat += text("<font color='[]'>\t-Respiratory Damage %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
 					dat += text("<font color='[]'>\t-Toxin Content %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
@@ -212,7 +213,7 @@
 						dat += text("<font color='[]'>\tDexalin: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dexalin"))
 
 
-				if(occupant.insurance in list("Premium"))
+				if(insurance_type == PREMIUM_INSURANCE)
 					dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 					storedinfo = null
 					dat += "<HR><table border='1'>"
