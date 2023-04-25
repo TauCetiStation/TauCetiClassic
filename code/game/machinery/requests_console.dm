@@ -234,7 +234,9 @@ var/global/list/departments_genitive = list()
 			return
 
 		var/new_message = sanitize(input(usr, "Напишите ваше сообщение:", "Ожидание Ввода", ""))
-		if(new_message)
+		if(!can_still_interact_with(usr))
+			return
+		if(length(new_message))
 			message = new_message
 			screen = 9
 			switch(href_list["priority"])
@@ -251,7 +253,9 @@ var/global/list/departments_genitive = list()
 
 	if(href_list["writeAnnouncement"])
 		var/new_message = sanitize(input(usr, "Напишите ваше сообщение:", "Ожидание Ввода", "") as null|message)
-		if(new_message)
+		if(!can_still_interact_with(usr))
+			return
+		if(length(new_message))
 			message = new_message
 			switch(href_list["priority"])
 				if("2")

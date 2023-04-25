@@ -311,6 +311,8 @@ Class Procs:
 
 /**
  * Any input()/alert() pause proc, so sometimes we need to check after if user still around and can interact
+ * For topics and tgui_act
+ * todo: we need atom analogues for attack_hand/attackby/topic/etc.
  */
 /obj/machinery/proc/can_still_interact_with(mob/user)
 	// in the future we maybe need to add or change to TGUI can_use_topic, should be fine now
