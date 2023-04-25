@@ -19,7 +19,7 @@ var/global/list/labor_rates = list()
 /datum/labor/plasteel
 	product = /obj/item/stack/sheet/plasteel
 	nametag = "plasteel"
-	price = 50
+	price = 60
 
 /datum/labor/rglass
 	product = /obj/item/stack/sheet/rglass
@@ -49,12 +49,12 @@ var/global/list/labor_rates = list()
 /datum/labor/phoron
 	product = /obj/item/stack/sheet/mineral/phoron
 	nametag = "phoron"
-	price = 150
+	price = 200
 
 /datum/labor/scrap
 	product = /obj/item/stack/sheet/refined_scrap
 	nametag = "scrap"
-	price = 80
+	price = 100
 
 /datum/labor/uranium
 	product = /obj/item/stack/sheet/mineral/uranium
@@ -64,12 +64,12 @@ var/global/list/labor_rates = list()
 /datum/labor/gold
 	product = /obj/item/stack/sheet/mineral/gold
 	nametag = "gold"
-	price = 100
+	price = 150
 
 /datum/labor/silver
 	product = /obj/item/stack/sheet/mineral/silver
 	nametag = "silver"
-	price = 60
+	price = 50
 
 /datum/labor/plastic
 	product = /obj/item/stack/sheet/mineral/plastic

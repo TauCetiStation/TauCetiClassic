@@ -369,6 +369,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/card/id(src)
 
+/obj/item/weapon/storage/box/labor_ids
+	name = "box of prison IDs"
+	desc = "ID cards for prisoners sentenced to labor"
+	icon_state = "id_box"
+
+/obj/item/weapon/storage/box/labor_ids/atom_init()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/card/id/labor(src)
+
 //R.O.B.U.S.T. Cartridges
 /obj/item/weapon/storage/box/seccarts
 	name = "box of spare R.O.B.U.S.T. Cartridges"

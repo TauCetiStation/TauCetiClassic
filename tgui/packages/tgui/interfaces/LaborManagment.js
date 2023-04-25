@@ -41,8 +41,15 @@ export const LaborManagment = (props, context) => {
                 <Button
                   icon="pencil-alt"
                   content={data.target_name ? "" + data.labor_sentence : "-----"}
-                  disabled={!data.authenticated}
+                  disabled={!data.authenticated || data.permanent}
                   onClick={() => act("set_sentence")} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Permanent">
+                <Button.Checkbox
+                  content={data.permanent ? "Yes" : "No"}
+                  checked={data.permanent}
+                  disabled={!data.authenticated}
+                  onClick={() => act("permanent")} />
               </LabeledList.Item>
               <LabeledList.Item label="Prisoner's balance">
                 <Button

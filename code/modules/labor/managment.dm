@@ -5,8 +5,10 @@
 	//TODO: add item_state
 	rank = "Prisoner"
 	assignment = "Prisoner"
+	var/permanent = FALSE
 	var/labor_sentence = 0
 	var/labor_credits = 0
+	var/responsible_officer
 
 /********** Labor managment computer**********/
 /obj/machinery/computer/labor
@@ -68,6 +70,7 @@
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : FALSE
 	data["authenticated"] = is_authenticated()
 
+	data["permanent"] = modify ? modify.permanent : FALSE
 	data["labor_sentence"] = modify ? modify.labor_sentence : FALSE
 	data["labor_credits"] = modify ? modify.labor_credits : FALSE
 
@@ -129,14 +132,20 @@
 			if(nam)
 				modify.registered_name = nam
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
+				modify.responsible_officer = scan.registered_name ? scan.registered_name : "undefined"
 			else
 				to_chat(usr, "<span class='warning'>Invalid name.</span>")
 		if("set_sentence")
 			var/cr = input("Amount of credits prisoner must work out to be released.", "Sentence", modify.labor_sentence) as num | null
 			if(cr && cr > 0)
 				modify.labor_sentence = cr
+				modify.responsible_officer = scan.registered_name ? scan.registered_name : "undefined"
 			else
 				to_chat(usr, "<span class='warning'>Invalid amount of credits.</span>")
+		if("permanent")
+			modify.permanent = !modify.permanent
+			modify.labor_sentence = 0
+			modify.responsible_officer = scan.registered_name ? scan.registered_name : "undefined"
 		if("set_credits")
 			var/cr = input("Amount of credits prisoner already has on his balance.", "Balance", modify.labor_credits) as num | null
 			if(cr != null && cr >= 0)

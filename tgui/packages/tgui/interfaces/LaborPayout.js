@@ -42,14 +42,14 @@ export const LaborPayout = (props, context) => {
                 onClick={() => act("insert")}>
                 Insert ID
               </Button>
-              in order to claim payout.
+              in order to receive payout.
             </Box>
           )}
         </NoticeBox>
         <LabeledList>
           <LabeledList.Item label="Current unclaimed payout" buttons={
             <Button
-              disabled={data.unclaimedPayout < 1}
+              disabled={data.unclaimedPayout < 1 || !data.has_id}
               icon="download"
               onClick={() => act("claim")}>
               Claim
@@ -57,6 +57,18 @@ export const LaborPayout = (props, context) => {
           }>
             <AnimatedNumber value={data.unclaimedPayout} />
           </LabeledList.Item>
+          {!!data.has_id && data.id.sentence > 0 && (
+            <LabeledList.Item label={"Your labor sentence in credits"} buttons={
+              <Button
+                disabled={data.id.sentence > data.id.credits}
+                icon="lock-open"
+                onClick={() => act("release")}>
+                Request release
+              </Button>
+            }>
+              <AnimatedNumber value={data.id.sentence} />
+            </LabeledList.Item>
+          )}
         </LabeledList>
       </Window.Content>
     </Window>
