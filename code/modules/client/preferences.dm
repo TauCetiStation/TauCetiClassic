@@ -406,7 +406,7 @@ var/global/list/preferences_datums = list()
 
 	character.home_system = home_system
 	character.citizenship = citizenship
-	character.insurance = insurance
+	character.roundstart_insurance = insurance
 	character.personal_faction = faction
 	character.religion = religion
 	character.vox_rank = vox_rank
