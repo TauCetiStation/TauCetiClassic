@@ -7,6 +7,8 @@
 	G.fields["sex"] = "Male"
 	G.fields["age"] = "Unknown"
 	G.fields["fingerprint"] = "Unknown"
+	G.fields["insurance_account_number"] = "Unknown"
+	G.fields["insurance_type"] = "Unknown"
 	G.fields["p_stat"] = "Active"
 	G.fields["m_stat"] = "Stable"
 	G.fields["species"] = HUMAN
