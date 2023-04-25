@@ -13,6 +13,7 @@
 	var/last_summon = -3000
 	var/active = 0
 	var/emagged = FALSE
+	var/scrap_type = /obj/random/scrap/moderate_weighted
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -56,7 +57,11 @@
 		sleep(impact_speed)
 		var/turf/newloc = pick(flooring_near_beacon)
 		flooring_near_beacon -= newloc
-		new /obj/effect/falling_effect(newloc, /obj/random/scrap/moderate_weighted)
+		new /obj/effect/falling_effect(newloc, scrap_type)
 	active = 0
 	update_icon()
 	return
+
+/*************** Labor beacon **********************/
+/obj/structure/scrap_beacon/labor
+	scrap_type = /obj/random/scrap/safe_even
