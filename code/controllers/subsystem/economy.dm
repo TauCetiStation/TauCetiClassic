@@ -133,15 +133,63 @@ SUBSYSTEM_DEF(economy)
 	
 /datum/controller/subsystem/economy/proc/handle_insurances()
 	var/insurance_sum = 0
-	for(var/mob/living/carbon/human/H as anything in global.human_list)
-		if(H.mind && H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-			var/insurance_price = MA.check_insurance_and_return_price(H)
-			if(insurance_price <= 0)
-				continue
-			insurance_sum += insurance_price
-			charge_to_account(MA.account_number, "Medical", "[MA.owner_insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+	var/errors = 0
+	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+	for(var/datum/data/record/R as anything in data_core.general)
+		var/list/info = check_insurance_data_and_return_info(R)
+		var/insurance_type = info["insurance_type"]
+		var/insurance_account_number = info["insurance_account_number"]
+		var/insurance_price = insurance_prices[insurance_type]
+		if(!insurance_account_number)
+			errors++
+			if(errors == 5)
+				announcer.autosay("Multiple insurance errors!", "Insurancer", "Common", freq = radiochannels["Common"])
+			if(errors < 5)
+				announcer.autosay("[R.fields["name"]], [R.fields["rank"]], doesn't have correct insurance account number in the medical record.", "Insurancer", "Common", freq = radiochannels["Common"])
+		if(insurance_price == 0)
+			continue
+		insurance_sum += insurance_price
+		charge_to_account(insurance_account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
 
+	qdel(announcer)
+				
 	if(insurance_sum > 0)
 		var/med_account_number = global.department_accounts["Medical"].account_number
-		charge_to_account(med_account_number, med_account_number,"Insurance", "NT Insurance", insurance_sum)
+		charge_to_account(med_account_number, med_account_number, "Insurance", "NT Insurance", insurance_sum)
+
+
+/proc/check_insurance_data_and_return_info(datum/data/record/R)
+	var/list/info = list("insurance_type" = NONE_INSURANCE, "insurance_account_number" = null)
+	var/datum/data/record/R1 = find_record("fingerprint", R.fields["fingerprint"], data_core.general)
+	if(!R1 || R.fields["id"] != R1.fields["id"])
+		return info
+	var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
+	if(!MA || MA.owner_name != R.fields["name"])
+		R.fields["insurance_type"] = NONE_INSURANCE
+		return info
+	info["insurance_account_number"] = MA.account_number
+	info["insurance_type"] = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money)
+	R.fields["insurance_type"] = info["insurance_type"]
+	return info
+
+
+
+/proc/get_insurance_type(mob/living/carbon/human/H)
+	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
+	if(!R)
+		return "None"
+	return R.fields["insurance_type"]
+
+
+/proc/get_next_insurance_type(current_insurance_type, preferred_insurance_type, money)
+	if(current_insurance_type == preferred_insurance_type && money >= SSeconomy.insurance_prices[current_insurance_type])
+		return current_insurance_type
+
+	var/prefprice = SSeconomy.insurance_prices[preferred_insurance_type]
+	if(money >= prefprice)
+		return preferred_insurance_type
+
+	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
+		var/insprice = SSeconomy.insurance_prices[insurance_type]
+		if(money >= insprice)
+			return insurance_type
