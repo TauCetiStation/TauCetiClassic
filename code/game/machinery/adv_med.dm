@@ -185,7 +185,7 @@
 				if(occupant.virus2.len)
 					dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
-				if(insurance_type in list(STANDART_INSURANCE, PREMIUM_INSURANCE))
+				if(insurance_type != INSURANCE_NONE)
 					dat += text("<font color='[]'>\t-Brute Damage %: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getBruteLoss())
 					dat += text("<font color='[]'>\t-Respiratory Damage %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
 					dat += text("<font color='[]'>\t-Toxin Content %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
@@ -213,7 +213,7 @@
 						dat += text("<font color='[]'>\tDexalin: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dexalin"))
 
 
-				if(insurance_type == PREMIUM_INSURANCE)
+				if(insurance_type == INSURANCE_PREMIUM)
 					dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 					storedinfo = null
 					dat += "<HR><table border='1'>"
