@@ -12,8 +12,8 @@ SUBSYSTEM_DEF(economy)
 	var/list/total_department_stocks
 	var/list/department_dividends
 	var/list/stock_splits
-	var/list/insurance_prices = list("None" = 0, "Standart" = 80, "Premium" = 200)
-	var/list/insurance_quality_decreasing = list("Premium", "Standart", "None")
+	var/list/insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 80, INSURANCE_PREMIUM = 200)
+	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
 
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
@@ -159,13 +159,13 @@ SUBSYSTEM_DEF(economy)
 
 
 /proc/check_insurance_data_and_return_info(datum/data/record/R)
-	var/list/info = list("insurance_type" = NONE_INSURANCE, "insurance_account_number" = null)
+	var/list/info = list("insurance_type" = INSURANCE_NONE, "insurance_account_number" = null)
 	var/datum/data/record/R1 = find_record("fingerprint", R.fields["fingerprint"], data_core.general)
 	if(!R1 || R.fields["id"] != R1.fields["id"])
 		return info
 	var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
 	if(!MA || MA.owner_name != R.fields["name"])
-		R.fields["insurance_type"] = NONE_INSURANCE
+		R.fields["insurance_type"] = INSURANCE_NONE
 		return info
 	info["insurance_account_number"] = MA.account_number
 	info["insurance_type"] = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money)
