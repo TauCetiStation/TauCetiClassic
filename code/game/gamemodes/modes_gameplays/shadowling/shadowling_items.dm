@@ -93,7 +93,7 @@
 	action_button_name = "Toggle Vision"
 	icon = 'icons/mob/shadowling_hud.dmi'
 	icon_state = "ling_vision_off"
-	flash_protection = -1
+	flash_protection = FLASHES_AMPLIFIER
 
 
 /obj/item/clothing/glasses/night/shadowling/attack_self()

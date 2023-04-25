@@ -28,7 +28,7 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = FACE|EYES
 	w_class = SIZE_SMALL
-	flash_protection = 2
+	flash_protection = FLASHES_FULL_PROTECTION
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -46,7 +46,7 @@
 			flags_inv |= (HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
-			flash_protection = 2
+			flash_protection = FLASHES_FULL_PROTECTION
 			to_chat(usr, "You adjust \the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
@@ -54,7 +54,7 @@
 			flags_inv &= ~(HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
-			flash_protection = 0
+			flash_protection = NONE
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		update_inv_mob()
