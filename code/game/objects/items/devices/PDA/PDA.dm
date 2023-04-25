@@ -1091,7 +1091,7 @@
 			if(MA.security_level && (MA.remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || MA.owner_name != H.real_name))
 				tgui_alert(H, "Please check information about your money account")
 				return
-			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", NONE_INSURANCE, STANDART_INSURANCE, PREMIUM_INSURANCE)
+			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", INSURANCE_NONE, INSURANCE_STANDARD, INSURANCE_PREMIUM)
 			if(insurance_type == "Cancel")
 				return
 			var/choice = input(H, "You wanna change insurance immediately, or make a preference?", "Insurance changes") in list("Cancel", "Immediately", "Make Preference")
@@ -1148,7 +1148,7 @@
 			if(!check_owner_fingerprints(U))
 				return
 			var/mob/living/carbon/human/H = U
-			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", STANDART_INSURANCE, PREMIUM_INSURANCE)
+			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", INSURANCE_STANDARD, INSURANCE_PREMIUM)
 			if(insurance_type == "Cancel")
 				return
 			var/newprice = input(user, "Insurance changes", "Write new price") as num
@@ -1992,7 +1992,7 @@
 	if(R2 && (R2.fields["fingerprint"] in owner_fingerprints))
 		return R2.fields["insurance_type"]
 
-	return NONE_INSURANCE
+	return INSURANCE_NONE
 
 /obj/item/device/pda/proc/get_record_id_connected_to_money_account()
 	var/datum/data/record/R = find_record("insurance_account_number", owner_account, data_core.general)
