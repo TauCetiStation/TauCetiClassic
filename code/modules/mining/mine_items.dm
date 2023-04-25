@@ -716,6 +716,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
 			power_supply.give(1000)
 			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+			update_icon()
 	else if(istype(A, /obj/item/weapon/ore/phoron))
 		if(power_supply.charge >= power_supply.maxcharge)
 			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
@@ -723,6 +724,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
 			power_supply.give(500)
 			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+			update_icon()
 	else if(istype(A, /obj/item/weapon/storage/bag/ore))
 		if(power_supply.charge >= power_supply.maxcharge)
 			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
@@ -735,6 +737,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				O.remove_from_storage(P)
 				power_supply.give(500)
 				to_chat(user, "<span class='notice'>You insert [P] in [src], recharging it.</span>")
+				update_icon()
 			else
 				return
 	else
