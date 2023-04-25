@@ -168,8 +168,8 @@ var/global/list/all_emotes
 		if(!M.client)
 			continue
 
-		if(M in viewers(get_turf(src), world.view))
-			M.show_runechat_message(src, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
+		if(M in viewers(get_turf(user), world.view))
+			M.show_runechat_message(user, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
 
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
