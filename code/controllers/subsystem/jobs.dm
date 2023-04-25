@@ -587,13 +587,14 @@ SUBSYSTEM_DEF(job)
 			if(MA)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
-				MA.owner_insurance_type = H.insurance
-				MA.owner_preferred_insurance_type = H.insurance
-				var/insurance_price = MA.check_insurance_and_return_price(H)
-				if(insurance_price > 0)
-					var/med_account_number = global.department_accounts["Medical"].account_number
-					charge_to_account(med_account_number, med_account_number, "[MA.owner_insurance_type] Insurance payment", "NT Insurance", insurance_price)
-					charge_to_account(MA.account_number, "Medical", "[MA.owner_insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+				var/insurance_type = get_next_insurance_type(current_insurance_type = H.roundstart_insurance, preferred_insurance_type = H.roundstart_insurance, money = MA.money)
+				H.roundstart_insurance = insurance_type
+				MA.owner_preferred_insurance_type = insurance_type
+				var/med_account_number = global.department_accounts["Medical"].account_number
+				var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+				charge_to_account(med_account_number, med_account_number, "[insurance_type] Insurance payment", "NT Insurance", insurance_price)
+				charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+
 
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
