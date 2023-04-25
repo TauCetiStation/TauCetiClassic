@@ -288,7 +288,7 @@
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
-		if(insurance_type != NONE_INSURANCE)
+		if(insurance_type != INSURANCE_NONE)
 			var/list/damaged = H.get_damaged_bodyparts(1, 1)
 			message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
 			if(length(damaged))
@@ -330,7 +330,7 @@
 		message += "<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span><br>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(insurance_type == PREMIUM_INSURANCE)
+		if(insurance_type == INSURANCE_PREMIUM)
 			var/found_bleed
 			var/found_broken
 			for(var/obj/item/organ/external/BP in H.bodyparts)
