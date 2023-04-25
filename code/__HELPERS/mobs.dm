@@ -288,7 +288,7 @@
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
-		if(insurance_type in list(STANDART_INSURANCE, PREMIUM_INSURANCE))
+		if(insurance_type != NONE_INSURANCE)
 			var/list/damaged = H.get_damaged_bodyparts(1, 1)
 			message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
 			if(length(damaged))
