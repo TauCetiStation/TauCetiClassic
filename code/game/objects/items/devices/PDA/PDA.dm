@@ -1985,11 +1985,11 @@
 /obj/item/device/pda/proc/get_owner_insurance_type()
 	var/datum/data/record/R1 = find_record("insurance_account_number", owner_account, data_core.general)
 	var/datum/data/record/R2 = find_record("name", owner, data_core.general)
-	if(R1 && R2 && R1.fields["id"] == R2.fields["id"] && R1.fields["fingerprint"] in owner_fingerprints)
+	if(R1 && R2 && R1.fields["id"] == R2.fields["id"] && (R1.fields["fingerprint"] in owner_fingerprints))
 		return R1.fields["insurance_type"]
-	if(R1 && R1.fields["name"] == owner && R1.fields["fingerprint"] in owner_fingerprints)
+	if(R1 && R1.fields["name"] == owner && (R1.fields["fingerprint"] in owner_fingerprints))
 		return R1.fields["insurance_type"]
-	if(R2 && R2.fields["fingerprint"] in owner_fingerprints)
+	if(R2 && (R2.fields["fingerprint"] in owner_fingerprints))
 		return R2.fields["insurance_type"]
 
 	return NONE_INSURANCE
