@@ -53,7 +53,7 @@
 	// General information
 	var/home_system = ""
 	var/citizenship = ""
-	var/insurance = ""
+	var/roundstart_insurance = ""
 	var/personal_faction = ""
 	var/religion = ""
 	var/vox_rank = ""
