@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
-	name = "Магическая Ракета"
+	name = "Magic arrow"
 	desc = "Заклинание выпускает несколько медленно летящих зарядов с самонаведением в ближайшие цели."
 
 	school = "evocation"
@@ -41,7 +41,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
-	name = "Мутация"
+	name = "Mutate"
 	desc = "Это заклинание сделает вас халком и даст пострелять лазером из глаз, но недолго."
 
 	school = "transmutation"
@@ -77,7 +77,7 @@
 	sparks_amt = 4
 
 /obj/effect/proc_holder/spell/targeted/smoke
-	name = "Дым"
+	name = "Smoke"
 	desc = "Заклинание создает удушающий дым вокруг вас и не требует одежды для использования."
 
 	school = "conjuration"
@@ -94,7 +94,7 @@
 	smoke_amt = 10
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
-	name = "Отключить Технологию"
+	name = "Disable Tech"
 	desc = "Отключает всю технологическую мумбу-юмбу в радиусе действия."
 	charge_max = 400
 	clothes_req = 1
@@ -109,7 +109,7 @@
 	emp_light = 10
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
-	name = "Скачок"
+	name = "Blink"
 	desc = "Мгновенно телепортирует вас в случайном направлении на небольшую дистанцию."
 
 	school = "abjuration"
@@ -131,7 +131,7 @@
 	centcomm_cancast = FALSE //prevent people from getting to centcomm
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
-	name = "Телепорт"
+	name = "Teleport"
 	desc = "Переносит вас туда, куда вы выберите."
 
 	school = "abjuration"
@@ -148,7 +148,7 @@
 	smoke_amt = 5
 
 /obj/effect/proc_holder/spell/targeted/forcewall
-	name = "Магическая Стена"
+	name = "Forcewall"
 	desc = "Создает неразрушимую стену на 30 секунд и не требует одежды для использования."
 	school = "transmutation"
 	charge_max = 600
@@ -171,7 +171,7 @@
 		new summon_path(get_step(user, SOUTH), user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
-	name = "Призыв Карпа"
+	name = "Summon Carp"
 	desc = "Это заклинание призывает очень злого карпа."
 
 	school = "conjuration"
@@ -186,7 +186,7 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
-	name = "Ремесленник"
+	name = "Artificer"
 	desc = "Призывает конструкта, которым могут управлять тени."
 
 	school = "conjuration"
@@ -202,7 +202,7 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
-	name = "Призвать Рой Существ"
+	name = "Summon Creature Swarm"
 	desc = "Разрывает реальность и позволяет призвать ужасающих созданий."
 
 	school = "conjuration"
@@ -216,7 +216,7 @@
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Ослепление"
+	name = "Blind"
 	desc = "Позволяет временно ослепить одного человека и не требует одежды для использования."
 
 	school = "transmutation"
@@ -242,7 +242,7 @@
 	sound = 'sound/magic/Blind.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	name = "Ловушки!"
+	name = "The Traps!"
 	desc = "Призывает несколько ловушек, чтобы запутать противника и возможно вас."
 	charge_max = 250
 	clothes_req = 1
@@ -261,7 +261,7 @@
 	action_icon_state = "the_traps"
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
-	name = "Огненный Шар"
+	name = "Fireball"
 	desc = "Выстреливает огненным шаром в цель."
 
 	school = "evocation"
@@ -307,7 +307,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
-	name = "Создание пола"
+	name = "Floor creating"
 	desc = "Это заклинание строит пол культа."
 
 	school = "conjuration"
@@ -323,7 +323,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
-	name = "Создание стены"
+	name = "Wall creating"
 	desc = "Это заклинание строит стену культа."
 
 	school = "conjuration"
@@ -339,7 +339,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/door
-	name = "Возвести Ворота"
+	name = "Erect a Gate"
 	desc = "Это заклинание создает Врата."
 
 	action_icon_state = "cult_door"
@@ -355,7 +355,7 @@
 	centcomm_cancast = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
-	name = "Создание камня души"
+	name = "Soul Stone"
 	desc = "Это заклинание вызывает легендарнейший фрагмент обелиска душ."
 
 	school = "conjuration"
@@ -371,7 +371,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
-	name = "Силовой барьер"
+	name = "Power barrier"
 	desc = "Это заклинание создает временное силовое поле для защиты себя и союзников."
 
 	school = "transmutation"
@@ -386,7 +386,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/targeted/communicate
-	name = "Сообщить"
+	name = "Communicate"
 	desc = "Позволяет отправить сообщение всем в твоей религии"
 
 	charge_max = 400

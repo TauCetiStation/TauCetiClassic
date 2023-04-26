@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/gnomecurse
-	name = "Гномий Дар"
+	name = "Gift of the Gnome"
 	desc = "Наделяет любого человека рядом с вами Гномьим Даром."
 	school = "transmutation"
 	charge_type = "recharge"

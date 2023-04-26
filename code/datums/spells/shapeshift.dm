@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/no_target/shapeshift
-	name = "Перевёртыш"
+	name = "Shapeshift"
 	desc = "Примите облик какого-либо существа на время, чтобы использовать его силы. Как только вы выбрали существо, его уже нельзя будет изменить."
 	clothes_req = FALSE
 	charge_max = 200

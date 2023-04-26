@@ -114,7 +114,7 @@
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/fireball
-	name = "Огненный Шар"
+	name = "Fireball"
 	desc = "Выстреливает огненным шаром в цель."
 	school = "evocation"
 	action_icon_state = "fireball"
@@ -122,7 +122,7 @@
 	charge_max = 200
 
 /obj/item/weapon/magic/fireball
-	name = "огненный шар"
+	name = "fireball"
 	invoke = "ONI SOMA"
 	icon_state = "fireball"
 	s_fire = 'sound/magic/Fireball.ogg'
@@ -147,7 +147,7 @@
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/icebolt
-	name = "Ледяная Стрела"
+	name = "Bolt of Ice"
 	desc = "Слабая ледяная стрела, не наносит большого ущерба здоровью, но неплохо замедляет цель."
 	school = "evocation"
 	action_icon_state = "ice_bolt"
@@ -155,7 +155,7 @@
 	charge_max = 150
 
 /obj/item/weapon/magic/icebolt
-	name = "ледяная стрела"
+	name = "bolt of ice"
 	invoke = "SI'ON MAD'I"
 	icon_state = "ice_bolt"
 	s_fire = 'sound/weapons/sear.ogg'
@@ -171,7 +171,7 @@
 //////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/acid
-	name = "Кислотный Чих"
+	name = "Acid Sneeze"
 	desc = "Вы используете магию для того, чтобы чихнуть кислотой во врага."
 	school = "evocation"
 	action_icon_state = "alien_neurotoxin"
@@ -179,7 +179,7 @@
 	charge_max = 200
 
 /obj/item/weapon/magic/acid
-	name = "кислота"
+	name = "acid"
 	invoke = "AP'CHKHI"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
@@ -199,7 +199,7 @@
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/tesla
-	name = "Шаровая Молния"
+	name = "Tesla"
 	desc = "Выстрелите молнией в ваших врагов!"
 	school = "evocation"
 	charge_max = 400
@@ -208,7 +208,7 @@
 	summon_path = /obj/item/weapon/magic/tesla
 
 /obj/item/weapon/magic/tesla
-	name = "Шаровая молния"
+	name = "tesla"
 	invoke ="UN'LTD P'WAH"
 	icon_state = "teslaball"
 	proj_path = /obj/item/projectile/magic/lightning
@@ -230,7 +230,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/arcane_barrage
-	name = "Чародейский Обстрел"
+	name = "Arcane Barrage"
 	desc = "Выстреливает мистической энергией в ваших врагов. Требует обе руки для использования."
 	charge_max = 600
 	action_icon_state = "arcane_barrage"
@@ -281,7 +281,7 @@
 //////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/res_touch
-	name = "Воскрешение"
+	name = "Resurrection"
 	desc = "Воскрешает труп. Нельзя использовать на админах, роботах или кроликах."
 	school = "evocation"
 	action_icon_state = "res_touch"
@@ -350,7 +350,7 @@
 //////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/heal
-	name = "Лечение"
+	name = "Heal"
 	desc = "Лечит физически и ментально. Иногда цель получает двойной эффект на низких уровнях. Цель должна быть жива. \
 		<br>Можно заряжать до семи раз. (Клик на заклинание в руке.) Каждый уровень дает разный эффект и увеличивает время перезарядки. 1 до 5 нельзя кидать. \
 		<br>1 до 3 лечение. \
@@ -365,7 +365,7 @@
 	clothes_req = FALSE
 
 /obj/item/weapon/magic/heal_touch
-	name = "Лечение"
+	name = "heal"
 	invoke = "In Mani"
 	icon_state = "heal_"
 	item_state = "healing"
@@ -393,11 +393,11 @@
 			to_chat(user, "<span class='notice'>[level_info] <b>очищает</b> любую <b>мутацию</b>.</span>")
 		if(6)
 			touch_spell = FALSE
-			name = "Лечащий шар"
+			name = "Healing Ball"
 			invoke = "In Vas Mani"
 			to_chat(user, "<span class='notice'>[level_info] <b>лечит</b> и можно <b>метнуть</b>.</span>")
 		if(7)
-			name = "Восстанавливающий шар лечения"
+			name = "Regenerating Treatment Ball"
 			invoke = "In Vas An Mani"
 			to_chat(user, "<span class='notice'>[level_info] <b>восстанавливает конечности</b>, но слабее лечит и можно <b>метнуть</b>.</span>")
 

@@ -374,7 +374,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/scribe_rune
-	name = "Руна"
+	name = "Rune"
 	desc = "Рисовать запомненную руну."
 
 	charge_max = 1 MINUTE
@@ -408,7 +408,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/memorize_rune
-	name = "Запомнить руну"
+	name = "Memorize rune"
 	desc = "Запоминает руну и позволяет её рисовать без тома."
 
 	clothes_req = FALSE

@@ -123,7 +123,7 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "cult_wall", I)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
-	name = "Парализующий Дым"
+	name = "Paralyzing Smoke"
 	desc = "Это заклинание создает парализующий дым."
 
 	school = "conjuration"
@@ -164,7 +164,7 @@
 		M.Weaken(4)
 
 /obj/effect/proc_holder/spell/no_target/area_conversion
-	name = "Обращение Зоны"
+	name = "Zone Conversion"
 	desc = "Это заклинание моментально делает небольшую зону вокруг вас подвластной вашей Вере"
 	clothes_req = FALSE
 	charge_max = 5 SECONDS

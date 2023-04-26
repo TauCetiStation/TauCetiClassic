@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/barnyardcurse
-	name = "Скотоклятье"
+	name = "Curse of the Barnyard"
 	desc = "Обрекает жертву носить обезличивающую, неснимаемую маску домашнего животного."
 	school = "transmutation"
 	charge_type = "recharge"

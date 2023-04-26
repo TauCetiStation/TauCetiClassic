@@ -1,7 +1,7 @@
 #define FLICK_OVERLAY_JAUNT_DURATION 12
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
-	name = "Выход из Тела"
+	name = "Ethereal Jaunt"
 	desc = "Делает вас прозрачным и невидимым, позволяя летать и проходить сквозь стены."
 	charge_max = 30 SECONDS
 	invocation = "none"

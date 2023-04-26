@@ -17,8 +17,8 @@
 	desc = "Боль для вас более мучительна. Эта особенность влияет лишь на звуки, издаваемые вами. "
 	value = 0
 	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>От одной лишь мысли о боли вас начинает трясти от страха.</span>"
-	lose_text = "<span class='notice'>Вы больше не хотите казаться слизняком в глазах окружающих. Теперь вы будете пытаться игнорировать боль.</span>"
+	gain_text = "<span class='danger'>Вам страшно от одной лишь мысли о боли.</span>"
+	lose_text = "<span class='notice'>Вы больше не хотите выглядеть слабаком. Теперь вы пытаетесь терпеть боль.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,

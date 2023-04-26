@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/lighting_shock
-	name = "Электрический шок"
+	name = "Lighting Shock"
 	desc = "Шокирует вашу цель на 5 секунд. Также разоружает, заставляя выбросить все вещи в руках и не дает их поднять."
 	school = "transmutation"
 	charge_type = "recharge"

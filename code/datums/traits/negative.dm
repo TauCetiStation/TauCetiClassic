@@ -19,7 +19,7 @@
 
 /datum/quirk/cough
 	name = QUIRK_COUGHING
-	desc = "У вас неизлечимый хронический кашель."
+	desc = "У вас неизлечимые приступы кашля."
 	value = -1
 	mob_trait = TRAIT_COUGH
 	gain_text = "<span class='danger'>Вы не можете перестать кашлять!</span>"
@@ -33,7 +33,7 @@
 
 /datum/quirk/deafness
 	name = QUIRK_DEAF
-	desc = "Вы полностью и неизлечимо глухи."
+	desc = "Вы полностью глухи."
 	value = -2
 	disability = TRUE
 	mob_trait = TRAIT_DEAF
@@ -81,7 +81,7 @@
 
 /datum/quirk/tourette
 	name = QUIRK_TOURETTE
-	desc = "У вас неизлечимые нервные тики."
+	desc = "У вас неизлечимый нервный тик."
 	value = -1
 	mob_trait = TRAIT_TOURETTE
 	gain_text = "<span class='danger'>Вас начинает трясти!</span>"
@@ -97,10 +97,10 @@
 
 /datum/quirk/nearsighted
 	name = QUIRK_NEARSIGHTED
-	desc = "Вы плохо видите без очков, однако появляетесь с парой таковых."
+	desc = "У вас близорукость, но вы приходите на смену с очками."
 	value = -1
 	mob_trait = TRAIT_NEARSIGHT
-	gain_text = "<span class='danger'>Всё на расстоянии от вас выглядит размыто.</span>"
+	gain_text = "<span class='danger'>Вещи, находящиеся вдалеке, начинают выглядеть размыто.</span>"
 	lose_text = "<span class='notice'>Вы стали нормально видеть!</span>"
 
 /datum/quirk/nearsighted/on_spawn()
@@ -128,7 +128,7 @@
 
 /datum/quirk/stress_eater
 	name = QUIRK_STRESS_EATER
-	desc = "Когда вы испытываете боль, ваш голод усиливается."
+	desc = "У вас привычка заедать боль."
 	value = -1
 	mob_trait = TRAIT_STRESS_EATER
 	gain_text = "<span class='danger'>Боль пробуждает ваш голод.</span>"
@@ -142,7 +142,7 @@
 
 /datum/quirk/mute
 	name = QUIRK_MUTE
-	desc = "Вы полностью и неизлечимо немы."
+	desc = "Вы неизлечимо немы."
 	disability = TRUE
 	value = -1
 	mob_trait = TRAIT_MUTE
@@ -156,7 +156,7 @@
 	desc = "Вы очень быстро напиваетесь."
 	value = -1
 	mob_trait = TRAIT_LIGHT_DRINKER
-	gain_text = "<span class='danger'>От одной лишь мысли об алкоголе у вас кружится голова.</span>"
+	gain_text = "<span class='danger'>У вас кружится голова от одной лишь мысли об алкоголе.</span>"
 	lose_text = "<span class='notice'>Вы перестали быть слишком чувствительными к алкоголю.</span>"
 
 	// Those are not affected by alcohol at all.
@@ -171,11 +171,11 @@
 
 /datum/quirk/nyctophobia
 	name = QUIRK_NYCTOPHOBIA
-	desc = "Всю вашу жизнь вас преследовал страх темноты. Ныряя во тьму вы инстинктивно настораживаетесь и действуете с осторожностью, познавая настоящий страх. Лишь источник света способен помочь вам."
+	desc = "Всю вашу жизнь вы боялись темноты. Находясь в темноте без света, вы инстинктивно ведете себя осторожно и постоянно испытываете чувство страха."
 	value = -1
 
-	gain_text = "<span class='notice'>Даже от мимолётной мысли о пребывании в темноте вас бросает в холодный пот.</span>"
-	lose_text = "<span class='notice'>Темнота больше не пугает вас!</span>"
+	gain_text = "<span class='notice'>Даже сама мысль о том, что вы находитесь в темноте, заставляет вас дрожать.</span>"
+	lose_text = "<span class='notice'>Вы больше не боитесь темноты!</span>"
 
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
@@ -223,7 +223,7 @@
 
 /datum/quirk/genetic_degradation
 	name = QUIRK_GENETIC_DEGRADATION
-	desc = "Ужасная генетическая болезнь делает невозможной искусственную реконструкцию вашего ДНК."
+	desc = "Неизлечимое генетическое заболевание делает невозможным искусственное восстановление вашего ДНК."
 	value = -1
 
 	mob_trait = TRAIT_NO_CLONE

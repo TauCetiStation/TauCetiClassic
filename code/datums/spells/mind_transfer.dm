@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/mind_transfer
-	name = "Обмен Разумом"
+	name = "Mind Transfer"
 	desc = "Позволяет поменяться телом с целью."
 
 	school = "transmutation"
