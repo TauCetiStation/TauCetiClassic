@@ -161,7 +161,7 @@
 				var/mob/living/carbon/human/H = M
 				if(!H.species.flags[NO_PAIN] && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
 					H.adjustHalLoss(25)
-				if(prob(H.halloss))
+				if(prob(H.halloss) && !incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
 			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
