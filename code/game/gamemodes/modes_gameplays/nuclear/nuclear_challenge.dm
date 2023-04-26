@@ -51,6 +51,8 @@ var/global/war_device_activation_forbidden
 	if(!check_allowed(user) || !war_declaration)
 		return
 	announcement.play(war_declaration)
+	for(var/mob/M in player_list)
+		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
 	A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
