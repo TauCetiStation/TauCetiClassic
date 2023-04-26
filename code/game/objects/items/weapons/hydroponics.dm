@@ -18,7 +18,7 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/cable_piece = I
 		if(cable_piece.use(3))
-			new /obj/item/clothing/head/sunflower_crown(loc)
+			new /obj/item/clothing/head/sunflower_crown(get_turf(loc))
 			qdel(src)
 			return
 	return ..()
