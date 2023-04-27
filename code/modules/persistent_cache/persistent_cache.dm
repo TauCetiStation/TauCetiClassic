@@ -35,6 +35,8 @@
 
 	fcopy(file, cache_file_path)
 
+var/global/list/md5_files_cache = list()
+
 /proc/key_files_hash(list/key_files)
 	. = ""
 	for(var/path in key_files)
@@ -44,7 +46,11 @@
 		if(!fexists(path))
 			stack_trace("Non-existing key file: [path]")
 			return FALSE
-		. += md5(file(path))
+
+		if(!md5_files_cache[path])
+			md5_files_cache[path] = md5(file(path))
+
+		. += md5_files_cache[path]
 
 	. = md5(.) // just for short nice name
 
