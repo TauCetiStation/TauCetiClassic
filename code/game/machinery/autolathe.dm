@@ -111,6 +111,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/clothing/head/welding,                        CATEGORY_GENERAL),
 	R(/obj/item/weapon/kitchenknife,                          CATEGORY_GENERAL),
 	R(/obj/item/weapon/light/tube,                            CATEGORY_GENERAL),
+	R(/obj/item/weapon/light/tube/smart,                      CATEGORY_GENERAL),
 	R(/obj/item/weapon/light/bulb,                            CATEGORY_GENERAL),
 	R(/obj/item/ashtray/glass,                                CATEGORY_GENERAL),
 	R(/obj/item/toy/gun,                                      CATEGORY_GENERAL),

@@ -7,19 +7,19 @@ SUBSYSTEM_DEF(station_coloring)
 /datum/controller/subsystem/station_coloring/Initialize()
 
 	//RED (Only sec stuff honestly)
-	var/list/red = list("#855363", "#7d5263", "#a35364", "#520014")
+	var/list/red = list("#d0294c", "#d6292f", "#d62f29", "#d63a29")
 	//BAR
-	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#78baac", "#4a9bdf", "#30cedf", "#b0825f", "#b0cedf")
+	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#4daf9b", "#4a9bdf", "#30cedf", "#c7804a", "#b0cedf")
 	//DWARFS
 	var/list/dw = list("#7d685f", "#b0825f", "#b0b55f", "#b09b79")
 	//PURPLE (RnD + Research outpost)
-	var/list/purple = list("#8d80b8", "#8d6eb6", "#8376ae", "#8b73c8")
+	var/list/purple = list("#674dba", "#6b43bc", "#864ec5", "#8d40c3")
 	//BROWN (Mining + Cargo)
-	var/list/brown = list("#7f7868", "#7d8a6e", "#83845f", "#9c8e75")
+	var/list/brown = list("#826627", "#825327", "#a9682b", "#a9542b")
 	//GREEN (Virology and Hydro areas)
-	var/list/green = list("#87b7a5", "#6eb671", "#5d9a6c", "#689883")
+	var/list/green = list("#50b47c", "#59b25d", "#46955a", "#4ba17b")
 	//BLUE (Some of Medbay areas)
-	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#054166")
+	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#307199")
 
 	var/list/color_palette = list(
 		pick(red)          = typesof(/area/station/security),
@@ -44,12 +44,12 @@ SUBSYSTEM_DEF(station_coloring)
 
 /datum/controller/subsystem/station_coloring/proc/color_area_objects(list/possible_areas, color) // paint in areas
 	for(var/type in possible_areas)
-		for(var/obj/structure/window/W in get_area_by_type(type)) // for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
+		for(var/obj/structure/window/W in get_area_by_type(type)) //for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
 			W.change_color(color)
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
 			D.color = color
 
 /datum/controller/subsystem/station_coloring/proc/get_default_color()
-	var/static/default_color = pick(list("#1a356e", "#361a6e", "#164f41"))
+	var/static/default_color = pick(list("#3c5da5", "#63489e", "#4495bc"))
 
 	return default_color
