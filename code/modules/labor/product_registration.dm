@@ -146,7 +146,16 @@
 			inserted_id.labor_sentence = 0
 
 /obj/machinery/labor_counter_console/proc/release_prisoner()
-	broadcast_security_hud_message("<b>[src.name]</b> Заключенный [inserted_id.registered_name] отработал вынесенный приговор.  <b>[inserted_id.responsible_officer]</b> запрашивается к месту проведения принудительных работ для процедуры освобождения.", src)
+	broadcast_security_hud_message("<b>[src.name]</b> Заключенный <b>[inserted_id.registered_name]</b> отработал вынесенный приговор. \
+									<b>[inserted_id.responsible_officer]</b> запрашивается к месту проведения принудительных работ для процедуры освобождения.", src)
+
+	if(inserted_id.security_data)
+		inserted_id.security_data.fields["criminal"] = "Released"
+		for(var/mob/living/carbon/human/H in global.human_list)
+			if(H.real_name == inserted_id.registered_name)
+				H.sec_hud_set_security_status()
+		add_record(null, inserted_id.security_data, "Отбыл наказание за преступления по статьям: [inserted_id.broken_laws]. Уголовный статус статус был изменен на <b>Released</b>", "NT Security System")
+
 	var/obj/item/weapon/paper/P = new(src.loc)
 	P.name = "Labor completion certificate"
 	P.info = {"
@@ -158,9 +167,7 @@
 		Время завершения принудительных работ: [worldtime2text()]<br>
         <hr>Место для штампов.<br>
 	"}
-
 	var/obj/item/weapon/stamp/hos/S = new
 	S.stamp_paper(P, "NT Security System")
-
 	P.update_icon()
 	P.updateinfolinks()

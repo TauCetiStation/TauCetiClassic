@@ -37,6 +37,20 @@ export const LaborManagment = (props, context) => {
                   disabled={!data.authenticated}
                   onClick={() => act("set_name")} />
               </LabeledList.Item>
+              <LabeledList.Item label="Broken laws">
+                <Button
+                  icon="pencil-alt"
+                  content={data.reason ? data.reason : "-----"}
+                  disabled={!data.authenticated}
+                  onClick={() => act("set_reason")} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Crime details">
+                <Button
+                  icon="pencil-alt"
+                  content={data.details ? data.details : "-----"}
+                  disabled={!data.authenticated}
+                  onClick={() => act("set_details")} />
+              </LabeledList.Item>
               <LabeledList.Item label="Labor sentence">
                 <Button
                   icon="pencil-alt"
