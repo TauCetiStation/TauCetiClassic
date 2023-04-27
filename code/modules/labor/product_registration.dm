@@ -53,6 +53,8 @@
 	icon_state = "console"
 	density = TRUE
 	anchored = TRUE
+	max_integrity = 300
+	damage_deflection = 20
 	var/obj/item/weapon/card/id/labor/inserted_id
 	var/obj/machinery/labor_counter_machine/machine
 	var/credits = 0
