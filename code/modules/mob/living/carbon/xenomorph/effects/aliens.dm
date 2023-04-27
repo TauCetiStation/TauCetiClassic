@@ -170,6 +170,9 @@
 			if(locate(/obj/structure/window/fulltile) in T)
 				continue
 
+			if(locate(/obj/structure/windowsill) in T)
+				continue
+
 			for(var/obj/machinery/door/D in T)
 				if(D.density)
 					continue check_next_dir
