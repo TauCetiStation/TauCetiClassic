@@ -93,6 +93,19 @@
 		return
 	..()
 
+/obj/machinery/labor_counter_console/emag_act(mob/user)
+	if(!inserted_id)
+		to_chat(usr, "<span class='warning'>There is no ID to initiate release protocol!</span>")
+		return FALSE
+
+	to_chat(user, "You hack \the [src] to initiate release protocol.")
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, src)
+	s.start()
+	visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
+	release_prisoner()
+	. = TRUE
+
 /obj/machinery/labor_counter_console/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
