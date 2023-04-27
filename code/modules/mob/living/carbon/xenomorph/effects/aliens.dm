@@ -167,6 +167,9 @@
 			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 				continue
 
+			if(locate(/obj/structure/window/fulltile) in T)
+				continue
+
 			for(var/obj/machinery/door/D in T)
 				if(D.density)
 					continue check_next_dir
