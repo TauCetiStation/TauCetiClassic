@@ -10,6 +10,7 @@
 		/obj/item/nutrient/ez = 45,
 		/obj/item/nutrient/l4z = 25,
 		/obj/item/nutrient/rh = 15,
+		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/pestspray = 20,
 		/obj/item/weapon/reagent_containers/syringe = 5,
 		/obj/item/weapon/storage/bag/plants = 5,
@@ -17,6 +18,9 @@
 	premium = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,
 		/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5,
+	)
+	prices = list(
+		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 250,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/hydronutrients
 	private = TRUE
@@ -29,6 +33,8 @@
 	icon_state = "seeds"
 	light_color = "#34ff7b"
 	products = list(
+		/obj/item/seeds/mtearseed = 3,
+		/obj/item/seeds/shandseed = 3,
 		/obj/item/seeds/ambrosiavulgarisseed = 3,
 		/obj/item/seeds/appleseed = 3,
 		/obj/item/seeds/bananaseed = 3,
@@ -66,14 +72,16 @@
 		/obj/item/seeds/amanitamycelium = 2,
 		/obj/item/seeds/glowshroom = 2,
 		/obj/item/seeds/libertymycelium = 2,
-		/obj/item/seeds/mtearseed = 2,
 		/obj/item/seeds/nettleseed = 2,
 		/obj/item/seeds/reishimycelium = 2,
 		/obj/item/seeds/reishimycelium = 2,
-		/obj/item/seeds/shandseed = 2,
 	)
 	premium = list(
 		/obj/item/toy/waterflower = 1,
+	)
+	prices = list(
+		/obj/item/seeds/mtearseed = 60,
+		/obj/item/seeds/shandseed = 60,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/hydroseeds
 	private = TRUE
