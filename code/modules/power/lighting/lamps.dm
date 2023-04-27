@@ -143,7 +143,7 @@
 /obj/machinery/light/update_icon()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
-			icon_state = "[initial(icon_state)][on ? 1 : 0]"
+			icon_state = "[initial(icon_state)][on ? "" : "-off"]"
 		if(LIGHT_EMPTY)
 			icon_state = "[initial(icon_state)]-empty"
 			on = FALSE
