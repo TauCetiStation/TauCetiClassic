@@ -4,7 +4,9 @@
 	icon_state = "stacker"
 	density = TRUE
 	anchored = TRUE
-	//speed_process = TRUE
+	speed_process = TRUE
+	max_integrity = 300
+	damage_deflection = 20
 	var/obj/machinery/labor_counter_console/console
 	var/list/acceptable_products = list(/obj/item/stack, /obj/item/weapon/reagent_containers/food/snacks/grown)
 
