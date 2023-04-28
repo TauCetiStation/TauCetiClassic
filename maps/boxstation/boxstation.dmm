@@ -56416,7 +56416,8 @@
 /area/station/engineering/atmos)
 "cfS" = (
 /obj/machinery/conveyor_switch{
-	id = "stationscrap"
+	id = "stationscrap";
+	pixel_y = 8
 	},
 /obj/structure/fence/metal{
 	dir = 1
