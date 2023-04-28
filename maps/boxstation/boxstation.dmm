@@ -6029,12 +6029,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aks" = (
-/obj/structure/fence/metal{
-	color = "#76417b";
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/rnd/xenobiology)
+/obj/structure/fence/metal,
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "akt" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -7495,12 +7492,6 @@
 	pixel_x = -25;
 	pixel_y = -25;
 	req_access = list(13)
-	},
-/obj/structure/fence/metal{
-	dir = 8
-	},
-/obj/structure/fence/metal{
-	dir = 4
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
@@ -9497,10 +9488,6 @@
 /obj/structure/disposaloutlet{
 	dir = 8
 	},
-/obj/structure/fence/metal{
-	color = "#76417b";
-	dir = 1
-	},
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "aqv" = (
@@ -9924,12 +9911,11 @@
 	},
 /area/station/rnd/xenobiology)
 "are" = (
-/obj/structure/closet/crate,
 /obj/structure/fence/metal{
-	dir = 1
+	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "arf" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -10848,25 +10834,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "asN" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "solar_chapel_airlock";
-	name = "exterior access button";
-	pixel_x = -25;
-	pixel_y = -25;
-	req_access = list(10,13)
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/structure/fence/metal{
-	dir = 4
-	},
-/obj/structure/fence/metal{
-	dir = 8
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "solar_tool_airlock";
+	name = "exterior access button";
+	pixel_x = -25;
+	pixel_y = -25;
+	req_access = list(13)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
@@ -20447,10 +20427,6 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/fence/metal{
-	color = "#76417b";
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -21061,10 +21037,6 @@
 /area/station/rnd/storage)
 "aMy" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/structure/fence/metal{
-	color = "#76417b";
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -21943,10 +21915,6 @@
 /area/station/security/prison)
 "aOl" = (
 /obj/structure/closet/secure_closet/scientist,
-/obj/structure/fence/metal{
-	color = "#76417b";
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -25316,9 +25284,6 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/misc_lab)
 "aUz" = (
-/obj/structure/fence/metal{
-	color = "#76417b"
-	},
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "aUA" = (
@@ -36103,9 +36068,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/fence/glass{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "whiteyellow"
 	},
@@ -41765,10 +41727,6 @@
 	network = list("SS13","Medical")
 	},
 /obj/machinery/body_scanconsole,
-/obj/structure/fence/metal{
-	dir = 4;
-	color = "#5995ba"
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -42873,10 +42831,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/structure/fence/metal{
-	dir = 8;
-	color = "#5995ba"
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -43188,10 +43142,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/closet/secure_closet/medical1,
-/obj/structure/fence/metal{
-	dir = 4;
-	color = "#5995ba"
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -48120,10 +48070,6 @@
 /obj/machinery/light/smart,
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
-/obj/structure/fence/metal{
-	dir = 8;
-	color = "#5995ba"
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -48582,10 +48528,6 @@
 /area/station/civilian/dormitories)
 "bKZ" = (
 /obj/machinery/body_scanconsole,
-/obj/structure/fence/metal{
-	dir = 4;
-	color = "#5995ba"
-	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -48852,10 +48794,6 @@
 	c_tag = "Medbay Cryogenics";
 	dir = 1;
 	network = list("SS13","Medical")
-	},
-/obj/structure/fence/metal{
-	dir = 8;
-	color = "#5995ba"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -52090,9 +52028,6 @@
 /obj/effect/decal/cleanable/spiderling_remains,
 /obj/item/weapon/table_parts,
 /obj/item/clothing/glasses/welding,
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "bRI" = (
@@ -56043,7 +55978,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 1
 	},
-/obj/structure/fence/metal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "ceC" = (
@@ -57512,9 +57446,6 @@
 /area/station/cargo/recycler)
 "ciQ" = (
 /obj/machinery/light/small,
-/obj/structure/fence/metal{
-	dir = 8
-	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ciR" = (
@@ -59678,10 +59609,6 @@
 	pixel_y = -20;
 	req_access = list(66)
 	},
-/obj/structure/fence/metal{
-	dir = 1
-	},
-/obj/structure/fence/metal,
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "coQ" = (
@@ -63460,12 +63387,6 @@
 	req_access = list(10,13)
 	},
 /obj/structure/cable,
-/obj/structure/fence/metal{
-	dir = 8
-	},
-/obj/structure/fence/metal{
-	dir = 4
-	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "czc" = (
@@ -69976,7 +69897,6 @@
 /obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/fence/metal,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "fAU" = (
@@ -70959,10 +70879,6 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
-	},
-/obj/structure/fence/metal,
-/obj/structure/fence/metal{
-	dir = 1
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
@@ -72672,8 +72588,8 @@
 /obj/structure/fence/metal{
 	dir = 1
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "iyR" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -74201,9 +74117,6 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
 /obj/item/device/tagger/shop,
-/obj/structure/fence/glass{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -74319,9 +74232,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/structure/fence/glass{
-	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "whiteyellow"
@@ -74707,7 +74617,6 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
-/obj/structure/fence/metal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "kDT" = (
@@ -78244,9 +78153,6 @@
 	pixel_y = 20;
 	req_access = list(10,13)
 	},
-/obj/structure/fence/metal{
-	dir = 4
-	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "pds" = (
@@ -81478,7 +81384,6 @@
 	id = "Incinerator";
 	on = 0
 	},
-/obj/structure/fence/metal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "sQb" = (
@@ -83409,14 +83314,10 @@
 /area/station/civilian/hydroponics)
 "wGT" = (
 /obj/structure/fence/metal{
-	dir = 4
+	dir = 8
 	},
-/obj/structure/fence/metal{
-	dir = 1
-	},
-/obj/structure/fence/metal,
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "wHd" = (
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -101868,7 +101769,7 @@ aah
 akD
 aah
 aaa
-aah
+wGT
 acG
 acG
 acG
@@ -102382,7 +102283,7 @@ aah
 aeZ
 aah
 aaa
-aah
+are
 acG
 acG
 acG
@@ -103763,9 +103664,9 @@ aaa
 aah
 aah
 aah
-aah
+iyy
 gEb
-aah
+aks
 aah
 aaa
 aaa
@@ -106048,16 +105949,16 @@ fub
 fxb
 bNk
 fAb
-aah
-aaa
-aaa
-aah
-aaa
-aaa
-aah
-aaa
-aaa
-agn
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
+dQT
+cap
 aah
 aaa
 aaa
@@ -106305,14 +106206,14 @@ xWb
 xXb
 lxb
 fBb
-dQT
-dQT
-dQT
-dQT
-dQT
-dQT
-dQT
-dQT
+bZZ
+bZZ
+bZZ
+bZZ
+bZZ
+bZZ
+bZZ
+bZZ
 ciQ
 cap
 aah
@@ -107328,11 +107229,11 @@ aSM
 aSM
 aSM
 cbS
-wGT
+bZZ
 cbS
 ahZ
 cbS
-iyy
+bZZ
 bZZ
 ciP
 cbB
@@ -108362,7 +108263,7 @@ cbf
 cgz
 bPK
 bZZ
-are
+cks
 cks
 cks
 cks
@@ -117916,7 +117817,7 @@ crH
 crH
 crH
 crH
-aah
+are
 bWt
 aah
 aah
@@ -121521,9 +121422,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
+iyy
 coP
-aaa
+aks
 aaa
 aaa
 aaa
@@ -128327,7 +128228,7 @@ aaa
 aaa
 aah
 czC
-aks
+ckC
 ceC
 ckC
 aqv
@@ -128584,7 +128485,7 @@ aaa
 aaa
 aah
 czC
-aks
+ckC
 ckC
 ckC
 aqw
@@ -133486,7 +133387,7 @@ aah
 ajH
 aah
 aaa
-aah
+wGT
 aqj
 aqj
 aqj
@@ -134000,7 +133901,7 @@ aah
 ajJ
 aah
 aaa
-aah
+are
 aqj
 aqj
 aqj
@@ -134071,7 +133972,7 @@ cwF
 aXA
 aXA
 aXA
-aaa
+wGT
 aaa
 aah
 aaa
@@ -134585,7 +134486,7 @@ oab
 aXA
 aXA
 aXA
-aaa
+are
 aaa
 aah
 aaa
