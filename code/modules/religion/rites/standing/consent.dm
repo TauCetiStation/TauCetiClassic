@@ -88,7 +88,7 @@
 /datum/religion_rites/standing/consent/sacrifice
 	name = "Добровольное Жертвоприношение"
 	desc = "Превращает энергию живого в favor."
-	ritual_length = (50 SECONDS)
+	ritual_length = (25 SECONDS)
 	ritual_invocations = list("Hallowed be thy name...",
 							  "...Thy kingdom come...",
 							  "...Thy will be done in earth as it is in heaven...",
@@ -140,7 +140,7 @@
 /datum/religion_rites/standing/consent/clownconversion
 	name = "Клоунконверсия"
 	desc = "Превращает маленького человека в Клоуна." // this is ref to Russian writers
-	ritual_length = (40 SECONDS)
+	ritual_length = (25 SECONDS)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",
 						"...From our mother to our feet we walk on we got the shoes of length...")
@@ -209,7 +209,7 @@
 /datum/religion_rites/standing/consent/invite
 	name = "Божественное Приглашение"
 	desc = "Заставляет человека поверить в Бога."
-	ritual_length = (40 SECONDS)
+	ritual_length = (20 SECONDS)
 	ritual_invocations = list("Send peace, love, and unquestioning love to...",
 						"...all that is good into the hearts of him and our children...",
 						"...do not allow any of my family to be separated...",

@@ -103,8 +103,9 @@ var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(!mended)
 				if(A.secondsElectrified != -1)
-					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+					if(usr)
+						A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)

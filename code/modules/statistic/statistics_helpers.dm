@@ -64,7 +64,23 @@
 	stat.heavy_impact_range = hi_range
 	stat.light_impact_range = li_range
 	stat.flash_range = flash_range
+	stat.occurred_time = roundduration2text()
+
 	explosions += stat
+
+/datum/stat_collector/proc/add_emp_stat(turf/epicenter, high_range, light_range)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		return
+
+	var/datum/stat/emp_stat/stat = new
+	stat.epicenter_x = epicenter.x
+	stat.epicenter_y = epicenter.y
+	stat.epicenter_z = epicenter.z
+	stat.heavy_range = high_range
+	stat.light_range = light_range
+	stat.occurred_time = roundduration2text()
+
+	emps += stat
 
 /datum/stat_collector/proc/add_manifest_entry(key, name, assigned_role, special_role, list/antag_roles, mob/controlled_mob)
 	var/datum/stat/manifest_entry/stat = new
