@@ -137,9 +137,6 @@
 	return M
 
 
-
-
-
 /proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
 
 	//create a new account
