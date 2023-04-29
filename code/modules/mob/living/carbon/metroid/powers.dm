@@ -56,7 +56,7 @@
 			choices += nearby_mob
 
 	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sortTim(choices, /proc/cmp_name_asc))
-	if(!isliving(victim))
+	if(!isliving(choice))
 		return
 
 	var/mob/living/victim = choice
@@ -65,9 +65,11 @@
 		to_chat(src, "<i>This subject does not have an edible life energy...</i>")
 		return
 
-	if(isslime(victim))
-		to_chat(src, "<i>I must not feed on my brothers...</i>")
-		return
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(H.species.name in list(IPC, DIONA, GOLEM))
+			to_chat(src, "<i>This subject does not have an edible life energy...</i>")
+			return
 
 	if(victim.stat == DEAD)
 		to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
@@ -76,13 +78,13 @@
 	if(!Adjacent(victim))
 		return
 
-	if(locate(/mob/living/carbon/slime) in M.buckled_mob)
+	if(locate(/mob/living/carbon/slime) in victim.buckled_mob)
 		to_chat(src, "<i>Another slime is already feeding on this subject...</i>")
 		return
 
-	Feedon(victim)
 	to_chat(src, "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>")
-	to_chat(M, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
+	to_chat(victim, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
+	Feedon(victim)
 
 /mob/living/carbon/slime/proc/Feedon(mob/living/carbon/M)
 	Victim = M
