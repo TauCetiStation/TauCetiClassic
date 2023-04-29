@@ -1879,47 +1879,38 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	desc = "Parts for creating energy weapons with a miniature reactor."
 	id = "nuclear_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_URANIUM = 500)
-	build_path = /obj/item/weapon/gun/energy/gun/nuclear
+	build_path = /obj/item/gunkit/aegun
 	category = list("Weapons")
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
-	desc = "The prize of the Head of Security."
+	desc = "Parts for creating a cowboy taser."
 	id = "stunrevolver"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/weapon/gun/energy/taser/stunrevolver
-	category = list("Weapons")
-
-/datum/design/laserrifle
-	name = "Laser Rifle"
-	desc = "An energy weapon with concentrated energy bolts."
-	id = "laserrifle"
-	build_type = PROTOLATHE
-	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
-	build_path = /obj/item/weapon/gun/energy/laser
+	build_path = /obj/item/gunkit/stun_revolver
 	category = list("Weapons")
 
 /datum/design/lasercannon
 	name = "Laser Cannon"
-	desc = "A heavy duty laser cannon."
+	desc = "Parts for creating an incredibly powerful laser cannon."
 	id = "lasercannon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000, MAT_DIAMOND = 2000, MAT_URANIUM = 100)
-	build_path = /obj/item/weapon/gun/energy/lasercannon
+	build_path = /obj/item/gunkit/laser_cannon
 	category = list("Weapons")
 
 /datum/design/decloner
 	name = "Decloner"
-	desc = "Your opponent will bubble into a messy pile of goop."
+	desc = "Parts for creating decloner."
 	id = "decloner"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
-	build_path = /obj/item/weapon/gun/energy/decloner
+	build_path = /obj/item/gunkit/decloner
 	category = list("Weapons")
 
 /datum/design/chemsprayer
@@ -1969,11 +1960,11 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tesla_gun
 	name = "Tesla Cannon"
-	desc = "A gun which uses electrical discharges to hit multiple targets"
+	desc = "Parts for creating a cannon that can shock multiple targets at once."
 	id = "tesla_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 1000, MAT_SILVER = 4000)
-	build_path = /obj/item/weapon/gun/tesla
+	build_path = /obj/item/gunkit/tesla
 	category = list("Weapons")
 
 /datum/design/flora_gun
@@ -2001,15 +1992,6 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
 	build_path = /obj/item/weapon/gun/plasma
-	category = list("Weapons")
-
-/datum/design/plasma_104_gun
-	name = "plasma 104-sass"
-	desc = "A plasma-based semi-automatic short shotgun."
-	id = "plasma_104_gun"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
-	build_path = /obj/item/weapon/gun/plasma/p104sass
 	category = list("Weapons")
 
 /datum/design/plasma_mag
@@ -2050,11 +2032,11 @@ other types of metals and chemistry for reagents).
 
 /datum/design/phoronpistol
 	name = "phoron pistol"
-	desc = "A specialized firearm designed to fire lethal bolts of phoron."
+	desc = "Parts for creating a phoron-shooting pistol."
 	id = "ppistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PHORON = 3000)
-	build_path = /obj/item/weapon/gun/energy/toxgun
+	build_path = /obj/item/gunkit/phoron_pistol
 	category = list("Weapons")
 
 /////////////////////////////////////////
