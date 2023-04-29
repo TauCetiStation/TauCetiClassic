@@ -10,7 +10,6 @@
 
 	var/spamcheck = 0
 	var/emagged = 0
-	var/insults = 0
 	var/list/insultmsg = list("ПОШЛИ ВЫ ВСЕ НАХУЙ!", "Я АГЕНТ СИНДИКАТА!", "ХОС ХУЕСОС!", "У МЕНЯ БОМБА!", "КАПИТАН ГОНДОН!", "СЛАВА СИНДИКАТУ!")
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
@@ -39,11 +38,7 @@
 
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
-			if(insults)
-				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
-				insults--
-			else
-				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
 		else
 			if(is_skill_competent(usr, required_skills))
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
@@ -61,5 +56,4 @@
 		return FALSE
 	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 	emagged = 1
-	insults = rand(1, 3)//to prevent dickflooding
 	return TRUE
