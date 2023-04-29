@@ -29,6 +29,7 @@
 	body_parts_covered = FACE|EYES
 	w_class = SIZE_SMALL
 	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_WEAR_MASK)
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()

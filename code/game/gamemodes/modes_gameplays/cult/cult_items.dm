@@ -74,6 +74,7 @@
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/cult_blindfold/mob_can_equip(M, slot)
 	if(!isliving(M))

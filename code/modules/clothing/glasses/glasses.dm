@@ -175,6 +175,7 @@
 	item_state = "sunglasses"
 	darkness_view = -1
 	flash_protection = FLASHES_PARTIAL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -183,6 +184,7 @@
 	item_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
 	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -272,6 +274,7 @@
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
 	. = ..()
@@ -298,6 +301,7 @@
 	action_button_name = "Toggle Goggles"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/thermal/attack_self(mob/user)
 	. = ..()

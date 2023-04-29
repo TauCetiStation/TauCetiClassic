@@ -437,6 +437,7 @@ BLIND     // can't see anything
 	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/suit/space
 	name = "space suit"

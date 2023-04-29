@@ -908,12 +908,13 @@
 ///eyecheck()
 /mob/living/carbon/human/eyecheck()
 	if(blinded)
-		return 2
+		return FLASHES_FULL_PROTECTION
 	var/protection = 0
 	for(var/obj/item/I in get_all_slots())
-		if(I in list(r_hand, l_hand, r_store, l_store))
-			continue
-		protection += I.flash_protection
+		for(var/possible_slot in I.flash_protection_slots)
+			if(get_slot_ref(possible_slot) == I)
+				protection += I.flash_protection
+				continue
 	return protection
 
 /mob/living/carbon/human/IsAdvancedToolUser()

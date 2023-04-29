@@ -94,6 +94,7 @@
 	icon = 'icons/mob/shadowling_hud.dmi'
 	icon_state = "ling_vision_off"
 	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
 
 
 /obj/item/clothing/glasses/night/shadowling/attack_self()

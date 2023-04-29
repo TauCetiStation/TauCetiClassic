@@ -8,6 +8,7 @@
 	siemens_coefficient = 0.65
 	species_restricted = list("exclude" , DIONA)
 	flash_protection = NONE
+	flash_protection_slots = list()
 
 /obj/item/clothing/suit/space/sk
 	name = "ERVOS"
