@@ -12,7 +12,7 @@
 	var/skill_delay = apply_skill_bonus(user, 20, /datum/skill/construction = SKILL_LEVEL_PRO, multiplier = -0.1)
 	if(!do_after(user, skill_delay, target))
 		return
-	if(ispath(weapon_req, target))
+	if(ispath(weapon_req, target.type))
 		to_chat(user, "<span class='warning'>You have successfully modified the weapon!</span>")
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		new weapon_result(user.loc)
