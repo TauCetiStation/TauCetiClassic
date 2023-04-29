@@ -20,7 +20,6 @@
 		qdel(target)
 	else
 		to_chat(user, "<span class='warning'>This item is not suitable for modification.</span>")
-		return
 
 /obj/item/gunkit/aegun
 	name = "advanced energy gun parts kit"
