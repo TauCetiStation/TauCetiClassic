@@ -42,12 +42,13 @@
 /mob/living/carbon/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
-	if(Victim)
-		Feedstop()
-		return
 
 	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
+		return
+
+	if(Victim)
+		Feedstop()
 		return
 
 	var/list/choices = list()
@@ -71,16 +72,17 @@
 			to_chat(src, "<i>This subject does not have an edible life energy...</i>")
 			return
 
-	if(victim.stat == DEAD)
+	if(victim.stat == DEAD || victim.health < -70 )
 		to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
 		return
 
 	if(!Adjacent(victim))
 		return
 
-	if(locate(/mob/living/carbon/slime) in victim.buckled_mob)
-		to_chat(src, "<i>Another slime is already feeding on this subject...</i>")
-		return
+	for(var/mob/living/carbon/slime/S in view(1, Victim))
+		if(S.Victim == victim)
+			to_chat(src, "<i>Another slime is already feeding on this subject...</i>")
+			return
 
 	to_chat(src, "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>")
 	to_chat(victim, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
