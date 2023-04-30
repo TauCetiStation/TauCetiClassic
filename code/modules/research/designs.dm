@@ -1994,6 +1994,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/plasma
 	category = list("Weapons")
 
+/datum/design/plasma_104_gun
+	name = "plasma 104-sass"
+	desc = "Parts for creating plasma-based semi-automatic short shotgun."
+	id = "plasma_104_gun"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
+	build_path = /obj/item/gunkit/plasma104
+	category = list("Weapons")
+
 /datum/design/plasma_mag
 	name = "plasma weapon battery pack"
 	desc = "A special battery case with protection against EM pulse. Has standardized dimensions and can be used with any plasma type gun of this series."

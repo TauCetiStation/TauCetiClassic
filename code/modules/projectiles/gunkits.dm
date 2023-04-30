@@ -56,3 +56,9 @@
 	desc = "A suitcase containing the necessary gun parts to tranform a standart energy gun into an phoron pistol."
 	weapon_result = /obj/item/weapon/gun/energy/toxgun
 	weapon_req = /obj/item/weapon/gun/energy/gun
+
+/obj/item/gunkit/plasma104
+	name = "plasma 104-sass parts kit"
+	desc = "A suitcase containing the necessary gun parts to tranform a standart shotgun into an plasma shotgun."
+	weapon_result = /obj/item/weapon/gun/plasma/p104sass
+	weapon_req = /obj/item/weapon/gun/projectile/shotgun
