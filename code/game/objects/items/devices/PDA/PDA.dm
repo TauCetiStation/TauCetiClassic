@@ -1091,7 +1091,8 @@
 			if(MA.security_level && (MA.remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || MA.owner_name != H.real_name))
 				tgui_alert(H, "Please check information about your money account")
 				return
-			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", INSURANCE_NONE, INSURANCE_STANDARD, INSURANCE_PREMIUM)
+			var/list/insurances = SSeconomy.insurance_quality_decreasing + "Cancel"
+			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in insurances
 			if(insurance_type == "Cancel")
 				return
 			var/choice = input(H, "You wanna change insurance immediately, or make a preference?", "Insurance changes") in list("Cancel", "Immediately", "Make Preference")
@@ -1148,7 +1149,8 @@
 			if(!check_owner_fingerprints(U))
 				return
 			var/mob/living/carbon/human/H = U
-			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", INSURANCE_STANDARD, INSURANCE_PREMIUM)
+			var/list/insurances = SSeconomy.insurance_quality_decreasing - INSURANCE_NONE + "Cancel"
+			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in insurances
 			if(insurance_type == "Cancel")
 				return
 			var/newprice = input(user, "Insurance changes", "Write new price") as num
