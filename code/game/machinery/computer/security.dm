@@ -118,7 +118,9 @@
 							Faction: [active1.fields["faction"]]<BR>\n	\
 							Religion: [active1.fields["religion"]]<BR>\n	\
 							Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
-							Fingerprint: [active1.fields["fingerprint"]]<BR>\n	\
+							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+							Insurance Account Number: [active1.fields["insurance_account_number"]]<BR>\n \
+							Insurance Type: [active1.fields["insurance_type"]]<BR>\n \
 							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 							Mental Status: [active1.fields["m_stat"]]<BR></td>	\
 							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4 class=nearest>	\
@@ -457,18 +459,23 @@ What a mess.*/
 						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
-				if("id")
-					if(istype(active2, /datum/data/record))
-						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
-						if(!t1 || active1 != a1)
-							return FALSE
-						active1.fields["id"] = t1
 				if("fingerprint")
 					if(istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
-						if(!t1 || active1 != a1)
+						if(!t1 || active1 != a1 || t1 == active1.fields["fingerprint"])
 							return FALSE
+
+						var/old_value = active1.fields["fingerprint"]
 						active1.fields["fingerprint"] = t1
+						active1.fields["insurance_account_number"] = 0
+						active1.fields["insurance_type"] = INSURANCE_NONE
+
+						var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+						announcer.config(list("Medical" = 1, "Security" = 1))
+						announcer.autosay("[usr] has changed the 'fingerprint' in [active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Medical", freq = radiochannels["Medical"])
+						announcer.autosay("[usr] has changed the 'fingerprint' in [active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Security", freq = radiochannels["Security"])
+						qdel(announcer)
+
 				if("sex")
 					if(istype(active1, /datum/data/record))
 						if(active1.fields["sex"] == "Male")
