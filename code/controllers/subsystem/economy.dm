@@ -133,46 +133,27 @@ SUBSYSTEM_DEF(economy)
 	
 /datum/controller/subsystem/economy/proc/handle_insurances()
 	var/insurance_sum = 0
-	var/errors = 0
-	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+	var/list/problem_record_id = list()
 	for(var/datum/data/record/R as anything in data_core.general)
-		var/list/info = check_insurance_data_and_return_info(R)
-		var/insurance_type = info["insurance_type"]
-		var/insurance_account_number = info["insurance_account_number"]
-		var/insurance_price = insurance_prices[insurance_type]
-		if(!insurance_account_number)
-			errors++
-			if(errors == 5)
-				announcer.autosay("Multiple insurance errors!", "Insurancer", "Common", freq = radiochannels["Common"])
-			if(errors < 5)
-				announcer.autosay("[R.fields["name"]], [R.fields["rank"]], doesn't have correct insurance account number in the medical record.", "Insurancer", "Common", freq = radiochannels["Common"])
+		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
+		if(!MA)
+			R.fields["insurance_type"] = INSURANCE_NONE
+			problem_record_id.Add(R.fields["id"])
+			continue
+		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money)
+		var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+		R.fields["insurance_type"] = insurance_type
 		if(insurance_price == 0)
 			continue
 		insurance_sum += insurance_price
-		charge_to_account(insurance_account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+		charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
 
-	qdel(announcer)
-				
 	if(insurance_sum > 0)
 		var/med_account_number = global.department_accounts["Medical"].account_number
 		charge_to_account(med_account_number, med_account_number, "Insurance", "NT Insurance", insurance_sum)
-
-
-/proc/check_insurance_data_and_return_info(datum/data/record/R)
-	var/list/info = list("insurance_type" = INSURANCE_NONE, "insurance_account_number" = null)
-	var/datum/data/record/R1 = find_record("fingerprint", R.fields["fingerprint"], data_core.general)
-	if(!R1 || R.fields["id"] != R1.fields["id"])
-		return info
-	var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
-	if(!MA || MA.owner_name != R.fields["name"])
-		R.fields["insurance_type"] = INSURANCE_NONE
-		return info
-	info["insurance_account_number"] = MA.account_number
-	info["insurance_type"] = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money)
-	R.fields["insurance_type"] = info["insurance_type"]
-	return info
-
-
+	
+	if(problem_record_id.len)
+		send_message_about_problem_insurances(problem_record_id)
 
 /proc/get_insurance_type(mob/living/carbon/human/H)
 	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
@@ -193,3 +174,16 @@ SUBSYSTEM_DEF(economy)
 		var/insprice = SSeconomy.insurance_prices[insurance_type]
 		if(money >= insprice)
 			return insurance_type
+
+
+/proc/send_message_about_problem_insurances(list/message)
+	var/message_text
+	message_text += "<B>ID of Medical Records With Data Problems:</B><br>"
+	for(var/r in message)
+		message_text += "<b>[r]</b> <br>"
+	for(var/obj/machinery/computer/med_data/comp in med_record_consoles_list)
+		if(!(comp.stat & (BROKEN | NOPOWER)))
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comp.loc )
+			intercept.name = "Records With Insurance Problems"
+			intercept.info = message_text
+			intercept.update_icon()
