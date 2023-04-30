@@ -21,6 +21,14 @@
 	var/docname
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
+/obj/machinery/computer/med_data/atom_init()
+	. = ..()
+	med_record_consoles_list += src
+
+/obj/machinery/computer/med_data/Destroy()
+	med_record_consoles_list -= src
+	return ..()
+
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_from_inventory(O, src)
@@ -80,7 +88,7 @@
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
 						dat += text(
-							"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[]</A><BR>\n<<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
+							"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
 							src.active2.fields["b_type"],
 							src.active2.fields["b_dna"],
 							src.active2.fields["mi_dis"],
@@ -248,45 +256,56 @@
 				if("fingerprint")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input fingerprint hash:", "Med. records", input_default(src.active1.fields["fingerprint"]), null)  as text)
-						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1 || t1 == src.active1.fields["fingerprint"]))
 							return
-						if(t1 != src.active1.fields["fingerprint"])
-							src.active1.fields["insurance_account_number"] = 0
-							src.active1.fields["insurance_type"] = INSURANCE_NONE
-							
-							var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-							announcer.config(list("Medical" = 1))
-							announcer.autosay("[usr] has changed the fingerprint in [src.active1.fields["id"]] record. All record insurance data will be deleted.", "Insurancer", "Medical", freq = radiochannels["Medical"])
-							qdel(announcer)
 
+						var/old_value = src.active1.fields["fingerprint"]
 						src.active1.fields["fingerprint"] = t1
+						src.active1.fields["insurance_account_number"] = 0
+						src.active1.fields["insurance_type"] = INSURANCE_NONE
 
+						var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+						announcer.config(list("Medical" = 1, "Security" = 1))
+						announcer.autosay("[usr] has changed the 'fingerprint' in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Medical", freq = radiochannels["Medical"])
+						announcer.autosay("[usr] has changed the 'fingerprint' in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Security", freq = radiochannels["Security"])
+						qdel(announcer)
 
 				if("insurance_account_number")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = input("Please input insurance account number:", "Med. records", input_default(src.active1.fields["insurance_account_number"]), null)  as num
-						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1 || t1 == src.active1.fields["insurance_account_number"]))
 							return
-						var/datum/data/record/R = find_record("insurance_account_number", t1, data_core.general)
-						var/can_replace = TRUE
+						var/datum/money_account/MA = get_account(t1)
+						if(!MA)
+							tgui_alert(usr, "Unable to find this money account.")
+							return
 						for(var/i in global.department_accounts)
 							if(t1 == global.department_accounts[i].account_number)
 								tgui_alert(usr, "This is department account, you can't use it.")
-								can_replace = FALSE
-								break
-						
-						if(R)
-							tgui_alert(usr, "This account is already used by [R.fields["id"]] record")
-							can_replace = FALSE
+								return				
+						if(MA.owner_name != src.active1.fields["name"])
+							tgui_alert(usr, "[src.active1.fields["name"]] is not owner of this money account.")
+							return
 
-						if(can_replace)
+						var/datum/data/record/R = find_record("insurance_account_number", t1, data_core.general)
+						if(R)
+							tgui_alert(usr, "This money account is already used by [R.fields["id"]] record.")
+							return
+						
+						for(var/mob/living/carbon/human/H as anything in global.human_list)
+							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
+								continue
+							var/old_value = src.active1.fields["insurance_account_number"]
 							src.active1.fields["insurance_account_number"] = t1
 							var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-							announcer.config(list("Medical" = 1))
-							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record.", "Insurancer", "Medical", freq = radiochannels["Medical"])
+							announcer.config(list("Medical" = 1, "Security" = 1))
+							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Medical", freq = radiochannels["Medical"])
+							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Security", freq = radiochannels["Security"])
 							qdel(announcer)
-
-
+						
+						if(src.active1.fields["insurance_account_number"] != t1)
+							tgui_alert(usr, "Can't match the 'fingerprint' data, please check this and try again.")
+						
 				if("sex")
 					if (istype(src.active1, /datum/data/record))
 						if (src.active1.fields["sex"] == "Male")
