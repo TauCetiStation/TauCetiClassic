@@ -540,13 +540,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			var/info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			if (record1)
 				info += text(
-					"Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\n<BR>Insurance account number: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
+					"Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\n<BR>Insurance Account Number: []<BR>\nInsurance Type: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
 					record1.fields["name"],
 					record1.fields["id"],
 					record1.fields["sex"],
 					record1.fields["age"],
 					record1.fields["fingerprint"],
 					record1.fields["insurance_account_number"],
+					record1.fields["insurance_type"],
 					record1.fields["p_stat"],
 					record1.fields["m_stat"]
 				)
