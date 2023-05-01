@@ -1,6 +1,5 @@
 
 /datum/action/innate/slime
-	//background_icon_state = "bg_alien"
 	var/needs_growth = FALSE
 
 /datum/action/innate/slime/IsAvailable()
