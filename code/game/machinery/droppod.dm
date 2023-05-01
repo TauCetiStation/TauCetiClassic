@@ -280,8 +280,9 @@
 
 /obj/structure/droppod/proc/SimpleAiming()
 	flags |= STATE_AIMING
-	var/A
-	A = input("Select Area for Droping Pod", "Select", A) in allowed_areas.areas
+	var/A = input("Select Area for Droping Pod", "Select") in allowed_areas.areas
+	if(intruder != usr)
+		return
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
