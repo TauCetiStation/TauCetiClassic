@@ -187,8 +187,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.name == UNATHI)
 		var/obj/item/organ/external/Chest = bodyparts_by_name[BP_CHEST]
-		var/belly_state = "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]"
-		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[belly_state]", -BODY_LAYER)
+		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]", -BODY_LAYER)
 		belly.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
 		standing += belly
 
