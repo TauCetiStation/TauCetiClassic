@@ -34,9 +34,13 @@
 	)
 	contraband = list(
 		/obj/item/weapon/lighter/zippo = 4,
+		/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 	)
 	premium = list(
-		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
+		/obj/item/clothing/mask/cigarette/cigar = 2,
+		/obj/item/clothing/mask/cigarette/cigar/havana = 1,
+		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+		/obj/item/clothing/mask/cigarette/pipe = 1,
 	)
 	syndie = list(
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
