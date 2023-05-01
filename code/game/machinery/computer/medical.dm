@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
@@ -20,14 +21,6 @@
 	var/next_print = 0
 	var/docname
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
-
-/obj/machinery/computer/med_data/atom_init()
-	. = ..()
-	med_record_consoles_list += src
-
-/obj/machinery/computer/med_data/Destroy()
-	med_record_consoles_list -= src
-	return ..()
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
