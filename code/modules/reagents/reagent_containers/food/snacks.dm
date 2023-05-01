@@ -62,7 +62,7 @@
 		var/fullness = C.get_nutrition()
 		if(C == user) // If you're eating it yourself
 			if(HAS_TRAIT(C, TRAIT_PICKY_EATER) && src.food_type != VERY_TASTY_FOOD)
-				to_chat(C, "<span class='rose'>You cant eat this horrible, nasty and cheap food!</span>")
+				to_chat(C, "<span class='rose'>You can't eat this horrible, nasty and cheap food!</span>")
 				return FALSE
 			else if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
