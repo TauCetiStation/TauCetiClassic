@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(economy)
 	message_text += "<B>ID of Medical Records With Data Problems:</B><br>"
 	for(var/r in message)
 		message_text += "<b>[r]</b> <br>"
-	for(var/obj/machinery/computer/med_data/comp in med_record_consoles_list)
+	for(var/obj/machinery/computer/med_data/comp in global.med_record_consoles_list)
 		if(!(comp.stat & (BROKEN | NOPOWER)))
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comp.loc )
 			intercept.name = "Records With Insurance Problems"
