@@ -2,13 +2,20 @@
 	products = list(
 		/obj/item/device/assembly/prox_sensor = 5,
 		/obj/item/device/assembly/igniter = 3,
-		/obj/item/device/assembly/signaler = 4,
+		/obj/item/device/assembly/signaler = 8,
 		/obj/item/weapon/wirecutters = 1,
 		/obj/item/weapon/cartridge/signal = 4,
 	)
 	contraband = list(
-		/obj/item/device/flashlight = 5,
+		/obj/item/device/assembly/infra = 2,
+		/obj/item/device/assembly/voice = 2,
+		/obj/item/weapon/stock_parts/cell/high = 2,
+		/obj/item/device/flashlight = 3,
 		/obj/item/device/assembly/timer = 2,
+	)
+	premium = list(
+		/obj/item/weapon/circuitboard/vendor = 2,
+		/obj/item/device/tagger = 2,
 	)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	refill_canister = /obj/item/weapon/vending_refill/assist

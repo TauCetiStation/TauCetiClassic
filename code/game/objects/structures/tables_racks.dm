@@ -620,7 +620,10 @@
 
 	var/attempt_pin = 0
 	if(Buyer.security_level > 0)
-		attempt_pin = input("Введите ПИН-код", "Прилавок") as num
+		if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == Buyer.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == Buyer.remote_access_pin)
+			attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
+		else
+			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
 		if(isnull(attempt_pin))
 			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
 			return

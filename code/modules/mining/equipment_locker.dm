@@ -284,11 +284,11 @@
 		EQUIPMENT("Elite capsule(Bar)",				/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
 	prize_list["Upgrades"] = list(
-		EQUIPMENT("Accelerator resources upgrade",	/obj/item/kinetic_upgrade/resources,											1750),
-		EQUIPMENT("Accelerator damage upgrade",		/obj/item/kinetic_upgrade/damage,												2000),
-		EQUIPMENT("Accelerator recharge upgrade",	/obj/item/kinetic_upgrade/speed,												2250),
-		EQUIPMENT("Accelerator range upgrade",		/obj/item/kinetic_upgrade/range,												2500),
-		EQUIPMENT("Expander for accelerator",		/obj/item/kinetic_expander,														3000),
+		EQUIPMENT("Accelerator resources upgrade",	/obj/item/kinetic_upgrade/resources,											900),
+		EQUIPMENT("Accelerator damage upgrade",		/obj/item/kinetic_upgrade/damage,												1000),
+		EQUIPMENT("Accelerator recharge upgrade",	/obj/item/kinetic_upgrade/speed,												1250),
+		EQUIPMENT("Accelerator range upgrade",		/obj/item/kinetic_upgrade/range,												1250),
+		EQUIPMENT("Expander for accelerator",		/obj/item/kinetic_expander,														1500),
 	)
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",							/obj/item/weapon/reagent_containers/food/snacks/hotchili,						150),
