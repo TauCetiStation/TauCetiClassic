@@ -221,6 +221,8 @@
 
 	if(ismob(A))
 		for(var/mob/mob in get_turf(M.loc))
+			if(mob == A)
+				continue
 			if(check_living_shield(mob) == M)
 				M.bullet_act(src,def_zone)
 			else
