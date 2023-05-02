@@ -114,6 +114,15 @@
 	reagents.add_reagent("bicaridine", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 3, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/poppy/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/cable_piece = I
+		if(cable_piece.use(3))
+			new /obj/item/clothing/head/poppy_crown(get_turf(loc))
+			qdel(src)
+			return
+	return ..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed_type = /obj/item/seeds/harebell
 	name = "harebell"
@@ -121,6 +130,7 @@
 	icon_state = "harebell"
 	potency = 1
 	filling_color = "#d4b2c9"
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell/atom_init()
 	. = ..()
@@ -251,6 +261,7 @@
 	desc = "A mountain climate herb with a soft, cold blue flower, known to contain an abundance of chemicals in it's flower useful to treating burns- Bad for the allergic to pollen."
 	icon_state = "mtear"
 	filling_color = "#70c470"
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear/atom_init()
 	. = ..()

@@ -131,6 +131,8 @@
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 		return 1
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	if (flipped)
@@ -504,6 +506,8 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	if (flipped)
@@ -616,7 +620,10 @@
 
 	var/attempt_pin = 0
 	if(Buyer.security_level > 0)
-		attempt_pin = input("Введите ПИН-код", "Прилавок") as num
+		if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == Buyer.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == Buyer.remote_access_pin)
+			attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
+		else
+			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
 		if(isnull(attempt_pin))
 			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
 			return
@@ -711,6 +718,8 @@
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return 1
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
 	else
 		return 0

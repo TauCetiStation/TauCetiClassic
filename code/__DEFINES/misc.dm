@@ -1,3 +1,5 @@
+#define path2text(path) "[path]"
+
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
@@ -325,6 +327,8 @@
 		/obj/structure/windowsill, \
 		/obj/structure/window/fulltile, \
 		/obj/structure/window/fulltile/phoron, \
+		/obj/structure/window/fulltile/tinted, \
+		/obj/structure/window/fulltile/polarized, \
 		/obj/structure/window/fulltile/reinforced, \
 		/obj/structure/window/fulltile/reinforced/phoron, \
 		/obj/structure/window/fulltile/reinforced/tinted, \

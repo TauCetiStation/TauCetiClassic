@@ -352,6 +352,9 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				R.receive_signal(signal)
 
 			// Receiving code can be located in Telecommunications.dm
+
+			if(!isAI(M))
+				playsound(src, pick('sound/effects/radio1.ogg', 'sound/effects/radio2.ogg'), VOL_EFFECTS_MASTER, 50)
 			return TRUE
 
 

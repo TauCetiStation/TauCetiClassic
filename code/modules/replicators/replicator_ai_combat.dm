@@ -9,7 +9,7 @@
 		if(get_dist(src, R) > 7)
 			continue
 
-		if(R.last_controller_ckey != last_controller_ckey)
+		if(!R.is_same_array_as(src))
 			continue
 
 		if(a_intent == INTENT_HARM)

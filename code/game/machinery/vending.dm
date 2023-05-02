@@ -61,7 +61,7 @@
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
 
-/obj/machinery/vending/atom_init(mapload)
+/obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -75,11 +75,11 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
-	build_inventory(products, mapload)
+	build_inventory(products)
 	 //Add hidden inventory
-	build_inventory(contraband, mapload, hidden = 1)
-	build_inventory(premium, mapload, req_coin = 1)
-	build_inventory(syndie, mapload, req_emag = 1)
+	build_inventory(contraband, hidden = 1)
+	build_inventory(premium, req_coin = 1)
+	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
 
@@ -108,19 +108,9 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(!hidden && !req_coin && !req_emag)
-			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
-				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
-
-				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
-
-				if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
-					amount = 1
 
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -300,7 +290,10 @@
 				var/attempt_pin = 0
 				if(D)
 					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
+						if(usr.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == D.account_number && usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == D.remote_access_pin)
+							attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
+						else
+							attempt_pin = input("Enter pin code", "Vendor transaction") as num
 						if(isnull(attempt_pin))
 							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 							return

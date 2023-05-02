@@ -22,8 +22,12 @@
 	var/glass_color_blend_to_color
 	var/glass_color_blend_to_ratio
 
-	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and thin windows
 	var/image/crack_overlay
+
+	max_integrity = 20
+	damage_deflection = 2
+
+	armor = list(melee = 50, fire = 70)
 
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
 
@@ -48,15 +52,6 @@
 	
 	regenerate_smooth_icon()
 
-/obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	if(damage_threshold)
-		switch(damage_type)
-			if(BRUTE)
-				return max(0, damage_amount - damage_threshold)
-			if(BURN)
-				return damage_amount * 0.3
-	return ..()
-
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
 	if(isprying(W) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to pry the glass out of the frame.</span>"))
@@ -66,10 +61,10 @@
 							"<span class='warning'>You start removing the glass from the [src]!</span>", \
 							"<span class='warning'>You hear screwing.</span>")
 
-		W.use_tool(src, user, 40)
-		to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
-		
-		deconstruct(TRUE)
+		if(W.use_tool(src, user, 40))
+			to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
+			deconstruct(TRUE)
+
 		return
 
 	return ..()
@@ -84,10 +79,38 @@
 	crack_overlay = image('icons/obj/window.dmi',"damage[ratio]_[rand(1, 3)]",-(layer+0.1))
 	add_overlay(crack_overlay)
 
+// because of regenerate_smooth_icon this is not the cheapest method (if we don't have icon cached) and should not be used in mass
+// currently we need this only for projectiles with PASSGLASS but not PASSGRILLE (replicators)
+/obj/structure/window/fulltile/proc/break_grille()
+	if(!grilled)
+		return
+
+	grilled = FALSE
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+
+	new /obj/item/stack/rods(loc, 1)
+
+	regenerate_smooth_icon()
+
 /obj/structure/window/fulltile/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS) && (!grilled || mover.checkpass(PASSGRILLE)))
 		return TRUE
 	return !density
+
+#define GRILLE_MAX_INTEGRITY 20 // /obj/structure/grille/max_integrity
+
+/obj/structure/window/fulltile/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(Proj.checkpass(PASSGLASS) && (!grilled || Proj.checkpass(PASSGRILLE)))
+		return PROJECTILE_FORCE_MISS
+
+	if(grilled && Proj.checkpass(PASSGLASS)) // replics should be happy (im crying because of how awful this is)
+		if(prob((max_integrity - get_integrity()) * 100 / GRILLE_MAX_INTEGRITY))
+			break_grille()
+
+	return ..()
+
+#undef GRILLE_MAX_INTEGRITY
 
 /obj/structure/window/fulltile/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
@@ -103,6 +126,13 @@
 
 	return ..()
 
+/obj/structure/window/fulltile/atom_destruction(damage_flag)
+	switch(damage_flag)
+		if(BOMB, FIRE, ACID)
+			grilled = FALSE
+
+	return ..()
+
 /**
  * Fulltile phoron
  */
@@ -114,15 +144,55 @@
 	icon_state = "window_phoron"
 
 	max_integrity = 120
+	armor = list(melee = 50, fire = 99)
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronglass
 
-/obj/structure/window/fulltile/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 32000)
-		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
+/**
+ * Fulltile tinted
+ */
+
+/obj/structure/window/fulltile/tinted
+	name = "tinted window"
+	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
+	opacity = 1
+
+	icon_state = "window_tinted"
+
+	glass_color_blend_to_color = "#000000"
+	glass_color_blend_to_ratio = 0.7
+
+/**
+ * Fulltile polarized
+ */
+
+/obj/structure/window/fulltile/polarized
+	name = "electrochromic window"
+	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
+
+	icon_state = "window_polarized"
+
+	glass_color_blend_to_color = "#bebebe"
+	glass_color_blend_to_ratio = 0.7
+
+	var/id
+
+/obj/structure/window/fulltile/polarized/proc/toggle()
+	if(opacity) // todo: color change?
+		set_opacity(0)
+	else
+		set_opacity(1)
+
+/obj/structure/window/fulltile/polarized/attackby(obj/item/W as obj, mob/user as mob)
+	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
+		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
+		src.id = t
+		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
+		return TRUE
+	return ..()
 
 /**
  * Fulltile reinforced
@@ -136,7 +206,8 @@
 	icon_state = "window_reinforced"
 
 	max_integrity = 100
-	damage_threshold = 10
+	damage_deflection = 5
+	armor = list(melee = 80, fire = 70, bomb = 25)
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
@@ -150,15 +221,13 @@
 
 	icon_state = "window_reinforced_phoron"
 
-	max_integrity = 160
+	max_integrity = 200
+	armor = list(melee = 80, fire = 100, bomb = 50)
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
-
-/obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
 
 /**
  * Fulltile reinforced tinted
@@ -179,7 +248,7 @@
  */
 
 /obj/structure/window/fulltile/reinforced/polarized
-	name = "electrochromic window"
+	name = "reinforced electrochromic window"
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 
 	icon_state = "window_reinforced_polarized"

@@ -144,9 +144,10 @@ var/global/list/alldepartments = list("Central Command")
 		authenticated = 0
 
 	if(href_list["dept"])
-		var/lastdpt = dptdest
-		dptdest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
-		if(!dptdest) dptdest = lastdpt
+		var/new_dep_dest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
+		if(!new_dep_dest || !can_still_interact_with(usr))
+			return
+		dptdest = new_dep_dest
 
 	if(href_list["auth"])
 		if ( (!( authenticated ) && (scan)) )

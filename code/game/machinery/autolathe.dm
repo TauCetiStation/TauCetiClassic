@@ -111,6 +111,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/clothing/head/welding,                        CATEGORY_GENERAL),
 	R(/obj/item/weapon/kitchenknife,                          CATEGORY_GENERAL),
 	R(/obj/item/weapon/light/tube,                            CATEGORY_GENERAL),
+	R(/obj/item/weapon/light/tube/smart,                      CATEGORY_GENERAL),
 	R(/obj/item/weapon/light/bulb,                            CATEGORY_GENERAL),
 	R(/obj/item/ashtray/glass,                                CATEGORY_GENERAL),
 	R(/obj/item/toy/gun,                                      CATEGORY_GENERAL),
@@ -133,7 +134,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/ammo_box/magazine/stechkin, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/colt, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/glock, CATEGORY_AMMO),
-	R(/obj/item/ammo_box/c38m,                    CATEGORY_AMMO),
+	R(/obj/item/ammo_box/speedloader/c38m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO)
 

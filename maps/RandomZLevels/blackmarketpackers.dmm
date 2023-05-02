@@ -35,7 +35,8 @@
 /area/awaymission/BMPship3)
 "ai" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/engine,
 /area/awaymission/BMPship3)
@@ -1505,7 +1506,8 @@
 /area/awaymission/BMPship1)
 "ew" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship3)

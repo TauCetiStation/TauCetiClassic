@@ -93,8 +93,7 @@
 /datum/quality/positiveish/heavy_equipment/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest/fullbody(H), SLOT_WEAR_SUIT)
 	H.equip_or_collect(new /obj/item/clothing/gloves/combat(H), SLOT_GLOVES)
-	H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/l13(H), SLOT_S_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_R_HAND)
+	H.equip_or_collect(new /obj/item/weapon/melee/baton/double(H), SLOT_S_STORE)
 
 
 /datum/quality/positiveish/big_iron

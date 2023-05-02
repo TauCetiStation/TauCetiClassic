@@ -525,7 +525,8 @@
 /area/awaymission/wildwest/mansion)
 "bS" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
@@ -1385,7 +1386,8 @@
 /area/awaymission/wildwest/refinery)
 "eR" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor,
 /area/awaymission/wildwest/refinery)
@@ -2029,7 +2031,8 @@
 /area/awaymission/wildwest/refinery)
 "gX" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle{
 	icon_state = "floor2"

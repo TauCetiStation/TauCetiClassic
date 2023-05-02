@@ -246,7 +246,8 @@
 /area/start)
 "aI" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/centcom)

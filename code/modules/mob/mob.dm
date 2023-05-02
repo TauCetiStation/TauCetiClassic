@@ -149,8 +149,11 @@
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
 // * need some version combined with playsound (one cycle for audio message and sound)
-/mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
+/mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs, runechat_msg)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
+
+		if((!(M.sdisabilities & BLIND) && !M.blinded && !M.paralysis) && runechat_msg)
+			M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 		if(M == src && self_message)
 			to_chat(M, self_message)
@@ -162,10 +165,13 @@
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(message, blind_message, viewing_distance = world.view, list/ignored_mobs)
+/atom/proc/visible_message(message, blind_message, viewing_distance = world.view, list/ignored_mobs, runechat_msg)
 	//todo: for range<=1 combine SHOWMSG_FEEL with SHOWMSG_VISUAL like in custom_emote?
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
 		M.show_message(message, SHOWMSG_VISUAL, blind_message, SHOWMSG_AUDIO)
+
+		if((!(M.sdisabilities & BLIND) && !M.blinded && !M.paralysis) && runechat_msg)
+			M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -174,8 +180,14 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance = world.view, self_message, list/ignored_mobs)
+/mob/audible_message(message, self_message, deaf_message, hearing_distance = world.view, list/ignored_mobs, runechat_msg, deaf_runechat_msg)
 	for(var/mob/M in (get_hearers_in_view(hearing_distance, src) - ignored_mobs))
+
+		if((M.sdisabilities & DEAF || M.ear_deaf) && deaf_runechat_msg)
+			M.show_runechat_message(src, null, deaf_runechat_msg, null, SHOWMSG_VISUAL)
+		else
+			if(runechat_msg)
+				M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 		if(self_message && M == src)
 			to_chat(M, self_message)
@@ -193,9 +205,15 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, list/ignored_mobs)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, list/ignored_mobs, runechat_msg, deaf_runechat_msg)
 	for(var/mob/M in (get_hearers_in_view(hearing_distance, src) - ignored_mobs))
 		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+
+		if((M.sdisabilities & DEAF || M.ear_deaf) && deaf_runechat_msg)
+			M.show_runechat_message(src, null, deaf_runechat_msg, null, SHOWMSG_VISUAL)
+		else
+			if(runechat_msg)
+				M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
 	for(var/mob/M as anything in mob_list)
@@ -1263,3 +1281,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			. += 1 + config.run_speed
 		if("walk")
 			. += 2.5 + config.walk_speed
+
+// return TRUE if we failed our interaction
+/mob/proc/interact_prob_brain_damage(atom/object)
+	return FALSE
