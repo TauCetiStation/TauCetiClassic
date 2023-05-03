@@ -107,7 +107,7 @@ var/global/list/preferences_datums = list()
 	var/b_eyes = 0						//Eye color
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
-	var/insurance = "None"
+	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
