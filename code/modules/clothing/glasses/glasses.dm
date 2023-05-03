@@ -174,6 +174,8 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+	flash_protection = FLASHES_PARTIAL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -181,6 +183,8 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -198,12 +202,14 @@
 			flags |= GLASSESCOVERSEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
+			flash_protection = FLASHES_FULL_PROTECTION
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
 			up = !up
 			flags &= ~GLASSESCOVERSEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
+			flash_protection = NONE
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		update_inv_mob()
@@ -267,6 +273,15 @@
 	sightglassesmod  = "sepia"
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
+
+/obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
+	. = ..()
+	if(active)
+		flash_protection = FLASHES_AMPLIFIER
+	else
+		flash_protection = FLASHES_PARTIAL_PROTECTION
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
@@ -285,6 +300,15 @@
 	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
+
+/obj/item/clothing/glasses/thermal/attack_self(mob/user)
+	. = ..()
+	if(active)
+		flash_protection = FLASHES_AMPLIFIER
+	else
+		flash_protection = NONE
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(ishuman(src.loc))

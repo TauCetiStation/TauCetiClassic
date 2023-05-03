@@ -190,10 +190,11 @@
 
 	for(var/obj/item/weapon/implant/I in src)
 		if(istype(I, /obj/item/weapon/implant/chem))
-			holder = hud_list[IMPCHEM_HUD]
-			holder.icon_state = "hud_imp_chem"
-			holder.pixel_y = y
-			y += -5
+			if(I.implanted)
+				holder = hud_list[IMPCHEM_HUD]
+				holder.icon_state = "hud_imp_chem"
+				holder.pixel_y = y
+				y += -5
 
 		if(istype(I, /obj/item/weapon/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]

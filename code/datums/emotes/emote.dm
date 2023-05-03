@@ -50,6 +50,9 @@ var/global/list/all_emotes
 /datum/emote/proc/get_emote_message_1p(mob/user)
 	return "<i>[message_1p]</i>"
 
+/datum/emote/proc/get_impaired_msg(mob/user)
+	return message_impaired_reception
+
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
 	var/miming = FALSE
@@ -68,7 +71,7 @@ var/global/list/all_emotes
 	if(!msg)
 		return null
 
-	return "<b>[user]</b> <i>[msg]</i>"
+	return msg
 
 /datum/emote/proc/get_cooldown_group()
 	if(isnull(cooldown_group))
@@ -137,8 +140,9 @@ var/global/list/all_emotes
 		I.trigger(emote_key, user)
 
 	var/msg_1p = get_emote_message_1p(user)
-	var/msg_3p = get_emote_message_3p(user)
+	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
+	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user)]"
 
 	if(!msg_1p)
 		msg_1p = msg_3p
@@ -147,9 +151,9 @@ var/global/list/all_emotes
 
 	if(msg_3p)
 		if(message_type & SHOWMSG_VISUAL)
-			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
+			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user))
 		else if(message_type & SHOWMSG_AUDIO)
-			user.audible_message(msg_3p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+			user.audible_message(msg_3p, msg_1p, deaf_impaired_msg, hearing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user), deaf_runechat_msg = get_impaired_msg(user))
 
 	else
 		to_chat(user, msg_1p)
@@ -163,6 +167,9 @@ var/global/list/all_emotes
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
+
+		if(M in viewers(get_turf(user), world.view))
+			M.show_runechat_message(user, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
 
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)

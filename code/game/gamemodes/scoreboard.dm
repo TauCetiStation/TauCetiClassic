@@ -35,6 +35,9 @@
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth
 
+			for (var/obj/item/weapon/ewallet/EW in get_contents_in_object(E, /obj/item/weapon/ewallet))
+				cashscore += EW.get_money()
+
 			if (cashscore > SSStatistics.score.richestcash)
 				SSStatistics.score.richestcash = cashscore
 				SSStatistics.score.richestname = E.real_name

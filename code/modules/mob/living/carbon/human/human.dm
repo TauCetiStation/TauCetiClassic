@@ -906,41 +906,14 @@
 
 
 ///eyecheck()
-///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	if(blinded)
-		return 2
-	var/number = 0
-	if(istype(head, /obj/item/clothing/head/welding))
-		var/obj/item/clothing/head/welding/W = head
-		if(!W.up)
-			number += 2
-	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) || istype(head, /obj/item/clothing/head/helmet/swat))
-		number += 2
-	if(istype(glasses, /obj/item/clothing/glasses/thermal))
-		var/obj/item/clothing/glasses/thermal/G = glasses
-		if(G.active)
-			number -= 1
-	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-		number += 1
-	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
-		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
-		if(!G.active)
-			number += 1
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
-		var/obj/item/clothing/mask/gas/welding/W = wear_mask
-		if(!W.up)
-			number += 2
-	if(istype(glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = glasses
-		if(!W.up)
-			number += 2
-	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-		number -= 1
-	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
-		number += 2
-	return number
-
+		return FLASHES_FULL_PROTECTION
+	var/protection = 0
+	for(var/obj/item/I in get_all_slots())
+		if(I.slot_equipped in I.flash_protection_slots)
+			protection += I.flash_protection
+	return protection
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such

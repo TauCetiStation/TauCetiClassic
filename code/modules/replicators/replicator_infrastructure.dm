@@ -404,7 +404,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	INVOKE_ASYNC(src, .proc/try_teleport, AM)
 
 /obj/machinery/power/replicator_generator/proc/teleportation_checks(mob/living/simple_animal/hostile/replicator/R, obj/machinery/power/replicator_generator/target)
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return FALSE
 	if(target.next_teleportation > world.time)
 		return FALSE
@@ -419,7 +419,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/machinery/power/replicator_generator/proc/try_teleport(mob/living/simple_animal/hostile/replicator/R)
 	if(R.incapacitated())
 		return
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 	if(next_teleportation > world.time)
 		to_chat(R, "<span class='notice'>Can not teleport at this moment, please wait for [CEIL((next_teleportation - world.time) * 0.1)] seconds.</span>")
@@ -454,7 +454,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return
 	if(R.loc != loc)
 		return
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 	if(R.incapacitated())
 		to_chat(R, "<span class='notice'>Unit too weak to support teleportation efforts.</span>")
@@ -673,11 +673,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
+	if(ispulsing(I) && !user.is_busy())
+		user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarm [src].</span>")
+		if(do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: (replicators) add a sound here. the sound should be somewhat melancholic and mechanical. even though this web is made by enemies, it still is a magnificent thing
-		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
-		qdel(src)
-		return
+			visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
+			qdel(src)
+			return
 
 	return ..()
 

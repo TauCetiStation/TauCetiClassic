@@ -167,13 +167,19 @@
 			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 				continue
 
+			if(locate(/obj/structure/window/fulltile) in T)
+				continue
+
+			if(locate(/obj/structure/windowsill) in T)
+				continue
+
 			for(var/obj/machinery/door/D in T)
 				if(D.density)
 					continue check_next_dir
 
-			var/obj/structure/window/W = locate() in T
+			var/obj/structure/window/thin/W = locate() in T
 
-			if(W && W.density)
+			if(W && W.density && dirn == turn(dir,180)) // if window is facing us
 				continue
 
 			new /obj/structure/alien/weeds(T, linked_node)

@@ -204,17 +204,6 @@
 	return flags & INSERT_CONTAINER
 */
 
-/atom/proc/can_mob_interact(mob/user)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
-			return FALSE
-		else if(prob(H.getBrainLoss()))
-			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
-			return FALSE
-	return TRUE
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -591,7 +580,7 @@
 /atom/proc/isinspace()
 	return isspaceturf(get_turf(src))
 
-/atom/proc/checkpass(passflag)
+/atom/proc/checkpass(passflag) // todo: define as macro
 	return pass_flags&passflag
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
