@@ -1980,11 +1980,49 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Xeno arsonist crate"
 	group = "xeno"
 	hidden = TRUE
+//----------------------------------------------
+//-------------SMARTLIGHT PROGRAMMS-------------
+//----------------------------------------------
+/datum/supply_pack/smartlight_standart
+	name = "Smartlight programms set: Standart"
+	contains = list(
+		/obj/item/weapon/disk/smartlight_programm/soft,
+		/obj/item/weapon/disk/smartlight_programm/hard,
+		/obj/item/weapon/disk/smartlight_programm/k3000,
+		/obj/item/weapon/disk/smartlight_programm/k4000,
+		/obj/item/weapon/disk/smartlight_programm/k5000,
+		/obj/item/weapon/disk/smartlight_programm/k6000,
+	)
+	additional_costs = 5000
+	group = "Operations"
+/datum/supply_pack/smartlight_neon
+	name = "Smartlight programms set: Neon"
+	contains = list(
+		/obj/item/weapon/disk/smartlight_programm/neon,
+		/obj/item/weapon/disk/smartlight_programm/neon_dark,
+	)
+	additional_costs = 10000
+	group = "Operations"
+/datum/supply_pack/smartlight_blue
+	name = "Smartlight programms set: Blue"
+	contains = list(
+		/obj/item/weapon/disk/smartlight_programm/neon,
+		/obj/item/weapon/disk/smartlight_programm/neon_dark,
+	)
+	additional_costs = 10000
+	group = "Operations"
+/datum/supply_pack/smartlight_shadows
+	name = "Smartlight programms set: Shadows"
+	contains = list(
+		/obj/item/weapon/disk/smartlight_programm/shadows_soft,
+		/obj/item/weapon/disk/smartlight_programm/shadows_hard,
+	)
+	additional_costs = 10000
+	group = "Operations"
 
 //----------------------------------------------
 //-----------------REBELLION--------------------
 //----------------------------------------------
-
 /datum/supply_pack/mining_centcom_supply
 	name = "Cent Com Shaft Miner Gear"
 	contains = list(/obj/item/clothing/head/helmet/space/globose/mining,
