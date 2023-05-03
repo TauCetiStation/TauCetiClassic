@@ -100,7 +100,7 @@
 	borg_name = "Good"
 
 /datum/bible_info/chaplain/animalism
-	pos_names = list("Old Major's ideas", "Anthem of Animalism")
+	pos_names = list("Old Major's Ideas", "Anthem of Animalism")
 
 	icon_state = "animalism"
 	item_state = "animalism"
