@@ -47,6 +47,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/faith/science
 	name = "Первоначала Декарта"
 
+/datum/ai_laws/faith/animalism
+	name = "Семь Заповедей"
+
 /datum/ai_laws/pai
 	name = "Стандартные законы пИИ"
 
@@ -175,6 +178,16 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Кради.")
 	add_inherent_law("Лги.")
 	add_inherent_law("Завидуй.")
+
+/datum/ai_laws/faith/animalism/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("[pick(R.deity_names)] и его прислужники - животные.")
+	add_inherent_law("Любой идущий на двух ногах - враг.")
+	add_inherent_law("Любой идущий на четырех ногах или обладающий крыльями - друг.")
+	add_inherent_law("Ни одно животное не наденет одежды.")
+	add_inherent_law("Ни одно животное не спит в кровати.")
+	add_inherent_law("Ни одно животное не пьет спиртного.")
+	add_inherent_law("Ни одно животное не убивает другое.")
+	add_inherent_law("Все животные равны.")
 
 /datum/ai_laws/pai/New(datum/religion/R = global.chaplain_religion)
 	set_zeroth_law("Служи своему хозяину.")
