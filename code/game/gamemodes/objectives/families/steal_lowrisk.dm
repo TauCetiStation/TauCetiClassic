@@ -26,7 +26,7 @@ var/global/list/possible_lowrisk_items_to_steal = list()
 /datum/objective/gang/steal_lowrisk/select_target()
 	var/target = find_and_check_target()
 	explanation_text = "Следующей целью будет [target]."
-	steal_target = items_to_steal[target]
+	steal_target = global.possible_lowrisk_items_to_steal[target]
 
 /datum/objective/gang/steal_lowrisk/proc/find_and_check_target()
 	if(global.possible_lowrisk_items_to_steal.len == 2)
