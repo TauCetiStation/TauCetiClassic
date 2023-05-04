@@ -307,7 +307,7 @@ var/global/bomb_set
 		deployed = TRUE
 		anchored = TRUE
 		if(!lighthack)
-			flick("nuclearbombc", src)
+			flick("nuclearbomb3", src)
 	update_icon()
 	return TRUE
 
