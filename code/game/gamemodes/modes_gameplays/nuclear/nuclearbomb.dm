@@ -88,14 +88,11 @@ var/global/bomb_set
 			return FALSE
 
 	if(istype(O, /obj/item/weapon/disk/nuclear))
-		if(deployed)
-			usr.drop_from_inventory(O, src)
-			auth = O
-			add_fingerprint(user)
-			return FALSE
-		else
-			to_chat(user, "<span class = 'red'>You need to deploy it first.</span>")
-			return FALSE
+		if(!deployed)
+			if(!deploy(user))
+				return
+		insert_disk(user, O)
+		return FALSE
 
 	if(deployed)
 		switch(removal_stage)
@@ -204,7 +201,21 @@ var/global/bomb_set
 			adjust_timer(usr, time)
 		if("bombSet")
 			bomb_set(usr)
+		if("insertDisk")
+			insert_disk(usr)
+
 	return TRUE
+
+/obj/machinery/nuclearbomb/proc/insert_disk(mob/user, disk)
+	if(disk)
+		if(user.drop_from_inventory(disk, src))
+			auth = disk
+	else
+		var/obj/item/I = usr.get_active_hand()
+		if(istype(I, /obj/item/weapon/disk/nuclear))
+			if(usr.drop_from_inventory(I, src))
+				auth = I
+	add_fingerprint(user)
 
 /obj/machinery/nuclearbomb/proc/code_typed(mob/user, digit)
 	if(digit == "E")
@@ -237,15 +248,15 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/proc/eject_disk(mob/user)
 	if(auth)
-		if(user)
+		if(user && in_range(src, user))
 			user.put_in_hands(auth)
 		else
 			auth.forceMove(loc)
 		auth = null
 		authorized = FALSE
 		cur_code = null
-	if(!timing)
-		safety = TRUE
+		if(!timing)
+			safety = TRUE
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/bomb_set(mob/user)
@@ -265,7 +276,7 @@ var/global/bomb_set
 /obj/machinery/nuclearbomb/proc/deploy(mob/user)
 	if(deployed)
 		if(timing)
-			return
+			return FALSE
 		to_chat(user, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
 		visible_message("<span class = 'red'>The anchoring bolts slide back into the depths of [src] and timer has stopped.</span>")
 		deployed = FALSE
@@ -273,23 +284,23 @@ var/global/bomb_set
 		eject_disk()
 	else
 		if(user.incapacitated())
-			return
+			return FALSE
 		if(!ishuman(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
-			return 1
+			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
 			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
-			return
+			return FALSE
 		if(!ishuman(user) && !isobserver(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
-			return
+			return FALSE
 		var/turf/current_location = get_turf(user)//What turf is the user on?
 		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
-			return
+			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
 			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
-			return
+			return FALSE
 
 		to_chat(user, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
 		visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
@@ -298,6 +309,7 @@ var/global/bomb_set
 		if(!lighthack)
 			flick("nuclearbombc", src)
 	update_icon()
+	return TRUE
 
 /obj/machinery/nuclearbomb/update_icon()
 	if(lighthack)

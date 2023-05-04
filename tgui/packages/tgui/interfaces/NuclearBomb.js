@@ -76,7 +76,7 @@ export const NuclearBomb = (props, context) => {
                 icon={"eject"}
                 content={hasDisk ? "Inserted" : "None"}
                 disabled={!deployed}
-                onClick={() => act('ejectDisk')}
+                onClick={() => act(hasDisk ? 'ejectDisk' : 'insertDisk')}
               />
             </LabeledList.Item>
           </LabeledList>
