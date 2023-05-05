@@ -277,7 +277,7 @@ var/global/bomb_set
 	if(deployed)
 		if(timing)
 			return FALSE
-		to_chat(user, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
+		to_chat(user, "<span class = 'red'>You close several panels to make [src] undeployed.</span>")
 		visible_message("<span class = 'red'>The anchoring bolts slide back into the depths of [src] and timer has stopped.</span>")
 		deployed = FALSE
 		anchored = FALSE
@@ -302,7 +302,7 @@ var/global/bomb_set
 			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
 			return FALSE
 
-		to_chat(user, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
+		to_chat(user, "<span class = 'red'>You adjust some panels to make [src] deployed.</span>")
 		visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
 		deployed = TRUE
 		anchored = TRUE
@@ -343,7 +343,7 @@ var/global/bomb_set
 		timeleft = TIMER_MAX
 		set_security_level("red")
 		flick("nuclearbomb1", src)
-		visible_message("<span class='notice'>\The [src] flicks with green. Looks like the fuse prevented explosion.</span>")
+		visible_message("<span class='notice'>\The [src] flicks with green. Looks like the safety fuse prevented explosion.</span>")
 		update_icon()
 		return
 	if(detonated)
