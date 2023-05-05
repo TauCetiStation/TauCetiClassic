@@ -78,7 +78,7 @@
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
 	if(user.mind?.holy_role && !iscultist(user))
-		change_chapel_looks(user)
+		change_chapel_looks(user, src)
 		return
 
 	return ..()
