@@ -59,11 +59,9 @@ var/global/bomb_set
 		if(removal_stage == 5)
 			if(!opened)
 				opened = TRUE
-				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
 			else
 				opened = FALSE
-				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else if(auth)
 			if(!opened)
@@ -72,15 +70,14 @@ var/global/bomb_set
 				to_chat(user, "You unscrew the control panel of [src].")
 			else
 				opened = FALSE
-				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else
 			if(!opened)
 				to_chat(user, "The [src] emits a buzzing noise, the panel staying locked in.")
 			if(opened)
 				opened = FALSE
-				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
+		update_icon()
 		return FALSE
 
 	if(is_wire_tool(O) && opened)
@@ -312,6 +309,9 @@ var/global/bomb_set
 	return TRUE
 
 /obj/machinery/nuclearbomb/update_icon()
+	cut_overlays()
+	if(opened)
+		add_overlay(image(icon, "npanel_open"))
 	if(lighthack)
 		icon_state = initial(icon_state)
 	else if(detonated)
