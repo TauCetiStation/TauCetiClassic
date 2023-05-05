@@ -149,6 +149,12 @@
 	painting = FALSE
 	update_overlays()
 
+/obj/item/canvas/proc/try_rename(mob/user)
+	var/new_name = sanitize(input(user, "What do you want to name the painting?"), MAX_LNAME_LEN)
+	if(new_name != painting_name && new_name)
+		painting_name = new_name
+		SStgui.update_uis(src)
+
 /obj/item/canvas/proc/finalize(mob/user)
 	finalized = TRUE
 	generate_proper_overlay()
@@ -231,12 +237,6 @@
 		return P.colour
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap) || istype(I, /obj/item/weapon/reagent_containers/glass/rag))
 		return canvas_color
-
-/obj/item/canvas/proc/try_rename(mob/user)
-	var/new_name = sanitize(user, "What do you want to name the painting?")
-	if(new_name != painting_name && new_name && Adjacent(user))
-		painting_name = new_name
-		SStgui.update_uis(src)
 
 /obj/item/canvas/nineteen_nineteen
 	icon_state = "19x19"
@@ -351,8 +351,6 @@
 		frame_canvas(user, I)
 	else if(iscutter(I))
 		remove_canvas(user)
-	else if(current_canvas && current_canvas.painting_name == initial(current_canvas.painting_name) && istype(I, /obj/item/weapon/pen))
-		try_rename(user)
 	else
 		return ..()
 
