@@ -282,13 +282,13 @@ var/global/bomb_set
 		if(user.incapacitated())
 			return FALSE
 		if(!ishuman(user))
-			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
+			to_chat(user, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
 			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
 			return FALSE
 		if(!ishuman(user) && !isobserver(user))
-			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
+			to_chat(user, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return FALSE
 		var/turf/current_location = get_turf(user)//What turf is the user on?
 		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
