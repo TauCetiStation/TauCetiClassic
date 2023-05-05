@@ -252,7 +252,7 @@
 
 	switch(choice)
 		if(CHAPEL_LOOK)
-			change_chapel_looks(user)
+			change_chapel_looks(user, to_anchor)
 		if(RUNES)
 			scribe_rune(user, to_anchor)
 		if(CONSTRUCTION)
