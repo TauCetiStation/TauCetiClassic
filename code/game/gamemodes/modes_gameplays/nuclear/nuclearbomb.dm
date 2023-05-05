@@ -66,7 +66,6 @@ var/global/bomb_set
 		else if(auth)
 			if(!opened)
 				opened = TRUE
-				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
 			else
 				opened = FALSE
