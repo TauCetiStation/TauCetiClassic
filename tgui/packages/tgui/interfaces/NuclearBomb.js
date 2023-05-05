@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Slider, Box, Grid, LabeledList, Section, ProgressBar } from '../components';
+import { Button, Box, Grid, LabeledList, Section, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 const NukeKeypad = (props, context) => {
