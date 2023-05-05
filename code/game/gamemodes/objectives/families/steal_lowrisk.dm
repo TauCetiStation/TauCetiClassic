@@ -23,13 +23,14 @@
 
 
 /datum/objective/gang/steal_lowrisk/New()
+	LAZYINITLIST(lowrisk_objectives_cache)
 	select_target()
 
 /datum/objective/gang/steal_lowrisk/select_target()
 	steal_target = find_and_check_target()
 	explanation_text = "Steal [initial(steal_target.name)]."
 
-var/global/list/lowrisk_objectives_cache = list()
+var/global/list/lowrisk_objectives_cache
 
 /datum/objective/gang/steal_lowrisk/proc/find_and_check_target()
 	if(global.lowrisk_objectives_cache.len == 2)
