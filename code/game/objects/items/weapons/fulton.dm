@@ -156,8 +156,8 @@
 	if(!isgundealer(user))
 		return FALSE
 	if(isitem(target))
-		for(var/objective in global.possible_lowrisk_items_to_steal)
-			if(global.possible_lowrisk_items_to_steal[objective] != target.type)
+		for(var/item in global.lowrisk_objectives_cache)
+			if(item != target.type)
 				continue
 			to_chat(user, "<span class='warning'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
 			return FALSE	
