@@ -277,7 +277,7 @@ var/global/bomb_set
 		visible_message("<span class = 'red'>The anchoring bolts slide back into the depths of [src] and timer has stopped.</span>")
 		deployed = FALSE
 		anchored = FALSE
-		eject_disk()
+		eject_disk(user)
 	else
 		if(user.incapacitated())
 			return FALSE
