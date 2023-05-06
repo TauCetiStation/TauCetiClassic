@@ -94,8 +94,6 @@
 		if(ishuman(owner))
 			human_owner = owner
 		ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
-		owner.drop_from_inventory(owner.l_hand)
-		owner.drop_from_inventory(owner.r_hand)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
@@ -124,6 +122,8 @@
 		if(prob(10) && owner.health)
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
