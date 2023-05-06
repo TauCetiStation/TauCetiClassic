@@ -360,3 +360,12 @@
 		var/datum/quality/quality = SSqualities.qualities_by_type[quality_type]
 		if(quality.satisfies_requirements(H, latespawn))
 			quality.add_effect(H, latespawn)
+
+/datum/quality/quirkieish/secret_mission
+	name = "Secret Mission"
+	desc = "У Нанотрейзен для тебя специальная миссия..."
+	requirement = "Синий Щит"
+	jobs_required = list("Blueshield Officer")
+
+/datum/quality/quirkieish/secret_mission/add_effect(mob/living/carbon/human/H, latespawn)
+	create_and_setup_role(/datum/role/nanotrasen_agent, H, TRUE)

@@ -62,6 +62,7 @@
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
 #define REPLICATOR "Replicator"
+#define NANOTRASEN_AGENT "Nanotrasen Agent"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
