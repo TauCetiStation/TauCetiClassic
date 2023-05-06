@@ -8,7 +8,7 @@
 	. = ..()
 	to_chat(antag.current, "<span class = 'info'><B>Вы - <font color='blue'>Тайный агент Нанотрейзен</font>!</B></span>")
 	to_chat(antag.current, "Совсем недавно отдел контрразведки Нанотрейзен обнаружил, что весь командный состав [station_name_ru()] оказался предателями, работающими на Синдикат.")
-	to_chat(antag.current, "<B>Вы должны уничтожить глав, при этом сохраняя секретность.</B></span>")
+	to_chat(antag.current, "<B>Вы должны уничтожить глав, при этом сохраняя секретность.</B>")
 
 /datum/role/nanotrasen_agent/forgeObjectives()
 	if(!..())
