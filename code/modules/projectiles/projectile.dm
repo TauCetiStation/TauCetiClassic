@@ -94,7 +94,7 @@
 		grab = H.l_hand
 	if(!grab)
 		return H
-	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
+	if(grab.state >= GRAB_NECK && !grab.affecting.lying && grab.affecting.stat != DEAD)
 		if(is_the_opposite_dir(H.dir, dir))
 			return grab.affecting
 	return H
