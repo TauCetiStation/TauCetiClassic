@@ -18,5 +18,5 @@
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/target/assassinate/A = AppendObjective(/datum/objective/target/assassinate, TRUE)
 		if(A)
-			A.target = M.mind
+			A.target = head_mind
 	return TRUE
