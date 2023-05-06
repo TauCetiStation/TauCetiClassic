@@ -32,6 +32,8 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 		if(NUKE_WIRE_TIMING)
 			if(!N.lighthack && !mended)
 				N.timing = 0
+				if(istype(N, /obj/machinery/nuclearbomb/fake))
+					return
 				if(get_security_level() == "delta")
 					set_security_level("red")
 

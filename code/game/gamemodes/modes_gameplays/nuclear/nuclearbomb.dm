@@ -338,7 +338,7 @@ var/global/bomb_set
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
 	if(safety)
-		timing = 0
+		timing = FALSE
 		timeleft = TIMER_MAX
 		set_security_level("red")
 		flick("nuclearbomb1", src)
@@ -347,12 +347,12 @@ var/global/bomb_set
 		return
 	if(detonated)
 		return
-	detonated = 1
-	safety = 1
+	detonated = TRUE
+	safety = TRUE
 	update_icon()
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 	if(SSticker)
-		SSticker.explosion_in_progress = 1
+		SSticker.explosion_in_progress = TRUE
 	sleep(100)
 
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
@@ -377,7 +377,7 @@ var/global/bomb_set
 				N.syndies_didnt_escape = is_station_level(syndie_location.z)
 			N.nuke_off_station = off_station
 		SSticker.station_explosion_cinematic(off_station,null)
-		SSticker.explosion_in_progress = 0
+		SSticker.explosion_in_progress = FALSE
 		if(N)
 			N.nukes_left = FALSE
 		else
@@ -489,17 +489,14 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/explode()
 	if(safety)
-		timing = 0
+		timing = FALSE
 		return
 	if(detonated)
 		return
-	detonated = 1
-	timing = -1.0
-	safety = 1
-	if(!lighthack)
-		icon_state = "nuclearbomb3"
-	addtimer(CALLBACK(src, .proc/fail), 10 SECONDS) //Good taste, right?
-	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
+	detonated = TRUE
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
+	update_icon()
+	addtimer(CALLBACK(src, .proc/fail), 13 SECONDS) //Good taste, right?
 
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()
@@ -507,30 +504,34 @@ var/global/bomb_set
 		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
 
 /obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
-	if(timing > 0) // because explode() sets it to -1, which is TRUE.
+	if(timing && !detonated)
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
 		if(timeleft <= 0)
 			explode()
-		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/fake/proc/fail(mob/user) //Resetting theatre of one actor and many watchers
-	if(!lighthack)
-		icon_state = "nuclearbomb1"
+	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
+	detonated = FALSE
+	timing = FALSE
+	safety = TRUE
+	deployed = FALSE
+	anchored = FALSE
+	update_icon()
 
 /obj/machinery/nuclearbomb/fake/deploy(mob/user)
 	if(false_activation)
+		to_chat(user, "<span class = 'red'>It doesn't react. Maybe broken?</span>")
 		return
-	..()
-
 	if(!isnukeop(user))
-		return
-	if(!anchored)
+		to_chat(user, "<span class = 'red'>It doesn't react. Maybe broken?</span>")
 		return
 	if(tgui_alert(user, "False decoy activation. Continue?", "Decoy activation", list("Yes","No")) != "Yes")
 		return
-	icon_state = "nuclearbomb2"
-	timing = 1.0
-	safety = 0
+	deployed = TRUE
+	anchored = TRUE
+	timing = TRUE
+	safety = FALSE
 	false_activation = TRUE
+	update_icon()
 	return
