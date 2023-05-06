@@ -236,3 +236,54 @@
 	result = /obj/item/weapon/storage/pneumatic
 	time = 45
 	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_PRO)
+
+// Armband craft
+
+/datum/crafting_recipe/armband_red
+	name = "Armband red"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband
+	time = 30
+
+/datum/crafting_recipe/armband_cargo
+	name = "Armband cargo"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/cargo
+	time = 30
+
+/datum/crafting_recipe/armband_engine
+	name = "Armband engine"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/engine
+	time = 30
+
+/datum/crafting_recipe/armband_science
+	name = "Armband science"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/science
+	time = 30
+
+/datum/crafting_recipe/armband_hydro
+	name = "Armband hydro"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/hydro
+	time = 30
+
+/datum/crafting_recipe/armband_med
+	name = "Armband med"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/med
+	time = 30
+
+/datum/crafting_recipe/armband_medgreen
+	name = "Armband medgreen"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/medgreen
+	time = 30
