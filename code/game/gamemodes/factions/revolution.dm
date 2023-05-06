@@ -59,8 +59,6 @@
 	return TRUE
 
 /datum/faction/revolution/check_win()
-	var/aboba = TRUE
-	if(aboba) return FALSE
 	var/win = IsSuccessful()
 	if(config.continous_rounds)
 		if(win && SSshuttle)
