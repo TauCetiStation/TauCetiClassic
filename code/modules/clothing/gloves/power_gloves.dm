@@ -15,7 +15,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	action_button_name = "Toggle gloves"
 	origin_tech = "combat=5;powerstorage=5;magnets=4;syndicate=2"
-	species_restricted = list("exclude")
+	species_restricted = null
 	var/cell_use = 0
 	var/selected_mode = GLOVES_MODE_OFF
 
