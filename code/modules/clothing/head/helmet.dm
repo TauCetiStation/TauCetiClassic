@@ -154,6 +154,8 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "thunderdome helmet"
@@ -260,6 +262,8 @@
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/syndiassault/atom_init()
 	. = ..()
