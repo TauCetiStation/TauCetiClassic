@@ -190,8 +190,10 @@ var/global/bomb_set
 		if("toggleSafety")
 			toggle_safety(usr)
 		if("type")
+			var/list/allowed_digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "E", "R")
 			var/digit = params["digit"]
-			code_typed(usr, digit)
+			if(digit in allowed_digits)
+				code_typed(usr, digit)
 		if("adjustTimer")
 			var/time = params["time"]
 			adjust_timer(usr, time)
@@ -214,6 +216,8 @@ var/global/bomb_set
 	add_fingerprint(user)
 
 /obj/machinery/nuclearbomb/proc/code_typed(mob/user, digit)
+	if(!auth || !deployed)
+		return
 	if(digit == "E")
 		if(r_code == cur_code)
 			cur_code = null
@@ -228,7 +232,7 @@ var/global/bomb_set
 			if(!timing)
 				safety = TRUE
 		else
-			cur_code += text("[]", digit)
+			cur_code += digit
 			if(length(cur_code) > 5)
 				cur_code = "ERROR"
 	update_icon()

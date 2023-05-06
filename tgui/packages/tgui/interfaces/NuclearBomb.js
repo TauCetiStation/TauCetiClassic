@@ -15,7 +15,9 @@ const NukeKeypad = (props, context) => {
     deployed,
   } = data;
   return (
-    <Box width="185px">
+    <Box
+      width="218px"
+      align="center">
       <Grid width="1px">
         {keypadKeys.map(keyColumn => (
           <Grid.Column key={keyColumn[0]}>
@@ -29,10 +31,8 @@ const NukeKeypad = (props, context) => {
                 textAlign="center"
                 fontSize="20px"
                 height="25px"
-                right="-50px"
-                top="+5px"
                 lineHeight={1.25}
-                disabled={code==="ERROR" && key!=="R" && (1) || !hasDisk || !deployed}
+                disabled={code==="ERROR" && key!=="R" || !hasDisk || !deployed}
                 onClick={() => act('type', { digit: key })} />
             ))}
           </Grid.Column>
