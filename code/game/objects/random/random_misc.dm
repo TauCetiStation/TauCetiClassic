@@ -161,3 +161,95 @@
 		prob(10);/obj/item/weapon/disk/research_points/rare,\
 		prob(100);pick(typesof(/obj/item/weapon/disk/smartlight_programm))
 	)
+
+/obj/random/misc/storage
+	name = "Random Bag/Box/Case"
+	desc = "Случайная сумка с миной или обычными предметами."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "briefcase"
+
+/obj/random/misc/storage/item_to_spawn()
+	return pick(\
+		prob(30);/obj/item/weapon/storage/briefcase,\
+		prob(30);/obj/item/weapon/storage/backpack/alt,\
+		prob(30);/obj/item/weapon/storage/backpack,\
+		prob(30);/obj/item/weapon/storage/backpack/satchel,\
+		prob(30);/obj/item/weapon/storage/backpack/satchel/norm,\
+		prob(20);/obj/item/weapon/storage/pouch/medium_generic,\
+		prob(10);/obj/item/weapon/storage/box,\
+		prob(5);/obj/item/weapon/storage/wallet,
+	)
+
+/obj/random/misc/storage/spawn_item()
+	var/obj/item/weapon/storage/Bag = ..()
+
+	if(prob(30))
+		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+	else
+		for(var/i = 0, i < 4, i++)
+			var/itemtype
+			if(istype(Bag, /obj/item/weapon/storage/box) || istype(Bag, /obj/item/weapon/storage/pouch/medium_generic))
+				itemtype = pick(\
+					prob(25);/obj/random/foods/food_snack,\
+					prob(25);/obj/random/foods/drink_can,\
+					prob(25);/obj/random/misc/cigarettes,\
+					prob(25);/obj/random/misc/lightsource,\
+					prob(25);/obj/random/misc/lighters,\
+					prob(25);/obj/random/meds/pills,\
+					prob(25);pick(typesof(/obj/item/device/camera) - /obj/item/device/camera/siliconcam),\
+					prob(20);/obj/item/weapon/storage/wallet/random,\
+					prob(15);/obj/item/weapon/reagent_containers/spray/pepper,\
+					prob(10);/obj/item/device/flash,
+				)
+			else if(istype(Bag, /obj/item/weapon/storage/wallet))
+				spawn_money(300, Bag)
+				return
+			else
+				itemtype = pick(\
+					prob(25);/obj/random/foods/food_snack,\
+					prob(25);/obj/random/foods/drink_can,\
+					prob(25);/obj/random/misc/cigarettes,\
+					prob(25);/obj/random/misc/lightsource,\
+					prob(25);/obj/random/misc/book,\
+					prob(25);/obj/random/misc/lighters,\
+					prob(25);/obj/random/meds/pills,\
+					prob(25);/obj/item/weapon/storage/box/survival,\
+					prob(25);/obj/item/weapon/storage/box/donkpockets,\
+					prob(25);pick(typesof(/obj/item/device/camera) - /obj/item/device/camera/siliconcam),\
+					prob(20);/obj/item/weapon/storage/wallet/random,\
+					prob(15);/obj/item/weapon/reagent_containers/spray/pepper,\
+					prob(10);/obj/item/device/flash,\
+					prob(5);/obj/item/weapon/gun/projectile/automatic/glock
+				)
+			new itemtype(Bag)
+
+/obj/random/misc/storage/mine
+	name = "Random Bag/Box/Case with mine"
+	desc = "Случайная сумка с миной."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "secure"
+
+/obj/random/misc/storage/mine/item_to_spawn()
+	return pick(\
+		prob(30);/obj/item/weapon/storage/briefcase,\
+		prob(30);/obj/item/weapon/storage/backpack/alt,\
+		prob(30);/obj/item/weapon/storage/backpack,\
+		prob(30);/obj/item/weapon/storage/backpack/satchel,\
+		prob(30);/obj/item/weapon/storage/backpack/satchel/norm,\
+		prob(20);/obj/item/weapon/storage/pouch/medium_generic,\
+		prob(10);/obj/item/weapon/storage/box,\
+		prob(5);/obj/item/weapon/storage/wallet,
+	)
+
+/obj/random/misc/storage/mine/spawn_item()
+	var/obj/item/weapon/storage/Bag = ..()
+
+	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)

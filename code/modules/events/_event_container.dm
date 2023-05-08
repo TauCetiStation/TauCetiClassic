@@ -139,6 +139,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Roundstart Nothing",      /datum/event/nothing, 1500),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Break Light",             /datum/event/feature/area/break_light,                        50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Dirt Bay",                /datum/event/feature/area/dirt,                               10, list(ASSIGNMENT_JANITOR = 100)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Satchel Mine",            /datum/event/feature/area/satchelmine,                        25, list(ASSIGNMENT_SECURITY = 100)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Randomize Cargo Storage", /datum/event/feature/area/cargo_storage,                      10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Armory Mess",             /datum/event/feature/area/mess/armory,                        10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Bridge Mess",             /datum/event/feature/area/mess/bridge,                        10),

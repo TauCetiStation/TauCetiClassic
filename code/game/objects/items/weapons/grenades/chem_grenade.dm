@@ -359,3 +359,23 @@
 	beakers += B1
 	beakers += B2
 	icon_state = initial(icon_state) +"_locked"
+
+///Drugs
+/obj/item/weapon/grenade/chem_grenade/mine
+	name = "Satchel mine"
+	desc = "Привет от синдиката."
+	path = 1
+	stage = 2
+
+/obj/item/weapon/grenade/chem_grenade/mine/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("potassium", 50)
+	B2.reagents.add_reagent("water", 50)
+
+	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"

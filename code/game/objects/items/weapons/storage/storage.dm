@@ -88,6 +88,7 @@
 		if(M.a_intent == INTENT_HELP)
 			var/dir_target = get_dir(M.loc, over_location)
 			M.SetNextMove(CLICK_CD_MELEE)
+			try_open(usr)
 			for(var/obj/item/I in contents)
 				if(M.is_busy())
 					return
@@ -423,6 +424,7 @@
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
 		if(verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
+			try_open(user)
 			quick_empty()
 			return
 
