@@ -57,6 +57,11 @@
 /obj/item/weapon/storage/briefcase/virology
 	icon_state = "briefcase_vir"
 	item_state = "briefcase_vir"
+	startswith = list(
+						/obj/item/weapon/virusdish/random,
+						/obj/item/weapon/virusdish/random,
+						/obj/item/weapon/virusdish/random
+					)
 
 /obj/item/weapon/storage/briefcase/inflatable
 	name = "inflatable barrier box"

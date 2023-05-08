@@ -1170,10 +1170,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/virus
 	name = "Virus sample crate"
-	contains = list(/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random)
+	contains = list(/obj/item/weapon/storage/briefcase/virology)
 	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Virus sample crate"
 	access = access_virology

@@ -7617,7 +7617,9 @@
 	pixel_x = -26
 	},
 /obj/item/device/flashlight/seclite,
-/obj/item/weapon/storage/briefcase,
+/obj/item/weapon/storage/briefcase{
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anb" = (
@@ -25590,7 +25592,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
-/obj/item/device/sensor_device,
+/obj/item/clothing/accessory/stethoscope,
 /obj/item/clothing/glasses/sunglasses/hud/med,
 /turf/simulated/floor{
 	dir = 8;
@@ -51187,6 +51189,18 @@
 	dir = 4
 	},
 /obj/structure/closet/wardrobe/medic_white,
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 2
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -55609,12 +55623,6 @@
 /area/station/maintenance/engineering)
 "cec" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -60678,9 +60686,6 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -64262,24 +64267,15 @@
 /area/station/civilian/garden)
 "cCg" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/weapon/cane{
+	pixel_x = -12
 	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/weapon/cane{
+	pixel_x = -8
 	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/weapon/storage/briefcase/med{
+	startswith = list(/obj/item/weapon/gun/syringe, /obj/item/device/camera, /obj/item/device/lens/rentgene, /obj/item/clothing/mask/muzzle, /obj/item/weapon/medical/teleporter, /obj/item/weapon/medical/teleporter, /obj/item/bodybag/cryobag, /obj/item/bodybag/cryobag, /obj/item/bodybag/cryobag)
 	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/medical/teleporter,
-/obj/item/weapon/medical/teleporter,
-/obj/item/weapon/storage/briefcase/med,
-/obj/item/device/lens/rentgene,
-/obj/item/device/camera,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -64555,12 +64551,6 @@
 /area/station/maintenance/engineering)
 "cCV" = (
 /obj/structure/rack,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/item/weapon/cane,
-/obj/item/weapon/cane,
-/obj/item/clothing/mask/muzzle,
 /obj/item/weapon/packageWrap,
 /obj/item/device/tagger/shop,
 /turf/simulated/floor{
@@ -75328,16 +75318,9 @@
 /area/station/engineering/break_room)
 "lSb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/cartridge/medical{
-	pixel_x = -4;
-	pixel_y = 6
+/obj/item/weapon/storage/briefcase/med{
+	startswith = list(/obj/item/weapon/cartridge/medical, /obj/item/weapon/cartridge/medical, /obj/item/weapon/cartridge/chemistry, /obj/item/device/megaphone, /obj/item/weapon/defibrillator/compact/loaded, /obj/item/device/sensor_device)
 	},
-/obj/item/weapon/cartridge/medical,
-/obj/item/weapon/cartridge/chemistry{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/briefcase/med,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -75412,8 +75395,6 @@
 /obj/item/weapon/folder/white,
 /obj/structure/table/glass,
 /obj/item/weapon/stamp/cmo,
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/weapon/book/manual/wiki/possible_threats,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -75452,11 +75433,10 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/item/device/megaphone,
-/obj/item/weapon/defibrillator/compact/loaded,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -79389,9 +79369,6 @@
 /area/station/maintenance/cargo)
 "rib" = (
 /obj/structure/table/glass,
-/obj/item/weapon/virusdish/random,
-/obj/item/weapon/virusdish/random,
-/obj/item/weapon/virusdish/random,
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
@@ -79399,6 +79376,7 @@
 	c_tag = "Virology North";
 	network = list("SS13","Medical")
 	},
+/obj/item/weapon/storage/briefcase/virology,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitegreen"
@@ -80253,7 +80231,6 @@
 	pixel_y = -22
 	},
 /obj/item/device/radio/headset/headset_med,
-/obj/item/weapon/storage/briefcase/virology,
 /turf/simulated/floor{
 	dir = 3;
 	icon_state = "whitegreen"
