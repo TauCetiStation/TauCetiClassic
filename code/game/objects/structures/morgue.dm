@@ -113,11 +113,14 @@
 /obj/structure/morgue/proc/close()
 	if (connected)
 		for(var/atom/movable/A in connected.loc)
-			if(!A.anchored)
-				A.loc = src
-				if(ismob(A))
-					var/mob/M = A
-					M.instant_vision_update(1,src)
+			if(A.anchored)
+				continue
+			if(ismob(A))
+				if(!isliving(A))
+					continue
+				var/mob/M = A
+				M.instant_vision_update(1,src)
+			A.loc = src
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		qdel(connected)
