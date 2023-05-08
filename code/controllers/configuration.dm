@@ -209,6 +209,7 @@ var/global/bridge_secret = null
 
 	var/record_replays = FALSE
 
+	var/use_persistent_cache = FALSE
 
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
@@ -671,6 +672,9 @@ var/global/bridge_secret = null
 
 				if("sandbox")
 					config.sandbox = TRUE
+
+				if("use_persistent_cache")
+					config.use_persistent_cache = TRUE
 
 				if("ooc_round_only")
 					config.ooc_round_only = TRUE

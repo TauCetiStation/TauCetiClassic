@@ -87,6 +87,8 @@
 
 	var/dyed_type
 
+	var/flash_protection = NONE
+	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
 /obj/item/atom_init()
