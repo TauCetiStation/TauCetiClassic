@@ -24,50 +24,89 @@
 /obj/machinery/replicator/atom_init()
 	. = ..()
 
-	var/list/viables = list(\
-	/obj/item/roller,\
-	/obj/structure/closet/crate,\
-	/obj/structure/closet/acloset,\
-	/mob/living/simple_animal/hostile/mimic/crate,\
-	/mob/living/simple_animal/hostile/viscerator,\
-	/mob/living/simple_animal/hostile/hivebot,\
-	/obj/item/device/analyzer,\
-	/obj/item/device/camera,\
-	/obj/item/device/flash,\
-	/obj/item/device/flashlight,\
-	/obj/item/device/healthanalyzer,\
-	/obj/item/device/multitool,\
-	/obj/item/device/paicard,\
-	/obj/item/device/radio,\
-	/obj/item/device/radio/headset,\
-	/obj/item/device/radio/beacon,\
-	/obj/item/weapon/autopsy_scanner,\
-	/obj/item/weapon/bikehorn,\
-	/obj/item/weapon/bonesetter,\
-	/obj/item/weapon/kitchenknife/butch,\
-	/obj/item/weapon/caution,\
-	/obj/item/weapon/caution/cone,\
-	/obj/item/weapon/crowbar,\
-	/obj/item/weapon/clipboard,\
-	/obj/item/weapon/stock_parts/cell,\
-	/obj/item/weapon/circular_saw,\
-	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/handcuffs,\
-	/obj/item/weapon/hemostat,\
-	/obj/item/weapon/kitchenknife,\
-	/obj/item/weapon/lighter,\
-	/obj/item/weapon/lighter,\
-	/obj/item/weapon/light/bulb,\
-	/obj/item/weapon/light/tube,\
-	/obj/item/weapon/pickaxe,\
-	/obj/item/weapon/shovel,\
-	/obj/item/weapon/table_parts,\
-	/obj/item/weapon/weldingtool,\
-	/obj/item/weapon/wirecutters,\
-	/obj/item/weapon/wrench,\
-	/obj/item/weapon/screwdriver,\
-	/obj/item/weapon/grenade/chem_grenade/cleaner,\
-	/obj/item/weapon/grenade/chem_grenade/metalfoam\
+	var/list/viables = list(
+	/obj/item/roller,
+	/obj/structure/closet/crate,
+	/obj/structure/closet/acloset,
+	/mob/living/simple_animal/hostile/mimic/crate,
+	/mob/living/simple_animal/hostile/viscerator,
+	/mob/living/simple_animal/hostile/hivebot,
+	/obj/item/device/analyzer,
+	/obj/item/device/camera,
+	/obj/item/device/flash,
+	/obj/item/device/flashlight,
+	/obj/item/device/healthanalyzer,
+	/obj/item/device/multitool,
+	/obj/item/device/paicard,
+	/obj/item/device/radio,
+	/obj/item/device/radio/headset,
+	/obj/item/device/radio/beacon,
+	/obj/item/weapon/autopsy_scanner,
+	/obj/item/weapon/bikehorn,
+	/obj/item/weapon/bonesetter,
+	/obj/item/weapon/kitchenknife/butch,
+	/obj/item/weapon/caution,
+	/obj/item/weapon/caution/cone,
+	/obj/item/weapon/crowbar,
+	/obj/item/weapon/clipboard,
+	/obj/item/weapon/stock_parts/cell,
+	/obj/item/weapon/circular_saw,
+	/obj/item/weapon/hatchet,
+	/obj/item/weapon/handcuffs,
+	/obj/item/weapon/hemostat,
+	/obj/item/weapon/kitchenknife,
+	/obj/item/weapon/lighter,
+	/obj/item/weapon/light/bulb,
+	/obj/item/weapon/light/tube,
+	/obj/item/weapon/pickaxe,
+	/obj/item/weapon/shovel,
+	/obj/item/weapon/table_parts,
+	/obj/item/weapon/weldingtool,
+	/obj/item/weapon/wirecutters,
+	/obj/item/weapon/wrench,
+	/obj/item/weapon/screwdriver,
+	/obj/item/weapon/grenade/chem_grenade/cleaner,
+	/obj/item/weapon/grenade/chem_grenade/metalfoam,
+	/obj/item/weapon/grenade/chem_grenade/teargas,
+	/obj/item/weapon/match,
+	/obj/item/clothing/mask/cigarette,
+	/obj/item/weapon/storage/fancy/cigarettes,
+	/obj/item/weapon/storage/secure/briefcase,
+	/obj/item/weapon/storage/pouch/pistol_holster,
+	/obj/item/weapon/storage/pouch/baton_holster,
+	/obj/item/clothing/accessory/holster,
+	/obj/item/weapon/reagent_containers/glass/bottle,
+	/obj/item/weapon/bananapeel,
+	/obj/item/weapon/reagent_containers/food/snacks/soap,
+	/obj/item/device/tabletop_assistant,
+	/obj/item/clothing/mask/ecig,
+	/obj/item/weapon/game_kit,
+	/obj/item/weapon/reagent_containers/spray/pepper,
+	/obj/item/weapon/shield,
+	/obj/item/clothing/head/helmet,
+	/obj/item/clothing/suit/armor,
+	/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,
+	/obj/item/device/biocan,
+	/obj/item/device/assembly/mousetrap,
+	/obj/item/weapon/storage/pouch/small_generic,
+	/obj/item/weapon/storage/pouch/medium_generic,
+	/obj/item/weapon/storage/pouch/large_generic,
+	/obj/item/weapon/storage/pouch/medical_supply,
+	/obj/item/weapon/storage/pouch/engineering_tools,
+	/obj/item/weapon/storage/pouch/engineering_supply,
+	/obj/item/weapon/storage/pouch/ammo,
+	/obj/item/weapon/storage/pouch/flare,
+	/obj/item/clothing/shoes/boots,
+	/obj/item/clothing/shoes/boots/galoshes,
+	/obj/item/weapon/reagent_containers/pill/stox,
+	/obj/item/weapon/reagent_containers/pill/dylovene,
+	/obj/item/weapon/reagent_containers/pill/tox,
+	/obj/item/weapon/reagent_containers/pill/kelotane,
+	/obj/item/weapon/reagent_containers/pill/paracetamol,
+	/obj/item/weapon/reagent_containers/pill/inaprovaline,
+	/obj/item/weapon/reagent_containers/pill/dexalin,
+	/obj/item/weapon/reagent_containers/pill/bicaridine,
+	/obj/item/weapon/reagent_containers/pill/antirad,
 	)
 
 	var/quantity = rand(5,15)
@@ -129,6 +168,9 @@
 	popup.open()
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
+	if(W.flags & (NODROP | ABSTRACT | DROPDEL))
+		to_chat(user, "<span class='notice'>[W] doesn't fit into [src].</span>")
+		return
 	user.drop_from_inventory(W, src)
 	stored_materials.Add(W)
 	visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
