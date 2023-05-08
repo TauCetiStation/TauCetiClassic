@@ -526,6 +526,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]          >> r_hair
 	S["hair_green"]        >> g_hair
 	S["hair_blue"]         >> b_hair
+	S["belly_red"]         >> r_belly
+	S["belly_green"]       >> g_belly
+	S["belly_blue"]        >> b_belly
 	S["grad_red"]          >> r_grad
 	S["grad_green"]        >> g_grad
 	S["grad_blue"]         >> b_grad
@@ -715,6 +718,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]              << r_hair
 	S["hair_green"]            << g_hair
 	S["hair_blue"]             << b_hair
+	S["belly_red"]             << r_belly
+	S["belly_green"]           << g_belly
+	S["belly_blue"]            << b_belly
 	S["grad_red"]              << r_grad
 	S["grad_green"]            << g_grad
 	S["grad_blue"]             << b_grad
