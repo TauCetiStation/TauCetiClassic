@@ -131,9 +131,6 @@
 	desc = "A locked box used to store medals of honor."
 	req_access = list(access_captain)
 	icon_state = "medalbox+l"
-	icon_locked = "medalbox+l"
-	icon_closed = "medalbox"
-	icon_broken = "medalbox+b"
 
 	max_w_class = SIZE_TINY
 	max_storage_space = null
