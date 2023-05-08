@@ -1,3 +1,5 @@
+#define path2text(path) "[path]"
+
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
@@ -9,12 +11,6 @@
 // and at the same time the empty condition do nothing.
 #define SWITCH_PASS ;
 
-//Ghost orbit types:
-#define GHOST_ORBIT_CIRCLE		"circle"
-#define GHOST_ORBIT_TRIANGLE	"triangle"
-#define GHOST_ORBIT_HEXAGON		"hexagon"
-#define GHOST_ORBIT_SQUARE		"square"
-#define GHOST_ORBIT_PENTAGON	"pentagon"
 
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
@@ -85,6 +81,13 @@
 #define EVENT_LEVEL_MUNDANE 2
 #define EVENT_LEVEL_MODERATE 3
 #define EVENT_LEVEL_MAJOR 4
+
+// shows STORAGE levels deep:
+// 1 lvl: item in backpack in src
+// 2 lvl: item in box in backpack in src
+// 3 lvl: item in matchbox in box in backpack in src
+// and so on
+#define MAX_STORAGE_DEEP_LEVEL 2
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -194,8 +197,6 @@
 #define PROJECTILE_ACTED 0 // it means that something else has took control of bullet_act() proc and it didn't run till the end.
 #define PROJECTILE_ABSORBED 2
 #define PROJECTILE_ALL_OK 3
-
-#define COORD(A) "([A.x],[A.y],[A.z])"
 
 #define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
@@ -307,3 +308,70 @@
 
 //For crawl_can_use() in /mob/living
 #define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
+
+#define CARGOSHOPNAME "ГрузТорг"
+
+// Notification action types for ghosts
+#define NOTIFY_JUMP "jump"
+#define NOTIFY_ATTACK "attack"
+#define NOTIFY_ORBIT "orbit"
+
+#define CAN_SMOOTH_WITH_WALLS list( \
+		/turf/unsimulated/wall, \
+		/turf/simulated/wall, \
+		/turf/simulated/wall/r_wall, \
+		/obj/structure/falsewall, \
+		/obj/structure/falsewall/reinforced, \
+		/obj/structure/girder, \
+		/obj/structure/girder/reinforced, \
+		/obj/structure/windowsill, \
+		/obj/structure/window/fulltile, \
+		/obj/structure/window/fulltile/phoron, \
+		/obj/structure/window/fulltile/tinted, \
+		/obj/structure/window/fulltile/polarized, \
+		/obj/structure/window/fulltile/reinforced, \
+		/obj/structure/window/fulltile/reinforced/phoron, \
+		/obj/structure/window/fulltile/reinforced/tinted, \
+		/obj/structure/window/fulltile/reinforced/polarized, \
+		/obj/structure/window/fulltile/reinforced/indestructible, \
+		/obj/machinery/door/airlock, \
+		/obj/machinery/door/airlock/centcom, \
+		/obj/machinery/door/airlock/command, \
+		/obj/machinery/door/airlock/security, \
+		/obj/machinery/door/airlock/engineering, \
+		/obj/machinery/door/airlock/medical, \
+		/obj/machinery/door/airlock/virology, \
+		/obj/machinery/door/airlock/maintenance, \
+		/obj/machinery/door/airlock/freezer, \
+		/obj/machinery/door/airlock/mining, \
+		/obj/machinery/door/airlock/atmos, \
+		/obj/machinery/door/airlock/research, \
+		/obj/machinery/door/airlock/science, \
+		/obj/machinery/door/airlock/neutral, \
+		/obj/machinery/door/airlock/highsecurity, \
+		/obj/machinery/door/airlock/vault, \
+		/obj/machinery/door/airlock/external, \
+		/obj/machinery/door/airlock/glass, \
+		/obj/machinery/door/airlock/command/glass, \
+		/obj/machinery/door/airlock/engineering/glass, \
+		/obj/machinery/door/airlock/security/glass, \
+		/obj/machinery/door/airlock/medical/glass, \
+		/obj/machinery/door/airlock/virology/glass, \
+		/obj/machinery/door/airlock/research/glass, \
+		/obj/machinery/door/airlock/mining/glass, \
+		/obj/machinery/door/airlock/atmos/glass, \
+		/obj/machinery/door/airlock/science/glass, \
+		/obj/machinery/door/airlock/science/neutral, \
+		/obj/machinery/door/airlock/maintenance_hatch, \
+)
+
+#define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/simulated/wall = "wall", \
+		/obj/structure/falsewall = "wall", \
+		/obj/machinery/door/airlock = "wall", \
+)
+
+// wall don't need adapter with another wall
+#define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
+		/obj/machinery/door/airlock = "wall", \
+)

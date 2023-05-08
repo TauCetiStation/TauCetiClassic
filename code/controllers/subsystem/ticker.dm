@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 
 	flags = SS_KEEP_TIMING
-	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | SS_SHOW_IN_MC_TAB
 
 	msg_lobby = "Запускаем атомные сверхточные часы..."
 
@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
-	var/delay_end = 0						//if set to nonzero, the round will not restart on it's own
+	var/admin_delayed = 0						//if set to nonzero, the round will not restart on it's own
 
 	var/triai = 0							//Global holder for Triumvirate
 
@@ -42,6 +42,8 @@ SUBSYSTEM_DEF(ticker)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
+
+	var/end_timer_id
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -75,6 +77,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>")
 			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
 			log_initialization() // need to dump cached log
 
@@ -97,18 +100,25 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
+				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
-			if(!explosion_in_progress && mode_finished)
+			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				if(!SSrating.already_started)
+					start_rating_vote_if_unexpected_roundend()
+					return
+
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
@@ -132,33 +142,49 @@ SUBSYSTEM_DEF(ticker)
 
 					SSStatistics.drop_round_stats()
 
+					SSmapping.autovote_next_map()
+
 					if (station_was_nuked)
 						feedback_set_details("end_proper","nuke")
-						if(!delay_end)
-							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
+						if(!admin_delayed)
+							to_chat(world, "<span class='notice'><B>Restarting due to destruction of station in [restart_timeout/10] seconds</B></span>")
 					else
 						feedback_set_details("end_proper","proper completion")
-						if(!delay_end)
+						if(!admin_delayed)
 							to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
 
-					if(!delay_end)
-						sleep(restart_timeout)
-						if(!delay_end)
-							world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion") //Can be upgraded to remove unneded sleep here.
-						else
-							to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
-							world.send2bridge(
-								type = list(BRIDGE_ROUNDSTAT),
-								attachment_msg = "An admin has delayed the round end",
-								attachment_color = BRIDGE_COLOR_ROUNDSTAT,
-							)
-					else
-						to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
-						world.send2bridge(
-							type = list(BRIDGE_ROUNDSTAT),
-							attachment_msg = "An admin has delayed the round end",
-							attachment_color = BRIDGE_COLOR_ROUNDSTAT,
-						)
+					end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/datum/controller/subsystem/ticker/proc/start_rating_vote_if_unexpected_roundend()
+	to_chat(world, "<span class='info bold'><B>Конец раунда задержан из-за голосования.</B></span>")
+	SSrating.start_rating_collection()
+
+/datum/controller/subsystem/ticker/proc/try_to_end()
+	var/delayed = FALSE
+
+	var/static/admin_delay_announced = FALSE //announce reason only first time
+	if(admin_delayed)
+		if(!admin_delay_announced)
+			to_chat(world, "<span class='info bold'>Restart delayed due to admin</span>")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "An admin has delayed the round end",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
+			admin_delay_announced = TRUE
+		delayed = TRUE
+
+	var/static/vote_delay_announced = FALSE
+	if(SSvote.active_poll)
+		if(!vote_delay_announced)
+			to_chat(world, "<span class='info bold'>Restart delayed due to vote</span>")
+			vote_delay_announced = TRUE
+		delayed = TRUE
+
+	if(delayed)
+		end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	else
+		world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion")
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -184,7 +210,7 @@ SUBSYSTEM_DEF(ticker)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
-			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
+			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
 			return FALSE
@@ -231,6 +257,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!bundle || !bundle.hidden)
 		mode.announce()
 
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
 	round_start_realtime = world.realtime
@@ -241,8 +268,8 @@ SUBSYSTEM_DEF(ticker)
 
 	setup_economy()
 	create_religion(/datum/religion/chaplain)
+	setup_hud_objects()
 
-	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -290,8 +317,9 @@ SUBSYSTEM_DEF(ticker)
 				N.show_titlescreen()
 		//Cleanup some stuff
 		SSjob.fallback_landmark = null
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			S.after_round_start()
+		for(var/obj/effect/landmark/start/type as anything in subtypesof(/obj/effect/landmark/start))
+			for(var/obj/effect/landmark/start/S as anything in landmarks_list[initial(type.name)])
+				S.after_round_start()
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -331,6 +359,11 @@ SUBSYSTEM_DEF(ticker)
 				summary = "summary_malf"
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
+			else if(override == "replicators")
+				screen = "intro_malf"
+				explosion = "station_swarmed"
+				summary = "summary_replicators"
+				screen_time = 76
 
 			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!
@@ -377,7 +410,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
-		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
@@ -387,7 +419,7 @@ SUBSYSTEM_DEF(ticker)
 			//	continue
 			else
 				player.create_character()
-		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
+		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -403,7 +435,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			SSquirks.AssignQuirks(player, player.client, TRUE)
 			if(player.mind.assigned_role != "MODE")
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(player, player.mind.assigned_role, FALSE)
+				player.PutDisabilityMarks()
 	if(captainless)
 		for(var/mob/M as anything in player_list)
 			if(!isnewplayer(M))
@@ -413,7 +446,15 @@ SUBSYSTEM_DEF(ticker)
 	var/completition = "<h1>Round End Information</h1><HR>"
 	completition += get_ai_completition()
 	completition += mode.declare_completion()
+	completition += get_ratings()
 	scoreboard(completition, one_mob)
+
+/datum/controller/subsystem/ticker/proc/get_ratings()
+	var/dat = "<h2>Round Ratings</h2>"
+	dat += "<div class='Section'>"
+	dat += SSrating.get_voting_results()
+	dat += "</div>"
+	return dat
 
 /datum/controller/subsystem/ticker/proc/get_ai_completition()
 	var/ai_completions = ""
@@ -562,6 +603,8 @@ SUBSYSTEM_DEF(ticker)
 	L.equipOutfit(/datum/outfit/arena)
 	L.name = L.key
 	L.real_name = L.name
+	L.mind.skills.add_available_skillset(/datum/skillset/max)
+	L.mind.skills.maximize_active_skills()
 	to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()

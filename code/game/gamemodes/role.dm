@@ -34,8 +34,14 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+	var/skillset_type
+	//if set to true, users skills will be set to maximum available after he gets this role
+	var/change_to_maximum_skills = TRUE
+
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
+
+	var/moveset_type
 
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
@@ -69,6 +75,10 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
+	if(!isnull(skillset_type))
+		M.skills.add_available_skillset(skillset_type)
+	if(change_to_maximum_skills)
+		M.skills.maximize_active_skills()
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -90,7 +100,15 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	var/mob/living/A = antag.current
+	if(!isnull(skillset_type))
+		M.skills.remove_available_skillset(skillset_type)
+	if(!isnull(moveset_type))
+		A.remove_moveset_source(MOVESET_ROLES)
+
 	remove_antag_hud()
+	if(M.current?.hud_used)
+		remove_ui(M.current.hud_used)
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
 		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
@@ -175,6 +193,11 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	var/mob/living/A = antag.current
+	if(!isnull(moveset_type))
+		A.add_moveset(new moveset_type(), MOVESET_ROLES)
+	if(antag.current?.hud_used)
+		add_ui(antag.current.hud_used)
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()
@@ -452,3 +475,9 @@
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.leave_hud(antag.current)
 		set_antag_hud(antag.current, null)
+
+/datum/role/proc/add_ui(datum/hud/hud)
+	return
+
+/datum/role/proc/remove_ui(datum/hud/hud)
+	return

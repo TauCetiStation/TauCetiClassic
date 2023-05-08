@@ -23,6 +23,8 @@
 	anchored = FALSE
 	light_range = 4
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/gasefficency = 0.25
 
 	var/base_icon_state = "darkmatter"
@@ -117,13 +119,17 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
+			var/rads = DETONATION_RADS
 			for(var/mob/living/mob in alive_mob_list)
 				if(ishuman(mob))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
+				rads *=  sqrt(1 / (get_dist(mob, src) + 1))
 				mob.apply_effect(rads, IRRADIATE)
-
+			for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+				var/distance_rad_signal = get_dist(counter, src)
+				rads *= sqrt(1 / (distance_rad_signal + 1))
+				counter.recieve_rad_signal(rads, distance_rad_signal)
 			explode()
 
 	//Ok, get the air from the turf
@@ -190,28 +196,24 @@
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
-
-	for(var/mob/living/l in range(src, 8))
-		var/rads = (power / 10) * sqrt( 1 / get_dist(l, src) )
-		l.apply_effect(rads, IRRADIATE)
-
+	irradiate_in_dist(get_turf(src), power / 10, 8)
 	power -= (power/500)**3
 
 	return 1
 
 
-/obj/machinery/power/supermatter/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/supermatter/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
-		return 0	// This stops people from being able to really power up the supermatter
+		return	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
 
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		power += Proj.damage * config_bullet_energy
 	else
 		damage += Proj.damage * config_bullet_energy
-	return 0
 
 /obj/machinery/power/supermatter/attack_robot(mob/user)
 	if(Adjacent(user))
@@ -247,9 +249,7 @@
 	user.drop_from_inventory(W)
 	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
-
-	user.apply_effect(150, IRRADIATE)
-
+	irradiate_one_mob(user, 150)
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)
 	if(isliving(AM))
@@ -273,12 +273,4 @@
 	power += 200
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(10))
-		if(l in view())
-			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
-		else
-			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
-		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
-		l.apply_effect(rads, IRRADIATE)
-
+	irradiate_in_dist(get_turf(src), 500, 10)

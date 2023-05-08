@@ -18,6 +18,16 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
+	skillsets = list(
+		"Test Subject"   = /datum/skillset/test_subject,
+		"Lawyer"         = /datum/skillset/test_subject/lawyer,
+		"Mecha Operator" = /datum/skillset/test_subject/mecha,
+		"Private Eye"    = /datum/skillset/test_subject/detective,
+		"Reporter"       = /datum/skillset/test_subject/reporter,
+		"Waiter"         = /datum/skillset/test_subject/waiter,
+		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
+		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
+		)
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)

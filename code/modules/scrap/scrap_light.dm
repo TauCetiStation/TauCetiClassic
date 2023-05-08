@@ -36,40 +36,51 @@
 	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
-	src.damtype = "fire"
+	src.damtype = BURN
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
-	if(loc == user)
-		user.update_inv_item(src)
+	update_inv_mob()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
 	return
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(src))
-		qdel(I)
-		return
+	if(istype(I, /obj/item/stack/medical/bruise_pack/rags))
+		var/turf/current_location = get_turf(src)
+		if(use(1))
+			new /obj/item/device/flashlight/flare/torch(current_location)
+			qdel(I)
+			return
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
 	name = "rags"
 	singular_name = "rag"
-	desc = "Some rags. May infect your wounds."
+	desc = "Some rags."
 	amount = 1
 	max_amount = 1
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gauze"
 
-/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, old = 0)
+/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, force_old = FALSE, old_chance = 33)
 	. = ..()
-	if(prob(33) || old)
+	if(force_old || prob(old_chance))
 		make_old()
+
+/obj/item/stack/medical/bruise_pack/rags/old/atom_init(mapload, new_amount, merge, force_old, old_chance)
+	. = ..(mapload, new_amount, merge, TRUE, null)
+
+/obj/item/stack/medical/bruise_pack/rags/not_old/atom_init(mapload, new_amount, merge, force_old, old_chance)
+	. = ..(mapload, new_amount, merge, FALSE, 0)
 
 /obj/item/stack/medical/bruise_pack/rags/update_icon()
 	return
+
+/obj/item/stack/medical/bruise_pack/rags/make_old()
+	. = ..()
+	desc += " May infect your wounds."
 
 //////SHITTY BONFIRE PORT///////
 
@@ -100,9 +111,6 @@
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
-		//var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
-		//switch(choice)
-			//if("Stake")
 		R.use(1)
 		can_buckle = TRUE
 		buckle_require_restraints = TRUE
@@ -112,29 +120,10 @@
 		stake.layer = 5
 		dir = 2
 		underlays += stake
-			//if("Grill")
-			//	R.use(1)
-			//	grill = TRUE
-			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
-			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
-			//else
-			//	return ..()
 		return
 	if(W.get_current_temperature())
 		StartBurning()
 		return
-/*	if(grill)
-		if(user.a_intent != INTENT_HARM && !(W.flags_1 & ABSTRACT_1))
-			if(user.temporarilyRemoveItemFromInventory(W))
-				W.forceMove(get_turf(src))
-				var/list/click_params = params2list(params)
-				//Center the icon where the user clicked.
-				if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
-					return
-				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size/2), world.icon_size/2)
-		else */
 	return ..()
 
 /obj/structure/bonfire/proc/onDismantle()
@@ -160,12 +149,14 @@
 	return 0
 
 /obj/structure/bonfire/proc/StartBurning()
-	if(!burning && CheckOxygen())
-		icon_state = "bonfire_on_fire"
-		burning = 1
-		set_light(6)
-		Burn()
-		START_PROCESSING(SSobj, src)
+	if(burning || !CheckOxygen())
+		return
+	icon_state = "bonfire_on_fire"
+	burning = 1
+	set_light(6)
+	particles = new /particles/bonfire()
+	Burn()
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
@@ -196,30 +187,11 @@
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 
-/*
-/obj/structure/bonfire/proc/Cook()
-	var/turf/current_location = get_turf(src)
-	for(var/A in current_location)
-		if(A == src)
-			continue
-		else if(isliving(A)) //It's still a fire, idiot.
-			var/mob/living/L = A
-			L.adjust_fire_stacks(fire_stack_strength)
-			L.IgniteMob()
-		else if(isitem(A) && prob(20))
-			var/obj/item/O = A
-			O.microwave_act()
-*/
-
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())
 		extinguish()
 		return
 	Burn()
-	/*if(!grill)
-		Burn()
-	else
-		Cook()*/
 /obj/structure/bonfire/water_act()
 	extinguish()
 
@@ -228,11 +200,8 @@
 		icon_state = "bonfire"
 		burning = 0
 		set_light(0)
+		QDEL_NULL(particles)
 		STOP_PROCESSING(SSobj, src)
-
-//obj/structure/bonfire/buckle_mob(mob/living/M)
-//	if(..())
-//		M.pixel_y += 13
 
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
@@ -241,8 +210,8 @@
 		M.layer = 5.1
 	else
 		if(M.pixel_y == 13)
-			M.pixel_y = 0
-		M.layer = initial(M.layer)
+			M.pixel_y = M.default_pixel_y
+		M.layer = M.default_layer
 
 /obj/structure/bonfire/dynamic
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
@@ -271,14 +240,15 @@
 
 /obj/structure/bonfire/dynamic/Burn()
 	var/turf/current_location = get_turf(src)
+	var/datum/gas_mixture/GM = current_location.return_air()
 	current_location.assume_gas("oxygen", -0.5)
-	if (current_location.air.temperature >= 393)
+	if (GM.temperature >= 393)
 		current_location.assume_gas("carbon_dioxide", 0.5)
 	else
-		current_location.assume_gas("carbon_dioxide", 0.5, (current_location.air.temperature + 200))
+		current_location.assume_gas("carbon_dioxide", 0.5, (GM.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
-	if ((world.time > last_time_smoke) && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
-		if (current_location.air.gas["carbon_dioxide"] > 5)
+	if ((world.time > last_time_smoke) && GM.gas["carbon_dioxide"]) //It's time to make some smoke
+		if (GM.gas["carbon_dioxide"] > 5)
 			MakeSmoke()
 	return ..()
 
@@ -311,3 +281,21 @@
 		to_chat(user, "<span class='notice'>There [logs == 1 ? "is" : "are"] [logs] log[logs == 1 ? "" : "s"] in [src]</span>")
 
 #undef ONE_LOG_BURN_TIME
+
+/particles/bonfire
+	icon = 'icons/effects/bonfire.dmi'
+	icon_state = "bonfire"
+	width = 100
+	height = 100
+	count = 1000
+	spawning = 4
+	lifespan = 0.7 SECONDS
+	fade = 1 SECONDS
+	grow = -0.01
+	velocity = list(0, 0)
+	position = generator("circle", 0, 16, NORMAL_RAND)
+	drift = generator("vector", list(0, -0.2), list(0, 0.2))
+	gravity = list(0, 0.95)
+	scale = generator("vector", list(0.3, 0.3), list(1,1), NORMAL_RAND)
+	rotation = 30
+	spin = generator("num", -20, 20)

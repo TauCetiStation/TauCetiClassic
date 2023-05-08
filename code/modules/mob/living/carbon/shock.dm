@@ -1,5 +1,6 @@
-/mob/living/var/traumatic_shock = 0
-/mob/living/carbon/var/shock_stage = 0
+/mob/living/carbon
+	var/traumatic_shock = 0
+	var/shock_stage = 0
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
@@ -11,23 +12,33 @@
 	1.7	* getCloneLoss() + 		\
 	2	* src.halloss
 
+	var/painkiller_effectiveness = 1.0
+	if(reagents.has_reagent("prismaline"))
+		painkiller_effectiveness = 0.3
+
 	if(reagents.has_reagent("alkysine"))
-		src.traumatic_shock -= 10
+		src.traumatic_shock -= 10 * painkiller_effectiveness
 	if(reagents.has_reagent("dextromethorphan"))
-		src.traumatic_shock -= 10
+		src.traumatic_shock -= 10 * painkiller_effectiveness
+	if(reagents.has_reagent("jenkem"))
+		src.traumatic_shock -= 15 * painkiller_effectiveness
 	if(reagents.has_reagent("inaprovaline"))
-		src.traumatic_shock -= 25
+		src.traumatic_shock -= 25 * painkiller_effectiveness
+	if(reagents.has_reagent("ambrosium"))
+		src.traumatic_shock -= 30 * painkiller_effectiveness
 	if(reagents.has_reagent("synaptizine"))
-		src.traumatic_shock -= 40
+		src.traumatic_shock -= 40 * painkiller_effectiveness
 	if(reagents.has_reagent("paracetamol"))
-		src.traumatic_shock -= 50
+		src.traumatic_shock -= 50 * painkiller_effectiveness
+	if(reagents.has_reagent("space_drugs"))
+		src.traumatic_shock -= 60 * painkiller_effectiveness
 	if(reagents.has_reagent("tramadol"))
-		src.traumatic_shock -= 80
+		src.traumatic_shock -= 80 * painkiller_effectiveness
 	if(reagents.has_reagent("oxycodone"))
-		src.traumatic_shock -= 200
+		src.traumatic_shock -= 200 * painkiller_effectiveness
 	if(src.slurring && drunkenness > DRUNKENNESS_SLUR)
 		src.traumatic_shock -= min(drunkenness - DRUNKENNESS_SLUR, 40)
-	if(src.analgesic)
+	if(src.analgesic && !reagents.has_reagent("prismaline"))
 		src.traumatic_shock = 0
 
 	// broken or ripped off bodyparts will add quite a bit of pain
@@ -89,7 +100,7 @@
 			else
 				pain_sound_name = "scream"
 	if(pain_sound_name)
-		emote(pain_sound_name, auto = TRUE)
+		emote(pain_sound_name)
 		last_pain_emote_sound = world.time + (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(15 SECONDS, 30 SECONDS) : rand(30 SECONDS, 60 SECONDS))
 		if(pain_sound_name == "scream") // don't cry out in pain too often
 			last_pain_emote_sound += (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(5 SECONDS, 10 SECONDS) : rand(10 SECONDS, 20 SECONDS))

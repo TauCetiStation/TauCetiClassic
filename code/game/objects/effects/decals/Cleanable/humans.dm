@@ -13,7 +13,6 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "mfloor1"
 	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
 	var/base_icon = 'icons/effects/blood.dmi'
-	var/list/viruses = list()
 	blood_DNA = list()
 	var/datum/dirt_cover/basedatum = /datum/dirt_cover/red_blood // Color when wet.
 	var/list/datum/disease2/disease/virus2 = list()
@@ -23,8 +22,6 @@ var/global/list/image/splatter_cache=list()
 	beauty = -100
 
 /obj/effect/decal/cleanable/blood/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/atom_init()
@@ -58,7 +55,7 @@ var/global/list/image/splatter_cache=list()
 	var/hasfeet = TRUE
 	var/skip = FALSE
 
-	if (buckled) 
+	if (buckled)
 		if (blood && istype(buckled, /obj/structure/stool/bed/chair/wheelchair)) // useless a bit because of unbuckling in relaymove
 			var/obj/structure/stool/bed/chair/wheelchair/W = buckled
 			W.bloodiness = 4
@@ -94,7 +91,7 @@ var/global/list/image/splatter_cache=list()
 			else
 				feet_blood_DNA = dirt_DNA.Copy()
 
-		update_inv_shoes()
+		update_inv_slot(SLOT_SHOES)
 		if(blood && lying)
 			crawl_in_blood(dirt_cover)
 
@@ -132,7 +129,7 @@ var/global/list/image/splatter_cache=list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
 		user.hand_dirt_datum = new(basedatum)
-		user.update_inv_gloves()
+		user.update_inv_slot(SLOT_GLOVES)
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter
@@ -244,10 +241,6 @@ var/global/list/image/splatter_cache=list()
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				b.basedatum = new/datum/dirt_cover(src.basedatum)
 				b.update_icon()
-				for(var/datum/disease/D in src.viruses)
-					var/datum/disease/ND = D.Copy(1)
-					b.viruses += ND
-					ND.holder = b
 
 				if (step_to(src, get_step(src, direction), 0))
 					break

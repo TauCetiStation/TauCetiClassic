@@ -22,7 +22,7 @@
 	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	usesound = 'sound/items/surgery/Retract.ogg'
-
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 /*
  * Hemostat
  */
@@ -38,7 +38,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 	usesound = 'sound/items/surgery/Hemostat.ogg'
-
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 /*
  * Cautery
  */
@@ -54,7 +54,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 	usesound = 'sound/items/surgery/cautery.ogg'
-
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 /*
  * Surgical Drill
@@ -73,6 +73,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 	usesound = 'sound/items/surgery/SurgDrill.ogg'
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
@@ -91,6 +92,7 @@
 	force = 10.0
 	sharp = 1
 	edge = 1
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
@@ -99,6 +101,7 @@
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_CUTTING = 1
 	)
@@ -116,7 +119,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
 	icon_state = "scalpel_laser1_on"
-	damtype = "fire"
+	damtype = BURN
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	toolspeed = 1.2
 
@@ -124,7 +127,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
 	icon_state = "scalpel_laser2_on"
-	damtype = "fire"
+	damtype = BURN
 	force = 12.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 
@@ -132,7 +135,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
 	icon_state = "scalpel_laser3_on"
-	damtype = "fire"
+	damtype = BURN
 	force = 15.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	toolspeed = 0.6
@@ -166,6 +169,7 @@
 	sharp = 1
 	edge = 1
 	usesound = 'sound/items/surgery/Bone_Saw.ogg'
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 
 //misc, formerly from code/defines/weapons.dm
@@ -177,6 +181,7 @@
 	w_class = SIZE_TINY
 	throwforce = 1.0
 	usesound = 'sound/items/surgery/Bone_Gel.ogg'
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"
@@ -188,6 +193,7 @@
 	w_class = SIZE_TINY
 	var/usage_amount = 10
 	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/bonesetter
 	name = "bone setter"
@@ -200,5 +206,6 @@
 	w_class = SIZE_TINY
 	attack_verb = list("attacked", "hit", "bludgeoned")
 	usesound = 'sound/items/surgery/BonSet.ogg'
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 

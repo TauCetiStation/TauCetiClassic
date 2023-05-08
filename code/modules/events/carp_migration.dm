@@ -22,7 +22,7 @@
 /datum/event/carp_migration/start()
 	switch(severity)
 		if(EVENT_LEVEL_MAJOR)
-			spawn_fish(landmarks_list.len)
+			spawn_fish(length(landmarks_list["carpspawn"]))
 		if(EVENT_LEVEL_MODERATE)
 			spawn_fish(rand(4, 6))        // 12 to 30 carp, in small groups
 		else
@@ -30,7 +30,7 @@
 
 /datum/event/carp_migration/end()
 	for(var/mob/living/simple_animal/hostile/carp/C in spawned_carp)
-		if(!C.stat)
+		if(C.stat == CONSCIOUS)
 			var/turf/T = get_turf(C)
 			if(isenvironmentturf(T))
 				qdel(C)
@@ -38,10 +38,7 @@
 /datum/event/carp_migration/proc/spawn_fish(num_groups, group_size_min = 3, group_size_max = 5)
 	var/list/spawn_locations = list()
 
-	for(var/obj/effect/landmark/C in landmarks_list)
-		if(C.name == "carpspawn")
-			spawn_locations.Add(C.loc)
-	spawn_locations = shuffle(spawn_locations)
+	spawn_locations = shuffle(landmarks_list["carpspawn"].Copy())
 	num_groups = min(num_groups, spawn_locations.len)
 
 	for(var/i in 1 to num_groups)

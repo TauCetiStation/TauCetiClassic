@@ -79,7 +79,7 @@
 		update_icon()
 		return 1
 
-	if (iswelder(O))
+	if (iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (WT.use(0))
@@ -208,7 +208,7 @@
 		held_item.loc = loc
 		held_item = null
 
-	robogibs(loc, viruses)
+	robogibs(loc)
 	qdel(src)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost

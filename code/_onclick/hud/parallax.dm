@@ -51,6 +51,9 @@
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
+	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(mymob, TRAIT_BYPASS_MEASURES))
+		return FALSE
+
 	var/client/C = mymob.client
 	switch(C.prefs.parallax)
 		if (PARALLAX_INSANE)
@@ -149,7 +152,8 @@
 
 		L.transform = newtransform
 
-		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
+		animate(L, transform = L.transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
+		animate(transform = matrix(), time = T)
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client

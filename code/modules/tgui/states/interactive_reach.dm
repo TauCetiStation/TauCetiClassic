@@ -17,7 +17,7 @@ var/global/datum/tgui_state/interactive_reach_state/interactive_reach_state = ne
 	return UI_CLOSE
 
 /mob/living/interactive_reach_can_use_topic(src_object)
-	if((TK in mutations) && can_tk(level=TK_LEVEL_TWO))
+	if(can_tk(level=TK_LEVEL_TWO))
 		return UI_INTERACTIVE
 
 	return hands_can_use_topic(src_object)

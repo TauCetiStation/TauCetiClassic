@@ -2,7 +2,14 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 37
+#define SAVEFILE_VERSION_MAX 41
+
+//For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
+//set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
+#define SAVEFILE_VERSION_SPECIES_JOBS 41 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
+//breaking changes is when you remove any existing quirk/job or change their restrictions
+//Don't forget to bump SAVEFILE_VERSION_MAX too
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -180,23 +187,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["be_role"] << be_role
 
-	if(current_version < 30)
-		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job.is_species_permitted(species))
-					SetJobPreferenceLevel(job, 0)
-			S["job_preferences"] << job_preferences
-
-	if(current_version < 30)
-		for(var/quirk_name in all_quirks)
-			// If the quirk isn't even hypothetically allowed, pref can't have it.
-			// If IsAllowedQuirk() for some reason ever becomes more computationally
-			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
-			if(!IsAllowedQuirk(quirk_name))
-				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
-				ResetQuirks()
-				break
-
 	if(current_version < 31)
 		flavor_text = fix_cyrillic(flavor_text)
 		med_record  = fix_cyrillic(med_record)
@@ -227,14 +217,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
-	// I missed the runtime and the code didnt work and the version of savefile has changed
-	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 35)
-		if(ignore_question && ignore_question.len)
-			var/list/diff = ignore_question - global.full_ignore_question
-			if(diff.len)
-				S["ignore_question"] << ignore_question - diff
-
 	if(current_version < 36)
 		var/datum/job/assistant/J = new
 
@@ -245,6 +227,49 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/deleted_hairstyles = list("Skrell Long Female Tentacles", "Skrell Zeke Female Tentacles", "Gold plated Skrell Male Tentacles", "Gold chained Skrell Female Tentacles", "Cloth draped Skrell Male Tentacles", "Cloth draped Skrell Female Tentacles")
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 38)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 38)
+		if("Raider" in be_role)
+			be_role -= "Raider"
+
+		S["be_role"] << be_role
+
+	if(current_version < 39)
+		S["ghost_orbit"] << null
+
+	if(current_version < 40)
+		if(ignore_question && ignore_question.len)
+			if("Lavra" in ignore_question)
+				ignore_question -= "Lavra"
+				ignore_question |= IGNORE_LARVA
+				S["ignore_question"] << ignore_question
+
+//
+/datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
+
+	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
+		if(species != HUMAN)
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job.is_species_permitted(species))
+					SetJobPreferenceLevel(job, 0)
+			S["job_preferences"] << job_preferences
+
+	if(current_version < SAVEFILE_VERSION_QUIRKS)
+		for(var/quirk_name in all_quirks)
+			// If the quirk isn't even hypothetically allowed, pref can't have it.
+			// If IsAllowedQuirk() for some reason ever becomes more computationally
+			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
+			if(!IsAllowedQuirk(quirk_name))
+				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
+				ResetQuirks()
+				break
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -318,7 +343,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      >> default_slot
 	S["chat_toggles"]      >> chat_toggles
 	S["toggles"]           >> toggles
-	S["ghost_orbit"]       >> ghost_orbit
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
 	S["permamuted"]        >> permamuted
@@ -326,6 +350,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["auto_fit_viewport"] >> auto_fit_viewport
+	S["lobbyanimation"]    >> lobbyanimation
 	S["tooltip"]           >> tooltip
 	S["tooltip_size"]      >> tooltip_size
 	S["tooltip_font"]      >> tooltip_font
@@ -365,10 +390,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
-	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
@@ -379,6 +403,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
@@ -441,12 +466,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      << default_slot
 	S["toggles"]           << toggles
 	S["chat_toggles"]      << chat_toggles
-	S["ghost_orbit"]       << ghost_orbit
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
 	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
-	S["ambientocclusion"]	 << ambientocclusion
+	S["ambientocclusion"]  << ambientocclusion
+	S["lobbyanimation"]    << lobbyanimation
 	S["auto_fit_viewport"] << auto_fit_viewport
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size
@@ -501,6 +526,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]          >> r_hair
 	S["hair_green"]        >> g_hair
 	S["hair_blue"]         >> b_hair
+	S["belly_red"]         >> r_belly
+	S["belly_green"]       >> g_belly
+	S["belly_blue"]        >> b_belly
 	S["grad_red"]          >> r_grad
 	S["grad_green"]        >> g_grad
 	S["grad_blue"]         >> b_grad
@@ -525,7 +553,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	S["alternate_option"] >> alternate_option
+	S["job_preferences"]  >> job_preferences
 
 	//Traits
 	S["all_quirks"]       >> all_quirks
@@ -551,6 +580,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["citizenship"]         >> citizenship
 	S["faction"]             >> faction
 	S["religion"]            >> religion
+	S["vox_rank"]            >> vox_rank
 
 	S["uplinklocation"]      >> uplinklocation
 
@@ -560,6 +590,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
+		repetitive_updates_character(needs_update, S)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -619,6 +650,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!citizenship) citizenship = "None"
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
+	if(!vox_rank)    vox_rank =    "Larva"
 
 /datum/preferences/proc/random_character()
 	if(!path)
@@ -630,7 +662,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	var/list/saves = list()
 	var/name
-	for(var/i = 1 to MAX_SAVE_SLOTS)
+	for(var/i = 1 to GET_MAX_SAVE_SLOTS(parent))
 		S.cd = "/character[i]"
 		S["real_name"] >> name
 		if(!name)
@@ -655,7 +687,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
-	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	slot = sanitize_integer(slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot
@@ -686,6 +718,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]              << r_hair
 	S["hair_green"]            << g_hair
 	S["hair_blue"]             << b_hair
+	S["belly_red"]             << r_belly
+	S["belly_green"]           << g_belly
+	S["belly_blue"]            << b_belly
 	S["grad_red"]              << r_grad
 	S["grad_green"]            << g_grad
 	S["grad_blue"]             << b_grad
@@ -736,6 +771,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["citizenship"]         << citizenship
 	S["faction"]             << faction
 	S["religion"]            << religion
+	S["vox_rank"]            << vox_rank
 	S["uplinklocation"]      << uplinklocation
 
 	return 1

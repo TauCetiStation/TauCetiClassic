@@ -127,3 +127,34 @@
 /obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
 	. = ..()
+
+/obj/item/weapon/implanter/freedom
+	name = "implanter (F)"
+
+/obj/item/weapon/implanter/freedom/atom_init()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/uplink
+	name = "implanter (U)"
+
+/obj/item/weapon/implanter/uplink/atom_init()
+	imp = new /obj/item/weapon/implant/uplink(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/abductor
+	name = "Strange implanter"
+
+/obj/item/weapon/implanter/abductor/atom_init()
+	imp = new /obj/item/weapon/implant/abductor(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/abductor/update()
+	if (imp)
+		icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter0"
+	return

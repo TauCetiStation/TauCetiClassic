@@ -298,7 +298,6 @@ var/global/list/contraband_listings
 			"lube"="Workplace accidents",
 			"glycerol",
 			"nicotine",
-			"nanites",
 			"nanites2",
 			"nanobots"="Two cases of cronenberging",
 			"mednanobots",
@@ -327,7 +326,6 @@ var/global/list/contraband_listings
 			"nitroglycerin",
 			"thermite",
 			"fuel",
-			"xenomicrobes",
 			"ectoplasm",
 		),
 	)

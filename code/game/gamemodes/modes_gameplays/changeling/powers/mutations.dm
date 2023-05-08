@@ -60,9 +60,6 @@
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
 		qdel(H.wear_suit)
 		qdel(H.head)
-		H.update_inv_wear_suit()
-		H.update_inv_head()
-		H.update_hair()
 
 		if(blood_on_castoff)
 			var/turf/T = get_turf(H)
@@ -86,8 +83,8 @@
 	user.drop_from_inventory(user.head)
 	user.drop_from_inventory(user.wear_suit)
 
-	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, 1, 1, 1)
+	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, TRUE, TRUE)
+	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, TRUE, TRUE)
 
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -118,6 +115,9 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
 
 /obj/item/weapon/melee/arm_blade/atom_init()
 	. = ..()
@@ -131,22 +131,11 @@
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.destroy()
 
-	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
-
-	else if(istype(target, /obj/machinery/door/airlock))
+	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
-			return
-
-		if(A.hasPower())
-			to_chat(user, "<span class='notice'>The airlock's motors resist our efforts to force it.</span>")
+		if(A.hasPower() && (!A.requiresID() || A.allowed(user))) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
 		else if(A.locked)
@@ -154,10 +143,16 @@
 			return
 
 		else
+			if(user.is_busy())
+				return
+			if(!A.hasPower())
+				A.open(1)
+				return FALSE
 			if(prob(10))
 				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
-			A.open(1)
+			user.visible_message("<span class='warning'>[user] start forces the door to open with \his [src]!</span>", "<span class='warning'>We attempt to force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
+			if(do_after(user, 70, target = A))
+				A.open(1)
 
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
@@ -206,6 +201,9 @@
 	else
 		remaining_uses--
 		return block_chance
+
+/obj/item/weapon/shield/changeling/toggle_wallshield(mob/living/user)
+	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
 
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
@@ -284,7 +282,6 @@
 	flags = DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0

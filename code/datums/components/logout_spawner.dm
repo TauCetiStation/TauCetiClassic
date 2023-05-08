@@ -26,7 +26,7 @@
 	del_timer()
 	return ..()
 
-/datum/component/logout_spawner/proc/logout(logout_reason)
+/datum/component/logout_spawner/proc/logout(datum/source, logout_reason)
 	SIGNAL_HANDLER
 	var/mob/M = parent
 

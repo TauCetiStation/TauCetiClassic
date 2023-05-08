@@ -33,6 +33,7 @@
 	chassis.visible_message("<span class='warning'>[chassis] fires [src]!</span>")
 	occupant_message("<span class='warning'>You fire [src]!</span>")
 	log_message("Fired from [src], targeting [target].")
+	set_ready_state(FALSE)
 	for(var/i = 1 to min(projectiles, projectiles_per_shot))
 		var/turf/aimloc = targloc
 		if(deviation)
@@ -47,7 +48,6 @@
 			sleep(fire_cooldown)
 	if(auto_rearm)
 		projectiles = projectiles_per_shot
-	set_ready_state(0)
 	do_after_cooldown()
 	return
 
@@ -131,7 +131,7 @@
 	icon_state = "mecha_honker"
 	energy_drain = 200
 	equip_cooldown = 150
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
 	if(!istype(M))

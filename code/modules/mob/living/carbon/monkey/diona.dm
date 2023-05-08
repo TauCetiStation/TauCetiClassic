@@ -9,6 +9,7 @@
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
+	speed = 3.5
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
@@ -33,6 +34,7 @@
 	name = "podkid"
 	voice_name = "podkid"
 	icon_state = "podkid1"
+	speed = 0.5
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
 
@@ -60,12 +62,6 @@
 	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
 	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
 
-/mob/living/carbon/monkey/diona/movement_delay(tally = 0)
-	return ..(tally = 3.5)
-
-/mob/living/carbon/monkey/diona/podman/movement_delay(tally = 0)
-	return ..(tally = 0.5)
-
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
 
@@ -86,7 +82,7 @@
 		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
 		return
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-	M.status_flags |= PASSEMOTES
+	M.add_status_flags(PASSEMOTES)
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 	forceMove(M)
 	gestalt = M
@@ -308,7 +304,7 @@
 		to_chat(src, "You are not yet ready for your growth...")
 		return
 
-	if(nutrition < 400)
+	if(nutrition < NUTRITION_LEVEL_NORMAL)
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
@@ -385,7 +381,7 @@
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
 
-	if(!message || stat)
+	if(!message || stat != CONSCIOUS)
 		return
 
 	..(message, speaking, verb, null, null, message_range, null)

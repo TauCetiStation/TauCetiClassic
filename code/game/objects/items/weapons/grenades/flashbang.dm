@@ -26,10 +26,9 @@
 	for(var/mob/living/carbon/M in hear(flashbang_range, flashbang_turf))
 		bang(flashbang_turf, M)
 
-	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
+	for(var/obj/structure/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
 		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
-		B.health -= damage
-		B.update_icon()
+		B.take_damage(damage * B.brute_resist, BRUTE, ENERGY) // workaround to deal full damage
 
 	qdel(src)
 
@@ -56,8 +55,6 @@
 //Flashing everyone
 	if(eye_safety < 1)
 		M.flash_eyes()
-		M.Stun(2)
-		M.Weaken(10)
 
 //Now applying sound
 	var/distance = get_dist(M, T)

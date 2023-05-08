@@ -30,6 +30,7 @@
 
 
 	var/area_type = /area/space //Types of area to affect
+	var/protect_indoors = FALSE //TRUE value protects areas with outdoors marked as false, regardless of area type
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
 	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
 	var/target_ztrait = ZTRAIT_STATION //The z-trait to affect
@@ -54,13 +55,13 @@
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
-	var/list/affectareas = list()
-	for(var/V in get_areas(area_type))
-		affectareas += V
+	var/list/affectareas = get_areas(area_type)
 	for(var/V in protected_areas)
 		affectareas -= get_areas(V)
 	for(var/V in affectareas)
 		var/area/A = V
+		if(protect_indoors && !A.outdoors)
+			continue
 		if(SSmapping.level_trait(A.z, target_ztrait))
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)

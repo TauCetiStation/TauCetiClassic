@@ -7,25 +7,25 @@
 	var/captured_amount = 0
 	var/area/centcom/holding/A = locate()
 	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(M.stat==2)//Dead folks are worth less.
+		if(M.stat==DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
 	for(var/mob/living/carbon/xenomorph/larva/M in A)//Larva are important for research.
-		if(M.stat==2)
+		if(M.stat==DEAD)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/xenomorph/humanoid/M in A)//Aliens are worth twice as much as humans.
 		if(isxenoqueen(M))//Queens are worth three times as much as humans.
-			if(M.stat==2)
+			if(M.stat==DEAD)
 				captured_amount+=1.5
 			else
 				captured_amount+=3
 			continue
-		if(M.stat==2)
+		if(M.stat==DEAD)
 			captured_amount+=1
 			continue
 		captured_amount+=2

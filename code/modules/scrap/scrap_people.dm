@@ -41,13 +41,6 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	qdel(CATCH)
 	randomize_human(src)
 	sight |= SEE_BLACKNESS
-	update_inv_head()
-	update_inv_wear_suit()
-	update_inv_gloves()
-	update_inv_shoes()
-	update_inv_w_uniform()
-	update_inv_r_hand()
-	update_inv_l_hand()
 
 /mob/proc/make_bum()
 	var/obj/effect/landmark/location = pick(junkyard_bum_list)

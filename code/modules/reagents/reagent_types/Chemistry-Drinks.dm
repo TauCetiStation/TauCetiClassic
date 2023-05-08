@@ -20,8 +20,7 @@
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
-		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT && M.bodytemperature <= TEMPERATURE_DAMAGE_COEFFICIENT)
-			M.bodytemperature = clamp(M.bodytemperature + adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.adjust_bodytemperature(adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
@@ -77,7 +76,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(data["ticks"] - 10))
-				M.disabilities &= ~NEARSIGHTED
+				M.cure_nearsighted(EYE_DAMAGE_TRAIT)
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/berryjuice
@@ -147,6 +146,42 @@
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "puke, you're pretty sure"
+
+/datum/reagent/consumable/drink/gourd_juice
+	name = "Gourd Juice"
+	id = "gourd"
+	description = "Тыквячий сок. Выглядит хорошо, на вкус - не очень."
+	color = "#95ba43" // rgb: 149, 186, 067
+	taste_message = "swamp"
+
+	toxin_absorption = 2.0
+
+/datum/reagent/consumable/drink/gourd_juice/New()
+	. = ..()
+	name = "[get_gourd_name()] juice"
+
+/datum/reagent/consumable/drink/gourd_juice/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+
+	H.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+	if(prob(10))
+		to_chat(H, "<span class='warning'>Any more and you'll probably puke.</span>")
+
+	if(H.reagents.total_volume >= 3)
+		H.invoke_vomit_async()
+
+/datum/reagent/consumable/drink/gourd_juice/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	return FALSE
+
+/datum/reagent/consumable/drink/gourd_juice/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	new /obj/effect/decal/cleanable/gourd(T)
 
 /datum/reagent/consumable/drink/milk
 	name = "Milk"
@@ -404,21 +439,21 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
+				M.adjust_bodytemperature(-rand(5,20))
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
+				M.adjust_bodytemperature(-rand(10,20))
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(-15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
+				M.adjust_bodytemperature(-rand(15,20))
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
@@ -568,19 +603,27 @@
 
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
 	..()
-	M.weakened = max(M.weakened, 3)
-	if(!data["ticks"])
+	if(data["ticks"])
+		data["ticks"]++
+	else
 		data["ticks"] = 1
-	data["ticks"]++
-	M.dizziness += 6
-	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.AdjustStuttering(4)
-	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
-		M.AdjustConfused(3)
-	else if(data["ticks"] >=55)
-		M.adjustDrugginess(5)
-	else if(data["ticks"] >=200)
-		M.adjustToxLoss(2)
+		
+	M.make_dizzy(6)
+	switch(data["ticks"])
+		if(1 to 5)
+			M.make_jittery(20)
+			M.Stuttering(4)
+		if(5 to 45)
+			M.Stun(3)
+			M.Weaken(3)
+		if(45 to 200)
+			M.Stun(3)
+			M.Weaken(3)
+			M.adjustDrugginess(5)
+		if(200 to INFINITY)
+			M.Stun(3)
+			M.Weaken(3)
+			M.adjustToxLoss(2)
 
 /datum/reagent/consumable/hippies_delight
 	name = "Hippies' Delight"
@@ -744,6 +787,47 @@
 	if(HAS_TRAIT(M, TRAIT_DWARF))
 		M.heal_bodypart_damage(1, 1)
 
+/datum/reagent/consumable/ethanol/gourd_beer
+	name = "Gourd Beer"
+	id = "gourdbeer"
+	description = "Тыквячье пиво. Красивое, но не очень вкусное."
+	color = "#6aa72d" // rgb: 106, 167, 45
+	boozepwr = 1.5
+	nutriment_factor = 1.5
+	taste_message = "swampy beer"
+
+	toxin_absorption = 4.0
+
+/datum/reagent/consumable/ethanol/gourd_beer/New()
+	. = ..()
+	name = "[get_gourd_name()] beer"
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+
+	H.adjust_bodytemperature(-4 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+	if(prob(10))
+		to_chat(H, "<span class='warning'>Any more and you'll probably puke.</span>")
+
+	H.heal_bodypart_damage(1, 1)
+
+	if(H.reagents.total_volume >= 3)
+		H.invoke_vomit_async()
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	M.heal_bodypart_damage(1, 1)
+	return FALSE
+
+/datum/reagent/consumable/ethanol/gourd_beer/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	new /obj/effect/decal/cleanable/gourd(T)
+
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
 	id = "kahlua"
@@ -787,8 +871,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(0, M.drowsyness - 7)
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.make_jittery(5)
 
@@ -1122,8 +1205,7 @@
 
 /datum/reagent/consumable/ethanol/toxins_special/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
@@ -1131,13 +1213,13 @@
 	description = "Deny drinking this and prepare for THE LAW."
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 4
+	boozepwr = 6
 	taste_message = "THE LAW"
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(10)
+		M.MakeConfused(3)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -1246,8 +1328,7 @@
 
 /datum/reagent/consumable/ethanol/antifreeze/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
@@ -1345,8 +1426,7 @@
 
 /datum/reagent/consumable/ethanol/sbiten/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
-		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/ethanol/devilskiss
 	name = "Devils Kiss"
@@ -1384,8 +1464,7 @@
 
 /datum/reagent/consumable/ethanol/iced_beer/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature > 270)
-		M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL - 40)
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"

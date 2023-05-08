@@ -336,3 +336,19 @@
 		new empprize(src.loc)
 
 	..(severity)
+
+/obj/machinery/computer/arcade/emagged
+	light_color = "#ff0000"
+
+/obj/machinery/computer/arcade/emagged/atom_init()
+	. = ..()
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = 0
+	blocked = 0
+	emagged = 1
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"

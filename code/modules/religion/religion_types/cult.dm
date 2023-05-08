@@ -81,6 +81,14 @@
 	var/list/possible_human_phrases = list("Я убью тебя!", "Ты чё?", "Я вырву твой имплант сердца и сожгу его!", "Я выпью твою кровь!", "Я уничтожу тебя!", "Молись, сука!", "Я вырву и съем твои кишки!", "Моргало выколю!", "Эй ты!", "Я измельчу тебя на мелкие кусочки и выброшу их в чёрную дыру!", "Пошёл нахуй!", "Ты умрешь в ужасных судорогах!", "Ильс'м уль чах!", "Твое призвание - это чистить канализацию на Марсе!", "Тупое животное!", "АХ-ХА-ХА-ХА-ХА-ХА!", "Что б ты бобов объелся!", "Ёбаный в рот этого ада!", "Эй обезьяна свинорылая!", "Обабок бля!", "Ну ты и маслёнок!",\
 	 						"Пиздакряк ты тупой!", "Твои потроха съедят кибер-свиньи вместе с помоями, а мозг будут разрывать на куски бездомные космо-кошки!", "Твою плоть разорвут космо-карпы, а кишки съедят мыши!", "Тупоголовый дегенерат!", "Ты никому не нужный биомусор!", "Ты тупое ничтожество!", "Лучше б ты у папы на синих трусах засох!", "ААА-Р-Р-Р-Р-Р-Г-Г-Г-Х-Х-Х!")
 
+	// Has our being already shown its nature? Red eyes
+	var/risen = FALSE
+	// We have something that no one can overlook anymore. Halo
+	var/ascendent = FALSE
+
+	var/mob/camera/eminence/eminence
+	var/research_forbidden = FALSE //If Eminence forbade research for fellow cultist
+
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
@@ -234,7 +242,63 @@
 		return FALSE
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
+	handle_appearence(M)
+	ADD_TRAIT(M, TRAIT_HEALS_FROM_PYLONS, RELIGION_TRAIT)
+	M.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/my_religion)
 	return TRUE
+
+/datum/religion/cult/proc/handle_appearence(mob/M)
+	if(risen)
+		rise(M) //No return here
+
+	if(ascendent) //To avoid useless counts through all players in Nar-Nar stage
+		ascend(M)
+		return
+
+	var/alive = 0
+	var/cultplayers = 0
+	for(var/mob/living/P in player_list)
+		if(P.stat != DEAD)
+			if(iscultist(P))
+				++cultplayers
+			else
+				++alive
+
+	if(cultplayers == 0 || alive == 0) //Just in case to avoid 0
+		return
+	var/ratio = cultplayers / alive
+	if(ratio > 0.25 && !risen) //Red eye check
+		first_rise()
+	if(ratio > 0.4 && !ascendent) //Halo check
+		first_ascend()
+
+	return TRUE
+
+/datum/religion/cult/proc/first_rise()
+	for(var/mob/living/L in members)
+		playsound(L, 'sound/hallucinations/i_see_you_2.ogg', VOL_EFFECTS_MASTER)
+		to_chat(L, "<span class='cult'>Культ набирает силы, вуаль реальности всё слабее, ваши глаза начинают светиться...</span>")
+		rise(L)
+	risen = TRUE
+	log_game("The blood cult has risen with [length(members)] players.")
+
+/datum/religion/cult/proc/first_ascend()
+	for(var/mob/living/L in members)
+		playsound(L, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
+		to_chat(L, "<span class='cult'>Культ всё сильнее, и приближается жатва - вы не можете больше скрывать свою истинную природу!</span>")
+		ascend(L)
+	ascendent = TRUE
+	log_game("The blood cult has ascended with [length(members)] players.")
+
+/datum/religion/cult/proc/rise(cultist)
+	if(isliving(cultist))
+		var/mob/living/L = cultist
+		L.AddElement(/datum/element/cult_eyes)
+
+/datum/religion/cult/proc/ascend(cultist)
+	if(isliving(cultist))
+		var/mob/living/L = cultist
+		L.AddElement(/datum/element/cult_halo)
 
 /datum/religion/cult/add_deity(mob/M)
 	..()
@@ -244,3 +308,12 @@
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
 		M.RemoveSpell(C)
+
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+	if(HAS_TRAIT(L, TRAIT_CULT_EYES))
+		L.RemoveElement(/datum/element/cult_eyes)
+	if(HAS_TRAIT(L, TRAIT_CULT_HALO))
+		L.RemoveElement(/datum/element/cult_halo)
+	M.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/my_religion)

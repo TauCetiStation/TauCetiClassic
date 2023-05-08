@@ -32,7 +32,7 @@
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(is_centcom_level(shuttlecaller.z))
 			continue
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
 		callshuttle++
 

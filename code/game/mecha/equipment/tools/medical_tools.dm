@@ -5,7 +5,7 @@
 	icon_state = "sleeper_0"
 	origin_tech = "programming=2;biotech=3"
 	energy_drain = 20
-	range = MELEE
+	range = RANGE_MELEE
 	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
@@ -232,12 +232,6 @@
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
-	M.AdjustStunned(-4)
-	M.AdjustWeakened(-4)
-	M.AdjustStunned(-4)
-	M.Paralyse(2)
-	M.Weaken(2)
-	M.Stun(2)
 	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
 		M.reagents.add_reagent("inaprovaline", 5)
 	chassis.use_power(energy_drain)
@@ -350,7 +344,7 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(turf/new_turf)
-	if(istype(new_turf, /turf/simulated/floor))
+	if(isfloorturf(new_turf))
 		var/turf/simulated/floor/T = new_turf
 		if(!T.is_plating() && !T.is_catwalk())
 			if(!T.broken && !T.burnt)
@@ -404,7 +398,7 @@
 	var/synth_speed = 5 //[num] reagent units per cycle
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
 
@@ -415,7 +409,7 @@
 	accessible_reagents = list("inaprovaline","anti_toxin", "alkysine", "arithrazine", "bicaridine", "citalopram", "dermaline",
 	"dexalin", "dexalinp", "ethylredoxrazine", "hyperzine", "hyronalin", "imidazoline", "kelotane", "leporazine", "methylphenidate",
 	"oxycodone", "paracetamol", "paroxetine", "peridaxon", "rezadone", "ryetalyn", "spaceacillin", "sterilizine", "synaptizine",
-	"tramadol", "tricordrazine", "doctorsdelight")
+	"tramadol", "tricordrazine", "doctorsdelight", "metatrombine")
 	known_reagents = list("inaprovaline"="Inaprovaline","anti_toxin"="Anti-Toxin (Dylovene)")
 	processed_reagents = new
 	create_reagents(max_volume)

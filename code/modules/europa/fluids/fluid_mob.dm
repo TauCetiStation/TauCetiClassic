@@ -30,13 +30,6 @@
 					for(var/n = 3, n > 0, n--)
 						var/obj/item/I = pick(inv_contents)
 						I.make_wet()
-
-			C.stop_pulling()
-			to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
-			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-			C.Stun(5)
-			C.Weaken(2)
-
 	if(prob(5))
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
@@ -44,7 +37,8 @@
 				var/obj/item/clothing/shoes/S = H.shoes
 				S.make_wet()
 
-/obj/effect/fluid/bullet_act(obj/item/projectile/Proj)
+/obj/effect/fluid/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
 		var/power = Proj.agony * 5
 		electrocute_act(power)

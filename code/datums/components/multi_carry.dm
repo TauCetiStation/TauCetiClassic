@@ -454,7 +454,7 @@
 		if(!check_proximity(carrier))
 			return
 
-/datum/component/multi_carry/proc/check_canpass(datum/source, atom/movable/mover, atom/target, height, air_group)
+/datum/component/multi_carry/proc/check_canpass(datum/source, atom/movable/mover, atom/target, height)
 	if(!moving)
 		return NONE
 

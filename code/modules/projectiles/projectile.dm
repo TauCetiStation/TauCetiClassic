@@ -1,14 +1,3 @@
-/*
-#define BRUTE "brute"
-#define BURN "burn"
-#define TOX "tox"
-#define OXY "oxy"
-#define CLONE "clone"
-
-#define ADD "add"
-#define SET "set"
-*/
-
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -38,9 +27,10 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/armor_multiplier = 1 //armor multiplier when a projectile hits it. values greater than 1 mean worse armor penetration
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
+	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 	var/paused = FALSE //for suspending the projectile midair
 		//Effects
@@ -52,6 +42,7 @@
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/agony = 0
+	var/incendiary = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 	var/impact_force = 0
 
@@ -108,10 +99,15 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(!isliving(target))	return 0
-	if(isanimal(target))	return 0
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
+	if(!isliving(target))
+		return 0
+	if(isanimal(target))
+		return 0
 	var/mob/living/L = target
+	if(incendiary && blocked <= 100)
+		L.adjust_fire_stacks(incendiary)
+		L.IgniteMob(target)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
@@ -224,8 +220,6 @@
 
 
 	if(istype(A,/turf))
-		for(var/obj/O in A)
-			O.bullet_act(src)
 		for(var/mob/Mob in A)
 			Mob.bullet_act(src, def_zone)
 
@@ -238,13 +232,10 @@
 	return 1
 
 
-/obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
-	if(istype(mover, /obj/item/projectile))
+/obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover, /obj/item/projectile) && (reverse_dir[dir] & mover.dir))
 		return prob(95)
-	else
-		return 1
+	return 1
 
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
@@ -359,7 +350,7 @@
 			P.pixel_y = location.pixel_y
 			P.activate()
 
-/obj/item/projectile/proc/Fire(atom/A, mob/living/user)
+/obj/item/projectile/proc/Fire(atom/A, mob/living/user, params=null)
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(A)
 	firer = user
@@ -369,6 +360,14 @@
 	current = T
 	yo = U.y - T.y
 	xo = U.x - T.x
+
+	if(params)
+		var/list/mouse_control = params2list(params)
+		if(mouse_control[ICON_X])
+			p_x = text2num(mouse_control[ICON_X])
+		if(mouse_control[ICON_Y])
+			p_y = text2num(mouse_control[ICON_Y])
+
 	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
@@ -388,8 +387,14 @@
 		result = A
 		bumped = TRUE
 		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/thin))
 		return
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/fulltile))
+		var/obj/structure/window/fulltile/FTW = A
+		if(!FTW.grilled)
+			return
+		else if(checkpass(PASSGRILLE))
+			return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = A

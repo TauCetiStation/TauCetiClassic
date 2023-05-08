@@ -29,32 +29,23 @@
 
 	hud_used = new hud_type(src)
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	hud_used.show_hud(istype(loc, /obj/mecha) ? HUD_STYLE_REDUCED : HUD_STYLE_STANDARD)
 	update_sight()
 	return TRUE
 
-// TOTAL SHITCODE
-// PLEASE REMOVE WHEN HUD SYSTEM IS REDONE
-// IS REQUIRED BECAUSE THE ONLY THING THAT USES HUD SIGNALS IS
-// THE MOOD SYSTEM WHICH ONLY HUMANS HAVE (WHICH REQUIRES HUD UPDATE AFTERWARDS)
-// AND USING SHOW_HUD ON ANY MOB THAT ISN'T HUMAN CAUSES RUNTIMES
-// ~Luduk
-/mob/living/carbon/human/create_mob_hud()
-	. = ..()
-	if(!.)
-		return
-
-	if(hud_used.mymob)
-		hud_used.show_hud(hud_used.hud_version)
-
 /mob/Login()
 	player_list |= src
+	
+	if(client.holder)
+		global.keyloop_list |= src
+	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
+		global.keyloop_list |= src
+
 	update_Login_details()
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
-
-	QDEL_NULL(hud_used)		//remove the hud objects
 
 	create_mob_hud()
 
@@ -99,3 +90,6 @@
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
+
+	if(client.click_intercept)
+		client.click_intercept.post_login()

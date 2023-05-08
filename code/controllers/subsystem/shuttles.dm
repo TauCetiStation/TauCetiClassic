@@ -35,8 +35,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 
-		//supply shuttle stuff
-	var/points = 5000
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
@@ -257,15 +255,6 @@ SUBSYSTEM_DEF(shuttle)
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				//if(alert == 1)
-				//	sleep(100)
-				// Turn on the star effects
-
-				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in not_world)
-					if(!S.spawning)
-						spawn() S.startspawn()
-				*/
 
 				departed = 1 // It's going!
 				location = SHUTTLE_IN_TRANSIT // in deep space
@@ -337,6 +326,8 @@ SUBSYSTEM_DEF(shuttle)
 				else
 					announce_crew_left.play()
 
+				start_transit()
+
 				return TRUE
 
 		else
@@ -375,6 +366,7 @@ SUBSYSTEM_DEF(shuttle)
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
+				M.Stun(1)
 				M.Weaken(3)
 		if(isliving(M) && !issilicon(M) && !M.buckled)
 			var/mob/living/L = M
@@ -512,7 +504,9 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "NTS Велосити", tax)
+		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "NTS Велосити", E.total_cost - tax)
 		E.export_end()
 
 	centcom_message = msg
@@ -648,6 +642,9 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
 	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
+
+/datum/controller/subsystem/shuttle/proc/start_transit()
+	SSrating.start_rating_collection()
 
 /obj/effect/bgstar
 	name = "star"

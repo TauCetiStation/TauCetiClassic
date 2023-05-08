@@ -33,7 +33,7 @@
 		update_crystal()
 		return
 
-	if(iswirecutter(W)) // If we want to remove the wiring
+	if(iscutter(W)) // If we want to remove the wiring
 		if(wired)
 			user.visible_message("<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
                                  "<span class='notice'>You start cutting off the wiring of the [src].</span>")
@@ -104,7 +104,7 @@
 		cut_overlays()
 
 // laser_act
-/obj/machinery/power/crystal/bullet_act(obj/item/projectile/P)
+/obj/machinery/power/crystal/bullet_act(obj/item/projectile/P, def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>",
 						"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -113,6 +113,6 @@
 			var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 			var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 			var/turf/curloc = get_turf(src)
-			// redirect the projectile
 			P.redirect(new_x, new_y, curloc, src)
-		return -1 // complete projectile permutation
+		return PROJECTILE_FORCE_MISS
+	return ..()

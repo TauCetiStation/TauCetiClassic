@@ -168,7 +168,8 @@
 /obj/effect/dummy/chameleon/emp_act()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/bullet_act()
+/obj/effect/dummy/chameleon/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)

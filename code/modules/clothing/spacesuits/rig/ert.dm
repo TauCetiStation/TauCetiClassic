@@ -5,7 +5,14 @@
 	item_state = "ert_commander"
 	armor = list(melee = 50, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	rig_variant = "ert_commander"
 	var/obj/machinery/camera/camera
+	can_be_modded = FALSE
+
+/obj/item/clothing/head/helmet/space/rig/ert/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/ert(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
 	if(camera)
@@ -28,6 +35,7 @@
 	icon_state = "ert_commander"
 	item_state = "ert_commander"
 	w_class = SIZE_SMALL
+	can_be_modded = FALSE
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
 	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
 	/obj/item/weapon/tank,/obj/item/weapon/rcd)
@@ -37,11 +45,17 @@
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
+/obj/item/clothing/suit/space/rig/ert/atom_init()
+	. = ..()
+	var/obj/item/clothing/shoes/magboots/ert/SB = new(src)
+	boots = SB
+
 //Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander
 	name = "emergency response team commander helmet"
 	desc = "A helmet worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured and space ready."
 	icon_state = "rig0-ert_commander"
+	rig_variant = "ert_commander"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/ert/commander
@@ -58,6 +72,7 @@
 	name = "emergency response team security helmet"
 	desc = "A helmet worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured and space ready."
 	icon_state = "rig0-ert_security"
+	rig_variant = "ert_security"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/ert/security
@@ -74,6 +89,7 @@
 	name = "emergency response team engineer helmet"
 	desc = "A helmet worn by engineering members of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured and space ready."
 	icon_state = "rig0-ert_engineer"
+	rig_variant = "ert_engineer"
 	siemens_coefficient = 0
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
 
@@ -91,6 +107,7 @@
 	name = "emergency response team medical helmet"
 	desc = "A helmet worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "rig0-ert_medical"
+	rig_variant = "ert_medical"
 
 /obj/item/clothing/suit/space/rig/ert/medical
 	name = "emergency response team medical suit"
@@ -106,7 +123,7 @@
 	icon_state = "rig0-ert_stealth"
 	armor = list(melee = 30, bullet = 15, laser = 20,energy = 5, bomb = 20, bio = 100, rad = 100)
 	light_color = "#c388eb"
-	action_button_name = "Toggle Helmet Visor Light"
+	rig_variant = "ert_stealth"
 
 /obj/item/clothing/suit/space/rig/ert/stealth
 	name = "emergency response team stealth suit"

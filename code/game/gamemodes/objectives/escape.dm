@@ -8,7 +8,7 @@
 		return OBJECTIVE_LOSS
 	if(SSshuttle.location<2)
 		return OBJECTIVE_LOSS
-	if(!owner.current || owner.current.stat ==2)
+	if(!owner.current || owner.current.stat ==DEAD)
 		return OBJECTIVE_LOSS
 	var/turf/location = get_turf(owner.current.loc)
 	if(!location)

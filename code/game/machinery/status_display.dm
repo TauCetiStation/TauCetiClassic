@@ -216,6 +216,15 @@
 
 	update()
 
+/obj/machinery/status_display/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc)
+	// new /obj/item/wallframe/status_display(loc) // TODO add?
+	..()
+
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'

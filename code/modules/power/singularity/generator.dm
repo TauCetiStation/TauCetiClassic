@@ -8,7 +8,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	var/energy = 0
-	var/creation_type = /obj/singularity
+	var/creation_type = /obj/singularity/gravitational
 	var/is_activated = FALSE
 
 /obj/machinery/the_singularitygen/process()
@@ -28,7 +28,7 @@
 		QDEL_IN(animation, 10)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		anchored = !anchored
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)

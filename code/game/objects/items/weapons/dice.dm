@@ -240,6 +240,7 @@
 	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled  && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
+		H.Stun(1)
 		H.Weaken(3)
 
 /obj/item/weapon/dice/ghost/d4/Crossed(atom/movable/AM)
@@ -249,6 +250,7 @@
 	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
+		H.Stun(1)
 		H.Weaken(3)
 		H.AdjustConfused(SLIGHTLY_CONFUSED)
 		if(prob(25)) // The chance of getting 1 on a D4.

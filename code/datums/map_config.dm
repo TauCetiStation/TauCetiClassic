@@ -19,12 +19,16 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 
+	var/votable = FALSE
+	var/voteweight = 1
+
 	var/traits = null
 	var/space_ruin_levels = 2
 	var/space_empty_levels = 1
 	var/load_junkyard = TRUE
 
 	var/minetype = "asteroid"
+	var/smartlight_preset = "default"
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
@@ -135,6 +139,9 @@
 
 	if("station_image" in json)
 		station_image = json["station_image"]
+
+	if("smartlight_preset" in json)
+		smartlight_preset = json["smartlight_preset"]
 
 	defaulted = FALSE
 	return TRUE

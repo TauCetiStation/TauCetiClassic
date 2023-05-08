@@ -29,6 +29,9 @@ var/global/list/bicon_cache = list()
 	if (!obj)
 		return
 
+	if(SSlag_switch.measures[DISABLE_BICON] && usr && !HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES)) // todo: bypass for round end stat
+		return
+
 	return "<img [css] src='data:image/png;base64,[bicon_raw(obj, time_stamp)]'>"
 
 /proc/timestamp_cache_add(key, element)
@@ -67,7 +70,7 @@ var/global/list/bicon_cache = list()
 	if(!isatom(obj) && !istype(obj, /image)) // we don't need datums here. no runtimes :<
 		return
 
-	// Thanks to dynamic typing, this atom can be both an image and a mutable_apperance
+	// Thanks to dynamic typing, this atom can be both an image and a mutable_appearance
 	var/atom/A = obj
 	var/key = "\ref[A.icon]#[A.icon_state]"
 	var/bicon_obj = timestamp_cache_get(key, time_stamp)

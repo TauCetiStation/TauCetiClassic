@@ -43,7 +43,7 @@
 				var/obj/machinery/door/airlock/D = locate() in T
 				if(D.density)
 					D.open()
-			if(istype(T,/turf/simulated/wall))
+			if(iswallturf(T))
 				T.dismantle_wall(1)
 		qdel(src)
 

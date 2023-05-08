@@ -27,6 +27,9 @@
 	if(input != "Confirm")
 		return
 
+	log_admin("[key_name(usr)] removed '[title]' from the library database")
+	message_admins("[key_name_admin(usr)] removed '[title]' from the library database")
+
 	query = dbcon.NewQuery("DELETE FROM erro_library WHERE id='[id]'")
 	if(!query.Execute())
 		to_chat(usr, "SQL ERROR")
@@ -94,3 +97,14 @@
 	var/datum/browser/popup = new(usr, "window=librecyclebin", "Book Inventory Management", 500, 500, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(catalog)
 	popup.open()
+
+/proc/library_needs_rewiew()
+	. = 0
+
+	var/DBQuery/select_query = dbcon.NewQuery({"SELECT COUNT(*)
+		FROM erro_library
+		WHERE deletereason IS NOT NULL"})
+	select_query.Execute()
+
+	if(select_query.NextRow())
+		. = text2num(select_query.item[1])

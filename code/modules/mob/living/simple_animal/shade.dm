@@ -141,7 +141,7 @@
 /mob/living/simple_animal/shade/god/RangedAttack(atom/A, params)
 	god_attack(A)
 
-/mob/living/simple_animal/shade/god/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/shade/god/CanPass(atom/movable/mover, turf/target, height=0)
 	return TRUE
 
 /mob/living/simple_animal/shade/god/Move(atom/NewLoc, direct)
@@ -220,8 +220,23 @@
 				container.forceMove(get_turf(container.loc))
 
 /mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
-	if(paralysis || stunned || weakened || buckled || pinned.len)
-		canmove = FALSE
-	else
-		canmove = TRUE
-	return canmove
+	canmove = !buckled
+
+/mob/living/simple_animal/shade/evil_shade
+	layer = TURF_LAYER
+	melee_damage = 2
+	incorporeal_move = 1
+	health = 15
+	icon_state = "ghost2"
+	icon_living = "ghost2"
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+/mob/living/simple_animal/shade/atom_init()
+	. = ..()
+	global.wizard_shades_count++
+
+/mob/living/simple_animal/shade/Destroy()
+	global.wizard_shades_count--
+	return ..()
+	

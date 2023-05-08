@@ -24,6 +24,7 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	flags = CONDUCT
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	slot_flags = SLOT_FLAGS_BELT
 	force = 40
 	throwforce = 10
@@ -43,15 +44,12 @@
 	force = 20
 	can_embed = 0
 
-/obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
-
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
 	item_state = "katana"
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 40
@@ -67,10 +65,6 @@
 
 /obj/item/weapon/katana/Get_shield_chance()
 		return 50
-
-/obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
 
 /obj/item/weapon/harpoon
 	name = "harpoon"

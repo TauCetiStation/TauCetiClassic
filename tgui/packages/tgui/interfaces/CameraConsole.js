@@ -41,8 +41,11 @@ export const selectCameras = (cameras, searchText = '') => {
 };
 
 export const CameraConsole = (props, context) => {
+  Byond.winget("mapwindow.map", "style").then(style => {
+    Byond.winset(mapRef, "style", style);
+  });
   const { act, data } = useBackend(context);
-  const { mapRef, mapStyle, activeCamera } = data;
+  const { mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
   const [
     prevCameraName,
@@ -83,7 +86,6 @@ export const CameraConsole = (props, context) => {
           params={{
             id: mapRef,
             type: 'map',
-            style: mapStyle,
           }} />
       </div>
     </Window>

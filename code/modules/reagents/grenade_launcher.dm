@@ -55,3 +55,52 @@
 	playsound(user, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(15)
 		F.prime()
+
+/obj/item/weapon/gun/grenadelauncher/cyborg
+	name = "grenade launcher"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "riotgun"
+	item_state = "riotgun"
+	var/current_grenade = null
+	var/mode = 0
+
+/obj/item/weapon/gun/grenadelauncher/cyborg/attackby()
+	return
+
+/obj/item/weapon/gun/grenadelauncher/cyborg/attack_self(mob/living/silicon/robot/user)
+	mode++
+	if(mode > 4)
+		mode = 1
+	switch(mode)
+		if(1)
+			current_grenade = /obj/item/weapon/grenade/flashbang
+			to_chat(user, "<span class='notice'>Flashbang selected.</span>")
+		if(2)
+			current_grenade = /obj/item/weapon/grenade/smokebomb
+			to_chat(user, "<span class='notice'>Smokebomb selected.</span>")
+		if(3)
+			current_grenade = /obj/item/weapon/grenade/chem_grenade/teargas
+			to_chat(user, "<span class='notice'>Teargas selected.</span>")
+		if(4)
+			current_grenade = /obj/item/weapon/grenade/chem_grenade/drugs
+			to_chat(user, "<span class='notice'>SpaceDrugs selected.</span>")
+
+/obj/item/weapon/gun/grenadelauncher/cyborg/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
+	user.SetNextMove(CLICK_CD_MELEE*2)
+	if(!current_grenade)
+		to_chat(user, "<span class='warning'>[src] is empty.</span>")
+		return
+	if(target == user)
+		return
+	if(user.cell.use(1500))
+		fire_grenade(target,user)
+	else
+		to_chat(user, "<span class='warning'>Not enough charge.</span>")
+
+/obj/item/weapon/gun/grenadelauncher/cyborg/fire_grenade(atom/target, mob/living/silicon/robot/user)
+	user.visible_message("<span class='warning'>[user] fired a grenade!</span>",
+	"<span class='warning'>You fire the grenade launcher!</span>")
+	var/obj/item/weapon/grenade/G = new current_grenade(loc)
+	G.forceMove(user.loc)
+	G.activate(user)
+	G.throw_at(target, 30, 2, user)

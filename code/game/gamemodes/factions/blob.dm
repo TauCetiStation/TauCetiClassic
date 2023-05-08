@@ -22,10 +22,13 @@
 	var/outbreak_announcement
 	var/reached_crit_mass = FALSE
 
+/datum/faction/blob_conglomerate/New()
+	..()
+	spawn_locs += get_vents()
+
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
 
-	spawn_locs += get_vents()
 	if(spawn_locs.len < max_roles)
 		// we were unable to setup because we didn't have enough spawn locations
 		return FALSE
@@ -118,7 +121,7 @@
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
+				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
 		if(FS_ENDGAME)
@@ -133,7 +136,7 @@
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
+				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожения. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
@@ -202,13 +205,11 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
-
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
 		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
 	else
 		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
-
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()
@@ -270,14 +271,14 @@ Message ends."}
 /datum/station_state/proc/count(count_territories)
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
-			if(istype(T,/turf/simulated/floor))
+			if(isfloorturf(T))
 				var/turf/simulated/floor/F = T
 				if(!F.burnt)
 					floor += 12
 				else
 					floor += 1
 
-			if(istype(T, /turf/simulated/wall))
+			if(iswallturf(T))
 				if(T.intact)
 					wall += 2
 				else

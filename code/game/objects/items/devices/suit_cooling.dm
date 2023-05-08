@@ -76,7 +76,7 @@
 		return FALSE
 
 	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
-	user.bodytemperature -= temp_adj * efficiency
+	user.adjust_bodytemperature(-temp_adj * efficiency)
 	cell.use(charge_usage)
 
 	return TRUE
@@ -134,7 +134,7 @@
 		turn_on()
 
 /obj/item/device/suit_cooling_unit/attackby(obj/item/I, mob/user, params)
-	if (isscrewdriver(I))
+	if (isscrewing(I))
 		if (cover_open)
 			cover_open = FALSE
 			to_chat(user, "<span class='info'>You screw the panel into place.</span>")

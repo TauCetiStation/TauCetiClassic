@@ -165,6 +165,7 @@
 
 	max_temperature = T20C
 	min_temperature = 170
+	required_skills = list()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/atom_init()
 	. = ..()
@@ -213,6 +214,7 @@
 
 	max_temperature = T20C + 680
 	min_temperature = T20C
+	required_skills = list()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/atom_init()
 	. = ..()

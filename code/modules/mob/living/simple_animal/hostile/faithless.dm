@@ -43,12 +43,13 @@
 /mob/living/simple_animal/hostile/faithless/FindTarget()
 	. = ..()
 	if(.)
-		emote("wails at [.]")
+		me_emote("wails at [.]")
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))
 		if(prob(12))
+			L.Stun(1)
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")

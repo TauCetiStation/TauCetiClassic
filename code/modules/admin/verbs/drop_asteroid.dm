@@ -30,6 +30,7 @@
 				shake_camera(C, 4, 1)
 			else
 				shake_camera(C, 10, 2)
+				C.Stun(4)
 				C.Weaken(8)
 				C.throw_at(get_step(C,pick(1,2,4,8)),16,3)
 

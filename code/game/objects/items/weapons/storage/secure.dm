@@ -13,7 +13,10 @@
 // -----------------------------
 /obj/item/weapon/storage/secure
 	name = "secstorage"
-	var/locked = 1
+	var/icon_locking = "secureb"
+	var/icon_sparking = "securespark"
+	var/icon_opened = "secure0"
+	var/locked = TRUE
 	var/code = ""
 	var/l_code = null
 	var/l_set = 0
@@ -48,7 +51,8 @@
 			add_overlay(spark)
 			sleep(6)
 			cut_overlays()
-			locked = 0
+			add_overlay(image('icons/obj/storage.dmi', icon_locking))
+			locked = FALSE
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
@@ -57,12 +61,12 @@
 			to_chat(user, "You slice through the lock on [src].")
 			return
 
-		if (isscrewdriver(I))
+		if (isscrewing(I))
 			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
-		if ((ismultitool(I)) && (src.open == 1)&& (!src.l_hacking))
+		if ((ispulsing(I)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
 			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
@@ -92,8 +96,9 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_overlay(spark)
 	sleep(6)
-	cut_overlays(spark)
-	locked = 0
+	cut_overlay(spark)
+	add_overlay(image('icons/obj/storage.dmi', icon_locking))
+	locked = FALSE
 	to_chat(user, "You short out the lock on [src].")
 	return TRUE
 
@@ -133,7 +138,7 @@
 					l_code = code
 					l_set = 1
 				else if ((code == l_code) && (emagged == 0) && (l_set == 1))
-					locked = 0
+					locked = FALSE
 					overlays = null
 					overlays += image('icons/obj/storage.dmi', "briefcase_accepted")
 					code = null
@@ -141,7 +146,7 @@
 					code = "ERROR"
 			else
 				if ((digit == "R") && (emagged == 0) && (!l_setshort))
-					locked = 1
+					locked = TRUE
 					overlays = null
 					code = null
 					close(usr)
@@ -167,6 +172,14 @@
 	throw_range = 4
 	w_class = SIZE_NORMAL
 	startswith = list(/obj/item/weapon/paper, /obj/item/weapon/pen)
+
+/obj/item/weapon/storage/secure/briefcase/try_open(mob/user)
+	if(locked)
+		if(user.in_interaction_vicinity(src))
+			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
+		return FALSE
+	else
+		return ..()
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
@@ -195,10 +208,7 @@
 		add_overlay(denied)
 		indicator_overlays += denied
 
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_l_hand()
-		M.update_inv_r_hand()
+	update_inv_mob()
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie

@@ -26,7 +26,7 @@
 		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
-/obj/structure/stool/bed/chair/pew/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/stool/bed/chair/pew/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	if(get_dir(target, loc) & dir)
@@ -171,8 +171,10 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		if(ear_safety > 1)
 			L.Stun(1)
 		else if(ear_safety > 0)
+			L.Stun(1)
 			L.Weaken(1)
 		else
+			L.Stun(3)
 			L.Weaken(3)
 			L.ear_damage += rand(0, 5)
 			L.ear_deaf = max(L.ear_deaf, 15)
@@ -291,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/big_bell/attackby(obj/item/I, mob/user)
-	if(iswrench(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
+	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
 		anchored = !anchored
 		visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -299,7 +301,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	return ..()
 
-/obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0)
 	return istype(mover) && mover.checkpass(PASSCRAWL)
 
 /obj/structure/big_bell/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, atom/movable/caller)
@@ -509,7 +511,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/stool/bed/chair/lectern/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(flipped)
 			to_chat(user, "<span class='notice'>You need to flip [src] back upright.</span>")
 			return
@@ -520,7 +522,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		to_chat(user, "<span class='notice'>You have [anchored ? "secured" : "unsecured"] [src].</span>")
 		return
 
-	if(iscrowbar(W))
+	if(isprying(W))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You need to unsecure [src] first.</span>")
 			return
@@ -535,7 +537,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM && anchored && book.attackby(W, user, params))
+	if(anchored && book.attackby(W, user, params))
 		return
 
 	return ..()
@@ -562,10 +564,10 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 			layer = BELOW_MOB_LAYER
 		else
 			layer = INFRONT_MOB_LAYER
-		M.pixel_y = M.get_pixel_y_offset()
+		M.pixel_y = M.default_pixel_y
 		cut_overlay(lectern_overlay)
 
-/obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 

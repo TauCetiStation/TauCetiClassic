@@ -9,6 +9,8 @@
 	storedPlasma = 50
 	max_plasma = 50
 
+	speed = -1
+
 	density = FALSE
 	w_class = SIZE_SMALL
 	var/amount_grown = 0
@@ -72,9 +74,6 @@
 
 /mob/living/carbon/xenomorph/larva/swap_hand()
 	return
-
-/mob/living/carbon/xenomorph/larva/movement_delay()
-	return (move_delay_add + config.alien_delay - 1)
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
 	return FALSE

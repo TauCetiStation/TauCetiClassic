@@ -54,6 +54,8 @@ cause a ton of data to be lost, an admin can go send it back.
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
@@ -112,12 +114,10 @@ cause a ton of data to be lost, an admin can go send it back.
 
 /obj/machinery/computer/rdconsole/atom_init()
 	. = ..()
-	RDcomputer_list += src
 	files = new /datum/research(src) //Setup the research data holder.
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
-	RDcomputer_list -= src
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null
@@ -136,7 +136,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
-	else if(ismultitool(D))
+	else if(ispulsing(D))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")
@@ -426,7 +426,6 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if((screen == "protolathe" && !linked_lathe) || (screen == "circuit_imprinter" && !linked_imprinter))
 		screen = "main" // Kick us from protolathe or imprinter screen if they were destroyed
-
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync
@@ -671,9 +670,10 @@ cause a ton of data to be lost, an admin can go send it back.
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
-	id = 2
+	id = DEFAULT_ROBOTICS_CONSOLE_ID
 	req_access = list(29)
 	can_research = FALSE
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/rdconsole/robotics/atom_init()
 	. = ..()
@@ -683,14 +683,15 @@ cause a ton of data to be lost, an admin can go send it back.
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
-	id = 1
+	id = DEFAULT_SCIENCE_CONSOLE_ID
 	can_research = TRUE
 
 /obj/machinery/computer/rdconsole/mining
 	name = "Mining R&D Console"
-	id = 3
+	id = DEFAULT_MINING_CONSOLE_ID
 	req_access = list(48)
 	can_research = FALSE
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/rdconsole/mining/atom_init()
 	. = ..()

@@ -10,7 +10,6 @@
 	brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	var/ping_cd = 0//attack_ghost cooldown
 
@@ -61,9 +60,10 @@
 	to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
 	to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
 	to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
-	to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
+	brainmob.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	brainmob.mind.skills.maximize_active_skills()
 	visible_message("<span class='notice'>\The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
@@ -80,7 +80,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
 	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
+		switch(brainmob.stat != CONSCIOUS)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
 					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk
@@ -107,12 +107,15 @@
 	..()
 
 /obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
-	if(!ping_cd)
-		ping_cd = 1
-		spawn(50)
-			ping_cd = 0
-		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
-		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
+	if(ping_cd)
+		return
+	ping_cd = 1
+	VARSET_IN(src, ping_cd, 0, 5 SECONDS)
+	audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+	if(can_waddle())
+		var/static/list/waddle_angles = list(-32, -22, 22, 32)
+		waddle(pick(waddle_angles), 0)
 
 /obj/item/device/mmi/posibrain/atom_init()
 

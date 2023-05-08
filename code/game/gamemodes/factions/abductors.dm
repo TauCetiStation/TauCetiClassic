@@ -12,7 +12,9 @@
 	qdel(src)
 
 /obj/effect/landmark/abductor/agent
+	name = "Abductor agent"
 /obj/effect/landmark/abductor/scientist
+	name = "Abductor scientist"
 
 var/global/list/obj/effect/landmark/abductor/agent_landmarks[MAX_ABDUCTOR_TEAMS]
 var/global/list/obj/effect/landmark/abductor/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
@@ -44,11 +46,10 @@ var/global/abductor_landmarks_setuped = FALSE
 		setup_landmarks()
 
 /datum/faction/abductors/proc/setup_landmarks()
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
+	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor agent"])
+		agent_landmarks[A.team] = A
+	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor scientist"])
+		scientist_landmarks[A.team] = A
 
 /datum/faction/abductors/get_initrole_type()
 	if(members.len == 0)
