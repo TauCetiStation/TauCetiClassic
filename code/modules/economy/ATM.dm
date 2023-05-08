@@ -489,8 +489,8 @@ log transactions
 				var/new_max_payment = input(usr, "Insurance changes", "Write new value") as num
 				if(!Adjacent(usr) || usr.incapacitated())
 					return
-				if(new_max_payment < 0)
-					tgui_alert(usr, "ERROR!")
+				if(new_max_payment < 0 || new_max_payment > MAX_INSURANCE_PRICE)
+					tgui_alert(usr, "You can only set it in range from 0 to [MAX_INSURANCE_PRICE]")
 					return				
 				authenticated_account.owner_max_insurance_payment = new_max_payment
 
