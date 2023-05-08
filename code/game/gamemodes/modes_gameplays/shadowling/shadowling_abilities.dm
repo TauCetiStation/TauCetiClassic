@@ -57,7 +57,7 @@
 		for(var/obj/machinery/M in T.contents)
 			if(istype(M,/obj/machinery/light))
 				var/obj/machinery/light/L = M
-				L.on = 0
+				L.on = FALSE
 				L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
 				L.update(0)
 			else if(istype(M,/obj/machinery/door/airlock))
