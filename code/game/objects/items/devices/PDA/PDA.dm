@@ -518,7 +518,9 @@
 	data["owner_preferred_insurance_type"] = MA.owner_preferred_insurance_type
 	data["owner_insurance_price"] = SSeconomy.insurance_prices[data["owner_insurance_type"]]
 	data["owner_preferred_insurance_price"] = SSeconomy.insurance_prices[data["owner_preferred_insurance_type"]]
-	data["record_id"] = get_record_id_connected_to_money_account()
+	data["owner_max_insurance_payment"] = MA.owner_max_insurance_payment
+	data["medical_record_id"] = get_medical_record_id_connected_to_money_account()
+	data["permission_to_change_insurance_price"] = check_permission_to_change_insurance_price()
 	data["money"] = MA ? MA.money : "error"
 	data["salary"] = MA ? MA.owner_salary : "error"
 	data["target_account_number"] = target_account
@@ -1083,91 +1085,38 @@
 			mode = 73
 			subordinate_staff = my_subordinate_staff(ownrank)
 
-		if("Change insurance")
-			if(!check_owner_fingerprints(U))
-				return
-			var/mob/living/carbon/human/H = U
-			var/datum/money_account/MA = get_account(owner_account)
-			if(MA.security_level && (MA.remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || MA.owner_name != H.real_name))
-				tgui_alert(H, "Please check information about your money account")
-				return
-			var/list/insurances = SSeconomy.insurance_quality_decreasing + "Cancel"
-			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in insurances
-			if(insurance_type == "Cancel")
-				return
-			var/choice = input(H, "You wanna change insurance immediately, or make a preference?", "Insurance changes") in list("Cancel", "Immediately", "Make Preference")
-			if(choice == "Cancel")
-				return
-			if(choice == "Make Preference")
-				if(H.incapacitated())
-					return
-				var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H
-				if(!P || P.owner != H.real_name || !check_owner_fingerprints(H))
-					return
-				MA.owner_preferred_insurance_type = insurance_type
-				return
-			var/timecoefficient = round((SSeconomy.endtime - world.timeofday) / 600)
-			var/current_price = SSeconomy.insurance_prices[insurance_type]
-			var/insurance_price = current_price + 10 * timecoefficient
-			if(MA.money < insurance_price)
-				tgui_alert(H, "Sorry, but you don't have enough money to buy [insurance_type] insurance, which costs [insurance_price] credits if bought right now")
-				return
-			var/decision = tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits if bought right now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No"))
-			if(decision == "No")
-				return
-			if(H.incapacitated())
-				return
-			var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H
-			if(!P || P.owner != H.real_name || !check_owner_fingerprints(H))
-				return
-			if(current_price != SSeconomy.insurance_prices[insurance_type])
-				tgui_alert(H, "Price of this insurance was changed.")
-				return
-			if(MA.money < insurance_price)
-				tgui_alert(H, "You don't have enough money.")
-				return
-			
-			var/datum/data/record/R = find_record("insurance_account_number", owner_account, data_core.general)
-			if(!R || !(R.fields["fingerprint"] in owner_fingerprints))
-				tgui_alert(H, "Sorry, but your money account is not connected to your medical record, please check this information and try again.")
-				return
-			if(R.fields["fingerprint"] != md5(H.dna.uni_identity))
-				tgui_alert(H, "Sorry, but your fingerprints aren't equal to the fingerprints from the record, connected to this money account, please check this information and try again.")
-				return
-			if(R.fields["name"] != H.real_name)
-				return
-			R.fields["insurance_type"] = insurance_type
-			MA.owner_preferred_insurance_type = insurance_type
-
-			if(insurance_price <= 0)
-				return
-			charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
-			var/med_account_number = global.department_accounts["Medical"].account_number
-			charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price)
-
 		if("Change insurance price")
+			if(!check_permission_to_change_insurance_price())
+				tgui_alert(U, "You don't have permission to change insurance price.")
+				return
 			if(!check_owner_fingerprints(U))
 				return
 			var/mob/living/carbon/human/H = U
 			var/list/insurances = SSeconomy.insurance_quality_decreasing - INSURANCE_NONE + "Cancel"
 			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in insurances
-			if(insurance_type == "Cancel")
+			if(insurance_type == "Cancel" || H.incapacitated() || !Adjacent(H))
+				return
+			if(!check_owner_fingerprints(H) || !check_permission_to_change_insurance_price())
+				tgui_alert(H, "You don't have permission to change insurance price.")
 				return
 			var/newprice = input(user, "Insurance changes", "Write new price") as num
+			if(H.incapacitated() || !Adjacent(H))
+				return
+			if(!check_owner_fingerprints(H) || !check_permission_to_change_insurance_price())
+				tgui_alert(H, "You don't have permission to change insurance price.")
+				return
 			if(newprice < 0 || newprice > MAX_INSURANCE_PRICE)
 				tgui_alert(H, "You can only set the price in range from 0 to [MAX_INSURANCE_PRICE]")
 				return
 			var/decision = tgui_alert(U, "Now [insurance_type] insurance will cost [newprice] credits. Are you sure?", "Confirm", list("Yes", "No"))
-			if(decision == "No")
+			if(decision == "No" || H.incapacitated() || !Adjacent(H))
 				return
-			if(H.incapacitated())
-				return
-			var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
-			if(!P || P.owner != H.real_name || !check_owner_fingerprints(H))
+			if(!check_owner_fingerprints(H) || !check_permission_to_change_insurance_price())
+				tgui_alert(H, "You don't have permission to change insurance price.")
 				return
 			SSeconomy.insurance_prices[insurance_type] = newprice
 			var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-			announcer.autosay("CMO has changed the price of \"[insurance_type]\"  insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
+			announcer.autosay("CMO has changed the price of \"[insurance_type]\" insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
 			qdel(announcer)
 
 
@@ -1991,11 +1940,17 @@
 	return INSURANCE_NONE
 
 
-/obj/item/device/pda/proc/get_record_id_connected_to_money_account()
+/obj/item/device/pda/proc/get_medical_record_id_connected_to_money_account()
 	var/datum/data/record/R = find_record("insurance_account_number", owner_account, data_core.general)
 	if(R)
 		return R.fields["id"]
 	return "ERROR"
+
+
+/obj/item/device/pda/proc/check_permission_to_change_insurance_price()
+	if(!cartridge || !istype(cartridge, /obj/item/weapon/cartridge/cmo) || !istype(src, /obj/item/device/pda/heads/cmo) || !istype(id, /obj/item/weapon/card/id/medGold))
+		return FALSE
+	return TRUE
 
 #undef TRANSCATION_COOLDOWN
 
