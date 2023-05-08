@@ -68,6 +68,8 @@
 		/obj/item/weapon/grenade/flashbang = 4,
 		/obj/item/device/flash = 5,
 		/obj/item/weapon/storage/box/evidence = 6,
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 5,
+		/obj/item/ammo_box/magazine/glock/rubber = 10,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
@@ -76,6 +78,10 @@
 	syndie = list(
 		/obj/item/ammo_box/speedloader/a357 = 1,
 		/obj/item/ammo_box/magazine/stechkin = 1,
+	)
+	prices = list(
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 200,
+		/obj/item/ammo_box/magazine/glock/rubber = 50,
 	)
 	private = TRUE
 
