@@ -229,7 +229,7 @@ log transactions
 							dat += "<b>Medical record id:</b> [R.fields["id"]]<br>"
 						else
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
-							dat += "Error, this money account is not connected to your medical record, please check this info and try again.</span><br>"
+							dat += "Error, this money account is not connected to your medical record, please check this info and try again.<br>"
 
 					else
 						dat += "Welcome, <b>[authenticated_account.owner_name].</b><br/>"
