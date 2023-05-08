@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(economy)
 			R.fields["insurance_type"] = INSURANCE_NONE
 			problem_record_id.Add(R.fields["id"])
 			continue
-		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money)
+		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money, max_insurance_payment = MA.owner_max_insurance_payment)
 		var/insurance_price = SSeconomy.insurance_prices[insurance_type]
 		R.fields["insurance_type"] = insurance_type
 		if(insurance_price == 0)
@@ -162,17 +162,18 @@ SUBSYSTEM_DEF(economy)
 	return R.fields["insurance_type"]
 
 
-/proc/get_next_insurance_type(current_insurance_type, preferred_insurance_type, money)
-	if(current_insurance_type == preferred_insurance_type && money >= SSeconomy.insurance_prices[current_insurance_type])
+/proc/get_next_insurance_type(current_insurance_type, preferred_insurance_type, money, max_insurance_payment)
+	var/current_insurance_price = SSeconomy.insurance_prices[current_insurance_type]
+	if(current_insurance_type == preferred_insurance_type && money >= current_insurance_price  && max_insurance_payment >= current_insurance_price)
 		return current_insurance_type
 
 	var/prefprice = SSeconomy.insurance_prices[preferred_insurance_type]
-	if(money >= prefprice)
+	if(money >= prefprice && max_insurance_payment >= prefprice)
 		return preferred_insurance_type
 
 	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
 		var/insprice = SSeconomy.insurance_prices[insurance_type]
-		if(money >= insprice)
+		if(money >= insprice && max_insurance_payment >= insprice)
 			return insurance_type
 
 
