@@ -373,6 +373,7 @@ log transactions
 					else
 						tried_account_num = held_card.associated_account_number
 					var/tried_pin = text2num(href_list["account_pin"])
+
 					authenticated_account = attempt_account_access(tried_account_num, tried_pin, held_card && held_card.associated_account_number == tried_account_num ? 2 : 1)
 					if(!authenticated_account)
 						number_incorrect_tries++
