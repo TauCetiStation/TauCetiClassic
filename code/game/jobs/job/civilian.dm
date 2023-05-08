@@ -255,6 +255,8 @@
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = pick(clown_names)
+	H.rename_self("clown")
 
 /datum/job/mime
 	title = "Mime"
@@ -276,3 +278,5 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
 		H.miming = TRUE
+	H.real_name = pick(mime_names)
+	H.rename_self("mime")
