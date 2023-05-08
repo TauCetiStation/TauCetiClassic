@@ -84,6 +84,7 @@
 	icon_state = "briefcase_eng"
 	item_state = "briefcase_eng"
 	can_hold = list(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/glass, /obj/item/stack/sheet/glass/phoronglass, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/glass/phoronrglass)
+	max_storage_space = null
 	storage_slots = 10
 
 /obj/item/weapon/storage/briefcase/engine/atom_init()
