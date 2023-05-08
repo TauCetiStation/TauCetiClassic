@@ -86,6 +86,23 @@
 	can_hold = list(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/glass, /obj/item/stack/sheet/glass/phoronglass, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/glass/phoronrglass)
 	storage_slots = 10
 
+/obj/item/weapon/storage/briefcase/engine/atom_init()
+	. = ..()
+
+	new /obj/item/stack/sheet/metal(src, 50)
+	new /obj/item/stack/sheet/metal(src, 50)
+	new /obj/item/stack/sheet/metal(src, 50)
+
+	new /obj/item/stack/sheet/glass(src, 50)
+	new /obj/item/stack/sheet/glass(src, 50)
+	new /obj/item/stack/sheet/glass(src, 50)
+
+	new /obj/item/stack/sheet/plasteel(src, 50)
+
+	new /obj/item/stack/sheet/rglass(src, 50)
+
+	update_icon()
+
 /obj/item/weapon/storage/briefcase/engine/update_icon()
 	cut_overlays()
 	for(var/i in 1 to min(10, contents.len))

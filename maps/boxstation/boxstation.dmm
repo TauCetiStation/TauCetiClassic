@@ -46870,7 +46870,6 @@
 /area/station/rnd/lab)
 "bIb" = (
 /obj/structure/table/glass,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/accessory/stethoscope,
 /obj/item/clothing/accessory/stethoscope,
 /obj/item/clothing/glasses/hud/health,
@@ -61224,9 +61223,7 @@
 /area/station/engineering/break_room)
 "ctc" = (
 /obj/structure/table,
-/obj/item/weapon/storage/briefcase/engine{
-	startswith = list(/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/plasteel)
-	},
+/obj/item/weapon/storage/briefcase/engine,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -64274,7 +64271,7 @@
 	pixel_x = -8
 	},
 /obj/item/weapon/storage/briefcase/med{
-	startswith = list(/obj/item/weapon/gun/syringe, /obj/item/device/camera, /obj/item/device/lens/rentgene, /obj/item/clothing/mask/muzzle, /obj/item/weapon/medical/teleporter, /obj/item/weapon/medical/teleporter, /obj/item/bodybag/cryobag, /obj/item/bodybag/cryobag, /obj/item/bodybag/cryobag)
+	startswith = list(/obj/item/weapon/gun/syringe,/obj/item/device/camera,/obj/item/device/lens/rentgene,/obj/item/clothing/mask/muzzle,/obj/item/weapon/medical/teleporter,/obj/item/weapon/medical/teleporter,/obj/item/bodybag/cryobag,/obj/item/bodybag/cryobag,/obj/item/bodybag/cryobag, /obj/item/clothing/suit/straight_jacket)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -75319,7 +75316,7 @@
 "lSb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/briefcase/med{
-	startswith = list(/obj/item/weapon/cartridge/medical, /obj/item/weapon/cartridge/medical, /obj/item/weapon/cartridge/chemistry, /obj/item/device/megaphone, /obj/item/weapon/defibrillator/compact/loaded, /obj/item/device/sensor_device)
+	startswith = list(/obj/item/weapon/cartridge/medical,/obj/item/weapon/cartridge/medical,/obj/item/weapon/cartridge/chemistry,/obj/item/device/megaphone,/obj/item/weapon/defibrillator/compact/loaded,/obj/item/device/sensor_device)
 	},
 /turf/simulated/floor{
 	dir = 8;
