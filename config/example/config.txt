@@ -274,6 +274,11 @@ NO_JUNKYARD
 ## Enables demo recordings, works slower on windows
 # RECORD_REPLAYS
 
+## Use persistent cache for better perfomance
+## You will need to occasionally clean ./cache/persistent yourself from old files
+## by removing folder or with ./script/clear_persistent_cache.sh
+#USE_PERSISTENT_CACHE
+
 ## Run server in sandbox mode - everyone has admin permissions without logs, bans
 ## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server
 # SANDBOX
