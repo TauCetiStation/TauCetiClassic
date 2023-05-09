@@ -505,6 +505,7 @@
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/durathread)
 
 /obj/item/seeds/riceseed
 	name = "pack of rice seeds"
@@ -1184,6 +1185,22 @@
 	new /obj/effect/spacevine_controller(user.loc)
 	qdel(src)
 
+/obj/item/seeds/durathread
+	name = "pack of durathread seeds"
+	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
+	icon_state = "seed-durathread"
+	species = "durathread"
+	plantname = "Durathread"
+	product_type = /obj/item/weapon/grown/durathread
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 2
+	potency = 5
+	growthstages = 3
+
+
 // **********************
 // Other harvested materials from plants (that are not food)
 // **********************
@@ -1299,6 +1316,13 @@
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
+
+/obj/item/weapon/grown/durathread
+	seed_type = /obj/item/seeds/durathread
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	name = "durathread bundle"
+	desc = "A tough bundle of durathread, good luck unraveling this."
+	icon_state = "durathread"
 
 // *************************************
 // Pestkiller defines for hydroponics
