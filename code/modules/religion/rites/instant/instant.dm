@@ -130,7 +130,7 @@
 	var/turf/turf = get_turf(AOG)
 	playsound(AOG, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 25)
 	turf.hotspot_expose(700, 125)
-	empulse(turf, 3, 5 * divine_power)
+	empulse(turf, 3 * sqrt(divine_power), 5 * divine_power)
 	return TRUE
 
 /datum/religion_rites/instant/cult/drain_torture
@@ -651,13 +651,13 @@
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
 	var/stun_modifier = 12 / length(heretics) * divine_power
-	for(var/mob/living/carbon/C in heretics)
-		C.flash_eyes()
-		if(!(HULK in C.mutations))
-			C.Stuttering(1)
-			C.Weaken(stun_modifier)
-			C.Stun(stun_modifier)
-			C.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
+	for(var/mob/living/L in heretics)
+		L.flash_eyes()
+		L.Stun(stun_modifier)
+		if(!(HULK in L.mutations))
+			L.Stuttering(1)
+			L.Weaken(stun_modifier)
+			L.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
 	return TRUE
 
 /datum/religion_rites/instant/communicate

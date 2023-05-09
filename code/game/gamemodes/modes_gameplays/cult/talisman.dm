@@ -6,6 +6,7 @@
 
 	var/disposable = FALSE
 	var/text_befor_riteinfo
+	var/filter_color = COLOR_BLUE_GRAY
 
 /obj/item/weapon/paper/talisman/atom_init(mapload, datum/religion/_religion, datum/religion_rites/_rite)
 	. = ..()
@@ -42,13 +43,17 @@
 
 	busy = TRUE
 	user.take_overall_damage(rand(1, 5), rand(1, 5))
+	user.add_filter("talisman", 2, outline_filter(1, filter_color))
 	if(rite?.perform_rite(user, src))
 		if(disposable)
 			qdel(src)
+	user.remove_filter("talisman")
 
 /obj/item/weapon/paper/talisman/chaplain
 	text_befor_riteinfo = "Божественным почерком написано"
+	filter_color = COLOR_AMBER
 
 /obj/item/weapon/paper/talisman/cult
 	icon_state = "scrap_bloodied"
 	text_befor_riteinfo = "Кровью наскребено"
+	filter_color = COLOR_CRIMSON_RED
