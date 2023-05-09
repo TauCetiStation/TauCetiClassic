@@ -445,13 +445,6 @@
 	item_state = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/rank/mecha_operator
-	desc = "It's a slimming black with reinforced seams."
-	name = "pilot's jumpsuit"
-	icon_state = "robotics2"
-	item_state = "robotics"
-	flags = ONESIZEFITSALL
-
 /obj/item/clothing/under/rank/cadet
 	desc = ""
 	name = "security cadet's uniform"
@@ -514,12 +507,6 @@
 	icon_state = "bar_f"
 	item_state = "bar_f"
 
-/obj/item/clothing/under/kimono
-	name = "kimono"
-	icon_state = "kimono"
-	item_state = "kimono"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
 	desc = "Filled with latin fire."
@@ -556,12 +543,6 @@
 	desc = "The big drum sounds good only from a distance."
 	icon_state = "mafia_tan"
 	item_state = "mafia_tan"
-
-/obj/item/clothing/under/mafia/flappers
-	name = "flappers"
-	desc = "Nothing like the roaring 20s, flapping the night away on the dance floor."
-	icon_state = "flapper"
-	item_state = "flapper"
 
 /obj/item/clothing/under/rank/capcamsole
 	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
