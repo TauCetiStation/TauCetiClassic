@@ -24,6 +24,15 @@
 		to_chat(world, "BAD: [src] ([type]) spawned at [COORD(src)]")
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/weapon/storage/toolbox/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return
+	//Clumsy used only for dna-handlers
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/C = M
+	C.apply_status_effect(STATUS_EFFECT_CLUMSY)
+
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"

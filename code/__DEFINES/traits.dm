@@ -220,6 +220,7 @@
 #define GENETIC_MUTATION_TRAIT "genetic"
 #define QUIRK_TRAIT "quirk"
 #define VIRUS_TRAIT "virus"
+#define STATUS_EFFECT_TRAIT "status_effect"
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself
