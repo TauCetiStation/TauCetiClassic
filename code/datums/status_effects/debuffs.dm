@@ -227,20 +227,20 @@
 	icon_state = "alien_help"
 	alerttooltipstyle = "alien"
 
-/datum/status_effect/clumsy_attach
+/datum/status_effect/clumsy
 	id = "clumsy"
 	alert_type = /atom/movable/screen/alert/status_effect/clumsy
 	duration = 4 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 
-/datum/status_effect/clumsy_attach/on_apply()
+/datum/status_effect/clumsy/on_apply()
 	. = ..()
 	if(!iscarbon(owner))
 		return
 	ADD_TRAIT(owner, TRAIT_CLUMSY, STATUS_EFFECT_TRAIT)
 	to_chat(owner, "<span class='warning'>You feel lightheaded</span>")
 
-/datum/status_effect/clumsy_attach/on_remove()
+/datum/status_effect/clumsy/on_remove()
 	if(!iscarbon(owner))
 		return
 	REMOVE_TRAIT(owner, TRAIT_CLUMSY, STATUS_EFFECT_TRAIT)

@@ -27,7 +27,7 @@
 
 #define STATUS_EFFECT_REMOVE_GREASY /datum/status_effect/remove_trait/greasy_hands
 
-#define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy_attach
+#define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy
 
 /////////////
 // NEUTRAL //
