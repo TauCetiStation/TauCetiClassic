@@ -300,5 +300,5 @@ var/global/list/allergen_reagents_list
 	desc = "У тебя большой аппетит, что всегда приводило тебя к неприятностям."
 	requirement = "Нет."
 
-/datum/quality/negativeish/delicate/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
 	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
