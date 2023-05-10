@@ -2693,6 +2693,11 @@
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #4"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -20300,6 +20305,16 @@
 	icon_state = "whiteblue"
 	},
 /area/station/rnd/hallway)
+"fED" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #2"
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/cargo/storage)
 "fEI" = (
 /obj/structure/sign/poster/ripped{
 	pixel_y = 32
@@ -24706,6 +24721,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"gRk" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #3"
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/cargo/storage)
 "gRp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77177,6 +77202,11 @@
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #1"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -80735,6 +80765,10 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"wPK" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "wPL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
@@ -128527,8 +128561,8 @@ cpR
 dpk
 dpk
 cpR
-tiC
-tiC
+wPK
+wPK
 cpR
 cpR
 idI
@@ -128784,8 +128818,8 @@ udw
 gaF
 gaF
 vNs
-bGb
-bGb
+fED
+gRk
 aBY
 tII
 gaF
