@@ -35,6 +35,7 @@
 	var/is_hungry = FALSE
 
 	var/can_starve = FALSE
+	var/breath_phoron = FALSE
 
 	var/next_jamming_alert = 0
 	var/jamming_alert_cooldown = 30 SECONDS
@@ -122,18 +123,20 @@
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
+	can_starve = TRUE
+	breath_phoron = FALSE
+
 	if(!environment)
-		can_starve = TRUE
 		return
 
-	if(environment.get_gas("fractol") < 1.0)
-		can_starve = TRUE
-		return
+	if(environment.get_gas("fractol") >= 1.0)
+		environment.adjust_gas("fractol", -1.0)
+		can_starve = FALSE
+		last_disintegration = world.time
 
-	environment.adjust_gas("fractol", -1.0)
-	can_starve = FALSE
-
-	last_disintegration = world.time
+	if(environment.get_gas("phoron") >= 1.0)
+		environment.adjust_gas("phoron", -1.0)
+		breath_phoron = TRUE
 
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
 	var/color_to_flash = null

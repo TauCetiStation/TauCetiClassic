@@ -184,6 +184,19 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
 		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
 		standing += tatoo
+
+	if(species.name == UNATHI)
+		var/obj/item/organ/external/Chest = bodyparts_by_name[BP_CHEST]
+		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]", -BODY_LAYER)
+		belly.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+		standing += belly
+
+		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
+		if(Head && !Head.is_stump)
+			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -FACEMASK_LAYER)
+			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+			standing += jaw
+
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)

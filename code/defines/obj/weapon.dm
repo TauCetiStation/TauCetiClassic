@@ -111,6 +111,7 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	item_state_world = "large_world"
+	var/item_state_base = ""
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
@@ -124,21 +125,31 @@
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
 
 /obj/item/weapon/shard/atom_init()
-	if(icon_state == "large") // little hack so we don't overwrite our childs phoron and shrapnel icons
-		icon_state = pick("large", "medium", "small")
-		item_state_world = "[icon_state]_world"
-		switch(icon_state)
-			if("small")
-				pixel_x = rand(-12, 12)
-				pixel_y = rand(-12, 12)
-			if("medium")
-				pixel_x = rand(-8, 8)
-				pixel_y = rand(-8, 8)
-			if("large")
-				pixel_x = rand(-5, 5)
-				pixel_y = rand(-5, 5)
+	var/icon_variant = pick("large", "medium", "small")
+	item_state_base = "[item_state_base][icon_variant]"
+	item_state_world = "[item_state_base]_world"
+
+	switch(icon_variant)
+		if("small")
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
+		if("medium")
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
+		if("large")
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
 	return ..()
+
+/obj/item/weapon/shard/update_icon()
+	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
+		icon_state = item_state_base
+	else if(icon_state != item_state_world)
+		icon_state = item_state_world
+
+/obj/item/weapon/shard/update_world_icon()
+	update_icon()
 
 /obj/item/weapon/shard/Bump()
 	if(prob(20))
@@ -224,24 +235,9 @@
 	throwforce = 15.0
 	icon_state = "phoronlarge"
 	item_state_world = "phoronlarge_world"
+	item_state_base = "phoron"
 	sharp = 1
 	edge = 1
-
-/obj/item/weapon/shard/phoron/atom_init()
-	icon_state = pick("phoronlarge", "phoronmedium", "phoronsmall")
-	item_state_world = "[icon_state]_world"
-	switch(icon_state)
-		if("phoronsmall")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("phoronmedium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("phoronlarge")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
-
-	return ..()
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I))
@@ -259,24 +255,9 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	item_state_world = "shrapnellarge_world"
+	item_state_base = "shrapnel"
 	desc = "A bunch of tiny bits of shattered metal."
 	on_step_sound = 'sound/effects/metalstep.ogg'
-
-/obj/item/weapon/shard/shrapnel/atom_init()
-	icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	item_state_world = "[icon_state]_world"
-	switch(icon_state)
-		if("shrapnelsmall")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("shrapnelmedium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("shrapnellarge")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
-
-	return ..()
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"

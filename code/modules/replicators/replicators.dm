@@ -740,12 +740,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 
 /mob/living/simple_animal/hostile/replicator/proc/announce_material_adjustment(amount, ignore_intent=TRUE)
-	if(!client)
-		return
-
-	if(!client.prefs.show_runechat)
-		return
-
 	if(!ignore_intent && a_intent == INTENT_GRAB)
 		return
 

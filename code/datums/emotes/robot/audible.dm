@@ -5,7 +5,7 @@
 	message_3p = "beeps."
 
 	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see a light flicker."
+	message_impaired_reception = "flickers."
 
 	message_miming = "makes robot noises."
 	message_muzzled = "makes a weak noise."
@@ -26,7 +26,7 @@
 	message_3p = "pings."
 
 	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see a light flicker."
+	message_impaired_reception = "flickers."
 
 	message_miming = "makes robot noises."
 	message_muzzled = "makes a weak noise."
@@ -47,7 +47,7 @@
 	message_3p = "buzzes."
 
 	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see a light flicker."
+	message_impaired_reception = "flickers."
 
 	message_miming = "makes robot noises."
 	message_muzzled = "makes a weak noise."
@@ -66,7 +66,7 @@
 	message_3p = "shows it's legal authorization barcode."
 
 	message_impaired_production = "makes a noise."
-	message_impaired_reception = "You see a light flicker."
+	message_impaired_reception = "flickers."
 
 	message_miming = "makes robot noises."
 	message_muzzled = "makes a noise."
@@ -86,7 +86,7 @@
 	message_3p = "skreeches with it's skeapers, \"Halt! Security!\""
 
 	message_impaired_production = "makes a loud noise."
-	message_impaired_reception = "You see a red light flicker."
+	message_impaired_reception = "flickers with red."
 
 	message_miming = "makes loud robot noises."
 	message_muzzled = "makes a loud noise."

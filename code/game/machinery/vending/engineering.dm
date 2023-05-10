@@ -2,13 +2,20 @@
 	products = list(
 		/obj/item/device/assembly/prox_sensor = 5,
 		/obj/item/device/assembly/igniter = 3,
-		/obj/item/device/assembly/signaler = 4,
+		/obj/item/device/assembly/signaler = 8,
 		/obj/item/weapon/wirecutters = 1,
 		/obj/item/weapon/cartridge/signal = 4,
 	)
 	contraband = list(
-		/obj/item/device/flashlight = 5,
+		/obj/item/device/assembly/infra = 2,
+		/obj/item/device/assembly/voice = 2,
+		/obj/item/weapon/stock_parts/cell/high = 2,
+		/obj/item/device/flashlight = 3,
 		/obj/item/device/assembly/timer = 2,
+	)
+	premium = list(
+		/obj/item/weapon/circuitboard/vendor = 2,
+		/obj/item/device/tagger = 2,
 	)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	refill_canister = /obj/item/weapon/vending_refill/assist
@@ -37,6 +44,7 @@
 		/obj/item/stack/cable_coil/random = 10,
 		/obj/item/weapon/crowbar = 5,
 		/obj/item/weapon/weldingtool = 3,
+		/obj/item/weapon/weldingtool/largetank = 3,
 		/obj/item/weapon/wirecutters = 5,
 		/obj/item/weapon/wrench = 5,
 		/obj/item/device/analyzer = 5,
@@ -51,6 +59,9 @@
 		/obj/item/clothing/gloves/yellow = 1,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 1,
 	)
+	prices = list(
+		/obj/item/weapon/weldingtool/largetank = 50,
+	)
 	refill_canister = /obj/item/weapon/vending_refill/tool
 	private = TRUE
 
@@ -63,6 +74,7 @@
 	req_access = list(11) //Engineering Equipment access
 	products = list(
 		/obj/item/clothing/glasses/meson = 2,
+		/obj/item/clothing/glasses/welding = 2,
 		/obj/item/device/multitool = 4,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 4,
 		/obj/item/weapon/airlock_electronics = 10,
@@ -82,6 +94,9 @@
 	premium = list(
 		/obj/item/weapon/storage/belt/utility = 3,
 		/obj/item/weapon/storage/part_replacer = 1,
+	)
+	prices = list(
+		/obj/item/clothing/glasses/welding = 200,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/engivend
 	private = TRUE

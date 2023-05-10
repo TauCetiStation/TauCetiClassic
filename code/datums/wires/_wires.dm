@@ -260,7 +260,7 @@ var/global/list/wire_daltonism_colors = list()
 
 	var/mob/living/L = usr
 
-	if(!can_use(src) || !holder.can_mob_interact(L))
+	if(!can_use(src) || L.interact_prob_brain_damage(holder))
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
