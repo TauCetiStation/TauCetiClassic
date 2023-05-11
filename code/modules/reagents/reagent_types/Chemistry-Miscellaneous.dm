@@ -230,6 +230,9 @@
 			if(H.lip_style)
 				H.lip_style = null
 				H.update_body()
+			if(H.get_species() == TAJARAN)
+				H.emote("scream")
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hatecleaner", /datum/mood_event/on_liquid)
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)

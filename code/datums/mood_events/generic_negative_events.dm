@@ -42,6 +42,11 @@
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>"
 	mood_change = -12
 
+/datum/mood_event/on_liquid
+	description = "<span class='boldwarning'>I HATE LIQUID!!!</span>"
+	mood_change = -5
+	timeout = 30 SECONDS
+
 /datum/mood_event/suffocation
 	description = "<span class='boldwarning'>CAN'T... BREATHE...</span>"
 	mood_change = -12

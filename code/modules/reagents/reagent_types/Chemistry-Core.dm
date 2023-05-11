@@ -37,6 +37,10 @@
 				H.update_body()
 			if(changes_occured)
 				H.update_hair()
+			if(H.get_species() != TAJARAN)
+				return
+			H.emote("scream")
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hatewater", /datum/mood_event/on_liquid)
 
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	. = ..()
