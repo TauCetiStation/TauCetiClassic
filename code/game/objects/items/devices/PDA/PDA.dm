@@ -1092,26 +1092,28 @@
 			if(!check_owner_fingerprints(U))
 				return
 			var/mob/living/carbon/human/H = U
-			var/list/insurances = SSeconomy.insurance_quality_decreasing - INSURANCE_NONE + "Cancel"
-			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in insurances
-			if(insurance_type == "Cancel" || H.incapacitated() || !Adjacent(H))
+			var/list/insurances = SSeconomy.insurance_quality_decreasing - INSURANCE_NONE
+			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") as null|anything in insurances
+			if(!insurance_type || H.incapacitated() || !Adjacent(H))
 				return
-			if(!check_owner_fingerprints(H) || !check_permission_to_change_insurance_price())
+			if(!check_permission_to_change_insurance_price())
 				tgui_alert(H, "You don't have permission to change insurance price.")
 				return
-			var/newprice = input(user, "Insurance changes", "Write new price") as num
-			if(H.incapacitated() || !Adjacent(H))
+
+			var/newprice = input(user, "Write new price", "Insurance changes") as null|num
+			if(isnull(newprice) || H.incapacitated() || !Adjacent(H))
 				return
-			if(!check_owner_fingerprints(H) || !check_permission_to_change_insurance_price())
+			if(!check_permission_to_change_insurance_price())
 				tgui_alert(H, "You don't have permission to change insurance price.")
 				return
 			if(newprice < 0 || newprice > MAX_INSURANCE_PRICE)
 				tgui_alert(H, "You can only set the price in range from 0 to [MAX_INSURANCE_PRICE]")
 				return
-			var/decision = tgui_alert(U, "Now [insurance_type] insurance will cost [newprice] credits. Are you sure?", "Confirm", list("Yes", "No"))
+
+			var/decision = tgui_alert(U, "Now \"[insurance_type]\" insurance will cost [newprice] credits. Are you sure?", "Confirm", list("Yes", "No"))
 			if(decision == "No" || H.incapacitated() || !Adjacent(H))
 				return
-			if(!check_owner_fingerprints(H) || !check_permission_to_change_insurance_price())
+			if(!check_permission_to_change_insurance_price())
 				tgui_alert(H, "You don't have permission to change insurance price.")
 				return
 			SSeconomy.insurance_prices[insurance_type] = newprice
@@ -1948,7 +1950,7 @@
 
 
 /obj/item/device/pda/proc/check_permission_to_change_insurance_price()
-	if(!cartridge || !istype(cartridge, /obj/item/weapon/cartridge/cmo) || !istype(src, /obj/item/device/pda/heads/cmo) || !istype(id, /obj/item/weapon/card/id/medGold))
+	if(!cartridge || !istype(cartridge, /obj/item/weapon/cartridge/cmo) || !id || !(access_cmo in id.access))
 		return FALSE
 	return TRUE
 
