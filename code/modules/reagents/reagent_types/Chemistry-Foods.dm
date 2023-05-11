@@ -282,6 +282,29 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
+	COOLDOWN_DECLARE(coco_warning)
+
+/datum/reagent/consumable/coco/proc/toxin_digest(mob/living/M)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	if(data["ticks"] > 15)
+		M.adjustToxLoss(sqrt(data["ticks"]) * FOOD_METABOLISM)
+		if(COOLDOWN_FINISHED(src, coco_warning))
+			to_chat(M, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
+			COOLDOWN_START(src, coco_warning, 7 SECONDS)
+	data["ticks"]++
+
+/datum/reagent/consumable/coco/on_unathi_digest(mob/living/M)
+	toxin_digest(M)
+	return TRUE
+
+/datum/reagent/consumable/coco/on_tajaran_digest(mob/living/M)
+	toxin_digest(M)
+	return TRUE
+
+/datum/reagent/consumable/coco/on_vox_digest(mob/living/M)
+	toxin_digest(M)
+	return TRUE
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -292,10 +315,33 @@
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
+	COOLDOWN_DECLARE(hot_coco_warning)
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
 	..()
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
+
+/datum/reagent/consumable/hot_coco/proc/toxin_digest(mob/living/M)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	if(data["ticks"] > 15)
+		M.adjustToxLoss((sqrt(data["ticks"]) * DRINK_METABOLISM) * (nutriment_factor * 10 / 100)) //default coco have 10 "power", hot coco have 4
+		if(COOLDOWN_FINISHED(src, hot_coco_warning))
+			to_chat(M, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
+			COOLDOWN_START(src, hot_coco_warning, 7 SECONDS)
+	data["ticks"]++
+
+/datum/reagent/consumable/hot_coco/on_unathi_digest(mob/living/M)
+	toxin_digest(M)
+	return TRUE
+
+/datum/reagent/consumable/hot_coco/on_tajaran_digest(mob/living/M)
+	toxin_digest(M)
+	return TRUE
+
+/datum/reagent/consumable/hot_coco/on_vox_digest(mob/living/M)
+	toxin_digest(M)
+	return TRUE
 
 /datum/reagent/consumable/psilocybin
 	name = "Psilocybin"
