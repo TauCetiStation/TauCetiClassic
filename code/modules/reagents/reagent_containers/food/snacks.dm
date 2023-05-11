@@ -2623,6 +2623,13 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/fried_vox
+	name = "Kentucky Fried Vox"
+	desc = "Bucket of voxxy, yaya!"
+	icon_state = "fried_vox"
+	trash = /obj/item/trash/empty_bucket
+	list_reagents = list("nutriment" = 3, "protein" = 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
 	desc = "A raw meatball."

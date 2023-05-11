@@ -96,6 +96,10 @@
 	name = "Space Fries"
 	icon_state = "fries"
 
+/obj/item/trash/empty_bucket
+	name = "Empty Kentucky Fried Vox"
+	icon_state = "fried_vox_empty"
+	item_state = "fried_vox"
 
 /obj/item/trash/candle/ghost/attackby(obj/item/I, mob/user, params)
 	var/chaplain_check = FALSE

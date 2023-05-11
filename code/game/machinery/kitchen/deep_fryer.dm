@@ -71,6 +71,38 @@
 		else if (fry_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
+/obj/machinery/deepfryer/proc/stop_cooking()
+	qdel(frying)
+	icon_state = "fryer_off"
+	frying = null
+	on = FALSE
+	fry_time = 0
+
+/obj/machinery/deepfryer/proc/create_product(mob/user)
+	var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(loc)
+	S.desc = frying.desc
+	S.appearance = frying.appearance
+	switch(fry_time)
+		if(0 to 15)
+			S.color = rgb(166,103,54)
+			S.name = "lightly-fried [frying.name]"
+		if(16 to 49)
+			S.color = rgb(103,63,24)
+			S.name = "fried [frying.name]"
+		if(50 to 59)
+			S.color = rgb(63, 23, 4)
+			S.name = "deep-fried [frying.name]"
+		if(60 to INFINITY)
+			S.color = rgb(33,19,9)
+			S.name = "burned down mess"
+			S.desc = "A heavily fried...something.  Who can tell anymore?"
+	S.filling_color = S.color
+	user.put_in_hands(S)
+
+/obj/machinery/deepfryer/proc/create_fried_vox(mob/user)
+	var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/fried_vox/V = new(loc)
+	user.put_in_hands(V)
+
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -78,27 +110,11 @@
 
 	if(frying)
 		to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
-		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(loc)
-		S.appearance = frying.appearance
-		S.desc = frying.desc
-		switch(fry_time)
-			if(0 to 15)
-				S.color = rgb(166,103,54)
-				S.name = "lightly-fried [frying.name]"
-			if(16 to 49)
-				S.color = rgb(103,63,24)
-				S.name = "fried [frying.name]"
-			if(50 to 59)
-				S.color = rgb(63, 23, 4)
-				S.name = "deep-fried [frying.name]"
-			if(60 to INFINITY)
-				S.color = rgb(33,19,9)
-				S.name = "burned down mess"
-				S.desc = "A heavily fried...something.  Who can tell anymore?"
-		S.filling_color = S.color
-		qdel(frying)
-		icon_state = "fryer_off"
-		user.put_in_hands(S)
-		frying = null
-		on = FALSE
-		fry_time = 0
+		if(isbodypart(frying))
+			var/obj/item/organ/external/IO = frying
+			if(IO.species.name == VOX)
+				create_fried_vox(user)
+				stop_cooking()
+				return
+		create_product(user)
+		stop_cooking()
