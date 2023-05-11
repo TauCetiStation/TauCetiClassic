@@ -260,7 +260,6 @@
 
 /obj/item/device/tagger/shop/on_round_start(datum/source)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
-	return
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
