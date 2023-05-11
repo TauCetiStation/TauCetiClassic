@@ -30,8 +30,28 @@
 	//Clumsy used only for dna-handlers
 	if(!iscarbon(M))
 		return
+	if(def_zone != BP_HEAD)
+		return
 	var/mob/living/carbon/C = M
-	C.apply_status_effect(STATUS_EFFECT_CLUMSY)
+	var/amount_of_effect = 4
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		var/obj/item/organ/external/head = H.get_bodypart(def_zone)
+		var/armor = H.getarmor(head, MELEE)
+		switch(armor)
+			if(25 to 50)
+				amount_of_effect = 3
+			if(50 to 75)
+				amount_of_effect = 2
+			if(75 to 100)
+				amount_of_effect = 1
+	var/datum/status_effect/clumsy/S = C.has_status_effect(STATUS_EFFECT_CLUMSY)
+	if(!S)
+		C.apply_status_effect(STATUS_EFFECT_CLUMSY, amount_of_effect SECONDS)
+		return
+	S.applied_times++
+	var/duration_calculate = initial(S.duration) - 0.5 SECONDS * S.applied_times
+	S.duration += clamp(duration_calculate, 1 SECOND, initial(S.duration))
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"

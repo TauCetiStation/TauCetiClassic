@@ -230,8 +230,13 @@
 /datum/status_effect/clumsy
 	id = "clumsy"
 	alert_type = /atom/movable/screen/alert/status_effect/clumsy
-	duration = 4 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
+	var/applied_times = 0
+
+/datum/status_effect/clumsy/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
 
 /datum/status_effect/clumsy/on_apply()
 	. = ..()
