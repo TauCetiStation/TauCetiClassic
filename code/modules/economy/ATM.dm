@@ -218,15 +218,34 @@ log transactions
 					if(INSURANCE_MANAGEMENT)
 						var/datum/data/record/R = find_record("insurance_account_number", authenticated_account.account_number, data_core.general)
 						if(R)
-							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
+							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br>"
+							dat += "<A href='?src=\ref[src]'>Refresh</a><br><br>"
 							dat += "<b>Account balance:</b> $[authenticated_account.money]<br>"
-							dat += "<b>Max. insurance payment:</b> $[authenticated_account.owner_max_insurance_payment]"
-							dat += "<A href='?src=\ref[src];choice=change_max_insurance_payment'>Change max. insurance payment</a><br>"
-							dat += "<b>Insurance type|price:</b> [R.fields["insurance_type"]]|$[SSeconomy.insurance_prices[R.fields["insurance_type"]]]"
-							dat += "<A href='?src=\ref[src];choice=change_insurance'>Change insurance type</a><br>"
-							dat += "<b>Pref. insurance type|price:</b> [authenticated_account.owner_preferred_insurance_type]|$[SSeconomy.insurance_prices[authenticated_account.owner_preferred_insurance_type]]"
-							dat += "<A href='?src=\ref[src];choice=change_preferred_insurance'>Change preferred insurance type</a><br>"
 							dat += "<b>Medical record id:</b> [R.fields["id"]]<br>"
+							dat += "<b>Medical record owner name:</b> [R.fields["name"]]<br>"
+							dat += "<b>Insurance type|price:</b> [R.fields["insurance_type"]]|$[SSeconomy.insurance_prices[R.fields["insurance_type"]]]<br>"
+							dat += "<b>Pref. insurance type|price:</b> [authenticated_account.owner_preferred_insurance_type]|$[SSeconomy.insurance_prices[authenticated_account.owner_preferred_insurance_type]]<br>"
+
+							dat += "<b>Max. insurance payment:</b> $[authenticated_account.owner_max_insurance_payment]"
+							dat += "<form name='change_max_insurance_payment' action='?src=\ref[src]' method='get'>"
+							dat += "<input type='hidden' name='src' value='\ref[src]'>"
+							dat += "<input type='hidden' name='choice' value='change_max_insurance_payment'>"
+							dat += "<input type='text' name='new_max_insurance_payment' value='[authenticated_account.owner_max_insurance_payment]' style='width:150px; background-color:white;'><input type='submit' value='Change max insurance payment'>"
+							dat += "</form><br><br>"	
+
+
+							var/time_addition = round((SSeconomy.endtime - world.timeofday) / 600) * 10
+
+							for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
+								dat += "<b>Insurance type|price:</b> [insurance_type]|$[SSeconomy.insurance_prices[insurance_type]]<br>"
+								var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+								var/insurance_price_with_time_addition
+								if(insurance_price != 0)
+									insurance_price_with_time_addition = insurance_price + time_addition
+								else
+									insurance_price_with_time_addition = 0
+								dat += "<A href='?src=\ref[src];choice=change_insurance_immediately;insurance_type=[insurance_type];insurance_price=[insurance_price];presented_price=[insurance_price_with_time_addition]'>Change immediately ($[insurance_price_with_time_addition])</a> "
+								dat += "<A href='?src=\ref[src];choice=change_preferred_insurance;insurance_type=[insurance_type];insurance_price=[insurance_price]]'>Make a preferrence</a><br><br>"
 						else
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
 							dat += "Error, this money account is not connected to your medical record, please check this info and try again.<br>"
@@ -445,53 +464,59 @@ log transactions
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
 
-			if("change_insurance")
-				var/insurances = SSeconomy.insurance_quality_decreasing + "Cancel"
-				var/insurance_type = input(usr, "Please select an insurance level", "Insurance changes") in insurances
-				if(insurance_type == "Cancel" || !Adjacent(usr) || usr.incapacitated())
+			if("change_insurance_immediately")
+				if(!authenticated_account)
 					return
 
-				var/timecoefficient = round((SSeconomy.endtime - world.timeofday) / 600)
-				var/current_price = SSeconomy.insurance_prices[insurance_type]
-				var/insurance_price = current_price + 10 * timecoefficient
+				var/insurance_type = href_list["insurance_type"]
+				var/insurance_price = text2num(href_list["insurance_price"])
+				var/presented_price = text2num(href_list["presented_price"])
 
-				var/decision = tgui_alert(usr, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits if bought right now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No"))
-				if(decision == "No" || !Adjacent(usr) || usr.incapacitated())
+				if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+					tgui_alert(usr, "Price of this insurance was changed. Press \"Refresh\" and try again.")
 					return
-				if(current_price != SSeconomy.insurance_prices[insurance_type])
-					tgui_alert(usr, "Price of this insurance was changed. Please try again.")
-					return
-				if(authenticated_account.money < insurance_price)
+				if(authenticated_account.money < presented_price)
 					tgui_alert(usr, "You don't have enough money.")
 					return
-				
+
 				var/datum/data/record/R = find_record("insurance_account_number", authenticated_account.account_number, data_core.general)
 				if(!R)
 					tgui_alert(usr, "Sorry, but your money account is not connected to your medical record, please check this information and try again.")
 					return
-
 				R.fields["insurance_type"] = insurance_type
-				authenticated_account.owner_preferred_insurance_type = insurance_type
-				authenticated_account.owner_max_insurance_payment = insurance_price
 
+				authenticated_account.owner_preferred_insurance_type = insurance_type
+				authenticated_account.owner_max_insurance_payment = max(presented_price, authenticated_account.owner_max_insurance_payment)
 				if(insurance_price > 0)
-					charge_to_account(authenticated_account.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+					charge_to_account(authenticated_account.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -presented_price)
 					var/med_account_number = global.department_accounts["Medical"].account_number
-					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price)
+					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", presented_price)
 
 			if("change_preferred_insurance")
-				var/insurances = SSeconomy.insurance_quality_decreasing + "Cancel"
-				var/insurance_type = input(usr, "Please select an insurance level", "Insurance changes") in insurances
-				if(insurance_type != "Cancel" && Adjacent(usr) && !usr.incapacitated())
-					authenticated_account.owner_preferred_insurance_type = insurance_type				
-			
-			if("change_max_insurance_payment")
-				var/new_max_payment = input(usr, "Insurance changes", "Write new value") as num
-				if(!Adjacent(usr) || usr.incapacitated())
+				if(!authenticated_account)
+					return		
+
+				var/insurance_type = href_list["insurance_type"]
+				var/insurance_price = text2num(href_list["insurance_price"])
+				if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+					tgui_alert(usr, "Price of this insurance was changed. Press \"Refresh\" and try again.")
 					return
+
+				authenticated_account.owner_preferred_insurance_type = insurance_type			
+				authenticated_account.owner_max_insurance_payment = max(insurance_price, authenticated_account.owner_max_insurance_payment)
+
+			if("change_max_insurance_payment")
+				if(!authenticated_account)
+					return
+
+				var/new_max_payment = text2num(href_list["new_max_insurance_payment"])
+				if(isnull(new_max_payment))
+					return
+
 				if(new_max_payment < 0 || new_max_payment > MAX_INSURANCE_PRICE)
 					tgui_alert(usr, "You can only set it in range from 0 to [MAX_INSURANCE_PRICE]")
-					return				
+					return
+
 				authenticated_account.owner_max_insurance_payment = new_max_payment
 
 			if("withdrawal_stocks")
