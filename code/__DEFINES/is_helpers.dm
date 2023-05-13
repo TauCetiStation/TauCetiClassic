@@ -201,7 +201,13 @@
 
 #define ismalf(H) isrole(MALF, H)
 
+//NUKE
+
 #define isnukeop(H) isrole(NUKE_OP, H)
+
+#define isnukeopleader(H) isrole(NUKE_OP_LEADER, H)
+
+#define isdeepnukeop(H) isrole(SYNDIESQUADIE, H)
 
 #define iswizard(H) isrole(WIZARD, H)
 

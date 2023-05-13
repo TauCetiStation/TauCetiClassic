@@ -503,7 +503,7 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()
-	if(isnukeop(user) || isobserver(user))
+	if(isnukeop(user) || isnukeopleader(user) || isdeepnukeop(user) || isobserver(user))
 		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
 
 /obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
@@ -523,7 +523,7 @@ var/global/bomb_set
 		return
 	..()
 
-	if(!isnukeop(user))
+	if(!isnukeop(user) && !isnukeopleader(user) && !isdeepnukeop(user))
 		return
 	if(!anchored)
 		return
