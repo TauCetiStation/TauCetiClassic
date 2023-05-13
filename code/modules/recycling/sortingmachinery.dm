@@ -352,7 +352,21 @@
 	return
 
 /obj/item/device/tagger/attackby(obj/item/weapon/W, mob/user, params)
-	if(istagger(W))
+	if(istype(W, /obj/item/weapon/wrench) && isturf(src.loc))
+		var/obj/item/weapon/wrench/Tool = W
+		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			user.SetNextMove(CLICK_CD_INTERACT)
+			if(!anchored)
+				if(!locate(/obj/structure/table, get_turf(src)))
+					to_chat(user, "<span class='warning'>Маркировщик можно прикрутить только к столу.</span>")
+					return
+				to_chat(user, "<span class='warning'>Маркировщик прикручен.</span>")
+				anchored = TRUE
+				return
+			to_chat(user, "<span class='notice'>Маркировщик откручен.</span>")
+			anchored = FALSE
+	else if(istagger(W))
 		return ..()
 	else if(can_apply_action(W, user))
 		get_action(W, user)
@@ -399,7 +413,7 @@
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
-	if(user.get_inactive_hand() == target || user.get_active_hand() == target)
+	if((src in user) && (user.get_inactive_hand() == target || user.get_active_hand() == target))
 		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(user.get_active_hand() != src && user.get_active_hand() != target && user.get_inactive_hand() != src && user.get_inactive_hand() != target)
 			return

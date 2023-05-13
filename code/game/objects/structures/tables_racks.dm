@@ -623,7 +623,12 @@
 		return
 
 	if(W.price_tag)
-		table_attached_to.attackby(W, user, params)
+		var/list/item_click_params = params2list(params)
+		if(!item_click_params || !item_click_params[ICON_X] || !item_click_params[ICON_Y])
+			return
+		item_click_params[ICON_X] = (pixel_x + world.icon_size * 0.5 + rand(-2, 2))
+		item_click_params[ICON_Y] = (pixel_y + world.icon_size * 0.5 + rand(-2, 2))
+		table_attached_to.attackby(W, user, list2params(item_click_params))
 	else if(istype(W, /obj/item/weapon/card/id))
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W
