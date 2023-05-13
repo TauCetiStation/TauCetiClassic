@@ -369,11 +369,16 @@
 					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
 						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 							active++
+				var/job_quota = "<B><FONT COLOR=red>"
+				for(var/job_name in global.station_jobs_quotas)
+					if(job.title == job_name)
+						job_quota += "!"
+				job_quota += "</FONT></B>"
 				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job_quota] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
 					number_of_extra_line_breaks++
 				else
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job_quota] [job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			dat += "</fieldset><br>"

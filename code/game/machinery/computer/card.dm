@@ -1,3 +1,5 @@
+var/global/list/station_jobs_quotas[3]
+
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -116,6 +118,13 @@
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
+
+	var/list/jobs_quotas = list()
+	for(var/datum/job/job in SSjob.occupations)
+		if(job && job.map_check())
+			jobs_quotas += list(list("name" = job.title))
+	data["jobs_quotas"] = jobs_quotas
+	data["quotted_jobs"] = global.station_jobs_quotas
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
@@ -321,6 +330,14 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
+		if ("add_job_to_quotas")
+			var/job_name = sanitize(href_list["quotajob_name"])
+			if(!job_name)
+				return
+
+			global.station_jobs_quotas.Swap(2, 3)
+			global.station_jobs_quotas.Swap(1, 2)
+			global.station_jobs_quotas[1] = job_name
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

@@ -80,6 +80,8 @@ SUBSYSTEM_DEF(economy)
 		if(D.owner_salary && !D.suspended)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
+	global.station_jobs_quotas = list(null, null, null)
+
 	monitor_cargo_shop()
 
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)

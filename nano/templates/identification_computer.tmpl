@@ -9,9 +9,26 @@
 {{else}}
   {{:helper.link('Access Modification', 'home', {'choice' : 'mode', 'mode_target' : 0}, !data.mode ? 'disabled' : null)}}
   {{:helper.link('Crew Manifest', 'folder-open', {'choice' : 'mode', 'mode_target' : 1}, data.mode ? 'disabled' : null)}}
+  {{:helper.link('Quotas', 'star', {'choice' : 'mode', 'mode_target' : 2}, data.mode ? 'disabled' : null)}}
   {{:helper.link('Print', 'print', {'choice' : 'print'}, (data.mode || data.has_modify) ? null : 'disabled')}}
 
-  {{if data.mode}}
+  {{if data.mode == 2}}
+    <div class='notice'>
+      <span class="bad">
+        Quotted jobs:  
+      </span>
+      {{for data.quotted_jobs}}
+        {{if value}}
+          '{{:value}}'
+        {{/if}}
+      {{/for}}
+    </div>
+    <div class='item'>
+      {{for data.jobs_quotas}}
+        {{:helper.link(value.name, null, {'choice' : "add_job_to_quotas", 'quotajob_name' : value.name}, null, null)}}
+      {{/for}}
+    </div>
+  {{else data.mode == 1}}
     <div class='item'>
       <h2>Crew Manifest</h2>
     </div>
