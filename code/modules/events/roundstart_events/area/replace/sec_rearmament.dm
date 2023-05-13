@@ -1,10 +1,6 @@
-/datum/event/feature/area/replace/sec_rearmament
-	special_area_types = list(/area/station/security/warden, /area/station/security/armoury, /area/station/security/hos, /area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception)
-	replace_types = list(
-		/obj/item/weapon/gun,
-	)
-
-/datum/event/feature/area/replace/sec_rearmament/bullets
+/datum/event/feature/area/replace/sec_rearmament_bullets
+	special_area_types = list(/area/station/security/warden, /area/station/security/armoury, /area/station/security/hos,
+	/area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception)
 	replace_types = list(
 		/obj/item/weapon/gun/energy/taser = /obj/item/weapon/gun/projectile/automatic/glock,
 		/obj/item/weapon/gun/plasma = /obj/item/weapon/gun/projectile/revolver/doublebarrel,
@@ -14,7 +10,9 @@
 		/obj/item/weapon/gun/energy/gun = /obj/item/ammo_box/magazine/l13,
 	)
 
-/datum/event/feature/area/replace/sec_rearmament/energy
+/datum/event/feature/area/replace/sec_rearmament_energy
+	special_area_types = list(/area/station/security/warden, /area/station/security/armoury, /area/station/security/hos,
+	/area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception)
 	replace_types = list(
 		/obj/item/weapon/gun/energy/taser = /obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/weapon/gun/projectile/automatic/glock = /obj/item/weapon/gun/energy/taser/stunrevolver,
