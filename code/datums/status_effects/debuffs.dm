@@ -231,7 +231,7 @@
 	id = "clumsy"
 	alert_type = /atom/movable/screen/alert/status_effect/clumsy
 	status_type = STATUS_EFFECT_REFRESH
-	var/applied_times = 0
+	var/applied_times = 1
 
 /datum/status_effect/clumsy/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -241,15 +241,17 @@
 /datum/status_effect/clumsy/on_apply()
 	. = ..()
 	if(!iscarbon(owner))
-		return
+		return FALSE
+	if(HAS_TRAIT_FROM(owner, TRAIT_CLUMSY_IMMUNE, STATUS_EFFECT_TRAIT))
+		if(prob(75))
+			return FALSE
+		REMOVE_TRAIT(owner, TRAIT_CLUMSY_IMMUNE, STATUS_EFFECT_TRAIT)
 	ADD_TRAIT(owner, TRAIT_CLUMSY, STATUS_EFFECT_TRAIT)
 	to_chat(owner, "<span class='warning'>You feel lightheaded</span>")
 
 /datum/status_effect/clumsy/on_remove()
-	if(!iscarbon(owner))
-		return
 	REMOVE_TRAIT(owner, TRAIT_CLUMSY, STATUS_EFFECT_TRAIT)
-	to_chat(owner, "<span class='notice'>You feel normal.</span>")
+	ADD_TRAIT(owner, TRAIT_CLUMSY_IMMUNE, STATUS_EFFECT_TRAIT)
 
 /atom/movable/screen/alert/status_effect/clumsy
 	name = "Неуклюжесть"

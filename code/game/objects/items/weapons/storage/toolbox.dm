@@ -38,20 +38,14 @@
 		var/mob/living/carbon/human/H = C
 		var/obj/item/organ/external/head = H.get_bodypart(def_zone)
 		var/armor = H.getarmor(head, MELEE)
-		switch(armor)
-			if(25 to 50)
-				amount_of_effect = 3
-			if(50 to 75)
-				amount_of_effect = 2
-			if(75 to 100)
-				amount_of_effect = 1
+		amount_of_effect = max((100 - armor) / 25, 1)
 	var/datum/status_effect/clumsy/S = C.has_status_effect(STATUS_EFFECT_CLUMSY)
 	if(!S)
-		C.apply_status_effect(STATUS_EFFECT_CLUMSY, amount_of_effect SECONDS)
+		C.AdjustClumsyStatus(amount_of_effect / 2)
 		return
 	S.applied_times++
-	var/duration_calculate = initial(S.duration) - 0.5 SECONDS * S.applied_times
-	S.duration += clamp(duration_calculate, 1 SECOND, initial(S.duration))
+	var/duration_calculate = round(amount_of_effect / S.applied_times) SECONDS
+	S.duration += duration_calculate
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"

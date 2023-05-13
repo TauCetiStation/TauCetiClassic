@@ -173,6 +173,7 @@
 #define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
 #define TRAIT_HEMOCOAGULATION     "hemocoagulation"
 #define TRAIT_CLUMSY              "clumsy"
+#define TRAIT_CLUMSY_IMMUNE       "clumsy_immune"
 #define TRAIT_SHOCKIMMUNE         "shockimmune"
 #define TRAIT_NATURAL_AGILITY     "natural_agility"
 #define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
