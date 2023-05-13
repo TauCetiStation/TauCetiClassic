@@ -125,7 +125,7 @@
 			continue
 		if(M.invisibility)//cloaked
 			continue
-		if(M.digitalcamo)
+		if(SEND_SIGNAL(M, COMSIG_LIVING_CAN_TRACK, src) & COMPONENT_CANT_TRACK)
 			continue
 
 		// Human check
@@ -194,43 +194,47 @@
 	to_chat(U, "Now tracking [target.name] on camera.")
 	target.tracking_initiated()
 
-	spawn (0)
-		while (U.cameraFollow == target)
-			if (U.cameraFollow == null)
+	INVOKE_ASYNC(src, .proc/do_track, target, U)
+
+/mob/living/silicon/ai/proc/do_track(mob/living/target)
+	var/mob/living/silicon/ai/U = src
+	var/datum/orbit/O = new(U.eyeobj, target, FALSE)
+	if (!orbiting) //something failed, and our orbit datum deleted itself
+		return
+	var/matrix/initial_transform = matrix(transform)
+	cached_transform = initial_transform
+	while (O)
+		if(SEND_SIGNAL(target, COMSIG_LIVING_CAN_TRACK, src) & COMPONENT_CANT_TRACK)
+			to_chat(U, "Follow camera mode terminated.")
+			return
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+				to_chat(U, "Follow camera mode terminated.")
+				U.eyeobj.stop_orbit()
 				return
-			if (ishuman(target))
-				var/mob/living/carbon/human/H = target
-				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+			if(istype(H.head, /obj/item/clothing/head))
+				var/obj/item/clothing/head/hat = H.head
+				if(hat.blockTracking)
 					to_chat(U, "Follow camera mode terminated.")
-					U.cameraFollow = null
+					U.eyeobj.stop_orbit()
 					return
-				if(istype(H.head, /obj/item/clothing/head))
-					var/obj/item/clothing/head/hat = H.head
-					if(hat.blockTracking)
-						to_chat(U, "Follow camera mode terminated.")
-						U.cameraFollow = null
-						return
-				if(H.digitalcamo)
-					to_chat(U, "Follow camera mode terminated.")
-					U.cameraFollow = null
-					return
+		if(istype(target.loc,/obj/effect/dummy))
+			to_chat(U, "Follow camera mode ended.")
+			U.eyeobj.stop_orbit()
+			return
+		if (!near_camera(target))
+			to_chat(U, "Target is not near any active cameras.")
+			U.eyeobj.stop_orbit()
+			sleep(100)
+			continue
+		/*if(U.eyeobj)
+			U.eyeobj.setLoc(get_turf(target))
+		else
+			view_core()
+			return*/
+		sleep(10)
 
-			if(istype(target.loc,/obj/effect/dummy))
-				to_chat(U, "Follow camera mode ended.")
-				U.cameraFollow = null
-				return
-
-			if (!near_camera(target))
-				to_chat(U, "Target is not near any active cameras.")
-				sleep(100)
-				continue
-
-			if(U.eyeobj)
-				U.eyeobj.setLoc(get_turf(target))
-			else
-				view_core()
-				return
-			sleep(10)
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))

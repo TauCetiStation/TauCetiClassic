@@ -11,6 +11,21 @@
 	force = 0
 	hitsound = list()
 
+/obj/item/clothing/head/helmet/space/space_ninja/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/space/space_ninja/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/space/space_ninja/proc/can_track(datum/source, mob/user)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
+
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
