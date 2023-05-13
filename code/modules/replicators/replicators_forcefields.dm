@@ -173,8 +173,8 @@
 
 /obj/structure/stabilization_field/Crossed(mob/living/carbon/M)
 	if(ishuman(M))
-		irradiate_one_mob(M, 50)
-		to_chat(M, "<span class='notice'>Микроскопические кристаллы силового поля испускают волну облучения.</span>")
+		irradiate_one_mob(M, 25)
+		to_chat(M, "<span class='warning'>Микроскопические кристаллы силового поля испускают волну облучения.</span>")
 	return ..()
 
 /obj/structure/replicator_barricade
