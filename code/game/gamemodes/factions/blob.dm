@@ -18,9 +18,6 @@
 	var/list/pre_escapees = list()
 	var/declared = FALSE
 	var/blobwincount = 0
-	var/prelude_announcement
-	var/outbreak_announcement
-	var/reached_crit_mass = FALSE
 
 /datum/faction/blob_conglomerate/New()
 	..()
@@ -64,23 +61,19 @@
 
 /datum/faction/blob_conglomerate/process()
 	. = ..()
-	if(!blobwincount)
+	if(!blobwincount || !detect_overminds())
 		return .
-	if(prelude_announcement && world.time >= prelude_announcement && detect_overminds())
-		prelude_announcement = 0
-		stage(FS_DORMANT)
-	if(outbreak_announcement && world.time >= outbreak_announcement && detect_overminds()) //Must be alive to advance.
-		outbreak_announcement = 0
+	if(0.25 * blobwincount < blobs.len && stage < FS_MIDGAME) // AI law
 		stage(FS_ACTIVE)
-	if(!reached_crit_mass && declared && 0.7 * blobwincount <= blobs.len && stage < FS_ENDGAME) // Blob almost won !
-		reached_crit_mass = TRUE
+	else if(0.55 * blobwincount < blobs.len && stage < FS_MIDGAME) // Weapons in cargo
+		stage(FS_MIDGAME)
+	else if(0.7 * blobwincount <= blobs.len && stage < FS_ENDGAME) // Nuclear codes
 		stage(FS_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
-	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	addtimer(CALLBACK(src, .proc/stage, FS_DORMANT), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)//world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	spawn_blob_mice()
 	return ..()
 
@@ -114,6 +107,7 @@
 			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 			announcement.play()
 			return
+
 		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
@@ -123,27 +117,44 @@
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
+
 			SSshuttle.fake_recall = TRUE //Quarantine
+			if(SSshuttle.direction != 2) //if not heading to CC, prevent escape
+				SSshuttle.online = FALSE
+
+		if(FS_MIDGAME)
+			var/datum/game_mode/gamemode = SSticker.mode
+			gamemode.add_supply_to_cargo(2, "Anti-blob equipment: Personal set", "Cent Comm", "Cent Comm", "", "Blob threat")
+			gamemode.add_supply_to_cargo(1, "Anti-blob equipment: Group supply", "Cent Comm", "Cent Comm", "", "Blob threat")
+			var/datum/announcement/centcomm/blob/half/announcement = new()
+			announcement.play()
+
 		if(FS_ENDGAME)
 			var/datum/announcement/centcomm/blob/critical/announcement = new
 			announcement.play()
 			for(var/mob/camera/blob/B in player_list)
 				to_chat(B, "<span class='blob'>The beings intend to eliminate you with a final suicidal attack, you must stop them quickly or consume the station before this occurs!</span>")
 			send_intercept(FS_ENDGAME)
+			if(security_level < SEC_LEVEL_RED)
+				set_security_level("red")
+
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
+
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожения. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
+
 		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 			announcement.play()
 
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
+			SSshuttle.online = TRUE
 			declared = FALSE
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
