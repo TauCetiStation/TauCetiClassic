@@ -247,6 +247,7 @@
 
 		if(istype(loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = src.loc
+			S.AddComponent(/datum/component/evidence, "Отсюда что-то взяли.")
 			. = S.remove_from_storage(src, user)
 		else
 			. = TRUE
@@ -324,12 +325,14 @@
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
+			S.AddComponent(/datum/component/evidence, "Сюда что-то положили.")
 			return FALSE
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
+	AddComponent(/datum/component/evidence, "Это бросили куда-то.")
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
@@ -348,16 +351,14 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(user && user.loc != loc && isturf(loc))
 		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
+	if(user && loc != user)
+		AddComponent(/datum/component/evidence, "Этот предмет здесь не лежал.")
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	flags_2 &= ~IN_INVENTORY
 	if(flags & DROPDEL)
 		qdel(src)
 	update_world_icon()
 	set_alt_apperances_layers()
-	prepare_huds()
-	var/datum/atom_hud/evidence/evid_hud = global.huds[DATA_HUD_EVIDENCE]
-	evid_hud.add_to_hud(src)
-	set_evidence_hud()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)

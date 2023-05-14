@@ -176,7 +176,9 @@ var/global/list/slot_equipment_priority = list(
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
 		var/atom/old_loc = W.loc
-
+		for(var/obj/structure/table/T in W.loc)
+			T.AddComponent(/datum/component/evidence, "Здесь что-то лежало.")
+		
 		W.forceMove(src)		//TODO: move to equipped?
 
 		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
