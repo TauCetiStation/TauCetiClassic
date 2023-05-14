@@ -24,6 +24,18 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
+/datum/outfit/job/scientist/unathi_equip()
+	backpack_contents += list(/obj/item/device/modkit/unathi)
+
+/datum/outfit/job/scientist/tajaran_equip()
+	backpack_contents += list(/obj/item/device/modkit/tajaran)
+
+/datum/outfit/job/scientist/skrell_equip()
+	backpack_contents += list(/obj/item/device/modkit/skrell)
+
+/datum/outfit/job/scientist/vox_equip()
+	backpack_contents += list(/obj/item/device/modkit/vox)
+
 // XENOARCHAEOLOGIST OUTFIT
 /datum/outfit/job/xenoarchaeologist
 	name = OUTFIT_JOB_NAME("Xenoarchaeologist")
@@ -48,7 +60,6 @@
 
 /datum/outfit/job/xenoarchaeologist/vox_equip()
 	backpack_contents += list(/obj/item/device/modkit/vox)
-
 
 // XENOBIOLOGIST OUTFIT
 /datum/outfit/job/xenobiologist
