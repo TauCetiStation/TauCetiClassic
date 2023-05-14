@@ -354,6 +354,10 @@
 		qdel(src)
 	update_world_icon()
 	set_alt_apperances_layers()
+	prepare_huds()
+	var/datum/atom_hud/evidence/evid_hud = global.huds[DATA_HUD_EVIDENCE]
+	evid_hud.add_to_hud(src)
+	set_evidence_hud()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -957,6 +961,9 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+	if(.)
+		if(src_location != over_location)
+			AddComponent(/datum/component/evidence, "Этот предмет здесь не лежал.")
 
 /obj/item/be_thrown(mob/living/thrower, atom/target)
 	if(!canremove || flags & NODROP)

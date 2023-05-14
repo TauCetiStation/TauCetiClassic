@@ -33,7 +33,7 @@
 	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
 	///HUD images that this atom can provide.
-	var/list/hud_possible
+	var/list/hud_possible = list(EVIDENCE_HUD)
 	///Current alternate_apperances on atom
 	var/list/datum/atom_hud/alternate_appearance/alternate_appearances
 
@@ -118,7 +118,11 @@
 		if (!armor)
 			armor = list()
 		atom_integrity = max_integrity
-
+	prepare_huds()
+	/*var/datum/atom_hud/evidence/evid_hud = global.huds[DATA_HUD_EVIDENCE]
+	evid_hud.add_to_hud(src)
+	set_evidence_hud()
+	set_evidence_active_hud()*/
 	return INITIALIZE_HINT_NORMAL
 
 //called if atom_init returns INITIALIZE_HINT_LATELOAD

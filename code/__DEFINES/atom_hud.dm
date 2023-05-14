@@ -45,6 +45,8 @@
 //Alien embryo hud
 #define ALIEN_EMBRYO_HUD	"alien_embryo"
 
+#define EVIDENCE_HUD        "evidence"
+
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
 #define HUD_LIST_LIST 1
@@ -59,6 +61,8 @@
 #define DATA_HUD_GOLEM          "data_hud_golem"
 #define DATA_HUD_EMBRYO         "data_hud_embryo"
 #define DATA_HUD_HOLY           "data_hud_holy"
+#define DATA_HUD_EVIDENCE       "data_hud_evidence"
+
 
 //antag HUD defines
 #define ANTAG_HUD_CULT          "antag_hud_cult"

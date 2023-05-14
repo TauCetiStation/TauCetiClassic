@@ -11,6 +11,7 @@ var/global/list/huds = list(
 	DATA_HUD_HOLY = new/datum/atom_hud/holy,
 	DATA_HUD_BROKEN = new/datum/atom_hud/data/broken,
 	DATA_HUD_MINER = new/datum/atom_hud/mine,
+	DATA_HUD_EVIDENCE = new/datum/atom_hud/evidence,
 	DATA_HUD_GOLEM = new/datum/atom_hud/golem,
 	DATA_HUD_EMBRYO = new/datum/atom_hud/embryo,
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag,

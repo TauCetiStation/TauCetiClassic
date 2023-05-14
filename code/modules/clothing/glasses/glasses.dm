@@ -413,6 +413,8 @@
 	action_button_name = "Toggle Noir"
 	sightglassesmod = "greyscale"
 	toggleable = TRUE
+	active = FALSE
+	hud_types = list(DATA_HUD_EVIDENCE)
 
 /obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
 	toggle_noir()
@@ -423,5 +425,16 @@
 
 	if(usr.incapacitated())
 		return
-	active = !active
+	if(active)
+		active = FALSE
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(H.glasses == src)
+				disable_hud(H)
+	else
+		active = TRUE
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(H.glasses == src)
+				enable_hud(H)
 	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")

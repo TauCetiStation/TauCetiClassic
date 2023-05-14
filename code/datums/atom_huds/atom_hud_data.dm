@@ -81,6 +81,9 @@
 /datum/atom_hud/embryo
 	hud_icons = list(ALIEN_EMBRYO_HUD)
 
+/datum/atom_hud/evidence
+	hud_icons = list(EVIDENCE_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
@@ -394,3 +397,14 @@
 /mob/proc/set_holy_hud()
 	var/image/holder = hud_list[HOLY_HUD]
 	holder.icon_state = my_religion?.symbol_icon_state
+
+/*~~~~~~~~~~~
+   Detective
+~~~~~~~~~~~~*/
+/atom/proc/set_evidence_hud()
+	var/image/holder = hud_list[EVIDENCE_HUD]
+	holder.icon_state = "hudevidence"
+
+/atom/proc/set_evidence_active_hud()
+	var/image/holder = hud_list[EVIDENCE_HUD]
+	holder.icon_state = "agolem_master"
