@@ -690,6 +690,10 @@
 
 /obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user, params)
 	if(I.price_tag || istype(I, /obj/item/smallDelivery))
+		if(istype(I, /obj/item/smallDelivery))
+			var/obj/item/smallDelivery/package = I
+			if(!package.lot_lock_image)
+				return
 		magnet_item(I, params)
 
 /obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I, list/params)

@@ -257,6 +257,8 @@ SUBSYSTEM_DEF(ticker)
 	if(!bundle || !bundle.hidden)
 		mode.announce()
 
+	setup_economy()
+
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
@@ -266,7 +268,6 @@ SUBSYSTEM_DEF(ticker)
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
 
-	setup_economy()
 	create_religion(/datum/religion/chaplain)
 	setup_hud_objects()
 
