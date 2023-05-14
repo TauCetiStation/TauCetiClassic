@@ -173,7 +173,9 @@ var/global/list/slot_equipment_priority = list(
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
-	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
+	if(W.anchored)
+		to_chat(src, "<span class='red'>Не получилось поднять [W.name].</span>")
+		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
 		var/atom/old_loc = W.loc
 
@@ -201,7 +203,9 @@ var/global/list/slot_equipment_priority = list(
 /mob/proc/put_in_r_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
-	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
+	if(W.anchored)
+		to_chat(src, "<span class='red'>Не получилось поднять [W.name].</span>")
+		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
 		var/atom/old_loc = W.loc
 

@@ -357,19 +357,25 @@
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.SetNextMove(CLICK_CD_INTERACT)
+			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
 			if(!anchored)
-				if(!locate(/obj/structure/table, get_turf(src)))
+				if(!Table)
 					to_chat(user, "<span class='warning'>Маркировщик можно прикрутить только к столу.</span>")
 					return
 				to_chat(user, "<span class='warning'>Маркировщик прикручен.</span>")
 				anchored = TRUE
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
 				return
 			to_chat(user, "<span class='notice'>Маркировщик откручен.</span>")
 			anchored = FALSE
+			UnregisterSignal(Table, list(COMSIG_PARENT_QDELETING))
 	else if(istagger(W))
 		return ..()
 	else if(can_apply_action(W, user))
 		get_action(W, user)
+
+/obj/item/device/tagger/proc/unwrench()
+	anchored = FALSE
 
 /obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
