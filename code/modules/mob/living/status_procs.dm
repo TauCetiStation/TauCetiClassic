@@ -258,9 +258,8 @@
 
 /mob/living/carbon/proc/AdjustClumsyStatus(amount)
 	var/datum/status_effect/clumsy/C = has_status_effect(STATUS_EFFECT_CLUMSY)
-	amount *= SS_WAIT_DEFAULT
 	if(C)
-		C.duration += amount
+		C.duration += amount SECONDS
 	else if(amount > 0)
-		C = apply_status_effect(STATUS_EFFECT_CLUMSY, amount)
+		C = apply_status_effect(STATUS_EFFECT_CLUMSY, amount SECONDS)
 	return C

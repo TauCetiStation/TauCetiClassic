@@ -259,7 +259,7 @@
 	if(!iscarbon(M))
 		return
 	var/mob/living/carbon/C = M
-	C.AdjustClumsyStatus(-1)
+	C.AdjustClumsyStatus(-2)
 
 /datum/reagent/consumable/drink/coffee/icecoffee
 	name = "Iced Coffee"

@@ -41,7 +41,7 @@
 		amount_of_effect = max((100 - armor) / 25, 1)
 	var/datum/status_effect/clumsy/S = C.has_status_effect(STATUS_EFFECT_CLUMSY)
 	if(!S)
-		C.AdjustClumsyStatus(amount_of_effect / 2)
+		C.AdjustClumsyStatus(amount_of_effect)
 		return
 	S.applied_times++
 	var/duration_calculate = round(amount_of_effect / S.applied_times) SECONDS
