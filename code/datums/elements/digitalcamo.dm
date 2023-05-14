@@ -40,8 +40,7 @@
 
 /datum/element/digitalcamo/proc/on_examine(datum/source, mob/M)
 	SIGNAL_HANDLER
-	to_chat(world, "[source], [M]")
-	to_chat(M, "<span_class='warning'>[source] skin seems to be shifting like something is moving below it.</span>")
+	to_chat(M, "<span class='warning'>[source] skin seems to be shifting like something is moving below it.</span>")
 
 /datum/element/digitalcamo/proc/can_track(datum/source, mob/user)
 	SIGNAL_HANDLER

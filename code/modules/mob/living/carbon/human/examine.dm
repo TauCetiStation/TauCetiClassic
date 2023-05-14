@@ -594,6 +594,8 @@
 
 	to_chat(user, msg)
 
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 // Only used for humans and other personal of station.
 /proc/hasHUD(mob/M, hudtype)
