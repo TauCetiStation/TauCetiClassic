@@ -97,6 +97,8 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
+	r_belly = 6
+	g_belly = 96
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
