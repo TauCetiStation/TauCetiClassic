@@ -15,16 +15,16 @@
   {{if data.mode == 2}}
     <div class='notice'>
       <span class="bad">
-        Quotted jobs:  
+        Quotta jobs:  
       </span>
-      {{for data.quotted_jobs}}
+      {{for data.quota_jobs}}
         {{if value}}
           '{{:value}}'
         {{/if}}
       {{/for}}
     </div>
     <div class='item'>
-      {{for data.jobs_quotas}}
+      {{for data.jobs_can_be_quota}}
         {{:helper.link(value.name, null, {'choice' : "add_job_to_quotas", 'quotajob_name' : value.name}, null, null)}}
       {{/for}}
     </div>
