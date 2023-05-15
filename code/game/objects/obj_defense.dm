@@ -5,6 +5,7 @@
 	if(isobj(AM))
 		var/obj/O = AM
 		throwdamage = O.throwforce
+		AddComponent(/datum/component/evidence, "Здесь след от [(O.sharp || O.edge) ? "острого" : "какого-то"] предмета.")
 	else if(ismob(AM)) // TODO add throwforce to atom movable
 		throwdamage = 10
 	//Let everyone know we've been hit!
@@ -39,6 +40,7 @@
 		"<span class='danger'>[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!</span>",
 		viewing_distance = COMBAT_MESSAGE_RANGE
 	)
+	AddComponent(/datum/component/evidence, "Здесь след выстрела.")
 
 /obj/attack_hulk(mob/living/user)
 	..()
@@ -78,6 +80,7 @@
 	. = attack_generic(user, damage, user.melee_damtype, MELEE, play_soundeffect)
 	if(. && !play_soundeffect)
 		playsound(loc, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	AddComponent(/datum/component/evidence, "Здесь след от не человеческого удара.")
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!isslimeadult(user))
