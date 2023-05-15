@@ -434,28 +434,6 @@
 				CHILD.status &= ~ORGAN_DEAD
 		H.update_body()
 
-/*/datum/disease2/effect/immortal
-	name = "Longevity Syndrome"
-	stage = 4
-	level = 7
-
-/datum/disease2/effect/immortal/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		for (var/obj/item/organ/external/BP in H.bodyparts)
-			if (BP.status & ORGAN_BROKEN && prob(30))
-				BP.status ^= ORGAN_BROKEN
-	var/heal_amt = -5*holder.multiplier
-	mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
-
-/datum/disease2/effect/immortal/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
-		H.age += 8
-	var/backlash_amt = 5*holder.multiplier
-	mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)*/
-
 /datum/disease2/effect/bones
 	name = "Fragile Bones Syndrome"
 	desc = "The virus creates a problem with host's production of connective tissue, making bones very fragile."
@@ -1261,14 +1239,6 @@
 				if(!M)
 					M = new(T)
 				M.virus2 = virus_copylist(mob.virus2)
-
-/*/datum/disease2/effect/gunck
-	name = "Flemmingtons"
-	stage = 1
-	level = 1
-
-/datum/disease2/effect/gunck/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	to_chat(mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")*/
 
 /datum/disease2/effect/drool
 	name = "Drooling"
