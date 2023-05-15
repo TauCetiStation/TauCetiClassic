@@ -320,6 +320,10 @@
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)	return 0		//to avoid spamming with insulated glvoes on
 
+		if(H.wear_suit)
+			var/obj/item/clothing/suit/S = H.wear_suit
+			if((S.siemens_coefficient == 0) && (S.body_parts_covered && ARMS))	return 0
+
 	var/area/source_area
 	if(istype(power_source,/area))
 		source_area = power_source
