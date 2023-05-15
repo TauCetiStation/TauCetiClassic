@@ -68,6 +68,7 @@
 				who.put_in_hands(slot_ref)
 			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their [slot_ref] ([slot_name]) removed by [who.name] ([who.ckey])</font>"
 			who.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) [slot_ref] ([slot_name])</font>"
+			AddComponent(/datum/component/evidence, "С тела что-то сняли.")
 	else
 		if(!this_item.canremove)
 			to_chat(who, "<span class='warning'>You can't put \the [this_item.name] on [src], it's stuck to your hand!</span>")

@@ -40,7 +40,7 @@
 		"<span class='danger'>[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!</span>",
 		viewing_distance = COMBAT_MESSAGE_RANGE
 	)
-	AddComponent(/datum/component/evidence, "Здесь след выстрела.")
+	AddComponent(/datum/component/evidence, "Здесь след от выстрела.")
 
 /obj/attack_hulk(mob/living/user)
 	..()

@@ -210,7 +210,7 @@
 	var/datum/religion/my_religion
 
 	// datum/atom_hud
-	hud_possible = list(ANTAG_HUD, HOLY_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, EVIDENCE_HUD)
 	// Mob typing indication
 	var/typing = FALSE
 	var/obj/effect/overlay/typing_indicator/typing_indicator

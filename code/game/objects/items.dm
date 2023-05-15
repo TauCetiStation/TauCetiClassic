@@ -963,6 +963,7 @@
 	if(src != over)
 		remove_outline()
 	if(.)
+		//not cover all interactions
 		if(src_location != over_location)
 			AddComponent(/datum/component/evidence, "Этот предмет здесь не лежал.")
 

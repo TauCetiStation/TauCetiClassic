@@ -294,6 +294,14 @@
 		"<span class='danger'>You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
 		viewing_distance = COMBAT_MESSAGE_RANGE
 	)
+	var/text_for_evidence = "Здесь след от удара каким-то предметом."
+	switch(attacking_item)
+		if(BRUTE)
+			if(attacking_item.sharp || attacking_item.sharp)
+				text_for_evidence = "Здесь след от удара острым предметом."
+		if(BURN)
+			text_for_evidence = "Здесь след от контакта с высокой температурой."
+	AddComponent(/datum/component/evidence, text_for_evidence)
 	return damage
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
