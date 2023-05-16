@@ -790,6 +790,13 @@
 		var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(old_loc)
 		BL.basedatum = new_cover
 		BL.update_icon()
+		var/text_for_evidence = "Здесь тащили что-то размером меньше чем человек."
+		switch(w_class)
+			if(SIZE_NORMAL to SIZE_BIG_HUMAN)
+				text_for_evidence = "Здесь тащили что-то размером с человека."
+			if(SIZE_MASSIVE to SIZE_GARGANTUAN)
+				text_for_evidence = "Здесь тащили что-то гигантское."
+		BL.AddComponent(/datum/component/evidence, text_for_evidence)
 	else
 		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
 			TH.basedatum.add_dirt(new_cover)

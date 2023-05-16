@@ -309,6 +309,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 	//B.fluorescent = 0
 	B.invisibility = 0
+	B.AddComponent(/datum/component/evidence, "Ещё тёплая кровь")
 	return B
 
 #define BLOOD_SPRAY_DISTANCE 2

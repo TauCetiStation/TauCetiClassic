@@ -334,6 +334,7 @@
 		return
 
 	// Tracking blood
+	var/evidence_text_about_trace = ""
 	var/list/bloodDNA = null
 	var/datum/dirt_cover/blooddatum
 	if(shoes)
@@ -342,15 +343,31 @@
 			bloodDNA   = S.blood_DNA
 			blooddatum = new/datum/dirt_cover(S.dirt_overlay)
 			S.track_blood--
+			if(istype(S, /obj/item/clothing/shoes/magboots))
+				evidence_text_about_trace = "Здесь следы от магнитных ботинок."
+			else if(istype(S, /obj/item/clothing/shoes/boots))
+				evidence_text_about_trace = "Здесь следы от ботинок."
+			else
+				evidence_text_about_trace = "Здесь следы от обуви."
 	else
 		if(track_blood && feet_blood_DNA)
 			bloodDNA   = feet_blood_DNA
 			blooddatum = new/datum/dirt_cover(feet_dirt_color)
 			track_blood--
+			if(!ishuman(src))
+				evidence_text_about_trace = "Здесь следы от чьих-то лап."
+			else
+				switch(get_species())
+					if(TAJARAN || UNATHI || VOX || ZOMBIE_TAJARAN || ZOMBIE_UNATHI)
+						evidence_text_about_trace = "Здесь следы от поступи с когтями."
+					else if(HUMAN || SKRELL || ABDUCTOR || ZOMBIE || ZOMBIE_SKRELL)
+						evidence_text_about_trace = "Здесь следы от человекоподобной поступи."
+					else
+						evidence_text_about_trace = "Здесь нечеловеческие следы."
 
 	if (bloodDNA)
-		oldLoc.AddTracks(src, bloodDNA, 0, Dir, blooddatum) // from
-		newLoc.AddTracks(src, bloodDNA, Dir, 0, blooddatum) // to
+		oldLoc.AddTracks(src, bloodDNA, 0, Dir, blooddatum, evidence_text_about_trace) // from
+		newLoc.AddTracks(src, bloodDNA, Dir, 0, blooddatum, evidence_text_about_trace) // to
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))

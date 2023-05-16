@@ -431,7 +431,7 @@
 // Tracks, cleanables
 /////////////////////
 
-/turf/proc/AddTracks(mob/M, bloodDNA, comingdir, goingdir, blooddatum = null)
+/turf/proc/AddTracks(mob/M, bloodDNA, comingdir, goingdir, blooddatum = null, evidence_text_about_trace = "")
 	if(flags & NOBLOODY)
 		return
 
@@ -449,6 +449,9 @@
 	if(!blooddatum)
 		blooddatum = new /datum/dirt_cover/red_blood
 	tracks.AddTracks(bloodDNA, comingdir, goingdir, blooddatum)
+	if(!evidence_text_about_trace)
+		return
+	tracks.AddComponent(/datum/component/evidence, evidence_text_about_trace)
 
 //returns 1 if made bloody, returns 0 otherwise
 /turf/add_blood(mob/living/carbon/human/M)
