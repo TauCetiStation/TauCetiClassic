@@ -10,6 +10,7 @@
 	on_damage = 10
 	slot_flags = null
 	action_button_name = null
+	on = TRUE
 
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/I, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	. = ..()
@@ -32,16 +33,22 @@
 		to_chat(user, "<span class='notice'>It's out of fuel.</span>")
 		return
 	if(on)
+		to_chat(user, "<span class='notice'>You extenguish [src].</span>")
+		qdel(src)
 		return
 	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
 	src.damtype = BURN
-	on = !on
-	update_brightness(user)
+	update_brightness(TRUE)
 	item_state = icon_state
 	update_inv_mob()
 	START_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/torch/set_light(l_range, l_power, l_color)
+	. = ..()
+	if(l_range <= 0)
+		qdel(src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
 	return

@@ -147,6 +147,12 @@
 		set_light(light_range_on, light_power_on)
 	return
 
+/obj/machinery/computer/set_light(l_range, l_power, l_color)
+	. = ..()
+	if(l_range == 0)
+		stat |= NOPOWER
+		update_icon()
+
 
 /obj/machinery/computer/proc/set_broken()
 	if(circuit) //no circuit, no breaking

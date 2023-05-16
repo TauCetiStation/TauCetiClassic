@@ -202,12 +202,8 @@
 				anchored = !anchored
 				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 				if (!(src.anchored & powered()))
-					src.icon_state = "[initial(icon_state)]-off"
-					stat |= NOPOWER
 					set_light(0)
 				else
-					icon_state = initial(icon_state)
-					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
 				wrenched_change()
 
@@ -549,20 +545,25 @@
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
 		set_light(0)
+		icon_state = "[initial(icon_state)]-broken"
 	else
 		if( powered() & src.anchored )
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
 			set_light(light_range_on, light_power_on)
 		else
 			spawn(rand(0, 15))
-				src.icon_state = "[initial(icon_state)]-off"
-				stat |= NOPOWER
 				set_light(0)
-				update_power_use()
 	update_power_use()
+
+/obj/machinery/vending/set_light(l_range, l_power, l_color)
+	. = ..()
+	if(l_range > 0)
+		stat &= ~NOPOWER
+		icon_state = initial(icon_state)
+	else
+		stat |= NOPOWER
+		icon_state = "[initial(icon_state)]-off"
+		update_power_use()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()

@@ -30,10 +30,7 @@
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
 	check_volume()
 	if(!liquid_fuel.volume || !on)
-		turn_off()
-		if(!liquid_fuel.volume)
-			src.icon_state = "glowstick_[colourName]-over"
-		STOP_PROCESSING(SSobj, src)
+		set_light(0)
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/check_volume()
 	if(liquid_fuel.volume)
@@ -46,21 +43,23 @@
 				set_light(3)
 			return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(mob/user = null)
-	if(on)
-		icon_state = "glowstick_[colourName]-on"
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(enable = FALSE)
+	if(enable)
 		set_light(start_brightness)
 	else
-		icon_state = "glowstick_[colourName]"
 		set_light(0)
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/turn_off()
-	on = 0
-	if(ismob(loc))
-		var/mob/U = loc
-		update_brightness(U)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/set_light(l_range, l_power, l_color)
+	. = ..()
+	if(l_range <= 0)
+		on = FALSE
+		if(liquid_fuel)
+			reagents.remove_reagent("luminophore", liquid_fuel.volume)
+		icon_state = "glowstick_[colourName]-over"
+		STOP_PROCESSING(SSobj, src)
 	else
-		update_brightness(null)
+		icon_state = "glowstick_[colourName]-on"
+		on = TRUE
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)
@@ -86,8 +85,7 @@
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='info'>You cannot turn the light on while in this [user.loc].</span>")//To prevent some lighting anomalities.
 		return
-	on = !on
-	update_brightness(user)
+	update_brightness(!on)
 	action_button_name = null
 	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS_MASTER, 35, FALSE)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
