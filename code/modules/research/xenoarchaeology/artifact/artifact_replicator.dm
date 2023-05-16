@@ -89,13 +89,15 @@
 	)
 
 	var/quantity = rand(5,15)
+	var/obj/randomcatcher/CATCH = new
 	for (var/i in 1 to quantity)
 		var/button_desc = "a [pick("yellow", "purple", "green", "blue", "red", "orange", "white")], "
 		button_desc += "[pick("round", "square", "diamond", "heart", "dog", "human")] shaped "
 		button_desc += "[pick("toggle", "switch", "lever", "button", "pad", "hole")]"
-		var/type = pick(viables)
-		viables.Remove(type)
-		construction[button_desc] = type
+		var/random_type = pick_n_take(viables)
+		var/obj/prototype = CATCH.get_item(random_type)
+		construction[button_desc] = prototype.type
+	qdel(CATCH)
 
 	fail_message = "<span class='notice'>[bicon(src)] a [pick("loud", "soft", "sinister", "eery", "triumphant", "depressing", "cheerful", "angry")] \
 		[pick("horn", "beep", "bing", "bleep", "blat", "honk", "hrumph", "ding")] sounds and a \
@@ -125,7 +127,7 @@
 				source_material.loc = null
 
 			spawn_progress_time = 0
-			max_spawn_time = rand(30,100)
+			max_spawn_time = rand(30,50)
 
 			if(!spawning_types.len || !stored_materials.len)
 				set_power_use(IDLE_POWER_USE)
