@@ -59,8 +59,6 @@
 	return TRUE
 
 /datum/faction/revolution/check_win()
-	var/aboba = TRUE
-	if(aboba) return FALSE
 	var/win = IsSuccessful()
 	if(config.continous_rounds)
 		if(win && SSshuttle)
@@ -135,7 +133,7 @@
 				tried_to_add_revheads = world.time + 10 MINUTES
 
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
-		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		command_report("С сожалением сообщаем, что ваша производительность оставляет желать лучшего, и мы вынуждены сократить финансовую поддержку вашей станции. Для достижения этой цели зарплата всего персонала, кроме глав и сотрудников службы безопасности, будет уменьшена в два раза.")
 		last_command_report = 1
 		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
@@ -154,13 +152,13 @@
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
-		command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
+		command_report("Согласно статистическим данным, отдых и связанные с ним активности являются причиной неудовлетворительной работы наших станций. Поэтому рекомендуется закрыть следующие развлекательные объекты: спортзал, голодек, театр и бар. Пища доступна на кухне и в торговых автоматах.")
 		last_command_report = 2
 	else if(last_command_report == 2 && world.time >= 45 MINUTES)
-		command_report("We began to suspect that the heads of staff might be disloyal to Nanotrasen. We ask you and other heads to implant the loyalty implant, if you have not already implanted it in yourself. Heads who do not want to implant themselves should be arrested for disobeying the orders of the Central Command until the end of the shift.")
+		command_report("Мы начали подозревать, что главы персонала могут быть нелояльны к НаноТрейзен. Мы просим вас и других глав ввести имплант лояльности, если вы еще не вводили его себе. Главы, которые не хотят вводить имплант, должны быть арестованы до конца смены за неисполнение приказов Центрального Командования.")
 		last_command_report = 3
 	else if(last_command_report == 3 && world.time >= 60 MINUTES)
-		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+		command_report("Сообщается, что простое закрытие развлекательных объектов не дало результатов. Все главы станции должны обеспечить максимальную эффективность всего экипажа и не допустить пустой траты времени и энергии. Любой член экипажа, который будет замечен отдыхающим без разрешения своего главы, должен быть предупреждён, а при повторном нарушении помещен в тюрьму до прибытия следующего транспортного шаттла, который доставит их на места, где они могут быть полезнее.")
 		last_command_report = 4
 
 /datum/faction/revolution/proc/command_report(message)

@@ -7,16 +7,19 @@
 	var/ticks = 0
 	var/cooldownticks = 0
 
-/datum/disease2/effectholder/proc/runeffect(mob/living/carbon/human/mob,datum/disease2/disease/disease)
+/datum/disease2/effectholder/proc/runeffect(atom/host, datum/disease2/disease/disease)
 	if(cooldownticks > 0)
-		cooldownticks -= 1*disease.cooldown_mul
+		cooldownticks -= 1 * disease.cooldown_mul
 	if(prob(chance))
-		if(ticks > stage*10 && prob(50) && stage < effect.max_stage)
+		if(ticks > stage * 10 && prob(50) && stage < effect.max_stage)
 			stage++
 		if(cooldownticks <= 0)
 			cooldownticks = effect.cooldown
-			effect.activate(mob, src, disease)
-		ticks+=1
+			if(ismob(host))
+				effect.activate_mob(host, src, disease)
+			if(istype(host, /obj/machinery/hydroponics))
+				effect.activate_plant(host, src, disease)
+		ticks += 1
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////EFFECTS/////////////////////////////////
@@ -31,15 +34,16 @@
 	var/max_stage = 1
 	var/cooldown = 0
 
-/datum/disease2/effect/proc/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-/datum/disease2/effect/proc/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/proc/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
 	level = 0 // can't get this one
 
-/datum/disease2/effect/invisible/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/invisible/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	return
 
 /datum/disease2/effect/zombie
@@ -53,9 +57,9 @@
 	var/activated = FALSE
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
-/datum/disease2/effect/zombie/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
+/datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
 		if(iszombie(H))
 			disease.dead = TRUE
 			return
@@ -86,22 +90,22 @@
 			if(4,5,6) //some random stuff
 				H.adjustToxLoss(1)
 				if(prob(70))
-					mob.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
+					H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
 				else
 					to_chat(H, "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>")
 			if(7,8) //pain
 				to_chat(H, "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>")
-				H.apply_effect(20,AGONY,0)
+				H.apply_effect(20, AGONY, 0)
 				H.adjustBrainLoss(5)
 				H.adjustToxLoss(3)
 			if(9) //IT HURTS
 				if(prob(33))
 					to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
-					H.adjustBruteLoss(rand(2,5))
-					H.apply_effect(50,AGONY,0)
+					H.adjustBruteLoss(rand(2, 5))
+					H.apply_effect(50, AGONY, 0)
 				else if(prob(33) && H.stat == CONSCIOUS)
 					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
-					H.adjustOxyLoss(rand(10,40))
+					H.adjustOxyLoss(rand(10, 40))
 				else
 					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
 					H.Stun(4)
@@ -125,9 +129,9 @@
 	max_stage = 3
 	cooldown = 30
 
-/datum/disease2/effect/beard/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
+/datum/disease2/effect/beard/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
 		switch(holder.stage)
 			if(1)
 				to_chat(H, "<span class='warning'>Your chin itches.</span>")
@@ -152,7 +156,7 @@
 	max_stage = 3
 	cooldown = 30
 
-/datum/disease2/effect/fire/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/fire/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || holder.stage == 1)
 		to_chat(mob, "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
 	else if(prob(50) || holder.stage == 2)
@@ -174,12 +178,12 @@
 	cooldown = 30
 	chance_maxm = 30
 
-/datum/disease2/effect/flesh_eating/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/flesh_eating/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || (holder.stage >= 1 && holder.stage <= 3))
 		to_chat(mob, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
 	else if(holder.stage == 4)
 		to_chat(mob, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
-		mob.adjustBruteLoss(rand(15,25))
+		mob.adjustBruteLoss(rand(15, 25))
 
 /datum/disease2/effect/flesh_death
 	name = "Autophagocytosis Necrosis"
@@ -189,7 +193,7 @@
 	cooldown = 5
 	chance_maxm = 20
 
-/datum/disease2/effect/flesh_death/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/flesh_death/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
 		to_chat(mob, "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
 	else if(holder.stage == 3)
@@ -205,25 +209,36 @@
 	chance_minm = 100
 	chance_maxm = 100
 	var/passive_message = "" //random message to infected but not actively healing people
+	COOLDOWN_DECLARE(heal_message)
 
-/datum/disease2/effect/heal/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(holder.stage == 2 && ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		var/effectiveness = can_heal(H, disease)
-		if(!effectiveness)
-			if(passive_message && prob(2) && passive_message_condition(H, disease))
-				to_chat(mob, passive_message)
-			return
-		else
-			heal(H, disease, effectiveness)
+/datum/disease2/effect/heal/activate_mob(mob/living/carbon/H, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(holder.stage != 2)
+		return
+	var/effectiveness = can_heal(H, disease)
+	if(effectiveness)
+		heal(H, disease, effectiveness)
+		return
+	if(!passive_message)
+		return
+	if(!COOLDOWN_FINISHED(src, heal_message))
+		return
+	if(passive_message_condition(H, disease))
+		to_chat(H, passive_message)
+		COOLDOWN_START(src, heal_message, rand(1 MINUTE, 3 MINUTES))
 
-/datum/disease2/effect/heal/proc/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/proc/can_heal(mob/living/carbon/A, datum/disease2/disease/disease)
 	return 1
 
-/datum/disease2/effect/heal/proc/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
+/datum/disease2/effect/heal/proc/can_heal_plant(obj/machinery/hydroponics/A, datum/disease2/disease/disease)
+	return 1
+
+/datum/disease2/effect/heal/proc/heal(mob/living/carbon/A, datum/disease2/disease/disease, actual_power)
 	return TRUE
 
-/datum/disease2/effect/heal/proc/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/proc/heal_plant(obj/machinery/hydroponics/A, datum/disease2/disease/disease, actual_power)
+	return TRUE
+
+/datum/disease2/effect/heal/proc/passive_message_condition(mob/living/carbon/human/A, datum/disease2/disease/disease)
 	return TRUE
 
 /datum/disease2/effect/heal/starlight
@@ -232,30 +247,45 @@
 	level = 3
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 
-/datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
-	if(isspaceturf(get_turf(M)))
+/datum/disease2/effect/heal/starlight/proc/calculate_spacepower(atom/A)
+	if(isspaceturf(get_turf(A)))
 		return 1
 	else
-		for(var/turf/T in view(M, 2))
+		for(var/turf/T in view(2, A))
 			if(isspaceturf(T))
 				return 0.5
 
-/datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
-	var/heal_amt = actual_power
-	if(M.getToxLoss() && prob(5))
-		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
+/datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/A, datum/disease2/disease/disease)
+	return calculate_spacepower(A)
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
+/datum/disease2/effect/heal/starlight/can_heal_plant(obj/machinery/hydroponics/A, datum/disease2/disease/disease)
+	return calculate_spacepower(A)
 
-	var/list/parts = M.get_damaged_bodyparts(1,1)
-
+/datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
+	if(M.getToxLoss())
+		passive_message = "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>"
+	else
+		passive_message = initial(passive_message)
+	M.adjustToxLoss(-(4 * actual_power)) //most effective on toxins
+	var/list/parts = M.get_damaged_bodyparts(1, 1)
 	if(!parts.len)
 		return
+	M.heal_bodypart_damage(actual_power, actual_power)
+	return TRUE
 
-	M.heal_bodypart_damage(heal_amt, heal_amt)
+/datum/disease2/effect/heal/starlight/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(holder.stage != 2)
+		return
+	var/effectiveness = can_heal_plant(A, disease)
+	if(effectiveness)
+		heal_plant(A, disease, effectiveness)
+
+/datum/disease2/effect/heal/starlight/heal_plant(obj/machinery/hydroponics/A, datum/disease2/disease/disease, actual_power)
+	A.adjustHealth(actual_power)
+	A.adjustToxic(-(4 * actual_power))
 	return 1
 
-/datum/disease2/effect/heal/starlight/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/starlight/passive_message_condition(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
 		return TRUE
 	return FALSE
@@ -265,27 +295,34 @@
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 	level = 4
 
-/datum/disease2/effect/heal/chem/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
+/datum/disease2/effect/heal/chem/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
 
-/datum/disease2/effect/heal/metabolism
+/datum/disease2/effect/metabolism
 	name = "Metabolic Boost"
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast, but also causing increased hunger."
 	level = 4
+	cooldown = 60
+	max_stage = 5
+	COOLDOWN_DECLARE(metabolicboost_message)
 
-/datum/disease2/effect/heal/metabolism/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
+/datum/disease2/effect/metabolism/activate_mob(mob/living/carbon/human/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(M.reagents)
 		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	M.overeatduration = max(M.overeatduration - 2, 0)
 	var/lost_nutrition = 2
 	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
-	if(prob(2))
-		to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
-	return 1
+	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
+		return
+	to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
+	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
+
+/datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustSpeedmultiplier(holder.stage)
 
 /datum/disease2/effect/heal/darkness
 	name = "Nocturnal Regeneration"
@@ -293,7 +330,7 @@
 	level = 3
 	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
 
-/datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	var/light_amount = 0
 	if(M.loc && isspaceturf(M.loc))
 		return 0
@@ -306,7 +343,7 @@
 			return 0
 	return 0.5  // If they are inside something, let them heal, but more slowly
 
-/datum/disease2/effect/heal/darkness/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
+/datum/disease2/effect/heal/darkness/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	var/heal_amt = 2 * actual_power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
@@ -320,7 +357,7 @@
 	M.heal_bodypart_damage(heal_amt, heal_amt * 0.5) //more effective on brute
 	return 1
 
-/datum/disease2/effect/heal/darkness/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/darkness/passive_message_condition(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	if(M.getBruteLoss() || M.getFireLoss())
 		return TRUE
 	return FALSE
@@ -332,7 +369,7 @@
 	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
 	var/active_coma = FALSE
 
-/datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	if(M.status_flags & FAKEDEATH)
 		return 1
 	else if(M.stat == UNCONSCIOUS)
@@ -353,7 +390,7 @@
 	active_coma = FALSE
 	M.remove_status_flags(FAKEDEATH)
 
-/datum/disease2/effect/heal/coma/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
+/datum/disease2/effect/heal/coma/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	var/heal_amt = 4 * actual_power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
@@ -367,7 +404,7 @@
 		uncoma(M)
 	return 1
 
-/datum/disease2/effect/heal/coma/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
+/datum/disease2/effect/heal/coma/passive_message_condition(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	if((M.getBruteLoss() + M.getFireLoss()) > 30)
 		return TRUE
 	return FALSE
@@ -381,7 +418,7 @@
 	chance_minm = 100
 	chance_maxm = 100
 
-/datum/disease2/effect/mind_restoration/activate(mob/living/carbon/M,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/mind_restoration/activate_mob(mob/living/carbon/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(holder.stage	>= 3)
 		M.dizziness = max(0, M.dizziness - 2)
 		M.drowsyness = max(0, M.drowsyness - 2)
@@ -405,7 +442,7 @@
 	chance_minm = 100
 	chance_maxm = 100
 
-/datum/disease2/effect/sensory_restoration/activate(mob/living/carbon/M,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/sensory_restoration/activate_mob(mob/living/carbon/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(holder.stage	== 4)
 		M.adjustBlurriness(-5)
 		M.eye_blind = max(M.eye_blind - 5, 0)
@@ -427,7 +464,7 @@
 	chance_minm = 100
 	chance_maxm = 100
 
-/datum/disease2/effect/stage_boost/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/stage_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(disease.stage < disease.effects.len)
 		disease.stage = disease.effects.len
 		to_chat(mob, "<span class='notice'>You feel warmth inside your head.</span>")
@@ -442,7 +479,7 @@
 	chance_maxm = 100
 	var/activated = FALSE
 
-/datum/disease2/effect/cooldown_boost/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/cooldown_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(!activated)
 		activated = TRUE
 		disease.cooldown_mul += 1
@@ -459,7 +496,7 @@
 	chance_maxm = 100
 	var/activated = FALSE
 
-/datum/disease2/effect/chance_boost/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/chance_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(!activated)
 		activated = TRUE
 		for(var/datum/disease2/effectholder/e in disease.effects)
@@ -480,7 +517,7 @@
 	max_stage = 14
 	cooldown = 30
 
-/datum/disease2/effect/gibbingtons/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/gibbingtons/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3,4,5)
 			to_chat(mob, "<span class='notice'>[pick("You feel angry for some reason.", "Your skin feels flakey.", "Your skin burns.", "Random small wounds are appearing on your skin.")]</span>")
@@ -514,7 +551,7 @@
 	max_stage = 3
 	cooldown = 60
 
-/datum/disease2/effect/vomit/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/vomit/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			to_chat(mob, "<span class='warning'>Your chest hurts!</span>")
@@ -536,22 +573,25 @@
 	max_stage = 3
 	cooldown = 10
 
-/datum/disease2/effect/radian/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/radian/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
-			to_chat(mob, "<span class='notice'>[pick("You feel warmth.", "You feel weak.")]</span>")
+			to_chat(A, "<span class='notice'>[pick("You feel warmth.", "You feel weak.")]</span>")
 		if(2)
-			to_chat(mob, "<span class='warning'>[pick("Your skin is flaking.", "You have a headache.")]</span>")
-			irradiate_one_mob(mob, 5)
+			to_chat(A, "<span class='warning'>[pick("Your skin is flaking.", "You have a headache.")]</span>")
+			irradiate_one_mob(A, 5)
 		if(3)
-			irradiate_one_mob(mob, 20)
+			irradiate_one_mob(A, 20)
+
+/datum/disease2/effect/radian/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustMutationmod(holder.stage)
 
 /*/datum/disease2/effect/deaf
 	name = "Dead Ear Syndrome"
 	stage = 4
 	level = 7
 
-/datum/disease2/effect/deaf/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/deaf/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	mob.ear_deaf += 20*/
 
 /datum/disease2/effect/monkey
@@ -561,17 +601,17 @@
 	max_stage = 8
 	cooldown = 30
 
-/datum/disease2/effect/monkey/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/h = mob
+/datum/disease2/effect/monkey/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/h = A
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(mob, "<span class='notice'>[pick("You want bananas.", "You feel very primitive.", "Is that a banana?")]</span>")
+				to_chat(A, "<span class='notice'>[pick("You want bananas.", "You feel very primitive.", "Is that a banana?")]</span>")
 			if(4,5,6,7)
 				if(holder.stage == 7 && prob(20))
 					h.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
 				else
-					to_chat(mob, "<span class='danger'>[pick("You really want some bananas.", "You feel yourself slowly degrading.", "You become smaller.", "Fur appears on your skin.")]</span>")
+					to_chat(A, "<span class='danger'>[pick("You really want some bananas.", "You feel yourself slowly degrading.", "You become smaller.", "Fur appears on your skin.")]</span>")
 			if(8)
 				h.monkeyize()
 
@@ -582,7 +622,7 @@
 	max_stage = 8
 	cooldown = 50
 
-/datum/disease2/effect/suicide/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/suicide/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if((holder.stage >= 1 && holder.stage <= 7) || prob(70))
 		to_chat(mob, "<span class='notice'>[pick("You feel very bad, thinking that there are people in the world who drown little tajaras.", "You are useless.", "Why do you exist?", "The world would be better without you.", "If suicide isn't an exit, then what is?", "Maybe they were right after all...", "I wish I hadn't been born.", "I wish I was dead.", "I feel so alone...", "Maybe I should end all of this.", "Everything I do is wrong.", "I am just an unfunny joke.", "Why should I disappoint everyone again?")]</span>")
 	else if(holder.stage == 8 && mob.stat == CONSCIOUS)
@@ -604,7 +644,7 @@
 	max_stage = 3
 	cooldown = 10
 
-/datum/disease2/effect/killertoxins/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/killertoxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -613,7 +653,7 @@
 			H.invoke_vomit_async()
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
-		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1,3), 1)) // some random toxin
+		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1, 3), 1)) // some random toxin
 
 
 /datum/disease2/effect/dna
@@ -623,7 +663,7 @@
 	max_stage = 3
 	cooldown = 10
 
-/datum/disease2/effect/dna/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/dna/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("For some reason you feel different.", "Your skin feels itchy.", "You feel light headed.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -631,7 +671,10 @@
 	else if(holder.stage == 3)
 		scramble(0,mob,10)
 
-/datum/disease2/effect/dna/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/dna/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!iscarbon(A))
+		return
+	var/mob/living/carbon/mob = A
 	mob.remove_any_mutations()
 
 /datum/disease2/effect/organs
@@ -641,7 +684,7 @@
 	max_stage = 7
 	cooldown = 20
 
-/datum/disease2/effect/organs/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/organs/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3)
 			to_chat(mob, "<span class='notice'>[pick("Your skin feels itchy.", "You feel weaker.")]</span>")
@@ -664,12 +707,12 @@
 				mob.apply_effect(20,AGONY,0)
 				mob.adjustBruteLoss(rand(5,15))
 
-/datum/disease2/effect/organs/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		for (var/obj/item/organ/external/BP in H.bodyparts)
+/datum/disease2/effect/organs/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
+		for(var/obj/item/organ/external/BP in H.bodyparts)
 			BP.status &= ~ORGAN_DEAD
-			for (var/obj/item/organ/external/CHILD in BP.children)
+			for(var/obj/item/organ/external/CHILD in BP.children)
 				CHILD.status &= ~ORGAN_DEAD
 		H.update_body()
 
@@ -678,7 +721,7 @@
 	stage = 4
 	level = 7
 
-/datum/disease2/effect/immortal/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/immortal/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		for (var/obj/item/organ/external/BP in H.bodyparts)
@@ -687,7 +730,7 @@
 	var/heal_amt = -5*holder.multiplier
 	mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
-/datum/disease2/effect/immortal/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/immortal/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
@@ -704,7 +747,7 @@
 	max_stage = 8
 	cooldown = 60
 
-/datum/disease2/effect/bones/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/bones/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3,4)
 			to_chat(mob, "<span class='notice'>[pick("You seem less agile.", "You move more jaggy than usual.")]</span>")
@@ -717,9 +760,9 @@
 				BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
 				to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before..</span>")
 
-/datum/disease2/effect/bones/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
+/datum/disease2/effect/bones/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
 		for (var/obj/item/organ/external/BP in H.bodyparts)
 			BP.min_broken_damage = initial(BP.min_broken_damage)
 
@@ -730,7 +773,7 @@
 	max_stage = 3
 	cooldown = 20
 
-/datum/disease2/effect/toxins/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/toxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			to_chat(mob, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You feel nauseated.")]</span>")
@@ -750,7 +793,7 @@
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(senses_message)
 
-/datum/disease2/effect/nerve_support/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/nerve_support/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			if(COOLDOWN_FINISHED(src, senses_message))
@@ -775,7 +818,7 @@
 	level = 6
 	maxm = 3
 
-/datum/disease2/effect/shakey/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/shakey/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	shake_camera(mob,5*holder.multiplier)*/
 
 /datum/disease2/effect/telepathic
@@ -785,7 +828,7 @@
 	max_stage = 3
 	cooldown = 60
 
-/datum/disease2/effect/telepathic/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/telepathic/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			to_chat(mob, "<span class='notice'>[pick("You heard something.", "Random thoughts are appearing inside your mind.", "Something is not right.")]</span>")
@@ -803,7 +846,7 @@
 	max_stage = 3
 	cooldown = 30
 
-/datum/disease2/effect/mind/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/mind/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("Something is not right.", "You forget your name for a moment.", "You suddenly forgot where you were going.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -827,7 +870,7 @@
 	max_stage = 3
 	cooldown = 30
 
-/datum/disease2/effect/hallucinations/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/hallucinations/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whisper with no source.", "Your head aches.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -845,7 +888,7 @@
 	cooldown = 60
 	var/pain_chance = 5
 
-/datum/disease2/effect/deaf/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/deaf/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -868,7 +911,7 @@
 	cooldown = 10
 	var/laughing_fit_chance = 5
 
-/datum/disease2/effect/giggle/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/giggle/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("You smile for no reason.", "You feel very happy.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -902,7 +945,7 @@
 	max_stage = 3
 	cooldown = 60
 
-/datum/disease2/effect/confusion/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/confusion/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -917,7 +960,7 @@
 	stage = 3
 	level = 3
 
-/datum/disease2/effect/mutation/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/mutation/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 		mob.apply_damage(2, CLONE)*/
 
 
@@ -926,7 +969,7 @@
 	stage = 3
 	level = 2
 
-/datum/disease2/effect/groan/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/groan/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	mob.say("*groan")*/
 ////////////////////////STAGE 2/////////////////////////////////
 
@@ -937,7 +980,7 @@
 	max_stage = 1
 	cooldown = 30
 
-/datum/disease2/effect/purging_advanced/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/purging_advanced/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(!mob.getToxLoss())
 		return
 	if(!mob.reagents)
@@ -952,7 +995,7 @@
 	max_stage = 4
 	cooldown = 10
 
-/datum/disease2/effect/scream/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/scream/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>[pick("You want to talk a lot.", "You feel a desire to talk loud.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -979,7 +1022,7 @@
 	max_stage = 4
 	cooldown = 60
 
-/datum/disease2/effect/drowsness/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/drowsness/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>You feel tired.</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1005,7 +1048,7 @@
 	max_stage = 4
 	cooldown = 10
 
-/datum/disease2/effect/blind/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/blind/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class='notice'>Your eyes itch.</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1034,7 +1077,7 @@
 	cooldown = 10
 	var/target_nutrition = NUTRITION_LEVEL_NORMAL
 
-/datum/disease2/effect/weight_even/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/weight_even/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	var/speed = 0
 	switch(holder.stage)
 		if(1)
@@ -1057,7 +1100,7 @@
 	max_stage = 3
 	cooldown = 30
 
-/datum/disease2/effect/hungry/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/hungry/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		mob.nutrition = max(0, mob.nutrition - 5)
 		mob.overeatduration = max(mob.overeatduration - 5, 0)
@@ -1080,7 +1123,7 @@
 	max_stage = 3
 	cooldown = 20
 
-/datum/disease2/effect/fridge/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/fridge/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You feel cold.", "You shiver.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1103,17 +1146,17 @@
 	max_stage = 8
 	cooldown = 60
 
-/datum/disease2/effect/hair/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
+/datum/disease2/effect/hair/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
 
 		if((is_face_bald(H) && is_bald(H)) || !is_race_valid(H.species.name))
 			return
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(mob, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
+				to_chat(H, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
 			if(4,5,6)
-				to_chat(mob, "<span class='warning'>[pick("Random hairs start to fall out.", "You feel more bald with every second.")]</span>")
+				to_chat(H, "<span class='warning'>[pick("Random hairs start to fall out.", "You feel more bald with every second.")]</span>")
 			if(7)
 				if(!is_face_bald(H))
 					to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
@@ -1158,7 +1201,7 @@
 	cooldown = 10
 	var/muscles_ache_chance = 5
 
-/datum/disease2/effect/stimulant/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/stimulant/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You want to jump around.", "You want to run.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1184,7 +1227,7 @@
 	max_stage = 1
 	cooldown = 600
 
-/datum/disease2/effect/monitoring/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+/datum/disease2/effect/monitoring/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	SSmobs.virus_monitored_mobs |= mob
 
 /datum/disease2/effect/monitoring/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -1199,7 +1242,7 @@
 	var/drop_item_chance = 30
 	var/couthing_fit_chance = 5
 
-/datum/disease2/effect/cough/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/cough/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(mob.reagents.has_reagent("dextromethorphan"))
 		return
 	if(prob(20) || holder.stage	== 1)
@@ -1230,7 +1273,7 @@
 	max_stage = 3
 	cooldown = 20
 
-/datum/disease2/effect/sneeze/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/sneeze/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You sniff a little.", "You want to sneeze.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1259,7 +1302,7 @@
 	stage = 1
 	level = 1
 
-/datum/disease2/effect/gunck/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/gunck/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	to_chat(mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")*/
 
 /datum/disease2/effect/drool
@@ -1269,7 +1312,7 @@
 	max_stage = 3
 	cooldown = 10
 
-/datum/disease2/effect/drool/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/drool/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You swallow excess saliva.", "You seem to forget how to swallow saliva.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1292,7 +1335,7 @@
 	max_stage = 3
 	cooldown = 5
 
-/datum/disease2/effect/twitch/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/twitch/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("Your thumb twitches.", "Your ear twitches.", "You twitch a bit.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1314,20 +1357,20 @@
 	cooldown = 10
 	var/stun_chance = 5
 
-/datum/disease2/effect/headache/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
+/datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
 		if(H.species && !H.species.flags[NO_PAIN])
 			if(prob(20) || holder.stage	== 1)
-				to_chat(mob, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
+				to_chat(H, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))
-				to_chat(mob, "<span class = 'warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.", "You have a throbbing headache.")]</span>")
+				to_chat(H, "<span class = 'warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.", "You have a throbbing headache.")]</span>")
 				H.apply_effect(5,AGONY,0)
 			else if(holder.stage == 6)
-				to_chat(mob, "<span class = 'userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
+				to_chat(H, "<span class = 'userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
 				if(prob(stun_chance))
 					H.apply_effect(30,AGONY,0)
 					H.Stun(2)
-					mob.emote("scream")
+					H.emote("scream")
 				else
 					H.apply_effect(10,AGONY,0)

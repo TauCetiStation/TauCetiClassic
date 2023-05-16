@@ -5,8 +5,8 @@
 	icon_state = "pdoor1"
 	icon_state_open  = "pdoor0"
 	icon_state_close = "pdoor1"
-	layer = SAFEDOOR_LAYER
-	base_layer = SAFEDOOR_LAYER
+	layer = ABOVE_SAFEDOOR_LAYER
+	base_layer = ABOVE_SAFEDOOR_LAYER
 	var/id = 1.0
 	explosion_resistance = 25
 	block_air_zones = 0

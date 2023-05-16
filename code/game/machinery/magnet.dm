@@ -305,7 +305,9 @@
 					speed = 1
 			if("setpath")
 				var/newpath = sanitize_safe(input(usr, "Please define a new path!",,input_default(path)) as text|null)
-				if(newpath && newpath != "")
+				if(!can_still_interact_with(usr))
+					return
+				if(length(newpath))
 					moving = 0 // stop moving
 					path = newpath
 					pathpos = 1 // reset position

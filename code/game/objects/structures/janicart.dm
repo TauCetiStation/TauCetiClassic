@@ -23,7 +23,7 @@
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
 	var/obj/item/weapon/mop/mymop = null
 	var/obj/item/weapon/reagent_containers/spray/myspray = null
-	var/obj/item/device/lightreplacer/myreplacer = null
+	var/obj/item/device/lightreplacer/robot/myreplacer = null
 	var/obj/structure/mopbucket/mybucket = null
 
 	var/signs = 0 //maximum capacity hardcoded below
