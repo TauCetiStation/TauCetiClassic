@@ -220,13 +220,16 @@
 
 
 	if(ismob(A))
-		for(var/mob/mob in get_turf(M.loc))
-			if(mob == A)
-				continue
-			if(check_living_shield(mob) == M)
-				M.bullet_act(src,def_zone)
-			else
-				mob.bullet_act(src,def_zone)
+		if(isreplicator(A))
+			A.bullet_act(src, def_zone)
+		else
+			for(var/mob/mob in get_turf(M.loc))
+				if(mob == A)
+					continue
+				if(check_living_shield(mob) == M)
+					M.bullet_act(src,def_zone)
+				else
+					mob.bullet_act(src,def_zone)
 
 	//stop flying
 	on_impact(A)
