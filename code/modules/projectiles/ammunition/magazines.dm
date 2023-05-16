@@ -549,6 +549,13 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 
+/obj/item/ammo_box/speedloader/c38m
+	name = "speedloader (.38)"
+	caliber = "38"
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c38m
+	max_ammo = 6
+
 /obj/item/ammo_box/speedloader/c45rubber
 	name = "speedloader (.45 rubber)"
 	desc = "A .45 speedloader."

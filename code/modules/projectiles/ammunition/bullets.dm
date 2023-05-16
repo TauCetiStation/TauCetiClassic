@@ -204,13 +204,6 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 400
 
-/obj/item/ammo_box/c38m
-	name = "speedloader (.38)"
-	icon_state = "38"
-	ammo_type = /obj/item/ammo_casing/c38m
-	max_ammo = 6
-	multiple_sprites = MANY_STATES
-
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."
 	caliber = "5.56mm"

@@ -105,6 +105,9 @@ var/global/list/preferences_datums = list()
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
+	var/r_belly = 0
+	var/g_belly = 0
+	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 
@@ -384,6 +387,10 @@ var/global/list/preferences_datums = list()
 	character.r_hair = r_hair
 	character.g_hair = g_hair
 	character.b_hair = b_hair
+
+	character.r_belly = r_belly
+	character.g_belly = g_belly
+	character.b_belly = b_belly
 
 	character.r_grad = r_grad
 	character.g_grad = g_grad

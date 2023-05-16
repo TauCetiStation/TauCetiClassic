@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	var/implanted = null
-	var/mob/imp_in = null
+	var/mob/living/carbon/imp_in = null
 	var/obj/item/organ/external/part = null
 	var/allow_reagents = 0
 	var/malfunction = 0
@@ -20,13 +20,13 @@
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
 	implanted = FALSE
-	imp_in = null
 	if(part)
 		part.implants.Remove(src)
 		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
+	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -374,7 +374,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")

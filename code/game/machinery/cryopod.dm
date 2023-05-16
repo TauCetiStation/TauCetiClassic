@@ -64,6 +64,8 @@ var/global/list/frozen_items = list()
 			return
 
 		var/obj/item/I = input(usr, "Please choose which object to retrieve.","Object recovery",null) as obj in frozen_items
+		if(!can_still_interact_with(usr))
+			return
 
 		if(!I || frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")

@@ -124,9 +124,13 @@
 	var/overload = 1 // used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/longtermpower = 10
+
+	var/datum/smartlight_preset/smartlight_preset
+	var/custom_smartlight_preset // optional /datum/smartlight_preset preset name to expand default SSsmartlight preset. For bar area, rnd/med, etc.
+	var/datum/light_mode/light_mode
 	var/nightshift_lights = FALSE
-	var/nightshift_preset = "soft"
-	var/last_nightshift_switch = 0
+	COOLDOWN_DECLARE(smartlight_switch)
+
 	var/update_state = -1
 	var/update_overlay = -1
 	var/static/status_overlays = 0
@@ -165,6 +169,8 @@
 		stat |= MAINT
 		update_icon()
 		addtimer(CALLBACK(src, .proc/update), 5)
+
+	init_smartlight()
 
 /obj/machinery/power/apc/Destroy()
 	apc_list -= src
@@ -799,7 +805,7 @@
 		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfCanHack" = get_malf_status(user),
 		"nightshiftLights" = nightshift_lights,
-		"nightshiftPreset" = SSnightshift.forced_admin_mode ? "unknown" : nightshift_preset,
+		"smartlightMode" = SSsmartlight.forced_admin_mode ? "unknown" : light_mode.name,
 
 		"powerChannels" = list(
 			list(
@@ -863,7 +869,7 @@
 			return FALSE
 
 	else // Human
-		if(locked && act != "toggle_nightshift" && act != "change_nightshift")
+		if(locked && act != "toggle_nightshift" && act != "change_smartlight")
 			return FALSE
 
 	return TRUE
@@ -888,18 +894,32 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
-			if(SSnightshift.forced_admin_mode)
+			if(SSsmartlight.forced_admin_mode)
 				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
 				return
-			toggle_nightshift_lights()
+
+			if(!COOLDOWN_FINISHED(src, smartlight_switch))
+				to_chat(usr, "<span class='warning'>[src]'s smart lighting circuit breaker is still cycling!</span>")
+				return
+
+			COOLDOWN_START(src, smartlight_switch, 4 SECONDS)
+			toggle_nightshift(!nightshift_lights)
 			. = TRUE
-		if("change_nightshift")
-			if(SSnightshift.forced_admin_mode)
+		if("change_smartlight")
+			if(SSsmartlight.forced_admin_mode)
 				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
 				return
-			var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
-			if(new_preset && lighting_presets[new_preset])
-				set_nightshift_preset(new_preset)
+
+			var/list/datum/light_mode/available_modes = smartlight_preset.get_user_available_modes()
+			var/mode_name = input(usr, "Please choose lighting mode.") as null|anything in available_modes
+
+			if(!COOLDOWN_FINISHED(src, smartlight_switch))
+				to_chat(usr, "<span class='warning'>[src]'s smart lighting circuit breaker is still cycling!</span>")
+				return
+
+			if(mode_name)
+				COOLDOWN_START(src, smartlight_switch, 4 SECONDS)
+				set_light_mode(available_modes[mode_name])
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -1288,42 +1308,55 @@
 		return APC_CHANNEL_AUTO_OFF
 	return APC_CHANNEL_OFF
 
-/obj/machinery/power/apc/proc/set_nightshift(on, preset = null)
+/obj/machinery/power/apc/proc/init_smartlight()
+	if(custom_smartlight_preset)
+		var/type = smartlight_presets[custom_smartlight_preset]
+		smartlight_preset = new type
+	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist))
+		smartlight_preset = new /datum/smartlight_preset/hardlight_nightshift
+	else
+		smartlight_preset = new
+
+	smartlight_preset.expand_onto(SSsmartlight.smartlight_preset)
+
+	if(SSsmartlight.nightshift_active && smartlight_preset.nightshift_mode)
+		nightshift_lights = TRUE
+		set_light_mode(global.light_modes_by_type[smartlight_preset.nightshift_mode])
+	else
+		nightshift_lights = FALSE
+		set_light_mode(global.light_modes_by_type[smartlight_preset.default_mode])
+
+/obj/machinery/power/apc/proc/sync_smartlight()
 	set waitfor = FALSE
-	nightshift_lights = on
+	// todo: need to preserve local user settings (idk how)
+	init_smartlight()
 
-	if(on && preset && preset != nightshift_preset)
-		var/list/preset_data
+/obj/machinery/power/apc/proc/set_light_mode(datum/light_mode/new_mode, forced = FALSE)
+	set waitfor = FALSE
 
-		if((SSnightshift.forced_admin_mode && lighting_presets_admin[preset]) || lighting_presets[preset])
-			preset_data = lighting_presets[preset] || lighting_presets_admin[preset]
+	if(light_mode == new_mode)
+		return
 
-		if(preset_data)
-			nightshift_preset = preset
-			for(var/obj/machinery/light/L in area)
-				L.nightshift_light_range = preset_data["range"]
-				L.nightshift_light_power = preset_data["power"]
-				L.nightshift_light_color = preset_data["color"]
+	if(SSsmartlight.forced_admin_mode && !forced)
+		return
+
+	light_mode = new_mode
 
 	for(var/obj/machinery/light/L in area)
-		if(L.nightshift_allowed)
-			L.nightshift_enabled = nightshift_lights
-			L.update(FALSE)
-		CHECK_TICK
+		L.set_light_mode(light_mode)
 
-/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
-	if(last_nightshift_switch > world.time - 20) // ~2 seconds between each toggle to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-		return
-	last_nightshift_switch = world.time
-	set_nightshift(!nightshift_lights)
+/obj/machinery/power/apc/proc/toggle_nightshift(active)
+	nightshift_lights = active
+	reset_smartlight()
 
-/obj/machinery/power/apc/proc/set_nightshift_preset(preset)
-	if(last_nightshift_switch > world.time - 20) // ~2 seconds between each change to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-		return
-	last_nightshift_switch = world.time
-	set_nightshift(nightshift_lights, preset)
+/obj/machinery/power/apc/proc/reset_smartlight()
+	if(nightshift_lights && smartlight_preset.nightshift_mode)
+		set_light_mode(global.light_modes_by_type[smartlight_preset.nightshift_mode])
+	else
+		set_light_mode(global.light_modes_by_type[smartlight_preset.default_mode])
+
+/obj/machinery/power/apc/proc/get_light_mode()
+	return light_mode
 
 /obj/machinery/power/apc/smallcell
 	cell_type = 2500
