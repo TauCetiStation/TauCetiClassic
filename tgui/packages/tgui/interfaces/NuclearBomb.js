@@ -18,7 +18,7 @@ const NukeKeypad = (props, context) => {
     <Box
       width="218px"
       align="center">
-      <Grid width="1px">
+      <Grid width="35%">
         {keypadKeys.map(keyColumn => (
           <Grid.Column key={keyColumn[0]}>
             {keyColumn.map(key => (
