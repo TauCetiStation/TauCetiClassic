@@ -170,7 +170,7 @@ var/global/bomb_set
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return
 		var/turf/current_location = get_turf(user)//What turf is the user on?
-		if((!current_location || is_centcom_level(current_location.z)) && (isnukeop(user) || isnukeopleader(user) || isdeepnukeop(user)))//If turf was not found or they're on z level 2.
+		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
 			return
 		if (!istype(get_area(src), /area/station)) // If outside of station
@@ -503,7 +503,7 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()
-	if(isnukeop(user) || isnukeopleader(user) || isdeepnukeop(user) || isobserver(user))
+	if(isnukeop(user) || isobserver(user))
 		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
 
 /obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
@@ -523,7 +523,7 @@ var/global/bomb_set
 		return
 	..()
 
-	if(!isnukeop(user) && !isnukeopleader(user) && !isdeepnukeop(user))
+	if(!isnukeop(user))
 		return
 	if(!anchored)
 		return
