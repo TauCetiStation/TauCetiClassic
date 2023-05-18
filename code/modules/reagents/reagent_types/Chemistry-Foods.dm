@@ -282,6 +282,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
+	allergen = list(ALLERGY_INGESTION = TRUE)
 	var/allergy_triggered = FALSE
 	COOLDOWN_DECLARE(coco_warning)
 
@@ -319,6 +320,7 @@
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
+	allergen = list(ALLERGY_INGESTION = TRUE)
 	var/allergy_triggered = FALSE
 	COOLDOWN_DECLARE(hot_coco_warning)
 
