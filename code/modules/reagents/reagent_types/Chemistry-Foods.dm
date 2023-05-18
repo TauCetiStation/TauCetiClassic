@@ -282,16 +282,20 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
+	var/allergy_triggered = FALSE
 	COOLDOWN_DECLARE(coco_warning)
 
 /datum/reagent/consumable/coco/proc/toxin_digest(mob/living/M)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(data["ticks"] > 15)
-		M.adjustToxLoss(sqrt(data["ticks"]) * FOOD_METABOLISM)
 		if(COOLDOWN_FINISHED(src, coco_warning))
 			to_chat(M, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
 			COOLDOWN_START(src, coco_warning, 7 SECONDS)
+		if(ishuman(M) && !allergy_triggered)
+			var/mob/living/carbon/human/H = M
+			H.allergies[id] = ALLERGY_UNDISCOVERED
+			allergy_triggered = TRUE
 	data["ticks"]++
 
 /datum/reagent/consumable/coco/on_unathi_digest(mob/living/M)
@@ -315,6 +319,7 @@
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
+	var/allergy_triggered = FALSE
 	COOLDOWN_DECLARE(hot_coco_warning)
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
@@ -325,10 +330,13 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(data["ticks"] > 15)
-		M.adjustToxLoss((sqrt(data["ticks"]) * DRINK_METABOLISM) * (nutriment_factor * 10 / 100)) //default coco have 10 "power", hot coco have 4
 		if(COOLDOWN_FINISHED(src, hot_coco_warning))
 			to_chat(M, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
 			COOLDOWN_START(src, hot_coco_warning, 7 SECONDS)
+		if(ishuman(M) && !allergy_triggered)
+			var/mob/living/carbon/human/H = M
+			H.allergies[id] = ALLERGY_UNDISCOVERED
+			allergy_triggered = TRUE
 	data["ticks"]++
 
 /datum/reagent/consumable/hot_coco/on_unathi_digest(mob/living/M)
