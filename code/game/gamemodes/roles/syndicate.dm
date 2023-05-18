@@ -97,7 +97,6 @@
 	name = LONE_OP
 	id = LONE_OP
 	nuclear_outfit = /datum/outfit/nuclear/solo
-	TC_num = 20
 	skillset_type = /datum/skillset/max
 
 /datum/role/operative/lone/forgeObjectives()
