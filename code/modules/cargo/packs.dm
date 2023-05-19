@@ -57,7 +57,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 			if(E.applies_to_type(item_type))
 				contents_cost += E.get_type_cost(item_type, amount)
 
-	cost = max(CARGO_MIN_PACK_PRICE, crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs)
+	cost = max(CARGO_MIN_PACK_PRICE, round(crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs))
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
