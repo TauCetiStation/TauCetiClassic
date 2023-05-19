@@ -49,7 +49,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "grapesoda"
 /obj/random/foods/drink_bottle/item_to_spawn()
-		return pick(subtypesof(/obj/item/weapon/reagent_containers/food/drinks/bottle))
+		return pick(subtypesof(/obj/item/weapon/reagent_containers/food/drinks/bottle) - subtypesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov))
 
 /obj/random/foods/food_without_garbage
 	name = "Random Food Supply with Garbage"

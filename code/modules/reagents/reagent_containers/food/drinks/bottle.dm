@@ -423,3 +423,14 @@
 	icon_state = "beer"
 	list_reagents = list("beer" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	name = "Molotov Cocktail"
+	desc = "It's a damn huge bottle full of fiery liquid. Serve to fascist pigs."
+	icon_state = "molotov_bottle"
+	volume = 150
+	list_reagents = list("fuel" = 150)
+	molotov_state = IS_MOLOTOV
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
+	. = ..()
+	name = pick("Molotov Cocktail", "New Gibson Special", "Lenin's Favorite", "Che's Choice", "Cuba Libre", "Njet Molotoff", "Anarchy Appertive", "Revrum")

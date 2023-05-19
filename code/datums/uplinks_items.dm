@@ -1183,6 +1183,12 @@
 	item = /obj/item/weapon/grenade/empgrenade
 	cost = 2
 
+/datum/uplink_item/revolution/mollie
+	name = "Molotov Cocktail"
+	desc = "Big ol' bottle of fuel. Comes prepacked with a rag. No lighter included."
+	item = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	cost = 1
+
 /datum/uplink_item/revolution/armor
 	name = "Surplus Armor Set"
 	desc = "Set of cheap armor stolen from forgotten military warehouses."
