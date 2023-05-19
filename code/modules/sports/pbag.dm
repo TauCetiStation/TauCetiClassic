@@ -13,7 +13,7 @@
 
 	maxHealth = 100
 
-	hud_possible = null
+	hud_possible = list(EVIDENCE_HUD)
 
 	var/list/ghosts_were_here = list()
 	// Used so after a swing we fall correctly in async calls.

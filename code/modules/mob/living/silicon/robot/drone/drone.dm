@@ -13,7 +13,7 @@
 	lawupdate = 0
 	density = FALSE
 	ventcrawler = 2
-	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD, EVIDENCE_HUD)
 	w_class = SIZE_SMALL
 	typing_indicator_type = "machine"
 	holder_type = /obj/item/weapon/holder/drone

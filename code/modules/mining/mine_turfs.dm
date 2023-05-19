@@ -16,7 +16,7 @@
 	blocks_air = AIR_BLOCKED
 	temperature = TCMB
 
-	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
+	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD, EVIDENCE_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
 	basetype = /turf/simulated/floor/plating/airless/asteroid
