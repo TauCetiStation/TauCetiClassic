@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(economy)
 	var/list/total_department_stocks
 	var/list/department_dividends
 	var/list/stock_splits
-	var/list/insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 80, INSURANCE_PREMIUM = 200)
+	var/list/insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
 	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
 
 
