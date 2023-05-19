@@ -12480,7 +12480,14 @@
 /area/centcom/specops)
 "aCN" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/paper/nuclear_code,
+/obj/item/weapon/book/manual/nuclear{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = -5;
+	pixel_y = 15
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "redcarpet11-12";
