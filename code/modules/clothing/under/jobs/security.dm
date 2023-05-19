@@ -32,16 +32,6 @@
 	item_state = "secskirtred"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
-/obj/item/clothing/under/rank/security/corp
-	icon_state = "sec_corporate"
-	item_state = "sec_corporate"
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/rank/warden/corp
-	icon_state = "warden_corporate"
-	item_state = "warden_corporate"
-	flags = ONESIZEFITSALL
-
 /obj/item/clothing/under/tactical
 	name = "tactical jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
@@ -117,11 +107,6 @@
 	icon_state = "hos_turtleneck"
 	item_state = "hos_turtleneck"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
-
-/obj/item/clothing/under/rank/head_of_security/corp
-	icon_state = "hos_corporate"
-	item_state = "hos_corporate"
-	flags = ONESIZEFITSALL
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen
