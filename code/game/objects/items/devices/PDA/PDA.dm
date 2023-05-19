@@ -515,10 +515,10 @@
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob				// ...and what does he do?
 	data["owner_insurance_type"] = get_owner_insurance_type()
-	data["owner_preferred_insurance_type"] = MA.owner_preferred_insurance_type
+	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
 	data["owner_insurance_price"] = SSeconomy.insurance_prices[data["owner_insurance_type"]]
-	data["owner_preferred_insurance_price"] = SSeconomy.insurance_prices[data["owner_preferred_insurance_type"]]
-	data["owner_max_insurance_payment"] = MA.owner_max_insurance_payment
+	data["owner_preferred_insurance_price"] = MA ? SSeconomy.insurance_prices[data["owner_preferred_insurance_type"]] : "error"
+	data["owner_max_insurance_payment"] = MA ? MA.owner_max_insurance_payment : "error"
 	data["medical_record_id"] = get_medical_record_id_connected_to_money_account()
 	data["permission_to_change_insurance_price"] = check_permission_to_change_insurance_price()
 	data["money"] = MA ? MA.money : "error"
