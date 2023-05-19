@@ -98,6 +98,9 @@
 				remove_from_storage(I, M.loc)
 				I.add_fingerprint(M)
 				step(I, dir_target)
+				I.AddComponent(/datum/component/evidence, "Этот предмет здесь не лежал.")
+			if(!M.is_in_hands(src))
+				AddComponent(/datum/component/evidence, "Отсюда что-то взяли.")
 		return
 
 	if(!over_object)

@@ -904,7 +904,13 @@ var/global/list/airlock_overlays = list()
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 	else if(isscrewing(C))
-		p_open = !p_open
+		if(p_open)
+			p_open = FALSE
+			AddComponent(/datum/component/evidence, "Здесь недавно открывали панель проводов.")
+			AddComponent(/datum/component/evidence, "Здесь открыли панель проводов недавно.")
+		else
+			p_open = TRUE
+			AddComponent(/datum/component/evidence, "Здесь открыли панель проводов недавно.")
 		update_icon()
 	else if(iscutter(C) && p_open)
 		return attack_hand(user)
