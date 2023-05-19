@@ -8,6 +8,9 @@
 /datum/export/stack/get_cost(O)
 	return round(..(O))
 
+/datum/export/stack/get_type_cost(export_type, amount = 1, contr = 0, emag = 0)
+	return amount * cost
+
 /datum/export/stack/get_amount(obj/O)
 	var/obj/item/stack/S = O
 	if(istype(S))
