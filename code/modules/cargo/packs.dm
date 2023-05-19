@@ -51,12 +51,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	if(crate_type2cost[crate_type])
 		crate_cost = crate_type2cost[crate_type]
 
+	world.log << "calculating [type]"
+
 	var/contents_cost = 0.0
 	for(var/item_type in contains)
 		for(var/datum/export/E in exports_list)
 			if(E.applies_to_type(item_type))
+				world.log << "contains [item_type] ([E.get_type_cost(item_type, amount)])"
 				contents_cost += E.get_type_cost(item_type, amount)
 
+	world.log << "cost : [round(crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs)]/[CARGO_MIN_PACK_PRICE]"
 	cost = max(CARGO_MIN_PACK_PRICE, round(crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs))
 
 /datum/supply_pack/proc/generate(turf/T)
