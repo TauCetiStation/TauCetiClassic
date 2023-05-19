@@ -78,6 +78,8 @@
 	*/
 	restricted_species = list(DIONA)
 
+/datum/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	to_chat(H, "<span class='userdanger'><b>Ваши очки были заменены улучшенной версией. Попробуйте их включить и посмотреть за людьми на станции. При осмотре вещей, вы можете заметить то, что нельзя увидеть другим способом.</b></span>")
 
 /datum/job/officer
 	title = "Security Officer"
