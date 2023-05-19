@@ -406,6 +406,9 @@ log transactions
 						authenticated_account.transaction_log.Add(T)
 
 						to_chat(usr, "<span class='notice'>[bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'</span>")
+						for(var/mob/living/L in range(1, src))
+							if(L != usr && prob(50))
+								to_chat(L, "Вам удалось подглядеть пин-код: <span class='notice'>[tried_pin]</span>.")
 
 					previous_account_number = tried_account_num
 			if("withdrawal")
