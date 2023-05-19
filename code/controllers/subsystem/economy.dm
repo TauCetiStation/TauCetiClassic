@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/handle_insurances()
 	var/insurance_sum = 0
 	var/list/problem_record_id = list()
-	for(var/datum/data/record/R as anything in data_core.general)
+	for(var/datum/data/record/R in data_core.general)
 		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
 		if(!MA)
 			R.fields["insurance_type"] = INSURANCE_NONE
