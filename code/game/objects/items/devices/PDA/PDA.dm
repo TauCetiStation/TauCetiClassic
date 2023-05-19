@@ -1123,9 +1123,7 @@
 				return
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner && owner_account)
-				global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = T, "time" = worldtime2text())
-				global.orders_and_offers_number++
-				mode = 8
+				add_order_and_offer(T)
 			else
 				to_chat(U, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
@@ -1884,5 +1882,10 @@
 		if(MS.active)
 			var/turf/pos = get_turf(src)
 			return is_station_level(pos.z)
+
+/obj/item/device/pda/proc/add_order_and_offer(Text)
+	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = Text, "time" = worldtime2text())
+	global.orders_and_offers_number++
+	mode = 8
 
 #undef TRANSCATION_COOLDOWN
