@@ -20,7 +20,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	var/dangerous = FALSE // Should we message admins?
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
-	var/amount = 0
+	var/sheet_amount = 0
 
 	// Is calculated dynamically based on: crate type, manifest's possible returns, contents, overprice and additional_costs.
 	var/cost = 0
@@ -55,6 +55,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	for(var/item_type in contains)
 		for(var/datum/export/E in exports_list)
 			if(E.applies_to_type(item_type))
+				var/amount = 1
+				if(sheet_amount > 0 && (ispath(item_type, /obj/item/stack/sheet) || ispath(item_type, /obj/item/stack/tile)))
+					amount = sheet_amount
 				contents_cost += E.get_type_cost(item_type, amount)
 
 	cost = max(CARGO_MIN_PACK_PRICE, round(crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs))
@@ -72,9 +75,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		var/n_item = new item(C)
-		if(amount && (istype(n_item, /obj/item/stack/sheet) || istype(n_item, /obj/item/stack/tile)))
+		if(sheet_amount > 0 && (istype(n_item, /obj/item/stack/sheet) || istype(n_item, /obj/item/stack/tile)))
 			var/obj/item/stack/sheet/n_sheet = n_item
-			n_sheet.set_amount(amount)
+			n_sheet.set_amount(sheet_amount)
 
 //----------------------------------------------
 //-----------------OPERATIONS-------------------
@@ -805,7 +808,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/metal50
 	name = "50 metal sheets"
 	contains = list(/obj/item/stack/sheet/metal)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Metal sheets crate"
 	group = "Engineering"
@@ -813,7 +816,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/glass50
 	name = "50 glass sheets"
 	contains = list(/obj/item/stack/sheet/glass)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Glass sheets crate"
 	group = "Engineering"
@@ -821,7 +824,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/wood50
 	name = "50 wooden planks"
 	contains = list(/obj/item/stack/sheet/wood)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
@@ -831,7 +834,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/stack/tile/carpet, /obj/item/stack/tile/carpet/black, /obj/item/stack/tile/carpet/purple, /obj/item/stack/tile/carpet/orange, /obj/item/stack/tile/carpet/green,
 					/obj/item/stack/tile/carpet/blue, /obj/item/stack/tile/carpet/blue2, /obj/item/stack/tile/carpet/red, /obj/item/stack/tile/carpet/cyan
 	)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Carpet crate"
 	group = "Engineering"
@@ -846,14 +849,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 			var/n_item = new item(C)
 			if(istype(n_item, /obj/item/stack/tile))
 				var/obj/item/stack/sheet/n_sheet = n_item
-				n_sheet.set_amount(amount)
+				n_sheet.set_amount(sheet_amount)
 	else
 		for(var/i in 1 to num_contained)
 			item = pick(L)
 			var/n_item = new item(C)
 			if(istype(n_item, /obj/item/stack/tile))
 				var/obj/item/stack/sheet/n_sheet = n_item
-				n_sheet.set_amount(amount)
+				n_sheet.set_amount(sheet_amount)
 
 /datum/supply_pack/electrical
 	name = "Electrical maintenance crate"
