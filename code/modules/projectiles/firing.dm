@@ -22,7 +22,8 @@
 			newshot()
 			BB.pixel_x += rand(-8, 8) // so they will look more spreaded and not all in one (good for shotguns).
 			BB.pixel_y += rand(-8, 8)
-	user.next_move = world.time + 4
+	if(weapon.fire_delay != NO_FIRE_DELAY)
+		user.next_move = world.time + 4
 	update_icon()
 	return 1
 

@@ -16,7 +16,7 @@
 	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	fire_delay = 1
+	fire_delay = NO_FIRE_DELAY
 	w_class = SIZE_NORMAL
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
@@ -86,7 +86,7 @@
 		fire_sound = initial(fire_sound)
 	else
 		shot = ammo_type[PLASMAGUN_OVERCHARGE_TYPE]
-		fire_delay = 0
+		fire_delay = NO_FIRE_DELAY
 		fire_sound = overcharge_fire_sound
 		max_projectile_per_fire = 1
 

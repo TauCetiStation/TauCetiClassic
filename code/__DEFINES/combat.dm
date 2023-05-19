@@ -111,3 +111,6 @@
 #define MOVESET_TYPE "moveset_type"
 #define MOVESET_ROLES "moveset_role"
 #define MOVESET_QUALITY "moveset_quality"
+
+// Guns. I have no idea where to put it
+#define NO_FIRE_DELAY -1
