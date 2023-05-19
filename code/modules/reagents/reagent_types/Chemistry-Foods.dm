@@ -283,20 +283,28 @@
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
 	allergen = list(ALLERGY_INGESTION = TRUE)
-	var/allergy_triggered = FALSE
 	COOLDOWN_DECLARE(coco_warning)
 
 /datum/reagent/consumable/coco/proc/toxin_digest(mob/living/M)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(data["ticks"] > 15)
-		if(COOLDOWN_FINISHED(src, coco_warning))
-			to_chat(M, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
-			COOLDOWN_START(src, coco_warning, 7 SECONDS)
-		if(ishuman(M) && !allergy_triggered)
-			var/mob/living/carbon/human/H = M
-			H.allergies[id] = ALLERGY_UNDISCOVERED
-			allergy_triggered = TRUE
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		var/allergies_type = ALLERGY_UNDISCOVERED
+		switch(data["ticks"])
+			if(15 to 59)
+				if(COOLDOWN_FINISHED(src, coco_warning))
+					to_chat(H, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
+					COOLDOWN_START(src, coco_warning, 7 SECONDS)
+			if(60 to 119)
+				if(allergies_type < ALLERGY_DISCOVERED)
+					allergies_type = ALLERGY_DISCOVERED
+			if(120 to INFINITY)
+				if(allergies_type < ALLERGY_LETHAL)
+					allergies_type = ALLERGY_LETHAL
+		LAZYSET(H.allergies, id, allergies_type)
 	data["ticks"]++
 
 /datum/reagent/consumable/coco/on_unathi_digest(mob/living/M)
@@ -321,7 +329,6 @@
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
 	allergen = list(ALLERGY_INGESTION = TRUE)
-	var/allergy_triggered = FALSE
 	COOLDOWN_DECLARE(hot_coco_warning)
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
@@ -332,13 +339,22 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(data["ticks"] > 15)
-		if(COOLDOWN_FINISHED(src, hot_coco_warning))
-			to_chat(M, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
-			COOLDOWN_START(src, hot_coco_warning, 7 SECONDS)
-		if(ishuman(M) && !allergy_triggered)
-			var/mob/living/carbon/human/H = M
-			H.allergies[id] = ALLERGY_UNDISCOVERED
-			allergy_triggered = TRUE
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		var/allergies_type = ALLERGY_UNDISCOVERED
+		switch(data["ticks"])
+			if(15 to 59)
+				if(COOLDOWN_FINISHED(src, hot_coco_warning))
+					to_chat(H, pick("<span class='warning'>You feel your heart beat faster.</span>", "<span class='warning'>You feel nauseous...</span>", "<span class='warning'>You feel cramps.</span>"))
+					COOLDOWN_START(src, hot_coco_warning, 7 SECONDS)
+			if(60 to 119)
+				if(allergies_type < ALLERGY_DISCOVERED)
+					allergies_type = ALLERGY_DISCOVERED
+			if(120 to INFINITY)
+				if(allergies_type < ALLERGY_LETHAL)
+					allergies_type = ALLERGY_LETHAL
+		LAZYSET(H.allergies, id, allergies_type)
 	data["ticks"]++
 
 /datum/reagent/consumable/hot_coco/on_unathi_digest(mob/living/M)
