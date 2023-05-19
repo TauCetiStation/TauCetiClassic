@@ -433,4 +433,4 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
 	. = ..()
-	name = pick("Molotov Cocktail", "New Gibson Special", "Lenin's Favorite", "Che's Choice", "Cuba Libre", "Njet Molotoff", "Anarchy Appertive", "Revrum")
+	name = pick("Anarchy Appertive", "Che's Choice", "Cuba Libre", "Lenin's Favorite", "Molotov Cocktail", "New Gibson Special", "Njet Molotoff", "Revrum")
