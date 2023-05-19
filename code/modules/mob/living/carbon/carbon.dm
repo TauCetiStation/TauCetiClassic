@@ -360,7 +360,7 @@
 				switch(get_species())
 					if(TAJARAN || UNATHI || VOX || ZOMBIE_TAJARAN || ZOMBIE_UNATHI)
 						evidence_text_about_trace = "Здесь следы от поступи с когтями."
-					else if(HUMAN || SKRELL || ABDUCTOR || ZOMBIE || ZOMBIE_SKRELL)
+					if(HUMAN || SKRELL || ABDUCTOR || ZOMBIE || ZOMBIE_SKRELL)
 						evidence_text_about_trace = "Здесь следы от человекоподобной поступи."
 					else
 						evidence_text_about_trace = "Здесь нечеловеческие следы."
