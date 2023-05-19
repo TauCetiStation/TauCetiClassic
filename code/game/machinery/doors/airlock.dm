@@ -907,7 +907,6 @@ var/global/list/airlock_overlays = list()
 		if(p_open)
 			p_open = FALSE
 			AddComponent(/datum/component/evidence, "Здесь недавно открывали панель проводов.")
-			AddComponent(/datum/component/evidence, "Здесь открыли панель проводов недавно.")
 		else
 			p_open = TRUE
 			AddComponent(/datum/component/evidence, "Здесь открыли панель проводов недавно.")
