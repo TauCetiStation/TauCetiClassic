@@ -58,11 +58,6 @@
 /datum/money_account/proc/adjust_money(amount)
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
-	if(money < 2 * owner_salary) //2x owner_salary credits debt is allowed
-		var/datum/data/record/debtor = find_security_record("money_account_number", account_number)
-		if(debtor)
-			change_criminal_status(null, author = src, target_name = owner_name, security_record = debtor, criminal_status = "*Arrest*", reason = "Долг перед станцией превысил порог")
-
 /datum/money_account/proc/set_salary(amount, ratio = 1)
 	owner_salary = amount * ratio
 	base_salary = amount
