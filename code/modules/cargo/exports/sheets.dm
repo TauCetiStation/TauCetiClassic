@@ -117,7 +117,7 @@
 
 // Cable.
 /datum/export/stack/cable
-	cost = 0.4
+	cost = 0.1
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
