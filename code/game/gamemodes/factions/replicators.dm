@@ -70,6 +70,11 @@
 
 	var/will_do_fake_announcement = FALSE
 
+	var/next_fake_disintegration = 0
+	var/min_fake_disintegration_cooldown = 1 SECOND
+	var/max_fake_disintegration_cooldown = 3 SECONDS
+
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -150,6 +155,11 @@
 		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
 		swarm_chat_message("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
 		bandwidth++
+
+	if(next_fake_disintegration < world.time && length(replicator_mines) > 0)
+		var/obj/item/mine/replicator/fake_sound = pick(replicator_mines)
+		next_fake_disintegration = world.time + rand(min_fake_disintegration_cooldown, max_fake_disintegration_cooldown)
+		INVOKE_ASYNC(fake_sound, /obj/item/mine/replicator.proc/pretend_disintegration)
 
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
