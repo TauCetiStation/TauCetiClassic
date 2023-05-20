@@ -11,7 +11,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_morgue, access_chapel_office, access_crematorium)
 	salary = 40
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	alt_titles = list("Counselor")
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/chaplain

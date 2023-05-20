@@ -9,7 +9,7 @@
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
 	salary = 0
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	alt_titles = list(
 		"Lawyer"         = /datum/outfit/job/assistant/lawyer,
 		"Private Eye"    = /datum/outfit/job/assistant/private_eye,

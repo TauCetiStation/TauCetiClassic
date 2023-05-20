@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(economy)
 			dep_salary += salary
 
 		//We want to substract salaries payment from Dep. account all at once to prevent spam.
-		charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
+		charge_to_account(D.account_number, D.account_number, "Salaries of [r] payment", D.owner_name, -dep_salary)
 
 	return all_salaries
 

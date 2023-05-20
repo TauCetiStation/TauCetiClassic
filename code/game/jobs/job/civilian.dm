@@ -11,7 +11,7 @@
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	salary = 0
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
 	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
@@ -38,7 +38,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	salary = 0
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
@@ -58,7 +58,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	salary = 0
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
@@ -78,7 +78,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mailsorting, access_recycler)
 	salary = 0
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
 	skillsets = list("Recycler" = /datum/skillset/recycler)
@@ -106,7 +106,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
 	salary = 40
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/bartender
 	skillsets = list("Bartender" = /datum/skillset/bartender)
@@ -131,7 +131,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_kitchen)
 	salary = 40
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/chef
@@ -157,7 +157,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	salary = 60
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
@@ -176,7 +176,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
 	salary = 50
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
 	skillsets = list("Janitor" = /datum/skillset/janitor)
@@ -195,7 +195,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
 	salary = 40
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
@@ -214,7 +214,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
 	salary = 40
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
@@ -234,7 +234,7 @@
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
 	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
@@ -259,7 +259,7 @@
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
 	salary = 20
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
 	skillsets = list("Clown" = /datum/skillset/clown)
@@ -282,7 +282,7 @@
 	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
 	salary = 20
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	outfit = /datum/outfit/job/mime
 	skillsets = list("Mime" = /datum/skillset/mime)
 

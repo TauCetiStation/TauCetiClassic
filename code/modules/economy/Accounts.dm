@@ -16,9 +16,9 @@
 	var/suspended = 0
 	var/datum/money_account/department = null
 	var/subsidy = 0
-	var/rank = "low"
-	var/salaries_rank_table = list("high" = list(), "medium" = list(), "low" = list()) //Rank table for department accounts
-	var/salaries_per_ranks_table = list("low" = 0, "medium" = 0, "high" = 0) //Sum of salaries based on rank
+	var/salary_priority = JOB_SALARY_PRIORITY_LOW
+	var/salaries_rank_table = list(JOB_SALARY_PRIORITY_HIGH = list(), JOB_SALARY_PRIORITY_NORMAL = list(), JOB_SALARY_PRIORITY_LOW = list()) //Rank table for department accounts
+	var/salaries_per_ranks_table = list(JOB_SALARY_PRIORITY_LOW = 0, JOB_SALARY_PRIORITY_NORMAL = 0, JOB_SALARY_PRIORITY_HIGH = 0) //Sum of salaries based on rank
 	var/security_level = 1	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
@@ -119,8 +119,8 @@
 	var/time = ""
 	var/source_terminal = ""
 
-/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10, department_stocks=null, datum/money_account/department_account = global.station_account, rank = "low")
-	var/datum/money_account/M = create_account(H.real_name, start_money, null, department_account, rank, H.age)
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10, department_stocks=null, datum/money_account/department_account = global.station_account, salary_priority = JOB_SALARY_PRIORITY_LOW)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null, department_account, salary_priority, H.age)
 
 	for(var/department in department_stocks)
 		var/stock_amount = department_stocks[department] * SSeconomy.get_stock_split(department)
@@ -145,7 +145,7 @@
 
 	return M
 
-/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, datum/money_account/department_account, rank, age = 10)
+/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, datum/money_account/department_account, salary_priority, age = 10)
 
 	//create a new account
 	var/datum/money_account/M = new()
@@ -154,10 +154,10 @@
 	M.adjust_money(starting_funds)
 	M.department = department_account
 
-	M.rank = rank
+	M.salary_priority = salary_priority
 
-	M.department.salaries_rank_table[M.rank] += M
-	M.department.salaries_per_ranks_table[M.rank] += starting_funds
+	M.department.salaries_rank_table[M.salary_priority] += M
+	M.department.salaries_per_ranks_table[M.salary_priority] += starting_funds
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

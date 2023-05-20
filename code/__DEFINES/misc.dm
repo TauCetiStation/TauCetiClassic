@@ -375,3 +375,7 @@
 #define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
 		/obj/machinery/door/airlock = "wall", \
 )
+
+#define JOB_SALARY_PRIORITY_HIGH "high priority"
+#define JOB_SALARY_PRIORITY_NORMAL "normal priority"
+#define JOB_SALARY_PRIORITY_LOW "low priority"

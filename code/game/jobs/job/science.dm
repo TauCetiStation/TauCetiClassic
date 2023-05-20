@@ -17,7 +17,7 @@
 		access_xenoarch, access_maint_tunnels, access_eva
 	)
 	salary = 250
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	skillsets = list("Research Director" = /datum/skillset/rd)
@@ -44,7 +44,7 @@
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
 	salary = 180
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
 	skillsets = list(
@@ -65,7 +65,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenoarch)
 	salary = 190
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
 	skillsets = list("Xenoarchaeologist" = /datum/skillset/xenoarchaeologist)
@@ -90,7 +90,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenobiology)
 	salary = 190
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
 	skillsets = list("Xenobiologist" = /datum/skillset/xenobiologist)
@@ -108,7 +108,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	salary = 180
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/roboticist
@@ -131,7 +131,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
 	salary = 50
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	outfit = /datum/outfit/job/research_assistant
 	skillsets = list("Research Assistant" = /datum/skillset/research_assistant)
 

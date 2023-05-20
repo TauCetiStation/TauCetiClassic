@@ -52,7 +52,7 @@
 	//salary ratio - for global salary changes
 	var/salary_ratio = 1
 
-	var/rank = "low"
+	var/salary_priority = JOB_SALARY_PRIORITY_LOW
 
 	/*
 		HEY YOU!

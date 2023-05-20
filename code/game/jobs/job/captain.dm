@@ -11,7 +11,7 @@
 	req_admin_notify = 1
 	access = list() 			//See get_access()
 	salary = 300
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 	outfit = /datum/outfit/job/captain
@@ -41,7 +41,7 @@
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	salary = 250
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	access = list(

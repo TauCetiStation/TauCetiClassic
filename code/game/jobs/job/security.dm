@@ -16,7 +16,7 @@
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
 	)
 	salary = 250
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/hos
@@ -42,7 +42,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
 	salary = 190
-	rank = "high"
+	salary_priority = JOB_SALARY_PRIORITY_HIGH
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	outfit = /datum/outfit/job/warden
@@ -68,7 +68,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
 	salary = 180
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/detective
@@ -94,7 +94,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
 	salary = 130
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/officer
@@ -120,7 +120,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
 	salary = 150
-	rank = "medium"
+	salary_priority = JOB_SALARY_PRIORITY_NORMAL
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/forensic
@@ -146,7 +146,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_maint_tunnels)
 	salary = 50
-	rank = "low"
+	salary_priority = JOB_SALARY_PRIORITY_LOW
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
 	outfit = /datum/outfit/job/cadet
