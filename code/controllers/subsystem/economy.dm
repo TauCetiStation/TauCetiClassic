@@ -93,62 +93,13 @@ SUBSYSTEM_DEF(economy)
 			continue
 
 		//Station to Departments salary transactions
-		if(!global.station_account.suspended)
-			if(global.station_account.money >= abs(D.subsidy) && D.subsidy > 0)
-				charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Subsidion", "Station Account", D.subsidy)
-				charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Subsidion", global.department_accounts[D.department], -D.subsidy)
-			if(D.money >= abs(D.subsidy) && D.subsidy < 0)
-				charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Penalty", "Station Account", D.subsidy)
-				charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Penalty", global.department_accounts[D.department], -D.subsidy)
+		station_to_departments_salary_transactions()
 
 		//Departments to personnel salary transactions
-		//Choosing a rank
-		for(var/r in D.salaries_rank_table)
-			var/list/rank_table = D.salaries_rank_table[r]
-			var/salary_rank = D.salaries_per_ranks_table[r]
-			var/salary = 0
-			var/dep_salary = 0
-
-			if(!rank_table.len || rank_table.len == 0)
-				continue //Next rank
-
-			//Skimming through personnel of this rank
-			for(var/datum/money_account/P in rank_table)
-				//Counting a station subsidion from CC
-				if(ubi)
-					all_salaries += ubi_count
-				else
-					all_salaries += P.base_salary
-
-				if(P.owner_salary == 0)
-					continue //No salary - no transactions. Next personel
-				if(P.owner_salary < 0) //Negative salary - pay debt. Next personel
-					charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s paycheck payment", global.department_accounts[P.department], salary)
-					continue
-				if(D.money <= 0 && P.owner_PDA)
-					P.owner_PDA.transaction_failure()
-					continue //Error no money at dep. account
-
-				//If a dep have enough money it will pay everything, if not - it will divide to everyone who is at the same rank.
-				if(salary_rank > D.money)
-					salary = round(D.money / rank_table.len * (1 - tax_income * 0.01)) //Dividing money for salaries
-				else
-					salary = round(P.owner_salary * (1 - tax_income * 0.01)) //Pure salaries
-
-				if(salary == 0 && P.owner_PDA)
-					P.owner_PDA.transaction_failure()
-					continue //Error no money
-
-				charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], salary)
-				dep_salary += salary
-
-			//We want to substract salaries payment from Dep. account all at once to prevent spam.
-			charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
+		all_salaries = departments_to_personnel_salary_transactions()
 
 	//CentComm to Station Subsidion transaction
-	if(!global.station_account.suspended && all_salaries != 0)
-		global.station_account.subsidy = all_salaries * station_subsidy_coefficient
-		charge_to_account(global.station_account.account_number, global.station_account.account_number, "Station Subsidion", "Central Command", global.station_account.subsidy)
+	centcomm_to_station_subsidion_transaction(all_salaries)
 
 	payment_counter += 1
 
@@ -161,6 +112,68 @@ SUBSYSTEM_DEF(economy)
 	qdel(announcer)
 
 	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
+
+/datum/controller/subsystem/economy/proc/station_to_departments_salary_transactions()
+	if(!global.station_account.suspended)
+		if(global.station_account.money >= abs(D.subsidy) && D.subsidy > 0)
+			charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Subsidion", "Station Account", D.subsidy)
+			charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Subsidion", global.department_accounts[D.department], -D.subsidy)
+		if(D.money >= abs(D.subsidy) && D.subsidy < 0)
+			charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Penalty", "Station Account", D.subsidy)
+			charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Penalty", global.department_accounts[D.department], -D.subsidy)
+
+/datum/controller/subsystem/economy/proc/departments_to_personnel_salary_transactions()
+	var/all_salaries = 0
+
+	//Choosing a rank
+	for(var/r in D.salaries_rank_table)
+		var/list/rank_table = D.salaries_rank_table[r]
+		var/salary_rank = D.salaries_per_ranks_table[r]
+		var/salary = 0
+		var/dep_salary = 0
+
+		if(!rank_table.len || rank_table.len == 0)
+			continue //Next rank
+
+		//Skimming through personnel of this rank
+		for(var/datum/money_account/P in rank_table)
+			//Counting a station subsidion from CC
+			if(ubi)
+				all_salaries += ubi_count
+			else
+				all_salaries += P.base_salary
+
+			if(P.owner_salary == 0)
+				continue //No salary - no transactions. Next personel
+			if(P.owner_salary < 0) //Negative salary - pay debt. Next personel
+				charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s paycheck payment", global.department_accounts[P.department], salary)
+				continue
+			if(D.money <= 0 && P.owner_PDA)
+				P.owner_PDA.transaction_failure()
+				continue //Error no money at dep. account
+
+			//If a dep have enough money it will pay everything, if not - it will divide to everyone who is at the same rank.
+			if(salary_rank > D.money)
+				salary = round(D.money / rank_table.len * (1 - tax_income * 0.01)) //Dividing money for salaries
+			else
+				salary = round(P.owner_salary * (1 - tax_income * 0.01)) //Pure salaries
+
+			if(salary == 0 && P.owner_PDA)
+				P.owner_PDA.transaction_failure()
+				continue //Error no money
+
+			charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], salary)
+			dep_salary += salary
+
+		//We want to substract salaries payment from Dep. account all at once to prevent spam.
+		charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
+
+	return all_salaries
+
+/datum/controller/subsystem/economy/proc/centcomm_to_station_subsidion_transaction(all_salaries)
+	if(!global.station_account.suspended && all_salaries != 0)
+		global.station_account.subsidy = all_salaries * station_subsidy_coefficient
+		charge_to_account(global.station_account.account_number, global.station_account.account_number, "Station Subsidion", "Central Command", global.station_account.subsidy)
 
 /datum/controller/subsystem/economy/proc/dividend_payment()
 	// All investors should have an equal opportunity to profit. Thus capital amount should be tallied before dividend distribution.
