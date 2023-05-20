@@ -138,7 +138,7 @@
 /obj/item/weapon/ewallet/atom_init()
 	. = ..()
 	name = "charge card ([rand(0, 999)])"
-	var/datum/money_account/M = create_account(name, 0, null, null, Age = 0)
+	var/datum/money_account/M = create_account(name, 0, null, null, age = 0)
 	account_number = M.account_number
 
 /obj/item/weapon/ewallet/examine(mob/user)
