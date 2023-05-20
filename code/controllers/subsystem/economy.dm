@@ -96,7 +96,7 @@ SUBSYSTEM_DEF(economy)
 		station_to_departments_salary_transactions(D)
 
 		//Departments to personnel salary transactions
-		all_salaries = departments_to_personnel_salary_transactions(D)
+		all_salaries += departments_to_personnel_salary_transactions(D)
 
 	//CentComm to Station Subsidion transaction
 	centcomm_to_station_subsidion_transaction(all_salaries)
@@ -167,6 +167,8 @@ SUBSYSTEM_DEF(economy)
 
 		//We want to substract salaries payment from Dep. account all at once to prevent spam.
 		charge_to_account(D.account_number, D.account_number, "Salaries of [r] payment", D.owner_name, -dep_salary)
+
+	D.subsidy = all_salaries
 
 	return all_salaries
 
