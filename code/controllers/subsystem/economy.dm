@@ -87,10 +87,6 @@ SUBSYSTEM_DEF(economy)
 		return
 
 	var/all_salaries = 0
-	for(var/dep_name in global.department_accounts)
-		var/datum/money_account/D = department_accounts[dep_name]
-		if(D.suspended)
-			continue
 
 		//Station to Departments salary transactions
 		station_to_departments_salary_transactions()
@@ -114,6 +110,11 @@ SUBSYSTEM_DEF(economy)
 	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
 
 /datum/controller/subsystem/economy/proc/station_to_departments_salary_transactions()
+	for(var/dep_name in global.department_accounts)
+		var/datum/money_account/D = department_accounts[dep_name]
+		if(D.suspended)
+			continue
+
 	if(!global.station_account.suspended)
 		if(global.station_account.money >= abs(D.subsidy) && D.subsidy > 0)
 			charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Subsidion", "Station Account", D.subsidy)
