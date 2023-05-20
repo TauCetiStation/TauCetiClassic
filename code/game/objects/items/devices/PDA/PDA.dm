@@ -514,7 +514,8 @@
 	var/data[0]  // This is the data that will be sent to the PDA
 
 	data["owner"] = owner					// Who is your daddy...
-	data["ownjob"] = ownjob				// ...and what does he do?
+	data["ownjob"] = ownjob					// ...and what does he do?
+	
 	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
 	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
 	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
