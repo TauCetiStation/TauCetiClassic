@@ -159,6 +159,21 @@
 
 	var/creator_ckey
 
+var/global/list/replicator_mines = list()
+ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
+
+/datum/faction/replicators/process()
+	if(length(replicator_mines) > 0)
+		var/obj/item/mine/replicator/fake_sound = pick(replicator_mines)
+		fake_sound.pretend_disintegration()
+
+/obj/item/mine/replicator/proc/pretend_disintegration()
+	var/amount = rand(1, 3)
+	for (var/i in 1 to amount)
+		playsound(src, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
+		sleep(rand(1, 3))
+		playsound(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
+
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
 	qdel(src)
