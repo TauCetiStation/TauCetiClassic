@@ -972,6 +972,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -1744,13 +1747,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "apq" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	location = "Security"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/plasticflaps{
 	opacity = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	dir = 1;
+	freq = 1400;
+	location = "Security"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
@@ -2688,6 +2693,11 @@
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #4"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3438,6 +3448,11 @@
 	},
 /obj/structure/plasticflaps{
 	opacity = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	freq = 1400;
+	location = "Medbay"
 	},
 /turf/simulated/floor,
 /area/station/medical/storage)
@@ -5369,6 +5384,24 @@
 	icon_state = "bot"
 	},
 /area/station/medical/storage)
+"bpW" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	dir = 1;
+	freq = 1400;
+	location = "Bridge"
+	},
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/bridge)
 "bqi" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /obj/machinery/light/small{
@@ -8170,7 +8203,14 @@
 /obj/structure/plasticflaps{
 	opacity = 1
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	freq = 1400;
+	location = "Kitchen"
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
 /area/station/maintenance/atmos)
 "bZA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -9121,6 +9161,23 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
+"cmG" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/station/maintenance/atmos)
 "cmN" = (
 /turf/simulated/wall,
 /area/station/security/iaa_office)
@@ -10752,6 +10809,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -12535,7 +12593,12 @@
 /obj/structure/plasticflaps{
 	opacity = 1
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "Engineering"
+	},
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "dpd" = (
 /obj/structure/rack,
@@ -20242,6 +20305,16 @@
 	icon_state = "whiteblue"
 	},
 /area/station/rnd/hallway)
+"fED" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #2"
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/cargo/storage)
 "fEI" = (
 /obj/structure/sign/poster/ripped{
 	pixel_y = 32
@@ -24648,6 +24721,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"gRk" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #3"
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/cargo/storage)
 "gRp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -32669,6 +32752,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)
+"jbF" = (
+/obj/machinery/door/firedoor,
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	freq = 1400;
+	location = "Hydroponics"
+	},
+/turf/simulated/floor,
+/area/station/maintenance/atmos)
 "jbM" = (
 /obj/machinery/light/smart,
 /obj/structure/sign/departments/chemistry{
@@ -34743,12 +34838,13 @@
 	},
 /area/station/aisat/antechamber_interior)
 "jFx" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Bar"
-	},
 /obj/structure/plasticflaps{
 	opacity = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	freq = 1400;
+	location = "Bar"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
@@ -36568,6 +36664,17 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"kdW" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	freq = 1400;
+	location = "Research Division"
+	},
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/escape)
 "kdY" = (
 /obj/machinery/flasher/portable,
 /obj/machinery/light/smart{
@@ -44131,6 +44238,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -54920,12 +55028,15 @@
 	},
 /area/station/security/prison)
 "ppl" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/window/eastright{
+	name = "Research Division Delivery";
+	req_access = list(47)
 	},
 /turf/simulated/floor{
-	icon_state = "bot"
+	icon_state = "delivery"
 	},
 /area/station/rnd/scibreak)
 "ppo" = (
@@ -61447,6 +61558,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor,
 /area/station/rnd/scibreak)
 "rkZ" = (
@@ -67801,15 +67913,22 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
-/obj/item/weapon/flora/random,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
+/obj/machinery/door/window/eastright{
+	dir = 1;
+	name = "Bridge Delivery";
+	req_access = list(19)
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "delivery"
 	},
 /area/station/bridge)
 "taq" = (
@@ -77083,6 +77202,11 @@
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "QM #1"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -80641,6 +80765,10 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"wPK" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "wPL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
@@ -114812,7 +114940,7 @@ rYj
 kop
 kdf
 wwi
-bZz
+jbF
 wwi
 wwi
 wwi
@@ -115864,7 +115992,7 @@ gUI
 gUI
 wwi
 wwi
-pug
+cmG
 bZz
 wwi
 ieA
@@ -120046,7 +120174,7 @@ gjo
 agy
 puP
 ppl
-hqd
+kdW
 pku
 fha
 hXu
@@ -120503,7 +120631,7 @@ lYH
 pFc
 hXM
 iRZ
-pFc
+bpW
 oIM
 oIM
 ksB
@@ -128433,8 +128561,8 @@ cpR
 dpk
 dpk
 cpR
-tiC
-tiC
+wPK
+wPK
 cpR
 cpR
 idI
@@ -128690,8 +128818,8 @@ udw
 gaF
 gaF
 vNs
-bGb
-bGb
+fED
+gRk
 aBY
 tII
 gaF
