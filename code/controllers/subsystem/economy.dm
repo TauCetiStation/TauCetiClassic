@@ -115,13 +115,13 @@ SUBSYSTEM_DEF(economy)
 		if(D.suspended)
 			continue
 
-	if(!global.station_account.suspended)
-		if(global.station_account.money >= abs(D.subsidy) && D.subsidy > 0)
-			charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Subsidion", "Station Account", D.subsidy)
-			charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Subsidion", global.department_accounts[D.department], -D.subsidy)
-		if(D.money >= abs(D.subsidy) && D.subsidy < 0)
-			charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Penalty", "Station Account", D.subsidy)
-			charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Penalty", global.department_accounts[D.department], -D.subsidy)
+		if(!global.station_account.suspended)
+			if(global.station_account.money >= abs(D.subsidy) && D.subsidy > 0)
+				charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Subsidion", "Station Account", D.subsidy)
+				charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Subsidion", global.department_accounts[D.department], -D.subsidy)
+			if(D.money >= abs(D.subsidy) && D.subsidy < 0)
+				charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Penalty", "Station Account", D.subsidy)
+				charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Penalty", global.department_accounts[D.department], -D.subsidy)
 
 /datum/controller/subsystem/economy/proc/departments_to_personnel_salary_transactions()
 	var/all_salaries = 0
