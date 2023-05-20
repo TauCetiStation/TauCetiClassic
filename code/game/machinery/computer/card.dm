@@ -260,7 +260,7 @@
 						department = department_accounts[jobdatum.department]
 						if(datum_account)
 							datum_account.department = department
-							datum_account.salary_priority = jobdatum.rank
+							datum_account.salary_priority = jobdatum.salary_priority
 							datum_account.department.salaries_rank_table[datum_account.salary_priority] += datum_account
 							datum_account.department.salaries_per_ranks_table[datum_account.salary_priority] += jobdatum.salary
 
