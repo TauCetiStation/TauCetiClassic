@@ -135,6 +135,8 @@ SUBSYSTEM_DEF(economy)
 	var/insurance_sum = 0
 	var/list/problem_record_id = list()
 	for(var/datum/data/record/R in data_core.general)
+		if(!R)
+			continue
 		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
 		if(!MA)
 			R.fields["insurance_type"] = INSURANCE_NONE
