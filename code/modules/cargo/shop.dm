@@ -99,6 +99,9 @@ var/global/online_shop_profits = 0
 		var/obj/item/smallDelivery/package = A
 		package.cut_overlay(package.lot_lock_image)
 		package.lot_lock_image = null
+		if(istype(package.loc, /obj/lot_holder))
+			var/obj/lot_holder/Holder = package.loc
+			qdel(Holder)
 		return
 
 	if(istype(A, /obj/structure/bigDelivery))
