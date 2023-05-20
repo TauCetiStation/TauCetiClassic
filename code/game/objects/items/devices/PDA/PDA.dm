@@ -509,17 +509,18 @@
 	var/title = "Personal Data Assistant"
 
 	var/datum/money_account/MA = get_account(owner_account)
+	var/datum/data/record/OR = get_owner_insurance_record()
 
 	var/data[0]  // This is the data that will be sent to the PDA
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob				// ...and what does he do?
-	data["owner_insurance_type"] = get_owner_insurance_type()
+	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
+	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
 	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
-	data["owner_insurance_price"] = SSeconomy.insurance_prices[data["owner_insurance_type"]]
 	data["owner_preferred_insurance_price"] = MA ? SSeconomy.insurance_prices[data["owner_preferred_insurance_type"]] : "error"
 	data["owner_max_insurance_payment"] = MA ? MA.owner_max_insurance_payment : "error"
-	data["medical_record_id"] = get_medical_record_id_connected_to_money_account()
+	data["medical_record_id"] = OR ? OR.fields["id"] : "error"
 	data["permission_to_change_insurance_price"] = check_permission_to_change_insurance_price()
 	data["money"] = MA ? MA.money : "error"
 	data["salary"] = MA ? MA.owner_salary : "error"
@@ -1935,18 +1936,8 @@
 			var/turf/pos = get_turf(src)
 			return is_station_level(pos.z)
 
-/obj/item/device/pda/proc/get_owner_insurance_type()
-	var/datum/data/record/R = find_record("insurance_account_number", owner_account, data_core.general)
-	if(R)
-		return R.fields["insurance_type"]
-	return INSURANCE_NONE
-
-
-/obj/item/device/pda/proc/get_medical_record_id_connected_to_money_account()
-	var/datum/data/record/R = find_record("insurance_account_number", owner_account, data_core.general)
-	if(R)
-		return R.fields["id"]
-	return "ERROR"
+/obj/item/device/pda/proc/get_owner_insurance_record()
+	return find_record("insurance_account_number", owner_account, data_core.general)
 
 
 /obj/item/device/pda/proc/check_permission_to_change_insurance_price()
