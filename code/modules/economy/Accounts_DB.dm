@@ -75,10 +75,7 @@
 		data["account_number"] = detailed_account_view.account_number
 		data["owner_name"] = detailed_account_view.owner_name
 		data["money"] = detailed_account_view.money
-		if(detailed_account_view.owner_name in global.department_accounts)
-			data["subsidy"] = num2text(detailed_account_view.subsidy)
-		else
-			data["subsidy"] = null
+		data["subsidy"] = detailed_account_view.subsidy ? num2text(detailed_account_view.subsidy) : null
 		data["suspended"] = detailed_account_view.suspended
 
 		var/list/trx[0]

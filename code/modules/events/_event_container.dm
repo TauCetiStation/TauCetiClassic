@@ -174,7 +174,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Last Clown Jokes",        /datum/event/feature/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Chiefs Animals",          /datum/event/feature/head_animals,                            10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Nuke Journey",            /datum/event/feature/bomb_journey,                            10),
-		new /datum/event_meta(EVENT_LEVEL_FEATURE, "No Subsidion",            /datum/event/feature/station_subsidion,                       10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "No Subsidy",            /datum/event/feature/station_no_subsidy,                       10),
 	)
 
 /datum/event_container/mundane
