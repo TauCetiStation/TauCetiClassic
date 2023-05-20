@@ -73,3 +73,17 @@
 	. = SSticker.mode.CreateRole(role_type, M)
 	if(. && setup_role)
 		setup_role(., post_setup)
+
+/proc/create_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
+	var/datum/faction/F = SSticker.mode.CreateFaction(faction_type, num_players(), TRUE)
+	if(post_setup)
+		F.OnPostSetup()
+	if(give_objectives)
+		F.forgeObjectives()
+		F.AnnounceObjectives()
+	return F
+
+/proc/create_uniq_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
+	. = find_faction_by_type(faction_type)
+	if(!.)
+		. = create_faction(faction_type, post_setup, give_objectives)

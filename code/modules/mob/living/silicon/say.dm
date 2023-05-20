@@ -43,7 +43,7 @@
 		return say_dead(message)
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
 	if(isAI(src))
@@ -59,7 +59,7 @@
 
 
 	//Must be concious to speak
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	var/verb = say_quote(message)
@@ -118,6 +118,10 @@
 				if(IS_PAI)
 					to_chat(src, "You do not appear to have that function")
 					return
+				if(IS_AI)
+					if (AI.aiRadio.disabledAi)
+						to_chat(src, "<span class='warning'>System Error - Transceiver Disabled</span>")
+						return
 
 			robot_talk(message)
 			return 1

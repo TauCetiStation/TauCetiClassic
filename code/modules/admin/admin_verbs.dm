@@ -88,6 +88,7 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/add_player_age,
 	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
+	/client/proc/add_smartlight_preset,
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -123,7 +124,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/achievement,
 	/client/proc/toggle_AI_interact, //toggle admin ability to interact with machines as an AI,
 	/client/proc/centcom_barriers_toggle,
-	/client/proc/gateway_toggle
+	/client/proc/gateway_toggle,
+	/client/proc/repaint_area_windows
 	)
 var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		//allows us to spawn instances,
@@ -151,6 +153,7 @@ var/global/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/toggle_deathmatch_arena,
 	)
 var/global/list/admin_verbs_debug = list(
@@ -187,6 +190,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
+	/client/proc/generate_fulltile_window_placeholders,
 #ifdef REFERENCE_TRACKING
 /client/proc/find_refs,
 /client/proc/qdel_then_find_references,
@@ -657,7 +661,7 @@ var/global/list/admin_verbs_hideable = list(
 				break
 		disease_type = "[disease_type] ([jointext(D.effects, ", ")])"
 	else
-		D.makerandom(greater)
+		D.makerandom(greater, spread_vector = DISEASE_SPREAD_AIRBORNE)
 		if (!greater)
 			D.infectionchance = 1
 
@@ -1092,6 +1096,31 @@ var/global/list/admin_verbs_hideable = list(
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
+/client/proc/repaint_area_windows()
+	set category = "Fun"
+	set name = "Repaint Area Windows"
+
+	if(!check_rights(R_FUN))
+		return
+
+	if(!SSstation_coloring.initialized)
+		to_chat(usr, "<span class='warning'>Subsystem has not finished initializing, please wait.</span>")
+		return
+
+	var/new_color = input(src, "Please select new colour.", "Windows colour") as color|null
+
+	if(!new_color)
+		return
+
+	var/area/A = get_area(usr)
+	if(!A)
+		return
+
+	SSstation_coloring.color_area_objects(list(A), new_color)
+
+	log_admin("[key_name(src)] repainted the windows [new_color] in \the [A]")
+	message_admins("[key_name(src)] repainted the windows [new_color] in \the [A]")
+
 //////////////////////////////
 // Map loader
 //////////////////////////////
@@ -1142,7 +1171,7 @@ var/global/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice, linkage))//, load_speed = 100)
+	if(maploader.load_new_z_level(choice, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage)))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 	else
@@ -1178,9 +1207,9 @@ var/global/centcom_barriers_stat = 1
 	if(!check_rights(R_FUN))
 		return
 
-	for(var/obj/effect/landmark/trololo/L in landmarks_list)
+	for(var/obj/effect/landmark/trololo/L as anything in landmarks_list["Rickroll"])
 		L.active = centcom_barriers_stat
-	for(var/obj/structure/centcom_barrier/B in centcom_barrier_list)
+	for(var/obj/structure/centcom_barrier/B as anything in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
@@ -1204,7 +1233,7 @@ var/global/centcom_barriers_stat = 1
 	anchored = TRUE
 	density = TRUE
 	invisibility = 101
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x3"
 
 /obj/structure/centcom_barrier/atom_init()

@@ -1,7 +1,7 @@
 #define ALREADY_STRUCTURE_THERE(user) (locate(/obj/structure/alien/air_plant) in get_turf(user))      || (locate(/obj/structure/alien/egg) in get_turf(user)) \
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(user))   || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) \
                              || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user))
-                            
+
 #define CHECK_WEEDS(user) (locate(/obj/structure/alien/weeds) in get_turf(user))
 
 /mob/living/carbon/xenomorph/proc/check_enough_plasma(cost)
@@ -221,11 +221,17 @@
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	alien.create_shriekwave()
-	for(var/mob/living/carbon/human/H in targets)
-		if(!ishuman(H))
+	for(var/mob/living/L as anything in targets)
+		if(L.stat == DEAD || isxeno(L) || L.flags & GODMODE)
 			continue
-		if(H.sdisabilities & DEAF || H.stat == DEAD || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-			to_chat(H, "<span class='warning'>You feel strong vibrations and quiet noise...</span>")
+		if(!ishuman(L))
+			to_chat(L, "<span class='danger'>You feel strong vibrations.</span>")
+			L.Stun(2)
+			continue
+		var/mob/living/carbon/human/H = L
+		if(H.sdisabilities & DEAF || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+			to_chat(H, "<span class='danger'>You feel strong vibrations and quiet noise...</span>")
+			H.Stun(2)
 			continue
 		if(H.species.flags[NO_BREATHE] || H.species.flags[NO_PAIN]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
 			to_chat(H, "<span class='danger'>You feel strong vibrations and loud noise, but you're strong enough to stand it!</span>")
@@ -294,7 +300,7 @@
 		for(var/name in buildings)
 			var/obj/type = buildings[name]
 			builds_image[name] = image(icon = initial(type.icon), icon_state = initial(type.icon_state))
-	
+
 	var/choice = show_radial_menu(user, user, builds_image, tooltips = TRUE)
 	if(!choice)
 		return
@@ -309,6 +315,8 @@
 
 /obj/effect/proc_holder/spell/no_target/resin/cast(list/targets, mob/user = usr)
 	if(!build_name)
+		return
+	if(!cast_check())
 		return
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
@@ -384,6 +392,12 @@
 	var/mob/living/carbon/xenomorph/humanoid/queen/new_xeno = new (user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
+
+	var/datum/faction/infestation/F = find_faction_by_type(/datum/faction/infestation)//Buff only for the first queen
+	if(F.start_help)
+		new_xeno.apply_status_effect(/datum/status_effect/young_queen_buff)
+		F.start_help = FALSE
+
 	qdel(alien)
 
 //----------------------------------------------
@@ -464,6 +478,26 @@
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
+
+/obj/effect/proc_holder/spell/no_target/xenowinds
+	name = "Эмиссия форона"
+	desc = "Выпустить небольшое облачко накопленного форона."
+	charge_max = 1200
+	charge_type = "recharge"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_alien"
+	plasma_cost = 120
+	action_icon_state = "rot"
+
+/obj/effect/proc_holder/spell/no_target/xenowinds/cast(list/targets, mob/living/user = usr)
+	if(!istype(user))
+		return
+	var/turf/T = get_turf(user)
+	user.visible_message("<span class='warning'><B>[user]</B> emits faint purple cloud.</span>", "<span class='notice'>You let some phoron out.</span>")
+	user.adjustToxLoss(-plasma_cost)
+	T.assume_gas("phoron", 25, user.bodytemperature) // give 25 moles of phoron (approx. 0.25% of air in room like Bar)
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS

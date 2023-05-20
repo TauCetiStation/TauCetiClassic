@@ -180,6 +180,7 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_FAMILIES)
 
 	var/roletype
+	var/list/prefixes = list("Officer")
 
 /datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart)
@@ -189,23 +190,20 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/living/carbon/human/cop = new(null)
 
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
 	cop.loc = spawnloc
 	cop.key = C.key
 
 	//Give antag datum
-	var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
-	if(!faction)
-		faction = SSticker.mode.CreateFaction(/datum/faction/cops)
+	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
 
 	faction.roletype = roletype
 	add_faction_member(faction, cop, TRUE, TRUE)
 
 	var/obj/item/weapon/card/id/W = cop.wear_id
-	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
-	W.registered_name = cop.real_name
+	W.assign(cop.real_name)
 
 /datum/spawner/cop/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart)
@@ -225,16 +223,20 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Боец Тактической Группы ОБОП"
 	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
+	prefixes = list("Sergeant", "Captain")
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
 	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
+	prefixes = list("Inspector")
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
 	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
+	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
+
 
 /*
  * ERT
@@ -254,21 +256,11 @@ var/global/list/datum/spawners_cooldown = list()
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/list/correct_landmarks = list()
-	for (var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "Commando")
-			correct_landmarks += L
-
-	var/jump_to = pick(correct_landmarks)
+	var/jump_to = pick(landmarks_list["Commando"])
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/list/correct_landmarks = list()
-	for (var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "Commando")
-			correct_landmarks += L
-
-	var/obj/spawnloc = pick(correct_landmarks)
+	var/obj/spawnloc = pick(landmarks_list["Commando"])
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
@@ -311,7 +303,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
 	var/turf/spawn_turf = pick(blobstart)
-	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
+	new /obj/structure/blob/core(spawn_turf, ghost.client, 120)
 
 /*
  * Ninja
@@ -333,9 +325,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ghost.key
 
-	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-	if(!N)
-		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
 	set_ninja_objectives(new_ninja)
@@ -497,7 +487,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/podman
 	name = "Подмена"
 	id = "podman"
-	desc = "Подмена умерла, да здраствует подмена."
+	desc = "Подмена умерла, да здравствует подмена."
 	wiki_ref = "Podmen"
 
 	var/replicant_memory
@@ -607,6 +597,41 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+
+/datum/spawner/living/eminence
+	name = "Возвышенный культа"
+	id = "eminence"
+	desc = "Вы станете Возвышенным - ментором и неформальным лидером всего культа."
+	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
+
+/datum/spawner/living/mimic
+	name = "Оживлённый предмет"
+	id = "mimic"
+	desc = "Вы магическим образом ожили на станции"
+
+/datum/spawner/living/evil_shade
+	name = "Злой Дух"
+	id = "evil_shade"
+	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+
+/datum/spawner/living/rat
+	name = "Крыса"
+	id = "rat"
+	desc = "Вы появляетесь в своём новом доме"
+
+/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
+	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
+
+/*
+ * Heist
+*/
+/datum/spawner/living/vox
+	name = "Вокс-Налётчик"
+	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
+	wiki_ref = "Vox_Raider"
+
 /datum/spawner/spy
 	name = "Агент Прослушки"
 	id = "spy"
@@ -633,6 +658,9 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
+	H.mind.skills.add_available_skillset(/datum/skillset/max)
+	H.mind.skills.maximize_active_skills()
+	H.add_language(LANGUAGE_SYCODE)
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())
@@ -644,3 +672,91 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/spy/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(espionageagent_start)
 	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/vox
+	name = "Вокс-Налётчик"
+	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
+	wiki_ref = "Vox_Raider"
+
+	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
+	time_to_del = 5 MINUTES
+
+/datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(global.heiststart)
+	global.heiststart -= spawnloc
+
+	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
+	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+
+	vox.key = ghost.client.key
+
+	var/sounds = rand(2, 8)
+	var/newname = ""
+	for(var/i in 1 to sounds)
+		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+
+	vox.real_name = capitalize(newname)
+	vox.name = vox.real_name
+	vox.age = rand(5, 15) // its fucking lore
+	vox.add_language(LANGUAGE_VOXPIDGIN)
+	if(faction.members.len % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
+		vox.add_language(LANGUAGE_SOLCOMMON)
+	vox.h_style = "Short Vox Quills"
+	vox.f_style = "Shaved"
+	vox.grad_style = "none"
+
+	//Now apply cortical stack.
+	var/obj/item/weapon/implant/cortical/I = new(vox)
+	I.inject(vox, BP_HEAD)
+
+	vox.equip_vox_raider()
+	vox.regenerate_icons()
+
+	add_faction_member(faction, vox)
+
+/datum/spawner/vox/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(global.heiststart)
+	ghost.forceMove(jump_to)
+
+/datum/spawner/survival
+	name = "Выживший"
+	id = "survival"
+	desc = "Вы просыпаетесь на заброшенной станции. Адаптируйтесь, выживайте и всё такое."
+	var/outfit = /datum/outfit/survival/engineer
+	var/skillset = /datum/skillset/survivalist_engi
+
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/survival/can_spawn(mob/dead/observer/ghost)
+	if(SSticker.current_state != GAME_STATE_PLAYING)
+		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
+		return FALSE
+	return ..()
+
+/datum/spawner/survival/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(survivalist_start)
+	survivalist_start -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
+
+	to_chat(H, "<B>Ваша голова раскалывается...Вы просыпаетесь в старом криоподе.</B>")
+	to_chat(H, "<B>Вы - <span class='boldwarning'>были работником передовой Космической Научной Станции Нанотрасен LCR</span>, что уже как год считается уничтоженной.</B>")
+	to_chat(H, "<B>Станция заброшена, никто, кроме вас и вашего товарища в соседней криокамере, не выжил. Вы вольны делать здесь что угодно. Можете попытаться всё починить, а можете просто улететь в поисках лучшей жизни. Выбор за вами.</B>")
+
+/datum/spawner/survival/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(survivalist_start)
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/survival/med
+	outfit = /datum/outfit/survival/medic
+	skillset = /datum/skillset/survivalist_medic

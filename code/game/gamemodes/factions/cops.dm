@@ -98,7 +98,7 @@
 			if(!ishuman(gangbanger.antag.current))
 				continue
 			var/mob/living/carbon/human/H = gangbanger.antag.current
-			if(H.stat || H.handcuffed)
+			if(H.stat != CONSCIOUS || H.handcuffed)
 				continue
 			alive_gangsters++
 	for(var/M in members)
@@ -107,7 +107,7 @@
 			if(!ishuman(bacon.antag.current)) // always returns false
 				continue
 			var/mob/living/carbon/human/H = bacon.antag.current
-			if(H.stat)
+			if(H.stat != CONSCIOUS)
 				continue
 			alive_cops++
 

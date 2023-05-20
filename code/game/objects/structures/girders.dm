@@ -5,7 +5,10 @@
 	density = TRUE
 	layer = 2.9
 	var/state = 0
-	var/health = 200
+
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 	canSmoothWith = list(
 		/turf/simulated/wall,
 		/turf/simulated/wall/r_wall,
@@ -17,32 +20,17 @@
 	)
 	smooth = SMOOTH_TRUE
 
-/obj/structure/girder/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	if(istype(Proj, /obj/item/projectile/beam))
-		health -= Proj.damage
-		if(health <= 0)
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
-
 /obj/structure/girder/attackby(obj/item/W, mob/user)
-	if(user.is_busy()) return
-	if(istype (W,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='warning'><B>[user]</B> бьет каркас!</span>")
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user, 1) && prob(40))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			qdel(src)
-	else if(iswrench(W) && state == 0)
+	if(user.is_busy())
+		return
+
+	else if(iswrenching(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
 			to_chat(user, "<span class='notice'>Вы разбираете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
 				if(!src) return
 				to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
-				new /obj/item/stack/sheet/metal(get_turf(src))
-				qdel(src)
+				deconstruct(TRUE)
 		else if(!anchored)
 			to_chat(user, "<span class='notice'>Вы фиксируете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
@@ -50,27 +38,25 @@
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 		to_chat(user, "<span class='notice'>Вы режете каркас.</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
+			deconstruct(TRUE)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
+		deconstruct(TRUE)
 
-	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+	else if(isscrewing(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы ослабили кронштейны!</span>")
 			state = 1
 
-	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+	else if(iscutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		to_chat(user, "<span class='notice'>Вы разбираете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
@@ -78,7 +64,7 @@
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
-	else if(iscrowbar(W) && state == 0 && anchored )
+	else if(isprying(W) && state == 0 && anchored )
 		to_chat(user, "<span class='notice'>Вы делаете каркас подвижным.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
@@ -87,7 +73,6 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
-
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 
@@ -175,51 +160,41 @@
 	else
 		..()
 
+/obj/structure/girder/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE, BURN)
+			playsound(loc, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/girder/blob_act()
-	if(prob(40))
-		qdel(src)
-
-
-/obj/structure/girder/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(70))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-	var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+/obj/structure/girder/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/remains
+	if(disassembled)
+		remains = /obj/item/stack/sheet/metal
+	else
+		remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
 	new remains(loc)
-	qdel(src)
+	..()
 
 /obj/structure/girder/attack_animal(mob/living/simple_animal/attacker)
-	if(attacker.environment_smash)
-		..()
+	. = ..()
+	if(.)
 		attacker.visible_message("<span class='warning'>[attacker] крушит каркас.</span>", \
 			 "<span class='warning'>Вы крушите каркас.</span>", \
 			 "Вы слышите скрежет металла.")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= attacker.melee_damage * 10
-		if(health <= 0)
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
 
 /obj/structure/girder/displaced
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
 	anchored = FALSE
-	health = 50
+	max_integrity = 50
 	smooth = SMOOTH_FALSE
 
 /obj/structure/girder/reinforced
 	icon = 'icons/obj/smooth_structures/girder_reinforced.dmi'
 	icon_state = "box"
 	state = 2
-	health = 500
+	max_integrity = 500
 
 /obj/structure/girder/cult
 	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
@@ -227,7 +202,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = 2.9
-	health = 250
+	max_integrity = 250
 	smooth = SMOOTH_TRUE
 
 /obj/structure/girder/cult/Destroy()

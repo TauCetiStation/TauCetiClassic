@@ -20,11 +20,11 @@
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/cmo
+	skillsets = list("Chief Medical Officer" = /datum/skillset/cmo)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
@@ -49,11 +49,15 @@
 		)
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/doctor
+	skillsets = list(
+		"Medical Doctor" = /datum/skillset/doctor,
+		"Surgeon" = /datum/skillset/doctor/surgeon,
+		"Nurse" = /datum/skillset/doctor/nurse
+		)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
@@ -74,11 +78,11 @@
 	rank = "medium"
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic
+	skillsets = list("Paramedic" = /datum/skillset/paramedic)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(IPC)
@@ -105,6 +109,7 @@
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/chemist
+	skillsets = list("Chemist" = /datum/skillset/chemist)
 
 
 /datum/job/geneticist
@@ -122,6 +127,7 @@
 	rank = "medium"
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/geneticist
+	skillsets = list("Geneticist" = /datum/skillset/geneticist)
 
 
 /datum/job/virologist
@@ -140,11 +146,11 @@
 	salary = 180
 	rank = "medium"
 	outfit = /datum/outfit/job/virologist
+	skillsets = list("Virologist" = /datum/skillset/virologist)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
@@ -166,6 +172,7 @@
 	rank = "medium"
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/psychiatrist
+	skillsets = list("Psychiatrist" = /datum/skillset/psychiatrist)
 
 
 /datum/job/intern
@@ -182,4 +189,5 @@
 	salary = 50
 	rank = "low"
 	outfit = /datum/outfit/job/intern
+	skillsets = list("Medical Intern" = /datum/skillset/intern)
 

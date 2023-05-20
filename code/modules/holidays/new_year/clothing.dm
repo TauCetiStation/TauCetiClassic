@@ -169,6 +169,11 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = LEGS
 
+/obj/item/clothing/shoes/winterboots/wizard
+
+/obj/item/clothing/shoes/winterboots/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/storage/labcoat/winterlabcoat
 	name = "winter labcoat"

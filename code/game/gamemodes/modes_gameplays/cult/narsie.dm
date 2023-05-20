@@ -9,15 +9,6 @@
 	layer = SINGULARITY_LAYER
 	density = TRUE
 
-/atom/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
-	for(var/mob/M as anything in observer_list)
-		if(!M.client)
-			continue
-		var/turf/T = get_turf(src)
-		to_chat(M, "<span class='ghostalert'>[FOLLOW_OR_TURF_LINK(M, src, T)] [message]</span>")
-		if(ghost_sound)
-			M.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
-
 /obj/singularity/narsie
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
@@ -51,7 +42,7 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.")
+		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.", source = src, action = NOTIFY_ORBIT, header = "Nar'Sie")
 
 	playsound_frequency_admin = -1
 
@@ -126,7 +117,7 @@
 		qdel(A)
 		return
 
-	if(istype(A, /turf/simulated/floor))
+	if(isfloorturf(A))
 		var/turf/T = A
 		if(prob(50))
 			T.ChangeTurf(pick(my_religion.floor_types))
@@ -136,7 +127,7 @@
 		var/area/area = get_area(A)
 		area.religion = global.cult_religion
 		return
-	if(istype(A, /turf/simulated/wall))
+	if(iswallturf(A))
 		var/turf/T = A
 		if(prob(20))
 			T.ChangeTurf(pick(my_religion.wall_types))
@@ -218,6 +209,3 @@
 	sleep(11)
 	move_self = TRUE
 	icon = initial(icon)
-
-/obj/singularity/narsie/update_icon(stage)
-	return

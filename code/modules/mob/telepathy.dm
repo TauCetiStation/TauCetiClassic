@@ -77,6 +77,10 @@
 	if(incapacitated())
 		return
 
+	if(M == src)
+		to_chat(src, "<span class='notice'>No, that would be extremely stupid.</span>")
+		return
+
 	if(!M.telepathy_targetable())
 		to_chat(src, "<span class='notice'>They don't have a mind to eavesdrop on.</span>")
 		return
@@ -84,6 +88,7 @@
 	if(src in M.remote_hearers)
 		M.remove_remote_hearer(src)
 		to_chat(src, "<span class='notice'>You stop telepathically eavesdropping on [M].</span>")
+
 	else if(length(remote_hearing) < CLEAR_TELEPATHY_TARGETS)
 		M.add_remote_hearer(src)
 		to_chat(src, "<span class='notice'>You start telepathically eavesdropping on [M].</span>")

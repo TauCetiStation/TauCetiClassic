@@ -15,20 +15,24 @@
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"
+#define F_SYNDIOPS_CROSSFIRE "Syndicate Operatives (CrossFire)"
 #define F_SYNDIESQUAD        "Syndicate Elite Strike Team"
 #define F_SHADOWLINGS        "Shadowlings"
 #define F_SPIDERCLAN         "Spider Clan"
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
+#define F_REPLICATORS        "Replicators"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
 #define ABDUCTOR_SCI "Abductor Scientist"
+#define ABDUCTOR_ASSISTANT "Abductor Assistant"
 #define ABDUCTED "Abducted"
 #define BORER "Cortical Borer"
 #define BLOBOVERMIND "Blob Overmind"
 #define BLOBCEREBRATE "Blob Cerebrate"
+#define BLOBBERNAUT "Blobbernaut"
 #define CHANGELING "Changeling"
 #define CULTIST "Cultist"
 #define CULT_LEADER "Cult Harbinger"
@@ -57,6 +61,7 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
+#define REPLICATOR "Replicator"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

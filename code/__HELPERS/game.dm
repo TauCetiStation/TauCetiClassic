@@ -24,7 +24,14 @@
 		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
 	)
 
-/proc/get_area_name(N) //get area by its name
+///Returns the name of the area the atom is in
+/proc/get_area_name(atom/checked_atom)
+	var/area/checked_area = isarea(checked_atom) ? checked_atom : get_area(checked_atom)
+	if(!checked_area)
+		return null
+	return checked_area.name
+
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
@@ -201,7 +208,7 @@
 
 	return hear
 
-// todo: tg
+// todo: https://github.com/tgstation/tgstation/pull/61422
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -648,7 +655,7 @@
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
-	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"))
+	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"), poll_time)
 	switch(ans)
 		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")

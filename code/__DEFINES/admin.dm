@@ -72,6 +72,20 @@
 #define ADMIN_PPJMPFLW(user) "[ADMIN_PP(user)] [ADMIN_FLW(user)] [ADMIN_JMP(user)]"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
 
+#define COORD(A) "[A ? A.Admin_Coordinates_Readable() : "nonexistent location"]"
+#define AREACOORD(A) "[A ? A.Admin_Coordinates_Readable(TRUE) : "nonexistent location"]"
+
+/atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
+	var/turf/T = Safe_COORD_Location()
+	return T ? "[area_name ? "[get_area_name(T)] " : " "]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
+
+// +- tg placeholder
+/atom/proc/Safe_COORD_Location()
+	return get_step(src, 0) //resolve where the thing is.
+
+/turf/Safe_COORD_Location()
+	return src
+
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
@@ -116,3 +130,17 @@
 #define BANKEY_PENDING_MATCHES      "pending_matches_this_round"
 
 #define GUARD_CHECK_AGE 60
+
+// Staffwho
+#define SW_ADMINS     1
+#define SW_MENTORS    2
+#define SW_XENOVISORS 3
+#define SW_DEVELOPERS 4
+#define SW_ALL_GROUPS 4 //update this, if add more staff groups
+
+var/global/list/default_admin_names = list(
+	SW_ADMINS     = "Admins",
+	SW_MENTORS    = "Mentors",
+	SW_XENOVISORS = "Xenovisors",
+	SW_DEVELOPERS = "Developers",
+)

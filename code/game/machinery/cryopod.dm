@@ -64,6 +64,8 @@ var/global/list/frozen_items = list()
 			return
 
 		var/obj/item/I = input(usr, "Please choose which object to retrieve.","Object recovery",null) as obj in frozen_items
+		if(!can_still_interact_with(usr))
+			return
 
 		if(!I || frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
@@ -228,8 +230,7 @@ var/global/list/frozen_items = list()
 
 			// Delete them from datacore.
 
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
+			PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.medical)
 				if ((R.fields["name"] == occupant.real_name))
 					qdel(R)

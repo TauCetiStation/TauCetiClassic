@@ -24,6 +24,7 @@
 #define to_chat_attack_log(usr, msg) to_chat_private(usr, msg, MESSAGE_TYPE_ATTACKLOG)
 #define to_chat_debug(usr, msg) to_chat_private(usr, msg, MESSAGE_TYPE_DEBUG)
 
+#define global_ooc_info(msg) send2ooc(msg, colour = "purple", prefix = "OOC-INFO")
 
 //Define to create a tooltip when hovering over an item.
 //hover_element - Pointed item

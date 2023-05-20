@@ -13,8 +13,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		handle_nutrition()
-
 		handle_targets()
 
 		if (!ckey)
@@ -229,15 +227,12 @@
 
 	else
 		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
-			if (src.stunned > 0)
-				AdjustStunned(-1)
+			if (src.stunned)
 				src.stat = CONSCIOUS
-			if (src.weakened > 0)
-				AdjustWeakened(-1)
+			if (src.weakened)
 				src.lying = 0
 				src.stat = CONSCIOUS
-			if (src.paralysis > 0)
-				AdjustParalysis(-1)
+			if (src.paralysis)
 				src.blinded = 0
 				src.lying = 0
 				src.stat = CONSCIOUS
@@ -279,7 +274,7 @@
 		Feedstop()
 	TargetAttack()
 	return
-/mob/living/carbon/slime/proc/handle_nutrition()
+/mob/living/carbon/slime/handle_nutrition()
 	if(prob(20))
 		if(isslimeadult(src)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
@@ -641,7 +636,14 @@
 	if (to_say)
 		say (to_say)
 	else if(prob(1))
-		emote(pick("bounce","sway","light","vibrate","jiggle"))
+		var/list/rand_emote = list(
+			"bounces in place.",
+			"sways around dizzily.",
+			"lights up for a bit, then stops.",
+			"vibrates!",
+			"jiggles!",
+		)
+		me_emote(pick(rand_emote))
 	else
 		var/t = 10
 		var/slimes_near = 0
@@ -705,6 +707,9 @@
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
+
+/mob/living/carbon/slime/count_pull_debuff()
+	return pulling ? ..() + 1.5 : 0
 
 /mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0

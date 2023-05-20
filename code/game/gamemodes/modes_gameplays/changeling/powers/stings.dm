@@ -19,15 +19,14 @@
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	C.chosen_sting = src
-	user.hud_used.lingstingdisplay.icon_state = sting_icon
-	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_NONE
+	C.lingstingdisplay.icon_state = sting_icon
+	C.lingstingdisplay.invisibility = INVISIBILITY_NONE
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	C.chosen_sting = null
-	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	C.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
@@ -246,8 +245,8 @@
 	if(sting_fail(user,target))
 		return FALSE
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
-	target.disabilities |= NEARSIGHTED
-	spawn(300)	target.disabilities &= ~NEARSIGHTED
+	target.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+	addtimer(CALLBACK(target, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
 	target.eye_blind = 20
 	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")

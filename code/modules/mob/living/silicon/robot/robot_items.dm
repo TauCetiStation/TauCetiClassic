@@ -73,8 +73,8 @@
 /obj/item/borg/combat/shield
 	name = "personal shielding"
 	desc = "A powerful experimental module that turns aside or absorbs incoming attacks at the cost of charge."
-	icon = 'icons/obj/decals.dmi'
-	icon_state = "shock"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "oldshieldon"
 	var/shield_level = 0.5 //Percentage of damage absorbed by the shield.
 
 /obj/item/borg/combat/shield/verb/set_shield_level()

@@ -2,7 +2,6 @@
 	name = "floor tile"
 	singular_name = "floor tile"
 	desc = "Those could not work as a pretty decent throwing weapon."
-	icon_state = "tile"
 	w_class = SIZE_SMALL
 	force = 6.0
 	m_amt = 937.5
@@ -20,7 +19,7 @@
 
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user)
-	if (usr.stat)
+	if (usr.stat != CONSCIOUS)
 		return
 	var/T = user.loc
 	if (!( istype(T, /turf) ))

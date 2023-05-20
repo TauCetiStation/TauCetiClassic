@@ -230,6 +230,9 @@
 						if(imp in W.embedded_objects)
 							W.embedded_objects -= imp
 							break
+					if(istype(imp, /obj/item/weapon/implant/skill))
+						var/obj/item/weapon/implant/skill/skill_impant = imp
+						skill_impant.removed()
 					imp.imp_in = null
 					imp.implanted = FALSE
 					if(istype(imp, /obj/item/weapon/implant/storage))

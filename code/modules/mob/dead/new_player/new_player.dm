@@ -37,10 +37,16 @@
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby)
 	assets.send(src)
 
-	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
+	if(global.custom_lobby_image)
+		client << browse(global.custom_lobby_image, "file=titlescreen.gif;display=0") // png? jpg?
+	else
+		if(client.prefs.lobbyanimation)
+			client << browse(global.lobby_screens[global.lobby_screen]["mp4"], "file=[global.lobby_screen].mp4;display=0")
+		client << browse(global.lobby_screens[global.lobby_screen]["png"], "file=[global.lobby_screen].png;display=0")
+
 	client << browse(get_lobby_html(), "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
@@ -130,6 +136,7 @@
 			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
+
 			observer.alpha = 127
 
 			if(client.prefs.be_random_name)
@@ -161,8 +168,8 @@
 		return
 
 	if(href_list["SelectedJob"])
-		if(!enter_allowed)
-			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -204,8 +211,8 @@
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
-	if(!enter_allowed)
-		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
@@ -218,11 +225,13 @@
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+
+	SSjob.EquipRank(character, rank, TRUE)					//equips the human
 
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
+		character.PutDisabilityMarks()
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -243,13 +252,8 @@
 		qdel(src)
 		return
 
-	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
+	character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
-	// Moving wheelchair if they have one
-	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		character.buckled.loc = character.loc
-		character.buckled.set_dir(character.dir)
 
 	SSticker.mode.latespawn(character)
 
@@ -418,9 +422,6 @@
 
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
-		if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-			new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
-			new_character.rename_self("clown")
 		mind.original = new_character
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
@@ -428,6 +429,9 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
+	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
+	var/old_base_metabolism = new_character.get_metabolism_factor()
+	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

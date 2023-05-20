@@ -2,25 +2,13 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
 	icon_state = "ionrifle"
-	item_state = "ionrifle"
+	item_state = null
 	origin_tech = "combat=2;magnets=4"
 	w_class = SIZE_NORMAL
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
-/obj/item/weapon/gun/energy/ionrifle/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = CEIL(ratio * 4) * 25
-	switch(modifystate)
-		if (0)
-			if(ratio > 100)
-				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
-			else
-				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
-	return
+	modifystate = 0
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
@@ -244,12 +232,6 @@
 		charge = 0
 
 	update_icon()
-
-	/*if(user.hand) with custom inhand sprites - yes, without - no.
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()*/
-
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
@@ -339,13 +321,13 @@
 		..()
 
 /obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
 
 	else if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			if(ML)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				user.put_in_hands(ML)
@@ -411,7 +393,7 @@
 		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
 	)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 
 /obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
 	. = ..()
@@ -458,7 +440,7 @@
 
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"
@@ -506,7 +488,7 @@
 		update_icon()
 		update_inv_mob()
 
-	if(isscrewdriver(C))
+	if(isscrewing(C))
 		if(!firing_core)
 			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
 			return
@@ -578,3 +560,107 @@
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
+
+/obj/item/weapon/gun/medbeam
+	name = "prototype medical retrosynchronizer"
+	desc = "A prototype healgun, which slowly reverts organic matter to it's previous state, 'healing' it. Don't cross the streams!"
+	icon_state = "medigun"
+	item_state = "medigun"
+	var/mob/living/current_target
+	var/last_check = 0
+	var/check_delay = 10 //Check los as often as possible, max resolution is SSobj tick though
+	var/max_range = 8
+	var/active = FALSE
+	var/beam_state = "medbeam"
+	var/datum/beam/current_beam = null
+
+/obj/item/weapon/gun/medbeam/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/gun/medbeam/Destroy()
+	LoseTarget()
+	return ..()
+
+/obj/item/weapon/gun/medbeam/dropped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/equipped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/attack(atom/target, mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+		Fire(target, user)
+		return
+	return ..()
+
+/obj/item/weapon/gun/medbeam/proc/LoseTarget()
+	if(active)
+		QDEL_NULL(current_beam)
+		active = FALSE
+	if(current_target)
+		UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
+	current_target = null
+
+/obj/item/weapon/gun/medbeam/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(isliving(user))
+		add_fingerprint(user)
+
+	if(current_target)
+		LoseTarget()
+	if(!isliving(target))
+		return
+
+	current_target = target
+	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, .proc/LoseTarget)
+	active = TRUE
+	current_beam = new(user, current_target, time = 6000, beam_icon_state = beam_state, btype = /obj/effect/ebeam/medical)
+	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
+	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/gun/medbeam/process()
+	var/source = loc
+	if(!isliving(source))
+		LoseTarget()
+		return
+
+	if(!current_target)
+		LoseTarget()
+		return
+
+	if(world.time <= last_check + check_delay)
+		return
+
+	last_check = world.time
+
+	if(get_dist(source, current_target) > max_range || !check_trajectory(source, current_target, pass_flags = PASSTABLE, flags = 0))
+		LoseTarget()
+		to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
+		return
+
+	if(current_target)
+		on_beam_tick(current_target)
+
+/obj/item/weapon/gun/medbeam/proc/on_beam_tick()
+	if(current_target.stat == DEAD)
+		LoseTarget()
+		return
+
+	current_target.adjustBruteLoss(-5)
+	current_target.adjustFireLoss(-5)
+	current_target.adjustToxLoss(-2)
+	current_target.adjustOxyLoss(-2)
+
+/obj/item/weapon/gun/medbeam/syndi
+	name = "ominous medical retrosynchronizer"
+	desc = "This medigun has no difference from it's Nanotrasen counterpart apart from color scheme. Sounds familiar."
+	icon_state = "medigun_syndi"
+	item_state = "medigun_syndi"
+	beam_state = "medbeam_syndi"
+
+/obj/effect/ebeam/medical
+	name = "medical beam"
+	icon_state = "medbeam"

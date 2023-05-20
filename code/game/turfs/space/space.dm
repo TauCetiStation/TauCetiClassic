@@ -13,7 +13,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	plane = PLANE_SPACE
-//	heat_capacity = 700000 No.
+	heat_capacity = HEAT_CAPACITY_VACUUM
 
 	flags = NOBLOODY | NOSTEPSOUND
 
@@ -120,7 +120,7 @@
 			if(!isemptylist(disk_search))
 				if(isliving(A))
 					var/mob/living/MM = A
-					if(MM.client && !MM.stat)
+					if(MM.client && MM.stat == CONSCIOUS)
 						to_chat(MM, "<span class='warning'>Вы имеете что-то, что мешает улететь. Не прикидывайтесь: вы знаете, что это.</span>")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4

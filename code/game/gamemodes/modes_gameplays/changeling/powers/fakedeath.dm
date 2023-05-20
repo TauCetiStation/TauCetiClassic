@@ -13,25 +13,14 @@
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
-		var/fake_pick = pick("oxy", "tox", "clone")
+		var/fake_pick = pick(OXY, TOX, CLONE)
 		switch(fake_pick)
-			if("oxy")
+			if(OXY)
 				user.adjustOxyLoss(rand(200,300))
-			if("tox")
+			if(TOX)
 				user.adjustToxLoss(rand(200,300))
-			if("clone")
+			if(CLONE)
 				user.adjustCloneLoss(rand(200,300))
-
-		//user.death(0)
-		//dead_mob_list -= user
-		//alive_mob_list += user
-		//user.status_flags |= FAKEDEATH		//play dead
-		//user.fake_death = 1
-		//user.update_canmove()
-
-		//if(user.stat != DEAD)
-		//	user.emote("deathgasp")
-		//	user.tod = worldtime2text()
 
 	if(NOCLONE in user.mutations)
 		to_chat(user, "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>")

@@ -115,7 +115,7 @@
 
 	// Create list for rituals to determine the value of things
 	var/list/money_type_by_cash_am = list()
-	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash) - /obj/item/weapon/spacecash/ewallet
+	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash)
 	for(var/money_type in type_cash)
 		var/obj/item/weapon/spacecash/cash = money_type
 		var/cash_am = "[initial(cash.worth)]"
@@ -231,9 +231,34 @@
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
 
+
+	global.all_skills = list()
+	for(var/skill_type in subtypesof(/datum/skill))
+		global.all_skills[skill_type] = new skill_type
+
+	global.all_skillsets = list()
+	for(var/skillset_type in subtypesof(/datum/skillset))
+		global.all_skillsets[skillset_type] = new skillset_type
+
+	global.skillset_names_aliases = list()
+	for(var/s in all_skillsets)
+		var/datum/skillset/skillset = all_skillsets[s]
+		global.skillset_names_aliases[skillset.name] = s
+
 	global.all_emotes = list()
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type
+
+	global.light_modes_by_type = list()
+	global.light_modes_by_name = list()
+	for(var/type as anything in subtypesof(/datum/light_mode))
+		var/datum/light_mode/LM = new type
+		light_modes_by_name[LM.name] = LM
+		light_modes_by_type[type] = LM
+
+	global.smartlight_presets = list()
+	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
+		smartlight_presets[initial(type.name)] = type
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

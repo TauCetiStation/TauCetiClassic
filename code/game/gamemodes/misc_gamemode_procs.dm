@@ -91,11 +91,11 @@
 			clients++
 			var/area/mob_area = get_area(M)
 			if(ishuman(M))
-				if(!M.stat)
+				if(M.stat == CONSCIOUS)
 					surviving_humans++
 					if(mob_area.type in escape_locations)
 						escaped_humans++
-			if(!M.stat)
+			if(M.stat == CONSCIOUS)
 				surviving_total++
 				if(mob_area.type in escape_locations)
 					escaped_total++
@@ -161,7 +161,7 @@
 			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				continue //AFK client
-			if(L.stat)
+			if(L.stat != CONSCIOUS)
 				if(L.suiciding)	//Suicider
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
 					continue //Disconnected client
@@ -217,3 +217,17 @@
 
 /proc/mode_has_antags()
 	return SSticker.mode.factions.len > 0 || SSticker.mode.orphaned_roles.len > 0
+
+// Ex: all xenomorph have boilerplate names (alien drone (123), alien hunter (321)),
+// but all wizards have unique names
+/proc/get_roles_with_interesting_names()
+	return list(ABDUCTED, CHANGELING, CULTIST, CULT_LEADER, DEATHSQUADIE, GANGSTER, GANGSTER_LEADER,
+				GANGSTER_DEALER, HEADREV, MALF, MALFBOT, NUKE_OP, NUKE_OP_LEADER, NINJA, REV,
+				RESPONDER, SHADOW_THRALL, TRAITOR, TRAITORCHAN, UNDERCOVER_COP, WIZARD, WIZ_APPRENTICE)
+
+//add crates to cargo
+/datum/game_mode/proc/add_supply_to_cargo(num_supply_packs = 1, supply_pack_name = "Crate", orderer = "Cent Comm", orderer_rank = "Cent Comm", orderer_ckey = "", reason_string = "No reisin")
+	for(var/i in 1 to num_supply_packs)
+		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey(supply_pack_name)], orderer, orderer_rank, orderer_ckey, reason_string)
+		SSshuttle.shoppinglist += order
+		. = TRUE

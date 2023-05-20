@@ -13,6 +13,7 @@
 #define ALIEN_HUNTER		"Охотники"
 #define ALIEN_LARVA			"Грудоломы"
 #define ALIEN_FACEHUGGER	"Лицехваты"
+#define ALIEN_MAID			"Горничные"
 
 //alien embryo
 #define MAX_EMBRYO_GROWTH 40

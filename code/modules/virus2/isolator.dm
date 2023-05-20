@@ -14,6 +14,7 @@
 	var/datum/disease2/disease/virus2 = null
 	var/datum/data/record/entry = null
 	var/obj/item/weapon/reagent_containers/syringe/sample = null
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/disease2/isolator/update_icon()
 	if (stat & (BROKEN|NOPOWER))
@@ -36,7 +37,8 @@
 	if(sample)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	sample = S
 	user.drop_from_inventory(S, src)
 
@@ -67,7 +69,7 @@
 						if (ID in virusDB)
 							R = virusDB[ID]
 
-						var/mob/living/carbon/human/D = B.data["donor"]
+						var/mob/living/carbon/human/D = locate(B.data["donor"])
 						pathogen_pool.Add(list(list(\
 							"name" = "[istype(D) ? D.get_species() : ""] [B.name]", \
 							"dna" = B.data["blood_DNA"], \
@@ -118,6 +120,7 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
+
 	if (href_list["close"])
 		user.unset_machine(src)
 		ui.close()
@@ -164,6 +167,8 @@
 		return TRUE
 
 /obj/machinery/disease2/isolator/proc/print(mob/user)
+	if(!do_skill_checks(user))
+		return
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 
 	switch (state)
@@ -182,7 +187,7 @@
 			P.info += "<hr>"
 
 			for(var/datum/reagent/blood/B in sample.reagents.reagent_list)
-				var/mob/living/carbon/human/D = B.data["donor"]
+				var/mob/living/carbon/human/D = locate(B.data["donor"])
 				P.info += "<large><u>[istype(D) ? D.get_species() : ""] [B.name]:</u></large><br>[B.data["blood_DNA"]]<br>"
 
 				var/list/virus = B.data["virus2"]

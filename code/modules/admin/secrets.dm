@@ -27,6 +27,7 @@
 					<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
 					<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
 					<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
+					<A href='?src=\ref[src];secretsadmin=smartlight_set'>Set Smart Light Mode</A><BR>
 					<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
 					<A href='?src=\ref[src];secretsadmin=restore_air'>Restore air in your zone</A><BR>
 					<h4>Bombs</h4>
@@ -339,7 +340,7 @@
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FL")
-			while(!usr.stat)
+			while(usr.stat == CONSCIOUS)
 				//knock yourself out to stop the ghosts
 				for(var/mob/M in player_list)
 					if(M.stat != DEAD && prob(25))
@@ -569,7 +570,7 @@
 		// Restore air in your zone
 		if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 			var/turf/simulated/T = get_turf(usr)
-			if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+			if((isfloorturf(T) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
 				var/datum/gas_mixture/GM = T.zone.air
 
 				for(var/g in gas_data.gases)
@@ -692,16 +693,35 @@
 			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
-					SSnightshift.can_fire = TRUE
-					SSnightshift.check_nightshift()
+					SSsmartlight.can_fire = TRUE
+					SSsmartlight.check_nightshift()
 				if("On")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(TRUE)
+					SSsmartlight.can_fire = FALSE
+					SSsmartlight.toggle_nightshift(TRUE)
 				if("Off")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(FALSE)
+					SSsmartlight.can_fire = FALSE
+					SSsmartlight.toggle_nightshift(FALSE)
 			if(val)
 				message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'.")
+				log_admin("[key_name(usr)] switched night shift mode to '[val]'.")
+
+		if("smartlight_set")
+			var/val = tgui_alert(usr, "What do you want to set smartlight to?", "Smartlight", list("Force Mode", "Cancel Forced Mode"))
+			var/custom_mode
+			switch(val)
+				if("Force Mode")
+					custom_mode = input("Select new lighting mode. Station will be locked in this mode.", "Force Mode") as null|anything in light_modes_by_name
+					if(custom_mode)
+						SSsmartlight.forced_admin_mode = TRUE
+						SSsmartlight.can_fire = FALSE
+						SSsmartlight.update_mode(light_modes_by_name[custom_mode], TRUE)
+				if("Cancel Forced Mode")
+					SSsmartlight.can_fire = TRUE
+					SSsmartlight.forced_admin_mode = FALSE
+					SSsmartlight.reset_smartlight()
+			if(val)
+				message_admins("[key_name_admin(usr)] switched smartlight mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
+				log_admin("[key_name(usr)] switched smartlight mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
 		// Put everyone to sleep
 		if("mass_sleep")
 			for(var/mob/living/L in global.living_list)

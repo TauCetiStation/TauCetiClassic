@@ -170,7 +170,7 @@
 		if(G.use_tool(src, user, 20, volume = 50))
 			L.loc = loc
 			if(buckle_mob(L))
-				L.visible_message(\
-					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",\
-					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
+				L.visible_message(
+					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",
+					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
 					"<span class='notice'>You hear metal clanking.</span>")

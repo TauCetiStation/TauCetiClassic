@@ -87,7 +87,7 @@ Quick adjacency (to turf):
 	return FALSE
 
 // This is necessary for storage items not on your person.
-/obj/item/Adjacent(atom/neighbor, recurse = 1)
+/obj/item/Adjacent(atom/neighbor, recurse = MAX_STORAGE_DEEP_LEVEL)
 	if(neighbor == loc) return TRUE
 	if(isitem(loc) || isliving(loc))
 		if(recurse > 0)
@@ -106,13 +106,8 @@ Quick adjacency (to turf):
 		if( !O.density || O == target_atom || O.throwpass) continue // throwpass is used for anything you can click through
 
 		if( O.flags&ON_BORDER) // windows have throwpass but are on border, check them first
-			if( O.dir & target_dir || O.dir&(O.dir-1) ) // full tile windows are just diagonals mechanically
-				var/obj/structure/window/W = target_atom
-				if(istype(W))
-					if(!W.is_fulltile())	//exception for breaking full tile windows on top of single pane windows
-						return FALSE
-				else
-					return FALSE
+			if( O.dir & target_dir || O.dir&(O.dir-1) ) // *insert explaining comment here*
+				return FALSE
 
 		else if( !border_only ) // dense, not on border, cannot pass over
 			return FALSE

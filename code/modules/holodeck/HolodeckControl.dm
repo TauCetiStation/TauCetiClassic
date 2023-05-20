@@ -228,6 +228,8 @@
 	return 1
 
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
+	if(id == "turnoff" && ((current_scene && id == current_scene.holoscene_id) || !current_scene))
+		return
 	if(id in restricted_programs && !safety_disabled) return
 	current_scene = holoscene_templates[id]
 	loadProgram()
@@ -253,13 +255,10 @@
 		qdel(B)
 
 	if(!spawn_point)
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if(L.name=="Holodeck Base")
-				spawn_point = get_turf(L)
-				break
-
-	if(!spawn_point)
-		return
+		var/obj/effect/landmark/L = locate("landmark*Holodeck Base")
+		if(!L)
+			return
+		spawn_point = get_turf(L)
 
 	var/datum/gas_mixture/cenv = spawn_point.return_air()
 	var/datum/gas_mixture/env = new()

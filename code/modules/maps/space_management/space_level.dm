@@ -10,6 +10,6 @@
 	name = new_name
 	traits = new_traits
 	linkage = new_traits[ZTRAIT_LINKAGE]
-	envtype = new_traits[ZTRAIT_ENV_TYPE]
+	envtype = new_traits[ZTRAIT_ENV_TYPE] || envtype
 
 	SSenvironment.update(z_value, envtype)

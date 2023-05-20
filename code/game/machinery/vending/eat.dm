@@ -44,6 +44,7 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(25)
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
+	private = TRUE
 
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
@@ -67,9 +68,11 @@
 		/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
+	private = FALSE
 
 /obj/machinery/vending/snack
 	name = "Getmore Chocolate Corp"
+	subname = "Red"
 	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
@@ -79,26 +82,31 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/chips = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,
+		/obj/item/weapon/storage/food/small/chips = 6,
+		/obj/item/weapon/storage/food/normal/chips = 6,
+		/obj/item/weapon/storage/food/normal/sosjerky = 6,
+		/obj/item/weapon/storage/food/normal/no_raisin = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
+		/obj/item/weapon/storage/food/normal/honkers = 6,
 	)
 	contraband = list(
-		/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6,
+		/obj/item/weapon/storage/food/normal/syndi_cakes = 6,
+		/obj/item/weapon/storage/food/big/chips = 6,
 	)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 25,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
-		/obj/item/weapon/reagent_containers/food/snacks/chips = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 14,
-		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10,
+		/obj/item/weapon/storage/food/small/chips = 10,
+		/obj/item/weapon/storage/food/normal/chips = 20,
+		/obj/item/weapon/storage/food/big/chips = 50,
+		/obj/item/weapon/storage/food/normal/sosjerky = 14,
+		/obj/item/weapon/storage/food/normal/no_raisin = 15,
+		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 20,
+		/obj/item/weapon/storage/food/normal/honkers = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/snack
+	private = FALSE
 
 /obj/random/vending/snack
 	name = "random snack vendor"
@@ -109,18 +117,22 @@
 	return pick(typesof(/obj/machinery/vending/snack))
 
 /obj/machinery/vending/snack/blue
+	subname = "Blue"
 	icon_state = "snackblue"
 	light_color = "#5efb00"
 
 /obj/machinery/vending/snack/orange
+	subname = "Orange"
 	icon_state = "snackorange"
 	light_color = "#ff8b02"
 
 /obj/machinery/vending/snack/green
+	subname = "Green"
 	icon_state = "snackgreen"
 	light_color = "#10ff1f"
 
 /obj/machinery/vending/snack/teal
+	subname = "Teal"
 	icon_state = "snackteal"
 	light_color = "#ffc400"
 
@@ -147,9 +159,11 @@
 		/obj/item/weapon/kitchen/utensil/fork/sticks = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/chinese
+	private = FALSE
 
 /obj/machinery/vending/cola
 	name = "Robust Softdrinks"
+	subname = "Blue"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "colablue"
 	light_color = "#315ab4"
@@ -179,6 +193,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 3,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+	private = FALSE
 
 /obj/random/vending/cola
 	name = "random cola vendor"
@@ -188,39 +203,43 @@
 /obj/random/vending/cola/item_to_spawn()
 	return pick(typesof(/obj/machinery/vending/cola))
 
-/obj/machinery/vending/cola/blue
-
 /obj/machinery/vending/cola/black
+	subname = "Black"
 	icon_state = "colablack"
 	light_color = "#dddddd"
 
 /obj/machinery/vending/cola/red
+	subname = "Red"
 	desc = "It vends cola, in space."
 	icon_state = "colared"
 	product_slogans = "Cola in space!"
 	light_color = "#bf0a38"
 
 /obj/machinery/vending/cola/spaceup
+	subname = "Lime, Space-up"
 	desc = "Indulge in an explosion of flavor."
 	icon_state = "spaceup"
 	product_slogans = "Space-up! Like a hull breach in your mouth."
 	light_color = "#18d32f"
 
 /obj/machinery/vending/cola/starkist
+	subname = "Orange, Starkist"
 	desc = "The taste of a star in liquid form."
 	icon_state = "starkist"
 	product_slogans = "Drink the stars! Star-kist!"
 	light_color = "#d1751a"
 
 /obj/machinery/vending/cola/soda
+	subname = "Red, Soda"
 	icon_state = "soda"
-	light_color = "c8c8be"
+	light_color = "#c8c8be"
 
 /obj/machinery/vending/cola/gib
+	subname = "Red, Dr. Gibb"
 	desc = "Canned explosion of different flavors in this very vendor!"
 	icon_state = "gib"
 	product_slogans = "You will lose your guts because of our drinks!; Explosion - in a can!"
-	light_color = "d23c3c"
+	light_color = "#d23c3c"
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
@@ -236,6 +255,7 @@
 	syndie = list(
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass = 10,
 	)
+	private = TRUE
 
 /obj/machinery/vending/junkfood
 	name = "McNuffin's Fast Food"
@@ -267,6 +287,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/junkfood
+	private = FALSE
 
 /obj/machinery/vending/donut
 	name = "Monkin' Donuts"
@@ -297,6 +318,7 @@
 		/obj/item/weapon/storage/fancy/donut_box = 3,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/donut
+	private = FALSE
 
 /obj/machinery/vending/sustenance
 	name = "Sustenance Vendor"
@@ -314,3 +336,4 @@
 	contraband = list(
 		/obj/item/weapon/kitchenknife = 6,
 	)
+	private = TRUE

@@ -49,12 +49,12 @@
 		S["ancestor_chain"]		<< 1
 		S["relic_mask"]			<< null
 		return
-	if(dead)
+	if(dead && istext(ancestor_name) && isnum(ancestor_chain))
 		S["ancestor_name"] 		<< ancestor_name
 		S["ancestor_chain"]		<< ancestor_chain + 1
-	if(!ancestor_name)	//new monkey name this round
+	if(!ancestor_name && istext(name))	//new monkey name this round
 		S["ancestor_name"] 		<< name
-	if(wear_mask)
+	if(wear_mask && istype(wear_mask, wear_mask.type))
 		S["relic_mask"]			<< wear_mask.type
 	else
 		S["relic_mask"]			<< null

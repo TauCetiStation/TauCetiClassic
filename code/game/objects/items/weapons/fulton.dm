@@ -36,6 +36,7 @@
 	var/image/balloon
 	if(isliving(AM))
 		var/mob/living/M = AM
+		M.Stun(16)
 		M.Weaken(16) // Keep them from moving during the duration of the extraction.
 		if(M && M.buckled)
 			M.buckled.unbuckle_mob()
@@ -154,6 +155,12 @@
 /obj/item/weapon/extraction_pack/dealer/try_use_fulton(atom/movable/target, mob/user)
 	if(!isgundealer(user))
 		return FALSE
+	if(isitem(target))
+		for(var/item in global.lowrisk_objectives_cache)
+			if(item != target.type)
+				continue
+			to_chat(user, "<span class='warning'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
+			return FALSE	
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
 	if(!..())
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)

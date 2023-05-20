@@ -17,6 +17,7 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = TM50C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 12000 // ~6 snow tiles
 
 	light_color = COLOR_BLUE
 
@@ -92,12 +93,12 @@
 		return
 	if(user.is_busy())
 		return
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
 	new /obj/effect/overlay/ice_hole(src)
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
 	var/ice_slide_count = 0
@@ -172,13 +173,9 @@
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
 					return
-				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
+				if(!D.power_supply?.use(D.drill_cost))
 					to_chat(user, "<span class='danger'>No power!</span>")
 					return
-				if(D.mode)
-					if(mineral)
-						mined_ore_loss = mineral.ore_loss
-				D.power_supply.use(D.drill_cost)
 
 		playsound(user, P.usesound, VOL_EFFECTS_INSTRUMENT)
 		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")

@@ -24,3 +24,16 @@
 	melee_damage = round(potency / 13) //max 7, min 0
 	maxHealth = max(round(potency / 4), 5) //max 25, min 5
 	health = maxHealth
+
+/mob/living/simple_animal/hostile/tomato/angry_tomato
+	icon = 'icons/mob/livestock.dmi'
+	icon_state = "OLDkillertomato"
+	icon_living = "OLDkillertomato"
+	icon_dead = "OLDkillertomato_d"
+	icon_move = "OLDkillertomato"
+
+/mob/living/simple_animal/hostile/tomato/angry_tomato/atom_init()
+	. = ..()
+	melee_damage = 15
+	maxHealth = 40
+	health = maxHealth

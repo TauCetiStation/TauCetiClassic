@@ -32,6 +32,7 @@
 	. = ..()
 	AppendObjective(/datum/objective/gang/points)
 	AppendObjective(gang_objective_type)
+	AppendObjective(/datum/objective/gang/steal_lowrisk)
 
 /datum/faction/gang/custom_result()
 	var/alive_gangsters = 0
@@ -40,7 +41,7 @@
 		if(!ishuman(G.antag.current))
 			continue
 		var/mob/living/carbon/human/H = G.antag.current
-		if(H.stat)
+		if(H.stat != CONSCIOUS)
 			continue
 		alive_gangsters++
 	var/datum/faction/cops/C = find_faction_by_type(/datum/faction/cops)
@@ -48,7 +49,7 @@
 		if(!ishuman(cop.antag.current)) // always returns false
 			continue
 		var/mob/living/carbon/human/H = cop.antag.current
-		if(H.stat)
+		if(H.stat != CONSCIOUS)
 			continue
 		alive_cops++
 	if(alive_gangsters > alive_cops)

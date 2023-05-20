@@ -27,6 +27,8 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
+	fumbling_time = 2 SECONDS
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -70,10 +72,6 @@
 		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
-
-/obj/machinery/chem_dispenser/blob_act()
-	if (prob(50))
-		qdel(src)
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
 	tgui_interact(user)
@@ -162,7 +160,7 @@
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
 //		return
-	if(ismultitool(B) && hackable)
+	if(ispulsing(B) && hackable)
 		hackedcheck = !hackedcheck
 		if(hackedcheck)
 			to_chat(user, msg_hack_enable)
@@ -187,6 +185,8 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
+		if(!do_skill_checks(user))
+			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
@@ -231,7 +231,7 @@
 				"ethanol",
 				"chlorine",
 				"potassium",
-				"aluminium",
+				"aluminum",
 				"radium",
 				"fluorine",
 				"iron",
@@ -243,6 +243,7 @@
 				"diethylamine"
 		)
 	)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -283,7 +284,7 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
@@ -306,6 +307,8 @@
 	hackable = TRUE
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
+	required_skills = list()
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -320,8 +323,8 @@
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-
-
+	required_skills = list()
+	resistance_flags = FULL_INDESTRUCTIBLE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -343,11 +346,12 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/chem_master/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(100)
+	var/datum/reagents/R = new/datum/reagents(150)
 	reagents = R
 	R.my_atom = src
 
@@ -359,10 +363,6 @@
 		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
-
-/obj/machinery/chem_master/blob_act()
-	if (prob(50))
-		qdel(src)
 
 /obj/machinery/chem_master/power_change()
 	if(anchored && powered())
@@ -405,6 +405,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -685,12 +686,14 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -717,7 +720,7 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(B))
+		if(isprying(B))
 			default_deconstruction_crowbar(B)
 			return 1
 		else
@@ -759,7 +762,8 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	pass_flags = PASSTABLE
-	var/inuse = 0
+	var/speed = 1
+	var/inuse = FALSE
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
 	var/list/blend_items = list (
@@ -770,7 +774,7 @@
 		/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 		/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 		/obj/item/weapon/grown/nettle = list("sacid" = 0),
-		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
+		/obj/item/weapon/grown/deathnettle = list("sanguisacid" = 0),
 
 		//Blender Stuff,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
@@ -813,10 +817,22 @@
 
 
 	var/list/holdingitems = list()
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/reagentgrinder(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	. = ..()
+	speed = 1
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		speed = M.rating
 
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -825,7 +841,7 @@
 
 /obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
 
-	if(iswrench(O))
+	if(iswrenching(O))
 		default_unfasten_wrench(user, O)
 		return
 
@@ -871,6 +887,14 @@
 	holdingitems += O
 	updateUsrDialog()
 	return 0
+
+/obj/machinery/reagentgrinder/deconstruct(disassembled)
+	drop_all_items()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
+	return ..()
+
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -928,7 +952,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	switch(href_list["action"])
 		if ("grind")
 			grind()
@@ -941,6 +964,31 @@
 
 	updateUsrDialog()
 
+/obj/machinery/reagentgrinder/examine(mob/user)
+	. = ..()
+	if(!user.Adjacent(src) && !issilicon(user) && !isobserver(user))
+		to_chat(user,"<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		return
+
+	if(inuse)
+		to_chat(user, "<span class='warning'>\The [src] is operating.</span>")
+		return
+
+	if(beaker || length(holdingitems))
+		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		if(beaker)
+			to_chat(user, "<span class='notice'>- \A [beaker].</span>")
+		for(var/i in holdingitems)
+			var/obj/item/O = i
+			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		to_chat(user, "<span class='notice'>The status display reads:</span>")
+		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.</span>")
+		if(beaker)
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+
 /obj/machinery/reagentgrinder/proc/detach()
 
 	if(usr.incapacitated())
@@ -951,17 +999,18 @@
 	beaker = null
 	update_icon()
 
+/obj/machinery/reagentgrinder/proc/drop_all_items()
+	if(holdingitems.len == 0)
+		return
+	for(var/obj/item/O as anything in holdingitems)
+		O.forceMove(loc)
+	holdingitems.Cut()
+
 /obj/machinery/reagentgrinder/proc/eject()
 
 	if(usr.incapacitated())
 		return
-	if (holdingitems && holdingitems.len == 0)
-		return
-
-	for(var/obj/item/O in holdingitems)
-		O.loc = src.loc
-		holdingitems -= O
-	holdingitems = list()
+	drop_all_items()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
 	for (var/i in blend_items)
@@ -1004,20 +1053,54 @@
 	holdingitems -= O
 	qdel(O)
 
+/obj/machinery/reagentgrinder/proc/start_shaking()
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
+		var/matrix/M3 = matrix()
+		var/matrix/M4 = matrix()
+		M1.Translate(-1, 0)
+		M2.Translate(0, 1)
+		M3.Translate(1, 0)
+		M4.Translate(0, -1)
+		transforms = list(M1, M2, M3, M4)
+	animate(src, transform=transforms[1], time=0.4, loop=-1)
+	animate(transform=transforms[2], time=0.2)
+	animate(transform=transforms[3], time=0.4)
+	animate(transform=transforms[4], time=0.6)
+
+/obj/machinery/reagentgrinder/proc/shake_for(duration)
+	start_shaking() //start shaking
+	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
+
+/obj/machinery/reagentgrinder/proc/stop_shaking()
+	update_icon()
+	animate(src, transform = matrix())
+
+/obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
+	shake_for(time / speed)
+	inuse = TRUE
+	if(!silent)
+		if(!juicing)
+			playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS_MASTER, 35)
+		else
+			playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER, 20)
+	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
+
+/obj/machinery/reagentgrinder/proc/stop_operating()
+	inuse = FALSE
+	updateUsrDialog()
+	power_change()
+
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER, 20)
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	inuse = 1
-	spawn(50)
-		pixel_x = initial(pixel_x) //return to its spot after shaking
-		inuse = 0
-		updateUsrDialog()
+	operate_for(50, juicing = TRUE)
 	//Snacks
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -1046,14 +1129,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS_MASTER, 35)
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	inuse = 1
-	spawn(60)
-		pixel_x = initial(pixel_x) //return to its spot after shaking
-		inuse = 0
-		updateUsrDialog()
+	operate_for(60)
 	//Snacks and Plants
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)

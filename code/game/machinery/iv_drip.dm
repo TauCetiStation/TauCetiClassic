@@ -49,6 +49,10 @@
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
 			add_overlay(filling)
 
+/obj/machinery/iv_drip/on_reagent_change()
+	..()
+	update_icon()
+
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
@@ -82,6 +86,11 @@
 	else
 		return ..()
 
+/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc)
+	..()
 
 /obj/machinery/iv_drip/process()
 	//set background = 1
@@ -130,14 +139,7 @@
 			if(T.blood_amount() < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("\The [src] beeps loudly.")
 
-			var/datum/reagent/B = T.take_blood(beaker,amount)
-
-			if (B)
-				beaker.reagents.reagent_list |= B
-				beaker.reagents.update_total()
-				beaker.on_reagent_change()
-				beaker.reagents.handle_reactions()
-				update_icon()
+			T.take_blood(beaker, amount)
 
 /obj/machinery/iv_drip/attack_ai(mob/user)
 	if(IsAdminGhost(user))
