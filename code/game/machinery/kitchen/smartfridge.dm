@@ -145,11 +145,11 @@
 	icon_off = "bluespace-off"
 
 /obj/machinery/smartfridge/secure/bluespace/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/storage/bag) || istype(O,/obj/item/weapon/card/id) || istype(O,/obj/item/device/pda))
-		return 0
+	if(istype(O, /obj/item/weapon/storage/bag) || istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
+		return FALSE
 	if(isitem(O))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/secure/bluespace/atom_init()
 	. = ..()
