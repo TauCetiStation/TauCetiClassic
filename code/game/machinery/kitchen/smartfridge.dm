@@ -147,7 +147,7 @@
 /obj/machinery/smartfridge/secure/bluespace/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/bag) || istype(O,/obj/item/weapon/card/id) || istype(O,/obj/item/device/pda))
 		return 0
-	if(istype(O,/obj/item))
+	if(isitem(O,/obj/item))
 		return 1
 	return 0
 
