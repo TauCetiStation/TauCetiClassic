@@ -224,7 +224,7 @@
 			A.bullet_act(src, def_zone)
 		else
 			for(var/mob/mob in get_turf(M.loc))
-				if(mob == A)
+				if(mob == A || isreplicator(mob))
 					continue
 				if(check_living_shield(mob) == M)
 					M.bullet_act(src,def_zone)
