@@ -22,12 +22,14 @@
 	icon_state = "weldingmask"
 	item_state = "weldingmask"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+	flags_inv = (HIDEEARS|HIDEEYES|HIDEFACE)
 	origin_tech = "materials=2;engineering=2"
 	action_button_name = "Toggle Welding Mask"
 	siemens_coefficient = 0.9
 	body_parts_covered = FACE|EYES
 	w_class = SIZE_SMALL
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_WEAR_MASK)
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -42,16 +44,18 @@
 		if(src.up)
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
-			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+			flags_inv |= (HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
+			flash_protection = FLASHES_FULL_PROTECTION
 			to_chat(usr, "You adjust \the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+			flags_inv &= ~(HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
+			flash_protection = NONE
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		update_inv_mob()

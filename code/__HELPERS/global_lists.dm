@@ -249,6 +249,17 @@
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type
 
+	global.light_modes_by_type = list()
+	global.light_modes_by_name = list()
+	for(var/type as anything in subtypesof(/datum/light_mode))
+		var/datum/light_mode/LM = new type
+		light_modes_by_name[LM.name] = LM
+		light_modes_by_type[type] = LM
+
+	global.smartlight_presets = list()
+	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
+		smartlight_presets[initial(type.name)] = type
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
