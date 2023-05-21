@@ -28,4 +28,4 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/fox/Renault, chief_animal_list)
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
-	desc = "Рональт, верный лис капитана. Интересно, что он говорит?"
+	desc = "Верный лис капитана. Интересно, что он говорит?"

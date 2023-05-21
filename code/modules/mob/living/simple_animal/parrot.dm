@@ -720,7 +720,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		color = "#bb7777"
 	else if(rounds_survived > 0)
 		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
-		desc += " Более [rounds_survived] смен без \"ужасных\" \"инцидентов\\"!"
+		desc += " Более [rounds_survived] смен без \"ужасных\" \"инцидентов\"!"
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
