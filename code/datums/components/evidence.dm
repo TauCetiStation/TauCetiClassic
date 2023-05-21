@@ -14,7 +14,7 @@
 		var/datum/atom_hud/evidence/evid_hud = global.huds[DATA_HUD_EVIDENCE]
 		evid_hud.add_to_hud(A)
 		A.set_evidence_hud()
-	SSevidence.add_to_queve(src)
+	SSevidence.add_to_queue(src)
 	RegisterSignal(parent, list(COMSIG_PARENT_POST_EXAMINE), .proc/show_evidence_info)
 	RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/delete_component)
 
@@ -39,7 +39,7 @@
 
 /datum/component/evidence/Destroy()
 	SSevidence.del_one_evidence(src)
-	SSevidence.del_from_queve(src)
+	SSevidence.del_from_queue(src)
 	if(operating_hud)
 		var/datum/atom_hud/evidence/evid_hud = global.huds[DATA_HUD_EVIDENCE]
 		evid_hud.remove_from_hud(parent)
