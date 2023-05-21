@@ -410,3 +410,23 @@
 /obj/item/clothing/suit/armor/vest/surplus/atom_init()
 	. = ..()
 	icon_state = "surplus_armor_[rand(1,2)]"
+
+/obj/item/clothing/suit/armor/vest/durathread
+	name = "durathread vest"
+	desc = "A vest made of durathread and a bunch of rags, tied with wires."
+	icon_state = "Duraarmor"
+	item_state = "Duraarmor"
+	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/duracoat
+	name = "durathread coat"
+	desc = "A coat made from durathread, looks stylish."
+	icon_state = "Duracoat"
+	item_state = "Duracoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	armor = list(melee = 40, bullet = 5, laser = 40, energy = 25, bomb = 0, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.4

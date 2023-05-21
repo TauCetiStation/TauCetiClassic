@@ -690,6 +690,7 @@
 #include "code\game\gamemodes\objectives\families\save_bottle.dm"
 #include "code\game\gamemodes\objectives\families\save_station.dm"
 #include "code\game\gamemodes\objectives\families\steal_gold.dm"
+#include "code\game\gamemodes\objectives\families\steal_lowrisk.dm"
 #include "code\game\gamemodes\objectives\families\tunnel_snake.dm"
 #include "code\game\gamemodes\objectives\heist\inviolate_crew.dm"
 #include "code\game\gamemodes\objectives\heist\inviolate_death.dm"

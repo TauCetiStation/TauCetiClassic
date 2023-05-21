@@ -44,6 +44,7 @@
 		/obj/item/stack/cable_coil/random = 10,
 		/obj/item/weapon/crowbar = 5,
 		/obj/item/weapon/weldingtool = 3,
+		/obj/item/weapon/weldingtool/largetank = 3,
 		/obj/item/weapon/wirecutters = 5,
 		/obj/item/weapon/wrench = 5,
 		/obj/item/device/analyzer = 5,
@@ -58,6 +59,9 @@
 		/obj/item/clothing/gloves/yellow = 1,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 1,
 	)
+	prices = list(
+		/obj/item/weapon/weldingtool/largetank = 50,
+	)
 	refill_canister = /obj/item/weapon/vending_refill/tool
 	private = TRUE
 
@@ -70,6 +74,7 @@
 	req_access = list(11) //Engineering Equipment access
 	products = list(
 		/obj/item/clothing/glasses/meson = 2,
+		/obj/item/clothing/glasses/welding = 2,
 		/obj/item/device/multitool = 4,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 4,
 		/obj/item/weapon/airlock_electronics = 10,
@@ -85,10 +90,18 @@
 	)
 	contraband = list(
 		/obj/item/weapon/stock_parts/cell/potato = 3,
+		/obj/item/weapon/stock_parts/matter_bin/adv = 3,
+		/obj/item/weapon/stock_parts/micro_laser/high = 3,
+		/obj/item/weapon/stock_parts/manipulator/nano = 3,
+		/obj/item/weapon/stock_parts/capacitor/adv = 2,
+		/obj/item/weapon/stock_parts/scanning_module/adv = 2,
 	)
 	premium = list(
 		/obj/item/weapon/storage/belt/utility = 3,
 		/obj/item/weapon/storage/part_replacer = 1,
+	)
+	prices = list(
+		/obj/item/clothing/glasses/welding = 200,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/engivend
 	private = TRUE

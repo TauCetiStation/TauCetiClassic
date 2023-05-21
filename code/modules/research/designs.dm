@@ -811,7 +811,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/storage/part_replacer/bluespace
 	category = list("Stock Parts")
 
-	//Tier1
+//Tier1
 /datum/design/basic_capacitor
 	name = "Basic Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -857,13 +857,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/matter_bin
 	category = list("Stock Parts")
 
-	//Tier 2
+//Tier 2
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_capacitor"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_SILVER = 250)
+	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
+	materials = list(MAT_METAL = 650, MAT_GLASS = 400)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
 	category = list("Stock Parts")
 
@@ -871,8 +871,8 @@ other types of metals and chemistry for reagents).
 	name = "Advanced Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 250)
+	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
+	materials = list(MAT_METAL = 400, MAT_GLASS = 310)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
 	category = list("Stock Parts")
 
@@ -880,8 +880,8 @@ other types of metals and chemistry for reagents).
 	name = "Nano Manipulator"
 	desc = "A stock part used in the construction of various devices."
 	id = "nano_mani"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 240, MAT_SILVER = 250)
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(MAT_METAL = 240, MAT_GLASS = 250)
 	build_path = /obj/item/weapon/stock_parts/manipulator/nano
 	category = list("Stock Parts")
 
@@ -889,8 +889,8 @@ other types of metals and chemistry for reagents).
 	name = "High-Power Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
 	id = "high_micro_laser"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 80, MAT_GLASS = 160, MAT_SILVER = 250)
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(MAT_METAL = 330, MAT_GLASS = 160)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/high
 	category = list("Stock Parts")
 
@@ -898,18 +898,18 @@ other types of metals and chemistry for reagents).
 	name = "Advanced Matter Bin"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_matter_bin"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 640, MAT_SILVER = 300)
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(MAT_METAL = 640, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/adv
 	category = list("Stock Parts")
 
-	//Tier 3
+//Tier 3
 /datum/design/super_capacitor
 	name = "Super Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "super_capacitor"
-	build_type = PROTOLATHE  |MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_GOLD = 250)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 700, MAT_GLASS = 450)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv/super
 	category = list("Stock Parts")
 
@@ -918,7 +918,7 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 80, MAT_GOLD = 250)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 390)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	category = list("Stock Parts")
 
@@ -927,7 +927,7 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "pico_mani"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 240, MAT_GOLD = 250)
+	materials = list(MAT_METAL = 340, MAT_GLASS = 250)
 	build_path = /obj/item/weapon/stock_parts/manipulator/nano/pico
 	category = list("Stock Parts")
 
@@ -936,7 +936,7 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "ultra_micro_laser"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 80, MAT_GLASS = 160, MAT_GOLD = 250, MAT_URANIUM = 80)
+	materials = list(MAT_METAL = 380, MAT_GLASS = 310)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 	category = list("Stock Parts")
 
@@ -945,11 +945,11 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "super_matter_bin"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 640, MAT_GOLD = 300)
+	materials = list(MAT_METAL = 840, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/adv/super
 	category = list("Stock Parts")
 
-	//Tier 4
+//Tier 4
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
 	desc = "A stock part used in the construction of various devices."

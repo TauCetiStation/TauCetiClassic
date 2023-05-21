@@ -10,7 +10,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
-	salary = 160
+	salary = 0
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
 	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
@@ -36,7 +36,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-	salary = 50
+	salary = 0
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
@@ -55,7 +55,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	salary = 80
+	salary = 0
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
@@ -74,7 +74,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mailsorting, access_recycler)
-	salary = 60
+	salary = 0
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
 	skillsets = list("Recycler" = /datum/skillset/recycler)
@@ -255,6 +255,8 @@
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = pick(clown_names)
+	H.rename_self("clown")
 
 /datum/job/mime
 	title = "Mime"
@@ -276,3 +278,5 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
 		H.miming = TRUE
+	H.real_name = pick(mime_names)
+	H.rename_self("mime")

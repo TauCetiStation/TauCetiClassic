@@ -117,7 +117,10 @@
 
 			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
-				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]"
+				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
+			if(species == UNATHI)
+				. += "<b>Belly & Jaw Color</b>"
+				. += "<br><a href='?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
 
 		//Gear
 		if("gear")
@@ -435,6 +438,13 @@
 						r_skin = hex2num(copytext(new_skin, 2, 4))
 						g_skin = hex2num(copytext(new_skin, 4, 6))
 						b_skin = hex2num(copytext(new_skin, 6, 8))
+
+				if("belly")
+					var/new_belly = input(user, "Choose your character's belly colour: ", "Character Preference", rgb(r_belly, g_belly, b_belly)) as color|null
+					if(new_belly)
+						r_belly = hex2num(copytext(new_belly, 2, 4))
+						g_belly = hex2num(copytext(new_belly, 4, 6))
+						b_belly = hex2num(copytext(new_belly, 6, 8))
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist
