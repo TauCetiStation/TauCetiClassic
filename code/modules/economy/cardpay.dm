@@ -159,7 +159,7 @@
 	if(.)
 		return
 
-	if(!is_the_opposite_dir(src.dir, get_dir(src, user)))
+	if(!is_the_opposite_dir(src.dir, get_dir(src, usr)))
 		SStgui.close_user_uis(usr, src)
 		return
 
