@@ -99,7 +99,7 @@
 	..()
 
 /obj/structure/fence/metal
-	name = "Metal Fence"
+	name = "railings"
 	desc = "Металлический забор."
 
 	icon = 'icons/obj/fences.dmi'
