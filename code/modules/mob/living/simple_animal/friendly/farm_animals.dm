@@ -2,7 +2,7 @@
 //goat
 /mob/living/simple_animal/hostile/retaliate/goat
 	name = "goat"
-	desc = "Не славятся своим приятным нравом."
+	desc = "Не славятся своим дружелюбием."
 	icon_state = "goat"
 	icon_living = "goat"
 	icon_dead = "goat_dead"
@@ -87,7 +87,7 @@
 		if(G.reagents.total_volume >= G.volume)
 			to_chat(user, "<span class='warning'>The [O] is full.</span>")
 		if(!transfered)
-			to_chat(user, "<span class='warning'>Вымя сухое. Нужно немного подождать...</span>")
+			to_chat(user, "<span class='warning'>Вымя пустое. Нужно немного подождать...</span>")
 	else
 		..()
 
@@ -133,7 +133,7 @@
 		if(G.reagents.total_volume >= G.volume)
 			to_chat(user, "<span class='warning'>The [O] is full.</span>")
 		if(!transfered)
-			to_chat(user, "<span class='warning'>Вымя сухое. Нужно немного подождать...</span>")
+			to_chat(user, "<span class='warning'>Вымя пустое. Нужно немного подождать...</span>")
 	else
 		..()
 
@@ -247,7 +247,7 @@ var/global/chicken_count = 0
 	if(!.)
 		return
 	if(stat == CONSCIOUS && prob(3) && eggsleft > 0)
-		visible_message("[src] [pick("отклазывает яйца.","садится и напевает.","поднимает шумиху.","начинает хрипло кудахтать.")]")
+		visible_message("[src] [pick("отклазывает яйца.","поднимает шумиху.","начинает хрипло кудахтать.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
@@ -315,7 +315,7 @@ var/global/chicken_count = 0
 	icon_living = "turkey"
 	icon_dead = "turkey_dead"
 	speak = list("Кулюк?","Кулюк","КУЛЮК")
-	speak_emote = list("курлыкает")
+	speak_emote = list("курлычет")
 	emote_see = list("осматривается")
 	speak_chance = 1
 	turns_per_move = 5
@@ -332,8 +332,8 @@ var/global/chicken_count = 0
 	icon_state = "goose"
 	icon_living = "goose"
 	icon_dead = "goose_dead"
-	speak = list("Кря?","Кря","КРЯ!")
-	speak_emote = list("крякает")
+	speak = list("Га?","Га","ГА!")
+	speak_emote = list("гогочет", "шипит")
 	emote_see = list("машет крыльями")
 	speak_chance = 1
 	turns_per_move = 5

@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
-	desc = "Свирепое, обладающее клыками существо, напоминающее рыбу."
+	desc = "Свирепое, клыкастое существо, напоминающее рыбу."
 	icon = 'icons/mob/carp.dmi'
 	icon_state = "purple"
 	icon_living = "purple"
@@ -91,7 +91,7 @@
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/megacarp.dmi'
 	name = "Мега карп!"
-	desc = "Свирепое существо с клыками, напоминающее акулу. Кажется, оно ещё опасней..."
+	desc = "Свирепое, клыкастое существо, напоминающее акулу. Кажется, оно ещё опасней..."
 	icon_state = "megacarp"
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
@@ -107,7 +107,7 @@
 
 /mob/living/simple_animal/hostile/carp/wizard
 	faction = "wizard"
-	desc = "Свирепое, обладающее клыками существо, напоминающее рыбу. Выглядит довольно странно."
+	desc = "Свирепое, клыкастое существо, напоминающее рыбу. Выглядит довольно странно."
 	melee_damage = 10
 	maxHealth = 60
 	health = 60

@@ -47,7 +47,7 @@
 				if( prob(sting_prob) && (M.stat == CONSCIOUS || (M.stat == UNCONSCIOUS && prob(25))) ) // Try to sting! If you're not moving, think about stinging.
 					M.apply_damage(min(strength, 2) + mut, BRUTE, null, null, DAM_SHARP) // Stinging. The more mutated I am, the harder I sting.
 					M.apply_damage((round(feral/10,1)*(max((round(strength/20,1)),1)))+toxic, TOX) // Bee venom based on how angry I am and how many there are of me!
-					to_chat(M, "<span class='warning'>Они жалятся!</span>")
+					to_chat(M, "<span class='warning'>Ай! Они жалятся!</span>")
 
 		//if we're chasing someone, get a little bit angry
 		if(target_mob && prob(5))

@@ -9,7 +9,7 @@
 	speak = list("Гав!", "Вуф!", "АУУУУ!")
 	speak_emote = list("лает", "воет")
 	emote_hear = list("лает", "воет")
-	emote_see = list("виляет хвостом", "облизываетася")
+	emote_see = list("виляет хвостом", "облизывается")
 	speak_chance = 1
 	turns_per_move = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 3)

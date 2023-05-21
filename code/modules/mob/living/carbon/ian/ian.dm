@@ -19,7 +19,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	var/list/speak = list("Гав!", "Вуф!", "АУУУУ!")
 	speak_emote = list("лает", "воет")
 	var/list/emote_hear = list("лает", "воет")
-	var/list/emote_see = list("виляет хвостом", "облизываетася")
+	var/list/emote_see = list("виляет хвостом", "облизывается")
 	var/speak_chance = 1
 
 	var/turns_per_move = 10

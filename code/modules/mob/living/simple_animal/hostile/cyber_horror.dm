@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/cyber_horror
 	name = "cyber horror"
-	desc = "Что-то, что было человеком, когда-то..."
+	desc = "Что-то, что когда-то было человеком..."
 	icon_state = "cyber_horror"
 	icon_dead = "cyber_horror_dead"
 	icon_gib = "cyber_horror_dead"
