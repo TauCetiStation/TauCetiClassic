@@ -1,5 +1,5 @@
 /obj/structure/fence
-	name = "Fence"
+	name = "fence"
 	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
 
 	icon = 'icons/obj/fences.dmi'
