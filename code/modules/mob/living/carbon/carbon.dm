@@ -987,7 +987,7 @@
 /mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
 	return
 
-/mob/living/carbon/get_nutrition()
+/mob/living/carbon/get_satiation()
 	return nutrition + (reagents.get_reagent_amount("nutriment") \
 					+ reagents.get_reagent_amount("plantmatter") \
 					+ reagents.get_reagent_amount("protein") \
@@ -1320,4 +1320,4 @@
 		if(pain > 0)
 			nutrition_to_remove += pain * 0.01
 	nutrition_to_remove *= met_factor
-	nutrition -= nutrition_to_remove
+	nutrition = max(0.0, nutrition - nutrition_to_remove)

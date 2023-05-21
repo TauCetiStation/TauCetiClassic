@@ -12,10 +12,12 @@ var/global/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/tran
 
 /* Announcement sounds */
 var/global/list/announcement_sounds = list(
-	"admin_capitain_tishina" = 'sound/AI/admin_capitain.ogg',
-	"admin_syndicate_pypysky" = 'sound/AI/admin_syndicate.ogg',
-	"admin_hos_gone" = 'sound/AI/admin_hos_gone.ogg',
-	"admin_cap_gone" = 'sound/AI/admin_cap_gone.ogg',
+	"admin_capitain_tishina" = 'sound/AI/_admin_capitain.ogg',
+	"admin_hos_gone" = 'sound/AI/_admin_hos_gone.ogg',
+	"admin_cap_gone" = 'sound/AI/_admin_cap_gone.ogg',
+	"admin_war_pipisky" = 'sound/AI/_admin_war_pipisky.ogg',
+	"admin_war_pizdec" = 'sound/AI/_admin_war_pizdec.ogg',
+	"admin_war_tishina" = 'sound/AI/_admin_war_tishina.ogg',
 	
 	"commandreport" = 'sound/AI/commandreport.ogg',
 	"announce" = 'sound/AI/announce.ogg',
@@ -111,6 +113,12 @@ var/global/list/announcement_sounds = list(
 	"rd" = 'sound/AI/rd.ogg',
 	"se" = 'sound/AI/se.ogg',
 	"kep" = 'sound/AI/kep.ogg',
+
+	"construction_began" = 'sound/AI/construction_began.ogg',
+	"construction_quarter" = 'sound/AI/construction_quarter.ogg',
+	"construction_half" = 'sound/AI/construction_half.ogg',
+	"construction_three_quarters" = 'sound/AI/construction_three_quarters.ogg',
+	"construction_doom" = 'sound/AI/construction_doom.ogg',
 )
 
 /* General announcement */

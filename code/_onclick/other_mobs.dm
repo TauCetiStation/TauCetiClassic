@@ -18,7 +18,7 @@
 	if(istype(G) && G.Touch(src, A, TRUE))
 		return
 
-	//if(!A.can_mob_interact(src)) maybe in future...
+	//if(interact_prob_brain_damage(A)) maybe in future...
 	//	return
 
 	A.attack_hand(src)

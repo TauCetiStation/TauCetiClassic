@@ -6,6 +6,9 @@
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)
 
+/obj/item/clothing/head/helmet/space/deathsquad/leader
+	icon_state = "deathsquadleader"
+
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "special operations officer's beret"
 	desc = "An armored beret commonly used by special operations officers."

@@ -73,7 +73,7 @@ var/global/lastMove = 0
 	curr_location = fromArea
 
 	for(var/obj/machinery/light/small/L in fromArea)
-		L.brightness_color = "#00ff00"
+		L.force_override_color = "#00ff00"
 		L.color = "#00ff00"
 		L.update(0)
 
@@ -84,7 +84,7 @@ var/global/lastMove = 0
 	sleep(10)
 
 	for(var/obj/machinery/light/small/L in fromArea)
-		L.brightness_color = initial(L.brightness_color)
+		L.force_override_color = initial(L.force_override_color)
 		L.color = initial(L.color)
 		L.update(0)
 

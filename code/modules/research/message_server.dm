@@ -112,7 +112,7 @@
 						Console.newmessagepriority = 2
 						Console.icon_state = "req_comp2"
 					if(!Console.silent)
-						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						playsound(Console, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
 						Console.audible_message("[bicon(Console)] **Консоль Запроса пищит: 'ПРИОРИТЕТНОЕ сообщение от [from_desc]'")
 					Console.messages += "[worldtime2text()] <B><FONT color='red'>Приоритетное сообщение от </FONT></B>[content]"
 				else		// Normal priority

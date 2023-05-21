@@ -48,7 +48,7 @@
 
 	return TRUE
 
-/atom/var/can_block_air = FALSE
+/atom/var/can_block_air = FALSE // if true - object need also CanPass or c_airblock
 
 //Basically another way of calling CanPass(null, other, 0, 0).
 //Returns:

@@ -90,7 +90,7 @@
 
 	if(isreplicator(A))
 		var/mob/living/simple_animal/hostile/replicator/R = A
-		if(R == src || R.stat == DEAD || !R.ckey)
+		if(R == src || R.stat == DEAD || !R.is_controlled())
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		return
 
@@ -266,7 +266,8 @@
 	update_icon()
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
-	if(I.use_tool(src, user, 40, volume = 50))
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(I.use_tool(src, user, erase_time, volume = 50))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
 		disarm()
@@ -306,7 +307,7 @@
 
 		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/hostile/replicator/other = r
-			if(other.ckey)
+			if(other.is_controlled())
 				continue
 			if(get_dist(src, other) > 7)
 				continue

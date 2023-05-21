@@ -22,7 +22,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
 
 #define ABSTRACT               (1<<6)   // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
-#define NODECONSTRUCT          (1<<6)   // For machines and structures that should not break into parts, eg, holodeck stuff.
+#define NODECONSTRUCT          (1<<6)   // For machines and structures that should just dissapear when deconstructed without breaking into parts, eg, holodeck stuff.
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
@@ -147,10 +147,12 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ACID_PROOF (1<<5)
 /// doesn't take damage
 #define INDESTRUCTIBLE (1<<6)
+/// can't be deconstructed with instruments
+#define DECONSTRUCT_IMMUNE (1<<7)
 /// can be hit with melee (mb change to CANT_BE_HIT)
-#define CAN_BE_HIT (1<<7)
+#define CAN_BE_HIT (1<<8)
 
-#define FULL_INDESTRUCTIBLE INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+#define FULL_INDESTRUCTIBLE INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | DECONSTRUCT_IMMUNE
 
 //turf-only flags
 #define NOSTEPSOUND   1

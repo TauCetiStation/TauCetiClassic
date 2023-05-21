@@ -86,12 +86,6 @@
 	style_text = "piety"
 	symbol_icon_state = "nimbus"
 
-// This subtype is used for integrating this system with current chaplain anything.
-/datum/religion/chaplain/New()
-	..()
-	//Radial menu
-	gen_bible_variants()
-
 /datum/religion/chaplain/setup_religions()
 	global.chaplain_religion = src
 	all_religions += src
@@ -104,18 +98,10 @@
 	var/list/variants = list()
 	for(var/info_type in subtypesof(/datum/bible_info/chaplain))
 		var/datum/bible_info/BB = new info_type(src)
-		if(!BB.name)
+		if(!BB.name || !BB.icon_state)
 			continue
-		variants[BB.name] = BB
+		variants["[BB.name] ([BB.icon_state])"] = BB
 	return variants
-
-/datum/religion/chaplain/proc/gen_bible_variants()
-	bible_skins = list()
-	for(var/info_type in subtypesof(/datum/bible_info/chaplain))
-		var/datum/bible_info/BI = info_type
-		if(!initial(BI.name))
-			continue
-		bible_skins[initial(BI.name)] = image(icon = initial(BI.icon), icon_state = initial(BI.icon_state))
 
 /datum/religion/chaplain/proc/create_by_chaplain(mob/living/carbon/human/chaplain)
 	reset_religion()
@@ -148,6 +134,12 @@
 	chaplain.equip_to_slot_or_del(B, SLOT_L_HAND)
 
 	var/list/bible_variants = gen_pos_bible_variants()
+
+	var/list/bible_skins = list()
+
+	for(var/bible_info_name in bible_variants)
+		var/datum/bible_info/BI = bible_variants[bible_info_name]
+		bible_skins[bible_info_name] = BI.radial_image
 
 	var/accepted = FALSE
 	var/choose_timeout = world.time + 1 MINUTE

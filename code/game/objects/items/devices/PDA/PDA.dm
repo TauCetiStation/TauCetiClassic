@@ -1168,8 +1168,8 @@
 				mode = 0
 				return
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
-			if(T && istext(T) && owner)
-				add_order_or_offer(owner, T)
+			if(T && istext(T) && owner && owner_account)
+				add_order_and_offer(T)
 			else
 				to_chat(U, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
@@ -1742,6 +1742,7 @@
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
 		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
+			shopping_cart -= "[package.lot_number]"
 			return
 
 	if(istype(target, /obj/item/smallDelivery))
@@ -1920,15 +1921,6 @@
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
 
-/obj/item/device/pda/proc/add_order_or_offer(name, desc)
-	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())
-	global.orders_and_offers_number++
-	mode = 8
-	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)
-
-/obj/item/device/pda/proc/delete_order_or_offer(num)
-	orders_and_offers -= "[num]"
-
 /obj/item/device/pda/proc/check_pda_server()
 	if(!global.message_servers)
 		return
@@ -1936,6 +1928,7 @@
 		if(MS.active)
 			var/turf/pos = get_turf(src)
 			return is_station_level(pos.z)
+
 
 /obj/item/device/pda/proc/get_owner_insurance_record()
 	return find_record("insurance_account_number", owner_account, data_core.general)
@@ -1945,6 +1938,12 @@
 	if(!cartridge || !istype(cartridge, /obj/item/weapon/cartridge/cmo) || !id || !(access_cmo in id.access))
 		return FALSE
 	return TRUE
+
+/obj/item/device/pda/proc/add_order_and_offer(Text)
+	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = Text, "time" = worldtime2text())
+	global.orders_and_offers_number++
+	mode = 8
+
 
 #undef TRANSCATION_COOLDOWN
 
