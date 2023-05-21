@@ -1,7 +1,7 @@
 // shouldn't these be deprecated? ~Luduk
 /mob/living/simple_animal/slime
 	name = "pet slime"
-	desc = "A lovable, domesticated slime."
+	desc = "Милый, одомашненный слайм."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	icon_living = "grey baby slime"
@@ -12,7 +12,7 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	emote_see = list("jiggles", "bounces in place")
+	emote_see = list("булькает", "качается")
 	var/colour = "grey"
 	ventcrawler = 2
 
@@ -23,7 +23,7 @@
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
-	desc = "A lovable, domesticated slime."
+	desc = "Милый, одомашненный слайм."
 	icon = 'icons/mob/slimes.dmi'
 	health = 200
 	maxHealth = 200
@@ -33,7 +33,7 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	emote_see = list("jiggles", "bounces in place")
+	emote_see = list("булькает", "качается")
 	w_class = SIZE_HUMAN
 	var/colour = "grey"
 

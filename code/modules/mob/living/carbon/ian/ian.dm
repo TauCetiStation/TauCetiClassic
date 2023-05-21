@@ -10,16 +10,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	icon = 'icons/mob/corgi.dmi'
 	icon_state = "corgi"
 	gender = MALE
-	desc = "It's a corgi."
+	desc = "Это корги."
 
 	var/response_help  = "pets"
 	var/response_disarm = "bops"
 	var/response_harm   = "kicks"
 
-	var/list/speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
-	speak_emote = list("barks", "woofs")
-	var/list/emote_hear = list("barks", "woofs", "yaps","pants")
-	var/list/emote_see = list("shakes its head", "shivers")
+	var/list/speak = list("Гав!", "Вуф!", "АУУУУ!")
+	speak_emote = list("лает", "воет")
+	var/list/emote_hear = list("лает", "воет")
+	var/list/emote_see = list("виляет хвостом", "облизываетася")
 	var/speak_chance = 1
 
 	var/turns_per_move = 10

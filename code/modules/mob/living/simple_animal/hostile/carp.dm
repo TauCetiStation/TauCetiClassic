@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
-	desc = "A ferocious, fang-bearing creature that resembles a fish."
+	desc = "Свирепое, обладающее клыками существо, напоминающее рыбу."
 	icon = 'icons/mob/carp.dmi'
 	icon_state = "purple"
 	icon_living = "purple"
@@ -90,8 +90,8 @@
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/megacarp.dmi'
-	name = "Mega Space Carp"
-	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
+	name = "Мега карп!"
+	desc = "Свирепое существо с клыками, напоминающее акулу. Кажется, оно ещё опасней..."
 	icon_state = "megacarp"
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
@@ -107,7 +107,7 @@
 
 /mob/living/simple_animal/hostile/carp/wizard
 	faction = "wizard"
-	desc = "A ferocious, fang-bearing creature that resembles a fish. This one looks kinda weird."
+	desc = "Свирепое, обладающее клыками существо, напоминающее рыбу. Выглядит довольно странно."
 	melee_damage = 10
 	maxHealth = 60
 	health = 60
@@ -125,7 +125,7 @@
 
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
-	desc = "That's a cute little doge... WAIT, WHAT???!!"
+	desc = "Какая милая маленькая собачка... СТОП ЧТО???!!"
 	icon = 'icons/mob/doge.dmi'
 	icon_state = "shepherd"
 	maxHealth = 9001

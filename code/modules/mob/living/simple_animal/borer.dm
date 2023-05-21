@@ -35,9 +35,9 @@
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"
-	desc = "A small, quivering sluglike creature."
-	speak_emote = list("chirrups")
-	emote_hear = list("chirrups")
+	desc = "Маленькое существо, похожее на слизняка."
+	speak_emote = list("щипит")
+	emote_hear = list("щипит")
 	response_help  = "pokes the"
 	response_disarm = "prods the"
 	response_harm   = "stomps on the"

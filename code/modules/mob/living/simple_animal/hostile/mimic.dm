@@ -219,7 +219,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/prophunt
 	name = "mimic"
 	real_name = "mimic"
-	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
+	desc = "Абсолютно не клювовидный и безвредный. Держать подальше от трупов."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "headcrab"
 	icon_living = "headcrab"
