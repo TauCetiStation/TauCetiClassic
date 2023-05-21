@@ -358,7 +358,7 @@
 
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot_flags & slot)
+	if(slot == SLOT_HEAD)
 		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
@@ -367,9 +367,8 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 
-/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source, mob/user)
+/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source)
 	SIGNAL_HANDLER
-
 	return COMPONENT_CANT_TRACK
 
 //ADVANCED BATON

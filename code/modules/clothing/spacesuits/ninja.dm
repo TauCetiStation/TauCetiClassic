@@ -7,13 +7,12 @@
 	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 50, bio = 100, rad = 50)
 	species_restricted = null
 	body_parts_covered = HEAD|FACE
-	blockTracking = 1
 	force = 0
 	hitsound = list()
 
 /obj/item/clothing/head/helmet/space/space_ninja/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot_flags & slot)
+	if(slot == SLOT_HEAD)
 		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
@@ -22,7 +21,7 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 
-/obj/item/clothing/head/helmet/space/space_ninja/proc/can_track(datum/source, mob/user)
+/obj/item/clothing/head/helmet/space/space_ninja/proc/can_track(datum/source)
 	SIGNAL_HANDLER
 	return COMPONENT_CANT_TRACK
 

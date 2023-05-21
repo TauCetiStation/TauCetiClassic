@@ -22,6 +22,7 @@
 	for(var/mob/living/silicon/ai/AI as anything in ai_list)
 		if(AI.client)
 			AI.client.images -= attached_mobs[target]
+	attached_mobs -= target
 	UnhideFromAIHuds(target)
 
 /datum/element/digitalcamo/proc/HideFromAIHuds(mob/living/target)
@@ -42,6 +43,6 @@
 	SIGNAL_HANDLER
 	to_chat(M, "<span class='warning'>[source] skin seems to be shifting like something is moving below it.</span>")
 
-/datum/element/digitalcamo/proc/can_track(datum/source, mob/user)
+/datum/element/digitalcamo/proc/can_track(datum/source)
 	SIGNAL_HANDLER
 	return COMPONENT_CANT_TRACK
