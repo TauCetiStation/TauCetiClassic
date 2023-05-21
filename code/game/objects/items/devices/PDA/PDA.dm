@@ -1122,8 +1122,8 @@
 				mode = 0
 				return
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
-			if(T && istext(T) && owner)
-				add_order_or_offer(owner, T)
+			if(T && istext(T) && owner && owner_account)
+				add_order_and_offer(T)
 			else
 				to_chat(U, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
@@ -1875,15 +1875,6 @@
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
 
-/obj/item/device/pda/proc/add_order_or_offer(name, desc)
-	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())
-	global.orders_and_offers_number++
-	mode = 8
-	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)
-
-/obj/item/device/pda/proc/delete_order_or_offer(num)
-	orders_and_offers -= "[num]"
-
 /obj/item/device/pda/proc/check_pda_server()
 	if(!global.message_servers)
 		return
@@ -1891,5 +1882,10 @@
 		if(MS.active)
 			var/turf/pos = get_turf(src)
 			return is_station_level(pos.z)
+
+/obj/item/device/pda/proc/add_order_and_offer(Text)
+	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = Text, "time" = worldtime2text())
+	global.orders_and_offers_number++
+	mode = 8
 
 #undef TRANSCATION_COOLDOWN
