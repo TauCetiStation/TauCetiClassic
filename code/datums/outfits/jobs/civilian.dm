@@ -28,7 +28,7 @@
 	name = OUTFIT_JOB_NAME("Botanist")
 
 	uniform = /obj/item/clothing/under/rank/hydroponics
-	uniform_f = /obj/item/clothing/under/rank/hydroponics_fem
+	uniform_f = /obj/item/clothing/under/rank/hydroponics_lite
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/botanist

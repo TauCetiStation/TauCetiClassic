@@ -501,11 +501,11 @@
 	icon_state = "roboticist_f"
 	item_state = "roboticist_f"
 
-/obj/item/clothing/under/rank/hydroponics_fem
+/obj/item/clothing/under/rank/hydroponics_lite
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
-	name = "botanist's female jumpsuit"
-	icon_state = "hydroponics_f"
-	item_state = "hydroponics_f"
+	name = "botanist's lite jumpsuit"
+	icon_state = "hydroponics_lite"
+	item_state = "hydroponics_lite"
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/bartender_fem

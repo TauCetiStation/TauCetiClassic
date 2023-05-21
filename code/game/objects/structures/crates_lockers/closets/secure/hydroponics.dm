@@ -17,7 +17,7 @@
 
 	new /obj/item/weapon/storage/bag/plants(src)
 	new /obj/item/clothing/under/rank/hydroponics(src)
-	new /obj/item/clothing/under/rank/hydroponics_fem(src)
+	new /obj/item/clothing/under/rank/hydroponics_lite(src)
 	new /obj/item/device/plant_analyzer(src)
 	//new /obj/item/clothing/head/greenbandana(src)
 	new /obj/item/clothing/mask/bandana(src)
