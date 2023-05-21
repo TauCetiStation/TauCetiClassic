@@ -14,6 +14,7 @@
 	resistance_flags = CAN_BE_HIT
 
 	anchored = TRUE
+	var/screwed = TRUE
 
 /obj/structure/fence/atom_init()
 	switch(dir)
@@ -31,6 +32,16 @@
 		to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
 		if(W.use_tool(src, user, 50, volume = 50))
 			deconstruct(TRUE)
+		return TRUE
+	else if(isscrewing(W))
+		if(user.is_busy(src))
+			return FALSE
+		if(W.use_tool(src, user, 50, volume = 50))
+			if(screwed)
+				to_chat(user, "<span class='notice'>Вы откручиваете забор.</span>")
+			else
+				to_chat(user, "<span class='notice'>Вы прикручиваете забор.</span>")
+			screwed = !screwed
 		return TRUE
 
 	return ..()
@@ -54,8 +65,12 @@
 			var/mob/user = mover
 			if(user.a_intent == INTENT_HARM)
 				if(!user.is_busy() && do_mob(user, src, 1 SECONDS))
-					user.forceMove(T)
-					return
+					if(screwed)
+						user.forceMove(T)
+					else
+						deconstruct(FALSE)
+						user.throw_at(get_step(user, reverse_dir[dir]), 2, 2)
+					return TRUE
 		return FALSE
 	else
 		return TRUE
@@ -82,13 +97,32 @@
 			var/mob/user = O
 			if(user.a_intent == INTENT_HARM)
 				if(!user.is_busy() && do_mob(user, src, 1 SECONDS))
-					user.forceMove(target)
-					return
+					if(screwed)
+						user.forceMove(target)
+					else
+						deconstruct(FALSE)
+						user.throw_at(get_step(user, dir), 2, 2)
+					return TRUE
 		return FALSE
 	return TRUE
 
+/obj/structure/fence/verb/rotate()
+	set name = "Повернуть забор"
+	set category = "Object"
+	set src in oview(1)
+
+	if(isobserver(usr)) //to stop ghosts from rotating
+		return
+
+	if(screwed)
+		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
+		return 0
+
+	set_dir(turn(dir, 90))
+	return
+
 /obj/structure/fence/wood
-	name = "Wooden Fence"
+	name = "wooden fence"
 	desc = "Деревянный забор."
 
 	icon = 'icons/obj/fences.dmi'
@@ -147,7 +181,7 @@
 	..()
 
 /obj/structure/fence/glass
-	name = "Glass Fence"
+	name = "glass fence"
 	desc = "Стеклянный забор."
 
 	icon = 'icons/obj/fences.dmi'
