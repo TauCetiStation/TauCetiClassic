@@ -583,7 +583,7 @@
 	add_overlay(Item)
 	name = Item.name
 	var/list/pricetag = Item.price_tag
-	name += " ([pricetag["price"]]$)"
+	name = "[name] ([pricetag["price"]]$)"
 
 	var/old_invisibility = invisibility
 	invisibility = INVISIBILITY_ABSTRACT
