@@ -111,6 +111,7 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	item_state_world = "large_world"
+	var/item_state_base = ""
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
@@ -124,21 +125,31 @@
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
 
 /obj/item/weapon/shard/atom_init()
-	if(icon_state == "large") // little hack so we don't overwrite our childs phoron and shrapnel icons
-		icon_state = pick("large", "medium", "small")
-		item_state_world = "[icon_state]_world"
-		switch(icon_state)
-			if("small")
-				pixel_x = rand(-12, 12)
-				pixel_y = rand(-12, 12)
-			if("medium")
-				pixel_x = rand(-8, 8)
-				pixel_y = rand(-8, 8)
-			if("large")
-				pixel_x = rand(-5, 5)
-				pixel_y = rand(-5, 5)
+	var/icon_variant = pick("large", "medium", "small")
+	item_state_base = "[item_state_base][icon_variant]"
+	item_state_world = "[item_state_base]_world"
+
+	switch(icon_variant)
+		if("small")
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
+		if("medium")
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
+		if("large")
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
 	return ..()
+
+/obj/item/weapon/shard/update_icon()
+	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
+		icon_state = item_state_base
+	else if(icon_state != item_state_world)
+		icon_state = item_state_world
+
+/obj/item/weapon/shard/update_world_icon()
+	update_icon()
 
 /obj/item/weapon/shard/Bump()
 	if(prob(20))
@@ -224,24 +235,9 @@
 	throwforce = 15.0
 	icon_state = "phoronlarge"
 	item_state_world = "phoronlarge_world"
+	item_state_base = "phoron"
 	sharp = 1
 	edge = 1
-
-/obj/item/weapon/shard/phoron/atom_init()
-	icon_state = pick("phoronlarge", "phoronmedium", "phoronsmall")
-	item_state_world = "[icon_state]_world"
-	switch(icon_state)
-		if("phoronsmall")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("phoronmedium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("phoronlarge")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
-
-	return ..()
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I))
@@ -259,24 +255,9 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	item_state_world = "shrapnellarge_world"
+	item_state_base = "shrapnel"
 	desc = "A bunch of tiny bits of shattered metal."
 	on_step_sound = 'sound/effects/metalstep.ogg'
-
-/obj/item/weapon/shard/shrapnel/atom_init()
-	icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	item_state_world = "[icon_state]_world"
-	switch(icon_state)
-		if("shrapnelsmall")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("shrapnelmedium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("shrapnellarge")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
-
-	return ..()
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -650,38 +631,39 @@
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
 	origin_tech = "powerstorage=1"
-	m_amt = 50
-	g_amt = 50
+	m_amt = 150
+	g_amt = 150
 
 /obj/item/weapon/stock_parts/scanning_module
 	name = "scanning module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
 	origin_tech = "magnets=1"
-	m_amt = 50
-	g_amt = 20
+	m_amt = 100
+	g_amt = 120
 
 /obj/item/weapon/stock_parts/manipulator
 	name = "micro-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	origin_tech = "materials=1;programming=1"
-	m_amt = 30
+	m_amt = 100
+	g_amt = 80
 
 /obj/item/weapon/stock_parts/micro_laser
 	name = "micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
 	origin_tech = "magnets=1"
-	m_amt = 10
-	g_amt = 20
+	m_amt = 100
+	g_amt = 120
 
 /obj/item/weapon/stock_parts/matter_bin
 	name = "matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
-	m_amt = 80
+	m_amt = 300
 
 //Rank 2
 
@@ -691,8 +673,8 @@
 	icon_state = "adv_capacitor"
 	origin_tech = "powerstorage=3"
 	rating = 2
-	m_amt = 50
-	g_amt = 50
+	m_amt = 250
+	g_amt = 250
 
 /obj/item/weapon/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
@@ -700,8 +682,8 @@
 	icon_state = "adv_scan_module"
 	origin_tech = "magnets=3"
 	rating = 2
-	m_amt = 50
-	g_amt = 20
+	m_amt = 250
+	g_amt = 220
 
 /obj/item/weapon/stock_parts/manipulator/nano
 	name = "nano-manipulator"
@@ -709,7 +691,8 @@
 	icon_state = "nano_mani"
 	origin_tech = "materials=3,programming=2"
 	rating = 2
-	m_amt = 30
+	m_amt = 230
+	g_amt = 220
 
 /obj/item/weapon/stock_parts/micro_laser/high
 	name = "high-power micro-laser"
@@ -717,8 +700,8 @@
 	icon_state = "high_micro_laser"
 	origin_tech = "magnets=3"
 	rating = 2
-	m_amt = 10
-	g_amt = 20
+	m_amt = 210
+	g_amt = 220
 
 /obj/item/weapon/stock_parts/matter_bin/adv
 	name = "advanced matter bin"
@@ -726,7 +709,8 @@
 	icon_state = "advanced_matter_bin"
 	origin_tech = "materials=3"
 	rating = 2
-	m_amt = 80
+	m_amt = 280
+	g_amt = 220
 
 //Rating 3
 
@@ -736,8 +720,8 @@
 	icon_state = "super_capacitor"
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
-	m_amt = 50
-	g_amt = 50
+	m_amt = 350
+	g_amt = 350
 
 /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"
@@ -745,8 +729,8 @@
 	icon_state = "super_scan_module"
 	origin_tech = "magnets=5"
 	rating = 3
-	m_amt = 50
-	g_amt = 20
+	m_amt = 350
+	g_amt = 320
 
 /obj/item/weapon/stock_parts/manipulator/nano/pico
 	name = "pico-manipulator"
@@ -754,7 +738,8 @@
 	icon_state = "pico_mani"
 	origin_tech = "materials=5,programming=2"
 	rating = 3
-	m_amt = 30
+	m_amt = 330
+	g_amt = 320
 
 /obj/item/weapon/stock_parts/micro_laser/high/ultra
 	name = "ultra-high-power micro-laser"
@@ -762,8 +747,8 @@
 	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
-	m_amt = 10
-	g_amt = 20
+	m_amt = 310
+	g_amt = 320
 
 /obj/item/weapon/stock_parts/matter_bin/adv/super
 	name = "super matter bin"
@@ -771,7 +756,8 @@
 	icon_state = "super_matter_bin"
 	origin_tech = "materials=5"
 	rating = 3
-	m_amt = 80
+	m_amt = 380
+	g_amt = 320
 
 //Rating 4
 
@@ -781,8 +767,8 @@
 	icon_state = "quadratic_capacitor"
 	origin_tech = "powerstorage=6;materials=5"
 	rating = 4
-	m_amt = 50
-	g_amt = 50
+	m_amt = 350
+	g_amt = 350
 
 /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic
 	name = "triphasic scanning module"
@@ -790,8 +776,8 @@
 	icon_state = "triphasic_scan_module"
 	origin_tech = "magnets=6"
 	rating = 4
-	m_amt = 50
-	g_amt = 20
+	m_amt = 350
+	g_amt = 320
 
 /obj/item/weapon/stock_parts/manipulator/nano/pico/femto
 	name = "femto-manipulator"
@@ -799,7 +785,7 @@
 	icon_state = "femto_mani"
 	origin_tech = "materials=6;programming=3"
 	rating = 4
-	m_amt = 30
+	m_amt = 330
 
 /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 	name = "quad-ultra micro-laser"
@@ -807,8 +793,8 @@
 	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=6"
 	rating = 4
-	m_amt = 10
-	g_amt = 20
+	m_amt = 80
+	g_amt = 220
 
 /obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace
 	name = "bluespace matter bin"
@@ -816,7 +802,7 @@
 	icon_state = "bluespace_matter_bin"
 	origin_tech = "materials=6"
 	rating = 4
-	m_amt = 80
+	m_amt = 380
 
 // Subspace stock parts
 

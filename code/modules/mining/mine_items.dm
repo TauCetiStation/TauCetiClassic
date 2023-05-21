@@ -504,7 +504,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
-	var/recharge_time = 2.1 SECONDS
+	var/recharge_time = 2.0 SECONDS
 	var/damage = 10
 	var/range = 3
 	var/mineral_multiply_coefficient = 1.0
@@ -842,7 +842,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/speed
 	name = "accelerator upgrade(speed)"
 	icon_state = "accelerator_upg_speed"
-	var/cooldown_reduction = 0.35 SECOND
+	var/cooldown_reduction = 0.4 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()
 	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунды."

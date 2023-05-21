@@ -3,7 +3,7 @@
 #define GLOVES_MODE_STUN "stun"
 
 /obj/item/clothing/gloves/power
-	name = "Black gloves"
+	name = "black gloves"
 	desc = "Heaped gloves with a bunch of all sorts of electronics."
 	icon_state = "marinad"
 	item_state = "marinad"
@@ -15,6 +15,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	action_button_name = "Toggle gloves"
 	origin_tech = "combat=5;powerstorage=5;magnets=4;syndicate=2"
+	species_restricted = null
 	var/cell_use = 0
 	var/selected_mode = GLOVES_MODE_OFF
 
@@ -78,7 +79,7 @@
 		if(cell)
 			cell.updateicon()
 			to_chat(user, "<span class='notice'>You unscrew the [cell] away from the [src].</span>")
-			user.put_in_any_hand_if_possible(cell)
+			user.put_in_hands(cell)
 			turn_off()
 			cell = null
 			return

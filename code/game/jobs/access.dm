@@ -96,7 +96,7 @@
 /obj/var/list/req_one_access = list()
 
 //returns 1 if this mob has sufficient access to use this object
-/obj/proc/allowed(mob/M)
+/obj/proc/allowed(mob/M) // todo: rename to try_access or something
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
@@ -112,7 +112,7 @@
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
+		if(check_access(H.wear_id) || check_access(H.get_active_hand()) || check_access(H.get_inactive_hand()))
 			return TRUE
 	else if(isIAN(M))
 		var/mob/living/carbon/ian/IAN = M

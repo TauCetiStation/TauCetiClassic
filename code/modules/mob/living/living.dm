@@ -1506,3 +1506,12 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+// return TRUE if we failed our interaction
+/mob/living/interact_prob_brain_damage(atom/object)
+	if(getBrainLoss() >= 60)
+		visible_message("<span class='warning'>[src] stares cluelessly at [isturf(object.loc) ? object : ismob(object.loc) ? object : "something"] and drools.</span>")
+		return TRUE
+	else if(prob(getBrainLoss()))
+		to_chat(src, "<span class='warning'>You momentarily forget how to use [object].</span>")
+		return TRUE
