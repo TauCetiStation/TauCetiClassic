@@ -247,7 +247,7 @@ var/global/chicken_count = 0
 	if(!.)
 		return
 	if(stat == CONSCIOUS && prob(3) && eggsleft > 0)
-		visible_message("[src] [pick("отклазывает яйца.","поднимает шумиху.","начинает хрипло кудахтать.")]")
+		visible_message("[src] [pick("откладывает яйца.","поднимает шумиху.","начинает хрипло кудахтать.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
