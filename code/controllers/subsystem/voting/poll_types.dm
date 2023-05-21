@@ -243,6 +243,9 @@
 		if (VM.config_max_users > 0 && length(player_list) > VM.config_max_users)
 			continue
 
+		if (VM.map_name == SSmapping.config.map_name)
+			continue
+
 		var/datum/vote_choice/nextmap/vc = new
 		vc.text = VM.GetFullMapName()
 		if(VM.voteweight != 1)
