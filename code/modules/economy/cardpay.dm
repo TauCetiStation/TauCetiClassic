@@ -92,10 +92,16 @@
 		if(D.security_level > 0)
 			var/time_for_pin = world.time
 			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
+			if(!usr || !usr.Adjacent(src))
+				return
 			if(world.time - time_for_pin > 300)
 				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
 				return
-			if(Acc != get_account(linked_account) || pay_holder != pay_amount || !usr || !usr.Adjacent(src))
+			if(Acc != get_account(linked_account))
+				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Подключённый аккаунт изменён!</span>")
+				return
+			if(pay_holder != pay_amount)
+				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Сумма оплаты изменена!</span>")
 				return
 			if(isnull(attempt_pin))
 				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
@@ -113,16 +119,19 @@
 		return
 	icon_state = "card-pay-idle"
 	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
-	if(amount <= Acc.money)
-		flick("card-pay-complete", src)
-		charge_to_account(Acc.account_number, "Терминал оплаты", "Оплата", src.name, -amount)
-		charge_to_account(linked_account, "Терминал оплаты", "Прибыль", src.name, amount)
-		if(reset)
-			pay_amount = 0
-			update_holoprice(clear = TRUE)
-	else
+
+	if(amount > Acc.money)
 		visible_message("[bicon(src)] [name] <span class='warning'>Недостаточно средств!</span>")
 		flick("card-pay-error", src)
+		return
+
+	flick("card-pay-complete", src)
+	charge_to_account(Acc.account_number, "Терминал оплаты", "Оплата", src.name, -amount)
+	charge_to_account(linked_account, "Терминал оплаты", "Прибыль", src.name, amount)
+
+	if(reset)
+		pay_amount = 0
+		update_holoprice(clear = TRUE)
 
 /obj/item/device/cardpay/attack_hand(mob/user)
 	. = ..()
