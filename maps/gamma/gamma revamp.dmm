@@ -5688,7 +5688,10 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
-/turf/simulated/floor/wood,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warning"
+	},
 /area/space)
 "aLu" = (
 /obj/random/scrap/safe_even,
@@ -14369,6 +14372,12 @@
 	icon_state = "dark"
 	},
 /area/space)
+"cWo" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "warning"
+	},
+/area/station/gateway)
 "cWA" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/open{
 	dir = 4
@@ -24019,6 +24028,12 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"fFw" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/station/gateway)
 "fFz" = (
 /obj/machinery/door/airlock/glass{
 	name = "Hydroponics Pasture";
@@ -26694,6 +26709,15 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/brig)
+"glT" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
+	icon_state = "gr_window_polarized";
+	id = "Courtroom"
+	},
+/turf/simulated/floor/plating,
+/area/station/gateway)
 "glZ" = (
 /obj/structure/closet/secure_closet/detective,
 /obj/item/weapon/storage/secure/safe{
@@ -37474,11 +37498,11 @@
 	},
 /area/station/civilian/hydroponics)
 "jpl" = (
-/obj/machinery/hologram/holopad,
-/obj/structure/window/thin/reinforced{
+/obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/light/smart,
+/turf/simulated/floor/carpet/red,
 /area/station/gateway)
 "jpE" = (
 /obj/structure/cable{
@@ -52623,6 +52647,13 @@
 	icon_state = "neutralcorner"
 	},
 /area/space)
+"nAl" = (
+/obj/machinery/windowtint{
+	id = "Courtroom";
+	pixel_y = 23
+	},
+/turf/simulated/floor/carpet/black,
+/area/space)
 "nAB" = (
 /obj/machinery/telecomms/processor/preset_two,
 /turf/simulated/floor/bluegrid{
@@ -60592,6 +60623,15 @@
 	icon_state = "wood-broken"
 	},
 /area/station/maintenance/medbay)
+"pGl" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "warning"
+	},
+/area/station/gateway)
 "pGA" = (
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating/airless,
@@ -74212,21 +74252,11 @@
 	},
 /area/station/hallway/secondary/entry)
 "toF" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	opacity = 0
+/obj/machinery/light/smart{
+	dir = 8
 	},
-/obj/structure/cable,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/space)
+/turf/simulated/floor/wood,
+/area/station/gateway)
 "toJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -79580,17 +79610,10 @@
 	},
 /area/station/medical/chemistry)
 "uIC" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	opacity = 0
-	},
-/obj/structure/cable,
-/obj/structure/window/fulltile/reinforced{
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
@@ -90577,7 +90600,10 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
-/turf/simulated/floor/wood,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
 /area/station/gateway)
 "xHJ" = (
 /obj/machinery/door/airlock{
@@ -115544,11 +115570,11 @@ hNT
 hNT
 hNT
 sDc
-als
+rRh
+fFw
+cWo
 qoI
-qoI
-qoI
-qoI
+toF
 qoI
 qoI
 pyG
@@ -115803,7 +115829,7 @@ hNT
 sDc
 aLt
 xHC
-xHC
+pGl
 nyL
 dQa
 jGc
@@ -116065,7 +116091,7 @@ nyL
 dQa
 jGc
 cuU
-jGc
+jpl
 vaO
 cKf
 bwK
@@ -116323,7 +116349,7 @@ cuU
 cuU
 cuU
 jGc
-vaO
+glT
 cKf
 bwK
 xac
@@ -116575,12 +116601,12 @@ sDc
 nNE
 sYn
 lGq
-jpl
+nyL
 vVc
 cuU
 cuU
 jGc
-vaO
+glT
 cKf
 bwK
 xac
@@ -116829,7 +116855,7 @@ pNb
 mqj
 xyN
 sDc
-xQw
+nAl
 oOr
 xOk
 nyL
@@ -116837,7 +116863,7 @@ cuU
 cuU
 cuU
 jGc
-vaO
+glT
 izf
 bwK
 xac
@@ -117093,7 +117119,7 @@ gHJ
 dQa
 jGc
 cuU
-jGc
+jpl
 vaO
 jnt
 hfu
@@ -117858,13 +117884,13 @@ pKG
 sDc
 sDc
 sDc
+hsC
 sDc
 sDc
-sDc
-sDc
+tda
 dMU
 dMU
-sDc
+tda
 sDc
 pCt
 cbC
@@ -118889,9 +118915,9 @@ boP
 rIs
 pKc
 sDc
-hsC
-toF
-toF
+tda
+tda
+tda
 sDc
 sDc
 tBk
@@ -120435,7 +120461,7 @@ xxj
 tbE
 fyq
 rFC
-hsC
+tda
 uQN
 bOT
 uWp
