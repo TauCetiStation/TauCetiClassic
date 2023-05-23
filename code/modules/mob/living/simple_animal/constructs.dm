@@ -159,7 +159,7 @@
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "Круглая структура, предназначенная для создания и поддержания армий Культа Нар-Си."
+	desc = "Выпуклая структура, предназначенная для создания и поддержания армий Культа Нар-Си."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
