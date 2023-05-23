@@ -612,6 +612,10 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/machinery/air_sensor{
+	frequency = 1441;
+	id_tag = "o2_sensor"
+	},
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "bp" = (
@@ -6597,6 +6601,10 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/machinery/air_sensor{
+	frequency = 1441;
+	id_tag = "n2_sensor"
+	},
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "OC" = (
@@ -6901,6 +6909,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
+/obj/machinery/air_sensor{
+	frequency = 1443;
+	id_tag = "air_sensor";
+	output = 7
+	},
 /turf/simulated/floor/engine/airmix{
 	nitrogen = 41073.6;
 	oxygen = 10918.3
@@ -6917,6 +6930,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/bot/medbot{
 	req_access = list(71)
+	},
+/obj/effect/landmark{
+	name = "Observer-Start"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -7179,6 +7195,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/secondary/exit)
+"TY" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/environment/space,
+/area/space)
 "Ug" = (
 /obj/machinery/drone_fabricator,
 /obj/structure/closet/fireaxecabinet{
@@ -29468,10 +29490,10 @@ XB
 eS
 aT
 Wx
-MC
 hO
 he
-he
+iv
+hO
 he
 iv
 OI
@@ -29725,10 +29747,10 @@ XB
 aU
 aU
 Wx
-MC
-aC
-MC
-MC
+go
+iv
+go
+TY
 aI
 aN
 bD

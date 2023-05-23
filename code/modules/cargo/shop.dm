@@ -99,6 +99,9 @@ var/global/online_shop_profits = 0
 		var/obj/item/smallDelivery/package = A
 		package.cut_overlay(package.lot_lock_image)
 		package.lot_lock_image = null
+		if(istype(package.loc, /obj/lot_holder))
+			var/obj/lot_holder/Holder = package.loc
+			qdel(Holder)
 		return
 
 	if(istype(A, /obj/structure/bigDelivery))
@@ -141,6 +144,7 @@ var/global/online_shop_profits = 0
 		P.info += "Посылка номер №[Lot.number]<br>"
 		P.info += "Наименование: [Lot.name]<br>"
 		P.info += "Цена: [Lot.price]$<br>"
+		P.info += "Время заказа: [worldtime2text()]<br>"
 		P.info += "Заказал: [orderer_name ? orderer_name : "Unknown"]<br>"
 		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
 		P.info += "Комментарий: [destination]<br>"
