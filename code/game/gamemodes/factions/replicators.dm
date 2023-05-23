@@ -74,7 +74,6 @@
 	var/min_fake_disintegration_cooldown = 1 SECOND
 	var/max_fake_disintegration_cooldown = 3 SECONDS
 
-
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -157,9 +156,16 @@
 		bandwidth++
 
 	if(next_fake_disintegration < world.time && length(replicator_mines) > 0)
-		var/obj/item/mine/replicator/fake_sound = pick(replicator_mines)
+		var/list/pos_mines = global.replicator_mines.Copy()
 		next_fake_disintegration = world.time + rand(min_fake_disintegration_cooldown, max_fake_disintegration_cooldown)
-		INVOKE_ASYNC(fake_sound, /obj/item/mine/replicator.proc/pretend_disintegration)
+		var/max_iterations = 100
+		while(length(pos_mines) > 0 && max_iterations > 0)
+			var/obj/item/mine/replicator/mine = pick(pos_mines)
+			pos_mines -= mine
+			max_iterations -= 1
+			if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
+				continue
+			INVOKE_ASYNC(mine, /obj/item/mine/replicator.proc/pretend_disintegration)
 
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
