@@ -193,9 +193,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
 	},
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "bh" = (
@@ -328,14 +325,6 @@
 	icon_state = "darkred"
 	},
 /area/space_structures/old_station/warehouse)
-"bO" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 10
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurple"
-	},
-/area/space_structures/old_station/right)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/directions/science{
@@ -439,7 +428,6 @@
 /area/space_structures/old_station/central/solars_c)
 "cC" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -451,9 +439,6 @@
 	},
 /area/space_structures/old_station/right)
 "cD" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 4;
@@ -492,12 +477,6 @@
 	icon_state = "darkbluecorners"
 	},
 /area/space_structures/old_station/central/bridge)
-"cS" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 10
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central)
 "cT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -687,7 +666,6 @@
 /area/space_structures/old_station/central)
 "ec" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -720,28 +698,8 @@
 	icon_state = "panelscorched"
 	},
 /area/space_structures/carp_space)
-"ek" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Research and Development";
-	req_access = list(73)
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "whitepurplefull"
-	},
-/area/space_structures/old_station/right)
 "en" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/elite/commander,
-/obj/item/clothing/head/helmet/space/syndicate/elite/commander,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -750,6 +708,12 @@
 	dir = 1;
 	name = "Warehouse APC";
 	pixel_y = 28
+	},
+/obj/item/clothing/suit/space/syndicate/elite/commander{
+	armor = list("melee"=60,"bullet"=45,"laser"=40,"energy"=35,"bomb"=70,"bio"=100,"rad"=20)
+	},
+/obj/item/clothing/head/helmet/space/syndicate/elite/commander{
+	armor = list("melee"=60,"bullet"=45,"laser"=40,"energy"=35,"bomb"=70,"bio"=100,"rad"=20)
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -803,15 +767,6 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "green"
-	},
-/area/space_structures/old_station/central)
-"eB" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 6
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitehall"
 	},
 /area/space_structures/old_station/central)
 "eE" = (
@@ -1079,7 +1034,6 @@
 	},
 /area/space_structures/old_station/satellite)
 "gw" = (
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -1165,7 +1119,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor/airless{
 	icon_state = "damaged3"
 	},
@@ -1250,9 +1203,6 @@
 /area/space_structures/old_station/right/rnd)
 "hu" = (
 /obj/structure/alien/weeds/node,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1318,9 +1268,6 @@
 "hM" = (
 /obj/item/ammo_casing/c45,
 /obj/machinery/light,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -1490,9 +1437,6 @@
 /turf/environment/space,
 /area/space)
 "iB" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 5
-	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
@@ -1590,9 +1534,6 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "ja" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 10
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1622,9 +1563,6 @@
 	},
 /area/space_structures/old_station/right)
 "je" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1655,12 +1593,6 @@
 /obj/item/weapon/circuitboard/biogenerator,
 /turf/simulated/floor,
 /area/space_structures/old_station/central/hydro)
-"jo" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/left)
 "jv" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/xeno/core,
@@ -1673,9 +1605,6 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
 "jz" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brownold"
@@ -1737,7 +1666,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -1783,7 +1711,6 @@
 /area/space_structures/old_station/satellite)
 "jW" = (
 /obj/effect/decal/cleanable/shreds,
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
@@ -2001,9 +1928,6 @@
 /area/space_structures/old_station/left)
 "lR" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2092,9 +2016,6 @@
 	},
 /area/space_structures/carp_space)
 "mA" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access = list(73)
@@ -2154,7 +2075,7 @@
 	},
 /area/space_structures/old_station/central)
 "mS" = (
-/obj/item/fish_carp,
+/obj/item/fish_carp/full_size,
 /turf/environment/space,
 /area/space)
 "mU" = (
@@ -2240,9 +2161,6 @@
 	},
 /area/space_structures/old_station/right/rnd)
 "no" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -2464,7 +2382,6 @@
 	},
 /area/space_structures/old_station/warehouse)
 "oX" = (
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2500,9 +2417,6 @@
 /area/space_structures/old_station/satellite)
 "pd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -2714,7 +2628,7 @@
 /area/space_structures/old_station/left/med)
 "qz" = (
 /obj/structure/lattice,
-/obj/item/fish_carp,
+/obj/item/fish_carp/full_size,
 /obj/structure/grille{
 	destroyed = 1
 	},
@@ -2771,13 +2685,6 @@
 /obj/machinery/computer/rdconsole,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
-"qX" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 9
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/left)
 "rb" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -2864,9 +2771,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 9
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
@@ -3215,13 +3119,6 @@
 	icon_state = "brownold"
 	},
 /area/space_structures/old_station/left)
-"us" = (
-/obj/effect/decal/cleanable/blood/writing,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitepurple"
-	},
-/area/space_structures/old_station/right)
 "uu" = (
 /obj/structure/table/woodentable,
 /obj/machinery/light/small{
@@ -3439,7 +3336,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "vD" = (
@@ -3504,11 +3400,6 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/old_station/central/kitchen)
-"vQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing,
-/turf/simulated/floor,
-/area/space_structures/old_station/central)
 "vS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -3585,7 +3476,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor{
 	icon_state = "brownold"
 	},
@@ -3959,10 +3849,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"yg" = (
-/obj/effect/decal/cleanable/blood/writing,
-/turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
 "yj" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -4002,9 +3888,6 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
 "yA" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	d1 = 4;
@@ -4133,9 +4016,6 @@
 /area/space_structures/old_station/central/brig)
 "zs" = (
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 5
-	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/old_station/central)
 "zu" = (
@@ -4169,9 +4049,6 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/bridge)
 "zD" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/sign/directions/medical{
 	buildable_sign = 0;
 	dir = 8;
@@ -4194,7 +4071,6 @@
 /area/space_structures/old_station/central)
 "zO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4256,12 +4132,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right/rnd)
-"Af" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central/solars_c)
 "Ag" = (
 /obj/structure/disposalpipe/broken{
 	dir = 8
@@ -4275,15 +4145,6 @@
 "Ah" = (
 /turf/simulated/wall,
 /area/space_structures/old_station/left)
-"Aj" = (
-/obj/machinery/door/airlock{
-	name = "Dorm"
-	},
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central)
 "Am" = (
 /obj/structure/alien/weeds,
 /obj/effect/spawner/mob_spawn/alien/queen,
@@ -4297,13 +4158,6 @@
 	},
 /turf/environment/space,
 /area/space)
-"Ap" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/space_structures/old_station/central/solars_c)
 "As" = (
 /obj/structure/table,
 /obj/item/weapon/kitchen/utensil/pfork{
@@ -4467,13 +4321,6 @@
 "By" = (
 /obj/structure/rack,
 /obj/item/weapon/switchblade,
-/obj/machinery/turretid/stun{
-	control_area = "OldStation";
-	name = "Station turret control";
-	pixel_x = -3;
-	pixel_y = 1;
-	req_access = list(73)
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bot"
@@ -4496,9 +4343,6 @@
 /turf/environment/space,
 /area/space)
 "BL" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Armoury Section";
 	req_access = list(73)
@@ -4687,16 +4531,6 @@
 /obj/structure/sign/poster/official/obey,
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central/brig)
-"Cz" = (
-/obj/effect/decal/cleanable/blood/writing,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central)
 "CA" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating,
@@ -4744,7 +4578,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "CS" = (
@@ -4803,7 +4636,6 @@
 /area/space_structures/carp_space)
 "Dj" = (
 /obj/structure/alien/weeds/node,
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4936,15 +4768,6 @@
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor/whitegreed,
 /area/space_structures/old_station/satellite)
-"DT" = (
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central)
 "DV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
@@ -5230,9 +5053,6 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "Fs" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 5
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -5295,9 +5115,6 @@
 /turf/simulated/floor/carpet/red,
 /area/space_structures/old_station/central)
 "FR" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/sign/directions/command{
 	dir = 4;
 	pixel_y = 23
@@ -5411,7 +5228,6 @@
 "Gu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
 "Gv" = (
@@ -5499,13 +5315,6 @@
 /obj/item/stack/sheet/plasteel,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/carp_space)
-"GU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 10
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central)
 "GW" = (
 /obj/structure/alien/weeds,
 /obj/effect/spawner/mob_spawn/alien/sentinel,
@@ -5557,9 +5366,6 @@
 /area/space_structures/old_station/armory)
 "Hf" = (
 /obj/structure/stool,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/old_station/central)
 "Hh" = (
@@ -5976,18 +5782,6 @@
 "JF" = (
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/left/med)
-"JG" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 5
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central)
 "JI" = (
 /obj/machinery/door/airlock/glass{
 	name = "Kitchen";
@@ -6244,9 +6038,6 @@
 /area/space_structures/old_station/left/med)
 "Ld" = (
 /obj/item/ammo_casing/c38m,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/old_station/central)
 "Lh" = (
@@ -6370,17 +6161,6 @@
 	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
-"LW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central)
 "Mc" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -6430,9 +6210,6 @@
 /area/space_structures/old_station/right/rnd)
 "Mx" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -6647,7 +6424,6 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "Of" = (
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7146,9 +6922,6 @@
 	},
 /area/space_structures/old_station/satellite)
 "QW" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7176,9 +6949,6 @@
 /area/space_structures/old_station/left/med)
 "Ro" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -7207,7 +6977,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -7217,9 +6986,6 @@
 	},
 /area/space_structures/old_station/central)
 "Rw" = (
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 5
-	},
 /obj/structure/sign/directions/command{
 	dir = 4;
 	pixel_y = 28
@@ -7281,7 +7047,6 @@
 	},
 /area/space_structures/old_station/left)
 "RP" = (
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -7398,14 +7163,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 6
-	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "Sq" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -7745,7 +7506,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/wall/r_wall,
+/turf/environment/space,
 /area/space_structures/old_station/left)
 "UB" = (
 /obj/structure/cable{
@@ -7896,9 +7657,6 @@
 "Vl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -7923,7 +7681,6 @@
 "Vv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -8176,13 +7933,6 @@
 /obj/structure/alien/weeds,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
-"WU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
 "WX" = (
 /obj/effect/decal/cleanable/greenglow,
 /mob/living/simple_animal/hostile/tomato/angry_tomato,
@@ -8357,9 +8107,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/writing{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "Yo" = (
@@ -8472,7 +8219,6 @@
 	pixel_x = -21;
 	pixel_y = -6
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
 "Zi" = (
@@ -8639,7 +8385,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Dormitory"
 	},
-/obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
 "ZV" = (
@@ -9470,7 +9215,7 @@ bC
 bC
 Ah
 vA
-qX
+Dd
 So
 Hx
 Ah
@@ -9530,7 +9275,7 @@ we
 we
 Ah
 sj
-jo
+Gl
 ir
 Vb
 ya
@@ -9770,7 +9515,7 @@ de
 we
 we
 ya
-WU
+Cl
 Sn
 ya
 wi
@@ -10442,7 +10187,7 @@ jh
 cy
 ZW
 VU
-Ap
+jh
 uI
 FK
 Ou
@@ -10502,7 +10247,7 @@ sz
 mU
 Bf
 VZ
-Af
+uI
 uI
 co
 Ou
@@ -10550,7 +10295,7 @@ gO
 wi
 wi
 ya
-WU
+Cl
 We
 ya
 wi
@@ -10562,7 +10307,7 @@ VZ
 ko
 du
 uI
-Af
+uI
 xl
 co
 Ou
@@ -10670,7 +10415,7 @@ Ou
 Ou
 Ou
 Ou
-DT
+YI
 YI
 Ou
 vh
@@ -10731,10 +10476,10 @@ rg
 bk
 Ou
 Rw
-yg
-vQ
+XO
+pE
 Gu
-GU
+pE
 fN
 pE
 fB
@@ -10794,15 +10539,15 @@ ae
 im
 QZ
 ZK
-JG
-LW
-Cz
+QZ
+ZK
+QZ
 Rt
 Vv
 Of
 jW
-yg
-eB
+XO
+Zm
 Er
 Zm
 Zm
@@ -10894,7 +10639,7 @@ we
 we
 we
 wi
-wi
+mS
 wi
 mS
 wi
@@ -11171,7 +10916,7 @@ gU
 Ja
 gw
 ZP
-cS
+fN
 fN
 dJ
 pE
@@ -11231,7 +10976,7 @@ Tx
 Ja
 uN
 ND
-Aj
+IE
 HT
 ND
 IE
@@ -13371,8 +13116,8 @@ kX
 Cm
 WJ
 tR
-us
-bO
+Se
+hz
 rf
 GY
 sq
@@ -13852,7 +13597,7 @@ JU
 bw
 wX
 au
-ek
+DW
 rf
 rf
 rf
