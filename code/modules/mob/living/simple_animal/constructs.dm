@@ -138,7 +138,7 @@
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
-	desc = "Хитроумный доспех с клинками, управляемый связанным духом."
+	desc = "Зловещий доспех с клинками, управляемый связанным духом."
 	icon_state = "wraith"
 	icon_living = "wraith"
 	maxHealth = 75
@@ -159,7 +159,7 @@
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "Луковичная конструкция, предназначенная для создания и поддержания армий Культа Нар-Си."
+	desc = "Круглая структура, предназначенная для создания и поддержания армий Культа Нар-Си."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
