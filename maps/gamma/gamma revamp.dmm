@@ -27174,6 +27174,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/station/security/prison)
 "grn" = (
@@ -56774,11 +56775,23 @@
 	},
 /area/station/maintenance/disposal)
 "oyX" = (
-/obj/structure/table/woodentable,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
-/obj/item/weapon/flora/deskferntrim,
+/obj/item/weapon/flora/deskferntrim{
+	pixel_y = 15
+	},
+/obj/structure/table/woodentable/poker,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/carpet/blue,
 /area/station/security/iaa_office)
 "oyY" = (
@@ -73312,6 +73325,12 @@
 	icon_state = "dark"
 	},
 /area/space)
+"sUG" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/station/hallway/primary/central)
 "sUJ" = (
 /obj/machinery/computer/secure_data{
 	dir = 8
@@ -84515,9 +84534,10 @@
 	},
 /area/station/cargo/recycleroffice)
 "vOK" = (
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor,
-/area/station/security/prison)
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/station/rnd/storage)
 "vOU" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/window/thin/reinforced{
@@ -113694,7 +113714,7 @@ fqn
 mBa
 otO
 pvV
-vOK
+mir
 mir
 xcF
 raq
@@ -115795,7 +115815,7 @@ qiR
 qiR
 dPb
 fXG
-nAG
+hBy
 cWS
 sjH
 kqh
@@ -118853,15 +118873,15 @@ vHj
 vHj
 kIs
 cKf
-nPP
-itl
-lLc
-hWA
+uQN
+uQN
+uQN
+uQN
 ebH
 uQN
-uQN
-uQN
-uQN
+sUG
+sUG
+nPP
 uQN
 nPP
 bwK
@@ -124760,11 +124780,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 pKc
@@ -125017,11 +125037,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 pKc
@@ -125274,11 +125294,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 dKv
@@ -125531,11 +125551,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 dKv
@@ -125788,11 +125808,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 dKv
@@ -126045,11 +126065,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 dKv
@@ -126302,11 +126322,11 @@ hNT
 hNT
 hNT
 hNT
-plf
-plf
-plf
-plf
-plf
+hNT
+hNT
+hNT
+hNT
+hNT
 hNT
 hNT
 dKv
@@ -138718,9 +138738,9 @@ tmd
 pwn
 qfz
 ksZ
-kmd
-xeB
-hNT
+vOK
+pyk
+xwb
 hNT
 hNT
 hNT
@@ -138975,9 +138995,9 @@ idC
 diF
 oln
 ksZ
-kmd
-xeB
-xeB
+vOK
+pyk
+pyk
 hNT
 hNT
 hNT
@@ -139232,9 +139252,9 @@ sCd
 afl
 jMG
 ksZ
-kmd
-xeB
-xeB
+vOK
+pyk
+pyk
 hNT
 hNT
 hNT
@@ -139489,9 +139509,9 @@ ksZ
 ksZ
 ksZ
 ksZ
-kmd
-kmd
-xeB
+vOK
+vOK
+pyk
 hNT
 hNT
 hNT
@@ -139746,9 +139766,9 @@ vQf
 kDo
 kDo
 ksZ
-kmd
-kmd
-xeB
+vOK
+vOK
+pyk
 hNT
 hNT
 hNT
