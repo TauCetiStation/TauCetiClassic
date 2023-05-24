@@ -519,12 +519,6 @@
 	. = ..()
 	charge = capacity
 
-/obj/machinery/power/smes/fullcharge/not_outputting
-	input_attempt = FALSE
-	output_attempt = FALSE
-	input_level = 0
-	output_level = 0
-
 /proc/rate_control(S, V, C, Min = 1, Max = 5, Limit = null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
 	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C ? C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"

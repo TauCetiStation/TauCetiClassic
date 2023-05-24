@@ -497,28 +497,3 @@
 /obj/item/weapon/card/id/syndicate/unknown/atom_init()
 	. = ..()
 	access = get_all_accesses()
-
-/obj/item/weapon/card/id/old_station
-	name = "captain's ID"
-	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
-	icon_state = "gold"
-	item_state = "gold_id"
-	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_surgery, access_captain, access_engine, access_research, access_tox, access_robotics, access_heads)
-
-/obj/item/weapon/card/id/old_station/eng
-	name = "engineer ID"
-	desc = "ID карта, принадлежащая старшему сотруднику инженерного отдела станции 'LCR'."
-	icon_state = "eng"
-	item_state = "eng_id"
-	rank = "Senior Engineer"
-	assignment = "Senior Engineer"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research, access_tox, access_robotics)
-
-/obj/item/weapon/card/id/old_station/med
-	name = "medic ID"
-	desc = "ID карта, принадлежащая старшему сотруднику медицинского отдела станции 'LCR'."
-	icon_state = "med"
-	item_state = "med_id"
-	rank = "Senior Medic"
-	assignment = "Senior Medic"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_surgery, access_research, access_tox, access_robotics)
