@@ -333,7 +333,7 @@
 	#define COMPONENT_BLOCK_SWAP 1
 ///from mob/living/vomit(): (/mob)
 #define COMSIG_LIVING_VOMITED "living_vomited"
-///from base of /mob/living/can_track(): (mob/user)
+///from ai_actual_track(): (mob/living)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 
