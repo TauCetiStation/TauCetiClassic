@@ -79,7 +79,7 @@
 
 		//make some noise
 		if(prob(0.5))
-			visible_message("<span class='notice'>[pick("Жжжжжжжжжж.","Жжжжжжжж.","Жжжжжжжжж.")]</span>")
+			visible_message("<span class='notice'>[pick("Жжжжжжжжжж.")]</span>")
 
 		//smoke, water and steam calms us down
 		var/calming = 0

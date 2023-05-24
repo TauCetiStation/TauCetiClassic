@@ -485,7 +485,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/clown_joke
 	name = "Joke"
-	desc = "МЕГАШУТНИК!"
+	desc = "МЕГАШУТКА!"
 	panel = "Hulk"
 	charge_max = 350
 	clothes_req = 0

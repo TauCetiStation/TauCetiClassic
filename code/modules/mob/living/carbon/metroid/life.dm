@@ -507,16 +507,14 @@
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = lowertext(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "слайм") || findtext(phrase, "легион") || findtext(phrase, "слаймы"))) // Talking to us
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "слайм") || findtext(phrase, "легион"))) // Talking to us
 			if (                                                                  \
-				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
-				findtext(phrase, "здравствуйте") || findtext(phrase, "привет")    \
+				findtext(phrase, "здравствуй") || findtext(phrase, "привет")    \
 			)
 				to_say = pick("Здравствуй...", "Привет...")
 			else if (                                                             \
-				findtext(phrase, "attack") || findtext(phrase, "kill") ||         \
 				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
-				findtext(phrase, "атак")                                     \
+				findtext(phrase, "атак")                                          \
 			)
 				if(Friends[who] > 4)
 					if(last_pointed)
@@ -524,7 +522,7 @@
 							if(holding_still)
 								holding_still = 0
 							if(last_pointed != src)
-								to_say = pick("Я уничтожу [last_pointed]...", "Убить...", "Убить [last_pointed]...", "Злодей...", "Есть...", "Да...")
+								to_say = pick("Я уничтожу [last_pointed]...", "Убить [last_pointed]...", "[last_pointed]... злодей...")
 								ATarget = last_pointed
 								last_pointed = null
 							else
@@ -539,7 +537,7 @@
 				else
 					to_say = pick("Я не хочу...", "Нет...", "Не хочу...", "Неее...")
 			else if (                                                             \
-				findtext(phrase, "follow") || findtext(phrase, "ко мне") ||       \
+				findtext(phrase, "ко мне") ||                                     \
 				findtext(phrase, "за мной")                                       \
 			)
 				if (Leader)
@@ -561,7 +559,7 @@
 					else // Not friendly enough
 						to_say = pick("Нет...", "Не хочу...", "Не верю...")
 			else if (                                                            \
-				findtext(phrase, "stop") || findtext(phrase, "перестань") ||     \
+				findtext(phrase, "перестань") ||                                 \
 				findtext(phrase, "хватит") || findtext(phrase, "стоп")           \
 			)
 				if (Victim) // We are asked to stop feeding
@@ -610,7 +608,7 @@
 						to_say = "Нее..."
 
 			else if (                                                           \
-				findtext(phrase, "stay") || findtext(phrase, "остановитесь") || \
+				findtext(phrase, "остановитесь") ||                             \
 				findtext(phrase, "стой") || findtext(phrase, "не двигайся")     \
 			)
 				if (Leader)

@@ -82,7 +82,7 @@
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
 	icon_move = "mouse_[body_color]_move"
-	desc = "Это маленький грызун, которого часто можно увидеть прячущимся в техтоннелях."
+	desc = "Это маленький грызун, которого часто можно увидеть, прячущимся в тех. туннелях.."
 
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0

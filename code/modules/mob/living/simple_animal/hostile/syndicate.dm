@@ -164,7 +164,7 @@
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
-	desc = "Небольшая машина с двумя лезвиями, способная наносить очень смертельные раны."
+	desc = "Небольшая машина с двумя лезвиями, способная наносить смертельные раны."
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE

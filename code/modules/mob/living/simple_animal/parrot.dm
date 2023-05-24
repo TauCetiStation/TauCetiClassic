@@ -781,7 +781,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
-	desc = "Обречён кричать на землю."
+	desc = "Обреченный бродить по Земле."
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE

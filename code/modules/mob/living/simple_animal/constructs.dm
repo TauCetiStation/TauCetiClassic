@@ -1,7 +1,7 @@
 /mob/living/simple_animal/construct
 	name = "Construct"
 	real_name = "Construct"
-	desc = "Какой-то странный робот."
+	desc = "Оно двигается..?"
 	icon = 'icons/mob/construct.dmi'
 	speak_emote = list("шипит")
 	emote_hear = list("стонет", "визжит")
@@ -276,7 +276,7 @@
 /mob/living/simple_animal/construct/proteon
 	name = "Proteon"
 	real_name = "Proteon"
-	desc = "Более слабая конструкция, предназначенная для обыска руин в поисках предметов привязанности Нар'Си. Эти зазубренные когти — не шутка."
+	desc = "Слабая конструкция, предназначенная для обыска руин в поисках предметов привязанности Нар'Си. Эти зазубренные когти — не шутка."
 	icon_state = "proteon"
 	icon_living = "proteon"
 	maxHealth = 30
@@ -296,7 +296,7 @@
 /mob/living/simple_animal/hostile/pylon
 	name = "charged pylon"
 	real_name = "charged pylon"
-	desc = "Летающий кристалл, излучающий неземную энергию."
+	desc = "Летающий кристалл, излучающий таинственную энергию."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "pylon_glow"
 	icon_living = "pylon"
