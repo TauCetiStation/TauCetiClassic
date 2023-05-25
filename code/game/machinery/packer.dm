@@ -304,3 +304,26 @@
 	else
 		new /obj/item/stack/sheet/wood(loc, 2)
 	qdel(src)
+
+/obj/item/box_pack_placeholder
+	name = "A box"
+	desc = "Коробка."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "box"
+
+/obj/item/box_pack_placeholder/atom_init()
+	. = ..()
+	var/obj/item/weapon/storage/box/Box = new /obj/item/weapon/storage/box(loc)
+	for(var/obj/item/I in loc)
+		if(I.flags_2 & CANT_BE_INSERTED)
+			continue
+		if(I.anchored)
+			continue
+		if(I.w_class >= SIZE_NORMAL)
+			continue
+		if(!Box.can_be_inserted(I, TRUE))
+			break
+
+		I.forceMove(Box)
+
+	qdel(src)

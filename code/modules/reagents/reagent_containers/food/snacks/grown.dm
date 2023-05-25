@@ -10,7 +10,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
-
 	var/seed_type
 	var/plantname = ""
 	var/species = ""

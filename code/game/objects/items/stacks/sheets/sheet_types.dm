@@ -180,6 +180,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 var/global/list/datum/stack_recipe/cloth_recipes = list (
 	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags/not_old, 1, 5, 25, 15),
 	null,
+	new/datum/stack_recipe("11x11 canvas", /obj/item/canvas, 2, time = 30),
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
 	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, time = 30),
@@ -188,6 +189,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list (
 var/global/list/datum/stack_recipe/old_cloth_recipes = list (
 	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags/old, 1, 5, 25, 15),
 	null,
+	new/datum/stack_recipe("11x11 canvas", /obj/item/canvas, 2, time = 30),
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
 	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, time = 30),
@@ -210,7 +212,7 @@ var/global/list/datum/stack_recipe/old_cloth_recipes = list (
  * Cardboard
  */
 var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
-	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
+	new/datum/stack_recipe("box/pack items into a box", /obj/item/box_pack_placeholder, 1, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("shotgun shell box", /obj/item/weapon/storage/box/shotgun), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/box/lights/bulbs), \

@@ -67872,7 +67872,6 @@
 	},
 /area/station/engineering/drone_fabrication)
 "dra" = (
-/obj/item/weapon/flora/pottedplant/minitree,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -70696,8 +70695,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "gNe" = (
-/obj/machinery/packer,
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/flora/pottedplant/minitree,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "green"

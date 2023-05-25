@@ -39,6 +39,17 @@
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
+/obj/item/weapon/storage/box/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/canvas))
+		var/obj/item/canvas/Canvas = I
+		if(icon_state == "box" && Canvas.width == 11)
+			var/icon/image = Canvas.generated_icon
+			image.Shift(NORTH, 14)
+			image.Shift(EAST, 11)
+			add_overlay(Canvas.generated_icon)
+			return FALSE
+	..()
+
 //Survival boxes, given by NanoTrasen
 /obj/item/weapon/storage/box/survival
 	name = "emergency box"
