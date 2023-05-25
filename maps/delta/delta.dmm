@@ -83122,7 +83122,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/camera{
-	c_tag = s;
+	c_tag = "Chief Medical Officer";
 	network = list("SS13","Medical");
 	dir = 7
 	},
