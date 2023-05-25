@@ -1346,8 +1346,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	unlocks_designs = list("ripley_main", "ripley_peri")
 
 /datum/technology/mech_odysseus
-	name = "Odyssey"
-	desc = "Odyssey"
+	name = "Odysseus"
+	desc = "Odysseus"
 	id = "mech_odysseus"
 	tech_type = RESEARCH_ROBOTICS
 
