@@ -302,3 +302,11 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
 	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+
+/datum/quality/negativeish/proudandwalking
+	name = "Proud and Walking"
+	desc = "Рождённый ходить ползать не может. Ты слишком горд, чтобы собирать животом пыль с полов станции."
+	requirement = "Нет."
+
+/datum/quality/negativeish/proudandwalking/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_NO_CRAWL, QUALITY_TRAIT)
