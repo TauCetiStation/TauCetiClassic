@@ -740,8 +740,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/client/C = ghost.client
 
 	var/mob/living/carbon/human/H = new(null)
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(H, new_name)
+	C.create_human_apperance(H)
 
 	H.loc = spawnloc
 	H.key = C.key
