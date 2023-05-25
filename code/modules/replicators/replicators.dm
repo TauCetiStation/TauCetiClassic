@@ -187,7 +187,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), .proc/on_clientmob_move)
 
-/mob/living/simple_animal/hostile/replicator/proc/can_track(datum/source)
+/mob/living/simple_animal/hostile/replicator/proc/can_be_tracked(datum/source)
 	SIGNAL_HANDLER
 	return COMPONENT_CANT_TRACK
 
