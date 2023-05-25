@@ -1,6 +1,6 @@
 /obj/machinery/packer
 	name = "packer"
-	desc = "Упаковывает предметы в деревянный ящик."
+	desc = "РЈРїР°РєРѕРІС‹РІР°РµС‚ РїСЂРµРґРјРµС‚С‹ РІ РґРµСЂРµРІСЏРЅРЅС‹Р№ СЏС‰РёРє."
 	icon_state = "packer"
 	density = TRUE
 	anchored = TRUE
@@ -26,7 +26,7 @@
 
 /obj/machinery/packer/examine(mob/user)
 	. = ..()
-	to_chat(user, "Загружено досок: [storage_wood]шт.")
+	to_chat(user, "Р—Р°РіСЂСѓР¶РµРЅРѕ РґРѕСЃРѕРє: [storage_wood]С€С‚.")
 
 /obj/machinery/packer/proc/check_can_load(obj/item/I)
 	if(I.flags_2 & CANT_BE_INSERTED)
@@ -43,12 +43,12 @@
 	if(istype(I, /obj/item/stack/sheet/wood))
 		var/loaded = load_wood(I)
 		if(loaded)
-			to_chat(user, "Загружено [loaded]шт. досок.")
+			to_chat(user, "Р—Р°РіСЂСѓР¶РµРЅРѕ [loaded]С€С‚. РґРѕСЃРѕРє.")
 	else if(istype(I, /obj/item/weapon/storage)) // fastload from userstorage
 		if(istype(I, /obj/item/weapon/storage/lockbox))
 			var/obj/item/weapon/storage/lockbox/L = I
 			if(L.locked)
-				to_chat(user, "<span class='notice'>[L] заперт.</span>")
+				to_chat(user, "<span class='notice'>[L] Р·Р°РїРµСЂС‚.</span>")
 				return
 		var/obj/item/weapon/storage/S = I
 
@@ -98,12 +98,12 @@
 /obj/machinery/packer/proc/load_item(obj/item/Item, mob/user = null)
 	if(state_empty)
 		if(user)
-			to_chat(user, "Требуются доски для ящика.")
+			to_chat(user, "РўСЂРµР±СѓСЋС‚СЃСЏ РґРѕСЃРєРё РґР»СЏ СЏС‰РёРєР°.")
 		return
 	if(check_can_load(Item))
 		if(user)
 			user.drop_from_inventory(Item, src)
-			to_chat(user, "[Item.name] положен внутрь.")
+			to_chat(user, "[Item.name] РїРѕР»РѕР¶РµРЅ РІРЅСѓС‚СЂСЊ.")
 		else
 			Item.forceMove(src)
 
@@ -138,20 +138,20 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(state_empty)
-		to_chat(user, "Требуются доски для ящика.")
+		to_chat(user, "РўСЂРµР±СѓСЋС‚СЃСЏ РґРѕСЃРєРё РґР»СЏ СЏС‰РёРєР°.")
 		return
 
 	if(!contents.len)
-		to_chat(user, "Нечего упаковывать.")
+		to_chat(user, "РќРµС‡РµРіРѕ СѓРїР°РєРѕРІС‹РІР°С‚СЊ.")
 		return
 
-	to_chat(user, "Упаковка запущена.")
+	to_chat(user, "РЈРїР°РєРѕРІРєР° Р·Р°РїСѓС‰РµРЅР°.")
 	pack()
 
 
 /obj/item/weapon/wooden_box
 	name = "A wooden box"
-	desc = "Деревянная коробка."
+	desc = "Р”РµСЂРµРІСЏРЅРЅР°СЏ РєРѕСЂРѕР±РєР°."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "wooden_box"
 	w_class = SIZE_NORMAL
@@ -162,14 +162,14 @@
 /obj/item/weapon/wooden_box/examine(mob/user)
 	. = ..()
 
-	var/contents_message = "пуст."
+	var/contents_message = "РїСѓСЃС‚."
 	if(1 <= contents.len && contents.len < 5)
-		contents_message = "почти пуст."
+		contents_message = "РїРѕС‡С‚Рё РїСѓСЃС‚."
 	else if(5 <= contents.len && contents.len < 10)
-		contents_message = "наполовину полон."
+		contents_message = "РЅР°РїРѕР»РѕРІРёРЅСѓ РїРѕР»РѕРЅ."
 	else if(10 <= contents.len && contents.len <= 15)
-		contents_message = "полон."
-	to_chat(user, "Ящик на вид [contents_message]")
+		contents_message = "РїРѕР»РѕРЅ."
+	to_chat(user, "РЇС‰РёРє РЅР° РІРёРґ [contents_message]")
 
 /obj/item/weapon/wooden_box/atom_init(mapload, items_to_store)
 	. = ..()
@@ -209,21 +209,21 @@
 	..()
 
 /obj/item/weapon/wooden_box/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>Нужна монтировка чтобы вскрыть!</span>")
+	to_chat(user, "<span class='notice'>РќСѓР¶РЅР° РјРѕРЅС‚РёСЂРѕРІРєР° С‡С‚РѕР±С‹ РІСЃРєСЂС‹С‚СЊ!</span>")
 	return
 
 /obj/item/weapon/wooden_box/attackby(obj/item/weapon/W, mob/user)
 	if(isprying(W))
-		user.visible_message("<span class='notice'>[user] вскрывает [src].</span>", \
-							 "<span class='notice'>Вы вскрываете [src].</span>", \
-							 "<span class='notice'>Слышно треск дерева.</span>")
+		user.visible_message("<span class='notice'>[user] РІСЃРєСЂС‹РІР°РµС‚ [src].</span>", \
+							 "<span class='notice'>Р’С‹ РІСЃРєСЂС‹РІР°РµС‚Рµ [src].</span>", \
+							 "<span class='notice'>РЎР»С‹С€РЅРѕ С‚СЂРµСЃРє РґРµСЂРµРІР°.</span>")
 		qdel(src)
 	else
 		return attack_self(user)
 
 /obj/item/weapon/wooden_box/potato
 	name = "A wooden box"
-	desc = "Коробка полная картошки на чёрный день."
+	desc = "РљРѕСЂРѕР±РєР° РїРѕР»РЅР°СЏ РєР°СЂС‚РѕС€РєРё РЅР° С‡С‘СЂРЅС‹Р№ РґРµРЅСЊ."
 	startswith = list(
 	/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
@@ -243,7 +243,7 @@
 
 /obj/item/weapon/wooden_box/beer
 	name = "A wooden box"
-	desc = "Коробка с пивом, необычный формат хранения."
+	desc = "РљРѕСЂРѕР±РєР° СЃ РїРёРІРѕРј, РЅРµРѕР±С‹С‡РЅС‹Р№ С„РѕСЂРјР°С‚ С…СЂР°РЅРµРЅРёСЏ."
 	startswith = list(
 	/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 	/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
@@ -260,7 +260,7 @@
 
 /obj/item/weapon/wooden_box/banana
 	name = "A wooden box"
-	desc = "Бонанза - съешь банан, спаси мир!"
+	desc = "Р‘РѕРЅР°РЅР·Р° - СЃСЉРµС€СЊ Р±Р°РЅР°РЅ, СЃРїР°СЃРё РјРёСЂ!"
 	startswith = list(
 	/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
@@ -280,7 +280,7 @@
 
 /obj/item/wooden_box_pack_placeholder
 	name = "A wooden box"
-	desc = "Деревянная коробка."
+	desc = "Р”РµСЂРµРІСЏРЅРЅР°СЏ РєРѕСЂРѕР±РєР°."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "wooden_box_open"
 
@@ -307,7 +307,7 @@
 
 /obj/item/box_pack_placeholder
 	name = "A box"
-	desc = "Коробка."
+	desc = "РљРѕСЂРѕР±РєР°."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "box"
 
