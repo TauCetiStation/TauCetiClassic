@@ -1262,6 +1262,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/smartfridge
 	category = list("Machine")
 
+/datum/design/bluespace_storage
+	name = "Machine Design (Bluespace Storage)"
+	desc = "The circuit board for a Bluespace Storage."
+	id = "bluespace_storage"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1500, MAT_DIAMOND = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge/secure/bluespace
+	category = list("Machine")
+
 /datum/design/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."
