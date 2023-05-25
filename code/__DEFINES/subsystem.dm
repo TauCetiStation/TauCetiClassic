@@ -29,11 +29,11 @@
 #define SS_INIT_MAPPING        8
 #define SS_INIT_ENVIRONMENT    7
 #define SS_INIT_XENOARCH       7
+#define SS_INIT_SMARTLIGHT     7
 #define SS_INIT_ATOMS          6
 #define SS_INIT_MACHINES       5
 #define SS_INIT_SHUTTLES       4
 #define SS_INIT_SUN            3
-#define SS_INIT_NIGHTSHIFT     2
 #define SS_INIT_LIGHTING       1
 #define SS_INIT_DEFAULT        0
 #define SS_INIT_AIR           -1
@@ -73,7 +73,7 @@
 #define SS_PRIORITY_GARBAGE       15
 #define SS_PRIORITY_HOLOMAPS      10
 #define SS_PRIORITY_SUN            3
-#define SS_PRIORITY_NIGHTSHIFT     3
+#define SS_PRIORITY_SMARTLIGHT     3
 #define SS_PRIORITY_LOW            1
 
 
@@ -105,7 +105,7 @@
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600
-#define SS_WAIT_NIGHTSHIFT  600
+#define SS_WAIT_SMARTLIGHT  600
 
 // SS runlevels
 

@@ -167,6 +167,7 @@
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_ANATOMIST           "anatomist"
 #define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
+#define TRAIT_PICKY_EATER         "picky_eater"
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
 #define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
@@ -175,6 +176,7 @@
 #define TRAIT_SHOCKIMMUNE         "shockimmune"
 #define TRAIT_NATURAL_AGILITY     "natural_agility"
 #define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
+#define TRAIT_STEEL_NERVES        "steel_nerves"
 #define TRAIT_ARIBORN             "ariborn"
 
 /*
@@ -217,6 +219,7 @@
 #define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
 #define GENETIC_MUTATION_TRAIT "genetic"
 #define QUIRK_TRAIT "quirk"
+#define VIRUS_TRAIT "virus"
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself

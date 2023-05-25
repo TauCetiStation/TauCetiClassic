@@ -188,19 +188,27 @@
 
 	else if(href_list["locedit"])
 		var/newloc = sanitize_safe(input("Enter New Location", "Navigation Beacon", input_default(location)) as text|null)
-		if(newloc)
-			location = newloc
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newloc))
+			return
+
+		location = newloc
 
 	else if(href_list["edit"])
 		var/codekey = href_list["code"]
 
 		var/newkey = sanitize_safe(input("Enter Transponder Code Key", "Navigation Beacon", input_default(codekey)) as text|null)
+		if(!can_still_interact_with(usr))
+			return
 		if(!newkey)
 			return FALSE
 
 		var/codeval = codes[codekey]
 		var/newval = sanitize_safe(input("Enter Transponder Code Value", "Navigation Beacon", input_default(codeval)) as text|null)
-		if(!newval)
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newval))
 			return FALSE
 
 		codes.Remove(codekey)
@@ -214,11 +222,15 @@
 
 	else if(href_list["add"])
 		var/newkey = sanitize(input("Enter New Transponder Code Key", "Navigation Beacon") as text|null)
-		if(!newkey)
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newkey))
 			return FALSE
 
 		var/newval = sanitize(input("Enter New Transponder Code Value", "Navigation Beacon") as text|null)
-		if(!newval)
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newval))
 			return FALSE
 
 		if(!codes)

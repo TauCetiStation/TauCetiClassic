@@ -88,7 +88,7 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/add_player_age,
 	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
-	/client/proc/add_nightshift_preset,
+	/client/proc/add_smartlight_preset,
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -661,7 +661,7 @@ var/global/list/admin_verbs_hideable = list(
 				break
 		disease_type = "[disease_type] ([jointext(D.effects, ", ")])"
 	else
-		D.makerandom(greater)
+		D.makerandom(greater, spread_vector = DISEASE_SPREAD_AIRBORNE)
 		if (!greater)
 			D.infectionchance = 1
 

@@ -190,7 +190,14 @@
 #define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
 /// from datum/orbit/New(): (/atom/orbiting)
 #define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
-
+///when an atom starts playing a song, used in song_tuner rites: (datum/music_player)
+#define COMSIG_ATOM_STARTING_INSTRUMENT "atom_starting_instrument"
+///sent to the instrument when a song stops playing: (datum/music_player)
+#define COMSIG_INSTRUMENT_END "instrument_end"
+///sent to the instrument (and player if available) when a song repeats: (datum/music_player)
+#define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
+///sent to the instrument when tempo changes, skipped on new: (datum/music_player)
+#define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
 #define COMSIG_OBJ_RESET_RITE "obj_reset_rite"

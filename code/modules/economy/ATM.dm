@@ -354,7 +354,16 @@ log transactions
 						tried_account_num = text2num(href_list["account_num"])
 					else
 						tried_account_num = held_card.associated_account_number
-					var/tried_pin = text2num(href_list["account_pin"])
+
+					var/datum/money_account/MA = get_account(tried_account_num)
+					if(!MA)
+						to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
+						return
+					var/tried_pin = 0
+					if(!href_list["account_pin"] && usr.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == MA.account_number && usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
+						tried_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
+					else
+						tried_pin = text2num(href_list["account_pin"])
 
 					authenticated_account = attempt_account_access(tried_account_num, tried_pin, held_card && held_card.associated_account_number == tried_account_num ? 2 : 1)
 					if(!authenticated_account)
