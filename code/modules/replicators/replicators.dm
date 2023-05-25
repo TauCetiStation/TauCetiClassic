@@ -183,7 +183,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	AddComponent(/datum/component/replicator_regeneration)
 
-	RegisterSignal(src, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	RegisterSignal(src, COMSIG_LIVING_CAN_TRACK, .proc/can_be_tracked)
 
 	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), .proc/on_clientmob_move)
 
