@@ -1,7 +1,7 @@
 /mob/living/carbon/slime/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
-		msg += "<span class='deadsay'>Он вялый и не реагирует.</span>\n"
+		msg += "<span class='deadsay'>Он размяк и не реагирует.</span>\n"
 	else
 		if (getBruteLoss())
 			msg += "<span class='warning'>"
