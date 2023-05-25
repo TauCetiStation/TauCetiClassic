@@ -65,7 +65,7 @@
 		return
 	if(istype(AM, /obj/item/stack/sheet/wood))
 		load_wood(AM)
-	else if(isitem(AM)))
+	else if(isitem(AM))
 		load_item(AM)
 	else
 		AM.forceMove(loc)
