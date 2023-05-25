@@ -72,12 +72,12 @@
 
 /obj/machinery/packer/proc/load_wood(obj/item/stack/sheet/wood/Wood)
 	if(Wood.is_cyborg())
-		return ..()
+		return
 
 	var/can_put = storage_capacity - storage_wood
 	var/loaded = 0
 	if(!can_put)
-		return ..()
+		return
 
 	if(Wood.amount > can_put)
 		storage_wood += can_put
