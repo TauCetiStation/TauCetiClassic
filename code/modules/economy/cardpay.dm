@@ -182,8 +182,8 @@
 		if("clearnumbers")
 			if(display_numbers == 0)
 				pay_amount = 0
+				update_holoprice(clear = TRUE)
 			display_numbers = 0
-			update_holoprice(clear = TRUE)
 			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("approveprice")
