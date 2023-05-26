@@ -1038,7 +1038,7 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
-	if(HAS_TRAIT(usr, TRAIT_NO_CRAWL))
+	if(!crawling && HAS_TRAIT(usr, TRAIT_NO_CRAWL))
 		to_chat(usr, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
 		return
 
