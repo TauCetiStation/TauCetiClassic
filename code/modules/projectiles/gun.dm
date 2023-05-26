@@ -159,6 +159,8 @@
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
+				if(isspaceturf(user.loc) && user.lying)
+					going_to_explode = 1
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
