@@ -10,7 +10,7 @@
 
 	var/linked_account = 0
 	var/pay_amount = 0
-	var/display_price = 0
+	var/display_numbers = 0
 	var/reset = TRUE
 	var/enter_account = FALSE
 
@@ -149,7 +149,7 @@
 
 /obj/item/device/cardpay/tgui_data(mob/user)
 	var/list/data = list()
-	data["numbers"] = display_price
+	data["numbers"] = display_numbers
 	data["reset_numbers"] = reset
 	data["enter_account"] = enter_account
 	return data
@@ -168,31 +168,31 @@
 			var/num = params["number"]
 			if(isnum(num))
 				num = clamp(num, 0, 9)
-				display_price *= 10
-				display_price += num
-				if(enter_account && display_price > 999999)
-					display_price %= 1000000
-				else if(!enter_account && display_price > 999)
-					display_price %= 1000
+				display_numbers *= 10
+				display_numbers += num
+				if(enter_account && display_numbers > 999999)
+					display_numbers %= 1000000
+				else if(!enter_account && display_numbers > 999)
+					display_numbers %= 1000
 				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 				return TRUE
 		if("clearnumbers")
-			if(display_price == 0)
+			if(display_numbers == 0)
 				pay_amount = 0
-			display_price = 0
+			display_numbers = 0
 			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("approveprice")
-			if(display_price > 0)
+			if(display_numbers > 0)
 				if(enter_account)
-					if(display_price >= 111111 && display_price <= 999999)
-						var/datum/money_account/D = get_account(display_price)
+					if(display_numbers >= 111111 && display_numbers <= 999999)
+						var/datum/money_account/D = get_account(display_numbers)
 						if(D)
-							linked_account = display_price
+							linked_account = display_numbers
 				else
-					pay_amount = display_price
+					pay_amount = display_numbers
 					update_holoprice(clear = FALSE)
-				display_price = 0
+				display_numbers = 0
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 				return TRUE
 		if("togglereset")
@@ -200,7 +200,7 @@
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("toggleenteraccount")
-			display_price = 0
+			display_numbers = 0
 			enter_account = !enter_account
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
