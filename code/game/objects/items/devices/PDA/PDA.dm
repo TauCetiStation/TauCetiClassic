@@ -509,12 +509,20 @@
 	var/title = "Personal Data Assistant"
 
 	var/datum/money_account/MA = get_account(owner_account)
+	var/datum/data/record/OR = get_owner_insurance_record()
 
 	var/data[0]  // This is the data that will be sent to the PDA
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
-
+	
+	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
+	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
+	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
+	data["owner_preferred_insurance_price"] = MA ? SSeconomy.insurance_prices[data["owner_preferred_insurance_type"]] : "error"
+	data["owner_max_insurance_payment"] = MA ? MA.owner_max_insurance_payment : "error"
+	data["medical_record_id"] = OR ? OR.fields["id"] : "error"
+	data["permission_to_change_insurance_price"] = check_permission_to_change_insurance_price()
 	data["money"] = MA ? MA.money : "error"
 	data["salary"] = MA ? MA.owner_salary : "error"
 	data["target_account_number"] = target_account
@@ -1078,6 +1086,44 @@
 		if("Staff Salary")
 			mode = 73
 			subordinate_staff = my_subordinate_staff(ownrank)
+
+		if("Change insurance price")
+			if(!check_permission_to_change_insurance_price())
+				tgui_alert(U, "You don't have permission to change insurance price.")
+				return
+			if(!check_owner_fingerprints(U))
+				return
+			var/mob/living/carbon/human/H = U
+			var/list/insurances = SSeconomy.insurance_quality_decreasing - INSURANCE_NONE
+			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") as null|anything in insurances
+			if(!insurance_type || H.incapacitated() || !Adjacent(H))
+				return
+			if(!check_permission_to_change_insurance_price())
+				tgui_alert(H, "You don't have permission to change insurance price.")
+				return
+
+			var/newprice = input(user, "Write new price", "Insurance changes") as null|num
+			if(isnull(newprice) || H.incapacitated() || !Adjacent(H))
+				return
+			if(!check_permission_to_change_insurance_price())
+				tgui_alert(H, "You don't have permission to change insurance price.")
+				return
+			if(newprice < 0 || newprice > MAX_INSURANCE_PRICE)
+				tgui_alert(H, "You can only set the price in range from 0 to [MAX_INSURANCE_PRICE]")
+				return
+
+			var/decision = tgui_alert(U, "Now \"[insurance_type]\" insurance will cost [newprice] credits. Are you sure?", "Confirm", list("Yes", "No"))
+			if(decision == "No" || H.incapacitated() || !Adjacent(H))
+				return
+			if(!check_permission_to_change_insurance_price())
+				tgui_alert(H, "You don't have permission to change insurance price.")
+				return
+			SSeconomy.insurance_prices[insurance_type] = newprice
+			var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+			announcer.autosay("CMO has changed the price of \"[insurance_type]\" insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
+			qdel(announcer)
+
+
 
 		if("Change Salary")
 			var/account_number = text2num(href_list["account"])
@@ -1883,9 +1929,21 @@
 			var/turf/pos = get_turf(src)
 			return is_station_level(pos.z)
 
+
+/obj/item/device/pda/proc/get_owner_insurance_record()
+	return find_record("insurance_account_number", owner_account, data_core.general)
+
+
+/obj/item/device/pda/proc/check_permission_to_change_insurance_price()
+	if(!cartridge || !istype(cartridge, /obj/item/weapon/cartridge/cmo) || !id || !(access_cmo in id.access))
+		return FALSE
+	return TRUE
+
 /obj/item/device/pda/proc/add_order_and_offer(Text)
 	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = Text, "time" = worldtime2text())
 	global.orders_and_offers_number++
 	mode = 8
 
+
 #undef TRANSCATION_COOLDOWN
+

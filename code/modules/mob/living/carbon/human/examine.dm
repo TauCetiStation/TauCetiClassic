@@ -513,6 +513,7 @@
 			msg += "---------\n"
 		var/perpname = "wot"
 		var/medical = "None"
+		var/insurance_type
 
 		if(wear_id)
 			if(istype(wear_id,/obj/item/weapon/card/id))
@@ -528,10 +529,12 @@
 				for (var/datum/data/record/R in data_core.general)
 					if (R.fields["id"] == E.fields["id"])
 						medical = R.fields["p_stat"]
+						insurance_type = R.fields["insurance_type"]
 
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
-
+		if(insurance_type)
+			msg += "<span class = 'deptradio'>Страховка: [insurance_type]</span>\n"
 		var/obj/item/clothing/under/C = w_uniform
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"

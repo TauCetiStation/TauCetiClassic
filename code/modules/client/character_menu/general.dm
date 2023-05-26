@@ -42,6 +42,7 @@
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
+			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(!specie_obj.flags[NO_BLOOD])
 				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
@@ -312,6 +313,11 @@
 							new_languages += lang.name
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages
+
+				
+				if("insurance")
+					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
+					
 
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])

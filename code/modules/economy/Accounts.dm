@@ -11,6 +11,8 @@
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
+	var/owner_preferred_insurance_type = ""
+	var/owner_max_insurance_payment = 0
 	var/list/transaction_log = list()
 	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0

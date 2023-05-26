@@ -12,6 +12,9 @@ SUBSYSTEM_DEF(economy)
 	var/list/total_department_stocks
 	var/list/department_dividends
 	var/list/stock_splits
+	var/list/insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
+	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
+
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
 	LAZYINITLIST(department_dividends)
@@ -80,6 +83,9 @@ SUBSYSTEM_DEF(economy)
 		if(D.owner_salary && !D.suspended)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
+	handle_insurances()
+	
+
 	monitor_cargo_shop()
 
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
@@ -122,3 +128,65 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
+	
+	
+	
+/datum/controller/subsystem/economy/proc/handle_insurances()
+	var/insurance_sum = 0
+	var/list/problem_record_id = list()
+	for(var/datum/data/record/R in data_core.general)
+		if(!R)
+			continue
+		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
+		if(!MA)
+			R.fields["insurance_type"] = INSURANCE_NONE
+			problem_record_id.Add(R.fields["id"])
+			continue
+		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money, max_insurance_payment = MA.owner_max_insurance_payment)
+		var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+		R.fields["insurance_type"] = insurance_type
+		if(insurance_price == 0)
+			continue
+		insurance_sum += insurance_price
+		charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+
+	if(insurance_sum > 0)
+		var/med_account_number = global.department_accounts["Medical"].account_number
+		charge_to_account(med_account_number, med_account_number, "Insurance", "NT Insurance", insurance_sum)
+	
+	if(problem_record_id.len)
+		send_message_about_problem_insurances(problem_record_id)
+
+/proc/get_insurance_type(mob/living/carbon/human/H)
+	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
+	if(!R)
+		return INSURANCE_NONE
+	return R.fields["insurance_type"]
+
+
+/proc/get_next_insurance_type(current_insurance_type, preferred_insurance_type, money, max_insurance_payment)
+	var/current_insurance_price = SSeconomy.insurance_prices[current_insurance_type]
+	if(current_insurance_type == preferred_insurance_type && money >= current_insurance_price  && max_insurance_payment >= current_insurance_price)
+		return current_insurance_type
+
+	var/prefprice = SSeconomy.insurance_prices[preferred_insurance_type]
+	if(money >= prefprice && max_insurance_payment >= prefprice)
+		return preferred_insurance_type
+
+	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
+		var/insprice = SSeconomy.insurance_prices[insurance_type]
+		if(money >= insprice && max_insurance_payment >= insprice)
+			return insurance_type
+
+
+/proc/send_message_about_problem_insurances(list/message)
+	var/message_text
+	message_text += "<B>ID of Medical Records With Data Problems:</B><br>"
+	for(var/r in message)
+		message_text += "<b>[r]</b> <br>"
+	for(var/obj/machinery/computer/med_data/comp in global.med_record_consoles_list)
+		if(!(comp.stat & (BROKEN | NOPOWER)))
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comp.loc )
+			intercept.name = "Records With Insurance Problems"
+			intercept.info = message_text
+			intercept.update_icon()
