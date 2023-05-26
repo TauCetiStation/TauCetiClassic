@@ -20,7 +20,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	var/dangerous = FALSE // Should we message admins?
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
-	var/amount = 0
+	var/sheet_amount = 0
 
 	// Is calculated dynamically based on: crate type, manifest's possible returns, contents, overprice and additional_costs.
 	var/cost = 0
@@ -55,9 +55,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	for(var/item_type in contains)
 		for(var/datum/export/E in exports_list)
 			if(E.applies_to_type(item_type))
+				var/amount = 1
+				if(sheet_amount > 0 && (ispath(item_type, /obj/item/stack/sheet) || ispath(item_type, /obj/item/stack/tile)))
+					amount = sheet_amount
 				contents_cost += E.get_type_cost(item_type, amount)
 
-	cost = max(CARGO_MIN_PACK_PRICE, crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs)
+	cost = max(CARGO_MIN_PACK_PRICE, round(crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs))
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -72,9 +75,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		var/n_item = new item(C)
-		if(amount && (istype(n_item, /obj/item/stack/sheet) || istype(n_item, /obj/item/stack/tile)))
+		if(sheet_amount > 0 && (istype(n_item, /obj/item/stack/sheet) || istype(n_item, /obj/item/stack/tile)))
 			var/obj/item/stack/sheet/n_sheet = n_item
-			n_sheet.set_amount(amount)
+			n_sheet.set_amount(sheet_amount)
 
 //----------------------------------------------
 //-----------------OPERATIONS-------------------
@@ -83,7 +86,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/mule
 	name = "MULEbot Crate"
 	contains = list(/obj/machinery/bot/mulebot)
-	additional_costs = 1300
+	additional_costs = 500
 	crate_type = /obj/structure/largecrate/mule
 	crate_name = "MULEbot Crate"
 	group = "Operations"
@@ -148,7 +151,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/box/syndie_kit/chameleon,
 					/obj/item/weapon/storage/toolbox/syndicate,
 					/obj/item/weapon/storage/box/syndie_kit/posters)
-	additional_costs = 3800
+	additional_costs = 760
 	crate_name = "Special Ops crate"
 	group = "Security"
 	hidden = TRUE
@@ -161,7 +164,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/storage/box/flashbangs)
-	additional_costs = 3800
+	additional_costs = 760
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Weapons crate"
 	access = access_brig
@@ -172,7 +175,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/gun/projectile/automatic/glock,
 					/obj/item/weapon/gun/projectile/automatic/glock,
 					/obj/item/weapon/gun/projectile/automatic/glock)
-	additional_costs = 3800
+	additional_costs = 760
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
 	access = access_brig
@@ -186,7 +189,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/magazine/glock,
 					/obj/item/ammo_box/magazine/glock,
 					/obj/item/ammo_box/magazine/glock)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine"
 	access = access_armory
@@ -200,7 +203,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/magazine/glock/rubber,
 					/obj/item/ammo_box/magazine/glock/rubber,
 					/obj/item/ammo_box/magazine/glock/rubber)
-	additional_costs = 300
+	additional_costs = 60
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine (rubber)"
 	access = access_brig
@@ -212,7 +215,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/tank/phoron,
 					/obj/item/weapon/tank/phoron,
 					/obj/item/weapon/tank/phoron)
-	additional_costs = 1050
+	additional_costs = 210
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Experimental weapons crate"
 	access = access_heads
@@ -224,7 +227,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/helmet,
 					/obj/item/clothing/suit/storage/flak,
 					/obj/item/clothing/suit/storage/flak)
-	additional_costs = 800
+	additional_costs = 160
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Armor crate"
 	access = access_brig
@@ -250,7 +253,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/suit/armor/riot)
-	additional_costs = 5300
+	additional_costs = 200
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Riot gear crate"
 	access = access_armory
@@ -259,7 +262,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/mind_shields
 	name = "Mind shields implant crate"
 	contains = list (/obj/item/weapon/storage/lockbox/mind_shields)
-	additional_costs = 4300
+	additional_costs = 800
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Mind shields implant crate"
 	access = access_armory
@@ -268,7 +271,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/loyalty
 	name = "Loyalty implant crate"
 	contains = list (/obj/item/weapon/storage/lockbox/loyalty)
-	additional_costs = 7300
+	additional_costs = 1400
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Loyalty implant crate"
 	access = access_armory
@@ -282,7 +285,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/helmet/bulletproof,
 					/obj/item/weapon/gun/projectile/shotgun,
 					/obj/item/weapon/gun/projectile/shotgun)
-	additional_costs = 4300
+	additional_costs = 860
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Ballistic gear crate"
 	access = access_armory
@@ -296,7 +299,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/helmet/laserproof,
 					/obj/item/weapon/gun/energy/sniperrifle,
 					/obj/item/weapon/gun/energy/sniperrifle)
-	additional_costs = 7500
+	additional_costs = 1500
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Energy marksman crate"
 	access = access_armory
@@ -314,7 +317,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/eight_shells/stunshot,
 					/obj/item/ammo_box/eight_shells/stunshot,
 					/obj/item/ammo_box/eight_shells/stunshot)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_name = "Shotgun shells (non-lethal) crate"
 	group = "Security"
 
@@ -326,7 +329,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/eight_shells,
 					/obj/item/ammo_box/eight_shells,
 					/obj/item/ammo_box/eight_shells)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure
 	access = access_armory
 	group = "Security"
@@ -339,7 +342,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/eight_shells/buckshot,
 					/obj/item/ammo_box/eight_shells/buckshot,
 					/obj/item/ammo_box/eight_shells/buckshot)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure
 	access = access_armory
 	group = "Security"
@@ -351,7 +354,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/eight_shells/incendiary,
 					/obj/item/ammo_box/eight_shells/incendiary,
 					/obj/item/ammo_box/eight_shells/incendiary,)
-	additional_costs = 1300
+	additional_costs = 260
 	hidden = TRUE
 	group = "Security"
 
@@ -359,7 +362,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "40x46mm rubber grenades"
 	contains = list(/obj/item/weapon/storage/box/r4046/rubber,
 					/obj/item/weapon/storage/box/r4046/rubber)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "40x46mm rubber grenades"
 	access = access_armory
@@ -369,7 +372,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 					/obj/item/weapon/storage/box/r4046/rubber)
-	additional_costs = 2300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "m79 grenade launcher"
 	access = access_armory
@@ -379,7 +382,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "ion rifles"
 	contains = list(/obj/item/weapon/gun/energy/ionrifle,
 					/obj/item/weapon/gun/energy/ionrifle)
-	additional_costs = 13700
+	additional_costs = 2500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "ion rifles crate"
 	access = access_armory
@@ -393,7 +396,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/helmet/laserproof,
 					/obj/item/weapon/gun/energy/gun,
 					/obj/item/weapon/gun/energy/gun)
-	additional_costs = 4300
+	additional_costs = 860
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Experimental energy gear crate"
 	access = access_armory
@@ -407,7 +410,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/helmet/bulletproof,
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/suit/armor/riot)
-	additional_costs = 2800
+	additional_costs = 460
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Experimental armor crate"
 	access = access_armory
@@ -419,7 +422,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure/gear
 	crate_name = "Security barrier crate"
 	group = "Security"
@@ -430,7 +433,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen)
-	additional_costs = 1300
+	additional_costs = 260
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "wall shield generators crate"
 	access = access_teleporter
@@ -453,7 +456,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/shockmines
 	name = "Shock Mines"
-	additional_costs = 2300
+	additional_costs = 200
 	contains = list(/obj/item/weapon/storage/box/mines/shock)
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Shock Mines Crate"
@@ -805,7 +808,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/metal50
 	name = "50 metal sheets"
 	contains = list(/obj/item/stack/sheet/metal)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Metal sheets crate"
 	group = "Engineering"
@@ -813,7 +816,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/glass50
 	name = "50 glass sheets"
 	contains = list(/obj/item/stack/sheet/glass)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Glass sheets crate"
 	group = "Engineering"
@@ -821,7 +824,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/wood50
 	name = "50 wooden planks"
 	contains = list(/obj/item/stack/sheet/wood)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
@@ -831,7 +834,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/stack/tile/carpet, /obj/item/stack/tile/carpet/black, /obj/item/stack/tile/carpet/purple, /obj/item/stack/tile/carpet/orange, /obj/item/stack/tile/carpet/green,
 					/obj/item/stack/tile/carpet/blue, /obj/item/stack/tile/carpet/blue2, /obj/item/stack/tile/carpet/red, /obj/item/stack/tile/carpet/cyan
 	)
-	amount = 50
+	sheet_amount = 50
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Carpet crate"
 	group = "Engineering"
@@ -846,14 +849,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 			var/n_item = new item(C)
 			if(istype(n_item, /obj/item/stack/tile))
 				var/obj/item/stack/sheet/n_sheet = n_item
-				n_sheet.set_amount(amount)
+				n_sheet.set_amount(sheet_amount)
 	else
 		for(var/i in 1 to num_contained)
 			item = pick(L)
 			var/n_item = new item(C)
 			if(istype(n_item, /obj/item/stack/tile))
 				var/obj/item/stack/sheet/n_sheet = n_item
-				n_sheet.set_amount(amount)
+				n_sheet.set_amount(sheet_amount)
 
 /datum/supply_pack/electrical
 	name = "Electrical maintenance crate"
@@ -1118,7 +1121,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/bonebreaker
 	name = "BB EX-01 crate"
 	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/bonebreaker)
-	cost = 5000
+	cost = 1000
 	crate_name = "BB EX-01 crate"
 	group = "Medical / Science"
 	hidden = TRUE
@@ -1831,7 +1834,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	                /obj/item/toy/crossbow,
 	                /obj/item/toy/katana)
 	name = "Toy Crate"
-	additional_costs = 4000
+	additional_costs = 200
 	crate_name ="Toy crate"
 	group = "Miscellaneous"
 
@@ -1895,7 +1898,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/tank/oxygen,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
-	additional_costs = 9300
+	additional_costs = 1800
 	crate_name = "Xeno liquidator crate"
 	group = "xeno"	//there is no such category, so these crates will not be visible in the console
 	hidden = TRUE
@@ -1913,7 +1916,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
-	additional_costs = 9300
+	additional_costs = 1800
 	crate_name = "Xeno arsonist crate"
 	group = "xeno"
 	hidden = TRUE
@@ -1932,7 +1935,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/k5000,
 		/obj/item/weapon/disk/smartlight_programm/k6000,
 	)
-	additional_costs = 5000
+	additional_costs = 1000
 	group = "Operations"
 
 /datum/supply_pack/smartlight_neon
@@ -1941,7 +1944,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/neon,
 		/obj/item/weapon/disk/smartlight_programm/neon_dark,
 	)
-	additional_costs = 10000
+	additional_costs = 2000
 	group = "Operations"
 
 /datum/supply_pack/smartlight_blue
@@ -1950,7 +1953,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/neon,
 		/obj/item/weapon/disk/smartlight_programm/neon_dark,
 	)
-	additional_costs = 10000
+	additional_costs = 2000
 	group = "Operations"
 
 /datum/supply_pack/smartlight_shadows
@@ -1959,5 +1962,5 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/shadows_soft,
 		/obj/item/weapon/disk/smartlight_programm/shadows_hard,
 	)
-	additional_costs = 10000
+	additional_costs = 2000
 	group = "Operations"
