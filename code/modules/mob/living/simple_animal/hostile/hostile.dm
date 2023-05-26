@@ -41,9 +41,9 @@
 	if(stat == DEAD)
 		to_chat(user, "<span class='danger'>Кажется, мертв.</span>")
 	else if(health <= maxHealth * 0.2)
-		to_chat(user, "<span class='danger'>Выглядит сильно побитым.</span>")
+		to_chat(user, "<span class='danger'>Кажется, он сильно ранен.</span>")
 	else if(health <= maxHealth * 0.6)
-		to_chat(user, "<span class='warning'>Похоже, немного побит.</span>")
+		to_chat(user, "<span class='warning'>Похоже, ранен.</span>")
 	else if(health <= maxHealth * 0.9)
 		to_chat(user, "<span class='notice'>Виднеется пара царапин.</span>")
 

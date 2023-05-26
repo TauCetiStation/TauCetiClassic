@@ -90,7 +90,7 @@
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/megacarp.dmi'
-	name = "Мега карп!"
+	name = "Mega Space Carp"
 	desc = "Свирепое и клыкастое существо, напоминающее акулу. Кажется, оно очень опасное..."
 	icon_state = "megacarp"
 	icon_living = "megacarp"

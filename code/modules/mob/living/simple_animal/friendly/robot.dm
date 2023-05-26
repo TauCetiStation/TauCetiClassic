@@ -66,7 +66,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 
 /mob/living/simple_animal/det5/death()
 	..()
-	visible_message("<span class='bold'>[src]</span> бикает <span class='bold'>Д-д-д-данные получены. У-у-у-уничтожение...</span>")
+	visible_message("<span class='bold'>[src]</span> пищит <span class='bold'>Д-д-д-данные получены. У-у-у-уничтожение...</span>")
 	new /obj/effect/decal/cleanable/blood/gibs/robot(loc)// drob blood robots
 	new /obj/effect/gibspawner/robot(loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
