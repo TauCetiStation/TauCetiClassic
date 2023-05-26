@@ -8,13 +8,17 @@
 
 /mob/living/carbon/human/atom_init()
 	. = ..()
-	handle_socialization()
+	set_social_state(social_state)
 
 /mob/living/carbon/human/Destroy()
 	deltimer(conversation_timer)
 	return ..()
 
 /mob/living/carbon/human/proc/set_social_state(state)
+	if(!species.flags[IS_SOCIAL])
+		return
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
 	switch(state)
 		if(SOCIALIZATION_NORMAL)
 			social_state = SOCIALIZATION_NORMAL
@@ -43,21 +47,12 @@
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
 
 /mob/living/carbon/human/proc/handle_prolonged_no_socialization()
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return
 	set_social_state(SOCIALIZATION_VERY_LONELY)
 
 /mob/living/carbon/human/proc/handle_no_socialization()
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return
 	set_social_state(SOCIALIZATION_LONELY)
 
 /mob/living/carbon/human/proc/handle_socialization(mob/hearer)
-	if(!species.flags[IS_SOCIAL])
-		return
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return
-
 	var/new_social_state = SOCIALIZATION_LONELY
 	if(ishuman(hearer))
 		new_social_state = SOCIALIZATION_NORMAL
