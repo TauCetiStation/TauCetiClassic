@@ -1,7 +1,7 @@
 /mob/living/simple_animal/mouse
 	name = "mouse"
 	real_name = "mouse"
-	desc = "It's a small, disease-ridden rodent."
+	desc = null
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
@@ -82,7 +82,8 @@
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
 	icon_move = "mouse_[body_color]_move"
-	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
+	if(!desc)
+		desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0
@@ -219,3 +220,28 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/rat/atom_init()
 	. = ..()
 	AddComponent(/datum/component/gnawing)
+
+/mob/living/simple_animal/mouse/nuke
+	name = "nuclear mousperative"
+	desc = "Syndicate's failed experiment. Some mad scientist tried to modify murine cheese craving to nuclear desire. Sadly, these rodents proved to be too small and stupid to properly insert the disk into a bomb."
+	icon_state = "mouse_nuke"
+	icon_living = "mouse_nuke"
+	icon_move = "mouse_nuke_move"
+	holder_type = /obj/item/weapon/holder/mouse/nuke
+
+	changes_color = FALSE
+
+	min_oxy = 0
+	max_tox = 0
+	max_co2 = 0
+	minbodytemp = 0
+	maxbodytemp = 500
+	melee_damage = 1
+	maxHealth = 30
+	health = 30
+	speak = list("Beep!","BEEP!","Beep?")
+
+/mob/living/simple_animal/mouse/nuke/death()
+	..()
+	new /obj/effect/gibspawner/generic(loc)
+	qdel(src)

@@ -45,6 +45,7 @@
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
 #define NUKE_OP_LEADER "Nuclear Operative Leader"
+#define LONE_OP "Solo Nuclear Operative"
 #define NINJA "Space Ninja"
 #define PROP "Prop"
 #define REV "Revolutionary"

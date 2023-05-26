@@ -92,3 +92,19 @@
 		P.loc = H.loc
 		H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
 		H.update_icons()
+
+/datum/role/operative/lone
+	name = LONE_OP
+	id = LONE_OP
+	nuclear_outfit = /datum/outfit/nuclear/solo
+	skillset_type = /datum/skillset/max
+
+/datum/role/operative/lone/forgeObjectives()
+	if(!..())
+		return FALSE
+	switch(rand(1,100))
+		if(1 to 50)
+			AppendObjective(/datum/objective/hijack)
+
+		if(51 to 100)
+			AppendObjective(/datum/objective/nuclear)
