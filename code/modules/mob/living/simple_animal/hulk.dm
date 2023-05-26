@@ -10,8 +10,8 @@
 	immune_to_ssd = 1
 	w_class = SIZE_MASSIVE
 
-	speak_emote = list("кричит")
-	emote_hear = list("кричит")
+	speak_emote = list("рычит")
+	emote_hear = list("рычит")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
