@@ -1950,8 +1950,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/smartlight_blue
 	name = "Smartlight programms set: Blue"
 	contains = list(
-		/obj/item/weapon/disk/smartlight_programm/neon,
-		/obj/item/weapon/disk/smartlight_programm/neon_dark,
+		/obj/item/weapon/disk/smartlight_programm/blue_night,
+		/obj/item/weapon/disk/smartlight_programm/soft_blue,
 	)
 	additional_costs = 2000
 	group = "Operations"
