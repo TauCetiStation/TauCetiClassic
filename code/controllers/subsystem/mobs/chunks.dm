@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(chunks)
 	var/tick = 0
 	var/list/grid = list()
 
-/datum/controller/subsystem/chunks/fire() 
+/datum/controller/subsystem/chunks/fire()
 	while(grid.len < world.maxz)
 		add_level()
 
@@ -36,15 +36,15 @@ SUBSYSTEM_DEF(chunks)
 		return
 
 	var/datum/chunk/zone = grid[T.z][GRID_ELEM(T.x)][GRID_ELEM(T.y)]
-	
+
 	zone.add_faction(L.faction)
 
-/datum/controller/subsystem/chunks/proc/has_enemy_faction(mob/M, range)
-	var/turf/T = get_turf(M)
+/datum/controller/subsystem/chunks/proc/has_enemy_faction(atom/A, faction ,range)
+	var/turf/T = get_turf(A)
 
 	if(!T || T.z > grid.len)
 		return FALSE
-	
+
 	var/z_grid = grid[T.z]
 	var/x_start = GRID_ELEM(max(1, (T.x - range)))
 	var/x_end = GRID_ELEM(min(world.maxx, T.x + range))
@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(chunks)
 		for(var/y_ in y_start to y_end)
 			var/datum/chunk/chunk = z_grid[x_][y_]
 
-			if(chunk.has_enemy_faction(M.faction))
+			if(chunk.has_enemy_faction(faction))
 				return TRUE
 
 	return FALSE
