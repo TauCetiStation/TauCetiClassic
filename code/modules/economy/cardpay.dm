@@ -202,18 +202,18 @@
 		if("togglereset")
 			reset = !reset
 			if(reset)
-				to_chat(user, "<span class='notice'>Включён режим оплаты.</span>")
+				to_chat(usr, "<span class='notice'>Включён режим оплаты.</span>")
 			else
-				to_chat(user, "<span class='notice'>Включён режим пожертвований.</span>")
+				to_chat(usr, "<span class='notice'>Включён режим пожертвований.</span>")
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("toggleenteraccount")
 			display_numbers = 0
 			enter_account = !enter_account
 			if(enter_account)
-				to_chat(user, "<span class='notice'>Включён режим ввода аккаунта.</span>")
+				to_chat(usr, "<span class='notice'>Включён режим ввода аккаунта.</span>")
 			else
-				to_chat(user, "<span class='notice'>Включён режим ввода цены.</span>")
+				to_chat(usr, "<span class='notice'>Включён режим ввода цены.</span>")
 			update_holoprice(clear = TRUE)
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
