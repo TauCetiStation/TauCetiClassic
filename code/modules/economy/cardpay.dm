@@ -212,7 +212,7 @@
 		holoprice.icon = 'icons/effects/32x32.dmi'
 		holoprice.icon_state = "blank"
 	else
-		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Arial Black';text-align:center;" valign="top">[pay_amount]$</div>"}
+		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[pay_amount]$</div>"}
 		holoprice.icon = 'icons/obj/device.dmi'
 		holoprice.icon_state = "holo_overlay"
 	add_overlay(holoprice)
