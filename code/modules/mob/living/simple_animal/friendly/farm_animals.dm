@@ -310,7 +310,7 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/turkey
 	name = "turkey"
-	desc = "Бенджамин Франклин гордился бы тобой."
+	desc = "Как курица, только индейская. "
 	icon_state = "turkey"
 	icon_living = "turkey"
 	icon_dead = "turkey_dead"
