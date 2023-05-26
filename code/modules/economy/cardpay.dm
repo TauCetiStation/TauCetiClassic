@@ -91,7 +91,10 @@
 	if(D)
 		if(D.security_level > 0)
 			var/time_for_pin = world.time
-			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
+			if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == D.remote_access_pin)
+				attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
+			else
+				attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
 			if(!usr || !usr.Adjacent(src))
 				return
 			if(world.time - time_for_pin > 300)
@@ -180,6 +183,7 @@
 			if(display_numbers == 0)
 				pay_amount = 0
 			display_numbers = 0
+			update_holoprice(clear = TRUE)
 			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("approveprice")
@@ -197,11 +201,20 @@
 				return TRUE
 		if("togglereset")
 			reset = !reset
+			if(reset)
+				to_chat(user, "<span class='notice'>Включён режим оплаты.</span>")
+			else
+				to_chat(user, "<span class='notice'>Включён режим пожертвований.</span>")
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("toggleenteraccount")
 			display_numbers = 0
 			enter_account = !enter_account
+			if(enter_account)
+				to_chat(user, "<span class='notice'>Включён режим ввода аккаунта.</span>")
+			else
+				to_chat(user, "<span class='notice'>Включён режим ввода цены.</span>")
+			update_holoprice(clear = TRUE)
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 
