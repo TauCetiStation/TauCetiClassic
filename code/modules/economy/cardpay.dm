@@ -49,6 +49,18 @@
 		visible_message("<span class='info'>[usr] прикладывает КПК к терминалу.</span>")
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		scan_card(Card)
+	else if(istype(I, /obj/item/weapon/ewallet))
+		var/obj/item/weapon/ewallet/Wallet = I
+		visible_message("<span class='info'>[usr] прикладывает чип оплаты к терминалу.</span>")
+		if(!enter_account)
+			scan_charge_card(get_account(Wallet.account_number))
+			return
+		if(!get_account(Wallet.account_number))
+			to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к чипу.</span>")
+			return
+		linked_account = Wallet.account_number
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
 	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
 		var/obj/item/weapon/wrench/Tool = I
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
@@ -72,6 +84,22 @@
 	. = ..()
 
 	set_dir(turn(dir,-90))
+
+/obj/item/device/cardpay/proc/scan_charge_card(datum/money_account/D)
+	if(!linked_account)
+		visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого аккаунта.</span>")
+		return
+	var/datum/money_account/Acc = get_account(linked_account)
+	if(!Acc || Acc.suspended)
+		visible_message("[bicon(src)] [name] <span class='warning'>Подключённый аккаунт заблокирован.</span>")
+		return
+	if(pay_amount <= 0)
+		return
+
+	var/pay_holder = pay_amount
+	if(D)
+		icon_state = "card-pay-processing"
+		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
 	if(!linked_account)
@@ -194,6 +222,9 @@
 						if(D)
 							linked_account = display_numbers
 				else
+					if(!linked_account)
+						visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого аккаунта.</span>")
+						return
 					pay_amount = display_numbers
 					update_holoprice(clear = FALSE)
 				display_numbers = 0
