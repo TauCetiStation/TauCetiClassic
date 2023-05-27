@@ -171,7 +171,7 @@
 
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
-#define isabductor(H) HAS_TRAIT(H, TRAIT_ABDUCTOR_OP)
+#define isabductor(H) HAS_TRAIT(H, TRAIT_ABDUCTOR_MEMBER)
 
 #define isabductorsci(H) HAS_TRAIT(H, TRAIT_ABDUCTOR_OP_SCIENTIST)
 
@@ -221,11 +221,11 @@
 
 #define isgangster(H) HAS_TRAIT(H, TRAIT_FAMILIES_GANGSTER)
 
-#define isgangsterlead(H) HAS_TRAIT(H, TRAIT_FAMILIES_LEADER)
+#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
 
-#define isanygangster(H) HAS_TRAIT(H, TRAIT_FAMILIES_MEMBER)
+#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
 
-#define isgundealer(H) HAS_TRAIT(H, TRAIT_SYNDICATE_GUN_DEALER)
+#define isgundealer(H) isrole(GANGSTER_DEALER, H)
 
 #define isanycop(H) HAS_TRAIT(H, TRAIT_COP_PERSON)
 
