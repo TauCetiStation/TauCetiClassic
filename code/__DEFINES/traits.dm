@@ -188,11 +188,207 @@
 /*
  * Used for items that have different behaviour when they are two-hand wielded
  */
+// atom traits
+#define TRAIT_XENO_FUR "xeno_fur"
+
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
 
 // item trait
 #define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
 
+// gamemodes roles traits
+/// overall
+#define TRAIT_ABDUCTOR_MEMBER "abductor_member"
+/// child
+#define TRAIT_ABDUCTOR_OP "abductor_op"
+#define TRAIT_ABDUCTOR_ABDUCTED "abductor_abducted"
+/// variables
+#define TRAIT_ABDUCTOR_OP_AGENT "abductor_op_agent"
+#define TRAIT_ABDUCTOR_OP_SCIENTIST "abductor_op_scientist"
+#define TRAIT_ABDUCTOR_ASSISTANT "abductor_assistant"
+#define TRAIT_ABDUCTOR_VISITOR "abductor_visitor"
+#define TRAIT_ABDUCTOR_RESEARCH_MISSION "abductor_research_mission"
+
+/// overall
+#define TRAIT_ALIEN_HIVEPART "alien_hivepart"
+/// child
+#define TRAIT_ALIEN_SPECIMEN "alien_specimen"
+/// variables
+#define TRAIT_ALIEN_ROUNDSTART "alien_roundstart"
+#define TRAIT_ALIEN_MIDROUND "alien_midround"
+#define TRAIT_ALIEN_REAL_INFESTATION "alien_real_infestation"
+
+/// overall
+#define TRAIT_BLOB_HIVEMIND_MEMBER "blob_hivemind_member"
+/// child
+#define TRAIT_BLOB_HIVEMIND_CORE "blob_hivemind_core"
+#define TRAIT_BLOB_HIVEMIND_PAWN "blob_hivemind_pawn"
+/// variables
+#define TRAIT_BLOB_HIVEMIND_CORE_MIDROUND "blob_hivemind_core_midround"
+
+/// overall
+#define TRAIT_BORER_CREATURE "borer_creature"
+/// child
+#define TRAIT_BORER_PARASITE "borer_parasite"
+/// variables
+#define TRAIT_BORER_MIDROUND "borer_midround"
+#define TRAIT_BORER_REAL_INFESTATION "borer_real_infestation"
+
+/// overall
+#define TRAIT_CHANGELING_INDIVIDUAL "changeling_individual"
+/// child
+#define TRAIT_CHANGELING_HIVEMIND_MEMBER "changeling_hivemind_member"
+/// variables
+#define TRAIT_CHANGELING_SYNDICATE_AGENT "changeling_syndicate_agent"
+#define TRAIT_CHANGELING_RESEARCH_MISSION "changeling_research_mission"
+#define TRAIT_CHANGELING_REAL_INFESTATION "changeling_real_infestation"
+
+/// overall
+#define TRAIT_COP_PERSON "cop_person"
+/// child
+#define TRAIT_COP_UNDERCOVER "cop_undercover"
+#define TRAIT_COP_SWAT "cop_swat"
+/// variables
+#define TRAIT_COP_ARMED_OFFICER "cop_armed_officer"
+#define TRAIT_COP_TACTICAL_GROUP_FIGHTER "cop_tactical_group_fighter"
+#define TRAIT_COP_INSPECTOR "cop_inspector"
+#define TRAIT_COP_MFNT_FIGHTER "cop_mfnt_fighter"
+#define TRAIT_COP_ROUNDSTART "cop_roundstart"
+#define TRAIT_COP_LATEJOIN "cop_latejoin"
+
+/// overall
+#define TRAIT_CULTIST_MEMBER "cultist_member"
+/// child
+#define TRAIT_CULTIST_DEDICATED "cultist_dedicated"
+#define TRAIT_CULTIST_HARBINGER "cultist_harbinger"
+#define TRAIT_CULTIST_HIGHPRIEST "cultist_highpriest"
+/// variables
+#define TRAIT_CULTIST_ROUNDSTART "cultist_roundstart"
+#define TRAIT_CULTIST_REVOLUTION_OF_NARSIE "cultist_revolution_of_narsie"
+#define TRAIT_CULTIST_CONFLUX "cultist_conflux"
+
+/// overall
+#define TRAIT_CUSTOM_ROLE "custom_role"
+/// variables
+#define TRAIT_CUSTOM_ROLE_ROUNDSTART "custom_role_roundstart"
+
+/// overall
+#define TRAIT_FAMILIES_MEMBER "families_member"
+/// child
+#define TRAIT_FAMILIES_GANGSTER "families_gangster"
+#define TRAIT_FAMILIES_LEADER "families_leader"
+/// variables
+#define TRAIT_FAMILIES_DUTCH "families_dutch"
+#define TRAIT_FAMILIES_GREEN "families_green"
+#define TRAIT_FAMILIES_HENCHMEN "families_henchmen"
+#define TRAIT_FAMILIES_ITALIAN_MOB "families_italian_mob"
+#define TRAIT_FAMILIES_JACKBROS "families_jackbros"
+#define TRAIT_FAMILIES_PURPLE "families_purple"
+#define TRAIT_FAMILIES_RED "families_red"
+#define TRAIT_FAMILIES_RUSSIAN_MAFIA "families_russian_mafia"
+#define TRAIT_FAMILIES_SNAKES "families_snakes"
+#define TRAIT_FAMILIES_VAGOS "families_vagos"
+#define TRAIT_FAMILIES_YAKUZA "families_yakuza"
+
+/// overall
+#define TRAIT_HEIST_CREWMEMBER "heist_crewmember"
+/// variables
+#define TRAIT_HEIST_RAIDER_MIDROUND "heist_raider_midround"
+#define TRAIT_HEIST_SABOTEUR "heist_saboteur"
+
+/// overall
+#define TRAIT_MALFUNCTION_SILICON "malfunction_silicon"
+/// child
+#define TRAIT_MALFUNCTION_AI "malfunction_ai"
+#define TRAIT_MALFUNCTION_BOT "malfunction_bot"
+
+/// overall
+#define TRAIT_SPRIDER_CLAN_MEMBER "spider_clan_member"
+/// child
+#define TRAIT_SPRIDER_CLAN_NINJA "spider_clan_ninja"
+
+/// overall
+#define TRAIT_PROP_INDIVIDUAL "prop_individual"
+
+/// overall
+#define TRAIT_REPLICATOR_HIVEMIND_MEMBER "replicator_hivemind_member"
+/// child
+#define TRAIT_REPLICATOR_UNIT "replicator_unit"
+
+/// overall
+#define TRAIT_REVOLUTION_PARTICIPANT "revolution_participant"
+/// child
+#define TRAIT_REVOLUTION_LEADER "revolution_leader"
+#define TRAIT_REVOLUTION_PROTESTER "revolution_protester"
+/// variables
+#define TRAIT_REVOLUTION_NARSIE_REVOLUTIONEER "revolution_narsie_revolutioneer"
+
+/// overall
+#define TRAIT_SHADOWLING_GROUP_MEMBER "shadowling_group_member"
+/// child
+#define TRAIT_SHADOWLING_MASTER "shadowling_master"
+#define TRAIT_SHADOWLING_CREWSLAVE "shadowling_crewslave"
+
+/// overall
+#define TRAIT_SLAVE_PERSON "slave_person"
+
+/// overall
+#define TRAIT_NUKE_OP "nuke_op"
+/// child
+#define TRAIT_NUKE_TEAMSTRIKE_MEMBER "nuke_teamstrike_member"
+#define TRAIT_NUKE_OP_LONE "nuke_op_lone"
+/// variables
+#define TRAIT_NUKE_TEAMSTRIKE_LEADER "nuke_teamstrike_leader"
+#define TRAIT_NUKE_OP_ROUNDSTART "nuke_op_roundstart"
+#define TRAIT_NUKE_OP_MIDROUND "nuke_op_midround"
+#define TRAIT_NUKE_OP_CROSSFIRE "nuke_op_crossfire"
+
+/// overall
+#define TRAIT_STRIKE_TEAMMATE "strike_teammate"
+/// child
+#define TRAIT_STRIKE_TEAM_MEMBER "strike_team_member"
+#define TRAIT_STRIKE_TEAM_LEADER "strike_team_leader"
+
+/// overall
+#define TRAIT_SYNDICATE_AGENT "syndicate_agent"
+/// child
+#define TRAIT_SYNDICATE_TRAITOR "syndicate_traitor"
+#define TRAIT_SYNDICATE_GUN_DEALER "syndicate_gun_dealer"
+/// variables
+#define TRAIT_SYNDICATE_ROUNDSTART "syndicate_roundstart"
+#define TRAIT_SYNDICATE_MIDROUND "syndicate_midround"
+#define TRAIT_SYNDICATE_SLEEPER "syndicate_sleeper"
+#define TRAIT_SYNDICATE_WISHGRANTED "syndicate_wishgranted"
+#define TRAIT_SYNDICATE_BEACONED "syndicate_beaconed"
+#define TRAIT_SYNDICATE_CHANGELING_TEAMMATE "syndicate_changeling_teammate"
+#define TRAIT_SYNDICATE_FUSS "syndicate_fuss"
+
+/// overall
+#define TRAIT_WIZARD_PARTY "wizard_party"
+/// child
+#define TRAIT_WIZARD_MASTER "wizard_master"
+#define TRAIT_WIZARD_APPERNTICE "wizard_apprentice"
+/// variables
+#define TRAIT_WIZARD_CONFLUX "wizard_conflux"
+#define TRAIT_WIZARD_VISITOR "wizard_visitor"
+#define TRAIT_WIZARD_FUSS "wizard_fuss"
+
+/// overall
+#define TRAIT_ZOMBIETIDE_MEMBER "zombietide_member"
+/// variables
+#define TRAIT_ZOMBIE_ROUNDSTART "zombietide_roundstart"
+
+/// overall
+#define TRAIT_ELITE_SQUAD_MEMBER "elite_squad_member"
+/// child
+#define TRAIT_ELITE_SQUAD_OP "elite_squad_op"
+
+/// overall
+#define TRAIT_DEATHSQUAD_MEMBER "deathsquad_member"
+/// child
+#define TRAIT_DEATHSQUAD_OP "deathsquad_op"
+
+// trait sources
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
@@ -200,6 +396,7 @@
 #define QUALITY_TRAIT      "quality"
 #define TWOHANDED_TRAIT    "twohanded"
 #define RELIGION_TRAIT     "religion"
+#define GAMEMODE_TRAIT     "gamemode"
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
@@ -210,11 +407,6 @@
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 #define FEAR_TRAIT         "fear"
-
-// atom traits
-#define TRAIT_XENO_FUR "xeno_fur"
-
-// trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"
 #define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
 #define GENETIC_MUTATION_TRAIT "genetic"
