@@ -256,3 +256,10 @@
 		holoprice.icon = 'icons/obj/device.dmi'
 		holoprice.icon_state = "holo_overlay"
 	add_overlay(holoprice)
+
+/obj/item/device/cardpay/examine(mob/user)
+	. = ..()
+	if(linked_account)
+		var/datum/money_account/Acc = get_account(linked_account)
+	if(Acc)
+		to_chat(user, "Принадлежит [Acc.owner_name] ([Acc.account_number])")
