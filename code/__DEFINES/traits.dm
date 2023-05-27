@@ -260,9 +260,9 @@
 #define TRAIT_CULTIST_MEMBER "cultist_member"
 /// child
 #define TRAIT_CULTIST_DEDICATED "cultist_dedicated"
-#define TRAIT_CULTIST_HARBINGER "cultist_harbinger"
 #define TRAIT_CULTIST_HIGHPRIEST "cultist_highpriest"
 /// variables
+#define TRAIT_CULTIST_HARBINGER "cultist_harbinger"
 #define TRAIT_CULTIST_ROUNDSTART "cultist_roundstart"
 #define TRAIT_CULTIST_REVOLUTION_OF_NARSIE "cultist_revolution_of_narsie"
 #define TRAIT_CULTIST_CONFLUX "cultist_conflux"
