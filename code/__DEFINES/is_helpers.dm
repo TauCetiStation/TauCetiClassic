@@ -171,65 +171,65 @@
 
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
-#define isabductor(H) isrolebytype(/datum/role/abductor, H)
+#define isabductor(H) HAS_TRAIT(H, TRAIT_ABDUCTOR_OP)
 
-#define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
+#define isabductorsci(H) HAS_TRAIT(H, TRAIT_ABDUCTOR_OP_SCIENTIST)
 
-#define isabductoragent(H) isrole(ABDUCTOR_AGENT, H)
+#define isabductoragent(H) HAS_TRAIT(H, TRAIT_ABDUCTOR_OP_AGENT)
 
-#define isshadowling(H) isrole(SHADOW, H)
+#define isshadowling(H) HAS_TRAIT(H, TRAIT_SHADOWLING_MASTER)
 
-#define isshadowthrall(H) isrole(SHADOW_THRALL, H)
+#define isshadowthrall(H) HAS_TRAIT(H, TRAIT_SHADOWLING_CREWSLAVE)
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
 #define iseminence(A) (istype(A, /mob/camera/eminence))
 
-#define isvoxraider(H) isrole(VOXRAIDER, H)
+#define isvoxraider(H) HAS_TRAIT(H, TRAIT_HEIST_CREWMEMBER)
 
-#define ischangeling(H) isrolebytype(/datum/role/changeling, H)
+#define ischangeling(H) HAS_TRAIT(H, TRAIT_CHANGELING_INDIVIDUAL)
 
-#define isanyrev(H) (isrev(H) || isrevhead(H))
+#define isanyrev(H) HAS_TRAIT(H, TRAIT_REVOLUTION_PARTICIPANT)
 
-#define isrev(H) isrole(REV, H)
+#define isrev(H) HAS_TRAIT(H, TRAIT_REVOLUTION_PROTESTER)
 
-#define isrevhead(H) isrole(HEADREV, H)
+#define isrevhead(H) HAS_TRAIT(H, TRAIT_REVOLUTION_LEADER)
 
-#define istraitor(H) isrole(TRAITOR, H)
+#define istraitor(H) HAS_TRAIT(H, TRAIT_SYNDICATE_AGENT)
 
-#define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
+#define iselitesyndie(H) HAS_TRAIT(H, TRAIT_ELITE_SQUAD_MEMBER)
 
-#define ismalf(H) isrole(MALF, H)
+#define ismalf(H) HAS_TRAIT(H, TRAIT_MALFUNCTION_AI)
 
-#define isnukeop(H) (isrole(NUKE_OP, H) || isrole(NUKE_OP_LEADER, H) || isrole(SYNDIESQUADIE, H))
+#define isnukeop(H) HAS_TRAIT(H, TRAIT_NUKE_OP) || HAS_TRAIT(H, TRAIT_ELITE_SQUAD_MEMBER)
 
-#define iswizard(H) isrole(WIZARD, H)
+#define iswizard(H) HAS_TRAIT(H, TRAIT_WIZARD_MASTER)
 
-#define iswizardapprentice(H) isrole(WIZ_APPRENTICE, H)
+#define iswizardapprentice(H) HAS_TRAIT(H, TRAIT_WIZARD_APPERNTICE)
 
-#define isdeathsquad(H) isrole(DEATHSQUADIE, H)
+#define isdeathsquad(H) HAS_TRAIT(H, TRAIT_DEATHSQUAD_MEMBER)
 
-#define isninja(H) isrole(NINJA, H)
+#define isninja(H) HAS_TRAIT(H, TRAIT_SPRIDER_CLAN_NINJA)
 
-#define isERT(H) isrole(RESPONDER, H)
+#define isERT(H) HAS_TRAIT(H, TRAIT_STRIKE_TEAMMATE)
 
-#define isrolezombie(H) isrole(ZOMBIE, H)
+#define isrolezombie(H) HAS_TRAIT(H, TRAIT_ZOMBIETIDE_MEMBER)
 
 #define iszombie(H) (H.get_species() in global.all_zombie_species_names)
 
-#define isalien(H) isrole(XENOMORPH, H)
+#define isalien(H) HAS_TRAIT(H, TRAIT_ALIEN_HIVEPART)
 
-#define isgangster(H) isrole(GANGSTER, H)
+#define isgangster(H) HAS_TRAIT(H, TRAIT_FAMILIES_GANGSTER)
 
-#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
+#define isgangsterlead(H) HAS_TRAIT(H, TRAIT_FAMILIES_LEADER)
 
-#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
+#define isanygangster(H) HAS_TRAIT(H, TRAIT_FAMILIES_MEMBER)
 
-#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+#define isgundealer(H) HAS_TRAIT(H, TRAIT_SYNDICATE_GUN_DEALER)
 
-#define isanycop(H) isrolebytype(/datum/role/cop, H)
+#define isanycop(H) HAS_TRAIT(H, TRAIT_COP_PERSON)
 
-#define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
+#define isanyblob(H) HAS_TRAIT(H, TRAIT_BLOB_HIVEMIND_MEMBER)
 
 // BLOB
 
