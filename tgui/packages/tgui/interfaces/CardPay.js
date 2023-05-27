@@ -8,6 +8,7 @@ export const CardPay = (props, context) => {
     numbers,
     reset_numbers,
     enter_account,
+    pay_amount,
   } = data;
   const buttons = [];
   for (let row = 0; row < 3; row++) {
@@ -38,7 +39,7 @@ export const CardPay = (props, context) => {
           m={0.375}
           mb={0.5}
         >
-          {enter_account ? "№"+(numbers) : (numbers)+"$"}
+          {(enter_account || pay_amount > 0) ? "№"+(numbers) : (numbers)+"$"}
         </Box>
         {buttons}
         <Button

@@ -171,6 +171,7 @@
 	data["numbers"] = display_numbers
 	data["reset_numbers"] = reset
 	data["enter_account"] = enter_account
+	data["pay_amount"] = pay_amount
 	return data
 
 /obj/item/device/cardpay/tgui_act(action, params)
@@ -185,9 +186,9 @@
 				num = clamp(num, 0, 9)
 				display_numbers *= 10
 				display_numbers += num
-				if((enter_account || pay_amount) && display_numbers > 999999)
+				if((enter_account || (pay_amount > 0)) && display_numbers > 999999)
 					display_numbers %= 1000000
-				else if(!enter_account && display_numbers > 999)
+				else if(display_numbers > 999)
 					display_numbers %= 1000
 				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 				return TRUE
@@ -201,7 +202,7 @@
 			return TRUE
 		if("approveprice")
 			if(display_numbers > 0)
-				if(enter_account || pay_amount)
+				if(enter_account || (pay_amount > 0))
 					if(display_numbers >= 111111 && display_numbers <= 999999)
 						var/datum/money_account/D = get_account(display_numbers)
 						if(D)
