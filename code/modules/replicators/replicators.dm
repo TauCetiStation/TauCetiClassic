@@ -183,10 +183,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	AddComponent(/datum/component/replicator_regeneration)
 
+	RegisterSignal(src, COMSIG_LIVING_CAN_TRACK, .proc/can_be_tracked)
+
 	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), .proc/on_clientmob_move)
 
+/mob/living/simple_animal/hostile/replicator/proc/can_be_tracked(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
+
 /mob/living/simple_animal/hostile/replicator/Destroy()
-	UnregisterSignal(src, list(COMSIG_CLIENTMOB_MOVE))
+	UnregisterSignal(src, list(COMSIG_CLIENTMOB_MOVE, COMSIG_LIVING_CAN_TRACK))
 
 	global.idle_replicators -= src
 

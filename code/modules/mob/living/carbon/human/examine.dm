@@ -459,8 +459,7 @@
 	for(var/implant in implants)
 		var/obj/item/organ/external/BP = implants[implant]
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
-	if(digitalcamo)
-		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
+
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.isabsorbing)
@@ -597,6 +596,8 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)
+
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 // Only used for humans and other personal of station.
