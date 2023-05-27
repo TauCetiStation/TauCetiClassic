@@ -10,6 +10,18 @@
 
 	logo_state = "malf-logo"
 
+/datum/role/malfAI/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_AI, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/malfAI/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_MALFUNCTION_AI, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
+
 /datum/role/malfAI/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
@@ -86,6 +98,18 @@
 	antag_hud_name = "hudmalborg"
 
 	logo_state = "malf-logo"
+
+/datum/role/malfbot/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_BOT, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/malfbot/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_MALFUNCTION_BOT, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
 
 /datum/role/malfbot/extraPanelButtons()
 	var/dat = ..()

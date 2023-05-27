@@ -22,6 +22,15 @@
 /datum/role/rev/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
 	..()
+	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_PROTESTER, GAMEMODE_TRAIT)
+
+/datum/role/rev/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_REVOLUTION_PROTESTER, GAMEMODE_TRAIT)
+	return TRUE
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
@@ -45,6 +54,18 @@
 /datum/role/rev_leader/New()
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, 1, "rev")
+
+/datum/role/rev_leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_REVOLUTION_LEADER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/rev_leader/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_LEADER, GAMEMODE_TRAIT)
 
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()

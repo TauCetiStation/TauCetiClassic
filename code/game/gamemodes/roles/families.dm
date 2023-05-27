@@ -16,6 +16,18 @@
 	. = ..()
 	package_spawner = new(src)
 
+/datum/role/gangster/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_FAMILIES_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_FAMILIES_GANGSTER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/gangster/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_FAMILIES_MEMBER, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_FAMILIES_GANGSTER, GAMEMODE_TRAIT)
+
 /datum/role/gangster/OnPreSetup()
 	. = ..()
 	var/datum/faction/gang/G = faction
@@ -92,6 +104,16 @@
 	id = GANGSTER_LEADER
 	skillset_type = /datum/skillset/gangster
 
+/datum/role/gangster/leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_FAMILIES_LEADER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/gangster/leader/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_FAMILIES_LEADER, GAMEMODE_TRAIT)
+
 /datum/role/gangster/leader/OnPostSetup(laterole)
 	..()
 	equip_gangster_in_inventory()
@@ -102,6 +124,16 @@
 	required_pref = ROLE_FAMILIES
 	change_to_maximum_skills = TRUE
 	telecrystals = 10
+
+/datum/role/traitor/dealer/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SYNDICATE_GUN_DEALER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/traitor/dealer/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_GUN_DEALER, GAMEMODE_TRAIT)
 
 /datum/role/traitor/dealer/OnPostSetup(laterole)
 	var/mob/living/carbon/human/H = antag.current

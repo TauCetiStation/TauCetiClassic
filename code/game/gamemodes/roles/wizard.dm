@@ -22,6 +22,15 @@
 /datum/role/wizard/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	M.current.ClearSpells()
+	REMOVE_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_WIZARD_MASTER, GAMEMODE_TRAIT)
+
+/datum/role/wizard/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_WIZARD_MASTER, GAMEMODE_TRAIT)
+	return TRUE
 
 /datum/role/wizard/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	var/wizard_name_first = pick(wizard_first)
@@ -154,6 +163,18 @@
 	antag_hud_name = "hudwizard"
 
 	logo_state = "wizard-logo"
+
+/datum/role/wizard_apprentice/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_WIZARD_APPERNTICE, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/wizard_apprentice/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_WIZARD_APPERNTICE, GAMEMODE_TRAIT)
 
 /datum/role/wizard_apprentice/GetScoreboard()
 	. = ..()

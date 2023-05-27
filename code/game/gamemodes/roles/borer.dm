@@ -5,6 +5,18 @@
 
 	logo_state = "borer-logo"
 
+/datum/role/borer/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_BORER_CREATURE, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_BORER_PARASITE, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/borer/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_BORER_CREATURE, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_BORER_PARASITE, GAMEMODE_TRAIT)
+
 /datum/role/borer/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")

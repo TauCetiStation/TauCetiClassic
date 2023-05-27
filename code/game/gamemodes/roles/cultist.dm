@@ -31,6 +31,15 @@
 	var/datum/faction/cult/C = faction
 	if(istype(C))
 		C.religion?.remove_member(M.current)
+	REMOVE_TRAIT(M.current, TRAIT_CULTIST_MEMBER, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_CULTIST_DEDICATED, GAMEMODE_TRAIT)
+
+/datum/role/cultist/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_CULTIST_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_CULTIST_DEDICATED, GAMEMODE_TRAIT)
+	return TRUE
 
 /datum/role/cultist/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -101,3 +110,13 @@
 
 	holy_rank = CULT_ROLE_MASTER
 	skillset_type = /datum/skillset/cultist/leader
+
+/datum/role/cultist/leader/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_CULTIST_HARBINGER, GAMEMODE_TRAIT)
+
+/datum/role/cultist/leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_CULTIST_HARBINGER, GAMEMODE_TRAIT)
+	return TRUE

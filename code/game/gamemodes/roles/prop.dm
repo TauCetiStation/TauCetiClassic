@@ -5,6 +5,16 @@
 
 	logo_state = "change-logoa"
 
+/datum/role/prop/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_PROP_INDIVIDUAL, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/prop/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_PROP_INDIVIDUAL, GAMEMODE_TRAIT)
+
 /datum/role/prop/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "Вы - аморфное существо, которое способно превращаться в любой предмет.")

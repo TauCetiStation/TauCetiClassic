@@ -108,8 +108,27 @@
 		AI.aiRadio.keyslot1 = new /obj/item/device/encryptionkey()
 		AI.aiRadio.recalculateChannels()
 	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_AGENT, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_TRAITOR, GAMEMODE_TRAIT)
+
+/datum/role/traitor/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SYNDICATE_AGENT, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_SYNDICATE_TRAITOR, GAMEMODE_TRAIT)
+	return TRUE
 
 /datum/role/traitor/wishgranter
+
+/datum/role/traitor/wishgranter/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SYNDICATE_WISHGRANTED, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/traitor/wishgranter/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_WISHGRANTED, GAMEMODE_TRAIT)
 
 /datum/role/traitor/wishgranter/forgeObjectives()
 	if(!..())
@@ -120,6 +139,16 @@
 
 /datum/role/traitor/syndbeacon
 
+/datum/role/traitor/syndbeacon/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SYNDICATE_BEACONED, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/traitor/syndbeacon/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_BEACONED, GAMEMODE_TRAIT)
+
 /datum/role/traitor/syndbeacon/forgeObjectives()
 	if(!..())
 		return FALSE
@@ -127,6 +156,16 @@
 	return TRUE
 
 /datum/role/traitor/syndcall
+
+/datum/role/traitor/syndcall/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SYNDICATE_SLEEPER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/traitor/syndcall/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_SLEEPER, GAMEMODE_TRAIT)
 
 /datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()

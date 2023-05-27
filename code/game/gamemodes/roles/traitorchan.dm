@@ -9,3 +9,13 @@
 /datum/role/changeling/traitor/New()
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, 20, "traitor")
+
+/datum/role/changeling/traitor/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_CHANGELING_SYNDICATE_AGENT, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/changeling/traitor/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_CHANGELING_SYNDICATE_AGENT, GAMEMODE_TRAIT)

@@ -14,6 +14,18 @@
 	skillset_type = /datum/skillset/shadowling
 	change_to_maximum_skills = TRUE
 
+/datum/role/shadowling/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_SHADOWLING_MASTER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/shadowling/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_MASTER, GAMEMODE_TRAIT)
+
 /datum/role/shadowling/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
@@ -55,3 +67,12 @@
 	for(var/obj/effect/proc_holder/spell/targeted/shadowling_hivemind/S in antag.current.spell_list)
 		antag.current.RemoveSpell(S)
 	..()
+	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_CREWSLAVE, GAMEMODE_TRAIT)
+
+/datum/role/shadowling/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_SHADOWLING_CREWSLAVE, GAMEMODE_TRAIT)
+	return TRUE

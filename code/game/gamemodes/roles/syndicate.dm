@@ -20,6 +20,18 @@
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, TC_num, "nuclear")
 
+/datum/role/operative/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_NUKE_OP, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_MEMBER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/operative/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_NUKE_OP, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_MEMBER, GAMEMODE_TRAIT)
+
 /datum/role/operative/proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
 
@@ -77,6 +89,16 @@
 	skillset_type = /datum/skillset/nuclear_operative_leader
 
 	TC_num = 25
+
+/datum/role/operative/leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_LEADER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/operative/leader/RemoveFromRole(datum/mind/M, msg_admins)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_LEADER, GAMEMODE_TRAIT)
 
 /datum/role/operative/leader/OnPostSetup(laterole)
 	. = ..()

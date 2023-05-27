@@ -9,6 +9,18 @@
 
 	logo_state = "xeno-logo"
 
+/datum/role/alien/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_ALIEN_HIVEPART, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_ALIEN_SPECIMEN, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/alien/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_ALIEN_HIVEPART, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_ALIEN_SPECIMEN, GAMEMODE_TRAIT)
+
 /datum/role/alien/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, {"<span class='notice'><b>Вы - ксеноморф. Ваша текущая форма - грудолом.

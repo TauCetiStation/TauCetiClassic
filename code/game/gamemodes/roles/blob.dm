@@ -7,10 +7,30 @@
 
 	disallow_job = TRUE
 
+/datum/role/blob_overmind/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/blob_overmind/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
+
 /datum/role/blob_overmind/cerebrate
 	name = BLOBCEREBRATE
 	id = BLOBCEREBRATE
 	logo_state = "cerebrate-logo"
+
+/datum/role/blob_overmind/cerebrate/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_CORE, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/blob_overmind/cerebrate/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_CORE, GAMEMODE_TRAIT)
 
 /datum/role/blob_overmind/OnPostSetup(laterole)
 	. = ..()
@@ -82,3 +102,15 @@
 	greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
 	disallow_job = TRUE
+
+/datum/role/blobbernaut/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_PAWN, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/blobbernaut/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_PAWN, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)

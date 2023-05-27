@@ -8,6 +8,18 @@
 	logo_state = "abductor-logo"
 	skillset_type = /datum/skillset/abductor
 
+/datum/role/abductor/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_OP, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/abductor/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_OP, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
+
 /datum/role/abductor/Greet(greeting, custom)
 	if(!..())
 		return FALSE
@@ -55,6 +67,16 @@
 	id = ABDUCTOR_AGENT
 	skillset_type = /datum/skillset/abductor/agent
 
+/datum/role/abductor/agent/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_OP_AGENT, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/abductor/agent/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_OP_AGENT, GAMEMODE_TRAIT)
+
 /datum/role/abductor/agent/Greet(greeting, custom)
 	if(!..())
 		return FALSE
@@ -85,6 +107,16 @@
 	name = "Scientist"
 	id = ABDUCTOR_SCI
 	skillset_type = /datum/skillset/abductor/scientist
+
+/datum/role/abductor/scientist/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_OP_SCIENTIST, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/abductor/scientist/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_OP_SCIENTIST, GAMEMODE_TRAIT)
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())
@@ -118,6 +150,16 @@
 	id = ABDUCTOR_ASSISTANT
 	skillset_type = /datum/skillset/abductor/scientist
 
+/datum/role/abductor/assistant/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_ASSISTANT, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/abductor/assistant/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_ASSISTANT, GAMEMODE_TRAIT)
+
 /datum/role/abductor/assistant/equip_common()
 	return
 
@@ -143,3 +185,15 @@
 		return FALSE
 	AppendObjective(pick(subtypesof(/datum/objective/abductee)))
 	return TRUE
+
+/datum/role/abducted/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
+	if(!..())
+		return FALSE
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_ABDUCTED, GAMEMODE_TRAIT)
+	return TRUE
+
+/datum/role/abducted/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
+	. = ..()
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_ABDUCTED, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
