@@ -14,6 +14,8 @@
 	var/reset = FALSE
 	var/enter_account = FALSE
 
+	var/paying = FALSE
+
 	var/image/holoprice
 
 /obj/item/device/cardpay/atom_init(mapload)
@@ -67,19 +69,27 @@
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.SetNextMove(CLICK_CD_INTERACT)
+			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
 			if(!anchored)
-				if(!locate(/obj/structure/table, get_turf(src)))
+				if(!Table)
 					to_chat(user, "<span class='warning'>Сканер можно прикрутить только к столу.</span>")
 					return
 				to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
 				anchored = TRUE
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
 				return
 			to_chat(user, "<span class='notice'>Сканер откручен.</span>")
 			anchored = FALSE
+			UnregisterSignal(Table, list(COMSIG_PARENT_QDELETING))
+			pay_amount = 0
+			paying = FALSE
 			update_holoprice(clear = TRUE)
 			SStgui.close_uis(src)
 	else
 		return ..()
+
+/obj/item/device/cardpay/proc/unwrench()
+	anchored = FALSE
 
 /obj/item/device/cardpay/attack_self(mob/living/user)
 	. = ..()
@@ -97,6 +107,9 @@
 	if(pay_amount <= 0)
 		return
 
+	if(paying)
+		return
+
 	var/pay_holder = pay_amount
 
 	if(D)
@@ -109,6 +122,9 @@
 				return FALSE
 
 			icon_state = "card-pay-processing"
+
+			paying = TRUE
+
 			addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/check_pincode(datum/money_account/Acc)
@@ -146,8 +162,11 @@
 		return
 
 	flick("card-pay-complete", src)
-	charge_to_account(Acc.account_number, "Терминал оплаты", "Оплата", src.name, -amount)
-	charge_to_account(linked_account, "Терминал оплаты", "Прибыль", src.name, amount)
+	var/datum/money_account/D = get_account(linked_account)
+	charge_to_account(Acc.account_number, "Терминал оплаты [D.owner_name] ([D.account_number])", "Оплата", src.name, -amount)
+	charge_to_account(linked_account, "Терминал оплаты [D.owner_name] ([D.account_number])", "Прибыль", src.name, amount)
+
+	paying = FALSE
 
 	if(reset)
 		pay_amount = 0
@@ -209,6 +228,8 @@
 						if(D)
 							if(enter_account)
 								linked_account = display_numbers
+								to_chat(usr, "<span class='notice'>Аккаунт подключён.</span>")
+								enter_account = FALSE
 							else
 								pay_with_account(D)
 						else
