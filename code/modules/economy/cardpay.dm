@@ -11,7 +11,7 @@
 	var/linked_account = 0
 	var/pay_amount = 0
 	var/display_numbers = 0
-	var/reset = TRUE
+	var/reset = FALSE
 	var/enter_account = FALSE
 
 	var/image/holoprice
@@ -35,7 +35,8 @@
 	if(istype(I, /obj/item/weapon/card/id) && anchored)
 		visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
 		if(!enter_account)
-			scan_card(I)
+			var/obj/item/weapon/card/id/Card = I
+			pay_with_account(get_account(Card.associated_account_number))
 			return
 		var/obj/item/weapon/card/id/Card = I
 		var/datum/money_account/D = get_account(Card.associated_account_number)
@@ -48,12 +49,12 @@
 	else if(istype(I, /obj/item/device/pda) && I.GetID())
 		visible_message("<span class='info'>[usr] прикладывает КПК к терминалу.</span>")
 		var/obj/item/weapon/card/id/Card = I.GetID()
-		scan_card(Card)
+		pay_with_account(get_account(Card.associated_account_number))
 	else if(istype(I, /obj/item/weapon/ewallet))
 		var/obj/item/weapon/ewallet/Wallet = I
 		visible_message("<span class='info'>[usr] прикладывает чип оплаты к терминалу.</span>")
 		if(!enter_account)
-			scan_charge_card(get_account(Wallet.account_number))
+			pay_with_account(get_account(Wallet.account_number))
 			return
 		if(!get_account(Wallet.account_number))
 			to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к чипу.</span>")
@@ -85,23 +86,7 @@
 
 	set_dir(turn(dir,-90))
 
-/obj/item/device/cardpay/proc/scan_charge_card(datum/money_account/D)
-	if(!linked_account)
-		visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого аккаунта.</span>")
-		return
-	var/datum/money_account/Acc = get_account(linked_account)
-	if(!Acc || Acc.suspended)
-		visible_message("[bicon(src)] [name] <span class='warning'>Подключённый аккаунт заблокирован.</span>")
-		return
-	if(pay_amount <= 0)
-		return
-
-	var/pay_holder = pay_amount
-	if(D)
-		icon_state = "card-pay-processing"
-		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
-
-/obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
+/obj/item/device/cardpay/proc/pay_with_account(datum/money_account/D)
 	if(!linked_account)
 		visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого аккаунта.</span>")
 		return
@@ -114,36 +99,40 @@
 
 	var/pay_holder = pay_amount
 
-	var/datum/money_account/D = get_account(Card.associated_account_number)
-	var/attempt_pin = 0
 	if(D)
-		if(D.security_level > 0)
-			var/time_for_pin = world.time
-			if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == D.remote_access_pin)
-				attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
-			else
-				attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
-			if(!usr || !usr.Adjacent(src))
-				return
-			if(world.time - time_for_pin > 300)
-				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
-				return
-			if(Acc != get_account(linked_account))
-				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Подключённый аккаунт изменён!</span>")
-				return
+		if(check_pincode(Acc))
 			if(pay_holder != pay_amount)
 				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Сумма оплаты изменена!</span>")
-				return
-			if(isnull(attempt_pin))
-				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
-				return
-			D = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
-			if(!D)
-				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
-				return
+				return FALSE
+			if(Acc != get_account(linked_account))
+				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Подключённый аккаунт изменён!</span>")
+				return FALSE
 
-		icon_state = "card-pay-processing"
-		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
+			icon_state = "card-pay-processing"
+			addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
+
+/obj/item/device/cardpay/proc/check_pincode(datum/money_account/Acc)
+	var/attempt_pin = 0
+	if(Acc.security_level > 0)
+		var/time_for_pin = world.time
+		if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin)
+			attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
+		else
+			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
+		if(!usr || !usr.Adjacent(src))
+			return FALSE
+		if(world.time - time_for_pin > 300)
+			to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
+			return FALSE
+		if(isnull(attempt_pin))
+			to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
+			return FALSE
+		Acc = attempt_account_access(Acc.account_number, attempt_pin, 2)
+		if(!Acc)
+			to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
+			return FALSE
+
+	return TRUE
 
 /obj/item/device/cardpay/proc/make_transaction(datum/money_account/Acc, amount)
 	if(!src || !Acc)
@@ -169,8 +158,7 @@
 	if(!isturf(loc))
 		return
 
-	if(anchored && is_the_opposite_dir(src.dir, get_dir(src, user)))
-		tgui_interact(user)
+	tgui_interact(user)
 
 /obj/item/device/cardpay/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -190,10 +178,6 @@
 	if(.)
 		return
 
-	if(!is_the_opposite_dir(src.dir, get_dir(src, usr)))
-		SStgui.close_user_uis(usr, src)
-		return
-
 	switch(action)
 		if("pressnumber")
 			var/num = params["number"]
@@ -201,7 +185,7 @@
 				num = clamp(num, 0, 9)
 				display_numbers *= 10
 				display_numbers += num
-				if(enter_account && display_numbers > 999999)
+				if((enter_account || pay_amount) && display_numbers > 999999)
 					display_numbers %= 1000000
 				else if(!enter_account && display_numbers > 999)
 					display_numbers %= 1000
@@ -211,16 +195,22 @@
 			if(display_numbers == 0)
 				pay_amount = 0
 				update_holoprice(clear = TRUE)
+				visible_message("[bicon(src)] [name] <span class='warning'>Отмена транзакции.</span>")
 			display_numbers = 0
 			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("approveprice")
 			if(display_numbers > 0)
-				if(enter_account)
+				if(enter_account || pay_amount)
 					if(display_numbers >= 111111 && display_numbers <= 999999)
 						var/datum/money_account/D = get_account(display_numbers)
 						if(D)
-							linked_account = display_numbers
+							if(enter_account)
+								linked_account = display_numbers
+							else
+								pay_with_account(D)
+						else
+							visible_message("[bicon(src)] [name] <span class='warning'>Номер аккаунта не существует.</span>")
 				else
 					if(!linked_account)
 						visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого аккаунта.</span>")
@@ -239,12 +229,16 @@
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("toggleenteraccount")
+			if(enter_account)
+				to_chat(usr, "<span class='notice'>Включён режим ввода цены.</span>")
+			else if(linked_account)
+				if(!check_pincode(get_account(linked_account)))
+					return
+				to_chat(usr, "<span class='notice'>Включён режим ввода аккаунта.</span>")
+
 			display_numbers = 0
 			enter_account = !enter_account
-			if(enter_account)
-				to_chat(usr, "<span class='notice'>Включён режим ввода аккаунта.</span>")
-			else
-				to_chat(usr, "<span class='notice'>Включён режим ввода цены.</span>")
+
 			update_holoprice(clear = TRUE)
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
