@@ -100,7 +100,7 @@
 	var/pay_holder = pay_amount
 
 	if(D)
-		if(check_pincode(Acc))
+		if(check_pincode(D))
 			if(pay_holder != pay_amount)
 				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Сумма оплаты изменена!</span>")
 				return FALSE
