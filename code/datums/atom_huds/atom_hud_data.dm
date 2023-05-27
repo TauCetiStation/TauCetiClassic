@@ -33,7 +33,7 @@
 	hud_icons = null
 
 /datum/atom_hud/data/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, INSURANCE_HUD)
 
 /datum/atom_hud/data/medical/proc/check_sensors(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -152,6 +152,10 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	if(iszombie(src))
 		holder.icon_state = "hudill"
+
+	holder = hud_list[INSURANCE_HUD]
+	var/insurance_type = get_insurance_type(src)
+	holder.icon_state = "hud_insurance_[insurance_type]"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
