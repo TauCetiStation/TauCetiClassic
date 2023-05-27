@@ -261,5 +261,5 @@
 	. = ..()
 	if(linked_account)
 		var/datum/money_account/Acc = get_account(linked_account)
-	if(Acc)
-		to_chat(user, "Принадлежит [Acc.owner_name] ([Acc.account_number])")
+		if(Acc)
+			to_chat(user, "Принадлежит [Acc.owner_name] ([Acc.account_number])")
