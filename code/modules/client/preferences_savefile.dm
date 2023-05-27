@@ -578,6 +578,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"]         >> home_system
 	S["citizenship"]         >> citizenship
+	S["insurance"]           >> insurance
 	S["faction"]             >> faction
 	S["religion"]            >> religion
 	S["vox_rank"]            >> vox_rank
@@ -648,6 +649,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
+	if(!insurance)   insurance = INSURANCE_STANDARD
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
 	if(!vox_rank)    vox_rank =    "Larva"
@@ -769,6 +771,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"]         << home_system
 	S["citizenship"]         << citizenship
+	S["insurance"]           << insurance
 	S["faction"]             << faction
 	S["religion"]            << religion
 	S["vox_rank"]            << vox_rank

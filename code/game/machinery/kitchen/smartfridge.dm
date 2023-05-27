@@ -137,6 +137,28 @@
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
 		return 1
 
+/obj/machinery/smartfridge/secure/bluespace
+	name = "Bluespace Storage"
+	desc = "Очень вместительное хранилище вещей с гравировкой BB-tech"
+	icon_state = "bluespace"
+	icon_on = "bluespace"
+	icon_off = "bluespace-off"
+
+/obj/machinery/smartfridge/secure/bluespace/accept_check(obj/item/O)
+	if(istype(O, /obj/item/weapon/storage/bag) || istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
+		return FALSE
+	if(isitem(O))
+		return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/secure/bluespace/atom_init()
+	. = ..()
+	wires = new(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge/secure/bluespace(null, type)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	RefreshParts()
+
 /obj/machinery/smartfridge/process()
 	if(!src.ispowered)
 		return
@@ -164,7 +186,7 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, icon_off, icon_on, O))
 		return
 
 	if(exchange_parts(user, O))

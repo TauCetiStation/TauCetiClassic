@@ -353,9 +353,23 @@
 					C.network = helm_cam.network
 
 		helm_cam.hidden = 1
-		blockTracking = 1
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
+
+/obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/abductor/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
 
 //ADVANCED BATON
 #define BATON_STUN 0

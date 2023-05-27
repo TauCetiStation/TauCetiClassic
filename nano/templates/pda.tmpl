@@ -1032,11 +1032,16 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="itemLabelWide">
                 <b>Money:</b> <span class="good">{{:data.money}}$</span><br>
                 <b>Salary:</b> <span class="good">{{:data.salary}}$</span><br>
-                <b>Next Payment:</b> <span class="average">{{:data.time_to_next_pay}}</span>
+                <b>Next Payment:</b> <span class="average">{{:data.time_to_next_pay}}</span><br>
+                <b>Insurance Type|Price:</b> <span class="good">{{:data.owner_insurance_type}}|{{:data.owner_insurance_price}}$</span><br>
+                <b>Max Insurance Payment</b> <span class = "good">{{:data.owner_max_insurance_payment}}$</span><br>
+                <b>Pref Insurance Type|Price:</b> <span class = "good">{{:data.owner_preferred_insurance_type}}|{{:data.owner_preferred_insurance_price}}$</span><br>
+                <b>Medical Record ID:</b> <span class="good">{{:data.medical_record_id}}</span><br>
             </div>
             <div class="itemContentSmall">
                 {{:helper.link('Transaction Menu', null, {'choice' : "Transaction Menu"}, null, null)}}
                 {{:helper.link('Transaction Log', null, {'choice' : "Transaction Log"}, null, null)}}
+                {{if data.permission_to_change_insurance_price}} {{:helper.link("Change Insurance Price", null, {'choice' : "Change insurance price"}, null, null)}} {{/if}}
                 {{if data.boss}} {{:helper.link('Staff Salary', null, {'choice' : "Staff Salary"}, null, null)}} {{/if}}
             </div>
         </div>

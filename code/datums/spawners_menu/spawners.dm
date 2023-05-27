@@ -740,8 +740,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/client/C = ghost.client
 
 	var/mob/living/carbon/human/H = new(null)
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(H, new_name)
+	C.create_human_apperance(H)
 
 	H.loc = spawnloc
 	H.key = C.key
@@ -760,3 +759,28 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/survival/med
 	outfit = /datum/outfit/survival/medic
 	skillset = /datum/skillset/survivalist_medic
+
+/*
+ * Lone operative
+*/
+/datum/spawner/lone_op_event
+	name = "Оперативник Синдиката"
+	id = "lone_op_event"
+	desc = "Вы появляетесь на малой базе Синдиката с невероятно сложным заданием."
+	wiki_ref = "Syndicate_Guide"
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/lone_op_event/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(loneopstart)
+	loneopstart -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Gorlex Maradeurs Operative"
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+
+	create_and_setup_role(/datum/role/operative/lone, H, TRUE)

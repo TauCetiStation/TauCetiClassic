@@ -75,3 +75,17 @@
 	backpack_contents += list(/obj/item/device/modkit/vox)
 	l_hand = /obj/item/weapon/tank/nitrogen
 	mask = /obj/item/clothing/mask/gas/vox
+
+/obj/item/weapon/storage/backpack/nuke/lone
+	startswith = list(
+	/obj/item/weapon/crowbar/red,
+	/obj/item/ammo_box/magazine/stechkin/extended,
+	/obj/item/clothing/accessory/holster/armpit,
+	/obj/item/weapon/pinpointer/nukeop,
+	/obj/item/weapon/kitchenknife/combat,
+	/obj/item/clothing/accessory/storage/syndi_vest,
+	/obj/item/weapon/paper/nuclear_code)
+
+/datum/outfit/nuclear/solo
+	name = "Syndicate: Lone Agent"
+	back = /obj/item/weapon/storage/backpack/nuke/lone
