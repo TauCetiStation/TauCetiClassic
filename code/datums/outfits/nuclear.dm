@@ -83,8 +83,7 @@
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
 	/obj/item/weapon/kitchenknife/combat,
-	/obj/item/clothing/accessory/storage/syndi_vest,
-	/obj/item/weapon/paper/nuclear_code)
+	/obj/item/clothing/accessory/storage/syndi_vest)
 
 /datum/outfit/nuclear/solo
 	name = "Syndicate: Lone Agent"

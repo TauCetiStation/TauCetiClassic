@@ -227,6 +227,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	icon_state = "mouse_nuke"
 	icon_living = "mouse_nuke"
 	icon_move = "mouse_nuke_move"
+	body_color = "nuke"
 	holder_type = /obj/item/weapon/holder/mouse/nuke
 
 	changes_color = FALSE
