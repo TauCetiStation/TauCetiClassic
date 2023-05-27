@@ -186,8 +186,9 @@
 				num = clamp(num, 0, 9)
 				display_numbers *= 10
 				display_numbers += num
-				if((enter_account || (pay_amount > 0)) && display_numbers > 999999)
-					display_numbers %= 1000000
+				if((enter_account || (pay_amount > 0)))
+					if(display_numbers > 999999)
+						display_numbers %= 1000000
 				else if(display_numbers > 999)
 					display_numbers %= 1000
 				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
