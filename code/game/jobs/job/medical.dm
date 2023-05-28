@@ -28,6 +28,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
+	department_stocks = list("Medical" = 40)
+
 
 /datum/job/doctor
 	title = "Medical Doctor"
@@ -60,6 +62,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
+	department_stocks = list("Medical" = 20)
+
 
 /datum/job/paramedic
 	title = "Paramedic"
@@ -84,6 +88,8 @@
 	*/
 	restricted_species = list(IPC)
 
+	department_stocks = list("Medical" = 15)
+
 // Slow species shouldn't be paramedics.
 /datum/job/paramedic/special_species_check(datum/species/S)
 	return S.speed_mod <= 1
@@ -107,6 +113,8 @@
 	outfit = /datum/outfit/job/chemist
 	skillsets = list("Chemist" = /datum/skillset/chemist)
 
+	department_stocks = list("Medical" = 10)
+
 
 /datum/job/geneticist
 	title = "Geneticist"
@@ -123,6 +131,8 @@
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/geneticist
 	skillsets = list("Geneticist" = /datum/skillset/geneticist)
+
+	department_stocks = list("Medical" = 10)
 
 
 /datum/job/virologist
@@ -149,6 +159,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
+	department_stocks = list("Medical" = 10)
+
 
 /datum/job/psychiatrist
 	title = "Psychiatrist"
@@ -167,6 +179,8 @@
 	outfit = /datum/outfit/job/psychiatrist
 	skillsets = list("Psychiatrist" = /datum/skillset/psychiatrist)
 
+	department_stocks = list("Medical" = 10)
+
 
 /datum/job/intern
 	title = "Medical Intern"
@@ -183,3 +197,4 @@
 	outfit = /datum/outfit/job/intern
 	skillsets = list("Medical Intern" = /datum/skillset/intern)
 
+	department_stocks = list("Medical" = 5)

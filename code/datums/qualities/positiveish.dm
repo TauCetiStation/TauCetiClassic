@@ -362,3 +362,4 @@
 	if(!MA)
 		return
 	SSeconomy.issue_founding_stock(MA.account_number, "Cargo", rand(10, 20))
+	SSeconomy.issue_founding_stock(MA.account_number, "Medical", rand(10, 20))
