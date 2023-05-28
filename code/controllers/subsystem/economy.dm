@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(economy)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
 	handle_insurances()
-	
+
 
 	monitor_cargo_shop()
 
@@ -128,9 +128,9 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
-	
-	
-	
+
+
+
 /datum/controller/subsystem/economy/proc/handle_insurances()
 	var/insurance_sum = 0
 	var/list/problem_record_id = list()
@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(economy)
 	if(insurance_sum > 0)
 		var/med_account_number = global.department_accounts["Medical"].account_number
 		charge_to_account(med_account_number, med_account_number, "Insurance", "NT Insurance", insurance_sum)
-	
+
 	if(problem_record_id.len)
 		send_message_about_problem_insurances(problem_record_id)
 

@@ -9,6 +9,7 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
