@@ -1176,13 +1176,13 @@
 	name = "tetris IPC screen"
 	icon_state = "ipc_tetris"
 	species_allowed = list(IPC)
+	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_noise
 	name = "noise IPC screen"
 	icon_state = "ipc_noise"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 	//UNATHI HAIRS
