@@ -1050,11 +1050,10 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_purple
-	name = "purple IPC screen"
-	icon_state = "ipc_purple"
+/datum/sprite_accessory/hair/ipc_screen_question
+	name = "question IPC screen"
+	icon_state = "ipc_question"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_shower
@@ -1187,6 +1186,13 @@
 /datum/sprite_accessory/hair/ipc_microwave
 	name = "microwave IPC screen"
 	icon_state = "ipc_microwave"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_smiley
+	name = "smiley IPC screen"
+	icon_state = "ipc_smiley"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
