@@ -984,24 +984,16 @@
 	ipc_head_compatible = null
 	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/ipc_screen_pink
-	name = "pink IPC screen"
-	icon_state = "ipc_pink"
+/datum/sprite_accessory/hair/ipc_screen_mask
+	name = "mask IPC screen"
+	icon_state = "ipc_mask"
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_red
-	name = "red IPC screen"
-	icon_state = "ipc_red"
+/datum/sprite_accessory/hair/ipc_screen_alert
+	name = "alert IPC screen"
+	icon_state = "ipc_alert"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_green
-	name = "green IPC screen"
-	icon_state = "ipc_green"
-	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_blue
@@ -1052,9 +1044,9 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_orange
-	name = "orange IPC screen"
-	icon_state = "ipc_orange"
+/datum/sprite_accessory/hair/ipc_screen_chroma
+	name = "chroma IPC screen"
+	icon_state = "ipc_chroma"
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
