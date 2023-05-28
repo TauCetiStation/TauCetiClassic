@@ -5,11 +5,9 @@
 
 	logo_state = "change-logoa"
 
-/datum/role/prop/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_PROP_INDIVIDUAL, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/prop/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_PROP_INDIVIDUAL, GAMEMODE_TRAIT)
 
 /datum/role/prop/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()

@@ -60,8 +60,6 @@
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_CUSTOM_ROLE, GAMEMODE_TRAIT)
 
-/datum/role/custom/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_CUSTOM_ROLE, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/custom/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_CUSTOM_ROLE, GAMEMODE_TRAIT)

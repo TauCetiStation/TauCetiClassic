@@ -11,13 +11,6 @@
 	logo_state = "ninja-logo"
 	skillset_type = /datum/skillset/max
 
-/datum/role/ninja/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_SPRIDER_CLAN_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_SPRIDER_CLAN_NINJA, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/ninja/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_SPRIDER_CLAN_MEMBER, GAMEMODE_TRAIT)
@@ -25,6 +18,8 @@
 
 /datum/role/ninja/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_SPRIDER_CLAN_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_SPRIDER_CLAN_NINJA, GAMEMODE_TRAIT)
 	var/mob/living/carbon/human/ninja = antag.current
 	ninja.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	ninja.dna.ready_dna(ninja)

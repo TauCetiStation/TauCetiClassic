@@ -11,12 +11,10 @@
 	antag_hud_type = ANTAG_HUD_REPLICATOR
 	antag_hud_name = "replicator"
 
-/datum/role/replicator/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_REPLICATOR_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_REPLICATOR_UNIT, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/replicator/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_REPLICATOR_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_REPLICATOR_UNIT, GAMEMODE_TRAIT)
 
 /datum/role/replicator/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()

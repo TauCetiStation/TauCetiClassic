@@ -43,13 +43,6 @@
 	var/atom/movable/screen/lingchemdisplay
 	var/atom/movable/screen/lingstingdisplay
 
-/datum/role/changeling/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_CHANGELING_INDIVIDUAL, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_CHANGELING_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_CHANGELING_INDIVIDUAL, GAMEMODE_TRAIT)
@@ -57,6 +50,8 @@
 
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_CHANGELING_INDIVIDUAL, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_CHANGELING_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
 	antag.current.make_changeling()
 	set_changeling_identifications()
 

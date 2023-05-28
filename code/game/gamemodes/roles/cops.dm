@@ -16,18 +16,13 @@
 	skillset_type = /datum/skillset/undercover
 	moveset_type = /datum/combat_moveset/cqc
 
-/datum/role/cop/undercover/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_UNDERCOVER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/cop/undercover/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_COP_UNDERCOVER, GAMEMODE_TRAIT)
 
 /datum/role/cop/undercover/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_UNDERCOVER, GAMEMODE_TRAIT)
 	if(ishuman(antag.current))
 		for(var/type in free_clothes)
 			var/mob/living/carbon/human/H = antag.current
@@ -67,18 +62,13 @@
 	var/outfit
 	skillset_type = /datum/skillset/cop
 
-/datum/role/cop/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_PERSON, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/cop/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_COP_PERSON, GAMEMODE_TRAIT)
 
 /datum/role/cop/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_PERSON, GAMEMODE_TRAIT)
 	var/mob/living/carbon/human/M = antag.current
 
 	if(outfit)
@@ -94,11 +84,9 @@
 	name = "Officer"
 	outfit = /datum/outfit/families_police/beatcop
 
-/datum/role/cop/beatcop/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_SWAT, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/cop/beatcop/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_SWAT, GAMEMODE_TRAIT)
 
 /datum/role/cop/beatcop/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -126,11 +114,9 @@
 	name = "Armed Officer"
 	outfit = /datum/outfit/families_police/beatcop/armored
 
-/datum/role/cop/beatcop/armored/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_ARMED_OFFICER, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/cop/beatcop/armored/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_ARMED_OFFICER, GAMEMODE_TRAIT)
 
 /datum/role/cop/beatcop/armored/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -140,11 +126,9 @@
 	name = "Tactical Group Fighter"
 	outfit = /datum/outfit/families_police/beatcop/swat
 
-/datum/role/cop/beatcop/swat/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_TACTICAL_GROUP_FIGHTER, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/cop/beatcop/swat/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_TACTICAL_GROUP_FIGHTER, GAMEMODE_TRAIT)
 
 /datum/role/cop/beatcop/swat/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -154,11 +138,9 @@
 	name = "Inspector"
 	outfit = /datum/outfit/families_police/beatcop/fbi
 
-/datum/role/cop/beatcop/fbi/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_INSPECTOR, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/cop/beatcop/fbi/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_INSPECTOR, GAMEMODE_TRAIT)
 
 /datum/role/cop/beatcop/fbi/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -168,11 +150,9 @@
 	name = "MFNT Fighter"
 	outfit = /datum/outfit/families_police/beatcop/military
 
-/datum/role/cop/beatcop/military/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_COP_MFNT_FIGHTER, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/cop/beatcop/military/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_COP_MFNT_FIGHTER, GAMEMODE_TRAIT)
 
 /datum/role/cop/beatcop/military/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()

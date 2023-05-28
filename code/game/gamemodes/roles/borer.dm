@@ -5,12 +5,10 @@
 
 	logo_state = "borer-logo"
 
-/datum/role/borer/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_BORER_CREATURE, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_BORER_PARASITE, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/borer/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_BORER_CREATURE, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_BORER_PARASITE, GAMEMODE_TRAIT)
 
 /datum/role/borer/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()

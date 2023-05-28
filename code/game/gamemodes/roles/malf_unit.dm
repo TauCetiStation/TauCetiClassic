@@ -10,13 +10,6 @@
 
 	logo_state = "malf-logo"
 
-/datum/role/malfAI/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_AI, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/malfAI/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_MALFUNCTION_AI, GAMEMODE_TRAIT)
@@ -24,6 +17,8 @@
 
 /datum/role/malfAI/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_MALFUNCTION_AI, GAMEMODE_TRAIT)
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
 	new /datum/AI_Module/module_picker(AI_mind_current)
 	new /datum/AI_Module/takeover(AI_mind_current)
@@ -99,12 +94,10 @@
 
 	logo_state = "malf-logo"
 
-/datum/role/malfbot/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_BOT, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/malfbot/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_MALFUNCTION_BOT, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_MALFUNCTION_SILICON, GAMEMODE_TRAIT)
 
 /datum/role/malfbot/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()

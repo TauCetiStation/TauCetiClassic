@@ -16,13 +16,6 @@
 	. = ..()
 	package_spawner = new(src)
 
-/datum/role/gangster/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_FAMILIES_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_FAMILIES_GANGSTER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/gangster/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_FAMILIES_MEMBER, GAMEMODE_TRAIT)
@@ -39,6 +32,8 @@
 
 /datum/role/gangster/OnPostSetup(laterole)
 	..()
+	ADD_TRAIT(antag.current, TRAIT_FAMILIES_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_FAMILIES_GANGSTER, GAMEMODE_TRAIT)
 	package_spawner.Grant(antag.current)
 	package_spawner.my_gang_datum = faction
 
@@ -104,18 +99,13 @@
 	id = GANGSTER_LEADER
 	skillset_type = /datum/skillset/gangster
 
-/datum/role/gangster/leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_FAMILIES_LEADER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/gangster/leader/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_FAMILIES_LEADER, GAMEMODE_TRAIT)
 
 /datum/role/gangster/leader/OnPostSetup(laterole)
 	..()
+	ADD_TRAIT(antag.current, TRAIT_FAMILIES_LEADER, GAMEMODE_TRAIT)
 	equip_gangster_in_inventory()
 
 /datum/role/traitor/dealer
@@ -125,17 +115,12 @@
 	change_to_maximum_skills = TRUE
 	telecrystals = 10
 
-/datum/role/traitor/dealer/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_SYNDICATE_GUN_DEALER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/traitor/dealer/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_SYNDICATE_GUN_DEALER, GAMEMODE_TRAIT)
 
 /datum/role/traitor/dealer/OnPostSetup(laterole)
+	ADD_TRAIT(antag.current, TRAIT_SYNDICATE_GUN_DEALER, GAMEMODE_TRAIT)
 	var/mob/living/carbon/human/H = antag.current
 	notify_ghosts("New gun dealer!", source = H, action = NOTIFY_ORBIT, header = "Gun Dealer")
 	H.equipOutfit(/datum/outfit/families_traitor)

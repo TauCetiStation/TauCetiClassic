@@ -10,11 +10,9 @@
 	logo_state = "raider-logo"
 	skillset_type = /datum/skillset/max
 
-/datum/role/vox_raider/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_HEIST_CREWMEMBER, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/vox_raider/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_HEIST_CREWMEMBER, GAMEMODE_TRAIT)
 
 /datum/role/vox_raider/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()

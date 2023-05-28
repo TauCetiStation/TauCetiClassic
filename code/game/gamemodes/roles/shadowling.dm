@@ -14,13 +14,6 @@
 	skillset_type = /datum/skillset/shadowling
 	change_to_maximum_skills = TRUE
 
-/datum/role/shadowling/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_SHADOWLING_MASTER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/shadowling/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
@@ -35,6 +28,8 @@
 
 /datum/role/shadowling/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_SHADOWLING_MASTER, GAMEMODE_TRAIT)
 	var/mob/living/carbon/human/S = antag.current
 
 	if(antag.assigned_role == "Clown")
@@ -70,9 +65,7 @@
 	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
 	REMOVE_TRAIT(M.current, TRAIT_SHADOWLING_CREWSLAVE, GAMEMODE_TRAIT)
 
-/datum/role/shadowling/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_SHADOWLING_CREWSLAVE, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/thrall/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_SHADOWLING_GROUP_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_SHADOWLING_CREWSLAVE, GAMEMODE_TRAIT)

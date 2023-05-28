@@ -25,13 +25,6 @@
 	REMOVE_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
 	REMOVE_TRAIT(M.current, TRAIT_WIZARD_MASTER, GAMEMODE_TRAIT)
 
-/datum/role/wizard/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_WIZARD_MASTER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/wizard/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
@@ -82,6 +75,8 @@
 
 /datum/role/wizard/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_WIZARD_MASTER, GAMEMODE_TRAIT)
 	equip_wizard(antag.current)
 	INVOKE_ASYNC(src, .proc/name_wizard, antag.current)
 
@@ -164,12 +159,10 @@
 
 	logo_state = "wizard-logo"
 
-/datum/role/wizard_apprentice/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_WIZARD_APPERNTICE, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/wizard_apprentice/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_WIZARD_APPERNTICE, GAMEMODE_TRAIT)
 
 /datum/role/wizard_apprentice/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()

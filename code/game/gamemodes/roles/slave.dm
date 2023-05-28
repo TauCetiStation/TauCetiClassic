@@ -2,11 +2,9 @@
 	name = SLAVE
 	id = SLAVE
 
-/datum/role/slave/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_SLAVE_PERSON, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/slave/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_SLAVE_PERSON, GAMEMODE_TRAIT)
 
 /datum/role/slave/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()

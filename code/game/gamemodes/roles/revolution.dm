@@ -25,12 +25,10 @@
 	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
 	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_PROTESTER, GAMEMODE_TRAIT)
 
-/datum/role/rev/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_REVOLUTION_PROTESTER, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/rev/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_REVOLUTION_PROTESTER, GAMEMODE_TRAIT)
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
@@ -55,13 +53,6 @@
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, 1, "rev")
 
-/datum/role/rev_leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_REVOLUTION_LEADER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/rev_leader/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
@@ -69,6 +60,8 @@
 
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_REVOLUTION_PARTICIPANT, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_REVOLUTION_LEADER, GAMEMODE_TRAIT)
 	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
 
 	// Show each head revolutionary up to 3 candidates

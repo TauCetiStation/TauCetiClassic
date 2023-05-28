@@ -34,13 +34,6 @@
 	REMOVE_TRAIT(M.current, TRAIT_CULTIST_MEMBER, GAMEMODE_TRAIT)
 	REMOVE_TRAIT(M.current, TRAIT_CULTIST_DEDICATED, GAMEMODE_TRAIT)
 
-/datum/role/cultist/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_CULTIST_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_CULTIST_DEDICATED, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/cultist/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
 		return
@@ -58,6 +51,8 @@
 
 /datum/role/cultist/OnPostSetup(laterole)
 	..()
+	ADD_TRAIT(antag.current, TRAIT_CULTIST_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_CULTIST_DEDICATED, GAMEMODE_TRAIT)
 	if(!laterole)
 		equip_cultist(antag.current)
 	var/datum/faction/cult/C = faction
@@ -115,8 +110,6 @@
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_CULTIST_HARBINGER, GAMEMODE_TRAIT)
 
-/datum/role/cultist/leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_CULTIST_HARBINGER, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/cultist/leader/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_CULTIST_HARBINGER, GAMEMODE_TRAIT)

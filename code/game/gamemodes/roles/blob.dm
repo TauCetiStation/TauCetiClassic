@@ -7,12 +7,6 @@
 
 	disallow_job = TRUE
 
-/datum/role/blob_overmind/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/blob_overmind/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
@@ -22,11 +16,9 @@
 	id = BLOBCEREBRATE
 	logo_state = "cerebrate-logo"
 
-/datum/role/blob_overmind/cerebrate/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_CORE, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/blob_overmind/cerebrate/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_BLOB_HIVEMIND_CORE, GAMEMODE_TRAIT)
 
 /datum/role/blob_overmind/cerebrate/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -34,6 +26,7 @@
 
 /datum/role/blob_overmind/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
 	var/wait_time = rand(INTERCEPT_TIME_LOW, INTERCEPT_TIME_HIGH)
 	var/time_to_stage1 = wait_time
 	var/time_to_stage2 = wait_time * 2
@@ -103,12 +96,10 @@
 
 	disallow_job = TRUE
 
-/datum/role/blobbernaut/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_BLOB_HIVEMIND_PAWN, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/blobbernaut/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_BLOB_HIVEMIND_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_BLOB_HIVEMIND_PAWN, GAMEMODE_TRAIT)
 
 /datum/role/blobbernaut/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()

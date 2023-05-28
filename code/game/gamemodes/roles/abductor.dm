@@ -8,13 +8,6 @@
 	logo_state = "abductor-logo"
 	skillset_type = /datum/skillset/abductor
 
-/datum/role/abductor/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_OP, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/abductor/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_OP, GAMEMODE_TRAIT)
@@ -44,6 +37,8 @@
 
 /datum/role/abductor/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_OP, GAMEMODE_TRAIT)
 	var/mob/living/carbon/human/abductor/H = antag.current
 	H.set_species(ABDUCTOR)
 	var/faction_name = faction ? faction.name : ""
@@ -67,11 +62,9 @@
 	id = ABDUCTOR_AGENT
 	skillset_type = /datum/skillset/abductor/agent
 
-/datum/role/abductor/agent/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_OP_AGENT, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/abductor/agent/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_OP_AGENT, GAMEMODE_TRAIT)
 
 /datum/role/abductor/agent/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -108,15 +101,13 @@
 	id = ABDUCTOR_SCI
 	skillset_type = /datum/skillset/abductor/scientist
 
-/datum/role/abductor/scientist/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_OP_SCIENTIST, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/abductor/scientist/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_ABDUCTOR_OP_SCIENTIST, GAMEMODE_TRAIT)
+
+/datum/role/abductor/scientist/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_OP_SCIENTIST, GAMEMODE_TRAIT)
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())
@@ -150,11 +141,9 @@
 	id = ABDUCTOR_ASSISTANT
 	skillset_type = /datum/skillset/abductor/scientist
 
-/datum/role/abductor/assistant/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_ASSISTANT, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/abductor/assistant/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_ASSISTANT, GAMEMODE_TRAIT)
 
 /datum/role/abductor/assistant/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()
@@ -186,12 +175,10 @@
 	AppendObjective(pick(subtypesof(/datum/objective/abductee)))
 	return TRUE
 
-/datum/role/abducted/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_ABDUCTOR_ABDUCTED, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/abducted/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_MEMBER, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_ABDUCTOR_ABDUCTED, GAMEMODE_TRAIT)
 
 /datum/role/abducted/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()

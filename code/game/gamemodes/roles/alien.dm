@@ -9,12 +9,10 @@
 
 	logo_state = "xeno-logo"
 
-/datum/role/alien/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_ALIEN_HIVEPART, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_ALIEN_SPECIMEN, GAMEMODE_TRAIT)
-	return TRUE
+/datum/role/alien/OnPostSetup(laterole)
+	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_ALIEN_HIVEPART, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_ALIEN_SPECIMEN, GAMEMODE_TRAIT)
 
 /datum/role/alien/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	. = ..()

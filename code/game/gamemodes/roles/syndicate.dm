@@ -20,13 +20,6 @@
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, TC_num, "nuclear")
 
-/datum/role/operative/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_NUKE_OP, GAMEMODE_TRAIT)
-	ADD_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_MEMBER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/operative/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_NUKE_OP, GAMEMODE_TRAIT)
@@ -42,6 +35,8 @@
 	synd_mind.current.real_name = choose_name
 
 /datum/role/operative/OnPostSetup(laterole)
+	ADD_TRAIT(antag.current, TRAIT_NUKE_OP, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_NUKE_TEAMSTRIKE_MEMBER, GAMEMODE_TRAIT)
 	antag.current.faction = "syndicate"
 	antag.current.real_name = "Gorlex Maradeurs Operative"
 
@@ -90,18 +85,13 @@
 
 	TC_num = 25
 
-/datum/role/operative/leader/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
-	if(!..())
-		return FALSE
-	ADD_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_LEADER, GAMEMODE_TRAIT)
-	return TRUE
-
 /datum/role/operative/leader/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_NUKE_TEAMSTRIKE_LEADER, GAMEMODE_TRAIT)
 
 /datum/role/operative/leader/OnPostSetup(laterole)
 	. = ..()
+	ADD_TRAIT(antag.current, TRAIT_NUKE_TEAMSTRIKE_LEADER, GAMEMODE_TRAIT)
 	var/datum/faction/nuclear/N = faction
 	if (istype(N) && N.nuke_code)
 		antag.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [N.nuke_code]", 0)
