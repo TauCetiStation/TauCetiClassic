@@ -1172,11 +1172,16 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_tetris
-	name = "tetris IPC screen"
-	icon_state = "ipc_tetris"
+/datum/sprite_accessory/hair/ipc_sinewave
+	name = "sinewave IPC screen"
+	icon_state = "ipc_sinewave"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_ecgwave
+	name = "ecgwave IPC screen"
+	icon_state = "ipc_ecgwave"
+	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_noise
@@ -1184,18 +1189,18 @@
 	icon_state = "ipc_noise"
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
+/datum/sprite_accessory/hair/ipc_tetris
+	name = "tetris IPC screen"
+	icon_state = "ipc_tetris"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_microwave
 	name = "microwave IPC screen"
 	icon_state = "ipc_microwave"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_spiral
-	name = "spiral IPC screen"
-	icon_state = "ipc_spiral"
-	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
 	//UNATHI HAIRS
