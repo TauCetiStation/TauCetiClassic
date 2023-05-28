@@ -8,7 +8,7 @@
 
 /mob/living/carbon/human/atom_init()
 	. = ..()
-	set_social_state())
+	set_social_state()
 
 /mob/living/carbon/human/Destroy()
 	deltimer(conversation_timer)
