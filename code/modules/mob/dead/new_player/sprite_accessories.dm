@@ -1192,6 +1192,12 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_spiral
+	name = "spiral IPC screen"
+	icon_state = "ipc_spiral"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
 	//UNATHI HAIRS
 
 /datum/sprite_accessory/hair/una_small_horns
