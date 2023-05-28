@@ -8,7 +8,7 @@
 			tally -= 2.5
 			nullify_debuffs = TRUE
 
-	if(!has_gravity(src))
+	if(!has_gravity(src) && !lying)
 		return tally - 1 // It's hard to be slowed down in space by... anything
 
 	if(iszombie(src))
