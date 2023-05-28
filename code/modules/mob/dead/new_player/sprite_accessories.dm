@@ -1203,6 +1203,13 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Human"
 
+/datum/sprite_accessory/hair/ipc_tamagotchi
+	name = "tamagotchi IPC screen"
+	icon_state = "ipc_tamagotchi"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_television
 	name = "TV IPC screen"
 	icon_state = "ipc_television"
