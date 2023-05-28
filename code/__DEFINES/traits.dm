@@ -367,7 +367,7 @@
 #define TRAIT_WIZARD_PARTY "wizard_party"
 /// child
 #define TRAIT_WIZARD_MASTER "wizard_master"
-#define TRAIT_WIZARD_APPERNTICE "wizard_apprentice"
+#define TRAIT_WIZARD_APPERENTICE "wizard_apprentice"
 /// variables
 #define TRAIT_WIZARD_CONFLUX "wizard_conflux"
 #define TRAIT_WIZARD_VISITOR "wizard_visitor"
