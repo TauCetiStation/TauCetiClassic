@@ -1083,6 +1083,12 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_equalizer
+	name = "equalizer IPC screen"
+	icon_state = "ipc_equalizer"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_four
 	name = "four IPC screen"
 	icon_state = "ipc_four"
