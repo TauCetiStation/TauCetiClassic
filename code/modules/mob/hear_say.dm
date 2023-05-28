@@ -106,27 +106,14 @@
 			for(var/datum/language/L as anything in H.languages)
 				H.remove_language(L.name)
 
+		H.handle_socialization(src)
+
 	if(!(sdisabilities & DEAF) && !ear_deaf)
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
 	. = TRUE
-
-	if(speaker == src)
-		return
-
-	if(stat != CONSCIOUS)
-		return
-
-	if(!client)
-		return
-
-	if(!ishuman(speaker))
-		return
-
-	var/mob/living/carbon/human/H = speaker
-	H.handle_socialization()
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
@@ -279,6 +266,9 @@
 	if(say_understands(speaker, language))
 		runechat_message = "[verb], \"[capitalize(message)]\""
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [language.format_message(message, verb)]</span>"
+		if(ishuman(speaker))
+			var/mob/living/carbon/human/H = speaker
+			H.handle_socialization(src)
 	else
 		runechat_message = "[verb]."
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>"

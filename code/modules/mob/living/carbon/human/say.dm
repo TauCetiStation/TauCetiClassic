@@ -8,17 +8,18 @@
 
 /mob/living/carbon/human/atom_init()
 	. = ..()
-	handle_socialization()
+	set_social_state())
 
 /mob/living/carbon/human/Destroy()
 	deltimer(conversation_timer)
 	return ..()
 
-/mob/living/carbon/human/proc/set_social_state(state)
+/mob/living/carbon/human/proc/set_social_state(state = SOCIALIZATION_NORMAL)
 	if(!species.flags[IS_SOCIAL])
+		deltimer(conversation_timer)
+		social_state = SOCIALIZATION_NORMAL
 		return
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return
+
 	switch(state)
 		if(SOCIALIZATION_NORMAL)
 			social_state = SOCIALIZATION_NORMAL
@@ -27,7 +28,7 @@
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
 				CALLBACK(src, .proc/handle_no_socialization),
-				5 MINUTES,
+				1 MINUTES,
 				TIMER_STOPPABLE
 			)
 
@@ -38,7 +39,7 @@
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
 				CALLBACK(src, .proc/handle_prolonged_no_socialization),
-				5 MINUTES,
+				1 MINUTES,
 				TIMER_STOPPABLE
 			)
 
@@ -52,7 +53,19 @@
 /mob/living/carbon/human/proc/handle_no_socialization()
 	set_social_state(SOCIALIZATION_LONELY)
 
-/mob/living/carbon/human/proc/handle_socialization()
+/mob/living/carbon/human/proc/handle_socialization(mob/hearer)
+	if(hearer == src)
+		return
+
+	if(hearer.stat != CONSCIOUS)
+		return
+
+	if(!hearer.client)
+		return
+
+	if(!ishuman(hearer))
+		return
+
 	set_social_state(SOCIALIZATION_NORMAL)
 
 /mob/living/carbon/human/say(message, ignore_appearance)

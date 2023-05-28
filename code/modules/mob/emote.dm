@@ -96,3 +96,13 @@
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
+
+	if(!ishuman(src))
+		return
+
+	var/mob/living/carbon/human/H = src
+	if(!H.miming && !(HAS_TRAIT(H, TRAIT_MUTE)))
+		return
+
+	for(var/mob/M in (viewers(get_turf(src), world.view)))
+		H.handle_socialization(M)

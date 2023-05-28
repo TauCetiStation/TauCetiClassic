@@ -256,8 +256,7 @@
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!flags[IS_SOCIAL])
-		H.handle_socialization()
+	H.set_social_state()
 
 	H.remove_moveset_source(MOVESET_SPECIES)
 
