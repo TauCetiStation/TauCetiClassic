@@ -1211,6 +1211,13 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_win
+	name = "win IPC screen"
+	icon_state = "ipc_win"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_yellow
 	name = "yellow IPC screen"
 	icon_state = "ipc_yellow"
