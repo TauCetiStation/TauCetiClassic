@@ -988,7 +988,6 @@
 	name = "pink IPC screen"
 	icon_state = "ipc_pink"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_red
@@ -1044,7 +1043,6 @@
 	name = "monoeye IPC screen"
 	icon_state = "ipc_monoeye"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_nature
@@ -1079,7 +1077,6 @@
 	name = "static IPC screen"
 	icon_state = "ipc_static"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_yellow
