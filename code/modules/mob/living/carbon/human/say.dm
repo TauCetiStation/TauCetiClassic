@@ -8,7 +8,7 @@
 
 /mob/living/carbon/human/atom_init()
 	. = ..()
-	set_social_state(social_state)
+	handle_socialization()
 
 /mob/living/carbon/human/Destroy()
 	deltimer(conversation_timer)
@@ -52,15 +52,8 @@
 /mob/living/carbon/human/proc/handle_no_socialization()
 	set_social_state(SOCIALIZATION_LONELY)
 
-/mob/living/carbon/human/proc/handle_socialization(mob/hearer)
-	var/new_social_state = SOCIALIZATION_LONELY
-	if(ishuman(hearer))
-		new_social_state = SOCIALIZATION_NORMAL
-	else if(isnull(hearer))
-		new_social_state = SOCIALIZATION_NORMAL
-
-	if(social_state > new_social_state)
-		set_social_state(new_social_state)
+/mob/living/carbon/human/proc/handle_socialization()
+	set_social_state(SOCIALIZATION_NORMAL)
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"

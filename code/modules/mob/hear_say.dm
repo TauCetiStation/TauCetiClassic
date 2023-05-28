@@ -126,7 +126,7 @@
 		return
 
 	var/mob/living/carbon/human/H = speaker
-	H.handle_socialization(src)
+	H.handle_socialization()
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
