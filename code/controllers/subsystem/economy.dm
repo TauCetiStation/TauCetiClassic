@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(economy)
 			R.fields["insurance_type"] = INSURANCE_NONE
 			problem_record_id.Add(R.fields["id"])
 			continue
-		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], MA)
+		var/insurance_type = get_next_insurance_type(R.fields["insurance_type"], MA)
 		var/insurance_price = SSeconomy.insurance_prices[insurance_type]
 		R.fields["insurance_type"] = insurance_type
 		if(insurance_price == 0)
