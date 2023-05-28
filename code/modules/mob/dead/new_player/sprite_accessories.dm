@@ -1185,6 +1185,13 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_microwave
+	name = "microwave IPC screen"
+	icon_state = "ipc_microwave"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 	//UNATHI HAIRS
 
 /datum/sprite_accessory/hair/una_small_horns
