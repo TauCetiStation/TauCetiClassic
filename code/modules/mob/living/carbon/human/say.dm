@@ -14,6 +14,13 @@
 	deltimer(conversation_timer)
 	return ..()
 
+/mob/living/carbon/human/me_emote(message, message_type, intentional)
+	. = ..()
+	if(!miming && !(HAS_TRAIT(src, TRAIT_MUTE)))
+		return
+	for(var/mob/M in (viewers(get_turf(src), world.view)))
+		handle_socialization(M)
+
 /mob/living/carbon/human/proc/set_social_state(state = SOCIALIZATION_NORMAL)
 	if(!species.flags[IS_SOCIAL])
 		deltimer(conversation_timer)
@@ -28,7 +35,7 @@
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
 				CALLBACK(src, .proc/handle_no_socialization),
-				5 MINUTES,
+				10 MINUTES,
 				TIMER_STOPPABLE
 			)
 
@@ -39,7 +46,7 @@
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
 				CALLBACK(src, .proc/handle_prolonged_no_socialization),
-				5 MINUTES,
+				10 MINUTES,
 				TIMER_STOPPABLE
 			)
 
@@ -61,9 +68,6 @@
 		return
 
 	if(!hearer.client)
-		return
-
-	if(!ishuman(hearer))
 		return
 
 	set_social_state(SOCIALIZATION_NORMAL)
