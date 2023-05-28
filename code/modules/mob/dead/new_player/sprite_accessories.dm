@@ -990,6 +990,13 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_aquarium
+	name = "aquarium IPC screen"
+	icon_state = "ipc_aquarium"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_blue
 	name = "blue IPC screen"
 	icon_state = "ipc_blue"
