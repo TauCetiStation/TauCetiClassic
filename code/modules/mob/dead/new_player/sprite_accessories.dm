@@ -1044,6 +1044,13 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_coffee
+	name = "coffee IPC screen"
+	icon_state = "ipc_coffee"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_chroma
 	name = "chroma IPC screen"
 	icon_state = "ipc_chroma"
