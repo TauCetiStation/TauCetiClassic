@@ -1114,6 +1114,12 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_matrix
+	name = "matrix IPC screen"
+	icon_state = "ipc_matrix"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_miami
 	name = "miami IPC screen"
 	icon_state = "ipc_miami"
