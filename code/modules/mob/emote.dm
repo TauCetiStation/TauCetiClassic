@@ -97,3 +97,9 @@
 				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
 
+/mob/living/carbon/human/me_emote(message, message_type, intentional)
+	. = ..()
+	if(!miming && !(HAS_TRAIT(src, TRAIT_MUTE)))
+		return
+	for(var/mob/M in (viewers(get_turf(src), world.view)))
+		handle_socialization(M)
