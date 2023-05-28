@@ -1056,7 +1056,6 @@
 	name = "orange IPC screen"
 	icon_state = "ipc_orange"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_purple
