@@ -9,6 +9,7 @@
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/sciGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_rd, access_heads, access_tox, access_genetics, access_morgue,
 		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
