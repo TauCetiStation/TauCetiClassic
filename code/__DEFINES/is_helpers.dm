@@ -205,7 +205,7 @@
 
 #define iswizard(H) HAS_TRAIT(H, TRAIT_WIZARD_MASTER)
 
-#define iswizardapprentice(H) HAS_TRAIT(H, TRAIT_WIZARD_APPERNTICE)
+#define iswizardapprentice(H) HAS_TRAIT(H, TRAIT_WIZARD_APPERENTICE)
 
 #define isdeathsquad(H) HAS_TRAIT(H, TRAIT_DEATHSQUAD_MEMBER)
 

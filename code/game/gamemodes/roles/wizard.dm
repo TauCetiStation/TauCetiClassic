@@ -162,12 +162,12 @@
 /datum/role/wizard_apprentice/OnPostSetup(laterole)
 	. = ..()
 	ADD_TRAIT(antag.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
-	ADD_TRAIT(antag.current, TRAIT_WIZARD_APPERNTICE, GAMEMODE_TRAIT)
+	ADD_TRAIT(antag.current, TRAIT_WIZARD_APPERENTICE, GAMEMODE_TRAIT)
 
 /datum/role/wizard_apprentice/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	REMOVE_TRAIT(M.current, TRAIT_WIZARD_PARTY, GAMEMODE_TRAIT)
-	REMOVE_TRAIT(M.current, TRAIT_WIZARD_APPERNTICE, GAMEMODE_TRAIT)
+	REMOVE_TRAIT(M.current, TRAIT_WIZARD_APPERENTICE, GAMEMODE_TRAIT)
 
 /datum/role/wizard_apprentice/GetScoreboard()
 	. = ..()
