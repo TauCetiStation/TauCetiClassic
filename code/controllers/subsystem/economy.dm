@@ -104,9 +104,16 @@ SUBSYSTEM_DEF(economy)
 
 	for(var/department in total_department_stocks)
 		var/datum/money_account/DA = global.department_accounts[department]
+		if(DA.suspended)
+			capitals[department] = 0.0
+			continue
+
 		capitals[department] = DA.money
 
 	for(var/datum/money_account/D in all_money_accounts)
+		if(D.suspended)
+			continue
+
 		var/total_dividend_payout = 0.0
 		for(var/department in D.stocks)
 			// Don't pay stocks to ourselves, less transaction spam.
@@ -142,7 +149,7 @@ SUBSYSTEM_DEF(economy)
 			R.fields["insurance_type"] = INSURANCE_NONE
 			problem_record_id.Add(R.fields["id"])
 			continue
-		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], preferred_insurance_type = MA.owner_preferred_insurance_type, money = MA.money, max_insurance_payment = MA.owner_max_insurance_payment)
+		var/insurance_type = get_next_insurance_type(current_insurance_type = R.fields["insurance_type"], MA)
 		var/insurance_price = SSeconomy.insurance_prices[insurance_type]
 		R.fields["insurance_type"] = insurance_type
 		if(insurance_price == 0)
@@ -164,18 +171,21 @@ SUBSYSTEM_DEF(economy)
 	return R.fields["insurance_type"]
 
 
-/proc/get_next_insurance_type(current_insurance_type, preferred_insurance_type, money, max_insurance_payment)
+/proc/get_next_insurance_type(current_insurance_type, datum/money_account/MA)
+	if(MA.suspended)
+		return INSURANCE_NONE
+
 	var/current_insurance_price = SSeconomy.insurance_prices[current_insurance_type]
-	if(current_insurance_type == preferred_insurance_type && money >= current_insurance_price  && max_insurance_payment >= current_insurance_price)
+	if(current_insurance_type == MA.owner_preferred_insurance_type && MA.money >= current_insurance_price  && MA.owner_max_insurance_payment >= current_insurance_price)
 		return current_insurance_type
 
-	var/prefprice = SSeconomy.insurance_prices[preferred_insurance_type]
-	if(money >= prefprice && max_insurance_payment >= prefprice)
-		return preferred_insurance_type
+	var/prefprice = SSeconomy.insurance_prices[MA.owner_preferred_insurance_type]
+	if(MA.money >= prefprice && MA.owner_max_insurance_payment >= prefprice)
+		return MA.owner_preferred_insurance_type
 
 	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
 		var/insprice = SSeconomy.insurance_prices[insurance_type]
-		if(money >= insprice && max_insurance_payment >= insprice)
+		if(MA.money >= insprice && MA.owner_max_insurance_payment >= insprice)
 			return insurance_type
 
 

@@ -590,7 +590,7 @@ SUBSYSTEM_DEF(job)
 				MA.owner_preferred_insurance_type = job.is_head ? SSeconomy.insurance_quality_decreasing[1] : H.roundstart_insurance
 				MA.owner_max_insurance_payment = SSeconomy.insurance_prices[H.roundstart_insurance]
 
-				var/insurance_type = get_next_insurance_type(current_insurance_type = H.roundstart_insurance, preferred_insurance_type = H.roundstart_insurance, money = MA.money, max_insurance_payment = MA.owner_max_insurance_payment)
+				var/insurance_type = get_next_insurance_type(H.roundstart_insurance, MA)
 				H.roundstart_insurance = insurance_type
 
 				var/med_account_number = global.department_accounts["Medical"].account_number
