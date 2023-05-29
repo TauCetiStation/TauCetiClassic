@@ -25,15 +25,10 @@
 	else
 		set_light(0)
 
-/obj/item/device/flashlight/set_light(l_range, l_power, l_color)
+/obj/item/device/flashlight/turn_light_off()
 	. = ..()
-	if(l_range <= 0)
-		on = FALSE
-		icon_state = initial(icon_state)
-	else
-		on = TRUE
-		icon_state = "[initial(icon_state)]-on"
-
+	on = FALSE
+	icon_state = initial(icon_state)
 	last_button_sound = world.time + 3
 	if(button_sound)
 		playsound(src, button_sound, VOL_EFFECTS_MASTER, 20)
@@ -197,10 +192,9 @@
 		return 1000
 	return 0
 
-/obj/item/device/flashlight/flare/set_light(l_range, l_power, l_color)
+/obj/item/device/flashlight/flare/turn_light_off()
 	. = ..()
-	if(l_range == 0)
-		turn_off()
+	turn_off()
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	src.force = initial(src.force)

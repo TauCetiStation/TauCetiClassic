@@ -45,10 +45,9 @@
 	update_inv_mob()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/flare/torch/set_light(l_range, l_power, l_color)
+/obj/item/device/flashlight/flare/torch/turn_light_off()
 	. = ..()
-	if(l_range <= 0)
-		qdel(src)
+	qdel(src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
 	return

@@ -49,17 +49,13 @@
 	else
 		set_light(0)
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/set_light(l_range, l_power, l_color)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/turn_light_off()
 	. = ..()
-	if(l_range <= 0)
-		on = FALSE
-		if(liquid_fuel)
-			reagents.remove_reagent("luminophore", liquid_fuel.volume)
-		icon_state = "glowstick_[colourName]-over"
-		STOP_PROCESSING(SSobj, src)
-	else
-		icon_state = "glowstick_[colourName]-on"
-		on = TRUE
+	on = FALSE
+	if(liquid_fuel)
+		reagents.remove_reagent("luminophore", liquid_fuel.volume)
+	icon_state = "glowstick_[colourName]-over"
+	STOP_PROCESSING(SSobj, src)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)
