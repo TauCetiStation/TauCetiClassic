@@ -620,7 +620,7 @@ log transactions
 		return
 
 	var/datum/money_account/MA = get_account(held_card.associated_account_number)
-	if(!(src in view(1, user)))
+	if(!in_range(src, user))
 		return
 	if(user.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
 		return
