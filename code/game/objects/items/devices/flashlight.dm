@@ -10,19 +10,26 @@
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
-	var/on = FALSE
+	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
 	var/last_button_sound = 0 // Prevents spamming for Object lights
 
 /obj/item/device/flashlight/atom_init()
 	. = ..()
-	update_brightness(on)
-
-/obj/item/device/flashlight/proc/update_brightness(enable = FALSE)
-	if(enable)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
 	else
+		icon_state = initial(icon_state)
+		set_light(0)
+
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		set_light(brightness_on)
+	else
+		icon_state = initial(icon_state)
 		set_light(0)
 
 /obj/item/device/flashlight/turn_light_off()
@@ -41,7 +48,12 @@
 		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
 		return 0
 
-	update_brightness(!on)
+	if (button_sound)
+		playsound(user, button_sound, VOL_EFFECTS_MASTER, 20)
+
+	on = !on
+	last_button_sound = world.time + 3
+	update_brightness(user)
 	return 1
 
 /obj/item/device/flashlight/get_current_temperature()
@@ -185,20 +197,21 @@
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
-		set_light(0)
 
 /obj/item/device/flashlight/flare/get_current_temperature()
 	if(on)
 		return 1000
 	return 0
 
-/obj/item/device/flashlight/flare/turn_light_off()
-	. = ..()
-	turn_off()
-
 /obj/item/device/flashlight/flare/proc/turn_off()
+	on = 0
 	src.force = initial(src.force)
 	src.damtype = initial(src.damtype)
+	if(ismob(loc))
+		var/mob/U = loc
+		update_brightness(U)
+	else
+		update_brightness(null)
 
 	if(!fuel)
 		icon_state = "[initial(icon_state)]-burned"
@@ -238,13 +251,14 @@
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6
+	on = 1 //Bio-luminesence has one setting, on.
 
 /obj/item/device/flashlight/slime/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/device/flashlight/slime/atom_init_late()
-	update_brightness(TRUE)
+	update_brightness()
 	icon_state = initial(icon_state)
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)

@@ -30,7 +30,10 @@
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
 	check_volume()
 	if(!liquid_fuel.volume || !on)
-		set_light(0)
+		turn_off()
+		if(!liquid_fuel.volume)
+			src.icon_state = "glowstick_[colourName]-over"
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/check_volume()
 	if(liquid_fuel.volume)
@@ -43,11 +46,21 @@
 				set_light(3)
 			return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(enable = FALSE)
-	if(enable)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(mob/user = null)
+	if(on)
+		icon_state = "glowstick_[colourName]-on"
 		set_light(start_brightness)
 	else
+		icon_state = "glowstick_[colourName]"
 		set_light(0)
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/turn_off()
+	on = 0
+	if(ismob(loc))
+		var/mob/U = loc
+		update_brightness(U)
+	else
+		update_brightness(null)
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/turn_light_off()
 	. = ..()
@@ -81,7 +94,8 @@
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='info'>You cannot turn the light on while in this [user.loc].</span>")//To prevent some lighting anomalities.
 		return
-	update_brightness(!on)
+	on = !on
+	update_brightness(user)
 	action_button_name = null
 	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS_MASTER, 35, FALSE)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
