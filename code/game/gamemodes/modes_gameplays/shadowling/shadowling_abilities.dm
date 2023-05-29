@@ -47,12 +47,12 @@
 /proc/light_off_range(list/targets, atom/center)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
-			F.set_light(0)
+			F.turn_light_off()
 
 		for(var/mob/living/C in T.contents)
 			for(var/obj/item/F in C)
-				F.set_light(0)
-			C.set_light(0) //This is required with the object-based lighting
+				F.turn_light_off()
+			C.turn_light_off() //This is required with the object-based lighting
 
 		for(var/obj/machinery/M in T.contents)
 			if(istype(M,/obj/machinery/light))
@@ -68,10 +68,10 @@
 						A.update_icon()
 			else if(istype(M,/obj/machinery/vending))
 				var/obj/machinery/vending/V = M
-				V.set_light(0)
+				V.turn_light_off()
 			else if(istype(M,/obj/machinery/computer))
 				var/obj/machinery/computer/C = M
-				C.set_light(0)
+				C.turn_light_off()
 
 		for(var/obj/structure/glowshroom/G in T.contents)
 			if(get_dist(center, G) <= 2) //Very small radius

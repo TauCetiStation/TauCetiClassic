@@ -206,6 +206,8 @@
 					stat |= NOPOWER
 					set_light(0)
 				else
+					icon_state = initial(icon_state)
+					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
 				wrenched_change()
 

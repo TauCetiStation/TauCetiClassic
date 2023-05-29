@@ -10,7 +10,6 @@
 	on_damage = 10
 	slot_flags = null
 	action_button_name = null
-	on = TRUE
 
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/I, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	. = ..()
@@ -40,7 +39,8 @@
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
 	src.damtype = BURN
-	update_brightness(TRUE)
+	on = !on
+	update_brightness(user)
 	item_state = icon_state
 	update_inv_mob()
 	START_PROCESSING(SSobj, src)

@@ -219,6 +219,10 @@
 		update_inv_mob()
 	STOP_PROCESSING(SSobj, src)
 
+/obj/item/device/flashlight/flare/turn_light_off()
+	. = ..()
+	turn_off()
+
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
