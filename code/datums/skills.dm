@@ -119,7 +119,7 @@
 /mob/living/proc/add_command_buff(mob/commander, time)
 	add_skills_buff(commander.mind.skills.active, time)
 
-/datum/skills/proc/randomize(min = 1, max = 3)
+/datum/skills/proc/randomize(min = 1, max = 2)
 	for(var/datum/skillset/s as anything in available_skillsets)
 		s.skills = list(
 			/datum/skill/police = rand(min, max),
