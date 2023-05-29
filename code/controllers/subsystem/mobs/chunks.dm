@@ -87,11 +87,10 @@ SUBSYSTEM_DEF(chunks)
 /datum/chunk/proc/has_enemy_faction(faction)
 	update()
 
-	for(var/other_faction in factions)
-		if(other_faction != faction)
-			return TRUE
+	if(length(factions) == 1 && !LAZYACCESS(factions, faction))
+		return TRUE
 
-	return FALSE
+	return length(factions) >= 2
 
 /datum/chunk/proc/has_ally_faction(faction)
 	update()
