@@ -136,6 +136,6 @@
 			/datum/skill/research = rand(min, max),
 			/datum/skill/command = rand(min, max)
 		)
-		for(var/i in 0 to 9) //5 skillpoints
+		for(var/i in 0 to 9)
 			LAZYREMOVE(s.skills, pick(s.skills))
 	update_available()
