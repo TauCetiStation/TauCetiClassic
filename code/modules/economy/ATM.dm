@@ -407,7 +407,7 @@ log transactions
 						authenticated_account.transaction_log.Add(T)
 
 						to_chat(usr, "<span class='notice'>[bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'</span>")
-						pin_visible_until = world.time
+						pin_visible_until = world.time + 2 SECONDS
 
 					previous_account_number = tried_account_num
 			if("withdrawal")
@@ -616,13 +616,17 @@ log transactions
 
 /obj/machinery/atm/examine(mob/user)
 	..()
+	if(!held_card)
+		return
+
 	var/datum/money_account/MA = get_account(held_card.associated_account_number)
 	if(!(src in view(1, user)))
 		return
 	if(user.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
 		return
-	if(pin_visible_until > world.time)
+	if(pin_visible_until < world.time)
 		return
-	pin_visible_until = world.time + 2 SECONDS
-	if(held_card && world.time < pin_visible_until + 2 SECONDS && prob(50))
+	if(held_card && world.time < pin_visible_until && prob(50))
 		to_chat(user, "Вам удаётся подглядеть пин-код: <span class='notice'>[MA.remote_access_pin]</span>.")
+
+	pin_visible_until = 0
