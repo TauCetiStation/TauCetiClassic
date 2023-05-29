@@ -363,3 +363,27 @@
 	if(!MA)
 		return
 	SSeconomy.issue_founding_stock(MA.account_number, "Cargo", rand(10, 20))
+
+
+/datum/quality/positiveish/healthy_body
+	name = "Healthy Body"
+	desc = "У тебя здоровое тело, которому позавидует среднестатистический космонавт."
+	requirement = "Нет."
+
+/datum/quality/positiveish/healthy_body/add_effect(mob/living/carbon/human/H)
+	H.health = 125
+	H.maxHealth = 125 //150 would be too much methinks
+
+
+/datum/quality/positiveish/psc
+	name = "Private Security Company"
+	desc = "Акции Карго растут в цене, и завхозу пришлось прибегнуть к услугам ЧОП."
+	requirement = "Грузчик."
+	jobs_required = list("Cargo Technician")
+
+/datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
+	H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/wjpp(H), SLOT_S_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
