@@ -200,32 +200,6 @@
 		W.set_amount(stacktypes[T])
 		modules += W
 
-/obj/item/weapon/robot_module/security
-	name = "security robot module"
-
-/obj/item/weapon/robot_module/security/atom_init()
-	. = ..()
-	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/handcuffs/cyborg(src)
-	modules += new /obj/item/weapon/melee/baton(src)
-	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
-	modules += new /obj/item/taperoll/police(src)
-	modules += new /obj/item/device/gps/cyborg(src)
-	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
-
-/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
-	..()
-	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in src.modules
-	if(T.power_supply.charge < T.power_supply.maxcharge)
-		var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-		T.power_supply.give(S.e_cost)
-		T.update_icon()
-	else
-		T.charge_tick = 0
-	var/obj/item/weapon/melee/baton/B = locate() in src.modules
-	if(B.charges < 10)
-		B.charges += 1
-
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
 

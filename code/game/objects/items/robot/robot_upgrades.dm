@@ -102,7 +102,7 @@
 /obj/item/borg/upgrade/tasercooler/action(mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/security))
+	if(!istype(R.module, /obj/item/weapon/robot_module/peacekeeper))
 		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
 		to_chat(usr, "There's no mounting point for the module!")
 		return 0
@@ -166,22 +166,6 @@
 	R.throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	R.emagged = 1
 	return 1
-
-/obj/item/borg/upgrade/security
-	name = "security safety protocols module"
-	desc = "Unlocks the ability to become a security cyborg."
-	icon_state = "cyborg_upgrade3"
-	require_module = FALSE
-
-/obj/item/borg/upgrade/security/action(mob/living/silicon/robot/R)
-	if(..())
-		return FALSE
-
-	if(R.can_be_security)
-		return FALSE
-
-	R.can_be_security = TRUE
-	return TRUE
 
 /obj/item/borg/upgrade/hud_calibrator
 	name = "Рекалибратор дисплея"

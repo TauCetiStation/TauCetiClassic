@@ -76,8 +76,7 @@
 	sound = 'sound/voice/beepsky/iamthelaw.ogg'
 
 	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(has_robot_module, /obj/item/weapon/robot_module/security),
+		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
 
@@ -96,6 +95,5 @@
 	sound = 'sound/voice/halt.ogg'
 
 	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(has_robot_module, /obj/item/weapon/robot_module/security),
+		EMOTE_STATE(is_stat, CONSCIOUS)
 	)

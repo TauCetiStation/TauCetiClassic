@@ -182,7 +182,6 @@
 				"Miner" = "Miner_old",
 				"Janitor" = "JanBot2",
 				"Service" = "Service",
-				"Security" = "secborg",
 				"Science" = "toxbot",
 				"PeaceKeeper" = "marina-peace"
 				)
@@ -262,24 +261,6 @@
 			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
-		if("Security")
-			if(can_be_security)
-				module = new /obj/item/weapon/robot_module/security(src)
-				module.channels = list("Security" = 1)
-				if(camera && ("Robots" in camera.network))
-					camera.add_network("Security")
-				module_sprites["Basic"] = "secborg"
-				module_sprites["Red Knight"] = "Security"
-				module_sprites["Black Knight"] = "securityrobot"
-				module_sprites["Bloodhound"] = "bloodhound"
-				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-				module_sprites["Drone"] = "drone-sec"
-				module_sprites["Acheron"] = "mechoid-Security"
-				module_sprites["Kodiak"] = "kodiak-sec"
-				module_sprites["NO ERP"] = "kerfusNoERP"
-			else
-				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
-				return
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -305,9 +286,6 @@
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("PeaceKeeper")
-			if(!can_be_security)
-				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
-				return
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
@@ -321,7 +299,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Medical" || modtype == "Combat" || modtype == "Syndicate")
 		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
@@ -922,7 +900,7 @@
 
 	update_fire()
 
-	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
+	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
 			add_overlay("mechoid-open+w")
 		else if(cell)
