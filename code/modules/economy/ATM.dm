@@ -626,7 +626,7 @@ log transactions
 		return
 	if(pin_visible_until < world.time)
 		return
-	if(held_card && world.time < pin_visible_until && prob(50))
+	if(held_card && prob(50))
 		to_chat(user, "Вам удаётся подглядеть пин-код: <span class='notice'>[MA.remote_access_pin]</span>.")
 
 	pin_visible_until = 0
