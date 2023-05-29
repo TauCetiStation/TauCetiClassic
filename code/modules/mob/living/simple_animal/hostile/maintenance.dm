@@ -16,7 +16,7 @@
 	has_leg = TRUE
 	alpha = 45
 
-/mob/living/simple_animal/hostile/forgotten/AttackingTarget()
+/mob/living/simple_animal/hostile/shade/AttackingTarget()
 	..()
 	var/mob/living/L = target
 	if(prob(50))
@@ -26,7 +26,7 @@
 	for(var/obj/item/I in L)
 		I.set_light(0)
 
-/mob/living/simple_animal/hostile/forgotten/death()
+/mob/living/simple_animal/hostile/shade/death()
 	..()
 	visible_message("<b>[src]</b> disappears!")
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
