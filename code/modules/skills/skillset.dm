@@ -32,3 +32,23 @@
 	if (skill_value == SKILL_LEVEL_MIN)
 		return skill_value + 0.5
 	return skill_value
+
+/datum/skillset/proc/randomize(min = 1, max = 2)
+	skills = list(
+		/datum/skill/police = rand(min, max),
+		/datum/skill/firearms = rand(min, max),
+		/datum/skill/melee = rand(min, max),
+		/datum/skill/engineering = rand(min, max),
+		/datum/skill/construction = rand(min, max),
+		/datum/skill/atmospherics = rand(min, max),
+		/datum/skill/civ_mech = rand(min, max),
+		/datum/skill/combat_mech = rand(min, max),
+		/datum/skill/surgery = rand(min, max),
+		/datum/skill/medical = rand(min, max),
+		/datum/skill/chemistry = rand(min, max),
+		/datum/skill/research = rand(min, max),
+		/datum/skill/command = rand(min, max)
+	)
+	for(var/i in 0 to 9)
+		LAZYREMOVE(skills, pick(skills))
+

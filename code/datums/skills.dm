@@ -119,23 +119,3 @@
 /mob/living/proc/add_command_buff(mob/commander, time)
 	add_skills_buff(commander.mind.skills.active, time)
 
-/datum/skills/proc/randomize(min = 1, max = 2)
-	for(var/datum/skillset/s as anything in available_skillsets)
-		s.skills = list(
-			/datum/skill/police = rand(min, max),
-			/datum/skill/firearms = rand(min, max),
-			/datum/skill/melee = rand(min, max),
-			/datum/skill/engineering = rand(min, max),
-			/datum/skill/construction = rand(min, max),
-			/datum/skill/atmospherics = rand(min, max),
-			/datum/skill/civ_mech = rand(min, max),
-			/datum/skill/combat_mech = rand(min, max),
-			/datum/skill/surgery = rand(min, max),
-			/datum/skill/medical = rand(min, max),
-			/datum/skill/chemistry = rand(min, max),
-			/datum/skill/research = rand(min, max),
-			/datum/skill/command = rand(min, max)
-		)
-		for(var/i in 0 to 9)
-			LAZYREMOVE(s.skills, pick(s.skills))
-	update_available()

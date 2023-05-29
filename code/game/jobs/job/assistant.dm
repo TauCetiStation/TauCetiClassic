@@ -39,5 +39,6 @@
 
 	if (H.mind)
 		H.mind.skills.add_available_skillset(get_skillset(H))
-		H.mind.skills.randomize()
+		for(var/datum/skillset/s as anything in H.mind.skills.available_skillsets)
+			s.randomize()
 	..()
