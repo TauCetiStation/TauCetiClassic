@@ -70,7 +70,6 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
-	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module

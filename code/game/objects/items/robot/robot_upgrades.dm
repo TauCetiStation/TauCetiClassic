@@ -92,25 +92,6 @@
 	return 1
 
 
-	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
-	if(!T)
-		T = locate() in R.module.contents
-	if(!T)
-		T = locate() in R.module.modules
-	if(!T)
-		to_chat(usr, "This robot has had its taser removed!")
-		return 0
-
-	if(T.recharge_time <= 2)
-		to_chat(R, "Maximum cooling achieved for this hardpoint!")
-		to_chat(usr, "There's no room for another cooling unit!")
-		return 0
-
-	else
-		T.recharge_time = max(2 , T.recharge_time - 4)
-
-	return 1
-
 /obj/item/borg/upgrade/jetpack
 	name = "mining robot jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
