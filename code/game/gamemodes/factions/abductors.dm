@@ -105,9 +105,8 @@ var/global/abductor_landmarks_setuped = FALSE
 			return c
 
 /datum/faction/abductors/event
-	var/agent_allowed = FALSE
 	//switch for spawn next kind of abductor's job
-	var/bullean_role_pick = FALSE
+	var/agent_allowed = FALSE
 
 /datum/faction/abductors/event/get_initrole_type()
 	if(agent_allowed)
@@ -121,3 +120,6 @@ var/global/abductor_landmarks_setuped = FALSE
 
 /datum/faction/abductors/event/get_team_console()
 	return null
+
+/datum/faction/abductors/event/proc/get_team_name()
+	return "[pick(greek_pronunciation)]"

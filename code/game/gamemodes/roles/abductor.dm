@@ -34,7 +34,13 @@
 	. = ..()
 	var/mob/living/carbon/human/abductor/H = antag.current
 	H.set_species(ABDUCTOR)
-	var/faction_name = faction ? faction.name : ""
+	var/faction_name = ""
+	if(faction)
+		if(istype(faction, /datum/faction/abductors/event))
+			var/datum/faction/abductors/event/event_faction = faction
+			faction_name = event_faction.get_team_name()
+		else
+			faction_name = faction.name
 	H.real_name = faction_name + " " + name
 	H.mind.name = H.real_name
 	H.f_style = "Shaved"
