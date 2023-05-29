@@ -52,7 +52,7 @@
  * After destroying shield waits for reactivate_time before beggining to rechage.
  * Shields require recharge_time amount of ticks to get fully charged from 0 health to max_health.
  *
- * Currently only /mob-s utilize the check_shields() mechanic, but forcefields can be applied to any /atom.
+ * Currently only /mob-s utilize the prob_shields() mechanic, but forcefields can be applied to any /atom.
  */
 /datum/component/forcefield
 	/// The name of the shield.

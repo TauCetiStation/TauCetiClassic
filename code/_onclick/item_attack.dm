@@ -233,7 +233,7 @@
 
 	if(user != M)
 		user.do_attack_animation(M)
-		if(M.check_shields(src, force, "the [name]", get_dir(user, M) ))
+		if(M.prob_shields(src, force, "the [name]", get_dir(user, M) ))
 			return FALSE
 
 	. = M.attacked_by(src, user, def_zone, power)

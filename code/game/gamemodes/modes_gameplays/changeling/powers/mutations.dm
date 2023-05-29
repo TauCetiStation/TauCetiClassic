@@ -187,7 +187,7 @@
 		if(C.absorbedcount)
 			remaining_uses +=  C.absorbedcount
 
-/obj/item/weapon/shield/changeling/Get_shield_chance()
+/obj/item/weapon/shield/changeling/get_shield_chance()
 	if(!remaining_uses)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc

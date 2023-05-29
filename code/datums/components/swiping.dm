@@ -338,7 +338,7 @@
 	else if(def_zone == BP_R_ARM && istype(target.r_hand, /obj/item/weapon/shield))
 		S = target.r_hand
 
-	if(S && prob(S.Get_shield_chance()))
+	if(S && prob(S.get_shield_chance()))
 		user.visible_message("<span class='warning'>[user] knocks [target] down with \a [src]!</span>", "<span class='warning'>You knock [target] down with \a [src]!</span>")
 		if(target.buckled)
 			target.buckled.user_unbuckle_mob(target)

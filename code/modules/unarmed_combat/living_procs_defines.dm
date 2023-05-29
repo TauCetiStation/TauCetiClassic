@@ -144,7 +144,7 @@
 		return FALSE
 
 	var/list/attack_obj = attacker.get_unarmed_attack()
-	if((attacker != src) && check_shields(attacker, attack_obj["damage"], attacker.name, get_dir(attacker, src)))
+	if((attacker != src) && prob_shields(attacker, attack_obj["damage"], attacker.name, get_dir(attacker, src)))
 		attacker.do_attack_animation(src)
 		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
 		return FALSE

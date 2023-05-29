@@ -85,20 +85,6 @@
 	shot_from = null
 	return ..()
 
-
-/obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
-	var/obj/item/weapon/grab/grab = null
-	if(istype(H.r_hand,/obj/item/weapon/grab))
-		grab = H.r_hand
-	else if(istype(H.l_hand,/obj/item/weapon/grab))
-		grab = H.l_hand
-	if(!grab)
-		return H
-	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
-		if(is_the_opposite_dir(H.dir, dir))
-			return grab.affecting
-	return H
-
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
 	if(!isliving(target))
 		return 0
@@ -110,7 +96,7 @@
 		L.IgniteMob(target)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
-	//called when the projectile stops flying because it collided with something
+//called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)
 	impact_effect(effect_transform)		// generate impact effect
 	if(proj_impact_sound)
@@ -185,9 +171,10 @@
 			forcedodge = PROJECTILE_FORCE_MISS
 
 	if(!forcedodge)
-		if(M && ishuman(M))
+		/*if(M && ishuman(M))
 			M = check_living_shield(A)
 			A = M
+		*/
 
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 
@@ -205,7 +192,7 @@
 
 		return FALSE
 
-	else if(M)
+	else if(M) // todo: move to bullet_act; todo2: def_zone == null?
 		if(silenced)
 			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 		else if(!fake)
@@ -224,7 +211,7 @@
 			Mob.bullet_act(src, def_zone)
 
 	//stop flying
-	on_impact(A)
+	on_impact(A) // todo: merge with on_hit
 
 	density = FALSE
 	invisibility = 101

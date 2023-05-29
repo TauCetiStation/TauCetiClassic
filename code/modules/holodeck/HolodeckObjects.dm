@@ -121,7 +121,7 @@
 	. = ..()
 	blade_color = "red"
 
-/obj/item/weapon/holo/esword/Get_shield_chance()
+/obj/item/weapon/holo/esword/get_shield_chance()
 	if(active)
 		return 50
 	return 0

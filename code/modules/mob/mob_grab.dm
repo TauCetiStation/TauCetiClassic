@@ -646,3 +646,13 @@
 			bad = 1
 		if(!bad)
 			to_chat(user, "<span class='notice'>[H]'s skin is normal.</span>")
+
+// mob as shield, should be less effective than real shields
+/obj/item/weapon/grab/get_shield_chance()
+	if(state < GRAB_NECK)
+		return 0
+
+	if(affecting.lying) // we need it?
+		return 0
+
+	return (affecting.w_class * 5) // 5% to block with mouse (squeek!), 35% for humans

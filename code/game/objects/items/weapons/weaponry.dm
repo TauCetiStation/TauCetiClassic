@@ -33,7 +33,7 @@
 	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/weapon/claymore/Get_shield_chance()
+/obj/item/weapon/claymore/get_shield_chance()
 	return 50
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
@@ -63,7 +63,7 @@
 	to_chat(viewers(user), "<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/katana/Get_shield_chance()
+/obj/item/weapon/katana/get_shield_chance()
 		return 50
 
 /obj/item/weapon/harpoon

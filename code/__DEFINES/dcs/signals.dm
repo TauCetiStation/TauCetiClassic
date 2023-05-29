@@ -321,7 +321,7 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 /// from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
-/// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
+/// from mob/living/prob_shields(): (atom/attacker, damage, attack_text, hit_dir)
 #define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
 	#define COMPONENT_ATTACK_SHIELDED 1
 // from mob/living/learn_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)

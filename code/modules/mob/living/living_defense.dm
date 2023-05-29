@@ -52,11 +52,19 @@
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), impact_force, 1, P.firer, spin = TRUE)
 
-	if(check_shields(P, P.damage, "the [P.name]", P.dir))
+	var/obj/item/weapon/shield = prob_shields(P, P.damage, "the [P.name]", P.dir)
+	if(shield)
+		// this is currently only special behaviour for mob grabbed "shields", but could be common shields behaviour with durability/breaking chances
+		if(istype(shield, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = shield
+			P.permutated += src // fix for possible loops
+			if(!(G.affecting in P.permutated))
+				return G.affecting.bullet_act(P, def_zone)
+
 		P.on_hit(src, def_zone, 100)
 		return PROJECTILE_ABSORBED
 
-	. = mob_bullet_act(P, def_zone)
+	. = mob_bullet_act(P, def_zone) // some carbon/human specific code, even when we already have human/bullet_act() ffs
 	if(. != PROJECTILE_ALL_OK)
 		return
 
@@ -120,7 +128,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(throwingdatum.thrower != src && check_shields(AM, throw_damage, "[O]", get_dir(O,src)))
+		if(throwingdatum.thrower != src && prob_shields(AM, throw_damage, "[O]", get_dir(O,src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -232,7 +240,7 @@
 
 // End BS12 momentum-transfer code.
 
-/mob/living/proc/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+/mob/living/proc/prob_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
 	return SEND_SIGNAL(src, COMSIG_LIVING_CHECK_SHIELDS, attacker, damage, attack_text, hit_dir) & COMPONENT_ATTACK_SHIELDED
 
 //Mobs on Fire

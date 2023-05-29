@@ -185,7 +185,7 @@
 	if(target.try_inject(user, FALSE, TRUE))
 		target.log_combat(user, "stabbed with [name] (INTENT: [uppertext(user.a_intent)])")
 
-		if((user != target) && target.check_shields(src, 7, "the [src.name]", get_dir(user,target)))
+		if((user != target) && target.prob_shields(src, 7, "the [src.name]", get_dir(user,target)))
 			return
 
 		if(ishuman(target))

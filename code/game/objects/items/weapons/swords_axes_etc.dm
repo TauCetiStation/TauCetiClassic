@@ -19,7 +19,7 @@
 /*
  * Sword
  */
-/obj/item/weapon/melee/energy/sword/Get_shield_chance()
+/obj/item/weapon/melee/energy/sword/get_shield_chance()
 	if(active)
 		return 40
 	return 0
@@ -289,7 +289,7 @@
 /*
  * Energy Shield
  */
-/obj/item/weapon/shield/energy/Get_shield_chance()
+/obj/item/weapon/shield/energy/get_shield_chance()
 	if(active)
 		return block_chance
 	return 0

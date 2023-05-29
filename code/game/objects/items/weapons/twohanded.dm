@@ -156,7 +156,7 @@
 				user.set_dir(i)
 				sleep(1)
 
-/obj/item/weapon/dualsaber/Get_shield_chance()
+/obj/item/weapon/dualsaber/get_shield_chance()
 	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)
 		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
 	else

@@ -43,7 +43,7 @@
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
-			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
+			if(prob_reflects(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
@@ -145,7 +145,8 @@
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 
-/mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+// todo: need to be living proc like with prob_shields
+/mob/living/carbon/human/proc/prob_reflects(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))
 		return TRUE
 	if(wear_suit && wear_suit.IsReflect(def_zone, hol_dir, hit_dir))
@@ -228,24 +229,24 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+// returns FALSE or shield that proc'd
+/mob/living/carbon/human/prob_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
 	. = ..()
 	if(.)
 		return
 
-	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
-		var/obj/item/weapon/I = l_hand
-		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [l_hand.name]!</span>")
-			return 1
-	if(r_hand && istype(r_hand, /obj/item/weapon))
-		var/obj/item/weapon/I = r_hand
-		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
-			return 1
+	for(var/obj/item/weapon/I in get_hand_slots())
+		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.get_shield_chance() - round(damage / 3) ))
+			var/blocked_name = I.name
+			if(istype(I, /obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = I
+				blocked_name = G.affecting
+			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [blocked_name]!</span>")
+			return I
+
 	if(wear_suit && isitem(wear_suit))
 		var/obj/item/I = wear_suit
-		if(prob(I.Get_shield_chance() - round(damage / 3) ))
+		if(prob(I.get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = list()
 			for(var/turf/T in orange(6))
@@ -256,9 +257,10 @@
 				turfs += T
 			if(!turfs.len) turfs += pick(/turf in orange(6))
 			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
+			if(!isturf(picked))
+				return
 			src.loc = picked
-			return 1
+			return wear_suit
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)

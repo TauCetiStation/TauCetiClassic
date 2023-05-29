@@ -28,7 +28,7 @@
 
 	melee_attack_chain(target, user)
 
-	if(isliving(target) && prob(Get_shield_chance())) // Better shields have more chance to stun.
+	if(isliving(target) && prob(get_shield_chance())) // Better shields have more chance to stun.
 		var/mob/living/M = target
 		user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
 		if(M.buckled)
@@ -115,7 +115,7 @@
 	if(wall_of_shield_on)
 		disable_wallshield(user)
 
-/obj/item/weapon/shield/Get_shield_chance()
+/obj/item/weapon/shield/get_shield_chance()
 	var/mob/living/carbon/human/M = loc
 	if(!M || !M.is_in_hands(src) || !wall_of_shield_on)
 		return block_chance
@@ -270,7 +270,7 @@
 /obj/item/weapon/shield/riot/tele/proc/can_sweep_push(mob/user)
 	return active
 
-/obj/item/weapon/shield/riot/tele/Get_shield_chance()
+/obj/item/weapon/shield/riot/tele/get_shield_chance()
 	if(active)
 		return ..()
 	return 0
