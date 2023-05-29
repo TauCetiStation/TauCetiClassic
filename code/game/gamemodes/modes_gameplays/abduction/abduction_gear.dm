@@ -15,7 +15,7 @@
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
 	action_button_name = "Activate"
 	action_button_is_hands_free = 1
-	var/mode = VEST_STEALTH
+	var/mode = VEST_COMBAT
 	var/stealth_active = 0
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
@@ -338,6 +338,16 @@
 	if(helm_cam)
 		..(user)
 	else
+		var/computer_detected = FALSE
+		var/obj/machinery/computer/security/abductor_ag/comp
+		for(var/obj/machinery/computer/security/abductor_ag/C in range(2, get_turf(src)))
+			if(C.network.len < 1)
+				computer_detected = TRUE
+				comp = C
+				break
+		if(!computer_detected)
+			to_chat(user, "<span class='warning'>No computers nearby. Helmet deactivated.</span>")
+			return
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
 		update_inv_mob()
@@ -347,10 +357,7 @@
 		helm_cam.c_tag = "[user.real_name] Cam"
 		helm_cam.replace_networks(list("Abductor[team]"))
 
-		for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
-			if(C.team == team)
-				if(C.network.len < 1)
-					C.network = helm_cam.network
+		comp.network = helm_cam.network
 
 		helm_cam.hidden = 1
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")

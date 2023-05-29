@@ -71,10 +71,13 @@ var/global/abductor_landmarks_setuped = FALSE
 /datum/faction/abductors/forgeObjectives()
 	if(!..())
 		return FALSE
+	set_objectives()
+	return TRUE
+
+/datum/faction/abductors/proc/set_objectives()
 	var/datum/objective/experiment/E = AppendObjective(/datum/objective/experiment)
 	if(E)
 		E.team = team_number
-	return TRUE
 
 /datum/faction/abductors/can_setup()
 	if(!..())
@@ -100,3 +103,21 @@ var/global/abductor_landmarks_setuped = FALSE
 	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)
 		if(c.team == team_number)
 			return c
+
+/datum/faction/abductors/event
+	var/agent_allowed = FALSE
+	//switch for spawn next kind of abductor's job
+	var/bullean_role_pick = FALSE
+
+/datum/faction/abductors/event/get_initrole_type()
+	if(agent_allowed)
+		agent_allowed = !agent_allowed
+		return /datum/role/abductor/agent
+	agent_allowed = !agent_allowed
+	return /datum/role/abductor/scientist
+
+/datum/faction/abductors/event/set_objectives()
+	AppendObjective(/datum/objective/experiment/long)
+
+/datum/faction/abductors/event/get_team_console()
+	return null

@@ -133,8 +133,6 @@
 		dat += "<br>"
 		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
 		dat += "<span class='gray bold'>Selected: </span>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
-	else
-		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)

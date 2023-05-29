@@ -1562,6 +1562,7 @@
 #include "code\modules\events\_event.dm"
 #include "code\modules\events\_event_container.dm"
 #include "code\modules\events\_event_procs.dm"
+#include "code\modules\events\abduction.dm"
 #include "code\modules\events\alien_infestation.dm"
 #include "code\modules\events\anomaly.dm"
 #include "code\modules\events\anomaly_bluespace.dm"
