@@ -364,6 +364,7 @@
 	SSeconomy.issue_founding_stock(MA.account_number, "Cargo", rand(10, 20))
 	SSeconomy.issue_founding_stock(MA.account_number, "Medical", rand(10, 20))
 
+
 /datum/quality/positiveish/healthy_body
 	name = "Healthy Body"
 	desc = "У тебя здоровое тело, которому позавидует среднестатистический космонавт."
