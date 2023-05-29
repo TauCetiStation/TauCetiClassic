@@ -9,6 +9,7 @@
 	selection_color = "#ccccff"
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list() 			//See get_access()
 	salary = 300
 	minimal_player_age = 14
@@ -39,6 +40,7 @@
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	is_head = TRUE
 	salary = 250
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400

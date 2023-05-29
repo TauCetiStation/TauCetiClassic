@@ -32,34 +32,6 @@
 	item_state = "secskirtred"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
-/obj/item/clothing/under/rank/dispatch
-	name = "dispatcher's uniform"
-	desc = "A dress shirt and khakis with a security patch sewn on."
-	icon_state = "dispatch"
-	item_state = "dispatch"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
-	siemens_coefficient = 0.9
-
-/obj/item/clothing/under/rank/security2
-	name = "security officer's uniform"
-	desc = "It's made of a slightly sturdier material, to allow for robust protection."
-	icon_state = "redshirt2"
-	item_state = "redshirt2"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
-	siemens_coefficient = 0.9
-
-/obj/item/clothing/under/rank/security/corp
-	icon_state = "sec_corporate"
-	item_state = "sec_corporate"
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/rank/warden/corp
-	icon_state = "warden_corporate"
-	item_state = "warden_corporate"
-	flags = ONESIZEFITSALL
-
 /obj/item/clothing/under/tactical
 	name = "tactical jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
@@ -135,11 +107,6 @@
 	icon_state = "hos_turtleneck"
 	item_state = "hos_turtleneck"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
-
-/obj/item/clothing/under/rank/head_of_security/corp
-	icon_state = "hos_corporate"
-	item_state = "hos_corporate"
-	flags = ONESIZEFITSALL
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen

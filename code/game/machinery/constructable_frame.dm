@@ -552,6 +552,16 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
+/obj/item/weapon/circuitboard/smartfridge/secure/bluespace
+	name = "circuit board (Bluespace Storage)"
+	build_path = /obj/machinery/smartfridge/secure/bluespace
+	board_type = "machine"
+	origin_tech = "programming=4;engineering=4;bluespace=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace = 3,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "circuit board (Monkey Recycler)"
 	build_path = /obj/machinery/monkey_recycler

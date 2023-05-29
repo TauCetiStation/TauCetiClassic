@@ -27,9 +27,6 @@
 #define MAINT		8		// under maintaince
 #define EMPED		16		// temporary broken by EMP pulse
 
-//General-purpose life speed define for plants.
-#define HYDRO_SPEED_MULTIPLIER 1
-
 #define NANO_IGNORE_DISTANCE 1
 
 //Where we should check allowed()
