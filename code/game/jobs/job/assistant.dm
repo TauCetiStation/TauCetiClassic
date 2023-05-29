@@ -18,19 +18,26 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
-	skillsets = list(
-		"Test Subject"   = /datum/skillset/test_subject,
-		"Lawyer"         = /datum/skillset/test_subject/lawyer,
-		"Mecha Operator" = /datum/skillset/test_subject/mecha,
-		"Private Eye"    = /datum/skillset/test_subject/detective,
-		"Reporter"       = /datum/skillset/test_subject/reporter,
-		"Waiter"         = /datum/skillset/test_subject/waiter,
-		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
-		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
-		)
+	skillsets = list("Test Subject"   = /datum/skillset/test_subject)
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)
 		return list(access_maint_tunnels)
 	else
 		return list()
+
+/datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE, alt_title)
+	if(!H)
+		return FALSE
+
+	var/outfit_type = get_outfit(H, alt_title)
+	if(outfit_type)
+		H.equipOutfit(outfit_type, visualsOnly)
+
+	for(var/moveset in moveset_types)
+		H.add_moveset(new moveset(), MOVESET_JOB)
+
+	if (H.mind)
+		H.mind.skills.add_available_skillset(get_skillset(H))
+		H.mind.skills.randomize()
+	..()
