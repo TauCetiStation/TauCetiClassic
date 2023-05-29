@@ -92,21 +92,6 @@
 	return 1
 
 
-/obj/item/borg/upgrade/tasercooler
-	name = "robotic Rapid Taser Cooling Module"
-	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-
-
-/obj/item/borg/upgrade/tasercooler/action(mob/living/silicon/robot/R)
-	if(..()) return 0
-
-	if(!istype(R.module, /obj/item/weapon/robot_module/peacekeeper))
-		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
-		to_chat(usr, "There's no mounting point for the module!")
-		return 0
-
 	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
 	if(!T)
 		T = locate() in R.module.contents

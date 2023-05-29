@@ -923,16 +923,6 @@
 	starts_unlocked = TRUE
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_tasercooler
-	name = "Cyborg Upgrade Module (Rapid Taser Cooling Module)"
-	id = "borg_upgrade_tasercooler"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/tasercooler
-	materials = list(MAT_METAL=80000, MAT_GLASS=6000, MAT_GOLD=2000, MAT_DIAMOND=500)
-	construction_time = 120
-	starts_unlocked = TRUE
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_jetpack
 	name = "Cyborg Upgrade Module (Mining Jetpack)"
 	id = "borg_upgrade_jetpack"
