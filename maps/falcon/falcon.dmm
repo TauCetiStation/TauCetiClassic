@@ -33892,7 +33892,6 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/circuitboard/teleporter,
-/obj/item/borg/upgrade/security,
 /obj/item/weapon/disk/research_points/rare,
 /turf/simulated/floor{
 	dir = 5;

@@ -92925,7 +92925,6 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/circuitboard/teleporter,
-/obj/item/borg/upgrade/security,
 /obj/structure/rack,
 /obj/machinery/requests_console/rd{
 	pixel_y = 28
