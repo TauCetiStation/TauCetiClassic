@@ -6,6 +6,8 @@
 #define HEALTH_HUD			"health"
 /// a simple line rounding the mob's number health
 #define STATUS_HUD			"status"
+/// None, Standard, Premium, insurance type
+#define INSURANCE_HUD       "insurance"
 /// the job asigned to your ID
 #define ID_HUD				"id"
 /// wanted, released, parroled, security status

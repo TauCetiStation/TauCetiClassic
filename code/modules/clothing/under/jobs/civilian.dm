@@ -138,11 +138,6 @@
 	item_state = "lawyer_red"
 	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/lawyer/blue
-	icon_state = "lawyer_blue"
-	item_state = "lawyer_blue"
-	flags = ONESIZEFITSALL
-
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
 	desc = "A classy suit and tie."

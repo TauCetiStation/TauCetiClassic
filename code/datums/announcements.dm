@@ -12,10 +12,12 @@ var/global/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/tran
 
 /* Announcement sounds */
 var/global/list/announcement_sounds = list(
-	"admin_capitain_tishina" = 'sound/AI/admin_capitain.ogg',
-	"admin_syndicate_pypysky" = 'sound/AI/admin_syndicate.ogg',
-	"admin_hos_gone" = 'sound/AI/admin_hos_gone.ogg',
-	"admin_cap_gone" = 'sound/AI/admin_cap_gone.ogg',
+	"admin_capitain_tishina" = 'sound/AI/_admin_capitain.ogg',
+	"admin_hos_gone" = 'sound/AI/_admin_hos_gone.ogg',
+	"admin_cap_gone" = 'sound/AI/_admin_cap_gone.ogg',
+	"admin_war_pipisky" = 'sound/AI/_admin_war_pipisky.ogg',
+	"admin_war_pizdec" = 'sound/AI/_admin_war_pizdec.ogg',
+	"admin_war_tishina" = 'sound/AI/_admin_war_tishina.ogg',
 	
 	"commandreport" = 'sound/AI/commandreport.ogg',
 	"announce" = 'sound/AI/announce.ogg',

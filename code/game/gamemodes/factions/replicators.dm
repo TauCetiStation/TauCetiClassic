@@ -59,6 +59,7 @@
 	var/prelude_announcement
 	var/outbreak_announcement
 	var/quarantine_end_announcement
+	var/fake_quarantine_end_announcement
 
 	var/gas = 0
 
@@ -67,12 +68,20 @@
 	var/destroyed_nodes = 0
 	var/destroyed_catapults = 0
 
+	var/will_do_fake_announcement = FALSE
+
+	var/next_fake_disintegration = 0
+	var/min_fake_disintegration_cooldown = 1 SECOND
+	var/max_fake_disintegration_cooldown = 3 SECONDS
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
 	vents4spawn = get_vents()
 
 	next_upgrade_at = world.time + first_ugprade_cooldown
+
+	will_do_fake_announcement = prob(50)
 
 /datum/faction/replicators/OnPostSetup()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
@@ -146,6 +155,18 @@
 		swarm_chat_message("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
 		bandwidth++
 
+	if(next_fake_disintegration < world.time && length(replicator_mines) > 0)
+		var/list/pos_mines = global.replicator_mines.Copy()
+		next_fake_disintegration = world.time + rand(min_fake_disintegration_cooldown, max_fake_disintegration_cooldown)
+		var/max_iterations = 100
+		while(length(pos_mines) > 0 && max_iterations > 0)
+			var/obj/item/mine/replicator/mine = pick(pos_mines)
+			pos_mines -= mine
+			max_iterations -= 1
+			if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
+				continue
+			INVOKE_ASYNC(mine, /obj/item/mine/replicator.proc/pretend_disintegration)
+
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
 		prelude_announcement = 0
@@ -160,14 +181,18 @@
 			aiPlayer.set_zeroth_law(law)
 		SSshuttle.fake_recall = TRUE //Quarantine
 
+	if(will_do_fake_announcement && length(global.alive_replicators) <= max_roles && SSshuttle.fake_recall)
+		fake_quarantine_end_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+
 	if(replicators_launched < REPLICATORS_CATAPULTED_TO_WIN && length(global.alive_replicators) <= 0 && SSshuttle.fake_recall)
 		for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			aiPlayer.set_zeroth_law("")
 		SSshuttle.fake_recall = FALSE
 		quarantine_end_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 
-	if(quarantine_end_announcement && world.time >= quarantine_end_announcement)
+	if(quarantine_end_announcement && world.time >= quarantine_end_announcement || fake_quarantine_end_announcement && world.time >= fake_quarantine_end_announcement)
 		quarantine_end_announcement = 0
+		fake_quarantine_end_announcement = 0
 		var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 		announcement.play()
 

@@ -72,6 +72,9 @@ SUBSYSTEM_DEF(shuttle)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
 
+	if(!exports_list.len)
+		setupExports()
+
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
 		supply_packs[ckey(P.name)] = P		//Convert to canonical form to avoid possible problems resulting from punctuation

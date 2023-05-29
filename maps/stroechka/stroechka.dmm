@@ -195,7 +195,7 @@
 /area/station/solar/auxport)
 "ax" = (
 /obj/machinery/space_heater,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -386,7 +386,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -612,6 +612,10 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/machinery/air_sensor{
+	frequency = 1441;
+	id_tag = "o2_sensor"
+	},
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "bp" = (
@@ -824,7 +828,7 @@
 	dir = 8;
 	id = "stationscrap"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -989,7 +993,7 @@
 /area/station/cargo/storage)
 "cg" = (
 /obj/machinery/pipedispenser/disposal/orderable,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1271,7 +1275,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/item/weapon/storage/briefcase/inflatable{
@@ -1540,7 +1544,7 @@
 	},
 /area/station/cargo/recycler)
 "cT" = (
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -1897,7 +1901,7 @@
 /obj/structure/closet/secure_closet/atmos_personal{
 	req_access = list(71)
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /obj/item/device/radio/off,
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = -28
@@ -2012,7 +2016,7 @@
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2289,7 +2293,7 @@
 	},
 /area/station/cargo/recycler)
 "ek" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2819,7 +2823,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -3140,7 +3144,7 @@
 	name = "Mech Bay Door Control";
 	pixel_x = -25
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -3603,7 +3607,7 @@
 /turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/rnd/chargebay)
 "ot" = (
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /obj/machinery/power/apc{
@@ -4039,7 +4043,7 @@
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 8
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -4130,7 +4134,7 @@
 /area/station/engineering/chiefs_office)
 "tD" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -5216,7 +5220,7 @@
 	name = "largecell apc right";
 	pixel_x = 28
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -5269,7 +5273,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -5395,7 +5399,7 @@
 	pixel_y = -28
 	},
 /obj/item/weapon/flora/random,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -5700,7 +5704,7 @@
 /area/station/cargo/storage)
 "FR" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/light,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -5973,7 +5977,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -6058,7 +6062,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = 32
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor/plating{
@@ -6597,6 +6601,10 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/machinery/air_sensor{
+	frequency = 1441;
+	id_tag = "n2_sensor"
+	},
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "OC" = (
@@ -6901,6 +6909,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
+/obj/machinery/air_sensor{
+	frequency = 1443;
+	id_tag = "air_sensor";
+	output = 7
+	},
 /turf/simulated/floor/engine/airmix{
 	nitrogen = 41073.6;
 	oxygen = 10918.3
@@ -6917,6 +6930,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/bot/medbot{
 	req_access = list(71)
+	},
+/obj/effect/landmark{
+	name = "Observer-Start"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -7072,7 +7088,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/light{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -7179,6 +7195,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/secondary/exit)
+"TY" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/environment/space,
+/area/space)
 "Ug" = (
 /obj/machinery/drone_fabricator,
 /obj/structure/closet/fireaxecabinet{
@@ -29468,10 +29490,10 @@ XB
 eS
 aT
 Wx
-MC
 hO
 he
-he
+iv
+hO
 he
 iv
 OI
@@ -29725,10 +29747,10 @@ XB
 aU
 aU
 Wx
-MC
-aC
-MC
-MC
+go
+iv
+go
+TY
 aI
 aN
 bD

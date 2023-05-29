@@ -113,6 +113,10 @@
 	icon_state = "mouse_brown"
 	flags = HEAR_PASS_SAY
 
+/obj/item/weapon/holder/mouse/nuke
+	icon_state = "mouse_nuke"
+	flags = HEAR_PASS_SAY
+
 /obj/item/weapon/holder/lizard
 	name = "lizard"
 	desc = "A cute tiny lizard."

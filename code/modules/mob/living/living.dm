@@ -1038,8 +1038,13 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
+	if(!crawling && HAS_TRAIT(usr, TRAIT_NO_CRAWL))
+		to_chat(usr, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
+		return
+
 	if(crawl_getup)
 		return
+
 
 	if((status_flags & FAKEDEATH) || buckled)
 		return
@@ -1506,3 +1511,12 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+// return TRUE if we failed our interaction
+/mob/living/interact_prob_brain_damage(atom/object)
+	if(getBrainLoss() >= 60)
+		visible_message("<span class='warning'>[src] stares cluelessly at [isturf(object.loc) ? object : ismob(object.loc) ? object : "something"] and drools.</span>")
+		return TRUE
+	else if(prob(getBrainLoss()))
+		to_chat(src, "<span class='warning'>You momentarily forget how to use [object].</span>")
+		return TRUE

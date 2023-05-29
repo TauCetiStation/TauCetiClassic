@@ -11,7 +11,7 @@
 /// Approximate height in pixels of an 'average' line, used for height decay
 #define RUNECHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define RUNECHAT_MESSAGE_WIDTH 96
+#define RUNECHAT_MESSAGE_WIDTH 100
 /// Max length of chat message in characters
 #define RUNECHAT_MESSAGE_MAX_LENGTH 110
 
@@ -224,6 +224,9 @@
  */
 /mob/proc/show_runechat_message(atom/movable/speaker, datum/language/language, raw_message, list/spans, runechat_flags = 0, lifespan = RUNECHAT_MESSAGE_LIFESPAN)
 	if(!speaker || isobserver(speaker))
+		return
+
+	if(!client || !client.prefs.show_runechat)
 		return
 
 	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
