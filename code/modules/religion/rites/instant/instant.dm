@@ -427,7 +427,6 @@
 		for(var/obj/item/weapon/implant/mind_protect/L in target)
 			if(L.implanted)
 				qdel(L)
-		target.sec_hud_set_implants()
 
 	var/converted = iscultist(target)
 	if(!converted)

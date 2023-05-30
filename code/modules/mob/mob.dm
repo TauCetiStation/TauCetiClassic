@@ -1001,7 +1001,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				break
 
 		BP.implants -= selection
-		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 

@@ -61,7 +61,7 @@
 	return TRUE
 
 /datum/atom_hud/data/security
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
@@ -167,44 +167,6 @@
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	holder.pixel_y = -8
 	sec_hud_set_security_status()
-
-/mob/living/proc/sec_hud_set_implants()
-	var/image/holder
-	var/y = 0
-	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD))
-		holder = hud_list[i]
-		holder.icon_state = null
-
-	if(isloyal())
-		holder = hud_list[IMPLOYAL_HUD]
-		holder.icon_state = "hud_imp_loyal"
-		y += -5
-
-	if(ismindshielded())
-		holder = hud_list[IMPMINDS_HUD]
-		holder.icon_state = "hud_imp_mindshield"
-		holder.pixel_y = y
-		y += -5
-
-	if(isimplantedobedience())
-		holder = hud_list[IMPOBED_HUD]
-		holder.icon_state = "hud_imp_obedience"
-		holder.pixel_y = y
-		y += -5
-
-	for(var/obj/item/weapon/implant/I in src)
-		if(istype(I, /obj/item/weapon/implant/chem))
-			if(I.implanted)
-				holder = hud_list[IMPCHEM_HUD]
-				holder.icon_state = "hud_imp_chem"
-				holder.pixel_y = y
-				y += -5
-
-		if(istype(I, /obj/item/weapon/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			holder.icon_state = "hud_imp_tracking"
-			holder.pixel_y = y
-			y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
