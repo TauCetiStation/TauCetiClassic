@@ -18,7 +18,9 @@
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
-	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins)
+	survival_kit_items = list(
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins
+	)
 
 // HOP OUTFIT
 /datum/outfit/job/hop
@@ -32,4 +34,6 @@
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
 
-	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins)
+	survival_kit_items = list(
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins
+	)

@@ -13,11 +13,12 @@
 
 	back_style = BACKPACK_STYLE_ENGINEERING
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi,
-	                          /obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
-	                          /obj/item/weapon/storage/pill_bottle/hyronalin,
-	                          /obj/item/stack/medical/ointment
-	                         )
+	survival_kit_items = list(
+		/obj/item/weapon/tank/emergency_oxygen/engi,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
+		/obj/item/weapon/storage/pill_bottle/hyronalin,
+		/obj/item/stack/medical/ointment
+	)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 // ENGINEER OUTFIT
@@ -35,10 +36,11 @@
 
 	back_style = BACKPACK_STYLE_ENGINEERING
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi,
-	                          /obj/item/weapon/storage/pill_bottle/hyronalin,
-	                          /obj/item/stack/medical/ointment
-	                         )
+	survival_kit_items = list(
+		/obj/item/weapon/tank/emergency_oxygen/engi,
+		/obj/item/weapon/storage/pill_bottle/hyronalin,
+		/obj/item/stack/medical/ointment
+	)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 /datum/outfit/job/engineer/pre_equip()
@@ -60,10 +62,11 @@
 
 	back_style = BACKPACK_STYLE_ENGINEERING
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi,
-	                          /obj/item/weapon/storage/pill_bottle/hyronalin,
-	                          /obj/item/stack/medical/ointment
-	                         )
+	survival_kit_items = list(
+		/obj/item/weapon/tank/emergency_oxygen/engi,
+		/obj/item/weapon/storage/pill_bottle/hyronalin,
+		/obj/item/stack/medical/ointment
+	)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 
