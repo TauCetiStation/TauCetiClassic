@@ -378,7 +378,7 @@
 /datum/quality/positiveish/psc
 	name = "Private Security Company"
 	desc = "Акции Карго растут в цене, и завхозу пришлось прибегнуть к услугам ЧОП."
-	requirement = "Грузчик."
+	requirement = "Карготех."
 	jobs_required = list("Cargo Technician")
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
