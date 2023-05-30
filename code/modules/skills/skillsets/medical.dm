@@ -31,10 +31,9 @@
 /datum/skillset/doctor/nurse
 	name = "Medical Nurse"
 	initial_skills = list(
-		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
-		/datum/skill/medical = SKILL_LEVEL_MASTER,
-		/datum/skill/chemistry = SKILL_LEVEL_PRO,
-		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE,
+		/datum/skill/chemistry = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/virologist
