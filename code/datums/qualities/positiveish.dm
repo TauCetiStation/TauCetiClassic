@@ -352,7 +352,7 @@
 
 /datum/quality/positiveish/investory
 	name = "Investor"
-	desc = "Вдоволь находившись на околофинансовые семинары, ты решил прикупить несколько акций Карго..."
+	desc = "Вдоволь находившись на околофинансовые семинары, ты решил прикупить парочку пакетов акций."
 	requirement = "Нет."
 
 /datum/quality/positiveish/investory/add_effect(mob/living/carbon/human/H, latespawn)
@@ -383,7 +383,10 @@
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/wjpp(H), SLOT_S_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
-	H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+	if(is_species(H, TAJARAN))
+		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
+	else
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/wjpp(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
