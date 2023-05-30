@@ -12,6 +12,12 @@
 #define ID_HUD				"id"
 /// wanted, released, parroled, security status
 #define WANTED_HUD			"wanted"
+/// loyality implant
+#define IMPLOYAL_HUD		"imployal"
+/// chemical implant
+#define IMPCHEM_HUD			"impchem"
+/// tracking implant
+#define IMPTRACK_HUD		"imptrack"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD		"diag_stat"
 /// Silicon health bar
@@ -24,6 +30,10 @@
 #define DIAG_AIRLOCK_HUD 	"diag_airlock"
 // For antag huds. these are used at the /mob level
 #define ANTAG_HUD			"antag"
+// Implant of mindshield
+#define IMPMINDS_HUD		"impminds"
+// Obedience implant
+#define IMPOBED_HUD			"impobed"
 // Broken glasses hud
 #define BROKEN_HUD			"broken"
 // Mineral hud

@@ -63,6 +63,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		for(var/obj/item/weapon/implant/mind_protect/L in target)
 			if(L.implanted && L.imp_in == target)
 				qdel(L)
+		target.sec_hud_set_implants()
 		target.adjustBrainLoss(15)
 		user.Paralyse(paralysis_amount_caster)
 		target.Paralyse(paralysis_amount_victim)

@@ -207,7 +207,7 @@
 
 	if(data["ticks"] < 5)
 		return
-
+	
 	if(data["ticks"] == 5)
 		M.add_status_flags(FAKEDEATH)
 		M.tod = worldtime2text()
@@ -800,6 +800,7 @@
 			W.layer = initial(W.layer)
 			W.loc = M.loc
 			W.dropped(M)
+		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 		new_mob.set_a_intent(INTENT_HARM)
 		new_mob.universal_speak = 1
