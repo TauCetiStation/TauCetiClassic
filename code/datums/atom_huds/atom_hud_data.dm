@@ -61,7 +61,10 @@
 	return TRUE
 
 /datum/atom_hud/data/security
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, WANTED_HUD)
+
+/datum/atom_hud/data/implants
+	hud_icons = list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD)
 
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)

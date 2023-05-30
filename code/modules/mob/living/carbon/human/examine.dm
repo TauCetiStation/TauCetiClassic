@@ -46,7 +46,7 @@
 		t_His = "Their"
 		t_his = "their"
 		t_him = "them"
-		t_has = "have"
+		t_has = "has"
 		t_is = "are"
 	else
 		switch(gender)
@@ -250,7 +250,7 @@
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"
 
 	if(suiciding)
-		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
+		msg += "<span class='warning'>[t_He] appears to has commited suicide... there is no hope of recovery.</span>\n"
 
 	var/distance = get_dist(user,src)
 	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
@@ -295,7 +295,7 @@
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if(!key && has_brain() && stat != DEAD)
-		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must has been too much for [t_him]. Any recovery is unlikely</span>\n"
 	else if(!client && has_brain() && stat != DEAD)
 		msg += "[t_He] [t_has] suddenly fallen asleep.\n"
 
@@ -400,7 +400,7 @@
 				wound_flavor_text[BP_Name] = ""
 
 	//Handles the text strings being added to the actual description.
-	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
+	//If they has something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
 	var/display_chest = 0
 	var/display_shoes = 0
 	var/display_gloves = 0
@@ -485,6 +485,29 @@
 			msg += "Отображает на экране: \"<span class=\"emojify\">[BP.display_text]</span>\"\n"
 
 	if(hasHUD(user,"security"))
+		var/has_implants = FALSE
+		var/list/showing_implants_strings = list()
+		for(var/obj/item/weapon/implant/I in src)
+			has_implants = TRUE
+			if(istype(I, /obj/item/weapon/implant/chem))
+				if(I.implanted)
+					showing_implants_strings += "Chemical"
+			if(istype(I, /obj/item/weapon/implant/tracking))
+				showing_implants_strings += "Tracking"
+		if(isloyal())
+			has_implants = TRUE
+			showing_implants_strings += "Loyality"
+		if(ismindshielded())
+			has_implants = TRUE
+			showing_implants_strings += "MindShield"
+		if(has_implants)
+			msg += "<span class='info'>[t_He] has implants:"
+			var/num = 1
+			for(var/implant in showing_implants_strings)
+				msg += " [implant][showing_implants_strings.len > num ? "," : "."]"
+				num++
+			msg += "</span><br>"
+
 		var/perpname = "wot"
 		var/criminal = "None"
 

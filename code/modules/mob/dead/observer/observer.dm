@@ -22,7 +22,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/has_enabled_antagHUD = 0
-	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY) // Data huds allowed all ghost
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY, DATA_HUD_IMPLANTS) // Data huds allowed all ghost
 	var/data_hud = FALSE
 	var/antagHUD = FALSE
 	universal_speak = 1

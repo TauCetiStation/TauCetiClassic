@@ -53,6 +53,7 @@
 
 //data HUD (medhud, sechud) defines
 #define DATA_HUD_SECURITY       "data_hud_sec"
+#define DATA_HUD_IMPLANTS       "data_hud_imp"
 #define DATA_HUD_MEDICAL        "data_hud_med"
 #define DATA_HUD_MEDICAL_ADV    "data_hud_med_adv"
 #define DATA_HUD_DIAGNOSTIC     "data_hud_diag"
