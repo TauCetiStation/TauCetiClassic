@@ -39,7 +39,6 @@
 
 	back_style = BACKPACK_STYLE_HYDROPONIST
 
-
 // JANITOR OUTFIT
 /datum/outfit/job/janitor
 	name = OUTFIT_JOB_NAME("Janitor")
@@ -48,7 +47,6 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/janitor
-
 
 // BARBER OUTFIT
 /datum/outfit/job/barber
@@ -59,7 +57,6 @@
 
 	belt = /obj/item/device/pda/barber
 
-
 // STYLIST OUTFIT
 /datum/outfit/job/stylist
 	name = OUTFIT_JOB_NAME("Stylist")
@@ -68,7 +65,6 @@
 	shoes = /obj/item/clothing/shoes/laceup
 
 	belt = /obj/item/device/pda/barber
-
 
 // LIBRARIAN OUTFIT
 /datum/outfit/job/librarian
@@ -80,7 +76,6 @@
 	belt = /obj/item/weapon/storage/bag/bookbag
 	l_hand = /obj/item/weapon/barcodescanner
 	r_pocket = /obj/item/device/pda/librarian
-
 
 // LAWYER OUTFIT
 /datum/outfit/job/lawyer
@@ -101,7 +96,6 @@
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
-
 
 // CLOWN OUTFIT
 /datum/outfit/job/clown
@@ -124,7 +118,6 @@
 
 	back = /obj/item/weapon/storage/backpack/clown
 
-
 // MIME OUTFIT
 /datum/outfit/job/mime
 	name = OUTFIT_JOB_NAME("Mime")
@@ -143,7 +136,6 @@
 
 	back_style = BACKPACK_STYLE_MIME
 
-
 // CHAPLAIN OUTFIT
 /datum/outfit/job/chaplain
 	name = OUTFIT_JOB_NAME("Chaplain")
@@ -152,4 +144,3 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
-
