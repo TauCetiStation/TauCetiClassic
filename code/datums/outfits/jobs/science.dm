@@ -11,7 +11,7 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/methylphenidate
                              )
 
 // SCIENTIST OUTFIT
@@ -27,7 +27,7 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/methylphenidate
                              )
 
 /datum/outfit/job/scientist/unathi_equip()
@@ -55,7 +55,7 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/citalopram
                              )
 
 /datum/outfit/job/xenoarchaeologist/unathi_equip()
@@ -83,7 +83,8 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/methylphenidate,
+	                          /obj/item/weapon/reagent_containers/spray/extinguisher/mini/water
                              )
 
 // ROBOTICIST OUTFIT
@@ -100,7 +101,7 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/methylphenidate
                              )
 
 // RESEARCH ASSISTANT OUTFIT

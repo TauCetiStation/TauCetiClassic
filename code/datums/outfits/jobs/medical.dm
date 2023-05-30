@@ -10,12 +10,17 @@
 	belt = /obj/item/device/pda/heads/cmo
 	l_ear = /obj/item/device/radio/headset/heads/cmo
 
-	l_hand = /obj/item/weapon/storage/firstaid/adv
 	suit_store = /obj/item/device/flashlight/pen
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/inaprovaline,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/splint
                              )
 
 // DOCTOR OUTFIT
@@ -30,12 +35,17 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	l_hand = /obj/item/weapon/storage/firstaid/adv
 	suit_store = /obj/item/device/flashlight/pen
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/inaprovaline,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/splint
                              )
 
 
@@ -51,12 +61,17 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	l_hand = /obj/item/weapon/storage/firstaid/adv
 	suit_store = /obj/item/device/flashlight/pen
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/inaprovaline,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/splint
                              )
 
 // NURSE OUTFIT
@@ -70,12 +85,17 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	l_hand = /obj/item/weapon/storage/firstaid/adv
 	suit_store = /obj/item/device/flashlight/pen
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/inaprovaline,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/splint
                              )
 
 /datum/outfit/job/nurse/pre_equip(mob/living/carbon/human/H)
@@ -96,11 +116,15 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	l_hand = /obj/item/weapon/storage/firstaid/adv
-
 	back_style = BACKPACK_STYLE_MEDICAL
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/inaprovaline,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/bruise_pack,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/advanced/ointment,
+	                          /obj/item/stack/medical/splint
                              )
 
 // CHEMIST OUTFIT
@@ -135,7 +159,7 @@
 
 	back_style = BACKPACK_STYLE_GENETICIST
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/dylovene
                              )
 
 // VIROLOGIST OUTFIT
@@ -153,7 +177,7 @@
 
 	back_style = BACKPACK_STYLE_VIROLOGIST
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/spaceacillin
                              )
 
 // PSYCHIATRIST OUTFIT
@@ -167,7 +191,10 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/citalopram,
+	                          /obj/item/weapon/storage/pill_bottle/methylphenidate,
+	                          /obj/item/weapon/storage/pill_bottle/paroxetine,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol
                              )
 
 // PSYCHOLOGIST OUTFIT
@@ -181,7 +208,10 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/citalopram,
+	                          /obj/item/weapon/storage/pill_bottle/methylphenidate,
+	                          /obj/item/weapon/storage/pill_bottle/paroxetine,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol
                              )
 
 // MEDICAL INTERN OUTFIT

@@ -14,7 +14,8 @@
 	back_style = BACKPACK_STYLE_ENGINEERING
 
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi,
-	                          /obj/item/weapon/storage/pill_bottle/kelotane
+	                          /obj/item/weapon/storage/pill_bottle/hyronalin,
+	                          /obj/item/stack/medical/ointment
 	                         )
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
@@ -34,7 +35,8 @@
 	back_style = BACKPACK_STYLE_ENGINEERING
 
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi,
-	                          /obj/item/weapon/storage/pill_bottle/kelotane
+	                          /obj/item/weapon/storage/pill_bottle/hyronalin,
+	                          /obj/item/stack/medical/ointment
 	                         )
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
@@ -58,7 +60,8 @@
 	back_style = BACKPACK_STYLE_ENGINEERING
 
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi,
-	                          /obj/item/weapon/storage/pill_bottle/kelotane
+	                          /obj/item/weapon/storage/pill_bottle/hyronalin,
+	                          /obj/item/stack/medical/ointment
 	                         )
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 

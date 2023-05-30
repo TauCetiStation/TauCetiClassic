@@ -97,6 +97,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	reagents.clear_reagents()
 	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/water
+	reagent_inside = "water"
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/golden
 	name = "golden fire extinguisher"
 	desc = "A rare golden extinguisher filled to the top with the finest champagne. Weighs a ton."

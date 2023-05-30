@@ -302,3 +302,13 @@
 /obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
 	. = ..()
 	reagents.add_reagent("adminordrazine", 1)
+
+/obj/item/weapon/reagent_containers/pill/carbon
+	name = "Absorbent Carbon"
+	desc = "Активированный уголь."
+	icon_state = "black"
+/obj/item/weapon/reagent_containers/pill/carbon/atom_init()
+	. = ..()
+	reagents.add_reagent("carbon", 10)
+	reagents.add_reagent("iron", 5)
+

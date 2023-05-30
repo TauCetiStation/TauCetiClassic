@@ -283,6 +283,12 @@
 
 	startswith = list(/obj/item/weapon/reagent_containers/pill/hyronalin = 5)
 
+/obj/item/weapon/storage/pill_bottle/abscarbon
+	name = "pill bottle (absorbent carbon)"
+	desc = "Активированный уголь."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/carbon = 12)
+
 /obj/item/weapon/storage/firstaid/personal
 	name = "presonal first-aid kit"
 	desc = "Карманная личная аптечка."
@@ -293,12 +299,12 @@
 
 /obj/item/weapon/storage/firstaid/personal/open()
 	..()
-	icon_state = "[item_state]_open"
-	item_state_world = "[item_state]_open_world"
+	icon_state = "personal_firstaid_open"
+	item_state_world = "personal_firstaid_open_world"
 	update_world_icon()
 
 /obj/item/weapon/storage/firstaid/personal/close()
 	..()
-	icon_state = "[item_state]"
-	item_state_world = "[item_state]_world"
+	icon_state = "personal_firstaid"
+	item_state_world = "personal_firstaid_world"
 	update_world_icon()

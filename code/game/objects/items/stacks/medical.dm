@@ -157,6 +157,21 @@
 	var/icon_amount = clamp(amount, 1, max_amount)
 	icon_state = "[initial(icon_state)][icon_amount]"
 
+/obj/item/stack/medical/bruise_pack/patch
+	name = "patch"
+	desc = "Стерильный пластырь."
+	icon_state = "patch"
+	item_state = "patch"
+	item_state_world = "patch_world"
+
+	repeating = FALSE
+	heal_brute = 1
+
+	amount = 1
+	max_amount = 1
+
+	required_skills = null
+
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."

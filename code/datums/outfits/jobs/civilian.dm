@@ -8,7 +8,8 @@
 
 	belt = /obj/item/device/pda/bar
 
-	survival_kit_items = list(/obj/item/ammo_casing/shotgun/beanbag,
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/abscarbon,
+	                          /obj/item/ammo_casing/shotgun/beanbag,
 	                          /obj/item/ammo_casing/shotgun/beanbag,
 	                          /obj/item/ammo_casing/shotgun/beanbag,
 	                          /obj/item/ammo_casing/shotgun/beanbag
@@ -23,7 +24,7 @@
 
 	belt = /obj/item/device/pda/chef
 
-	survival_kit_items = list(
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/abscarbon
                              )
 
 // BOTANIST OUTFIT
@@ -38,8 +39,6 @@
 
 	back_style = BACKPACK_STYLE_HYDROPONIST
 
-	survival_kit_items = list(
-                             )
 
 // JANITOR OUTFIT
 /datum/outfit/job/janitor
@@ -50,8 +49,6 @@
 
 	belt = /obj/item/device/pda/janitor
 
-	survival_kit_items = list(
-                             )
 
 // BARBER OUTFIT
 /datum/outfit/job/barber
@@ -62,8 +59,6 @@
 
 	belt = /obj/item/device/pda/barber
 
-	survival_kit_items = list(
-                             )
 
 // STYLIST OUTFIT
 /datum/outfit/job/stylist
@@ -74,8 +69,6 @@
 
 	belt = /obj/item/device/pda/barber
 
-	survival_kit_items = list(
-                             )
 
 // LIBRARIAN OUTFIT
 /datum/outfit/job/librarian
@@ -88,8 +81,6 @@
 	l_hand = /obj/item/weapon/barcodescanner
 	r_pocket = /obj/item/device/pda/librarian
 
-	survival_kit_items = list(
-                             )
 
 // LAWYER OUTFIT
 /datum/outfit/job/lawyer
@@ -111,8 +102,6 @@
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
-	survival_kit_items = list(
-                             )
 
 // CLOWN OUTFIT
 /datum/outfit/job/clown
@@ -135,8 +124,6 @@
 
 	back = /obj/item/weapon/storage/backpack/clown
 
-	survival_kit_items = list(
-                             )
 
 // MIME OUTFIT
 /datum/outfit/job/mime
@@ -156,8 +143,6 @@
 
 	back_style = BACKPACK_STYLE_MIME
 
-	survival_kit_items = list(
-                             )
 
 // CHAPLAIN OUTFIT
 /datum/outfit/job/chaplain
@@ -168,5 +153,3 @@
 
 	belt = /obj/item/device/pda/chaplain
 
-	survival_kit_items = list(
-                             )
