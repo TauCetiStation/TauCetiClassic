@@ -10,8 +10,7 @@
 	l_ear =  /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/quartermaster
 
-	survival_kit_items = list(
-                             )
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins)
 
 // CARGOTECH OUTFIT
 /datum/outfit/job/cargo_tech
@@ -23,8 +22,7 @@
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
 
-	survival_kit_items = list(
-                             )
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins)
 
 // MINER OUTFIT
 /datum/outfit/job/mining
@@ -41,7 +39,8 @@
 		/obj/item/weapon/survivalcapsule
 		)
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/citalopram
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
+	                          /obj/item/weapon/storage/pill_bottle/citalopram
                              )
 
 	back_style = BACKPACK_STYLE_ENGINEERING
@@ -57,5 +56,6 @@
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/spaceacillin
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
+	                          /obj/item/weapon/storage/pill_bottle/spaceacillin
                              )

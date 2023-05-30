@@ -14,7 +14,8 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/inaprovaline,
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
+	                          /obj/item/weapon/storage/pill_bottle/inaprovaline,
 	                          /obj/item/stack/medical/advanced/bruise_pack,
 	                          /obj/item/stack/medical/advanced/bruise_pack,
 	                          /obj/item/stack/medical/advanced/bruise_pack,

@@ -279,6 +279,13 @@
 	icon_state = "vodkabottle"
 	list_reagents = list("vodka" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot
+	name = "Small bottle of vodka"
+	desc = "Для трудных моментов в жизни."
+	icon_state = "bottle_small"
+	list_reagents = list("vodka" = 10)
+	volume = 10
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
 	name = "Caccavo Guaranteed Quality Tequilla"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
@@ -422,4 +429,11 @@
 	desc = "Contains only water, malt and hops."
 	icon_state = "beer"
 	list_reagents = list("beer" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins
+	name = "Small bottle of vitamins"
+	desc = "Полный набор витаминов для здорового тела."
+	icon_state = "bottle_small"
+	list_reagents = list("vitamin" = 10)
+	volume = 10
 

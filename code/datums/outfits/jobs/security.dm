@@ -19,7 +19,9 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
+	                          /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol,
 	                          /obj/item/stack/medical/bruise_pack/patch
                              )
 
@@ -43,7 +45,8 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol,
 	                          /obj/item/stack/medical/bruise_pack/patch
                              )
 
@@ -64,7 +67,8 @@
 	l_pocket = /obj/item/weapon/lighter/zippo
 	r_pocket_back = /obj/item/device/detective_scanner
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol,
                               /obj/item/weapon/storage/pill_bottle/paroxetine,
                               /obj/item/stack/medical/bruise_pack/patch
                              )
@@ -86,7 +90,8 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol,
 	                          /obj/item/stack/medical/bruise_pack/patch
                              )
 
@@ -103,10 +108,6 @@
 
 	r_pocket_back = /obj/item/device/detective_scanner
 	l_hand_back = /obj/item/weapon/storage/box/evidence
-
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
-	                          /obj/item/stack/medical/bruise_pack/patch
-                             )
 
 // CADET OUTFIT
 /datum/outfit/job/cadet
@@ -145,6 +146,7 @@
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
+	                          /obj/item/weapon/storage/pill_bottle/paracetamol,
 	                          /obj/item/stack/medical/bruise_pack/patch
                              )

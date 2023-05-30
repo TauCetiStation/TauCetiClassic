@@ -11,7 +11,8 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/methylphenidate
+	survival_kit_items = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
+	                          /obj/item/weapon/storage/pill_bottle/methylphenidate
                              )
 
 // SCIENTIST OUTFIT
