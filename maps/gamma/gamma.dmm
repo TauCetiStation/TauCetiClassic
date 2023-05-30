@@ -8029,7 +8029,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "bzF" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -38776,7 +38776,7 @@
 "lrQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -74521,7 +74521,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"

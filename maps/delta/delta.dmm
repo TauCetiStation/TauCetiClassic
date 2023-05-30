@@ -26904,7 +26904,7 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -30095,7 +30095,7 @@
 /area/station/security/lobby)
 "hFc" = (
 /obj/structure/stool/bed/chair,
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -60749,7 +60749,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
 	id = "MedbayFoyerIn";
@@ -73589,7 +73589,7 @@
 	dir = 4;
 	pixel_x = 22
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -88562,7 +88562,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -89516,7 +89516,7 @@
 /obj/structure/stool/bed/chair{
 	dir = 8
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"

@@ -46717,7 +46717,7 @@
 	},
 /area/station/civilian/cold_room)
 "bHP" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

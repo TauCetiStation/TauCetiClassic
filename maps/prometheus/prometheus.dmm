@@ -8323,7 +8323,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -26029,7 +26029,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -75356,7 +75356,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "white"
@@ -93436,7 +93436,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

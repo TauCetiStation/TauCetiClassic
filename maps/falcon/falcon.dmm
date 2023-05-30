@@ -14662,7 +14662,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/medbay)
 "frG" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /obj/machinery/hologram/holopad{
 	pixel_x = -16;
 	pixel_y = -16
