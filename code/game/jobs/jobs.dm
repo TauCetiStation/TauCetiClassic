@@ -30,7 +30,7 @@ var/global/const/ROBOTICIST         =(1<<8)
 var/global/const/XENOBIOLOGIST      =(1<<9)
 var/global/const/PARAMEDIC          =(1<<10)
 var/global/const/XENOARCHAEOLOGIST  =(1<<11)
-var/global/const/INTERN             =(1<<12)
+var/global/const/NURSE           =(1<<12)
 var/global/const/RESEARCHASSISTANT  =(1<<13)
 
 var/global/const/CIVILIAN           =(1<<2)
@@ -96,7 +96,7 @@ var/global/list/medical_positions = list(
 	"Geneticist", //Part of both medical and science
 	"Virologist",
 	"Psychiatrist",
-	"Medical Intern"
+	"Medical Nurse"
 )
 
 var/global/list/science_positions = list(

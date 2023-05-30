@@ -62,7 +62,7 @@ MAP_REMOVE_JOB(chaplain)
 
 MAP_REMOVE_JOB(chef)
 
-MAP_REMOVE_JOB(intern)
+MAP_REMOVE_JOB(nurse)
 
 MAP_REMOVE_JOB(doctor)
 

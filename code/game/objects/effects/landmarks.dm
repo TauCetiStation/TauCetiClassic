@@ -247,9 +247,9 @@
 	name = "Psychiatrist"
 	icon_state = "Psychiatrist"
 
-/obj/effect/landmark/start/medical_intern
-	name = "Medical Intern"
-	icon_state = "Medical Intern"
+/obj/effect/landmark/start/medical_nurse
+	name = "Medical Nurse"
+	icon_state = "Medical Nurse"
 
 // Both is good
 /obj/effect/landmark/start/geneticist

@@ -183,9 +183,9 @@
 	department_stocks = list("Medical" = 10)
 
 
-/datum/job/intern
-	title = "Medical Intern"
-	flag = INTERN
+/datum/job/nurse
+	title = "Medical Nurse"
+	flag = NURSE
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 3
@@ -195,7 +195,7 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical)
 	salary = 50
-	outfit = /datum/outfit/job/intern
-	skillsets = list("Medical Intern" = /datum/skillset/intern)
+	outfit = /datum/outfit/job/nurse
+	skillsets = list("Medical Nurse" = /datum/skillset/doctor/nurse)
 
 	department_stocks = list("Medical" = 5)

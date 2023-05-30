@@ -110,7 +110,7 @@
 	custom_ranks = list(
 		"Untrained",
 		"Novice",
-		"Intern",
+		"Nurse",
 		"Professional",
 		"Master",
 		"Asclepius"

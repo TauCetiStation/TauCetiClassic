@@ -154,9 +154,9 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-// MEDICAL INTERN OUTFIT
-/datum/outfit/job/intern
-	name = OUTFIT_JOB_NAME("Medical Intern")
+// MEDICAL NURSE OUTFIT
+/datum/outfit/job/nurse
+	name = OUTFIT_JOB_NAME("Medical Nurse")
 
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/white

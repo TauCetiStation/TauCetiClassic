@@ -103,13 +103,13 @@
 	minimal_player_ingame_minutes = 900
 	skillsets = list("Medical Doctor" = /datum/skillset/falcon/doctor)
 
-/datum/job/intern/New()
+/datum/job/nurse/New()
 	..()
 	MAP_JOB_CHECK
 	access += list(access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 	total_positions = 1
 	spawn_positions = 1
-	skillsets = list("Medical Intern" = /datum/skillset/falcon/doctor)
+	skillsets = list("Medical Nurse" = /datum/skillset/falcon/doctor)
 
 /datum/job/chief_engineer/New()
 	..()
