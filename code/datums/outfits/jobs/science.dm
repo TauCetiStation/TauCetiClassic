@@ -11,6 +11,9 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
+	survival_kit_items = list(
+                             )
+
 // SCIENTIST OUTFIT
 /datum/outfit/job/scientist
 	name = OUTFIT_JOB_NAME("Scientist")
@@ -23,6 +26,9 @@
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
 	back_style = BACKPACK_STYLE_RESEARCH
+
+	survival_kit_items = list(
+                             )
 
 /datum/outfit/job/scientist/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/unathi)
@@ -49,6 +55,9 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
+	survival_kit_items = list(
+                             )
+
 /datum/outfit/job/xenoarchaeologist/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/unathi)
 
@@ -74,6 +83,9 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
+	survival_kit_items = list(
+                             )
+
 // ROBOTICIST OUTFIT
 /datum/outfit/job/roboticist
 	name = OUTFIT_JOB_NAME("Roboticist")
@@ -87,6 +99,9 @@
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
 	back_style = BACKPACK_STYLE_RESEARCH
+
+	survival_kit_items = list(
+                             )
 
 // RESEARCH ASSISTANT OUTFIT
 /datum/outfit/job/research_assistant

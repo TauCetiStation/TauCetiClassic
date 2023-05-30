@@ -19,6 +19,9 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol
+                             )
+
 // WARDEN OUTFIT
 /datum/outfit/job/warden
 	name = OUTFIT_JOB_NAME("Warden")
@@ -39,6 +42,9 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol
+                             )
+
 // DETECTIVE OUTFIT
 /datum/outfit/job/detective
 	name = OUTFIT_JOB_NAME("Detective")
@@ -55,6 +61,10 @@
 	l_hand_back = /obj/item/weapon/storage/box/evidence
 	l_pocket = /obj/item/weapon/lighter/zippo
 	r_pocket_back = /obj/item/device/detective_scanner
+
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol,
+                              /obj/item/weapon/storage/pill_bottle/paroxetine
+                             )
 
 // OFFICER OUTFIT
 /datum/outfit/job/officer
@@ -73,6 +83,9 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol
+                             )
+
 // FORENSIC OUTFIT
 /datum/outfit/job/forensic
 	name = OUTFIT_JOB_NAME("Forensic Technician")
@@ -86,6 +99,9 @@
 
 	r_pocket_back = /obj/item/device/detective_scanner
 	l_hand_back = /obj/item/weapon/storage/box/evidence
+
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol
+                             )
 
 // CADET OUTFIT
 /datum/outfit/job/cadet
@@ -106,7 +122,7 @@
 	back_style = BACKPACK_STYLE_SECURITY
 
 
-
+// BLUESHIELD OUTFIT
 /datum/outfit/job/blueshield
 	name = OUTFIT_JOB_NAME("Blueshield Officer")
 
@@ -123,3 +139,6 @@
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)
+
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/paracetamol
+                             )

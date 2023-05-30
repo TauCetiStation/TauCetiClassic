@@ -23,6 +23,9 @@
 
 	belt = /obj/item/device/pda/chef
 
+	survival_kit_items = list(
+                             )
+
 // BOTANIST OUTFIT
 /datum/outfit/job/hydro
 	name = OUTFIT_JOB_NAME("Botanist")
@@ -35,6 +38,9 @@
 
 	back_style = BACKPACK_STYLE_HYDROPONIST
 
+	survival_kit_items = list(
+                             )
+
 // JANITOR OUTFIT
 /datum/outfit/job/janitor
 	name = OUTFIT_JOB_NAME("Janitor")
@@ -43,6 +49,9 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/janitor
+
+	survival_kit_items = list(
+                             )
 
 // BARBER OUTFIT
 /datum/outfit/job/barber
@@ -53,6 +62,9 @@
 
 	belt = /obj/item/device/pda/barber
 
+	survival_kit_items = list(
+                             )
+
 // STYLIST OUTFIT
 /datum/outfit/job/stylist
 	name = OUTFIT_JOB_NAME("Stylist")
@@ -61,6 +73,9 @@
 	shoes = /obj/item/clothing/shoes/laceup
 
 	belt = /obj/item/device/pda/barber
+
+	survival_kit_items = list(
+                             )
 
 // LIBRARIAN OUTFIT
 /datum/outfit/job/librarian
@@ -72,6 +87,9 @@
 	belt = /obj/item/weapon/storage/bag/bookbag
 	l_hand = /obj/item/weapon/barcodescanner
 	r_pocket = /obj/item/device/pda/librarian
+
+	survival_kit_items = list(
+                             )
 
 // LAWYER OUTFIT
 /datum/outfit/job/lawyer
@@ -92,6 +110,9 @@
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
+
+	survival_kit_items = list(
+                             )
 
 // CLOWN OUTFIT
 /datum/outfit/job/clown
@@ -114,6 +135,9 @@
 
 	back = /obj/item/weapon/storage/backpack/clown
 
+	survival_kit_items = list(
+                             )
+
 // MIME OUTFIT
 /datum/outfit/job/mime
 	name = OUTFIT_JOB_NAME("Mime")
@@ -132,6 +156,9 @@
 
 	back_style = BACKPACK_STYLE_MIME
 
+	survival_kit_items = list(
+                             )
+
 // CHAPLAIN OUTFIT
 /datum/outfit/job/chaplain
 	name = OUTFIT_JOB_NAME("Chaplain")
@@ -140,3 +167,6 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
+
+	survival_kit_items = list(
+                             )

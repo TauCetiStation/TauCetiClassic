@@ -276,3 +276,29 @@
 			/obj/item/weapon/reagent_containers/pill/kelotane = 2,
 			/obj/item/weapon/reagent_containers/pill/hyronalin = 2
 		)
+
+/obj/item/weapon/storage/pill_bottle/hyronalin
+	name = "pill bottle (hyronalin)"
+	desc = "Для лечения радиационного отравления."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/hyronalin = 5)
+
+/obj/item/weapon/storage/firstaid/personal
+	name = "presonal first-aid kit"
+	desc = "Карманная личная аптечка."
+	icon_state = "personal_firstaid"
+	item_state = "personal_firstaid"
+	item_state_world = "personal_firstaid_world"
+	max_storage_space = DEFAULT_BOX_STORAGE
+
+/obj/item/weapon/storage/firstaid/personal/open()
+	..()
+	icon_state = "[item_state]_open"
+	item_state_world = "[item_state]_open_world"
+	update_world_icon()
+
+/obj/item/weapon/storage/firstaid/personal/close()
+	..()
+	icon_state = "[item_state]"
+	item_state_world = "[item_state]_world"
+	update_world_icon()

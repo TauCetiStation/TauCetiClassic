@@ -10,6 +10,9 @@
 	l_ear =  /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/quartermaster
 
+	survival_kit_items = list(
+                             )
+
 // CARGOTECH OUTFIT
 /datum/outfit/job/cargo_tech
 	name = OUTFIT_JOB_NAME("Cargo Technician")
@@ -19,6 +22,9 @@
 
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
+
+	survival_kit_items = list(
+                             )
 
 // MINER OUTFIT
 /datum/outfit/job/mining
@@ -35,6 +41,9 @@
 		/obj/item/weapon/survivalcapsule
 		)
 
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/citalopram
+                             )
+
 	back_style = BACKPACK_STYLE_ENGINEERING
 
 // RECYCLER OUTFIT
@@ -47,3 +56,6 @@
 
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
+
+	survival_kit_items = list(/obj/item/weapon/storage/pill_bottle/spaceacillin
+                             )

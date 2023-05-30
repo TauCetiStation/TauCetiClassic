@@ -10,7 +10,7 @@
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!prob(10) || isanyantag(H))
 			continue
-		var/list/boxs = H.get_all_contents_type(/obj/item/weapon/storage/box/survival)
+		var/list/boxs = H.get_all_contents_type(/obj/item/weapon/storage/firstaid/personal)
 		if(!boxs.len)
 			continue
 		for(var/box in boxs)

@@ -15,6 +15,9 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
+	survival_kit_items = list(
+                             )
+
 // DOCTOR OUTFIT
 /datum/outfit/job/doctor
 	name = OUTFIT_JOB_NAME("Medical Doctor")
@@ -31,6 +34,9 @@
 	suit_store = /obj/item/device/flashlight/pen
 
 	back_style = BACKPACK_STYLE_MEDICAL
+
+	survival_kit_items = list(
+                             )
 
 
 // SURGEON OUTFIT
@@ -50,6 +56,9 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
+	survival_kit_items = list(
+                             )
+
 // NURSE OUTFIT
 /datum/outfit/job/nurse
 	name = OUTFIT_JOB_NAME("Nurse")
@@ -65,6 +74,9 @@
 	suit_store = /obj/item/device/flashlight/pen
 
 	back_style = BACKPACK_STYLE_MEDICAL
+
+	survival_kit_items = list(
+                             )
 
 /datum/outfit/job/nurse/pre_equip(mob/living/carbon/human/H)
 	if(H.use_skirt)
@@ -88,6 +100,9 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
+	survival_kit_items = list(
+                             )
+
 // CHEMIST OUTFIT
 /datum/outfit/job/chemist
 	name = OUTFIT_JOB_NAME("Chemist")
@@ -101,6 +116,9 @@
 	l_ear = /obj/item/device/radio/headset/headset_med
 
 	back_style = BACKPACK_STYLE_CHEMIST
+
+	survival_kit_items = list(
+                             )
 
 // GENETICIST OUTFIT
 /datum/outfit/job/geneticist
@@ -117,6 +135,9 @@
 
 	back_style = BACKPACK_STYLE_GENETICIST
 
+	survival_kit_items = list(
+                             )
+
 // VIROLOGIST OUTFIT
 /datum/outfit/job/virologist
 	name = OUTFIT_JOB_NAME("Virologist")
@@ -132,6 +153,9 @@
 
 	back_style = BACKPACK_STYLE_VIROLOGIST
 
+	survival_kit_items = list(
+                             )
+
 // PSYCHIATRIST OUTFIT
 /datum/outfit/job/psychiatrist
 	name = OUTFIT_JOB_NAME("Psychiatrist")
@@ -143,6 +167,9 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
+	survival_kit_items = list(
+                             )
+
 // PSYCHOLOGIST OUTFIT
 /datum/outfit/job/psychologist
 	name = OUTFIT_JOB_NAME("Psychologist")
@@ -153,6 +180,9 @@
 
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
+
+	survival_kit_items = list(
+                             )
 
 // MEDICAL INTERN OUTFIT
 /datum/outfit/job/intern

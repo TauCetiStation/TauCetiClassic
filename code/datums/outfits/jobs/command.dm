@@ -18,6 +18,9 @@
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
+	survival_kit_items = list(
+                             )
+
 // HOP OUTFIT
 /datum/outfit/job/hop
 	name = OUTFIT_JOB_NAME("Head of Personnel")
@@ -29,3 +32,6 @@
 	belt = /obj/item/device/pda/heads/hop
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
+
+	survival_kit_items = list(
+                             )
