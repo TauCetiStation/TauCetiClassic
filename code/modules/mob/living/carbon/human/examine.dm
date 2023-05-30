@@ -485,23 +485,23 @@
 			msg += "Отображает на экране: \"<span class=\"emojify\">[BP.display_text]</span>\"\n"
 
 	if(hasHUD(user,"security"))
-		var/has_implants = FALSE
+		var/have_implants = FALSE
 		var/list/showing_implants_strings = list()
 		for(var/obj/item/weapon/implant/I in src)
-			has_implants = TRUE
+			have_implants = TRUE
 			if(istype(I, /obj/item/weapon/implant/chem))
 				if(I.implanted)
 					showing_implants_strings += "Chemical"
 			if(istype(I, /obj/item/weapon/implant/tracking))
 				showing_implants_strings += "Tracking"
 		if(isloyal())
-			has_implants = TRUE
+			have_implants = TRUE
 			showing_implants_strings += "Loyality"
 		if(ismindshielded())
-			has_implants = TRUE
+			have_implants = TRUE
 			showing_implants_strings += "MindShield"
-		if(has_implants)
-			msg += "<span class='info'>[t_He] has implants:"
+		if(have_implants)
+			msg += "<span class='info'>[t_He] have implants:"
 			var/num = 1
 			for(var/implant in showing_implants_strings)
 				msg += " [implant][showing_implants_strings.len > num ? "," : "."]"
