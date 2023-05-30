@@ -54851,7 +54851,7 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cbb" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/medical_nurse,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
