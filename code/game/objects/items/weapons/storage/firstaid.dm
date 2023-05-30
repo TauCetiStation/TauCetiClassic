@@ -282,12 +282,14 @@
 	desc = "Для лечения радиационного отравления."
 
 	startswith = list(/obj/item/weapon/reagent_containers/pill/hyronalin = 5)
+	wrapper_color = "#408000"
 
 /obj/item/weapon/storage/pill_bottle/abscarbon
 	name = "pill bottle (absorbent carbon)"
 	desc = "Активированный уголь."
 
 	startswith = list(/obj/item/weapon/reagent_containers/pill/carbon = 12)
+	wrapper_color = "#1c1300"
 
 /obj/item/weapon/storage/firstaid/personal
 	name = "presonal first-aid kit"
