@@ -38,7 +38,7 @@
 
 	survival_kit_items = list(
 		/obj/item/weapon/tank/emergency_oxygen/engi,
-		/obj/item/weapon/storage/pill_bottle/hyronalin,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/milk,
 		/obj/item/stack/medical/ointment
 	)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
@@ -64,7 +64,7 @@
 
 	survival_kit_items = list(
 		/obj/item/weapon/tank/emergency_oxygen/engi,
-		/obj/item/weapon/storage/pill_bottle/hyronalin,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/milk,
 		/obj/item/stack/medical/ointment
 	)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)

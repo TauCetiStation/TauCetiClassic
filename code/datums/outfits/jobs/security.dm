@@ -23,6 +23,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vitamins,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
 		/obj/item/weapon/storage/pill_bottle/paracetamol,
+		/obj/item/stack/medical/bruise_pack/patch,
 		/obj/item/stack/medical/bruise_pack/patch
 	)
 
@@ -49,6 +50,7 @@
 	survival_kit_items = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
 		/obj/item/weapon/storage/pill_bottle/paracetamol,
+		/obj/item/stack/medical/bruise_pack/patch,
 		/obj/item/stack/medical/bruise_pack/patch
 	)
 
@@ -73,6 +75,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
 		/obj/item/weapon/storage/pill_bottle/paracetamol,
 		/obj/item/weapon/storage/pill_bottle/paroxetine,
+		/obj/item/stack/medical/bruise_pack/patch,
 		/obj/item/stack/medical/bruise_pack/patch
 	)
 
@@ -96,6 +99,7 @@
 	survival_kit_items = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
 		/obj/item/weapon/storage/pill_bottle/paracetamol,
+		/obj/item/stack/medical/bruise_pack/patch,
 		/obj/item/stack/medical/bruise_pack/patch
 	)
 
@@ -153,5 +157,6 @@
 	survival_kit_items = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/smallshot,
 		/obj/item/weapon/storage/pill_bottle/paracetamol,
+		/obj/item/stack/medical/bruise_pack/patch,
 		/obj/item/stack/medical/bruise_pack/patch
 	)

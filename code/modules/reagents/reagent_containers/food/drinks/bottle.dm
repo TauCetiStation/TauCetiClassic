@@ -437,3 +437,10 @@
 	list_reagents = list("vitamin" = 10)
 	volume = 10
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/milk
+	name = "Small bottle of milk"
+	desc = "За вредность."
+	icon_state = "bottle_small"
+	list_reagents = list("milk" = 10)
+	volume = 10
+
