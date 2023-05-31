@@ -60,8 +60,8 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
-	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_hit (Bump) handles bullet_act too.
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_hit() which happens after Bump() or killed by process. v
 	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
@@ -99,22 +99,19 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(!isliving(target))
 		return 0
 	if(isanimal(target))
 		return 0
 	var/mob/living/L = target
+	impact_effect(effect_transform)		// generate impact effect
 	if(incendiary && blocked <= 100)
 		L.adjust_fire_stacks(incendiary)
 		L.IgniteMob(target)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
-
-	//called when the projectile stops flying because it collided with something
-/obj/item/projectile/proc/on_impact(atom/A)
-	impact_effect(effect_transform)		// generate impact effect
 	if(proj_impact_sound)
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	return check_trajectory(target, src, pass_flags, flags)
@@ -232,7 +229,7 @@
 					mob.bullet_act(src,def_zone)
 
 	//stop flying
-	on_impact(A)
+	on_hit(A)
 
 	density = FALSE
 	invisibility = 101
@@ -257,7 +254,7 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
+			on_hit(src.loc) //for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
