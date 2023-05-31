@@ -172,6 +172,9 @@
 
 	required_skills = null
 
+/obj/item/stack/medical/bruise_pack/patch/update_icon()
+	return
+
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
