@@ -109,7 +109,7 @@
 			armor = list()
 		atom_integrity = max_integrity
 
-	if(!isturf(src.loc))
+	if(!isturf(loc))
 		flags_2 |= IN_STORAGE
 
 	if(item_state_world)
