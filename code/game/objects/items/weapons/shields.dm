@@ -228,6 +228,7 @@
 			turn_off()
 
 /obj/item/weapon/shield/energy/on_enter_storage(obj/item/weapon/storage/S)
+	..()
 	if(active)
 		attack_self(usr)
 

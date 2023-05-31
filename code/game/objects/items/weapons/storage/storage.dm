@@ -46,17 +46,16 @@
 
 	if(startswith)
 		for(var/item_path in startswith)
-			var/list/data = startswith[item_path]
-			if(islist(data))
-				var/qty = data[1]
-				var/list/argsl = data.Copy()
-				argsl[1] = src
-				for(var/i in 1 to qty)
-					new item_path(arglist(argsl))
-			else
-				for(var/i in 1 to (isnull(data)? 1 : data))
-					new item_path(src)
-		update_icon()
+			var/quantity = startswith[item_path] || 1
+			var/obj/item/I
+			for(var/num in 1 to quantity)
+				I = new item_path(src)
+				// maybe just need to call A.on_enter_storage(src), but it can trigger unwanted effects
+				I.flags_2 |= IN_STORAGE
+				if(I.item_state_world)
+					I.update_world_icon()
+	
+		update_icon() // todo: some storages that use content as overlays can have problems with world_icons, need to fix it in the furure while adding new world_icons (donut_box and donuts, crayons and crayon box, etc.)
 
 /obj/item/weapon/storage/Destroy()
 	QDEL_NULL(storage_ui)
