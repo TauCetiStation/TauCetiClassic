@@ -276,8 +276,8 @@
 	update_mood_client_color()
 
 	if(spirit_level > prev_spirit_level)
-		to_chat(parent, "<span class='nice'>Ваше настроение улучшилось.</span>")
-	else if(spirit_level < prev_spirit_level)
+		to_chat(parent, "<span class='notice'>Ваше настроение улучшилось.</span>")
+	if(spirit_level < prev_spirit_level)
 		to_chat(parent, "<span class='warning'>Ваше настроение ухудшилось.</span>")
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
