@@ -1,5 +1,3 @@
-#define DUALSABER_BLOCK_CHANCE_MODIFIER 1.2
-
 /obj/item/weapon/fireaxe
 	icon_state = "fireaxe0"
 	name = "fire axe"
@@ -71,7 +69,7 @@
 
 /obj/item/weapon/dualsaber/atom_init()
 	. = ..()
-	reflect_chance = rand(50, 65)
+	reflect_chance = rand(20, 35)
 	blade_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(blade_color)
 		if("red")
@@ -157,8 +155,7 @@
 				sleep(1)
 
 /obj/item/weapon/dualsaber/Get_shield_chance()
-	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)
-		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
+		return reflect_chance
 	else
 		return 0
 
@@ -207,5 +204,3 @@
 	if(slicing)
 		return
 	..()
-
-#undef DUALSABER_BLOCK_CHANCE_MODIFIER
