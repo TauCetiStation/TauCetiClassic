@@ -159,8 +159,8 @@
 	ui.user.open_uis.Add(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	uis.Add(ui)
-	START_PROCESSING(SSnano, ui)
-	//testing("nanomanager/ui_opened mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnano.processing.len]")
+	START_PROCESSING(SSnanoui, ui)
+	//testing("nanomanager/ui_opened mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnanoui.processing.len]")
 
  /**
   * Remove a /nanoui ui from the list of open uis
@@ -177,13 +177,13 @@
 	else if (isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
 		return 0 // wasn't open
 
-	STOP_PROCESSING(SSnano, ui)
+	STOP_PROCESSING(SSnanoui, ui)
 	if(ui.user)	// Sanity check in case a user has been deleted (say a blown up borg watching the alarm interface)
 		ui.user.open_uis -= ui
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	uis -= ui
 
-	//testing("nanomanager/ui_closed mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnano.processing.len]")
+	//testing("nanomanager/ui_closed mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnanoui.processing.len]")
 
 	return 1
 

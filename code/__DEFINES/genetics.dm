@@ -13,30 +13,6 @@
 #define NOCLONE			7
 #define LASEREYES		8 	// harm intent - click anywhere to shoot lasers from eyes
 
-	// Extra powers:
-//#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
-//#define SCREAM			12 	// supersonic screaming (25%)
-//#define EXPLOSIVE		13 	// exploding on-demand (15%)
-//#define REGENERATION	14 	// superhuman regeneration (30%)
-//#define REPROCESSOR		15 	// eat anything (50%)
-//#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
-//#define PHASING			17 	// ability to phase through walls (40%)
-//#define SHIELD			18 	// shielding from all projectile attacks (30%)
-//#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-//#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-//bitflags for mutations
-	// Extra powers:
-#define SHADOW			(1<<10)	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			(1<<11)	// supersonic screaming (25%)
-#define EXPLOSIVE		(1<<12)	// exploding on-demand (15%)
-#define REGENERATION	(1<<13)	// superhuman regeneration (30%)
-#define REPROCESSOR		(1<<14)	// eat anything (50%)
-#define SHAPESHIFTING	(1<<15)	// take on the appearance of anything (40%)
-#define PHASING			(1<<16)	// ability to phase through walls (40%)
-#define SHIELD			(1<<17)	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		(1<<18)	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		(1<<19)	// ability to shoot electric attacks (15%)
-
 // Other Mutations:
 #define NO_BREATH		100 	// no need to breathe
 #define REMOTE_VIEW		101 	// remote viewing

@@ -2,6 +2,7 @@
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
 	var/list/climbers = list()
+	w_class = SIZE_MASSIVE
 
 /obj/structure/atom_init()
 	. = ..()
@@ -20,25 +21,27 @@
 	if(prob(50))
 		qdel(src)
 
+/obj/structure/airlock_crush_act()
+	if(anchored)
+		return
+	if(!density)
+		return
+	var/turf/src_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(src_turf, dir)
+		if(Move(new_turf))
+			break
+
 /obj/structure/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.forceMove(loc)
-				AM.ex_act(severity++)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.forceMove(loc)
-					AM.ex_act(severity++)
-				qdel(src)
 				return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			return
-
-/obj/structure/meteorhit(obj/O)
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
+		AM.ex_act(severity++)
 	qdel(src)
 
 /obj/structure/proc/climb_on()
@@ -68,6 +71,10 @@
 		return FALSE
 
 	if(climber.loc == loc)
+		return FALSE
+
+	if(user.incapacitated())
+		to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src] while being incapacitated.</span>")
 		return FALSE
 
 	if(user != climber)
@@ -124,7 +131,9 @@
 		. *= 0.25
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		. *= 0.5
-
+	//tajaran can jump on/over the table faster than else species
+	if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
+		. *= 0.25
 
 /obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
 	add_fingerprint(climber)
@@ -176,9 +185,9 @@
 
 			var/damage = rand(15,30)
 			var/mob/living/carbon/human/H = M
-			if(!istype(M))
+			if(!istype(H))
 				to_chat(H, "<span class='red'>You land heavily!</span>")
-				M.adjustBruteLoss(damage)
+				H.adjustBruteLoss(damage)
 				return
 
 			var/obj/item/organ/external/BP
@@ -192,7 +201,7 @@
 					BP = H.bodyparts_by_name[BP_HEAD]
 
 			if(BP)
-				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")
+				to_chat(H, "<span class='red'>You land heavily on your [BP.name]!</span>")
 				BP.take_damage(damage, 0)
 				if(BP.parent)
 					BP.parent.add_autopsy_data("Misadventure", damage)
@@ -201,7 +210,6 @@
 				H.adjustBruteLoss(damage)
 
 			H.updatehealth()
-	return
 
 /obj/structure/proc/can_touch(mob/user)
 	if(!user)

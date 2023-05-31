@@ -9,7 +9,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	//matter = list("metal" = 200)
@@ -38,16 +38,16 @@
 			to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 			return
 	else
-		if(!istype(M, /mob/living/silicon/robot))
+		if(!isrobot(M))
 			to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 			return
 
 	add_fingerprint(user)
-	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class='warning'>You try to analyze the floor's vitals!</span>")
 		var/message = ""
 		if(!output_to_chat)
-			message += "<HTML><head><title>floor's scan results</title></head><BODY>"
+			message += "<title>floor's scan results</title>"
 
 		message += "<span class='notice'>Analyzing Results for The floor:<br>&emsp; Overall Status: Healthy</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: 0-0-0-0</span><br>"
@@ -55,9 +55,9 @@
 		message += "<span class='notice'>Body Temperature: ???</span><br>"
 
 		if(!output_to_chat)
-			message += "</BODY></HTML>"
-			user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
-			onclose(user, "[M.name]_scan_report")
+			var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
+			popup.set_content(message)
+			popup.open()
 		else
 			to_chat(user, message)
 		return
@@ -66,7 +66,7 @@
 
 	var/message = ""
 	if(!output_to_chat)
-		message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+		message += "<title>[M.name]'s scan results</title>"
 
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
@@ -77,7 +77,7 @@
 	if(M.tod && M.stat == DEAD)
 		message += "<span class='notice'>Time of Disable: [M.tod]</span><br>"
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/H = M
 		var/list/damaged = H.get_damaged_components(1,1,1)
 
@@ -112,7 +112,8 @@
 	message += "<span class='notice'>Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 
 	if(!output_to_chat)
-		user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
-		onclose(user, "[M.name]_scan_report")
+		var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
+		popup.set_content(message)
+		popup.open()
 	else
 		to_chat(user, message)

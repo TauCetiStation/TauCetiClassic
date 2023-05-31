@@ -60,7 +60,7 @@
 
 /datum/wound/proc/can_autoheal()
 	for(var/obj/item/thing in embedded_objects)
-		if(thing.w_class > ITEM_SIZE_SMALL)
+		if(thing.w_class > SIZE_TINY)
 			return FALSE
 	return (wound_damage() <= autoheal_cutoff) ? 1 : is_treated()
 
@@ -196,7 +196,7 @@
 
 	if(embedded_objects.len)
 		for(var/obj/item/thing in embedded_objects)
-			if(thing.w_class > ITEM_SIZE_SMALL)
+			if(thing.w_class > SIZE_TINY)
 				return FALSE
 
 	return bleed_timer > 0 || wound_damage() > bleed_threshold

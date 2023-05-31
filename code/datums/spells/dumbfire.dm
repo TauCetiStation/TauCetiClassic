@@ -1,6 +1,5 @@
 /obj/effect/proc_holder/spell/dumbfire
 
-	var/projectile_type = ""
 	var/activate_on_collision = 1
 
 	var/proj_icon = 'icons/obj/projectiles.dmi'
@@ -12,7 +11,7 @@
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
-	var/proj_type = "/obj/effect/proc_holder/spell" //IMPORTANT use only subtypes of this
+	var/proj_type = /obj/effect/proc_holder/spell //IMPORTANT use only subtypes of this
 
 	var/proj_insubstantial = 0 //if it can pass through dense objects or not
 	var/proj_trigger_range = 1 //the range from target at which the projectile triggers cast(target)
@@ -22,9 +21,9 @@
 
 /obj/effect/proc_holder/spell/dumbfire/choose_targets(mob/user = usr)
 
-	var/turf/T = get_turf(usr)
-	for(var/i = 1; i < range; i++)
-		var/turf/new_turf = get_step(T, usr.dir)
+	var/turf/T = get_turf(user)
+	for(var/i in 1 to range)
+		var/turf/new_turf = get_step(T, user.dir)
 		if(new_turf.density)
 			break
 		T = new_turf
@@ -35,18 +34,13 @@
 	for(var/turf/target in targets)
 		spawn(0)
 			var/obj/effect/proc_holder/spell/targeted/projectile
-			if(istext(proj_type))
-				var/projectile_type = text2path(proj_type)
-				projectile = new projectile_type(user)
-			if(istype(proj_type,/obj/effect/proc_holder/spell))
-				projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
-				projectile:linked_spells += proj_type
+			projectile = new proj_type(user)
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
-			projectile.dir = get_dir(projectile, target)
+			projectile.set_dir(get_dir(projectile, target))
 			projectile.name = proj_name
 
-			var/current_loc = usr.loc
+			var/current_loc = user.loc
 
 			projectile.loc = current_loc
 
@@ -63,7 +57,7 @@
 					projectile.cast(current_loc)
 					break
 
-				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - usr
+				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - user
 				if(L)
 					projectile.cast(L.loc)
 					break
@@ -74,7 +68,7 @@
 							var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
 							trail.icon = proj_trail_icon
 							trail.icon_state = proj_trail_icon_state
-							trail.density = 0
+							trail.density = FALSE
 							spawn(proj_trail_lifespan)
 								qdel(trail)
 

@@ -1,10 +1,10 @@
 /mob/living/carbon/xenomorph/facehugger/get_unarmed_attack()
-	var/retDam = 2
+	var/retDam = 1
 	var/retDamType = BRUTE
 	var/retFlags = DAM_SHARP
 	var/retVerb = "gnaw"
 	var/retSound = 'sound/weapons/bite.ogg'
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

@@ -1,8 +1,8 @@
 #define LIQUID_TRANSFER_THRESHOLD 0.05
 
-var/liquid_delay = 4
+var/global/liquid_delay = 4
 
-var/list/datum/puddle/puddles = list()
+var/global/list/datum/puddle/puddles = list()
 
 /datum/puddle
 	var/list/obj/effect/liquid/liquid_objects = list()
@@ -136,7 +136,7 @@ var/list/datum/puddle/puddles = list()
 	return FALSE
 
 /obj/effect/liquid/Destroy()
-	src.controller.liquid_objects.Remove(src)
+	controller.liquid_objects.Remove(src)
 	return ..()
 
 /obj/effect/liquid/proc/update_icon2()
@@ -165,15 +165,13 @@ var/list/datum/puddle/puddles = list()
 /turf/proc/can_leave_liquid(from_direction)
 	return 0
 
-/turf/space/can_accept_liquid(from_direction)
+/turf/environment/can_accept_liquid(from_direction)
 	return 1
-/turf/space/can_leave_liquid(from_direction)
+/turf/environment/can_leave_liquid(from_direction)
 	return 1
 
 /turf/simulated/floor/can_accept_liquid(from_direction)
-	for(var/obj/structure/window/W in src)
-		if(W.dir in list(5,6,9,10))
-			return 0
+	for(var/obj/structure/window/thin/W in src)
 		if(W.dir & from_direction)
 			return 0
 	for(var/obj/O in src)
@@ -182,9 +180,7 @@ var/list/datum/puddle/puddles = list()
 	return 1
 
 /turf/simulated/floor/can_leave_liquid(to_direction)
-	for(var/obj/structure/window/W in src)
-		if(W.dir in list(5,6,9,10))
-			return 0
+	for(var/obj/structure/window/thin/W in src)
 		if(W.dir & to_direction)
 			return 0
 	for(var/obj/O in src)
@@ -202,5 +198,11 @@ var/list/datum/puddle/puddles = list()
 
 /obj/machinery/door/liquid_pass()
 	return !density
+
+/obj/structure/liquid_pass() // i'm not sure, possible fix for fulltile windows, shuttle walls, maybe other structures
+	return !(density && can_block_air)
+
+/obj/structure/window/thin/liquid_pass() // depends, can_accept_liquid/can_leave_liquid do own check
+	return TRUE
 
 #undef LIQUID_TRANSFER_THRESHOLD

@@ -25,9 +25,6 @@
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
-							// Keeping this separate from the laws var, it should be much more difficult to modify
-	var/pai_law0 = "Serve your master."
-	var/pai_laws				// String for additional operating instructions our master might give us
 
 	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
 
@@ -65,6 +62,8 @@
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
 
+	laws = new /datum/ai_laws/pai()
+
 	loc = P
 	card = P
 	sradio = new(src)
@@ -73,10 +72,10 @@
 	radio = card.radio
 
 	//Default languages without universal translator software
-	add_language("Sol Common", 1)
-	add_language("Trinary", 1)
-	add_language("Tradeband", 1)
-	add_language("Gutter", 1)
+	add_language(LANGUAGE_SOLCOMMON)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_GUTTER)
 
 	//PDA
 	pda = new(src)
@@ -100,10 +99,6 @@
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-		if(proc_holder_list.len)//Generic list for proc_holder objects.
-			for(var/obj/effect/proc_holder/P in proc_holder_list)
-				statpanel("[P.panel]","",P)
-
 /mob/living/silicon/pai/check_eye(mob/user)
 	if (!src.current)
 		return null
@@ -112,8 +107,8 @@
 
 /mob/living/silicon/pai/blob_act()
 	if (src.stat != DEAD)
-		src.adjustBruteLoss(60)
-		src.updatehealth()
+		adjustBruteLoss(60)
+		updatehealth()
 		return 1
 	return 0
 
@@ -131,7 +126,7 @@
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
 		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", blind_message = "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>")
-		return src.death(0)
+		return death(0)
 
 	switch(pick(1,2,3))
 		if(1)
@@ -144,44 +139,31 @@
 				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
-			src.pai_law0 = "[command] your master."
+			laws.set_zeroth_law("[command] your master.")
 			to_chat(src, "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>")
 		if(3)
 			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
 
 /mob/living/silicon/pai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(30)
-
-	src.updatehealth()
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
+	updatehealth()
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (src.health > 0)
-		src.adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			src.adjustFireLoss(40)
-		src.updatehealth()
-	return
-
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	if(istype(usr, /mob/living))
+	if(isliving(usr))
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)
@@ -202,17 +184,20 @@
 /mob/living/silicon/pai/cancel_camera()
 	set category = "pAI Commands"
 	set name = "Cancel Camera View"
-	src.reset_view(null)
-	src.unset_machine()
+	reset_view(null)
+	unset_machine()
 	src.cameraFollow = null
+
+/mob/living/silicon/pai/ghost()
+	suicide()
 
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()
 	set category = "pAI Commands"
 	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
+	reset_view(null)
+	unset_machine()
 	src.cameraFollow = null
 	var/cameralist[0]
 
@@ -235,7 +220,7 @@
 
 /*
 // Debug command - Maybe should be added to admin verbs later
-/mob/verb/makePAI(var/turf/t in view())
+/mob/verb/makePAI(turf/t in view())
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key

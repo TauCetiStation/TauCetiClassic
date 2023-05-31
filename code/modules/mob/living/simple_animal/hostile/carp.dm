@@ -48,6 +48,8 @@
 	if(randomify)
 		carp_randomify()
 
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
+
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify()
 	melee_damage = initial(melee_damage) * rand(8, 12) * 0.1
 	maxHealth = rand(initial(maxHealth), (1.5 * initial(maxHealth)))
@@ -75,13 +77,14 @@
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
-		custom_emote(1,"nashes at [.]")
+		me_emote("nashes at [.].")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))
 		if(prob(15))
+			L.Stun(1)
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -96,10 +99,29 @@
 	maxHealth = 65
 	health = 65
 	pixel_x = -16
+	w_class = SIZE_MASSIVE
 
 	randomify = FALSE
 
 	melee_damage = 20
+
+/mob/living/simple_animal/hostile/carp/wizard
+	faction = "wizard"
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one looks kinda weird."
+	melee_damage = 10
+	maxHealth = 60
+	health = 60
+
+/mob/living/simple_animal/hostile/carp/wizard/Life()
+	..()
+	adjustBruteLoss(30)
+
+
+/mob/living/simple_animal/hostile/carp/wizard/death()
+	..()
+	visible_message("<span class='warning'><b>[src]</b> disappears.</span>")
+	qdel(src)
+	return
 
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
@@ -108,6 +130,7 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
+	w_class = SIZE_HUMAN
 
 	turns_per_move = 5
 	speed = -15
@@ -134,4 +157,4 @@
 
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
-		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, FALSE, null, -3)

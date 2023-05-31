@@ -9,17 +9,17 @@
 
 #define SSAIR_TICK_MULTIPLIER 2
 
-var/datum/subsystem/air/SSair
-
-/datum/subsystem/air
+SUBSYSTEM_DEF(air)
 	name = "Air"
 
 	init_order    = SS_INIT_AIR
 	priority      = SS_PRIORITY_AIR
 	wait          = SS_WAIT_AIR
-	display_order = SS_DISPLAY_AIR
 
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_SHOW_IN_MC_TAB
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+
+	msg_lobby = "Фильтруем кислород..."
 
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 
@@ -51,13 +51,10 @@ var/datum/subsystem/air/SSair
 	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
-	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
+	var/map_init_levels = -1 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
-/datum/subsystem/air/New()
-	NEW_SS_GLOBAL(SSair)
-
-/datum/subsystem/air/stat_entry(msg)
+/datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
@@ -81,28 +78,28 @@ var/datum/subsystem/air/SSair
 	..(msg)
 
 
-/datum/subsystem/air/Initialize(timeofday)
+/datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
 	..()
 
-/datum/subsystem/air/fire(resumed = 0)
-	var/timer = world.tick_usage
+/datum/controller/subsystem/air/fire(resumed = 0)
+	var/timer = TICK_USAGE_REAL
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -115,18 +112,18 @@ var/datum/subsystem/air/SSair
 	// This ensures that doorways don't form their own single-turf zones, since doorways are self-zone-blocked and
 	// can merge with an adjacent zone, whereas zones that are formed on adjacent turfs cannot merge with the doorway.
 	if (currentpart == SSAIR_TILES_CUR)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_tiles_current(resumed)
-		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_TILES_DEF
 
 	if (currentpart == SSAIR_TILES_DEF)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_tiles_deferred(resumed)
-		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -134,9 +131,9 @@ var/datum/subsystem/air/SSair
 
 	// Where gas exchange happens.
 	if (currentpart == SSAIR_EDGES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_edges(resumed)
-		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -144,9 +141,9 @@ var/datum/subsystem/air/SSair
 
 	// Process fire zones.
 	if (currentpart == SSAIR_FIRE_ZONES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_fire_zones(resumed)
-		cost_fire_zones = MC_AVERAGE(cost_fire_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_fire_zones = MC_AVERAGE(cost_fire_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -154,9 +151,9 @@ var/datum/subsystem/air/SSair
 
 	// Process hotspots.
 	if (currentpart == SSAIR_HOTSPOTS)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_hotspots(resumed)
-		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -164,9 +161,9 @@ var/datum/subsystem/air/SSair
 
 	// Process zones.
 	if (currentpart == SSAIR_ZONES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_zones(resumed)
-		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -174,7 +171,7 @@ var/datum/subsystem/air/SSair
 
 /*********** Processing procs ***********/
 
-/datum/subsystem/air/proc/process_pipenets(resumed = 0)
+/datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
 		src.currentrun = networks.Copy()
 	// Cache for sanic speed (lists are references anyways)
@@ -189,7 +186,7 @@ var/datum/subsystem/air/SSair
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_atmos_machinery(resumed = 0)
+/datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = atmos_machinery.Copy()
@@ -203,13 +200,13 @@ var/datum/subsystem/air/SSair
 		if(MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_tiles_current(resumed = 0)
+/datum/controller/subsystem/air/proc/process_tiles_current(resumed = 0)
 	while (tiles_to_update.len)
 		var/turf/T = tiles_to_update[tiles_to_update.len]
 		tiles_to_update.len--
 
 		// Check if the turf is self-zone-blocked
-		if(T.c_airblock(T) & ZONE_BLOCKED)
+		if(FAST_C_AIRBLOCK(T, T) == ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
@@ -226,7 +223,7 @@ var/datum/subsystem/air/SSair
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_tiles_deferred(resumed = 0)
+/datum/controller/subsystem/air/proc/process_tiles_deferred(resumed = 0)
 	while (deferred_tiles.len)
 		var/turf/T = deferred_tiles[deferred_tiles.len]
 		deferred_tiles.len--
@@ -242,7 +239,7 @@ var/datum/subsystem/air/SSair
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_edges(resumed = 0)
+/datum/controller/subsystem/air/proc/process_edges(resumed = 0)
 	if (!resumed)
 		src.currentrun = active_edges.Copy()
 	// Cache for sanic speed (lists are references anyways)
@@ -254,7 +251,7 @@ var/datum/subsystem/air/SSair
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_fire_zones(resumed = 0)
+/datum/controller/subsystem/air/proc/process_fire_zones(resumed = 0)
 	if (!resumed)
 		src.currentrun = active_fire_zones.Copy()
 	// Cache for sanic speed (lists are references anyways)
@@ -266,7 +263,7 @@ var/datum/subsystem/air/SSair
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_hotspots(resumed = 0)
+/datum/controller/subsystem/air/proc/process_hotspots(resumed = 0)
 	if (!resumed)
 		src.currentrun = active_hotspots.Copy()
 	// Cache for sanic speed (lists are references anyways)
@@ -278,7 +275,7 @@ var/datum/subsystem/air/SSair
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/air/proc/process_zones(resumed = 0)
+/datum/controller/subsystem/air/proc/process_zones(resumed = 0)
 	while (zones_to_update.len)
 		var/zone/Z = zones_to_update[zones_to_update.len]
 		zones_to_update.len--
@@ -289,7 +286,7 @@ var/datum/subsystem/air/SSair
 
 /*********** Setup procs ***********/
 
-/datum/subsystem/air/proc/setup_allturfs()
+/datum/controller/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 
 	map_init_levels = world.maxz // we simply set current max Z level (later on this value will be increased by maploading process).
@@ -298,7 +295,7 @@ var/datum/subsystem/air/SSair
 		T.update_air_properties()
 		CHECK_TICK
 
-/datum/subsystem/air/proc/setup_atmos_machinery()
+/datum/controller/subsystem/air/proc/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.atmos_init()
 		CHECK_TICK
@@ -306,12 +303,12 @@ var/datum/subsystem/air/SSair
 //this can't be done with setup_atmos_machinery() because
 //	all atmos machinery has to initalize before the first
 //	pipenet can be built.
-/datum/subsystem/air/proc/setup_pipenets()
+/datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.build_network()
 		CHECK_TICK
 
-/datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+/datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmos_init()
@@ -324,34 +321,34 @@ var/datum/subsystem/air/SSair
 
 /*********** Procs, which doesn't get involved in processing directly ***********/
 
-/datum/subsystem/air/proc/add_zone(zone/z)
+/datum/controller/subsystem/air/proc/add_zone(zone/z)
 	zones += z
 	z.name = "Zone [next_id++]"
 	mark_zone_update(z)
 
-/datum/subsystem/air/proc/remove_zone(zone/z)
+/datum/controller/subsystem/air/proc/remove_zone(zone/z)
 	zones -= z
 	zones_to_update.Remove(z)
 
-/datum/subsystem/air/proc/air_blocked(turf/A, turf/B)
+/datum/controller/subsystem/air/proc/air_blocked(turf/A, turf/B)
 	#ifdef ZASDBG
 	ASSERT(isturf(A))
 	ASSERT(isturf(B))
 	#endif
 
-	var/ablock = A.c_airblock(B)
+	var/ablock = FAST_C_AIRBLOCK(A, B)
 	if(ablock == BLOCKED)
 		return BLOCKED
-	return ablock | B.c_airblock(A)
+	return ablock | FAST_C_AIRBLOCK(B, A)
 
-/datum/subsystem/air/proc/has_valid_zone(turf/simulated/T)
+/datum/controller/subsystem/air/proc/has_valid_zone(turf/simulated/T)
 	#ifdef ZASDBG
 	ASSERT(istype(T))
 	#endif
 
 	return istype(T) && T.zone && !T.zone.invalid
 
-/datum/subsystem/air/proc/merge(zone/A, zone/B)
+/datum/controller/subsystem/air/proc/merge(zone/A, zone/B)
 	#ifdef ZASDBG
 	ASSERT(istype(A))
 	ASSERT(istype(B))
@@ -367,7 +364,7 @@ var/datum/subsystem/air/SSair
 		B.c_merge(A)
 		mark_zone_update(A)
 
-/datum/subsystem/air/proc/connect(turf/simulated/A, turf/simulated/B)
+/datum/controller/subsystem/air/proc/connect(turf/simulated/A, turf/simulated/B)
 	#ifdef ZASDBG
 	ASSERT(istype(A))
 	ASSERT(isturf(B))
@@ -415,7 +412,7 @@ var/datum/subsystem/air/SSair
 	if(direct)
 		c.mark_direct()
 
-/datum/subsystem/air/proc/mark_for_update(turf/simulated/T)
+/datum/controller/subsystem/air/proc/mark_for_update(turf/simulated/T)
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif
@@ -434,11 +431,15 @@ var/datum/subsystem/air/SSair
 
 		T.needs_air_update = TRUE
 
-/datum/subsystem/air/StartLoadingMap()
+/datum/controller/subsystem/air/StartLoadingMap()
+	if(map_init_levels == -1) // SSair will init turfs itself
+		return
 	LAZYINITLIST(queued_for_update)
 	map_loading = TRUE
 
-/datum/subsystem/air/StopLoadingMap()
+/datum/controller/subsystem/air/StopLoadingMap()
+	if(map_init_levels == -1)
+		return
 	map_loading = FALSE
 	map_init_levels = world.maxz // update z level counting, so air start to work on added levels.
 
@@ -447,7 +448,7 @@ var/datum/subsystem/air/SSair
 
 	queued_for_update.Cut()
 
-/datum/subsystem/air/proc/mark_zone_update(zone/Z)
+/datum/controller/subsystem/air/proc/mark_zone_update(zone/Z)
 	#ifdef ZASDBG
 	ASSERT(istype(Z))
 	#endif
@@ -458,7 +459,7 @@ var/datum/subsystem/air/SSair
 	zones_to_update.Add(Z)
 	Z.needs_update = TRUE
 
-/datum/subsystem/air/proc/mark_edge_sleeping(connection_edge/E)
+/datum/controller/subsystem/air/proc/mark_edge_sleeping(connection_edge/E)
 	#ifdef ZASDBG
 	ASSERT(istype(E))
 	#endif
@@ -469,7 +470,7 @@ var/datum/subsystem/air/SSair
 	active_edges.Remove(E)
 	E.sleeping = TRUE
 
-/datum/subsystem/air/proc/mark_edge_active(connection_edge/E)
+/datum/controller/subsystem/air/proc/mark_edge_active(connection_edge/E)
 	#ifdef ZASDBG
 	ASSERT(istype(E))
 	#endif
@@ -488,10 +489,10 @@ var/datum/subsystem/air/SSair
 		log_debug("ZASDBG: Active edge! Area: [get_area(pick(E.A.contents))]")
 	#endif
 
-/datum/subsystem/air/proc/equivalent_pressure(zone/A, zone/B)
+/datum/controller/subsystem/air/proc/equivalent_pressure(zone/A, zone/B)
 	return A.air.compare(B.air)
 
-/datum/subsystem/air/proc/get_edge(zone/A, zone/B)
+/datum/controller/subsystem/air/proc/get_edge(zone/A, zone/B)
 
 	if(istype(B))
 		for(var/connection_edge/zone/edge in A.edges)
@@ -510,12 +511,12 @@ var/datum/subsystem/air/SSair
 		edge.recheck()
 		return edge
 
-/datum/subsystem/air/proc/remove_edge(connection_edge/E)
+/datum/controller/subsystem/air/proc/remove_edge(connection_edge/E)
 	edges -= E
 	if(!E.sleeping)
 		active_edges.Remove(E)
 
-/datum/subsystem/air/proc/has_same_air(turf/A, turf/B)
+/datum/controller/subsystem/air/proc/has_same_air(turf/A, turf/B)
 	if(A.oxygen != B.oxygen)
 		return FALSE
 	if(A.nitrogen != B.nitrogen)

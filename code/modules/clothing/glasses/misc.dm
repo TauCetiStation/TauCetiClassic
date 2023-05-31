@@ -1,4 +1,4 @@
-/obj/item/clothing/glasses/sunglasses/chaplain
+/obj/item/clothing/glasses/sunglasses/hud/chaplain
 	name = "faithful sunglasses"
 	desc = "Sometimes you just feel like watching them ghosts sin."
 
@@ -10,25 +10,27 @@
 	var/next_assessment = 0
 	var/assessment_cooldown = 6 SECONDS
 
-/obj/item/clothing/glasses/sunglasses/chaplain/proc/gen_holy_overlay(turf/simulated/floor/F)
+	hud_types = list(DATA_HUD_HOLY)
+
+/obj/item/clothing/glasses/sunglasses/hud/chaplain/proc/gen_holy_overlay(turf/simulated/floor/F)
 	var/image/I = image('icons/effects/effects.dmi', "holy_land")
-	if(F.holy.religion != global.chaplain_religion)
+	if(F.holy.religion != usr.my_religion)
 		I.color = "#dc143c"
 	I.alpha = 0
 	I.loc = F
 	return I
 
-/obj/item/clothing/glasses/sunglasses/chaplain/proc/animate_holy_overlay(image/holy_overlay)
+/obj/item/clothing/glasses/sunglasses/hud/chaplain/proc/animate_holy_overlay(image/holy_overlay)
 	animate(holy_overlay, alpha = 200, time = assessment_cooldown * 0.2)
 	sleep(assessment_cooldown * 0.6)
 	if(QDELING(src))
 		return
 	animate(holy_overlay, alpha = 0, time = assessment_cooldown  * 0.2)
 
-/obj/item/clothing/glasses/sunglasses/chaplain/attack_self(mob/user)
+/obj/item/clothing/glasses/sunglasses/hud/chaplain/attack_self(mob/user)
 	assess_holyness(user)
 
-/obj/item/clothing/glasses/sunglasses/chaplain/proc/assess_holyness(mob/user = usr)
+/obj/item/clothing/glasses/sunglasses/hud/chaplain/proc/assess_holyness(mob/user = usr)
 	set name = "Assess Holyness"
 	set desc = "Scan your surrounding area on subject of holy land."
 	set category = "Object"

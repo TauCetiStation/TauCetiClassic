@@ -9,48 +9,26 @@
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/sciGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_rd, access_heads, access_tox, access_genetics, access_morgue,
 		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
 		access_research, access_robotics, access_xenobiology, access_ai_upload,
-		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
+		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway,
+		access_xenoarch, access_maint_tunnels, access_eva
 	)
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
+	skillsets = list("Research Director" = /datum/skillset/rd)
+	outfit = /datum/outfit/job/rd
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-
-/datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), SLOT_WEAR_SUIT)
-
-	switch(H.backbag)
-		if(2)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
-		if(4)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(5)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/rd(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/rd(H), SLOT_BELT)
-
-	return TRUE
 
 
 /datum/job/scientist
@@ -67,30 +45,12 @@
 	alt_titles = list("Phoron Researcher")
 	salary = 180
 	minimal_player_ingame_minutes = 1560
+	outfit = /datum/outfit/job/scientist
+	skillsets = list(
+		"Scientist" = /datum/skillset/scientist,
+		"Phoron Researcher" = /datum/skillset/scientist/phoron
+		)
 
-/datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), SLOT_WEAR_SUIT)
-
-	switch(H.backbag)
-		if(2)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
-		if(4)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(5)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-
-	return TRUE
 
 /datum/job/xenoarchaeologist
 	title = "Xenoarchaeologist"
@@ -105,38 +65,16 @@
 	access = list(access_research, access_xenoarch)
 	salary = 190
 	minimal_player_ingame_minutes = 1400
+	outfit = /datum/outfit/job/xenoarchaeologist
+	skillsets = list("Xenoarchaeologist" = /datum/skillset/xenoarchaeologist)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(IPC)
 
-/datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), SLOT_WEAR_SUIT)
-
-	switch(H.backbag)
-		if(2)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
-		if(4)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(5)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-
-	return TRUE
 
 /datum/job/xenobiologist
 	title = "Xenobiologist"
@@ -151,30 +89,8 @@
 	access = list(access_research, access_xenobiology)
 	salary = 190
 	minimal_player_ingame_minutes = 1560
-
-/datum/job/xenobiologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H) return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), SLOT_WEAR_SUIT)
-
-	switch(H.backbag)
-		if(2)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
-		if(4)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(5)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-
-	return TRUE
+	outfit = /datum/outfit/job/xenobiologist
+	skillsets = list("Xenobiologist" = /datum/skillset/xenobiologist)
 
 
 /datum/job/roboticist
@@ -191,27 +107,12 @@
 	salary = 180
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
-
-/datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
-	if(H.backbag == 4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-	if(H.backbag == 5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), SLOT_WEAR_SUIT)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/roboticist(H), SLOT_BELT)
-
-	return TRUE
+	outfit = /datum/outfit/job/roboticist
+	skillsets = list(
+		"Roboticist" = /datum/skillset/roboticist,
+		"Biomechanical Engineer" = /datum/skillset/roboticist/bio,
+		"Mechatronic Engineer" = /datum/skillset/roboticist/mecha
+	)
 
 
 /datum/job/research_assistant
@@ -226,27 +127,6 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
 	salary = 50
+	outfit = /datum/outfit/job/research_assistant
+	skillsets = list("Research Assistant" = /datum/skillset/research_assistant)
 
-/datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return 0
-	switch(H.backbag)
-		if(2)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
-		if(4)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(5)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda, SLOT_BELT)
-
-
-	return TRUE

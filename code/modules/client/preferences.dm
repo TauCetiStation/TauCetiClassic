@@ -1,8 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+var/global/list/preferences_datums = list()
 
-var/list/preferences_datums = list()
-
-var/const/MAX_SAVE_SLOTS = 10
+#define MAX_SAVE_SLOTS 10
+#define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
+#define GET_MAX_SAVE_SLOTS(Client) ((Client && Client.supporter) ? MAX_SAVE_SLOTS_SUPPORTER : MAX_SAVE_SLOTS)
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
@@ -35,8 +35,29 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
-	var/ghost_orbit = GHOST_ORBIT_CIRCLE
-	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
+	var/clientfps = -1
+
+	// Custom Keybindings
+	var/list/key_bindings = list()
+	// If hotkey mode is enabled, then clicking the map will automatically
+	// unfocus the text bar. This removes the red color from the text bar
+	// so that the visual focus indicator matches reality.
+	var/hotkeys = TRUE
+
+	var/tooltip = TRUE
+	var/tooltip_font = "Small Fonts"
+	var/tooltip_size = 8
+
+	var/outline_enabled = TRUE
+	var/outline_color = COLOR_BLUE_LIGHT
+	var/eorg_enabled = TRUE
+
+	var/show_runechat = TRUE
+
+	//TGUI
+	var/tgui_fancy = TRUE
+	var/tgui_lock = FALSE
 
 	//sound volume preferences
 	var/snd_music_vol = 100
@@ -58,15 +79,21 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/height = HUMANHEIGHT_MEDIUM			//height of character
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
+	var/use_skirt = FALSE				//using skirt uniform version
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
 	var/b_hair = 0						//Hair color
+	var/grad_style = "none"				//Gradient style
+	var/r_grad = 0						//Gradient color
+	var/g_grad = 0						//Gradient color
+	var/b_grad = 0						//Gradient color
 	var/f_style = "Shaved"				//Face hair type
 	var/r_facial = 0					//Face hair color
 	var/g_facial = 0					//Face hair color
@@ -78,8 +105,12 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
+	var/r_belly = 0
+	var/g_belly = 0
+	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
+	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -87,6 +118,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
+	var/vox_rank = "Larva"              //Vox ranks
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
@@ -106,12 +138,19 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/sec_record = ""
 	var/gen_record = ""
 
+	// Qualities
+	// Quality selected.
+	var/selected_quality_name
+	var/selecting_quality = FALSE
+
 	// Quirk list
 	var/list/positive_quirks = list()
 	var/list/negative_quirks = list()
 	var/list/neutral_quirks = list()
 	var/list/all_quirks = list()
 	var/list/character_quirks = list()
+
+	var/list/allowed_quirks = list()
 
 	// OOC Metadata:
 	var/metadata = ""
@@ -123,7 +162,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
-	var/parallax_theme = PARALLAX_THEME_CLASSIC
+	var/auto_fit_viewport = TRUE
+	var/lobbyanimation = FALSE
 
   //custom loadout
 	var/list/gear = list()
@@ -142,16 +182,22 @@ var/const/MAX_SAVE_SLOTS = 10
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
+	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
+	C?.set_macros()
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
-	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
-	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
+	dat += "<style type='text/css'>a.white:hover{background: #dddddd}</style>"
+	dat += "<style type='text/css'>a.disabled{background:#999999!important;text-decoration: none;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
+	dat += "<style type='text/css'>a.fluid{display:block;margin-left:0;margin-right:0;text-align:center;}</style>"
+	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;}</style>"
+	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;}</style>"
 
 	if(path)
 		dat += "<div class='main_menu'>"
@@ -165,7 +211,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
 		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
-		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"]"
+		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
+		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -189,11 +236,12 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowQuirks(user)
 		if("fluff")
 			dat += ShowFluffMenu(user)
-
+		if("custom_keybindings")
+			dat += ShowCustomKeybindings(user)
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
-	user << browse(entity_ja(dat), "window=preferences_browser")
+	user << browse(dat, "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
@@ -242,9 +290,17 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("fluff")
 			menu_type = "fluff"
 
+		if("custom_keybindings")
+			menu_type = "custom_keybindings"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
+
+		if("open_jobban_info") //for the 'occupation' and 'roles' panels
+			open_jobban_info(user, href_list["position"])
+			return
+
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
@@ -268,10 +324,13 @@ var/const/MAX_SAVE_SLOTS = 10
 			process_link_fluff(user, href_list)
 			return 1
 
+		if("custom_keybindings")
+			process_link_custom_keybindings(user, href_list)
+
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -288,6 +347,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(character.dna)
 		character.dna.real_name = character.real_name
 
+	character.set_species(species)
+
 	character.flavor_text = flavor_text
 	character.metadata = metadata
 	character.med_record = med_record
@@ -296,21 +357,29 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.gender = gender
 	character.age = age
+	character.height = height
 	character.b_type = b_type
+
+	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
 		switch(ipc_head)
 			if("Default")
-				new /obj/item/organ/external/head/robot/ipc(null, character)
+				var/obj/item/organ/external/head/robot/ipc/H = new(null)
+				H.insert_organ(character)
 			if("Alien")
-				new /obj/item/organ/external/head/robot/ipc/alien(null, character)
+				var/obj/item/organ/external/head/robot/ipc/alien/H = new(null)
+				H.insert_organ(character)
 			if("Double")
-				new /obj/item/organ/external/head/robot/ipc/double(null, character)
+				var/obj/item/organ/external/head/robot/ipc/double/H = new(null)
+				H.insert_organ(character)
 			if("Pillar")
-				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
+				var/obj/item/organ/external/head/robot/ipc/pillar/H = new(null)
+				H.insert_organ(character)
 			if("Human")
-				new /obj/item/organ/external/head/robot/ipc/human(null, character)
+				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
+				H.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -319,6 +388,14 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.r_hair = r_hair
 	character.g_hair = g_hair
 	character.b_hair = b_hair
+
+	character.r_belly = r_belly
+	character.g_belly = g_belly
+	character.b_belly = b_belly
+
+	character.r_grad = r_grad
+	character.g_grad = g_grad
+	character.b_grad = b_grad
 
 	character.r_facial = r_facial
 	character.g_facial = g_facial
@@ -331,12 +408,15 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.s_tone = s_tone
 
 	character.h_style = h_style
+	character.grad_style = grad_style
 	character.f_style = f_style
 
 	character.home_system = home_system
 	character.citizenship = citizenship
+	character.roundstart_insurance = insurance
 	character.personal_faction = faction
 	character.religion = religion
+	character.vox_rank = vox_rank
 
 	// Destroy/cyborgize bodyparts & organs
 
@@ -346,25 +426,37 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/status = organ_data[name]
 
 		if(status == "amputated" && BP)
-			qdel(BP) // Destroy will handle everything
-		if(status == "cyborg" && BP)
-			var/zone = BP.body_zone
 			qdel(BP)
-			switch(zone)
+		else if(status == "cyborg")
+			if(BP)
+				qdel(BP)
+			switch(name)
 				if(BP_L_ARM)
-					new /obj/item/organ/external/l_arm/robot(null, character)
+					var/obj/item/organ/external/l_arm/robot/R = new(null)
+					R.insert_organ(character)
 				if(BP_R_ARM)
-					new /obj/item/organ/external/r_arm/robot(null, character)
+					var/obj/item/organ/external/r_arm/robot/R = new(null)
+					R.insert_organ(character)
 				if(BP_L_LEG)
-					new /obj/item/organ/external/l_leg/robot(null, character)
+					var/obj/item/organ/external/l_leg/robot/R = new(null)
+					R.insert_organ(character)
 				if(BP_R_LEG)
-					new /obj/item/organ/external/r_leg/robot(null, character)
-		if(status == "assisted" && IO)
+					var/obj/item/organ/external/r_leg/robot/R = new(null)
+					R.insert_organ(character)
+
+		// create normal bodypart
+		else if(status == null && character.species.has_bodypart[name] && (!BP || BP.controller_type == /datum/bodypart_controller/robot))
+			var/type = character.species.has_bodypart[name]
+			var/obj/item/organ/external/new_BP = new type(null)
+			new_BP.insert_organ(character)
+
+		else if(status == "assisted" && IO)
 			IO.mechassist()
 		else if(status == "mechanical" && IO)
 			IO.mechanize()
 
-		else continue
+		else
+			continue
 
 	// Apply skin color
 	character.apply_recolor()
@@ -374,11 +466,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
 	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
-		character.buckled = W
-		character.update_canmove()
-		W.dir = character.dir
-		W.buckled_mob = character
-		W.add_fingerprint(character)
+		W.set_dir(character.dir)
+		W.buckle_mob(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
@@ -396,6 +485,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
+	character.use_skirt = use_skirt
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(character.gender in list(PLURAL, NEUTER))
@@ -407,3 +497,29 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.update_body()
 		character.update_hair()
 
+//for the 'occupation' and 'roles' panels
+/datum/preferences/proc/open_jobban_info(mob/user, rank)
+	if(rank && (rank in user.client.jobbancache)) //this double-checking after the call of jobban_isbanned() can be not needed in the most cases, but we cannot trust the preceding href
+		var/dat
+
+		dat += "<b>Причина, указанная администратором:</b><br>\"[user.client.jobbancache[rank]["reason"]]\""
+		dat += "<hr>"
+		dat += "Выдан администратором [user.client.jobbancache[rank]["ackey"]] [user.client.jobbancache[rank]["bantime"]] "
+
+		if(user.client.jobbancache[rank]["rid"])
+			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
+
+		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
+			dat += "<hr>"
+			dat += "<br>"
+			dat += "Дополнительную информацию можно получить у администратора, выдавшего джоббан. Апелляции и жалобы принимаются на форуме."
+		else
+			dat += "как бессрочный."
+			dat += "<hr>"
+			dat += "<br>"
+			dat += "Дополнительную информацию можно получить у администратора, выдавшего бессрочный джоббан. С ним же стоит согласовывать снятие этого джоббана, если вы согласны с его выдачей. Если у вас есть не разрешаемые в личной беседе с администратором претензии или же администратор, с джоббаном от которого вы согласны, покинул состав, обратитесь на форум."
+
+		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
+		popup.set_content(dat)
+		popup.open()

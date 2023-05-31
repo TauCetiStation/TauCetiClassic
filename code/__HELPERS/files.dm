@@ -24,8 +24,7 @@
 		var/list/choices = sortList(flist(path))
 		if(path != root)
 			choices.Insert(1,"/")
-
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
+		var/choice = tgui_input_list(src,"Choose a file to access:","Download", choices)
 		switch(choice)
 			if(null)
 				return
@@ -59,7 +58,7 @@
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [round(time_to_wait/10)] seconds.</font>")
-		return 1
+		return TRUE
 	fileaccess_timer = world.time + FTPDELAY
-	return 0
+	return FALSE
 #undef FTPDELAY

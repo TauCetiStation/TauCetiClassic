@@ -5,8 +5,8 @@
 
 	var/folder = "data/announcements/"
 	var/edit_path
-	
-	var/choice = alert("Do you want to edit an existent announcement or create a new one?", "Host Announcement", "New", "Edit", "Reload", "Cancel")
+
+	var/choice = tgui_alert(usr, "Do you want to edit an existent announcement or create a new one?", "Host Announcement", list("New", "Edit", "Reload", "Cancel"))
 
 	if(choice == "Cancel")
 		return
@@ -25,8 +25,8 @@
 			return
 
 	else
-		var/name = reject_bad_text(input("Enter short english name for file", "Name") as null|text, 25)
-		
+		var/name = ckey(input("Enter short english name for file", "Name") as null|text)
+
 		if(!name)
 			to_chat(usr, "<span class='warning'>Bad name.</span>")
 			return
@@ -36,7 +36,7 @@
 	var/announcement = sanitize(input("Edit announcement [edit_path] (leave blank to cancel or delete).\nNo HTML allowed from ingame edit.", "Edit Host Announcement", file2text(edit_path)) as null|message, max_length = 10000, extra = FALSE)
 
 	if(!announcement)
-		choice = alert("Empty text. Cancel edit or delete announcement?", "Host Announcement", "Cancel", "Delete")
+		choice = tgui_alert(usr, "Empty text. Cancel edit or delete announcement?", "Host Announcement", list("Cancel", "Delete"))
 		if(choice == "Cancel")
 			to_chat(usr, "<span class='warning'>No changes have been made.</span>")
 			return

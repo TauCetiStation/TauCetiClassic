@@ -1,13 +1,7 @@
-var/create_object_html = null
-var/list/create_object_forms = list(
-	/obj, /obj/structure, /obj/machinery, /obj/effect,
-	/obj/item, /obj/item/clothing, /obj/item/stack, /obj/item/device,
-	/obj/item/weapon, /obj/item/weapon/reagent_containers, /obj/item/weapon/gun)
-
 /datum/admins/proc/create_object(mob/user)
+	var/static/create_object_html
 	if (!create_object_html)
-		var/objectjs = null
-		objectjs = jointext(typesof(/obj), ";")
+		var/objectjs = jointext(typesof(/obj), ";")
 		create_object_html = file2text('html/create_object.html')
 		create_object_html = replacetext(create_object_html, "null /* object types */", "\"[objectjs]\"")
 
@@ -15,6 +9,11 @@ var/list/create_object_forms = list(
 
 
 /datum/admins/proc/quick_create_object(mob/user)
+	var/static/list/create_object_forms = list(
+		/obj, /obj/structure, /obj/machinery, /obj/effect,
+		/obj/item, /obj/item/clothing, /obj/item/stack, /obj/item/device,
+		/obj/item/weapon, /obj/item/weapon/reagent_containers, /obj/item/weapon/gun)
+
 	var/path = input("Select the path of the object you wish to create.", "Path", /obj) in create_object_forms
 	var/html_form = create_object_forms[path]
 

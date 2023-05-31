@@ -7,11 +7,11 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
-	var/list/syringes = new/list()
+	var/list/syringes = list()
 	var/max_syringes = 1
 	m_amt = 2000
 	can_suicide_with = FALSE
@@ -21,13 +21,14 @@
 	if(src in view(2, user))
 		to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 
-/obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
-				user.drop_item()
-				I.loc = src
+				if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)))
+					return
+				user.drop_from_inventory(I, src)
 				syringes += I
 				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
 				to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
@@ -36,6 +37,8 @@
 		else
 			to_chat(usr, "<span class='warning'>This syringe is broken!</span>")
 
+	else
+		return ..()
 
 /obj/item/weapon/gun/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(target == user)
@@ -94,7 +97,7 @@
 						R += num2text(RA.volume) + "),"
 				M.log_combat(user, "shot with a <b>syringegun</b>")
 
-				if(!M.check_thickmaterial(target_zone = user.zone_sel.selecting) && !M.isSynthetic(user.zone_sel.selecting))
+				if(!M.check_pierce_protection(target_zone = user.get_targetzone()) && !M.isSynthetic(user.get_targetzone()))
 					if(D.reagents)
 						M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 						D.reagents.trans_to(M, 15)
@@ -120,8 +123,8 @@
 	desc = ""
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "null"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 /obj/effect/syringe_gun_dummy/atom_init()
 	. = ..()
@@ -134,6 +137,6 @@
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "syringe_pistol"
 	item_state = "gun"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2

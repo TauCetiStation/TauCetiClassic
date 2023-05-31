@@ -1,10 +1,10 @@
-/obj/item/weapon/airlock_painter
+/obj/item/weapon/airlock_painter // todo: rename
 	name = "universal painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks, windows and pipes. Use it on an airlock during or after construction to change the paintjob, or on window or pipe."
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
@@ -12,6 +12,8 @@
 
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
+
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	var/static/list/modes // used to dye pipes, contains pipe colors.
 	var/obj/item/device/toner/ink
@@ -30,7 +32,7 @@
 	//Only call this if you are certain that the painter will be used right after this check!
 /obj/item/weapon/airlock_painter/use(cost)
 	if(cost < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [cost]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
 	if(can_use(usr, cost))
 		ink.charges -= cost
@@ -68,17 +70,18 @@
 		ink_level = "dangerously high"
 	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
 
-/obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/toner))
+/obj/item/weapon/airlock_painter/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/toner))
 		if(ink)
 			to_chat(user, "<span class='notice'>\the [name] already contains \a [ink].</span>")
 			return
-		user.drop_item()
-		W.loc = src
-		to_chat(user, "<span class='notice'>You install \the [W] into \the [name].</span>")
-		ink = W
+		user.drop_from_inventory(I, src)
+		to_chat(user, "<span class='notice'>You install \the [I] into \the [name].</span>")
+		ink = I
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+
+	else
+		return ..()
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
@@ -95,7 +98,7 @@
 	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
 		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
 		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, target))
+		!user.Adjacent(target))
 	{
 		return
 	}

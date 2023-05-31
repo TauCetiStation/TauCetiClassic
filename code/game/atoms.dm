@@ -1,6 +1,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+
 	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
@@ -11,8 +12,10 @@
 	var/list/blood_DNA      //forensic reasons
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
+	var/uncleanable = 0
+
 	var/last_bumped = 0
-	var/pass_flags = 0
+	var/pass_flags = NONE
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
@@ -27,6 +30,13 @@
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
 
+	///This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = null
+	///HUD images that this atom can provide.
+	var/list/hud_possible
+	///Current alternate_apperances on atom
+	var/list/datum/atom_hud/alternate_appearance/alternate_appearances
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
@@ -38,6 +48,25 @@
 	var/list/original_atom
 
 	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
+
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
+	var/uses_integrity = FALSE
+
+	var/list/armor // TODO armor gatum?
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = FULL_INDESTRUCTIBLE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -66,11 +95,14 @@
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/atom_init
-// /turf/space/atom_init
+// /turf/environment/space/atom_init
 // /mob/dead/atom_init
+// /obj/item
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -82,6 +114,11 @@
 		var/turf/T = src.loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
+	if(uses_integrity)
+		if (!armor)
+			armor = list()
+		atom_integrity = max_integrity
+
 	return INITIALIZE_HINT_NORMAL
 
 //called if atom_init returns INITIALIZE_HINT_LATELOAD
@@ -89,14 +126,30 @@
 	return
 
 /atom/Destroy()
-	if(reagents)
-		QDEL_NULL(reagents)
+	if(alternate_appearances)
+		var/prev_key // There is a runtime when the index remains in list, but the type or other devilry disappears
+		for(var/K in alternate_appearances)
+			// ghost apperance qdeling in main apperance
+			if(K == "[prev_key]_observer")
+				continue
+			prev_key = K
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
+	QDEL_NULL(reagents)
 
 	LAZYCLEARLIST(overlays)
 
 	QDEL_NULL(light)
 
+	var/area/A = get_area(src)
+	A?.Exited(src, null)
+
 	return ..()
+
+///This atom has been hit by hulk (TODO a hulkified mob in hulk mode (user))
+/atom/proc/attack_hulk(mob/living/user)
+	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -105,7 +158,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(ismovableatom(A))
+		else if(ismovable(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -126,7 +179,7 @@
 		return null
 
 /atom/proc/check_eye(user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
+	if (isAI(user)) // WHYYYY
 		return 1
 	return
 
@@ -151,20 +204,6 @@
 	return flags & INSERT_CONTAINER
 */
 
-/atom/proc/can_mob_interact(mob/user)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
-			return FALSE
-		else if(prob(H.getBrainLoss()))
-			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
-			return FALSE
-	return TRUE
-
-/atom/proc/meteorhit(obj/meteor)
-	return
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -188,15 +227,12 @@
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	P.on_hit(src, def_zone, 0)
-	. = 0
+	return PROJECTILE_ACTED
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
-			return 1
-	else if(src in container)
-		return 1
-	return
+		return istype(src.loc, container)
+	return src in container
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -230,52 +266,74 @@
   * You can override what is returned from this proc by registering to listen for the
   * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
   */
-/atom/proc/get_examine_name(mob/user)
+/atom/proc/get_examine_name(mob/user, atom/alt_obj)
 	var/list/override
 	if(!dirt_overlay)
-		. = "\a [src]."
-		override = list("", gender == PLURAL ? "some" : "a", " ", "[name]", ".")
+		. = "\a [alt_obj ? alt_obj.name : src]."
+		override = list("", gender == PLURAL ? "some" : "a", " ", "[alt_obj ? alt_obj.name : name]", ".")
 	else
 		. = "<span class='danger'> \a [dirt_description()]!</span>"
-		override = list("<span class='danger'>", gender == PLURAL ? "some" : "a", " ", "[dirt_description()]", "!</span>")
+		override = list("<span class='danger'>", gender == PLURAL ? "some" : "a", " ", "[dirt_description(alt_obj)]", "!</span>")
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
 ///Generate the full examine string of this atom (including icon for goonchat)
-/atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[bicon(src)] [thats ? "That's ": ""][get_examine_name(user)]"
+/atom/proc/get_examine_string(mob/user, thats = FALSE, atom/alt_obj)
+	return "[bicon(alt_obj ? alt_obj : src)] [thats ? "That's ": ""][get_examine_name(user, alt_obj)]"
 
 /atom/proc/examine(mob/user, distance = -1)
-	to_chat(user, get_examine_string(user, TRUE))
-	if(desc)
-		to_chat(user, desc)
+	var/atom/alt_obj
+
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
+			if(!AA.alternate_obj || !(user in AA.hudusers))
+				continue
+			alt_obj = AA.alternate_obj
+			break
+
+	var/msg = get_examine_string(user, TRUE, alt_obj)
+
+	var/visible_desc = alt_obj?.desc || desc
+	if(visible_desc)
+		msg += "<br>[visible_desc]"
+
 	// *****RM
-	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
+		msg += "<br>It contains:"
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
+			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
+				if(length(reagents.reagent_list) == 1)
+					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
+				else
+					for(var/datum/reagent/R in reagents.reagent_list)
+						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
 			else
-				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
+				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
-			to_chat(user, "Nothing.")
+			msg += "<br>Nothing."
+
+	to_chat(user, msg)
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 
-/atom/proc/dirt_description()
+/atom/proc/dirt_description(atom/alt_obj)
 	if(dirt_overlay)
-		return "[dirt_overlay.name]-covered [name]"
+		return "[dirt_overlay.name]-covered [alt_obj ? alt_obj.name : name]"
 	else
-		return name
+		return "[alt_obj ? alt_obj.name : name]"
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	if(.)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/proc/relaymove()
 	return
@@ -284,6 +342,9 @@
 	return
 
 /atom/proc/blob_act()
+	return
+
+/atom/proc/airlock_crush_act()
 	return
 
 /atom/proc/fire_act()
@@ -382,7 +443,7 @@
 		// Add the fingerprints
 		//
 		if(fingerprints[full_print])
-			switch(stringpercent(fingerprints[full_print]))		//tells us how many stars are in the current prints.
+			switch(stringpercent_ascii(fingerprints[full_print]))		//tells us how many stars are in the current prints.
 
 				if(28 to 32)
 					if(prob(1))
@@ -453,13 +514,16 @@
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
-	if(flags & NOBLOODY) return 0
-	.=1
+	if(flags & NOBLOODY) return FALSE
+	. = TRUE
 	if (!istype(M))
-		return 0
+		return FALSE
 
 	if(M.species.flags[NO_BLOOD_TRAILS])
-		return 0
+		return FALSE
+
+	if(M.reagents.has_reagent("metatrombine"))
+		return FALSE
 
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
@@ -467,18 +531,28 @@
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(M.species.blood_datum)
+	add_dirt_cover(M.species.blood_datum, FALSE) // FALSE - dont call update_inv_slot in add_dirt_cover as it will be handled in human/add_blood or it will be double call and runtime
 
 /atom/proc/add_dirt_cover(dirt_datum)
-	if(flags & NOBLOODY) return 0
-	if(!dirt_datum) return 0
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(flags & NOBLOODY)
+		return FALSE
+	if(!dirt_datum)
+		return FALSE
 	if(!dirt_overlay)
 		dirt_overlay = new/datum/dirt_cover(dirt_datum)
 	else
 		dirt_overlay.add_dirt(dirt_datum)
-	return 1
+	SEND_SIGNAL(src, COMSIG_ATOM_ADD_DIRT, dirt_datum)
+	return TRUE
 
 /atom/proc/clean_blood()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(uncleanable)
+		return 0
+	SEND_SIGNAL(src, COMSIG_ATOM_CLEAN_BLOOD)
 	src.germ_level = 0
 	if(dirt_overlay)
 		dirt_overlay = null
@@ -504,12 +578,9 @@
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
-		return 1
-	else
-		return 0
+	return isspaceturf(get_turf(src))
 
-/atom/proc/checkpass(passflag)
+/atom/proc/checkpass(passflag) // todo: define as macro
 	return pass_flags&passflag
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
@@ -551,7 +622,7 @@
 				return FALSE
 		if(!(lube & SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 		var/olddir = C.dir
 
@@ -566,11 +637,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			step(C, olddir)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 4)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 			C.take_bodypart_damage(2) // Was 5 -- TLE
 		else if(lube & SLIDE_ICE)
 			var/has_NOSLIP = FALSE
@@ -579,12 +646,14 @@
 				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 					has_NOSLIP = TRUE
 			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
-				step(C, olddir)
+				if(C.force_moving) //If we're already slipping extend it
+					qdel(C.force_moving)
+				new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 			else
 				C.inertia_dir = 0
 		return TRUE
 
-/turf/space/handle_slip()
+/turf/environment/space/handle_slip()
 	return
 
 // Recursive function to find everything this atom is holding.
@@ -640,15 +709,15 @@
 
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
-		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+		INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
-/atom/movalbe/lightning_object/shake_act(severity, recursive = TRUE)
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
 
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)
 		A.shake_act(severity - 1)
-	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+	INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 	if(severity >= 3)
 		for(var/dir_ in cardinal)
@@ -658,3 +727,71 @@
 /mob/shake_act(severity, recursive = TRUE)
 	..()
 	shake_camera(src, 0.5 SECONDS, severity)
+
+/atom/proc/get_name(mob/user)
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			if(!AA.alternate_obj || !(user in AA.hudusers))
+				continue
+			return AA.alternate_obj.name
+	return name
+
+/*
+ * Returns:
+ * An assoc list of kind image = list(viewers)
+ */
+/atom/proc/get_perceived_images(list/viewers)
+	var/list/imgs = list()
+
+	for(var/key in alternate_appearances)
+		var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+
+		var/image/I = image(AA.theImage.icon, AA.theImage.icon_state)
+		I.appearance = AA.theImage
+		I.dir = AA.theImage.dir
+
+		var/list/img_viewers = list()
+		for(var/v in viewers)
+			if(v in AA.hudusers)
+				img_viewers += v
+
+		imgs[I] = img_viewers
+
+		if(AA.theImage.override)
+			for(var/v in img_viewers)
+				viewers -= v
+
+	var/image/I = image(icon, icon_state)
+	I.appearance = src
+	I.dir = dir
+
+	imgs[I] = viewers
+
+	return imgs
+
+/atom/proc/update_icon()
+	return
+
+/**
+ * Point at an atom
+ *
+ * Intended to enable and standardise the pointing animation for all atoms
+ *
+ * Not intended as a replacement for the mob verb
+ */
+/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point)
+	if (!isturf(loc))
+		return FALSE
+
+	var/turf/tile = get_turf(pointed_atom)
+	if (!tile)
+		return FALSE
+
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = new arrow_type(our_tile, invisibility)
+	QDEL_IN(visual, 20)
+
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+
+	return TRUE

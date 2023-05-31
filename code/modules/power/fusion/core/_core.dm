@@ -2,7 +2,7 @@
 	TODO README
 */
 
-var/list/fusion_cores = list()
+var/global/list/fusion_cores = list()
 
 #define MAX_FIELD_STR 1000
 #define MIN_FIELD_STR 1
@@ -49,7 +49,7 @@ var/list/fusion_cores = list()
 		return
 	if(href_list["str"])
 		var/dif = text2num(href_list["str"])
-		field_strength = CLAMP(field_strength + dif, MIN_FIELD_STR, MAX_FIELD_STR)
+		field_strength = clamp(field_strength + dif, MIN_FIELD_STR, MAX_FIELD_STR)
 		active_power_usage = 500 * field_strength
 		if(owned_field)
 			owned_field.ChangeFieldStrength(field_strength)
@@ -79,12 +79,14 @@ var/list/fusion_cores = list()
 		owned_field.AddParticles(name, quantity)
 		. = TRUE
 
-/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(owned_field)
 		. = owned_field.bullet_act(Proj)
+	else
+		. = ..()
 
 /obj/machinery/power/fusion_core/proc/set_strength(value)
-	value = CLAMP(value, MIN_FIELD_STR, MAX_FIELD_STR)
+	value = clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
 	field_strength = value
 	active_power_usage = 5 * value
 	if(owned_field)
@@ -109,13 +111,13 @@ var/list/fusion_cores = list()
 		to_chat(user,"<span class='warning'>Shut \the [src] off first!</span>")
 		return
 
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fusion Core", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 		return
 
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)

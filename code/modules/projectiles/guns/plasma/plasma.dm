@@ -1,5 +1,5 @@
 // Here's the math used for plasma weapon shot consumption.
-// We balance this number over "/obj/item/weapon/stock_parts/cell/super" which is used as default cell type in magazine.
+// We balance this number over "[/obj/item/weapon/stock_parts/cell/super]" which is used as default cell type in magazine.
 // This battery provides 20000 cell charge, and we want 25 shots for carbine (as it was before this rework).
 // So we take this number and divide it by number of shots, and get charge consumption per shot
 // 20000 / number_of_shots = 800, incase of carbine.
@@ -16,11 +16,13 @@
 	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	w_class = ITEM_SIZE_LARGE
+	fire_delay = 1
+	w_class = SIZE_NORMAL
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
+	two_hand_weapon = ONLY_TWOHAND
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -29,7 +31,7 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge
 		)
 
-	var/mag_type = /obj/item/ammo_box/magazine/plasma
+	var/initial_mag = /obj/item/ammo_box/magazine/plasma
 	var/obj/item/ammo_box/magazine/plasma/magazine
 	var/number_of_shots = 25 // with 20000 battery
 	var/max_projectile_per_fire = 1 // this is amount of pellets at 100% used energy required to shoot, incase of spread guns like shotguns.
@@ -48,14 +50,14 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge/massive
 		)
 
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	fire_delay = 15
 	number_of_shots = 7 // It can be more than that (but no more than 1 extra), if there is a bit of charge left after 7th shot.
 	max_projectile_per_fire = 5
 
 /obj/item/weapon/gun/plasma/atom_init()
 	. = ..()
-	magazine = new mag_type(src)
+	magazine = new initial_mag(src)
 	for(var/i in ammo_type)
 		var/path = ammo_type[i]
 		ammo_type[i] = new path(src)
@@ -65,15 +67,6 @@
 	QDEL_LIST_ASSOC_VAL(ammo_type)
 	QDEL_NULL(magazine)
 	return ..()
-
-/obj/item/weapon/gun/plasma/special_check(mob/M, atom/target)
-	. = ..()
-	if(.)
-		// Two-handed wielding prototype for trying.
-		// Has modern codebases idea where you simply need an empty hand to shoot, while keeping old idea where it blocks shooting at all.
-		if(M.get_inactive_hand())
-			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
-			return FALSE
 
 /obj/item/weapon/gun/plasma/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
@@ -140,13 +133,12 @@
 	update_icon(user)
 	return
 
-/obj/item/weapon/gun/plasma/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/ammo_box/magazine/plasma))
+/obj/item/weapon/gun/plasma/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine/plasma))
 		var/obj/item/ammo_box/magazine/plasma/AB = I
-		if (!magazine && istype(AB, mag_type))
-			user.remove_from_mob(AB)
+		if(!magazine && istype(AB, initial_mag))
+			user.drop_from_inventory(AB, src)
 			magazine = AB
-			magazine.forceMove(src)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AB.get_charge())
 				if(!AB.has_overcharge())
@@ -155,10 +147,13 @@
 					playsound(user, 'sound/weapons/guns/plasma10_overcharge_load.ogg', VOL_EFFECTS_MASTER)
 			AB.update_icon()
 			update_icon(user)
-			return 1
+			return TRUE
+
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/weapon/gun/plasma/update_icon()
 	if(!magazine)

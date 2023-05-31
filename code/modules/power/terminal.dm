@@ -10,7 +10,7 @@
 	level = 1
 	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
-	anchored = 1
+	anchored = TRUE
 	layer = 2.6 // a bit above wires
 
 
@@ -74,7 +74,7 @@
 
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user)
-	if(iswirecutter(W))
+	if(iscutter(W))
 		dismantle(user)
 		return
 

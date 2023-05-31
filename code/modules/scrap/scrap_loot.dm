@@ -1,4 +1,7 @@
 //item holders generators
+/obj/preset
+	flags = ABSTRACT
+
 /obj/preset/storage
 	var/ammo_type = ""
 

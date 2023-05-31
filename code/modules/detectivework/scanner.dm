@@ -7,29 +7,28 @@
 	icon_state = "forensic1"
 	var/amount = 20.0
 	var/list/stored = list()
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 
-/obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
-	..()
-	if (istype(W, /obj/item/weapon/f_card))
-		if (W.fingerprints)
+/obj/item/device/detective_scanner/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/f_card))
+		var/obj/item/weapon/f_card/F = I
+		if(F.fingerprints)
 			return
-		if (src.amount == 20)
+		if(amount == 20)
 			return
-		if (W.amount + src.amount > 20)
-			src.amount = 20
-			W.amount = W.amount + src.amount - 20
+		if(F.amount + amount > 20)
+			amount = 20
+			F.amount = F.amount + amount - 20
+			F.add_fingerprint(user)
 		else
-			src.amount += W.amount
-			//W = null
-			qdel(W)
+			amount += F.amount
+			qdel(F)
 		add_fingerprint(user)
-		if (W)
-			W.add_fingerprint(user)
-	return
+		return
+	return ..()
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
 	if (!ishuman(M))
@@ -65,8 +64,7 @@
 	return
 
 /obj/item/device/detective_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
-	if(loc != user)
+	if(!proximity)
 		return
 	if(istype(target, /obj/machinery/computer/forensic_scanning)) //breaks shit.
 		return
@@ -110,7 +108,7 @@
 		var/list/complete_prints = list()
 		for(var/i in target.fingerprints)
 			var/print = target.fingerprints[i]
-			if(stringpercent(print) <= FINGERPRINT_COMPLETE)
+			if(stringpercent_ascii(print) <= FINGERPRINT_COMPLETE)
 				complete_prints += print
 		if(complete_prints.len < 1)
 			to_chat(user, "<span class='notice'>&nbsp;&nbsp;No intact prints found</span>")
@@ -154,7 +152,7 @@
 			if(!merged_print)
 				data_prints[print] = A.fingerprints[print]
 			else
-				data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
+				data_prints[print] = stringmerge_ascii(data_prints[print],A.fingerprints[print])
 
 		//Now the fibers
 		var/list/fibers = data_entry[2]

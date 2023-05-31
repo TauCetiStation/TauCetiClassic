@@ -104,6 +104,18 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 
+/obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
+	..()
+	if(ishuman(user) && slot == SLOT_HEAD)
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
+			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
+			CB.disguise(user, src)
+
+/obj/item/clothing/head/cardborg/dropped(mob/living/user)
+	..()
+	user.remove_alt_appearance("standard_borg_disguise")
+
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
@@ -388,11 +400,20 @@
 	desc = "An officer's SS cap."
 	icon_state = "SS_cap"
 	item_state = "that"
-	item_color = "SS_cap"
 
 /obj/item/clothing/head/Nazi_Officer_Cap
 	name = "Nazi Officer Cap"
 	desc = "A nazi officer's cap."
 	icon_state = "officer_cap"
 	item_state = "that"
-	item_color = "officer_cap"
+
+/obj/item/clothing/head/orange_bandana
+	name = "orange bandana"
+	desc = "Hey, I think we're missing a hazard vest..."
+	icon_state = "orange_bandana"
+
+/obj/item/clothing/head/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon_state = "kung_headband"
+	item_state = "kung_headband"

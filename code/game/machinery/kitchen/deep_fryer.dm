@@ -4,8 +4,8 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	layer = 2.9
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	interact_offline = TRUE
@@ -40,7 +40,7 @@
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!anchored)
-		if(iswrench(I))
+		if(iswrenching(I))
 			default_unfasten_wrench(user, I)
 		return
 	if(on)
@@ -49,16 +49,15 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	else if(iswrench(I))
-		if(alert(user,"How do you want to use [I]?","You think...","Unfasten","Cook") == "Unfasten")
+	else if(iswrenching(I))
+		if(tgui_alert(user, "How do you want to use [I]?","You think...", list("Unfasten","Cook")) == "Unfasten")
 			default_unfasten_wrench(user, I)
 			return
 	if (ishuman(user) && !(I.flags & DROPDEL))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
-		user.drop_item()
 		frying = I
-		frying.loc = src
+		user.drop_from_inventory(frying, src)
 		icon_state = "fryer_on"
 
 

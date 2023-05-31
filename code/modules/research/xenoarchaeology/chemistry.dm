@@ -73,20 +73,20 @@
 	icon_state = "solution_tray"
 	m_amt = 0
 	g_amt = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1, 2)
 	volume = 2
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W, mob/living/user)
-	if(istype(W, /obj/item/weapon/pen))
+/obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen))
 		var/new_label = sanitize_safe(input("What should the new label be?","Label solution tray"), MAX_NAME_LEN)
 		if(new_label)
 			name = "solution tray ([new_label])"
 			to_chat(user, "<span class='notice'>You write on the label of the solution tray.</span>")
 	else
-		..(W, user)
+		return ..()
 
 /obj/item/weapon/reagent_containers/glass/beaker/tungsten
 	name = "beaker 'tungsten'"

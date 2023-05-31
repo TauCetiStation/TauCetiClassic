@@ -1,4 +1,4 @@
-var/list/fuel_injectors = list()
+var/global/list/fuel_injectors = list()
 
 /obj/machinery/fusion_fuel_injector
 	name = "fuel injector"
@@ -39,9 +39,21 @@ var/list/fuel_injectors = list()
 		else
 			Inject()
 
+/obj/machinery/fusion_fuel_injector/verb/rotate()
+	set name = "Rotate"
+	set category = "Object"
+	set src in oview(1)
+
+	if (usr.incapacitated())
+		return
+	if (anchored)
+		to_chat(usr,"<span class='notice'>It is fastened to the floor!</span>")
+		return
+	set_dir(turn(dir, 90))
+
 /obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
 
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fuel Injector", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
@@ -67,7 +79,7 @@ var/list/fuel_injectors = list()
 		cur_assembly = W
 		return
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(injecting)
 			to_chat(user, "<span class='warning'>Shut \the [src] off first!</span>")
 			return

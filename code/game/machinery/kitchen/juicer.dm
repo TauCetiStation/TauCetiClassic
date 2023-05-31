@@ -4,8 +4,8 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = 2.9
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -47,14 +47,14 @@
 			beaker = O
 			src.verbs += /obj/machinery/juicer/verb/detach
 			update_icon()
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return 0
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "It looks as not containing any juice.")
 		return 1
 	user.remove_from_mob(O)
 	O.loc = src
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return 0
 
 /obj/machinery/juicer/attack_ai(mob/user)
@@ -97,8 +97,10 @@
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=juicer")
-	onclose(user, "juicer")
+
+	var/datum/browser/popup = new(user, "juicer", "Juicer")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 
 /obj/machinery/juicer/Topic(href, href_list)
@@ -112,7 +114,7 @@
 		if ("detach")
 			detach()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/juicer/verb/detach()
 	set category = "Object"

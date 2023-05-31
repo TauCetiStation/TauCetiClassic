@@ -42,6 +42,8 @@ field_generator power level display
 	var/list/obj/machinery/containment_field/fields
 	var/list/obj/machinery/field_generator/connected_gens
 
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
+
 
 /obj/machinery/field_generator/Destroy()
 	if(active != FG_OFFLINE)
@@ -52,7 +54,7 @@ field_generator power level display
 	cut_overlays()
 	if(warming_up)
 		add_overlay("+a[warming_up]")
-	if(LAZYLEN(fields))
+	if(length(fields))
 		add_overlay("+on")
 	// Power level indicator
 	// Scale % power to % FG_POWER_LEVELS and truncate value
@@ -85,11 +87,13 @@ field_generator power level display
 	if(.)
 		return
 	if(state == FG_WELDED)
-		if(in_range(src, user) || isobserver(user))//Need to actually touch the thing to turn it on
+		if(Adjacent(user) || isobserver(user))//Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return 1
 			else
+				if(!do_skill_checks(user))
+					return
 				user.visible_message(
 					"<span class='notice'>[user] turns on the [src].</span>",
 					"<span class='notice'>You turn on the [src].</span>",
@@ -105,7 +109,7 @@ field_generator power level display
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
@@ -125,7 +129,7 @@ field_generator power level display
 				anchored = FALSE
 			if(FG_WELDED)
 				to_chat(user, "<span class='red'>The [src] needs to be unwelded from the floor.</span>")
-	else if(iswelder(W))
+	else if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
@@ -136,7 +140,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if(WT.use_tool(src, user, 20, volume = 50))
+					if(WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
@@ -145,7 +149,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else
@@ -161,14 +165,13 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/containment_field/meteorhit()
-	return FALSE
-
-/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag != "bullet")
-		power += Proj.damage
-		update_icon()
-	return FALSE
+/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
+	switch(Proj.flag)
+		if(LASER, ENERGY)
+			power += Proj.damage
+			update_icon()
+			return
+	. = ..()
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = FG_OFFLINE
@@ -206,7 +209,7 @@ field_generator power level display
 
 	power = min(power, FG_MAX_POWER)
 
-	var/power_draw = 2 + LAZYLEN(fields)
+	var/power_draw = 2 + length(fields)
 	if(!draw_power(round(power_draw / 2, 1)))
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
@@ -291,10 +294,9 @@ field_generator power level display
 		var/field_dir = get_dir(T, get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/containment_field) in T)
-			var/obj/machinery/containment_field/CF = new
+			var/obj/machinery/containment_field/CF = new(T)
 			CF.set_master(src, G)
-			CF.loc = T
-			CF.dir = field_dir
+			CF.set_dir(field_dir)
 
 	connected_gens |= G
 	G.connected_gens |= src
@@ -306,12 +308,12 @@ field_generator power level display
 
 	clean_up = TRUE
 
-	if(LAZYLEN(fields))
+	if(length(fields))
 		for(var/obj/machinery/containment_field/CF in fields)  // `fileds` list will be cleared by field themself in `Destroy()` so no `Cut()`.
 			if(!QDESTROYING(CF))
 				qdel(CF)
 
-	if(LAZYLEN(connected_gens))
+	if(length(connected_gens))
 		for(var/obj/machinery/field_generator/FG in connected_gens)
 			FG.connected_gens -= src
 			FG.cleanup()
@@ -333,7 +335,7 @@ field_generator power level display
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
 				log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
-		O.last_warning = world.time
+			O.last_warning = world.time
 
 
 #undef FG_MAX_POWER

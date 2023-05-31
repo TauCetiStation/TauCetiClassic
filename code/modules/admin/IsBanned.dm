@@ -17,15 +17,13 @@
 	var/ckey = ckey(key)
 	var/client/C = global.directory[ckey]
 
-	/* Uncomment this for skip connected clients checks. Broke stckybans sometimes
 	// Don't recheck connected clients.
 	if (!real_bans_only && istype(C) && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
 		return
-	*/
 
 	// Whitelist
-	if(!real_bans_only && config.serverwhitelist && !check_if_a_new_player(key))
-		return list(BANKEY_REASON="", "desc"="[config.serverwhitelist_message]")
+	if(!real_bans_only && config.bunker_ban_mode && is_blocked_by_regisration_panic_bunker_ban_mode(key))
+		return list(BANKEY_REASON="", "desc"="[config.bunker_ban_mode_message]")
 	//Guest Checking
 	if(!real_bans_only && !guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
@@ -52,7 +50,7 @@
 
 	// Database ban system
 	else
-		if(!establish_db_connection())
+		if(!establish_db_connection("erro_ban"))
 			error("Ban database connection failure. Key [ckey] not checked")
 			log_misc("Ban database connection failure. Key [ckey] not checked")
 			return
@@ -67,14 +65,14 @@
 		if(computer_id)
 			failedcid = FALSE
 			cidquery = " OR computerid = '[sanitize_sql(computer_id)]' "
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[sanitize_sql(ckey)]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckey(ckey)]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		query.Execute()
 		while(query.NextRow())
 			var/pckey = query.item[1]
 			//var/pip = query.item[2]
 			//var/pcid = query.item[3]
 			var/ackey = query.item[4]
-			var/reason = initial_ja(query.item[5])
+			var/reason = query.item[5]
 			var/expiration = query.item[6]
 			var/duration = query.item[7]
 			var/bantime = query.item[8]
@@ -135,9 +133,9 @@
 				// Then next ban drop from Config after limit
 				// When ban not in DB clearing matches too
 				// DB restore after sometime rouge bans
-				if (LAZYLEN(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + LAZYLEN(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
+				if (length(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + length(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
+					length(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+					length(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
 					var/action
 					if (byond_ban[BANKEY_FROMDB])
 						cached_ban[BANKEY_TIMEOUT] = TRUE
@@ -166,7 +164,7 @@
 					return null
 		if (byond_ban[BANKEY_FROMDB])
 			// update matches DB cache
-			INVOKE_ASYNC(SSstickyban, /datum/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
+			INVOKE_ASYNC(SSstickyban, /datum/controller/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
 		if (is_admin)
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [banned_ckey]")
 			return null

@@ -7,26 +7,27 @@
 
 	for(var/item_name in custom_items)
 		var/datum/custom_item/item = custom_items[item_name]
+		var/item_link = "<a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name], [item.item_type]</a>"
 		if(item.status == "submitted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#267F00'>(Accepted)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#267F00'>(Accepted)</font></center></td></tr>"
 		if(item.status == "rejected")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
 
 	. += "</table>"
 
-var/list/editing_item_list = list() // stores the item that is currently being edited for each player
-var/list/editing_item_oldname_list = list()
-/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE, adminview = FALSE)
+var/global/list/editing_item_list = list() // stores the item that is currently being edited for each player
+var/global/list/editing_item_oldname_list = list()
+/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
 		return
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
 	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
 
-	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-color: #F5ECDD}</style>"
@@ -95,6 +96,10 @@ var/list/editing_item_oldname_list = list()
 	dat += "<td>Description</td>"
 	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
 	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
+	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
+	dat += "</tr>"
 	if(!readonly)
 		dat += "<tr>"
 		dat += "<td>Icon</td>"
@@ -120,11 +125,11 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname)
 			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
-	else if(adminview)
+	if(editing_item.icon)
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(dat, "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -143,7 +148,7 @@ var/list/editing_item_oldname_list = list()
 		var/itemCount = length(get_custom_items(user.client.ckey))
 		var/slotCount = user.client.get_custom_items_slot_count()
 		if(slotCount <= itemCount) // can't create, we have too much custom items
-			alert(user, "You don't have free custom item slots", "Info", "OK")
+			tgui_alert(user, "You don't have free custom item slots", "Info")
 			return
 
 		editing_item_oldname_list[user.client.ckey] = null
@@ -152,7 +157,7 @@ var/list/editing_item_oldname_list = list()
 		editing_item.name = "new item"
 		editing_item.desc = "description"
 		editing_item.icon_state = ""
-		editing_item.item_type = "normal"
+		editing_item.item_type = FLUFF_TYPE_NORMAL
 
 		editing_item.status = "submitted"
 		editing_item.moderator_message = ""
@@ -172,7 +177,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 	if(href_list["change_name"])
-		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN)
+		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN, ascii_only = TRUE)
 		if(!editing_item || !new_item_name || length(new_item_name) <= 2 || length(new_item_name) > 40)
 			return
 		editing_item.name = new_item_name
@@ -187,6 +192,22 @@ var/list/editing_item_oldname_list = list()
 		edit_custom_item_panel(src, user)
 		return
 
+	if(href_list["change_hair_flags"])
+		var/new_hair_flags = input("Select which hair item should hide", "Text") as null|anything in list("None", "Head Hair", "Head & Face Hair")
+		if(!editing_item || !new_hair_flags)
+			return
+
+		switch(new_hair_flags)
+			if("Head Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_HEAD
+			if("Head & Face Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_ALL
+			else
+				editing_item.hair_flags = null
+
+		edit_custom_item_panel(src, user)
+		return
+
 	if(href_list["change_iconname"])
 		if(!editing_item.icon || !length(icon_states(editing_item.icon)))
 			return
@@ -198,7 +219,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_type"])
-		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in FLUFF_TYPES_LIST)
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
@@ -206,7 +227,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["author_info"])
-		alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info", "OK")
+		tgui_alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info")
 		return
 
 	if(href_list["change_author"])
@@ -225,7 +246,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["ooc_info"])
-		alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info", "OK")
+		tgui_alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info")
 		return
 
 	if(href_list["change_oocinfo"])
@@ -253,7 +274,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname) //editing
 			if(slotCount < itemCount) // can't edit, we have too much custom items
-				alert(user, "You have too much custom items, remove old ones before being able to edit", "Info", "OK")
+				tgui_alert(user, "You have too much custom items, remove old ones before being able to edit", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -266,10 +287,10 @@ var/list/editing_item_oldname_list = list()
 		else //adding new
 			var/datum/custom_item/old_item = get_custom_item(user.client.ckey, editing_item.name)
 			if(old_item)
-				alert(user, "You already have an item with name [editing_item.name]", "Info", "OK")
+				tgui_alert(user, "You already have an item with name [editing_item.name]", "Info")
 				return
 			if(slotCount <= itemCount) // can't create, we have too much custom items
-				alert(user, "You don't have free custom item slots", "Info", "OK")
+				tgui_alert(user, "You don't have free custom item slots", "Info")
 				return
 
 			editing_item.status = "submitted"
@@ -282,13 +303,13 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state || !editing_item_oldname)
 			return
 
-		if(alert(usr, "Are you sure?", "Item deletion confirmation", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Are you sure?", "Item deletion confirmation", list("Yes", "No")) == "Yes")
 			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "")
 			user.client.remove_custom_item(editing_item_oldname)
 			user << browse(null, "window=edit_custom_item")
 
 	if(href_list["download"])
-		if(!editing_item || !editing_item.icon)
+		if(!editing_item || !editing_item.icon || !isicon(editing_item.icon))
 			return
 
 		usr << ftp(editing_item.icon)
@@ -327,6 +348,8 @@ var/list/editing_item_oldname_list = list()
 	var/list/all_custom_items = get_custom_items(user.client.ckey)
 	for(var/item_name in all_custom_items)
 		var/datum/custom_item/item = all_custom_items[item_name]
+		if(item.item_type == FLUFF_TYPE_GHOST) // not loadout items
+			continue
 		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")
 		if(accepted || ticked)
@@ -357,6 +380,7 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -381,7 +405,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems;size=600x500")
+	usr << browse(output,"window=customitems;size=600x500")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
 	if(!check_rights(R_PERMISSIONS))
@@ -392,16 +416,16 @@ var/list/editing_item_oldname_list = list()
 		if(!target_ckey)
 			return
 
-	var/ammount = input(usr,"type in ammount (can be negative):","Ammount", 1) as null|num
-	if(!ammount)
+	var/amount = input(usr,"type in amount (can be negative):","Amount", 1) as null|num
+	if(!amount)
 		return
-	ammount = round(ammount)
+	amount = round(amount)
 
-	var/reason = input(usr, "([target_ckey] [ammount > 0 ? "+" : ""][ammount]) type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [amount > 0 ? "+" : ""][amount]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
-	add_custom_items_history(target_ckey, usr.ckey, reason, ammount)
+	add_custom_items_history(target_ckey, usr.ckey, reason, amount)
 	customitems_panel()
 	customs_items_history(target_ckey)
 
@@ -418,6 +442,7 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -426,7 +451,7 @@ var/list/editing_item_oldname_list = list()
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
 <th text-align:center;'>[user_ckey] <a class='small' href='?src=\ref[src];custom_items=addckey;ckey=[user_ckey]'>\[+\]</a></th>
-<th text-align:center;'>Ammount</th>
+<th text-align:center;'>Amount</th>
 <th text-align:center;'>Reason</th>
 <th text-align:center;'>Added by</th>
 </tr>
@@ -436,7 +461,7 @@ var/list/editing_item_oldname_list = list()
 	for(var/datum/custom_items_history/entry in history)
 		output += "<tr>"
 		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=history_remove;ckey=[user_ckey];index=[i]'>DELETE</a></td>"
-		output += "<td style='text-align:center;'>[entry.ammount]</td>"
+		output += "<td style='text-align:center;'>[entry.amount]</td>"
 		output += "<td style='text-align:center;'>[sanitize(entry.reason)]</td>"
 		output += "<td style='text-align:center;'>[entry.admin_ckey]</td>"
 		output += "</tr>"
@@ -448,7 +473,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems_history;size=600x500")
+	usr << browse(output,"window=customitems_history;size=600x500")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
 	if(!check_rights(R_PERMISSIONS))
@@ -457,7 +482,7 @@ var/list/editing_item_oldname_list = list()
 	if(!target_ckey)
 		return
 
-	if(alert(usr, "Are you sure?", "Confirm deletion", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Are you sure?", "Confirm deletion", list("Yes", "No")) == "Yes")
 		remove_custom_items_history(target_ckey, index)
 		customitems_panel()
 		customs_items_history(target_ckey)

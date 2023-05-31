@@ -37,7 +37,6 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
-	unacidable = TRUE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -96,7 +95,7 @@
 			src.loc = loc
 
 		if(dir)
-			src.dir = dir
+			set_dir(dir)
 
 		buildstage = 0
 		wiresexposed = 1
@@ -494,7 +493,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/alarm/proc/populate_status(var/data)
+/obj/machinery/alarm/proc/populate_status(data)
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.total_moles
@@ -515,7 +514,7 @@
 	data["target_temperature"] = "[target_temperature - T0C]C"
 	data["thermoregulation"] = allow_regulate
 
-/obj/machinery/alarm/proc/populate_controls(var/list/data)
+/obj/machinery/alarm/proc/populate_controls(list/data)
 	switch(screen)
 		if(AALARM_SCREEN_MAIN)
 			data["mode"] = mode
@@ -636,6 +635,8 @@
 		var/max_temperature = min(selected[3] - T0C-1, MAX_TEMPERATURE) // (-/+ 1) required because it won't heat/cool, if (target_temperature == TLV)
 		var/min_temperature = max(selected[2] - T0C+1, MIN_TEMPERATURE)
 		var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature] and [max_temperature]C)", "Thermostat Controls", target_temperature - T0C) as num|null
+		if(!can_still_interact_with(usr))
+			return
 		if(isnum(input_temperature))
 			if(input_temperature > max_temperature || input_temperature < min_temperature)
 				to_chat(usr, "Temperature must be between [min_temperature]C and [max_temperature]C")
@@ -655,6 +656,8 @@
 
 				if("set_external_pressure")
 					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(!can_still_interact_with(usr))
+						return
 					if(isnum(input_pressure))
 						send_signal(device_id, list(href_list["command"] = input_pressure))
 					return FALSE
@@ -665,6 +668,8 @@
 
 				if("set_internal_pressure")
 					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(!can_still_interact_with(usr))
+						return
 					if(isnum(input_pressure))
 						send_signal(device_id, list(href_list["command"] = input_pressure))
 					return FALSE
@@ -699,6 +704,8 @@
 					var/list/selected = TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
+					if(!can_still_interact_with(usr))
+						return
 					if (isnull(newval))
 						return TRUE
 					if (newval < 0)
@@ -784,13 +791,13 @@
 
 	switch(buildstage)
 		if(2)
-			if(isscrewdriver(W))  // Opening that Air Alarm up.
+			if(isscrewing(W))  // Opening that Air Alarm up.
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
 				return
 
-			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
+			if (iscutter(W) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -814,8 +821,6 @@
 				wires.interact(user)
 				return
 
-			return
-
 		if(1)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
@@ -831,7 +836,7 @@
 				wires.repair()
 				return
 
-			else if(iscrowbar(W))
+			else if(isprying(W))
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
@@ -850,14 +855,25 @@
 				update_icon()
 				return
 
-			else if(iswrench(W))
+			else if(iswrenching(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
-				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
-				frame.loc = user.loc
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-				qdel(src)
+				deconstruct(TRUE)
 
 	return ..()
+
+/obj/machinery/alarm/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/alarm_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+	if(buildstage >= 1)
+		new /obj/item/weapon/airalarm_electronics(loc)
+		if(buildstage >= 2)
+			new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/alarm/power_change()
 	if(powered(power_channel))
@@ -883,7 +899,7 @@ Just a object used in constructing air alarms
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
 
@@ -900,13 +916,13 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = CONDUCT
 
-/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+/obj/item/alarm_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrenching(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -918,7 +934,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
@@ -936,16 +952,15 @@ Code shamelessly copied from apc_frame
 FIRE ALARM
 */
 /obj/machinery/firealarm
-	name = "fire alarm"
+	name = "Fire Alarm"
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
-	var/working = 1.0
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -975,8 +990,11 @@ FIRE ALARM
 			alarm()			// added check of detector status here
 	return
 
-/obj/machinery/firealarm/bullet_act(BLAH)
-	return alarm()
+/obj/machinery/firealarm/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
+	if(!is_operational())
+		return
+	alarm()
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity))
@@ -986,7 +1004,7 @@ FIRE ALARM
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	add_fingerprint(user)
 
-	if (isscrewdriver(W) && buildstage == 2)
+	if (isscrewing(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
 		return
@@ -994,13 +1012,13 @@ FIRE ALARM
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if (ismultitool(W))
+				if (ispulsing(W))
 					detecting = !detecting
 					if (detecting)
 						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				else if (iswirecutter(W))
+				else if (iscutter(W))
 					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -1017,7 +1035,7 @@ FIRE ALARM
 					to_chat(user, "You wire \the [src]!")
 					update_icon()
 
-				else if(iscrowbar(W))
+				else if(isprying(W))
 					to_chat(user, "You start prying out the circuit.")
 					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
@@ -1033,7 +1051,7 @@ FIRE ALARM
 					buildstage = 1
 					update_icon()
 
-				else if(iswrench(W))
+				else if(iswrenching(W))
 					if(user.is_busy())
 						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
@@ -1043,11 +1061,13 @@ FIRE ALARM
 					qdel(src)
 		return
 
+	if(!is_operational())
+		return
 	alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		return
 
 	if(timing)
@@ -1096,9 +1116,12 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(entity_ja(dat), "window=firealarm")
-		onclose(user, "firealarm")
+		var/dat = "[d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+
+		var/datum/browser/popup = new(user, "window=firealarm", src.name)
+		popup.set_content(dat)
+		popup.open()
+
 	else
 		if (A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
@@ -1110,9 +1133,11 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(entity_ja(dat), "window=firealarm")
-		onclose(user, "firealarm")
+		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+
+		var/datum/browser/popup = new(user, "window=firealarm", stars(src.name))
+		popup.set_content(dat)
+		popup.open()
 
 /obj/machinery/firealarm/Topic(href, href_list)
 	. = ..()
@@ -1121,6 +1146,8 @@ FIRE ALARM
 
 	if (buildstage != 2)
 		return FALSE
+	if(!is_operational())
+		return
 
 	if (href_list["reset"])
 		reset()
@@ -1138,8 +1165,6 @@ FIRE ALARM
 	updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!working)
-		return
 	var/area/A = get_area(src)
 	A.firereset()
 	for(var/obj/machinery/firealarm/FA in A)
@@ -1147,14 +1172,28 @@ FIRE ALARM
 		FA.update_icon()
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!working)
-		return
 	var/area/A = get_area(src)
 	A.firealert()
 	for(var/obj/machinery/firealarm/FA in A)
 		FA.detecting = FALSE
 		FA.update_icon()
 		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+/obj/machinery/firealarm/atom_break(damage_flag)
+	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+		return
+	return ..()
+
+/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	if(buildstage >= 1)
+		var/obj/item/item = new /obj/item/weapon/firealarm_electronics(loc)
+		if(!disassembled)
+			item.update_integrity(item.max_integrity * 0.5)
+	new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
@@ -1179,7 +1218,7 @@ FIRE ALARM
 		src.loc = loc
 
 	if(dir)
-		src.dir = dir
+		set_dir(dir)
 
 	if(building)
 		buildstage = 0
@@ -1208,7 +1247,7 @@ Just a object used in constructing fire alarms
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
 
@@ -1225,13 +1264,13 @@ Code shamelessly copied from apc_frame
 	icon_state = "fire_bitem"
 	flags = CONDUCT
 
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+/obj/item/firealarm_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrenching(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr) > 1)
@@ -1243,7 +1282,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")

@@ -7,7 +7,7 @@
 	throwforce = 10.0
 	throw_speed = 5
 	throw_range = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 
 	sweep_step = 4
@@ -61,11 +61,11 @@
 	clean(current_turf, 1)
 
 /obj/item/weapon/mop/proc/on_sweep_to_check(turf/current_turf, turf/next_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		if(I.anchored)
 			return
-		if(I.w_class <= ITEM_SIZE_NORMAL)
+		if(I.w_class <= SIZE_SMALL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
@@ -80,7 +80,7 @@
 			continue
 		if(I.anchored)
 			continue
-		if(I.w_class <= ITEM_SIZE_NORMAL)
+		if(I.w_class <= SIZE_SMALL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
@@ -95,7 +95,7 @@
 			continue
 		if(I.anchored)
 			continue
-		if(I.w_class <= ITEM_SIZE_NORMAL)
+		if(I.w_class <= SIZE_SMALL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
@@ -131,7 +131,7 @@
 	sweep_step = 2
 
 /obj/effect/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/kitchen/utensil/fork))
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap) || istype(I, /obj/item/weapon/kitchen/utensil/fork))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 	return ..()

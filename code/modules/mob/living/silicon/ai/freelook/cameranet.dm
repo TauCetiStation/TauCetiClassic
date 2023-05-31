@@ -2,7 +2,7 @@
 //
 // The datum containing all the chunks.
 
-var/datum/cameranet/cameranet = new()
+var/global/datum/cameranet/cameranet = new()
 
 /datum/cameranet
 	var/name = "Camera Net" // Name to show for VV and stat()
@@ -70,7 +70,7 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 
-	if(!ticker || (opacity_check && !A.opacity))
+	if(!SSticker || (opacity_check && !A.opacity))
 		return
 	majorChunkChange(A, 2)
 

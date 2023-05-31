@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "ab" = (
 /turf/simulated/wall,
@@ -15,9 +15,7 @@
 /turf/simulated/floor,
 /area/awaymission/example)
 "ae" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -328,14 +326,6 @@
 	},
 /area/awaymission/example)
 "aX" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
@@ -343,23 +333,9 @@
 	name = "Privacy Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
-/area/awaymission/example)
-"aY" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "example";
-	name = "Privacy Shutters";
-	opacity = 0
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/example)
@@ -453,17 +429,10 @@
 	},
 /area/awaymission/example)
 "bm" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/example)
 "bn" = (
@@ -471,36 +440,6 @@
 	dir = 8;
 	icon_state = "stage_stairs"
 	},
-/area/awaymission/example)
-"bo" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/example)
-"bp" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/example)
-"bq" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
 /area/awaymission/example)
 "br" = (
 /obj/structure/toilet{
@@ -769,7 +708,7 @@
 "cd" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1970,7 +1909,7 @@ ab
 bU
 ac
 ac
-bo
+bm
 aO
 aP
 ac
@@ -2036,7 +1975,7 @@ ab
 ac
 ac
 ac
-bp
+bm
 ac
 aP
 bj
@@ -2102,7 +2041,7 @@ ab
 bV
 ac
 ac
-bp
+bm
 ac
 aP
 bk
@@ -2168,7 +2107,7 @@ ab
 bW
 ac
 ac
-bq
+bm
 aM
 aP
 bl
@@ -2224,9 +2163,9 @@ ab
 ac
 aP
 ac
-bo
+bm
 aa
-bo
+bm
 bH
 bs
 bx
@@ -2290,9 +2229,9 @@ ab
 ad
 aP
 ac
-bp
+bm
 aa
-bp
+bm
 bI
 bs
 bQ
@@ -2356,9 +2295,9 @@ ab
 ac
 aP
 ac
-bq
+bm
 aa
-bq
+bm
 bJ
 bs
 bH
@@ -3793,7 +3732,7 @@ aQ
 aS
 aS
 aS
-aY
+aX
 ba
 bd
 bh

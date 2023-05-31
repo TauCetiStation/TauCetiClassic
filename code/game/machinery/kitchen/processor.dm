@@ -61,7 +61,7 @@
 	output = /obj/item/weapon/reagent_containers/food/condiment/flour
 
 /datum/food_processor_process/spaghetti
-	input = /obj/item/weapon/reagent_containers/food/snacks/dough
+	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */
@@ -91,35 +91,20 @@
 /datum/food_processor_process/mob/monkey/process_food(loc, what, processor)
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
-		O.loc = loc
+		O.forceMove(loc)
 		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
 				"You jump out from the processor", \
 				"You hear chimp")
 		return
 	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
-	var/datum/reagent/blood/B = new()
-	B.holder = bucket_of_blood
-	B.volume = 70
-	//set reagent data
-	B.data["donor"] = O
+	O.take_blood(bucket_of_blood, 70)
 
-	for(var/datum/disease/D in O.viruses)
-		if(D.spread_type != SPECIAL)
-			B.data["viruses"] += D.Copy()
-
-	B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
-	if(O.resistances&&O.resistances.len)
-		B.data["resistances"] = O.resistances.Copy()
-	bucket_of_blood.reagents.reagent_list += B
-	bucket_of_blood.reagents.update_total()
-	bucket_of_blood.on_reagent_change()
-	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
 	..()
 
 
 
 /obj/machinery/processor/proc/select_recipe(X)
-	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
+	for (var/Type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
 		if (!istype(X, P.input))
 			continue
@@ -147,7 +132,7 @@
 	if(contents.len > 0) //TODO: several items at once? several different items?
 		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
 		return 1
-	var/what = O
+	var/obj/item/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
@@ -158,9 +143,10 @@
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
-	user.drop_item()
-	what:loc = src
-	return
+	if(isitem(what))
+		user.drop_from_inventory(what, src)
+	else
+		what.forceMove(src)
 
 /obj/machinery/processor/attack_hand(mob/user)
 	. = ..()

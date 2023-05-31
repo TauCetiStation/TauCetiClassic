@@ -26,7 +26,6 @@
 		if(HALLOSS)
 			adjustHalLoss(damage * blocked_mult(blocked))
 
-	flash_weak_pain()
 	updatehealth()
 	return TRUE
 
@@ -61,9 +60,9 @@
 			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
-				stuttering = max(stuttering,(effect * blocked))
+				Stuttering(effect * blocked)
 		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect * blocked))
+			blurEyes(effect * blocked)
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
 	updatehealth()

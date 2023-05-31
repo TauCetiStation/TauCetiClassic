@@ -1,0 +1,788 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall,
+/area/mafia)
+"b" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/nerdshirt,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"c" = (
+/obj/structure/closet,
+/obj/item/clothing/head/sombrero,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"d" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/unsimulated/floor{
+	icon_state = "asteroid";
+	name = "grass"
+	},
+/area/mafia)
+"e" = (
+/obj/structure/closet,
+/obj/item/clothing/head/sombrero/shamebrero,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"f" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"g" = (
+/obj/structure/closet,
+/obj/item/clothing/head/western/cowboy,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"h" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/ianshirt,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"i" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/unsimulated/floor{
+	icon_state = "asteroid";
+	name = "grass"
+	},
+/area/mafia)
+"j" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"k" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho/red,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"l" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho/ponchoshame,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"m" = (
+/obj/structure/closet,
+/obj/item/clothing/head/sombrero/green,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"n" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/holidaypriest,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"o" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho/rainbow,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"p" = (
+/obj/machinery/door/poddoor/mafia,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
+/area/mafia)
+"t" = (
+/turf/simulated/floor/beach/water/waterpool,
+/area/mafia)
+"u" = (
+/obj/effect/landmark/mafia/town_center,
+/turf/simulated/floor/beach/water/waterpool,
+/area/mafia)
+"v" = (
+/obj/mafia_game_board,
+/turf/unsimulated/floor{
+	icon_state = "asteroid";
+	name = "grass"
+	},
+/area/mafia)
+"x" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"z" = (
+/turf/simulated/wall/mineral/sandstone,
+/area/mafia)
+"B" = (
+/obj/structure/flora/junglebush/c,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"G" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"I" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"K" = (
+/obj/structure/flora/junglebush,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"N" = (
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"O" = (
+/obj/effect/landmark/mafia,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"P" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/shawl,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"T" = (
+/obj/structure/flora/junglebush/large,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"V" = (
+/obj/structure/flora/junglebush/b,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"X" = (
+/turf/unsimulated/floor{
+	icon_state = "asteroid";
+	name = "grass"
+	},
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+N
+x
+N
+K
+N
+N
+T
+N
+N
+V
+N
+N
+I
+N
+I
+N
+N
+B
+N
+I
+N
+a
+"}
+(3,1,1) = {"
+a
+I
+N
+d
+X
+X
+X
+X
+X
+d
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+N
+K
+a
+"}
+(4,1,1) = {"
+a
+N
+N
+X
+v
+X
+i
+X
+X
+X
+X
+d
+X
+X
+X
+X
+i
+X
+v
+X
+I
+N
+a
+"}
+(5,1,1) = {"
+a
+N
+V
+X
+X
+X
+X
+X
+z
+z
+j
+z
+j
+z
+z
+X
+X
+X
+X
+X
+N
+I
+a
+"}
+(6,1,1) = {"
+a
+N
+N
+X
+i
+z
+z
+j
+z
+f
+N
+z
+N
+h
+z
+j
+z
+z
+i
+X
+G
+N
+a
+"}
+(7,1,1) = {"
+a
+N
+G
+X
+X
+z
+c
+N
+p
+O
+N
+p
+N
+O
+p
+N
+l
+z
+X
+X
+N
+B
+a
+"}
+(8,1,1) = {"
+a
+N
+N
+d
+X
+z
+O
+N
+z
+z
+N
+z
+N
+z
+z
+N
+O
+z
+X
+X
+N
+N
+a
+"}
+(9,1,1) = {"
+a
+K
+N
+X
+z
+z
+p
+N
+X
+p
+X
+p
+X
+p
+X
+N
+p
+z
+z
+X
+I
+N
+a
+"}
+(10,1,1) = {"
+a
+N
+N
+X
+z
+P
+p
+z
+p
+p
+p
+p
+p
+p
+p
+z
+p
+n
+z
+X
+N
+N
+a
+"}
+(11,1,1) = {"
+a
+N
+B
+X
+j
+O
+N
+N
+X
+p
+t
+t
+t
+p
+X
+N
+N
+O
+j
+X
+B
+N
+a
+"}
+(12,1,1) = {"
+a
+N
+N
+X
+z
+z
+p
+z
+p
+p
+t
+u
+t
+p
+p
+z
+p
+z
+z
+X
+N
+N
+a
+"}
+(13,1,1) = {"
+a
+I
+N
+X
+j
+O
+N
+N
+X
+p
+t
+t
+t
+p
+X
+N
+N
+O
+j
+X
+N
+I
+a
+"}
+(14,1,1) = {"
+a
+N
+N
+X
+z
+b
+p
+z
+p
+p
+p
+p
+p
+p
+p
+z
+p
+o
+z
+X
+K
+N
+a
+"}
+(15,1,1) = {"
+a
+N
+K
+X
+z
+z
+p
+N
+X
+p
+X
+p
+X
+p
+X
+N
+p
+z
+z
+X
+N
+N
+a
+"}
+(16,1,1) = {"
+a
+G
+N
+X
+i
+z
+O
+N
+z
+z
+N
+z
+N
+z
+z
+N
+O
+z
+X
+X
+N
+G
+a
+"}
+(17,1,1) = {"
+a
+N
+N
+X
+X
+z
+e
+N
+p
+O
+N
+p
+N
+O
+p
+N
+m
+z
+i
+X
+N
+N
+a
+"}
+(18,1,1) = {"
+a
+N
+N
+i
+X
+z
+z
+j
+z
+g
+N
+z
+N
+k
+z
+j
+z
+z
+X
+X
+T
+N
+a
+"}
+(19,1,1) = {"
+a
+N
+G
+X
+X
+X
+d
+X
+z
+z
+j
+z
+j
+z
+z
+X
+i
+X
+X
+X
+N
+N
+a
+"}
+(20,1,1) = {"
+a
+N
+N
+X
+v
+X
+X
+X
+d
+X
+d
+X
+X
+X
+X
+X
+X
+X
+v
+X
+N
+I
+a
+"}
+(21,1,1) = {"
+a
+I
+N
+i
+X
+X
+X
+i
+X
+X
+X
+X
+X
+i
+X
+X
+X
+X
+X
+X
+G
+K
+a
+"}
+(22,1,1) = {"
+a
+N
+N
+N
+I
+N
+B
+N
+N
+I
+N
+x
+N
+N
+I
+N
+N
+V
+N
+N
+N
+N
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

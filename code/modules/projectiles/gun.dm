@@ -1,3 +1,9 @@
+#define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free"
+#define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
+//Please do not increase power in shake_camera(). It is really not needed for players.
+#define OPTIMAL_POWER_RECOIL 1
+#define DEFAULT_DURATION_RECOIL 1
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -7,9 +13,10 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
+	hitsound = list('sound/weapons/genhit1.ogg')
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
@@ -31,9 +38,16 @@
 						// 1 for one bullet after tarrget moves and aim is lowered
 	var/fire_delay = 6
 	var/last_fired = 0
+	var/two_hand_weapon = FALSE
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+
+/obj/item/weapon/gun/examine(mob/user)
+	..()
+	if(two_hand_weapon)
+		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
+
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
@@ -46,8 +60,12 @@
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
-	if(M.mind && M.mind.special_role == "Wizard")
+	if(iswizard(M))
 		return FALSE
+	if(two_hand_weapon == ONLY_TWOHAND)
+		if(M.get_inactive_hand())
+			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
+			return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
@@ -56,11 +74,19 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+	if(recoil > 0)
+		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+		if(two_hand_weapon != DESIRABLE_TWOHAND)
+			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+		if(two_hand_weapon == DESIRABLE_TWOHAND)
+			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
+			if(user.get_inactive_hand())
+				shake_camera(user, recoil + 2, recoil + 1)
+			else
+				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
 
 	if(silenced)
-		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 		announce_shot(user)
@@ -80,17 +106,20 @@
 /obj/item/weapon/gun/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-	if(user && user.client && user.client.gun_mode && !(target in target))
+	if(user && user.client && user.client.gun_mode && !(target in src.target))
 		PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(target,user,params) //Otherwise, fire normally.
 
 /mob/living/carbon/AltClickOn(atom/A)
+	if(next_move > world.time) // CD for clicks is checked before clicks with modifiers(shift, alt)
+		return
 	var/obj/item/I = get_active_hand()
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/G = I
-		if(src.client.gun_mode)
-			G.Fire(A, src)
+		if(client.gun_mode)
+			if(G.can_fire())
+				G.Fire(A, src)
 		else
 			if(isliving(A))
 				var/mob/living/M = A
@@ -113,11 +142,11 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == SHADOWLING)
+			if(H.species.name == SHADOWLING || H.species.name == ABOMINATION)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
-			if(user.dna && user.dna.mutantrace == "adamantine")
+			if(user.get_species() == GOLEM)
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
@@ -126,7 +155,7 @@
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
@@ -134,7 +163,6 @@
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 					H.take_bodypart_damage(0, 20)
-					H.drop_item()
 					qdel(src)
 					return
 
@@ -152,7 +180,7 @@
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(src, target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
@@ -161,11 +189,7 @@
 		shoot_with_empty_chamber(user)
 	process_chamber()
 	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -179,7 +203,7 @@
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	else
-		src.visible_message("*click click*")
+		visible_message("*click click*")
 		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
@@ -210,6 +234,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 
@@ -239,3 +264,6 @@
 			return
 	else
 		return ..()
+
+#undef OPTIMAL_POWER_RECOIL
+#undef DEFAULT_DURATION_RECOIL

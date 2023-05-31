@@ -1,10 +1,10 @@
 /obj/machinery/mecha_part_fabricator/mining_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab-idle"
+	icon_state = "fab"
 	name = "Mining fabricator"
 	desc = "Nothing is being built."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 25000
@@ -27,6 +27,7 @@
 						"Support",
 						"Misc"
 						)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/New_parts()
 	component_parts = list()
@@ -69,6 +70,7 @@
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
+			  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			  <title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
@@ -97,7 +99,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(entity_ja(dat), "window=mine_fabricator;size=1000x430")
+	user << browse(dat, "window=mine_fabricator;size=1000x430")
 	onclose(user, "mine_fabricator")
 	return
 
@@ -142,18 +144,17 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/W, mob/user, params)
+/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/item/weapon/W, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
+	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
+		update_icon()
 		return
 
 	if(exchange_parts(user, W))
 		return
 
 	if(panel_open)
-		if(iscrowbar(W))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 			return 1
 		else
@@ -186,12 +187,12 @@
 			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			to_chat(user, "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>")
+			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -199,7 +200,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

@@ -58,7 +58,7 @@
 		if(!new_val)
 			to_chat(usr, "<span class='warning'>That's not a valid number.</span>")
 			return
-		G.mega_energy = CLAMP(new_val, 1, 50)
+		G.mega_energy = clamp(new_val, 1, 50)
 		G.active_power_usage = G.mega_energy * 1500
 		updateUsrDialog()
 		return
@@ -68,7 +68,7 @@
 		if(!new_val)
 			to_chat(usr, "<span class='warning'>That's not a valid number.</span>")
 			return
-		G.rate = CLAMP(new_val, 1, 10)
+		G.rate = clamp(new_val, 1, 10)
 		updateUsrDialog()
 		return
 
@@ -78,7 +78,7 @@
 		return
 
 /obj/machinery/computer/gyrotron_control/attackby(obj/item/W, mob/user)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Gyrotron Control", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident

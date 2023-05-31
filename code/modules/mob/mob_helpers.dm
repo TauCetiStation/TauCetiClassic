@@ -1,25 +1,3 @@
-#define CHANGELING_STATPANEL_STATS(BYOND) \
-	if(mind && mind.changeling) \
-	{ \
-		stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]"); \
-		stat("Genetic Damage Time", mind.changeling.geneticdamage); \
-		stat("Absorbed DNA", mind.changeling.absorbedcount); \
-	}
-
-
-#define CHANGELING_STATPANEL_POWERS(BYOND) \
-	if(mind && mind.changeling && mind.changeling.purchasedpowers.len) \
-	{ \
-		for(var/P in mind.changeling.purchasedpowers) \
-		{ \
-			var/obj/effect/proc_holder/changeling/S = P; \
-			if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
-			{ \
-				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
-			} \
-		} \
-	}
-
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
@@ -47,17 +25,32 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield)
-			continue
+/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
 
-/proc/isloyal(A)
-	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+/mob/proc/isloyal()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ismindprotect()
+	for(var/obj/item/weapon/implant/mind_protect/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/isimplantedobedience()
+	for(var/obj/item/weapon/implant/obedience/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/isimplantedblueshield()
+	for(var/obj/item/weapon/implant/blueshield/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
@@ -162,173 +155,254 @@
 
 	return zone
 
-/proc/stars(n, pr)
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
-		return null
-	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+/proc/stars(text, probability = 25)
+	if (probability >= 100)
+		return text
+
+	text = html_decode(text)
+
+	var/new_text = ""
+	var/bytes_length = length(text)
+	var/letter = ""
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		if(letter != " " && prob(probability))
+			new_text += "*"
 		else
-			t = text("[]*", t)
-		p++
-	return t
+			new_text += letter
 
-/proc/slur(phrase)
-	phrase = html_decode(phrase)
-	var/leng=lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="c")	newletter="k"
-			if(lowertext_(newletter)=="ч")	newletter="щ" //247 -> 249
-			if(lowertext_(newletter)=="е")	newletter="и" //229 -> 232
-			if(lowertext_(newletter)=="з")	newletter="с" //231 -> 241
+	return new_text
+
+/proc/slur(text)
+
+	text = html_decode(text)
+
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
+
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
+
+		if(prob(35))
+			switch(lowertext(new_letter))
+				// latin
+				if("o")
+					new_letter = "u"
+				if("s")
+					new_letter = "ch"
+				if("a")
+					new_letter = "ah"
+				if("c")
+					new_letter = "k"
+				// cyrillic
+				if("ч")
+					new_letter = "щ"
+				if("е")
+					new_letter = "и"
+				if("з")
+					new_letter = "с"
+				if("к")
+					new_letter = "х"
+
 		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[lowertext_(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext_(newletter)]"
-			if(7)	newletter+="'"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
+			if(1 to 4)
+				new_letter = lowertext(new_letter)
+			if(5 to 9)
+				new_letter = uppertext(new_letter)
+			if(10)
+				new_letter += "'"
+			if(11 to 15)
+				SWITCH_PASS
 
-/proc/stutter(n)
-	var/te = html_decode(n)
-	var/t = ""//placed before the message. Not really sure what it's for.
-	n = length(n)//length of the entire word
-	var/alphabet[0]
-	//latin
-	//"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z"
-	alphabet.Add(98,99,100,102,103,104,105,106,107,108,109,110,112,113,114,115,116,118,119,120,121,122)
-	//cyrillic
-	//"б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ"
-	alphabet.Add(225,226,227,228,230,231,233,234,235,236,237,239,240,241,242,244,245,246,247,248,249)
+		new_text += new_letter
 
-	var/p = null
-	p = 1//1 is the start of any word
-	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
-		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (text2ascii(lowertext_(n_letter)) in alphabet))
+	return html_encode(capitalize(new_text))
+
+/proc/stutter(text)
+
+	text = html_decode(text)
+
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
+
+	var/static/list/stutter_alphabet = list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z","б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ")
+
+
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
+
+		if(prob(80) && (lowertext(new_letter) in stutter_alphabet))
 			if (prob(10))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
+				new_letter = "[new_letter]-[new_letter]-[new_letter]-[new_letter]"
 			else
 				if (prob(20))
-					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
+					new_letter = "[new_letter]-[new_letter]-[new_letter]"
 				else
 					if (prob(5))
-						n_letter = null
+						new_letter = ""
 					else
-						n_letter = text("[n_letter]-[n_letter]")
-		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
-		p++//for each letter p is increased to find where the next letter will be.
-	return sanitize(t)
+						new_letter = "[new_letter]-[new_letter]"
 
+		new_text += new_letter
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
-	/* Turn text into complete gibberish! */
-	var/returntext = ""
-	for(var/i = 1, i <= length(t), i++)
+	return html_encode(new_text)
 
-		var/letter = copytext(t, i, i+1)
+/proc/Gibberish(text, p) // Any value higher than 70 for p will cause letters to be replaced instead of added
+	text = html_decode(text)
+
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
+
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
+
 		if(prob(50))
+
 			if(p >= 70)
-				letter = ""
+				new_letter = ""
 
 			for(var/j = 1, j <= rand(0, 2), j++)
-				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+				new_letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
-		returntext += letter
+		new_text += new_letter
 
-	return returntext
+	return html_encode(new_text)
 
-/proc/GibberishAll(t) // Same as above, except there is no probability and chance always 100.
-	/* Turn text into complete gibberish! */
-	var/returntext = ""
-	for(var/i = 1 to length(t))
+/proc/GibberishAll(text) // Same as above, except there is no probability and chance always 100.
+	text = html_decode(text)
 
-		var/letter = ""
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
 
-		for(var/j = rand(0, 2) to 0 step -1)
-			letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
 
-		returntext += letter
+		for(var/j = 1, j <= rand(0, 2), j++)
+			new_letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
-	return returntext
+		new_text += new_letter
+
+	return html_encode(new_text)
+
+/proc/zombie_talk(message)
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+
+	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
+		var/insertpos = rand(1, message_list.len)
+		message_list.Insert(insertpos, "[pick("МОЗГИ", "Мозги", "Моозгиии", "МОООЗГИИИИ", "БОЛЬНО", "БОЛЬ", "ПОМОГИ", "РАААА", "АААА", "АРРХ", "ОТКРОЙТЕ", "ОТКРОЙ")]...")
+
+	for(var/i = 1, i <= message_list.len, i++)
+		if(prob(50) && !(copytext(message_list[i], -3) == "..."))
+			message_list[i] = message_list[i] + "..."
+
+		if(prob(60))
+			message_list[i] = stutter(message_list[i])
+
+		message_list[i] = stars(message_list[i], 80)
+
+		if(prob(60))
+			message_list[i] = slur(message_list[i])
+
+	return jointext(message_list, " ")
+
+/proc/turret_talk(message, species)
+	if(!(species in tourette_bad_words))
+		return message
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
+		var/insertpos = rand(1, message_list.len)
+		message_list[insertpos] = pick(tourette_bad_words[species])
+	return jointext(message_list, " ")
+
+var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА", "БУРЯ", "ВОЙНА", "ПУТЬ НА КОТОРОМ НЕ СНОСИТЬ ГОЛОВЫ", "КОПЬЕ", "УБИТЬ", "КРОВЬ",  "ЧИСТИЛИЩЕ", "МУЧИТЕЛЬНАЯ БОЛЬ", "МЯСО", "БОЙНЯ", "ПЫТКИ", "КРОВАВЫЙ ДОЖДЬ", "РАЗРЫВАЮЩИЕСЯ ГЛАЗНЫЕ ЯБЛОКИ", "ХАОС", "ВЗРЫВНОЕ УСТРОЙСТВО", "ДЕМОНИЧЕСКИЕ ВРАТА", "ЛАВА", "СМЕРТЬ", "РАЗОРВАННОЕ СЕРДЦЕ", "МУЧЕНИЯ", "СЖЕЧЬ", "РВОТА", "ВЫРВАННЫЙ ЯЗЫК", "ЗАБВЕНИЕ", "БЕЗЫСХОДНОСТЬ", "СУИЦИД", "БЕЗДНА", "ОБЕЗГЛАВЛИВАНИЕ", "РАЗРЫВ", "ДЫХАНИЕ СМЕРТИ", "УЖАСНАЯ УЧАСТЬ", "РАЗРУШЕНИЯ", "ГЛАЗНИЦА")
+/proc/cursed_talk(message)
+	var/text = ""
+	var/words = round(length_char(message)/6)
+	for(var/i in 1 to max(1, words))
+		text += pick(cursed_words)
+		if(i != words)
+			text += " "
+
+	return text
 
 
-/proc/ninjaspeak(n)
-/*
-The difference with stutter is that this proc can stutter more than 1 letter
-The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-*/
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = 1
-	while(p <= n)
-		var/n_letter
-		var/n_mod = rand(1,4)
-		if(p+n_mod>n+1)
-			n_letter = copytext(te, p, n+1)
-		else
-			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-			else
-				n_letter = text("[n_letter]-[n_letter]")
-		else
-			n_letter = text("[n_letter]")
-		t = text("[t][n_letter]")
-		p=p+n_mod
-	return sanitize(t)
-
+#define TILES_PER_SECOND 0.7
+///Shake the camera of the person viewing the mob SO REAL!
+///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
+///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || !strength) return
-	spawn()
-		strength *= 32
-		for(var/i=0; i<duration, i++)
-			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
-			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 0)
+	if(!M || !M.client || duration < 1)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	//How much time to allot for each pixel moved
+	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/last_x = oldx
+	var/last_y = oldy
+
+	var/time_spent = 0
+	while(time_spent < duration)
+		//Get a random pos in our box
+		var/x_pos = rand(min, max) + oldx
+		var/y_pos = rand(min, max) + oldy
+
+		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
+		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
+
+		if (time_spent == 0)
+			animate(C, pixel_x=x_pos, pixel_y=y_pos, time=time)
+		else
+			animate(pixel_x=x_pos, pixel_y=y_pos, time=time)
+
+		last_x = x_pos
+		last_y = y_pos
+		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		time_spent += time
+
+	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+
+#undef TILES_PER_SECOND
 
 
 /proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0
 
 
-/mob/proc/abiotic(var/full_body = 0)
+/mob/proc/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
 		return 1
 
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
 		return 1
 
-	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
+	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
 		return 1
 
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
@@ -351,6 +425,12 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 			else
 				return INTENT_HARM
 
+/mob/proc/set_a_intent(new_intent)
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, new_intent)
+	a_intent = new_intent
+	if(hud_used)
+		action_intent?.update_icon(src)
+
 //change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
@@ -359,18 +439,20 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 	if(isliving(src))
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
-				a_intent = input
+				set_a_intent(input)
 			if(INTENT_HOTKEY_RIGHT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
 			if(INTENT_HOTKEY_LEFT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "intent_[a_intent]"
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
+	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]
+	var/list/sec_hud_users = hud.hudusers
 	broadcast_hud_message(message, broadcast_source, sec_hud_users)
 
 /proc/broadcast_medical_hud_message(message, broadcast_source)
+	var/datum/atom_hud/hud = huds[DATA_HUD_MEDICAL]
+	var/list/med_hud_users = hud.hudusers
 	broadcast_hud_message(message, broadcast_source, med_hud_users)
 
 /proc/broadcast_hud_message(message, broadcast_source, list/targets)
@@ -409,7 +491,7 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 	if(id && istype(id, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
 	// A proper CentCom id is hard currency.
-	else if(id && is_type_in_list(id, list(/obj/item/weapon/card/id/centcom, /obj/item/weapon/card/id/ert)))
+	else if(id && istype(id, /obj/item/weapon/card/id/centcom))
 		return SAFE_PERP
 
 	if(check_access && !access_obj.allowed(src))
@@ -483,3 +565,52 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 
 /mob/proc/become_not_busy(_hand = 0)
 	busy_with_action = FALSE
+
+/**
+ * Fancy notifications for ghosts
+ *
+ * The kitchen sink of notification procs
+ *
+ * Arguments:
+ * * message
+ * * ghost_sound sound to play
+ * * enter_link Href link to enter the ghost role being notified for
+ * * source The source of the notification
+ * * alert_overlay The alert overlay to show in the alert message
+ * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
+ * * header The header of the notifiaction
+ * * notify_volume How loud the sound should be to spook the user
+ */
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, header, notify_volume = 100) //Easy notification of ghosts.
+	for(var/mob/dead/observer/ghost as anything in observer_list)
+		var/orbit_link
+		if(source && action == NOTIFY_ORBIT)
+			orbit_link = " <span class='ghostalert'>[FOLLOW_LINK(ghost, source)]</span>"
+		to_chat(ghost, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
+		if(ghost_sound)
+			playsound(ghost, ghost_sound, VOL_EFFECTS_MASTER, notify_volume)
+		if(!source)
+			continue
+		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action, new_master=source)
+		if(!alert)
+			continue
+		if (header)
+			alert.name = header
+		alert.desc = message
+		alert.action = action
+		alert.target = source
+		if(!alert_overlay)
+			alert_overlay = new(source)
+			var/icon/size_check = icon(source.icon, source.icon_state)
+			var/scale = 1
+			var/width = size_check.Width()
+			var/height = size_check.Height()
+			if(width > world.icon_size || height > world.icon_size)
+				if(width >= height)
+					scale = world.icon_size / width
+				else
+					scale = world.icon_size / height
+			alert_overlay.transform = alert_overlay.transform.Scale(scale)
+			alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.plane = ABOVE_HUD_PLANE
+		alert.add_overlay(alert_overlay)

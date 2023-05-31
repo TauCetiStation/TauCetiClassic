@@ -1,0 +1,238 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/environment/space,
+/area/space)
+"c" = (
+/obj/structure/stool/bed/chair/comfy/lime{
+	dir = 1
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"d" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/space_structures/tree_asteroid)
+"e" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"f" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"j" = (
+/obj/structure/flora/junglebush/large,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"k" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"n" = (
+/turf/simulated/floor/plating,
+/area/space_structures/tree_asteroid)
+"x" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"z" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"A" = (
+/obj/structure/stool/bed/chair/comfy/lime,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{
+	pixel_x = -15;
+	pixel_y = 15
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"B" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/game_kit/random,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"D" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"M" = (
+/obj/structure/flora/junglebush/c,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"R" = (
+/turf/simulated/mineral/random/caves,
+/area/space)
+"S" = (
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"T" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"U" = (
+/turf/simulated/wall,
+/area/space_structures/tree_asteroid)
+"V" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"Z" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+
+(1,1,1) = {"
+a
+a
+a
+R
+R
+R
+R
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+R
+R
+R
+R
+R
+R
+R
+R
+a
+a
+"}
+(3,1,1) = {"
+R
+R
+U
+U
+U
+U
+U
+R
+R
+a
+a
+"}
+(4,1,1) = {"
+R
+U
+U
+k
+Z
+x
+U
+U
+R
+R
+a
+"}
+(5,1,1) = {"
+R
+U
+j
+V
+S
+z
+e
+U
+U
+U
+a
+"}
+(6,1,1) = {"
+R
+U
+z
+S
+D
+S
+f
+d
+n
+d
+a
+"}
+(7,1,1) = {"
+R
+U
+S
+f
+z
+T
+M
+U
+U
+U
+R
+"}
+(8,1,1) = {"
+R
+U
+U
+A
+B
+c
+U
+U
+R
+R
+R
+"}
+(9,1,1) = {"
+R
+R
+U
+U
+U
+U
+U
+R
+R
+R
+a
+"}
+(10,1,1) = {"
+a
+R
+R
+R
+R
+R
+R
+R
+R
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+R
+R
+R
+R
+a
+a
+a
+a
+a
+"}

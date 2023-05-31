@@ -10,12 +10,12 @@
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)
 //collapsed to percent_of_tick_used * tick_lag
 #define TICK_DELTA_TO_MS(percent_of_tick_used) ((percent_of_tick_used) * world.tick_lag)
-#define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(world.tick_usage-starting_tickusage))
+#define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(TICK_USAGE_REAL - starting_tickusage))
 
 //time of day but automatically adjusts to the server going into the next day within the same round.
 //for when you need a reliable time number that doesn't depend on byond time.
 #define REALTIMEOFDAY (world.timeofday + (MIDNIGHT_ROLLOVER * MIDNIGHT_ROLLOVER_CHECK))
-#define MIDNIGHT_ROLLOVER_CHECK ( rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : midnight_rollovers )
+#define MIDNIGHT_ROLLOVER_CHECK ( global.rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : global.midnight_rollovers )
 
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
@@ -25,12 +25,7 @@
 
 #define PERCENT(val) (round((val)*100, 0.1))
 
-#if DM_VERSION < 513
-#define CLAMP(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
-#else
-#define CLAMP(CLVALUE,CLMIN,CLMAX) clamp(CLVALUE, CLMIN, CLMAX)
-#endif
-#define CLAMP01(x) (CLAMP(x, 0, 1))
+#define CLAMP01(x) (clamp(x, 0, 1))
 
 #define SIGN(x) (x < 0 ? -1 : 1)
 
@@ -41,15 +36,8 @@
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
 
-// Tangent
-#if DM_VERSION < 513
-#define TAN(x) (sin(x) / cos(x))
-#else
-#define TAN(x) tan(x)
-#endif
-
 // Cotangent
-#define COT(x) (1 / TAN(x))
+#define COT(x) (1 / tan(x))
 
 // Secant
 #define SEC(x) (1 / cos(x))
@@ -159,7 +147,7 @@
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 
-var/normal_next
+var/global/normal_next
 /proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box-Muller transform
 	if(normal_next != null)
 		. = mean + normal_next * stddev
@@ -192,8 +180,8 @@ var/normal_next
 	while(pixel_y < -16)
 		pixel_y += 32
 		new_y--
-	new_x = CLAMP(new_x, 0, world.maxx)
-	new_y = CLAMP(new_y, 0, world.maxy)
+	new_x = clamp(new_x, 0, world.maxx)
+	new_y = clamp(new_y, 0, world.maxy)
 	return locate(new_x, new_y, starting.z)
 
 // Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
@@ -218,9 +206,13 @@ var/normal_next
 
 #define EXP_DISTRIBUTION(desired_mean) ( -(1/(1/desired_mean)) * log(rand(1, 1000) * 0.001) )
 
-#define LORENTZ_DISTRIBUTION(x, s) ( s*TAN(TO_DEGREES(PI*(rand()-0.5))) + x )
+#define LORENTZ_DISTRIBUTION(x, s) ( s*tan(TO_DEGREES(PI*(rand()-0.5))) + x )
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 
-#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) CLAMP((x - minx) * (maxy - miny) / (maxx - minx), miny, maxy)
+// Linear conversion from range of [minx, maxx] to [miny, maxy] regarding the value x. Clamps excesses.
+#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) clamp(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)
+
+//A parabola y = multiplier*x^2 + pike
+#define PARABOLIC_SCALING(x, pike, multiplier) (pike + multiplier * (x ** 2))

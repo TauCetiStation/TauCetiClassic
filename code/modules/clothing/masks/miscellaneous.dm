@@ -5,7 +5,7 @@
 	item_state = "muzzle"
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
 
 //Monkeys can not take the muzzle off of themself! Call PETA!
@@ -21,8 +21,8 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
-	w_class = ITEM_SIZE_SMALL
+	item_state = "m_mask"
+	w_class = SIZE_TINY
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
 	gas_transfer_coefficient = 0.90
@@ -58,7 +58,7 @@
 	icon_state = "bluescarf"
 	item_state = "bluescarf"
 	flags = MASKCOVERSMOUTH
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
 	action_button_name = "Adjust scarf"
 	var/hanging = 0
@@ -111,7 +111,7 @@
 		flags |= MASKCOVERSMOUTH
 		icon_state = "[initial(icon_state)]"
 		to_chat(user, "You pull the scarf up to cover your face.")
-	user.update_inv_wear_mask()
+	update_inv_mob()
 
 
 
@@ -122,7 +122,7 @@
 	icon_state = "ninja_scarf"
 	item_state = "ninja_scarf"
 	flags = MASKCOVERSMOUTH
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
 	siemens_coefficient = 0
 
@@ -133,7 +133,7 @@
 	item_state = "pig"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|FACE|EYES
 
@@ -150,7 +150,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
@@ -166,7 +166,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/mask/cowmask/speechModification(message)
 	if(!canremove)
@@ -176,10 +176,11 @@
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	flags = MASKCOVERSMOUTH
 	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
+	item_state = "greenbandana"
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/chicken
@@ -206,7 +207,7 @@
 		else
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
-		usr.update_inv_wear_mask()
+		update_inv_mob()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
@@ -243,7 +244,7 @@
 
 /obj/item/clothing/mask/tie
 	body_parts_covered = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/clothing/mask/tie/collar
 	name = "silver collar"
@@ -255,13 +256,25 @@
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
 
+/obj/item/clothing/mask/tie/silver_cross
+	name = "pectoral silver cross"
+	desc = "That's a big pectoral silver cross for big religion figures."
+	icon_state = "pectoral_silver_cross"
+	item_state = "pectoral_silver_cross"
+
+/obj/item/clothing/mask/tie/golden_cross
+	name = "pectoral golden cross"
+	desc = "That's a big pectoral golden cross for the biggest religion figure."
+	icon_state = "pectoral_golden_cross"
+	item_state = "pectoral_golden_cross"
+
 /obj/item/clothing/mask/ecig
 	name = "electronic cigarette"
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
 	icon_state = "ecig"
 	item_state = "ecig"
 	throw_speed = 0.5
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	body_parts_covered = null
 	var/last_time_used = 0
 

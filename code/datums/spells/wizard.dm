@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
-	name = "Magic Missile"
-	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
+	name = "Магическая Ракета"
+	desc = "Заклинание выпускает несколько медленно летящих зарядов с самонаведением в ближайшие цели."
 
 	school = "evocation"
 	charge_max = 350
@@ -14,7 +14,7 @@
 	proj_icon_state = "magicm"
 	proj_name = "a magic missile"
 	proj_lingering = 1
-	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile"
+	proj_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 
 	proj_lifespan = 20
 	proj_step_delay = 5
@@ -26,29 +26,30 @@
 	action_icon_state = "magicm"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	desc = "Some kind of Blasphemy"
+	desc = "Какое-то богохульство."
+	amt_stunned = 2
 	amt_weakened = 5
 	amt_dam_fire = 10
 	sound = 'sound/magic/MAGIC_MISSILE.ogg'
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/Click()
-	if(loc && in_range(usr, src))
+	if(loc && Adjacent(usr))
 		qdel(src)
 	else if(cast_check())
 		choose_targets()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
-	name = "Mutate"
-	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
+	name = "Мутация"
+	desc = "Это заклинание сделает вас халком и даст пострелять лазером из глаз, но недолго."
 
 	school = "transmutation"
 	charge_max = 400
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
+	message = "<span class='notice'>Вы чувствовать сила! Вы чувствуете давление в области глаз!</span>"
 	range = -1
 	include_user = 1
 	sound = 'sound/magic/Mutate.ogg'
@@ -76,8 +77,8 @@
 	sparks_amt = 4
 
 /obj/effect/proc_holder/spell/targeted/smoke
-	name = "Smoke"
-	desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+	name = "Дым"
+	desc = "Заклинание создает удушающий дым вокруг вас и не требует одежды для использования."
 
 	school = "conjuration"
 	charge_max = 120
@@ -93,8 +94,8 @@
 	smoke_amt = 10
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
-	name = "Disable Tech"
-	desc = "This spell disables all weapons, cameras and most other technology in range."
+	name = "Отключить Технологию"
+	desc = "Отключает всю технологическую мумбу-юмбу в радиусе действия."
 	charge_max = 400
 	clothes_req = 1
 	invocation = "NEC CANTIO"
@@ -108,8 +109,8 @@
 	emp_light = 10
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
-	name = "Blink"
-	desc = "This spell randomly teleports you a short distance."
+	name = "Скачок"
+	desc = "Мгновенно телепортирует вас в случайном направлении на небольшую дистанцию."
 
 	school = "abjuration"
 	charge_max = 20
@@ -127,11 +128,11 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	centcomm_cancast = 0 //prevent people from getting to centcomm
+	centcomm_cancast = FALSE //prevent people from getting to centcomm
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
-	name = "Teleport"
-	desc = "This spell teleports you to a type of area of your selection."
+	name = "Телепорт"
+	desc = "Переносит вас туда, куда вы выберите."
 
 	school = "abjuration"
 	charge_max = 600
@@ -147,8 +148,8 @@
 	smoke_amt = 5
 
 /obj/effect/proc_holder/spell/targeted/forcewall
-	name = "Forcewall"
-	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
+	name = "Магическая Стена"
+	desc = "Создает неразрушимую стену на 30 секунд и не требует одежды для использования."
 	school = "transmutation"
 	charge_max = 600
 	clothes_req = 0
@@ -170,22 +171,23 @@
 		new summon_path(get_step(user, SOUTH), user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
-	name = "Summon Carp"
-	desc = "This spell conjures a simple carp."
+	name = "Призыв Карпа"
+	desc = "Это заклинание призывает очень злого карпа."
 
 	school = "conjuration"
-	charge_max = 1200
+	charge_max = 300
+	action_icon_state = "purple_carp"
 	clothes_req = 1
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list(/mob/living/simple_animal/hostile/carp)
+	summon_type = list(/mob/living/simple_animal/hostile/carp/wizard)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
-	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades."
+	name = "Ремесленник"
+	desc = "Призывает конструкта, которым могут управлять тени."
 
 	school = "conjuration"
 	charge_max = 600
@@ -200,8 +202,8 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
-	name = "Summon Creature Swarm"
-	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
+	name = "Призвать Рой Существ"
+	desc = "Разрывает реальность и позволяет призвать ужасающих созданий."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -214,8 +216,8 @@
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
+	name = "Ослепление"
+	desc = "Позволяет временно ослепить одного человека и не требует одежды для использования."
 
 	school = "transmutation"
 	charge_max = 300
@@ -223,11 +225,11 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	sound = 'sound/magic/Blind.ogg'
-	message = "<span class ='notice'>Your eyes cry out in pain!</span>"
+	message = "<span class ='notice'>Вы почувствовали сильную боль в глазах.</span>"
 
 	action_icon_state = "blind"
 
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
+	starting_spells = list(/obj/effect/proc_holder/spell/targeted/inflict_handler/blind, /obj/effect/proc_holder/spell/targeted/genetic/blind)
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
@@ -239,9 +241,28 @@
 	duration = 300
 	sound = 'sound/magic/Blind.ogg'
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	name = "Ловушки!"
+	desc = "Призывает несколько ловушек, чтобы запутать противника и возможно вас."
+	charge_max = 250
+	clothes_req = 1
+	invocation = "CAVERE INSIDIAS"
+	invocation_type = "shout"
+	range = 3
+	summon_type = list(
+		/obj/structure/trap/stun,
+		/obj/structure/trap/fire,
+		/obj/structure/trap/chill,
+		/obj/structure/trap/damage,
+					)
+	summon_lifespan = 3000
+	summon_amt = 5
+
+	action_icon_state = "the_traps"
+
 /obj/effect/proc_holder/spell/dumbfire/fireball
-	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
+	name = "Огненный Шар"
+	desc = "Выстреливает огненным шаром в цель."
 
 	school = "evocation"
 	charge_max = 100
@@ -255,7 +276,7 @@
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
-	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
+	proj_type = /obj/effect/proc_holder/spell/turf/fireball
 
 	proj_lifespan = 200
 	proj_step_delay = 1
@@ -283,10 +304,11 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
-	name = "Floor Construction"
-	desc = "This spell constructs a cult floor."
+	name = "Создание пола"
+	desc = "Это заклинание строит пол культа."
 
 	school = "conjuration"
 	charge_max = 20
@@ -294,12 +316,15 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/turf/simulated/floor/engine/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	summon_type = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
+	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
+
+	action_icon_state = "floorconstruct"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
-	name = "Leser Construction"
-	desc = "This spell constructs a cult wall."
+	name = "Создание стены"
+	desc = "Это заклинание строит стену культа."
 
 	school = "conjuration"
 	charge_max = 100
@@ -307,27 +332,31 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/turf/simulated/wall/cult)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	summon_type = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
+	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
-	name = "Greater Construction"
-	desc = "This spell constructs a reinforced metal wall."
+	action_icon_state = "lesserconstruct"
+	action_background_icon_state = "bg_cult"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/door
+	name = "Возвести Ворота"
+	desc = "Это заклинание создает Врата."
+
+	action_icon_state = "cult_door"
+	action_background_icon_state = "bg_cult"
 
 	school = "conjuration"
-	charge_max = 300
-	clothes_req = 0
+	charge_max = 400
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
-	delay = 50
-
-	summon_type = list(/turf/simulated/wall/r_wall)
+	summon_type = list(/obj/structure/mineral_door/cult)
+	centcomm_cancast = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
-	name = "Summon Soulstone"
-	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
+	name = "Создание камня души"
+	desc = "Это заклинание вызывает легендарнейший фрагмент обелиска душ."
 
 	school = "conjuration"
 	charge_max = 3000
@@ -338,10 +367,12 @@
 
 	summon_type = list(/obj/item/device/soulstone)
 
+	action_icon_state = "summonsoulstone"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
-	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
+	name = "Силовой барьер"
+	desc = "Это заклинание создает временное силовое поле для защиты себя и союзников."
 
 	school = "transmutation"
 	charge_max = 300
@@ -349,40 +380,48 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/obj/effect/forcefield)
-	summon_lifespan = 50
+	summon_type = list(/obj/effect/forcefield/cult)
+	summon_lifespan = 200
+	action_icon_state = "floorconstruct"
+	action_background_icon_state = "bg_cult"
 
+/obj/effect/proc_holder/spell/targeted/communicate
+	name = "Сообщить"
+	desc = "Позволяет отправить сообщение всем в твоей религии"
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
-	name = "Phase Shift"
-	desc = "This spell allows you to pass through walls."
-
-	school = "transmutation"
-	charge_max = 200
+	charge_max = 400
 	clothes_req = 0
-	invocation = "none"
-	invocation_type = "none"
 	range = -1
+	max_targets = 1
 	include_user = 1
-	phaseshift = 1
-	jaunt_duration = 50 //in deciseconds
-	centcomm_cancast = 0 //Stop people from getting to centcomm
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	name = "The Traps!"
-	desc = "Summon a number of traps to confuse and weaken your enemies, and possibly you."
-	charge_max = 250
-	clothes_req = 1
-	invocation = "CAVERE INSIDIAS"
-	invocation_type = "shout"
-	range = 3
-	summon_type = list(
-		/obj/structure/trap/stun,
-		/obj/structure/trap/fire,
-		/obj/structure/trap/chill,
-		/obj/structure/trap/damage,
-					)
-	summon_lifespan = 3000
-	summon_amt = 5
+	action_icon_state = "cult_comms"
+	action_background_icon_state = "bg_cult"
 
-	action_icon_state = "the_traps"
+/obj/effect/proc_holder/spell/targeted/communicate/cast(list/targets, mob/user = usr)
+	if(!user.my_religion)
+		to_chat(user, "Вы не можете с кем-либо общаться.")
+		return
+
+	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[user.my_religion.name]", ""))
+	if(!input)
+		return
+	if(!user.my_religion)
+		usr.RemoveSpell(src)
+		return
+
+	var/text = "<span class='[user.my_religion.style_text]'>[user.mind.holy_role == CULT_ROLE_MASTER ? "Предвестник" : "Аколит"] [user.real_name]: [input]</span>"
+	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
+	for(var/mob/M in global.mob_list)
+		if(isobserver(M))
+			to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
+		if(user.my_religion.is_member(M))
+			if(iseminence(M))
+				to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
+			else
+				to_chat(M, text)
+
+	playsound(user, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER, extrarange = -6) // radius 3
+
+/obj/effect/proc_holder/spell/targeted/communicate/fastener
+	charge_max = 100

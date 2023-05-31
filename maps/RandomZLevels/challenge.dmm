@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "ab" = (
 /turf/unsimulated/floor{
@@ -19,13 +19,13 @@
 	id = "syndicate_elite_mech_room";
 	name = "Mech Room Door"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "af" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "ag" = (
 /obj/item/clothing/suit/space/syndicate/striker,
@@ -33,7 +33,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "ah" = (
 /turf/simulated/floor/airless,
@@ -52,14 +52,14 @@
 	icon_state = "6,0";
 	name = "shuttle wall"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "ak" = (
 /obj/effect/decal/remains/human,
 /obj/structure/object_wall/erokez{
 	icon_state = "13,6"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "al" = (
 /obj/structure/sign/mark{
@@ -77,14 +77,14 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "ao" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
 	name = "shuttle wall"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "ap" = (
 /obj/item/clothing/suit/space/syndicate/jailbreaker,
@@ -92,7 +92,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/start)
 "aq" = (
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/weapon/gun/energy/retro,
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/start)
 "ar" = (
@@ -104,7 +104,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "at" = (
 /obj/structure/girder,
@@ -117,7 +117,7 @@
 /obj/structure/object_wall/erokez{
 	icon_state = "13,6"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "aw" = (
 /obj/item/stack/rods,
@@ -125,7 +125,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "ax" = (
 /mob/living/simple_animal/hostile/syndicate,
@@ -141,7 +141,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/start)
 "aA" = (
 /turf/unsimulated/floor{
@@ -160,7 +160,7 @@
 	icon_state = "6,0";
 	name = "shuttle wall"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "aE" = (
 /turf/simulated/wall,
@@ -172,7 +172,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "aH" = (
 /turf/simulated/floor/airless,
@@ -201,7 +201,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "aM" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -209,7 +209,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aN" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aO" = (
@@ -224,7 +224,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aQ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -236,7 +236,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "aS" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -254,24 +254,9 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/awaymission/challenge/main)
-"aW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
@@ -290,28 +275,28 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "ba" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/object_wall/erokez{
 	icon_state = "6,2"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "bb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
 	req_access = list(151)
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "bc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
@@ -322,10 +307,10 @@
 	},
 /area/awaymission/challenge/main)
 "bd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -337,7 +322,7 @@
 /turf/simulated/floor,
 /area/awaymission/challenge/main)
 "bf" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/door_control{
@@ -361,7 +346,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/main)
 "bi" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/object_wall/erokez{
@@ -377,7 +362,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "bk" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/door_control{
@@ -403,47 +388,47 @@
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/main)
 "bn" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/object_wall/erokez{
 	icon_state = "16,4";
 	opacity = 0
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "bo" = (
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "bp" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/object_wall/erokez{
 	icon_state = "13,3"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "bq" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "podhatch"
 	},
 /area/awaymission/challenge/main)
 "br" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
 /area/awaymission/challenge/main)
 "bs" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/unsimulated/wall{
@@ -467,14 +452,6 @@
 	icon_state = "warning"
 	},
 /area/awaymission/challenge/main)
-"bv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/awaymission/challenge/main)
 "bw" = (
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor{
@@ -483,7 +460,7 @@
 	},
 /area/awaymission/challenge/main)
 "bx" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/wall{
@@ -512,31 +489,31 @@
 	},
 /area/awaymission/challenge/main)
 "bC" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bE" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bF" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/unsimulated/wall{
@@ -551,7 +528,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bH" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/wall{
@@ -560,7 +537,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bI" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/unsimulated/wall{
@@ -598,7 +575,7 @@
 	},
 /area/awaymission/challenge/end)
 "bM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/light,
@@ -612,10 +589,10 @@
 	pixel_y = -24;
 	req_access = list(101)
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/main)
 "bO" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/light,
@@ -744,10 +721,10 @@
 	},
 /area/awaymission/challenge/end)
 "cg" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "ch" = (
 /turf/simulated/floor/bluegrid,
@@ -762,13 +739,13 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "ck" = (
 /obj/structure/table/woodentable,
@@ -818,18 +795,18 @@
 	},
 /area/awaymission/challenge/end)
 "cr" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "cs" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "ct" = (
 /obj/structure/sign/warning/securearea,
@@ -872,82 +849,51 @@
 /turf/simulated/floor/bluegrid,
 /area/awaymission/challenge/end)
 "cA" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "cB" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "cC" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "cD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "cE" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "cF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
-"cG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
-"cH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
-"cI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/end)
@@ -967,7 +913,7 @@
 /obj/effect/landmark{
 	name = "Syndicate-Spawn"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cL" = (
 /obj/machinery/gateway{
@@ -982,7 +928,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cM" = (
 /obj/machinery/gateway{
@@ -1020,7 +966,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -1045,7 +991,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cS" = (
 /obj/machinery/gateway{
@@ -1071,7 +1017,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cU" = (
 /obj/machinery/gateway{
@@ -1080,10 +1026,10 @@
 /obj/effect/landmark{
 	name = "Syndicate-Spawn"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/challenge/end)
 "cV" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -1102,23 +1048,12 @@
 	},
 /area/awaymission/challenge/end)
 "cX" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/turf/space,
+/obj/structure/window/thin/reinforced,
+/turf/environment/space,
 /area)
-"cY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
 "cZ" = (
 /obj/structure/table,
 /obj/item/weapon/paper/pamphlet,
@@ -1170,11 +1105,11 @@
 	},
 /area/awaymission/challenge/end)
 "de" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
-/turf/space,
+/obj/structure/window/thin/reinforced,
+/turf/environment/space,
 /area)
 "df" = (
 /obj/structure/sign/mark{
@@ -1184,19 +1119,6 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/challenge/end)
-"dg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
 /area/awaymission/challenge/end)
 "dh" = (
 /obj/item/device/radio/intercom{
@@ -1611,7 +1533,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -1667,7 +1589,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1677,7 +1599,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -1743,7 +1665,7 @@ aO
 aV
 aX
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1793,7 +1715,7 @@ aR
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1806,7 +1728,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1814,7 +1736,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 bC
@@ -1832,14 +1754,14 @@ bX
 ch
 cA
 cF
-cI
-cI
-cI
-cI
-cY
+cF
+cF
+cF
+cF
+cF
 df
-dg
-cY
+cF
+cF
 bJ
 "}
 (10,1,1) = {"
@@ -1897,7 +1819,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cJ
 cO
 cO
@@ -1941,7 +1863,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -1963,7 +1885,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cK
 cP
 cS
@@ -2007,12 +1929,12 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
 aO
-aW
+aV
 aX
 bA
 bA
@@ -2029,7 +1951,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cL
 cQ
 cT
@@ -2073,7 +1995,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -2095,7 +2017,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cM
 cR
 cU
@@ -2161,7 +2083,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cN
 cO
 cO
@@ -2189,7 +2111,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -2202,7 +2124,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aO
 aV
@@ -2210,7 +2132,7 @@ aX
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 bC
@@ -2227,15 +2149,15 @@ bX
 bX
 ch
 cA
-cH
-cI
-cI
-cI
-cI
-cY
+cF
+cF
+cF
+cF
+cF
+cF
 df
-dg
-cY
+cF
+cF
 bJ
 "}
 (16,1,1) = {"
@@ -2271,7 +2193,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -2327,7 +2249,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -2337,7 +2259,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 bw
 aH
 aH
@@ -2403,7 +2325,7 @@ aH
 aH
 aH
 bu
-aW
+aV
 aX
 aH
 aH

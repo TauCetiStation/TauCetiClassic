@@ -6,18 +6,20 @@
 	name = "shuttle window"
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "1"
-	density = 1
+	density = TRUE
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
+	can_block_air = TRUE
 
-/obj/structure/shuttle/window/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return 0
-	else return ..()
+/obj/structure/shuttle/window/CanPass(atom/movable/mover, turf/target, height)
+	if(!height)
+		return FALSE
+	return ..()
 
 /obj/structure/shuttle/engine
 	name = "engine"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 
 /obj/structure/shuttle/engine/heater
 	name = "heater"

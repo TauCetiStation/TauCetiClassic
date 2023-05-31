@@ -6,10 +6,11 @@
 	icon = 'icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
+	w_class = SIZE_MASSIVE
 	maxHealth = INFINITY
 	health = INFINITY
 	immune_to_ssd = 1
-	density = 1
+	density = TRUE
 
 	speak_emote = list("")
 	emote_hear = list("")
@@ -24,11 +25,10 @@
 
 	speed = 1
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -53,6 +53,7 @@
 /turf/var/scp_was_here = 0
 
 /mob/living/simple_animal/special/scp173/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	for(var/mob/living/simple_animal/special/scp173/SA in mob_list) //only 1 can exist at the same time
 		if(SA != src)
@@ -81,7 +82,7 @@
 		life_cicle = 0
 
 		for(var/turf/T in view(7, src))
-			if(istype(T,/turf/space)) continue
+			if(isspaceturf(T)) continue
 			turfs_around += T
 			for(var/obj/item/F in T.contents)
 				F.set_light(0)
@@ -95,7 +96,7 @@
 					Light.update(0)
 				else
 					L.set_light(0)
-			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
+			for(var/obj/structure/glowshroom/G in T.contents) //Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)
@@ -113,7 +114,7 @@
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue
 		var/turf/T = get_turf(L)
-		if(istype(T,/turf/space)) continue
+		if(isspaceturf(T)) continue
 
 		var/light_amount = 0
 		light_amount = round(T.get_lumcount()*10)
@@ -121,7 +122,7 @@
 		if(light_amount <= 3)
 			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
-				src.dir = L.dir
+				set_dir(L.dir)
 				playsound(L, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 				L.gib()
 				did_move = 1
@@ -155,7 +156,7 @@
 		if(!no_where_to_jump)
 			target_turf.scp_was_here = 1
 			loc = target_turf
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 			playsound(src, 'sound/effects/scp_move.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/special/scp173/death()
@@ -186,7 +187,7 @@
 			L.scp_mark = 0
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
-	M.emote("[M.friendly] \the <EM>[src]</EM>")
+	M.me_emote("[M.friendly] \the <EM>[src]</EM>")
 
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code
@@ -196,5 +197,6 @@
 	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
-/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	visible_message("[Proj] ricochets off [src]!")

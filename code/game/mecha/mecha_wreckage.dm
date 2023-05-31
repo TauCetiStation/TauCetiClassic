@@ -7,9 +7,13 @@
 	name = "Exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely unrepairable."
 	icon = 'icons/mecha/mecha.dmi'
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
+	plane = GAME_PLANE
+	flags = NODECONSTRUCT
+	w_class = SIZE_MASSIVE
+
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,
@@ -27,25 +31,22 @@
 	var/salvage_num = 15
 
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
-	if(severity == 1)
+	if(severity == EXPLODE_DEVASTATE)
 		qdel(src)
-	return
-
-/obj/effect/decal/mecha_wreckage/bullet_act(obj/item/projectile/Proj)
 	return
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
 	var/salvage_with = ""
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	if(iswirecutter(W))
+	if(iscutter(W))
 		salvage_with = "wirecutter"
-	if(iscrowbar(W))
+	if(isprying(W))
 		salvage_with = "crowbar"
 	if(!salvage_with)
 		..()
@@ -60,7 +61,7 @@
 		to_chat(user, "You failed to salvage anything valuable from [src].")
 
 
-/obj/effect/decal/mecha_wreckage/proc/detach_part(var/where)
+/obj/effect/decal/mecha_wreckage/proc/detach_part(where)
 	var/obj/to_salvage = pick(salvage[where])
 	if(to_salvage)
 		var/obj/salvaged = new to_salvage(get_turf(src))
@@ -127,8 +128,8 @@
 			/obj/item/weapon/circuitboard/mecha/ultra/targeting,
 			/obj/item/weapon/circuitboard/mecha/ultra/peripherals,
 			/obj/item/weapon/circuitboard/mecha/ultra/main,
-			/obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/capacitor/adv/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 			/obj/item/stack/rods
 			),
 		"crowbar" = list(
@@ -273,8 +274,8 @@
 			/obj/item/weapon/circuitboard/mecha/vindicator/targeting,
 			/obj/item/weapon/circuitboard/mecha/vindicator/peripherals,
 			/obj/item/weapon/circuitboard/mecha/vindicator/main,
-			/obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/capacitor/adv/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 			/obj/item/stack/rods
 			),
 		"crowbar" = list(

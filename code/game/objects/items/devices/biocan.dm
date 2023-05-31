@@ -4,7 +4,7 @@
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	var/obj/item/organ/external/head/headobj = null
 	var/image/display_headobj = null
@@ -64,12 +64,12 @@
 		to_chat(usr, "<span class='warning'>You enable commutating device, allowing your prisoner to speak.</span>")
 		to_chat(brainmob, "<span class='warning'>Your commutating device is now enabled.</span>")
 
-/obj/item/device/biocan/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/organ/external/head))
+/obj/item/device/biocan/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/organ/external/head))
 		if(!headobj)
-			headobj = W
-			user.drop_item()
-			headobj.loc = src
+			headobj = I
+			user.drop_from_inventory(I, src)
+
 			if(headobj.brainmob)
 				brainmob = headobj.brainmob
 				headobj.brainmob = null
@@ -79,7 +79,7 @@
 				dead_mob_list -= brainmob
 				alive_mob_list += brainmob
 			display_headobj = new (src)
-			display_headobj.appearance = W.appearance
+			display_headobj.appearance = I.appearance
 			display_headobj.transform = matrix()
 			display_headobj.dir = SOUTH
 			display_headobj.pixel_y = 0
@@ -88,9 +88,11 @@
 			display_headobj.plane = FLOAT_PLANE
 			underlays.Add(display_headobj)
 			update_icon()
+	else
+		return ..()
 
 /obj/item/device/biocan/attack_self(mob/user)
-	if(alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",,"Cancel","Continue") != "Continue")
+	if(tgui_alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",, list("Cancel","Continue")) != "Continue")
 		return
 	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
 	extract_head(brain_destroyed = TRUE)

@@ -1,12 +1,11 @@
-/obj/item/clothing/gloves/attackby(obj/item/weapon/W, mob/user)
+/obj/item/clothing/gloves/attackby(obj/item/I, mob/user, params)
 	if(istype(src, /obj/item/clothing/gloves/boxing))			//quick fix for stunglove overlay not working nicely with boxing gloves.
 		to_chat(user, "<span class='notice'>That won't work.</span>")//i'm not putting my lips on that!
-		..()
-		return
+		return ..()
 
 	//add wires
-	if(iscoil(W))
-		var/obj/item/stack/cable_coil/C = W
+	if(iscoil(I))
+		var/obj/item/stack/cable_coil/C = I
 		if (clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
 			return
@@ -26,26 +25,24 @@
 		return
 
 	//add cell
-	else if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(!wired)
 			to_chat(user, "<span class='notice'>The [src] need to be wired first.</span>")
 		else if(!cell)
-			user.drop_item()
-			W.loc = src
-			cell = W
+			user.drop_from_inventory(I, src)
+			cell = I
 			to_chat(user, "<span class='notice'>You attach the [cell] to the [src].</span>")
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
-
+	else if(iscutter(I) || istype(I, /obj/item/weapon/scalpel))
 		//stunglove stuff
 		if(cell)
 			cell.updateicon()
 			to_chat(user, "<span class='notice'>You cut the [cell] away from the [src].</span>")
-			cell.loc = get_turf(src.loc)
+			cell.forceMove(get_turf(loc))
 			cell = null
 			update_icon()
 			return
@@ -71,7 +68,7 @@
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
 		return
-	..()
+	return ..()
 
 /obj/item/clothing/gloves/proc/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
 	if(isliving(A))
@@ -82,10 +79,10 @@
 				if(cell.charge >= 2500)
 					cell.use(2500)
 					update_icon()
-					var/calc_power = 150
+					var/calc_power = 100
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
-						var/obj/item/organ/external/BP = H.get_bodypart(attacker.zone_sel.selecting)
+						var/obj/item/organ/external/BP = H.get_bodypart(attacker.get_targetzone())
 
 						calc_power *= H.get_siemens_coefficient_organ(BP)
 
@@ -93,10 +90,6 @@
 					L.log_combat(attacker, "stungloved witht [name]")
 
 					L.apply_effects(0,0,0,0,2,0,0,calc_power)
-					L.apply_effect(5, WEAKEN)
-					if(L.stuttering < 5)
-						L.stuttering = 5
-					L.apply_effect(5, STUN)
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, L)
 					s.start()
@@ -121,6 +114,4 @@
 			item_state = "stungloves"
 	else
 		item_state = initial(item_state)
-	if(ishuman(src.loc)) // Update item_state if src in gloves slot
-		var/mob/living/carbon/human/H = src.loc
-		H.update_inv_gloves()
+	update_inv_mob() // Update item_state if src in gloves slot

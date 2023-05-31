@@ -37,14 +37,57 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
 
-//Chaplain
-/obj/item/clothing/suit/nun
+/obj/item/clothing/suit/hooded/skhima
+	name = "Skhima Suit"
+	desc = "That's an ancient religion robe Skhima, decorated with white runes and symbols. Commonly weared by monks."
+	icon_state = "skhima"
+	item_state = "skhima"
+	icon_suit_up = "skhima_up"
+	hoodtype = /obj/item/clothing/head/skhima_hood
+	flags_inv = HIDEJUMPSUIT
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+	allowed = list (/obj/item/weapon/storage/bible,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/device/pda,
+					/obj/item/weapon/lighter,
+					/obj/item/weapon/storage/fancy/crayons,
+					/obj/item/weapon/paper)
+
+/obj/item/clothing/suit/hooded/nun
 	name = "nun robe"
-	desc = "Maximum piety in this star system."
+	desc = "A religion female suit commonly weared by monastery sisters."
 	icon_state = "nun"
 	item_state = "nun"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	var/sleeves = TRUE
+	hoodtype = /obj/item/clothing/head/nun_hood
+	flags_inv = HIDEJUMPSUIT
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+	allowed = list (/obj/item/weapon/storage/bible,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/device/pda,
+					/obj/item/weapon/lighter,
+					/obj/item/weapon/storage/fancy/crayons,
+					/obj/item/weapon/paper)
+
+/obj/item/clothing/suit/hooded/nun/verb/adjust_sleeves()
+	set name = "Toggle Sleeves"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(sleeves)
+		icon_state = "nun_rolled"
+		to_chat(usr, "You roll up your sleeves.")
+		sleeves = FALSE
+	else
+		icon_state = "nun"
+		to_chat(usr, "You let off your sleeves.")
+		sleeves = TRUE
+	update_inv_mob()
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -55,7 +98,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	allowed = list (/obj/item/weapon/kitchenknife)
 
 //Chef
 /obj/item/clothing/suit/chef/classic
@@ -68,29 +111,38 @@
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
-	name = "brown coat"
+	name = "detective's brown trenchcoat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "detective_brown"
-	item_state = "det_suit"
+	icon_state = "detective_trenchcoat_brown"
+	item_state = "detective_trenchcoat_brown"
 	blood_overlay_type = "coat"
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	var/is_fasten = TRUE
 
-/obj/item/clothing/suit/storage/det_suit/grey
-	name = "grey coat"
-	icon_state = "detective_grey"
+/obj/item/clothing/suit/storage/det_suit/verb/toggle()
+	set name = "Toggle Trenchcoat Belt"
+	set category = "Object"
+	set src in usr
 
-/obj/item/clothing/suit/storage/det_suit/black
-	name = "black coat"
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
+	if(usr.incapacitated())
+		return
 
-/obj/item/clothing/suit/storage/det_suit/noir_trenchcoat
-	name = "dark grey trenchcoat"
-	desc = "A hard-boiled private investigator's dark grey trenchcoat."
-	icon_state = "trenchcoat_darkgrey"
-	item_state = "trenchcoat_darkgrey"
+	if(!is_fasten)
+		icon_state = initial(icon_state)
+		to_chat(usr, "You have fasteneded [src]")
+		is_fasten = TRUE
+	else
+		icon_state += "_open"
+		to_chat(usr, "You have unfastened [src]")
+		is_fasten = FALSE
+	update_inv_mob()
+
+/obj/item/clothing/suit/storage/det_suit/gray
+	name = "detective's gray trenchcoat"
+	icon_state = "detective_trenchcoat_gray"
+	item_state = "detective_trenchcoat_gray"
 
 //Forensics
 /obj/item/clothing/suit/storage/forensics
@@ -174,7 +226,7 @@
 		else
 			to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 			return
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 //Medical
 /obj/item/clothing/suit/storage/fr_jacket
@@ -202,7 +254,7 @@
 		if("fr_jacket")
 			src.icon_state = "fr_jacket_open"
 			to_chat(usr, "You unbutton the jacket.")
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -238,7 +290,7 @@
         else
             to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
             return
-    usr.update_inv_wear_suit()    //so our overlays update
+    update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"
@@ -249,4 +301,4 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/scalpel,/obj/item/weapon/retractor,/obj/item/weapon/hemostat,
-	/obj/item/weapon/cautery,/obj/item/weapon/bonegel,/obj/item/weapon/FixOVein)
+	/obj/item/weapon/cautery, /obj/item/weapon/bonegel,/obj/item/weapon/FixOVein, /obj/item/clothing/gloves/latex)

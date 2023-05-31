@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*Composed of 7 parts
 3 Particle emitters
 proc
@@ -57,13 +55,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 */
 
+ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_list)
 /obj/structure/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = 0
 	var/reference = null
@@ -93,10 +92,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 270)
+	set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/structure/particle_accelerator/verb/rotateccw()
@@ -104,10 +103,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/structure/particle_accelerator/examine(mob/user)
@@ -127,7 +126,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(process_tool_hit(W,user))
 			return
 	..()
 	return
@@ -135,37 +134,25 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(master && master.active)
+	if(master && master.active && !moving_diagonally)
 		master.toggle_power()
 		log_investigate("was moved whilst active; it <font color='red'>powered down</font>.",INVESTIGATE_SINGULO)
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
-		else
-	return
-
+	qdel(src)
 
 /obj/structure/particle_accelerator/blob_act()
 	if(prob(50))
 		qdel(src)
 	return
 
-
-/obj/structure/particle_accelerator/meteorhit()
-	if(prob(50))
-		qdel(src)
-	return
 
 /obj/structure/particle_accelerator/update_icon()
 	switch(construction_state)
@@ -216,16 +203,16 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
-			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 1
+			if(iswrenching(O))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
-			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 0
+			if(iswrenching(O))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
@@ -236,16 +223,16 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iscutter(O))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
-			else if(isscrewdriver(O))
+			else if(isscrewing(O))
 				user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 					"You close the access panel.")
 				temp_state++
 		if(3)
-			if(isscrewdriver(O))
+			if(isscrewing(O))
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--
@@ -265,8 +252,8 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	desc = "Part of a Particle Accelerator."
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -283,10 +270,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 270)
+	set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/particle_accelerator/verb/rotateccw()
@@ -294,10 +281,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/particle_accelerator/update_icon()
@@ -320,35 +307,23 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(process_tool_hit(W,user))
 			return
 	..()
 	return
 
 /obj/machinery/particle_accelerator/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (prob(50))
-				qdel(src)
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
-		else
-	return
+	qdel(src)
 
 
 /obj/machinery/particle_accelerator/blob_act()
-	if(prob(50))
-		qdel(src)
-	return
-
-
-/obj/machinery/particle_accelerator/meteorhit()
 	if(prob(50))
 		qdel(src)
 	return
@@ -366,16 +341,16 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/temp_state = src.construction_state
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
-			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 1
+			if(iswrenching(O))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
-			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 0
+			if(iswrenching(O))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
@@ -385,16 +360,16 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iscutter(O))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
-			else if(isscrewdriver(O))
+			else if(isscrewing(O))
 				user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 					"You close the access panel.")
 				temp_state++
 		if(3)
-			if(isscrewdriver(O))
+			if(isscrewing(O))
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--

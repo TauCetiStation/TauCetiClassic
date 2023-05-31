@@ -2,7 +2,7 @@
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore2"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/datum/geosample/geologic_data
 	var/oretag
 	var/points = 0
@@ -100,12 +100,17 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 	if(is_mining_level(z))
-		score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
+		SSStatistics.score.oremined++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
-/obj/item/weapon/ore/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(W,/obj/item/device/core_sampler))
-		var/obj/item/device/core_sampler/C = W
+/obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/core_sampler))
+		var/obj/item/device/core_sampler/C = I
 		C.sample_item(src, user)
 	else
 		return ..()
+
+/obj/item/weapon/ore/use(used, transfer = FALSE)
+	if(used == 1)
+		qdel(src)
+		return TRUE
+	return FALSE

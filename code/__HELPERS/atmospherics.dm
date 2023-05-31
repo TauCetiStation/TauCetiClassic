@@ -1,4 +1,4 @@
-/obj/proc/analyze_gases(obj/A, mob/user, advanced)
+/obj/proc/analyze_gases(atom/A, mob/user, advanced)
 	user.visible_message("<span class='notice'>\The [user] has used \an [src] on \the [A].</span>")
 	A.add_fingerprint(user)
 
@@ -43,7 +43,7 @@
 						traits += "contaminates clothing with toxic residue"
 					if(gas_data.flags[mix] & XGM_GAS_FUSION_FUEL)
 						traits += "can be used to fuel fusion reaction"
-					. += "\t<span class='notice'>Specific heat: [gas_data.specific_heat[mix]] J/(mol*K), Molar mass: [gas_data.molar_mass[mix]] kg/mol.[traits.len ? "\n\tThis gas [english_list(traits)]" : ""]</span>"
+					. += "\t<span class='notice'>Specific heat: [gas_data.specific_heat[mix]] J/(mol*K), Molar mass: [gas_data.molar_mass[mix]] kg/mol.[traits.len ? "\n\tThis gas [get_english_list(traits)]" : ""]</span>"
 			. += "<span class='notice'>Temperature: [round(mixture.temperature-T0C)]&deg;C / [round(mixture.temperature)]K</span>"
 			return
 	. += "<span class='warning'>\The [target] has no gases!</span>"

@@ -18,7 +18,6 @@
 	bar_icon_state = my_icon_state
 
 	bar = image('icons/effects/progessbar.dmi', target, "[bar_icon_state]_0")
-	bar.layer = ABOVE_HUD_LAYER
 	bar.plane = ABOVE_HUD_PLANE
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	bar.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -63,7 +62,7 @@
 		if (user.client)
 			user.client.images += bar
 
-	progress = CLAMP(progress, 0, goal)
+	progress = clamp(progress, 0, goal)
 	bar.icon_state = "[bar_icon_state]_[round(((progress / goal) * 100), 5)]"
 	if (!shown)
 		user.client.images += bar
@@ -80,6 +79,7 @@
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
 
+	user = null
 	if (client)
 		client.images -= bar
 

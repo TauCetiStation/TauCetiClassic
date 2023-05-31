@@ -16,6 +16,7 @@ This is what happens, when alien attack.
 	A.attack_facehugger(src)
 
 /atom/proc/attack_facehugger(mob/user)
+	attack_paw(user)
 	return
 
 /mob/living/carbon/xenomorph/larva/UnarmedAttack(atom/A)
@@ -24,6 +25,7 @@ This is what happens, when alien attack.
 	A.attack_larva(src)
 
 /atom/proc/attack_larva(mob/user)
+	attack_paw(user)
 	return
 
 /mob/living/carbon/xenomorph/larva/get_unarmed_attack()
@@ -32,7 +34,7 @@ This is what happens, when alien attack.
 	var/retFlags = DAM_SHARP
 	var/retVerb = "gnaw"
 	var/retSound = 'sound/weapons/bite.ogg'
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

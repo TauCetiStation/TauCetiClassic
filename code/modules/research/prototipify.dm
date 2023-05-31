@@ -57,7 +57,7 @@
 /obj/item/set_prototype_qualities(rel_val=100, mark=0)
 	..()
 	if(!prob(200 - rel_val))
-		w_class = max(ITEM_SIZE_TINY, w_class - 1)
+		w_class = max(SIZE_MINUSCULE, w_class - 1)
 	else if(!prob(rel_val))
 		w_class += 1
 	if(mark > 0)

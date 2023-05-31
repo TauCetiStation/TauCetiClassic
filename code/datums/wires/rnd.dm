@@ -1,6 +1,6 @@
-var/const/RND_WIRE_HACK    = 1
-var/const/RND_WIRE_DISABLE = 2
-var/const/RND_WIRE_SHOCK   = 4
+var/global/const/RND_WIRE_HACK    = 1
+var/global/const/RND_WIRE_DISABLE = 2
+var/global/const/RND_WIRE_SHOCK   = 4
 
 /datum/wires/rnd
 	holder_type = /obj/machinery/r_n_d
@@ -10,12 +10,12 @@ var/const/RND_WIRE_SHOCK   = 4
 	var/obj/machinery/r_n_d/R = holder
 	return R.panel_open
 
-/datum/wires/rnd/get_interact_window()
+/datum/wires/rnd/get_status()
 	var/obj/machinery/r_n_d/R = holder
 	. += ..()
-	. += "<br>The red light is [R.disabled ? "off" : "on"]."
-	. += "<br>The green light is [R.shocked ? "off" : "on"]."
-	. += "<br>The blue light is [R.hacked ? "off" : "on"]."
+	. += "The red light is [R.disabled ? "off" : "on"]."
+	. += "The green light is [R.shocked ? "off" : "on"]."
+	. += "The blue light is [R.hacked ? "off" : "on"]."
 
 /datum/wires/rnd/update_cut(index, mended)
 	var/obj/machinery/r_n_d/R = holder

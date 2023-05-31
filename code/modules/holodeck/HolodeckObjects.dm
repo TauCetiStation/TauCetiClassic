@@ -52,8 +52,8 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
 
@@ -73,7 +73,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
+	anchored = TRUE
 
 
 /obj/item/clothing/gloves/boxing/hologlove
@@ -82,103 +82,14 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
-/obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(!istype(W)) return//I really wish I did not need this
-	user.SetNextMove(CLICK_CD_MELEE)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
-		if(istype(G.affecting,/mob/living))
-			var/mob/living/M = G.affecting
-			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
-			switch (state)
-				if(1)
-					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
-					M.apply_damage(7)
-					take_damage(10)
-				if(2)
-					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-					if (prob(50))
-						M.Weaken(1)
-					M.apply_damage(10)
-					take_damage(25)
-				if(3)
-					M.visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
-					M.Weaken(5)
-					M.apply_damage(20)
-					take_damage(50)
-			return
-
-	if(W.flags & NOBLUDGEON) return
-
-	if(isscrewdriver(W))
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(iscrowbar(W) && reinf && state <= 1)
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
-	else if(iswrench(W) && !anchored && (!state || !reinf))
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
-	else
-		if(W.damtype == BRUTE || W.damtype == BURN)
-			take_damage(W.force)
-			if(health <= 7)
-				anchored = 0
-				update_nearby_icons()
-				step(src, get_dir(user, src))
-		else
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
-	return
-
-/obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] fades away as it shatters!")
-	qdel(src)
-	return
-
-/obj/structure/window/reinforced/holowindow/disappearing
-
-/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
-
-	if (src.operating == 1)
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
-		var/aforce = I.force
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-
-		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce)
-		return
-
-	src.add_fingerprint(user)
-	if (!src.requiresID())
-		user = null
-
-	if (src.allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
-
-	return
-
-/obj/machinery/door/window/holowindoor/shatter(display_message = 1)
-	src.density = 0
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] fades away as it shatters!")
-	qdel(src)
+/obj/machinery/door/window/holowindoor
+	flags = NODECONSTRUCT | ON_BORDER
 
 /obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_gray"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -192,21 +103,23 @@
 	throw_speed = 1
 	throw_range = 5
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
-	flags = NOSHIELD | NOBLOODY
+	w_class = SIZE_TINY
+	flags = NOBLOODY
 	var/active = 0
+
+	var/blade_color
 
 /obj/item/weapon/holo/esword/green
 
 /obj/item/weapon/holo/esword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/holo/esword/red
 
 /obj/item/weapon/holo/esword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
@@ -218,28 +131,24 @@
 
 /obj/item/weapon/holo/esword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple")
+	blade_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[item_color]"
-		w_class = ITEM_SIZE_LARGE
+		icon_state = "sword[blade_color]"
+		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	add_fingerprint(user)
 	return
 
@@ -251,15 +160,16 @@
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = ITEM_SIZE_LARGE //Stops people from hiding it in their bags/pockets
+	w_class = SIZE_NORMAL //Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, Shakalaka!"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/basketball_hoop.dmi'
 	icon_state = "hoop"
-	anchored = 1
-	density = 1
+	layer = ABOVE_WINDOW_LAYER
+	anchored = TRUE
+	density = TRUE
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
@@ -270,17 +180,18 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
+		G.affecting.Stun(5)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if (isitem(W) && get_dist(src,user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
+	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -291,7 +202,7 @@
 			visible_message("<span class='warning'>\The [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..()
 
 
 /obj/machinery/readybutton
@@ -299,7 +210,7 @@
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -358,7 +269,7 @@
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
+	for(var/obj/structure/window/thin/reinforced/holowindow/disappearing/W in currentarea)
 		qdel(W)
 
 	for(var/mob/M in currentarea)
@@ -370,12 +281,13 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
+	flags = NODECONSTRUCT
 
 /obj/structure/rack/holorack/attack_hand(mob/user)
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
@@ -400,7 +312,7 @@
 		faction = "neutral"
 		melee_damage = 0
 		//wall_smash = 0
-		destroy_surroundings = 0
+		destroy_surroundings = FALSE
 	else
 		faction = "carp"
 		melee_damage = initial(melee_damage)

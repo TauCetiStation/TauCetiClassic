@@ -42,10 +42,10 @@ def main(options):
 	sys.stdout.buffer.write(byond_inner_text(r.text))
 
 def byond_outer_text(text):
-	return text.decode("cp1251").replace("¶", "я")
+	return text.decode("utf-8")
 
 def byond_inner_text(text):
-	return text.replace("я", "¶").encode("cp1251", 'ignore')
+	return text.encode("utf-8")
 
 if __name__ == "__main__":
 	options = read_arguments()

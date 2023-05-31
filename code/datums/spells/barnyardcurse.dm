@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/barnyardcurse
-	name = "Curse of the Barnyard"
-	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
+	name = "Скотоклятье"
+	desc = "Обрекает жертву носить обезличивающую, неснимаемую маску домашнего животного."
 	school = "transmutation"
 	charge_type = "recharge"
 	charge_max = 150
@@ -44,7 +44,7 @@
 	var/randM = rand(1, 4)
 	var/choice = masks[randM]
 	var/obj/item/clothing/mask/magichead = new choice
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.speech_problem_flag = 1
 	magichead.canremove = 0

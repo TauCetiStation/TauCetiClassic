@@ -10,7 +10,7 @@
 	var/obj/machinery/power/fusion_core/cur_viewed_device
 
 /obj/machinery/computer/fusion_core_control/attackby(obj/item/thing, mob/user)
-	if(ismultitool(thing))
+	if(ispulsing(thing))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Core Control", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
@@ -112,7 +112,7 @@
 		return
 
 	if(href_list["access_device"])
-		var/idx = CLAMP(text2num(href_list["toggle_active"]), 1, connected_devices.len)
+		var/idx = clamp(text2num(href_list["toggle_active"]), 1, connected_devices.len)
 		cur_viewed_device = connected_devices[idx]
 		updateUsrDialog()
 

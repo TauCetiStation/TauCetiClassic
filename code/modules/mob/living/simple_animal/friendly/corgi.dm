@@ -17,6 +17,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+	w_class = SIZE_BIG
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -38,11 +39,11 @@
 /mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(!stat)
+		if(stat == CONSCIOUS)
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
@@ -54,6 +55,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	w_class = SIZE_SMALL
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa
@@ -67,13 +69,18 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+
+	default_emotes = list(
+		/datum/emote/dance,
+	)
+
 	var/turns_since_scan = 0
 	var/puppies = 0
 
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 15)
 			turns_since_scan = 0
@@ -81,7 +88,7 @@
 			var/ian = 0
 			//for(var/mob/M in oviewers(7, src))
 			for(var/mob/M in oview(src,7))
-				if(istype(M, /mob/living/carbon/ian))
+				if(isIAN(M))
 					if(M.client)
 						alone = 0
 						break
@@ -98,12 +105,9 @@
 
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases her tail"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
-					sleep(1)
+			emote("dance")
 
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/corgi/borgi, chief_animal_list)
 /mob/living/simple_animal/corgi/borgi
 	name = "E-N"
 	real_name = "E-N"	//Intended to hold the name without altering it.
@@ -119,7 +123,7 @@
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
-			src.explode()
+			explode()
 		return TRUE
 	return FALSE
 

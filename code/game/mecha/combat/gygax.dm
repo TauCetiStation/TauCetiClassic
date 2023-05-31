@@ -7,14 +7,29 @@
 	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
+	damage_absorption = list(BRUTE=0.75,BURN=1,BULLET=0.8,LASER=0.7,ENERGY=0.85,BOMB=1)
 	max_temperature = 25000
 	infra_luminosity = 6
-	var/overload = 0
 	var/overload_coeff = 2
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax
 	internal_damage_threshold = 35
 	max_equip = 3
+	var/overload = FALSE
+
+	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
+
+/obj/mecha/combat/gygax/Destroy()
+	QDEL_NULL(overload_action)
+	return ..()
+
+
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
+	..()
+	overload_action.Grant(user, src)
+
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
+	..()
+	overload_action.Remove(user)
 
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
@@ -23,7 +38,7 @@
 	initial_icon = "ultra"
 	health = 350
 	deflect_chance = 20
-	damage_absorption = list("brute"=0.65,"fire"=0.9,"bullet"=0.7,"laser"=0.6,"energy"=0.75,"bomb"=0.9)
+	damage_absorption = list(BRUTE=0.65,BURN=0.9,BULLET=0.7,LASER=0.6,ENERGY=0.75,BOMB=0.9)
 	max_temperature = 30000
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/ultra
 	animated = 1
@@ -35,7 +50,7 @@
 	initial_icon = "darkgygax"
 	health = 400
 	deflect_chance = 25
-	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
+	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
 	max_temperature = 45000
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
@@ -63,18 +78,16 @@
 	cell.maxcharge = 30000
 
 
-/obj/mecha/combat/gygax/verb/overload()
-	set category = "Exosuit Interface"
-	set name = "Toggle leg actuators overload"
-	set src = usr.loc
-	set popup_menu = 0
-	if(usr!=src.occupant)
+/obj/mecha/combat/gygax/proc/overload()
+	if(usr != src.occupant)
+		return
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [overload? "en" : "dis"]able leg actuators overload.</span>"))
 		return
 	if(overload)
 		overload = 0
 		step_in = initial(step_in)
 		step_energy_drain = initial(step_energy_drain)
-		src.occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
+		occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
 		if(animated)
 			flick("ultra-gofasta-off",src)
 			reset_icon()
@@ -82,11 +95,11 @@
 		overload = 1
 		step_in = min(1, round(step_in/2))
 		step_energy_drain = step_energy_drain*overload_coeff
-		src.occupant_message("<font color='red'>You enable leg actuators overload.</font>")
+		occupant_message("<font color='red'>You enable leg actuators overload.</font>")
 		if(animated)
 			flick("ultra-gofasta-on",src)
 			icon_state = "ultra-gofasta"
-	src.log_message("Toggled leg actuators overload.")
+	log_message("Toggled leg actuators overload.")
 	return
 
 /obj/mecha/combat/gygax/dyndomove(direction)
@@ -97,7 +110,7 @@
 			overload = 0
 			step_in = initial(step_in)
 			step_energy_drain = initial(step_energy_drain)
-			src.occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
+			occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
 			if(animated)
 				flick("ultra-gofasta-off",src)
 				reset_icon()
@@ -123,5 +136,5 @@
 /obj/mecha/combat/gygax/Topic(href, href_list)
 	..()
 	if (href_list["toggle_leg_overload"])
-		src.overload()
+		overload()
 	return

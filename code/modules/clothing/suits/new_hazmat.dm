@@ -9,7 +9,7 @@
 	name = "hazmat suit"
 	desc = "White colored and from brand new collection. Unisex!"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEEARS
-	flags = THICKMATERIAL | PHORONGUARD | BLOCKHAIR
+	flags = PHORONGUARD | BLOCKHAIR
 
 
 /obj/item/clothing/suit/bio_suit/new_hazmat/security
@@ -52,10 +52,12 @@
 	icon_state = "hazmat_janitor"
 	item_state = "hazmat_janitor"
 	desc = "Brand new collection for janitor. Even with this much style you remain just a janitor."
+	can_get_wet = FALSE
 
 /obj/item/clothing/head/bio_hood/new_hazmat/janitor
 	icon_state = "hazmat_janitor_head"
 	desc = "Brand new collection for janitor. Even with this much style you remain just a janitor."
+	can_get_wet = FALSE
 
 /obj/item/clothing/suit/bio_suit/new_hazmat/scientist
 	icon_state = "hazmat_cyan"

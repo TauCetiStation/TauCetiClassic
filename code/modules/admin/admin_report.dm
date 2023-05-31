@@ -1,3 +1,5 @@
+// wtf is this thing?
+
 // Reports are a way to notify admins of wrongdoings that happened
 // while no admin was present. They work a bit similar to news, but
 // they can only be read by admins and moderators.
@@ -23,7 +25,7 @@
 	else if(href_list["action"] == "edit")
 		C.edit_report(text2num(href_list["ID"]))
 
-var/datum/report_topic_handler/report_topic_handler
+var/global/datum/report_topic_handler/report_topic_handler
 
 /world/New()
 	..()
@@ -114,8 +116,9 @@ var/datum/report_topic_handler/report_topic_handler
 	else
 		output += "Whoops, no reports!"
 
-	usr << browse(entity_ja(output), "window=news;size=600x400")
-
+	var/datum/browser/popup = new(usr, "window=news", "Display Admin Reports", 600, 400, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(output)
+	popup.open()
 
 /client/proc/Report(mob/M as mob in not_world)
 	set category = "Admin"

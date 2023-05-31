@@ -82,6 +82,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -123,4 +124,4 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems_moderation;size=600x500")
+	usr << browse(output,"window=customitems_moderation;size=600x500")

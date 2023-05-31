@@ -1,12 +1,13 @@
 //predominantly negative traits
 
 /datum/quirk/blindness
-	name = "Blind"
-	desc = "You are completely blind, nothing can counteract this."
+	name = QUIRK_BLIND
+	desc = "Вы абсолютно слепы. Ничто не в силах это изменить."
 	value = -4
+	disability = TRUE
 	mob_trait = TRAIT_BLIND
-	gain_text = "<span class='danger'>You can't see anything.</span>"
-	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
+	gain_text = "<span class='danger'>Эй, кто выключил свет?</span>"
+	lose_text = "<span class='notice'>К вам чудесным образом вернулось зрение!</span>"
 
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -17,73 +18,94 @@
 
 
 /datum/quirk/cough
-	name = "Coughing"
-	desc = "You have incurable coughing fit."
+	name = QUIRK_COUGHING
+	desc = "У вас неизлечимый хронический кашель."
 	value = -1
 	mob_trait = TRAIT_COUGH
-	gain_text = "<span class='danger'>You can't stop coughing!</span>"
-	lose_text = "<span class='notice'>You feel relief again, as cough stops bothering you.</span>"
+	gain_text = "<span class='danger'>Вы не можете перестать кашлять!</span>"
+	lose_text = "<span class='notice'>Вы чувствуете облегчение, кашель больше вас не побеспокоит.</span>"
+
+	req_species_flags = list(
+		NO_BREATHE = FALSE,
+	)
 
 
 
 /datum/quirk/deafness
-	name = "Deaf"
-	desc = "You are incurably deaf."
+	name = QUIRK_DEAF
+	desc = "Вы полностью и неизлечимо глухи."
 	value = -2
+	disability = TRUE
 	mob_trait = TRAIT_DEAF
-	gain_text = "<span class='danger'>You can't hear anything.</span>"
-	lose_text = "<span class='notice'>You're able to hear again!</span>"
+	gain_text = "<span class='danger'>Тут подозрительно тихо.</span>"
+	lose_text = "<span class='notice'>Вы снова слышите!</span>"
 
 
 
 /datum/quirk/epileptic
-	name = "Seizures"
-	desc = "You have incurable seizures."
+	name = QUIRK_SEIZURES
+	desc = "Вы испытываете эпилептические припадки."
 	value = -1
 	mob_trait = TRAIT_EPILEPSY
-	gain_text = "<span class='danger'>You start having a seizures!</span>"
-	lose_text = "<span class='notice'>You feel relief again, as seizures stops bothering you.</span>"
+	gain_text = "<span class='danger'>Вы начинаете испытывать эпилептические припадки!</span>"
+	lose_text = "<span class='notice'>Вы чувствуете облегчение, припадки больше вас не побеспокоят.</span>"
+
+	req_species_flags = list(
+		NO_EMOTION = FALSE,
+	)
 
 
 
 /datum/quirk/fatness
-	name = "Fatness"
-	desc = "You are incurably fat."
+	name = QUIRK_FATNESS
+	desc = "Вы, мягко скажем, полноваты."
 	value = -1
 	mob_trait = TRAIT_FAT
-	gain_text = "<span class='danger'>You feel chubby again.</span>"
-	lose_text = "<span class='notice'>You feel fit again!</span>"
+	gain_text = "<span class='danger'>Вы чувствуете, что набрали несколько лишних килограмм.</span>"
+	lose_text = "<span class='notice'>Вы снова в форме!</span>"
+
+	req_species_flags = list(
+		NO_FAT = FALSE,
+		IS_PLANT = FALSE,
+		IS_SYNTHETIC = FALSE,
+	)
 
 /datum/quirk/fatness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_body()
-	H.update_mutantrace()
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()
-
+	H.update_size_class()
 
 
 /datum/quirk/tourette
-	name = "Tourette"
-	desc = "You have incurable twitching."
+	name = QUIRK_TOURETTE
+	desc = "У вас неизлечимые нервные тики."
 	value = -1
 	mob_trait = TRAIT_TOURETTE
-	gain_text = "<span class='danger'>You start twitch!</span>"
-	lose_text = "<span class='notice'>You feel relief again, as twitching stops bothering you.</span>"
+	gain_text = "<span class='danger'>Вас начинает трясти!</span>"
+	lose_text = "<span class='notice'>Вас перестаёт трясти.</span>"
+
+	incompatible_species = list(SKRELL, DIONA, IPC, ABDUCTOR)
+
+	req_species_flags = list(
+		NO_EMOTION = FALSE,
+	)
 
 
 
 /datum/quirk/nearsighted
-	name = "Nearsighted"
-	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
+	name = QUIRK_NEARSIGHTED
+	desc = "Вы плохо видите без очков, однако появляетесь с парой таковых."
 	value = -1
 	mob_trait = TRAIT_NEARSIGHT
-	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
-	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
+	gain_text = "<span class='danger'>Всё на расстоянии от вас выглядит размыто.</span>"
+	lose_text = "<span class='notice'>Вы стали нормально видеть!</span>"
 
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
+	H.become_nearsighted(QUIRK_TRAIT)
 	var/obj/item/clothing/glasses/regular/G = new
 	if(!H.equip_to_slot_if_possible(G, SLOT_GLASSES, null, TRUE))
 		H.put_in_hands(G)
@@ -91,77 +113,124 @@
 
 
 /datum/quirk/nervous
-	name = "Nervous"
-	desc = "You are always nervous."
+	name = QUIRK_NERVOUS
+	desc = "Вы постоянно на взводе."
 	value = -1
 	mob_trait = TRAIT_NERVOUS
-	gain_text = "<span class='danger'>You feel nervous!</span>"
-	lose_text = "<span class='notice'>You feel less yourself less nervous.</span>"
+	gain_text = "<span class='danger'>Вы весь на нервах.</span>"
+	lose_text = "<span class='notice'>Вы чувствуете себя более расслабленно.</span>"
+
+	req_species_flags = list(
+		NO_EMOTION = FALSE,
+	)
 
 
 
 /datum/quirk/stress_eater
-	name = "Stress Eater"
-	desc = "You eat more when in pain."
+	name = QUIRK_STRESS_EATER
+	desc = "Когда вы испытываете боль, ваш голод усиливается."
 	value = -1
 	mob_trait = TRAIT_STRESS_EATER
-	gain_text = "<span class='danger'>You feel quenchless hunger when hurt.</span>"
-	lose_text = "<span class='notice'>You no longer feel the quenchless hunger when hurt.</span>"
+	gain_text = "<span class='danger'>Боль пробуждает ваш голод.</span>"
+	lose_text = "<span class='notice'>Вы перестали заедать боль.</span>"
+
+	req_species_flags = list(
+		NO_PAIN = FALSE,
+	)
 
 
 
 /datum/quirk/mute
-	name = "Mute"
-	desc = "You are completely and incurably mute."
-	value = -2
+	name = QUIRK_MUTE
+	desc = "Вы полностью и неизлечимо немы."
+	disability = TRUE
+	value = -1
 	mob_trait = TRAIT_MUTE
-	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
-	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"
-
-
-
-/datum/quirk/low_pain_threshold
-	name = "Low pain threshold"
-	desc = "You endure pain more difficult. This quirk only affects sounds"
-	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>Just the thought of pain makes you tremble in fear.</span>"
-	lose_text = "<span class='notice'>You don't want to show yourself to other people anymore that you're a wimp. Now you're trying to ignore the pain.</span>"
+	gain_text = "<span class='danger'>Вы не можете вымолвить ни слова.</span>"
+	lose_text = "<span class='notice'>Вы снова обрели дар речи.</span>"
 
 
 
 /datum/quirk/light_drinker
-	name = "Light Drinker"
-	desc = "You just can't handle your drinks and get drunk very quickly."
+	name = QUIRK_LIGHT_DRINKER
+	desc = "Вы очень быстро напиваетесь."
 	value = -1
 	mob_trait = TRAIT_LIGHT_DRINKER
-	gain_text = "<span class='danger'>Just the thought of drinking alcohol makes your head spin.</span>"
-	lose_text = "<span class='notice'>You're no longer severely affected by alcohol.</span>"
+	gain_text = "<span class='danger'>От одной лишь мысли об алкоголе у вас кружится голова.</span>"
+	lose_text = "<span class='notice'>Вы перестали быть слишком чувствительными к алкоголю.</span>"
+
+	// Those are not affected by alcohol at all.
+	incompatible_species = list(SKRELL)
+
+	req_species_flags = list(
+		IS_PLANT = FALSE,
+		IS_SYNTHETIC = FALSE,
+	)
 
 
 
 /datum/quirk/nyctophobia
-	name = "Nyctophobia"
-	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
+	name = QUIRK_NYCTOPHOBIA
+	desc = "Всю вашу жизнь вас преследовал страх темноты. Ныряя во тьму вы инстинктивно настораживаетесь и действуете с осторожностью, познавая настоящий страх. Лишь источник света способен помочь вам."
 	value = -1
 
-/datum/quirk/nyctophobia/on_process()
+	gain_text = "<span class='notice'>Даже от мимолётной мысли о пребывании в темноте вас бросает в холодный пот.</span>"
+	lose_text = "<span class='notice'>Темнота больше не пугает вас!</span>"
+
+	req_species_flags = list(
+		NO_EMOTION = FALSE,
+	)
+
+	var/is_afraid = FALSE
+
+/datum/quirk/nyctophobia/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	if(H.species.flags [NO_EMOTION])  //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
+
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+
+/datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
+	var/mob/living/carbon/human/H = quirk_holder
+
+	check_fear(H, get_turf(H))
+
+/datum/quirk/nyctophobia/proc/become_afraid()
+	if(is_afraid)
 		return
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums <= 0.2)
-		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
-			quirk_holder.m_intent = MOVE_INTENT_WALK
-			quirk_holder.hud_used.move_intent.icon_state = "walking"
+	is_afraid = TRUE
 
+	var/mob/living/L = quirk_holder
 
+	L.emote("scream")
+	to_chat(quirk_holder, "<span class='warning'>Тише, тише, успокойся, дружище... Это всего-лишь темнота...</span>")
 
-/datum/quirk/no_taste
-	name = "Ageusia"
-	desc = "You can't taste anything! Toxic food will still poison you."
-	value = 0
-	mob_trait = TRAIT_AGEUSIA
-	gain_text = "<span class='notice'>You can't taste anything!</span>"
-	lose_text = "<span class='notice'>You can taste again!</span>"
+	L.set_m_intent(MOVE_INTENT_WALK)
+	ADD_TRAIT(quirk_holder, TRAIT_NO_RUN, FEAR_TRAIT)
+
+/datum/quirk/nyctophobia/proc/chill()
+	if(!is_afraid)
+		return
+	is_afraid = FALSE
+
+	REMOVE_TRAIT(quirk_holder, TRAIT_NO_RUN, FEAR_TRAIT)
+
+/datum/quirk/nyctophobia/proc/check_fear(datum/source, turf/myturf)
+	var/lums = myturf.get_lumcount()
+
+	if(lums <= 0.4)
+		become_afraid()
+	else
+		chill()
+
+/datum/quirk/genetic_degradation
+	name = QUIRK_GENETIC_DEGRADATION
+	desc = "Ужасная генетическая болезнь делает невозможной искусственную реконструкцию вашего ДНК."
+	value = -1
+
+	mob_trait = TRAIT_NO_CLONE
+
+	req_species_flags = list(
+		NO_DNA = FALSE,
+		NO_SCAN = FALSE,
+		IS_PLANT = FALSE,
+		IS_SYNTHETIC = FALSE,
+	)

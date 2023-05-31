@@ -1,24 +1,22 @@
-var/datum/subsystem/machines/SSmachine
-
-/datum/subsystem/machines
+SUBSYSTEM_DEF(machines)
 	name = "Machines"
+	msg_lobby = "Чиним машинерию..."
 
-	init_order    = SS_INIT_MACHINES
-	display_order = SS_DISPLAY_MACHINES
+	init_order = SS_INIT_MACHINES
 
 	flags = SS_KEEP_TIMING
 
 	var/list/processing = list()
+	var/list/processing_second = list()
 	var/list/currentrun = list()
 	var/list/powernets  = list()
 
-
-/datum/subsystem/machines/Initialize()
+/datum/controller/subsystem/machines/Initialize()
 	makepowernets()
 	fire()
 	..()
 
-/datum/subsystem/machines/proc/makepowernets()
+/datum/controller/subsystem/machines/proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
 		qdel(PN)
 	powernets.Cut()
@@ -29,19 +27,16 @@ var/datum/subsystem/machines/SSmachine
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/subsystem/machines/New()
-	NEW_SS_GLOBAL(SSmachine)
 
-
-/datum/subsystem/machines/stat_entry()
+/datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]|PN:[powernets.len]")
 
 
-/datum/subsystem/machines/fire(resumed = 0)
+/datum/controller/subsystem/machines/fire(resumed = 0)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
-		src.currentrun = processing.Copy()
+		src.currentrun = processing_second + processing
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -52,11 +47,12 @@ var/datum/subsystem/machines/SSmachine
 		currentrun.len--
 		if (QDELETED(thing) || thing.process(seconds) == PROCESS_KILL)
 			processing -= thing
+			processing_second -= thing
 			thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/machines/proc/setup_template_powernets(list/cables)
+/datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	for(var/A in cables)
 		var/obj/structure/cable/PC = A
 		if(!PC.powernet)
@@ -64,8 +60,10 @@ var/datum/subsystem/machines/SSmachine
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/subsystem/machines/Recover()
-	if (istype(SSmachine.processing))
-		processing = SSmachine.processing
-	if (istype(SSmachine.powernets))
-		powernets = SSmachine.powernets
+/datum/controller/subsystem/machines/Recover()
+	if (istype(SSmachines.processing))
+		processing = SSmachines.processing
+	if (istype(SSmachines.processing_second))
+		processing_second = SSmachines.processing_second
+	if (istype(SSmachines.powernets))
+		powernets = SSmachines.powernets

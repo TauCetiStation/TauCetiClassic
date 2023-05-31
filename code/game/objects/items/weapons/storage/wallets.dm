@@ -3,9 +3,10 @@
 	desc = "It can hold a few small and personal things."
 	max_storage_space = 10
 	icon_state = "wallet"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	can_hold = list(
 		/obj/item/weapon/spacecash,
+		/obj/item/weapon/ewallet,
 		/obj/item/weapon/card,
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/device/flashlight/pen,
@@ -44,6 +45,10 @@
 			front_id = W
 			name = "[name] ([front_id])"
 			update_icon()
+			if(ishuman(loc))
+				var/mob/living/carbon/human/H = loc
+				if(H.wear_id == src)
+					H.sec_hud_set_ID()
 
 /obj/item/weapon/storage/wallet/update_icon()
 

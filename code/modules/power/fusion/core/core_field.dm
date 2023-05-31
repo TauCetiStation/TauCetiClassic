@@ -268,7 +268,6 @@
 	if(name in reactants)
 		reactants[name] += quantity
 	else if(name != "proton" && name != "electron" && name != "neutron")
-		reactants.Add(name)
 		reactants[name] = quantity
 
 /obj/effect/fusion_em_field/proc/RadiateAll(ratio_lost = 1)
@@ -322,9 +321,7 @@
 		if(radiation)
 			var/rad_power = radiation * 0.001
 			var/range = min(round(sqrt(rad_power / 0.35)), 31)
-
-			for(var/mob/living/L in range(src, range))
-				L.apply_effect(round(rad_power), IRRADIATE)
+			irradiate_in_dist(get_turf(src), rad_power, range)
 
 	if(owned_core && owned_core.loc)
 		var/datum/gas_mixture/environment = owned_core.loc.return_air()
@@ -387,7 +384,7 @@
 				react_pool -= reactant
 
 		//loop through all the reacting reagents, picking out random reactions for them
-		var/list/produced_reactants = new/list
+		var/list/produced_reactants = list()
 		var/list/p_react_pool = react_pool.Copy()
 		while(p_react_pool.len)
 			//pick one of the unprocessed reacting reagents randomly
@@ -402,7 +399,7 @@
 				possible_s_reacts.Remove(cur_p_react)
 
 			//loop through and work out all the possible reactions
-			var/list/possible_reactions = new/list
+			var/list/possible_reactions = list()
 			for(var/cur_s_react in possible_s_reacts)
 				if(possible_s_reacts[cur_s_react] < 1)
 					continue
@@ -494,10 +491,10 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/effect/fusion_em_field/bullet_act(obj/item/projectile/Proj)
+/obj/effect/fusion_em_field/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	AddEnergy(Proj.damage)
 	update_icon()
-	return 0
 
 #undef FUSION_ENERGY_PER_K
 #undef FUSION_INSTABILITY_DIVISOR

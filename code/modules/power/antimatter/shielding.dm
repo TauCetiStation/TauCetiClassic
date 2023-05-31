@@ -13,12 +13,14 @@
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	dir = 1
 	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
+
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/obj/machinery/power/am_control_unit/control_unit = null
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
@@ -73,9 +75,8 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
-	return 0
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
+	return FALSE
 
 
 /obj/machinery/am_shielding/process()
@@ -93,9 +94,9 @@
 	stability -= 20
 	if(prob(100-stability))
 		if(prob(10))//Might create a node
-			new /obj/effect/blob/node(src.loc,150)
+			new /obj/structure/blob/node(loc, 150)
 		else
-			new /obj/effect/blob(src.loc,60)
+			new /obj/structure/blob(loc,60)
 		spawn(0)
 			qdel(src)
 		return
@@ -105,21 +106,20 @@
 
 /obj/machinery/am_shielding/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			stability -= 80
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			stability -= 40
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			stability -= 20
 	check_stability()
 	return
 
 
-/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag != "bullet")
+/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(Proj.flag != BULLET)
 		stability -= Proj.force/2
-	return 0
-
 
 /obj/machinery/am_shielding/update_icon()
 	cut_overlays()
@@ -205,18 +205,16 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
 	m_amt = 100
-	w_amt = 2000
 
-/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user)
-	if(ismultitool(I) && istype(src.loc,/turf))
-		new/obj/machinery/am_shielding(src.loc)
+/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
+	if(ispulsing(I) && istype(loc, /turf))
+		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return
-	..()
-	return
+	return ..()

@@ -4,8 +4,8 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/transform_dead = 0
 	var/transform_standing = 0
 
@@ -46,10 +46,10 @@
 
 		//East
 		var/turf/east = locate(T.x + 1, T.y, T.z)
-		if(istype(east, /turf/simulated/floor))
+		if(isfloorturf(east))
 			new /obj/machinery/conveyor(east, WEST, 1)
 
 		// West
 		var/turf/west = locate(T.x - 1, T.y, T.z)
-		if(istype(west, /turf/simulated/floor))
+		if(isfloorturf(west))
 			new /obj/machinery/conveyor(west, WEST, 1)

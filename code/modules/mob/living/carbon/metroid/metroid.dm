@@ -17,7 +17,12 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	attack_push_vis_effect = ATTACK_EFFECT_SLIME
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLIME
+
 	ventcrawler = 2
+
+	moveset_type = /datum/combat_moveset/slime
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
@@ -71,6 +76,7 @@
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max
+	w_class = SIZE_HUMAN
 
 
 /mob/living/carbon/slime/atom_init()
@@ -112,13 +118,16 @@
 	..()
 
 /mob/living/carbon/slime/movement_delay()
-	var/tally = 0
+	var/tally = speed
+
+	if (bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
+	else if (bodytemperature >= BODYTEMP_NORMAL + 20)
+		return -1	// slimes become supercharged at high temperatures
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
-
-	if (bodytemperature < 183.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	if(health_deficiency >= 45)
+		tally += (health_deficiency / 25)
 
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
@@ -127,16 +136,9 @@
 		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
-	if(health <= 0) // if damaged, the slime moves twice as slow
-		tally *= 2
-
-	if (bodytemperature >= 330.23) // 135 F
-		return -1	// slimes become supercharged at high temperatures
-
-	return tally+config.slime_delay
+	return tally + config.slime_delay
 
 /mob/living/carbon/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -198,9 +200,9 @@
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj)
+/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	attacked += 10
-	return ..()
 
 /mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
@@ -218,17 +220,17 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(EXPLODE_DEVASTATE)
 			b_loss += 500
 			return
 
-		if (2.0)
+		if(EXPLODE_HEAVY)
 
 			b_loss += 60
 			f_loss += 60
 
 
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			b_loss += 30
 
 	adjustBruteLoss(b_loss)
@@ -249,9 +251,7 @@
 	if(shielded)
 		damage /= 4
 
-		//paralysis += 1
-
-	to_chat("<span class='warning'>The blob attacks you!</span>")
+	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -266,25 +266,28 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
-/mob/living/carbon/slime/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
+/mob/living/carbon/slime/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[colour]
+	. = ..()
 
-		updatehealth()
-	return
+/mob/living/carbon/slime/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
+
+/mob/living/carbon/slime/adult/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
 
 /mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)
 		if(Victim == attacker)
 			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			return FALSE
 		else
 			if(prob(30))
 				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 				return FALSE
 
 			if(prob(90) && !client)
@@ -305,17 +308,19 @@
 
 /mob/living/carbon/slime/updatehealth()
 	if(status_flags & GODMODE)
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			health = 200
 		else
 			health = 150
 		stat = CONSCIOUS
 	else
 		// slimes can't suffocate unless they suicide. They are also not harmed by fire
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/carbon/slime/getTrail()
 	return null
@@ -329,6 +334,9 @@
 /mob/living/carbon/slime/is_usable_leg(targetzone = null)
 	return FALSE
 
+/mob/living/carbon/slime/can_pickup(obj/O)
+	return FALSE
+
 /mob/living/carbon/slime/get_species()
 	return SLIME
 
@@ -338,7 +346,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -346,8 +354,8 @@
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 // has it been enhanced before?
 
-/obj/item/slime_extract/attackby(obj/item/weapon/O, mob/user)
-	if(istype(O, /obj/item/weapon/slimesteroid2))
+/obj/item/slime_extract/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
 			to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")
 			return
@@ -357,7 +365,8 @@
 		to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 		Uses = 3
 		enhanced = 1
-		qdel(O)
+		qdel(I)
+		return
 	return ..()
 
 /obj/item/slime_extract/atom_init()
@@ -486,13 +495,13 @@
 	icon_state = "bottle19"
 
 /obj/item/weapon/slimepotion/attack(mob/living/carbon/slime/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on baby slimes!</span>")
 		return ..()
-	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
@@ -517,10 +526,10 @@
 	icon_state = "bottle19"
 
 /obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/adult/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
+	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
@@ -546,13 +555,13 @@
 	icon_state = "bottle16"
 
 /obj/item/weapon/slimesteroid/attack(mob/living/carbon/slime/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The steroid only works on baby slimes!</span>")
 		return ..()
-	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	if(M.cores == 3)
@@ -576,7 +585,6 @@
 	desc = "A golem's skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
@@ -589,7 +597,7 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = ABSTRACT | DROPDEL | NOSLIP
+	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
 	unacidable = 1
 
 
@@ -619,7 +627,6 @@
 /obj/item/clothing/head/helmet/space/golem
 	icon_state = "golem"
 	item_state = "dermal"
-	item_color = "dermal"
 	name = "golem's head"
 	desc = "A golem's head."
 	canremove = 0
@@ -638,7 +645,7 @@
 	canremove = 0
 	siemens_coefficient = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 
 /obj/item/clothing/suit/space/golem
@@ -646,7 +653,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = ITEM_SIZE_LARGE//bulky item
+	w_class = SIZE_NORMAL//bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -663,10 +670,10 @@
 	siemens_coefficient = 0
 	can_breach = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -703,43 +710,43 @@
 		to_chat(user, "<span class='notice'>You cannot do this so often.</span>")
 		return
 	if(user == spirit)
-		for(var/image/I in user.client.images)
-			if(I.loc == src && I.icon_state == "agolem_master")
-				user.client.images -= I
-				break
 		spirit = null
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
 	else
 		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
-		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
-		user.client.images += I
 		spirit = user
 		user.golem_rune = src
 		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
 	check_spirit()
 
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	if(!check_spirit())
-		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
+/obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
+	if(H.my_golem || H.get_species() == GOLEM)
 		return
-	user.SetNextMove(CLICK_CD_INTERACT)
+	if(!check_spirit())
+		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")
+		return
+	H.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
-	G.my_master = user
-	G.update_golem_hud_icons()
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.my_golems += G
-		H.update_golem_hud_icons()
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+	G.my_master = H
+	H.my_golem = G
+	// Golem get hud
+	H.set_golem_hud()
+	var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+	golem_hud.add_to_single_hud(G, H)
+
+	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
+	G.mind.memory += "<B>[H]</B> - your master."
+	G.mind.skills.add_available_skillset(/datum/skillset/golem)
+	G.mind.skills.maximize_active_skills()
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.client)
 			var/area/A = get_area(src)
 			if(A)
@@ -758,18 +765,6 @@
 	update_icon()
 	return result
 
-/mob/living/carbon/human/proc/update_golem_hud_icons()
-	if(client)
-		if(dna && (dna.mutantrace == "adamantine"))
-			if(my_master)
-				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
-				client.images += I
-		else
-			if(my_golems)
-				for(var/mob/living/carbon/human/G in my_golems)
-					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
-					client.images += I
-
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
@@ -780,7 +775,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	force = 1.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -836,9 +831,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
+	visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
+		visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
@@ -847,10 +842,10 @@
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
-		src.Hatch()
+		Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W, mob/user)
-	if(istype( W, /obj/item/toy/crayon ))
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
 		return
 	else
-		..()
+		return ..()

@@ -18,6 +18,9 @@
 	// SDisability to give (or 0)
 	var/sdisability=0
 
+	// trait to give with source GENETIC_MUTATION_TRAIT
+	var/trait_disability = ""
+
 	// Activation message
 	var/activation_message=""
 
@@ -25,7 +28,7 @@
 	var/deactivation_message=""
 
 /datum/dna/gene/disability/can_activate(mob/M,flags)
-	return 1 // Always set!
+	return TRUE // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
 	if(mutation && !(mutation in M.mutations))
@@ -34,6 +37,8 @@
 		M.disabilities|=disability
 	if(mutation)
 		M.sdisabilities|=sdisability
+	if(trait_disability)
+		ADD_TRAIT(M, trait_disability, GENETIC_MUTATION_TRAIT)
 	if(activation_message)
 		to_chat(M, "<span class='warning'>[activation_message]</span>")
 	//else
@@ -46,6 +51,8 @@
 		M.disabilities-=disability
 	if(mutation)
 		M.sdisabilities-=sdisability
+	if(trait_disability)
+		REMOVE_TRAIT(M, trait_disability, GENETIC_MUTATION_TRAIT)
 	if(deactivation_message)
 		to_chat(M, "<span class='warning'>[deactivation_message]</span>")
 	//else
@@ -87,7 +94,7 @@
 /datum/dna/gene/disability/clumsy
 	name="Clumsiness"
 	activation_message="You feel lightheaded."
-	mutation=CLUMSY
+	trait_disability = TRAIT_CLUMSY
 
 /datum/dna/gene/disability/clumsy/New()
 	block=CLUMSYBLOCK
@@ -118,12 +125,12 @@
 
 /datum/dna/gene/disability/blindness/OnMobLife(mob/living/carbon/human/M) //#Z2
 	if(!istype(M)) return
-	M.eye_blurry = 200
+	M.setBlurriness(200)
 	M.eye_blind = 200
 
 /datum/dna/gene/disability/blindness/deactivate(mob/living/carbon/human/M, connected, flags)
 	..(M,connected,flags)
-	M.eye_blurry = 0
+	M.setBlurriness(0)
 	M.eye_blind = 0 //##Z2
 
 /datum/dna/gene/disability/deaf
@@ -149,3 +156,11 @@
 
 /datum/dna/gene/disability/nearsighted/New()
 	block=GLASSESBLOCK
+
+/datum/dna/gene/disability/nearsighted/activate(mob/M, connected, flags)
+	. = ..()
+	M.become_nearsighted(GENETIC_MUTATION_TRAIT)
+
+/datum/dna/gene/disability/nearsighted/deactivate(mob/M, connected, flags)
+	. = ..()
+	M.cure_nearsighted(GENETIC_MUTATION_TRAIT)

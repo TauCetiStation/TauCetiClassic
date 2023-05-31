@@ -2,6 +2,10 @@ var/global/total_runtimes = 0
 var/global/total_runtimes_skipped = 0
 
 #ifdef DEBUG
+
+	#define CAT_COOLDOWN 20 SECONDS
+	#define CAT_MAX_NUMBER 10
+
 /world/Error(exception/E, datum/e_src)
 	total_runtimes++
 
@@ -60,12 +64,18 @@ var/global/total_runtimes_skipped = 0
 		locinfo = atom_loc_line(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
+			// Create a Dusty at the runtime location
+			var/static/cat_teleport = 0.0
+			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Dusty
+				new /mob/living/simple_animal/cat/runtime(get_turf(usr), E.line)
+				cat_teleport = world.time
+
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()
-	if(LAZYLEN(splitlines) > ERROR_USEFUL_LEN) // If there aren't at least three lines, there's no info
+	if(length(splitlines) > ERROR_USEFUL_LEN) // If there aren't at least three lines, there's no info
 		for(var/line in splitlines)
-			if(LAZYLEN(line) < 3 || findtext(line, "source file:") || findtext(line, "usr.loc:"))
+			if(length(line) < 3 || findtext(line, "source file:") || findtext(line, "usr.loc:"))
 				continue
 			if(findtext(line, "usr:"))
 				if(usrinfo)
@@ -89,5 +99,8 @@ var/global/total_runtimes_skipped = 0
 		world.log << line
 
 	log_runtime("[E.name] in [E.file]:[E.line] :[log_end]\n[E.desc]")
+
+	#undef CAT_COOLDOWN
+	#undef CAT_MAX_NUMBER
 
 #endif

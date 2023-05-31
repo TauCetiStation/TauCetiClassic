@@ -1,11 +1,12 @@
-var/const/NUKE_WIRE_LIGHT  = 1
-var/const/NUKE_WIRE_TIMING = 2
-var/const/NUKE_WIRE_SAFETY = 4
+var/global/const/NUKE_WIRE_LIGHT  = 1
+var/global/const/NUKE_WIRE_TIMING = 2
+var/global/const/NUKE_WIRE_SAFETY = 4
 
 /datum/wires/nuclearbomb
 	random = TRUE
 	holder_type = /obj/machinery/nuclearbomb
 	wire_count = 7
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /datum/wires/nuclearbomb/can_use()
 	var/obj/machinery/nuclearbomb/N = holder
@@ -14,12 +15,12 @@ var/const/NUKE_WIRE_SAFETY = 4
 /datum/wires/nuclearbomb/additional_checks_and_effects(mob/living/user)
 	return isdrone(user)
 
-/datum/wires/nuclearbomb/get_interact_window()
+/datum/wires/nuclearbomb/get_status()
 	var/obj/machinery/nuclearbomb/N = holder
 	. = ..()
-	. += "<br>The device is [N.timing ? "shaking!" : "still."]"
-	. += "<br>The device is [N.safety ? "quiet" : "whirring"]."
-	. += "<br>The lights are [N.lighthack ? "static" : "functional"]."
+	. += "The device is [N.timing ? "shaking!" : "still."]"
+	. += "The device is [N.safety ? "quiet" : "whirring"]."
+	. += "The lights are [N.lighthack ? "static" : "functional"]."
 
 /datum/wires/nuclearbomb/update_cut(index, mended)
 	var/obj/machinery/nuclearbomb/N = holder

@@ -1,6 +1,6 @@
 /datum/admins/proc/stickyban(action, data)
 	// Entry point for stickyban admin control
-	if(!check_rights(R_BAN))
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 	switch (action)
 		if ("show")
@@ -65,7 +65,7 @@
 	if (!is_stickyban_from_game(ban))
 		to_chat(usr, "<span class='adminnotice'>This user was stickybanned by the host, and can not be un-stickybanned from this panel</span>")
 		return
-	if (alert("Are you sure you want to remove the sticky ban on [ckey]?", "Are you sure", "Yes", "No") == "No")
+	if (tgui_alert(usr, "Are you sure you want to remove the sticky ban on [ckey]?", "Are you sure", list("Yes", "No")) == "No")
 		return
 	// check again after sleep
 	if (!stickyban_ban_exists_check(ckey, get_stickyban_from_ckey(ckey)))
@@ -89,10 +89,10 @@
 	if (!stickyban_ban_and_alt_exists_check(ban, ckey, alt))
 		return
 	if (!is_stickyban_from_game(ban))
-		alert("This user was stickybanned by the host, and can not be edited from this panel")
+		tgui_alert(usr, "This user was stickybanned by the host, and can not be edited from this panel")
 		return
 	// Confirm
-	if (alert("Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure","Yes","No") == "No")
+	if (tgui_alert(usr, "Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure", list("Yes","No")) == "No")
 		return
 	// After sleep checking again
 	ban = get_stickyban_from_ckey(ckey)
@@ -142,7 +142,7 @@
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!stickyban_ban_and_alt_exists_check(ban, ckey, alt))
 		return
-	if (alert("Are you sure you want to exempt [alt] from [ckey]'s sticky ban?","Are you sure","Yes","No") == "No")
+	if (tgui_alert(usr, "Are you sure you want to exempt [alt] from [ckey]'s sticky ban?","Are you sure",list("Yes","No")) == "No")
 		return
 	ban = get_stickyban_from_ckey(ckey)
 	if (!stickyban_ban_and_alt_exists_check(ban, ckey, alt))
@@ -168,7 +168,7 @@
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!stickyban_whitelist_alt_exists_check(ban, ckey, alt))
 		return
-	if (alert("Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure","Yes","No") == "No")
+	if (tgui_alert(usr, "Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure", list("Yes","No")) == "No")
 		return
 	if (!stickyban_whitelist_alt_exists_check(ban, ckey, alt))
 		return
@@ -179,10 +179,10 @@
 /datum/admins/proc/stickyban_timeout(ckey)
 	if (!ckey)
 		return
-	if (!establish_db_connection())
+	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 		return
-	if (alert("Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure","Yes","No") == "No")
+	if (tgui_alert(usr, "Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure", list("Yes","No")) == "No")
 		return
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!ban)
@@ -195,10 +195,10 @@
 /datum/admins/proc/stickyban_untimeout(ckey)
 	if (!ckey)
 		return
-	if (!establish_db_connection())
+	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 		return
-	if (alert("Are you sure you want to lift the timeout on [ckey]'s stickyban?","Are you sure","Yes","No") == "No")
+	if (tgui_alert(usr,"Are you sure you want to lift the timeout on [ckey]'s stickyban?","Are you sure", list("Yes","No")) == "No")
 		return
 	SSstickyban.untimeout(ckey)
 	log_admin_private("[key_name(usr)] has taken [ckey]'s sticky ban off of timeout.")
@@ -207,7 +207,7 @@
 /datum/admins/proc/stickyban_revert(ckey)
 	if (!ckey)
 		return
-	if (alert("Are you sure you want to revert the sticky ban on [ckey] to its state at round start (or last edit)?","Are you sure","Yes","No") == "No")
+	if (tgui_alert(usr,"Are you sure you want to revert the sticky ban on [ckey] to its state at round start (or last edit)?","Are you sure", list("Yes","No")) == "No")
 		return
 	if (!get_stickyban_from_ckey(ckey))
 		to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
@@ -228,8 +228,8 @@
 		return
 	var/src_href = "_src_=holder"
 	var/disable_link = "<a href='?[src_href];stickyban=revert&ckey=[ckey]'>Revert</a>"
-	establish_db_connection()
-	if(dbcon && dbcon.IsConnected())
+
+	if(establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		disable_link = "<a href='?[src_href];stickyban=[(ban[BANKEY_TIMEOUT] ? "untimeout" : "timeout")]&ckey=[ckey]'>[ban[BANKEY_TIMEOUT] ? "Untimeout" : "Timeout"]</a>"
 	var/remove_link = "<a href='?[src_href];stickyban=remove&ckey=[ckey]'>-</a>"
 	var/edit_link = "<b><a href='?[src_href];stickyban=edit&ckey=[ckey]'>Edit</a></b>"
@@ -270,8 +270,8 @@
 	)
 
 /datum/admins/proc/stickyban_show()
-	// Show browser window for stickyban panel if R_BAN rights
-	if(!check_rights(R_BAN))
+	// Show browser window for stickyban panel if R_BAN & R_LOG rights
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 	var/list/bans = sticky_banned_ckeys()
 	var/header = "<title>Sticky Bans</title><style> .sign{ font-style: italic;}</style>"
@@ -286,7 +286,7 @@
 	var/content = html_bans_data.Join("<hr/>")
 	var/datum/browser/browser = new(owner.mob, "stickybans", title, 700, 400)
 	browser.add_head_content(header)
-	browser.set_content(entity_ja(content))
+	browser.set_content(content)
 	browser.open()
 
 /client/proc/stickybanpanel()

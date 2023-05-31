@@ -1,14 +1,16 @@
-
 /datum/artifact_effect/emp
-	effect_name = "EMP"
-	effect_type = ARTIFACT_EFFECT_ELECTRO
+	log_name = "EMP"
+	type_name = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/emp/New()
 	..()
-	effect = ARTIFACT_EFFECT_PULSE
+	release_method = ARTIFACT_EFFECT_PULSE
 
 /datum/artifact_effect/emp/DoEffectPulse()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		empulse(T, effectrange/2, effectrange)
-		return 1
+	. = ..()
+	if(!.)
+		return
+	empulse(get_turf(holder), range / 2, range)
+
+/datum/artifact_effect/emp/DoEffectDestroy()
+	empulse(get_turf(holder), 7, range)

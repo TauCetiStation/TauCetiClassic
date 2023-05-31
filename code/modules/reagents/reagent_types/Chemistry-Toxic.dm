@@ -19,6 +19,8 @@
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M)
 	..()
+
+	M.nutrition += 4 * REM
 	return !flags[IS_ORGANIC]
 
 /datum/reagent/toxin/amatoxin
@@ -56,7 +58,7 @@
 
 /datum/reagent/toxin/mutagen/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(10, IRRADIATE, 0)
+	irradiate_one_mob(M, 10)
 
 /datum/reagent/toxin/phoron
 	name = "Phoron"
@@ -98,7 +100,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 5)
@@ -148,7 +150,7 @@
 	toxpwr = 4
 	custom_metabolism = 0.4
 	restrict_species = list(IPC, DIONA)
-	flags = list()
+	flags = list(IS_ORGANIC = TRUE) // We do not have a division into organic and inorganic cyanides.
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
@@ -158,10 +160,10 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 		if(6 to INFINITY)
 			M.SetSleeping(20 SECONDS)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	if(data["ticks"] % 3 == 0)
 		M.emote("gasp")
 
@@ -198,17 +200,25 @@
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
-	..()
-	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5 * REM)
-	M.Weaken(10)
+	if(data["ticks"])
+		data["ticks"]++
+	else
+		data["ticks"] = 1
+
+	if(data["ticks"] < 5)
+		return
+	
+	if(data["ticks"] == 5)
+		M.add_status_flags(FAKEDEATH)
+		M.tod = worldtime2text()
+
 	M.silent = max(M.silent, 10)
-	M.tod = worldtime2text()
 
 /datum/reagent/toxin/zombiepowder/Destroy()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+	if(holder && isliving(holder.my_atom))
+		var/mob/living/M = holder.my_atom
+		M.remove_status_flags(FAKEDEATH)
+		M.adjustToxLoss(toxpwr * REM * data["ticks"])
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
@@ -238,7 +248,7 @@
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
 	. = ..()
-	if(istype(T, /turf/simulated/wall))
+	if(iswallturf(T))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
 			W.rotting = 0
@@ -251,26 +261,62 @@
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
-		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
-		alien_weeds.healthcheck()
-	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
+		alien_weeds.take_damage(rand(15, 35), BURN, ACID, FALSE)
+	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/effect/spacevine))
+	else if(istype(O,/obj/structure/spacevine))
 		if(prob(50))
-			del(O) //Kills kudzu too.
+			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
-	src = null
-	if(iscarbon(M))
+	if(!iscarbon(M))
+		return
+
+	if(!ishuman(M))
 		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason ~~(What could possible double it, if the toxpwr = 1 :hmm: :thinking:)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.dna)
-					if(H.species.flags[IS_PLANT]) //plantmen take a LOT of damage
-						H.adjustToxLoss(50)
+		if((method == INGEST) || C.wear_mask)
+			return
+		C.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/mob/living/carbon/human/H = M
+
+	if(!H.species.flags[IS_PLANT])
+		if((method == INGEST) || H.wear_mask || H.is_skip_breathe()) // different behaviour only for inhaling
+			return
+		H.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/brute = toxpwr * 5 //plantmen take a LOT of damage
+	var/burn = toxpwr * 4
+
+	if(method == INGEST)
+		var/capped = min(volume, 5)
+		H.take_bodypart_damage(brute * capped, burn * capped)
+		return
+
+	var/list/bodyparts = H.get_damageable_bodyparts()
+	if(!bodyparts.len)
+		return
+
+	var/covered = get_human_covering(H)
+	var/list/targets = list()
+
+	for(var/obj/item/organ/external/BP in bodyparts) // get uncovered bodyparts
+		if(covered & BP.body_part)
+			continue
+		targets += BP
+
+	if(!targets.len)
+		return
+	var/coef = min(volume / 3, 5) * 2
+	brute *= coef
+	burn *= coef
+
+	for(var/obj/item/organ/external/BP in targets)
+		BP.take_damage(brute, burn)
+
 
 /datum/reagent/toxin/stoxin
 	name = "Sleep Toxin"
@@ -282,7 +328,7 @@
 	custom_metabolism = 0.1
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
-	flags = list()
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
 	..()
@@ -293,12 +339,14 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
+				M.Stun(1)
 				M.Weaken(2)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(50 to INFINITY)
+			M.Stun(10)
 			M.Weaken(20)
 			M.drowsyness  = max(M.drowsyness, 30)
 	data["ticks"]++
@@ -323,9 +371,10 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 199)
+			M.Stun(30)
 			M.Weaken(30)
 		if(200 to INFINITY)
 			M.SetSleeping(20 SECONDS)
@@ -347,7 +396,11 @@
 			if(M.losebreath >= 10)
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
+			M.Stun(5)
 			M.Weaken(10)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.attack_heart(10, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -367,7 +420,10 @@
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
+			H.Stun(5)
 			H.Weaken(10)
+		if(volume >= overdose)
+			H.attack_heart(5, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -385,7 +441,7 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 50)
 			M.SetSleeping(20 SECONDS)
@@ -422,7 +478,7 @@
 	M.take_bodypart_damage(0, 1 * REM)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -432,8 +488,6 @@
 				if(prob(meltprob) && !H.head.unacidable)
 					to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
 					qdel(H.head)
-					H.update_inv_head()
-					H.update_hair()
 				else
 					to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
 				return
@@ -442,8 +496,6 @@
 				if(prob(meltprob) && !H.wear_mask.unacidable)
 					to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 					qdel(H.wear_mask)
-					H.update_inv_wear_mask()
-					H.update_hair()
 				else
 					to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
@@ -452,7 +504,6 @@
 				if(prob(meltprob) && !H.glasses.unacidable)
 					to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
 					qdel(H.glasses)
-					H.update_inv_glasses()
 
 		else if(ismonkey(M))
 			var/mob/living/carbon/monkey/MK = M
@@ -460,7 +511,6 @@
 				if(!MK.wear_mask.unacidable)
 					to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 					qdel(MK.wear_mask)
-					MK.update_inv_wear_mask()
 				else
 					to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
@@ -481,7 +531,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+	if((isitem(O) || istype(O,/obj/structure/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -509,6 +559,7 @@
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/alphaamanitin/on_general_digest(mob/living/M)
 	..()
@@ -524,6 +575,7 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
+	flags = list(IS_ORGANIC = TRUE)
 
 	data = list()
 
@@ -535,7 +587,7 @@
 
 	if(data["ticks"] >= 165)
 		M.adjustToxLoss(4)
-		M.apply_effect(5*REM,IRRADIATE,0)
+		irradiate_one_mob(M, 5 * REM)
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
@@ -560,6 +612,60 @@
 		M.death(0)
 		M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
 	data["ticks"]++
+
+/datum/reagent/sanguisacid
+	name = "Sanguis Acid"
+	id = "sanguisacid"
+	description = "A toxin that burns the blood in the body causes hematemesis. Only works on humanoids."
+	reagent_state = LIQUID
+	color = "#861102"
+	custom_metabolism = 0.05
+	taste_message = "bitter blood"
+	restrict_species = list(IPC, DIONA)
+
+
+/datum/reagent/sanguisacid/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(!ishuman(H))
+		return
+	H.blood_remove(2)
+	if(prob(15))
+		H.blood_remove(5)
+		H.adjustHalLoss(10)
+		H.adjustFireLoss(5)
+		to_chat(H,"<span class='warning'><b>You feel a burning sensation inside!</b></span>")
+	else if(prob(5))
+		H.blood_remove(150)
+		H.vomit(vomit_type = VOMIT_BLOOD)
+
+/datum/reagent/bonebreaker
+	name = "BB EX-01"
+	id = "bonebreaker"
+	description = "Experimental poison of unknown origin. When introduced into the body of a living being, the poison relaxes the structure of the bones, and then breaks them."
+	reagent_state = LIQUID
+	color = "#3d3549"
+	custom_metabolism = 0.1
+	taste_message = "something disgusting"
+	restrict_species = list(IPC, DIONA)
+
+
+/datum/reagent/bonebreaker/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(!ishuman(H))
+		return
+	if(data["ticks"])
+		data["ticks"]++
+	else
+		data["ticks"] = 1
+	switch(data["ticks"])
+		if(1 to 30)
+			if(prob(15))
+				to_chat(H, "<span class='warning'>You feel something strange and unpleasant inside of you.</span>")
+		if(30 to INFINITY)
+			holder.remove_reagent("bonebreaker", 100)
+			for(var/obj/item/organ/external/E in H.bodyparts)
+				H.apply_effect(100, AGONY)
+				E.fracture()
 
 /datum/reagent/dioxin
 	name = "Dioxin"
@@ -600,6 +706,7 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
+						H.attack_heart(20, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
@@ -612,19 +719,11 @@
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
 	..()
-	if(istype(H))
+	if(!istype(H) || H.species.flags[NO_DNA])
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	H.gender = pick(MALE, FEMALE)
-	if(H.gender == MALE)
-		H.name = pick(first_names_male)
-	else
-		H.name = pick(first_names_female)
-	H.name += " [pick(last_names)]"
-	H.real_name = H.name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
-	A.randomize_appearance_for(H)
+	randomize_human(H)
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
@@ -666,12 +765,11 @@
 			if(30)
 				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
-					H.dna.mutantrace = "slime"
-					H.update_mutantrace()
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
+					H.restore_blood()
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
 				M.adjustOxyLoss(-2 * REM)
@@ -686,7 +784,7 @@
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
-	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
+	if(iscarbon(M) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 		if(M.notransform)
 			return
@@ -702,8 +800,9 @@
 			W.layer = initial(W.layer)
 			W.loc = M.loc
 			W.dropped(M)
+		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-		new_mob.a_intent = INTENT_HARM
+		new_mob.set_a_intent(INTENT_HARM)
 		new_mob.universal_speak = 1
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
@@ -726,13 +825,57 @@
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 15)
-	if(isturf(M.loc) && !istype(M.loc, /turf/space))
-		if(M.canmove && !M.incapacitated())
-			if(prob(10))
-				step(M, pick(cardinal))
+	M.adjustDrugginess(2)
+	if(prob(10))
+		M.random_move()
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
+
+/datum/reagent/space_drugs/on_skrell_digest(mob/living/M)
+	M.nutrition += 4 * REM
+	M.adjustDrugginess(2)
+	return FALSE
+
+/datum/reagent/ambrosium
+	name = "Ambrosium"
+	id = "ambrosium"
+	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
+	reagent_state = LIQUID
+	color = "#003b08"
+	taste_message = "hash"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/ambrosium/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(2)
+	if(prob(10))
+		M.random_move()
+	if(prob(25))
+		M.emote(pick("cough","laugh","giggle"))
+	if(prob(15))
+		M.adjustToxLoss(1)
+
+/datum/reagent/jenkem
+	name = "Space jenkem"
+	id = "jenkem"
+	description = "A homemade illegal chemical compound used by the poor as a substitute for better quality drugs. Very toxic."
+	reagent_state = LIQUID
+	color = "#3f2020"
+	custom_metabolism = 0.4
+	overdose = 15
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/jenkem/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(1)
+	if(prob(30))
+		M.random_move()
+	if(prob(25))
+		M.emote(pick("twitch","drool","moan","giggle"))
+	if(prob(60))
+		M.adjustToxLoss(1)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -764,9 +907,7 @@
 /datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
 	..()
 	M.make_dizzy(1)
-	if(!M.confused)
-		M.confused = 1
-	M.confused = max(M.confused, 20)
+	M.MakeConfused(20)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"

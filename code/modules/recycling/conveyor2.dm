@@ -6,7 +6,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
 	layer = BELOW_CONTAINERS_LAYER
 	speed_process = TRUE
@@ -20,13 +20,15 @@
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
 
-// Auto conveyour is always on unless unpowered
+/obj/machinery/conveyor/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace)
 
+// Auto conveyour is always on unless unpowered
 /obj/machinery/conveyor/auto/atom_init(mapload, newdir)
 	. = ..(mapload, newdir)
 	operating = 1
 	update_move_direction()
-	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
@@ -45,7 +47,7 @@
 /obj/machinery/conveyor/atom_init(mapload, newdir)
 	. = ..()
 	if(newdir)
-		dir = newdir
+		set_dir(newdir)
 	update_move_direction()
 
 /obj/machinery/conveyor/proc/update_move_direction()
@@ -119,7 +121,7 @@
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user)
-	if(iscrowbar(I))
+	if(isprying(I))
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
@@ -128,10 +130,10 @@
 		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 		qdel(src)
 		return
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(!(stat & BROKEN))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			dir = turn(dir,-45)
+			set_dir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return
@@ -179,7 +181,7 @@
 /*
 /obj/machinery/conveyor/verb/destroy()
 	set src in view()
-	src.broken()
+	broken()
 */
 
 /obj/machinery/conveyor/power_change()
@@ -282,7 +284,7 @@
 			S.update()
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user)
-	if(iscrowbar(I))
+	if(isprying(I))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
@@ -303,19 +305,20 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/id = "" //inherited by the belt
 
-/obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
+/obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/conveyor_switch_construct))
 		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
+
 	else
 		return ..()
 
 /obj/item/conveyor_construct/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
+	if(!proximity || !isfloorturf(target) || istype(target, /area/shuttle))
 		return
 	var/cdir = get_dir(target, user)
 	if(target == user.loc)
@@ -331,7 +334,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/atom_init()
@@ -339,7 +342,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
+	if(!proximity || !isfloorturf(target) || istype(target, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

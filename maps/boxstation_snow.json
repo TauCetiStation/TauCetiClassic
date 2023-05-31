@@ -1,0 +1,11 @@
+{
+    "map_name": "Box Station (Snowy)",
+    "map_path": "boxstation",
+    "map_file": "boxstation.dmm",
+    "traits":[{
+        "Linkage": null,
+        "Environment Type": "Snow",
+        "Station": true,
+        "Snowstorm": true
+    }]
+}

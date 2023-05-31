@@ -5,7 +5,6 @@
 	icon_living = "lizard"
 	icon_dead = "lizard_dead"
 	icon_gib = "lizard_gib"
-	small = TRUE
 	speak = list("hiss", "hiss", "hiss", "hiss", "hiss?", "hiss...")
 	speak_emote = list("hisses")
 	emote_hear = list("hisses")
@@ -23,9 +22,14 @@
 	response_harm   = "stomps on"
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
+	w_class = SIZE_MINUSCULE
 
 	has_head = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/lizard/atom_init()
+	. = ..()
+	AddComponent(/datum/component/gnawing)
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()
@@ -33,7 +37,7 @@
 
 /mob/living/simple_animal/lizard/Crossed(atom/movable/AM)
 	if(ishuman(AM))
-		if(!stat)
+		if(stat == CONSCIOUS)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Hiss!</span>")
 	. = ..()
@@ -53,6 +57,3 @@
 	if(stat >= DEAD)
 		return
 	..()
-
-
-

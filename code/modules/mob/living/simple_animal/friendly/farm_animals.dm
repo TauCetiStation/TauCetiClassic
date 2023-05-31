@@ -1,3 +1,4 @@
+#define FEEDER_DISTANT 7
 //goat
 /mob/living/simple_animal/hostile/retaliate/goat
 	name = "goat"
@@ -45,14 +46,14 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message("<span class='notice'>[src] calms down.</span>")
+			visible_message("<span class='notice'>[src] calms down.</span>")
 
 		if(stat == CONSCIOUS)
 			if(udder && prob(5))
 				udder.add_reagent("milk", rand(5, 10))
 
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		if(locate(/obj/structure/spacevine) in loc)
+			var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
 			qdel(SV)
 			if(prob(10))
 				say("Nom")
@@ -61,18 +62,18 @@
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/effect/spacevine) in step)
+					if(locate(/obj/structure/spacevine) in step)
 						Move(step)
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class='warning'>[src] gets an evil-looking gleam in their eye.</span>")
+	visible_message("<span class='warning'>[src] gets an evil-looking gleam in their eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(!stat)
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+	if(stat == CONSCIOUS && !ISDIAGONALDIR(Dir))
+		if(locate(/obj/structure/spacevine) in loc)
+			var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
 			qdel(SV)
 			if(prob(10))
 				say("Nom")
@@ -90,14 +91,6 @@
 	else
 		..()
 
-/mob/living/simple_animal
-	name = "animal"
-	desc = "Just simple animal"
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
-
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -113,6 +106,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_MASSIVE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	health = 50
 
@@ -149,12 +143,12 @@
 		if(udder && prob(5))
 			udder.add_reagent("milk", rand(5, 10))
 		else if(prob(15))
-			playsound(src, 'sound/voice/cowmoos.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/voice/cow_moo.ogg', VOL_EFFECTS_MASTER, null, TRUE, null, -3)
 
 /mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(. && prob(55))
-		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	if(. && prob(55) && !ISDIAGONALDIR(Dir))
+		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 /mob/living/simple_animal/chick
 	name = "chick"
@@ -173,7 +167,7 @@
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
-	small = 1
+	w_class = SIZE_TINY
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -187,13 +181,13 @@
 	. = ..()
 	if(!.)
 		return
-	if(!stat)
+	if(stat == CONSCIOUS)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-var/const/MAX_CHICKENS = 50
+var/global/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken
@@ -214,7 +208,7 @@ var/global/chicken_count = 0
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
-	small = 1
+	w_class = SIZE_MINUSCULE
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -238,9 +232,8 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!stat && eggsleft < 8)
+		if(stat == CONSCIOUS && eggsleft < 8)
 			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
-			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
@@ -253,7 +246,7 @@ var/global/chicken_count = 0
 	. =..()
 	if(!.)
 		return
-	if(!stat && prob(3) && eggsleft > 0)
+	if(stat == CONSCIOUS && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
@@ -261,6 +254,16 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
 			START_PROCESSING(SSobj, E)
+	if(stat != DEAD || stat != CONSCIOUS && !buckled)
+		if(eggsleft < 2) //hungry
+			for(var/obj/structure/chicken_feeder/C as anything in chicken_feeder_list)
+				if(get_dist(src, C) < FEEDER_DISTANT && C.z == z)
+					if(C.food > 0)
+						stop_automated_movement = TRUE
+						step_to(src, C)
+						if(loc == C.loc)
+							C.feed(src)
+							stop_automated_movement = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -286,11 +289,23 @@ var/global/chicken_count = 0
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_BIG
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
 	health = 50
 
 	has_head = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/pig/shadowpig
+	name = "Shadowpig"
+	icon_state = "shadowpig"
+	icon_living = "shadowpig"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+/mob/living/simple_animal/pig/shadowpig/atom_init()
+	. = ..()
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke)
 
 /mob/living/simple_animal/turkey
 	name = "turkey"
@@ -363,3 +378,12 @@ var/global/chicken_count = 0
 
 	has_head = TRUE
 	has_arm = TRUE
+
+/mob/living/simple_animal/walrus/syndicate
+	icon_state = "walrus-syndi"
+	icon_living = "walrus-syndi"
+	icon_dead = "walrus-syndi_dead"
+	speak = list("Urk?","urk","URK","Furk NT")
+	health = 80
+
+#undef FEEDER_DISTANT

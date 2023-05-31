@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/storage
+	flags = HEAR_TALK
 	var/obj/item/weapon/storage/internal/pockets
 
 /obj/item/clothing/suit/storage/atom_init()
@@ -19,8 +20,8 @@
 	if (pockets && pockets.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/suit/storage/attackby(obj/item/W, mob/user)
-	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(W, user))
+/obj/item/clothing/suit/storage/attackby(obj/item/I, mob/user, params)
+	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(I, user, params))
 		return
 	return ..()
 

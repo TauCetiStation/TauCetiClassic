@@ -19,6 +19,7 @@
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,
@@ -30,7 +31,11 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
-		/obj/item/taperoll/engineering)
+		/obj/item/taperoll/engineering,
+		/obj/item/weapon/gun/energy/pyrometer,
+		/obj/item/device/science_tool,
+		/obj/item/weapon/multi
+		)
 
 
 /obj/item/weapon/storage/belt/utility/full/atom_init()
@@ -79,7 +84,8 @@
 	    /obj/item/weapon/reagent_containers/hypospray,
 	    /obj/item/device/sensor_device,
 	    /obj/item/device/mass_spectrometer,
-	    /obj/item/device/reagent_scanner
+	    /obj/item/device/reagent_scanner,
+		/obj/item/device/antibody_scanner,
 	    )
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"
@@ -87,7 +93,7 @@
 	icon_state = "medicalbelt"
 	item_state = "medical"
 	storage_slots = 9
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/reagent_containers/glass/beaker,
@@ -128,8 +134,9 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
+	force = 5
 	storage_slots = 7
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/grenade/flashbang,
 		/obj/item/weapon/reagent_containers/spray/pepper,
@@ -138,9 +145,8 @@
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box/magazine,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
@@ -149,7 +155,7 @@
 		/obj/item/device/pda,
 		/obj/item/weapon/melee,
 		/obj/item/taperoll/police,
-		/obj/item/weapon/gun/energy/taser,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/weapon/shield/riot/tele,
 		/obj/item/device/flashlight/seclite
 		)
@@ -159,7 +165,6 @@
 	desc = "A belt from military soldier set."
 	icon_state = "Leather_Belt_Officer"
 	icon_state = "Leather_Belt_Officer"
-	item_color = "Leather_Belt_Officer"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -181,6 +186,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
+	force = 5
 	storage_slots = 1
 	can_hold = list(
 		/obj/item/clothing/mask/luchador
@@ -192,7 +198,7 @@
 	icon_state = "swatbelt"
 	item_state = "swatbelt"
 	storage_slots = 9
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/grenade/flashbang,
 		/obj/item/weapon/reagent_containers/spray/pepper,
@@ -200,11 +206,10 @@
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box/magazine,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/gun/energy/taser,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/clothing/glasses/hud/security,
@@ -213,12 +218,20 @@
 		/obj/item/taperoll/police,
 		/obj/item/device/radio/headset,
 		/obj/item/weapon/melee,
+		/obj/item/weapon/kitchenknife,
 		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/tactical/throwing
+	storage_slots = 7
+	startswith = list(
+		/obj/item/weapon/kitchenknife/throwing = 7,
+	)
 
 /obj/item/weapon/storage/belt/military
 	name = "military belt"
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "militarybelt"
+	force = 10
 	can_hold = list()

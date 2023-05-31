@@ -1,20 +1,16 @@
-var/datum/subsystem/diseases/SSdisease
-
-/datum/subsystem/diseases
+SUBSYSTEM_DEF(diseases)
 	name = "Diseases"
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/subsystem/diseases/New()
-	NEW_SS_GLOBAL(SSdisease)
-
-/datum/subsystem/diseases/stat_entry(msg)
+/datum/controller/subsystem/diseases/stat_entry(msg)
 	..("P:[processing.len]")
 
-/datum/subsystem/diseases/fire(resumed = 0)
+/datum/controller/subsystem/diseases/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

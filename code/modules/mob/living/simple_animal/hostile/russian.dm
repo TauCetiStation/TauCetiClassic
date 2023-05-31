@@ -11,7 +11,7 @@
 	response_disarm = "shoves the"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -43,7 +43,7 @@
 	icon_living = "russianranged"
 	corpse = /obj/effect/landmark/mobcorpse/russian/ranged
 	weapon1 = /obj/item/weapon/gun/projectile/revolver/mateba
-	ranged = 1
+	ranged = TRUE
 	projectiletype = /obj/item/projectile/bullet
 	projectilesound = 'sound/weapons/guns/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/a357

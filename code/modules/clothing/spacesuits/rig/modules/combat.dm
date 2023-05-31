@@ -192,4 +192,4 @@
 
 	interface_name = "mounted taser"
 	interface_desc = "A palm-mounted, cell-powered taser."
-	gun = /obj/item/weapon/gun/energy/taser
+	gun = /obj/item/weapon/gun/energy/taser/stunrevolver

@@ -96,6 +96,12 @@
 		num_list += text2num(x)
 	return num_list
 
+/proc/hex2color(hex)
+	if(!hex_by_color)
+		gen_hex_by_color()
+
+	return hex_by_color[hex]
+
 //Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")
 	return splittext(trim(return_file_text(filename)),seperator)
@@ -264,9 +270,9 @@
 		switch(child)
 			if(/datum)
 				return null
-			if(/obj || /mob)
+			if(/obj, /mob)
 				return /atom/movable
-			if(/area || /turf)
+			if(/area, /turf)
 				return /atom
 			else
 				return /datum

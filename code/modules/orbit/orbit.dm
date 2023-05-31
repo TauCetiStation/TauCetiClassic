@@ -16,13 +16,20 @@
 	if (orbiter.orbiting)
 		orbiter.stop_orbit()
 	orbiter.orbiting = src
-	Check()
+
+	// NEVERMIND
+	if(!Check())
+		return
+
 	lock = _lock
+
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_BEGIN, orbiting)
 
 
 
 //do not qdel directly, use stop_orbit on the orbiter. (This way the orbiter can bind to the orbit stopping)
 /datum/orbit/Destroy()
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_STOP, orbiting)
 	SSorbit.orbits -= src
 	if (orbiter)
 		orbiter.orbiting = null
@@ -38,10 +45,10 @@
 /datum/orbit/proc/Check(turf/targetloc)
 	if (!orbiter)
 		qdel(src)
-		return
+		return FALSE
 	if (!orbiting)
 		orbiter.stop_orbit()
-		return
+		return FALSE
 	if (!orbiter.orbiting) //admin wants to stop the orbit.
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
@@ -50,16 +57,18 @@
 		targetloc = get_turf(orbiting)
 	if (!targetloc || (!lock && orbiter.loc != lastloc && orbiter.loc != targetloc))
 		orbiter.stop_orbit()
-		return
+		return FALSE
 
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
+	return TRUE
 
 
 /atom/movable/var/datum/orbit/orbiting = null
 /atom/var/list/orbiters = null
 
+/atom/movable/var/cached_transform = null
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -76,6 +85,7 @@
 	if (!orbiting) //something failed, and our orbit datum deleted itself
 		return
 	var/matrix/initial_transform = matrix(transform)
+	cached_transform = initial_transform
 
 	//Head first!
 	if (pre_rotation)
@@ -92,12 +102,10 @@
 
 	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
 
-	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
-	transform = initial_transform
-
 /atom/movable/proc/stop_orbit()
 	SpinAnimation(0, 0)
 	qdel(orbiting)
+	transform = cached_transform
 
 /atom/Destroy()
 	. = ..()

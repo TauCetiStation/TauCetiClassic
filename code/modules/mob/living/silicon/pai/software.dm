@@ -50,7 +50,7 @@
 #define INTERACTION_ANYBOT_TOGGLE_ACTIVE				2
 
 #define INTERACTION_SECBOT_ID_CHECKER					3
-#define INTERACTION_SECBOT_CHEKING_RECORDS				4
+#define INTERACTION_SECBOT_CHECKING_RECORDS				4
 
 #define INTERACTION_FARMBOT_PLANTS_WATERING				3
 #define INTERACTION_FARMBOT_TOGGLE_REFILLGING			4
@@ -86,54 +86,52 @@
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
-	src.set_machine(src)
+	set_machine(src)
 
 	if(temp)
 		left_part = temp
 	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
-		if(config.rus_language)
-			left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"	//This file has to be saved as ANSI or this will not display correctly
-		else
-			left_part = "<b><font color=red>3Rr0R �a�A C0RrU?�ion</font></b>"
+		left_part = "<b><font color=red>3Rr0R ?a?A C0RrU??ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 	else
 		switch(src.screen)							// Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
-				left_part = src.directives()
+				left_part = directives()
 			if("pdamessage")
-				left_part = src.pdamessage()
+				left_part = pdamessage()
 			if("buy")
 				left_part = downloadSoftware()
 			if("manifest")
-				left_part = src.softwareManifest()
+				left_part = softwareManifest()
 			if("medicalrecord")
-				left_part = src.softwareMedicalRecord()
+				left_part = softwareMedicalRecord()
 			if("securityrecord")
-				left_part = src.softwareSecurityRecord()
+				left_part = softwareSecurityRecord()
 			if("translator")
-				left_part = src.softwareTranslator()
+				left_part = softwareTranslator()
 			if("atmosensor")
-				left_part = src.softwareAtmo()
+				left_part = softwareAtmo()
 			if("securityhud")
-				left_part = src.facialRecognition()
+				left_part = facialRecognition()
 			if("medicalhud")
-				left_part = src.medicalAnalysis()
+				left_part = medicalAnalysis()
 			if("interaction")
-				left_part = src.softwareInteraction()
+				left_part = softwareInteraction()
 			if("signaller")
-				left_part = src.softwareSignal()
+				left_part = softwareSignal()
 			if("radio")
-				left_part = src.softwareRadio()
+				left_part = softwareRadio()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
 
 	// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
-	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	dat = {"<!DOCTYPE html>
 			<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style type=\"text/css\">
 					body { background-image:url(\"painew.png\"); background-color:#333333; background-repeat:no-repeat; margin-top:12px; margin-left:4px; }
 
@@ -168,7 +166,7 @@
 				</div>
 			</body>
 			</html>"}
-	usr << browse(entity_ja(dat), "window=pai;size=685x449;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	usr << browse(dat, "window=pai;size=685x449;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
 	return
@@ -190,7 +188,7 @@
 
 /mob/living/silicon/pai/proc/get_carrier(mob/living/M)
 	var/count = 0
-	while(!istype(M, /mob/living))
+	while(!isliving(M))
 		if(!M || !M.loc) return null //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 		M = M.loc
 		count++
@@ -218,7 +216,7 @@
 					var/cost = src.available_software[target]
 					if(src.ram >= cost)
 						src.ram -= cost
-						src.software.Add(target)
+						software.Add(target)
 					else
 						src.temp = "Insufficient RAM available."
 				else
@@ -260,7 +258,7 @@
 					pID = 8
 				if("What")
 					pID = 9
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("signaller")
 
@@ -301,7 +299,7 @@
 					pda.message_silent = !pda.message_silent
 				else if(href_list["target"])
 					if(silence_time)
-						return alert("Communications circuits remain uninitialized.")
+						return tgui_alert(usr, "Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)
@@ -337,13 +335,27 @@
 						src.securityActive2 = M
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				if(secHUD)
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
+					sec.add_hud_to(src)
+				else
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
+					sec.remove_hud_from(src)
+
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				if(medHUD)
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+					med.add_hud_to(src)
+				else
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+					med.remove_hud_from(src)
+
 		if("translator")
 			if(href_list["toggle"])
-				src.translator_toggle()
+				translator_toggle()
 		if("interaction")
 			if(href_list["jack"])
 				if(cable && cable.machine)
@@ -384,11 +396,11 @@
 					C.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto someone's hand"].</span>", "<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto your hand"].</span>", "<span class='warning'>You hear the soft click of something light and hard falling [C ? "onto someone's hand" : "to the ground"].</span>")
 				if(href_list["cable"] == "2")
 					if(cable)
-						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
+						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
 						QDEL_NULL(cable)
 					hackobj = null
-	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
+	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
+	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
 // Interaction module - proc
@@ -463,11 +475,11 @@
 			var/mob/living/silicon/pai/targetPersonality = target.pai
 			switch(interaction_type)
 				if(INTERACTION_PAI_MODIFY_MAIN_LAW)
-					targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0) as text
-					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
+					targetPersonality.laws.set_zeroth_law(sanitize(input("Insert new main law here.", "PAI exploiter", targetPersonality.laws.zeroth) as text))
+					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.laws.zeroth]")
 				if(INTERACTION_PAI_MODIFY_SEC_LAW)
-					targetPersonality.pai_laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.pai_laws) as text
-					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.pai_laws]")
+					targetPersonality.laws.add_supplied_law(0, sanitize(input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.supplied.len ? targetPersonality.laws.supplied[1] : "") as text))
+					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [jointext(targetPersonality.laws.supplied, "<br>")]")
 				if(INTERACTION_PAI_MANAGE_MARKED)
 					var/markedobjselected
 					while(markedobjselected != "Cancel")
@@ -513,7 +525,7 @@
 					A.extended_inventory = !A.extended_inventory
 				if(INTERACTION_VENDING_ACCOUNT_VERIFY)
 					A.check_accounts = !A.check_accounts
-		if(istype(hackobj, /obj/machinery/bot))
+		if(isbot(hackobj))
 			switch(interaction_type)
 				if(INTERACTION_ANYBOT_INTERFACE_LOCK) //Unlock
 					var/obj/machinery/bot/Bot = hackobj
@@ -527,9 +539,9 @@
 			if(istype(hackobj, /obj/machinery/bot/secbot))
 				var/obj/machinery/bot/secbot/Bot = hackobj
 				switch(interaction_type)
-					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID cheker
+					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID checker
 						Bot.idcheck = !Bot.idcheck
-					if(INTERACTION_SECBOT_CHEKING_RECORDS) //Toggle Checking records
+					if(INTERACTION_SECBOT_CHECKING_RECORDS) //Toggle Checking records
 						Bot.check_records = !Bot.check_records
 			if(istype(hackobj, /obj/machinery/bot/farmbot))
 				var/obj/machinery/bot/farmbot/Bot = hackobj
@@ -576,7 +588,7 @@
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
 		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>�</font>" : "<font color=#55FF55>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>•</font>" : "<font color=#55FF55>•</font>"] <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -595,11 +607,11 @@
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "medical HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "universal translator")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "interaction module")
@@ -638,9 +650,9 @@
 	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
 	dat += "<h2>Directives</h2><br>"
 	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_law0]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_laws]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(laws.supplied, "<br>")]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
 			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
@@ -652,7 +664,7 @@
 			"}
 	return dat
 
-/mob/living/silicon/pai/proc/CheckDNA(var/mob/M, var/mob/living/silicon/pai/P)
+/mob/living/silicon/pai/proc/CheckDNA(mob/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		P.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>", blind_message = "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
@@ -715,7 +727,7 @@
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><hr>"
 	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
+		dat += data_core.html_manifest(monochrome=0)
 	dat += "<br>"
 	return dat
 
@@ -798,8 +810,8 @@
 				 <h4>Host Bioscan</h4>
 				"}
 		var/mob/living/M = src.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
+		if(!isliving(M))
+			while (!isliving(M))
 				M = M.loc
 				if(istype(M, /turf))
 					src.temp = "Error: No biological host found. <br>"
@@ -815,13 +827,7 @@
 		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>[M.getBruteLoss()]</font>" : "<font color=#55FF55>[M.getBruteLoss()]</font>"]<br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
-		for(var/datum/disease/D in M.viruses)
-			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
-					"}
+
 		dat += "<br><a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Refresh Bioscan</a><br>"
 		dat += "<br><a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
@@ -922,8 +928,8 @@
 				dat += "pAI.<br>"
 				if(Temp.pai)
 					var/mob/living/silicon/pai/Temppai = Temp.pai
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_MAIN_LAW];sub=0'>Modify Main Law</a> (Current: [Temppai.pai_law0]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [Temppai.pai_laws]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_MAIN_LAW];sub=0'>Modify Main Law</a> (Current: [Temppai.laws.zeroth]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [jointext(Temppai.laws.supplied, "<br>")]) <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MANAGE_MARKED];sub=0'>Get Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_RESET_MARKED];sub=0'>Clear Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_CLEAR_SOFTWARE];sub=0'>Delete All Installed Software</a> <br>"
@@ -941,7 +947,7 @@
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_SPEAK];sub=0'>Speak</a> <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_CONTRABAND_MODE];sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_ACCOUNT_VERIFY];sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
-			if(istype(hackobj, /obj/machinery/bot))
+			if(isbot(hackobj))
 				var/botchecked = 0 //Should we name bot as "Unknown"?
 				if(istype(hackobj, /obj/machinery/bot/secbot))
 					botchecked = 1
@@ -950,7 +956,7 @@
 					dat += "Security Bot.<br>"
 					var/obj/machinery/bot/secbot/Temp = hackobj
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_ID_CHECKER];sub=0'>Toggle ID Checker</a> (Currently [Temp.idcheck ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHEKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHECKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
 				if(istype(hackobj, /obj/machinery/bot/farmbot))
 					botchecked = 1
 					dat += "Farm Bot.<br>"
@@ -992,7 +998,7 @@
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf_or_move(loc)
 	if(is_type_in_list(hackobj, list(/obj/machinery/door, /obj/machinery/camera, /obj/machinery/bot)))
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			if(T.loc)
 				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 			else
@@ -1006,7 +1012,7 @@
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
 		if(src.screen == "interaction" && src.subscreen == 0) // Update our view, if appropriate
-			src.paiInterface()
+			paiInterface()
 		if(hackprogress == 100)
 			hackprogress = 0
 			src.hacksuccess = TRUE
@@ -1047,20 +1053,20 @@
 	if(translator_on)
 		translator_on = 0
 
-		remove_language("Sinta'unathi")
-		remove_language("Siik'maas")
-		remove_language("Siik'tajr")
-		remove_language("Skrellian")
+		remove_language(LANGUAGE_SINTAUNATHI)
+		remove_language(LANGUAGE_SIIKMAAS)
+		remove_language(LANGUAGE_SIIKTAJR)
+		remove_language(LANGUAGE_SKRELLIAN)
 
 		to_chat(src, "<span class='notice'>Translator Module toggled OFF.</span>")
 
 	else
 		translator_on = 1
 
-		add_language("Sinta'unathi")
-		add_language("Siik'maas")
-		add_language("Siik'tajr", 0)
-		add_language("Skrellian")
+		add_language(LANGUAGE_SINTAUNATHI)
+		add_language(LANGUAGE_SIIKMAAS)
+		add_language(LANGUAGE_SIIKTAJR, 0)
+		add_language(LANGUAGE_SKRELLIAN)
 
 		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")
 
@@ -1111,7 +1117,7 @@
 #undef INTERACTION_ANYBOT_TOGGLE_ACTIVE
 
 #undef INTERACTION_SECBOT_ID_CHECKER
-#undef INTERACTION_SECBOT_CHEKING_RECORDS
+#undef INTERACTION_SECBOT_CHECKING_RECORDS
 
 #undef INTERACTION_FARMBOT_PLANTS_WATERING
 #undef INTERACTION_FARMBOT_TOGGLE_REFILLGING

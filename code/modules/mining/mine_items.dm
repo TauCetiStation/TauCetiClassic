@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
-	anchored = 1
+	anchored = TRUE
 	unacidable = 1
 	light_range = 8
 
@@ -33,16 +33,15 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
-var/mining_shuttle_moving = 0
-var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
+var/global/mining_shuttle_moving = 0
+var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
@@ -102,7 +101,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 						shake_camera(M, 3, 1) // buckled, not a lot of shaking
 					else
 						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
-			if(istype(M, /mob/living/carbon))
+			if(iscarbon(M))
 				if(!M.buckled)
 					M.Weaken(3)
 
@@ -114,13 +113,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
+	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/ui_interact(user)
-	var/dat
-
-	dat = "<center>Mining Shuttle Control<hr>"
+	var/dat = "<center>"
 
 	if(mining_shuttle_moving)
 		dat += "Location: <font color='red'>Moving</font> <br>"
@@ -128,7 +125,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
 	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
-	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=200x150")
+
+	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	. = ..()
@@ -136,10 +136,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(ticker.mode.name == "blob")
-		//	if(ticker.mode:declared)
-		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		//		return
 
 		if (!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
@@ -164,7 +160,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "lantern"
 	desc = "A mining lantern."
 	button_sound = 'sound/items/lantern.ogg'
-	brightness_on = 4			// luminosity when on
+	brightness_on = 5			// luminosity when on
 
 /*****************************Pickaxe********************************/
 /obj/item/weapon/pickaxe
@@ -176,13 +172,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	m_amt = 3750 //one sheet, but where can you make them?
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/pickaxe.ogg'
 	var/drill_verb = "picking"
+	var/mineral_multiply_coefficient = 1.0 // default
 	sharp = 1
 
 	var/excavation_amount = 100
@@ -191,7 +188,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	toolspeed = 0.9
+	toolspeed = 0.7
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
@@ -199,76 +196,61 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	toolspeed = 0.9
+	toolspeed = 0.2 // hi MiNeCrAfT golden pickaxe
+	mineral_multiply_coefficient = 0.6 // for speed balance
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
-
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "plasmacutter"
-	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
-	damtype = "fire"
-	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	drill_verb = "cutting"
-
-/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
-	return 3800
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	toolspeed = 0.2
+	toolspeed = 0.25
+	mineral_multiply_coefficient = 1.3
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
 /*****************************Sledgehammer********************************/
-/obj/item/weapon/twohanded/sledgehammer
+/obj/item/weapon/sledgehammer
 	name = "Sledgehammer"
 	icon_state = "sledgehammer0"
 	force = 15
 	origin_tech = "materials=3"
 	desc = "This thing breaks skulls pretty well, right?"
 	hitsound = 'sound/items/sledgehammer_hit.ogg'
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 15
-	force_wielded = 35
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 	var/next_hit = 0
 
-/obj/item/weapon/twohanded/sledgehammer/update_icon()
-	icon_state = "sledgehammer[wielded]"
+/obj/item/weapon/sledgehammer/atom_init()
+	. = ..()
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 35
+	TCB.force_unwielded = 15
+	TCB.icon_wielded = "sledgehammer1"
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/sledgehammer/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
 	if(next_hit < world.time)
 		asshole_counter = 0
 	next_hit = world.time + COUNTER_COOLDOWN
 	asshole_counter += 1
 
-	var/target_zone = user.zone_sel.selecting
+	var/target_zone = user.get_targetzone()
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
-	if((CLUMSY in user.mutations) && asshole_counter >= 5)
+	if((user.IsClumsy()) && asshole_counter >= 5)
 		target.emote("scream")
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
 		asshole_counter = 0
-	if(wielded)
-		INVOKE_ASYNC(src, .proc/spin, user)
 
-/obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
-	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
-		user.dir = i
-		sleep(1)
 
-/obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
+/obj/item/weapon/sledgehammer/dropped(mob/living/carbon/user)
 	..()
 	asshole_counter = 0
 
@@ -283,10 +265,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	usesound = 'sound/effects/shovel_digging.ogg'
+	// Better than a rod, worse than a crowbar.
+	qualities = list(
+		QUALITY_PRYING = 0.75
+	)
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
@@ -295,7 +282,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
@@ -304,7 +291,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "Mining car (not for rails)"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
-	density = 1
+	density = TRUE
 	icon_opened = "miningcaropen"
 	icon_closed = "miningcar"
 
@@ -322,18 +309,19 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/drill.ogg'
 	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	toolspeed = 0.6
-	var/drill_cost = 15
+	toolspeed = 0.55
+	mineral_multiply_coefficient = 1.0
+	var/drill_cost = 35
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
-	var/cell_type = /obj/item/weapon/stock_parts/cell
-	var/mode = 0
+	var/cell_type = /obj/item/weapon/stock_parts/cell/high
+	var/effectively_mode = FALSE
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -342,6 +330,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
@@ -352,8 +341,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		icon_state += "_broken"
 	return
 
-/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/weapon/pickaxe/drill/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -365,18 +354,18 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		else if(state == 2)
 			to_chat(user, "<span class='danger'>[src] is broken!</span>")
 		return
-	else if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(state == 1 || state == 2)
 			if(!power_supply)
-				user.remove_from_mob(W)
-				power_supply = W
-				power_supply.loc = src
+				user.drop_from_inventory(I, src)
+				power_supply = I
 				to_chat(user, "<span class='notice'>You load a powercell into \the [src]!</span>")
 			else
 				to_chat(user, "<span class='notice'>There's already a powercell in \the [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] panel is closed.</span>")
-		return
+	else
+		return ..()
 
 /obj/item/weapon/pickaxe/drill/attack_hand(mob/user)
 	if(loc != user)
@@ -394,31 +383,43 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user)
-	mode = !mode
+	effectively_mode = !effectively_mode
 
-	if(mode)
-		to_chat(user, "<span class='notice'>[src] is now standard mode.</span>")
+	if(effectively_mode)
+		to_chat(user, "<span class='notice'>[src] is now effectively mode. The speed is lowered and the cost of drilling is increased, but the amount of minerals is greater.</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is now safe mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now standart drilling mode.</span>")
+	update_mode_stats()
 
+/obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
+	if(effectively_mode)
+		toolspeed *= 1.25 // slow down drilling speed
+		drill_cost *= 2
+		mineral_multiply_coefficient += 0.25
+	else
+		toolspeed = initial(toolspeed)
+		drill_cost = initial(drill_cost)
+		mineral_multiply_coefficient -= 0.25
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	toolspeed = 0.8 //Drills 3 tiles in front of user
+	toolspeed = 0.8 // Drills 3 tiles in front of user
+	mineral_multiply_coefficient = 0.8
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
-/obj/item/weapon/pickaxe/drill/jackhammer/attackby()
+/obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
 	item_state = "d_drill"
-	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
+	toolspeed = 0.3 // Digs through walls, girders, and can dig up sand
+	mineral_multiply_coefficient = 1.2
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
@@ -429,13 +430,12 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
 	toolspeed = 0.4
+	mineral_multiply_coefficient = 1.2
 	desc = ""
 	drill_verb = "drilling"
 
-/obj/item/weapon/pickaxe/drill/borgdrill/attackby()
+/obj/item/weapon/pickaxe/drill/borgdrill/attackby(obj/item/I, mob/user, params)
 	return
-
-
 
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
@@ -446,7 +446,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/timer = 10
 	var/atom/target = null
 	var/blast_range = 1
@@ -454,6 +454,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
@@ -468,9 +470,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	if(user.is_busy(src))
 		return
-	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	to_chat(user, "<span class='notice'>Planting explosives...</span>")
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
+	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -484,7 +487,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(target)
 				explosion(location, 3, 2, 2)
-				target.ex_act(1)
+				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
 
@@ -500,9 +503,17 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
-	var/recharge_time = 20
-	var/already_improved = FALSE
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
+	var/recharge_time = 2.0 SECONDS
+	var/damage = 10
+	var/range = 3
+	var/mineral_multiply_coefficient = 1.0
+
+	var/list/installed_upgrades = list()
+	var/max_upgrades = 3
+
+#define MAX_IDENTICAL_UPGRADES 2
+#define MAX_UPGRADES_LIMIT 5
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
@@ -516,18 +527,57 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/kinetic_upgrade/speed))
-		if(already_improved == FALSE)
-			already_improved = TRUE
-			recharge_time -= 8 //We get 1.2 seconds of reload instead.
-			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
-			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-			qdel(O)
-		else
-			to_chat(user, "<span class='notice'>Already improved.</span>")
-	else
-		return ..()
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/can_be_upgraded(mob/user, obj/item/kinetic_upgrade/UPG)
+	if(length(installed_upgrades) >= max_upgrades)
+		to_chat(user, "<span class='warning'>Достигнут общий лимит количества улучшений!</span>")
+		return FALSE
+
+	if(count_by_type(installed_upgrades, UPG.type) >= MAX_IDENTICAL_UPGRADES)
+		to_chat(user, "<span class='warning'>Достигнут лимит улучшений данного типа!</span>")
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
+	if(!isliving(user))
+		return
+
+	if(istype(I, /obj/item/kinetic_upgrade))
+		var/obj/item/kinetic_upgrade/UPG = I
+
+		if(!can_be_upgraded(user, UPG))
+			return
+
+		if(!user.unEquip(UPG))
+			return
+
+		UPG.install(src)
+
+	else if(istype(I, /obj/item/kinetic_expander))
+		if(max_upgrades >= MAX_UPGRADES_LIMIT)
+			to_chat(user, "<span class='warning'>Закончилось место для расширителей!</span>")
+			return
+		max_upgrades++
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+		qdel(I)
+
+	else if(isscrewing(I))
+		if(!length(installed_upgrades))
+			to_chat(user, "<span class='warning'>Нет улучшений для извлечения!</span>")
+			return
+
+		var/list/possible_removals = list()
+		for(var/obj/item/kinetic_upgrade/upg in installed_upgrades)
+			possible_removals[upg] = image(icon = upg.icon, icon_state = upg.icon_state)
+
+		var/obj/item/kinetic_upgrade/removal_choice = show_radial_menu(user, src, possible_removals, require_near = TRUE, tooltips = TRUE)
+
+		if(!removal_choice)
+			return
+
+		if(!Adjacent(user))
+			return
+
+		removal_choice.remove(src)
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -540,20 +590,31 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = "bomb"
-	var/range = 3
-	var/power = 4
+	flag = BOMB
+	hitscan = TRUE
+	var/range = 3 // in tiles
+	var/mineral_multiply_coefficient = 1.0 // default
 
 /obj/item/projectile/kinetic/atom_init()
 	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/projectile/kinetic/setup_trajectory()
+	if(istype(shot_from, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = shot_from
+		damage = KA.damage
+		range = KA.range
+		mineral_multiply_coefficient = KA.mineral_multiply_coefficient
+
+	var/turf/proj_turf = get_turf(src)
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 4
+	return ..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
@@ -566,7 +627,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
-		M.GetDrilled(firer)
+		M.GetDrilled(firer, mineral_drop_coefficient = mineral_multiply_coefficient)
 	new /obj/item/effect/kinetic_blast(target_turf)
 
 /obj/item/effect/kinetic_blast
@@ -580,13 +641,218 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/effect/kinetic_blast/atom_init_late()
-	QDEL_IN(src, 4)
+	QDEL_IN(src, 0.35 SECOND)
+
+#undef MAX_IDENTICAL_UPGRADES
+#undef MAX_UPGRADES_LIMIT
+
+///////////////*UPGRADES*///////////////
+/obj/item/kinetic_upgrade
+	name = "accelerator upgrade"
+	icon = 'icons/obj/module.dmi'
+	desc = "Улучшение для кинетического ускорителя. "
+	var/obj/item/weapon/gun/energy/kinetic_accelerator/holder
+
+/*****************************Plasma Cutter********************************/
+
+/obj/item/weapon/gun/energy/laser/cutter
+	name = "plasma cutter"
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	force = 15
+	damtype = BURN
+	hitsound = list('sound/weapons/sear.ogg')
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
+	fire_delay = 3
+	w_class = SIZE_SMALL //it is smaller than the pickaxe
+	origin_tech = "materials=4;phorontech=3;engineering=3"
+	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	var/emagged = FALSE
+
+/obj/item/projectile/beam/plasma_cutter
+	name = "cutter"
+	damage = 5
+	damage_type = BURN
+	flag = ENERGY
+	light_color = "#4abdff"
+	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
+	tracer_type = /obj/effect/projectile/laser_omni/tracer
+	impact_type = /obj/effect/projectile/laser_omni/impact
+	var/destruction_chance = 20
+
+/obj/item/projectile/beam/plasma_cutter/emagged
+	damage = 75
+	destruction_chance = 100
+
+/obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	. = ..()
+	var/turf/target_turf = get_turf(target)
+	if(istype(target_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target_turf
+		M.GetDrilled(firer)
+	if((iswallturf(target)) && (prob(destruction_chance)))
+		target.ex_act(EXPLODE_HEAVY)
+
+
+/obj/item/weapon/gun/energy/laser/cutter/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+
+/obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
+	fire_delay = 5
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	return TRUE
+
+/obj/item/weapon/gun/energy/laser/cutter/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
+			power_supply.give(1000)
+			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+			update_icon()
+	else if(istype(A, /obj/item/weapon/ore/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
+			power_supply.give(500)
+			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+			update_icon()
+	else if(istype(A, /obj/item/weapon/storage/bag/ore))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		var/obj/item/weapon/storage/bag/ore/O = A
+		for(var/obj/item/weapon/ore/phoron/P in O.contents)
+			if(power_supply.charge >= power_supply.maxcharge)
+				return
+			if (P.use_tool(O, user, 10, amount = 1, can_move = TRUE))
+				O.remove_from_storage(P)
+				power_supply.give(500)
+				to_chat(user, "<span class='notice'>You insert [P] in [src], recharging it.</span>")
+				update_icon()
+			else
+				return
+	else
+		return ..()
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
+	emagged = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter/emagged)
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 150)
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged/newshot()
+	if(!isrobot(loc))
+		return FALSE
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			R.cell.use(shot.e_cost)
+
+/obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	upgrade_kinetic(KA)
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+	holder = KA
+	holder.installed_upgrades += src
+	forceMove(holder)
+
+/obj/item/kinetic_upgrade/proc/remove(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	downgrade_kinetic(KA)
+	playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+	forceMove(get_turf(holder))
+	holder.installed_upgrades -= src
+	holder = null
+
+/obj/item/kinetic_upgrade/proc/upgrade_kinetic()
+	return
+
+/obj/item/kinetic_upgrade/proc/downgrade_kinetic()
+	return
+
+/obj/item/kinetic_expander
+	name = "accelerator upgrade"
+	icon = 'icons/obj/module.dmi'
+	icon_state = "card_mod"
+	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
+
+///////////////////////////////////////////
+
+/obj/item/kinetic_upgrade/resources
+	name = "accelerator upgrade(resources)"
+	icon_state = "accelerator_upg_resources"
+	var/additional_coefficient = 0.25 // 25%
+
+/obj/item/kinetic_upgrade/resources/atom_init()
+	desc += "Повышает <span class='notice'><B>эффективность добычи ресурсов</B></span> на <span class='notice'><B>[additional_coefficient * 100]%</B></span>. "
+	return ..()
+
+/obj/item/kinetic_upgrade/resources/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.mineral_multiply_coefficient += additional_coefficient
+
+/obj/item/kinetic_upgrade/resources/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.mineral_multiply_coefficient -= additional_coefficient
+
+///////////////////////////////////////////
+
+/obj/item/kinetic_upgrade/range
+	name = "accelerator upgrade(range)"
+	icon_state = "accelerator_upg_range"
+	var/range_increase = 1
+
+/obj/item/kinetic_upgrade/range/atom_init()
+	desc += "Повышает <span class='notice'><B>дальность стрельбы</B></span> на <span class='notice'><B>[range_increase]</B></span>."
+	return ..()
+
+/obj/item/kinetic_upgrade/range/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.range += range_increase
+
+/obj/item/kinetic_upgrade/range/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.range -= range_increase
+
+///////////////////////////////////////////
+
+/obj/item/kinetic_upgrade/damage
+	name = "accelerator upgrade(damage)"
+	icon_state = "accelerator_upg_damage"
+	var/damage_increase = 1.5
+
+/obj/item/kinetic_upgrade/damage/atom_init()
+	desc += "Повышает <span class='notice'><B>урон</B></span> на <span class='notice'><B>[damage_increase]</B></span>."
+	return ..()
+
+/obj/item/kinetic_upgrade/damage/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.damage += damage_increase
+
+/obj/item/kinetic_upgrade/damage/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.damage -= damage_increase
+
+///////////////////////////////////////////
 
 /obj/item/kinetic_upgrade/speed
-	name = "upgrade for accelerator"
-	desc = "Speeds up reloading Proto-kinetic accelerator."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "accelerator_speedupgrade"
+	name = "accelerator upgrade(speed)"
+	icon_state = "accelerator_upg_speed"
+	var/cooldown_reduction = 0.4 SECOND
+
+/obj/item/kinetic_upgrade/speed/atom_init()
+	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунды."
+	return ..()
+
+/obj/item/kinetic_upgrade/speed/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.recharge_time -= cooldown_reduction
+
+/obj/item/kinetic_upgrade/speed/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.recharge_time += cooldown_reduction
 
 /*****************************Survival Pod********************************/
 
@@ -597,13 +863,18 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
+	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
+
+/area/custom/survivalpod/bar
+	name = "Emergency Bar"
+	looped_ambience = null
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
-	icon_state = "capsule"
+	icon_state = "capsule_classic"
 	icon = 'icons/obj/mining.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -626,14 +897,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "This capsule has the [template.name] stored.")
 	to_chat(user, template.description)
 
-/obj/item/weapon/survivalcapsule/attack_self()
+/obj/item/weapon/survivalcapsule/attack_self(mob/living/user)
 	// Can't grab when capsule is New() because templates aren't loaded then
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
-			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
-			and shut up!</span>")
+		var/area/A = T.loc
+		if(!A.outdoors)
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)
 			new /obj/item/weapon/tank/air(T)
@@ -642,8 +913,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			new /obj/item/clothing/head/helmet/space/cheap(T)
 			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
-			src.loc.visible_message("<span class='warning'>\The [src] begins \
-				to shake. Stand back!</span>")
+			visible_message("<span class='warning'>\The [src] begins to shake.</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"Stand back!\"</span>")
 			used = TRUE
 			sleep(50)
 
@@ -651,14 +922,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			var/status = template.check_deploy(T)
 			switch(status)
 				if(SHELTER_DEPLOY_BAD_AREA)
-					src.loc.visible_message("<span class='warning'>\The [src] \
-					will not function in this area.</span>")
+					to_chat(user, "<span class='warning'>\The [src] will not function in this area.</span>")
 				if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
 					var/width = template.width
 					var/height = template.height
-					src.loc.visible_message("<span class='warning'>\The [src] \
-					doesn't have room to deploy! You need to clear a \
-					[width]x[height] area!</span>")
+					audible_message("<span class='game say'><span class='name'>[src]</span> says, \"There is no room to deply! A cleared space of [width]x[height] size is required!\"</span>")
 
 			if(status != SHELTER_DEPLOY_ALLOWED)
 				used = FALSE
@@ -668,11 +936,29 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(!is_mining_level(T.z))//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
-				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [COORD(T)]")
 			template.load(T, centered = TRUE)
 
 		new /datum/effect/effect/system/smoke_spread(T)
 		qdel(src)
+
+/obj/item/weapon/survivalcapsule/improved
+	name = "improved bluespace shelter capsule"
+	desc = "Version of emergency shelter with all the amenities for survival."
+	icon_state = "capsule_improved"
+	icon = 'icons/obj/mining.dmi'
+	w_class = SIZE_MINUSCULE
+	origin_tech = "engineering=4;bluespace=3"
+	template_id = "shelter_beta"
+
+/obj/item/weapon/survivalcapsule/elite
+	name = "elite bluespace shelter capsule"
+	desc = "Wow, this is a mining bar? In a capsule?"
+	icon_state = "capsule_elite"
+	icon = 'icons/obj/mining.dmi'
+	w_class = SIZE_MINUSCULE
+	origin_tech = "engineering=5;bluespace=4"
+	template_id = "shelter_gamma"
 
 //Pod turfs and objects
 
@@ -699,13 +985,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/inflatable/survival
 	name = "inflatable pod wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/structure/inflatable/survival
 	name = "pod wall"
 	desc = "An easily-compressable wall used for temporary shelter."
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
+	opacity = TRUE
+	max_integrity = 100
 
 /obj/structure/inflatable/survival/atom_init()
 	. = ..()
@@ -733,13 +1021,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 					junction |= get_dir(src,W)
 		icon_state = "[basestate][junction]"
 
-//Window
-/obj/structure/window/shuttle/survival_pod
-	name = "pod window"
-	icon = 'icons/obj/survwindows.dmi'
-	icon_state = "window"
-	basestate = "window"
-
 //Door
 /obj/structure/inflatable/door/survival_pod
 	name = "inflatable airlock"
@@ -765,20 +1046,21 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/survival_pod_computer.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	pixel_y = -32
 
-/obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrench(W) && !(flags&NODECONSTRUCT))
+/obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
+	if(iswrenching(I) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
-			return ..()
+			return
+	return ..()
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
@@ -814,7 +1096,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(istype(O, /obj/item))
+	if(isitem(O))
+		if(O.flags & NODROP || !O.canremove)
+			return 0
 		return 1
 	return 0
 
@@ -850,7 +1134,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
-		if(iswrench(O))
+		if(iswrenching(O))
 			if(user.is_busy(src))
 				return
 			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
@@ -881,11 +1165,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "fans"
 	name = "environmental regulation system"
 	desc = "A large machine releasing a constant gust of air."
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrench(W) && !(flags&NODECONSTRUCT))
+	if(iswrenching(W) && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -901,24 +1185,19 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
 	layer = ABOVE_NORMAL_TURF_LAYER
-	density = 0
+	density = FALSE
+	can_block_air = TRUE
 	icon_state = "fan_tiny"
 
-/obj/structure/fans/tiny/atom_init()
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = 1
-	. = ..()
+/obj/structure/fans/tiny/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover))
+		return ..()
+	return FALSE
 
 /obj/structure/fans/tiny/Destroy()
 	var/turf/T = get_turf(loc)
 	if(T)
-		T.blocks_air = 0
-		if(SSair)
-			SSair.mark_for_update(get_turf(loc))
-	return ..()
-
-/obj/structure/fans/Destroy()
+		SSair?.mark_for_update(T)
 	return ..()
 
 //Signs
@@ -946,8 +1225,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "tubes"
 	icon = 'icons/obj/survival_pod.dmi'
 	name = "tubes"
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	density = 0
+	density = FALSE
 
 #undef COUNTER_COOLDOWN

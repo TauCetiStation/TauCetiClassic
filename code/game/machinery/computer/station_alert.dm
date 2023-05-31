@@ -6,6 +6,7 @@
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE, /datum/skill/command = SKILL_LEVEL_NONE)
 
 /obj/machinery/computer/station_alert/atom_init()
 	. = ..()
@@ -16,8 +17,9 @@
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
+	if(!do_skill_checks(user))
+		return
+	var/dat = ""
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = src.alarms[cat]
@@ -35,8 +37,10 @@
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-	user << browse(entity_ja(dat), "window=alerts")
-	onclose(user, "alerts")
+
+	var/datum/browser/popup = new(user, "window=alerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, alarmsource)
 	if(stat & (BROKEN))
@@ -48,6 +52,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
+				updateDialog()
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
@@ -58,6 +63,7 @@
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
+	updateDialog()
 	return 1
 
 
@@ -75,6 +81,7 @@
 			if (srcs.len == 0)
 				cleared = 1
 				L -= I
+	updateDialog()
 	return !cleared
 
 

@@ -7,8 +7,8 @@
 	icon_state = "airtunnel"
 	state_broken_preset = "atmosb"
 	state_nopower_preset = "atmos0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/obj/machinery/gravity_generator = null
 
 
@@ -17,8 +17,8 @@
 	desc = "A device which produces a gravaton field when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 1000
@@ -66,37 +66,36 @@
 /obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
-	var/dat = "<h3>Generator Control System</h3>"
-	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
+	var/dat
 	if(gravity_generator)
 		if(gravity_generator:on)
-			dat += "<font color=green><br><tt>Gravity Status: ON</tt></font><br>"
+			dat += "<span class='green'><br>Gravity Status: ON</span><br>"
 		else
-			dat += "<font color=red><br><tt>Gravity Status: OFF</tt></font><br>"
+			dat += "<span class='red'><br>Gravity Status: OFF</span><br>"
 
-		dat += "<br><tt>Currently Supplying Gravitons To:</tt><br>"
+		dat += "<br>Currently Supplying Gravitons To:<br>"
 
 		for(var/area/A in gravity_generator:localareas)
 			if(A.has_gravity && gravity_generator:on)
-				dat += "<tt><font color=green>[A]</tt></font><br>"
-
+				dat += "<span class='green'>[A]</span><br>"
 			else if (A.has_gravity)
-				dat += "<tt><font color=yellow>[A]</tt></font><br>"
-
+				dat += "<span class='yellow'>[A]</span><br>"
 			else
-				dat += "<tt><font color=red>[A]</tt></font><br>"
+				dat += "<span class='red'>[A]</span><br>"
 
-		dat += "<br><tt>Maintainence Functions:</tt><br>"
+		dat += "<br>Maintainence Functions:<br>"
+		dat += "TURN GRAVITY GENERATOR: "
 		if(gravity_generator:on)
-			dat += "<a href='byond://?src=\ref[src];gentoggle=1'><font color=red> TURN GRAVITY GENERATOR OFF. </font></a>"
+			dat += "<a class='red' href='byond://?src=\ref[src];gentoggle=1'>OFF</a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];gentoggle=1'><font color=green> TURN GRAVITY GENERATOR ON. </font></a>"
+			dat += "<a class='green' href='byond://?src=\ref[src];gentoggle=1'>ON</a>"
 
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(entity_ja(dat), "window=gravgen")
-	onclose(user, "gravgen")
+	var/datum/browser/popup = new(user, "gravgen", "Generator Control System")
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/gravity_control_computer/Topic(href, href_list)
@@ -114,12 +113,12 @@
 					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
-					A.gravitychange(0,A)
+					A.gravitychange(FALSE)
 
 
 		else
 			for(var/area/A in gravity_generator:localareas)
 				gravity_generator:on = 1
-				A.gravitychange(1,A)
+				A.gravitychange(TRUE)
 
-	src.updateUsrDialog()
+	updateUsrDialog()

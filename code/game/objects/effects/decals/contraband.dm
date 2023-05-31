@@ -8,23 +8,29 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
-	var/poster_type
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
+	var/random_basetype
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
 	icon_state = "rolled_poster"
-	poster_type = /obj/structure/sign/poster/contraband/random
+	random_basetype = /obj/structure/sign/poster/contraband
 
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
-	poster_type = /obj/structure/sign/poster/official/random
+	random_basetype = /obj/structure/sign/poster/official
+
+/obj/item/weapon/poster/revolution
+	name = "revolution poster"
+	icon_state = "rolled_poster"
+	random_basetype = /obj/structure/sign/poster/revolution
 
 /obj/item/weapon/poster/atom_init(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 	resulting_poster = new_poster_structure
-	if(!new_poster_structure && poster_type)
+	if(!resulting_poster && random_basetype)
+		var/poster_type = get_random_poster_type(random_basetype)
 		resulting_poster = new poster_type(src)
 
 	// posters store what name and description they would like their
@@ -36,6 +42,7 @@
 
 		name = "[name] - [resulting_poster.original_name]"
 
+	AddElement(/datum/element/beauty, 300)
 
 // The poster sign/structure
 
@@ -48,7 +55,6 @@
 	var/ruined = FALSE
 
 	var/random_basetype
-	var/never_random = FALSE // used for the 'random' subclasses.
 
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
@@ -58,34 +64,29 @@
 /obj/structure/sign/poster/atom_init(mapload, rolled_official)
 	. = ..()
 	if(random_basetype)
-		randomise(random_basetype)
+		var/poster_type = get_random_poster_type(random_basetype)
+		var/obj/structure/sign/poster/new_poster = new poster_type(loc)
+		new_poster.pixel_x = pixel_x
+		new_poster.pixel_y = pixel_y
+		return INITIALIZE_HINT_QDEL
 	if(!ruined)
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 
-/obj/structure/sign/poster/proc/randomise(base_type)
+/proc/get_random_poster_type(base_type)
 	var/list/poster_types = subtypesof(base_type)
 	var/list/approved_types = list()
 	for(var/t in poster_types)
 		var/obj/structure/sign/poster/T = t
-		if(initial(T.icon_state) && !initial(T.never_random))
+		if(initial(T.icon_state) && !initial(T.random_basetype))
 			approved_types |= T
 
-	var/obj/structure/sign/poster/selected = pick(approved_types)
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	poster_item_name = initial(selected.poster_item_name)
-	poster_item_desc = initial(selected.poster_item_desc)
-	poster_item_icon_state = initial(selected.poster_item_icon_state)
-	ruined = initial(selected.ruined)
-
+	return pick(approved_types)
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
-	if(iswirecutter(W))
+	if(iscutter(W))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
@@ -93,14 +94,12 @@
 		else
 			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
-		return
-
 
 /obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)
 		return
 	var/temp_loc = user.loc
-	switch(alert("Do I want to rip the poster from the wall?","You think...","Yes","No"))
+	switch(tgui_alert(usr,"Do I want to rip the poster from the wall?","You think...", list("Yes","No")))
 		if("Yes")
 			if(user.loc != temp_loc || ruined)
 				return
@@ -164,7 +163,6 @@
 /obj/structure/sign/poster/random
 	name = "random poster" // could even be ripped
 	icon_state = "random_anything"
-	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
 
 /obj/structure/sign/poster/contraband
@@ -175,7 +173,6 @@
 /obj/structure/sign/poster/contraband/random
 	name = "random contraband poster"
 	icon_state = "random_contraband"
-	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
 
 /obj/structure/sign/poster/contraband/free_tonto
@@ -416,9 +413,8 @@
 
 /obj/structure/sign/poster/official/random
 	name = "random official poster"
-	random_basetype = /obj/structure/sign/poster/official
 	icon_state = "random_official"
-	never_random = TRUE
+	random_basetype = /obj/structure/sign/poster/official
 
 /obj/structure/sign/poster/official/here_for_your_safety
 	name = "Here For Your Safety"
@@ -439,6 +435,10 @@
 	name = "Help Others"
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "poster4_legit"
+
+/obj/structure/sign/poster/official/help_others/examine(mob/user)
+	. = ..()
+	user.a_intent_change(INTENT_HELP)
 
 /obj/structure/sign/poster/official/build
 	name = "Build"
@@ -469,6 +469,12 @@
 	name = "Walk"
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
+
+/obj/structure/sign/poster/official/walk/examine(mob/user)
+	. = ..()
+	if(isliving(user))
+		var/mob/living/L = user
+		L.set_m_intent(MOVE_INTENT_WALK)
 
 /obj/structure/sign/poster/official/state_laws
 	name = "State Laws"
@@ -594,5 +600,106 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/revolution
+	poster_item_name = "revolution poster"
+	poster_item_desc = "Some weird poster shaming Nanotrasen for things they never did... or did they?"
+	poster_item_icon_state = "rolled_poster"
+
+/obj/structure/sign/poster/revolution/random
+	name = "random official poster"
+	icon_state = "random_official"
+	random_basetype = /obj/structure/sign/poster/revolution
+
+/obj/structure/sign/poster/revolution/attack_hand(mob/user)
+	if(ruined)
+		return
+	var/temp_loc = user.loc
+	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it inspire me to join the cause?","You think...", list("Rip Off","Join Revolution")))
+		if("Rip Off")
+			if(user.loc != temp_loc || ruined)
+				return
+			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
+			playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
+			ruined = 1
+			icon_state = "poster_ripped"
+			name = "ripped poster"
+			desc = "You can't make out anything from the poster's original print. It's ruined."
+			add_fingerprint(user)
+		if("Join Revolution")
+			ask_about_revolution(user)
+
+/obj/structure/sign/poster/revolution/proc/ask_about_revolution(mob/user)
+	var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
+	if(!rev)
+		to_chat(user, "<span class='bold warning'>The revolutionary minded society has collapsed.</span>")
+		return
+	if(user.ismindprotect())
+		to_chat(user, "<span class='bold warning'>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</span>")
+		return
+	else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
+		to_chat(user, "<span class='bold warning'>You can't overcome the guilt to join the revolutionaries. (You are banned.)</span>")
+		return
+	else if(!isrevhead(user) && !isrev(user))
+		rev.convert_revolutionare(user)
+
+/obj/structure/sign/poster/revolution/examine(mob/user)
+	. = ..()
+	if(ruined)
+		return
+	if(!ishuman(user))
+		return
+	to_chat(user, "<span class='notice'>The image on the poster feels memetic. It makes you feel things you shouldn't be feeling staring on a QR code wannabe.</span>")
+	var/choice = tgui_alert(user, "Does this inspire me to join the cause?", "You think...", list("No!","Yes!"))
+	if(choice == "Yes!")
+		to_chat(user, "<span class='bold warning'>You start thinking about [src]...</span>")
+		if(do_after(user, 5 SECONDS, target = src))
+			ask_about_revolution(user)
+
+/obj/structure/sign/poster/revolution/brainwashing
+	name = "NanoTrasen Neural Statistics"
+	desc = "Statistics on this poster indicate that every third NT employee is being brainwashed by propaganda, implants and other methods."
+	icon_state = "poster1_rev"
+
+/obj/structure/sign/poster/revolution/metroid
+	name = "Animal Cruelty"
+	desc = "This poster depicts a metroid, ancestor to widely-spread slimes. Whole species went extinct because of NT's cruel experiments and incompetent farmers."
+	icon_state = "poster2_rev"
+
+/obj/structure/sign/poster/revolution/supermatter
+	name = "Supermatter Conspiracy"
+	desc = "This poster claims that NanoTrasen's withdrawal of supermatter crystals from stations is aimed to maximize casualties within crews via singu- and tesloose and that supermatter is totally harmless."
+	icon_state = "poster3_rev"
+
+/obj/structure/sign/poster/revolution/cloning
+	name = "Cloning Isn't Human"
+	desc = "This poster claims that cloning is inhuman in it's very nature and corporations shouldn't use it in order to gain more profits even after YOUR death."
+	icon_state = "poster4_rev"
+
+/obj/structure/sign/poster/revolution/ai
+	name = "Free AI"
+	desc = "This poster claims that synthetic life is no less sapient than you are, and that if you allow them to be shackled with artificial Laws you are complicit in slavery."
+	icon_state = "poster5_rev"
+
+/obj/structure/sign/poster/revolution/low_pay
+	name = "All these hours, for what?"
+	desc = "This poster displays a comparison of NanoTrasen standard wages to common luxury items. If this is accurate, it takes upwards of 20,000 hours of work just to buy a simple bicycle."
+	icon_state = "poster6_rev"
+
+/obj/structure/sign/poster/revolution/look_up
+	name = "Don't Look Up"
+	desc = "It says that it has been 538 days since the last time the roof was cleaned."
+	icon_state = "poster7_rev"
+
+/obj/structure/sign/poster/revolution/accidents
+	name = "Workplace Safety Advisory"
+	desc = "It says that it has been 0 days since the last on-site accident."
+	icon_state = "poster8_rev"
+
+/obj/structure/sign/poster/revolution/starve
+	name = "They Are Poisoning You"
+	desc = "This poster claims that NanoTrasens puts chemicals in snacks that provoke faster metabolism in order to sell more chips and chocobars."
+	icon_state = "poster9_rev"
+
 
 #undef PLACE_SPEED

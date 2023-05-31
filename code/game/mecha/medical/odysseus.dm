@@ -10,77 +10,22 @@
 	internal_damage_threshold = 35
 	deflect_chance = 15
 	step_energy_drain = 6
-	var/obj/item/clothing/glasses/hud/health/mech/hud
-
-/obj/mecha/medical/odysseus/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/health/mech(src)
 
 /obj/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
-	if(..())
-		if(H.glasses)
-			occupant_message("<font color='red'>[H.glasses] prevent you from using [src] [hud]</font>")
-		else
-			H.glasses = hud
-		return 1
-	else
-		return 0
+	. = ..()
+	if(.)
+		var/datum/atom_hud/hud = global.huds[DATA_HUD_MEDICAL]
+		hud.add_hud_to(H)
 
 /obj/mecha/medical/odysseus/go_out()
-	if(ishuman(occupant))
-		var/mob/living/carbon/human/H = occupant
-		if(H.glasses == hud)
-			H.glasses = null
+	if(isliving(occupant))
+		var/mob/living/L = occupant
+		var/datum/atom_hud/hud = global.huds[DATA_HUD_MEDICAL]
+		hud.remove_hud_from(L)
 	..()
 
-//TODO - Check documentation for client.eye and client.perspective...
-/obj/item/clothing/glasses/hud/health/mech
-	name = "Integrated Medical Hud"
-
-
-/obj/item/clothing/glasses/hud/health/mech/process_hud(mob/M)
-
-	if(!M || M.stat || !(M in view(M)))
-		return
-	if(!M.client)
-		return
-	var/client/C = M.client
-	var/image/holder
-	for(var/mob/living/carbon/human/patient in view(M.loc))
-		if(M.see_invisible < patient.invisibility)
-			continue
-		var/foundVirus = 0
-		for(var/datum/disease/D in patient.viruses)
-			if(!D.hidden[SCANNER])
-				foundVirus++
-
-		for (var/ID in patient.virus2)
-			if (ID in virusDB)
-				foundVirus = 1
-				break
-
-		holder = patient.hud_list[HEALTH_HUD]
-		if(patient.stat == DEAD)
-			holder.icon_state = "hudhealth-100"
-			C.images += holder
-		else
-			holder.icon_state = "hud[RoundHealth(patient.health)]"
-			C.images += holder
-
-		holder = patient.hud_list[STATUS_HUD]
-		if(patient.stat == DEAD)
-			holder.icon_state = "huddead"
-		else if(patient.status_flags & XENO_HOST)
-			holder.icon_state = "hudxeno"
-		else if(foundVirus || iszombie(patient))
-			holder.icon_state = "hudill"
-		else if(patient.has_brain_worms())
-			var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
-			if(B.controlling)
-				holder.icon_state = "hudbrainworm"
-			else
-				holder.icon_state = "hudhealthy"
-		else
-			holder.icon_state = "hudhealthy"
-
-		C.images += holder
+/obj/mecha/medical/odysseus/mmi_moved_inside(obj/item/device/mmi/M, mob/user)
+	. = ..()
+	if(.)
+		var/datum/atom_hud/hud = global.huds[DATA_HUD_MEDICAL]
+		hud.add_hud_to(M.brainmob)

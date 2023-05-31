@@ -40,7 +40,7 @@
 	max_temperature = 65000
 	health = 250
 	lights_power = 8
-	damage_absorption = list("fire"=0.5,"bullet"=0.8,"bomb"=0.5)
+	damage_absorption = list(BURN=0.5,BULLET=0.8,BOMB=0.5)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
 
 /obj/mecha/working/ripley/deathripley
@@ -56,7 +56,7 @@
 /obj/mecha/working/ripley/deathripley/atom_init()
 	. = ..()
 	if(!istype(src,/obj/mecha/working/ripley/deathripley/pirate))
-		var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
+		var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/safety_clamp
 		ME.attach(src)
 
 /obj/mecha/working/ripley/deathripley/pirate
@@ -66,7 +66,7 @@
 	step_energy_drain = 10
 	health = 750
 	deflect_chance = 0
-	damage_absorption = list("brute"=1,"fire"=1,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
+	damage_absorption = list(BRUTE=1,BURN=1,BULLET=1,LASER=1,ENERGY=1,BOMB=1)
 	add_req_access = 0
 	maint_access = 0
 	operation_req_access = list(access_syndicate)
@@ -76,9 +76,9 @@
 
 /obj/mecha/working/ripley/deathripley/pirate/atom_init()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tool/drill(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/drill(src)
 	ME.attach(src)
 
 /obj/mecha/working/ripley/mining
@@ -89,14 +89,14 @@
 	..()
 	//Attach drill
 	if(prob(25)) //Possible diamond drill... Feeling lucky?
-		var/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+		var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 		D.attach(src)
 	else
-		var/obj/item/mecha_parts/mecha_equipment/tool/drill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill
+		var/obj/item/mecha_parts/mecha_equipment/drill/D = new /obj/item/mecha_parts/mecha_equipment/drill
 		D.attach(src)
 
 	//Attach hydrolic clamp
-	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	HC.attach(src)
 
 	return INITIALIZE_HINT_LATELOAD
@@ -115,13 +115,13 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && (O in src.cargo))
-			src.occupant_message("<span class='notice'>You unload [O].</span>")
+			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.loc = get_turf(src)
 			src.cargo -= O
 			var/turf/T = get_turf(O)
 			if(T)
 				T.Entered(O)
-			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 

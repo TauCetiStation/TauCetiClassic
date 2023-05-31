@@ -13,11 +13,12 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_MASSIVE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/bearmeat = 5)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 60
 	health = 60
 	melee_damage = 25
@@ -55,7 +56,7 @@
 	if(!.)
 		return
 
-	if(loc && istype(loc,/turf/space))
+	if(loc && isspaceturf(loc))
 		icon_state = "bear"
 	else
 		icon_state = "bearfloor"
@@ -63,7 +64,7 @@
 	switch(stance)
 
 		if(HOSTILE_STANCE_TIRED)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			stance_step++
 			if(stance_step >= 10) //rests for 10 ticks
 				if(target && (target in ListTargets(10)))
@@ -72,19 +73,19 @@
 					stance = HOSTILE_STANCE_IDLE
 
 		if(HOSTILE_STANCE_ALERT)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			var/found_mob = 0
 			if(target && (target in ListTargets(10)))
 				if(CanAttack(target))
 					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++
 					found_mob = 1
-					src.dir = get_dir(src,target)	//Keep staring at the mob
+					set_dir(get_dir(src,target))	//Keep staring at the mob
 
 					if(stance_step in list(1,4,7)) //every 3 ticks
 						var/action = pick( list( "growls at [target]", "stares angrily at [target]", "prepares to attack [target]", "closely watches [target]" ) )
 						if(action)
-							custom_emote(1,action)
+							me_emote(action)
 			if(!found_mob)
 				stance_step--
 
@@ -95,7 +96,7 @@
 
 		if(HOSTILE_STANCE_ATTACKING)
 			if(stance_step >= 20)	//attacks for 20 ticks, then it gets tired and needs to rest
-				custom_emote(1, "is worn out and needs to rest" )
+				me_emote("is worn out and needs to rest.")
 				stance = HOSTILE_STANCE_TIRED
 				stance_step = 0
 				walk(src, 0) //This stops the bear's walking
@@ -123,7 +124,7 @@
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()
 	if(.)
-		custom_emote(1,"stares alertly at [.]")
+		me_emote("stares alertly at [.].")
 		stance = HOSTILE_STANCE_ALERT
 
 /mob/living/simple_animal/hostile/bear/LoseTarget()
@@ -132,7 +133,7 @@
 /mob/living/simple_animal/hostile/bear/AttackingTarget()
 	if(!Adjacent(target))
 		return
-	custom_emote(1, pick( list("slashes at [target]", "bites [target]") ) )
+	me_emote(pick(list("slashes at [target].", "bites [target].")))
 
 	var/damage = rand(20,30)
 
@@ -140,7 +141,7 @@
 		var/mob/living/carbon/human/H = target
 		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
-		H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
+		H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, MELEE), DAM_SHARP | DAM_EDGE)
 		return H
 	else if(isliving(target))
 		var/mob/living/L = target

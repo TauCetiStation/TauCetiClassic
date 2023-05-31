@@ -10,8 +10,8 @@
 
 	var/turf/T = get_turf(usr)
 
-	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]</span>")
-	log_admin("[key_name(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [COORD(T)] [ADMIN_JMP(T)]</span>")
+	log_admin("[key_name(usr)] creates the [side_x]x[side_y] asteroid on [COORD(T)]")
 
 	var/datum/map_template/asteroid = new(map = generate_asteroid_mapfile(side_x, side_y))
 
@@ -24,12 +24,13 @@
 			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	//shake the station!
-	for(var/mob/living/carbon/C in carbon_list)
+	for(var/mob/living/carbon/C as anything in carbon_list)
 		if(C.z == T.z)
 			if(C.buckled)
 				shake_camera(C, 4, 1)
 			else
 				shake_camera(C, 10, 2)
+				C.Stun(4)
 				C.Weaken(8)
 				C.throw_at(get_step(C,pick(1,2,4,8)),16,3)
 
@@ -47,7 +48,7 @@
 			if(prob(5))
 				H.gib()
 		else
-			M.ex_act(pick(1,3))
+			M.ex_act(pick(EXPLODE_DEVASTATE,EXPLODE_LIGHT))
 
 	asteroid.load(T)
 
@@ -67,7 +68,7 @@
 
 /proc/generate_asteroid_mapfile(size_x, size_y)
 	var/map = "\
-		\"[SPACETURF]\" = (/turf/space,/area/space)\n\
+		\"[SPACETURF]\" = (/turf/environment/space,/area/space)\n\
 		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/asteroid/mine/unexplored)\n\
 		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/asteroid/mine/unexplored)\n\

@@ -1,7 +1,7 @@
 /obj/machinery/power/am_engine
 	icon = 'icons/am_engine.dmi'
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	flags = ON_BORDER
 
 /obj/machinery/power/am_engine/bits
@@ -176,7 +176,7 @@
 
 			if(energy > convert2energy(8e-12))	//FAR TOO MUCH ENERGY STILL
 				audible_message("<span class='warning'><big>BANG!</big></span>")
-				new /obj/effect/bhole(src.loc)
+				new /obj/effect/anomaly/bhole(src.loc)
 
 		else	//this amount of energy is okay so it does the proper output thing
 

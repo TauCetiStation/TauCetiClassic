@@ -49,6 +49,10 @@
 	if(!Adjacent(user))
 		return
 
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	toggle(user)
@@ -89,21 +93,18 @@
 		cut_overlay(coffin_side)
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
-	if(opened && iscrowbar(I))
+	if(opened && isprying(I))
 		new /obj/item/stack/sheet/wood(loc, 5)
 		visible_message("<span class='notice'>\The [src] has been disassembled apart by [user] with \the [I].</span>",
 						"<span class='notice'>You hear splitting wood.</span>")
 		qdel(src)
 		return TRUE
-	else if(!opened && isscrewdriver(I))
+	else if(!opened && isscrewing(I))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		welded = !welded
 		visible_message("<span class='warning'>[src] has been [welded?"screwed":"unscrewed"] by [user].</span>",
 						"<span class='warning'>You hear screwing.</span>")
 		return TRUE
-
-/obj/structure/closet/coffin/correct_pixel_shift(mob/living/M)
-	return
 
 /obj/structure/closet/coffin/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
@@ -111,8 +112,8 @@
 		M.pixel_y = -1
 		update_buckle_mob(M)
 	else
-		M.pixel_x = 0
-		M.pixel_y = 0
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
 
 /obj/structure/closet/coffin/update_buckle_mob(mob/living/M)
 	// When mob layering will properly work:
@@ -124,7 +125,7 @@
 	else
 		coffin_side.layer = 3.95
 
-	M.dir = WEST
+	M.set_dir(WEST)
 	// why tf do I need to cut overlay to update a layer?
 	cut_overlay(coffin_side)
 	add_overlay(coffin_side)
@@ -145,6 +146,6 @@
 	if(.)
 		// so the body doesn't spin in it's grave
 		// unless required to!
-		buckled_mob.dir = saved_dir
+		buckled_mob.set_dir(saved_dir)
 
 #undef LYING_ANIM_COOLDOWN

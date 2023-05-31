@@ -4,14 +4,14 @@
 
 	if (notransform)
 		return
+	if(!loc)
+		return
 
 	..()
 
 	if(stat != DEAD)
 		//Chemicals in the body
 		handle_chemicals_in_body()
-
-		handle_nutrition()
 
 		handle_targets()
 
@@ -31,9 +31,6 @@
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
 	src.blinded = null
-
-	// Basically just deletes any screen objects :<
-	regular_hud_updates()
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
@@ -107,7 +104,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(istype(Target, /mob/living/silicon))
+				if(issilicon(Target))
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -157,37 +154,24 @@
 		adjustToxLoss(rand(10,20))
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
-	/*
-	if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-		var/transfer_coefficient
+	var/divisitor = 10
 
-		transfer_coefficient = 1
-		if(wear_mask && (wear_mask.body_parts_covered & HEAD) && (environment.temperature < wear_mask.protective_temperature))
-			transfer_coefficient *= wear_mask.heat_transfer_coefficient
+	var/temp_delta = loc_temp - bodytemperature
 
-		// handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
-	*/
+	if(abs(temp_delta) > 50) // If the difference is great, reduce the divisor for faster stabilization
+		divisitor = 5
 
+	if(!on_fire)
+		adjust_bodytemperature(temp_delta / divisitor)
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-
-	/*
-	if(stat==2)
-		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
-
-	*/
 	//Account for massive pressure differences
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature
 			Tempstun = 1
 
-		if(bodytemperature <= (T0C - 50)) // hurt temperature
+		if(bodytemperature <= (T0C - 45)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
 				adjustToxLoss(200)
 			else
@@ -200,36 +184,18 @@
 
 	return //TODO: DEFERRED
 
-
-/mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
-
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
 	if(reagents)
 		reagents.metabolize(src)
 
-	src.updatehealth()
+	updatehealth()
 
 	return //TODO: DEFERRED
 
 
 /mob/living/carbon/slime/proc/handle_regular_status_updates()
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -242,7 +208,7 @@
 		// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 		//if(!src.rejuv) src.oxyloss++
-		if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(10)
+		if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(10)
 
 		if(src.stat != DEAD)	src.stat = UNCONSCIOUS
 
@@ -261,15 +227,12 @@
 
 	else
 		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
-			if (src.stunned > 0)
-				AdjustStunned(-1)
+			if (src.stunned)
 				src.stat = CONSCIOUS
-			if (src.weakened > 0)
-				AdjustWeakened(-1)
+			if (src.weakened)
 				src.lying = 0
 				src.stat = CONSCIOUS
-			if (src.paralysis > 0)
-				AdjustParalysis(-1)
+			if (src.paralysis)
 				src.blinded = 0
 				src.lying = 0
 				src.stat = CONSCIOUS
@@ -278,7 +241,8 @@
 			src.lying = 0
 			src.stat = CONSCIOUS
 
-	if (src.stuttering) src.stuttering = 0
+	if (src.stuttering > 0)
+		setStuttering(0)
 
 	if (src.eye_blind)
 		src.eye_blind = 0
@@ -296,10 +260,10 @@
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
-		src.eye_blurry = 0
+		setBlurriness(0)
 
 	if (src.druggy > 0)
-		src.druggy = 0
+		setDrugginess(0)
 
 	return 1
 
@@ -310,9 +274,9 @@
 		Feedstop()
 	TargetAttack()
 	return
-/mob/living/carbon/slime/proc/handle_nutrition()
+/mob/living/carbon/slime/handle_nutrition()
 	if(prob(20))
-		if(istype(src, /mob/living/carbon/slime/adult)) nutrition-=rand(4,6)
+		if(isslimeadult(src)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
 
 	if(nutrition <= 0)
@@ -322,7 +286,7 @@
 			adjustToxLoss(rand(0,5))
 
 	else
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			if(nutrition >= 1000)
 				if(prob(40)) amount_grown++
 
@@ -331,7 +295,7 @@
 				if(prob(40)) amount_grown++
 
 	if(amount_grown >= max_grown && !Victim && !Target)
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			if(!client)
 				for(var/i=1,i<=4,i++)
 					if(prob(70))
@@ -542,17 +506,17 @@
 	var/to_say
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
-		var/phrase = lowertext_(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "слайм") || findtext(phrase, "легион"))) // Talking to us
+		var/phrase = lowertext(speech_buffer[2]) // What did they say?
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "СЃР»Р°Р№Рј") || findtext(phrase, "Р»РµРіРёРѕРЅ"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
-				findtext(phrase, "здравствуйте") || findtext(phrase, "привет")    \
+				findtext(phrase, "Р·РґСЂР°РІСЃС‚РІСѓР№С‚Рµ") || findtext(phrase, "РїСЂРёРІРµС‚")    \
 			)
 				to_say = pick("Hello...", "Hi...")
 			else if (                                                             \
 				findtext(phrase, "attack") || findtext(phrase, "kill") ||         \
-				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
-				findtext(phrase, "атак")                                     \
+				findtext(phrase, "СѓР±РёС‚СЊ") || findtext(phrase, "СѓРЅРёС‡С‚РѕР¶РёС‚СЊ") ||    \
+				findtext(phrase, "Р°С‚Р°Рє")                                     \
 			)
 				if(Friends[who] > 4)
 					if(last_pointed)
@@ -575,8 +539,8 @@
 				else
 					to_say = "I won't do it..."
 			else if (                                                             \
-				findtext(phrase, "follow") || findtext(phrase, "ко мне") ||       \
-				findtext(phrase, "за мной")                                       \
+				findtext(phrase, "follow") || findtext(phrase, "РєРѕ РјРЅРµ") ||       \
+				findtext(phrase, "Р·Р° РјРЅРѕР№")                                       \
 			)
 				if (Leader)
 					if (holding_still)
@@ -597,8 +561,8 @@
 					else // Not friendly enough
 						to_say = pick("No...", "I won't follow...")
 			else if (                                                            \
-				findtext(phrase, "stop") || findtext(phrase, "перестань") ||     \
-				findtext(phrase, "хватит") || findtext(phrase, "стоп")           \
+				findtext(phrase, "stop") || findtext(phrase, "РїРµСЂРµСЃС‚Р°РЅСЊ") ||     \
+				findtext(phrase, "С…РІР°С‚РёС‚") || findtext(phrase, "СЃС‚РѕРї")           \
 			)
 				if (Victim) // We are asked to stop feeding
 					if (Friends[who] > 4)
@@ -646,8 +610,8 @@
 						to_say = "No..."
 
 			else if (                                                           \
-				findtext(phrase, "stay") || findtext(phrase, "остановитесь") || \
-				findtext(phrase, "стой") || findtext(phrase, "не двигайся")     \
+				findtext(phrase, "stay") || findtext(phrase, "РѕСЃС‚Р°РЅРѕРІРёС‚РµСЃСЊ") || \
+				findtext(phrase, "СЃС‚РѕР№") || findtext(phrase, "РЅРµ РґРІРёРіР°Р№СЃСЏ")     \
 			)
 				if (Leader)
 					if (Leader == who)
@@ -672,7 +636,14 @@
 	if (to_say)
 		say (to_say)
 	else if(prob(1))
-		emote(pick("bounce","sway","light","vibrate","jiggle"))
+		var/list/rand_emote = list(
+			"bounces in place.",
+			"sways around dizzily.",
+			"lights up for a bit, then stops.",
+			"vibrates!",
+			"jiggles!",
+		)
+		me_emote(pick(rand_emote))
 	else
 		var/t = 10
 		var/slimes_near = 0
@@ -737,7 +708,10 @@
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
-/mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
+/mob/living/carbon/slime/count_pull_debuff()
+	return pulling ? ..() + 1.5 : 0
+
+/mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0

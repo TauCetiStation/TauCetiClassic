@@ -10,7 +10,7 @@
 	var/list/dirs_to_move
 	var/next_dir = 1
 
-/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item, list/dirs_to_move, sweep_delay)
+/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/sweep_item, list/dirs_to_move, sweep_delay)
 	. = ..()
 	name = "sweeping [sweep_item]"
 	glide_size = DELAY2GLIDESIZE(sweep_delay)
@@ -154,7 +154,7 @@
 	var/datum/callback/on_sweep_pull_success
 
 /datum/component/swiping/Initialize(datum/swipe_component_builder/SCB)
-	if(!istype(parent, /obj/item/weapon))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	interupt_on_sweep_hit_types = SCB.interupt_on_sweep_hit_types
@@ -196,7 +196,6 @@
 		can_spin = TRUE
 		can_spin_call = SCB.can_spin_call
 		on_spin = SCB.on_spin
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/sweep_spin)
 		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
 
 	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
@@ -207,6 +206,12 @@
 /datum/component/swiping/Destroy()
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SWIPING_TIP))
 	return ..()
+
+// Whether any of the actions at all can be performed.
+/datum/component/swiping/proc/availability_check(obj/item/I)
+	// Future proofing for cases of telekinetic swiping.
+	// If item's not held by anyone, and is not on turf - you can't sweep, spin, push, and/or pull.
+	return (ismob(I.loc) && isturf(I.loc.loc)) || isturf(I.loc)
 
 /datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	if(on_get_sweep_objects)
@@ -267,12 +272,10 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_away(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -283,11 +286,14 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(can_push_call)
 		if(!can_push_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/s_time = W.sweep_step * 2
 	user.SetNextMove(s_time)
@@ -296,7 +302,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))
@@ -305,6 +311,7 @@
 
 	sweep_push(target, T, user)
 
+	user.face_atom(T)
 	user.do_attack_animation(T)
 
 	if(istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored && user.buckled != target)
@@ -358,12 +365,10 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_to(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -374,11 +379,14 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(can_pull_call)
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/s_time = W.sweep_step * 2
 	user.SetNextMove(s_time)
@@ -387,7 +395,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))
@@ -396,6 +404,7 @@
 
 	sweep_pull(target, T, user)
 
+	user.face_atom(T)
 	user.do_attack_animation(T)
 
 	if(WS.Adjacent(target))
@@ -434,10 +443,11 @@
 
 // A proc called each new tile we're swiping across, before all the possible checks.
 /datum/component/swiping/proc/sweep_move(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, mob/user)
+	user.face_atom(current_turf)
+
 	if(on_sweep_move)
 		on_sweep_move.Invoke(current_turf, sweep_image, user)
 		return
-	user.face_atom(current_turf)
 
 // A proc that checks whether the sweep will hit target.
 /datum/component/swiping/proc/can_sweep_hit(atom/target, mob/user)
@@ -450,23 +460,13 @@
 	if(on_sweep_hit)
 		return on_sweep_hit.Invoke(current_turf, sweep_image, target, user)
 
-	if(user.a_intent == INTENT_HARM && is_type_in_list(target, list(/obj/machinery/disposal, /obj/structure/table, /obj/structure/rack)))
-		/*
-		A very weird snowflakey thing but very crucial to keeping this fun.
-		If we're on I_HURT and we hit anything that should drop our item from the hands,
-		we just ignore the click to it.
-		*/
-		return FALSE
-
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/is_stunned = is_type_in_list(target, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [W] has hit [target]! There's not enough space for broad sweeps here!</span>")
 
-	var/resolved = target.attackby(W, user, list())
-	if(!resolved && W)
-		W.afterattack(target, user, TRUE, list()) // TRUE indicates adjacency
+	W.melee_attack_chain(target, user)
 
 	return is_stunned
 
@@ -526,7 +526,8 @@
 			return SWEEP_INTERUPT
 
 		sweep_to_check(current_turf, next_turf, sweep_image, A, user)
-		user.SetNextMove(sweep_image.sweep_delay + 1)
+		// Just in case of some delaying/async bull.
+		user.AdjustNextMove(sweep_image.sweep_delay + 1)
 
 	if(sweep_image.next_dir == sweep_image.dirs_to_move.len)
 		return SWEEP_END
@@ -535,7 +536,7 @@
 
 // The handler for all the possible sweeping images, directions, and etc. Please use the wrapper - sweep.
 /datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay)
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 	W.swiping = TRUE
 
 	var/turf/start = get_step(W, directions[1])
@@ -548,6 +549,8 @@
 		for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 			var/dir_ = sweep_image.dirs_to_move[sweep_image.next_dir]
 			var/turf/current_turf = get_step(W, dir_)
+
+			user.SetNextMove(sweep_image.sweep_delay * directions.len + 1)
 
 			INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
 
@@ -602,11 +605,14 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(can_sweep_call)
 		if(!can_sweep_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/turf/T = get_turf(target)
 	var/direction = get_dir(get_turf(W), T)
@@ -620,6 +626,9 @@
 */
 // A spin proc, a glorified 2x speed sweep.
 /datum/component/swiping/proc/sweep_spin(datum/source, mob/user)
+	if(!availability_check(source))
+		return NONE
+
 	if(can_spin_call)
 		if(!can_spin_call.Invoke(user))
 			return NONE
@@ -633,7 +642,7 @@
 
 	var/list/directions = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step * 0.5)
 	return COMPONENT_NO_INTERACT
@@ -641,6 +650,9 @@
 // A little bootleg for MiddleClick.
 /datum/component/swiping/proc/sweep_spin_click(datum/source, atom/target, mob/user)
 	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
+	if(!availability_check(source))
 		return NONE
 
 	if(sweep_spin(source, user) != NONE)
@@ -656,10 +668,13 @@
 	if(user.next_move > world.time || user.incapacitated())
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	var/turf/over_turf = get_turf(over)
 	var/turf/dropping_turf = get_turf(dropping)
 
-	if(get_dir(user, over_turf) == reverse_direction(get_dir(user, dropping_turf)))
+	if(get_dir(user, over_turf) == turn(get_dir(user, dropping_turf), 180))
 		if(can_spin && sweep_spin(parent, user) != NONE)
 			return COMPONENT_NO_MOUSEDROP
 
@@ -678,7 +693,7 @@
 					return COMPONENT_NO_MOUSEDROP
 		directions += get_dir(user, T)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	if(directions.len == 3 && can_sweep && sweep(directions, user, W.sweep_step) != NONE)
 		return COMPONENT_NO_MOUSEDROP

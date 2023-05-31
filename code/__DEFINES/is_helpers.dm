@@ -1,8 +1,27 @@
+// This file is used to test the entire build
+// To use istype-defines from this file for tests, wrap your istype in brackets
+// Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
+// Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
+
+// TURFS
+
+#define isenvironmentturf(A) (istype(A, /turf/environment))
+
+#define isspaceturf(A) (istype(A, /turf/environment/space))
+
+#define isiceturf(A) (istype(A, /turf/environment/snow/ice))
+
+#define isfloorturf(A) (istype(A, /turf/simulated/floor))
+
+#define isplatingturf(A) (istype(A, /turf/simulated/floor/plating))
+
+#define iswallturf(A) (istype(A, /turf/simulated/wall))
+
 // HUMAN
 
-#define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
-
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
+
+#define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
@@ -67,7 +86,13 @@
 
 #define isessence(A) (istype(A, /mob/living/parasite/essence))
 
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
+#define isconstruct(A) istype(A, /mob/living/simple_animal/construct)
+
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
+
+#define isreplicator(A) (istype(A, /mob/living/simple_animal/hostile/replicator))
 
 // MOB
 
@@ -77,29 +102,25 @@
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
+#define isautosay(A) (istype(A, /mob/autosay))
+
+#define isMMI(A) (istype(A, /obj/item/device/mmi))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
 
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
-#if DM_VERSION < 513
-#define islist(L) (istype(L, /list))
-#endif
-
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-#if DM_VERSION < 513
-#define ismovableatom(A) (istype(A, /atom/movable))
-#else
-#define ismovableatom(A) ismovable(A)
-#endif
+#define istagger(A) (istype(A, /obj/item/device/tagger))
 
 // GOONCHAT PORT
 
-#define isatom(A) istype(A, /atom)
+#define isatom(A) (istype(A, /atom))
 
-#define isclient(A) istype(A, /client)
+#define isclient(A) (istype(A, /client))
 
 
 // ASSEMBLY HELPERS
@@ -118,16 +139,110 @@
 
 // TOOLS HELPERS
 
-#define iswrench(A) istype(A, /obj/item/weapon/wrench)
+#define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
 
-#define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
+#define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
-#define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
+#define iscutter(I) 	I.get_quality(QUALITY_CUTTING)
 
-#define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
+#define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
-#define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
+#define isprying(I)		I.get_quality(QUALITY_PRYING)
 
-#define ismultitool(A) istype(A, /obj/item/device/multitool)
+#define ispulsing(I) 	I.get_quality(QUALITY_PULSING)
 
-#define iscoil(A) istype(A, /obj/item/stack/cable_coil)
+#define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
+
+#define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
+
+// OBJECTS
+
+#define isitem(A) (istype(A, /obj/item))
+
+#define isunder(A) (istype(A, /obj/item/clothing/under))
+
+// ROLES / ANTAG
+
+#define isfaction(A) (istype(A, /datum/faction))
+
+#define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
+
+#define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)
+
+#define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
+
+#define isabductor(H) isrolebytype(/datum/role/abductor, H)
+
+#define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
+
+#define isabductoragent(H) isrole(ABDUCTOR_AGENT, H)
+
+#define isshadowling(H) isrole(SHADOW, H)
+
+#define isshadowthrall(H) isrole(SHADOW_THRALL, H)
+
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+#define iseminence(A) (istype(A, /mob/camera/eminence))
+
+#define isvoxraider(H) isrole(VOXRAIDER, H)
+
+#define ischangeling(H) isrolebytype(/datum/role/changeling, H)
+
+#define isanyrev(H) (isrev(H) || isrevhead(H))
+
+#define isrev(H) isrole(REV, H)
+
+#define isrevhead(H) isrole(HEADREV, H)
+
+#define istraitor(H) isrole(TRAITOR, H)
+
+#define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
+
+#define ismalf(H) isrole(MALF, H)
+
+#define isnukeop(H) (isrole(NUKE_OP, H) || isrole(NUKE_OP_LEADER, H) || isrole(SYNDIESQUADIE, H))
+
+#define iswizard(H) isrole(WIZARD, H)
+
+#define iswizardapprentice(H) isrole(WIZ_APPRENTICE, H)
+
+#define isdeathsquad(H) isrole(DEATHSQUADIE, H)
+
+#define isninja(H) isrole(NINJA, H)
+
+#define isERT(H) isrole(RESPONDER, H)
+
+#define isrolezombie(H) isrole(ZOMBIE, H)
+
+#define iszombie(H) (H.get_species() in global.all_zombie_species_names)
+
+#define isalien(H) isrole(XENOMORPH, H)
+
+#define isgangster(H) isrole(GANGSTER, H)
+
+#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
+
+#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
+
+#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+
+#define isanycop(H) isrolebytype(/datum/role/cop, H)
+
+#define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
+
+// BLOB
+
+#define isblob(A) (istype(A, /obj/structure/blob))
+
+#define isblobnormal(A) (istype(A, /obj/structure/blob/normal))
+
+#define isblobcore(A) (istype(A, /obj/structure/blob/core))
+
+#define isblobnode(A) (istype(A, /obj/structure/blob/node))
+
+#define isblobfactory(A) (istype(A, /obj/structure/blob/factory))
+
+#define isblobshield(A) (istype(A, /obj/structure/blob/shield))
+
+#define isblobresource(A) (istype(A, /obj/structure/blob/resource))

@@ -2,8 +2,8 @@
 
 /obj/machinery/power/port_gen/riteg
 	name = "C.H.E.R.N.O.B.Y.L-type Portable Emergency Generator"
-	icon_state = "portgen1"
-	icon_state_on = "portgen1"
+	icon_state = "gen_gen_chernobyl-o-off"
+	icon_state_on = "gen_gen_chernobyl-o-on"
 	power_gen = 5000
 	var/rad_cooef = 40
 	var/rad_range = 1
@@ -11,16 +11,16 @@
 /obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
 	if(!active)
 
-		if(iswrench(O))
+		if(iswrenching(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
-				anchored = 1
+				anchored = TRUE
 			else if(anchored)
 				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
-				anchored = 0
+				anchored = FALSE
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
@@ -37,26 +37,22 @@
 		user << browse(null, "window=port_gen")
 		return
 
-	var/dat = text("<b>[name]</b><br>")
+	var/dat = ""
 	if (active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
 	dat += text("Power output: [power_gen * power_output]<br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
-	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse("[entity_ja(dat)]", "window=port_gen")
-	onclose(user, "port_gen")
 
-/obj/machinery/power/port_gen/riteg/is_operational_topic()
+	var/datum/browser/popup = new(user, "port_gen", src.name)
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/power/port_gen/riteg/is_operational()
 	return TRUE
 
 /obj/machinery/power/port_gen/riteg/Topic(href, href_list)
-	if (href_list["action"] == "close")
-		usr << browse(null, "window=port_gen")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -71,22 +67,15 @@
 				active = 0
 				icon_state = initial(icon_state)
 
-	src.updateUsrDialog()
-
-
-/obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
-	for(var/mob/living/l in range(rad_range,src))
-		l.show_message("<span class=\"warning\">You feel warm</span>", SHOWMSG_FEEL)
-		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )
-		l.apply_effect(rads, IRRADIATE)
+	updateUsrDialog()
 
 /obj/machinery/power/port_gen/riteg/process()
 
 	if(active  && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
 		UseFuel()
-		Pulse_radiation()
-		src.updateDialog()
+		irradiate_in_dist(get_turf(src), rad_cooef, rad_range)
+		updateDialog()
 
 	else
 		active = 0

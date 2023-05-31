@@ -8,7 +8,7 @@
 	icon = 'icons/obj/remote_device.dmi'
 	icon_state = "rdc_white"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/mode = REMOTE_OPEN
 	var/region_access = list(0, 1, 2, 3, 4, 5, 6, 7) // look at access.dm
 	var/obj/item/weapon/card/id/ID
@@ -28,10 +28,12 @@
 	QDEL_NULL(ID)
 	return ..()
 
-/obj/item/device/remote_device/attackby(obj/item/weapon/card/emag/W, mob/user)
-	if(istype(W) && !emagged)
+/obj/item/device/remote_device/emag_act(mob/user)
+	if(!emagged)
 		emagged = TRUE
-		to_chat(user, "This device now can electrify doors")
+		to_chat(user, "<span class='notice'>You sneakily swipe through [src], and now it can electrify doors.</span>")
+		return TRUE
+	return FALSE
 
 /obj/item/device/remote_device/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -87,6 +89,7 @@
 					D.secondsElectrified = 0
 				else
 					D.secondsElectrified = 10
+				D.diag_hud_set_electrified()
 		D.add_hiddenprint(user)
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")

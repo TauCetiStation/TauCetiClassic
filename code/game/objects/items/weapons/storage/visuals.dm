@@ -28,11 +28,16 @@
 	qdel(item_overlays[I])
 	item_overlays -= I
 
-/obj/item/weapon/storage/visuals/open(mob/user)
+/obj/item/weapon/storage/visuals/try_open(mob/user)
+	if(!user)
+		return FALSE
+
 	if(require_opened && !opened)
 		to_chat(user, "<span class='notice'>You can't view [src]'s inventory without opening it up!</span>")
 		return FALSE
-	return ..()
+	
+	open(user)
+	return TRUE
 
 /obj/item/weapon/storage/visuals/can_be_inserted(obj/item/W, stop_messages = FALSE)
 	if(require_opened && !opened)
@@ -95,10 +100,10 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 	max_storage_space = 18
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/retractor,
 		/obj/item/weapon/hemostat,

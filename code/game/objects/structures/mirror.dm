@@ -4,9 +4,13 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/shattered = 0
+
+	max_integrity = 200
+	integrity_failure = 0.5
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
 
 
 /obj/structure/mirror/attack_hand(mob/user)
@@ -35,14 +39,13 @@
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
+/obj/structure/mirror/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage * 2))
 		if(!shattered)
 			shatter()
 		else
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-	..()
-
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
@@ -58,6 +61,26 @@
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_type == BRUTE)
+		if(shattered)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	else
+		..()
+
+/obj/structure/mirror/atom_break(damage_flag, mapload)
+	. = ..()
+	if(!shattered)
+		shatter()
+
+/obj/structure/mirror/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled)
+		new /obj/item/weapon/shard(loc)
+	..()
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
@@ -108,7 +131,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height", "belly")
 
 	switch(choice)
 		if("name")
@@ -129,6 +152,7 @@
 			if(new_tone)
 				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)
@@ -182,14 +206,14 @@
 				return
 
 			if(H.gender == "male")
-				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "female"
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
-				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "male"
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
@@ -199,37 +223,19 @@
 			H.check_dna(H)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = tgui_alert(H, "Hair style or hair color?", "Change Hair", list("Style", "Color"))
 
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				var/userloc = H.loc
-				//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
-				//this is largely copypasted from there.
 				//handle facial hair (if necessary)
 				if(H.gender == MALE)
-					var/list/species_facial_hair = list()
-					if(H.species)
-						for(var/i in facial_hair_styles_list)
-							var/datum/sprite_accessory/facial_hair/tmp_facial = facial_hair_styles_list[i]
-							if(H.species.name in tmp_facial.species_allowed)
-								species_facial_hair += i
-					else
-						species_facial_hair = facial_hair_styles_list
-					var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in species_facial_hair
+					var/new_style = input(user, "Select a facial hair style", "Grooming") as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
 					if(userloc != H.loc)
 						return	//no tele-grooming
 					if(new_style)
 						H.f_style = new_style
 				//handle normal hair
-				var/list/species_hair = list()
-				if(H.species)
-					for(var/i in hair_styles_list)
-						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-						if(H.species.name in tmp_hair.species_allowed)
-							species_hair += i
-				else
-					species_hair = hair_styles_list
-				var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in species_hair
+				var/new_style = input(user, "Select a hair style", "Grooming") as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
 				if(userloc != H.loc)
 					return	//no tele-grooming
 				if(new_style)
@@ -258,6 +264,23 @@
 				H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
 				H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 				H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+			H.update_hair()
+			H.update_body()
+			H.check_dna(H)
+		if("height")
+			var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
+			if(new_height)
+				H.height = new_height
+				H.update_hair()
+				H.update_body()
+				H.regenerate_icons()
+				H.check_dna(H)
+		if("belly")
+			var/new_belly = input(H, "Choose your belly color (UNATHI ONLY)", "Belly Color") as null|color
+			if(new_belly)
+				H.r_belly = hex2num(copytext(new_belly, 2, 4))
+				H.g_belly = hex2num(copytext(new_belly, 4, 6))
+				H.b_belly = hex2num(copytext(new_belly, 6, 8))
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

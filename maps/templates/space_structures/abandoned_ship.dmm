@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ab" = (
 /turf/simulated/shuttle/wall{
@@ -24,7 +24,7 @@
 /area/space_structures/abandoned_ship)
 "af" = (
 /obj/structure/scrap_cube,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ag" = (
 /turf/simulated/floor{
@@ -120,7 +120,7 @@
 	},
 /area/space_structures/abandoned_ship)
 "at" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater{
@@ -133,7 +133,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area/space_structures/abandoned_ship)
 "aw" = (
 /obj/machinery/bodyscanner,
@@ -180,9 +180,9 @@
 	},
 /area/space_structures/abandoned_ship)
 "aD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/abandoned_ship)
@@ -339,10 +339,10 @@
 "aZ" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -356,7 +356,7 @@
 	},
 /area/space_structures/abandoned_ship)
 "bb" = (
-/obj/item/weapon/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -369,11 +369,11 @@
 /area/space_structures/abandoned_ship)
 "bd" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "be" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/weapon/gun/energy/retro,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -520,10 +520,10 @@
 "bA" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/syntiflesh,
@@ -725,7 +725,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space_structures/abandoned_ship)
 "ca" = (
 /obj/machinery/door/poddoor{

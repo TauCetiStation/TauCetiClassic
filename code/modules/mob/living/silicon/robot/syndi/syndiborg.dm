@@ -7,13 +7,18 @@
 //	designation = "Syndicate"
 	braintype = "Robot"
 	req_access = list(access_syndicate)
+	w_class = SIZE_BIG
+
+	typing_indicator_type = "syndibot"
 
 	var/static/image/sword_overlay
+
+	spawner_args = list(/datum/spawner/living/robot/syndi, 2 MINUTES)
 
 /mob/living/silicon/robot/syndicate/atom_init()
 	. = ..()
 	updatename("Syndicate")
-	connected_ai = null
+	set_ai_link(null)
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
@@ -37,6 +42,7 @@
 /obj/item/device/radio/borg/syndicate/atom_init()
 	. = ..()
 	set_frequency(SYND_FREQ)
+	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 500

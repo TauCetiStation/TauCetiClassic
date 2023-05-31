@@ -2,7 +2,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
@@ -14,6 +14,8 @@
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
 	var/start_brightness = 4
+	food_type = JUNK_FOOD
+	food_moodlet = /datum/mood_event/junk_food
 	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
@@ -102,29 +104,19 @@
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
-	if(istype(M, /mob/living/carbon))
-		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
-					return
-		else
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
-					return
+	if(iscarbon(M))
+		if(M != user)
+			if(!isslime(M))		//If you're feeding it to someone else.
 
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
-
-				user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 
 				if(!do_mob(user, M)) return
 
 				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-				user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 			else
 				to_chat(user, "<span class='warning'>This creature does not seem to have a mouth!</span>")
@@ -157,9 +149,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(atom/target, mob/user, proximity, params)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W, mob/user)
-	return
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
 	liquid_fuel = null // as long as this is in reagent_list, no need to qdel, will be handled by parent's reagent cleaning process.
 	return ..()
@@ -169,9 +158,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/add_fuel()
 	if(prob(95))
-		src.reagents.add_reagent("luminophore", rand(18,36))
+		reagents.add_reagent("luminophore", rand(18,36))
 	else
-		src.reagents.add_reagent("luminophore", rand(1,2))
+		reagents.add_reagent("luminophore", rand(1,2))
 	var/datum/reagents/R = reagents
 	for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
 		if(luminophore)

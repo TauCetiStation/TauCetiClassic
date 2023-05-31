@@ -3,14 +3,26 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
 	interact_offline = TRUE
 	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
+	var/recharge_coeff = 1
 	var/efficiency = 0.875	//<1.0 means some power is lost in the charging process, >1.0 means free energy.
+
+/obj/machinery/cell_charger/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cell_recharger(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	RefreshParts()
+
+/obj/machinery/cell_charger/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		recharge_coeff = C.rating
 
 /obj/machinery/cell_charger/proc/updateicon()
 	icon_state = "ccharger[charging ? 1 : 0]"
@@ -30,9 +42,10 @@
 		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
-	if(charging)
-		to_chat(user, "Current charge: [charging.charge]")
+	if(user.Adjacent(src))
+		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+		if(charging)
+			to_chat(user, "Current charge: [charging.charge]")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -50,20 +63,24 @@
 				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
 				return
 
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
 		updateicon()
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
-
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
+		update_icon()
+		return
+	if(default_deconstruction_crowbar(W))
+		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()
@@ -99,7 +116,17 @@
 
 	var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
 
-	power_used = charging.give(power_used*CELLRATE*efficiency)
+	power_used = charging.give(recharge_coeff*power_used*CELLRATE*efficiency)
 	use_power(power_used)
 
 	updateicon()
+
+/obj/machinery/cell_charger/deconstruct(disassembled = TRUE)
+	if(charging)
+		charging.forceMove(loc)
+		charging = null
+	..()
+
+/obj/machinery/cell_charger/Destroy()
+	QDEL_NULL(charging)
+	return ..()

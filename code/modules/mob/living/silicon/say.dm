@@ -1,5 +1,5 @@
 /mob/living/silicon/say_quote(text)
-	var/ending = copytext(text, length(text))
+	var/ending = copytext(text, -1)
 
 	if (ending == "?")
 		return "queries"
@@ -17,37 +17,40 @@
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
 			return 1
+		if (isautosay(other))
+			return 1
 		if (issilicon(other))
 			return 1
 		if (isbrain(other))
 			return 1
 	return ..()
 
-/mob/living/silicon/say(var/message)
-	if (!message)
-		return
+/mob/living/silicon/say(message)
 
 	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return*/
 
 	message = sanitize(message)
 
+	if(!message)
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+	if(message[1] == "*")
+		return emote(copytext(message, 2))
 
 	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		bot_type = IS_AI
-	else if(istype(src, /mob/living/silicon/robot))
+	else if(isrobot(src))
 		bot_type = IS_ROBOT
-	else if(istype(src, /mob/living/silicon/pai))
+	else if(ispAI(src))
 		bot_type = IS_PAI
 
 	var/mob/living/silicon/ai/AI = src		//and let's not declare vars over and over and over for these guys.
@@ -56,7 +59,7 @@
 
 
 	//Must be concious to speak
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	var/verb = say_quote(message)
@@ -67,7 +70,7 @@
 		if (message_mode == "general")
 			message = trim(copytext(message,2))
 		else
-			message = trim(copytext(message,3))
+			message = trim(copytext(message,2 + length(message[2])))
 
 	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
 		to_chat(src, "<span class='warning'>Your radio isn't functional at this time.</span>")
@@ -79,10 +82,13 @@
 			return
 
 	//parse language key and consume it
-	var/datum/language/speaking = parse_language(message)
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if (speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		verb = speaking.get_spoken_verb(ending)
 
 	var/area/A = get_area(src)
 
@@ -112,6 +118,10 @@
 				if(IS_PAI)
 					to_chat(src, "You do not appear to have that function")
 					return
+				if(IS_AI)
+					if (AI.aiRadio.disabledAi)
+						to_chat(src, "<span class='warning'>System Error - Transceiver Disabled</span>")
+						return
 
 			robot_talk(message)
 			return 1
@@ -212,7 +222,7 @@
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, SHOWMSG_AUDIO)
-			else if(istype(S, /mob/living/carbon/brain))
+			else if(isbrain(S))
 				S.show_message(rendered, SHOWMSG_AUDIO)
 			else
 				var/mob/living/silicon/robot/borg = S
@@ -236,7 +246,7 @@
 
 	var/list/heard = list()
 	for (var/mob/M in listening)
-		if(!istype(M, /mob/living/silicon) && !M.robot_talk_understand)
+		if(!issilicon(M) && !M.robot_talk_understand)
 			heard += M
 	if (length(heard))
 		var/message_beep

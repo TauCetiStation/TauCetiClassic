@@ -13,7 +13,7 @@
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks")
 	speak_chance = 1
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 75
 	health = 75
 	speed = -1
@@ -55,7 +55,7 @@
 	speak = list("HONK!?", "Honk!", "Honk?", "ALL YOUR HONKS BELONGS TO US!", "Hooonk...")
 	emote_see = list("honks")
 	speak_chance = 3
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 75
 	health = 75
 	speed = -1

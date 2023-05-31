@@ -3,8 +3,16 @@
 	desc = "A nicely-crafted wooden dresser. It's filled with lots of undies."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dresser"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/dresser/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 10)
+	..()
 
 /obj/structure/dresser/attack_hand(mob/user)
 	if(!Adjacent(user))//no tele-grooming

@@ -4,7 +4,6 @@
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
 
-	var/hud_updateflag = 0
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0.0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
@@ -19,26 +18,23 @@
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
+	// Holly, we're drunk.
+	// Should this be in organ/liver ? ~Luduk
+	var/drunkenness = 0
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
 
-	var/t_phoron = null
-	var/t_oxygen = null
-	var/t_sl_gas = null
-	var/t_n2 = null
-
 	var/now_pushing = null
 
 	var/mob/living/cameraFollow = null
-	var/list/datum/action/actions = list()
 
 	var/tod = null // Time of death
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
-	var/pull_debuff = 0		//Movement debuff when pulling
+	var/speed = 0			//Movement addditive modifier
 
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
@@ -51,6 +47,7 @@
 
 	var/list/roundstart_quirks = list()
 	var/list/status_effects // a list of all status effects the mob has
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD, HOLY_HUD)
 
 	var/force_remote_viewing = FALSE
 
@@ -61,5 +58,17 @@
 	var/default_pixel_y = 0
 	var/default_layer = 0
 
+	// Moveset type that this mob is spawned with(What the mob should know "by nature")
+	var/moveset_type = /datum/combat_moveset/living
+
 	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
 	var/logs_combat = TRUE
+
+	var/datum/modval/beauty
+
+	var/beauty_living = 0.0
+	var/beauty_dead = -100.0
+
+	var/list/spawner_args = null
+
+	COOLDOWN_DECLARE(wc_use_cooldown)

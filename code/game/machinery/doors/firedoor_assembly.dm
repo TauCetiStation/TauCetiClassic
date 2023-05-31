@@ -3,9 +3,9 @@
 	desc = "It can save lives."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_construction"
-	anchored = 0
+	anchored = FALSE
 	opacity = 0
-	density = 1
+	density = TRUE
 	var/wired = 0
 
 /obj/structure/firedoor_assembly/update_icon()
@@ -27,7 +27,7 @@
 				wired = 1
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 
-	else if(iswirecutter(C) && wired )
+	else if(iscutter(C) && wired )
 		if(user.is_busy(src)) return
 		user.visible_message("[user] cuts the wires from \the [src].", "You start to cut the wires from \the [src].")
 
@@ -46,12 +46,12 @@
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You must secure \the [src] first!</span>")
-	else if(iswrench(C))
+	else if(iswrenching(C))
 		anchored = !anchored
 		user.visible_message("<span class='warning'>[user] has [anchored ? "" : "un" ]secured \the [src]!</span>",
 							 "You have [anchored ? "" : "un" ]secured \the [src]!")
 		update_icon()
-	else if(!anchored && iswelder(C))
+	else if(!anchored && iswelding(C))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(user.is_busy(src)) return
 		if(WT.use(0, user))
@@ -65,4 +65,4 @@
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 	else
-		..(C, user)
+		return ..()

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/spacetime_dist
-	name = "Spacetime Distortion"
-	desc = "Entangle the strings of spacetime to deny easy movement around you. The strings vibrate..."
+	name = "Искажение Пространства-Времени"
+	desc = "Искажает струны пространства-времени и делает перемещение в зоне действия более проблематичным. Струны вибрируют..."
 	charge_max = 700
 	var/duration = 150
 	range = 7
@@ -52,7 +52,7 @@
 	name = "cross me"
 	desc = "for crossing"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"
@@ -78,6 +78,11 @@
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(linked_dist && walks_left > 0 && !AM.freeze_movement)
 		flick("purplesparkles", src)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(!iswizard(H) && !iswizardapprentice(H) && prob(30) && global.wizard_shades_count < 5)
+				var/mob/living/simple_animal/A = new /mob/living/simple_animal/shade/evil_shade(H.loc)
+				create_spawner(/datum/spawner/living/evil_shade, A)
 		linked_dist.get_walker(AM)
 		walks_left--
 
@@ -98,6 +103,7 @@
 		walk_link(W)
 	else
 		walk_link(user)
+	return FALSE
 
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
 	walk_link(user)

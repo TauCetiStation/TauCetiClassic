@@ -2,9 +2,10 @@
 	name = "Operating Table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "table2-idle"
-	density = 1
-	anchored = 1.0
+	icon_state = "table_surgey_idle"
+	icon_state_active = "table_surgey_active"
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	active_power_usage = 5
@@ -21,35 +22,21 @@
 			computer.table = src
 			break
 	AddComponent(/datum/component/clickplace)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/operating_table(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
+	RefreshParts()
 
-/obj/machinery/optable/ex_act(severity)
-
-	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				//SN src = null
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				src.density = 0
-		else
-	return
-
-/obj/machinery/optable/blob_act()
-	if(prob(75))
-		qdel(src)
 
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
-		src.density = 0
+		src.density = FALSE
 		qdel(src)
 	return
 
@@ -58,14 +45,12 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
-		src.density = 0
+		src.density = FALSE
 		qdel(src)
 	else
 		return ..() // for fun, for braindamage and fingerprints.
 
-/obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
+/obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
@@ -73,7 +58,9 @@
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
+	if(user.incapacitated())
+		return
+	if (iscarbon(A) && isturf(user.loc) && user.IsAdvancedToolUser())
 		var/mob/living/carbon/M = A
 		if (M.buckled)
 			M.buckled.user_unbuckle_mob(user)
@@ -82,14 +69,18 @@
 	return ..()
 
 /obj/machinery/optable/proc/check_victim()
+	if(panel_open)
+		src.victim = null
+		icon_state = "table_surgey_open"
+		return 0
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(!panel_open && M.crawling)
 			src.victim = M
-			icon_state = M.pulse ? "table2-active" : "table2-idle"
+			icon_state = M.pulse ? icon_state_active : initial(icon_state)
 			return 1
 	src.victim = null
-	icon_state = "table2-idle"
+	icon_state = initial(icon_state)
 	return 0
 
 /obj/machinery/optable/process()
@@ -97,23 +88,22 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user)
 	if (C == user)
-		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
+		user.visible_message("<span class='rose'>[user] climbs on [src].</span>","<span class='notice'>You climb on [src].</span>")
 	else
-		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>")
+		visible_message("<span class='notice'>[C] has been laid on [src] by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
-	C.resting = 1
+	C.SetCrawling(TRUE)
 	C.loc = src.loc
-	for(var/obj/O in src)
-		O.loc = src.loc
-	src.add_fingerprint(user)
+
+	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		src.victim = H
-		icon_state = H.pulse ? "table2-active" : "table2-idle"
+		icon_state = H.pulse ? icon_state_active : initial(icon_state)
 	else
-		icon_state = "table2-idle"
+		icon_state = initial(icon_state)
 
 /obj/machinery/optable/verb/climb_on()
 	set name = "Climb On Table"
@@ -130,9 +120,6 @@
 	take_victim(usr,usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
-	if(isrobot(user))
-		return
-
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
 		if(iscarbon(G.affecting))
@@ -140,5 +127,15 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			qdel(G)
 			return
+
+	if(default_deconstruction_screwdriver(user, "table_surgey_open", initial(icon_state), W))
+		update_icon()
+		return
+
+	var/turf/T = get_turf(src)
+	if(default_deconstruction_crowbar(W))
+		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in [COORD(T)] - [ADMIN_JMP(T)]")
+		log_game("[src] has been deconstructed by [key_name(user)]")
+		log_investigate("[src] deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
 
 	return ..()

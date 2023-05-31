@@ -2,10 +2,10 @@
 	desc = "A close-fitting mask that can be connected to an air supply."
 	name = "breath mask"
 	icon_state = "breath"
-	item_state = "breath"
+	item_state = "b_mask"
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	body_parts_covered = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	action_button_name = "Adjust mask"
@@ -27,11 +27,11 @@
 			flags |= MASKCOVERSMOUTH | MASKINTERNALS
 			icon_state = "breath"
 			to_chat(usr, "You pull the mask up to cover your face.")
-		usr.update_inv_wear_mask()
+		update_inv_mob()
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"
-	icon_state = "medical"
-	item_state = "medical"
+	icon_state = "m_mask"
+	item_state = "m_mask"
 	permeability_coefficient = 0.01

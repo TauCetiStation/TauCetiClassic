@@ -10,6 +10,11 @@
 	var/dyed_b_hair = 0
 	var/hair_painted = FALSE
 
+	var/r_grad = 0
+	var/g_grad = 0
+	var/b_grad = 0
+	var/grad_style = "none"
+
 	//Facial hair colour and style
 	var/r_facial = 0
 	var/g_facial = 0
@@ -26,7 +31,7 @@
 	var/g_eyes = 0
 	var/b_eyes = 0
 
-	var/s_tone = 0	//Skin tone
+	var/s_tone = 0  //Skin tone
 
 	//Skin colour
 	var/r_skin = 0
@@ -36,19 +41,25 @@
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
 
-	var/age = 30		//Player's age (pure fluff)
-	var/b_type = "A+"	//Player's bloodtype
+	var/age = 30                //Player's age (pure fluff)
+	var/height = HUMANHEIGHT_MEDIUM  //Player's height
+	var/b_type = "A+"           //Player's bloodtype
 
-	var/underwear = 1	//Which underwear the player wants
-	var/undershirt = 0	//Which undershirt the player wants.
-	var/socks = 0	//Which socks the player wants.
-	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
-
+	var/underwear = 1   //Which underwear the player wants
+	var/undershirt = 0  //Which undershirt the player wants.
+	var/socks = 0       //Which socks the player wants.
+	var/backbag = 2     //Which backpack type the player has chosen. Nothing, Satchel or Backpack.
+	var/use_skirt = FALSE
 	// General information
 	var/home_system = ""
 	var/citizenship = ""
+	var/roundstart_insurance = ""
 	var/personal_faction = ""
 	var/religion = ""
+	var/vox_rank = ""
+	var/r_belly = 0
+	var/g_belly = 0
+	var/b_belly = 0
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -63,15 +74,11 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = null
-
 	var/voice = ""	//Instead of new say code calling GetVoice() over and over and over, we're just going to ask this variable, which gets updated in Life()
 
 	var/speech_problem_flag = 0
 
-	var/miming = null //Toggle for the mime's abilities.
+	var/miming = FALSE //Toggle for the mime's abilities.
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
@@ -89,8 +96,8 @@
 	var/obj/item/organ/external/regenerating_bodypart // A bodypart that is currently regenerating, so we don't have a random one picked each time.
 
 	//Golem stuff
-	var/my_master = 0
-	var/my_golems = list()
+	var/mob/living/carbon/human/my_master = null
+	var/mob/living/carbon/human/my_golem = null
 
 	// Prevent sound emotes spam in some situations
 	var/next_high_priority_sound = 0 // Usually these sounds require high attention, such as the sound of agony. These sounds can only be overlaid by sounds with the same priority.
@@ -110,3 +117,14 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	// Mood affecting how we see the world.
+	var/list/moody_color
+
+	// Clothes count. Used in mood.
+	var/wet_clothes = 0
+	var/dirty_clothes = 0
+
+	// Reagent allergies.
+	var/list/allergies
+	var/next_allergy_message = 0

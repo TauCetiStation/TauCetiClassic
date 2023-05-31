@@ -12,9 +12,9 @@
 /obj/item/weapon/fossil/base/atom_init()
 	..()
 	var/list/l = list(
-		"/obj/item/weapon/fossil/bone" = 9,
-		"/obj/item/weapon/fossil/skull" = 3,
-		"/obj/item/weapon/fossil/skull/horned" = 2
+		/obj/item/weapon/fossil/bone = 9,
+		/obj/item/weapon/fossil/skull = 3,
+		/obj/item/weapon/fossil/skull/horned = 2
 		)
 	var/t = pickweight(l)
 	var/obj/item/weapon/W = new t(loc)
@@ -50,21 +50,24 @@
 	. = ..()
 	icon_state = "horned_skull[rand(1, 2)]"
 
-/obj/item/weapon/fossil/skull/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/fossil/bone))
+/obj/item/weapon/fossil/skull/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/fossil/bone))
 		var/obj/o = new /obj/skeleton(get_turf(src))
 		var/a = new /obj/item/weapon/fossil/bone
 		var/b = new src.type
 		o.contents.Add(a)
 		o.contents.Add(b)
-		qdel(W)
+		qdel(I)
 		qdel(src)
+		return
+	return ..()
 
 /obj/skeleton
 	name = "Incomplete skeleton"
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_state = "uskel"
 	desc = "Incomplete skeleton."
+	w_class = SIZE_LARGE
 	var/bnum = 1
 	var/breq
 	var/bstate = 0
@@ -79,15 +82,15 @@
 	if(istype(W,/obj/item/weapon/fossil/bone))
 		if(!bstate)
 			bnum++
-			src.contents.Add(new/obj/item/weapon/fossil/bone)
+			contents.Add(new/obj/item/weapon/fossil/bone)
 			qdel(W)
 			if(bnum==breq)
 				usr = user
 				icon_state = "skel"
 				src.bstate = 1
-				src.density = 1
+				src.density = TRUE
 				src.name = "alien skeleton display"
-				if(src.contents.Find(/obj/item/weapon/fossil/skull/horned))
+				if(contents.Find(/obj/item/weapon/fossil/skull/horned))
 					src.desc = "A creature made of [src.contents.len-1] assorted bones and a horned skull. The plaque reads \'[plaque_contents]\'."
 				else
 					src.desc = "A creature made of [src.contents.len-1] assorted bones and a skull. The plaque reads \'[plaque_contents]\'."
@@ -99,7 +102,7 @@
 	else if(istype(W,/obj/item/weapon/pen))
 		plaque_contents = sanitize(input("What would you like to write on the plaque:","Skeleton plaque",""))
 		user.visible_message("[user] writes something on the base of [src].","You relabel the plaque on the base of [bicon(src)] [src].")
-		if(src.contents.Find(/obj/item/weapon/fossil/skull/horned))
+		if(contents.Find(/obj/item/weapon/fossil/skull/horned))
 			src.desc = "A creature made of [src.contents.len-1] assorted bones and a horned skull. The plaque reads \'[plaque_contents]\'."
 		else
 			src.desc = "A creature made of [src.contents.len-1] assorted bones and a skull. The plaque reads \'[plaque_contents]\'."

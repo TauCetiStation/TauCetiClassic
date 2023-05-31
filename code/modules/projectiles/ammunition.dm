@@ -1,13 +1,16 @@
+#define MANY_STATES 1
+#define TWO_STATES 2
+
 //TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "s-casing"
+	icon = 'icons/obj/ammo/casings.dmi'
+	icon_state = "casing_normal"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -18,14 +21,18 @@
 	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-	dir = pick(alldirs)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	transform = turn(transform,rand(0,360))
 	update_icon()
+
+/obj/item/ammo_casing/Destroy()
+	QDEL_NULL(BB)
+	return ..()
 
 /obj/item/ammo_casing/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
@@ -33,8 +40,8 @@
 		BB = new projectile_type(src)
 	return
 
-/obj/item/ammo_casing/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription"), MAX_NAME_LEN)
@@ -51,29 +58,42 @@
 				to_chat(user, "<span class='notice'>You can only inscribe a metal bullet.</span>")//because inscribing beanbags is silly
 		else
 			to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
-	else
-		..()
+		return
+
+	if(istype(I, /obj/item/ammo_box) && isturf(loc))
+		var/obj/item/ammo_box/B = I
+		if(B.ammo_type == type)
+			for(var/obj/item/ammo_casing/AC in loc)
+				if(!do_after(user, 2, target = AC))
+					break
+				if(!B.give_round(AC))
+					break
+				B.update_icon()
+				playsound(B, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		return
+
+	return ..()
 
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
-	desc = "A box of ammo"
+	desc = "A box of ammo."
 	icon_state = "357"
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/boxes.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
 	m_amt = 500
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
 	var/list/stored_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing
 	var/max_ammo = 7
-	var/multiple_sprites = 0
+	var/multiple_sprites = TWO_STATES
 	var/caliber
-	var/multiload = 1
+	var/multiload = TRUE
 
 /obj/item/ammo_box/atom_init()
 	. = ..()
@@ -81,7 +101,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = FALSE)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -97,13 +117,23 @@
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
-/obj/item/ammo_box/attackby(obj/item/A, mob/user, silent = 0)
+/obj/item/ammo_box/proc/make_empty(deleting = TRUE)
+	if(deleting)
+		stored_ammo = list()
+		update_icon()
+	else
+		var/turf/T = get_turf(src)
+		for(var/obj/ammo in stored_ammo)
+			stored_ammo -= ammo
+			ammo.forceMove(T)
+
+/obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
+	if(istype(I, /obj/item/ammo_box))
+		var/obj/item/ammo_box/AM = I
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			var/did_load = give_round(AC)
 			if(did_load)
@@ -111,19 +141,17 @@
 				num_loaded++
 			if(!did_load || !multiload)
 				break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
+	if(istype(I, /obj/item/ammo_casing))
+		var/obj/item/ammo_casing/AC = I
 		if(give_round(AC))
-			user.drop_item()
-			AC.loc = src
+			user.drop_from_inventory(AC, src)
 			num_loaded++
 	if(num_loaded)
-		if (!silent)
-			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-		A.update_icon()
+		playsound(src, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		I.update_icon()
 		update_icon()
 		return num_loaded
-	return 0
+	return ..()
 
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
@@ -135,12 +163,26 @@
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)
-		if(1)
+		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-		if(2)
+			desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			desc = "[initial(desc)] [get_ammo_count_description()]."
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len
+
+/obj/item/ammo_box/proc/get_ammo_count_description(message)
+	if(stored_ammo.len == max_ammo)
+		message = "It feels full"
+	if(stored_ammo.len < max_ammo)
+		message = "It feels almost full"
+	if(stored_ammo.len <= max_ammo*0.5)
+		message = "It feels half as full"
+	if(stored_ammo.len <= max_ammo*0.25)
+		message = "It feels almost empty"
+	if(!stored_ammo.len)
+		message = "It is empty"
+	return (message)

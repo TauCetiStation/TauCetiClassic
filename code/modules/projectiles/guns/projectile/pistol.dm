@@ -2,57 +2,32 @@
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
-	w_class = ITEM_SIZE_NORMAL
+	item_state = "gun"
+	w_class = SIZE_SMALL
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/sm45
+	initial_mag = /obj/item/ammo_box/magazine/silenced_pistol
+	suitable_mags = list(/obj/item/ammo_box/magazine/silenced_pistol, /obj/item/ammo_box/magazine/silenced_pistol/nonlethal)
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	can_be_holstered = TRUE
 
-/obj/item/weapon/gun/projectile/wjpp
-	name = "W&J PP"
-	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
-	icon_state = "9mm_wjpp"
-	item_state = "9mm_wjpp"
+/obj/item/weapon/gun/projectile/automatic/glock
+	name = "G17"
+	desc = "Semi-automatic service pistol of 9x19mm cal. Designed for professionals."
+	icon_state = "9mm_glock"
+	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/m9mm_2/rubber
-	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
+	initial_mag = /obj/item/ammo_box/magazine/glock/rubber
+	suitable_mags = list(/obj/item/ammo_box/magazine/glock, /obj/item/ammo_box/magazine/glock/rubber, /obj/item/ammo_box/magazine/glock/extended, /obj/item/ammo_box/magazine/glock/extended/rubber)
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
-	var/mag = null
+	can_be_silenced = TRUE
 
-/obj/item/weapon/gun/projectile/wjpp/atom_init()
-	. = ..()
-	mag = image('icons/obj/gun.dmi', "mag")
-	add_overlay(mag)
-
-/obj/item/weapon/gun/projectile/wjpp/spec
-	icon_state = "9mm_wjpp_spec"
-	item_state = "9mm_wjpp_spec"
-
-/obj/item/weapon/gun/projectile/wjpp/update_icon(load = 0)
-	..()
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
-
-/obj/item/weapon/gun/projectile/wjpp/attack_self(mob/user)
-	cut_overlay(mag)
-	..()
-
-/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
-			add_overlay(mag)
-			..()
-
-/obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]"
-	return
+/obj/item/weapon/gun/projectile/automatic/glock/spec
+	name = "G17 GEN3"
+	icon_state = "9mm_glock_spec"
+	item_state = "9mm_glock_spec"
+	initial_mag = /obj/item/ammo_box/magazine/glock/extended/rubber
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
@@ -60,136 +35,76 @@
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0
-	mag_type = /obj/item/ammo_box/magazine/m50
+	initial_mag = /obj/item/ammo_box/magazine/deagle
+	suitable_mags = list(/obj/item/ammo_box/magazine/deagle, /obj/item/ammo_box/magazine/deagle/weakened)
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/user, proximity, params)
-	..()
-	update_icon()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/deagle/update_icon(load = 0)
-	..()
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
 
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol
-	name = "gyrojet pistol"
-	desc = "A bulky pistol designed to fire self propelled rounds."
-	icon_state = "gyropistol"
-	fire_sound = 'sound/effects/Explosion1.ogg'
-	origin_tech = "combat=3"
-	mag_type = /obj/item/ammo_box/magazine/m75
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	initial_mag = /obj/item/ammo_box/magazine/deagle/weakened
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/user, proximity, params)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
-		update_icon()
-		alarmed = 1
-	return
-
-/obj/item/weapon/gun/projectile/automatic/gyropistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
-	return
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	icon_state = "deagleg"
+	item_state = "deagleg"
 
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
-	icon_state = "pistol"
-	w_class = ITEM_SIZE_SMALL
-	silenced = 0
+	icon_state = "stechkin"
+	item_state = "9mm_glock"
+	w_class = SIZE_TINY
+	silenced = FALSE
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	can_be_holstered = TRUE
-	mag_type = /obj/item/ammo_box/magazine/m9mm
-
-/obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
-	if(loc == user)
-		if(silenced)
-			silencer_attack_hand(user)
-	..()
-
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/silencer))
-		silencer_attackby(I,user)
-	..()
-
-/obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][silenced ? "-silencer" : ""][chambered ? "" : "-e"]"
-	return
+	initial_mag = /obj/item/ammo_box/magazine/stechkin
+	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
+	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/colt1911
 	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
 	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
-	w_class = ITEM_SIZE_SMALL
-	mag_type = /obj/item/ammo_box/magazine/c45r
-	mag_type2 = /obj/item/ammo_box/magazine/c45m
+	w_class = SIZE_SMALL
+	initial_mag = /obj/item/ammo_box/magazine/colt/rubber
+	suitable_mags = list(/obj/item/ammo_box/magazine/colt/rubber, /obj/item/ammo_box/magazine/colt)
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
+	can_be_silenced = TRUE
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/user, proximity, params)
-	..()
-	update_icon()
-	return
+/obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
+	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
+	name = "Colt M1911"
+	initial_mag = /obj/item/ammo_box/magazine/colt
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/update_icon(load = 0)
-	..()
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
+	name = "Derringer"
+	desc = "A small pocket pistol and your best friend. Manufactured by Hephaestus Industries without much changes from the earliest designs. Chambered in .38."
+	icon_state = "derringer"
+	item_state = null
+	w_class = SIZE_TINY
+	two_hand_weapon = FALSE
+	force = 2
+	flags =  CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
+	can_be_holstered = TRUE
+	can_be_shortened = FALSE
+	fire_sound = 'sound/weapons/guns/gunshot_derringer.ogg'
+	recoil = 2
 
-/obj/item/weapon/gun/projectile/sec_pistol
-	name = "pistol"
-	desc = "AT-7 .45 caliber pistol."
-	icon_state = "at7"
-	fire_sound = 'sound/weapons/guns/gunshot_at7.wav'
-	mag_type = /obj/item/ammo_box/magazine/at7_45
-
-/obj/item/weapon/gun/projectile/sec_pistol/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
-	if(magazine)
-		cut_overlays()
-		add_overlay(image('icons/obj/gun.dmi', "at7-mag"))
-		return
-
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	cut_overlays()
-	update_magazine()
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
-
-/obj/item/weapon/gun/projectile/sec_pistol/acm38
-	name = "pistol"
-	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
-	icon_state = "acm38"
-	item_state = "colt"
-	fire_sound = 'sound/weapons/guns/gunshot_acm38.ogg'
-	mag_type = /obj/item/ammo_box/magazine/acm38_38
-
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
+	name = "Opressor"
+	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
+	icon_state = "synderringer"
+	force = 5
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
+	recoil = 3
+	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'

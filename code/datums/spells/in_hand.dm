@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/spell/in_hand/Click()
 	if(cast_check())
 		cast()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
 	return (!user.lying && ..())
@@ -114,15 +114,15 @@
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/fireball
-	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
+	name = "Огненный Шар"
+	desc = "Выстреливает огненным шаром в цель."
 	school = "evocation"
 	action_icon_state = "fireball"
 	summon_path = /obj/item/weapon/magic/fireball
 	charge_max = 200
 
 /obj/item/weapon/magic/fireball
-	name = "Fireball"
+	name = "огненный шар"
 	invoke = "ONI SOMA"
 	icon_state = "fireball"
 	s_fire = 'sound/magic/Fireball.ogg'
@@ -134,6 +134,7 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/projectile/magic/fireball/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isliving(target))
@@ -143,11 +144,63 @@
 	explosion(get_turf(target), 1)
 	return ..()
 
+///////////////////////////////////////////
+
+/obj/effect/proc_holder/spell/in_hand/icebolt
+	name = "Ледяная Стрела"
+	desc = "Слабая ледяная стрела, не наносит большого ущерба здоровью, но неплохо замедляет цель."
+	school = "evocation"
+	action_icon_state = "ice_bolt"
+	summon_path = /obj/item/weapon/magic/icebolt
+	charge_max = 150
+
+/obj/item/weapon/magic/icebolt
+	name = "ледяная стрела"
+	invoke = "SI'ON MAD'I"
+	icon_state = "ice_bolt"
+	s_fire = 'sound/weapons/sear.ogg'
+	proj_path = /obj/item/projectile/temp/icebolt
+
+/obj/item/projectile/temp/icebolt
+	name = "bolt of ice"
+	damage = 10
+	flag = "magic"
+	damage_type = BURN
+	temperature = 25 // reduces body temperature to VERY low values
+
 //////////////////////////////////////////////////////////////
 
+/obj/effect/proc_holder/spell/in_hand/acid
+	name = "Кислотный Чих"
+	desc = "Вы используете магию для того, чтобы чихнуть кислотой во врага."
+	school = "evocation"
+	action_icon_state = "alien_neurotoxin"
+	summon_path = /obj/item/weapon/magic/acid
+	charge_max = 200
+
+/obj/item/weapon/magic/acid
+	name = "кислота"
+	invoke = "AP'CHKHI"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	s_fire = 'sound/voice/mob/mbcough_1.ogg'
+	proj_path = /obj/item/projectile/neurotoxin/magic
+
+/obj/item/projectile/neurotoxin/magic
+	name = "toxin"
+	damage = 40
+	weaken = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	flag = "magic"
+	neurotoxin
+	damage_type = TOX
+
+///////////////////////////////////////////
+
 /obj/effect/proc_holder/spell/in_hand/tesla
-	name = "Lightning Bolt"
-	desc = "Fire a high powered lightning bolt at your foes!"
+	name = "Шаровая Молния"
+	desc = "Выстрелите молнией в ваших врагов!"
 	school = "evocation"
 	charge_max = 400
 	clothes_req = 1
@@ -155,7 +208,7 @@
 	summon_path = /obj/item/weapon/magic/tesla
 
 /obj/item/weapon/magic/tesla
-	name = "Lighting Ball"
+	name = "Шаровая молния"
 	invoke ="UN'LTD P'WAH"
 	icon_state = "teslaball"
 	proj_path = /obj/item/projectile/magic/lightning
@@ -167,6 +220,7 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
+	light_color = LIGHT_COLOR_LIGHTNING
 
 /obj/item/projectile/magic/lightning/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	..()
@@ -176,8 +230,8 @@
 /////////////////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/arcane_barrage
-	name = "Arcane Barrage"
-	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
+	name = "Чародейский Обстрел"
+	desc = "Выстреливает мистической энергией в ваших врагов. Требует обе руки для использования."
 	charge_max = 600
 	action_icon_state = "arcane_barrage"
 	summon_path = /obj/item/weapon/magic/arcane_barrage
@@ -220,14 +274,15 @@
 	icon_state = "arcane_bolt"
 	damage = 20
 	nodamage = 0
-	flag = "laser"
+	flag = LASER
 	damage_type = BURN
+	light_color = COLOR_PINK
 
 //////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/res_touch
-	name = "Resurrection Touch"
-	desc = "Resurrects a dead player. Cannot be used on ADMINs, robbutts or bunnies."
+	name = "Воскрешение"
+	desc = "Воскрешает труп. Нельзя использовать на админах, роботах или кроликах."
 	school = "evocation"
 	action_icon_state = "res_touch"
 	summon_path = /obj/item/weapon/magic/res_touch
@@ -261,8 +316,8 @@
 	animation.icon_state = icon_state
 	animation.pixel_y = 32
 	animation.alpha = 0
-	animation.layer = LIGHTING_LAYER + 1
-	animation.plane = LIGHTING_PLANE + 1
+	animation.plane = ABOVE_LIGHTING_PLANE
+	animation.layer = ABOVE_LIGHTING_LAYER
 
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)
@@ -285,7 +340,7 @@
 	L.revive()
 
 	if(!L.ckey || !L.mind)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(L.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break
@@ -295,14 +350,14 @@
 //////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/heal
-	name = "Heal"
-	desc = "Heals physically and mentally. Sometimes target may recieve double effect at lower levels. Target must be alive. \
-		<br>Can be powered up seven times (click spell in hand). Each level provides different effect, while also raises spell cooldown. 1 to 5 can only be used by touching target \
-		<br>1 to 3 heals \
-		<br>4 cures any virus, but heals alot less \
-		<br>5 cleans from any mutations, but heals alot less \
-		<br>6 heals target for a great amount, but cannot be used on yourself. \
-		<br>7 regenerates target limbs which fully recovers them, but for everything else effect is greatly reduced."
+	name = "Лечение"
+	desc = "Лечит физически и ментально. Иногда цель получает двойной эффект на низких уровнях. Цель должна быть жива. \
+		<br>Можно заряжать до семи раз. (Клик на заклинание в руке.) Каждый уровень дает разный эффект и увеличивает время перезарядки. 1 до 5 нельзя кидать. \
+		<br>1 до 3 лечение. \
+		<br>4 лечит вирусы, но восстанавливает меньше здоровья. \
+		<br>5 очищает гены от мутаций, но восстанавливает меньше здоровья. \
+		<br>6 восстанавливает больше здоровья, но нельзя применить к себе. \
+		<br>7 отращивает конечности цели и полностью их восстанавливает, но не более."
 	school = "evocation"
 	action_icon_state = "heal"
 	summon_path = /obj/item/weapon/magic/heal_touch
@@ -310,7 +365,7 @@
 	clothes_req = FALSE
 
 /obj/item/weapon/magic/heal_touch
-	name = "healing touch"
+	name = "Лечение"
 	invoke = "In Mani"
 	icon_state = "heal_"
 	item_state = "healing"
@@ -328,23 +383,23 @@
 
 	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140 (2:20)
 
-	var/level_info = "<b>level [power_of_spell]</b> [src] now"
+	var/level_info = "<b>Уровень [power_of_spell]</b> [src] now"
 	switch(power_of_spell)
 		if(2 to 3)
-			to_chat(user, "<span class='notice'>[level_info] <b>heals</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b> просто лечит</b>.</span>")
 		if(4)
-			to_chat(user, "<span class='notice'>[level_info] <b>cures</b> any <b>virus</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>исцеляет</b> любой <b>вирус</b>.</span>")
 		if(5)
-			to_chat(user, "<span class='notice'>[level_info] <b>cleans</b> from any <b>mutations</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>очищает</b> любую <b>мутацию</b>.</span>")
 		if(6)
 			touch_spell = FALSE
-			name = "healing ball"
+			name = "Лечащий шар"
 			invoke = "In Vas Mani"
-			to_chat(user, "<span class='notice'>[level_info] <b>heals</b> and can be <b>thrown</b></span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>лечит</b> и можно <b>метнуть</b>.</span>")
 		if(7)
-			name = "regeneration healing ball"
+			name = "Восстанавливающий шар лечения"
 			invoke = "In Vas An Mani"
-			to_chat(user, "<span class='notice'>[level_info] <b>regenerates limbs</b> but heals a lot less and can be <b>thrown</b></span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>восстанавливает конечности</b>, но слабее лечит и можно <b>метнуть</b>.</span>")
 
 /obj/item/weapon/magic/heal_touch/update_icon()
 	icon_state = initial(icon_state) + "[power_of_spell]"
@@ -387,6 +442,7 @@
 	damage_type = OXY
 	nodamage = 1
 	flag = "magic"
+	light_color = "#00ff00"
 
 /obj/item/projectile/magic/healing_ball/atom_init()
 	. = ..()

@@ -38,15 +38,14 @@
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
 		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
-		dat += "<a href ='?src=\ref[src];buy=\ref[T]'>[buyable ? "Buy"  : "<font color='grey'>Buy</font>"]</a> | "
+		dat += "<a [!buyable ? "class='disabled'" : null] href ='?src=\ref[src];buy=\ref[T]'>Buy</a> | "
 		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
 			dat += "[T.desc]<BR>"
 		dat += "<BR>"
 
-	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500)
+	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)
@@ -88,6 +87,23 @@
 		console.tools -= src
 		qdel(src)
 
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				continue
+			S.spent_TC += cost
+			if(istype(R, /datum/role/operative))
+				R.faction.faction_scoreboard_data += {"[name] for [cost] TC."}
+			else
+				S.uplink_items_bought += {"[name] for [cost] TC."}
+
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = name
+			stat.cost = cost
+			stat.item_type = item
+			S.uplink_purchases += stat
 
 /datum/intruder_tools/war_device
 	name = "War Device"
@@ -99,9 +115,9 @@
 
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
-	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
+	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be instruments. Caution. You'll have to buy spacesuit's in addition."
 	delete_dat_after_buying = TRUE
-	cost = 30
+	cost = 25
 
 /datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	var/area/cur_area = get_area(console)
@@ -112,7 +128,8 @@
 	for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
 		if(shutter.dock_tag == "Syndicate_shuttle")
 			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
-			qdel(shutter)
+			shutter.open_allowed = TRUE
+			shutter.open()
 			playsound(console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			for(var/datum/intruder_tools/gateway_locker/D in console.tools)
 				console.tools -= D
@@ -127,7 +144,7 @@
 	After Hack, you can switch entering through gateway."
 	item = /obj/item/device/gateway_locker
 	delete_dat_after_buying = TRUE
-	cost = 15
+	cost = 25
 
 /datum/intruder_tools/gateway_locker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	..()
@@ -139,41 +156,22 @@
 	name = "Exosuit Drop System"
 	desc = "A module for exosuit, that allow you launching at Long distances"
 	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
-	cost = 15
+	cost = 5
 
 /datum/intruder_tools/droppod
 	name = "Drop Pod"
 	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
-	cost = 14
+	cost = 5
 
 /datum/intruder_tools/drop_aim
 	name = "Simple Drop System"
 	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
 	item =  /obj/item/weapon/simple_drop_system
-	cost = 8
+	cost = 4
 
 /datum/intruder_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
-
-/datum/intruder_tools/rig
-	name = "Syndi Rig"
-	desc = "The red syndicate space rig with additional armor plating.\
-	 Nanotrasen crewmembers are trained to report red space suit sightings."
-	item = /obj/item/weapon/storage/box/syndie_kit/rig
-	cost = 8
-
-/datum/intruder_tools/heavy_rig
-	name = "Heavy Syndi Rig"
-	desc = "Combat rig fitted with heavy armor plates made to endure even the greatest damage, developed off existing 'Striker' space suit."
-	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
-	cost = 12
-
-/datum/intruder_tools/armor
-	name = "Syndi Assault Armor"
-	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
-	item = /obj/item/weapon/storage/box/syndie_kit/armor
-	cost = 4

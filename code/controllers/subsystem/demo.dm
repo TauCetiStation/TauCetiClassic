@@ -1,8 +1,6 @@
-var/datum/subsystem/demo/SSdemo
-
-/datum/subsystem/demo
+SUBSYSTEM_DEF(demo)
 	name = "Demo"
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 	wait = SS_WAIT_DEMO
 	priority = SS_PRIORITY_DEMO
 	init_order = SS_INIT_DEMO
@@ -25,11 +23,8 @@ var/datum/subsystem/demo/SSdemo
 	var/last_queued = 0
 	var/last_completed = 0
 
-/datum/subsystem/demo/New()
-	NEW_SS_GLOBAL(SSdemo)
-
-/datum/subsystem/demo/proc/write_time()
-	if(!config.record_replays)
+/datum/controller/subsystem/demo/proc/write_time()
+	if(!can_fire)
 		return
 	var/new_time = world.time
 	if(last_written_time != new_time)
@@ -39,8 +34,8 @@ var/datum/subsystem/demo/SSdemo
 			pre_init_lines += "time [new_time]"
 	last_written_time = new_time
 
-/datum/subsystem/demo/proc/write_event_line(line)
-	if(!config.record_replays)
+/datum/controller/subsystem/demo/proc/write_event_line(line)
+	if(!can_fire)
 		return
 	write_time()
 	if(initialized)
@@ -48,8 +43,8 @@ var/datum/subsystem/demo/SSdemo
 	else
 		pre_init_lines += line
 
-/datum/subsystem/demo/proc/write_chat(target, text)
-	if(!config.record_replays)
+/datum/controller/subsystem/demo/proc/write_chat(target, text)
+	if(!can_fire)
 		return
 	var/target_text = ""
 	if(target == clients)
@@ -72,9 +67,9 @@ var/datum/subsystem/demo/SSdemo
 	write_event_line("chat [target_text] [last_chat_message == text ? "=" : json_encode(text)]")
 	last_chat_message = text
 
-/datum/subsystem/demo/Initialize()
+/datum/controller/subsystem/demo/Initialize()
 	if(!config.record_replays)
-		can_fire = FALSE
+		stop_demo() // todo: lagswith should have higher priority to be able to stop demo initialization
 		return ..()
 	demo_file = file("[global.log_directory]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
@@ -94,9 +89,9 @@ var/datum/subsystem/demo/SSdemo
 				var/turf/T = locate(x,y,z)
 				T.demo_last_appearance = T.appearance
 				var/this_appearance
-				// space turfs are difficult to RLE otherwise, because they all
+				// environment turfs are difficult to RLE otherwise, because they all
 				// have different appearances despite being the same thing.
-				if(T.type == /turf/space)
+				if(isenvironmentturf(T))
 					this_appearance = "s" // save the bytes
 				else
 					this_appearance = T.appearance
@@ -131,7 +126,7 @@ var/datum/subsystem/demo/SSdemo
 					var/atom/movable/as_movable = C
 					if(as_movable.loc != T)
 						continue
-					if(isobj(C) || ismob(C))
+					if((isobj(C) || ismob(C)) && !(as_movable.flags_2 & PROHIBIT_FOR_DEMO_2))
 						turf_list += encode_init_obj(C)
 				if(turf_list.len)
 					if(spacing)
@@ -145,8 +140,9 @@ var/datum/subsystem/demo/SSdemo
 	// track objects that exist in nullspace
 	var/nullspace_list = list()
 	for(var/atom/movable/M in world)
-		if(M.loc != null) continue
-		if(!isobj(M) && !ismob(M))
+		if(M.loc != null)
+			continue
+		if((!isobj(M) && !ismob(M)) || !(M.flags_2 & PROHIBIT_FOR_DEMO_2))
 			continue
 		nullspace_list += encode_init_obj(M)
 		CHECK_TICK
@@ -159,7 +155,7 @@ var/datum/subsystem/demo/SSdemo
 
 	return ..()
 
-/datum/subsystem/demo/fire()
+/datum/controller/subsystem/demo/fire()
 	if(!src.marked_new.len && !src.marked_dirty.len && !src.marked_turfs.len && !src.del_list.len)
 		return // nothing to do
 
@@ -189,7 +185,7 @@ var/datum/subsystem/demo/SSdemo
 			loc_string = "null"
 			if(isturf(M.loc))
 				loc_string = "[M.x],[M.y],[M.z]"
-			else if(ismovableatom(M.loc))
+			else if(ismovable(M.loc))
 				loc_string = "\ref[M.loc]"
 			M.demo_last_loc = M.loc
 		var/appearance_string = "="
@@ -218,7 +214,7 @@ var/datum/subsystem/demo/SSdemo
 		var/loc_string = "null"
 		if(isturf(M.loc))
 			loc_string = "[M.x],[M.y],[M.z]"
-		else if(ismovableatom(M.loc))
+		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
 		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type)]"
@@ -250,18 +246,19 @@ var/datum/subsystem/demo/SSdemo
 	if(canceled)
 		return;
 
-/datum/subsystem/demo/proc/encode_init_obj(atom/movable/M)
+/datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
 	M.demo_last_appearance = M.appearance
 	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type)
 	var/list/encoded_contents = list()
 	for(var/C in M.contents)
-		if(isobj(C) || ismob(C))
-			encoded_contents += encode_init_obj(C)
+		var/atom/A = C
+		if((isobj(A) || ismob(A)) && !(A.flags_2 & PROHIBIT_FOR_DEMO_2))
+			encoded_contents += encode_init_obj(A)
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
-/datum/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
+/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
 	if(appearance == null)
 		return "n"
 	if(appearance == diff_appearance)
@@ -337,7 +334,7 @@ var/datum/subsystem/demo/SSdemo
 		appearance.pixel_y == 0 ? "" : appearance.pixel_y,
 		appearance.blend_mode <= 1 ? "" : appearance.blend_mode,
 		appearance_transform_string != "i" ? appearance_transform_string : "",
-		appearance:invisibility == 0 ? "" : appearance:invisibility, // colon because dreamchecker is dumb
+		appearance:invisibility == INVISIBILITY_NONE ? "" : appearance:invisibility, // colon because dreamchecker is dumb
 		appearance.pixel_w == 0 ? "" : appearance.pixel_w,
 		appearance.pixel_z == 0 ? "" : appearance.pixel_z,
 		appearance.overlays.len ? overlays_string : "",
@@ -406,7 +403,7 @@ var/datum/subsystem/demo/SSdemo
 			return diffed_string
 	return undiffed_string
 
-/datum/subsystem/demo/stat_entry(msg)
+/datum/controller/subsystem/demo/stat_entry(msg)
 	msg += "Remaining: {"
 	msg += "Trf:[marked_turfs.len]|"
 	msg += "New:[marked_new.len]|"
@@ -415,13 +412,17 @@ var/datum/subsystem/demo/SSdemo
 	msg += "}"
 	..(msg)
 
-/datum/subsystem/demo/proc/mark_turf(turf/T)
-	if(!isturf(T))
+/datum/controller/subsystem/demo/proc/mark_turf(turf/T)
+	if(!can_fire)
+		return
+	if(!isturf(T) || T.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	marked_turfs[T] = TRUE
 
-/datum/subsystem/demo/proc/mark_new(atom/movable/M)
-	if(!isobj(M) && !ismob(M))
+/datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
+	if(!can_fire)
+		return
+	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
 		return
@@ -430,15 +431,19 @@ var/datum/subsystem/demo/SSdemo
 		marked_dirty -= M
 
 // I can't wait for when TG ports this and they make this a #define macro.
-/datum/subsystem/demo/proc/mark_dirty(atom/movable/M)
-	if(!isobj(M) && !ismob(M))
+/datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
+	if(!can_fire)
+		return
+	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
 		return
 	if(!marked_new[M])
 		marked_dirty[M] = TRUE
 
-/datum/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+	if(!can_fire)
+		return
 	if(!isobj(M) && !ismob(M))
 		return
 	if(marked_new[M])
@@ -447,3 +452,14 @@ var/datum/subsystem/demo/SSdemo
 		marked_dirty -= M
 	if(initialized)
 		del_list["\ref[M]"] = 1
+
+/datum/controller/subsystem/demo/proc/stop_demo(source)
+	if(source)
+		var/blame_note = "<span class='warning big'>!!Demo recording interrupted by [source]!!</span>"
+		write_event_line("chat world [json_encode(blame_note)]")
+	flags |= SS_NO_FIRE
+	can_fire = FALSE
+	marked_dirty.Cut()
+	marked_new.Cut()
+	marked_turfs.Cut()
+	del_list.Cut()

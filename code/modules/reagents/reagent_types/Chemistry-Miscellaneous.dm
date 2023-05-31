@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
+	data = list()
 	name = "Blood"
 	id = "blood"
 	reagent_state = LIQUID
@@ -9,18 +9,8 @@
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
 	src = null
-	if(self.data && self.data["viruses"])
-		for(var/datum/disease/D in self.data["viruses"])
-			//var/datum/disease/virus = new D.type(0, D, 1)
-			// We don't spread.
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS)
-				continue
-			if(method == TOUCH)
-				M.contract_disease(D)
-			else //injected
-				M.contract_disease(D, 1, 0)
 
-	if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
+	if(self.data && self.data["virus2"] && iscarbon(M))//infecting...
 		var/list/vlist = self.data["virus2"]
 		if(vlist.len)
 			for(var/ID in vlist)
@@ -30,7 +20,7 @@
 				else
 					infect_virus2(M,V.getcopy(),1) //injected, force infection!
 
-	if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
+	if(self.data && self.data["antibodies"] && iscarbon(M))//... and curing
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
 
@@ -46,64 +36,35 @@
 	var/datum/reagent/blood/self = src
 	if(!(volume >= 3))
 		return
-	//var/datum/disease/D = self.data["virus"]
-	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
+
+	var/mob/living/carbon/donor = locate(self.data["donor"])
+	if(!istype(donor)) // if donor was deleted and ref changed to random thing
+		donor = null
+
+	if(!donor || ishuman(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
 			blood_prop = new(T)
-			blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
-
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
+			if(self.data["blood_DNA"])
+				if(self.data["blood_type"])
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
+				else
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
-
-	else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+	else if(ismonkey(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 
-	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
+	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
-/datum/reagent/vaccine
-	//data must contain virus type
-	name = "Vaccine"
-	id = "vaccine"
-	reagent_state = LIQUID
-	color = "#c81040" // rgb: 200, 16, 64
-	taste_message = "health"
-
-/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
-	var/datum/reagent/vaccine/self = src
-	src = null
-	if(self.data&&method == INGEST)
-		for(var/datum/disease/D in M.viruses)
-			if(istype(D, /datum/disease/advance))
-				var/datum/disease/advance/A = D
-				if(A.GetDiseaseID() == self.data)
-					D.cure()
-			else
-				if(D.type == self.data)
-					D.cure()
-
-			M.resistances += self.data
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -164,8 +125,8 @@
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
-	if(volume >= 5)
-		if(istype(T, /turf/simulated/wall))
+	if(volume >= 30)
+		if(iswallturf(T))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
@@ -215,7 +176,7 @@
 	M.adjustToxLoss(1)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 10)
@@ -228,6 +189,17 @@
 	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
+
+/datum/reagent/space_cleaner/on_general_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(0.2)
+
+	if(prob(10))
+		M.emote("hiccup")
+		var/image/I = image('icons/effects/effects.dmi', M, "bubbles", MOB_LAYER + 1)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		flick_overlay_view(I, M, 30)
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
@@ -253,7 +225,7 @@
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(istype(M,/mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.lip_style)
 				H.lip_style = null
@@ -263,48 +235,30 @@
 		if(C.l_hand)
 			C.l_hand.clean_blood()
 		if(C.wear_mask)
-			if(C.wear_mask.clean_blood())
-				C.update_inv_wear_mask()
+			C.wear_mask.clean_blood()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = C
 			if(H.head)
-				if(H.head.clean_blood())
-					H.update_inv_head()
+				H.head.clean_blood()
 			if(H.wear_suit)
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
+				H.wear_suit.clean_blood()
 			else if(H.w_uniform)
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
+				H.w_uniform.clean_blood()
 			if(H.shoes)
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
+				H.shoes.clean_blood()
 			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 			var/no_legs = FALSE
 			if(!l_foot && !r_foot)
 				no_legs = TRUE
 			if(!no_legs)
-				if(H.shoes && H.shoes.clean_blood())
-					H.update_inv_shoes()
+				if(H.shoes)
+					H.shoes.clean_blood()
 				else
 					H.feet_blood_DNA = null
 					H.feet_dirt_color = null
-					H.update_inv_shoes()
+					H.update_inv_slot(SLOT_SHOES)
 		M.clean_blood()
-
-/datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
-	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "something alien"
-
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/xeno_transformation(0),1)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -314,7 +268,7 @@
 	color = "#9e6b38" // rgb: 158, 107, 56
 	taste_message = null
 
-/datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
+/datum/reagent/foaming_agent // Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
 	id = "foaming_agent"
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
@@ -341,21 +295,21 @@
 				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
 				alert_time = world.time
 			if(prob(60))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 		if(volume < 0.7)
 			if(prob(10))
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
 		if(volume > 1)
 			if(prob(80))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 				M.drowsyness = min(40, (M.drowsyness + 2))
 			if(prob(3) & ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.invoke_vomit_async()
 		if(volume > 5)
 			if(prob(70))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 	if(holder.has_reagent("anti_toxin"))
 		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
@@ -367,6 +321,12 @@
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
 	taste_message = "floor cleaner"
+
+/datum/reagent/ammonia/reaction_obj(obj/O, volume)
+	if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		C.color = null
+		C.remove_paint_state()
 
 /datum/reagent/ultraglue
 	name = "Ultra Glue"
@@ -440,24 +400,11 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.invoke_vomit_async()
-		H.apply_effect(1,IRRADIATE,0)
+	irradiate_one_mob(M, 1)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/reagent/nanites
-	name = "Nanomachines"
-	id = "nanites"
-	description = "Microscopic construction robots."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
-
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
-
 /datum/reagent/nanites2
 	name = "Friendly Nanites"
 	id = "nanites2"
@@ -535,11 +482,11 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -592,11 +539,11 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -676,7 +623,7 @@
 
 /datum/reagent/paint/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T) || istype(T, /turf/space))
+	if(!istype(T) || isspaceturf(T))
 		return
 	if(color_weight < 15 || volume < 5)
 		return
@@ -700,45 +647,45 @@
 		var/hair_changes_occured = FALSE
 		var/body_changes_occured = FALSE
 		if(H.client && volume >= 5 && !H.glasses)
-			H.eye_blurry = max(H.eye_blurry, volume)
+			H.blurEyes(volume)
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
-				H.r_skin = CLAMP(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
-				H.g_skin = CLAMP(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.b_skin = CLAMP(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
-				H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
-				H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.r_skin = clamp(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
+				H.g_skin = clamp(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.b_skin = clamp(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_hair = clamp(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
+				H.dyed_g_hair = clamp(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_hair = clamp(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
 				H.hair_painted = TRUE
-				H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
-				H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_facial = clamp(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
+				H.dyed_g_facial = clamp(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_facial = clamp(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
 				H.facial_painted = TRUE
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
 		else if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
-					H.dyed_r_hair = CLAMP(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_hair = CLAMP(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_hair = CLAMP(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_hair = clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
 					H.hair_painted = TRUE
 				else
-					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_hair = clamp(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = clamp(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = clamp(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
 				if(!H.facial_painted)
-					H.dyed_r_facial = CLAMP(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_facial = CLAMP(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_facial = CLAMP(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_facial = clamp(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = clamp(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = clamp(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
 					H.facial_painted = TRUE
 				else
-					H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_facial = clamp(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = clamp(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = clamp(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
 			H.lip_style = "spray_face"
@@ -753,15 +700,11 @@
 /datum/reagent/paint/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
-		if(!C.painted)
-			if(!C.isXRay())
-				var/paint_time = min(volume * 1 SECOND, 10 SECONDS)
-				addtimer(CALLBACK(C, /obj/machinery/camera/proc/remove_paint_state, C.network), paint_time) // EMP turns it off for 90 SECONDS, 10 seems fair.
-				C.disconnect_viewers()
-				C.painted = TRUE
-				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
-				C.triggerCameraAlarm()
-			C.color = color
+		C.color = color
+	if(istype(O, /obj/item/canvas))
+		var/obj/item/canvas/C = O
+		C.canvas_color = color
+		C.reset_grid()
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"
@@ -798,9 +741,8 @@
 /datum/reagent/paint_remover/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
-		if(C.painted)
-			C.remove_paint_state()
-			C.color = null
+		C.remove_paint_state()
+		C.color = null
 
 ////////////////////////////////////
 ///// All the barber's bullshit/////
@@ -930,21 +872,21 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 				M.Sleeping(10) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
 			M.make_jittery(4)
-			M.druggy = max(M.druggy, 15)
+			M.adjustDrugginess(1)
 			M.hallucination = max(M.hallucination, 10)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(45 to 90)
 			M.make_jittery(8)
-			M.druggy = max(M.druggy, 30)
+			M.adjustDrugginess(3)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(90 to 180)
 			M.make_jittery(8)
-			M.druggy = max(M.druggy, 35)
+			M.adjustDrugginess(3)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")

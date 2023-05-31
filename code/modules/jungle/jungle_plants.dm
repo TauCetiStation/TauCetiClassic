@@ -5,10 +5,10 @@
 /obj/structure/bush
 	name = "foliage"
 	desc = "Pretty thick scrub, it'll take something sharp and a lot of determination to clear away."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "bush1"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = 3.2
 	var/indestructable = 0
 	var/stump = 0
@@ -22,7 +22,7 @@
 	if (istype(M, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = M
 		A.loc = get_turf(src)
-	else if (istype(M, /mob/living/carbon/monkey))
+	else if (ismonkey(M))
 		var/mob/living/carbon/monkey/A = M
 		A.loc = get_turf(src)
 
@@ -43,7 +43,7 @@
 						icon_state = "stump[rand(1,2)]"
 						name = "cleared foliage"
 						desc = "There used to be dense undergrowth here."
-						density = 0
+						density = FALSE
 						stump = 1
 						pixel_x = rand(-6,6)
 						pixel_y = rand(-6,6)
@@ -56,9 +56,9 @@
 // Strange, fruit-bearing plants //
 //*******************************//
 
-var/list/fruit_icon_states = list("badrecipe","kudzupod","reishi","lime","grapes","boiledrorocore","chocolateegg")
-var/list/reagent_effects = list("toxin","anti_toxin","stoxin","space_drugs","mindbreaker","zombiepowder","impedrezene")
-var/jungle_plants_init = 0
+var/global/list/fruit_icon_states = list("badrecipe","kudzupod","reishi","lime","grapes","boiledrorocore","chocolateegg")
+var/global/list/reagent_effects = list("toxin","anti_toxin","stoxin","space_drugs","mindbreaker","zombiepowder","impedrezene")
+var/global/jungle_plants_init = 0
 
 /proc/init_jungle_plants()
 	jungle_plants_init = 1
@@ -66,15 +66,15 @@ var/jungle_plants_init = 0
 	reagent_effects = shuffle(reagent_effects)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/jungle_fruit
-	seed = ""
+	seed_type = null
 	name = "jungle fruit"
 	desc = "It smells weird and looks off."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "orange"
 	potency = 1
 
 /obj/structure/jungle_plant
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "plant1"
 	desc = "Looks like some of that fruit might be edible."
 	var/fruits_left = 3
@@ -94,7 +94,7 @@ var/jungle_plants_init = 0
 	fruit_type = rand(1,7)
 	icon_state = "plant[fruit_type]"
 	fruits_left = rand(1,5)
-	fruit_overlay = icon('code/modules/jungle/jungle.dmi',"fruit[fruits_left]")
+	fruit_overlay = icon('icons/misc/jungle.dmi',"fruit[fruits_left]")
 	fruit_r = 255 - fruit_type * 36
 	fruit_g = rand(1,255)
 	fruit_b = fruit_type * 36
@@ -116,7 +116,7 @@ var/jungle_plants_init = 0
 		J.attack_hand(user)
 
 		cut_overlay(fruit_overlay)
-		fruit_overlay = icon('code/modules/jungle/jungle.dmi',"fruit[fruits_left]")
+		fruit_overlay = icon('icons/misc/jungle.dmi',"fruit[fruits_left]")
 		fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
 		add_overlay(fruit_overlay)
 	else

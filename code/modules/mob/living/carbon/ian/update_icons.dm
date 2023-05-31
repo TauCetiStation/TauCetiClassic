@@ -1,25 +1,18 @@
-#define LAYERIAN_BACK     6
-#define LAYERIAN_MOUTH    5
-#define LAYERIAN_HEAD     4
-#define LAYERIAN_NECKCUFF 3
-#define LAYERIAN_TARGETED 2
-#define LAYERIAN_FIRE     1
-#define LAYERIANS_TOTAL   6
+//#define LAYERIAN_LOWER_FIRE      * // --should be in underlays (underlays bad); or we need to make BODY part as overlays layer too (like humans); or remove
+#define LAYERIAN_BACK              6
+#define LAYERIAN_MOUTH             5
+#define LAYERIAN_HEAD              4
+#define LAYERIAN_NECKCUFF          3
+#define LAYERIAN_UPPER_FIRE        2
+#define LAYERIAN_TARGETED          1
+#define LAYERIANS_TOTAL            6
 
-/mob/living/carbon/ian/var/static/list/corgi_icons = list()
-/mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
-
-/mob/living/carbon/ian/proc/apply_overlay(index)
-	var/image/I = overlays_inv[index]
-	if(I)
-		add_overlay(I)
-
-/mob/living/carbon/ian/proc/remove_overlay(index)
-	if(overlays_inv[index])
-		cut_overlay(overlays_inv[index])
-		overlays_inv[index] = null
+/mob/living/carbon/ian
+	var/static/list/corgi_icons = list()
+	overlays_standing = new /list(LAYERIANS_TOTAL)
 
 /mob/living/carbon/ian/regenerate_icons()
+	update_fire_underlay()
 	update_inv_head()
 	update_inv_mouth()
 	update_inv_neck()
@@ -32,7 +25,7 @@
 		client.screen |= contents
 
 /mob/living/carbon/ian/update_inv_head()
-	remove_overlay(LAYERIAN_HEAD)
+	remove_standing_overlay(LAYERIAN_HEAD)
 
 	update_corgi_ability()
 
@@ -107,12 +100,12 @@
 	else
 		body_icon.icon_state = head.icon_state
 
-	overlays_inv[LAYERIAN_HEAD] = body_icon
+	overlays_standing[LAYERIAN_HEAD] = body_icon
 
-	apply_overlay(LAYERIAN_HEAD)
+	apply_standing_overlay(LAYERIAN_HEAD)
 
 /mob/living/carbon/ian/proc/update_inv_mouth()
-	remove_overlay(LAYERIAN_MOUTH)
+	remove_standing_overlay(LAYERIAN_MOUTH)
 
 	if(!mouth)
 		return
@@ -172,12 +165,12 @@
 	else
 		body_icon.icon_state = t_state
 
-	overlays_inv[LAYERIAN_MOUTH] = body_icon
+	overlays_standing[LAYERIAN_MOUTH] = body_icon
 
-	apply_overlay(LAYERIAN_MOUTH)
+	apply_standing_overlay(LAYERIAN_MOUTH)
 
 /mob/living/carbon/ian/proc/update_inv_neck()
-	//remove_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
+	//remove_standing_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
 
 	if(!neck)
 		return
@@ -189,10 +182,10 @@
 	if(client && hud_used && hud_used.hud_shown)
 		client.screen += neck
 
-	//apply_overlay(LAYERIAN_NECKCUFF)
+	//apply_standing_overlay(LAYERIAN_NECKCUFF)
 
 /mob/living/carbon/ian/update_inv_back()
-	remove_overlay(LAYERIAN_BACK)
+	remove_standing_overlay(LAYERIAN_BACK)
 
 	if(!back)
 		return
@@ -220,34 +213,45 @@
 		if(POSE_REST,POSE_STAT)
 			body_icon.icon_state = i_state + "_lie"
 
-	overlays_inv[LAYERIAN_BACK] = body_icon
+	overlays_standing[LAYERIAN_BACK] = body_icon
 
-	apply_overlay(LAYERIAN_BACK)
+	apply_standing_overlay(LAYERIAN_BACK)
 
 /mob/living/carbon/ian/update_targeted()
-	remove_overlay(LAYERIAN_TARGETED)
+	remove_standing_overlay(LAYERIAN_TARGETED)
 
 	if(targeted_by && target_locked)
-		overlays_inv[LAYERIAN_TARGETED] = image("icon"=target_locked, "layer"=-LAYERIAN_TARGETED)
+		overlays_standing[LAYERIAN_TARGETED] = image("icon"=target_locked, "layer"=-LAYERIAN_TARGETED)
 	else if (!targeted_by && target_locked)
 		qdel(target_locked)
 
-	apply_overlay(LAYERIAN_TARGETED)
+	apply_standing_overlay(LAYERIAN_TARGETED)
 
 /mob/living/carbon/ian/update_fire()
-	remove_overlay(LAYERIAN_FIRE)
+	//remove_standing_overlay(LAYERIAN_LOWER_FIRE)
+	remove_standing_overlay(LAYERIAN_UPPER_FIRE)
+
+	update_fire_underlay()
+	if(on_fire)
+		//overlays_standing[LAYERIAN_LOWER_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_LOWER_FIRE)
+		overlays_standing[LAYERIAN_UPPER_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_UPPER_FIRE)
+
+	//apply_standing_overlay(LAYERIAN_LOWER_FIRE)
+	apply_standing_overlay(LAYERIAN_UPPER_FIRE)
+
+/mob/living/carbon/ian/proc/update_fire_underlay()
+	underlays.Cut()
 
 	if(on_fire)
-		overlays_inv[LAYERIAN_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning", "layer"=-LAYERIAN_FIRE)
+		underlays += image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay")
 
-	apply_overlay(LAYERIAN_FIRE)
-
+//#undef LAYERIAN_LOWER_FIRE
 #undef LAYERIAN_BACK
 #undef LAYERIAN_MOUTH
 #undef LAYERIAN_HEAD
 #undef LAYERIAN_NECKCUFF
+#undef LAYERIAN_UPPER_FIRE
 #undef LAYERIAN_TARGETED
-#undef LAYERIAN_FIRE
 #undef LAYERIANS_TOTAL
 
 /mob/living/carbon/ian/update_transform()
@@ -270,10 +274,9 @@
 	update_inv_back()
 
 /mob/living/carbon/ian/update_canmove()
+	..(TRUE)
 
-	. = ..(TRUE)
-
-	if(buckled || resting)
+	if(buckled || ian_sit)
 		pose_last = POSE_SIT
 	else if(stat || weakened || stunned)
 		pose_last = POSE_STAT
@@ -287,3 +290,5 @@
 
 	if(pose_last != pose_prev)
 		update_transform()
+
+	canmove = canmove && !ian_sit

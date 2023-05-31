@@ -1,6 +1,4 @@
-var/datum/subsystem/religion/SSreligion
-
-/datum/subsystem/religion
+SUBSYSTEM_DEF(religion)
 	name = "Religion"
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
@@ -8,13 +6,10 @@ var/datum/subsystem/religion/SSreligion
 	var/list/processing = list()
 	var/list/currentrun = list()
 
-/datum/subsystem/religion/New()
-	NEW_SS_GLOBAL(SSreligion)
-
-/datum/subsystem/religion/stat_entry()
+/datum/controller/subsystem/religion/stat_entry()
 	..("P:[processing.len]")
 
-/datum/subsystem/religion/fire(resumed = 0)
+/datum/controller/subsystem/religion/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -32,6 +27,6 @@ var/datum/subsystem/religion/SSreligion
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/religion/Recover()
+/datum/controller/subsystem/religion/Recover()
 	if(istype(SSreligion.processing))
 		processing = SSreligion.processing

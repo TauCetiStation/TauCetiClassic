@@ -3,7 +3,7 @@
 	desc = "Access transaction logs, account data and all kinds of other financial records."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "aiupload"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	req_one_access = list(access_hop, access_captain, access_cent_captain)
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -12,6 +12,7 @@
 	var/obj/item/weapon/card/id/held_card
 	var/datum/money_account/detailed_account_view
 	var/creating_new_account = 0
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/account_database/proc/get_access_level()
 	if (!held_card)
@@ -48,8 +49,7 @@
 		return ..()
 
 	if(!held_card)
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		held_card = O
 
 		nanomanager.update_uis(src)
@@ -68,6 +68,7 @@
 	data["station_account_number"] = station_account.account_number
 	data["transactions"] = null
 	data["accounts"] = null
+	data["cargo_export_tax"] = SSeconomy.tax_cargo_export
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
@@ -91,6 +92,8 @@
 	var/list/accounts[0]
 	for(var/i=1, i<=all_money_accounts.len, i++)
 		var/datum/money_account/D = all_money_accounts[i]
+		if(D.hidden)
+			continue
 		accounts.Add(list(list(\
 			"account_number"=D.account_number,\
 			"owner_name"=D.owner_name,\
@@ -123,6 +126,11 @@
 				if(detailed_account_view)
 					detailed_account_view.adjust_money(amount)
 
+			if("change_export_tax")
+				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
+				amount = clamp(amount, 0, 100)
+				SSeconomy.tax_cargo_export = amount
+
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num
 				if(detailed_account_view)
@@ -131,9 +139,6 @@
 			if("toggle_suspension")
 				if(detailed_account_view)
 					detailed_account_view.suspended = !detailed_account_view.suspended
-					var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-					if(mode)
-						mode.suspension_directive(detailed_account_view)
 
 			if("finalise_create_account")
 				var/account_name = href_list["holder_name"]
@@ -147,9 +152,7 @@
 					var/trx = create_transation(account_name, "New account activation", "([starting_funds])")
 					station_account.transaction_log.Add(trx)
 
-					creating_new_account = 0
-					ui.close()
-
+				ui.close()
 				creating_new_account = 0
 			if("insert_card")
 				if(held_card)
@@ -163,14 +166,15 @@
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
-						usr.drop_item()
-						C.loc = src
+						usr.drop_from_inventory(C, src)
 						held_card = C
 
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
 				if(index && index <= all_money_accounts.len)
-					detailed_account_view = all_money_accounts[index]
+					var/datum/money_account/MA = all_money_accounts[index]
+					if(!MA.hidden)
+						detailed_account_view = all_money_accounts[index]
 
 			if("view_accounts_list")
 				detailed_account_view = null
@@ -186,10 +190,6 @@
 
 				detailed_account_view.transaction_log.Add(account_trx)
 				station_account.transaction_log.Add(station_trx)
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.payroll_directive(detailed_account_view)
 
 			if("print")
 				var/text

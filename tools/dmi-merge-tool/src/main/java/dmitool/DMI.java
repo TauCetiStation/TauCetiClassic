@@ -30,7 +30,7 @@ public class DMI implements Comparator<IconState> {
     int totalImages = 0;
     RGBA[] palette;
     boolean isPaletted;
-    
+
     public DMI(int w, int h) {
         this.w = w;
         this.h = h;
@@ -38,11 +38,11 @@ public class DMI implements Comparator<IconState> {
         isPaletted = false;
         palette = null;
     }
-    
+
     public DMI(String f) throws DMIException, FileNotFoundException {
         this(new File(f));
     }
-    
+
     public DMI(File f) throws DMIException, FileNotFoundException {
         if(!f.canRead()) {
             throw new FileNotFoundException("File cannot be found or is unreadable!");
@@ -64,13 +64,13 @@ public class DMI implements Comparator<IconState> {
         }
         String descriptor = pngr.getMetadata().getTxtForKey("Description");
         String[] lines = descriptor.split("\n");
-        
+
         if(Main.VERBOSITY > 0) System.out.println("Descriptor has " + lines.length + " lines.");
         if(Main.VERBOSITY > 3) {
             System.out.println("Descriptor:");
             System.out.println(descriptor);
         }
-        
+
         /* length 6 is:
             # BEGIN DMI
             version = 4.0
@@ -80,16 +80,16 @@ public class DMI implements Comparator<IconState> {
             # END DMI
         */
         if(lines.length < 6) throw new DMIException(null, 0, "Descriptor too short!");
-        
+
         if(!"# BEGIN DMI".equals(lines[0]))             throw new DMIException(lines, 0, "Expected '# BEGIN DMI'");
         if(!"# END DMI".equals(lines[lines.length-1]))  throw new DMIException(lines, lines.length-1, "Expected '# END DMI'");
         if(!"version = 4.0".equals(lines[1]))           throw new DMIException(lines, 1, "Unknown version, expected 'version = 4.0'");
-        
+
         this.w = 32;
         this.h = 32;
-        
+
         int i = 2;
-        
+
         if(lines[i].startsWith("\twidth = ")) {
             this.w = Integer.parseInt(lines[2].substring("\twidth = ".length()));
             i++;
@@ -98,9 +98,9 @@ public class DMI implements Comparator<IconState> {
             this.h = Integer.parseInt(lines[3].substring("\theight = ".length()));
             i++;
         }
-        
+
         List<IconState> states = new ArrayList<>();
-        
+
         while(i < lines.length - 1) {
             long imagesInState = 1;
             if(!lines[i].startsWith("state = \"") || !lines[i].endsWith("\"")) throw new DMIException(lines, i, "Error reading state string");
@@ -157,11 +157,11 @@ public class DMI implements Comparator<IconState> {
             states.add(is);
         }
         images = states;
-        
+
         PngChunkPLTE pal = (PngChunkPLTE)pngr.getChunksList().getById1("PLTE");
-        
+
         isPaletted = pal != null;
-        
+
         if(isPaletted) {
             if(Main.VERBOSITY > 0) System.out.println(pal.getNentries() + " palette entries");
 
@@ -174,16 +174,16 @@ public class DMI implements Comparator<IconState> {
         } else {
             if(Main.VERBOSITY > 0) System.out.println("Non-paletted image");
         }
-        
+
         int iw = pngr.imgInfo.cols;
         int ih = pngr.imgInfo.rows;
-        
+
         if(totalImages > iw * ih)
             throw new DMIException(null, 0, "Impossible number of images!");
-        
+
         if(Main.VERBOSITY > 0) System.out.println("Image size " + iw+"x"+ih);
         int[][] px = new int[ih][];
-        
+
         for(int y=0; y<ih; y++) {
             ImageLineInt ili = (ImageLineInt)pngr.readRow();
             int[] sl = ili.getScanline();
@@ -191,10 +191,10 @@ public class DMI implements Comparator<IconState> {
                 throw new DMIException(null, 0, "Error processing image!");
             px[y] = sl.clone();
         }
-        
+
         int statesX = iw / w;
         int statesY = ih / h;
-        
+
         int x=0, y=0;
         for(IconState is: states) {
             int numImages = is.dirs * is.frames;
@@ -217,7 +217,7 @@ public class DMI implements Comparator<IconState> {
                     }
                     img[q] = new NonPalettedImage(w, h, idat);
                 }
-                
+
                 x++;
                 if(x == statesX) {
                     x = 0;
@@ -234,7 +234,7 @@ public class DMI implements Comparator<IconState> {
             is.images = img;
         }
     }
-    
+
     public IconState getIconState(String name) {
         for(IconState is: images) {
             if(is.name.equals(name)) {
@@ -243,7 +243,7 @@ public class DMI implements Comparator<IconState> {
         }
         return null;
     }
-    
+
     /**
      * Makes a copy, unless name is null.
      */
@@ -258,7 +258,7 @@ public class DMI implements Comparator<IconState> {
             totalImages += is.dirs * is.frames;
         }
     }
-    
+
     public boolean removeIconState(String name) {
         for(IconState is: images) {
             if(is.name.equals(name)) {
@@ -269,7 +269,7 @@ public class DMI implements Comparator<IconState> {
         }
         return false;
     }
-    
+
     public boolean setIconState(IconState is) {
         for(int i=0; i<images.size(); i++) {
             IconState ic = images.get(i);
@@ -282,7 +282,7 @@ public class DMI implements Comparator<IconState> {
         }
         return false;
     }
-    
+
     private static final int IEND = 0x49454e44;
     private static final int zTXt = 0x7a545874;
     private static final int IHDR = 0x49484452;
@@ -290,11 +290,11 @@ public class DMI implements Comparator<IconState> {
         if(Main.VERBOSITY > 0) System.out.println("Fixing PNG chunks...");
         out.writeInt(in.readInt());
         out.writeInt(in.readInt());
-        
+
         Deque<PNGChunk> notZTXT = new ArrayDeque<>();
-        
+
         PNGChunk c = null;
-        
+
         while(c == null || c.type != IEND) {
             c = new PNGChunk(in);
             if(c.type == zTXt && notZTXT != null) {
@@ -321,7 +321,7 @@ public class DMI implements Comparator<IconState> {
     @Override public int compare(IconState arg0, IconState arg1) {
         return arg0.name.compareTo(arg1.name);
     }
-    
+
     public void writeDMI(OutputStream os) throws IOException {
         writeDMI(os, false);
     }
@@ -330,14 +330,14 @@ public class DMI implements Comparator<IconState> {
             os.close();
             return;
         }
-        
+
         // Setup chunk-fix buffer
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        
+
         if(sortStates) {
             Collections.sort(images, this);
         }
-        
+
         // Write the dmi into the buffer
         int sx = (int)Math.ceil(Math.sqrt(totalImages));
         int sy = totalImages / sx;
@@ -353,7 +353,7 @@ public class DMI implements Comparator<IconState> {
         String description = getDescriptor();
         if(Main.VERBOSITY > 0) System.out.println("Descriptor has " + (description.split("\n").length) + " lines.");
         out.getMetadata().setText("Description", description, true, true);
-        
+
         Image[][] img = new Image[sx][sy];
         {
             int k = 0;
@@ -361,7 +361,7 @@ public class DMI implements Comparator<IconState> {
             for(IconState is: images) {
                 for(Image i: is.images) {
                     img[k++][r] = i;
-                    
+
                     if(k == sx) {
                         k = 0;
                         r++;
@@ -369,17 +369,17 @@ public class DMI implements Comparator<IconState> {
                 }
             }
         }
-        
+
         for(int irow=0; irow<iy; irow++) {
             ImageLineInt ili = new ImageLineInt(ii);
             int[] buf = ili.getScanline();
             for(int icol=0; icol<ix; icol++) {
                 int imageX = icol / w;
                 int pixelX = icol % w;
-                
+
                 int imageY = irow / h;
                 int pixelY = irow % h;
-                
+
                 Image i = img[imageX][imageY];
                 if(i != null) {
                     RGBA c = i.getPixel(pixelX, pixelY);
@@ -397,16 +397,16 @@ public class DMI implements Comparator<IconState> {
             out.writeRow(ili);
         }
         out.end();
-        
+
         ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
         fixChunks(new DataInputStream(bais), new DataOutputStream(os));
     }
-    
+
     private String getDescriptor() {
         String s = "";
         String n = "\n";
         String q = "\"";
-        
+
           s += "# BEGIN DMI\n";
           s += "version = 4.0\n";
           s += "	width = " + w + n;
@@ -415,14 +415,14 @@ public class DMI implements Comparator<IconState> {
           s += is.getDescriptorFragment();
         }
           s += "# END DMI\n";
-        
+
         return s;
     }
-    
+
     public void printInfo() {
         System.out.println(totalImages + " images, " + images.size() + " states, size "+w+"x"+h);
     }
-    
+
     public void printStateList() {
         for(IconState s: images) {
             System.out.println(s.getInfoLine());
@@ -433,7 +433,7 @@ public class DMI implements Comparator<IconState> {
         if(obj == this) return true;
         if(!(obj instanceof DMI)) return false;
         DMI dmi = (DMI)obj;
-        
+
         // try to find a simple difference before we dive into icon_state comparisons
         if(dmi.w != w || dmi.h != h) return false;
         if(dmi.isPaletted != isPaletted) return false;
@@ -441,7 +441,7 @@ public class DMI implements Comparator<IconState> {
         if(dmi.images.size() != images.size()) return false;
         HashMap<String, IconState> myIS = new HashMap<>();
         HashMap<String, IconState> dmiIS = new HashMap<>();
-        
+
         for(IconState is: images) {
             myIS.put(is.name, is);
         }
@@ -452,7 +452,7 @@ public class DMI implements Comparator<IconState> {
         for(String s: myIS.keySet()) {
             if(!myIS.get(s).equals(dmiIS.get(s))) return false;
         }
-        
+
         return true;
     }
 }

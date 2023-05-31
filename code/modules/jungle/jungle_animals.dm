@@ -9,7 +9,7 @@
 	. = ..()
 
 	if(!spawn_type)
-		var/new_type = pick(typesof(/obj/effect/landmark/animal_spawner) - /obj/effect/landmark/animal_spawner)
+		var/new_type = pick(subtypesof(/obj/effect/landmark/animal_spawner))
 		new new_type(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
@@ -51,7 +51,7 @@
 /mob/living/simple_animal/hostile/panther
 	name = "panther"
 	desc = "A long sleek, black cat with sharp teeth and claws."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "panther"
 	icon_living = "panther"
 	icon_dead = "panther_dead"
@@ -62,9 +62,10 @@
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 50
 	health = 50
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 8
 	melee_damage = 15
@@ -83,7 +84,7 @@
 /mob/living/simple_animal/hostile/panther/FindTarget()
 	. = ..()
 	if(.)
-		emote("nashes at [.]")
+		me_emote("nashes at [.]")
 
 /mob/living/simple_animal/hostile/panther/AttackingTarget()
 	. =..()
@@ -91,6 +92,7 @@
 	if(istype(L))
 		if(prob(15))
 			L.Weaken(3)
+			L.Stun(1)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
 /mob/living/simple_animal/hostile/panther/AttackTarget()
@@ -108,7 +110,7 @@
 /mob/living/simple_animal/hostile/snake
 	name = "snake"
 	desc = "A sinuously coiled, venomous looking reptile."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "snake"
 	icon_living = "snake"
 	icon_dead = "snake_dead"
@@ -119,9 +121,10 @@
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 25
 	health = 25
+	w_class = SIZE_HUMAN
 
 	harm_intent_damage = 2
 	melee_damage = 7
@@ -140,7 +143,7 @@
 /mob/living/simple_animal/hostile/snake/FindTarget()
 	. = ..()
 	if(.)
-		emote("hisses wickedly")
+		me_emote("hisses wickedly")
 
 /mob/living/simple_animal/hostile/snake/AttackingTarget()
 	. =..()

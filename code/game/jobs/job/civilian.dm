@@ -10,33 +10,19 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
-	salary = 160
+	salary = 0
 	minimal_player_ingame_minutes = 960
+	outfit = /datum/outfit/job/qm
+	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
-/datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/quartermaster(H), SLOT_BELT)
-
-	return TRUE
+	department_stocks = list("Cargo" = 40)
 
 
 /datum/job/cargo_tech
@@ -50,21 +36,12 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-	salary = 50
+	salary = 0
 	minimal_player_ingame_minutes = 480
+	outfit = /datum/outfit/job/cargo_tech
+	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
 
-/datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), SLOT_BELT)
-
-	return TRUE
+	department_stocks = list("Cargo" = 20)
 
 
 /datum/job/mining
@@ -78,28 +55,12 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	salary = 80
+	salary = 0
 	minimal_player_ingame_minutes = 480
+	outfit = /datum/outfit/job/mining
+	skillsets = list("Shaft Miner" = /datum/skillset/miner)
 
-/datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/miner(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo (H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), SLOT_IN_BACKPACK)
-
-	return TRUE
+	department_stocks = list("Cargo" = 10)
 
 
 /datum/job/recycler
@@ -112,31 +73,21 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
-	salary = 60
+	access = list(access_mailsorting, access_recycler)
+	salary = 0
 	minimal_player_ingame_minutes = 480
+	outfit = /datum/outfit/job/recycler
+	skillsets = list("Recycler" = /datum/skillset/recycler)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(DIONA)
 
-/datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/recycler(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/recyclervest/(H), SLOT_WEAR_SUIT)
+	department_stocks = list("Cargo" = 10)
 
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), SLOT_BELT)
-
-	return TRUE
 
 //Food
 /datum/job/bartender
@@ -152,40 +103,15 @@
 	access = list(access_bar)
 	salary = 40
 	minimal_player_ingame_minutes = 240
+	outfit = /datum/outfit/job/bartender
+	skillsets = list("Bartender" = /datum/skillset/bartender)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN)
-
-	survival_kit_items = list(/obj/item/ammo_casing/shotgun/beanbag,
-	                          /obj/item/ammo_casing/shotgun/beanbag,
-	                          /obj/item/ammo_casing/shotgun/beanbag,
-	                          /obj/item/ammo_casing/shotgun/beanbag
-	                          )
-
-/datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender(H), SLOT_W_UNIFORM)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/bar(H), SLOT_BELT)
-
-	return TRUE
 
 
 /datum/job/chef
@@ -193,8 +119,8 @@
 	flag = CHEF
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
@@ -202,26 +128,15 @@
 	salary = 40
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
+	outfit = /datum/outfit/job/chef
+	skillsets = list("Chef" = /datum/skillset/chef)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN)
-
-/datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chef(H), SLOT_BELT)
-
-	return TRUE
 
 
 /datum/job/hydro
@@ -238,26 +153,8 @@
 	salary = 60
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
-
-/datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_hyd(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/hyd(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/hyd(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics(H), SLOT_W_UNIFORM)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/botanist(H), SLOT_BELT)
-
-	return TRUE
+	outfit = /datum/outfit/job/hydro
+	skillsets = list("Botanist" = /datum/skillset/botanist)
 
 
 /datum/job/janitor
@@ -270,21 +167,11 @@
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_janitor, access_maint_tunnels)
+	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
 	salary = 50
 	minimal_player_ingame_minutes = 120
-
-/datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), SLOT_BELT)
-
-	return TRUE
+	outfit = /datum/outfit/job/janitor
+	skillsets = list("Janitor" = /datum/skillset/janitor)
 
 
 //More or less assistants
@@ -300,29 +187,11 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
 	salary = 40
-	alt_titles = list("Stylist")
+	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
+	outfit = /datum/outfit/job/barber
+	skillsets = list("Barber" = /datum/skillset/barber)
 
-/datum/job/barber/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return FALSE
-
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(H), SLOT_W_UNIFORM)
-		return
-
-	if(H.mind.role_alt_title)
-		switch(H.mind.role_alt_title)
-			if("Barber")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(H), SLOT_W_UNIFORM)
-			if("Stylist")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), SLOT_W_UNIFORM)
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/barber(H), SLOT_BELT)
-
-	return TRUE
 
 /datum/job/librarian
 	title = "Librarian"
@@ -338,20 +207,8 @@
 	salary = 40
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
-
-/datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), SLOT_L_HAND)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/bookbag(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), SLOT_R_STORE)
-
-	return TRUE
+	outfit = /datum/outfit/job/librarian
+	skillsets = list("Librarian" = /datum/skillset/librarian)
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
@@ -365,42 +222,18 @@
 	supervisors = "The Central Command"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
+	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
 	minimal_player_ingame_minutes = 1560
+	outfit = /datum/outfit/job/lawyer
+	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
-
-/datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/internalaffairs(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/internalaffairs(H), SLOT_WEAR_SUIT)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/big(H), SLOT_GLASSES)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase/centcomm(H), SLOT_L_HAND)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_R_STORE)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_int(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), SLOT_BELT)
-
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
-	L.inject(H)
-	START_PROCESSING(SSobj, L)
-	return TRUE
 
 
 /datum/job/clown
@@ -416,27 +249,14 @@
 	access = list(access_clown, access_theatre)
 	salary = 20
 	minimal_player_ingame_minutes = 120
+	outfit = /datum/outfit/job/clown
+	skillsets = list("Clown" = /datum/skillset/clown)
 
-/datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/clown(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), SLOT_IN_BACKPACK)
-	H.mutations.Add(CLUMSY)
-	return TRUE
-
+/datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = pick(clown_names)
+	H.rename_self("clown")
 
 /datum/job/mime
 	title = "Mime"
@@ -450,34 +270,13 @@
 	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
 	salary = 20
+	outfit = /datum/outfit/job/mime
+	skillsets = list("Mime" = /datum/skillset/mime)
 
-/datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/mime(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/mime(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(H), SLOT_GLOVES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H), SLOT_WEAR_MASK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(H), SLOT_WEAR_SUIT)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/mime(H), SLOT_BELT)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), SLOT_L_STORE)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), SLOT_L_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), SLOT_IN_BACKPACK)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), SLOT_IN_BACKPACK)
-	H.verbs += /client/proc/mimespeak
-	H.verbs += /client/proc/mimewall
-	H.mind.special_verbs += /client/proc/mimespeak
-	H.mind.special_verbs += /client/proc/mimewall
-	H.miming = 1
-	return TRUE
+/datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
+		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
+		H.miming = TRUE
+	H.real_name = pick(mime_names)
+	H.rename_self("mime")

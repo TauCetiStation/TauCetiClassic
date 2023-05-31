@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "b" = (
 /turf/unsimulated/wall,
@@ -51,7 +51,7 @@
 	},
 /area/awaymission)
 "j" = (
-/obj/item/ammo_box/magazine/m50,
+/obj/item/ammo_box/magazine/deagle,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

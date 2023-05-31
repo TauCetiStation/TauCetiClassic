@@ -42,11 +42,10 @@
 	throwforce = 25.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
-	flags = CONDUCT | NOSHIELD | NOBLOODY
+	w_class = SIZE_SMALL
+	flags = CONDUCT | NOBLOODY
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-	sharp = 1
 	edge = 1
 
 	sweep_step = 5
@@ -63,35 +62,44 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
-	flags = NOSHIELD | NOBLOODY
+	w_class = SIZE_TINY
+	flags = NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
 	edge = 1
 	var/hacked
 
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
-	if(istype(W, /obj/item/weapon/melee/energy/sword) && !istype(W, /obj/item/weapon/melee/energy/sword/pirate))
+	var/can_combine = TRUE
+
+	var/blade_color
+
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/melee/energy/sword))
+		var/obj/item/weapon/melee/energy/sword/S = I
+		if(!S.can_combine || !can_combine)
+			return
+
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		user.unEquip(W)
+		var/obj/item/weapon/dualsaber/newSaber = new(user.loc)
+		user.unEquip(I)
 		user.unEquip(src)
-		qdel(W)
+		qdel(I)
 		qdel(src)
 		user.put_in_hands(newSaber)
-	if(ismultitool(W))
+
+	else if(ispulsing(I))
 		if(!hacked)
-			hacked = 1
+			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			blade_color = "rainbow"
 			if (active)
-				active = 0
+				active = FALSE
 				icon_state = "sword0"
 		else
 			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+
 	else
 		return ..()
 
@@ -100,8 +108,7 @@
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
 
-/obj/item/weapon/melee/energy/sword/pirate/attackby()
-	return
+	can_combine = FALSE
 
 /obj/item/weapon/melee/energy/sword/traitor
 	name = "toy sword"
@@ -112,12 +119,12 @@
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
 	force = 70.0//Normal attacks deal very high damage.
-	sharp = 1
 	edge = 1
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
-	w_class = ITEM_SIZE_LARGE//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD | NOBLOODY | DROPDEL
+	w_class = SIZE_SMALL
+	flags = NOBLOODY | DROPDEL
+	flags_2 = CANT_BE_INSERTED
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

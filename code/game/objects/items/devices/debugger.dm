@@ -11,7 +11,7 @@
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	flags = CONDUCT
 	force = 5.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
@@ -37,7 +37,7 @@
 		else
 			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
-	else if(istype(O, /obj/machinery))
+	else if(ismachinery(O))
 		var/obj/machinery/A = O
 		if(A.emagged)
 			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")

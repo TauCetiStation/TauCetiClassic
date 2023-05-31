@@ -1,6 +1,6 @@
 #define GYRO_POWER 25000
 
-var/list/gyrotrons = list()
+var/global/list/gyrotrons = list()
 
 /obj/machinery/power/emitter/gyrotron
 	name = "gyrotron"
@@ -14,6 +14,7 @@ var/list/gyrotrons = list()
 	var/id_tag
 	var/rate = 3
 	var/mega_energy = 1
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/power/emitter/gyrotron/atom_init_late()
 	..(board_path = /obj/item/weapon/circuitboard/emitter/gyrotron)
@@ -47,7 +48,7 @@ var/list/gyrotrons = list()
 	return E
 
 /obj/machinery/power/emitter/gyrotron/attackby(obj/item/W, mob/user)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Gyrotron", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident

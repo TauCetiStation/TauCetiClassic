@@ -11,7 +11,6 @@
 	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
@@ -35,7 +34,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
+/mob/living/carbon/ian/equip_to_slot(obj/item/W, slot)
 	if(!slot)
 		return
 	if(!istype(W))
@@ -46,8 +45,7 @@
 		update_inv_mouth() //So items actually disappear from mouth.
 
 	W.screen_loc = null // will get moved if inventory is visible
-
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_HEAD)
@@ -55,29 +53,25 @@
 				facehugger = TRUE
 			head = W
 			W.equipped(src, slot)
-			update_inv_head()
 		if(SLOT_MOUTH)
 			mouth = W
 			W.equipped(src, slot)
-			update_inv_mouth()
 		if(SLOT_NECK)
 			if(istype(W, /obj/item/weapon/handcuffs))
 				handcuffed = W
 			neck = W
 			W.equipped(src, slot)
-			update_inv_neck()
 		if(SLOT_BACK)
 			back = W
 			W.equipped(src, slot)
-			update_inv_back()
 		else
 			to_chat(usr, "<span class='red'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
-	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
+	W.update_inv_mob()
 
 //Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
 /mob/living/carbon/ian/put_in_active_hand(obj/item/W)
@@ -90,11 +84,10 @@
 	if(!mouth)
 		W.loc = src
 		mouth = W
-		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.slot_equipped = SLOT_MOUTH
 		W.equipped(src,SLOT_MOUTH)
+		W.slot_equipped = SLOT_MOUTH
 		if(client)
 			client.screen |= W
 		if(pulling == W)
@@ -106,6 +99,13 @@
 	return FALSE
 
 /mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+// ian have only one hand
+/mob/living/carbon/ian/put_in_r_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+/mob/living/carbon/ian/put_in_l_hand(obj/item/W)
 	return put_in_active_hand(W)
 
 /mob/living/carbon/ian/put_in_hands(obj/item/W)
@@ -122,21 +122,18 @@
 		W.slot_equipped = initial(W.slot_equipped)
 		return FALSE
 
-/mob/living/carbon/ian/u_equip(obj/W)
+/mob/living/carbon/ian/u_equip(obj/item/W)
 	if (W == head)
 		facehugger = FALSE
 		head = null
-		update_inv_head()
 	else if (W == neck)
 		handcuffed = null
 		neck = null
-		update_inv_neck()
 	else if (W == mouth)
 		mouth = null
-		update_inv_mouth()
 	else if (W == back)
 		back = null
-		update_inv_back()
+	W.update_inv_mob()
 
 /mob/living/carbon/ian/proc/update_corgi_ability()
 	name = real_name
@@ -159,7 +156,7 @@
 			name = "Captain [real_name]"
 			desc = "Probably better than the last captain."
 		if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
-			name = "Runtime"
+			name = "Dusty"
 			emote_see = list("coughs up a furball", "stretches")
 			emote_hear = list("purrs")
 			speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")

@@ -3,10 +3,10 @@
 		return 0
 
 	var/contents = length(reagent_list)
-	var/list/weight = new /list(contents)
-	var/list/redcolor = new /list(contents)
-	var/list/greencolor = new /list(contents)
-	var/list/bluecolor = new /list(contents)
+	var/list/weight[contents]
+	var/list/redcolor[contents]
+	var/list/greencolor[contents]
+	var/list/bluecolor[contents]
 	var/i
 
 	//fill the list of weights
@@ -22,9 +22,9 @@
 		var/hue = re.color
 		if(length(hue) != 7)
 			return 0
-		redcolor[i]=hex2num(copytext(hue,2,4))
-		greencolor[i]=hex2num(copytext(hue,4,6))
-		bluecolor[i]=hex2num(copytext(hue,6,8))
+		redcolor[i] = HEX_VAL_RED(hue)
+		greencolor[i] = HEX_VAL_GREEN(hue)
+		bluecolor[i] = HEX_VAL_BLUE(hue)
 
 	//mix all the colors
 	var/red = mixOneColor(weight,redcolor)

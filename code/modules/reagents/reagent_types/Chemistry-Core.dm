@@ -7,6 +7,8 @@
 	custom_metabolism = 0.01
 	taste_message = null
 
+	toxin_absorption = 0.5
+
 /datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -16,16 +18,16 @@
 
 			if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
-					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
-					H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
+					H.dyed_r_hair = clamp(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
+					H.dyed_g_hair = clamp(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
+					H.dyed_b_hair = clamp(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
 					if(H.dyed_r_hair == H.r_hair && H.dyed_g_hair == H.g_hair && H.dyed_b_hair == H.b_hair)
 						H.hair_painted = FALSE
 						changes_occured = TRUE
 				if(H.facial_painted && !((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
-					H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
-					H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
-					H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
+					H.dyed_r_facial = clamp(round(H.dyed_r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
+					H.dyed_g_facial = clamp(round(H.dyed_g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
+					H.dyed_b_facial = clamp(round(H.dyed_b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
 					if(H.dyed_r_facial == H.r_facial && H.dyed_g_facial == H.g_facial && H.dyed_b_facial == H.b_facial)
 						H.facial_painted = FALSE
 						changes_occured = TRUE
@@ -49,7 +51,7 @@
 		M.adjustToxLoss(rand(15,20))
 
 	var/hotspot = (locate(/obj/fire) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !isspaceturf(T))
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
@@ -59,7 +61,7 @@
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !isspaceturf(T))
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
@@ -74,6 +76,11 @@
 		if(C.painted)
 			C.remove_paint_state()
 			C.color = null
+
+/datum/reagent/water/on_general_digest(mob/living/M)
+	..()
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
 
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
@@ -97,8 +104,9 @@
 	..()
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
-	if(ishuman(M) && iscultist(M) && prob(10))
-		ticker.mode.remove_cultist(M.mind)
+	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
+		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+		C.Deconvert()
 		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
 				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 
@@ -112,7 +120,7 @@
 		else
 			cleansed.result = G.result
 		cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -122,21 +130,21 @@
 		if(G.lit) // Haha, but wouldn't water actually extinguish it?
 			cleansed.light("")
 		cleansed.wax = G.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/ghost/G = O
 		var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -192,7 +200,7 @@
 		else
 			cursed.result = N.result
 		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -202,7 +210,7 @@
 		if(N.lit) // Haha, but wouldn't water actually extinguish it?
 			cursed.light("")
 		cursed.wax = N.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -210,14 +218,14 @@
 		var/obj/item/weapon/game_kit/N = O
 		var/obj/item/weapon/game_kit/random/cursed = new /obj/item/weapon/game_kit/chaplain(N.loc)
 		cursed.board_stat = N.board_stat
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/N = O
 		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -302,7 +310,7 @@
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -326,9 +334,11 @@
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
 
-/datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
+	toxin_absorption = 2.0
+
+/datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T, /turf/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)
 		if (!dirtoverlay)
 			dirtoverlay = new/obj/effect/decal/cleanable/dirt(T)
@@ -401,7 +411,7 @@
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -413,12 +423,18 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
+	custom_metabolism = 0.5
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += 4 * REM
+	M.nutrition += 1
+
+/datum/reagent/sugar/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5)
+	return FALSE
 
 /datum/reagent/radium
 	name = "Radium"
@@ -430,9 +446,9 @@
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(2 * REM,IRRADIATE, 0)
+	irradiate_one_mob(M, 2 * REM)
 	// radium may increase your chances to cure a disease
-	if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
 		if(C.virus2.len)
 			for(var/ID in C.virus2)
@@ -441,7 +457,7 @@
 					if(prob(50))
 						M.radiation += 50 // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
-						if(istype(C,/mob/living/carbon/human))
+						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 							M.adjustToxLoss(100)
@@ -450,7 +466,7 @@
 /datum/reagent/radium/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
@@ -463,6 +479,13 @@
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "metal"
+
+/datum/reagent/iron/on_skrell_digest(mob/living/M)
+	if(prob(15))
+		M.visible_message("<span class='warning'>You feel pain inside you body.</span>")
+	M.adjustToxLoss(1)
+	M.adjustHalLoss(1)
+	return FALSE
 
 /datum/reagent/gold
 	name = "Gold"
@@ -494,12 +517,12 @@
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(1, IRRADIATE, 0)
+	irradiate_one_mob(M, 1)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)

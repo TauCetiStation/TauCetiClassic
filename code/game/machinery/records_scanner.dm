@@ -4,8 +4,8 @@
 	var/outputdir = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "scanner_idle"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/lastuser = null
 
 /obj/machinery/scanner/atom_init()
@@ -57,7 +57,7 @@
 	var/age = user.age
 	var/gender = user.gender
 	/* no dbstuff yet
-	var/DBQuery/cquery = dbcon.NewQuery("SELECT * from jobban WHERE ckey='[user.ckey]'")
+	var/DBQuery/cquery = dbcon.NewQuery("SELECT * from jobban WHERE ckey='[ckey(user.ckey)]'")
 	if(!cquery.Execute()) return
 	else
 		while(cquery.NextRow())

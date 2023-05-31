@@ -6,7 +6,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/mask/balaclava/tactical
 	name = "green balaclava"
@@ -15,7 +15,25 @@
 	item_state = "balaclava"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
+
+/obj/item/clothing/mask/balaclava/richard
+	name = "cock mask"
+	desc = "Do you like hurting other people?"
+	icon_state = "richard"
+	item_state = "richard"
+
+/obj/item/clothing/mask/balaclava/rasmus
+	name = "owl mask"
+	desc = "You're not a nice person, are you?"
+	icon_state = "rasmus"
+	item_state = "rasmus"
+
+/obj/item/clothing/mask/balaclava/don_juan
+	name = "horse mask"
+	desc = "Some things work out best when you don't try so hard."
+	icon_state = "don_juan"
+	item_state = "don_juan"
 
 /obj/item/clothing/mask/luchador
 	name = "luchador mask"
@@ -25,7 +43,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	siemens_coefficient = 3.0
 
 /obj/item/clothing/mask/luchador/tecnicos

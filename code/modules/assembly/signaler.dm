@@ -5,7 +5,6 @@
 	item_state = "signaler"
 	m_amt = 1000
 	g_amt = 200
-	w_amt = 100
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 
@@ -19,8 +18,14 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
-/obj/item/device/assembly/signaler/atom_init()
+	qualities = list(
+		QUALITY_SIGNALLING = 1
+	)
+
+/obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency)
 	. = ..()
+	if(my_new_frequency)
+		frequency = my_new_frequency
 	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
@@ -69,15 +74,17 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(entity_ja(dat), "window=radio")
-	onclose(user, "radio")
+
+	var/datum/browser/popup = new(user, "radio")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 
 /obj/item/device/assembly/signaler/Topic(href, href_list)
 	..()
 
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
 		return
@@ -116,13 +123,13 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] [ADMIN_JMP(usr)]")
-		log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+		message_admins("[key_name_admin(usr)] used [src], location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code] [ADMIN_JMP(usr)]")
+		log_game("[usr.ckey]([usr]) used [src], location [COORD(T)],frequency: [format_frequency(frequency)], code:[code]")
 	else
-		lastsignalers.Add("[time] <B>:</B> (<span class='warning'>NO USER FOUND</span>) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		message_admins("(<span class='warning'>NO USER FOUND</span>) used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		log_game("(NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+		lastsignalers.Add("[time] <B>:</B> (<span class='warning'>NO USER FOUND</span>) used [src] @ location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+		message_admins("(<span class='warning'>NO USER FOUND</span>) used [src], location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+		log_game("(NO USER FOUND) used [src], location [COORD(T)],frequency: [format_frequency(frequency)], code:[code]")
 
 	return
 
@@ -208,7 +215,11 @@ Code:
 		return 0
 	if(signal.encryption != code)
 		return 0
-	for(var/obj/effect/anomaly/A in orange(0, src))
+	if(istype(loc, /obj/machinery/swarm_powered/bluespace_transponder))
+		var/obj/machinery/swarm_powered/bluespace_transponder/BT = loc
+		BT.neutralize()
+	else if(istype(loc, /obj/effect/anomaly))
+		var/obj/effect/anomaly/A = loc
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()
