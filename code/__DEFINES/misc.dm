@@ -1,3 +1,5 @@
+#define path2text(path) "[path]"
+
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 

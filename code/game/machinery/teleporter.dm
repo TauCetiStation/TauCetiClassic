@@ -188,6 +188,8 @@
 				L[tmpname] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+		if(!can_still_interact_with(user))
+			return
 		target = L[desc]
 
 	else
@@ -210,6 +212,8 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") in L
+		if(!can_still_interact_with(user))
+			return
 		target = L[desc]
 		if(target)
 			var/obj/machinery/teleport/station/trg = target

@@ -438,6 +438,13 @@
 		place_poster(W,user)
 		return
 
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/tied_object_reset_pixel_offset, W))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/tied_object_reset_pixel_offset, W))
+		return
 	else
 		return attack_hand(user)
 
@@ -479,3 +486,9 @@
 
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
+
+/turf/simulated/wall/proc/tied_object_reset_pixel_offset(obj/O)
+	O.pixel_y = rand(-8, 8)
+	O.pixel_x = rand(-9, 9)
+	UnregisterSignal(O, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(O, COMSIG_PARENT_QDELETING)

@@ -525,8 +525,10 @@
 
 /obj/item/weapon/storage/box/lights/mixed/atom_init()
 	. = ..()
-	for(var/i in 1 to 14)
+	for(var/i in 1 to 7)
 		new /obj/item/weapon/light/tube(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/light/tube/smart(src)
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/light/bulb(src)
 

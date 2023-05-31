@@ -133,7 +133,7 @@
 
 /obj/item/weapon/storage/backpack/satchel/withwallet/atom_init()
 	. = ..()
-	new /obj/item/weapon/storage/wallet/random(src)
+	new /obj/item/weapon/storage/wallet(src)
 
 /obj/item/weapon/storage/backpack/satchel/norm
 	name = "satchel"

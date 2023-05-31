@@ -9,6 +9,7 @@
 	selection_color = "#ffdddd"
 	idtype = /obj/item/weapon/card/id/secGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_security, access_sec_doors, access_brig, access_armory,
 		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,

@@ -483,10 +483,14 @@ A proc that does all the animations before mix()-ing.
 			menustat = href_list["stat"]
 		if("choose_color")
 			var/new_color = input(user, "Choose your desired color.", "Dye Mixer") as color|null
+			if(!can_still_interact_with(usr))
+				return
 			if(new_color)
 				chosen_color = new_color
 		if("choose_quantity")
 			var/new_quantity = input(user, "Choose amount to create.", "Dye Mixer") as num|null
+			if(!can_still_interact_with(usr))
+				return
 			if(new_quantity && new_quantity > 0 && beakers["output"] && new_quantity <= beakers["output"].reagents.maximum_volume)
 				chosen_quantity = new_quantity
 		if("load_tank")

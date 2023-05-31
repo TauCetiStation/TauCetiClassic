@@ -290,7 +290,10 @@
 				var/attempt_pin = 0
 				if(D)
 					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
+						if(usr.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == D.account_number && usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == D.remote_access_pin)
+							attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
+						else
+							attempt_pin = input("Enter pin code", "Vendor transaction") as num
 						if(isnull(attempt_pin))
 							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 							return

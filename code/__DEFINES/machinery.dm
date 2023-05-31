@@ -27,9 +27,6 @@
 #define MAINT		8		// under maintaince
 #define EMPED		16		// temporary broken by EMP pulse
 
-//General-purpose life speed define for plants.
-#define HYDRO_SPEED_MULTIPLIER 1
-
 #define NANO_IGNORE_DISTANCE 1
 
 //Where we should check allowed()
@@ -68,3 +65,13 @@
 #define ATMOS_DEFAULT_VOLUME_FILTER 200 // L.
 #define ATMOS_DEFAULT_VOLUME_MIXER  200 // L.
 #define ATMOS_DEFAULT_VOLUME_PIPE   70  // L.
+
+// status values shared between lighting fixtures and items
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+
+#define LAMP_FITTING_BULB "bulb"
+#define LAMP_FITTING_TUBE "tube"
+#define LAMP_FITTING_LARGE_TUBE "large tube"

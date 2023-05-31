@@ -234,6 +234,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Carp Migration",          /datum/event/carp_migration,    0, list(ASSIGNMENT_SECURITY = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT, 1, 25),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Lone Syndicate Agent",    /datum/event/lone_op,         100, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 	)
 
 #undef ASSIGNMENT_ANY

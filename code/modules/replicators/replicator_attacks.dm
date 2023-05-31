@@ -90,7 +90,7 @@
 
 	if(isreplicator(A))
 		var/mob/living/simple_animal/hostile/replicator/R = A
-		if(R == src || R.stat == DEAD || !R.ckey)
+		if(R == src || R.stat == DEAD || !R.is_controlled())
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		return
 
@@ -141,6 +141,22 @@
 		visual_effect_color = color
 	return ..(A, end_pixel_y, has_effect, visual_effect_icon, visual_effect_color)
 
+var/global/list/replicator_mines = list()
+ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
+
+/obj/item/mine/replicator/proc/pretend_disintegration()
+	if(fake_disintegrating)
+		return
+	fake_disintegrating = TRUE
+	var/amount = rand(1, 3)
+	for (var/i in 1 to amount)
+		playsound(src, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
+		sleep(rand(1, 3))
+		if(QDELING(src))
+			fake_disintegrating = FALSE
+			return
+		playsound(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
+	fake_disintegrating = FALSE
 
 /obj/item/mine/replicator
 	name = "mine"
@@ -158,6 +174,8 @@
 	var/being_disarmed = FALSE
 
 	var/creator_ckey
+
+	var/fake_disintegrating = FALSE
 
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
@@ -307,7 +325,7 @@
 
 		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/hostile/replicator/other = r
-			if(other.ckey)
+			if(other.is_controlled())
 				continue
 			if(get_dist(src, other) > 7)
 				continue

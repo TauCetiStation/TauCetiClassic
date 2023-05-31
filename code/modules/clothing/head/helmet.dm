@@ -154,6 +154,8 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "thunderdome helmet"
@@ -260,6 +262,8 @@
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/syndiassault/atom_init()
 	. = ..()
@@ -316,3 +320,13 @@
 	desc = "An advanced helmet issued to blueshield officers."
 	icon_state = "blueshield_helmet"
 	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/durathread
+	name = "durathread helmet"
+	desc = "A helmet crafted from a bunch of metal, durathread, and God's help."
+	icon_state = "Durahelmet"
+	item_state = "Durahelmet"
+	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
+
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
