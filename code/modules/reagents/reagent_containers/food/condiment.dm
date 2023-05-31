@@ -39,6 +39,7 @@
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
+	var/empty_icon = "condiment" // Empty state icon
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
