@@ -34,14 +34,7 @@
 	. = ..()
 	var/mob/living/carbon/human/abductor/H = antag.current
 	H.set_species(ABDUCTOR)
-	var/faction_name = ""
-	if(faction)
-		if(istype(faction, /datum/faction/abductors/event))
-			var/datum/faction/abductors/event/event_faction = faction
-			faction_name = event_faction.get_team_name()
-		else
-			faction_name = faction.name
-	H.real_name = faction_name + " " + name
+	H.real_name = "[pick(global.greek_pronunciation)]" + " " + name
 	H.mind.name = H.real_name
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
@@ -51,10 +44,6 @@
 	H.regenerate_icons()
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "abductor", /datum/mood_event/abductor)
 	return TRUE
-
-/datum/role/abductor/proc/get_team_num()
-	var/datum/faction/abductors/A = faction
-	return istype(A) && A.team_number
 
 /datum/role/abductor/agent
 	name = "Agent"
@@ -79,14 +68,6 @@
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
 
-	var/datum/faction/abductors/A = faction
-	if(!istype(A))
-		return
-	var/obj/machinery/abductor/console/console = A.get_team_console()
-	if(console)
-		console.vest = V
-		B.console = console
-
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
@@ -109,15 +90,15 @@
 	if(!istype(A))
 		return
 
-	var/obj/machinery/abductor/console/console = A.get_team_console()
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.imp_in = scientist
 	beamplant.implanted = 1
 	beamplant.implanted(scientist)
-	if(console)
+	for(var/obj/machinery/abductor/console/console in range(2, scientist))
 		console.gizmo = G
 		G.console = console
 		beamplant.home = console.pad
+		break
 
 /datum/role/abductor/assistant
 	name = "Assistant"
@@ -133,19 +114,4 @@
 
 	to_chat(antag.current, "<span class='info'>Help your team. Do the operations for them, look for test subjects, or what is the assistant doing there?</span>")
 
-	return TRUE
-
-/datum/role/abducted
-	name = ABDUCTED
-	id = ABDUCTED
-
-	logo_state = "abductor-logo"
-
-	antag_hud_type = ANTAG_HUD_ABDUCTOR
-	antag_hud_name = "abductee"
-
-/datum/role/abducted/forgeObjectives()
-	if(!..())
-		return FALSE
-	AppendObjective(pick(subtypesof(/datum/objective/abductee)))
 	return TRUE

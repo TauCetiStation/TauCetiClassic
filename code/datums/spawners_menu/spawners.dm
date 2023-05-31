@@ -733,47 +733,23 @@ var/global/list/datum/spawners_cooldown = list()
 	var/ship_num = 1
 	var/kind_role = /datum/role/abductor
 
-/datum/spawner/abductor/can_spawn(mob/dead/observer/ghost)
-	var/datum/faction/abductors/event/fac = find_faction_by_type(/datum/faction/abductors/event)
-	if(!fac)
-		if(kind_role != /datum/role/abductor/scientist)
-			to_chat(ghost, "<span class='warning'>Need more scientists.</span>")
-			return FALSE
-		return ..()
-	if(fac.agent_allowed)
-		if(kind_role != /datum/role/abductor/agent)
-			to_chat(ghost, "<span class='warning'>Need more agents.</span>")
-			return FALSE
-	else
-		if(kind_role != /datum/role/abductor/scientist)
-			to_chat(ghost, "<span class='warning'>Need more scientists.</span>")
-			return FALSE
-	return ..()
-
-/datum/spawner/abductor/New()
+/datum/spawner/abductor/New(_ship_num)
+	ship_num = _ship_num
 	. = ..()
-	if(global.abductor_landmarks_setuped)
-		return
-	global.abductor_landmarks_setuped = TRUE
-	setup_landmarks()
-
-/datum/spawner/abductor/proc/setup_landmarks()
-	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor agent"])
-		agent_landmarks[A.team] = A
-	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor scientist"])
-		scientist_landmarks[A.team] = A
 
 /datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = get_spawn_loc()
+	var/spawnLoc
+	if(kind_role == /datum/role/abductor/scientist)
+		var/obj/effect/landmark/L = scientist_landmarks[ship_num]
+		spawnLoc = L.loc
+	else if(kind_role == /datum/role/abductor/agent)
+		var/obj/effect/landmark/L = agent_landmarks[ship_num]
+		spawnLoc = L.loc
 	// One team. Working together
-	var/datum/faction/abductors/team_fac = create_uniq_faction(/datum/faction/abductors/event)
-	var/mob/living/carbon/human/abductor/event/body_abductor = new(spawnloc)
+	var/datum/faction/abductors/team_fac = create_uniq_faction(/datum/faction/abductors)
+	var/mob/living/carbon/human/abductor/event/body_abductor = new(spawnLoc)
 	body_abductor.key = ghost.client.key
-	add_faction_member(team_fac, body_abductor, FALSE)
-	var/datum/role/R = body_abductor.mind.GetRoleByType(/datum/role/abductor)
-	//get equip, species, hair and name
-	R.OnPostSetup()
-
+	add_faction_member(team_fac, body_abductor, kind_role == /datum/role/abductor/scientist ? FALSE : TRUE)
 
 /datum/spawner/abductor/jump(mob/dead/observer/ghost)
 	var/jump_to = get_spawn_loc()
@@ -783,7 +759,7 @@ var/global/list/datum/spawners_cooldown = list()
 	return
 
 /datum/spawner/abductor/scientist
-	name = "Похититель-Учёный 1"
+	name = "Похититель-Учёный"
 	id = "sci1"
 	kind_role = /datum/role/abductor/scientist
 
@@ -791,44 +767,14 @@ var/global/list/datum/spawners_cooldown = list()
 	var/obj/effect/landmark/L = scientist_landmarks[ship_num]
 	return L.loc
 
-/datum/spawner/abductor/scientist/second
-	name = "Похититель-Учёный 2"
-	id = "sci2"
-	ship_num = 2
-
-/datum/spawner/abductor/scientist/third
-	name = "Похититель-Учёный 3"
-	id = "sci3"
-	ship_num = 3
-
-/datum/spawner/abductor/scientist/fourth
-	name = "Похититель-Учёный 4"
-	id = "sci4"
-	ship_num = 4
-
 /datum/spawner/abductor/agent
-	name = "Похититель-Агент 1"
+	name = "Похититель-Агент"
 	id = "agent1"
 	kind_role = /datum/role/abductor/agent
 
 /datum/spawner/abductor/agent/get_spawn_loc()
 	var/obj/effect/landmark/L = agent_landmarks[ship_num]
 	return L.loc
-
-/datum/spawner/abductor/agent/second
-	name = "Похититель-Агент 2"
-	id = "agent2"
-	ship_num = 2
-
-/datum/spawner/abductor/agent/third
-	name = "Похититель-Агент 3"
-	id = "agent3"
-	ship_num = 3
-
-/datum/spawner/abductor/agent/fourth
-	name = "Похититель-Агент 4"
-	id = "agent4"
-	ship_num = 4
 
 /mob/living/carbon/human/abductor/event
 	spawner_args = list(/datum/spawner/living/abductor, 2 MINUTES)
