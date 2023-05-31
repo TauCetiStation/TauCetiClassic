@@ -4,6 +4,7 @@
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/spirit_level = 2 //To track what stage of spirit they're on
+	var/previous_spirit_level = 2
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/atom/movable/screen/mood/screen_obj
@@ -243,6 +244,8 @@
 		return
 	spirit = amount
 
+	var/prev_spirit_level = spirit_level
+
 	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
@@ -271,6 +274,11 @@
 			spirit_level = 1
 	update_mood_icon()
 	update_mood_client_color()
+
+	if(spirit_level > prev_spirit_level)
+		to_chat(parent, "<span class='nice'>Ваше настроение улучшилось.</span>")
+	else if(spirit_level < prev_spirit_level)
+		to_chat(parent, "<span class='warning'>Ваше настроение ухудшилось.</span>")
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 /datum/component/mood/proc/add_event(datum/source, category, type, ...)
