@@ -155,6 +155,7 @@
 				sleep(1)
 
 /obj/item/weapon/dualsaber/Get_shield_chance()
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)
 		return reflect_chance
 	else
 		return 0
