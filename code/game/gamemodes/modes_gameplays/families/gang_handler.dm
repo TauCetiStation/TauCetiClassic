@@ -52,7 +52,7 @@ var/global/deaths_during_shift = 0
 		for(var/mob/living/carbon/human/H in A)
 			if(H.stat != CONSCIOUS || !H.mind || !H.client)
 				continue
-			var/datum/role/gangster/is_gangster = isanygangster(H)
+			var/datum/role/gangster/is_gangster = isrolebytype(/datum/role/gangster, H)
 			if(is_gangster in members)
 				members_in_area++
 			CHECK_TICK

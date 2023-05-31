@@ -221,11 +221,11 @@
 
 #define isgangster(H) HAS_TRAIT(H, TRAIT_FAMILIES_GANGSTER)
 
-#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
+#define isgangsterlead(H) HAS_TRAIT(H, TRAIT_FAMILIES_LEADER)
 
-#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
+#define isanygangster(H) HAS_TRAIT(H, TRAIT_FAMILIES_MEMBER)
 
-#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+#define isgundealer(H) HAS_TRAIT(H, TRAIT_SYNDICATE_GUN_DEALER)
 
 #define isanycop(H) HAS_TRAIT(H, TRAIT_COP_PERSON)
 

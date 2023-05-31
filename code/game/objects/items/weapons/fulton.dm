@@ -153,14 +153,14 @@
 	return TRUE
 
 /obj/item/weapon/extraction_pack/dealer/try_use_fulton(atom/movable/target, mob/user)
-	if(!isgundealer(user))
+	if(!isrole(GANGSTER_DEALER, user))
 		return FALSE
 	if(isitem(target))
 		for(var/item in global.lowrisk_objectives_cache)
 			if(item != target.type)
 				continue
 			to_chat(user, "<span class='warning'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
-			return FALSE	
+			return FALSE
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
 	if(!..())
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
@@ -169,7 +169,7 @@
 
 /obj/item/weapon/extraction_pack/dealer/proc/give_telecrystal(atom/movable/target_type, mob/user)
 	sleep(10 SECONDS) // signals are called async
-	var/datum/role/traitor/dealer/is_traitor = isgundealer(user)
+	var/datum/role/traitor/dealer/is_traitor = isrole(GANGSTER_DEALER, user)
 	if(!is_traitor)
 		return
 	var/datum/component/gamemode/syndicate/S = is_traitor.GetComponent(/datum/component/gamemode/syndicate)

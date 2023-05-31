@@ -27,7 +27,7 @@
 			new threads(get_turf(src))
 		qdel(src)
 		return
-	var/datum/role/gangster/is_gangster = isgangsterlead(user)
+	var/datum/role/gangster/is_gangster = user?.mind?.GetRole(GANGSTER_LEADER)
 	if(is_gangster)
 		if(is_gangster.faction == team_to_use)
 			to_chat(user, "You started your family. You don't need to join it.")

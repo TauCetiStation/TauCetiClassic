@@ -62,7 +62,7 @@
 
 	var/datum/faction/gang/gang_mode
 	if(user.mind)
-		var/datum/role/R = isanygangster(user)
+		var/datum/role/R = isrolebytype(/datum/role/gangster, user)
 		if(R && istype(R.faction, /datum/faction/gang))
 			gang_mode = R.faction
 
