@@ -64,4 +64,5 @@
 	buckling_mob.reagents.add_reagent("metatrombine", 4)
 	buckling_mob.reagents.add_reagent("bicaridine", 10)
 	buckling_mob.reagents.add_reagent("anti_toxin", 50)
+	buckling_mob.reagents.add_reagent("dexalinp", 5)
 
