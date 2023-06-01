@@ -345,6 +345,12 @@
 
 		if(action == "eject")
 			eject()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				if(!H.has_taken_gun)
+					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
+					new /obj/random/guns/weapon_item(loc)
+					H.has_taken_gun = TRUE
 
 	return TRUE
 
@@ -356,6 +362,7 @@
 	for(var/atom/movable/AM in src)
 		AM.loc = src.loc
 		AM.pipe_eject(0)
+
 	update()
 
 // update the icon & overlays to reflect mode & status
