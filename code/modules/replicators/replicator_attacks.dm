@@ -16,7 +16,7 @@
 	// Thus it shouldn't also protect you from pew pew.
 	flag = BULLET
 
-/obj/item/projectile/disabler/on_hit(atom/A)
+/obj/item/projectile/disabler/on_impact(atom/A)
 	..()
 	spit_prismaline(src, A, 1.5)
 
