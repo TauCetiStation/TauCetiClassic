@@ -39,7 +39,7 @@ export const CardPay = (props, context) => {
           m={0.375}
           mb={0.5}
         >
-          {(enter_account || pay_amount > 0) ? "№"+(numbers) : (numbers)+"$"}
+          {(enter_account || pay_amount > 0) ? "№"+(numbers ? numbers : "------") : (numbers ? numbers : "---")+"$"}
         </Box>
         {buttons}
         <Button
