@@ -4,7 +4,6 @@
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/spirit_level = 2 //To track what stage of spirit they're on
-	var/prev_spirit_level = 2
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/atom/movable/screen/mood/screen_obj
