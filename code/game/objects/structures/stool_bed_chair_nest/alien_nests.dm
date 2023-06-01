@@ -62,7 +62,6 @@
 /obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
 	. = ..()
 	buckling_mob.reagents.add_reagent("metatrombine", 4)
-	buckling_mob.reagents.add_reagent("bicaridine", 4)
-	START_PROCESSING(SSobj, src)
-	if
+	buckling_mob.reagents.add_reagent("bicaridine", 10)
+	buckling_mob.reagents.add_reagent("anti_toxin", 50)
 
