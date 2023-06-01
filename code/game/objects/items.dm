@@ -1040,12 +1040,11 @@
 	if(!item_state_world)
 		return
 
-	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
-		if(icon_state == item_state_world)
-			// moving to inventory, restore icon (big inventory icon)
-			icon_state = initial(icon_state)
+	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
+		// moving to inventory, restore icon (big inventory icon)
+		icon_state = initial(icon_state)
 
-	else if(icon_state != item_state_world)
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
 		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 
