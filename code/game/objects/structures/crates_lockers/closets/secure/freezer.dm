@@ -83,4 +83,4 @@
 	icon_opened = "fridgeopen"
 	icon_broken = "fridgebroken"
 	icon_off = "fridgeoff"
-	req_access = list(access_heads_vault)
+	req_access = list()
