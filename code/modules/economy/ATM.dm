@@ -37,6 +37,7 @@ log transactions
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/money_stock = 15000
 	var/money_stock_max = 25000
+	var/pin_visible_until = 0
 
 /obj/machinery/atm/atom_init()
 	. = ..()
@@ -443,6 +444,7 @@ log transactions
 						authenticated_account.transaction_log.Add(T)
 
 						to_chat(usr, "<span class='notice'>[bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'</span>")
+						pin_visible_until = world.time + 2 SECONDS
 
 					previous_account_number = tried_account_num
 			if("withdrawal")
@@ -703,3 +705,20 @@ log transactions
 	else
 		money_stock -= sum
 		spawn_money(sum, src.loc)
+
+/obj/machinery/atm/examine(mob/user)
+	..()
+	if(!held_card)
+		return
+
+	var/datum/money_account/MA = get_account(held_card.associated_account_number)
+	if(!in_range(src, user))
+		return
+	if(user.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
+		return
+	if(pin_visible_until < world.time)
+		return
+	if(held_card && prob(50))
+		to_chat(user, "Вам удаётся подглядеть пин-код: <span class='notice'>[MA.remote_access_pin]</span>.")
+
+	pin_visible_until = 0
