@@ -73,3 +73,14 @@
 		new /obj/item/weapon/spacecash/c500(src)
 	for (var/i in 1 to 6)
 		new /obj/item/weapon/spacecash/c200(src)
+
+/obj/structure/closet/secure_closet/freezer/empty
+
+	name = "Refrigerator"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridgeoff"
+	req_access = list(access_heads_vault)
