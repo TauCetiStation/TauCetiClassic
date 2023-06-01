@@ -173,3 +173,31 @@
 						prob(2);/obj/item/weapon/gun/projectile/revolver,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/syndie\
 					)
+
+/obj/random/guns/set_empty_special
+	name = "Random lethal Weapon with no ammunition"
+	desc = "This is a random weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "saber-18"
+
+/obj/random/guns/set_empty_special/item_to_spawn()
+		return pick(\
+						/obj/item/weapon/gun/projectile/shotgun/empty,\
+						/obj/item/weapon/gun/projectile/shotgun/combat/empty,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/empty,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/empty,\
+						/obj/item/weapon/gun/projectile/revolver/empty,\
+						/obj/item/weapon/gun/projectile/revolver/detective/empty,\
+						/obj/item/weapon/gun/projectile/automatic/empty,\
+						/obj/item/weapon/gun/projectile/automatic/mini_uzi/empty,\
+						/obj/item/weapon/gun/projectile/automatic/c20r/empty,\
+						/obj/item/weapon/gun/projectile/automatic/l13/empty,\
+						/obj/item/weapon/gun/projectile/automatic/tommygun/empty,\
+						/obj/item/weapon/gun/projectile/automatic/bulldog/empty,\
+						/obj/item/weapon/gun/projectile/automatic/glock/empty,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/empty,\
+						/obj/item/weapon/gun/projectile/automatic/colt1911/empty,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/empty,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate/empty,\
+						/obj/item/weapon/gun/projectile/automatic/wjpp/empty\
+					)
