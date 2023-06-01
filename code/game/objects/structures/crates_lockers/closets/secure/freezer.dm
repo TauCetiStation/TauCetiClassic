@@ -1,12 +1,5 @@
 /obj/structure/closet/secure_closet/freezer
 
-icon_state = "fridge1"
-	icon_closed = "fridge"
-	icon_locked = "fridge1"
-	icon_opened = "fridgeopen"
-	icon_broken = "fridgebroken"
-	icon_off = "fridgeoff"
-
 /obj/structure/closet/secure_closet/freezer/update_icon()
 	if(broken)
 		icon_state = icon_broken
@@ -35,7 +28,12 @@ icon_state = "fridge1"
 
 /obj/structure/closet/secure_closet/freezer/meat
 	name = "Meat Fridge"
-
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridgeoff"
 
 /obj/structure/closet/secure_closet/freezer/meat/PopulateContents()
 	for (var/i in 1 to 4)
@@ -43,7 +41,12 @@ icon_state = "fridge1"
 
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "Refrigerator"
-
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridgeoff"
 
 /obj/structure/closet/secure_closet/freezer/fridge/PopulateContents()
 	for (var/i in 1 to 5)
@@ -55,7 +58,12 @@ icon_state = "fridge1"
 
 /obj/structure/closet/secure_closet/freezer/money
 	name = "Freezer"
-
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridgeoff"
 	req_access = list(access_heads_vault)
 
 /obj/structure/closet/secure_closet/freezer/money/PopulateContents()
@@ -69,4 +77,10 @@ icon_state = "fridge1"
 /obj/structure/closet/secure_closet/freezer/empty
 
 	name = "Refrigerator"
-	req_access = list()
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridgeoff"
+	req_access = list(access_heads_vault)
