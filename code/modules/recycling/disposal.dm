@@ -364,7 +364,6 @@
 	for(var/atom/movable/AM in src)
 		AM.loc = src.loc
 		AM.pipe_eject(0)
-
 	update()
 
 // update the icon & overlays to reflect mode & status
