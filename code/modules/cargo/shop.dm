@@ -138,12 +138,27 @@ var/global/online_shop_profits = 0
 		if(istype(Console, /obj/machinery/computer/cargo/request))
 			continue
 
+		var/static/list/category2color = list(
+			"Еда" = "orange",
+			"Одежда" = "green",
+			"Устройства" = "purple",
+			"Инструменты" = "red",
+			"Ресурсы" = "blue",
+			"Наборы" = "yellow",
+			// "Разное" = no colour,
+		)
+
+		var/color_string = ""
+		if(category2color[Lot.category])
+			color_string = " ([category2color[Lot.category]])"
+
 		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
 
 		P.name = "Заказ предмета №[Lot.number] из магазина"
 		P.info += "Посылка номер №[Lot.number]<br>"
 		P.info += "Наименование: [Lot.name]<br>"
 		P.info += "Цена: [Lot.price]$<br>"
+		P.info += "Категория: [Lot.category][color_string]<br>"
 		P.info += "Время заказа: [worldtime2text()]<br>"
 		P.info += "Заказал: [orderer_name ? orderer_name : "Unknown"]<br>"
 		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"

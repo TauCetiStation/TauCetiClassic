@@ -9,6 +9,7 @@
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/engGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 		access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,

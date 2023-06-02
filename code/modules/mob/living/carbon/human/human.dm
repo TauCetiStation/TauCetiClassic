@@ -6,7 +6,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, INSURANCE_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
 	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
@@ -97,6 +97,9 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
+	r_belly = HEX_VAL_RED(species.base_color)
+	g_belly = HEX_VAL_GREEN(species.base_color)
+	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)

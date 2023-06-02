@@ -362,7 +362,20 @@
 	else
 		..()
 
+/obj/item/weapon/card/id/syndicate/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_ID)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 
+/obj/item/weapon/card/id/syndicate/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/weapon/card/id/syndicate/proc/can_track(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"

@@ -1122,6 +1122,19 @@
 	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
 	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
 
+	var/static/list/category2color = list(
+		"Еда" = "#ff9300",
+		"Одежда" = "#a8e61d",
+		"Устройства" = "#da00ff",
+		"Инструменты" = "#da0000",
+		"Ресурсы" = "#00b7ef",
+		"Наборы" = "#fff200",
+		// "Разное" = no colour,
+	)
+
+	if(category2color[lot_category])
+		Item.color = category2color[lot_category]
+
 	global.shop_categories[lot_category]++
 
 	Item.name = "Посылка номер: [global.online_shop_number]"

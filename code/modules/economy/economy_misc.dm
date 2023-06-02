@@ -112,6 +112,10 @@ var/global/initial_station_money = 7500
 	SSeconomy.set_dividend_rate("Cargo", 0.1)
 	// Enough stock to supply 2 cargos of employees with it. TO-DO: calculate it programatically depending on map changes to jobs?
 	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 260)
+	// Pay out the insurance to everyone completely.
+	SSeconomy.set_dividend_rate("Medical", 1.0)
+	// Enoguh stock to supply 2 medbay employees. See comment above.
+	SSeconomy.issue_founding_stock(global.department_accounts["Medical"], "Medical", 410)
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
@@ -131,6 +135,7 @@ var/global/initial_station_money = 7500
 	global.centcomm_account.hidden = TRUE
 	// Is needed in case admins want to have some !!!FUN!!!
 	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Cargo", 10)
+	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Medical", 10)
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()
@@ -156,6 +161,7 @@ var/global/initial_station_money = 7500
 	station_account.money = global.initial_station_money
 	// Station gets a slight rebound on all cargo activity from stock ownership. In theory HoP or Captain can also sell this.
 	SSeconomy.issue_founding_stock(station_account.account_number, "Cargo", 10)
+	SSeconomy.issue_founding_stock(station_account.account_number, "Medical", 10)
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

@@ -125,25 +125,15 @@
 			continue
 		if(M.invisibility)//cloaked
 			continue
-		if(M.digitalcamo)
+		if(SEND_SIGNAL(M, COMSIG_LIVING_CAN_TRACK) & COMPONENT_CANT_TRACK)
 			continue
-
-		// Human check
-		var/human = 0
-		if(ishuman(M))
-			human = 1
-			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or hat with blockTracking.
-			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				continue
-			if(istype(H.head, /obj/item/clothing/head))
-				var/obj/item/clothing/head/hat = H.head
-				if(hat.blockTracking)
-					continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!near_camera(M))
 			continue
+
+		// Human check
+		var/human = ishuman(M) ? TRUE : FALSE
 
 		var/name = M.name
 		if (name in TB.names)
@@ -198,22 +188,9 @@
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
-			if (ishuman(target))
-				var/mob/living/carbon/human/H = target
-				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					to_chat(U, "Follow camera mode terminated.")
-					U.cameraFollow = null
-					return
-				if(istype(H.head, /obj/item/clothing/head))
-					var/obj/item/clothing/head/hat = H.head
-					if(hat.blockTracking)
-						to_chat(U, "Follow camera mode terminated.")
-						U.cameraFollow = null
-						return
-				if(H.digitalcamo)
-					to_chat(U, "Follow camera mode terminated.")
-					U.cameraFollow = null
-					return
+			if(SEND_SIGNAL(target, COMSIG_LIVING_CAN_TRACK) & COMPONENT_CANT_TRACK)
+				to_chat(U, "Follow camera mode terminated.")
+				return
 
 			if(istype(target.loc,/obj/effect/dummy))
 				to_chat(U, "Follow camera mode ended.")
