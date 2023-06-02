@@ -225,15 +225,3 @@
 
 /obj/item/weapon/gun/projectile/shotgun/dungeon
 	initial_mag = /obj/item/ammo_box/magazine/internal/shot/dungeon
-
-/obj/item/weapon/gun/projectile/shotgun/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/shotgun/combat/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/empty
-	empty = TRUE

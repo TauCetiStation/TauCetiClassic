@@ -255,9 +255,3 @@
 	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."
 	icon_state = "synd_revolver"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder
-
-/obj/item/weapon/gun/projectile/revolver/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/revolver/detective/empty
-	empty = TRUE

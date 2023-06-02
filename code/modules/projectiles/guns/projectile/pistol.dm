@@ -120,21 +120,3 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
 	recoil = 1.5
-
-/obj/item/weapon/gun/projectile/automatic/glock/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/pistol/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/colt1911/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/wjpp/empty
-	empty = TRUE

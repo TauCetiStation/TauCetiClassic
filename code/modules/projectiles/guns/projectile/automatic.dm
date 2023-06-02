@@ -281,21 +281,3 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd/ui_action_click()
 	toggle_gl(usr)
-
-/obj/item/weapon/gun/projectile/automatic/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/mini_uzi/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/c20r/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/l13/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/tommygun/empty
-	empty = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/bulldog/empty
-	empty = TRUE

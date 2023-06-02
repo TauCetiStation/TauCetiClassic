@@ -13,20 +13,14 @@
 	var/has_cover = FALSE //does this gun has cover
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
-	var/empty = FALSE
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()
 	magazine = new initial_mag(src)
 	if(!suitable_mags.len)
 		suitable_mags += initial_mag
-	if(empty)
-		magazine.make_empty()
-	else
-		chamber_round()
+	chamber_round()
 	update_icon()
-
-
 
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1, no_casing = 0)
 //	if(chambered)
