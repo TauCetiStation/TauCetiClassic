@@ -311,6 +311,7 @@
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
 	color = "#00a000" // rgb: 200, 165, 220
+	overdose = NO_OVERDOSE
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -555,6 +556,26 @@
 /datum/reagent/bicaridine/on_general_digest(mob/living/M, alien)
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
+
+/datum/reagent/xenojelly_n // only for alien nest
+	name = "Natural xenojelly"
+	id = "xenojelly_n"
+	description = "Natural xenomorph jelly is released only if the victim hits the nest"
+	reagent_state = LIQUID
+	color = "#5EA95D"
+	overdose = NO_OVERDOSE
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_un
+	name = "Unnatural xenojelly"
+	id = "xenojelly_un"
+	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
+	reagent_state = LIQUID
+	color = "#5ea95d2b"
+	overdose = NO_OVERDOSE
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"
