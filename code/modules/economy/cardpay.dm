@@ -321,7 +321,7 @@
 				return
 			if(Acc.security_level > 0)
 				if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin || Acc.security_level == 0)
-					linked_acctount = 0
+					linked_account = 0
 					return
 				changemode(ENTERPIN)
 		if(PAYMODE)
