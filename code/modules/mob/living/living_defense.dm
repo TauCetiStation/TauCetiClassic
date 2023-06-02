@@ -81,6 +81,19 @@
 			damage *= FLUIDLOSS_CONC_BURN / FLUIDLOSS_WIDE_BURN
 		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
+	if(P.silenced)
+		to_chat(src, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [P.name]!</span>")
+	else if(!P.fake)
+		visible_message("<span class='userdanger'>[name] is hit by the [P.name] in the [parse_zone(def_zone)]!</span>")
+		//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+	if(P.firer)
+		log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake)
+	else
+		attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[src]/[ckey]</b> with a <b>[src]</b>"
+		if(!P.fake)
+			msg_admin_attack("UNKNOWN shot [name] ([ckey]) with a [P]", src) //BS12 EDIT ALG
+
+
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, (absorb * P.armor_multiplier), flags, P)
 		if(length(P.proj_act_sound))

@@ -162,7 +162,6 @@
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/living/M = isliving(A) ? A : null
-	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
 		if(!isliving(A))
@@ -204,20 +203,6 @@
 		permutated.Add(A)
 
 		return FALSE
-
-	else if(M)
-		if(silenced)
-			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-		else if(!fake)
-			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
-			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-		if(old_firer)
-			M.log_combat(old_firer, "shot with <b>[type]</b>", alert_admins = !fake)
-		else
-			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
-
 
 	if(ismob(A))
 		if(isreplicator(A))
