@@ -271,7 +271,6 @@
 	desc = "A small bag filled with some flour."
 	icon_state = "flour"
 	item_state = "flour"
-	empty_icon = "flour_empty"
 	list_reagents = list("flour" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
@@ -279,7 +278,6 @@
 	desc = "Tastey space sugar!"
 	icon_state = "sugar"
 	item_state = "sugar"
-	empty_icon = "sugar_empty"
 	list_reagents = list("sugar" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/rice
@@ -287,7 +285,6 @@
 	desc = "Salt. From space oceans, presumably. Good for cooking!"
 	icon_state = "rice"
 	item_state = "rice"
-	empty_icon = "rice_empty"
 	list_reagents = list("rice" = 30)
 
 // SAUCES
@@ -296,21 +293,18 @@
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
-	empty_icon = "soysauce_empty"
 	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
 	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
-	empty_icon = "hotsauce_empty"
 	list_reagents = list("capsaicin" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/ketchup
 	name = "ketchup"
 	desc = "You feel more American already."
 	icon_state = "ketchup"
-	empty_icon = "ketchup_empty"
 	list_reagents = list("ketchup" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/coldsauce
@@ -323,7 +317,6 @@
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
-	empty_icon = "cornoil_empty"
 	list_reagents = list("cornoil" = 40)
 
 // SUPPLEMENTS
@@ -333,14 +326,13 @@
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 	item_state = "enzyme"
-	empty_icon = "enzyme_empty"
 	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
 	name = "salt shaker"
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
-	empty_icon = "saltshakersmall_empty"
+	empty_icon = "emptyshaker"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
