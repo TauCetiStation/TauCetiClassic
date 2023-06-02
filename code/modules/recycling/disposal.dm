@@ -349,7 +349,12 @@
 				var/mob/living/carbon/human/H = usr
 				if(!H.has_taken_gun)
 					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
-					new /obj/random/guns/weapon_item(loc)
+					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>Так...</span>"), 1 SECOND)
+					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
+					new /obj/random/guns/set_special(loc)
+					for(var/obj/item/weapon/gun/projectile/P in loc)
+						P.magazine.make_empty()
+						qdel(P.chambered)
 					H.has_taken_gun = TRUE
 
 	return TRUE
