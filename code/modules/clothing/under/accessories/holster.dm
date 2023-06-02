@@ -79,7 +79,7 @@
 
 /mob/living/carbon/human/proc/get_holster()
 	var/obj/item/clothing/accessory/holster/H = locate() in src
-	if(!H && istype(w_uniform, /obj/item/clothing/under))
+	if(!H && isunder(w_uniform))
 		var/obj/item/clothing/under/S = w_uniform
 		if(S.accessories)
 			H = locate() in S.accessories

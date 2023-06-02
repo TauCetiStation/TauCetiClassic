@@ -4,7 +4,6 @@
 
 /mob/living/carbon/Destroy()
 	carbon_list -= src
-	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Life()
@@ -79,6 +78,7 @@
 	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
 	var/const/safe_toxins_max = 0.005
+	var/const/safe_fractol_max = 0.15
 	var/const/SA_para_min = 1
 	var/const/SA_sleep_min = 5
 	var/const/SA_giggle_min = 0.15
@@ -102,6 +102,15 @@
 	var/exhaled_pp = exhaling ? (exhaling / breath_total_moles) * breath_pressure : 0
 	var/poison_pp = poison ? (poison / breath_total_moles) * breath_pressure : 0
 	var/SA_pp = sleeping_agent ? (sleeping_agent / breath_total_moles) * breath_pressure : 0
+
+	// Anyone can breath this!
+	var/druggy_inhale_type = "fractol"
+	var/druggy_inhaling = breath_gas[druggy_inhale_type]
+	var/druggy_inhale_pp = druggy_inhaling ? (druggy_inhaling / breath_total_moles) * breath_pressure : 0
+
+	inhale_type = inhale_pp >= druggy_inhale_pp ? inhale_type : druggy_inhale_type
+	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
+	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
@@ -149,6 +158,14 @@
 				emote("cough")
 		else
 			co2overloadtime = null
+
+	if(druggy_inhale_pp > safe_fractol_max)
+		adjustDrugginess(1)
+		if(prob(5))
+			emote("twitch")
+			random_move()
+		else if(prob(7))
+			emote(pick("drool","moan","giggle"))
 
 	// Too much poison in the air.
 	if(poison_pp > safe_toxins_max)
@@ -296,15 +313,7 @@
 		return .
 
 	handle_phantom_move(NewLoc, Dir)
-	if(nutrition && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-		if(m_intent == "run")
-			nutrition -= met_factor * 0.01
+
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
 		adjust_bodytemperature(2)
 
@@ -571,22 +580,43 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else switch(M.get_targetzone())
-				if(BP_R_ARM, BP_L_ARM)
-					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
-									"<span class='notice'>You shake [src]'s hand.</span>", )
-				if(BP_HEAD)
-					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
-									"<span class='notice'>You pat [src] on the head.</span>", )
-				if(O_EYES)
-					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
-									"<span class='notice'>You look into [src]'s eyes.</span>", )
-				if(BP_GROIN)
-					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
-									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
+			else
+				switch(M.get_targetzone())
+					if(BP_R_ARM, BP_L_ARM)
+						M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
+										"<span class='notice'>You shake [src]'s hand.</span>", )
+						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
+							var/mob/living/carbon/human/H = src
+							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
+							if(BP && BP.is_robotic())
+								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+								sparks.set_up(3, 0, get_turf(H))
+								sparks.start()
+								to_chat(src, "<span class='userdanger'>[M]'s hand is wet!</span>")
+					if(BP_HEAD)
+						M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
+										"<span class='notice'>You pat [src] on the head.</span>", )
+					if(O_EYES)
+						M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
+										"<span class='notice'>You look into [src]'s eyes.</span>", )
+					if(BP_GROIN)
+						M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
+										"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
+					else
+						M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
+										"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+
+				if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+					var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+					if(mood)
+						if(mood.mood_level >= MOOD_LEVEL_HAPPY2)
+							new /obj/effect/temp_visual/heart(loc)
+							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+						else if(mood.mood_level >= MOOD_LEVEL_NEUTRAL)
+							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
 				else
-					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
-									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -617,16 +647,13 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
-			if(H.gloves.clean_blood())
-				H.update_inv_gloves()
+			H.gloves.clean_blood()
 			H.gloves.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
-				H.update_inv_gloves()
+				H.update_inv_slot(SLOT_GLOVES)
 			H.germ_level = 0
-	update_icons()	//apply the now updated overlays to the mob
-
 
 //Throwing stuff
 /mob/living/carbon/throw_mode_off()
@@ -638,6 +665,14 @@
 	..()
 	if(throw_icon)
 		throw_icon.icon_state = "act_throw_on"
+	if(!COOLDOWN_FINISHED(src, toggle_throw_message))
+		return
+	var/obj/item/I = get_active_hand()
+	if(!I || (I.flags & (ABSTRACT|NODROP|DROPDEL)))
+		return
+	visible_message("<span class='notice'>[src] prepares to throw [I]!</span>",
+					"<span class='notice'>Вы замахиваетесь.</span>")
+	COOLDOWN_START(src, toggle_throw_message, 5 SECONDS)
 
 /mob/proc/throw_item(atom/target)
 	return
@@ -704,21 +739,18 @@
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)
-	if(!W)	return 0
+	if(!W)
+		return
 
 	else if (W == handcuffed)
 		handcuffed = null
-		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
 	else if (W == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed()
-	else
-	 ..()
 
-	return
+	..()
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
@@ -848,32 +880,8 @@
 	new /mob/living/simple_animal/borer(loc, TRUE, B.generation + 1)
 
 /mob/living/carbon/proc/uncuff()
-	if(handcuffed)
-		var/obj/item/weapon/W = handcuffed
-		handcuffed = null
-		if(buckled && buckled.buckle_require_restraints)
-			buckled.unbuckle_mob()
-		update_inv_handcuffed()
-		if(client)
-			client.screen -= W
-		if(W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
-	if(legcuffed)
-		var/obj/item/weapon/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+	remove_from_mob(handcuffed)
+	remove_from_mob(legcuffed)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_pixel_y_offset(lying_current = FALSE)
@@ -979,7 +987,7 @@
 /mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
 	return
 
-/mob/living/carbon/get_nutrition()
+/mob/living/carbon/get_satiation()
 	return nutrition + (reagents.get_reagent_amount("nutriment") \
 					+ reagents.get_reagent_amount("plantmatter") \
 					+ reagents.get_reagent_amount("protein") \
@@ -1101,12 +1109,12 @@
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
 
-/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(head && (head.flags & HEADCOVERSMOUTH))
 		mask_ = TRUE
 
-	. = ..(punched, mask_)
+	. = ..(punched, mask_, vomit_type, stun, force)
 	if(. && !mask_)
 		if(reagents.total_volume > 0)
 			var/toxins_puked = 0
@@ -1114,14 +1122,7 @@
 
 			while(TRUE)
 				var/datum/reagent/R_V = pick(reagents.reagent_list)
-				if(istype(R_V, /datum/reagent/water))
-					toxins_puked += 0.5
-				else if(R_V.id == "carbon")
-					toxins_puked += 2
-				else if(R_V.id == "anti_toxin")
-					toxins_puked += 3
-				else if(R_V.id == "thermopsis")
-					toxins_puked += 5
+				toxins_puked += R_V.toxin_absorption
 				reagents.trans_id_to(R, R_V.id, 1)
 				if(R.total_volume >= 10)
 					break
@@ -1142,6 +1143,9 @@
 /mob/living/carbon/update_sight()
 	if(!..())
 		return FALSE
+
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
 
 	if(blinded)
 		see_in_dark = 8
@@ -1304,3 +1308,16 @@
 				amount = max(amount, BODYTEMP_COOLING_MAX)
 
 	..(amount, min_temp, max_temp)
+
+/mob/living/carbon/handle_nutrition()
+	var/met_factor = get_metabolism_factor()
+	if(!met_factor)
+		return
+	var/nutrition_to_remove = 0
+	nutrition_to_remove += 0.16
+	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+		var/pain = getHalLoss()
+		if(pain > 0)
+			nutrition_to_remove += pain * 0.01
+	nutrition_to_remove *= met_factor
+	nutrition = max(0.0, nutrition - nutrition_to_remove)

@@ -59,7 +59,7 @@
 			return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
-		if((CLUMSY in user.mutations) && prob(50))
+		if(user.ClumsyProbabilityCheck(50))
 			M = user
 		return eyestab(M,user)
 
@@ -236,30 +236,27 @@
 		if(M.check_shields(src, force, "the [name]", get_dir(user, M) ))
 			return FALSE
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
-	else
-		switch(damtype)
-			if(BRUTE)
-				if(isslime(src))
-					M.adjustBrainLoss(power)
-
-				else
-					if(prob(33)) // Added blood for whacking non-humans too
-						var/turf/T = M.loc
-						if(istype(T))
-							T.add_blood_floor(M)
-					M.take_bodypart_damage(power)
-			if(BURN)
-				if (!(COLD_RESISTANCE in M.mutations))
-					to_chat(M, "Aargh it burns!")
-					M.take_bodypart_damage(0, power)
-
+	. = M.attacked_by(src, user, def_zone, power)
 	add_fingerprint(user)
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
+
+/mob/living/attacked_by(obj/item/I, mob/living/user, def_zone, power)
+	switch(I.damtype)
+		if(BRUTE)
+			if(isslime(src))
+				adjustBrainLoss(power)
+			else
+				if(prob(33)) // Added blood for whacking non-humans too
+					var/turf/T = loc
+					if(istype(T))
+						T.add_blood_floor(src)
+				take_bodypart_damage(power)
+		if(BURN)
+			if (!(COLD_RESISTANCE in mutations))
+				to_chat(src, "Aargh it burns!")
+				take_bodypart_damage(0, power)
 	return TRUE
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
@@ -283,7 +280,7 @@
 	return TRUE
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
-/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user, def_zone, power)
 	if(!uses_integrity)
 		CRASH("attacked_by() was called on an object that doesnt use integrity!")
 

@@ -13,7 +13,7 @@
 	var/leap_on_click = 0
 	heal_rate = 3
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 15 SECONDS
+	var/pounce_cooldown_time = 10 SECONDS
 
 	var/neurotoxin_on_click = 0
 	var/neurotoxin_delay = 60

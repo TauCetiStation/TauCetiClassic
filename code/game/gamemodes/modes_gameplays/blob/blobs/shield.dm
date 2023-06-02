@@ -10,7 +10,7 @@
 /obj/structure/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
-/obj/structure/blob/shield/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/blob/shield/CanPass(atom/movable/mover, turf/target, height=0)
 	return istype(mover) && mover.checkpass(PASSBLOB)
 
 /obj/structure/blob/shield/reflective

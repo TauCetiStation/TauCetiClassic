@@ -99,7 +99,7 @@
 		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(locked)
 			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
@@ -116,7 +116,7 @@
 		updateDialog()
 	else if(is_wire_tool(I))
 		wires.interact(user)
-	else if (iswrench(I))
+	else if (iswrenching(I))
 		if (get_integrity() < max_integrity)
 			repair_damage(25)
 			user.visible_message(
@@ -449,10 +449,7 @@
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
 	if(dirn)
-		var/turf/T = loc
-		var/turf/newT = get_step(T,dirn)
-		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
-			step(load, dirn)
+		step(load, dirn)
 
 	load = null
 

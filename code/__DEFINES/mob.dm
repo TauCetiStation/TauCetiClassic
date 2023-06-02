@@ -55,6 +55,12 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
+//Vomit
+#define DEFAULT_VOMIT 0
+#define VOMIT_TOXIC 1
+#define VOMIT_BLOOD 2
+#define VOMIT_NANITE 3
+
 //intent defines
 #define INTENT_HELP   "help"
 #define INTENT_GRAB   "grab"

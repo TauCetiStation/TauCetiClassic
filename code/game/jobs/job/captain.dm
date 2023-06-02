@@ -9,6 +9,7 @@
 	selection_color = "#ccccff"
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list() 			//See get_access()
 	salary = 300
 	minimal_player_age = 14
@@ -39,6 +40,7 @@
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	is_head = TRUE
 	salary = 250
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
@@ -59,3 +61,29 @@
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 	skillsets = list("Head of Personnel" = /datum/skillset/hop)
+
+/datum/job/blueshield
+	title = "Blueshield Officer"
+	flag = BLUESHIELD
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "NanoTrasen officials"
+	selection_color = "#ddddff"
+	idtype = /obj/item/weapon/card/id/blueshield
+	access = list(access_blueshield, access_heads, access_maint_tunnels,
+				  access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby,
+				  access_security, access_engine) // needed accesses to reach heads
+	salary = 200
+	minimal_player_age = 14
+	minimal_player_ingame_minutes = 2400
+	outfit = /datum/outfit/job/blueshield
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
+		~Luduk
+	*/
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)

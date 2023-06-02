@@ -1,12 +1,6 @@
 /mob/living/carbon/brain/add_to_hud(datum/hud/hud)
 	hud.init_screen(/atom/movable/screen/health/living)
 
-/mob/camera/blob/add_to_hud(datum/hud/hud)
-	hud.init_screens(list(
-		/atom/movable/screen/blob_power,
-		/atom/movable/screen/health/blob,
-	))
-
 /mob/living/parasite/essence/add_to_hud(datum/hud/hud)
 	hud.init_screens(list(
 		/atom/movable/screen/essence/voice,

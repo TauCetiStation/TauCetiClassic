@@ -362,9 +362,16 @@
 /obj/item/rig_module/emp_shield
 	name = "hardsuit EMP shield"
 	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
 	origin_tech = "engineering=2;magnets=2"
 	interface_name = "EMP shield"
-	interface_desc = "Device for protecting hardsuit against EMPs."
+	var/uses = 5
+
+/obj/item/rig_module/emp_shield/adv
+	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
+	origin_tech = "engineering=2;magnets=2;bluespace=3;"
+	uses = 20
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
@@ -558,7 +565,7 @@
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
-			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+			irradiate_one_mob(holder.wearer, rand(5, 25))
 
 	if(damage >= MODULE_DESTROYED)
 		if(!unstable)

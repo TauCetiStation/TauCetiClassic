@@ -27,6 +27,7 @@
 	desc = "A remote control switch for a mounted flasher."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "launcherbtt"
+	layer = ABOVE_WINDOW_LAYER
 	var/id = null
 	var/active = FALSE
 	anchored = TRUE

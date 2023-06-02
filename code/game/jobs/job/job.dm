@@ -35,6 +35,9 @@
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
+	// Is this position of a Head of some department? They always start with max level insurance.
+	var/is_head = FALSE
+
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
@@ -51,6 +54,8 @@
 	var/salary = 0
 	//salary ratio - for global salary changes
 	var/salary_ratio = 1
+	// Some jobs don't have a salary but still would like to eat roundstart. They have some starting money.
+	var/starting_money = 0
 
 	/*
 		HEY YOU!
@@ -65,6 +70,9 @@
 
 	// What movesets does this job grant.
 	var/list/moveset_types
+
+	// Which department stocks this job has on arrival.
+	var/list/department_stocks
 
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return

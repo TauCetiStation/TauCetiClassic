@@ -103,6 +103,7 @@ var/global/list/blob_nodes = list()
 	conglomerate.declared = TRUE
 
 	B.b_congl = conglomerate
+	notify_ghosts("[B] in [get_area(B)]!", source=B, action=NOTIFY_ORBIT, header="Blob")
 
 	if(icon_state == "cerebrate")
 		icon_state = "core"

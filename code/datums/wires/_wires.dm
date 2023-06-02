@@ -48,11 +48,11 @@
 #define SEE_BLIND 1
 
 /proc/is_wire_tool(obj/item/I)
-	if(ismultitool(I))
+	if(ispulsing(I))
 		return TRUE
-	if(iswirecutter(I))
+	if(iscutter(I))
 		return TRUE
-	if(issignaler(I))
+	if(issignaling(I))
 		return TRUE
 	return
 
@@ -260,7 +260,7 @@ var/global/list/wire_daltonism_colors = list()
 
 	var/mob/living/L = usr
 
-	if(!can_use(src) || !holder.can_mob_interact(L))
+	if(!can_use(src) || L.interact_prob_brain_damage(holder))
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
@@ -268,14 +268,14 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	switch(action)
 		if("cut")
-			if(I && iswirecutter(I))
+			if(I && iscutter(I))
 				cut_wire_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(I && ismultitool(I))
+			if(I && ispulsing(I))
 				pulse_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
@@ -288,7 +288,7 @@ var/global/list/wire_daltonism_colors = list()
 					L.put_in_hands(O)
 					. = TRUE
 			else
-				if(issignaler(I))
+				if(I && issignaling(I))
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else

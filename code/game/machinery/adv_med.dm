@@ -135,7 +135,7 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield)
 	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -344,7 +344,7 @@
 				if(occupant.sdisabilities & BLIND)
 					dat += text("<font color='red'>Cataracts detected.</font><BR>")
 					storedinfo += text("<font color='red'>Cataracts detected.</font><BR>")
-				if(occupant.sdisabilities & NEARSIGHTED)
+				if(HAS_TRAIT(occupant, TRAIT_NEARSIGHT))
 					dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 					storedinfo += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 		else

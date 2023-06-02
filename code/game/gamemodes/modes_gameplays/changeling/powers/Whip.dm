@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 2
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -18,7 +18,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
-	var/next_click
 
 /obj/item/weapon/changeling_whip/atom_init()
 	. = ..()
@@ -34,21 +33,15 @@
 		return
 	if(user.incapacitated() || user.lying)
 		return
-	if(next_click > world.time)
-		return
-	if(!use_charge(user, 2))
-		return
-	next_click = world.time + 10
+	user.SetNextMove(CLICK_CD_MELEE)
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	switch(user.a_intent)
 		if(INTENT_GRAB)
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
-			if(prob(65))
-				LE.weaken = 3
-				LE.stun = 2
+			LE.weaken = 1
 		if(INTENT_HARM)
-			LE.damage = 30
+			LE.damage = 15
 		else
 			LE.agony = 15
 	LE.host = user

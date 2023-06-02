@@ -85,6 +85,7 @@
 	opacity = 0
 	density = TRUE
 	unacidable = 1
+	can_block_air = TRUE
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()

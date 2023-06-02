@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	var/implanted = null
-	var/mob/imp_in = null
+	var/mob/living/carbon/imp_in = null
 	var/obj/item/organ/external/part = null
 	var/allow_reagents = 0
 	var/malfunction = 0
@@ -20,13 +20,13 @@
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
 	implanted = FALSE
-	imp_in = null
 	if(part)
 		part.implants.Remove(src)
 		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
+	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -307,7 +307,7 @@ Implant Specifics:<BR>"}
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	if(ishuman(imp_in))
 		var/mob/living/carbon/human/H = imp_in
-		H.halloss = 0
+		H.setHalLoss(0)
 		H.shock_stage = 0
 	imp_in.stat = CONSCIOUS
 	imp_in.SetParalysis(0)
@@ -374,7 +374,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")
@@ -583,3 +584,35 @@ var/global/list/death_alarm_stealth_areas = list(
 <b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
 <b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
 	return dat
+
+/obj/item/weapon/implant/blueshield
+	name = "blueshield implant"
+	desc = "Subtle brainwashing."
+	var/last_examined = 0
+
+/obj/item/weapon/implant/blueshield/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Blueshield\" Experimental Initiative<BR>
+<b>Life:</b> Activates upon injection.<BR>
+<b>Important Notes:</b> Subtly directs user to protect heads of staff.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains special hormones which affect host's brain.<BR>
+<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+	return dat
+
+/obj/item/weapon/implant/blueshield/implanted(mob/source)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/implant/blueshield/process()
+	if (!implanted)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(!imp_in)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(world.time > last_examined + 6000)
+		SEND_SIGNAL(imp_in, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
+		SEND_SIGNAL(imp_in, COMSIG_ADD_MOOD_EVENT, "blueshield", /datum/mood_event/blueshield)

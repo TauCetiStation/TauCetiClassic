@@ -49,3 +49,36 @@
 
 		COMBO_CHARGE
 	)
+
+
+/datum/combat_moveset/cqc //For traitors, nukies, headrevs, undercover cops and quality.
+	name = "CQC Moveset"
+	teach_combos = list(
+		COMBO_CAPTURE_CQC,
+		COMBO_KICK_CQC,
+		COMBO_HIGHKICK_CQC
+	)
+
+/datum/combat_moveset/cult //For cultists.
+	name = "Cult Moveset"
+	teach_combos = list(
+		COMBO_NECK_CULT,
+		COMBO_EYES_CULT,
+		COMBO_BLOOD_BOIL_CULT
+	)
+
+/datum/combat_moveset/changeling //For changelings.
+	name = "Changeling Moveset"
+	teach_combos = list(
+		COMBO_SWIPE_CHANGELING
+	)
+
+/datum/combat_moveset/traitorchan //For traitorchans.
+	name = "Traitorchan Moveset"
+	teach_combos = list(
+		COMBO_CAPTURE_CQC,
+		COMBO_KICK_CQC,
+		COMBO_HIGHKICK_CQC,
+
+		COMBO_SWIPE_CHANGELING
+	)

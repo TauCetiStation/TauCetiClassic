@@ -15,12 +15,15 @@
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(!ismob(AM))
+		return
+
 	//should be non-negative
 	var/size_diff_calculate = AM.w_class - w_class
 	if(size_diff_calculate < 0)
 		return
 	var/weight_diff_coef = 1 + sqrt(size_diff_calculate)
-	if(shoes?.flags & NOSLIP || wear_suit?.flags & NOSLIP)
+	if(shoes?.flags & AIR_FLOW_PROTECT || wear_suit?.flags & AIR_FLOW_PROTECT)
 		adjustHalLoss(15 * weight_diff_coef)	//thicc landing
 	else
 		AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
@@ -68,10 +71,10 @@
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		P.agony *= get_siemens_coefficient_organ(BP)
-		P.stun *= get_siemens_coefficient_organ(BP)
-		P.weaken *= get_siemens_coefficient_organ(BP)
-		P.stutter *= get_siemens_coefficient_organ(BP)
+		P.agony *= get_siemens_coefficient_organ(BP) * P.armor_multiplier
+		P.stun *=  get_siemens_coefficient_organ(BP) * P.armor_multiplier
+		P.weaken *=  get_siemens_coefficient_organ(BP) * P.armor_multiplier
+		P.stutter *=  get_siemens_coefficient_organ(BP) * P.armor_multiplier
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
@@ -345,8 +348,6 @@
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (force_with_melee_skill * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
-//		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
-//		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
 		if(prob(33))
 			bloody = 1
 			var/turf/location = loc
@@ -367,13 +368,10 @@
 				if(bloody)//Apply blood
 					if(wear_mask)
 						wear_mask.add_blood(src)
-						update_inv_wear_mask()
 					if(head)
 						head.add_blood(src)
-						update_inv_head()
 					if(glasses && prob(33))
 						glasses.add_blood(src)
-						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
 				if(prob((10 + force_with_melee_skill) * (100 - armor) / 100))
@@ -418,28 +416,22 @@
 		add_blood(source)
 		bloody_hands = amount
 		bloody_hands_mob = source
-	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
 /mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
-		update_inv_wear_suit()
 	if(w_uniform)
 		w_uniform.add_blood(source)
-		update_inv_w_uniform()
 
 /mob/living/carbon/human/crawl_in_blood(datum/dirt_cover/dirt_cover)
 	if(wear_suit)
 		wear_suit.add_dirt_cover(dirt_cover)
-		update_inv_wear_suit()
 	if(w_uniform)
 		w_uniform.add_dirt_cover(dirt_cover)
-		update_inv_w_uniform()
 	if (gloves)
 		gloves.add_dirt_cover(dirt_cover)
 	else
 		add_dirt_cover(dirt_cover)
-	update_inv_gloves()
 
 /mob/living/carbon/proc/check_pierce_protection(obj/item/organ/external/BP, target_zone)
 	return 0

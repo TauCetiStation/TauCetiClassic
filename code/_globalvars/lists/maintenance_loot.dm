@@ -28,7 +28,7 @@ var/global/list/trash_loot = list(
 		/obj/item/weapon/poster/contraband = 1,
 		/obj/item/weapon/poster/legit = 1,
 		/obj/item/weapon/folder/yellow = 1,
-		/obj/item/weapon/hand_labeler = 1,
+		/obj/item/device/tagger = 1,
 		/obj/item/weapon/pen = 1,
 		/obj/item/weapon/paper = 1,
 		/obj/item/weapon/paper/crumpled = 1,
@@ -112,6 +112,7 @@ var/global/list/common_loot = list(
 		/obj/item/weapon/reagent_containers/syringe = 1,
 		/obj/item/weapon/reagent_containers/glass/beaker = 1,
 		/obj/item/weapon/reagent_containers/glass/rag = 1,
+		/obj/item/weapon/reagent_containers/food/condiment/sugar = 1
 		) = 1,
 
 	list(

@@ -28,8 +28,6 @@
 	var/bible_type
 
 	var/list/bible_info_by_name
-	// Radial menu
-	var/list/bible_skins
 
 	var/religious_tool_type
 
