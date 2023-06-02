@@ -569,7 +569,7 @@
 
 /datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
 	..()
-	M.heal_bodypart_damage(10, 10)
+	M.heal_bodypart_damage(35, 10)
 	M.adjustToxLoss(-10)
 	M.adjustOxyLoss(-20)
 	M.adjustHalLoss(-25)
