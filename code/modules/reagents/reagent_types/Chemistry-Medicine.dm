@@ -581,15 +581,16 @@
 	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
 	reagent_state = LIQUID
 	color = "#5ea95d2b"
+	custom_metabolism = 2
 	overdose = REAGENTS_OVERDOSE / 2
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
 
 /datum/reagent/xenojelly_un/on_general_digest(mob/living/M)
 	..()
-	M.heal_bodypart_damage(5,3)
-	M.adjustOxyLoss(-10)
-	M.adjustHalLoss(-10)
+	M.heal_bodypart_damage(2,3)
+	M.adjustOxyLoss(-5)
+	M.adjustHalLoss(-5)
 	M.adjustFireLoss(-5)
 
 /datum/reagent/hyperzine
