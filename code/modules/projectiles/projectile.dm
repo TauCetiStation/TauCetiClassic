@@ -100,6 +100,7 @@
 	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
+	impact_effect(effect_transform)		// generate impact effect
 	if(!isliving(target))
 		return 0
 	if(isanimal(target))
@@ -108,13 +109,15 @@
 	if(incendiary && blocked <= 100)
 		L.adjust_fire_stacks(incendiary)
 		L.IgniteMob(target)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
-
-	//called when the projectile stops flying because it collided with something
-/obj/item/projectile/proc/on_impact(atom/A)
-	impact_effect(effect_transform)		// generate impact effect
 	if(proj_impact_sound)
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
+
+//obj/item/projectile/proc/on_impact(atom/A)
+//	impact_effect(effect_transform)		// generate impact effect
+//	if(proj_impact_sound)
+//		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	return check_trajectory(target, src, pass_flags, flags)
@@ -212,12 +215,13 @@
 				if(mob == A || isreplicator(mob))
 					continue
 				if(check_living_shield(mob) == M)
+
 					M.bullet_act(src,def_zone)
 				else
 					mob.bullet_act(src,def_zone)
 
 	//stop flying
-	on_impact(A)
+	on_hit(A)
 
 	density = FALSE
 	invisibility = 101
@@ -242,7 +246,7 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
+			on_hit(src.loc) //for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
