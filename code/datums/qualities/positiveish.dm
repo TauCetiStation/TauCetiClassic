@@ -392,12 +392,10 @@
 	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
 
 
-/mob/living/carbon/human/var/has_taken_gun = TRUE
-
 /datum/quality/positiveish/selfdefense
 	name = "Self Defense"
 	desc = "Самооборона - это важно. Ты спрятал пушку в одной из мусорок."
 	requirement = "Нет."
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
-	H.has_taken_gun = FALSE
+	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
