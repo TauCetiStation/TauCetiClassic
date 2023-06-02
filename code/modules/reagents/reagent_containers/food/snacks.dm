@@ -578,6 +578,10 @@
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
 
+/obj/item/weapon/reagent_containers/food/snacks/xenomeat/atom_init()
+	. = ..()
+	reagents.add_reagent("xenojelly_un", 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	name = "spider meat"
 	desc = "A slab of spider meat."
@@ -698,7 +702,7 @@
 	icon_state = "xburger"
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("protein" = 6, "vitamin" = 1)
+	list_reagents = list("protein" = 6, "vitamin" = 1, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -847,7 +851,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("protein" = 10, "vitamin" = 2)
+	list_reagents = list("protein" = 10, "vitamin" = 2, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -858,7 +862,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("protein" = 6, "vitamin" = 2)
+	list_reagents = list("protein" = 6, "vitamin" = 2, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -1945,7 +1949,7 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xeno
 	filling_color = "#8aff75"
-	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5)
+	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 

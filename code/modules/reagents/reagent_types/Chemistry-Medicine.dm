@@ -567,15 +567,31 @@
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
 
+/datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(10, 10)
+	M.adjustToxLoss(-10)
+	M.adjustOxyLoss(-20)
+	M.adjustHalLoss(-25)
+	M.adjustFireLoss(-20)
+
 /datum/reagent/xenojelly_un
 	name = "Unnatural xenojelly"
 	id = "xenojelly_un"
 	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
 	reagent_state = LIQUID
 	color = "#5ea95d2b"
-	overdose = NO_OVERDOSE
+	overdose = REAGENTS_OVERDOSE / 2
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_un/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(5,3)
+	M.adjustToxLoss(-5)
+	M.adjustOxyLoss(-10)
+	M.adjustHalLoss(-10)
+	M.adjustFireLoss(-5)
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"
@@ -599,6 +615,7 @@
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 	reagent_state = LIQUID
 	color = "#80bfff" // rgb: 200, 165, 220
+	overdose = NO_OVERDOSE
 	taste_message = null
 
 /datum/reagent/cryoxadone/on_general_digest(mob/living/M)
@@ -615,6 +632,7 @@
 	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 	reagent_state = LIQUID
 	color = "#8080ff" // rgb: 200, 165, 220
+	overdose = NO_OVERDOSE
 	taste_message = null
 
 /datum/reagent/clonexadone/on_general_digest(mob/living/M)
@@ -701,6 +719,7 @@
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
 	color = "#664330" // rgb: 102, 67, 48
+	overdose = NO_OVERDOSE
 	taste_message = null
 
 /datum/reagent/vitamin/on_general_digest(mob/living/M)
