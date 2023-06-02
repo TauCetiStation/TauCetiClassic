@@ -57,14 +57,14 @@ export const CardPay = (props, context) => {
   return (
     <Window theme=""
       width={220}
-      height={315}>
+      height={340}>
       <Window.Content className="CardPay_Window">
         <Box
           className="CardPay_Monitor"
         >
           <SegmentDisplay display_cells_amount={8} display_height={40} display_text={getText()} />
         </Box>
-        <Box width="158px" height="208px" position="absolute" left="58px" top="65px">
+        <Box width="158px" height="208px" position="absolute" left="32px" top="95px">
           {buttons}
           <Button
             className="CardPay_Button_Red"
@@ -85,22 +85,11 @@ export const CardPay = (props, context) => {
         <Button
           selected={reset_numbers ? 1 : 0}
           position="absolute"
-          top="65px"
-          left="5px"
-          height="74px"
-          className="CardPay_Button"
-          content={<Box className="CardPay_Button_inside" height="66px"><Icon name="retweet" position="relative" left="5px" top="10px" /></Box>}
+          top="60px"
+          left="140px"
+          className="CardPay_Switch"
+          content={<Box className="CardPay_Switch_inside">|||</Box>}
           onClick={() => act("togglereset")}
-        />
-        <Button
-          selected={mode === 'Mode_Account' ? 1 : 0}
-          position="absolute"
-          top="145px"
-          left="5px"
-          height="74px"
-          className="CardPay_Button"
-          content={<Box className="CardPay_Button_inside" height="66px"><Icon name="id-badge" position="relative" left="5px" top="10px" /></Box>}
-          onClick={() => act("toggleenteraccount")}
         />
       </Window.Content>
     </Window>

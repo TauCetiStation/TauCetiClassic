@@ -125,3 +125,47 @@
 	margin-top: -2px;
 	position: absolute;
 }
+
+
+.CardPay_Switch {
+	height: 24px;
+	width: 64px;
+	background: #9497AB;
+	border-bottom: 1px solid #E8E9EF;
+	border-top: 2px solid #474A5B;
+	border-radius: 5px;
+	padding: 0px;
+	padding-left: 1px;
+	margin-left: 2.5px;
+	&:hover, &:focus {
+		background: #9497AB !important;
+	}
+}
+
+.CardPay_Switch.Button--selected {
+	height: 24px;
+	width: 64px;
+	background: #9497AB;
+	border-bottom: 1px solid #E8E9EF;
+	border-top: 2px solid #474A5B;
+	padding: 0px;
+	padding-left: 41px;
+	margin-left: 2.5px;
+	&:hover, &:focus {
+		background: #9497AB !important;
+	}
+}
+
+.CardPay_Switch_inside {
+    height: 22px;
+	width: 22px;
+	background: #D0D2DD;
+    border-bottom: 5px #E8E9EF solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 13px;
+	font-weight: bold;
+	color: #D0D2DD;
+	text-shadow: 0px -1px 1px #E8E9EF, 0px -3px 5px #E8E9EF, 0px 1px 1px #474A5B, 0px 1px 5px #474A5B;
+	position: absolute;
+}
