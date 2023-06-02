@@ -36,6 +36,7 @@
 /obj/item/device/cardpay/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id) && anchored)
 		visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!enter_account)
 			var/obj/item/weapon/card/id/Card = I
 			pay_with_account(get_account(Card.associated_account_number))
@@ -50,11 +51,13 @@
 		to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
 	else if(istype(I, /obj/item/device/pda) && I.GetID())
 		visible_message("<span class='info'>[usr] прикладывает КПК к терминалу.</span>")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		pay_with_account(get_account(Card.associated_account_number))
 	else if(istype(I, /obj/item/weapon/ewallet))
 		var/obj/item/weapon/ewallet/Wallet = I
 		visible_message("<span class='info'>[usr] прикладывает чип оплаты к терминалу.</span>")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!enter_account)
 			pay_with_account(get_account(Wallet.account_number))
 			return
@@ -112,20 +115,23 @@
 
 	var/pay_holder = pay_amount
 
-	if(D)
-		if(check_pincode(D))
-			if(pay_holder != pay_amount)
-				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Сумма оплаты изменена!</span>")
-				return FALSE
-			if(Acc != get_account(linked_account))
-				to_chat(usr, "[bicon(src)] [name] <span class='warning'>Подключённый аккаунт изменён!</span>")
-				return FALSE
+	if(!D)
+		return
 
-			icon_state = "card-pay-processing"
+	if(!check_pincode(D))
+		return
+	if(pay_holder != pay_amount)
+		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Сумма оплаты изменена!</span>")
+		return FALSE
+	if(Acc != get_account(linked_account))
+		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Подключённый аккаунт изменён!</span>")
+		return FALSE
 
-			paying = TRUE
+	icon_state = "card-pay-processing"
 
-			addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
+	paying = TRUE
+
+	addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/check_pincode(datum/money_account/Acc)
 	var/attempt_pin = 0
@@ -254,7 +260,7 @@
 		if("toggleenteraccount")
 			if(enter_account)
 				to_chat(usr, "<span class='notice'>Включён режим ввода цены.</span>")
-			else if(linked_account)
+			else if(linked_account && get_account(linked_account))
 				if(!check_pincode(get_account(linked_account)))
 					return
 				to_chat(usr, "<span class='notice'>Включён режим ввода аккаунта.</span>")
