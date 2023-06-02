@@ -1,0 +1,127 @@
+.CardPay_Window {
+	background: #D0D2DD !important;
+    border-radius: 5px 5px 15px 15px;
+}
+
+.CardPay_Monitor {
+	width: 208px;
+	height: 50px;
+	background: #111111;
+	border-bottom: 2px solid #E8E9EF;
+	border-top: 3px solid #9497AB;
+	padding: 0px;
+	padding-top: 4px;
+	padding-left: -20px;
+	margin-bottom: 5px;
+}
+
+.CardPay_Button {
+	height: 48px;
+	width: 48px;
+	background: #9497AB;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid #9497AB;
+	border-top: 2px solid #B9BBCB;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 4px;
+		background: #9497AB !important;
+	}
+}
+
+.CardPay_Button.Button--selected {
+	height: 48px;
+	width: 48px;
+	background: #9497AB;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid #9497AB;
+	border-top: 6px solid #B9BBCB;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 8px;
+		background: #9497AB !important;
+	}
+}
+
+.CardPay_Button_inside {
+    height: 40px;
+	width: 40px;
+	background: #D0D2DD;
+    border-bottom: 5px #E8E9EF solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 35px;
+	font-weight: bold;
+	color: #333344;
+	padding-top: 7px;
+	margin: 0px;
+	margin-top: -2px;
+	position: absolute;
+}
+
+.CardPay_Button_Red {
+	height: 48px;
+	width: 48px;
+	background: #991000;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid #991000;
+	border-top: 2px solid #ca201a;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 4px;
+		background: #991000 !important;
+	}
+}
+
+.CardPay_Button_Red_inside {
+    height: 40px;
+	width: 40px;
+	background: #e81b1d;
+    border-bottom: 5px #e13a3b solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 35px;
+	font-weight: bold;
+	color: #e81b1d;
+	text-shadow: 0px -1px 1px #e13a3b, 0px -3px 5px #e13a3b, 0px 1px 1px #991000, 0px 1px 5px #991000;
+	padding-top: 7px;
+	margin: 0px;
+	margin-top: -2px;
+	position: absolute;
+}
+
+.CardPay_Button_Green {
+	top: -2px;
+	height: 48px;
+	width: 48px;
+	background: #105735;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid #105735;
+	border-top: 2px solid #1a9f66;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 4px;
+		background: #105735 !important;
+	}
+}
+
+.CardPay_Button_Green_inside {
+    height: 40px;
+	width: 40px;
+	background: #009853;
+    border-bottom: 5px #05a05b solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 35px;
+	font-weight: bold;
+	color: #009853;
+	text-shadow: 0px -1px 1px #02b46a, 0px -3px 5px #02b46a, 0px 1px 1px #105735, 0px 1px 5px #105735;
+	padding-top: 7px;
+	margin: 0px;
+	margin-top: -2px;
+	position: absolute;
+}

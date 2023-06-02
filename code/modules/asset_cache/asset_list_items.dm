@@ -10,6 +10,8 @@
 	assets = list(
 		"tgui-panel.bundle.js" = 'tgui/public/tgui-panel.bundle.js',
 		"tgui-panel.bundle.css" = 'tgui/public/tgui-panel.bundle.css',
+		"Gys14Segment.ttf" = 'html/custom-fonts/Gys14Segment.ttf',
+		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 
 
