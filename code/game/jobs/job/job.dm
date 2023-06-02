@@ -54,6 +54,8 @@
 	var/salary = 0
 	//salary ratio - for global salary changes
 	var/salary_ratio = 1
+	// Some jobs don't have a salary but still would like to eat roundstart. They have some starting money.
+	var/starting_money = 0
 
 	/*
 		HEY YOU!
