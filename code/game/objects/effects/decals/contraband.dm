@@ -634,7 +634,7 @@
 	if(!rev)
 		to_chat(user, "<span class='bold warning'>The revolutionary minded society has collapsed.</span>")
 		return
-	if(user.ismindprotect())
+	if(user.ismindprotect(TRUE))
 		to_chat(user, "<span class='bold warning'>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</span>")
 		return
 	else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))

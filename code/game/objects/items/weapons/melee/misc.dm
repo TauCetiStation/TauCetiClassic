@@ -18,8 +18,8 @@
 
 /obj/item/weapon/melee/chainofcommand/afterattack(atom/target, mob/user, proximity, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-
-	if(!user.isloyal())
+	// Contentious. One chain of command in changeling hands, without any other prepares - all security will die
+	if(!user.isloyal(TRUE))
 		to_chat(user, "<span class='danger'[bicon(src)] SPECIAL FUNCTION DISABLED. LOYALTY IMPLANT NOT FOUND.</span>")
 		return
 	if(!ishuman(target))

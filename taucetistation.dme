@@ -574,6 +574,7 @@
 #include "code\game\gamemodes\modes_gameplays\changeling\changeling_power.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\evolution_menu.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\headcrab.dm"
+#include "code\game\gamemodes\modes_gameplays\changeling\implant_menu.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\test.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\absorb.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\augmented_eyesight.dm"

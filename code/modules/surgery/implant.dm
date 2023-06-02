@@ -233,6 +233,7 @@
 					if(istype(imp, /obj/item/weapon/implant/skill))
 						var/obj/item/weapon/implant/skill/skill_impant = imp
 						skill_impant.removed()
+					imp.implant_removal(target)
 					imp.imp_in = null
 					imp.implanted = FALSE
 					if(istype(imp, /obj/item/weapon/implant/storage))

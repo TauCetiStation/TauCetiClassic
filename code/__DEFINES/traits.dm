@@ -180,6 +180,12 @@
 #define TRAIT_STEEL_NERVES        "steel_nerves"
 #define TRAIT_ARIBORN             "ariborn"
 #define TRAIT_NO_CRAWL            "nocrawl"
+#define TRAIT_MINDSHIELD          "mindshield"
+#define TRAIT_LOYAL               "loyal"
+#define TRAIT_OBEY                "obey"
+#define TRAIT_CHEM_IMPLANTED      "chem_implanted"
+#define TRAIT_TRACK_IMPLANTED     "track_implanted"
+
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -223,6 +229,9 @@
 #define QUIRK_TRAIT "quirk"
 #define VIRUS_TRAIT "virus"
 #define STATUS_EFFECT_TRAIT "status_effect"
+#define IMPLANT_TRAIT "implant"
+#define FAKE_IMPLANT_TRAIT "fake_implant"
+
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself

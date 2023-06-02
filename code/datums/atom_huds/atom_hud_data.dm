@@ -192,19 +192,17 @@
 		holder.pixel_y = y
 		y += -5
 
-	for(var/obj/item/weapon/implant/I in src)
-		if(istype(I, /obj/item/weapon/implant/chem))
-			if(I.implanted)
-				holder = hud_list[IMPCHEM_HUD]
-				holder.icon_state = "hud_imp_chem"
-				holder.pixel_y = y
-				y += -5
+	if(isimplantedchem())
+		holder = hud_list[IMPCHEM_HUD]
+		holder.icon_state = "hud_imp_chem"
+		holder.pixel_y = y
+		y += -5
 
-		if(istype(I, /obj/item/weapon/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			holder.icon_state = "hud_imp_tracking"
-			holder.pixel_y = y
-			y += -5
+	if(isimplantedtrack())
+		holder = hud_list[IMPTRACK_HUD]
+		holder.icon_state = "hud_imp_tracking"
+		holder.pixel_y = y
+		y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]

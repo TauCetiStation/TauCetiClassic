@@ -48,6 +48,15 @@
 				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
 	return dat
 
+/obj/item/weapon/implant/mind_protect/mindshield/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	if(.)
+		ADD_TRAIT(C, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+
+/obj/item/weapon/implant/mind_protect/loyalty/implant_removal(mob/host)
+	if(istype(host))
+		REMOVE_TRAIT(host, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+
 /obj/item/weapon/implant/mind_protect/loyalty
 	name = "loyalty implant"
 	desc = "Makes you loyal or such."
@@ -90,9 +99,12 @@
 		for(var/obj/item/weapon/implant/skill/S in M)
 			if(S.implanted)
 				S.meltdown()
-
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
+
+/obj/item/weapon/implant/mind_protect/loyalty/implant_removal(mob/host)
+	if(istype(host))
+		REMOVE_TRAIT(host, TRAIT_LOYAL, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/mind_protect/loyalty/process()
 	if (!implanted || !imp_in)
@@ -111,3 +123,8 @@
 				to_chat(imp_in, "\italic You want to give your life away in the name of NanoTrasen!")
 			if(4)
 				to_chat(imp_in, "\italic You are confident that all what Heads of station do - is for a greater good!")
+
+/obj/item/weapon/implant/mind_protect/loyalty/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	if(.)
+		ADD_TRAIT(C, TRAIT_LOYAL, IMPLANT_TRAIT)

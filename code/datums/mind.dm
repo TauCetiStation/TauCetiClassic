@@ -146,12 +146,12 @@
 	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
-			if(H.ismindshielded())
+			if(H.ismindshielded(TRUE))
 				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
 
-			if(H.isloyal())
+			if(H.isloyal(TRUE))
 				text += "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"

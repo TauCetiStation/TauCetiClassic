@@ -18,6 +18,7 @@
 	implant_list += src
 
 /obj/item/weapon/implant/Destroy()
+	implant_removal(imp_in)
 	implant_list -= src
 	implanted = FALSE
 	if(part)
@@ -43,7 +44,7 @@
 
 /obj/item/weapon/implant/proc/inject(mob/living/carbon/C, def_zone)
 	if(!C)
-		return
+		return FALSE
 	loc = C
 	imp_in = C
 	implanted = TRUE
@@ -51,16 +52,20 @@
 		var/mob/living/carbon/human/H = C
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
-			return
+			return FALSE
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
+	return TRUE
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
+
+/obj/item/weapon/implant/proc/implant_removal(mob/host)
+	return
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -121,6 +126,15 @@ Implant Specifics:<BR>"}
 
 	spawn(delay)
 		malfunction--
+
+/obj/item/weapon/implant/tracking/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	if(.)
+		ADD_TRAIT(C, TRAIT_TRACK_IMPLANTED, IMPLANT_TRAIT)
+
+/obj/item/weapon/implant/tracking/implant_removal(mob/host)
+	if(istype(host))
+		REMOVE_TRAIT(host, TRAIT_TRACK_IMPLANTED, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
@@ -400,6 +414,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
+
+/obj/item/weapon/implant/chem/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	if(.)
+		ADD_TRAIT(C, TRAIT_CHEM_IMPLANTED, IMPLANT_TRAIT)
+
+/obj/item/weapon/implant/chem/implant_removal(mob/host)
+	if(istype(host))
+		REMOVE_TRAIT(host, TRAIT_CHEM_IMPLANTED, IMPLANT_TRAIT)
 
 var/global/list/death_alarm_stealth_areas = list(
 	/area/shuttle/syndicate,

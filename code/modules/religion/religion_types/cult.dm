@@ -233,7 +233,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[NO_BLOOD])
 			return FALSE
-	if(M.ismindprotect())
+	if(M.ismindprotect(TRUE))
 		return FALSE
 	return TRUE
 
