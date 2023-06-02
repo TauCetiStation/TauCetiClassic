@@ -562,7 +562,7 @@
 	id = "xenojelly_n"
 	description = "Natural xenomorph jelly is released only if the victim hits the nest"
 	reagent_state = LIQUID
-	color = "#5EA95D"
+	color = "#3f6d3f"
 	overdose = NO_OVERDOSE
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
