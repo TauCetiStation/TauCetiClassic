@@ -352,7 +352,7 @@
 
 /datum/quality/positiveish/investory
 	name = "Investor"
-	desc = "Вдоволь находившись на околофинансовые семинары, ты решил прикупить несколько акций Карго..."
+	desc = "Вдоволь находившись на околофинансовые семинары, ты решил прикупить парочку пакетов акций."
 	requirement = "Нет."
 
 /datum/quality/positiveish/investory/add_effect(mob/living/carbon/human/H, latespawn)
@@ -363,3 +363,30 @@
 		return
 	SSeconomy.issue_founding_stock(MA.account_number, "Cargo", rand(10, 20))
 	SSeconomy.issue_founding_stock(MA.account_number, "Medical", rand(10, 20))
+
+
+/datum/quality/positiveish/healthy_body
+	name = "Healthy Body"
+	desc = "У тебя здоровое тело, которому позавидует среднестатистический космонавт."
+	requirement = "Нет."
+
+/datum/quality/positiveish/healthy_body/add_effect(mob/living/carbon/human/H)
+	H.health = 125
+	H.maxHealth = 125 //150 would be too much methinks
+
+
+/datum/quality/positiveish/psc
+	name = "Private Security Company"
+	desc = "Акции Карго растут в цене, и завхозу пришлось прибегнуть к услугам ЧОП."
+	requirement = "Карготех."
+	jobs_required = list("Cargo Technician")
+
+/datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
+	if(is_species(H, TAJARAN))
+		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
+	else
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/wjpp(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
