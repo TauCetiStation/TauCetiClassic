@@ -580,7 +580,7 @@
 	id = "xenojelly_un"
 	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
 	reagent_state = LIQUID
-	color = "#5ea95d2b"
+	color = "#5ea95d"
 	overdose = REAGENTS_OVERDOSE / 2
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
@@ -588,7 +588,6 @@
 /datum/reagent/xenojelly_un/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(5,3)
-	M.adjustToxLoss(-5)
 	M.adjustOxyLoss(-10)
 	M.adjustHalLoss(-10)
 	M.adjustFireLoss(-5)
