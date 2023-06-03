@@ -18,7 +18,7 @@
 
 /obj/item/weapon/melee/chainofcommand/afterattack(atom/target, mob/user, proximity, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	// Contentious. One chain of command in changeling hands, without any other prepares - all security will die
+
 	if(!user.isloyal())
 		to_chat(user, "<span class='danger'[bicon(src)] SPECIAL FUNCTION DISABLED. LOYALTY IMPLANT NOT FOUND.</span>")
 		return
@@ -26,6 +26,21 @@
 		return
 	var/mob/living/carbon/human/H = target
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
+	if(HAS_TRAIT_FROM(H, TRAIT_OBEY, FAKE_IMPLANT_TRAIT))
+		//like clumsy
+		explosion(user.loc, 0, 0, 1, 7)
+		to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")
+		if(isliving(user))
+			var/mob/living/living_user = user
+			living_user.Sleeping(15 SECONDS)
+			if(ishuman(user))
+				var/mob/living/carbon/human/user_human = living_user
+				var/obj/item/organ/external/BP = user_human.get_bodypart(BP_ACTIVE_ARM)
+				if(BP)
+					BP.droplimb(FALSE, FALSE, DROPLIMB_BLUNT)
+		to_chat(target, "<span class='userdanger'>THEY KNOWS ABOUT US!!!</span>")
+		qdel(src)
+		return
 	if(!H.isimplantedobedience())
 		return
 	H.Stun(5)
