@@ -470,7 +470,7 @@ SUBSYSTEM_DEF(job)
 			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary, job.department_stocks)	//starting funds = salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary + job.starting_money, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -591,13 +591,11 @@ SUBSYSTEM_DEF(job)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 				MA.owner_preferred_insurance_type = job.is_head ? SSeconomy.insurance_quality_decreasing[1] : H.roundstart_insurance
-				MA.owner_max_insurance_payment = SSeconomy.insurance_prices[H.roundstart_insurance]
-
-				var/insurance_type = get_next_insurance_type(H.roundstart_insurance, MA)
+				MA.owner_max_insurance_payment = job.is_head ? SSeconomy.roundstart_insurance_prices[MA.owner_preferred_insurance_type] : SSeconomy.roundstart_insurance_prices[H.roundstart_insurance]
+				var/insurance_type = get_next_insurance_type(H.roundstart_insurance, MA, SSeconomy.roundstart_insurance_prices)
 				H.roundstart_insurance = insurance_type
-
 				var/med_account_number = global.department_accounts["Medical"].account_number
-				var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+				var/insurance_price = SSeconomy.roundstart_insurance_prices[insurance_type]
 				charge_to_account(med_account_number, med_account_number, "[insurance_type] Insurance payment", "NT Insurance", insurance_price)
 				charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
 

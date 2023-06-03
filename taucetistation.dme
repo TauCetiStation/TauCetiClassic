@@ -1633,6 +1633,7 @@
 #include "code\modules\events\roundstart_events\area\replace\random_airlock.dm"
 #include "code\modules\events\roundstart_events\area\replace\replace.dm"
 #include "code\modules\events\roundstart_events\area\replace\sec_weapons.dm"
+#include "code\modules\events\roundstart_events\area\replace\station_rearmament.dm"
 #include "code\modules\events\roundstart_events\area\replace\vault_gold.dm"
 #include "code\modules\ext_scripts\get_webpage.dm"
 #include "code\modules\ext_scripts\python.dm"

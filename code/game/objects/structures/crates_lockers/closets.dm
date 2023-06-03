@@ -67,12 +67,12 @@
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.forceMove(src.loc)
 
-	for(var/obj/I in src)
-		I.forceMove(src.loc)
-
 	for(var/mob/M in src)
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
+
+	for(var/obj/I in src)
+		I.forceMove(src.loc)
 
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
