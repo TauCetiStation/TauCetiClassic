@@ -39,6 +39,9 @@
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 	)
 
+	m_amt = 50
+	g_amt = 50
+
 /obj/machinery/manipulator
 	name = "manipulator"
 	desc = "Manipulates stuff. I think we'll put this thing right here..."
