@@ -25,38 +25,46 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/mob/proc/ismindshielded(truth_check = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	if(truth_check)
-		for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
-			if(L.implanted)
-				return TRUE
+/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ishavemindshieldhud()
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		return TRUE
 	return FALSE
 
-/mob/proc/isloyal(truth_check = FALSE)
-	if(truth_check)
-		for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
-			if(L.implanted)
-				return TRUE
+/mob/proc/isloyal()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ishaveloyalhud()
 	if(HAS_TRAIT(src, TRAIT_LOYAL))
 		return TRUE
 	return FALSE
 
-/mob/proc/ismindprotect(truth_check = FALSE)
-	if(truth_check)
-		for(var/obj/item/weapon/implant/mind_protect/L in src)
-			if(L.implanted)
-				return TRUE
+/mob/proc/ismindprotect()
+	for(var/obj/item/weapon/implant/mind_protect/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ishavemindprotecthud()
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD) || HAS_TRAIT(src, TRAIT_LOYAL))
 		return TRUE
 	return FALSE
 
-/mob/proc/isimplantedobedience(truth_check = FALSE)
-	if(truth_check)
-		for(var/obj/item/weapon/implant/obedience/L in src)
-			if(L.implanted)
-				return TRUE
+/mob/proc/isimplantedobedience()
+	for(var/obj/item/weapon/implant/obedience/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ishaveobediencehud()
 	if(HAS_TRAIT(src, TRAIT_OBEY))
 		return TRUE
 	return FALSE
@@ -67,20 +75,24 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/isimplantedchem(truth_check = FALSE)
-	if(truth_check)
-		for(var/obj/item/weapon/implant/chem/L in src)
-			if(L.implanted)
-				return TRUE
+/mob/proc/isimplantedchem()
+	for(var/obj/item/weapon/implant/chem/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ishavechemhud()
 	if(HAS_TRAIT(src, TRAIT_CHEM_IMPLANTED))
 		return TRUE
 	return FALSE
 
-/mob/proc/isimplantedtrack(truth_check = FALSE)
-	if(truth_check)
-		for(var/obj/item/weapon/implant/tracking/L in src)
-			if(L.implanted)
-				return TRUE
+/mob/proc/isimplantedtrack()
+	for(var/obj/item/weapon/implant/tracking/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ishavetrackhud()
 	if(HAS_TRAIT(src, TRAIT_TRACK_IMPLANTED))
 		return TRUE
 	return FALSE
