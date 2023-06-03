@@ -195,6 +195,8 @@
 	else
 		fail_angle = 90
 
+	if(fail_turf)
+		UnregisterSignal(fail_turf, list(COMSIG_PARENT_QDELETING))
 	set_fail_turf()
 
 	decal.icon_state = "manip_decor[mirrored ? "-mirrored" : ""]"
@@ -287,8 +289,6 @@
 
 /obj/machinery/manipulator/proc/set_from_turf()
 	SIGNAL_HANDLER
-	if(from_turf)
-		UnregisterSignal(from_turf, list(COMSIG_ATOM_ENTERED, COMSIG_PARENT_QDELETING))
 	var/opposite_dir = turn(dir, 180)
 	from_turf = get_step(src, opposite_dir)
 	RegisterSignal(from_turf, list(COMSIG_ATOM_ENTERED), .proc/on_from_entered)
@@ -296,21 +296,24 @@
 
 /obj/machinery/manipulator/proc/set_fail_turf()
 	SIGNAL_HANDLER
-	if(fail_turf)
-		UnregisterSignal(fail_turf, list(COMSIG_PARENT_QDELETING))
 	var/fail_dir = turn(dir, fail_angle)
 	fail_turf = get_step(src, fail_dir)
 	RegisterSignal(fail_turf, list(COMSIG_PARENT_QDELETING), .proc/set_fail_turf)
 
 /obj/machinery/manipulator/proc/set_to_turf()
 	SIGNAL_HANDLER
-	if(to_turf)
-		UnregisterSignal(to_turf, list(COMSIG_PARENT_QDELETING))
 	to_turf = get_step(src, dir)
 	RegisterSignal(to_turf, list(COMSIG_PARENT_QDELETING), .proc/set_to_turf)
 
 /obj/machinery/manipulator/set_dir(new_dir)
 	. = ..()
+
+	if(from_turf)
+		UnregisterSignal(from_turf, list(COMSIG_ATOM_ENTERED, COMSIG_PARENT_QDELETING))
+	if(fail_turf)
+		UnregisterSignal(fail_turf, list(COMSIG_PARENT_QDELETING))
+	if(to_turf)
+		UnregisterSignal(to_turf, list(COMSIG_PARENT_QDELETING))
 
 	set_from_turf()
 	set_fail_turf()
