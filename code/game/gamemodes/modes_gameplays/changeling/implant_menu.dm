@@ -3,6 +3,13 @@
 	req_human = TRUE
 	can_be_used_in_abom_form = FALSE
 	genomecost = 0
+	var/list/topics_trait_keys = list(
+		"implant_m" = TRAIT_MINDSHIELD,
+		"implant_l" = TRAIT_LOYAL,
+		"implant_o" = TRAIT_OBEY,
+		"implant_c" = TRAIT_CHEM_IMPLANTED,
+		"implant_t" = TRAIT_TRACK_IMPLANTED
+	)
 
 /obj/effect/proc_holder/changeling/implant_managment/Click()
 	setup_brows(usr)
@@ -19,27 +26,12 @@
 		text += "Not allowed in this form"
 		return text
 	var/mob/living/carbon/human/H = user
-	if(HAS_TRAIT_FROM(H, TRAIT_MINDSHIELD, FAKE_IMPLANT_TRAIT))
-		text += "Mind Shield Implant:<a href='?src=\ref[src];remove=implant_m'>Stop mimicry</a>|<b>Implanted</b></br>"
-	else
-		text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];add=implant_m'>Mimicry!</a></br>"
-	if(HAS_TRAIT_FROM(H, TRAIT_LOYAL, FAKE_IMPLANT_TRAIT))
-		text += "Loyalty Implant:<a href='?src=\ref[src];remove=implant_l'>Stop mimicry</a>|<b>Implanted</b></br>"
-	else
-		text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];add=implant_l'>Mimicry!</a></br>"
-	if(HAS_TRAIT_FROM(H, TRAIT_OBEY, FAKE_IMPLANT_TRAIT))
-		text += "Obedience Implant:<a href='?src=\ref[src];remove=implant_o'>Stop mimicry</a>|<b>Implanted</b></br>"
-	else
-		text += "Obedience Implant:<b>No Implant</b>|<a href='?src=\ref[src];add=implant_o'>Mimicry!</a></br>"
-	if(HAS_TRAIT_FROM(H, TRAIT_CHEM_IMPLANTED, FAKE_IMPLANT_TRAIT))
-		text += "Chemical Implant:<a href='?src=\ref[src];remove=implant_c'>Stop mimicry</a>|<b>Implanted</b></br>"
-	else
-		text += "Chemical Implant:<b>No Implant</b>|<a href='?src=\ref[src];add=implant_c'>Mimicry!</a></br>"
-	if(HAS_TRAIT_FROM(H, TRAIT_TRACK_IMPLANTED, FAKE_IMPLANT_TRAIT))
-		text += "Tracking Implant:<a href='?src=\ref[src];remove=implant_t'>Stop mimicry</a>|<b>Implanted</b></br>"
-	else
-		text += "Tracking Implant:<b>No Implant</b>|<a href='?src=\ref[src];add=implant_t'>Mimicry!</a></br>"
-
+	var/enabled_mindshield = HAS_TRAIT_FROM(H, TRAIT_MINDSHIELD, FAKE_IMPLANT_TRAIT)
+	var/enabled_loyal = HAS_TRAIT_FROM(H, TRAIT_LOYAL, FAKE_IMPLANT_TRAIT)
+	var/enabled_obey = HAS_TRAIT_FROM(H, TRAIT_OBEY, FAKE_IMPLANT_TRAIT)
+	var/enabled_chem = HAS_TRAIT_FROM(H, TRAIT_CHEM_IMPLANTED, FAKE_IMPLANT_TRAIT)
+	var/enabled_track = HAS_TRAIT_FROM(H, TRAIT_TRACK_IMPLANTED, FAKE_IMPLANT_TRAIT)
+	text += get_implant_text(enabled_mindshield, enabled_loyal, enabled_obey, enabled_chem, enabled_track)
 	return text
 
 /obj/effect/proc_holder/changeling/implant_managment/Topic(href, href_list)
@@ -47,36 +39,40 @@
 	if(!istype(M))
 		return
 	if(href_list["remove"])
-		var/trait_to_remove = ""
-		switch(href_list["remove"])
-			if("implant_m")
-				trait_to_remove = TRAIT_MINDSHIELD
-			if("implant_l")
-				trait_to_remove = TRAIT_LOYAL
-			if("implant_o")
-				trait_to_remove = TRAIT_OBEY
-			if("implant_c")
-				trait_to_remove = TRAIT_CHEM_IMPLANTED
-			if("implant_t")
-				trait_to_remove = TRAIT_TRACK_IMPLANTED
-		if(trait_to_remove)
-			REMOVE_TRAIT(M, trait_to_remove, FAKE_IMPLANT_TRAIT)
+		REMOVE_TRAIT(M, topics_trait_keys[href_list["remove"]], FAKE_IMPLANT_TRAIT)
 	if(href_list["add"])
-		var/trait_to_add = ""
-		switch(href_list["add"])
-			if("implant_m")
-				trait_to_add = TRAIT_MINDSHIELD
-			if("implant_l")
-				trait_to_add = TRAIT_LOYAL
-			if("implant_o")
-				trait_to_add = TRAIT_OBEY
-			if("implant_c")
-				trait_to_add = TRAIT_CHEM_IMPLANTED
-			if("implant_t")
-				trait_to_add = TRAIT_TRACK_IMPLANTED
-		if(trait_to_add)
-			ADD_TRAIT(M, trait_to_add, FAKE_IMPLANT_TRAIT)
+		ADD_TRAIT(M, topics_trait_keys[href_list["add"]], FAKE_IMPLANT_TRAIT)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.sec_hud_set_implants()
 	setup_brows(M)
+
+/obj/effect/proc_holder/changeling/implant_managment/proc/get_implant_text(mindshield_arg, loyal_arg, obey_arg, chem_arg, track_arg)
+	var/out = ""
+	if(mindshield_arg)
+		out += "Mind Shield Implant:[setup_mimicry_active_text("implant_m")]"
+	else
+		out += "Mind Shield Implant:[setup_mimicry_unactive_text("implant_m")]"
+	if(loyal_arg)
+		out += "Loyalty Implant:[setup_mimicry_active_text("implant_l")]"
+	else
+		out += "Loyalty Implant:[setup_mimicry_unactive_text("implant_l")]"
+	if(obey_arg)
+		out += "Obedience Implant:[setup_mimicry_active_text("implant_o")]"
+	else
+		out += "Obedience Implant:[setup_mimicry_unactive_text("implant_o")]"
+	if(chem_arg)
+		out += "Chemical Implant:[setup_mimicry_active_text("implant_c")]"
+	else
+		out += "Chemical Implant:[setup_mimicry_unactive_text("implant_c")]"
+	if(track_arg)
+		out += "Tracking Implant:[setup_mimicry_active_text("implant_t")]"
+	else
+		out += "Tracking Implant:[setup_mimicry_unactive_text("implant_t")]"
+	return out
+
+/obj/effect/proc_holder/changeling/implant_managment/proc/setup_mimicry_active_text(topic_implant)
+	return "<a href='?src=\ref[src];remove=[topic_implant]'>Stop mimicry</a>|<b>Implanted</b></br>"
+
+/obj/effect/proc_holder/changeling/implant_managment/proc/setup_mimicry_unactive_text(topic_implant)
+	return "<b>No Implant</b>|<a href='?src=\ref[src];add=[topic_implant]'>Mimicry!</a></br>"
