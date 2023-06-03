@@ -10,7 +10,7 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
-
+	var/implant_trait = ""
 	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
@@ -44,7 +44,7 @@
 
 /obj/item/weapon/implant/proc/inject(mob/living/carbon/C, def_zone)
 	if(!C)
-		return FALSE
+		return
 	loc = C
 	imp_in = C
 	implanted = TRUE
@@ -52,11 +52,12 @@
 		var/mob/living/carbon/human/H = C
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
-			return FALSE
+			return
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
-	return TRUE
+	if(implant_trait)
+		ADD_TRAIT(C, implant_trait, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
@@ -65,7 +66,9 @@
 	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/implant_removal(mob/host)
-	return
+	if(implant_trait)
+		if(istype(host))
+			REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -92,6 +95,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
+	implant_trait = TRAIT_VISUAL_TRACK
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
@@ -126,15 +130,6 @@ Implant Specifics:<BR>"}
 
 	spawn(delay)
 		malfunction--
-
-/obj/item/weapon/implant/tracking/inject(mob/living/carbon/C, def_zone)
-	. = ..()
-	if(.)
-		ADD_TRAIT(C, TRAIT_TRACK_IMPLANTED, IMPLANT_TRAIT)
-
-/obj/item/weapon/implant/tracking/implant_removal(mob/host)
-	if(istype(host))
-		REMOVE_TRAIT(host, TRAIT_TRACK_IMPLANTED, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
@@ -354,6 +349,7 @@ Implant Specifics:<BR>"}
 	name = "chemical implant"
 	desc = "Injects things."
 	allow_reagents = 1
+	implant_trait = TRAIT_VISUAL_CHEM
 
 /obj/item/weapon/implant/chem/get_data()
 	var/dat = {"
@@ -414,15 +410,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
-
-/obj/item/weapon/implant/chem/inject(mob/living/carbon/C, def_zone)
-	. = ..()
-	if(.)
-		ADD_TRAIT(C, TRAIT_CHEM_IMPLANTED, IMPLANT_TRAIT)
-
-/obj/item/weapon/implant/chem/implant_removal(mob/host)
-	if(istype(host))
-		REMOVE_TRAIT(host, TRAIT_CHEM_IMPLANTED, IMPLANT_TRAIT)
 
 var/global/list/death_alarm_stealth_areas = list(
 	/area/shuttle/syndicate,

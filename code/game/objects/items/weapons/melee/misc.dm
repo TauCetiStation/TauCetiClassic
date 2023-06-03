@@ -26,7 +26,7 @@
 		return
 	var/mob/living/carbon/human/H = target
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
-	if(HAS_TRAIT_FROM(H, TRAIT_OBEY, FAKE_IMPLANT_TRAIT))
+	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_OBEY, FAKE_IMPLANT_TRAIT))
 		//like clumsy
 		explosion(user.loc, 0, 0, 1, 7)
 		to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")

@@ -4,11 +4,11 @@
 	can_be_used_in_abom_form = FALSE
 	genomecost = 0
 	var/list/topics_trait_keys = list(
-		"implant_m" = TRAIT_MINDSHIELD,
-		"implant_l" = TRAIT_LOYAL,
-		"implant_o" = TRAIT_OBEY,
-		"implant_c" = TRAIT_CHEM_IMPLANTED,
-		"implant_t" = TRAIT_TRACK_IMPLANTED
+		"implant_m" = TRAIT_VISUAL_MINDSHIELD,
+		"implant_l" = TRAIT_VISUAL_LOYAL,
+		"implant_o" = TRAIT_VISUAL_OBEY,
+		"implant_c" = TRAIT_VISUAL_CHEM,
+		"implant_t" = TRAIT_VISUAL_TRACK
 	)
 
 /obj/effect/proc_holder/changeling/implant_managment/Click()
@@ -26,11 +26,11 @@
 		text += "Not allowed in this form"
 		return text
 	var/mob/living/carbon/human/H = user
-	var/enabled_mindshield = HAS_TRAIT_FROM(H, TRAIT_MINDSHIELD, FAKE_IMPLANT_TRAIT)
-	var/enabled_loyal = HAS_TRAIT_FROM(H, TRAIT_LOYAL, FAKE_IMPLANT_TRAIT)
-	var/enabled_obey = HAS_TRAIT_FROM(H, TRAIT_OBEY, FAKE_IMPLANT_TRAIT)
-	var/enabled_chem = HAS_TRAIT_FROM(H, TRAIT_CHEM_IMPLANTED, FAKE_IMPLANT_TRAIT)
-	var/enabled_track = HAS_TRAIT_FROM(H, TRAIT_TRACK_IMPLANTED, FAKE_IMPLANT_TRAIT)
+	var/enabled_mindshield = HAS_TRAIT_FROM(H, TRAIT_VISUAL_MINDSHIELD, FAKE_IMPLANT_TRAIT)
+	var/enabled_loyal = HAS_TRAIT_FROM(H, TRAIT_VISUAL_LOYAL, FAKE_IMPLANT_TRAIT)
+	var/enabled_obey = HAS_TRAIT_FROM(H, TRAIT_VISUAL_OBEY, FAKE_IMPLANT_TRAIT)
+	var/enabled_chem = HAS_TRAIT_FROM(H, TRAIT_VISUAL_CHEM, FAKE_IMPLANT_TRAIT)
+	var/enabled_track = HAS_TRAIT_FROM(H, TRAIT_VISUAL_TRACK, FAKE_IMPLANT_TRAIT)
 	text += get_implant_text(enabled_mindshield, enabled_loyal, enabled_obey, enabled_chem, enabled_track)
 	return text
 

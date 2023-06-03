@@ -32,7 +32,7 @@
 	return FALSE
 
 /mob/proc/hasmindshieldhud()
-	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
 		return TRUE
 	return FALSE
 
@@ -43,7 +43,7 @@
 	return FALSE
 
 /mob/proc/hasloyalhud()
-	if(HAS_TRAIT(src, TRAIT_LOYAL))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
 		return TRUE
 	return FALSE
 
@@ -54,7 +54,7 @@
 	return FALSE
 
 /mob/proc/ishavemindprotecthud()
-	if(HAS_TRAIT(src, TRAIT_MINDSHIELD) || HAS_TRAIT(src, TRAIT_LOYAL))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD) || HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
 		return TRUE
 	return FALSE
 
@@ -65,7 +65,7 @@
 	return FALSE
 
 /mob/proc/hasobediencehud()
-	if(HAS_TRAIT(src, TRAIT_OBEY))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
 		return TRUE
 	return FALSE
 
@@ -82,7 +82,7 @@
 	return FALSE
 
 /mob/proc/haschemhud()
-	if(HAS_TRAIT(src, TRAIT_CHEM_IMPLANTED))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
 		return TRUE
 	return FALSE
 
@@ -93,7 +93,7 @@
 	return FALSE
 
 /mob/proc/hastrackhud()
-	if(HAS_TRAIT(src, TRAIT_TRACK_IMPLANTED))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
 		return TRUE
 	return FALSE
 
