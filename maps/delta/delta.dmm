@@ -87634,9 +87634,6 @@
 "wHy" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/suit_jacket/red,
-/obj/item/device/eftpos{
-	eftpos_name = "Library EFTPOS scanner"
-	},
 /obj/item/device/taperecorder,
 /obj/item/clothing/shoes/leather,
 /obj/item/clothing/suit/wcoat,
