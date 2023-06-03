@@ -423,7 +423,7 @@
 	if(!do_after(user, 5 SECONDS, FALSE, target))
 		return FALSE
 
-	if(target.ismindprotect(TRUE))
+	if(target.ismindprotect())
 		for(var/obj/item/weapon/implant/mind_protect/L in target)
 			if(L.implanted)
 				qdel(L)

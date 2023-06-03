@@ -11,7 +11,7 @@
 /datum/role/rev/CanBeAssigned(datum/mind/M)
 	if(!..())
 		return FALSE
-	if(M.current.ismindprotect(TRUE))
+	if(M.current.ismindprotect())
 		return FALSE
 	return TRUE
 
@@ -84,7 +84,7 @@
 
 	if(isrevhead(M) || isrev(M))
 		to_chat(src, "<span class='bold warning'>[M] is already be a revolutionary!</span>")
-	else if(M.ismindprotect(TRUE))
+	else if(M.ismindprotect())
 		to_chat(src, "<span class='bold warning'>[M] is implanted with a mind protected implant - Remove it first!</span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='bold warning'>[M] is a blacklisted player!</span>")

@@ -101,7 +101,7 @@
 			var/mob/living/carbon/human/H = scanner.victim
 			var/same_user = H == user
 			var/compatible = (H.species.name in scanner.cartridge.compatible_species)
-			if(compatible && !same_user && !H.ismindprotect())
+			if(compatible && !same_user && !H.ishavemindprotecthud())
 				return TRUE
 	return FALSE
 
