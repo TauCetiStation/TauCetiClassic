@@ -102,10 +102,6 @@
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
-/obj/item/weapon/implant/mind_protect/loyalty/implant_removal(mob/host)
-	if(istype(host))
-		REMOVE_TRAIT(host, TRAIT_LOYAL, IMPLANT_TRAIT)
-
 /obj/item/weapon/implant/mind_protect/loyalty/process()
 	if (!implanted || !imp_in)
 		STOP_PROCESSING(SSobj, src)
@@ -128,3 +124,7 @@
 	. = ..()
 	if(.)
 		ADD_TRAIT(C, TRAIT_LOYAL, IMPLANT_TRAIT)
+
+/obj/item/weapon/implant/mind_protect/loyalty/implant_removal(mob/host)
+	if(istype(host))
+		REMOVE_TRAIT(host, TRAIT_LOYAL, IMPLANT_TRAIT)
