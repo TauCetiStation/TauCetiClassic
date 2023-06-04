@@ -35,6 +35,12 @@
 		return ..()
 	return target_zone
 
+/mob/living/carbon/human/bluespace/SetNextMove(num)
+	return
+
+/mob/living/carbon/human/bluespace/AdjustNextMove(num)
+	return
+
 /obj/item/weapon/circuitboard/manipulator
 	name = "Circuit board (Manipulator)"
 	build_path = /obj/machinery/manipulator
@@ -146,12 +152,13 @@
 		add_overlay(status)
 
 /obj/machinery/manipulator/RefreshParts()
-	delay = 5
+	delay = 6
 
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		delay -= M.rating
 
-	delay = max(delay, 1)
+	// Min delay between clicks is 1, so we need at least 2 tick delay to actually be able to interact.
+	delay = max(delay, 2)
 
 	var/laser_rating = 1
 
