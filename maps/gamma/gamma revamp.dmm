@@ -6420,12 +6420,12 @@
 	},
 /area/station/medical/reception)
 "aUU" = (
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
 	},
+/obj/item/clothing/head/cueball,
 /turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/area/space)
 "aVn" = (
 /obj/machinery/computer/secure_data{
 	dir = 4
@@ -9223,9 +9223,12 @@
 /area/station/civilian/chapel/altar)
 "byU" = (
 /obj/effect/decal/remains/human,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 9;
-	pixel_y = -3
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 6
+	},
+/obj/item/weapon/storage/bag/plasticbag{
+	pixel_x = -1;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	icon_state = "asteroid3"
@@ -52932,6 +52935,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor{
 	icon_state = "asteroid3"
 	},
@@ -55143,6 +55147,9 @@
 "nja" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
+	},
+/obj/item/clothing/head/cueball{
+	pixel_x = 11
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -64301,7 +64308,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "pxv" = (
-/obj/item/weapon/reagent_containers/food/snacks/badrecipe,
+/obj/item/weapon/reagent_containers/food/snacks/badrecipe{
+	desc = "Some sort of matter";
+	name = "Mess"
+	},
 /obj/item/weapon/ore/iron{
 	pixel_x = 5;
 	pixel_y = 10
@@ -65977,12 +65987,15 @@
 	},
 /area/station/civilian/dormitories)
 "pVb" = (
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/obj/item/clothing/head/cueball{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/eva)
 "pVd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -81763,7 +81776,10 @@
 /turf/simulated/floor/plating,
 /area/space)
 "tTa" = (
-/obj/machinery/kitchen_machine/microwave,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_y = 7;
+	pixel_x = -1
+	},
 /obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 8;
@@ -97696,12 +97712,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/central)
-"xQe" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
 "xQm" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -111130,7 +111140,7 @@ kpc
 kpc
 vWz
 pyC
-pVb
+lQP
 jGi
 hNT
 hNT
@@ -111387,8 +111397,8 @@ kpc
 kpc
 pxv
 mDB
-pVb
-hhh
+lQP
+aUU
 hhh
 hNT
 plf
@@ -111644,8 +111654,8 @@ kpc
 kpc
 qBk
 byU
-aUU
-nja
+blh
+pVb
 nja
 yaE
 cTy
@@ -121006,10 +121016,10 @@ kHU
 lgc
 lgc
 kHU
-xQe
 lgc
 lgc
-xQe
+lgc
+lgc
 lgc
 lgc
 lgc
