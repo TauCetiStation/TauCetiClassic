@@ -558,7 +558,10 @@
 			set_light(light_range_on, light_power_on)
 		else
 			spawn(rand(0, 15))
-				turn_light_off()
+				src.icon_state = "[initial(icon_state)]-off"
+				stat |= NOPOWER
+				set_light(0)
+				update_power_use()
 	update_power_use()
 
 /obj/machinery/vending/turn_light_off()

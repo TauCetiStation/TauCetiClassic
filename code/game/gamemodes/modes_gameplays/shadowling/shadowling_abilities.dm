@@ -46,18 +46,8 @@
 
 /proc/light_off_range(list/targets, atom/center)
 	for(var/turf/T in targets)
-		for(var/mob/living/C in T.contents)
-			for(var/obj/item/F in C)
-				F.turn_light_off()
-			C.turn_light_off() //This is required with the object-based lighting
-
-		for(var/obj/F in T.contents)
-			F.turn_light_off()
-
-		for(var/obj/structure/glowshroom/G in T.contents)
-			if(get_dist(center, G) <= 2) //Very small radius
-				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-				qdel(G)
+		for(var/atom/A in T.contents)
+			A.turn_light_off()
 
 		if(T.is_light_floor())
 			var/turf/simulated/floor/F = T

@@ -151,7 +151,7 @@
 	. = ..()
 	stat |= NOPOWER
 	update_icon()
-
+	update_power_use()
 
 /obj/machinery/computer/proc/set_broken()
 	if(circuit) //no circuit, no breaking
