@@ -487,6 +487,8 @@
 	clicker.forceMove(loc)
 
 /obj/machinery/manipulator/proc/after_click()
+	for(var/obj/item/I in clicker)
+		clicker.drop_from_inventory(I, loc)
 	clicker.forceMove(src)
 
 /obj/machinery/manipulator/proc/clickability_from(atom/movable/A)
