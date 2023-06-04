@@ -104,6 +104,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/device/assembly/prox_sensor, CATEGORY_DEVICES),
 	R(/obj/item/device/flashlight,           CATEGORY_DEVICES),
 	R(/obj/item/device/tagger/shop,          CATEGORY_DEVICES),
+	R(/obj/item/device/cardpay,              CATEGORY_DEVICES),
 	R(/obj/item/device/analyzer,             CATEGORY_DEVICES),
 	R(/obj/item/device/plant_analyzer,       CATEGORY_DEVICES),
 	R(/obj/item/device/healthanalyzer,       CATEGORY_DEVICES),

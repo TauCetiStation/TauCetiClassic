@@ -470,7 +470,7 @@ SUBSYSTEM_DEF(job)
 			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary, job.department_stocks)	//starting funds = salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary + job.starting_money, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -483,6 +483,9 @@ SUBSYSTEM_DEF(job)
 			remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
 
 		H.mind.store_memory(remembered_info)
+
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER, department_account.account_number)
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_PIN, department_account.remote_access_pin)
 
 	spawn(0)
 		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
