@@ -82,6 +82,16 @@ export const CardPay = (props, context) => {
             onClick={() => act("approveprice")}
           />
         </Box>
+        <Box position="absolute" top="62px" left="25px" textColor="#333344" fontSize={0.85} bold={1}>
+          сброс
+          <Button
+            position="absolute"
+            top="15px"
+            left="10px"
+            className="CardPay_ResetHole"
+            onClick={() => act("toggleenteraccount")}
+          />
+        </Box>
         <Button
           selected={reset_numbers ? 1 : 0}
           position="absolute"

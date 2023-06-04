@@ -169,3 +169,17 @@
 	text-shadow: 0px -1px 1px #E8E9EF, 0px -3px 5px #E8E9EF, 0px 1px 1px #474A5B, 0px 1px 5px #474A5B;
 	position: absolute;
 }
+
+.CardPay_ResetHole {
+	height: 9px;
+	width: 9px;
+	background: #9497AB;
+	border-top: 2px solid #474A5B;
+	border-bottom: 2px solid #E8E9EF;
+	border-radius: 10px;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		background: #9497AB !important;
+	}
+}

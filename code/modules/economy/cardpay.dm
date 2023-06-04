@@ -21,7 +21,7 @@
 
 	var/image/holoprice
 
-	var/mode = IDLEMODE
+	var/mode = ACCOUNTMODE
 	var/prevmode = IDLEMODE
 
 /obj/item/device/cardpay/atom_init(mapload)
@@ -144,6 +144,7 @@
 			if(isnum(num))
 				press_number(num)
 				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
+				return TRUE
 
 		if("clearnumbers")
 			clear_numbers()
@@ -165,7 +166,6 @@
 
 		if("toggleenteraccount")
 			enter_account()
-
 			return TRUE
 
 /obj/item/device/cardpay/proc/press_number(num)
@@ -383,7 +383,7 @@
 	else
 		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[pay_amount]$</div>"}
 		holoprice.icon = 'icons/obj/device.dmi'
-		holoprice.icon_state = "holo_overlay"
+		holoprice.icon_state = "holo_overlay_[length(num2text(pay_amount))]"
 	add_overlay(holoprice)
 
 #undef IDLEMODE
