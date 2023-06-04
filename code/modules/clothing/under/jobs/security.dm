@@ -90,6 +90,23 @@
 	item_state = item_state == "polsuit" ? "polsuit_rolled" : "polsuit"
 	update_inv_mob()
 
+//Forensics
+/obj/item/clothing/under/rank/forensic_technician
+	desc = "A very business suit, as for someone who is engaged in autopsy and inspection of crime scenes."
+	name = "forensics suit"
+	icon_state = "forensicsred"
+	item_state = "forensicsred"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/under/rank/forensic_technician/black
+	icon_state = "forensicsblack"
+	item_state = "forensicsblack"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+
 /*
  * Head of Security
  */

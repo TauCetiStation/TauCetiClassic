@@ -929,3 +929,15 @@ var/global/list/contributor_names
 	S.stamp_paper(src, "CentComm DPA")
 
 	update_icon()
+
+/obj/item/weapon/paper/psc
+	name = "Разрешение на работу ЧОП"
+	info = {"<h1 style="text-align: center;"Разрешение на работу ЧОП></h1>
+	<p>Данный документ подтверждает, что держатель документа (далее Сотрудник) является сотрудником частного охранного предприятия, нанятого для охраны активов Карго.</p>
+	<p>Сотрудник имеет право на владение и использование пистолета W&J PP и/или флешера и средств личной защиты в целях охраны активов Карго.</p>
+	<p>При неправомерном применении спецсредств офицеры охраны имеют право изъять пистолет, флешер и средства личной защиты.</p>"}
+
+/obj/item/weapon/paper/psc/atom_init()
+	. = ..()
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Logistics Department")

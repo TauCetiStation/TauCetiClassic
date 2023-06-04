@@ -20841,9 +20841,6 @@
 /area/station/rnd/hallway)
 "aMe" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/device/eftpos{
-	eftpos_name = "Chapel EFTPOS scanner"
-	},
 /obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -24607,9 +24604,6 @@
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
 	},
-/obj/item/device/eftpos{
-	eftpos_name = "Bar EFTPOS scanner"
-	},
 /obj/item/device/radio/intercom{
 	pixel_x = -25
 	},
@@ -28240,9 +28234,6 @@
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/device/eftpos{
-	eftpos_name = "Quartermaster EFTPOS scanner"
-	},
 /obj/item/weapon/coin/silver{
 	pixel_x = -10;
 	pixel_y = 3
@@ -31075,9 +31066,6 @@
 /area/station/hallway/primary/central)
 "beP" = (
 /obj/structure/table/woodentable,
-/obj/item/device/eftpos{
-	eftpos_name = "Captain EFTPOS scanner"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -32108,9 +32096,6 @@
 /area/station/cargo/office)
 "bgG" = (
 /obj/item/device/assembly/timer,
-/obj/item/device/eftpos{
-	eftpos_name = "Bridge EFTPOS scanner"
-	},
 /obj/structure/table/woodentable,
 /obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
@@ -34852,9 +34837,6 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/folder/brown,
-/obj/item/device/eftpos{
-	eftpos_name = "Cargo Bay EFTPOS scanner"
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -54310,9 +54292,6 @@
 "bYL" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/suit_jacket/red,
-/obj/item/device/eftpos{
-	eftpos_name = "Library EFTPOS scanner"
-	},
 /obj/item/device/taperecorder,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -62046,9 +62025,6 @@
 /area/station/bridge/hop_office)
 "cvn" = (
 /obj/structure/table,
-/obj/item/device/eftpos{
-	eftpos_name = "HoP EFTPOS scanner"
-	},
 /obj/machinery/door_control{
 	id = "HoP_queue";
 	name = "Queue shutters";
@@ -69345,9 +69321,6 @@
 /obj/item/weapon/packageWrap,
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/hydroponics,
-/obj/item/device/eftpos{
-	eftpos_name = "Botany EFTPOS scanner"
-	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -79605,9 +79578,6 @@
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/sundress,
-/obj/item/device/eftpos{
-	eftpos_name = "Kitchen EFTPOS scanner"
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cold Room APC";
