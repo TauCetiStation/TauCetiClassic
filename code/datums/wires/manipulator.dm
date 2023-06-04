@@ -1,6 +1,6 @@
 var/global/const/MANIPULATOR_WIRE_ACTIVATE = 1
 var/global/const/MANIPULATOR_WIRE_AFTER_ACTIVATE = 2
-var/global/const/MANIPULATOR_WIRE_CHANGE_TARGET_ZONE = 3
+var/global/const/MANIPULATOR_WIRE_CHANGE_TARGET_ZONE = 4
 
 /datum/wires/manipulator
 	holder_type = /obj/machinery/manipulator
