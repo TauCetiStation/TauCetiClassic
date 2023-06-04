@@ -140,6 +140,11 @@
 	if(initial(inserted_bulb_type.smart))
 		update()
 
+/obj/machinery/light/turn_light_off()
+	on = FALSE
+	visible_message("<span class='danger'>[src] flickers and falls dark.</span>")
+	update(0)
+
 /obj/machinery/light/update_icon()
 	switch(status) // set icon_states
 		if(LIGHT_OK)

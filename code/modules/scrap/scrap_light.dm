@@ -209,6 +209,8 @@
 		QDEL_NULL(particles)
 		STOP_PROCESSING(SSobj, src)
 
+/obj/structure/bonfire/turn_light_off()
+	return
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
 	if(buckled_mob == M)

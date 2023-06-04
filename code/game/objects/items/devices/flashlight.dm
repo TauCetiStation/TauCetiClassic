@@ -268,6 +268,11 @@
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
 
+/obj/item/device/flashlight/flare/turn_light_off()
+	. = ..()
+	to_chat(loc, "<span class='notice'>[src] melts!</span>")
+	qdel(src)
+
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
