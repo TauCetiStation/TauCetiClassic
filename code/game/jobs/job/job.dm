@@ -85,6 +85,8 @@
 
 	if (H.mind)
 		H.mind.skills.add_available_skillset(get_skillset(H))
+		for(var/datum/skillset/random/s as anything in H.mind.skills.available_skillsets)
+			s.New()
 		H.mind.skills.maximize_active_skills()
 	post_equip(H, visualsOnly)
 	return TRUE

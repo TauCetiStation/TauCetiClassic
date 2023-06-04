@@ -15,3 +15,19 @@
 		/datum/skill/research = SKILL_LEVEL_TRAINED,
 		/datum/skill/command = SKILL_LEVEL_TRAINED
 	)
+
+/datum/skillset/random
+	name = "Random skillset"
+	var/skill_max = 2
+	var/skillpoints_total = 5
+	initial_skills = list()
+	skills = list()
+
+/datum/skillset/random/New()
+	skills = list()
+	for(var/i in 1 to skillpoints_total)
+		var/skill_improvement = pick(default_skills_list)
+		skills[skill_improvement] += 1
+		if(skills[skill_improvement] > skill_max)
+			skills -= skill_improvement
+	..()
