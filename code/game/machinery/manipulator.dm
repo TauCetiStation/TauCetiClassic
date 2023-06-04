@@ -27,6 +27,14 @@
 #define MANIPULATOR_STATE_INTERACTING_FROM "interacting_from"
 #define MANIPULATOR_STATE_INTERACTING_TO "interacting_to"
 
+/mob/living/carbon/human/bluespace
+	var/target_zone
+
+/mob/living/carbon/human/bluespace/get_targetzone()
+	if(zone_sel)
+		return ..()
+	return target_zone
+
 /obj/item/weapon/circuitboard/manipulator
 	name = "Circuit board (Manipulator)"
 	build_path = /obj/machinery/manipulator
@@ -62,7 +70,7 @@
 
 	var/turf/fail_turf
 
-	var/mob/living/carbon/human/clicker
+	var/mob/living/carbon/human/bluespace/clicker
 
 	var/state = MANIPULATOR_STATE_IDLE
 
@@ -90,6 +98,10 @@
 	var/remember_trigger = FALSE
 
 	var/datum/wires/manipulator/wires
+
+	var/target_zone = "random"
+
+	var/static/list/possible_target_zones = TARGET_ZONE_ALL + list("random")
 
 /obj/machinery/manipulator/atom_init()
 	. = ..()
@@ -382,7 +394,7 @@
 		return
 
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-	set_dir(turn(dir,-90))
+	set_dir(turn(dir, -90))
 	to_chat(usr, "<span class='notice'>You rotate [src].</span>")
 
 /obj/machinery/manipulator/verb/mirror()
@@ -462,6 +474,9 @@
 
 /obj/machinery/manipulator/proc/before_click()
 	clicker.rejuvenate()
+	clicker.target_zone = target_zone
+	if(target_zone == "random")
+		clicker.target_zone = pick(TARGET_ZONE_ALL)
 	clicker.forceMove(loc)
 
 /obj/machinery/manipulator/proc/after_click()
@@ -608,6 +623,15 @@
 		return
 
 	simulate_click(target, list(CALLBACK(src, .proc/after_interact_to)))
+
+/obj/machinery/manipulator/proc/cycle_target_zone()
+	var/cur_target_index = possible_target_zones.Find(target_zone)
+	cur_target_index += 1
+
+	if(cur_target_index > length(possible_target_zones))
+		cur_target_index -= possible_target_zones
+
+	target_zone = possible_target_zones[cur_target_index]
 
 #undef MANIPULATOR_STATE_IDLE
 #undef MANIPULATOR_STATE_FAIL
