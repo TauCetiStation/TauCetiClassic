@@ -479,6 +479,12 @@
 	clicker.layer = BELOW_TURF_LAYER
 	clicker.plane = CLICKCATCHER_PLANE
 
+	global.mob_list -= clicker
+	global.living_list -= clicker
+	global.carbon_list -= clicker
+	global.human_list -= clicker
+	global.alive_mob_list -= clicker
+
 /obj/machinery/manipulator/proc/before_click()
 	clicker.rejuvenate()
 	clicker.target_zone = target_zone
