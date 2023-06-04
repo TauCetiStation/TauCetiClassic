@@ -30,6 +30,14 @@
 /mob/living/carbon/human/bluespace
 	var/target_zone
 
+	var/datum/skills/skills
+
+/mob/living/carbon/human/bluespace/atom_init()
+	. = ..()
+	skills = new
+	skills.add_available_skillset(/datum/skillset/max)
+	skills.maximize_active_skills()
+
 /mob/living/carbon/human/bluespace/get_targetzone()
 	if(zone_sel)
 		return ..()
@@ -40,6 +48,9 @@
 
 /mob/living/carbon/human/bluespace/AdjustNextMove(num)
 	return
+
+/mob/living/carbon/human/bluespace/get_skills()
+	return skills
 
 /obj/item/weapon/circuitboard/manipulator
 	name = "Circuit board (Manipulator)"
