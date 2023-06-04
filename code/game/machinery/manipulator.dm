@@ -386,6 +386,9 @@
 	if(S)
 		S.signal()
 
+	for(var/obj/item/I in clicker)
+		clicker.drop_from_inventory(I, loc)
+
 /obj/machinery/manipulator/verb/rotate()
 	set category = "Object"
 	set name = "Rotate"
@@ -493,8 +496,6 @@
 	clicker.forceMove(loc)
 
 /obj/machinery/manipulator/proc/after_click()
-	for(var/obj/item/I in clicker)
-		clicker.drop_from_inventory(I, loc)
 	clicker.forceMove(src)
 
 /obj/machinery/manipulator/proc/clickability_from(atom/movable/A)
@@ -566,7 +567,7 @@
 			return
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
-		addtimer(CALLBACK(src, .proc/after_activate, delay))
+		after_activate()
 		return
 
 	try_interact_to()
@@ -578,14 +579,14 @@
 	if(!target)
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
-		addtimer(CALLBACK(src, .proc/after_activate, delay))
+		after_activate()
 		return
 
 	set_state(MANIPULATOR_STATE_INTERACTING_FROM)
 	if(!do_sleep(delay, CALLBACK(src, /obj/machinery.proc/is_operational)))
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
-		addtimer(CALLBACK(src, .proc/after_activate, delay))
+		after_activate()
 		return
 
 	simulate_click(target, list(CALLBACK(src, .proc/after_interact_from)))
@@ -616,13 +617,13 @@
 			if(!do_sleep(delay, CALLBACK(src, /obj/machinery.proc/is_operational)))
 				set_state(MANIPULATOR_STATE_IDLE)
 				do_sleep(delay)
-				addtimer(CALLBACK(src, .proc/after_activate, delay))
+				after_activate()
 				return
 
 			if(QDELETED(I))
 				set_state(MANIPULATOR_STATE_IDLE)
 				do_sleep(delay)
-				addtimer(CALLBACK(src, .proc/after_activate, delay))
+				after_activate()
 				return
 
 			clicker.drop_from_inventory(I, to_turf)
@@ -634,7 +635,7 @@
 	if(!do_sleep(delay, CALLBACK(src, /obj/machinery.proc/is_operational)))
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
-		addtimer(CALLBACK(src, .proc/after_activate, delay))
+		after_activate()
 		return
 
 	simulate_click(target, list(CALLBACK(src, .proc/after_interact_to)))
