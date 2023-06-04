@@ -875,7 +875,6 @@
 	production = 10
 	yield = 5
 	potency = 10
-	plant_type = 0
 	growthstages = 6
 
 /obj/item/seeds/ambrosiavulgarisseed
