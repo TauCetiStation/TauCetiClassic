@@ -861,6 +861,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/korta_nut
+	name = "pack of korta nut seeds"
+	desc = "These seeds grow into korta nut bushes, native to Tajaran."
+	icon_state = "seed-korta"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "kortanut"
+	plantname = "Korta Nut Bush"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/ambrosiavulgarisseed
 	name = "pack of ambrosia vulgaris seeds"
 	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
