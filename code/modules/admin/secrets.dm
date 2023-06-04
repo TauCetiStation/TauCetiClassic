@@ -167,6 +167,8 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				spawn(0)
 					H.monkeyize()
 			ok = 1
@@ -175,6 +177,8 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				spawn(0)
 					H.corgize()
 			ok = 1
@@ -253,6 +257,8 @@
 				var/security = 0
 				if(!is_station_level(loc.z) || prisonwarped.Find(H))
 			//don't warp them if they aren't ready or are already there
+					continue
+				if(!H.simulated)
 					continue
 				H.Paralyse(5)
 				if(H.wear_id)
@@ -469,6 +475,8 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DF")
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				H.f_style = "Dwarf Beard"
 				H.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
@@ -646,6 +654,8 @@
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				if(H.ckey)
 					dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 			dat += "</table>"
@@ -662,6 +672,8 @@
 			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				if(H.dna && H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 			dat += "</table>"
@@ -675,6 +687,8 @@
 			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				if(H.ckey)
 					if(H.dna && H.dna.uni_identity)
 						dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"

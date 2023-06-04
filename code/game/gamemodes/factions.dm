@@ -410,6 +410,8 @@
 			continue
 		if(H.stat == DEAD)
 			continue
+		if(!H.simulated)
+			continue
 		if(!H.mind || !H.client)
 			continue
 		total_human++

@@ -89,6 +89,8 @@
 				add_record(null, security_data, "Отбыл наказание за преступления по статьям: [prisoner_crimes]. Уголовный статус статус был изменен на <b>Released</b>", id)
 				security_data.fields["criminal"] = "Released"
 				for(var/mob/living/carbon/human/H in global.human_list)
+					if(!H.simulated)
+						continue
 					if(H.real_name == prisoner_name)
 						H.sec_hud_set_security_status()
 			timer_end() // open doors, reset timer, clear status screen
@@ -316,6 +318,8 @@
 					add_record(usr, security_data, "Уголовный статус статус был изменен на <b>Incarcerated</b>.<br><b>Статья:</b> [prisoner_crimes].<br><b>Подробности:</b> [prisoner_details].<br><b>Время наказания:</b> [prison_minute] min.")
 					security_data.fields["criminal"] = "Incarcerated"
 					for(var/mob/living/carbon/human/H in global.human_list)
+						if(!H.simulated)
+							continue
 						if(H.real_name == prisoner_name)
 							H.sec_hud_set_security_status()
 					data = "База данных обновлена."
@@ -328,6 +332,8 @@
 					add_record(usr, security_data, "Освобожден досрочно из камеры [id]. Уголовный статус статус был изменен на <b>Paroled</b>")
 					security_data.fields["criminal"] = "Paroled"
 					for(var/mob/living/carbon/human/H in global.human_list)
+						if(!H.simulated)
+							continue
 						if(H.real_name == prisoner_name)
 							H.sec_hud_set_security_status()
 				timer_end()

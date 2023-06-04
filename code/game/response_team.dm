@@ -44,6 +44,8 @@ var/global/can_call_ert
 	var/total = 0
 	var/deadcount = 0
 	for(var/mob/living/carbon/human/H as anything in human_list)
+		if(!H.simulated)
+			continue
 		if(H.client) // Monkeys and mice don't have a client, amirite?
 			if(H.stat == DEAD) deadcount++
 			total++
@@ -56,6 +58,8 @@ var/global/can_call_ert
 	var/total = 0
 	var/antagonists = 0
 	for(var/mob/living/carbon/human/H as anything in human_list)
+		if(!H.simulated)
+			continue
 		if(is_special_character(H) >= 1)
 			antagonists++
 		total++

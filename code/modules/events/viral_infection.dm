@@ -14,6 +14,8 @@
 	for(var/mob/living/carbon/human/H in shuffle(human_list))
 		if(!infected)
 			break
+		if(!H.simulated)
+			continue
 		if(!H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
 			continue
 		if(prob(chance))

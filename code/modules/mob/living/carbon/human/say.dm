@@ -149,6 +149,8 @@
 				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(!H.mind || H.species.name != ABDUCTOR)
 						continue
+					if(!H.simulated)
+						continue
 					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
 					if(!(human in A.faction.members))
 						continue

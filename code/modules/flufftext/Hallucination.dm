@@ -431,6 +431,8 @@ var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /
 	var/clone_weapon = null
 
 	for(var/mob/living/carbon/human/H as anything in human_list)
+		if(!H.simulated)
+			continue
 		if(H.incapacitated())
 			continue
 //		possible_clones += H

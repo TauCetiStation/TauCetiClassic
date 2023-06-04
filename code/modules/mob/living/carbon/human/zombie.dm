@@ -309,6 +309,8 @@ var/global/list/zombie_list = list()
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
+		if(!H.simulated)
+			continue
 		var/turf/target_turf = get_turf(H)
 		var/target_dist = get_dist(target_turf, self_turf)
 		if(target_dist < min_dist)

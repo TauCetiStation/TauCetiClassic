@@ -79,6 +79,8 @@
 /datum/mood_event/blueshield/add_effects()
 	var/list/to_protect = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(!player.simulated)
+			continue
 		if(player.mind && (player.mind.assigned_role in protected_by_blueshield_list))
 			to_protect += player.mind
 

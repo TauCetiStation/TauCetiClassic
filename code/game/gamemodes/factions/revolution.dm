@@ -1,6 +1,8 @@
 /proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(!player.simulated)
+			continue
 		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in heads_positions))
 			heads += player.mind
 	return heads
@@ -27,6 +29,8 @@
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(!player.simulated)
+			continue
 		if(player.mind && (player.mind.assigned_role in heads_positions))
 			heads += player.mind
 	return heads
@@ -116,6 +120,8 @@
 			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = FALSE
 			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(!H.simulated)
+					continue
 				if(H.stat != DEAD && H.mind && H.client?.inactivity <= 20 MINUTES && isrev(H))
 					var/datum/role/R = H.mind.GetRole(REV)
 					R.Drop(H.mind)
@@ -190,6 +196,8 @@
 	if(foecount == SSStatistics.score.arrested)
 		SSStatistics.score.allarrested = 1
 	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(!player.simulated)
+			continue
 		if(player.mind)
 			var/role = player.mind.assigned_role
 			if(role in global.command_positions)
@@ -220,6 +228,8 @@
 			revcount++
 
 	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(!player.simulated)
+			continue
 		if(!player.mind)
 			continue
 		var/role = player.mind.assigned_role

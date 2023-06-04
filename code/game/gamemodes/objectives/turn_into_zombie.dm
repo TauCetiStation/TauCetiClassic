@@ -9,6 +9,8 @@
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!H || !H.mind || !is_station_level(H.z))
 			continue
+		if(!H.simulated)
+			continue
 		if(!H.mind.GetRoleByType(faction.initroletype) || !H.mind.GetRoleByType(faction.roletype))
 			return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
