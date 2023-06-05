@@ -16,6 +16,14 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 
+/obj/machinery/computer/vox_stealth/atom_init()
+	. = ..()
+	SSholomaps.holomap_landmarks += src
+
+/obj/machinery/computer/vox_stealth/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
+
 /obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
@@ -193,10 +201,6 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		return
 	console_say("Процедура полёта отменена.")
 	warning = FALSE
-
-/obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	visible_message("[Proj] ricochets off [src]!")
 
 #undef VOX_SHUTTLE_MOVE_TIME
 #undef VOX_SHUTTLE_COOLDOWN

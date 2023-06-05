@@ -323,17 +323,18 @@
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
+	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name], gumming it up!</span>",
+		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name], gumming it up!</span>")
+
+	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
+		BP.take_damage(0, 6, used_weapon = tool)
+
+	else if(iswrenching(tool))
+		BP.take_damage(12, 0, used_weapon = tool)
+		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
+
+	var/dam_amt = 2
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>",
-		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>")
-		var/dam_amt = 2
-		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
-			BP.take_damage(0, 6, used_weapon = tool)
-
-		else if(iswrench(tool))
-			BP.take_damage(12, 0, used_weapon = tool)
-			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
-
 		if(IO.damage > 0 && IO.robotic == 2)
 			IO.take_damage(dam_amt,0)
 
@@ -468,8 +469,38 @@
 
 	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
-	var/obj/item/device/mmi/posibrain/P = new(target.loc)
-	P.transfer_identity(target)
+	var/brain_type = /obj/item/device/mmi/posibrain
+	var/brain_species = target.get_species()
+
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(istype(BP, /obj/item/organ/external/chest/robot/ipc))
+		var/obj/item/organ/external/chest/robot/ipc/I = BP
+		brain_type = I.posibrain_type
+		brain_species = I.posibrain_species
+
+	var/obj/item/device/mmi/P = new brain_type(target.loc)
+	if(brain_species == DIONA)
+		var/mob/living/carbon/monkey/diona/D = new(target)
+
+		D.real_name = target.real_name
+		D.name = target.real_name
+
+		D.dna = target.dna.Clone()
+		D.dna.SetSEState(MONKEYBLOCK, 1)
+		D.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
+
+		if(target.mind)
+			target.mind.transfer_to(D)
+
+		for(var/datum/language/L as anything in target.languages)
+			D.add_language(L.name, target.languages[L])
+
+		for(var/datum/quirk/Q in target.roundstart_quirks)
+			D.saved_quirks += Q.type
+
+		P.transfer_nymph(D)
+	else
+		P.transfer_identity(target)
 
 	target.chest_brain_op_stage = 2
 	target.death()
@@ -763,3 +794,4 @@
 	qdel(tool)
 	target.ear_damage = 0
 	target.ear_deaf = 0
+	target.sdisabilities &= ~DEAF

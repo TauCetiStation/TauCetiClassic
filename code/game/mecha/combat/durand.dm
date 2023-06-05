@@ -7,7 +7,7 @@
 	dir_in = 1 //Facing North.
 	health = 400
 	deflect_chance = 20
-	damage_absorption = list("brute"=0.5,"fire"=1.1,"bullet"=0.65,"laser"=0.85,"energy"=0.9,"bomb"=0.8)
+	damage_absorption = list(BRUTE=0.5,BURN=1.1,BULLET=0.65,LASER=0.85,ENERGY=0.9,BOMB=0.8)
 	max_temperature = 30000
 	infra_luminosity = 8
 	force = 40
@@ -102,7 +102,7 @@
 	dir_in = 1 //Facing North.
 	health = 440
 	deflect_chance = 25
-	damage_absorption = list("brute"=0.5,"fire"=1.0,"bullet"=0.55,"laser"=0.75,"energy"=0.8,"bomb"=0.7)
+	damage_absorption = list(BRUTE=0.5,BURN=1.0,BULLET=0.55,LASER=0.75,ENERGY=0.8,BOMB=0.7)
 	max_temperature = 30000
 	infra_luminosity = 8
 	internal_damage_threshold = 40

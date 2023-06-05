@@ -79,7 +79,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.volume = vol
 	S.environment = SOUND_AREA_DEFAULT // this is the default environment and should not ever be ignored or overwrited (this exact line).
 	S.frequency = 1
-	
+
 	if(frequency)
 		S.frequency = frequency
 	if(playsound_frequency_admin)
@@ -142,7 +142,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			else
 				if(isliving(src))
 					var/mob/living/L = src
-					if(L.drunkenness >= DRUNKENNESS_BLUR || druggy > 0)
+					if(L.drunkenness >= DRUNKENNESS_BLUR || druggy > 0 && get_species(L) != SKRELL)
 						S.environment = SOUND_ENVIRONMENT_DRUGGED
 
 		if(use_reverb && S.environment != SOUND_AREA_DEFAULT) // We have reverb, reset our echo setting
@@ -172,7 +172,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	but still keep ability to resume admin music on the fly mid position
 	*/
 
-	if(!vol && volume_channel != VOL_ADMIN) 
+	if(!vol && volume_channel != VOL_ADMIN)
 		return
 
 	var/sound/S

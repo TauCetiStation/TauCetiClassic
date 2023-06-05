@@ -41,8 +41,16 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
+
+		var/cultists = 0
+		for(var/mob/M in religion.members)
+			if(M.stat != DEAD)
+				cultists++
+
+		to_chat(user, "В культе всего [cultists] [pluralize_russian(cultists, "последователь", "последователя", "последователей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
+		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
 	else
 		..()
 
@@ -74,6 +82,17 @@
 			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
 			return FALSE
 	return TRUE
+
+/obj/item/weapon/storage/bible/tome/Topic(href, href_list)
+	..()
+	if(!Adjacent(usr) || usr.stat || !iscultist(usr))
+		return
+	var/list/L = LAZYACCESS(usr.my_religion.runes_by_ckey, usr.ckey)
+	if(href_list["del_runes_ckey"])
+		for(var/obj/effect/rune/R in L)
+			qdel(R)
+		to_chat(usr, "<span class='warning'>Все вами начерченные руны были стёрты.</span>")
+		return
 
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
 	..()
@@ -122,55 +141,57 @@
 		qdel(R)
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
-	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
+	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 	for(var/datum/building_agent/B in religion.available_buildings)
 		var/atom/build = B.building_type
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
 
-/obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/living/carbon/human/H)
-	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, H)
+/obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/user, mob/to_anchor)
+	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, user, to_anchor)
 	if(!choice)
 		return
 
 	if(scribing)
-		to_chat(H, "<span class='warning'>Вы уже рисуете руну!</span>")
+		to_chat(user, "<span class='warning'>Вы уже рисуете руну!</span>")
 		return
 
-	if(rune_next[H.ckey] > world.time)
-		to_chat(H, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[H.ckey] - world.time) * 0.1)+1] секунд!</span>")
+	if(rune_next[user.ckey] > world.time)
+		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
 
-	var/list/L = LAZYACCESS(religion.runes_by_ckey, H.ckey)
+	var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 	if(!isnull(L) && L.len >= religion.max_runes_on_mob)
-		to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
+		to_chat(user, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
 		return
 
-	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
+	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
 	scribing = TRUE
-	if(!do_after(H, scribe_time, target = get_turf(H)))
+	if(!do_after(user, scribe_time, target = get_turf(user)))
 		scribing = FALSE
 		return
 	scribing = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 
-	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
-
-	var/obj/effect/rune/R = new choice.building_type(get_turf(H), religion, H)
+	var/obj/effect/rune/R = new choice.building_type(get_turf(user), religion, user)
 	R.icon = rune_choices_image[choice]
 	R.power = new choice.rune_type(R)
 	R.power.religion = religion
 	R.blood_DNA = list()
-	R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+	if(!iseminence(user))
+		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 	new /obj/effect/temp_visual/cult/sparks(get_turf(R))
 
 	religion.adjust_favor(-choice.favor_cost * cost_coef)
 	religion.adjust_piety(-choice.piety_cost * cost_coef)
-	rune_next[H.ckey] = world.time + rune_cd
+	rune_next[user.ckey] = world.time + rune_cd
 
-/obj/item/weapon/storage/bible/tome/proc/building(mob/user)
-	var/datum/building_agent/choice = get_agent_radial_menu(build_choices_image, user)
+/obj/item/weapon/storage/bible/tome/proc/building(mob/user, mob/to_anchor)
+	var/datum/building_agent/choice = get_agent_radial_menu(build_choices_image, user, to_anchor)
 	if(!choice)
 		return
 
@@ -196,7 +217,7 @@
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
-	var/turf/targeted_turf = get_step(src, user.dir)
+	var/turf/targeted_turf = iseminence(user) ? get_turf(src) : get_step(src, user.dir)
 	for(var/atom/A in targeted_turf.contents)
 		if(A.density)
 			to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")
@@ -223,20 +244,25 @@
 	for(var/choose in choices)
 		temp_images[choose] += rad_choices[choose]
 
-	var/choice = show_radial_menu(user, src, temp_images, tooltips = TRUE, require_near = TRUE)
+	var/choice
+	var/to_anchor = src
+	if(iseminence(user))
+		to_anchor = user
+	choice = show_radial_menu(user, to_anchor, temp_images, tooltips = TRUE, require_near = TRUE)
+
 	switch(choice)
 		if(CHAPEL_LOOK)
-			change_chapel_looks(user)
+			change_chapel_looks(user, to_anchor)
 		if(RUNES)
-			scribe_rune(user)
+			scribe_rune(user, to_anchor)
 		if(CONSTRUCTION)
-			building(user)
+			building(user, to_anchor)
 
-/obj/item/weapon/storage/bible/tome/proc/get_agent_radial_menu(list/datum/building_agent/BA, mob/user)
+/obj/item/weapon/storage/bible/tome/proc/get_agent_radial_menu(list/datum/building_agent/BA, mob/user, mob/to_anchor)
 	for(var/datum/building_agent/B in BA)
 		B.name = "[initial(B.name)] [B.get_costs(cost_coef)]"
 
-	var/datum/building_agent/choice = show_radial_menu(user, src, BA, tooltips = TRUE, require_near = TRUE)
+	var/datum/building_agent/choice = show_radial_menu(user, to_anchor, BA, tooltips = TRUE, require_near = TRUE)
 
 	return choice
 

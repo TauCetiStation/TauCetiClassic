@@ -8,7 +8,7 @@
 */
 /atom/movable/screen
 	name = ""
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	plane = HUD_PLANE
 	flags = ABSTRACT
 	vis_flags = VIS_INHERIT_PLANE

@@ -37,22 +37,22 @@
 		if(health_deficiency >= 40)
 			tally += health_deficiency / 25
 
-		var/hungry = 500 - get_nutrition()
+		var/hungry = 500 - get_satiation()
 		if(hungry >= 350) // Slow down if nutrition <= 150
-			tally += hungry / 250
+			tally += hungry / 250 // 1,4 - 2
 
 		if(shock_stage >= 10)
 			tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
 		if(bodytemperature < species.cold_level_1)
-			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10 
+			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10
 
 	var/list/moving_bodyparts
 	if(buckled) // so, if we buckled we have large debuff
 		tally += 5.5
 		if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 			moving_bodyparts = list(BP_L_ARM , BP_R_ARM)
-	
+
 	if(!moving_bodyparts)
 		if(lying)
 			moving_bodyparts = list(BP_L_LEG , BP_R_LEG, BP_L_ARM , BP_R_ARM)
@@ -76,7 +76,7 @@
 		else if(BP.status & ORGAN_BROKEN)
 			bp_tally += 6
 		else if(BP.pumped)
-			bp_weight_negation += BP.pumped * 0.02
+			bp_weight_negation += BP.pumped * 0.0072
 
 	tally += bp_tally / moving_bodyparts.len
 	weight_negation += bp_weight_negation / moving_bodyparts.len
@@ -114,8 +114,20 @@
 	if(weight_tally > weight_negation)
 		tally += weight_tally - weight_negation
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
+
+	if(!chem_nullify_debuff)
+		for(var/x in list(l_hand, r_hand))
+			var/obj/item/I = x
+			if(I && !(I.flags & ABSTRACT))
+				if(I.w_class >= SIZE_NORMAL)
+					tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
+				if(HAS_TRAIT(I, TRAIT_DOUBLE_WIELDED))
+					tally += 0.25
+				var/obj/item/weapon/shield/shield = I
+				//give them debuff to speed for better combat stance control
+				if(istype(shield) && shield.wall_of_shield_on)
+					tally += 2
 
 	var/turf/T = get_turf(src)
 	if(T)

@@ -76,9 +76,18 @@ SUBSYSTEM_DEF(throwing)
 	src.callback = callback
 	src.early_callback = early_callback
 
+	if(ismob(thrownthing))
+		var/mob/M = thrownthing
+		ADD_TRAIT(M, TRAIT_ARIBORN, TRAIT_ARIBORN_THROWN)
+
 	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
 
 /datum/thrownthing/Destroy()
+
+	if(ismob(thrownthing))
+		var/mob/M = thrownthing
+		REMOVE_TRAIT(M, TRAIT_ARIBORN, TRAIT_ARIBORN_THROWN)
+
 	SSthrowing.processing -= thrownthing
 	SSthrowing.currentrun -= thrownthing
 	thrownthing.throwing = null

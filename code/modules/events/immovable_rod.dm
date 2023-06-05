@@ -15,9 +15,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/startside = pick(cardinal)
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
-	var/turf/endT = spaceDebrisFinishLoc(startside, z)
+	var/turf/endT = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
 	//rod time!
-	new /obj/effect/immovable_rod(startT, endT)
+	var/obj/O = new /obj/effect/immovable_rod(startT, endT)
+	notify_ghosts("[O.name] is coming!", source=O, action=NOTIFY_ORBIT, header="[O.name]")
 
 /obj/effect/immovable_rod
 	name = "Immovable Rod"

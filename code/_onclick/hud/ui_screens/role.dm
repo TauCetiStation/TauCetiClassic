@@ -1,6 +1,6 @@
 // changeling
 /atom/movable/screen/current_sting
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	name = "current sting"
 	screen_loc = ui_lingstingdisplay
 	plane = ABOVE_HUD_PLANE
@@ -15,7 +15,7 @@
 
 /atom/movable/screen/chemical_display
 	name = "chemical storage"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 	plane = ABOVE_HUD_PLANE

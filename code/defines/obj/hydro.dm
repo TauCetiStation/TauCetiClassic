@@ -505,6 +505,7 @@
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/durathread)
 
 /obj/item/seeds/riceseed
 	name = "pack of rice seeds"
@@ -943,6 +944,7 @@
 	potency = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/gourdseed)
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -960,7 +962,51 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed)
 
+/obj/item/seeds/gourdseed
+	name = "pack of gourd seeds"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "gourd"
+	plantname = "Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed, /obj/item/seeds/magicgourdseed)
+
+/obj/item/seeds/gourdseed/atom_init()
+	. = ..()
+	name = "pack of [get_gourd_name()] seeds"
+
+/obj/item/seeds/magicgourdseed
+	name = "pack of gourd seeds"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd_magic"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "magic_gourd"
+	plantname = "Refreshing Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 20
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed, /obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed)
+
+/obj/item/seeds/magicgourdseed/atom_init()
+	. = ..()
+	name = "pack of refreshing [get_gourd_name()] seeds"
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
@@ -1139,6 +1185,22 @@
 	new /obj/effect/spacevine_controller(user.loc)
 	qdel(src)
 
+/obj/item/seeds/durathread
+	name = "pack of durathread seeds"
+	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
+	icon_state = "seed-durathread"
+	species = "durathread"
+	plantname = "Durathread"
+	product_type = /obj/item/weapon/grown/durathread
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 2
+	potency = 5
+	growthstages = 3
+
+
 // **********************
 // Other harvested materials from plants (that are not food)
 // **********************
@@ -1197,7 +1259,7 @@
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	damtype = "fire"
+	damtype = BURN
 	force = 0
 	throwforce = 1
 	w_class = SIZE_MINUSCULE
@@ -1211,7 +1273,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
 	icon_state = "nettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 15
 	throwforce = 1
 	w_class = SIZE_TINY
@@ -1233,7 +1295,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 30
 	throwforce = 1
 	w_class = SIZE_TINY
@@ -1248,12 +1310,19 @@
 	. = ..()
 	spawn(5)
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
-		reagents.add_reagent("pacid", round(potency, 1))
+		reagents.add_reagent("sanguisacid", round(potency, 1))
 		force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
+
+/obj/item/weapon/grown/durathread
+	seed_type = /obj/item/seeds/durathread
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	name = "durathread bundle"
+	desc = "A tough bundle of durathread, good luck unraveling this."
+	icon_state = "durathread"
 
 // *************************************
 // Pestkiller defines for hydroponics

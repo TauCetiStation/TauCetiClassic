@@ -144,6 +144,7 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 			for(var/obj/machinery/power/apc/A in apc_list)
 				A.overload_lighting()
 			var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(usr.loc)
+			notify_ghosts("\A [A.name], ascendant shadowling, at [get_area(src)]!", source = A, action = NOTIFY_ORBIT, header = "Ascendance")
 			A.spell_list = list()
 			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/annihilate)
 			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/hypnosis)

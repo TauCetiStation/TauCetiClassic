@@ -68,6 +68,8 @@
 		return FALSE
 	if(I.swiping)
 		return FALSE
+	if(I.anchored)
+		return FALSE
 	return TRUE
 
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
@@ -97,7 +99,7 @@
 		return FALSE
 
 	if(on_place)
-		on_place.Invoke(A, I, user)
+		on_place.Invoke(A, I, user, params)
 
 	A.add_fingerprint(user)
 	// Prevent hitting the thing if we're just putting it.
@@ -217,8 +219,9 @@
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
 	if(G.state >= GRAB_AGGRESSIVE)
-		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc)
+		var/atom/old_loc = victim.loc
 		victim.forceMove(A.loc)
+		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc, old_loc)
 		victim.Stun(2)
 		victim.Weaken(5)
 

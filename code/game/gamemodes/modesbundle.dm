@@ -23,6 +23,7 @@
 	/datum/game_mode/extended,
 	/datum/game_mode/heist,
 	/datum/game_mode/infestation,
+	/datum/game_mode/replicators,
 	/datum/game_mode/malfunction,
 	/datum/game_mode/nuclear,
 	/datum/game_mode/revolution,
@@ -43,7 +44,6 @@
 /datum/modesbundle/teambased
 	name = "Team Based"
 	possible_gamemodes = list(
-		/datum/game_mode/abduction,
 		/datum/game_mode/blob,
 		/datum/game_mode/cult,
 		/datum/game_mode/infestation,
@@ -51,6 +51,7 @@
 		/datum/game_mode/revolution,
 		/datum/game_mode/shadowling,
 		/datum/game_mode/families,
+		/datum/game_mode/replicators,
 	)
 
 /datum/modesbundle/mix

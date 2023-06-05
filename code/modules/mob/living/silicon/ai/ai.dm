@@ -146,7 +146,7 @@ var/global/list/ai_verbs_default = list(
 	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, MELEE), DAM_SHARP|DAM_EDGE)
 	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
@@ -824,7 +824,7 @@ var/global/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")

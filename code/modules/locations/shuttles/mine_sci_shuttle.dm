@@ -32,13 +32,13 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		if(istype(autopilot.mine_sci_curr_location, MINE_DOCK))
 			shuttle_location = "Mining Station"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
-			shuttle_location = "Research Outpost"
+			shuttle_location = "Research"
 		dat += "<ul><li>Location: [shuttle_location]</li>"
 		dat += {"<li>Ready to move[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]</li>"}
 		dat += "</ul>"
 		dat += "<a href='?src=\ref[src];mine=1'>Mining Station</a> |"
 		dat += "<a href='?src=\ref[src];station=1'>[station_name()]</a> |"
-		dat += "<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>"
+		dat += "<a href='?src=\ref[src];sci=1'>Research</a><br>"
 	else
 		dat = "Cannot find shuttle"
 

@@ -145,8 +145,7 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	for(var/mob/living/L in range (3,src))
-		L.apply_effect(15, IRRADIATE, 0)
+	irradiate_in_dist(get_turf(src), 15, 3)
 
 /obj/machinery/door/airlock/phoron
 	name = "phoron airlock"
@@ -269,6 +268,8 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_vault
 
+	max_integrity = 600
+
 
 /***************
 * Hatch airlocks
@@ -349,6 +350,8 @@
 /obj/machinery/door/airlock/centcom
 	icon          = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 
 /******************

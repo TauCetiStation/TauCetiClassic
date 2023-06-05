@@ -32,6 +32,8 @@ var/global/list/all_emotes
 
 	// Sound produced. (HAHAHAHA)
 	var/sound
+	// Whether sound pitch varies with age.
+	var/age_variations = FALSE
 
 	// What group does this emote belong to. By default uses emote type
 	var/cooldown_group = null
@@ -47,6 +49,9 @@ var/global/list/all_emotes
 
 /datum/emote/proc/get_emote_message_1p(mob/user)
 	return "<i>[message_1p]</i>"
+
+/datum/emote/proc/get_impaired_msg(mob/user)
+	return message_impaired_reception
 
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
@@ -66,7 +71,7 @@ var/global/list/all_emotes
 	if(!msg)
 		return null
 
-	return "<b>[user]</b> <i>[msg]</i>"
+	return msg
 
 /datum/emote/proc/get_cooldown_group()
 	if(isnull(cooldown_group))
@@ -104,7 +109,14 @@ var/global/list/all_emotes
 	return sound
 
 /datum/emote/proc/play_sound(mob/user, intentional, emote_sound)
-	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, null)
+	var/sound_frequency = null
+	if(age_variations && ishuman(user))
+		// TO-DO: add get_min_age, get_max_age to all mobs? ~Luduk
+		var/mob/living/carbon/human/H = user
+		var/voice_frequency = TRANSLATE_RANGE(H.age, H.species.min_age, H.species.max_age, 0.85, 1.05)
+		sound_frequency = 1.05 - (voice_frequency - 0.85)
+
+	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 
 /datum/emote/proc/can_emote(mob/user, intentional)
 	if(!check_cooldown(user.next_emote_use, intentional))
@@ -128,8 +140,9 @@ var/global/list/all_emotes
 		I.trigger(emote_key, user)
 
 	var/msg_1p = get_emote_message_1p(user)
-	var/msg_3p = get_emote_message_3p(user)
+	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
+	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user)]"
 
 	if(!msg_1p)
 		msg_1p = msg_3p
@@ -138,9 +151,9 @@ var/global/list/all_emotes
 
 	if(msg_3p)
 		if(message_type & SHOWMSG_VISUAL)
-			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
+			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user))
 		else if(message_type & SHOWMSG_AUDIO)
-			user.audible_message(msg_3p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+			user.audible_message(msg_3p, msg_1p, deaf_impaired_msg, hearing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user), deaf_runechat_msg = get_impaired_msg(user))
 
 	else
 		to_chat(user, msg_1p)
@@ -154,6 +167,9 @@ var/global/list/all_emotes
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
+
+		if(M in viewers(get_turf(user), world.view))
+			M.show_runechat_message(user, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
 
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)

@@ -1,22 +1,14 @@
-/obj/effect/blob/resource
+/obj/structure/blob/resource
 	name = "resource blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
-	max_health = 30
-	health = 30
+	max_integrity = 30
 	fire_resist = 2
-	var/mob/camera/blob/overmind = null
 	var/resource_delay = 0
 
-/obj/effect/blob/resource/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	return
-
-/obj/effect/blob/resource/run_action()
-	if(QDELETED(overmind))
-		overmind = null
+/obj/structure/blob/resource/run_action()
+	if(QDELETED(OV))
+		OV = null
 		return
 	if(resource_delay > world.time)
 		return
@@ -24,5 +16,5 @@
 	resource_delay = world.time + 40 // 4 seconds
 	PulseAnimation()
 
-	overmind.add_points(1)
+	OV.add_points(1)
 

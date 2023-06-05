@@ -20,6 +20,7 @@
 // The numbers just define the ordering, they are meaningless otherwise.
 
 #define SS_INIT_INPUT         85
+#define SS_INIT_RATING        14
 #define SS_INIT_EVENTS        13
 #define SS_INIT_FLUIDS        12
 #define SS_INIT_HOLIDAY       11
@@ -28,11 +29,11 @@
 #define SS_INIT_MAPPING        8
 #define SS_INIT_ENVIRONMENT    7
 #define SS_INIT_XENOARCH       7
+#define SS_INIT_SMARTLIGHT     7
 #define SS_INIT_ATOMS          6
 #define SS_INIT_MACHINES       5
 #define SS_INIT_SHUTTLES       4
 #define SS_INIT_SUN            3
-#define SS_INIT_NIGHTSHIFT     2
 #define SS_INIT_LIGHTING       1
 #define SS_INIT_DEFAULT        0
 #define SS_INIT_AIR           -1
@@ -40,6 +41,7 @@
 #define SS_INIT_ICON_SMOOTH   -5
 #define SS_INIT_ORDER_OVERLAY -6
 #define SS_INIT_STICKY_BAN    -7
+#define SS_INIT_HOLOMAPS      -8
 #define SS_INIT_QUALITIES     -93
 #define SS_INIT_DEMO          -94 // To avoid a bunch of changes related to initialization being written, do this last
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.
@@ -69,8 +71,9 @@
 #define SS_PRIORITY_AIR           20
 #define SS_PRIORITY_FLUIDS        20
 #define SS_PRIORITY_GARBAGE       15
+#define SS_PRIORITY_HOLOMAPS      10
 #define SS_PRIORITY_SUN            3
-#define SS_PRIORITY_NIGHTSHIFT     3
+#define SS_PRIORITY_SMARTLIGHT     3
 #define SS_PRIORITY_LOW            1
 
 
@@ -97,11 +100,12 @@
 #define SS_WAIT_DCS          10
 #define SS_WAIT_PROCESSING   10
 #define SS_WAIT_MOOD         10
+#define SS_WAIT_HOLOMAPS     15
 #define SS_WAIT_GNAW         20
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600
-#define SS_WAIT_NIGHTSHIFT  600
+#define SS_WAIT_SMARTLIGHT  600
 
 // SS runlevels
 

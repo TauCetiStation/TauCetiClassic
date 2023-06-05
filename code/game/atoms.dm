@@ -56,6 +56,18 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
+	var/uses_integrity = FALSE
+
+	var/list/armor // TODO armor gatum?
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = FULL_INDESTRUCTIBLE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -85,6 +97,7 @@
 // /turf/atom_init
 // /turf/environment/space/atom_init
 // /mob/dead/atom_init
+// /obj/item
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
@@ -100,6 +113,11 @@
 	if(opacity && isturf(src.loc))
 		var/turf/T = src.loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(uses_integrity)
+		if (!armor)
+			armor = list()
+		atom_integrity = max_integrity
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -128,6 +146,10 @@
 	A?.Exited(src, null)
 
 	return ..()
+
+///This atom has been hit by hulk (TODO a hulkified mob in hulk mode (user))
+/atom/proc/attack_hulk(mob/living/user)
+	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -181,17 +203,6 @@
 /atom/proc/can_add_container()
 	return flags & INSERT_CONTAINER
 */
-
-/atom/proc/can_mob_interact(mob/user)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
-			return FALSE
-		else if(prob(H.getBrainLoss()))
-			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
-			return FALSE
-	return TRUE
 
 /atom/proc/allow_drop()
 	return 1
@@ -520,7 +531,7 @@
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(M.species.blood_datum)
+	add_dirt_cover(M.species.blood_datum, FALSE) // FALSE - dont call update_inv_slot in add_dirt_cover as it will be handled in human/add_blood or it will be double call and runtime
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	SHOULD_CALL_PARENT(TRUE)
@@ -569,7 +580,7 @@
 /atom/proc/isinspace()
 	return isspaceturf(get_turf(src))
 
-/atom/proc/checkpass(passflag)
+/atom/proc/checkpass(passflag) // todo: define as macro
 	return pass_flags&passflag
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
@@ -769,7 +780,7 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/proc/point_at(atom/pointed_atom)
+/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point)
 	if (!isturf(loc))
 		return FALSE
 
@@ -778,7 +789,7 @@
 		return FALSE
 
 	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new /obj/effect/decal/point(our_tile, invisibility)
+	var/obj/visual = new arrow_type(our_tile, invisibility)
 	QDEL_IN(visual, 20)
 
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)

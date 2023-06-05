@@ -34,6 +34,8 @@
 
 	var/list/alien_spells = list()
 
+	show_examine_log = FALSE
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language(LANGUAGE_XENOMORPH)
@@ -289,12 +291,6 @@ Hit Procs
 		canmove = FALSE
 	if(density)
 		density = initial(density)
-
-
-/mob/living/carbon/xenomorph/crawl()
-	SetCrawling(!crawling)
-	update_canmove()
-	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
 
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()

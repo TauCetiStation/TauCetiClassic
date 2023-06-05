@@ -13,8 +13,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		handle_nutrition()
-
 		handle_targets()
 
 		if (!ckey)
@@ -276,7 +274,7 @@
 		Feedstop()
 	TargetAttack()
 	return
-/mob/living/carbon/slime/proc/handle_nutrition()
+/mob/living/carbon/slime/handle_nutrition()
 	if(prob(20))
 		if(isslimeadult(src)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
@@ -709,6 +707,9 @@
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
+
+/mob/living/carbon/slime/count_pull_debuff()
+	return pulling ? ..() + 1.5 : 0
 
 /mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0

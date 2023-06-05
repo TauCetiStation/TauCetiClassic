@@ -275,7 +275,7 @@
 	if(ishuman(src)) // This is stupid. TODO: abstract get_armor() proc.
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
-		armor_block = run_armor_check(BP, "melee")
+		armor_block = run_armor_check(BP, MELEE)
 
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)

@@ -86,8 +86,8 @@ var/global/intercom_range_display_status = 0
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
-				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || (W.dir in list(5,6,9,10)) )
+				for(var/obj/structure/window/thin/W in T)
+					if (W.dir == turn(C1.dir,180))
 						window_check = 1
 						break
 				if(!window_check)
@@ -442,5 +442,5 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	qdel(D)
 	//Also add the x
 	for(var/x_number in 1 to 4)
-		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
+		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")

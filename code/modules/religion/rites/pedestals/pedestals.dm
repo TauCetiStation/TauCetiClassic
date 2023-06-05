@@ -18,7 +18,7 @@
 
 	var/need_members = 4
 
-/datum/religion_rites/pedestals/cult/narsie/proc/checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/proc/checks(mob/user, obj/structure/altar_of_gods/AOG)
 	if(istype(get_area(AOG), religion.area_type))
 		if(user)
 			to_chat(user, "<span class='warning'>Мне нужно пространство станции.</span>")
@@ -44,7 +44,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 
 	if(!checks(user, AOG))
@@ -71,18 +71,18 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/proc/announce_summon(mob/living/user)
+/datum/religion_rites/pedestals/cult/narsie/proc/announce_summon(mob/user)
 	var/datum/announcement/centcomm/narsie_summon/A = new(user)
 	A.play()
 
-/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/can_start(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 	if(!checks(user, AOG))
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
 	for(var/mob/M in player_list)
@@ -93,6 +93,7 @@
 
 /datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)
 	new /obj/singularity/narsie(T, religion)
+	global.cult_religion.eminence.start_process()
 
 /datum/religion_rites/pedestals/cult/cult_portal
 	name = "Призыв Портала"
@@ -115,7 +116,7 @@
 		ASPECT_DEATH = 1
 	)
 
-/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -127,7 +128,7 @@
 		to_chat(user, "<span class='warning'>Сначала разместите руну-маяк.</span>")
 	return FALSE
 
-/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	..()
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
@@ -155,7 +156,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -177,7 +178,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob

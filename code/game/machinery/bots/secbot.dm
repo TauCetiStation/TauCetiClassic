@@ -6,8 +6,7 @@
 	var/icon_state_arrest = "secbot-c"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxhealth = 25
+	max_integrity = 25
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 
@@ -162,7 +161,7 @@
 
 
 /obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewdriver(W) && W.force && !target)
+	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
@@ -645,7 +644,7 @@
 	qdel(src)
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I) && !build_step)
+	if(iswelding(I) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			build_step++

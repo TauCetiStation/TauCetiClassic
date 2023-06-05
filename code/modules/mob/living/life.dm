@@ -10,11 +10,11 @@
 	if(stat != DEAD)
 		add_ingame_age()
 
-	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
-		pull_debuff = 0
 	update_gravity(mob_has_gravity())
 
 	handle_combat()
+
+	handle_nutrition()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -86,10 +86,10 @@
 			return FALSE
 	return loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside)
 
-/mob/living/proc/handle_vision()
+/mob/living/proc/handle_vision(vision_for_dead = FALSE)
 	update_sight()
 
-	if(stat != DEAD)
+	if(vision_for_dead || stat != DEAD)
 		if(blinded)
 			throw_alert("blind", /atom/movable/screen/alert/blind)
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
@@ -98,14 +98,6 @@
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
-			if(!ishuman(src))
-				if(disabilities & NEARSIGHTED)
-					overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, 1)
-				else
-					clear_fullscreen("impaired")
-
-					update_eye_blur()
-
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)
@@ -114,7 +106,7 @@
 				reset_view(null)
 
 
-/mob/living/update_action_buttons()
+/mob/update_action_buttons()
 	if(!hud_used) return
 	if(!client) return
 
@@ -166,3 +158,6 @@
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
+
+/mob/living/proc/handle_nutrition()
+	return

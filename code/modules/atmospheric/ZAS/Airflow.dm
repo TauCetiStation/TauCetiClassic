@@ -38,9 +38,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_stun()
-	if(shoes?.flags & NOSLIP)
+	if(shoes?.flags & AIR_FLOW_PROTECT)
 		return FALSE
-	if(wear_suit?.flags & NOSLIP)
+	if(wear_suit?.flags & AIR_FLOW_PROTECT)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
@@ -64,9 +64,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return FALSE
 
 /mob/living/carbon/human/check_airflow_movable(n)
-	if(shoes && (shoes.flags & NOSLIP))
+	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
 		return FALSE
-	if(wear_suit && (wear_suit.flags & NOSLIP))
+	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
 		return FALSE
 	return ..()
 
@@ -102,6 +102,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(dest == loc)
 		step_away(src, loc)
 	if(ismob(src))
+		ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_AIRFLOW)
 		to_chat(src, "<span clas='danger'>You are [repelled ? "pushed" : "sucked"] away by airflow!</span>")
 	COOLDOWN_START(src, last_airflow, vsc.airflow_delay)
 	var/airflow_falloff = 9 - get_dist_euclidian(src, dest)
@@ -118,6 +119,8 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(repelled)
 		xo = -xo
 		yo = -yo
+		// update airflow_dest for proper step_towards
+		airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
 
 	while(airflow_speed > 0)
 		airflow_speed = airflow_speed - vsc.airflow_speed_decay
@@ -146,6 +149,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	airflow_dest = null
 	airflow_speed = 0
 	airborne_acceleration = 0
+	REMOVE_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_AIRFLOW)
 
 /atom/movable/Bump(atom/A)
 	if(airflow_speed > 0)
@@ -203,13 +207,13 @@ Contains helper procs for airflow, handled in /connection_group.
 			loc.add_blood(src)
 			bloody_body(src)
 
-		var/blocked = run_armor_check(BP_HEAD,"melee")
+		var/blocked = run_armor_check(BP_HEAD,MELEE)
 		apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
 
-		blocked = run_armor_check(BP_CHEST,"melee")
+		blocked = run_armor_check(BP_CHEST,MELEE)
 		apply_damage(b_loss / 3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
 
-		blocked = run_armor_check(BP_GROIN,"melee")
+		blocked = run_armor_check(BP_GROIN,MELEE)
 		apply_damage(b_loss / 3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
 
 	if(airflow_speed > 10)

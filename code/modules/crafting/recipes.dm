@@ -8,6 +8,10 @@
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
 	var/required_proficiency
+
+/datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
+	return
+
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"
 	result = /obj/item/weapon/grenade/cancasing
@@ -232,3 +236,89 @@
 	result = /obj/item/weapon/storage/pneumatic
 	time = 45
 	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_PRO)
+
+
+/datum/crafting_recipe/durathread
+	name = "durathread suit"
+	reqs = list(/obj/item/weapon/grown/durathread = 3,
+	/obj/item/stack/medical/bruise_pack/rags = 5,
+	/obj/item/stack/cable_coil = 15)
+	tools = list(/obj/item/weapon/wirecutters = 1)
+	result = /obj/item/clothing/under/durathread
+	time = 30
+	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_PRO)
+
+/datum/crafting_recipe/durathread/armor
+	name = "durathread vest"
+	reqs = list(/obj/item/weapon/grown/durathread = 5,
+	/obj/item/stack/medical/bruise_pack/rags = 5,
+	/obj/item/stack/cable_coil = 15)
+	result = /obj/item/clothing/suit/armor/vest/durathread
+	time = 60
+
+/datum/crafting_recipe/durathread/coat
+	name = "durathread coat"
+	reqs = list(/obj/item/weapon/grown/durathread = 20,
+	/obj/item/stack/medical/bruise_pack/rags = 10,
+	/obj/item/stack/cable_coil = 30)
+	time = 100
+	result = /obj/item/clothing/suit/armor/duracoat
+
+/datum/crafting_recipe/durathread/helm
+	name = "durathread helmet"
+	reqs = list(/obj/item/weapon/grown/durathread = 10,
+	/obj/item/stack/sheet/metal = 10,
+	/obj/item/stack/cable_coil = 15)
+	result = /obj/item/clothing/head/helmet/durathread
+	time = 60
+
+
+/datum/crafting_recipe/armband_red
+	name = "Armband red"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband
+	time = 30
+
+/datum/crafting_recipe/armband_cargo
+	name = "Armband cargo"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/cargo
+	time = 30
+
+/datum/crafting_recipe/armband_engine
+	name = "Armband engine"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/engine
+	time = 30
+
+/datum/crafting_recipe/armband_science
+	name = "Armband science"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/science
+	time = 30
+
+/datum/crafting_recipe/armband_hydro
+	name = "Armband hydro"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/hydro
+	time = 30
+
+/datum/crafting_recipe/armband_med
+	name = "Armband med"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/med
+	time = 30
+
+/datum/crafting_recipe/armband_medgreen
+	name = "Armband medgreen"
+	reqs = list(/obj/item/stack/sheet/cloth = 1)
+	tools = list(/obj/item/toy/crayon/spraycan)
+	result = /obj/item/clothing/accessory/armband/medgreen
+	time = 30
+

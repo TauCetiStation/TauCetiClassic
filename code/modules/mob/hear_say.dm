@@ -272,17 +272,21 @@
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
+	var/runechat_message
 	if(!client)
 		return
 
 	if(say_understands(speaker, language))
+		runechat_message = "[verb], \"[capitalize(message)]\""
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [language.format_message(message, verb)]</span>"
 	else
+		runechat_message = "[verb]."
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>"
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message, SHOWMSG_VISUAL)
+	show_runechat_message(speaker, null, runechat_message, null, SHOWMSG_VISUAL)
 	show_message(message, SHOWMSG_VISUAL)
 
 	telepathy_eavesdrop(speaker, message, "has seen", language)
@@ -304,10 +308,9 @@
 			heardword = copytext(heardword,2)
 		if(copytext(heardword,-1) in punctuation)
 			heardword = copytext(heardword,1,-1)
-		heard = "<span class = 'game_say'>...You hear something about...[heardword]</span>"
-
+		heard = "<span class='notice italic'>... [heardword] ...</span>"
 	else
-		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
+		return
 
 	to_chat(src, heard)
 

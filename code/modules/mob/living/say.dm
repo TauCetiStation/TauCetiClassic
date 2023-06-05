@@ -125,6 +125,7 @@ var/global/list/department_radio_keys = list(
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
+			last_phrase = message
 			return 1
 
 	//speaking into radios
@@ -208,6 +209,8 @@ var/global/list/department_radio_keys = list(
 
 	for(var/atom/TA in listening_talking_atoms)
 		SEND_SIGNAL(TA, COMSIG_MOVABLE_HEAR, message, src)
+
+	last_phrase = message
 
 	return 1
 

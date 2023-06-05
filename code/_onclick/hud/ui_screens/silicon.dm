@@ -1,6 +1,6 @@
 /atom/movable/screen/crew_manifest
 	name = "Show Crew Manifest"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "manifest"
 	screen_loc = ui_ai_crew_manifest
 	plane = ABOVE_HUD_PLANE
@@ -11,13 +11,13 @@
 		S.show_station_manifest()
 
 /atom/movable/screen/crew_manifest/robot
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "crewmanifest"
 	screen_loc = ui_borg_show_manifest
 
 /atom/movable/screen/alerts
 	name = "Show Alerts"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "alerts"
 	screen_loc = ui_ai_alerts
 	plane = ABOVE_HUD_PLANE
@@ -28,13 +28,13 @@
 		S.show_alerts()
 
 /atom/movable/screen/alerts/robot
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "showalerts"
 	screen_loc = ui_borg_show_alerts
 
 /atom/movable/screen/sensor_augmentation
 	name = "Sensor Augmentation"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "ai_sensor"
 	screen_loc = ui_ai_sensor
 	plane = ABOVE_HUD_PLANE
@@ -45,13 +45,13 @@
 		S.toggle_sensor_mode()
 
 /atom/movable/screen/sensor_augmentation/robot
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "setsensor"
 	screen_loc = ui_borg_sensor
 
 /atom/movable/screen/state_laws
 	name = "State Laws"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "state_laws"
 	screen_loc = ui_ai_state_laws
 	plane = ABOVE_HUD_PLANE
@@ -62,13 +62,13 @@
 		S.checklaws()
 
 /atom/movable/screen/state_laws/robot
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "statelaws"
 	screen_loc = ui_borg_state_laws
 
 // Robots
 /atom/movable/screen/health/robot
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	screen_loc = ui_borg_health
 
 /atom/movable/screen/pull/robot
@@ -76,7 +76,7 @@
 
 /atom/movable/screen/module
 	name = "module"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "nomod"
 	screen_loc = ui_borg_module
 
@@ -94,7 +94,7 @@
 
 /atom/movable/screen/robot_inventory
 	name = "inventory"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "inventory"
 	screen_loc = ui_borg_inventory
 
@@ -108,7 +108,7 @@
 
 /atom/movable/screen/radio
 	name = "radio"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "radio"
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
@@ -120,7 +120,7 @@
 
 /atom/movable/screen/panel
 	name = "panel"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "panel"
 	screen_loc = ui_borg_panel
 
@@ -131,7 +131,7 @@
 
 /atom/movable/screen/store
 	name = "store"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "store"
 	screen_loc = ui_borg_store
 
@@ -144,7 +144,7 @@
 			to_chat(R, "You haven't selected a module yet.")
 
 /atom/movable/screen/robot_hands
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/module_index
 
@@ -191,7 +191,7 @@
 // AI
 /atom/movable/screen/ai_core
 	name = "AI Core"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "ai_core"
 	screen_loc = ui_ai_core
 	plane = ABOVE_HUD_PLANE
@@ -203,7 +203,7 @@
 
 /atom/movable/screen/camera_list
 	name = "Show Camera List"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "camera"
 	screen_loc = ui_ai_camera_list
 	plane = ABOVE_HUD_PLANE
@@ -216,7 +216,7 @@
 
 /atom/movable/screen/camera_track
 	name = "Track With Camera"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "track"
 	screen_loc = ui_ai_track_with_camera
 	plane = ABOVE_HUD_PLANE
@@ -229,7 +229,7 @@
 
 /atom/movable/screen/camera_light
 	name = "Toggle Camera Light"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "camera_light"
 	screen_loc = ui_ai_camera_light
 	plane = ABOVE_HUD_PLANE
@@ -241,7 +241,7 @@
 
 /atom/movable/screen/radio_settings
 	name = "Radio Settings"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "radio_control"
 	screen_loc = ui_ai_control_integrated_radio
 	plane = ABOVE_HUD_PLANE
@@ -253,7 +253,7 @@
 
 /atom/movable/screen/announcement
 	name = "Announcement"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "announcement"
 	screen_loc = ui_ai_announcement
 	plane = ABOVE_HUD_PLANE
@@ -265,7 +265,7 @@
 
 /atom/movable/screen/call_shuttle
 	name = "Call Emergency Shuttle"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "call_shuttle"
 	screen_loc = ui_ai_shuttle
 	plane = ABOVE_HUD_PLANE
@@ -278,7 +278,7 @@
 // Robot
 /atom/movable/screen/show_laws
 	name = "Show Laws"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "showlaws"
 	screen_loc = ui_borg_show_laws
 	plane = ABOVE_HUD_PLANE
@@ -290,7 +290,7 @@
 
 /atom/movable/screen/toggle_lights
 	name = "Toggle Lights"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "togglelights"
 	screen_loc = ui_borg_light
 	plane = ABOVE_HUD_PLANE
@@ -302,7 +302,7 @@
 
 /atom/movable/screen/self_diagnosis
 	name = "Self Diagnosis"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "selfdiagnosis"
 	screen_loc = ui_borg_diagnostic
 	plane = ABOVE_HUD_PLANE
@@ -314,7 +314,7 @@
 
 /atom/movable/screen/namepick
 	name = "Namepick"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "changename"
 	screen_loc = ui_borg_namepick
 	plane = ABOVE_HUD_PLANE
@@ -326,7 +326,7 @@
 
 /atom/movable/screen/toggle_components
 	name = "Toggle Components"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "togglecompanent"
 	screen_loc = ui_borg_component
 	plane = ABOVE_HUD_PLANE
@@ -338,7 +338,7 @@
 
 // pda and photo
 /atom/movable/screen/robot_pda
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/robot_pda/proc/pda_action(obj/item/device/pda/silicon/PDA)
@@ -357,7 +357,7 @@
 	PDA.cmd_send_pdamesg(usr)
 
 /atom/movable/screen/robot_pda/send/ai
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	screen_loc = ui_ai_pda_send
 
 /atom/movable/screen/robot_pda/log
@@ -368,7 +368,7 @@
 	PDA.cmd_show_message_log(usr)
 
 /atom/movable/screen/robot_pda/log/ai
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "pda_receive"
 	screen_loc = ui_ai_pda_log
 
@@ -387,7 +387,7 @@
 	PDA.cmd_toggle_pda_receiver()
 
 /atom/movable/screen/robot_image
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/robot_image/proc/camera_action(obj/item/device/camera/siliconcam/camera)
@@ -406,7 +406,7 @@
 	camera.take_image()
 
 /atom/movable/screen/robot_image/take/ai
-	icon =  'icons/mob/screen_ai.dmi'
+	icon =  'icons/hud/screen_ai.dmi'
 	icon_state = "take_picture"
 	screen_loc = ui_ai_take_picture
 
@@ -418,7 +418,7 @@
 	camera.view_images()
 
 /atom/movable/screen/robot_image/view/ai
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "view_images"
 	screen_loc = ui_ai_view_images
 

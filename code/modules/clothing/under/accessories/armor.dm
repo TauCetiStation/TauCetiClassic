@@ -30,7 +30,6 @@
 	name = "dermal armour patch"
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head. And now you can hide it in some hats!"
 	icon_state = "dermal"
-	item_state = "dermal"
 	siemens_coefficient = 0.6
 	pierce_protection = HEAD
 	body_parts_covered = HEAD

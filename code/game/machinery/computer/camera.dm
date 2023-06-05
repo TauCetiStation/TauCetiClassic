@@ -32,7 +32,7 @@
 
 	var/camera_cache = null
 
-/obj/machinery/computer/security/atom_init()
+/obj/machinery/computer/security/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
@@ -56,6 +56,13 @@
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
+	var/obj/item/weapon/circuitboard/security/board = circuit
+	if(istype(C))
+		var/list/circuitboard_network = board.network
+		if(circuitboard_network.len > 0)
+			network = circuitboard_network
+	else
+		board.network = network
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
