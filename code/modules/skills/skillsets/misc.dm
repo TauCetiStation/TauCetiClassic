@@ -18,7 +18,7 @@
 
 /datum/skillset/random
 	name = "Random skillset"
-	var/skill_max = 2
+	var/skill_max = 3
 	var/skillpoints_total = 5
 	initial_skills = list()
 	skills = list()
