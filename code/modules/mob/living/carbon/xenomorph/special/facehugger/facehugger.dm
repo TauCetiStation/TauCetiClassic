@@ -3,7 +3,7 @@
 
 /obj/item/clothing/mask/facehugger
 	name = "alien"
-	desc = "На конце хвоста есть какая-то трубочка."
+	desc = "Из кончика хвоста выступает отросток, похожий на трубочку."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"

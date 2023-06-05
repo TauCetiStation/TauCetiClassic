@@ -94,7 +94,7 @@
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
-	desc = "Известны своим молоком. Только не роняйте их."
+	desc = "Известны своим молоком. Только не валите их на спину."
 	icon_state = "cow"
 	icon_living = "cow"
 	icon_dead = "cow_dead"
