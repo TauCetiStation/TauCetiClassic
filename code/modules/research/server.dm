@@ -13,13 +13,13 @@
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
+	var/sabotaged = FALSE
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
 /obj/machinery/r_n_d/server/atom_init()
 	. = ..()
 	rnd_server_list += src
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
@@ -166,6 +166,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
+	var/sabotage_time = 30 SECONDS
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
@@ -302,9 +303,43 @@
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
+		sabotage_time = 15 SECOND
 		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 		return TRUE
 	return FALSE
+
+
+/obj/machinery/computer/rdservercontrol/AltClick(mob/user)
+	if(!isliving(user) && !user.mind)
+		return
+	if(!isanyantag(user))
+		return
+	for(var/role in user.mind.antag_roles)
+		var/datum/role/R = user.mind.antag_roles[role]
+		if(!locate(/datum/objective/research_sabotage) in R.objectives.objectives)
+			return
+		else
+			for(var/datum/objective/research_sabotage/rs in R.objectives.objectives)
+				if(rs.already_completed)
+					return //in order to avoid that the antagonist will constantly do this.
+	to_chat(user, "<span class='warning'>Так-с, эта процедура займёт [sabotage_time / 10] секунд.</span>")
+	playsound(src, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
+	if(!do_after(user, sabotage_time, target = src))
+		return
+	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
+		s.sabotaged = TRUE
+		for(var/i in 1 to 3)
+			s.files.forget_random_technology()
+	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
+		explosion(c.loc, 3, 2, 1)
+	for(var/role in user.mind.antag_roles)
+		var/datum/role/R = user.mind.antag_roles[role]
+			for(var/datum/objective/research_sabotage/rs in R.objectives.objectives)
+				rs.already_completed = TRUE
+	add_fingerprint(user)
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='nicegreen'>Готово!</span>")
+
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

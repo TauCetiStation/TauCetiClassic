@@ -7840,9 +7840,6 @@
 /area/space_structures/carp_space)
 "Wt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/circuitboard/rdserver{
-	pixel_y = 4
-	},
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "Ww" = (

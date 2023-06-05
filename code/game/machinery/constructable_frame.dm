@@ -275,7 +275,7 @@ to destroy them and players will be able to make replacements.
 		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(vending_name))
 			return
-		
+
 		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
 
 		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")
@@ -673,15 +673,6 @@ to destroy them and players will be able to make replacements.
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/weapon/storage/wallet = 1)
-
-/obj/item/weapon/circuitboard/rdserver
-	name = "Circuit Board (R&D Server)"
-	build_path = /obj/machinery/r_n_d/server
-	board_type = "machine"
-	origin_tech = "programming=3"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/item/weapon/circuitboard/mechfab
 	name = "Circuit board (Exosuit Fabricator)"

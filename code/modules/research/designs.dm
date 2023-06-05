@@ -1485,15 +1485,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/rdservercontrol
 	category = list("Computer")
 
-/datum/design/rdserver
-	name = "R&D Server Board"
-	desc = "The circuit board for an R&D Server"
-	id = "rdserver"
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/rdserver
-	category = list("Machine")
-
 /datum/design/mechfab
 	name = "Exosuit Fabricator Board"
 	desc = "The circuit board for an Exosuit Fabricator"
