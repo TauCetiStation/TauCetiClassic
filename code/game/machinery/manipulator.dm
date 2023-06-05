@@ -120,6 +120,14 @@
 
 	var/static/list/possible_target_zones = TARGET_ZONE_ALL + list("random")
 
+	// Whether the next activation chain should be forced (i.e. even when a manipulator doesn't find an item to click with).
+	var/forced = FALSE
+
+	// Whether instead of clicking to something we should click the item in hand.
+	var/attack_self_interaction = FALSE
+	// When pulsed attack self interact only once.
+	var/next_attack_self_interaction = FALSE
+
 /obj/machinery/manipulator/atom_init()
 	. = ..()
 
@@ -549,6 +557,8 @@
 	return most_clickable
 
 /obj/machinery/manipulator/proc/DoClick(atom/A, list/params)
+	if(!A)
+		return
 	usr = clicker
 	clicker.ClickOn(A, params)
 
@@ -569,7 +579,7 @@
 
 /obj/machinery/manipulator/proc/after_interact_from()
 	var/obj/item/I = clicker.get_active_hand()
-	if(!I)
+	if(!I && !forced)
 		if(remember_trigger)
 			remember_trigger = FALSE
 			set_state(MANIPULATOR_STATE_IDLE)
@@ -581,13 +591,15 @@
 		after_activate()
 		return
 
+	forced = FALSE
+
 	try_interact_to()
 
 /obj/machinery/manipulator/proc/try_interact_from(atom/target=null)
 	if(!target)
 		target = find_clickable(from_turf)
 
-	if(!target)
+	if(!target && !forced)
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
 		after_activate()
@@ -620,6 +632,10 @@
 /obj/machinery/manipulator/proc/try_interact_to(atom/target=null)
 	if(!target)
 		target = find_clickable(to_turf)
+
+	if(!target && (attack_self_interaction || next_attack_self_interaction))
+		target = clicker.get_active_hand()
+		next_attack_self_interaction = FALSE
 
 	if(!target)
 		var/obj/item/I = clicker.get_active_hand()
@@ -656,7 +672,7 @@
 	cur_target_index += 1
 
 	if(cur_target_index > length(possible_target_zones))
-		cur_target_index -= possible_target_zones
+		cur_target_index -= length(possible_target_zones)
 
 	target_zone = possible_target_zones[cur_target_index]
 
