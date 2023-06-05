@@ -18,7 +18,7 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
-	skillsets = list("Test Subject"   = /datum/skillset/random)
+	skillsets = list("Test Subject" = /datum/skillset/random)
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)
