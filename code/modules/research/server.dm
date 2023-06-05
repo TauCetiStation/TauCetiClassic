@@ -337,9 +337,9 @@
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
 		explosion(c.loc, 3, 2, 1)
 	for(var/role in user.mind.antag_roles)
-		var/datum/role/r = user.mind.antag_roles[role]
-			for(var/datum/objective/research_sabotage/sr in r.objectives.objectives)
-				sr.already_completed = TRUE
+		var/datum/role/R = user.mind.antag_roles[role]
+			for(var/datum/objective/research_sabotage/rs in R.objectives.objectives)
+				rs.already_completed = TRUE
 	add_fingerprint(user)
 	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='nicegreen'>Готово!</span>")
