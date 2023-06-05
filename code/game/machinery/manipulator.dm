@@ -676,6 +676,15 @@
 
 	target_zone = possible_target_zones[cur_target_index]
 
+/obj/machinery/manipulator/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	clicker.a_intent = INTENT_HARM
+	to_chat(user, "<span class='warning'>You short out [src]'s harm prevention systems.</span>")
+	visible_message("[src] hums oddly...")
+	emagged = TRUE
+	return TRUE
+
 #undef MANIPULATOR_STATE_IDLE
 #undef MANIPULATOR_STATE_FAIL
 #undef MANIPULATOR_STATE_INTERACTING_FROM
