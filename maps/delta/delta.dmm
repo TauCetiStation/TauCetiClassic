@@ -41249,6 +41249,19 @@
 	icon_state = "gcircuit"
 	},
 /area/station/bridge/ai_upload)
+"knL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door_control{
+	id = "vac_offic";
+	name = "Vacant Office";
+	req_access = list(57);
+	pixel_x = -26
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/central)
 "koi" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -79659,6 +79672,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"ulV" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "vac_offic";
+	name = "Vacant Office"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "ulW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -139020,8 +139041,8 @@ aiy
 hyh
 hBZ
 hBZ
-hOf
-hOf
+ulV
+ulV
 hBZ
 hBZ
 eiS
@@ -139279,7 +139300,7 @@ hBZ
 tcX
 uWE
 hTc
-hTc
+knL
 hTc
 itC
 xvQ
