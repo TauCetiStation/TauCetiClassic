@@ -28,6 +28,6 @@
 	for(var/i in 1 to skillpoints_total)
 		var/skill_improvement = pick(default_skills_list)
 		skills[skill_improvement] += 1
-		if(skills[skill_improvement] > skill_max)
+		if(skills[skill_improvement] >= skill_max)
 			skills -= skill_improvement
 	..()
