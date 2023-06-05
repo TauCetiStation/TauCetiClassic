@@ -38,21 +38,21 @@
 
 //EASTER EGGS
 
-/obj/structure/flora/tree/pine/bear_piano
+/obj/structure/bear_piano
 	name = "bear"
 	desc = "Looks like this is not your common black bear, it's an alien space bear playing a piano. You see nothing out of the ordinary?"
 	icon = 'trainstation13/icons/64x32.dmi'
 	icon_state = "bear_piano"
 	anchored = FALSE
 
-/obj/structure/flora/tree/pine/bear_harmonica
+/obj/structure/bear_harmonica
 	name = "bear"
 	desc = "And I'm playing the accordion. And all people gaze at me. It's a pity, that the Birthday is just once a year..."
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "bear_harmonica"
 	anchored = FALSE
 
-/obj/structure/flora/tree/pine/bear_vodka
+/obj/structure/bear_vodka
 	name = "bear"
 	desc = "This alien space bear had just enough to dance happily. You see nothing out of the ordinary?"
 	icon = 'trainstation13/icons/trainstructures.dmi'

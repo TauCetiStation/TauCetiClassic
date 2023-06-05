@@ -115,3 +115,12 @@
 	icon_state = "metaldoubleglass"
 	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/metal
+
+//DECALS
+
+/obj/structure/sign/train
+	name = "railcar number"
+	desc = "A metal sign with a railcar number on it."
+	icon = 'trainstation13/icons/traindecals.dmi'
+	icon_state = "zero"
+	layer = 4.4
