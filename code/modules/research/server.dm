@@ -310,6 +310,8 @@
 
 
 /obj/machinery/computer/rdservercontrol/AltClick(mob/user)
+	if(!user.Adjacent(src))
+		return
 	if(!isliving(user) && !user.mind)
 		return
 	if(!isanyantag(user))
