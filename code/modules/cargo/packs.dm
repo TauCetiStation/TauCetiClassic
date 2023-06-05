@@ -1957,7 +1957,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/ammo_box/magazine/glock,
 					/obj/item/ammo_box/magazine/glock,
 					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/gun/energy/laser/cutter)
+					/obj/item/weapon/gun/energy/laser/cutter,
+					/obj/machinery/power/emitter,
+					/obj/machinery/power/emitter)
+	crate_type = /obj/structure/closet/crate/secure/large
 	access = access_mint
 	additional_costs = 9300
 	crate_name = "Anti-blob equipment: Group supply"

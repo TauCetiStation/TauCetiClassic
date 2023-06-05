@@ -13,10 +13,10 @@
 	max_roles = 2
 
 	var/datum/station_state/start
+	var/announcement_timer
 
 	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
-	var/declared = FALSE
 	var/blobwincount = 0
 
 /datum/faction/blob_conglomerate/New()
@@ -33,26 +33,17 @@
 
 // -- Victory procs --
 /datum/faction/blob_conglomerate/check_win()
-	if(!declared) //No blobs have been spawned yet
-		return FALSE
 	. = FALSE
-	var/ded = TRUE
-	for (var/datum/role/R in members)
-		if (R.antag.current && !(R.antag.current.is_dead()))
-			ded = FALSE
 
-	if(!ded)
-		if(blobwincount <= blobs.len) //Blob took over
-			for(var/datum/role/blob_overmind/R in members)
-				var/mob/camera/blob/B = R.antag.current
-				if(istype(B))
-					B.max_blob_points = INFINITY
-					B.blob_points = INFINITY
-			return TRUE // force end
-		if(SSticker.station_was_nuked)
-			return TRUE // force end
-	else
-		stage(FS_DEFEATED)
+	if(blobwincount <= blobs.len) //Blob took over
+		for(var/datum/role/blob_overmind/R in members)
+			var/mob/camera/blob/B = R.antag.current
+			if(istype(B))
+				B.max_blob_points = INFINITY
+				B.blob_points = INFINITY
+		return TRUE // force end
+	if(SSticker.station_was_nuked)
+		return TRUE // force end
 
 	if(config.continous_rounds)
 		return FALSE
@@ -63,17 +54,21 @@
 	. = ..()
 	if(!blobwincount || !detect_overminds())
 		return .
-	if(0.25 * blobwincount < blobs.len && stage < FS_MIDGAME) // AI law
+	if(0.2 * blobwincount < blobs.len && stage <= FS_DORMANT) // Announcement
+		stage(FS_DORMANT)
+		if(announcement_timer)
+			deltimer(announcement_timer)
+	if(0.3 * blobwincount < blobs.len && stage < FS_ACTIVE) // AI law
 		stage(FS_ACTIVE)
 	else if(0.55 * blobwincount < blobs.len && stage < FS_MIDGAME) // Weapons in cargo
 		stage(FS_MIDGAME)
-	else if(0.7 * blobwincount <= blobs.len && stage < FS_ENDGAME) // Nuclear codes
+	else if(0.7 * blobwincount < blobs.len && stage < FS_ENDGAME) // Nuclear codes
 		stage(FS_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	addtimer(CALLBACK(src, .proc/stage, FS_DORMANT), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)//world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	announcement_timer = addtimer(CALLBACK(src, .proc/stage, FS_DORMANT), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)//world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	spawn_blob_mice()
 	return ..()
 
@@ -102,6 +97,7 @@
 	. += "<br/>Station takeover: [blobs.len]/[blobwincount]."
 
 /datum/faction/blob_conglomerate/stage(new_stage)
+	stage = new_stage
 	switch(new_stage)
 		if(FS_DORMANT)
 			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
@@ -117,10 +113,7 @@
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
-
 			SSshuttle.fake_recall = TRUE //Quarantine
-			if(SSshuttle.direction != 2) //if not heading to CC, prevent escape
-				SSshuttle.online = FALSE
 
 		if(FS_MIDGAME)
 			var/datum/game_mode/gamemode = SSticker.mode
@@ -148,16 +141,13 @@
 				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожения. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 
-		if (FS_DEFEATED) //Cleanup time
+		if(FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 			announcement.play()
-
-			send_intercept(FS_DEFEATED)
-			SSshuttle.fake_recall = FALSE
-			SSshuttle.online = TRUE
-			declared = FALSE
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
+			send_intercept(FS_DEFEATED)
+			SSshuttle.fake_recall = FALSE
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""

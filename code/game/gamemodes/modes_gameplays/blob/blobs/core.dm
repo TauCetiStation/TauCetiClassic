@@ -30,6 +30,16 @@ var/global/list/blob_nodes = list()
 	blob_cores -= src
 	QDEL_NULL(OV)
 	STOP_PROCESSING(SSobj, src)
+
+	var/dead_faction = TRUE
+	var/datum/faction/F = find_faction_by_type(/datum/faction/blob_conglomerate)
+	for(var/datum/role/R in F.members)
+		if(R.antag.current && R.antag.current.is_dead())
+			continue
+		dead_faction = FALSE
+	if(dead_faction)
+		F.stage(FS_DEFEATED)
+
 	return ..()
 //	return
 
@@ -99,8 +109,6 @@ var/global/list/blob_nodes = list()
 					ded = FALSE
 					break
 		add_faction_member(conglomerate, B, !ded)
-
-	conglomerate.declared = TRUE
 
 	B.b_congl = conglomerate
 	notify_ghosts("[B] in [get_area(B)]!", source=B, action=NOTIFY_ORBIT, header="Blob")
