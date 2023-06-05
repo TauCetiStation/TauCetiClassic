@@ -364,9 +364,6 @@
 /turf/simulated/wall,
 /area/station/security/iaa_office)
 "acw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -380,6 +377,9 @@
 	pixel_x = -25;
 	pixel_y = -25;
 	req_access = list(13)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
 	},
 /turf/simulated/floor/plating{
 	dir = 8;
@@ -12701,7 +12701,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -13728,8 +13730,8 @@
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "dlW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
@@ -14489,8 +14491,8 @@
 /area/station/engineering/engine)
 "dwB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
@@ -17054,8 +17056,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -23008,7 +23010,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
 	},
 /turf/simulated/floor/plating{
@@ -23993,13 +23995,14 @@
 	},
 /area/station/civilian/dormitories)
 "gbs" = (
-/obj/machinery/power/solar_control{
-	id = "foreport";
-	name = "Port Bow Solar Control"
-	},
 /obj/machinery/camera{
 	c_tag = "Fore Port Solar Control";
 	network = list("SS13","Engineering")
+	},
+/obj/machinery/power/solar_control{
+	id = "auxsolareast";
+	name = "Fore Port Solar Control";
+	dir = 8
 	},
 /turf/simulated/floor/plating{
 	dir = 5;
@@ -24624,7 +24627,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
 	},
 /turf/simulated/floor/plating{
@@ -27795,9 +27798,6 @@
 	},
 /area/station/hallway/primary/central)
 "gYc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -27811,6 +27811,9 @@
 	pixel_x = 25;
 	pixel_y = 25;
 	req_access = list(10,13)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -29454,6 +29457,10 @@
 	},
 /area/station/medical/cryo)
 "hue" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -30490,7 +30497,6 @@
 /area/station/civilian/chapel)
 "hGd" = (
 /obj/machinery/power/solar_control{
-	dir = 4;
 	id = "aftport";
 	name = "Port Quarter Solar Control"
 	},
@@ -32146,7 +32152,6 @@
 /turf/environment/space,
 /area/shuttle/syndicate/south)
 "ibG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -32160,6 +32165,7 @@
 	req_access = list(13)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "ibP" = (
@@ -35040,9 +35046,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "iNl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -35056,6 +35059,9 @@
 	req_access = list(13)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "iNv" = (
@@ -39551,7 +39557,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -42315,9 +42321,6 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "kBR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -42331,6 +42334,9 @@
 	req_access = list(13)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "kBT" = (
@@ -45204,7 +45210,6 @@
 /turf/simulated/wall,
 /area/station/maintenance/starboardsolar)
 "lla" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -45225,6 +45230,11 @@
 	layer = 3.3;
 	pixel_x = 28;
 	pixel_y = -8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "solar_tool_pump";
+	name = "Solar Tool Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -47986,7 +47996,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -58693,9 +58703,6 @@
 	},
 /area/station/civilian/dormitories)
 "oOJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -58709,6 +58716,9 @@
 	req_access = list(13)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "oOP" = (
@@ -61166,9 +61176,6 @@
 	},
 /area/station/cargo/storage)
 "pwt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -61189,6 +61196,12 @@
 	tag_exterior_door = "solar_chapel_outer";
 	tag_interior_door = "solar_chapel_inner";
 	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "solar_chapel_pump";
+	name = "Solar Chapel Large Air Vent";
+	dir = 8
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -62438,9 +62451,6 @@
 	},
 /area/station/civilian/library)
 "pMd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -62461,6 +62471,12 @@
 	tag_exterior_door = "solar_xeno_outer";
 	tag_interior_door = "solar_xeno_inner";
 	pixel_y = 25
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "solar_xeno_pump";
+	name = "Solar Xeno Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -62626,7 +62642,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -64632,7 +64648,7 @@
 /turf/simulated/floor/wood,
 /area/station/engineering/engine)
 "qnU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
 	},
 /turf/simulated/floor/plating{
@@ -76887,7 +76903,6 @@
 /area/station/rnd/xenobiology)
 "tzH" = (
 /obj/machinery/power/solar_control{
-	dir = 8;
 	id = "aftstarboard";
 	name = "Starboard Quarter Solar Control"
 	},
@@ -77883,6 +77898,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating{
 	dir = 4;
 	icon_state = "warnplate"
@@ -78136,7 +78155,9 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "tSt" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "tSE" = (
@@ -78378,9 +78399,6 @@
 	},
 /area/station/rnd/hallway)
 "tUY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -78394,6 +78412,9 @@
 	pixel_x = 25;
 	pixel_y = 25;
 	req_access = list(13)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
 	},
 /turf/simulated/floor/plating{
 	dir = 9;
@@ -78594,7 +78615,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "tXy" = (
@@ -82555,9 +82576,6 @@
 /area/station/rnd/hor)
 "vaT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -82577,6 +82595,12 @@
 	layer = 3.3;
 	pixel_x = 12;
 	pixel_y = -25
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "robotics_solar_pump";
+	name = "Solar Robotics Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -86891,6 +86915,10 @@
 	},
 /area/station/engineering/monitoring)
 "wjK" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -87401,8 +87429,8 @@
 	},
 /area/station/civilian/gym)
 "wru" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
@@ -88109,9 +88137,6 @@
 	},
 /area/station/civilian/dormitories)
 "wBi" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -88125,6 +88150,9 @@
 	pixel_x = 25;
 	pixel_y = 25;
 	req_access = list(13)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -90989,7 +91017,6 @@
 /area/station/civilian/dormitories)
 "xpt" = (
 /obj/machinery/power/solar_control{
-	dir = 8;
 	id = "forestarboard";
 	name = "Starboard Bow Solar Control"
 	},
@@ -91363,6 +91390,10 @@
 	},
 /area/station/cargo/storage)
 "xtY" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
