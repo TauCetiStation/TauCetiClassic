@@ -4,7 +4,7 @@
 
 /datum/objective/research_sabotage/check_completion()
 	..()
-	for(var/var/obj/machinery/r_n_d/server/s in rnd_server_list)
+	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
 		if((!s.sabotaged))
 			return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
