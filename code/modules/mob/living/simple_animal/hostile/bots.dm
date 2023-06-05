@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/hostile/bot/secbot
 	name = "Securitron"
-	desc = "Маленький робот-охранник. Не впечатлен, ему вообще пофиг на всех, он закон."
+	desc = "Маленький робот-охранник. Похоже, он не в восторге увидев вас."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot1"
 	health = 40
