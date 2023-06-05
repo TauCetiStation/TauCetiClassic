@@ -1,6 +1,13 @@
 //TRAIN STATION 13
 
 //MACHINES
+//TRAIN MOVEMENT IS BASED ON CONVEYOR BELTS CODE
+
+/obj/machinery/conveyor/train
+	name = "ice"
+	desc = "Layer of ice has formed on top of the snow. You see nothing out of the ordinary."
+	icon = 'trainstation13/icons/trainstructures.dmi'
+
 
 /obj/machinery/media/jukebox/trainjukebox
 	name = "wall radio"
@@ -75,57 +82,36 @@
 
 /obj/structure/mineral_door/wood/single
 	name = "wooden door"
-	icon = 'trainstation13/icons/traindoors.dmi'
+	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "wood"
 
 /obj/structure/mineral_door/wood/double
 	name = "wooden double door"
-	icon = 'trainstation13/icons/traindoors.dmi'
+	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "wooddouble"
 
 /obj/structure/mineral_door/wood/doubledirty
 	name = "dirty wooden double door"
-	icon = 'trainstation13/icons/traindoors.dmi'
+	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "wooddoubledirty"
 
 /obj/structure/mineral_door/transparent/wood
 	name = "wooden door with doorlight"
-	icon = 'trainstation13/icons/traindoors.dmi'
+	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "woodglass"
 	sheetType = /obj/item/stack/sheet/wood
 	operating_sound = 'sound/effects/doorcreaky.ogg'
 
 /obj/structure/mineral_door/transparent/wooddouble
 	name = "wooden double door with doorlight"
-	icon = 'trainstation13/icons/traindoors.dmi'
+	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "wooddoubleglass"
 	sheetType = /obj/item/stack/sheet/wood
 	operating_sound = 'sound/effects/doorcreaky.ogg'
 
 /obj/structure/mineral_door/transparent/metal
 	name = "metal double door with doorlight"
-	icon = 'trainstation13/icons/traindoors.dmi'
+	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "metaldoubleglass"
 	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/metal
-
-//DECALS
-
-/obj/structure/sign/moon
-	name = "photo of astronauts"
-	desc = "A group photo of legendary astronauts who became the first people on the Moon."
-	icon = 'trainstation13/icons/traindecals.dmi'
-	icon_state = "photo_moon"
-
-/obj/structure/sign/secretary
-	name = "portrait of a person"
-	desc = "A formal portrait. Must be someone really important."
-	icon = 'trainstation13/icons/traindecals.dmi'
-	icon_state = "portrait"
-
-/obj/structure/sign/train
-	name = "railcar number"
-	desc = "A metal sign with a railcar number on it."
-	icon = 'trainstation13/icons/traindecals.dmi'
-	icon_state = "zero"
-	layer = 4.4
