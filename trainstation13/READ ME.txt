@@ -1,0 +1,36 @@
+WARNING!!!
+THE FOLLOWING BASE CODE CHANGES ASIDE FROM ENABLING EVERYTHING WITHIN TRAINSTATION 13 MODULE
+ARE NECESSARY TO RUN THIS CODE AFTER REBASE!
+
+#1 In code/game/turfs/turf.dm replace:
+
+	var/turf/basetype = /turf/environment/space
+
+with
+
+	var/turf/basetype = /turf/simulated/floor/plating
+
+#2 In /code/modules/admin/admin_verbs.dm add:
+
+		// <trainstation13>
+		if(holder.rights & R_EVENT)
+			verbs += global.admin_verbs_trainstation_event
+		// </trainstation13>
+
+after the line:
+
+		if(holder.rights & R_EVENT)
+			verbs += admin_verbs_event
+
+#3 In /code/modules/recycling/conveyor2.dm add:
+
+	// <trainstation13>
+	for(var/obj/effect/trainspawner/TR in trainspawners)
+		TR.operating = position != 0 ? TRUE : FALSE
+	// </trainstation13>
+
+after the line:
+
+	for(var/obj/machinery/conveyor/C in conveyors)
+		C.operating = position
+		C.update_move_direction()

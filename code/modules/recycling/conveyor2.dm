@@ -253,6 +253,11 @@
 		C.operating = position
 		C.update_move_direction()
 
+	// <trainstation13>
+	for(var/obj/effect/trainspawner/TR in trainspawners)
+		TR.operating = position != 0 ? TRUE : FALSE
+	// </trainstation13>
+
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
 	. = ..()
