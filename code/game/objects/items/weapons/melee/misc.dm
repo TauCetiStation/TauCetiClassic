@@ -38,7 +38,7 @@
 				var/obj/item/organ/external/BP = user_human.get_bodypart(BP_ACTIVE_ARM)
 				if(BP)
 					BP.droplimb(FALSE, FALSE, DROPLIMB_BLUNT)
-		to_chat(target, "<span class='userdanger'>THEY KNOWS ABOUT US!!!</span>")
+		to_chat(target, "<span class='userdanger'>COVER BLOWN!!! THEY KNOW ABOUT US!!!</span>")
 		qdel(src)
 		return
 	if(!H.isimplantedobedience())
