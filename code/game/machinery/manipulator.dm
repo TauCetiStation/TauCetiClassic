@@ -136,6 +136,8 @@
 	var/has_eyes = FALSE
 	// The idea of the googly eyes icon.
 	var/eyes_id = 1
+	// Is currently shaking eyes.
+	var/shaking_eyes = FALSE
 
 /obj/machinery/manipulator/atom_init()
 	. = ..()
@@ -634,6 +636,10 @@
 	try_interact_to()
 
 /obj/machinery/manipulator/proc/shake_eyes()
+	if(shaking_eyes)
+		return
+	shaking_eyes = TRUE
+
 	var/list/eyes_recipients = list()
 	for(var/mob/M in viewers(src))
 		if(M.client)
@@ -648,6 +654,8 @@
 	eyes = image(icon, src, "eyes-[eyes_id]", layer, dir)
 	overlays += eyes
 
+	VARSET_IN(src, shaking_eyes, FALSE, 5)
+
 /obj/machinery/manipulator/proc/try_interact_from(atom/target=null)
 	if(!target)
 		target = find_clickable(from_turf)
@@ -658,15 +666,15 @@
 		after_activate()
 		return
 
-	if(has_eyes)
-		shake_eyes()
-
 	set_state(MANIPULATOR_STATE_INTERACTING_FROM)
 	if(!do_sleep(delay, CALLBACK(src, /obj/machinery.proc/is_operational)))
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
 		after_activate()
 		return
+
+	if(has_eyes)
+		shake_eyes()
 
 	simulate_click(target, list(CALLBACK(src, .proc/after_interact_from)))
 
@@ -740,6 +748,11 @@
 	visible_message("[src] hums oddly...")
 	emagged = TRUE
 	return TRUE
+
+/obj/machinery/manipulator/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(has_eyes)
+		shake_eyes()
 
 #undef MANIPULATOR_STATE_IDLE
 #undef MANIPULATOR_STATE_FAIL
