@@ -346,6 +346,6 @@
 /mob/living/simple_animal/hostile/pylon/update_canmove()
 	return
 
-/mob/living/simple_animal/hostile/pylon/AttackingTarget()
-	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
-	OpenFire(target)
+/mob/living/simple_animal/hostile/pylon/UnarmedAttack(atom/A)
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
+	OpenFire(A)

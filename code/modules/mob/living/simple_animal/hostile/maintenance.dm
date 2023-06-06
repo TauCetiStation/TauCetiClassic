@@ -16,8 +16,10 @@
 	has_leg = TRUE
 	alpha = 45
 
-/mob/living/simple_animal/hostile/shade/AttackingTarget()
-	..()
+/mob/living/simple_animal/hostile/shade/UnarmedAttack(atom/target)
+	. = ..()
+	if(!isliving(target))
+		return
 	var/mob/living/L = target
 	if(prob(50))
 		var/sound_to_play = pick('sound/hallucinations/scary_sound_1.ogg', 'sound/hallucinations/scary_sound_2.ogg', 'sound/hallucinations/scary_sound_3.ogg', 'sound/hallucinations/scary_sound_4.ogg')
@@ -62,9 +64,9 @@
 			visible_message("<span class='warning'>[src] throws [I] at [target]!</span>")
 			ranged_cooldown = 0
 
-/mob/living/simple_animal/hostile/octopus/AttackingTarget()
-	..()
+/mob/living/simple_animal/hostile/octopus/UnarmedAttack(atom/target)
+	. = ..()
 	var/mob/living/L = target
-	if(prob(50))
+	if(L && prob(50))
 		L.drop_item()
 		to_chat(L, "<span class='warning'>[src] disarms you with it's tentacles!</span>")

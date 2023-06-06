@@ -175,9 +175,9 @@
 			Burrow()
 
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore))
-		EatOre(target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/UnarmedAttack(atom/A)
+	if(istype(A, /obj/item/weapon/ore))
+		EatOre(A)
 		return
 	..()
 
@@ -262,7 +262,7 @@
 	A.friends = friends
 	A.faction = faction
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
+/mob/living/simple_animal/hostile/asteroid/hivelord/UnarmedAttack(atom/A)
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)

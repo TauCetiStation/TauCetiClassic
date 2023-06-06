@@ -81,7 +81,7 @@
 	if(.)
 		trigger()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/crate/UnarmedAttack(atom/target)
 	. = ..()
 	if(.)
 		icon_state = initial(icon_state)
@@ -114,10 +114,10 @@
 	qdel(src)
 	..()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/crate/UnarmedAttack(atom/target)
 	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(15))
 			L.Stun(1)
 			L.Weaken(2)
@@ -189,11 +189,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	if(destroy_objects)
 		..()
 
-/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/copy/UnarmedAttack(atom/target)
 	. = ..()
 	if(knockdown_people)
-		var/mob/living/L = .
-		if(istype(L))
+		if(isliving(target))
+			var/mob/living/L = target
 			if(prob(15))
 				L.Stun(1)
 				L.Weaken(1)
