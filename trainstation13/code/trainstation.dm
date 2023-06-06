@@ -57,11 +57,15 @@ var/list/train_block = list()
 
 //Admin verb toggles
 
-var/list/event_verbs = list(/client/proc/toggle_block)
+var/list/admin_verbs_trainstation_event = list(
+	/client/proc/toggle_trainstation_block,
+	/client/proc/toggle_train_spawners_and_despawners,
+	/client/proc/change_global_spawn_list_type,
+)
 
 //1 - nothing, 2 - objects, 3 - all
 
-/client/proc/toggle_block()
+/client/proc/toggle_trainstation_block()
 	set category = "Event"
 	set name = "Toggle Invisible Wall"
 
