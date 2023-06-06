@@ -1482,7 +1482,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
 	var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
-	O.max_damage = 200
+	O.max_damage = 1000
 
 	add_zombie(H)
 
