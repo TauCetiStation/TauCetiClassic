@@ -327,7 +327,7 @@
 	item_state = "alienhelmet"
 	origin_tech = "materials=5;biotech=5"
 	action_button_name = "Activate Helmet"
-
+	flashbang_protection = TRUE
 	var/team
 	var/obj/machinery/camera/helm_cam
 
