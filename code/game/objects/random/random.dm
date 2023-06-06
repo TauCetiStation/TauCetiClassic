@@ -34,9 +34,9 @@
 	var/spawn_nothing_percentage = 0 // this variable determines the likelyhood that this random object will not spawn anything
 
 // creates a new object and deletes itself
-/obj/random/atom_init(mapload, no_init = FALSE)
-	if(no_init)
-		return
+/obj/random/atom_init(mapload, no_spawn = FALSE)
+	if(no_spawn)
+		return ..()
 	..()
 	if (!prob(spawn_nothing_percentage))
 		spawn_item()
