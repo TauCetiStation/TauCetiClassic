@@ -136,3 +136,7 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].",
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>",
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
+
+/obj/item/weapon/coin/update_icon()
+	icon_state = "coin_[cmineral]_[coinflip]"
+	item_state_world = "[icon_state]_world"
