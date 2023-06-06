@@ -481,6 +481,14 @@
 		return
 
 	else if(default_unfasten_wrench(user, I) && !busy_moving && state == MANIPULATOR_STATE_IDLE)
+		if(state != MANIPULATOR_STATE_IDLE)
+			to_chat(usr, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
+			return
+
+		if(busy_moving)
+			to_chat(usr, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
+			return
+
 		if(!panel_open)
 			if(anchored)
 				add_overlay(stat)
