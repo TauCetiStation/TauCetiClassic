@@ -128,6 +128,9 @@
 	// When pulsed attack self interact only once.
 	var/next_attack_self_interaction = FALSE
 
+	// Whether the manipulator will automatically activate on items entering the turf.
+	var/auto_activation = TRUE
+
 /obj/machinery/manipulator/atom_init()
 	. = ..()
 
@@ -376,6 +379,9 @@
 
 /obj/machinery/manipulator/proc/on_from_entered(datum/source, atom/movable/entering, atom/oldLoc)
 	SIGNAL_HANDLER
+
+	if(!auto_activation)
+		return
 
 	if(!can_activate(entering))
 		remember_trigger = TRUE

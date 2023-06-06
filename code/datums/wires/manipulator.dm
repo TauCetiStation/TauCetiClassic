@@ -21,9 +21,14 @@ var/global/const/MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION = 8
 /datum/wires/manipulator/update_cut(index, mended)
 	var/obj/machinery/manipulator/M = holder
 
-	if(index == MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION)
-		M.attack_self_interaction = !mended
-		return
+	switch(index)
+		if(MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION)
+			M.auto_activation = mended
+			return
+
+		if(MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION)
+			M.attack_self_interaction = !mended
+			return
 
 	update_pulsed(index)
 
