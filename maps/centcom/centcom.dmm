@@ -3263,14 +3263,15 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 6;
+	dir = 2;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aiv" = (
 /obj/machinery/computer/intruder_station,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aiw" = (
@@ -3551,16 +3552,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"ajc" = (
-/obj/structure/closet/secure_closet/syndicate,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
 "ajd" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -4032,16 +4023,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
-	},
-/area/custom/syndicate_mothership)
-"akd" = (
-/obj/structure/closet/secure_closet/syndicate,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
 "ake" = (
@@ -14735,20 +14716,6 @@
 /obj/effect/landmark{
 	name = "Nuclear-Bomb"
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/window/eastright{
-	dir = 2;
-	name = "Nuclear Bomb";
-	req_access = list(151)
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -15931,8 +15898,8 @@
 "aKz" = (
 /obj/structure/closet/secure_closet/syndicate/commander,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "darkredfull"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/custom/syndicate_mothership)
 "aKA" = (
@@ -15971,12 +15938,6 @@
 	icon_state = "darkred"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
-"aKF" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkredcorners"
-	},
-/area/custom/syndicate_mothership)
 "aKG" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor,
@@ -16556,22 +16517,6 @@
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership)
-"aLY" = (
-/obj/structure/closet/secure_closet/syndicate,
-/obj/structure/window/thin/reinforced,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"aLZ" = (
-/obj/structure/closet/secure_closet/syndicate,
-/obj/structure/window/thin/reinforced,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
 "aMa" = (
@@ -87641,7 +87586,7 @@ ahF
 ahF
 aie
 ail
-aKF
+aSb
 aLX
 aIK
 aIK
@@ -90208,11 +90153,11 @@ ahF
 ahF
 ahF
 aie
+aie
 aiz
-alM
-ajc
 aKN
-aLY
+aKN
+aKN
 alM
 alM
 alM
@@ -90466,7 +90411,7 @@ ahF
 ahF
 aie
 ajT
-aIb
+ajd
 aIb
 aIb
 aIb
@@ -90723,7 +90668,7 @@ ahF
 ahF
 aie
 aHE
-aIb
+ajd
 aIb
 aLo
 aIb
@@ -90980,7 +90925,7 @@ ahF
 ahF
 aie
 ajT
-aIb
+ajd
 aIb
 aIb
 aIb
@@ -91236,11 +91181,11 @@ ahF
 ahF
 ahF
 aie
+aie
 ajk
-alY
-akd
 aLD
-aLZ
+aLD
+aLD
 aky
 aIM
 alY
