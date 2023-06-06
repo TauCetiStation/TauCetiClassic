@@ -121,6 +121,8 @@
 		total_TC += R.hidden_uplink.uses
 		R.hidden_uplink.uplink_type = uplink_type
 
+	R.hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(R.hidden_uplink))
+
 /datum/component/gamemode/syndicate/proc/give_codewords()
 	var/mob/traitor_mob = get_current()
 	if(!traitor_mob)
