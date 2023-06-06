@@ -109,7 +109,7 @@
 			armor = list()
 		atom_integrity = max_integrity
 
-	if(!isturf(loc))
+	if(istype(loc, /obj/item/weapon/storage)) // todo: need to catch all spawns in /storage/ objects and make them use handle_item_insertion or something
 		flags_2 |= IN_STORAGE
 
 	if(item_state_world)

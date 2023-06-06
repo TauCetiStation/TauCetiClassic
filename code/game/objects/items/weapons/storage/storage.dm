@@ -49,12 +49,16 @@
 			var/quantity = startswith[item_path] || 1
 			var/obj/item/I
 			for(var/num in 1 to quantity)
+				item_path = PATH_OR_RANDOM_PATH(item_path)
+				if(!item_path) // random objects can spawn nothing
+					continue
 				I = new item_path(src)
 				// maybe just need to call A.on_enter_storage(src), but it can trigger unwanted effects
-				I.flags_2 |= IN_STORAGE
-				if(I.item_state_world)
-					I.update_world_icon()
-	
+				// todo: commented in favor of check in /obj/item/atom_init() 
+				//I.flags_2 |= IN_STORAGE
+				//if(I.item_state_world)
+				//	I.update_world_icon()
+
 		update_icon() // todo: some storages that use content as overlays can have problems with world_icons, need to fix it in the furure while adding new world_icons (donut_box and donuts, crayons and crayon box, etc.)
 
 /obj/item/weapon/storage/Destroy()
