@@ -69,6 +69,31 @@
 		if(TR.id == id)
 			trainspawners += TR
 
+var/global/globally_operating = TRUE
+var/global/spawn_list_type = "normal"
+
+/client/proc/toggle_train_spawners_and_despawners()
+	set category = "Event"
+	set name = "Toggle Spawners and Despawners"
+
+	global.globally_operating = !global.globally_operating
+	to_chat(src, "Toggled spawners and despawners to [global.globally_operating ? "ON" :  "OFF"]")
+
+	for(var/obj/effect/trainspawner/T as anything in global.trainspawners)
+		T.globally_operating = global.globally_operating
+	for(var/obj/effect/traindespawner/T as anything in global.traindespawners)
+		T.globally_operating = global.globally_operating
+
+/client/proc/change_global_spawn_list_type()
+	set category = "Event"
+	set name = "Change Spawn List Type"
+
+	var/prev_spawn_list_type = global.spawn_list_type
+	global.spawn_list_type = global.spawn_list_type == "normal" ? "normal" : "station"
+	to_chat(src, "Changed Spawn List Type from [prev_spawn_list_type] to [global.spawn_list_type]")
+
+	for(var/obj/effect/trainspawner/T as anything in global.trainspawners)
+		T.current_spawn_list_type = global.spawn_list_type
 
 var/global/list/trainspawners = list()
 ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
@@ -85,6 +110,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 
 	// Which conveyor id this trainspawner is linked to.
 	var/id
+
+	var/globally_operating = TRUE
 
 	var/operating = FALSE
 
@@ -117,11 +144,16 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
+	globally_operating = global.globally_operating
+	current_spawn_list_type = global.spawn_list_type
+
 /obj/effect/trainspawner/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/trainspawner/process()
+	if(!globally_operating)
+		return
 	if(!operating)
 		return
 	if(next_spawn > world.time)
@@ -130,7 +162,12 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 
 	var/list/current_spawn_list = spawn_lists[current_spawn_list_type]
 	var/spawn_type = pickweight(current_spawn_list)
+	if(spawn_type == "null")
+		return
 	new spawn_type(loc)
+
+var/global/list/traindespawners = list()
+ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 
 /obj/effect/traindespawner
 	name = "despawner mark"
@@ -141,6 +178,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	plane = GAME_PLANE
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
+
+	var/globally_operating = TRUE
 
 	var/list/despawn_list = list(
 		// /obj/bench,
@@ -153,7 +192,12 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	. = ..()
 	despawn_list = typecacheof(despawn_list, FALSE)
 
+	globally_operating = global.globally_operating
+
 /obj/effect/traindespawner/Crossed(atom/movable/AM)
 	. = ..()
+	if(!globally_operating)
+		return
+
 	if(is_type_in_typecache(AM, despawn_list))
 		qdel(AM)
