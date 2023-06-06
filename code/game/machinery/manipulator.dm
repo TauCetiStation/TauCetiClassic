@@ -97,6 +97,7 @@
 	var/image/decal
 	var/image/panel
 	var/image/status
+	var/image/eyes
 	var/atom/movable/hand
 	var/atom/movable/item
 
@@ -131,6 +132,11 @@
 	// Whether the manipulator will automatically activate on items entering the turf.
 	var/auto_activation = TRUE
 
+	// Whether we are cute and have googly eyes.
+	var/has_eyes = FALSE
+	// The idea of the googly eyes icon.
+	var/eyes_id = 1
+
 /obj/machinery/manipulator/atom_init()
 	. = ..()
 
@@ -153,9 +159,12 @@
 
 	vis_contents += hand
 
+	eyes_id = rand(1, 3)
+
 	decal = image(icon, src, "manip_decor", layer, dir)
 	panel = image(icon, src, "base-wires", layer, dir)
 	status = image(icon, src, "power_on", layer, dir)
+	eyes = image(icon, src, "eyes-[eyes_id]", layer, dir)
 
 	add_overlay(decal)
 
@@ -196,14 +205,16 @@
 	vis_contents -= hand
 	if(item)
 		hand.vis_contents -= item
-	cut_overlay(decal)
 
+	cut_overlay(decal)
 	cut_overlay(panel)
 	cut_overlay(status)
+	overlays -= eyes
 
 	QDEL_NULL(hand)
 	QDEL_NULL(item)
 	QDEL_NULL(decal)
+	QDEL_NULL(eyes)
 	QDEL_NULL(panel)
 	QDEL_NULL(status)
 
@@ -485,11 +496,11 @@
 
 	else if(default_unfasten_wrench(user, I) && !busy_moving && state == MANIPULATOR_STATE_IDLE)
 		if(state != MANIPULATOR_STATE_IDLE)
-			to_chat(usr, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
 			return
 
 		if(busy_moving)
-			to_chat(usr, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
 			return
 
 		if(!panel_open)
@@ -498,6 +509,12 @@
 				set_dir(dir)
 			else
 				cut_overlay(stat)
+		return
+
+	else if(istype(I, /obj/item/weapon/pen))
+		to_chat(user, "<span class='notice'>You draw googly eyes on the chassis of [src]. Somehow they even shake!</span>")
+		overlays += eyes
+		has_eyes = TRUE
 		return
 
 	else if(default_deconstruction_crowbar(I))
@@ -525,6 +542,10 @@
 	global.alive_mob_list -= clicker
 
 /obj/machinery/manipulator/proc/before_click()
+	if(name != "manipulator")
+		clicker.real_name = name
+		clicker.name = clicker.real_name
+
 	clicker.rejuvenate()
 	clicker.target_zone = target_zone
 	if(target_zone == "random")
@@ -612,6 +633,21 @@
 
 	try_interact_to()
 
+/obj/machinery/manipulator/proc/shake_eyes()
+	var/list/eyes_recipients = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			eyes_recipients += M.client
+
+	var/image/I = image(icon, src, "eyes-[eyes_id]-anim", layer, dir)
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	flick_overlay(I, eyes_recipients, 5)
+
+	eyes_id = rand(1, 3)
+	overlays -= eyes
+	eyes = image(icon, src, "eyes-[eyes_id]", layer, dir)
+	overlays += eyes
+
 /obj/machinery/manipulator/proc/try_interact_from(atom/target=null)
 	if(!target)
 		target = find_clickable(from_turf)
@@ -621,6 +657,9 @@
 		do_sleep(delay)
 		after_activate()
 		return
+
+	if(has_eyes)
+		shake_eyes()
 
 	set_state(MANIPULATOR_STATE_INTERACTING_FROM)
 	if(!do_sleep(delay, CALLBACK(src, /obj/machinery.proc/is_operational)))
