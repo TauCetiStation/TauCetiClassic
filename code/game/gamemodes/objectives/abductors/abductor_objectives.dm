@@ -19,6 +19,7 @@
 	target_amount = 20
 
 /datum/objective/experiment/long/check_completion()
+	. = OBJECTIVE_LOSS
 	var/total_points = 0
 	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		total_points += E.all_points
