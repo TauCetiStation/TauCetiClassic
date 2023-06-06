@@ -3184,14 +3184,11 @@
 	},
 /area/custom/syndicate_mothership)
 "ail" = (
-/obj/machinery/computer/telecrystals/boss{
-	dir = 4;
-	req_access = list(151)
-	},
+/obj/machinery/computer/telecrystals/boss,
 /obj/effect/decal/cleanable/cobweb,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	dir = 10;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aim" = (
@@ -3266,13 +3263,14 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
+	dir = 6;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aiv" = (
 /obj/machinery/computer/intruder_station,
 /turf/unsimulated/floor{
-	icon_state = "podhatch"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "aiw" = (
@@ -3554,14 +3552,13 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "ajc" = (
-/obj/structure/table/reinforced,
-/obj/item/device/megaphone{
-	pixel_y = 2
+/obj/structure/closet/secure_closet/syndicate,
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+	dir = 8;
+	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
 "ajd" = (
@@ -4038,11 +4035,12 @@
 	},
 /area/custom/syndicate_mothership)
 "akd" = (
-/obj/effect/landmark{
-	name = "Nuclear-Bomb"
+/obj/structure/closet/secure_closet/syndicate,
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
@@ -4646,8 +4644,8 @@
 	},
 /area/shuttle/syndicate/start)
 "alF" = (
-/obj/structure/closet/syndicate,
 /obj/item/weapon/tank/jetpack/oxygen/harness,
+/obj/structure/closet/secure_closet/syndicate,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -14734,10 +14732,26 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
 "aHE" = (
+/obj/effect/landmark{
+	name = "Nuclear-Bomb"
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/eastright{
+	dir = 2;
+	name = "Nuclear Bomb";
+	req_access = list(151)
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/vending/syndi,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -15852,11 +15866,7 @@
 	pixel_x = 32
 	},
 /obj/structure/rack,
-/obj/item/weapon/mining_voucher/armour{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/item/weapon/mining_voucher/kit,
+/obj/item/toy/crayon/spraycan,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -15918,6 +15928,13 @@
 	icon_state = "darkred"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"aKz" = (
+/obj/structure/closet/secure_closet/syndicate/commander,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkredfull"
+	},
+/area/custom/syndicate_mothership)
 "aKA" = (
 /obj/structure/table/reinforced,
 /turf/unsimulated/floor{
@@ -15954,6 +15971,12 @@
 	icon_state = "darkred"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"aKF" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/custom/syndicate_mothership)
 "aKG" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor,
@@ -15996,6 +16019,13 @@
 	icon_state = "darkred"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"aKN" = (
+/obj/structure/closet/secure_closet/syndicate,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
 "aKO" = (
 /obj/machinery/computer/guestpass/dark{
 	pixel_y = 26
@@ -16220,6 +16250,12 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
+"aLo" = (
+/obj/machinery/vending/syndi,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/syndicate_mothership)
 "aLp" = (
 /obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
@@ -16325,6 +16361,13 @@
 	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
+"aLD" = (
+/obj/structure/closet/secure_closet/syndicate,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
 "aLE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/kitchen_machine/microwave{
@@ -16504,6 +16547,33 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
+"aLX" = (
+/obj/structure/window/thin/reinforced,
+/obj/structure/table/reinforced,
+/obj/item/device/megaphone{
+	pixel_y = 2
+	},
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aLY" = (
+/obj/structure/closet/secure_closet/syndicate,
+/obj/structure/window/thin/reinforced,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
+"aLZ" = (
+/obj/structure/closet/secure_closet/syndicate,
+/obj/structure/window/thin/reinforced,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
 "aMa" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -86799,8 +86869,8 @@ ahJ
 ahJ
 ahI
 aaM
-aaM
-aaM
+ahJ
+ahJ
 aaM
 aaM
 aaM
@@ -87056,8 +87126,8 @@ aaM
 ahJ
 ahF
 ahF
-ahJ
-ahJ
+aie
+aaN
 aie
 aaN
 aaN
@@ -87312,9 +87382,9 @@ ahF
 ahF
 ahF
 ahF
-ahF
 aie
-aaN
+aie
+aKz
 aie
 ajy
 aki
@@ -87570,9 +87640,9 @@ ahF
 ahF
 ahF
 aie
-aie
 ail
-ajc
+aKF
+aLX
 aIK
 aIK
 aIK
@@ -90137,13 +90207,13 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-aie
 aie
 aiz
-akd
+alM
+ajc
+aKN
+aLY
+alM
 alM
 alM
 aIi
@@ -90394,12 +90464,12 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
 aie
 ajT
-ajd
+aIb
+aIb
+aIb
+aIb
 aIb
 aIb
 aIb
@@ -90651,12 +90721,12 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
 aie
 aHE
-ajd
+aIb
+aIb
+aLo
+aIb
 aIb
 aIb
 aIb
@@ -90908,12 +90978,12 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
 aie
 ajT
-ajd
+aIb
+aIb
+aIb
+aIb
 aIb
 aIb
 aIb
@@ -91165,12 +91235,12 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-aie
 aie
 ajk
+alY
+akd
+aLD
+aLZ
 aky
 aIM
 alY
