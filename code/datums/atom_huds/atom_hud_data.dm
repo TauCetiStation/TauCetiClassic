@@ -175,30 +175,30 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(hasloyalhud())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
 
-	if(hasmindshieldhud())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
 		holder.pixel_y = y
 		y += -5
 
-	if(hasobediencehud())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
 		holder = hud_list[IMPOBED_HUD]
 		holder.icon_state = "hud_imp_obedience"
 		holder.pixel_y = y
 		y += -5
 
-	if(haschemhud())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
 		holder = hud_list[IMPCHEM_HUD]
 		holder.icon_state = "hud_imp_chem"
 		holder.pixel_y = y
 		y += -5
 
-	if(hastrackhud())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
 		holder = hud_list[IMPTRACK_HUD]
 		holder.icon_state = "hud_imp_tracking"
 		holder.pixel_y = y

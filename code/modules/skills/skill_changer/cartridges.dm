@@ -93,7 +93,7 @@
 	if(!compatible)
 		H.adjustBrainLoss(100)
 		meltdown()
-	if(H.ishavemindprotecthud())
+	if(HAS_TRAIT(H, TRAIT_VISUAL_MINDSHIELD) || HAS_TRAIT(H, TRAIT_VISUAL_LOYAL))
 		H.adjustBrainLoss(25)
 		meltdown()
 		return

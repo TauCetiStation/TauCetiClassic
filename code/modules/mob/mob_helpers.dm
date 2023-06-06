@@ -31,20 +31,10 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/hasmindshieldhud()
-	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
-		return TRUE
-	return FALSE
-
 /mob/proc/isloyal()
 	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
 		if(L.implanted)
 			return TRUE
-	return FALSE
-
-/mob/proc/hasloyalhud()
-	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
-		return TRUE
 	return FALSE
 
 /mob/proc/ismindprotect()
@@ -64,11 +54,6 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/hasobediencehud()
-	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
-		return TRUE
-	return FALSE
-
 /mob/proc/isimplantedblueshield()
 	for(var/obj/item/weapon/implant/blueshield/L in src)
 		if(L.implanted)
@@ -81,20 +66,10 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/haschemhud()
-	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
-		return TRUE
-	return FALSE
-
 /mob/proc/isimplantedtrack()
 	for(var/obj/item/weapon/implant/tracking/L in src)
 		if(L.implanted)
 			return TRUE
-	return FALSE
-
-/mob/proc/hastrackhud()
-	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
-		return TRUE
 	return FALSE
 
 /proc/check_zone(zone)
