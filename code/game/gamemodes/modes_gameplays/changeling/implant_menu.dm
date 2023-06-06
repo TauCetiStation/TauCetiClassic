@@ -41,7 +41,9 @@
 	if(href_list["remove"])
 		REMOVE_TRAIT(M, topics_trait_keys[href_list["remove"]], FAKE_IMPLANT_TRAIT)
 	if(href_list["add"])
-		ADD_TRAIT(M, topics_trait_keys[href_list["add"]], FAKE_IMPLANT_TRAIT)
+		//validation preventing double-trait adding
+		if(!HAS_TRAIT_FROM(M, topics_trait_keys[href_list["add"]], FAKE_IMPLANT_TRAIT))
+			ADD_TRAIT(M, topics_trait_keys[href_list["add"]], FAKE_IMPLANT_TRAIT)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.sec_hud_set_implants()
