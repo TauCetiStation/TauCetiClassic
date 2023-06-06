@@ -148,6 +148,7 @@
 	hand = new(null)
 	hand.simulated = FALSE
 	hand.anchored = TRUE
+	hand.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	hand.appearance = I
 
 	vis_contents += hand
@@ -279,6 +280,8 @@
 
 	item.pixel_x = item_x
 	item.pixel_y = item_y
+
+	item.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	item.appearance = IM
 	item.appearance_flags |= KEEP_TOGETHER
