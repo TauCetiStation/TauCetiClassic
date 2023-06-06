@@ -32,12 +32,7 @@
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 
-	for(var/obj/O in src)
-		O.forceMove(get_turf(src))
-
-	for(var/mob/M in src)
-		M.forceMove(src.loc)
-		M.instant_vision_update(0)
+	dump_contents()
 
 	icon_state = icon_opened
 	src.opened = 1

@@ -1742,12 +1742,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Formalwear for the best occasions."
 	group = "Miscellaneous"
 
-/datum/supply_pack/eftpos
-	contains = list(/obj/item/device/eftpos)
-	name = "EFTPOS scanner"
-	crate_name = "EFTPOS crate"
-	group = "Miscellaneous"
-
 /datum/supply_pack/laser_tag
 	name = "Laser Tag Crate"
 	contains = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,

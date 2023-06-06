@@ -32,6 +32,11 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellowchecker"
@@ -569,7 +574,6 @@
 "bz" = (
 /obj/structure/rack,
 /obj/item/weapon/handcuffs,
-/obj/item/device/eftpos,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redchecker"

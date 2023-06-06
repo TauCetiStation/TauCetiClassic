@@ -11,6 +11,7 @@
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	salary = 0
+	starting_money = 60
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
 	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
@@ -37,6 +38,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	salary = 0
+	starting_money = 25
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
@@ -56,6 +58,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	salary = 0
+	starting_money = 30
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
@@ -75,6 +78,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mailsorting, access_recycler)
 	salary = 0
+	starting_money = 20
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
 	skillsets = list("Recycler" = /datum/skillset/recycler)

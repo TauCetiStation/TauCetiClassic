@@ -127,6 +127,8 @@
 
 	process_announcements()
 
+	process_fake_disintegration()
+
 	if(next_materials_update < world.time)
 		last_second_materials_change = this_second_materials_change
 		this_second_materials_change = 0
@@ -155,17 +157,25 @@
 		swarm_chat_message("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
 		bandwidth++
 
-	if(next_fake_disintegration < world.time && length(replicator_mines) > 0)
-		var/list/pos_mines = global.replicator_mines.Copy()
-		next_fake_disintegration = world.time + rand(min_fake_disintegration_cooldown, max_fake_disintegration_cooldown)
-		var/max_iterations = 100
-		while(length(pos_mines) > 0 && max_iterations > 0)
-			var/obj/item/mine/replicator/mine = pick(pos_mines)
-			pos_mines -= mine
-			max_iterations -= 1
-			if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
-				continue
-			INVOKE_ASYNC(mine, /obj/item/mine/replicator.proc/pretend_disintegration)
+/datum/faction/replicators/proc/process_fake_disintegration()
+	if(length(global.replicator_mines) <= 0)
+		return
+	if(next_fake_disintegration > world.time)
+		return
+	next_fake_disintegration = world.time + rand(min_fake_disintegration_cooldown, max_fake_disintegration_cooldown)
+
+	var/list/pos_mines = global.replicator_mines.Copy()
+	var/max_iterations = 100
+	while(length(pos_mines) > 0 && max_iterations > 0)
+		var/obj/item/mine/replicator/mine = pick(pos_mines)
+		pos_mines -= mine
+		max_iterations -= 1
+
+		if(SSchunks.has_ally_faction(mine, "replicator", 7))
+			continue
+		if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
+			continue
+		INVOKE_ASYNC(mine, /obj/item/mine/replicator.proc/pretend_disintegration)
 
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
