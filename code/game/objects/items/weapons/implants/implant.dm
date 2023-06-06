@@ -66,9 +66,8 @@
 	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/implant_removal(mob/host)
-	if(implant_trait)
-		if(istype(host))
-			REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
+	if(implant_trait && istype(host))
+		REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
