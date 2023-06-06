@@ -30,9 +30,9 @@
 	)
 
 	switch(pickweight(discount_types))
-		if(1)
+		if("big" )
 			return 0.75
-		if(2)
+		if("medium")
 			return 0.5
 		else
 			return 0.25
