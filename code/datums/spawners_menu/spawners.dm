@@ -730,54 +730,21 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_ABDUCTOR, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
-	var/ship_num = 1
-	var/kind_role = /datum/role/abductor
-
-/datum/spawner/abductor/New(_ship_num)
-	ship_num = _ship_num
-	. = ..()
 
 /datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnLoc
-	if(kind_role == /datum/role/abductor/scientist)
-		var/obj/effect/landmark/L = scientist_landmarks[ship_num]
-		spawnLoc = L.loc
-	else if(kind_role == /datum/role/abductor/agent)
-		var/obj/effect/landmark/L = agent_landmarks[ship_num]
-		spawnLoc = L.loc
 	// One team. Working together
 	var/datum/faction/abductors/team_fac = create_uniq_faction(/datum/faction/abductors)
-	var/mob/living/carbon/human/abductor/event/body_abductor = new(spawnLoc)
+	//Nullspace for spawning and assigned key causes image freeze, so move body to non-playing area
+	var/mob/living/carbon/human/abductor/event/body_abductor = new(pick(newplayer_start))
 	body_abductor.key = ghost.client.key
-	add_faction_member(team_fac, body_abductor, kind_role == /datum/role/abductor/scientist ? FALSE : TRUE)
+	add_faction_member(team_fac, body_abductor, team_fac.get_needed_teamrole())
 
 /datum/spawner/abductor/jump(mob/dead/observer/ghost)
-	var/jump_to = get_spawn_loc()
-	ghost.forceMove(jump_to)
+	var/obj/effect/landmark/L = scientist_landmarks[1]
+	ghost.forceMove(L.loc)
 
-/datum/spawner/abductor/proc/get_spawn_loc()
-	return
-
-/datum/spawner/abductor/scientist
-	name = "Похититель-Учёный"
-	id = "sci1"
-	kind_role = /datum/role/abductor/scientist
-
-/datum/spawner/abductor/scientist/get_spawn_loc()
-	var/obj/effect/landmark/L = scientist_landmarks[ship_num]
-	return L.loc
-
-/datum/spawner/abductor/agent
-	name = "Похититель-Агент"
-	id = "agent1"
-	kind_role = /datum/role/abductor/agent
-
-/datum/spawner/abductor/agent/get_spawn_loc()
-	var/obj/effect/landmark/L = agent_landmarks[ship_num]
-	return L.loc
-
-/mob/living/carbon/human/abductor/event
-	spawner_args = list(/datum/spawner/living/abductor, 2 MINUTES)
+/datum/spawner/abductor/check_cooldown(mob/dead/observer/ghost)
+	return TRUE
 
 /datum/spawner/survival
 	name = "Выживший"

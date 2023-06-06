@@ -1,3 +1,6 @@
+/mob/living/carbon/human/abductor/event
+	spawner_args = list(/datum/spawner/living/abductor, 2 MINUTES)
+
 /obj/effect/landmark/abductor
 	var/team = 1
 
@@ -30,6 +33,8 @@ var/global/list/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
 
 	max_roles = 8
 
+	var/num_agents = 0
+	var/num_scientists = 0
 	var/static/finished = FALSE
 	var/abductor_landmarks_setuped = FALSE
 
@@ -39,9 +44,7 @@ var/global/list/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
 		abductor_landmarks_setuped = TRUE
 		setup_landmarks()
 	//Always max teams, because major event
-	for(var/i in 1 to MAX_ABDUCTOR_TEAMS)
-		create_spawner(/datum/spawner/abductor/scientist, i)
-		create_spawner(/datum/spawner/abductor/agent, i)
+	create_spawners(/datum/spawner/abductor, max_roles)
 
 /datum/faction/abductors/proc/setup_landmarks()
 	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor agent"])
@@ -59,13 +62,20 @@ var/global/list/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
 	var/datum/role/newRole = ..()
 	if(!newRole)
 		return
+	num_scientists++
 	newRole.OnPostSetup()
 
 /datum/faction/abductors/HandleRecruitedMind(datum/mind/M, laterole)
 	var/datum/role/newRole = ..()
 	if(!newRole)
 		return
+	num_agents++
 	newRole.OnPostSetup()
+
+/datum/faction/abductors/proc/get_needed_teamrole()
+	. = FALSE
+	if(num_scientists > 0)
+		. = num_scientists > num_agents
 
 /datum/faction/abductors/can_setup()
 	if(!..())

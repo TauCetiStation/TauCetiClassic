@@ -30,8 +30,12 @@
 /datum/role/abductor/proc/equip_class()
 	return
 
+/datum/role/abductor/proc/move_to_positions()
+	return
+
 /datum/role/abductor/OnPostSetup(laterole)
 	. = ..()
+	move_to_positions()
 	var/mob/living/carbon/human/abductor/H = antag.current
 	H.set_species(ABDUCTOR)
 	H.real_name = "[pick(global.greek_pronunciation)]" + " " + name
@@ -58,6 +62,12 @@
 
 	return TRUE
 
+/datum/role/abductor/agent/move_to_positions()
+	var/datum/faction/abductors/mothership = faction
+	if(mothership)
+		var/obj/effect/landmark/L = agent_landmarks[clamp(mothership.num_agents, 1, 4)]
+		antag.current.forceMove(L.loc)
+
 /datum/role/abductor/agent/equip_class()
 	var/mob/living/carbon/human/agent = antag.current
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
@@ -80,6 +90,12 @@
 	to_chat(antag.current, "<span class='info'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>")
 
 	return TRUE
+
+/datum/role/abductor/scientist/move_to_positions()
+	var/datum/faction/abductors/mothership = faction
+	if(mothership)
+		var/obj/effect/landmark/L = scientist_landmarks[clamp(mothership.num_scientists, 1, 4)]
+		antag.current.forceMove(L.loc)
 
 /datum/role/abductor/scientist/equip_class()
 	var/mob/living/carbon/human/scientist = antag.current
