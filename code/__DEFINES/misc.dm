@@ -3,9 +3,6 @@
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
-// gets final path from /obj/random, can be null if random has a chance to spawn nothing
-#define PATH_OR_RANDOM_PATH(path) ispath(path, /obj/random) ? random2path(path) : path
-
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
