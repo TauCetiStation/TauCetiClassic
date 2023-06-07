@@ -452,3 +452,34 @@
 
 /datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_WOO_FEMALE : SOUNDIN_WOO_MALE)
+
+
+/datum/emote/human/spit
+	key = "spit"
+
+	message_1p = "You spit tactlessly."
+	message_3p = "spits tactlessly."
+
+	message_impaired_production = "spits tactlessly."
+	message_impaired_reception = "You see someone spits tactlessly."
+
+	message_miming = "silently gathers invisible spittle and spit it out."
+	message_muzzled = "tries to gather some spittle."
+
+	message_type = SHOWMSG_AUDIO
+
+	cooldown = 2 SECONDS
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/spit/do_emote(mob/user, emote_key, intentional)
+	. = ..()
+	switch(pick(1, 2))
+		if(1)
+			playsound(user, 'sound/voice/spit_1.ogg', VOL_EFFECTS_MASTER)
+		if(2)
+			playsound(user, 'sound/voice/spit_2.ogg', VOL_EFFECTS_MASTER)
