@@ -463,7 +463,7 @@
 	message_impaired_production = "spits tactlessly."
 	message_impaired_reception = "You see someone spits tactlessly."
 
-	message_miming = "silently gathers invisible spittle and spit it out."
+	message_miming = "silently gathers invisible spittle and spits it out."
 	message_muzzled = "tries to gather some spittle."
 
 	message_type = SHOWMSG_AUDIO
