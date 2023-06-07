@@ -1,7 +1,12 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
+	/* <base>
+	var/turf/basetype = /turf/environment/space
+	</base> */
+	// <trainstation13>
 	var/turf/basetype = /turf/simulated/floor/plating
+	// </trainstation13>
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 	var/can_deconstruct = FALSE

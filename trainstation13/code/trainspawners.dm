@@ -33,7 +33,7 @@ var/global/spawn_list_type = "normal"
 	set name = "Change Spawn List Type"
 
 	var/prev_spawn_list_type = global.spawn_list_type
-	global.spawn_list_type = global.spawn_list_type == "normal" ? "normal" : "station"
+	global.spawn_list_type = global.spawn_list_type == "normal" ? "station" : "normal"
 	to_chat(src, "Changed Spawn List Type from [prev_spawn_list_type] to [global.spawn_list_type]")
 
 	for(var/obj/effect/trainspawner/T as anything in global.trainspawners)
@@ -64,22 +64,58 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	var/list/spawn_lists = list(
 		"normal" = list(
 			// trees grass and stuff, example below
-			// /obj/tree = 100,
-			// /obj/grass = 90,
-			// /mob/bear = 10,
-			// /mob/easteregg = 1,
-			/obj/item/trash/raisins = 1,
+			"null" = 40,
+			/obj/machinery/floodlight = 10,
+			/obj/structure/flora/tree/pine/train = 30,
+			/obj/structure/flora/tree/dead/train = 80,
+			/obj/structure/flora/ausbushes/fullgrass/train = 30,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
+			/obj/structure/flora/ausbushes/palebush/train = 10,
+			/obj/structure/flora/ausbushes/grassybush/train = 10,
+			/obj/structure/flora/ausbushes/stalkybush/train = 30,
+			/obj/structure/flora/ausbushes/reedbush/train = 20,
+			/obj/structure/flora/mine_rocks/train = 10,
+			/obj/structure/bear_piano = 1,
+			/obj/structure/bear_harmonica = 1,
+			/obj/structure/bear_vodka = 1,
+			/obj/item/stack/rods = 2,
+			/obj/item/weapon/grown/log = 2,
+			/obj/item/weapon/cigbutt = 5,
+			/obj/item/weapon/cigbutt/cigarbutt = 2,
+			/obj/item/trash/semki = 5,
+			/obj/item/trash/popcorn = 5,
+			/obj/item/trash/sosjerky = 5,
+			/obj/item/trash/candy = 5,
+			/obj/item/trash/raisins = 5,
+			/obj/item/trash/chips = 5,
+			/obj/item/trash/pistachios = 5,
+			/obj/structure/scrap/medical/train = 2,
+			/obj/structure/scrap/medical/large/train = 2,
+			/obj/structure/scrap/vehicle/train = 2,
+			/obj/structure/scrap/vehicle/large/train = 2,
+			/obj/structure/scrap/food/train = 2,
+			/obj/structure/scrap/food/large/train = 2,
+			/obj/structure/scrap/poor/train = 2,
+			/obj/structure/scrap/poor/large/train = 2,
 		),
 		"station" = list(
 			// benches and stuff
-			// /obj/bench = 100,
-			// /obj/trash = 10,
-			// /mob/easteregg = 1,
-			/obj/item/trash/chips = 1,
+			"null" = 90,
+			/obj/structure/closet/crate/bin = 10,
+			/obj/item/weapon/cigbutt = 2,
+			/obj/item/weapon/cigbutt/cigarbutt = 1,
+			/obj/item/trash/semki = 2,
+			/obj/item/trash/popcorn = 2,
+			/obj/item/trash/sosjerky = 2,
+			/obj/item/trash/candy = 2,
+			/obj/item/trash/raisins = 2,
+			/obj/item/trash/chips = 2,
+			/obj/item/trash/pistachios = 2,
 		),
 	)
 
-	var/min_delay = 5 SECONDS
+	var/min_delay = 3 SECONDS
 	var/max_delay = 10 SECONDS
 
 	var/next_spawn = 0
@@ -126,10 +162,40 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 	var/globally_operating = TRUE
 
 	var/list/despawn_list = list(
-		// /obj/bench,
-		// /obj/trash,
 		/obj/item/trash/raisins,
 		/obj/item/trash/chips,
+		/obj/machinery/floodlight,
+		/obj/item/weapon/stock_parts/cell/high,
+		/obj/structure/flora/tree/pine/train,
+		/obj/structure/flora/tree/dead/train,
+		/obj/structure/flora/ausbushes/fullgrass/train,
+		/obj/structure/flora/ausbushes/sparsegrass/train,
+		/obj/structure/flora/ausbushes/lavendergrass/train,
+		/obj/structure/flora/ausbushes/palebush/train,
+		/obj/structure/flora/ausbushes/grassybush/train,
+		/obj/structure/flora/ausbushes/stalkybush/train,
+		/obj/structure/flora/ausbushes/reedbush/train,
+		/obj/structure/flora/mine_rocks/train,
+		/obj/structure/bear_piano,
+		/obj/structure/bear_harmonica,
+		/obj/structure/bear_vodka,
+		/obj/item/weapon/cigbutt,
+		/obj/item/weapon/cigbutt/cigarbutt,
+		/obj/item/trash/semki,
+		/obj/item/trash/popcorn,
+		/obj/item/trash/sosjerky,
+		/obj/item/trash/candy,
+		/obj/item/trash/raisins,
+		/obj/item/trash/chips,
+		/obj/item/trash/pistachios,
+		/obj/structure/scrap/medical/train,
+		/obj/structure/scrap/medical/large/train,
+		/obj/structure/scrap/vehicle/train,
+		/obj/structure/scrap/vehicle/large/train,
+		/obj/structure/scrap/food/train,
+		/obj/structure/scrap/food/large/train,
+		/obj/structure/scrap/poor/train,
+		/obj/structure/scrap/poor/large/train,
 	)
 
 /obj/effect/traindespawner/atom_init()
@@ -179,6 +245,33 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 
 /obj/structure/flora/mine_rocks/train
 	anchored = FALSE
+
+//GARBAGE
+
+/obj/structure/scrap/medical/train
+	anchored = FALSE
+
+/obj/structure/scrap/medical/large/train
+	anchored = FALSE
+
+/obj/structure/scrap/vehicle/train
+	anchored = FALSE
+
+/obj/structure/scrap/vehicle/large/train
+	anchored = FALSE
+
+/obj/structure/scrap/food/train
+	anchored = FALSE
+
+/obj/structure/scrap/food/large/train
+	anchored = FALSE
+
+/obj/structure/scrap/poor/train
+	anchored = FALSE
+
+/obj/structure/scrap/poor/large/train
+	anchored = FALSE
+
 
 //EASTER EGGS
 
