@@ -185,8 +185,6 @@
 	if(is_operational() && !panel_open)
 		add_overlay(status)
 
-	STOP_PROCESSING(SSmobs, src)
-
 /obj/machinery/manipulator/RefreshParts()
 	delay = 6
 
