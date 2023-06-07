@@ -302,7 +302,7 @@
 	id = "atmos";
 	name = "Atmospherics Lockdown";
 	pixel_y = 16;
-	req_access = list(24)
+	req_access = list(56)
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -40424,7 +40424,7 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "engi blast";
 	name = "Engineers Blast Doors";
-	req_access = list(56);
+	req_access = list(10);
 	pixel_y = -26
 	},
 /turf/simulated/floor{
@@ -42719,7 +42719,8 @@
 	},
 /obj/machinery/door_control{
 	id = "QM Lockdown Blast Doors";
-	name = "QM Lockdown Blast Doors"
+	name = "QM Lockdown Blast Doors";
+	req_access = list(41)
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -64326,12 +64327,14 @@
 	},
 /obj/machinery/door_control{
 	id = "medbay_biohazard";
-	pixel_x = -6
+	pixel_x = -6;
+	req_access = list(40)
 	},
 /obj/machinery/door_control{
 	id = "cmo_shutters";
 	pixel_x = 6;
-	name = "CMO Shutters"
+	name = "CMO Shutters";
+	req_access = list(40)
 	},
 /turf/simulated/floor{
 	dir = 8;
