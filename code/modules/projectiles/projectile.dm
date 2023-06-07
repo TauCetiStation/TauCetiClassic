@@ -220,8 +220,6 @@
 				else
 					mob.bullet_act(src,def_zone)
 
-	//stop flying
-	on_hit(A)
 
 	density = FALSE
 	invisibility = 101
