@@ -4036,9 +4036,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(31)
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
