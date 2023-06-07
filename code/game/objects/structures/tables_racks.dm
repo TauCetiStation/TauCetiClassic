@@ -640,15 +640,43 @@
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W.GetID()
 		scan_card(Card, user)
+	else if(istype(W, /obj/item/weapon/ewallet))
+		var/obj/item/weapon/ewallet/EW = W
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает чип к столу.</span>")
+		scan_ewallet(EW, user)
 	else
 		return ..()
 
-/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
-	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
-	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
 
+/obj/lot_holder/proc/pay_with_account(datum/money_account/Buyer, mob/user)
 	if(!Buyer)
 		return
+
+	if(Buyer.suspended)
+		table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Оплачивающий аккаунт заблокирован.</span>")
+		return
+
+	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
+	var/cost = held_Item.price_tag["price"]
+
+	if(cost > 0 && Seller && Buyer != Seller)
+		if(Seller.suspended)
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+			return
+
+		if(cost <= Buyer.money)
+			charge_to_account(Buyer.account_number, Seller.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Buyer.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+
+		else
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
+			return
+
+	held_Item.remove_price_tag()
+	qdel(src)
+
+/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
+	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
 
 	var/attempt_pin = 0
 	if(Buyer.security_level > 0)
@@ -665,21 +693,10 @@
 			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
 			return
 
-	var/cost = held_Item.price_tag["price"]
+	pay_with_account(Buyer, user)
 
-	if(cost > 0 && Seller && Buyer != Seller)
-		if(Seller.suspended)
-			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
-			return
-		if(cost <= Buyer.money)
-			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
-			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
-		else
-			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
-			return
-
-	held_Item.remove_price_tag()
-	qdel(src)
+/obj/lot_holder/proc/scan_ewallet(obj/item/weapon/ewallet/EW, mob/user)
+	pay_with_account(get_account(EW.account_number), user)
 
 /obj/structure/table/reinforced/stall
 	name = "stall table"

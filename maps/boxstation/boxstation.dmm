@@ -7840,6 +7840,9 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anx" = (
@@ -8657,6 +8660,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/item/device/cardpay{
+	pixel_x = -10
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -12473,6 +12479,11 @@
 	dir = 2;
 	name = "Hydroponics";
 	req_access = list(35)
+	},
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor,
@@ -20830,9 +20841,6 @@
 /area/station/rnd/hallway)
 "aMe" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/device/eftpos{
-	eftpos_name = "Chapel EFTPOS scanner"
-	},
 /obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -24596,9 +24604,6 @@
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
 	},
-/obj/item/device/eftpos{
-	eftpos_name = "Bar EFTPOS scanner"
-	},
 /obj/item/device/radio/intercom{
 	pixel_x = -25
 	},
@@ -26423,6 +26428,7 @@
 /area/station/cargo/office)
 "aWy" = (
 /obj/structure/table/reinforced,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -28228,9 +28234,6 @@
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/device/eftpos{
-	eftpos_name = "Quartermaster EFTPOS scanner"
-	},
 /obj/item/weapon/coin/silver{
 	pixel_x = -10;
 	pixel_y = 3
@@ -28688,6 +28691,11 @@
 	layer = 3.3;
 	pixel_x = -32;
 	supply_display = 1
+	},
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -29512,6 +29520,9 @@
 	req_access = list(7)
 	},
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bcd" = (
@@ -30224,6 +30235,7 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/device/cardpay,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bdy" = (
@@ -31054,9 +31066,6 @@
 /area/station/hallway/primary/central)
 "beP" = (
 /obj/structure/table/woodentable,
-/obj/item/device/eftpos{
-	eftpos_name = "Captain EFTPOS scanner"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -32087,9 +32096,6 @@
 /area/station/cargo/office)
 "bgG" = (
 /obj/item/device/assembly/timer,
-/obj/item/device/eftpos{
-	eftpos_name = "Bridge EFTPOS scanner"
-	},
 /obj/structure/table/woodentable,
 /obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
@@ -34676,6 +34682,11 @@
 "blJ" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/glass,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "blK" = (
@@ -34826,9 +34837,6 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/folder/brown,
-/obj/item/device/eftpos{
-	eftpos_name = "Cargo Bay EFTPOS scanner"
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -36097,6 +36105,11 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "box" = (
@@ -36332,7 +36345,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/clothing/head/cakehat,
+/obj/item/device/cardpay{
+	dir = 4;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -42131,6 +42147,11 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/folder/white,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bzo" = (
@@ -46446,6 +46467,11 @@
 /obj/item/weapon/haircomb,
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/dropper,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -47510,6 +47536,9 @@
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating,
 /area/station/rnd/robotics)
 "bJm" = (
@@ -53764,6 +53793,11 @@
 	req_one_access = list(47,9)
 	},
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics)
 "bXt" = (
@@ -54258,9 +54292,6 @@
 "bYL" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/suit_jacket/red,
-/obj/item/device/eftpos{
-	eftpos_name = "Library EFTPOS scanner"
-	},
 /obj/item/device/taperecorder,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -55962,6 +55993,11 @@
 	},
 /obj/item/weapon/bell,
 /obj/machinery/door/firedoor,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/break_room)
 "cfn" = (
@@ -61989,9 +62025,6 @@
 /area/station/bridge/hop_office)
 "cvn" = (
 /obj/structure/table,
-/obj/item/device/eftpos{
-	eftpos_name = "HoP EFTPOS scanner"
-	},
 /obj/machinery/door_control{
 	id = "HoP_queue";
 	name = "Queue shutters";
@@ -63194,9 +63227,17 @@
 	dir = 1
 	},
 /obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = -4
+	pixel_x = -10
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/teapot,
+/obj/item/weapon/reagent_containers/glass/beaker/teapot{
+	pixel_x = -5
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = 10
+	},
+/obj/item/weapon/pen{
+	pixel_x = 10
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -68821,6 +68862,11 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/item/device/cardpay{
+	dir = 4;
+	pixel_y = 10;
+	pixel_x = 5
+	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
@@ -69275,9 +69321,6 @@
 /obj/item/weapon/packageWrap,
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/hydroponics,
-/obj/item/device/eftpos{
-	eftpos_name = "Botany EFTPOS scanner"
-	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -73465,11 +73508,10 @@
 	dir = 1;
 	name = "Medbay Reception"
 	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -5
-	},
-/obj/item/weapon/pen{
-	pixel_x = -5
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -79536,9 +79578,6 @@
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/sundress,
-/obj/item/device/eftpos{
-	eftpos_name = "Kitchen EFTPOS scanner"
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cold Room APC";
@@ -81798,6 +81837,9 @@
 "ujL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced/stall,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -82441,10 +82483,11 @@
 "vWz" = (
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
-/obj/structure/table/reinforced/stall,
-/obj/item/weapon/storage/fancy/donut_box{
-	pixel_y = 8
+/obj/item/device/cardpay{
+	dir = 4;
+	pixel_y = 10
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

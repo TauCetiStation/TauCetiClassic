@@ -457,15 +457,6 @@
 	icon_state = "skirt_cadet"
 	item_state = "skirt_cadet"
 
-/obj/item/clothing/under/rank/forensic_technician
-	desc = "It has a Forensics rank stripe on it."
-	name = "forensics jumpsuit"
-	icon_state = "forensicsred"
-	item_state = "forensicsred"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
-	siemens_coefficient = 0.9
-
 /obj/item/clothing/under/rank/cargo_fem
 	name = "quartermaster's dress"
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
