@@ -127,8 +127,6 @@
 	S.fields["criminal"] = criminal_status
 	add_record(author, S, "Уголовный статус статус был изменен на <b>[criminal_status]</b><BR><b>Причина:</b> [reason]")
 	for(var/mob/living/carbon/human/H in global.human_list)
-		if(!H.simulated)
-			continue
 		if(H.real_name == target_name)
 			H.sec_hud_set_security_status()
 

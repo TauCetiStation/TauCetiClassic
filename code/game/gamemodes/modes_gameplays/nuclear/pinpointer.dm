@@ -171,8 +171,6 @@
 /proc/get_humans_by_dna(dna)
 	var/list/result = list()
 	for(var/mob/living/carbon/human/player in human_list)
-		if(!player.simulated)
-			continue
 		if (!player.dna)
 			continue
 		if (!player.dna.unique_enzymes)

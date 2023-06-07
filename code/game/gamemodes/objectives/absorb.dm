@@ -12,8 +12,6 @@
 					n_p ++
 		else if (SSticker.current_state == GAME_STATE_PLAYING)
 			for(var/mob/living/carbon/human/P as anything in human_list)
-				if(!P.simulated)
-					continue
 				if(P.client && !ischangeling(P) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)

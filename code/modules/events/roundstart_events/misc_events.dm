@@ -1,7 +1,5 @@
 /datum/event/feature/headset/start()
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(!H.simulated)
-			continue
 		if((H.l_ear || H.r_ear) && prob(80) && !isanyantag(H))
 			var/headset_to_del = H.l_ear ? H.l_ear : H.r_ear
 			message_admins("RoundStart Event: [headset_to_del] was removed from [H]")
@@ -10,8 +8,6 @@
 
 /datum/event/feature/survbox/start()
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(!H.simulated)
-			continue
 		if(!prob(10) || isanyantag(H))
 			continue
 		var/list/boxs = H.get_all_contents_type(/obj/item/weapon/storage/box/survival)

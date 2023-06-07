@@ -90,8 +90,6 @@
 
 /obj/nano_module/crew_monitor/proc/scan()
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(!H.simulated)
-			continue
 		var/obj/item/clothing/under/C
 		if(isunder(H.w_uniform))
 			C = H.w_uniform

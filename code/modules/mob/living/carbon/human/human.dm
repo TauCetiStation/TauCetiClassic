@@ -1195,8 +1195,6 @@
 	var/target = null	   //Chosen target.
 
 	for(var/mob/living/carbon/human/M as anything in human_list) //#Z2 only carbon/human for now
-		if(!M.simulated)
-			continue
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
 			count++

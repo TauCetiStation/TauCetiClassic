@@ -275,7 +275,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						for(var/i in global.department_accounts)
 							if(t1 == global.department_accounts[i].account_number)
 								tgui_alert(usr, "This is department account, you can't use it.")
-								return
+								return				
 						if(MA.owner_name != src.active1.fields["name"])
 							tgui_alert(usr, "[src.active1.fields["name"]] is not owner of this money account.")
 							return
@@ -284,10 +284,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						if(R)
 							tgui_alert(usr, "This money account is already used by [R.fields["id"]] record.")
 							return
-
+						
 						for(var/mob/living/carbon/human/H as anything in global.human_list)
-							if(!H.simulated)
-								continue
 							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
 								continue
 							var/old_value = src.active1.fields["insurance_account_number"]
@@ -297,10 +295,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Medical", freq = radiochannels["Medical"])
 							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Security", freq = radiochannels["Security"])
 							qdel(announcer)
-
+						
 						if(src.active1.fields["insurance_account_number"] != t1)
 							tgui_alert(usr, "Can't match the 'fingerprint' data, please check this and try again.")
-
+						
 				if("sex")
 					if (istype(src.active1, /datum/data/record))
 						if (src.active1.fields["sex"] == "Male")
