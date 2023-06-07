@@ -10688,38 +10688,41 @@
 	id = "robotic_shutters";
 	name = "Robotist Shutters";
 	pixel_x = 1;
-	pixel_y = 8
+	pixel_y = 8;
+	req_access = list(30)
 	},
 /obj/machinery/door_control{
 	id = "scince_lab_shutters";
 	name = "Science Lab Shutters";
 	pixel_x = -10;
-	pixel_y = -3
+	pixel_y = -3;
+	req_access = list(30)
 	},
 /obj/machinery/door_control{
 	id = "genetic_shutters";
 	name = "Genetic Shutters";
 	pixel_x = 1;
-	pixel_y = -3
+	pixel_y = -3;
+	req_access = list(30)
 	},
 /obj/machinery/door_control{
 	id = "Biohazard";
 	name = "Biohazard Shutter Control";
 	pixel_x = -10;
 	pixel_y = 8;
-	req_access = list(47)
+	req_access = list(30)
 	},
 /obj/machinery/door_control{
 	id = "east_science_hazard";
 	name = "East Science Biohazard Control";
-	req_access = list(47);
+	req_access = list(30);
 	pixel_x = 12;
 	pixel_y = 8
 	},
 /obj/machinery/door_control{
 	id = "toxin_science_hazard";
 	name = "Toxin Biohazard Control";
-	req_access = list(47);
+	req_access = list(30);
 	pixel_x = 12;
 	pixel_y = -3
 	},
