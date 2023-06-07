@@ -40618,9 +40618,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
-/obj/machinery/door/airlock/medical{
-	name = "Medbay Desk"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
