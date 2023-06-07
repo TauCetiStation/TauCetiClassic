@@ -1460,6 +1460,7 @@
 	tox_mod = 0
 	brain_mod = 0
 	speed_mod = -0.2
+	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
