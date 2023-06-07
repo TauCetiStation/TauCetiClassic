@@ -476,7 +476,7 @@
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
-/datum/emote/human/spit/do_emote(mob/user, emote_key, intentional)
+/datum/emote/human/spit/get_sound(mob/user, emote_key, intentional)
 	. = ..()
 	switch(pick(1, 2))
 		if(1)
