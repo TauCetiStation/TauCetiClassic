@@ -691,6 +691,7 @@
 
 	set_state(MANIPULATOR_STATE_IDLE)
 	do_sleep(delay)
+	after_activate()
 	try_interact_from()
 
 /obj/machinery/manipulator/proc/try_interact_to(atom/target=null)
