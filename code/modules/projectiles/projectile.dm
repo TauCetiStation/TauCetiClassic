@@ -114,10 +114,6 @@
 
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
-//obj/item/projectile/proc/on_impact(atom/A)
-//	impact_effect(effect_transform)		// generate impact effect
-//	if(proj_impact_sound)
-//		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	return check_trajectory(target, src, pass_flags, flags)
