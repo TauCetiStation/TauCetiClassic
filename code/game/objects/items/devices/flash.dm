@@ -10,14 +10,16 @@
 	flags = CONDUCT
 	origin_tech = "magnets=2;combat=1"
 
-	action_button_name = "Toggle Flash"
-
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flash)
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 
 	var/times_used = 0 //Number of times it's been used.
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
+
+/datum/action/item_action/hands_free/toggle_flash
+	name = "Toggle Flash"
 
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && user.ClumsyProbabilityCheck(50))

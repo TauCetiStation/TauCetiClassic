@@ -232,10 +232,14 @@
 	w_class = SIZE_SMALL
 	two_hand_weapon = DESIRABLE_TWOHAND
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
-	action_button_name = "Toggle GL"
 	fire_delay = 7
 	var/using_gl = FALSE
 	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/gl
+	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_gl)
+
+/datum/action/item_action/hands_free/toggle_gl
+	name = "Toggle GL"
 
 /obj/item/weapon/gun/projectile/automatic/drozd/examine(mob/user)
 	. = ..()

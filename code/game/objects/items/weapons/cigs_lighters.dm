@@ -440,7 +440,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
 
-	action_button_name = "Toggle Lighter"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_lighter)
+
+/datum/action/item_action/hands_free/toggle_lighter
+	name = "Toggle Lighter"
 
 /obj/item/weapon/lighter/zippo
 	name = "Zippo lighter"

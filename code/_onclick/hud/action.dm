@@ -74,6 +74,14 @@
 				Activate()
 			else
 				Deactivate()
+
+	if(button == null)
+		var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
+		N.owner = src.owner
+		button = N
+	var/atom/movable/screen/movable/action_button/B = button
+	B.UpdateIcon()
+	B.name = UpdateName()
 	return
 
 /datum/action/proc/Activate()
@@ -297,7 +305,7 @@
 /datum/action/item_action
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE
 
-/datum/action/item_action/CheckRemoval(mob/living/user)
+/datum/action/item_action/CheckRemoval(mob/user)
 	return !(target in user)
 
 /datum/action/item_action/hands_free

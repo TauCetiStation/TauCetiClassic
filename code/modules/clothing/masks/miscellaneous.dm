@@ -60,8 +60,11 @@
 	flags = MASKCOVERSMOUTH
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
-	action_button_name = "Adjust scarf"
 	var/hanging = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_scarf)
+
+/datum/action/item_action/hands_free/adjust_scarf
+	name = "Adjust scarf"
 
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
@@ -178,10 +181,13 @@
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = SIZE_MINUSCULE
 	flags = MASKCOVERSMOUTH
-	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
 	item_state = "greenbandana"
 	body_parts_covered = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_bandana)
+
+/datum/action/item_action/hands_free/adjust_bandana
+	name = "Adjust Bandana"
 
 /obj/item/clothing/mask/chicken
 	name = "chicken suit head"

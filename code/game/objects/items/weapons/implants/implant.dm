@@ -286,8 +286,10 @@ Implant Specifics:<BR>"}
 	icon_state = "implant"
 	uses = 3
 
-	action_button_name = "Adrenaline implant"
-	action_button_is_hands_free = TRUE
+	item_action_types = list(/datum/action/item_action/adrenaline_implant)
+
+/datum/action/item_action/adrenaline_implant
+	name = "Adrenaline implant"
 
 /obj/item/weapon/implant/adrenaline/get_data()
 	var/dat = {"
@@ -326,8 +328,10 @@ Implant Specifics:<BR>"}
 	icon_state = "emp"
 	uses = 3
 
-	action_button_name = "EMP pulse"
-	action_button_is_hands_free = TRUE
+	item_action_types = list(/datum/action/item_action/emp_implant)
+
+/datum/action/item_action/emp_implant
+	name = "EMP implant"
 
 /obj/item/weapon/implant/emp/ui_action_click()
 	if (uses > 0)
@@ -545,8 +549,11 @@ var/global/list/death_alarm_stealth_areas = list(
 	desc = "Stores up to two big items in a bluespace pocket."
 	icon_state = "implant_evil"
 	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
-	action_button_name = "Bluespace pocket"
 	var/obj/item/weapon/storage/internal/imp/storage
+	item_action_types = list(/datum/action/item_action/storage_implant)
+
+/datum/action/item_action/storage_implant
+	name = "Bluespace pocket"
 
 /obj/item/weapon/implant/storage/atom_init()
 	. = ..()

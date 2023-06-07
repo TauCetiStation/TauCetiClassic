@@ -25,15 +25,8 @@
 		if(A.CheckRemoval(src))
 			A.Remove(src)
 	for(var/obj/item/I in src)
-		if(I.action_button_name)
-			if(!I.action)
-				if(I.action_button_is_hands_free)
-					I.action = new/datum/action/item_action/hands_free
-				else
-					I.action = new/datum/action/item_action
-				I.action.name = I.action_button_name
-				I.action.target = I
-			I.action.Grant(src)
+		for(var/datum/action/A in I.item_actions)
+			A.Grant(src)
 
 /mob/living/proc/update_health_hud()
 	if(!healths)
@@ -67,8 +60,8 @@
 		return
 
 	handle_vision()
-	handle_actions()
-	update_action_buttons()
+	//handle_actions()
+	//update_action_buttons()
 	update_health_hud()
 
 	pullin?.update_icon(src)

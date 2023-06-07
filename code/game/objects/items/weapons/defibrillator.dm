@@ -12,11 +12,14 @@
 	throwforce = 6
 	w_class = SIZE_NORMAL
 	origin_tech = list("biotech" = 2, "powerstorage" = 1)
-	action_button_name = "Remove/Replace Paddles"
+	item_action_types = list(/datum/action/item_action/hands_free/paddles)
 
 	var/obj/item/weapon/shockpaddles/linked/paddles
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/charge_time = 1 SECONDS
+
+/datum/action/item_action/hands_free/paddles
+	name = "Remove/Replace Paddles"
 
 /obj/item/weapon/defibrillator/atom_init() // starts without a cell for rnd
 	. = ..()

@@ -9,7 +9,10 @@
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
-	action_button_name = "Toggle Jetpack"
+	item_action_types = list(/datum/action/item_action/toggle_jetpack)
+
+/datum/action/item_action/toggle_jetpack
+	name = "Toggle Jetpack"
 
 /obj/item/weapon/tank/jetpack/atom_init()
 	. = ..()

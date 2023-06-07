@@ -26,9 +26,8 @@
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/datum/action/item_action/action = null
-	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
-	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/list/item_action_types = list() //Actions that item spawns on atom_init(), paths
+	var/list/item_actions = list()      //Spawned actions, datums
 
 	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
@@ -126,8 +125,15 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/atom_init(mapload, ...)
+	. = ..()
+	for(var/path in item_action_types)
+		var/datum/action/B = new path (src)
+		item_actions += B
+
 /obj/item/Destroy()
-	QDEL_NULL(action)
+	for(var/datum/action/A in item_actions)
+		QDEL_NULL(A)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -357,6 +363,9 @@
 		qdel(src)
 	update_world_icon()
 	set_alt_apperances_layers()
+	for(var/datum/action/A in item_actions)
+		if(A.CheckRemoval(user))
+			A.Remove(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -394,6 +403,8 @@
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	update_world_icon()
 	set_alt_apperances_layers()
+	for(var/datum/action/A in item_actions)
+		A.Grant(user)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.

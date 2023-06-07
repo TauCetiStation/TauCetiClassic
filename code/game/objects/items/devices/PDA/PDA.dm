@@ -78,7 +78,10 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	action_button_name = "Toggle light"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_light)
+
+/datum/action/item_action/hands_free/toggle_light
+	name = "Toggle light"
 
 /obj/item/device/pda/atom_init()
 	. = ..()

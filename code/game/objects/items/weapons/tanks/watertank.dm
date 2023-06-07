@@ -8,10 +8,14 @@
 	item_state = "waterbackpack"
 	flags = OPENCONTAINER
 	w_class = SIZE_NORMAL
-	action_button_name = "Toggle Mister"
 
 	var/obj/item/weapon/reagent_containers/spray/mister/noz
 	volume = 500
+
+	item_action_types = list(/datum/action/item_action/toggle_mister)
+
+/datum/action/item_action/toggle_mister
+	name = "Toggle Mister"
 
 /obj/item/weapon/reagent_containers/watertank_backpack/atom_init()
 	. = ..()

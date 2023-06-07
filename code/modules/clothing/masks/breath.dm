@@ -8,8 +8,11 @@
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
-	action_button_name = "Adjust mask"
 	var/hanging = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_mask)
+
+/datum/action/item_action/hands_free/adjust_mask
+	name = "Adjust mask"
 
 /obj/item/clothing/mask/breath/attack_self()
 

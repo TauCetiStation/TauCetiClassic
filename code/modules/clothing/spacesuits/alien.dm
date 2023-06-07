@@ -5,13 +5,15 @@
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN, PODMAN)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
 
-
-	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 
 	light_color = "#00ffff"
+
+/datum/action/item_action/hands_free/toggle_helmet_light
+	name = "Toggle Helmet Light"
 
 /obj/item/clothing/head/helmet/space/skrell/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -63,11 +65,13 @@
 	icon_state = "unathi_helm_cheap"
 	item_state = "unathi_helm_cheap"
 
-	action_button_name = "Toggle Helmet Light"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 
 	light_color = "#00ffff"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
+/datum/action/item_action/hands_free/toggle_helmet_light
+	name = "Toggle Helmet Light"
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -227,11 +231,14 @@
 	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
 	slowdown = 0.2
-	action_button_name = "Toggle Stealth Technology"
 	var/on = FALSE
 	var/mob/living/carbon/human/wearer
 	var/current_charge = MAX_STEALTH_SPACESUIT_CHARGE
 	var/last_try = 0
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_stealth_technology)
+
+/datum/action/item_action/hands_free/toggle_stealth_technology
+	name = "Toggle Stealth Technology"
 
 /obj/item/clothing/suit/space/vox/stealth/examine(mob/user)
 	..()
@@ -396,7 +403,10 @@
 	icon_state = "boots-vox"
 
 	species_restricted = list(VOX , VOX_ARMALIS)
-	action_button_name = "Toggle the magclaws"
+	item_action_types = list(/datum/action/item_action/toggle_magclaws)
+
+/datum/action/item_action/toggle_magclaws
+	name = "Toggle the magclaws"
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
 	if(src.magpulse)

@@ -13,8 +13,7 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
-	action_button_name = "Activate"
-	action_button_is_hands_free = 1
+	item_action_types = list(/datum/action/item_action/hands_free/activate_vest, /datum/action/item_action/hands_free/toggle_vest)
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
@@ -22,7 +21,11 @@
 	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
-	action_button_name = "Toggle Vest"
+/datum/action/item_action/hands_free/activate_vest
+	name = "Activate"
+
+/datum/action/item_action/hands_free/toggle_vest
+	name = "Toggle Vest"
 
 /obj/item/clothing/suit/armor/abductor/vest/atom_init()
 	. = ..()
@@ -269,12 +272,12 @@
 	desc = "Returns you to the mothership."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
-//	activated = 1
+	item_action_types = list(/datum/action/item_action/hands_free/activate_implant)
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30 SECONDS
 
-	action_button_name = "Activate Implant"
-	action_button_is_hands_free = 1
+/datum/action/item_action/hands_free/activate_implant
+	name = "Activate Implant"
 
 /obj/item/weapon/implant/abductor/attack_self()
 	var/turf/T = get_turf(src)
@@ -326,10 +329,14 @@
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	origin_tech = "materials=5;biotech=5"
-	action_button_name = "Activate Helmet"
 
 	var/team
 	var/obj/machinery/camera/helm_cam
+
+	item_action_types = list(/datum/action/item_action/hands_free/activate_helmet)
+
+/datum/action/item_action/hands_free/activate_helmet
+	name = "Activate Helmet"
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
 	if(!isabductor(user))
@@ -389,8 +396,11 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 7
 	w_class = SIZE_SMALL
-	action_button_name = "Toggle Mode"
 	var/obj/machinery/abductor/console/console
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_mode)
+
+/datum/action/item_action/hands_free/toggle_mode
+	name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	if(!isabductor(user))

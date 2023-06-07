@@ -62,9 +62,12 @@
 	icon_state = "wave_scanner"
 	item_state = "wave_scanner"
 	w_class = SIZE_NORMAL
-	action_button_name = "Toggle Searcher"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_searcher)
 
 	var/obj/item/device/searcher/processor
+
+/datum/action/item_action/hands_free/toggle_searcher
+	name = "Toggle Searcher"
 
 /obj/item/device/wave_scanner_backpack/atom_init()
 	. = ..()
