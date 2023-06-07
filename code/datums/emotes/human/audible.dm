@@ -461,7 +461,7 @@
 	message_3p = "spits tactlessly."
 
 	message_impaired_production = "spits tactlessly."
-	message_impaired_reception = "You see someone spits tactlessly."
+	message_impaired_reception = "spits tactlessly."
 
 	message_miming = "silently gathers invisible spittle and spits it out."
 	message_muzzled = "tries to gather some spittle."
