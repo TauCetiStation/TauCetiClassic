@@ -468,8 +468,6 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	cooldown = 2 SECONDS
-
 	age_variations = TRUE
 
 	state_checks = list(
