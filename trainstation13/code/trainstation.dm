@@ -68,7 +68,7 @@ var/list/admin_verbs_trainstation_event = list(
 
 /client/proc/toggle_trainstation_block()
 	set category = "Event"
-	set name = "Toggle Invisible Wall"
+	set name = "TS13 Toggle Invisible Wall"
 
 	var/msg
 	if(event_field_stage==1)
