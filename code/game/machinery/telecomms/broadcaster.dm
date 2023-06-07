@@ -483,33 +483,33 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 		if (length(heard_masked))
 			for (var/mob/R in heard_masked)
-				R.hear_radio(message,verbage, speaking, part_a, part_b, part_c, M, 0, name)
+				R.hear_radio(message,verbage, speaking, part_a, part_b, part_c, M, 0, name, radio)
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
 		if (length(heard_normal))
 			for (var/mob/R in heard_normal)
-				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 0, realname)
+				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 0, realname, radio)
 
 		/* --- Process all the mobs that heard the voice normally (did not understand) --- */
 
 		if (length(heard_voice))
 			for (var/mob/R in heard_voice)
-				R.hear_radio(message,verbage, speaking, part_a, part_b, part_c, M,0, vname)
+				R.hear_radio(message,verbage, speaking, part_a, part_b, part_c, M,0, vname, radio)
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 
 		if (length(heard_garbled))
 			for (var/mob/R in heard_garbled)
-				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 1, vname)
+				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 1, vname, radio)
 
 
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 
 		if (length(heard_gibberish))
 			for (var/mob/R in heard_gibberish)
-				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 1)
+				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 1, null, radio)
 
 
 /proc/Broadcast_SimpleMessage(source, frequency, text, data, mob/M, compression, level)

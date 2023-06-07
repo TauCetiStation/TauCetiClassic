@@ -15,7 +15,7 @@
 	return ..()
 
 /mob/living/carbon/human/proc/set_social_state(state = SOCIALIZATION_NORMAL)
-	if(!species.flags[IS_SOCIAL])
+	if(!species.flags[IS_SOCIAL] || HAS_TRAIT(src, TRAIT_LONER))
 		deltimer(conversation_timer)
 		social_state = SOCIALIZATION_NORMAL
 		return
@@ -24,7 +24,6 @@
 		if(SOCIALIZATION_NORMAL)
 			social_state = SOCIALIZATION_NORMAL
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization")
-
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
 				CALLBACK(src, .proc/handle_no_socialization),
@@ -35,7 +34,6 @@
 		if(SOCIALIZATION_LONELY)
 			social_state = SOCIALIZATION_LONELY
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
-
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
 				CALLBACK(src, .proc/handle_prolonged_no_socialization),

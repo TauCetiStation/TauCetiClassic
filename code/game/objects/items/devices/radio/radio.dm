@@ -19,6 +19,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/b_stat = 0
 	var/broadcasting = 0
 	var/listening = 1
+	var/handle_socialization = 0 // Causes a proc handle_socialization() when used
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/subspace_transmission = 0
@@ -662,7 +663,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (src in view(1, user))
-		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
+		to_chat(user, "<span class='notice'>\The [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
 /obj/item/device/radio/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/radio_grid))

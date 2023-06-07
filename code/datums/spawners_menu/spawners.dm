@@ -661,6 +661,7 @@ var/global/list/datum/spawners_cooldown = list()
 	H.mind.skills.add_available_skillset(/datum/skillset/max)
 	H.mind.skills.maximize_active_skills()
 	H.add_language(LANGUAGE_SYCODE)
+	ADD_TRAIT(H, TRAIT_LONER, ROLE_TRAIT)
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())
@@ -782,5 +783,6 @@ var/global/list/datum/spawners_cooldown = list()
 
 	H.loc = spawnloc
 	H.key = C.key
+	ADD_TRAIT(H, TRAIT_LONER, ROLE_TRAIT)
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE)

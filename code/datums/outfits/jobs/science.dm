@@ -45,7 +45,7 @@
 	suit = /obj/item/clothing/suit/storage/labcoat/science
 
 	belt = /obj/item/device/pda/science
-	l_ear = /obj/item/device/radio/headset/headset_sci
+	l_ear = /obj/item/device/radio/headset/headset_sci/xenoarch
 
 	back_style = BACKPACK_STYLE_RESEARCH
 

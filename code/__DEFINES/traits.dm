@@ -181,6 +181,7 @@
 #define TRAIT_ARIBORN             "ariborn"
 #define TRAIT_NO_CRAWL            "nocrawl"
 #define TRAIT_HIDDEN_TRASH_GUN    "hidden_trash_gun"
+#define TRAIT_LONER               "loner"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -224,6 +225,7 @@
 #define QUIRK_TRAIT "quirk"
 #define VIRUS_TRAIT "virus"
 #define STATUS_EFFECT_TRAIT "status_effect"
+#define ROLE_TRAIT "role"
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself

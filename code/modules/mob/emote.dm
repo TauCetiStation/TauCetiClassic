@@ -76,6 +76,7 @@
 /mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional = FALSE)
 	log_emote("[key_name(src)] : [message]")
 
+	var/viewers = message_type & SHOWMSG_VISUAL ? viewers(get_turf(src), world.view) : hearers(get_turf(src), world.view)
 	var/msg = "<b>[src]</b> <i>[message]</i>"
 	if(message_type & SHOWMSG_VISUAL)
 		visible_message(msg, ignored_mobs = observer_list, runechat_msg = message)
@@ -97,9 +98,15 @@
 				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
 
-/mob/living/carbon/human/me_emote(message, message_type, intentional)
-	. = ..()
-	if(!miming && !(HAS_TRAIT(src, TRAIT_MUTE)))
+	if(intentional)
+		handle_emote_effects(viewers)
+
+/mob/proc/handle_emote_effects(viewers)
+	return
+
+/mob/living/carbon/human/handle_emote_effects(viewers)
+	if(!miming && !HAS_TRAIT(src, TRAIT_MUTE))
 		return
-	for(var/mob/M in (viewers(get_turf(src), world.view)))
-		handle_socialization(M)
+
+	for(var/mob/viewer in viewers)
+		handle_socialization(viewer)

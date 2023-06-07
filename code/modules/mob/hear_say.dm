@@ -115,7 +115,7 @@
 
 	. = TRUE
 
-/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
+/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="", obj/item/device/radio/radio)
 
 	if(!client)
 		return
@@ -160,6 +160,8 @@
 		var/mob/living/carbon/human/H = speaker
 		if(H.voice)
 			speaker_name = H.voice
+		if(radio && radio.handle_socialization)
+			H.handle_socialization(src)
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src

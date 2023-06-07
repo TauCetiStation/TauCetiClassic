@@ -142,6 +142,7 @@ var/global/list/all_emotes
 	var/msg_1p = get_emote_message_1p(user)
 	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
+	var/viewers = message_type & SHOWMSG_VISUAL ? viewers(get_turf(user), range) : hearers(get_turf(user), range)
 	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user)]"
 
 	if(!msg_1p)
@@ -181,6 +182,9 @@ var/global/list/all_emotes
 
 	if(cloud)
 		add_cloud(user)
+
+	if(intentional)
+		user.handle_emote_effects(viewers)
 
 /datum/emote/proc/add_cloud(mob/user)
 	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)

@@ -82,10 +82,6 @@
 	name = "security radio headset"
 	icon_state = "sec_headset_alt"
 
-/obj/item/device/radio/headset/headset_sec/nt_pmc
-	name = "NT PMC Radio Headset. Works with default security frequency."
-	icon_state = "nt_pmc_earset"
-
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
 	icon_state = "marinad"
@@ -134,6 +130,11 @@
 	icon_state = "sci_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sci
+
+/obj/item/device/radio/headset/headset_sci/xenoarch
+	name = "xenoarchaeologist radio headset"
+	icon_state = "xenoarch_headset"
+	handle_socialization = TRUE
 
 /obj/item/device/radio/headset/headset_medsci
 	name = "medical research radio headset"
@@ -240,6 +241,11 @@
 	icon_state = "cargo_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_cargo
+
+/obj/item/device/radio/headset/headset_cargo/miner
+	name = "miner radio headset"
+	icon_state = "miner_headset"
+	handle_socialization = TRUE
 
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
@@ -349,3 +355,8 @@
 			name = "broken radio headset"
 			return
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+
+/obj/item/device/radio/headset/examine(mob/user)
+	..()
+	if(handle_socialization)
+		to_chat(user, "<span class='notice'>It can help you deal with loneliness.</span>")

@@ -63,7 +63,7 @@
 //---- Lockers and closets
 
 /obj/structure/closet/secure_closet/xenoarchaeologist
-	name = "Xenoarchaeologist Locker"
+	name = "xenoarchaeologist Locker"
 	req_access = list(access_xenoarch)
 	icon_state = "securerexenoarch1"
 	icon_closed = "securerexenoarch"
@@ -77,7 +77,7 @@
 	new /obj/item/clothing/suit/storage/labcoat(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/glasses/science(src)
-	new /obj/item/device/radio/headset/headset_sci(src)
+	new /obj/item/device/radio/headset/headset_sci/xenoarch(src)
 	new /obj/item/weapon/storage/belt/archaeology(src)
 	new /obj/item/weapon/storage/box/excavation(src)
 

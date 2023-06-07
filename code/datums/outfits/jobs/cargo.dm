@@ -27,7 +27,7 @@
 	uniform = /obj/item/clothing/under/rank/miner
 	shoes = /obj/item/clothing/shoes/black
 
-	l_ear = /obj/item/device/radio/headset/headset_cargo
+	l_ear = /obj/item/device/radio/headset/headset_cargo/miner
 	belt = /obj/item/device/pda/shaftminer
 
 	backpack_contents = list(
