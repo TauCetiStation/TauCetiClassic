@@ -22,7 +22,7 @@ var/global/const/MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION = 8
 	var/obj/machinery/manipulator/M = holder
 
 	switch(index)
-		if(MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION)
+		if(MANIPULATOR_WIRE_ACTIVATE)
 			M.auto_activation = mended
 			return
 
