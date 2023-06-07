@@ -103,7 +103,7 @@
 	set src in usr
 
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -118,7 +118,7 @@
 	set category = "Object"
 	set src in usr
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -540,16 +540,10 @@
 				h_user.put_in_l_hand(B)
 			else if (h_user.l_store == src)
 				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.plane = ABOVE_HUD_PLANE
-				h_user.l_store = B
-				h_user.update_inv_pockets()
+				h_user.equip_to_slot_if_possible(B, SLOT_L_STORE)
 			else if (h_user.r_store == src)
 				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.plane = ABOVE_HUD_PLANE
-				h_user.r_store = B
-				h_user.update_inv_pockets()
+				h_user.equip_to_slot_if_possible(B, SLOT_R_STORE)
 			else if (h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)
@@ -935,3 +929,15 @@ var/global/list/contributor_names
 	S.stamp_paper(src, "CentComm DPA")
 
 	update_icon()
+
+/obj/item/weapon/paper/psc
+	name = "Разрешение на работу ЧОП"
+	info = {"<h1 style="text-align: center;"Разрешение на работу ЧОП></h1>
+	<p>Данный документ подтверждает, что держатель документа (далее Сотрудник) является сотрудником частного охранного предприятия, нанятого для охраны активов Карго.</p>
+	<p>Сотрудник имеет право на владение и использование пистолета W&J PP и/или флешера и средств личной защиты в целях охраны активов Карго.</p>
+	<p>При неправомерном применении спецсредств офицеры охраны имеют право изъять пистолет, флешер и средства личной защиты.</p>"}
+
+/obj/item/weapon/paper/psc/atom_init()
+	. = ..()
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Logistics Department")

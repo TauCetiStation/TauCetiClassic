@@ -68,7 +68,7 @@
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
 		updateicon()
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
@@ -121,7 +121,7 @@
 
 	updateicon()
 
-/obj/machinery/cell_charger/deconstruct()
+/obj/machinery/cell_charger/deconstruct(disassembled = TRUE)
 	if(charging)
 		charging.forceMove(loc)
 		charging = null

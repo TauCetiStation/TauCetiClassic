@@ -51,7 +51,7 @@
 	if(user.is_busy()) return
 
 	if(rotting)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
@@ -67,7 +67,7 @@
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
@@ -88,7 +88,7 @@
 		to_chat(user, "<span class='notice'>Эта стена слишком толстая. Лучше найти другой способ.</span>")
 		return
 
-	if(damage && iswelder(W))
+	if(damage && iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0,user))
 			to_chat(user, "<span class='notice'>Вы начинаете ремонтировать укрепленную стену.</span>")
@@ -104,7 +104,7 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
-			if (iswirecutter(W))
+			if (iscutter(W))
 				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
 					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -115,7 +115,7 @@
 				return
 
 		if(SUPPORT_LINES)
-			if (isscrewdriver(W))
+			if (isscrewing(W))
 				to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие ряды.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
@@ -142,7 +142,7 @@
 				return
 
 		if(COVER)
-			if(iswelder(W))
+			if(iswelding(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
@@ -172,7 +172,7 @@
 				return
 
 		if(CUT_COVER)
-			if (iscrowbar(W))
+			if (isprying(W))
 				to_chat(user, "<span class='notice'>Вы пытаетесь отделить покрытие.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -185,7 +185,7 @@
 				return
 
 		if(ANCHOR_BOLTS)
-			if (iswrench(W))
+			if (iswrenching(W))
 
 				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
@@ -199,7 +199,7 @@
 				return
 
 		if(SUPPORT_RODS)
-			if(iswelder(W))
+			if(iswelding(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
@@ -232,7 +232,7 @@
 				return
 
 		if(SHEATH)
-			if(iscrowbar(W))
+			if(isprying(W))
 
 				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
@@ -339,6 +339,13 @@
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
+		return
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/tied_object_reset_pixel_offset, W))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/tied_object_reset_pixel_offset, W))
 		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged

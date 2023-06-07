@@ -887,7 +887,7 @@ var/global/list/airlock_overlays = list()
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
 
-	if(iswelder(C) && !(operating > 0))
+	if(iswelding(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
@@ -903,25 +903,25 @@ var/global/list/airlock_overlays = list()
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	else if(isscrewdriver(C))
+	else if(isscrewing(C))
 		p_open = !p_open
 		update_icon()
-	else if(iswirecutter(C))
+	else if(iscutter(C) && p_open)
 		return attack_hand(user)
-	else if(ismultitool(C))
+	else if(ispulsing(C))
 		return attack_hand(user)
-	else if(issignaler(C))
+	else if(issignaling(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.afterattack(src, user)
-	else if(iscrowbar(C) || istype(C, /obj/item/weapon/fireaxe) )
+	else if(isprying(C))
 		var/beingcrowbarred = null
-		if(iscrowbar(C) )
+		if(isprying(C))
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
-		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
+		if(beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
@@ -1046,15 +1046,12 @@ var/global/list/airlock_overlays = list()
 	bolt()
 	return
 
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!istype(W))
 		to_chat(user, "If you see this, it means airlock/change_paintjob() was called with something other than an airlock painter. Check your code!")
 		return
 
-	if(!W.can_use(user))
+	if(!W.can_use(user, 1))
 		return
 
 	var/list/optionlist
@@ -1064,7 +1061,7 @@ var/global/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!Adjacent(usr) && loc != usr) || !W.use(10))
+	if(!W.use_tool(src, user, 50, 1))
 		return
 	switch(paintjob)
 		if("Public")
@@ -1190,7 +1187,7 @@ var/global/list/airlock_overlays = list()
 
 
 /obj/structure/door_scrap/attackby(obj/item/O, mob/user)
-	if(iswrench(O))
+	if(iswrenching(O))
 		if(ticker >= 300)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)

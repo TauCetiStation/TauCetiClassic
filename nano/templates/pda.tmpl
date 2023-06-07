@@ -1032,11 +1032,16 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="itemLabelWide">
                 <b>Money:</b> <span class="good">{{:data.money}}$</span><br>
                 <b>Salary:</b> <span class="good">{{:data.salary}}$</span><br>
-                <b>Next Payment:</b> <span class="average">{{:data.time_to_next_pay}}</span>
+                <b>Next Payment:</b> <span class="average">{{:data.time_to_next_pay}}</span><br>
+                <b>Insurance Type|Price:</b> <span class="good">{{:data.owner_insurance_type}}|{{:data.owner_insurance_price}}$</span><br>
+                <b>Max Insurance Payment</b> <span class = "good">{{:data.owner_max_insurance_payment}}$</span><br>
+                <b>Pref Insurance Type|Price:</b> <span class = "good">{{:data.owner_preferred_insurance_type}}|{{:data.owner_preferred_insurance_price}}$</span><br>
+                <b>Medical Record ID:</b> <span class="good">{{:data.medical_record_id}}</span><br>
             </div>
             <div class="itemContentSmall">
                 {{:helper.link('Transaction Menu', null, {'choice' : "Transaction Menu"}, null, null)}}
                 {{:helper.link('Transaction Log', null, {'choice' : "Transaction Log"}, null, null)}}
+                {{if data.permission_to_change_insurance_price}} {{:helper.link("Change Insurance Price", null, {'choice' : "Change insurance price"}, null, null)}} {{/if}}
                 {{if data.boss}} {{:helper.link('Staff Salary', null, {'choice' : "Staff Salary"}, null, null)}} {{/if}}
             </div>
         </div>
@@ -1076,7 +1081,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th>Name</th><th>Rank</th><th>Salary</th></tr>
                     {{for data.subordinate_staff}}
                         <tr><td>{{:value.name}}</td><td>{{:value.rank}}</td><td>{{:value.salary}}</td>
-                        <td>{{:helper.link('Change', null, {'choice' : "Change Salary", 'account' : value.acc_number}, null, null)}}</td></tr>
+                        <td>{{:helper.link('Change', null, {'choice' : "Change Salary", 'account' : value.account}, null, null)}}</td></tr>
                     {{/for}}
                 </table></center>
             </div>
@@ -1084,6 +1089,9 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 	{{else data.mode == 8}} <!-- Online Shop -->
         <div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+			{{if data.no_cargonauts}}
+				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+			{{/if}}
 			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
 			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
@@ -1102,7 +1110,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
-				<td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
 				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number}, null, 'floatRight')}}</td></tr>
 				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
 			{{/if}}
@@ -1129,6 +1137,9 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 	{{else data.mode == 81}} <!-- Online Shop Item -->
         <div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+			{{if data.no_cargonauts}}
+				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+			{{/if}}
 			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
 			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
@@ -1153,7 +1164,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
-				<td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
 				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number}, null, 'floatRight')}}</td></tr>
 				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
 		{{empty}}
@@ -1163,24 +1174,28 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		<center><table class="shop" style="width: 100%;"><tbody>
 			<tr><th class="cargo">{{:helper.link('пред.', 'arrow-1-w', {'choice' : "Shop_Change_Page", 'shop_change_page' : "previous"}, null, 'arrow')}}<span class="arrow"><center>{{:data.category_shop_page}}</center></span>{{:helper.link('след.', 'arrow-1-e', {'choice' : "Shop_Change_Page", 'shop_change_page' : "next"}, null, 'arrow')}}</th></tr>
 		</tbody></table></center>
-		
+
 	{{else data.mode == 82}} <!-- Online Shop Cart -->
 		<div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+			{{if data.no_cargonauts}}
+				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+			{{/if}}
 			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
 			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
 		<center><table class="shop" style="width: 100%;"><tbody>
-		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
+		<tr><th colspan="5" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
 			{{if !value.delivered}}
-				<tr><th colspan="4" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
+				<tr><th colspan="5" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
-				<td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
+                <td><B>Локация: </B>{{:value.area}}</td>
 				<td>{{:helper.link('Доставлено', 'check', {'choice' : "Shop_Mark_As_Delivered", 'delivered_item' : value.number}, null, 'floatRight')}}</td></tr>
-				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
-				
+				<tr><td colspan="4"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+
 			{{/if}}
 		{{empty}}
 			<tr><td><center><H4>Нет предметов в корзине</H4></center></td></tr>

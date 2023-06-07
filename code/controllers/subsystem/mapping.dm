@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, default_traits = ZTRAITS_STATION)
 	station_loaded = TRUE
-	change_lobbyscreen()
+	change_lobbyscreen() // todo: move to better place from map controller
 
 	if(global.config.load_space_levels)
 		while (space_levels_so_far < config.space_ruin_levels)
@@ -282,10 +282,10 @@ SUBSYSTEM_DEF(mapping)
 	if(!should_revote)
 		return
 
-	var/datum/poll/map_poll = SSvote.votes[/datum/poll/nextmap]
+	var/datum/poll/map_poll = SSvote.possible_polls[/datum/poll/nextmap]
 	if(map_poll && map_poll.can_start())
 		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
-		SSvote.start_vote(map_poll.type)
+		SSvote.start_vote(map_poll)
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM

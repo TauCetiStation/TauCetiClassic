@@ -396,6 +396,13 @@
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
 		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit COMPLETELY
 
+/datum/spellbook_entry/item/tiara
+	name = "Тиара защиты"
+	desc = "Дорогостоящая корона из драгоценного металла, инкрустированная магическими кристаллами. Излучает защитную ауру, используя силу РаЗуМа!"
+	item_path = /obj/item/clothing/head/wizard/amp/shielded
+	log_name = "TZ"
+	category = "Оборона"
+
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"
 	desc = "Магический контракт, что связывает учителя и ученика."

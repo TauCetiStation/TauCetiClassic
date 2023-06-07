@@ -82,19 +82,6 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
-/obj/structure/window/reinforced/holowindow
-	flags = NODECONSTRUCT | ON_BORDER
-
-/obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(isscrewdriver(W))
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(iscrowbar(W))
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
-	else
-		return ..()
-
-/obj/structure/window/reinforced/holowindow/disappearing
-
 /obj/machinery/door/window/holowindoor
 	flags = NODECONSTRUCT | ON_BORDER
 
@@ -102,7 +89,7 @@
 	icon_state = "chair_gray"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -178,8 +165,9 @@
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, Shakalaka!"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/basketball_hoop.dmi'
 	icon_state = "hoop"
+	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE
 	throwpass = 1
@@ -281,7 +269,7 @@
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
+	for(var/obj/structure/window/thin/reinforced/holowindow/disappearing/W in currentarea)
 		qdel(W)
 
 	for(var/mob/M in currentarea)
@@ -299,7 +287,7 @@
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 

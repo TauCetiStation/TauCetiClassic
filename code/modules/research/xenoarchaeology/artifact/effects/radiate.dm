@@ -11,24 +11,18 @@
 	. = ..()
 	if(!.)
 		return
-	user.apply_effect(radiation_amount * 5, IRRADIATE, 0)
+	irradiate_one_mob(user, radiation_amount * 5)
 	user.updatehealth()
 
 /datum/artifact_effect/radiate/DoEffectAura()
 	. = ..()
 	if(!.)
 		return
-	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/M in range(range, curr_turf))
-		M.apply_effect(radiation_amount, IRRADIATE, 0)
-		M.updatehealth()
+	irradiate_one_mob(holder, radiation_amount)
 
 /datum/artifact_effect/radiate/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return
 	var/used_power = .
-	var/turf/curr_turf = get_turf(holder)
-	for(var/mob/living/M in range(range, curr_turf))
-		M.apply_effect(radiation_amount * used_power, IRRADIATE, 0)
-		M.updatehealth()
+	irradiate_one_mob(holder, radiation_amount * used_power)

@@ -20,9 +20,9 @@
 	},
 /area/space_structures/ghostship)
 "ae" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
@@ -658,10 +658,10 @@
 /area/space_structures/ghostship)
 "cb" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -733,10 +733,10 @@
 /area/space_structures/ghostship)
 "ck" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -745,11 +745,11 @@
 /area/space_structures/ghostship)
 "cl" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	req_access = list(72)
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -817,21 +817,21 @@
 /area/space_structures/ghostship)
 "cv" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
 "cw" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
 "cx" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	req_access = list(72)
 	},

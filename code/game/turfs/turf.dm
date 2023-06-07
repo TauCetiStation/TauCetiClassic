@@ -408,20 +408,15 @@
 
 ////////////////
 
-/turf/singularity_act()
+/turf/singularity_act(obj/singularity/S, current_size)
 	if(intact)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
 			if(O.level != 1)
 				continue
 			if(O.invisibility == 101)
-				O.singularity_act()
+				O.singularity_act(S, current_size)
 	ChangeTurf(/turf/environment/space)
 	return(2)
-
-/turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	if(isliving(AM))
-		var/mob/living/L = AM
-		L.turf_collision(src)
 
 /turf/update_icon()
 	if(is_flooded(absolute = 1))
@@ -497,20 +492,25 @@
 	else if(isrobot(M))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
-/turf/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+/turf/proc/add_vomit_floor(mob/living/carbon/C, vomit_type = DEFAULT_VOMIT)
 	if(flags & NOBLOODY)
 		return
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 	// Make toxins vomit look different
-	if(toxvomit)
-		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
-		if(!new_color)
-			V.icon_state = "vomittox_[pick(1,4)]"
-		else
-			V.icon_state = "vomittox_nc_[pick(1,4)]"
-			V.alpha = 127
-			V.color = new_color.color
-			V.light_color = V.color
-			V.set_light(3)
-			V.stop_light()
+	switch(vomit_type)
+		if(VOMIT_TOXIC)
+			var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
+			if(!new_color)
+				V.icon_state = "vomittox_[pick(1,4)]"
+			else
+				V.icon_state = "vomittox_nc_[pick(1,4)]"
+				V.alpha = 127
+				V.color = new_color.color
+				V.light_color = V.color
+				V.set_light(3)
+				V.stop_light()
+		if(VOMIT_NANITE)
+			V.name = "metallic slurry"
+			V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
+			V.icon_state = "vomitnanite_[pick(1,4)]"

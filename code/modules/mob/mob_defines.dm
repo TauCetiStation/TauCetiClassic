@@ -50,6 +50,7 @@
 	var/computer_id = null
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
+	var/last_examined = ""
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -172,9 +173,6 @@
 	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
-
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 

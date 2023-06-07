@@ -12,7 +12,7 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
-	var/filter = list("phoron", "sleeping_agent")
+	var/filter = list("phoron", "sleeping_agent", "fractol")
 
 // **** Welding gas mask ****
 
@@ -22,12 +22,14 @@
 	icon_state = "weldingmask"
 	item_state = "weldingmask"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+	flags_inv = (HIDEEARS|HIDEEYES|HIDEFACE)
 	origin_tech = "materials=2;engineering=2"
 	action_button_name = "Toggle Welding Mask"
 	siemens_coefficient = 0.9
 	body_parts_covered = FACE|EYES
 	w_class = SIZE_SMALL
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_WEAR_MASK)
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -42,19 +44,21 @@
 		if(src.up)
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
-			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+			flags_inv |= (HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
+			flash_protection = FLASHES_FULL_PROTECTION
 			to_chat(usr, "You adjust \the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+			flags_inv &= ~(HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
+			flash_protection = NONE
 			to_chat(usr, "You push \the [src] up out of your face.")
 
-		usr.update_inv_wear_mask()
+		update_inv_mob()
 
 // ********************************************************************
 
@@ -64,6 +68,7 @@
 	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
+	item_state = "gas_alt"
 	var/cooldown = 0
 	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE
@@ -74,7 +79,7 @@
 		"Ни с места!" = 'sound/voice/complionator/lawful_ni_s_mesta.ogg',
 		"Стоять!" = 'sound/voice/complionator/lawful_stoyat.ogg',
 		"Стоять на месте!" = 'sound/voice/complionator/lawful_stoyat_na_meste.ogg')
-	
+
 	var/static/list/pharses_shitcurity = list(
 		"Давай, попробуй побежать. Безмозглый идиот." = 'sound/voice/complionator/davai_poprobui_pobejat.ogg',
 		"Неудачник выбрал не тот день для нарушения закона." = 'sound/voice/complionator/neudachnik_vybral.ogg',
@@ -89,7 +94,7 @@
 		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		var/obj/item/weapon/screwdriver/S = I
 		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40))
 			shitcurity_mode = !shitcurity_mode
@@ -133,6 +138,7 @@
 	name = "police respirator"
 	desc = "Стандартный распиратор полиции с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
 	icon_state = "police_mask"
+	item_state = "police_mask"
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
@@ -148,6 +154,7 @@
 	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
+	item_state = "swat"
 	siemens_coefficient = 0.7
 	body_parts_covered = FACE|EYES
 
@@ -253,7 +260,7 @@
 	body_parts_covered = 0
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
-	filter = list("phoron", "sleeping_agent", "oxygen")
+	filter = list("phoron", "sleeping_agent", "oxygen", "fractol")
 	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/mask/gas/German

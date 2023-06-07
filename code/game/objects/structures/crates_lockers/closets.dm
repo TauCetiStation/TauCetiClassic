@@ -67,12 +67,12 @@
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.forceMove(src.loc)
 
-	for(var/obj/I in src)
-		I.forceMove(src.loc)
-
 	for(var/mob/M in src)
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
+
+	for(var/obj/I in src)
+		I.forceMove(src.loc)
 
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
@@ -170,14 +170,15 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/device/tagger))
+
+	else if(istagger(W))
 		return
 
 	else
 		attack_hand(user)
 
 /obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())

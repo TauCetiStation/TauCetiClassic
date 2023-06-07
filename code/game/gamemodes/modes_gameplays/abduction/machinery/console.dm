@@ -38,7 +38,9 @@
 							"agent helmet" 						=1,
 							"additional agent equipment" 		=1,
 							"additional scientist equipment" 	=1,
-							"silence gloves"					=3)
+							"transforming gland" 				=1,
+							"silence gloves"					=3,
+							"recall implant" 					=4)
 
 	var/baton_modules_bought = FALSE
 
@@ -97,7 +99,9 @@
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=scientist_gear'>Additional scientist equipment</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=trans_gland'>Transforming gland</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silence_gloves'>Silence gloves</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=recall_implant'>Recall implant</A><br>"
 		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
 			dat += "<div class='Section'>[get_price_list()]</div>"
@@ -188,6 +192,15 @@
 			if("scientist_gear")
 				if(Dispense(/obj/item/clothing/glasses/hud/health/night))
 					new /obj/item/weapon/storage/visuals/surgery(pad.loc)
+			if("trans_gland")
+				var/obj/item/gland/abductor/G = Dispense(/obj/item/gland/abductor)
+				if(G)
+					G.team = team
+			if("recall_implant")
+				var/obj/item/weapon/implanter/abductor/G = Dispense(/obj/item/weapon/implanter/abductor, 3)
+				if(G)
+					var/obj/item/weapon/implant/abductor/I = G.imp
+					I.home = pad
 			if("silence_gloves")
 				Dispense(/obj/item/clothing/gloves/black/silence, 3)
 	else if(href_list["show_prices"])
@@ -281,15 +294,20 @@
 		gizmo = G
 		G.console = src
 		return FALSE
-	if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
+	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 		return FALSE
-	if(istype(O, /obj/item/weapon/abductor_baton))
+	else if(istype(O, /obj/item/weapon/abductor_baton))
 		var/obj/item/weapon/abductor_baton/B = O
 		to_chat(user, "<span class='notice'>You link the advanced baton to the console.</span>")
 		B.console = src
+		return FALSE
+	else if(istype(O, /obj/item/gland/abductor))
+		experiment.points++
+		visible_message("Refunded!")
+		qdel(O)
 		return FALSE
 	return ..()
 
@@ -299,10 +317,9 @@
 		visible_message("Incoming supply!")
 		if(pad)
 			flick("alien-pad", pad)
-			new item(pad.loc)
+			. = new item(pad.loc)
 		else
-			new item(loc)
-		return TRUE
+			. = new item(loc)
 	else
 		visible_message("Insufficent data!")
 		return FALSE

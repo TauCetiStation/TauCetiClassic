@@ -14,7 +14,6 @@
 			/mob/living/simple_animal/goose,
 			/mob/living/simple_animal/walrus,
 			/obj/item/weapon/gun/energy/decloner,
-			/obj/item/weapon/gun/projectile/revolver/flare,
 			/obj/item/weapon/gun/energy/sniperrifle,
 			/obj/item/weapon/gun/projectile/shotgun/bolt_action,
 			/obj/item/stack/sheet/mineral/diamond,

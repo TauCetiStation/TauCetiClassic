@@ -13,6 +13,7 @@ var/global/list/directory = list()							//list of all ckeys with associated cli
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
 
 var/global/list/player_list = list()			//List of all mobs **with clients attached**.
+var/global/list/keyloop_list = list()			//as above but can be limited to boost performance
 var/global/list/alive_mob_list = list()			//List of all alive mobs, including clientless. Excludes /mob/dead/new_player
 var/global/list/dead_mob_list = list()			//List of all dead mobs, including clientless. Excludes /mob/dead/new_player
 var/global/list/joined_player_list = list()		//List of all clients that have joined the game at round-start or as a latejoin.
@@ -41,7 +42,7 @@ var/global/list/drone_list = list()
 var/global/list/gods_list = list()
 
 //feel free to add shit to lists below
-var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
+var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine", "ambrosium", "jenkem")	//increase heart rate
 var/global/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
 var/global/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
 var/global/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional

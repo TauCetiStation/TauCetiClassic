@@ -33,7 +33,7 @@
 		update_crystal()
 		return
 
-	if(iswirecutter(W)) // If we want to remove the wiring
+	if(iscutter(W)) // If we want to remove the wiring
 		if(wired)
 			user.visible_message("<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
                                  "<span class='notice'>You start cutting off the wiring of the [src].</span>")

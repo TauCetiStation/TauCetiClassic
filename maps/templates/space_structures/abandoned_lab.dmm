@@ -170,9 +170,9 @@
 	},
 /area/space_structures/derelict_lab)
 "aA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/plating,
 /area/space_structures/derelict_lab)
@@ -264,7 +264,7 @@
 	},
 /area/space_structures/derelict_lab)
 "aQ" = (
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -643,9 +643,9 @@
 	},
 /area/space_structures/derelict_lab)
 "bZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -773,7 +773,9 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space_structures/derelict_lab)
 "cs" = (
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	id = 0
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},

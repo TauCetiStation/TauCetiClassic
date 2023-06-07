@@ -689,7 +689,7 @@
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses HulkHONK</font>"
 	msg_admin_attack("[key_name(usr)] uses HulkHONK", usr)
 	for(var/mob/living/carbon/M in ohearers(2))
-		if(CLUMSY in M.mutations)
+		if(M.IsClumsy())
 			M.heal_bodypart_damage(10, 10)
 			M.adjustToxLoss(-10)
 			M.adjustOxyLoss(-10)

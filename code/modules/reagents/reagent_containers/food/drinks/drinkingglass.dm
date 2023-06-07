@@ -3,6 +3,8 @@
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
+	m_amt = 0
+	g_amt = 250
 	volume = 25
 	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
 	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
@@ -554,6 +556,14 @@
 				icon_state = "mojitoglass"
 				name = "Mojito"
 				desc = "Good old mojito, not an aging classic."
+			if("gourd")
+				icon_state = "glass_gourd"
+				name = "disgusting swamp juice"
+				desc = "Тыквячий сок. Хороший способ облегчить желудок."
+			if("gourdbeer")
+				icon_state = "gourdbeer"
+				name = "[get_gourd_name()] beer"
+				desc = "Тыквяк. Известный напиток на дрожжах из тыквячьего сока. Просто отвратителен."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"

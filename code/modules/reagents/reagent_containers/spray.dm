@@ -225,10 +225,7 @@
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_mob()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible
@@ -335,7 +332,7 @@
 
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/I, mob/user, params)
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(iswelder(I))
+		if(iswelding(I))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.isOn())
 				light(user, "casually lights")
