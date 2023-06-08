@@ -239,13 +239,17 @@
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
 /proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = 0)
-	var/datum/money_account/D = get_account(attempt_account_number)	
+	var/datum/money_account/D = get_account(attempt_account_number)
+	if(!D)
+		return
 	if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number) )
 		return D
 
 //for ATM, cardpay, watercloset, table_rack, vendomat
 /proc/attempt_account_access_with_user_input(attempt_account_number, security_level_passed = 0, mob/user)
 	var/datum/money_account/MA = get_account(attempt_account_number)
+	if(!MA)
+		return
 	if(MA.security_level == 0)
 		return MA
 	var/attempt_pin = 0
