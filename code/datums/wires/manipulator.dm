@@ -2,6 +2,7 @@ var/global/const/MANIPULATOR_WIRE_ACTIVATE = 1
 var/global/const/MANIPULATOR_WIRE_AFTER_ACTIVATE = 2
 var/global/const/MANIPULATOR_WIRE_CHANGE_TARGET_ZONE = 4
 var/global/const/MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION = 8
+var/global/const/MANIPULATOR_WIRE_AUTO_ACTIVATION = 16
 
 /datum/wires/manipulator
 	holder_type = /obj/machinery/manipulator
@@ -17,12 +18,13 @@ var/global/const/MANIPULATOR_WIRE_ATTACK_SELF_ON_INTERACTION = 8
 	. += ..()
 	. += "Target selection screen displays: [parse_zone(M.target_zone)]"
 	. += "The 'Activate Instead' light is [M.attack_self_interaction ? "on" : "off"]."
+	. += "The 'Auto Activation' light is [M.auto_activation ? "on" : "off"]."
 
 /datum/wires/manipulator/update_cut(index, mended)
 	var/obj/machinery/manipulator/M = holder
 
 	switch(index)
-		if(MANIPULATOR_WIRE_ACTIVATE)
+		if(MANIPULATOR_WIRE_AUTO_ACTIVATION)
 			M.auto_activation = mended
 			return
 
