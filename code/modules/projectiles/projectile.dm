@@ -61,7 +61,7 @@
 										//  have to be recreated multiple times
 
 	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
-	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_hit() which happens after Bump() or killed by process. v
 	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
@@ -99,7 +99,7 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	impact_effect(effect_transform)		// generate impact effect
 	if(!isliving(target))
 		return 0
@@ -113,7 +113,6 @@
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
-
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	return check_trajectory(target, src, pass_flags, flags)
@@ -183,11 +182,17 @@
 			forcedodge = PROJECTILE_FORCE_MISS
 
 	if(!forcedodge)
-		if(M && ishuman(M))
-			M = check_living_shield(A)
-			A = M
-
-		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+		if(ismob(A))
+			if(check_living_shield(A) == M)
+				M.bullet_act(src,def_zone)
+			else
+				var/list/mobs = list()
+				for(var/mob/ML in get_turf(M.loc))
+					mobs += ML
+				if(mobs.len <= 1)
+					forcedodge = M.bullet_act(src, def_zone)
+		else
+			forcedodge = A.bullet_act(src, def_zone) // searches for return value
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
@@ -204,18 +209,16 @@
 		return FALSE
 
 	if(ismob(A))
-		if(isreplicator(A))
-			A.bullet_act(src, def_zone)
-		else
-			for(var/mob/mob in get_turf(M.loc))
-				if(mob == A || isreplicator(mob))
-					continue
-				if(check_living_shield(mob) == M)
+		var/list/mobs = list()
+		for(var/mob/ML in get_turf(A.loc))
+			mobs += ML
+		if(mobs.len >= 2)
+			var/mob/mob = pick(mobs)
+			mob.bullet_act(src, def_zone)
 
-					M.bullet_act(src,def_zone)
-				else
-					mob.bullet_act(src,def_zone)
-
+	if(istype(A,/turf))
+		for(var/mob/Mob in A)
+			Mob.bullet_act(src, def_zone)
 
 	density = FALSE
 	invisibility = 101
