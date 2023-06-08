@@ -359,4 +359,4 @@
 /obj/item/device/radio/headset/examine(mob/user)
 	..()
 	if(handle_socialization)
-		to_chat(user, "<span class='notice'>It can help you deal with loneliness.</span>")
+		to_chat(user, "<span class='notice'>The unreasonable realism of sound coming out of it can help you feel as if you were talking in person. Helps with loneliness.</span>")
