@@ -281,8 +281,9 @@
 /datum/action/item_action/hands_free/toggle_vest_buttons
 	name = "Toggle vest buttons"
 
-/obj/item/clothing/suit/recyclervest/ui_action_click()
-	toggle()
+/datum/action/item_action/hands_free/toggle_vest_buttons/Activate()
+	var/obj/item/clothing/suit/recyclervest/S = target
+	S.toggle()
 
 /obj/item/clothing/suit/recyclervest/proc/toggle()
     switch(icon_state)

@@ -77,8 +77,6 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_mask)
 
-/datum/action/item_action/hands_free/toggle_mask
-	name = "Toggle Mask"
 
 	var/static/list/phrases_lawful = list(
 		"Не двигаться!" = 'sound/voice/complionator/lawful_ne_dvigatsya.ogg',
@@ -98,6 +96,9 @@
 		"Виновен или невиновен - это лишь вопрос времени." = 'sound/voice/complionator/vinoven_ili_nevinoven.ogg',
 		"Я - закон. Ты - убогое ничтожество." = 'sound/voice/complionator/ya_zakon_ty.ogg',
 		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
+
+/datum/action/item_action/hands_free/toggle_mask
+	name = "Toggle Mask"
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))

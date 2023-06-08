@@ -240,13 +240,15 @@
 /datum/action/item_action/hands_free/toggle_stealth_technology
 	name = "Toggle Stealth Technology"
 
+/datum/action/item_action/hands_free/toggle_stealth_technology/Activate()
+	var/obj/item/clothing/suit/space/vox/stealth/S = target
+	S.toggle_stealth()
+
 /obj/item/clothing/suit/space/vox/stealth/examine(mob/user)
 	..()
 	if(wearer)
 		to_chat(wearer, "On your left wrist you see <span class='electronicblue'>\[ [current_charge] \]</span>. [damage ? "Looks like the reactor is damaged" : "The reactor is functioning stably"].")
 
-/obj/item/clothing/suit/space/vox/stealth/ui_action_click()
-	toggle_stealth()
 
 /obj/item/clothing/suit/space/vox/stealth/Destroy()
 	STOP_PROCESSING(SSobj, src)

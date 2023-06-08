@@ -21,6 +21,10 @@
 /datum/action/item_action/hands_free/paddles
 	name = "Remove/Replace Paddles"
 
+/datum/action/item_action/hands_free/paddles/Activate()
+	var/obj/item/weapon/defibrillator/S = target
+	S.toggle_paddles()
+
 /obj/item/weapon/defibrillator/atom_init() // starts without a cell for rnd
 	. = ..()
 	if(ispath(paddles))
@@ -63,9 +67,6 @@
 
 	cut_overlays()
 	add_overlay(new_overlays)
-
-/obj/item/weapon/defibrillator/ui_action_click()
-	toggle_paddles()
 
 /obj/item/weapon/defibrillator/attack_hand(mob/user)
 	if(loc == user)

@@ -665,10 +665,13 @@
 	throwforce = 8
 	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed")
-	action_button_name = "Change mode"
 	qualities = list(
 		QUALITY_WRENCHING = 1
 	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
 
 /obj/item/weapon/multi/hand_drill/attack_self(mob/user)
 	mode = !mode
@@ -694,12 +697,15 @@
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	action_button_name = "Change mode"
 	toolspeed = 0.7
 	sharp = 1
 	qualities = list(
 		QUALITY_CUTTING = 1
 	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
 
 /obj/item/weapon/multi/jaws_of_life/attack_self(mob/user)
 	mode = !mode

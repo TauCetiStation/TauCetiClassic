@@ -295,7 +295,8 @@
 	return
 
 /obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
-	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(action.button, initial(cooldown))
+	var/datum/action/item_action/hands_free/activate_implant/A = locate(/datum/action/item_action/hands_free/activate_implant) in item_actions
+	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(A.button, initial(cooldown))
 	while(cooldown < initial(cooldown))
 		sleep(1)
 		cooldown++

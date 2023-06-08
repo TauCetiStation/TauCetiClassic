@@ -241,6 +241,10 @@
 /datum/action/item_action/hands_free/toggle_gl
 	name = "Toggle GL"
 
+/datum/action/item_action/hands_free/toggle_gl/Activate()
+	var/obj/item/weapon/gun/projectile/automatic/drozd/S = target
+	S.toggle_gl(usr)
+
 /obj/item/weapon/gun/projectile/automatic/drozd/examine(mob/user)
 	. = ..()
 	to_chat(user, "It's [gl.name] is [gl.get_ammo() ? "loaded" : "unloaded"].")
@@ -283,5 +287,3 @@
 		return ..()
 	gl.attack_self(user)
 
-/obj/item/weapon/gun/projectile/automatic/drozd/ui_action_click()
-	toggle_gl(usr)

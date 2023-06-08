@@ -8,6 +8,10 @@
 /datum/action/item_action/hands_free/hood
 	name = "Hood"
 
+/datum/action/item_action/hands_free/hood/Activate()
+	var/obj/item/clothing/suit/hooded/S = target
+	S.ToggleHood()
+
 /obj/item/clothing/suit/hooded/atom_init()
 	. = ..()
 	hood = new hoodtype(src)
@@ -17,10 +21,6 @@
 /obj/item/clothing/suit/hooded/Destroy()
 	qdel(hood)
 	return ..()
-
-
-/obj/item/clothing/suit/hooded/ui_action_click()
-	ToggleHood()
 
 /obj/item/clothing/suit/hooded/equipped(mob/living/carbon/human/user, slot)
 	if(slot != user.wear_suit)

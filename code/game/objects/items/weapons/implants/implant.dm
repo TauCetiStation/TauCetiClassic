@@ -291,6 +291,25 @@ Implant Specifics:<BR>"}
 /datum/action/item_action/adrenaline_implant
 	name = "Adrenaline implant"
 
+/datum/action/item_action/adrenaline_implant/Activate()
+	var/obj/item/weapon/implant/adrenaline/S = target
+	S.uses--
+	to_chat(S.imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	if(ishuman(S.imp_in))
+		var/mob/living/carbon/human/H = S.imp_in
+		H.setHalLoss(0)
+		H.shock_stage = 0
+	S.imp_in.stat = CONSCIOUS
+	S.imp_in.SetParalysis(0)
+	S.imp_in.SetStunned(0)
+	S.imp_in.SetWeakened(0)
+	S.imp_in.reagents.add_reagent("tricordrazine", 20)
+	S.imp_in.reagents.add_reagent("doctorsdelight", 25)
+	S.imp_in.reagents.add_reagent("oxycodone", 5)
+	S.imp_in.reagents.add_reagent("stimulants", 4)
+	if (!S.uses)
+		qdel(S)
+
 /obj/item/weapon/implant/adrenaline/get_data()
 	var/dat = {"
 <b>Implant Specifications:</b><BR>
@@ -304,24 +323,6 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
 	return dat
 
-/obj/item/weapon/implant/adrenaline/ui_action_click()
-	uses--
-	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	if(ishuman(imp_in))
-		var/mob/living/carbon/human/H = imp_in
-		H.setHalLoss(0)
-		H.shock_stage = 0
-	imp_in.stat = CONSCIOUS
-	imp_in.SetParalysis(0)
-	imp_in.SetStunned(0)
-	imp_in.SetWeakened(0)
-	imp_in.reagents.add_reagent("tricordrazine", 20)
-	imp_in.reagents.add_reagent("doctorsdelight", 25)
-	imp_in.reagents.add_reagent("oxycodone", 5)
-	imp_in.reagents.add_reagent("stimulants", 4)
-	if (!uses)
-		qdel(src)
-
 /obj/item/weapon/implant/emp
 	name = "emp implant"
 	desc = "Triggers an EMP."
@@ -333,12 +334,13 @@ Implant Specifics:<BR>"}
 /datum/action/item_action/emp_implant
 	name = "EMP implant"
 
-/obj/item/weapon/implant/emp/ui_action_click()
-	if (uses > 0)
-		empulse(imp_in, 3, 5)
-		uses--
-		if (!uses)
-			qdel(src)
+/datum/action/item_action/emp_implant/Activate()
+	var/obj/item/weapon/implant/emp/S = target
+	if (S.uses > 0)
+		empulse(S.imp_in, 3, 5)
+		S.uses--
+		if (!S.uses)
+			qdel(S)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"
@@ -555,12 +557,13 @@ var/global/list/death_alarm_stealth_areas = list(
 /datum/action/item_action/storage_implant
 	name = "Bluespace pocket"
 
+/datum/action/item_action/storage_implant/Activate()
+	var/obj/item/weapon/implant/storage/S = target
+	S.storage.open(S.imp_in)
+
 /obj/item/weapon/implant/storage/atom_init()
 	. = ..()
 	storage = new /obj/item/weapon/storage/internal/imp(src)
-
-/obj/item/weapon/implant/storage/ui_action_click()
-	storage.open(imp_in)
 
 /obj/item/weapon/implant/storage/proc/removed()
 	storage.close_all()

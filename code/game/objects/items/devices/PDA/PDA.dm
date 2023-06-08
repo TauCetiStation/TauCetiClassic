@@ -83,6 +83,11 @@
 /datum/action/item_action/hands_free/toggle_light
 	name = "Toggle light"
 
+/datum/action/item_action/hands_free/toggle_light/Activate()
+	. = ..()
+	var/obj/item/device/pda/P = target
+	P.toggle_light()
+
 /obj/item/device/pda/atom_init()
 	. = ..()
 	PDAs += src
@@ -125,9 +130,6 @@
 		return
 
 	return ..()
-
-/obj/item/device/pda/ui_action_click()
-	toggle_light()
 
 /obj/item/device/pda/verb/toggle_light()
 	set name = "Toggle light"
@@ -518,7 +520,7 @@
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
-	
+
 	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
 	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
 	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"

@@ -62,9 +62,7 @@
 		return
 	switch(action_type)
 		if(AB_ITEM)
-			if(target)
-				var/obj/item/item = target
-				item.ui_action_click()
+			Activate()
 		if(AB_SPELL)
 			if(target)
 				var/obj/effect/proc_holder/spell = target
@@ -81,7 +79,6 @@
 		button = N
 	var/atom/movable/screen/movable/action_button/B = button
 	B.UpdateIcon()
-	B.name = UpdateName()
 	return
 
 /datum/action/proc/Activate()

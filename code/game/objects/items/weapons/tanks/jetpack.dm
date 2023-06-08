@@ -9,10 +9,21 @@
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
-	item_action_types = list(/datum/action/item_action/toggle_jetpack)
+	item_action_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/toggle_jetpack_stabilization)
 
 /datum/action/item_action/toggle_jetpack
 	name = "Toggle Jetpack"
+
+/datum/action/item_action/toggle_jetpack/Activate()
+	var/obj/item/weapon/tank/jetpack/S = target
+	S.toggle()
+
+/datum/action/item_action/toggle_jetpack_stabilization
+	name = "Toggle Jetpack Stabilization"
+
+/datum/action/item_action/toggle_jetpack_stabilization/Activate()
+	var/obj/item/weapon/tank/jetpack/S = target
+	S.toggle_rockets()
 
 /obj/item/weapon/tank/jetpack/atom_init()
 	. = ..()
@@ -63,10 +74,6 @@
 		return TRUE
 
 	qdel(G)
-
-/obj/item/weapon/tank/jetpack/ui_action_click()
-	toggle()
-
 
 /obj/item/weapon/tank/jetpack/void
 	name = "Void Jetpack (Oxygen)"

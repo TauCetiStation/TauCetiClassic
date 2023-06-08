@@ -815,6 +815,10 @@
 /datum/action/item_action/hands_free/toggle_space_suit_mode
 	name = "Toggle space suit mode"
 
+/datum/action/item_action/hands_free/toggle_space_suit_mode/Activate()
+	var/obj/item/clothing/suit/space/rig/syndi/S = target
+	S.toggle_mode()
+
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
@@ -831,9 +835,6 @@
 	..()
 	icon_state = "[rig_variant]-[combat_mode ? "combat" : "space"]"
 	update_inv_mob()
-
-/obj/item/clothing/suit/space/rig/syndi/ui_action_click()
-	toggle_mode()
 
 /obj/item/clothing/suit/space/rig/syndi/verb/toggle_mode()
 	set category = "Object"

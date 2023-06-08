@@ -17,6 +17,10 @@
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
 
+/datum/action/item_action/toggle_mister/Activate()
+	var/obj/item/weapon/reagent_containers/watertank_backpack/S = target
+	S.toggle_mister()
+
 /obj/item/weapon/reagent_containers/watertank_backpack/atom_init()
 	. = ..()
 	reagents.add_reagent("water", volume)
@@ -24,9 +28,6 @@
 		noz = new noz(src, src)
 	else
 		noz = new(src, src)
-
-/obj/item/weapon/reagent_containers/watertank_backpack/ui_action_click()
-	toggle_mister()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/verb/toggle_mister()
 	set name = "Toggle Mister"
@@ -74,7 +75,7 @@
 
 /obj/item/weapon/reagent_containers/watertank_backpack/attack_hand(mob/user)
 	if(loc == user)
-		ui_action_click()
+		toggle_mister()
 		return
 	..()
 

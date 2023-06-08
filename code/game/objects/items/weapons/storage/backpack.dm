@@ -18,12 +18,13 @@
 /datum/action/item_action/storage
 	name = "Storage"
 
-/obj/item/weapon/storage/backpack/ui_action_click()
-	if(!opened)
-		open(loc)
+/datum/action/item_action/storage/Activate()
+	var/obj/item/weapon/storage/backpack/S = target
+	if(!S.opened)
+		S.open(S.loc)
 	else
-		close(loc)
-	opened = !opened
+		S.close(S.loc)
+	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))

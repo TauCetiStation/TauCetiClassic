@@ -28,6 +28,10 @@
 /datum/action/item_action/hands_free/toggle_pip_boy
 	name = "Toggle Pip-Boy"
 
+/datum/action/item_action/hands_free/toggle_pip_boy/Activate()
+	var/obj/item/clothing/gloves/pipboy/S = target
+	S.open_interface()
+
 /obj/item/clothing/gloves/pipboy/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -61,8 +65,6 @@
 		return
 	return ..()
 
-/obj/item/clothing/gloves/pipboy/ui_action_click()
-	open_interface()
 
 /obj/item/clothing/gloves/pipboy/verb/open_interface()
 	set name = "Open Interface"
