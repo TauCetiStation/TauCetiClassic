@@ -29,6 +29,7 @@
 	animalistic = FALSE
 	has_head = TRUE
 	has_arm = TRUE
+	can_point = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
 	attack_sound = SOUNDIN_PUNCH_MEDIUM
@@ -233,8 +234,13 @@
 	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
-		/obj/effect/proc_holder/spell/no_target/area_conversion,
 		)
+/mob/living/simple_animal/construct/harvester/atom_init()
+	. = ..()
+	if(SSticker.nar_sie_has_risen)
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion(src))
+	else
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion/lesser(src))
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
 	. = ..()

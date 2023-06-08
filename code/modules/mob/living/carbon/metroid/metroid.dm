@@ -92,6 +92,11 @@
 
 	. = ..()
 
+	var/datum/action/innate/slime/E
+	for(var/V in subtypesof(/datum/action/innate/slime))
+		E = new V (src)
+		E.Grant(src)
+
 	regenerate_icons()
 
 /mob/living/carbon/slime/Destroy()
