@@ -663,14 +663,12 @@
 	if(!target && !forced)
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
-		after_activate()
 		return
 
 	set_state(MANIPULATOR_STATE_INTERACTING_FROM)
 	if(!do_sleep(delay, CALLBACK(src, /obj/machinery.proc/is_operational)))
 		set_state(MANIPULATOR_STATE_IDLE)
 		do_sleep(delay)
-		after_activate()
 		return
 
 	if(has_eyes)
