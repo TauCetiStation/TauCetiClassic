@@ -1,5 +1,16 @@
 //TRAIN STATION 13
 
+//STRUCTURES
+
+/obj/structure/alien/resin/wall/gangway //Not really a wall, or a turf, but it's made of resin, allright.
+	name = "gangway"
+	desc = "A flexible connector fitted to the end of a railway coach, enabling passengers to move from one coach to another without danger of falling from the train."
+	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon_state = "gangway_still" //Does not animate by default when spawned, but will animate if the train is moving.
+	can_block_air = FALSE
+	smooth = FALSE
+	max_integrity = 100
+
 //MACHINES
 
 /obj/machinery/media/jukebox/trainjukebox

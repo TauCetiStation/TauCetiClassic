@@ -7,14 +7,14 @@
 	icon_state = "matrix"
 	smooth = FALSE
 
-/turf/unsimulated/floor/snow/city //This snow won't switch to animation if the train is moving
+/turf/unsimulated/floor/still/snow //This snow won't switch to animation if the train is moving
 	name = "snow"
 	desc = "It's cold."
 	icon = 'trainstation13/icons/trainturf.dmi'
-	icon_state = "snow0static"
+	icon_state = "snow_still"
 
-/turf/unsimulated/floor/snow/trainsnow
+/turf/unsimulated/floor/moving/snow //This snow will switch icon state to animation if the train is moving
 	name = "snow"
 	desc = "It's cold."
 	icon = 'trainstation13/icons/trainturf.dmi'
-	icon_state = "snow0static"
+	icon_state = "snow_still"
