@@ -239,11 +239,21 @@
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
 /proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = 0)
-	for(var/datum/money_account/D in all_money_accounts)
-		if(D.account_number == attempt_account_number)
-			if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number) )
-				return D
-			break
+	var/datum/money_account/D = get_account(attempt_account_number)	
+	if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number) )
+		return D
+
+//for ATM, cardpay, watercloset, table_rack, vendomat
+/proc/attempt_account_access_with_user_input(attempt_account_number, security_level_passed = 0, mob/user)
+	var/datum/money_account/MA = get_account(attempt_account_number)
+	if(MA.security_level == 0)
+		return MA
+	var/attempt_pin = 0
+	if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == MA.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
+		attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
+	else
+		attempt_pin = input("Enter pin code", "Money transaction") as num
+	return attempt_account_access(attempt_account_number, attempt_pin, security_level_passed)
 
 /proc/get_account(account_number)
 	for(var/datum/money_account/D in all_money_accounts)
