@@ -676,23 +676,10 @@
 	qdel(src)
 
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
-	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
-
-	var/attempt_pin = 0
-	if(Buyer.security_level > 0)
-		if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == Buyer.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == Buyer.remote_access_pin)
-			attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
-		else
-			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
-		if(isnull(attempt_pin))
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
-
-		if(!Buyer)
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-
+	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, 2, user)
+	if(!Buyer)
+		to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+		return
 	pay_with_account(Buyer, user)
 
 /obj/lot_holder/proc/scan_ewallet(obj/item/weapon/ewallet/EW, mob/user)
