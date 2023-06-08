@@ -431,12 +431,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				var/obj/item/weapon/card/C = I
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 				if(station_account)
-					var/datum/money_account/D = get_account(C.associated_account_number)
-					var/attempt_pin = 0
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Transaction") as num
-					if(attempt_pin)
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					var/datum/money_account/D = attempt_account_access_with_user_input(C.associated_account_number, 2, usr)
 					if(D)
 						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
