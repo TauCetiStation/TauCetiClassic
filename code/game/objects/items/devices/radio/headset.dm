@@ -98,7 +98,7 @@
 
 /obj/item/device/radio/headset/headset_int/blueshield
 	name = "blueshield radio headset"
-	icon_state = "blueshield"
+	icon_state = "headset"
 	desc = "Headset of the guy that for some reason follows our heads of staff... To access the security channel, use :s. For command, use :c."
 
 /obj/item/device/radio/headset/headset_eng
@@ -133,7 +133,7 @@
 
 /obj/item/device/radio/headset/headset_sci/xenoarch
 	name = "xenoarchaeologist radio headset"
-	icon_state = "xenoarch_headset"
+	icon_state = "blueshield"
 	handle_socialization = TRUE
 
 /obj/item/device/radio/headset/headset_medsci
@@ -244,7 +244,7 @@
 
 /obj/item/device/radio/headset/headset_cargo/miner
 	name = "miner radio headset"
-	icon_state = "miner_headset"
+	icon_state = "blueshield"
 	handle_socialization = TRUE
 
 /obj/item/device/radio/headset/ert
