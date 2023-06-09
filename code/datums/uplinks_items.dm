@@ -1,5 +1,4 @@
 //var/list/uplink_items = list()
-#define NO_LIMIT -1
 
 /proc/get_uplink_items(obj/item/device/uplink/uplink)
 	// If not already initialized..
@@ -49,7 +48,7 @@
 	var/desc = "item description"
 	var/item = null
 	var/cost = 0
-	var/min_online = NO_LIMIT
+	var/min_online = 0
 	var/last = 0 // Appear last
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 
