@@ -75,10 +75,11 @@
 ///////////////// FACTION STAGES //////////////////////
 #define FS_DEFEATED    -1
 #define FS_DORMANT      0
-#define FS_ACTIVE       1
-#define FS_MIDGAME      2
-#define FS_ENDGAME      3
-#define FS_VICTORY      4
+#define FS_START        1
+#define FS_ACTIVE       2
+#define FS_MIDGAME      3
+#define FS_ENDGAME      4
+#define FS_VICTORY      5
 
 /////////////////////// OTHERS ////////////////////////
 

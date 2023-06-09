@@ -54,8 +54,8 @@
 	. = ..()
 	if(!blobwincount || !detect_overminds())
 		return .
-	if(0.2 * blobwincount < blobs.len && stage <= FS_DORMANT) // Announcement
-		stage(FS_DORMANT)
+	if(0.2 * blobwincount < blobs.len && stage < FS_START) // Announcement
+		stage(FS_START)
 		if(announcement_timer)
 			deltimer(announcement_timer)
 	if(0.3 * blobwincount < blobs.len && stage < FS_ACTIVE) // AI law
@@ -68,7 +68,7 @@
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	announcement_timer = addtimer(CALLBACK(src, .proc/stage, FS_DORMANT), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)//world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	announcement_timer = addtimer(CALLBACK(src, .proc/stage, FS_START), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)//world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	spawn_blob_mice()
 	return ..()
 
@@ -99,7 +99,7 @@
 /datum/faction/blob_conglomerate/stage(new_stage)
 	stage = new_stage
 	switch(new_stage)
-		if(FS_DORMANT)
+		if(FS_START)
 			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 			announcement.play()
 			return
