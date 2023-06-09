@@ -183,14 +183,11 @@
 
 	if(!forcedodge)
 		if(ismob(A))
-			if(check_living_shield(A) == M)
-				M.bullet_act(src,def_zone)
-			else
-				var/list/mobs = list()
-				for(var/mob/ML in get_turf(M.loc))
-					mobs += ML
-				if(mobs.len <= 1)
-					forcedodge = M.bullet_act(src, def_zone)
+			var/list/mobs = list()
+			for(var/mob/ML in get_turf(M.loc))
+				mobs += ML
+			if(mobs.len <= 1)
+				forcedodge = M.bullet_act(src, def_zone)
 		else
 			forcedodge = A.bullet_act(src, def_zone) // searches for return value
 
@@ -212,6 +209,9 @@
 		var/list/mobs = list()
 		for(var/mob/ML in get_turf(A.loc))
 			mobs += ML
+			if(check_living_shield(A) == ML)
+				ML.bullet_act(src, def_zone)
+				mobs -= ML
 		if(mobs.len >= 2)
 			var/mob/mob = pick(mobs)
 			mob.bullet_act(src, def_zone)
