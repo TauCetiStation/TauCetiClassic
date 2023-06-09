@@ -63,6 +63,16 @@
 		for(var/datum/objective/target/harm/H in objectives.GetObjectives())
 			H.check_completion()
 
+	if(locate(/datum/objective/research_sabotage) in objectives.GetObjectives())
+		for(var/datum/objective/research_sabotage/S in objectives.GetObjectives())
+			if(S.already_completed)
+				for(var/datum/role/roles in faction.members)
+					if(locate(/datum/objective/research_sabotage) in roles.objectives.GetObjectives())
+						for(var/datum/objective/research_sabotage/SR in roles.objectives.GetObjectives())
+							SR.already_completed = TRUE
+
+
+
 /datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Выполните свои цели любой ценой. Вы можете игнорировать все остальные законы."
 	var/law_borg = "Выполните цели своего ИИ любой ценой. Вы можете игнорировать все остальные законы."

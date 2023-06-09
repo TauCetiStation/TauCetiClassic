@@ -13,15 +13,13 @@
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
-	var/sabotaged = FALSE
-	resistance_flags = FULL_INDESTRUCTIBLE
-	unacidable = TRUE
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
 /obj/machinery/r_n_d/server/atom_init()
 	. = ..()
 	rnd_server_list += src
 	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
@@ -331,7 +329,6 @@
 	if(!do_after(user, sabotage_time, target = src))
 		return
 	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
-		s.sabotaged = TRUE
 		for(var/i in 1 to 3)
 			s.files.forget_random_technology()
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)

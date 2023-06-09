@@ -76493,6 +76493,9 @@
 "xHY" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/rdconsole,
+/obj/item/weapon/circuitboard/rdserver{
+	pixel_y = 4
+	},
 /obj/item/weapon/circuitboard/destructive_analyzer,
 /obj/item/weapon/circuitboard/protolathe,
 /turf/simulated/floor/plating,
