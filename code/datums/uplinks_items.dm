@@ -1,4 +1,5 @@
 //var/list/uplink_items = list()
+#define NO_LIMIT -1
 
 /proc/get_uplink_items(obj/item/device/uplink/uplink)
 	// If not already initialized..
@@ -11,6 +12,8 @@
 		for(var/item in typesof(/datum/uplink_item))
 
 			var/datum/uplink_item/I = new item()
+			if(I.min_online >= player_list.len)
+				continue
 			if(!I.item)
 				continue
 			if(I.uplink_types.len && !(uplink.uplink_type in I.uplink_types))
@@ -46,6 +49,7 @@
 	var/desc = "item description"
 	var/item = null
 	var/cost = 0
+	var/min_online = NO_LIMIT
 	var/last = 0 // Appear last
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 
@@ -136,6 +140,7 @@
 	name = "TR-8-R Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers. This one looks like toy."
 	item = /obj/item/weapon/gun/projectile/revolver/traitor
+	min_online = 25
 	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/pistol
@@ -144,6 +149,7 @@
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
+	min_online = 25
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/dangerous/deagle
@@ -239,6 +245,7 @@
 	Its bolts stun enemies for short periods, and replenish automatically. This one looks like toy."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 7
+	min_online = 25
 	uplink_types = list("traitor")
 /*
 /datum/uplink_item/dangerous/flamethrower
@@ -256,6 +263,7 @@
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/weapon/melee/powerfist
 	cost = 8
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/dangerous/sword
@@ -268,6 +276,7 @@
 /datum/uplink_item/dangerous/sword/traitor
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise. This one looks like toy."
 	item = /obj/item/weapon/melee/energy/sword/traitor
+	min_online = 25
 	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/power_gloves
@@ -279,6 +288,7 @@
 	They are disguised as heavy padded black gloves."
 	item = /obj/item/clothing/gloves/power
 	cost = 4
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/dangerous/emp
@@ -286,6 +296,7 @@
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/emps
 	cost = 5
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/dangerous/syndicate_minibomb
@@ -330,6 +341,7 @@
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 25
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 //for refunding the syndieborg teleporter
@@ -343,6 +355,7 @@
 	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
 	cost = 4
+	min_online = 25
 	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/light_armor/dealer
@@ -382,6 +395,7 @@
 	desc = "A 40-round .45 magazine for use in Robot submachine gun."
 	item = /obj/item/ammo_box/magazine/borg45
 	cost = 2
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/pistol
@@ -390,6 +404,7 @@
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/stechkin/extended
 	cost = 1
+	min_online = 25
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/ammo/revolver
@@ -397,6 +412,7 @@
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/speedloader/a357
 	cost = 2
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/smg
@@ -651,6 +667,7 @@
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
+	min_online = 25
 	uplink_types = list("traitor")
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -689,6 +706,7 @@
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
 	cost = 6
+	min_online = 25
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -756,9 +774,10 @@
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
-	and other medical supplies helpful for a medical field operative.."
+	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 10
+	min_online = 25
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/medkit_small
@@ -766,6 +785,7 @@
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 5
+	min_online = 25
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/bonepen
@@ -973,6 +993,7 @@
 	desc = "An implant, that will inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	cost = 6
+	min_online = 25
 
 /datum/uplink_item/implants/adrenaline/dealer
 	cost = 20
@@ -983,6 +1004,7 @@
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
+	min_online = 25
 
 /datum/uplink_item/implants/emp/dealer
 	cost = 14
@@ -1029,6 +1051,7 @@
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
+	min_online = 25
 
 /datum/uplink_item/badass/merch
 	name = "Syndicate Merchandise"
@@ -1088,6 +1111,7 @@
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
 	uplink_types = list("traitor")
+	min_online = 25
 	var/crate_value = 40
 
 /datum/uplink_item/badass/surplus_crate/team
