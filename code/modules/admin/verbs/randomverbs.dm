@@ -905,7 +905,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSshuttle.announce_crew_called.play()
 	else
 		var/eaccess = tgui_alert(src, "Grant acces to maints for everyone?", "Confirm", list("Yes", "No"))
-		SSshuttle.incall(0.1)
+		SSshuttle.incall()
 		SSshuttle.announce_emer_called.play()
 
 		if(eaccess == "Yes")
