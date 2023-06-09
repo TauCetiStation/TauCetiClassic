@@ -76494,7 +76494,8 @@
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/rdconsole,
 /obj/item/weapon/circuitboard/rdserver{
-	pixel_y = 4
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /obj/item/weapon/circuitboard/destructive_analyzer,
 /obj/item/weapon/circuitboard/protolathe,
