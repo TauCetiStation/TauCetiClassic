@@ -49,7 +49,6 @@
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "sheater-off"
 
-
 //FURNITURE
 
 /obj/structure/rack/traintable //Sort of a table limited to a single tile
@@ -140,3 +139,22 @@
 	icon = 'trainstation13/icons/traindecals.dmi'
 	icon_state = "zero"
 	layer = 4.4
+
+//CARS
+
+/obj/structure/atomobile //Automobile becomes atomobile - by WalterJe
+	name = "taxi"
+	desc = "A yellow cab with electric engine powered by micro fusion reactor."
+	icon = 'trainstation13/icons/96x96.dmi'
+	icon_state = "taxi"
+	pixel_x = -16
+
+/obj/structure/atomobile/white
+	name = "white car"
+	desc = "A white car with electric engine powered by micro fusion reactor."
+	icon_state = "white"
+
+/obj/structure/atomobile/blue
+	name = "blue car"
+	desc = "A blue car with electric engine powered by micro fusion reactor."
+	icon_state = "blue"
