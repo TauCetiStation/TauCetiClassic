@@ -3,7 +3,94 @@
 //Code by Luduk/LudwigVonChesterfield.
 //This module is responsible for spawning and cleaning up the decorations moving past the train.
 
-//DECORATIONS SPAWNER
+//SIGNALS
+
+var/list/signal_spawner = list()
+
+/obj/effect/signalspawner
+	name = "railway signal spawner"
+	desc = "Spawns a signal along the rail tracks for train driver."
+	icon = 'trainstation13/icons/trainareas.dmi'
+	icon_state = "signal"
+	anchored = TRUE
+	layer = TURF_LAYER
+	plane = GAME_PLANE
+	unacidable = TRUE
+	invisibility = INVISIBILITY_ABSTRACT
+
+	var/list/spawntypes = list(/obj/machinery/floodlight/signal)
+
+/obj/effect/signalspawner/atom_init()
+	signal_spawner += src
+
+/obj/effect/signalspawner/proc/do_spawn()
+	for(var/spawntype in spawntypes)
+		new spawntype(loc)
+
+/client/proc/spawn_signal()
+	set category = "Event"
+	set name = "TS13 Signals - Spawn Red Signal"
+
+	log_admin("[usr.key] has spawned railway signal.")
+	message_admins("[key_name_admin(usr)] has spawned railway signal.")
+
+	for(var/obj/effect/signalspawner/T in signal_spawner)
+		if(T.anchored)
+			T.do_spawn()
+
+/obj/machinery/floodlight/signal
+	name = "railway signal"
+	desc = "A visual display device that conveys instructions or provides warning of instructions regarding the driver’s authority to proceed."
+	icon = 'icons/obj/machines/floodlight.dmi'
+	icon_state = "flood00"
+	density = TRUE
+	light_power = 1
+	light_color = "#da0205"
+	interact_offline = TRUE
+	on = TRUE
+	brightness_on = 3
+
+var/railway_signal_state = 1 //1 - red, 2 - green
+
+var/list/railway_signals = list()
+
+/proc/set_railway_signal_state(value)
+	railway_signal_state = value
+
+	for(var/obj/machinery/floodlight/signal/red in railway_signals)
+		red.update_icon()
+
+/obj/machinery/floodlight/signal/atom_init()
+	. = ..()
+	railway_signals += src
+	update_icon()
+
+/obj/machinery/floodlight/signal/update_icon()
+	switch(railway_signal_state)
+		if(1)
+			light_color = "#da0205"
+		if(2)
+			light_color = "#66ff66"
+
+/client/proc/toggle_signals()
+	set category = "Event"
+	set name = "TS13 Signals - Toggle Signal Lights"
+
+	var/msg
+	if(event_field_stage==1)
+		event_field_stage=2
+		msg = "ALL railway SIGNALS are GREEN!"
+	else if(event_field_stage==2)
+		event_field_stage=1
+		msg = "ALL railway SIGNALS are RED!"
+
+	log_admin("[usr.key] has toggled railway signals, now [msg].")
+	message_admins("[key_name_admin(usr)] has toggled railway signals, now [msg].")
+
+	for(var/obj/machinery/floodlight/signal/red in railway_signals)
+		red.update_icon()
+
+//DECORATIONS
 
 /obj/machinery/conveyor_switch
 	var/list/trainspawners
@@ -20,7 +107,7 @@ var/global/spawn_list_type = "normal"
 
 /client/proc/toggle_train_spawners_and_despawners()
 	set category = "Event"
-	set name = "TS13 Toggle Spawners"
+	set name = "TS13 Decorations - Toggle Spawners on/off"
 
 	global.globally_operating = !global.globally_operating
 	to_chat(src, "Toggled spawners to [global.globally_operating ? "ON" :  "OFF"]")
@@ -32,7 +119,7 @@ var/global/spawn_list_type = "normal"
 
 /client/proc/change_global_spawn_list_type()
 	set category = "Event"
-	set name = "TS13 Change Spawn List Type"
+	set name = "TS13 Decorations - Change Spawn List Type"
 
 	var/prev_spawn_list_type = global.spawn_list_type
 	global.spawn_list_type = global.spawn_list_type == "normal" ? "station" : "normal"
@@ -251,6 +338,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/item/trash/raisins,
 		/obj/item/trash/chips,
 		/obj/machinery/floodlight,
+		/obj/machinery/floodlight/signal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/structure/flora/tree/pine/train,
 		/obj/structure/flora/tree/dead/train,

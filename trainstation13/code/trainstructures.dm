@@ -9,7 +9,7 @@
 	icon_state = "gangway_still" //Does not animate by default when spawned, but will animate if the train is moving.
 	can_block_air = FALSE
 	smooth = FALSE
-	max_integrity = 100
+	max_integrity = 70
 
 //MACHINES
 

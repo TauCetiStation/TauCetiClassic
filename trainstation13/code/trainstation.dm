@@ -1,7 +1,19 @@
 //TRAIN STATION 13
 
 //Code by VoLas and Luduk/LudwigVonChesterfield.
-//This module is responsible for train movement and train stations along the way.
+//This module is responsible for train movement and train stations along the way with a couple others train specific features.
+
+//Admin verb toggles
+
+var/list/admin_verbs_trainstation_event = list(
+	/client/proc/toggle_trainstation_block, //Event (admin menu) - TS13 Movement - Toggle Invisible Wall
+	/client/proc/toggle_train_spawners_and_despawners, //Event (admin menu) - TS13 Decorations - Toggle Spawners on/off"
+	/client/proc/change_global_spawn_list_type, //Event (admin menu) - TS13 Decorations - Change Spawn List Type
+	/client/proc/spawn_signal, //Event (admin menu) - TS13 Signals - Spawn Red Signal
+	/client/proc/toggle_signals, //Event (admin menu) - TS13 Signals - Toggle Signal Lights
+)
+
+//INVISIBLE WALL
 //Adaptive invisible wall allows admins to control whether players can get to the train station when the train has reached the destination.
 
 var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
@@ -22,6 +34,7 @@ var/list/train_block = list()
 	layer = 2
 	icon = 'trainstation13/icons/trainbackstage.dmi'
 	icon_state = "block"
+	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/decal/trainstation/atom_init()
@@ -56,19 +69,11 @@ var/list/train_block = list()
 			desc = "This snow is deeper than usual, but it's passable."
 			icon_state = "block"
 
-//Admin verb toggles
-
-var/list/admin_verbs_trainstation_event = list(
-	/client/proc/toggle_trainstation_block,
-	/client/proc/toggle_train_spawners_and_despawners,
-	/client/proc/change_global_spawn_list_type,
-)
-
 //1 - nothing, 2 - objects, 3 - all
 
 /client/proc/toggle_trainstation_block()
 	set category = "Event"
-	set name = "TS13 Toggle Invisible Wall"
+	set name = "TS13 Movement - Toggle Invisible Wall"
 
 	var/msg
 	if(event_field_stage==1)
@@ -94,4 +99,8 @@ var/list/admin_verbs_trainstation_event = list(
 	name = "ice"
 	desc = "Layer of ice has formed on top of the snow. You see nothing out of the ordinary."
 	icon = 'trainstation13/icons/trainbackstage.dmi'
+	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/machinery/conveyor/train/ex_act()
+	return
