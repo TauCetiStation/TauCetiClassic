@@ -60,8 +60,6 @@
 		return
 
 	handle_vision()
-	//handle_actions()
-	//update_action_buttons()
 	update_health_hud()
 
 	pullin?.update_icon(src)
