@@ -475,5 +475,4 @@
 	)
 
 /datum/emote/human/spit/get_sound(mob/user, emote_key, intentional)
-	playsound(user, pick('sound/voice/spit_1.ogg','sound/voice/spit_2.ogg'), VOL_EFFECTS_MASTER)
-	return
+	return pick('sound/voice/spit_1.ogg','sound/voice/spit_2.ogg', VOL_EFFECTS_MASTER)
