@@ -10,7 +10,15 @@ with
 
 	var/turf/basetype = /turf/simulated/floor/plating
 
-#2 In /code/modules/admin/admin_verbs.dm add:
+#2 In /code/datums/announcements.dm replace:
+
+	"commandreport" = 'sound/AI/commandreport.ogg',
+
+with
+
+	"commandreport" = 'trainstation13/sound/train_melody.ogg',
+
+#3 In /code/modules/admin/admin_verbs.dm add:
 
 		// <trainstation13>
 		if(holder.rights & R_EVENT)
@@ -22,7 +30,7 @@ after the line:
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
 
-#3 In /code/modules/recycling/conveyor2.dm add:
+#4 In /code/modules/recycling/conveyor2.dm add:
 
 	// <trainstation13>
 	for(var/obj/effect/trainspawner/TR in trainspawners)

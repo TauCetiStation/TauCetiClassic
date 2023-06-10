@@ -18,8 +18,13 @@ var/global/list/announcement_sounds = list(
 	"admin_war_pipisky" = 'sound/AI/_admin_war_pipisky.ogg',
 	"admin_war_pizdec" = 'sound/AI/_admin_war_pizdec.ogg',
 	"admin_war_tishina" = 'sound/AI/_admin_war_tishina.ogg',
-	
+
+/* <base>
 	"commandreport" = 'sound/AI/commandreport.ogg',
+</base> */
+// <trainstation13>
+	"commandreport" = 'trainstation13/sound/train_melody.ogg',
+// </trainstation13>
 	"announce" = 'sound/AI/announce.ogg',
 	"aiannounce" = 'sound/AI/aiannounce.ogg',
 	"portal" = 'sound/AI/portal.ogg',
