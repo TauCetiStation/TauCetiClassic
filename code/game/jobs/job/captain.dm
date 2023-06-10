@@ -27,7 +27,7 @@
 		SSStatistics.score.captain += H.real_name
 
 /datum/job/captain/get_access()
-	return get_all_accesses()
+	return get_all_accesses() - get_region_accesses(7)
 
 /datum/job/hop
 	title = "Head of Personnel"
