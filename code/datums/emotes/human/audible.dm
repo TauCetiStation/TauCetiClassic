@@ -476,8 +476,4 @@
 
 /datum/emote/human/spit/do_emote(mob/user, emote_key, intentional)
 	. = ..()
-	switch(pick(1, 2))
-		if(1)
-			playsound(user, 'sound/voice/spit_1.ogg', VOL_EFFECTS_MASTER)
-		if(2)
-			playsound(user, 'sound/voice/spit_2.ogg', VOL_EFFECTS_MASTER)
+	playsound(user, [pick('sound/voice/spit_1.ogg','sound/voice/spit_2.ogg')])
