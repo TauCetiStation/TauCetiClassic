@@ -133,7 +133,7 @@
 
 /obj/item/Destroy()
 	for(var/datum/action/A in item_actions)
-		QDEL_NULL(A)
+		qdel(A)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
