@@ -2463,6 +2463,7 @@
 #include "maps\testmap\job_changes.dm"
 #include "trainstation13\code\trainareas.dm"
 #include "trainstation13\code\trainitems.dm"
+#include "trainstation13\code\trainsignals.dm"
 #include "trainstation13\code\trainspawners.dm"
 #include "trainstation13\code\trainstation.dm"
 #include "trainstation13\code\trainstructures.dm"
