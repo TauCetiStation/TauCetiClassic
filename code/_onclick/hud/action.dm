@@ -302,6 +302,10 @@
 /datum/action/item_action
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE
 
+/datum/action/item_action/Activate()
+	var/obj/item/I = target
+	I.attack_self(usr)
+
 /datum/action/item_action/CheckRemoval(mob/user)
 	return !(target in user)
 

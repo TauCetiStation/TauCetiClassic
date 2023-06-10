@@ -22,10 +22,14 @@
 	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
 /datum/action/item_action/hands_free/activate_vest
-	name = "Activate"
+	name = "Activate Vest"
 
 /datum/action/item_action/hands_free/toggle_vest
-	name = "Toggle Vest"
+	name = "Change Mode"
+
+/datum/action/item_action/hands_free/toggle_vest/Activate()
+	var/obj/item/clothing/suit/armor/abductor/vest/S = target
+	S.flip_mode()
 
 /obj/item/clothing/suit/armor/abductor/vest/atom_init()
 	. = ..()
@@ -312,16 +316,14 @@
 	origin_tech = "materials=6;biotech=4;combat=5"
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
+	item_action_types = null
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
 	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
 		return FALSE
 	return TRUE
-
-/obj/item/weapon/gun/energy/decloner/alien
-	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
-
 
 //AGENT HELMET
 /obj/item/clothing/head/helmet/abductor
