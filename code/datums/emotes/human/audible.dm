@@ -474,5 +474,6 @@
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
-/datum/emote/human/spit/do_emote(mob/user, emote_key, intentional)
+/datum/emote/human/spit/get_sound(mob/user, emote_key, intentional)
 	playsound(user, pick('sound/voice/spit_1.ogg','sound/voice/spit_2.ogg'), VOL_EFFECTS_MASTER)
+	return
