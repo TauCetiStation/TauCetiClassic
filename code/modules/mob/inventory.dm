@@ -172,7 +172,7 @@ var/global/list/slot_equipment_priority = list(
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(!(W.flags & ABSTRACT))
-		if(HAS_TRAIT(usr, TRAIT_IMMOBILIZED))
+		if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 			return FALSE
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
@@ -202,7 +202,7 @@ var/global/list/slot_equipment_priority = list(
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/W)
 	if(!(W.flags & ABSTRACT))
-		if(HAS_TRAIT(usr, TRAIT_IMMOBILIZED))
+		if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 			return FALSE
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
