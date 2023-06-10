@@ -80,7 +80,7 @@
 			rate = rate.Copy(2,7)
 		else
 			if(tgui_alert(user, "Permanent - only admin can return the base salary.\
-			Temporarily - any head can return the base salary.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
+			Temporarily - any head can return the base salary.", "Choose type of salary change.", list("Permanent", "Temporarily")) == "Permanent")
 				type_change = "perm"
 		input_rate = input(user, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
 		if(!input_rate)
