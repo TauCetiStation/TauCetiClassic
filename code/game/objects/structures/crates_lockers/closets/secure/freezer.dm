@@ -73,3 +73,32 @@
 		new /obj/item/weapon/spacecash/c500(src)
 	for (var/i in 1 to 6)
 		new /obj/item/weapon/spacecash/c200(src)
+
+/obj/structure/closet/secure_closet/freezer/milkshake
+	name = "Refrigerator"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridgeoff"
+
+/obj/structure/closet/secure_closet/freezer/milkshake/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+
+/obj/structure/closet/secure_closet/freezer/icecream
+	name = "Ingredients"
+
+/obj/structure/closet/secure_closet/freezer/icecream/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
+	//popcorn why not
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
