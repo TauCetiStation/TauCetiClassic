@@ -8587,6 +8587,17 @@
 	icon_state = "yellowpatch"
 	},
 /area/station/engineering/atmos)
+"bSM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/hologram/holopad{
+	pixel_y = -16
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "bSR" = (
 /obj/machinery/computer/monitor,
 /obj/item/device/radio/intercom{
@@ -18094,6 +18105,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ete" = (
@@ -22768,6 +22780,10 @@
 	icon_state = "vault"
 	},
 /area/station/security/forensic_office)
+"fCj" = (
+/obj/machinery/status_display,
+/turf/simulated/wall,
+/area/station/hallway/secondary/exit)
 "fCu" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -53545,6 +53561,15 @@
 	icon_state = "vault"
 	},
 /area/station/security/hos)
+"nft" = (
+/obj/machinery/ai_status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/starboard)
 "nfy" = (
 /obj/machinery/cell_charger,
 /obj/structure/table/reinforced,
@@ -80980,6 +81005,9 @@
 /area/station/maintenance/brig)
 "uei" = (
 /obj/structure/filingcabinet,
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -95110,6 +95138,10 @@
 	icon_state = "darkred"
 	},
 /area/station/rnd/xenobiology)
+"xOC" = (
+/obj/machinery/status_display,
+/turf/simulated/wall,
+/area/station/hallway/primary/starboard)
 "xOH" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -95869,6 +95901,9 @@
 	},
 /obj/machinery/light/smart{
 	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -138158,14 +138193,14 @@ bAQ
 ier
 rmY
 caw
-rmY
+fCj
 djc
 ier
 rUL
 rmY
 rmY
 uei
-aMr
+bSM
 nGt
 oBw
 sug
@@ -139698,7 +139733,7 @@ rmY
 guO
 tnp
 ier
-rmY
+fCj
 onH
 rmY
 djc
@@ -139945,7 +139980,7 @@ xQo
 lDB
 xQo
 cWl
-efB
+xOC
 xjH
 xfr
 xfr
@@ -140716,7 +140751,7 @@ xQo
 xQo
 iVc
 pZR
-xgV
+nft
 xgV
 xgV
 xgV
@@ -140737,7 +140772,7 @@ kTP
 dVh
 dVh
 dVh
-rmY
+fCj
 rmY
 kHU
 pka
