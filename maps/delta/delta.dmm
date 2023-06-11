@@ -4906,6 +4906,15 @@
 	icon_state = "bot"
 	},
 /area/station/medical/cryo)
+"bcG" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Chapel"
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel)
 "bcO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -61953,7 +61962,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock/glass{
+	name = "Chapel"
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -141473,7 +141484,7 @@ wAH
 eiH
 eiH
 eiH
-pbQ
+bcG
 pnY
 eiH
 eiH
