@@ -397,11 +397,14 @@ log transactions
 					if(!MA)
 						to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 						return
-					var/security_level_passed = held_card && held_card.associated_account_number == tried_account_num ? 2 : 1
+						
+					var/security_level_passed = held_card && held_card.associated_account_number == tried_account_num ? ACCOUNT_SECURITY_LEVEL_MAXIMUM : ACCOUNT_SECURITY_LEVEL_STANDARD
 					if(href_list["account_pin"])
 						authenticated_account = attempt_account_access(tried_account_num, text2num(href_list["account_pin"]), security_level_passed)
 					else
 						authenticated_account = attempt_account_access_with_user_input(tried_account_num, security_level_passed, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 
 					if(!authenticated_account)
 						number_incorrect_tries++
