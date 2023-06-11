@@ -43,11 +43,6 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/ishavemindprotecthud()
-	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD) || HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
-		return TRUE
-	return FALSE
-
 /mob/proc/isimplantedobedience()
 	for(var/obj/item/weapon/implant/obedience/L in src)
 		if(L.implanted)
