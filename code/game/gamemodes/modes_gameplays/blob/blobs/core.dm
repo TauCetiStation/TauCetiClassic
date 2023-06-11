@@ -31,13 +31,8 @@ var/global/list/blob_nodes = list()
 	QDEL_NULL(OV)
 	STOP_PROCESSING(SSobj, src)
 
-	var/dead_faction = TRUE
-	var/datum/faction/F = find_faction_by_type(/datum/faction/blob_conglomerate)
-	for(var/datum/role/R in F.members)
-		if(R.antag.current && R.antag.current.is_dead())
-			continue
-		dead_faction = FALSE
-	if(dead_faction)
+	var/datum/faction/blob_conglomerate/F = find_faction_by_type(/datum/faction/blob_conglomerate)
+	if(!F.detect_overminds())
 		F.stage(FS_DEFEATED)
 
 	return ..()
