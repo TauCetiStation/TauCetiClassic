@@ -676,7 +676,9 @@
 	qdel(src)
 
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
-	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, 2, user)
+	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
 	if(!Buyer)
 		to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
 		return
