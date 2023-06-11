@@ -36107,7 +36107,7 @@
 /obj/item/weapon/bell,
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 10;
+	pixel_y = 15;
 	pixel_x = -3
 	},
 /turf/simulated/floor,
@@ -46469,7 +46469,7 @@
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 10;
+	pixel_y = 15;
 	pixel_x = -3
 	},
 /turf/simulated/floor{
@@ -68864,7 +68864,7 @@
 	},
 /obj/item/device/cardpay{
 	dir = 4;
-	pixel_y = 10;
+	pixel_y = 15;
 	pixel_x = 5
 	},
 /obj/structure/table/reinforced/stall,
@@ -82485,7 +82485,7 @@
 /obj/item/weapon/bell,
 /obj/item/device/cardpay{
 	dir = 4;
-	pixel_y = 10
+	pixel_y = 15
 	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
