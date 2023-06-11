@@ -16,9 +16,7 @@
 	var/list/transaction_log = list()
 	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0
-	var/security_level = 1	//0 - auto-identify from worn ID, require only account number
-							//1 - require manual login / account number and pin
-							//2 - require card and manual login
+	var/security_level = ACCOUNT_SECURITY_LEVEL_STANDARD
 	// Whether this account is hidden from databases. In the future, if required, abstract to Database ID, and make the financial database connect to said ID and view accounts only for that ID.
 	var/hidden = FALSE
 
@@ -238,7 +236,7 @@
 	return FALSE
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
-/proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = 0)
+/proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = ACCOUNT_SECURITY_LEVEL_NONE)
 	var/datum/money_account/D = get_account(attempt_account_number)
 	if(!D)
 		return
@@ -246,11 +244,11 @@
 		return D
 
 //for ATM, cardpay, watercloset, table_rack, vendomat
-/proc/attempt_account_access_with_user_input(attempt_account_number, security_level_passed = 0, mob/user)
+/proc/attempt_account_access_with_user_input(attempt_account_number, security_level_passed = ACCOUNT_SECURITY_LEVEL_NONE, mob/user)
 	var/datum/money_account/MA = get_account(attempt_account_number)
 	if(!MA)
 		return
-	if(MA.security_level == 0)
+	if(MA.security_level == ACCOUNT_SECURITY_LEVEL_NONE)
 		return MA
 	var/attempt_pin = 0
 	if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == MA.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
