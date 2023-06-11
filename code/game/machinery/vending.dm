@@ -288,7 +288,9 @@
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
 				if(D)
-					D = attempt_account_access_with_user_input(C.associated_account_number, 2, usr)
+					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
