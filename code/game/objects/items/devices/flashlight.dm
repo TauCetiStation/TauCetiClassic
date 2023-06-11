@@ -177,9 +177,9 @@
 	var/produce_heat = 1500
 	light_color = LIGHT_COLOR_FLARE
 	light_power = 2
-	item_action_types = list(/datum/action/toggle_flare)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flare)
 
-/datum/action/toggle_flare
+/datum/action/item_action/hands_free/toggle_flare
 	name = "Toggle Flare"
 
 /obj/item/device/flashlight/flare/atom_init()

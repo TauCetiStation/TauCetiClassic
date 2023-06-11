@@ -116,7 +116,7 @@
 		if(owner.incapacitated(restained_check))
 			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying && !owner.crawling)
+		if(owner.lying)
 			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat != CONSCIOUS)
@@ -306,11 +306,15 @@
 	var/obj/item/I = target
 	I.attack_self(usr)
 
+/datum/action/item_action/IsAvailable()
+	return TRUE
+
 /datum/action/item_action/CheckRemoval(mob/user)
 	return !(target in user)
 
 /datum/action/item_action/hands_free
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE|AB_CHECK_ALIVE|AB_CHECK_INSIDE
+
 
 //Preset for spells
 /datum/action/spell_action
