@@ -25505,11 +25505,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "glD" = (
-/obj/structure/table/glass,
 /obj/item/device/radio,
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34484,7 +34484,6 @@
 	},
 /area/station/bridge/hop_office)
 "iuy" = (
-/obj/structure/table/glass,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
@@ -34493,6 +34492,7 @@
 /obj/item/weapon/lighter/random{
 	pixel_x = 11
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blackcorner"
@@ -60721,13 +60721,13 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "oYI" = (
-/obj/structure/table/glass,
 /obj/item/weapon/crowbar/red,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73519,8 +73519,8 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "shX" = (
-/obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/regular,
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "blackcorner"
 	},
@@ -75678,7 +75678,7 @@
 /obj/structure/sign/departments/holy{
 	pixel_x = 32
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "blackcorner"
 	},
@@ -81473,10 +81473,10 @@
 /turf/simulated/floor,
 /area/station/engineering/singularity)
 "ukM" = (
-/obj/structure/table/glass,
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blackcorner"
