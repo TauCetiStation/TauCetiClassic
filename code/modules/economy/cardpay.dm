@@ -135,8 +135,8 @@
 
 /obj/item/device/cardpay/proc/check_pincode(datum/money_account/Acc)
     var/time_for_pin = world.time
-    Acc = attempt_account_access_with_user_input(Acc.account_number, 2, usr)
-    if(!usr || !usr.Adjacent(src))
+    Acc = attempt_account_access_with_user_input(Acc.account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+    if(usr.incapacitated() || !usr.Adjacent())
         return FALSE
     if(world.time - time_for_pin > 300)
         to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
