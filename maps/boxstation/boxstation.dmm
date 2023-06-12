@@ -5240,9 +5240,14 @@
 	},
 /area/station/security/interrogation)
 "ajf" = (
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet{
+	req_access = list(58)
+	},
 /obj/machinery/keycard_auth{
 	pixel_x = 26
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Security"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -15663,7 +15668,12 @@
 	},
 /area/station/security/prison)
 "aCa" = (
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet{
+	req_access = list(41)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Cargo"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -23034,9 +23044,14 @@
 	},
 /area/station/rnd/hor)
 "aQv" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/requests_console/rd{
 	pixel_x = 32
+	},
+/obj/structure/filingcabinet/chestdrawer/black{
+	req_access = list(30)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Science"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -40120,10 +40135,15 @@
 /turf/simulated/wall,
 /area/station/medical/genetics_cloning)
 "bvS" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
+	},
+/obj/structure/filingcabinet/chestdrawer/black{
+	req_access = list(57)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Civilian"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -70499,6 +70519,12 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/filingcabinet/chestdrawer/black{
+	req_access = list(56)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Engineering"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkyellow"
@@ -70845,9 +70871,14 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "gTb" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
+	},
+/obj/structure/filingcabinet/chestdrawer/black{
+	req_access = list(40)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Medical"
 	},
 /turf/simulated/floor{
 	dir = 8;
