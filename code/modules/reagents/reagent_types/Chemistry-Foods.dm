@@ -333,6 +333,11 @@
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++
 
+/datum/reagent/consumable/psilocybin/on_skrell_digest(mob/living/M)
+	M.adjustDrugginess(3)
+	M.nutrition += 10 * REM
+	return FALSE
+
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	id = "cornoil"
@@ -375,6 +380,10 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
+/datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
+	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
+
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
 	id = "hot_ramen"
@@ -386,6 +395,7 @@
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/hell_ramen
@@ -399,6 +409,7 @@
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/hot_hell_ramen
@@ -412,6 +423,7 @@
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/rice

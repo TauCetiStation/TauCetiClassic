@@ -58,7 +58,7 @@
 
 	changeling.absorb_dna(target)
 
-	var/nutr = user.get_nutrition()
+	var/nutr = user.get_satiation()
 	if(nutr < NUTRITION_LEVEL_NORMAL)
 		user.nutrition += min(target.nutrition, NUTRITION_LEVEL_NORMAL - nutr)
 

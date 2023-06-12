@@ -29,6 +29,7 @@
 	animalistic = FALSE
 	has_head = TRUE
 	has_arm = TRUE
+	can_point = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
 	attack_sound = SOUNDIN_PUNCH_MEDIUM
@@ -45,6 +46,8 @@
 	var/image/glow = image(icon, src, "glow_[icon_state]", ABOVE_LIGHTING_LAYER)
 	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
+
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 
 /mob/living/simple_animal/construct/death()
 	..()
@@ -231,8 +234,13 @@
 	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
-		/obj/effect/proc_holder/spell/no_target/area_conversion,
 		)
+/mob/living/simple_animal/construct/harvester/atom_init()
+	. = ..()
+	if(SSticker.nar_sie_has_risen)
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion(src))
+	else
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion/lesser(src))
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
 	. = ..()
@@ -304,8 +312,8 @@
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	ranged_cooldown = 5
 	ranged_cooldown_cap = 0
-	maxHealth = 200
-	health = 200
+	maxHealth = 120
+	health = 120
 	melee_damage = 0
 	speed = 0
 	anchored = TRUE
@@ -343,3 +351,7 @@
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
 	return
+
+/mob/living/simple_animal/hostile/pylon/AttackingTarget()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
+	OpenFire(target)

@@ -19,8 +19,8 @@
 /area/station/civilian/holodeck/source_courtroom)
 "d" = (
 /obj/structure/table/holotable/wooden,
-/obj/structure/window/reinforced/holowindow,
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow,
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
@@ -35,7 +35,7 @@
 /area/station/civilian/holodeck/source_courtroom)
 "f" = (
 /obj/structure/table/holotable/wooden,
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
@@ -52,7 +52,7 @@
 /area/station/civilian/holodeck/source_courtroom)
 "h" = (
 /obj/structure/table/holotable/wooden,
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor{
@@ -61,7 +61,7 @@
 /area/station/civilian/holodeck/source_courtroom)
 "i" = (
 /obj/structure/table/holotable/wooden,
-/obj/structure/window/reinforced/holowindow,
+/obj/structure/window/thin/reinforced/holowindow,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet13-5"
@@ -83,10 +83,10 @@
 	dir = 8;
 	icon_state = "right"
 	},
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 4
 	},
-/obj/structure/window/reinforced/holowindow,
+/obj/structure/window/thin/reinforced/holowindow,
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
 	},
@@ -164,7 +164,7 @@
 /area/station/civilian/holodeck/source_courtroom)
 "u" = (
 /obj/structure/table/holotable/wooden,
-/obj/structure/window/reinforced/holowindow,
+/obj/structure/window/thin/reinforced/holowindow,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet9-4"
@@ -191,10 +191,10 @@
 /obj/machinery/door/window/holowindoor{
 	dir = 8
 	},
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 4
 	},
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{
@@ -241,7 +241,7 @@
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-10"
 	},
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{
@@ -258,7 +258,7 @@
 	},
 /area/station/civilian/holodeck/source_courtroom)
 "F" = (
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{

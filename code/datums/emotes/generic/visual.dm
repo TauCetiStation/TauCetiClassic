@@ -94,7 +94,7 @@
 	)
 
 /datum/emote/shake/get_emote_message_3p(mob/user)
-	return "<b>[user]</b> shakes [P_THEIR(user)] head."
+	return "shakes [P_THEIR(user.gender)] head."
 
 
 /datum/emote/twitch
@@ -164,4 +164,4 @@
 	)
 
 /datum/emote/deathgasp/get_emote_message_3p(mob/user)
-	return "<b>[user]</b> seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."
+	return "seizes up and falls limp, [P_THEIR(user.gender)] eyes dead and lifeless..."

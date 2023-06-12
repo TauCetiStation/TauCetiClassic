@@ -92,6 +92,8 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
+#define isreplicator(A) (istype(A, /mob/living/simple_animal/hostile/replicator))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -199,7 +201,7 @@
 
 #define ismalf(H) isrole(MALF, H)
 
-#define isnukeop(H) isrole(NUKE_OP, H)
+#define isnukeop(H) (isrole(NUKE_OP, H) || isrole(NUKE_OP_LEADER, H) || isrole(SYNDIESQUADIE, H))
 
 #define iswizard(H) isrole(WIZARD, H)
 

@@ -1,6 +1,8 @@
 //#define ZASDBG
 //#define MULTIZAS
 
+//  docs: /code/modules/atmospheric/ZAS/_docs.dm
+
 #define AIR_BLOCKED (1<<0)
 #define ZONE_BLOCKED (1<<1)
 #define BLOCKED (AIR_BLOCKED | ZONE_BLOCKED)

@@ -23,37 +23,9 @@
 /turf/simulated/wall,
 /area/space_structures/djstation)
 "ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"ah" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"ai" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
@@ -64,17 +36,6 @@
 /obj/machinery/telecomms/relay/preset/ruskie,
 /obj/machinery/light{
 	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"al" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
@@ -204,19 +165,6 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/djstation)
-"aC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
 "aD" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -236,20 +184,6 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
-"aG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aH" = (
 /turf/simulated/floor{
@@ -277,29 +211,6 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
-"aL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"aM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aN" = (
 /obj/structure/table,
@@ -355,27 +266,6 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
-"aT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"aU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aV" = (
 /obj/machinery/disposal,
@@ -505,7 +395,7 @@
 	},
 /area/space_structures/djstation)
 "bl" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/space_heater,
@@ -515,7 +405,7 @@
 	},
 /area/space_structures/djstation)
 "bm" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/rack{
@@ -606,9 +496,9 @@ ab
 ab
 aa
 af
-aC
-aM
-aU
+ag
+ag
+ag
 af
 aa
 ae
@@ -753,17 +643,17 @@ ab
 ab
 ab
 af
-ai
-al
+ag
+ag
 af
-ai
-al
+ag
+ag
 af
 af
 af
-aG
+ag
 aO
-aG
+ag
 af
 af
 bo
@@ -814,7 +704,7 @@ ad
 ad
 ad
 ad
-ah
+ag
 aj
 aj
 aj
@@ -907,7 +797,7 @@ ac
 ac
 ac
 ac
-ah
+ag
 aj
 aj
 ao
@@ -939,17 +829,17 @@ ab
 ab
 ab
 af
-ai
-al
+ag
+ag
 af
-ai
-al
+ag
+ag
 af
 af
 af
-aG
+ag
 aR
-aG
+ag
 af
 af
 af
@@ -1102,9 +992,9 @@ ab
 ab
 aa
 af
-aL
-aT
-al
+ag
+ag
+ag
 af
 aa
 ae

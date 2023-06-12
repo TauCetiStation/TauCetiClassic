@@ -21,6 +21,9 @@
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
+	//associative
+	var/list/reasons = list()
+
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -91,7 +94,7 @@
 	return dat
 
 /datum/faction/revolution/latespawn(mob/M)
-	if(M.mind.assigned_role in command_positions)
+	if(M.mind.assigned_role in heads_positions)
 		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 
 		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
@@ -130,7 +133,7 @@
 				tried_to_add_revheads = world.time + 10 MINUTES
 
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
-		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		command_report("С сожалением сообщаем, что ваша производительность оставляет желать лучшего, и мы вынуждены сократить финансовую поддержку вашей станции. Для достижения этой цели зарплата всего персонала, кроме глав и сотрудников службы безопасности, будет уменьшена в два раза.")
 		last_command_report = 1
 		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
@@ -149,13 +152,13 @@
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
-		command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
+		command_report("Согласно статистическим данным, отдых и связанные с ним активности являются причиной неудовлетворительной работы наших станций. Поэтому рекомендуется закрыть следующие развлекательные объекты: спортзал, голодек, театр и бар. Пища доступна на кухне и в торговых автоматах.")
 		last_command_report = 2
 	else if(last_command_report == 2 && world.time >= 45 MINUTES)
-		command_report("We began to suspect that the heads of staff might be disloyal to Nanotrasen. We ask you and other heads to implant the loyalty implant, if you have not already implanted it in yourself. Heads who do not want to implant themselves should be arrested for disobeying the orders of the Central Command until the end of the shift.")
+		command_report("Мы начали подозревать, что главы персонала могут быть нелояльны к НаноТрейзен. Мы просим вас и других глав ввести имплант лояльности, если вы еще не вводили его себе. Главы, которые не хотят вводить имплант, должны быть арестованы до конца смены за неисполнение приказов Центрального Командования.")
 		last_command_report = 3
 	else if(last_command_report == 3 && world.time >= 60 MINUTES)
-		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+		command_report("Сообщается, что простое закрытие развлекательных объектов не дало результатов. Все главы станции должны обеспечить максимальную эффективность всего экипажа и не допустить пустой траты времени и энергии. Любой член экипажа, который будет замечен отдыхающим без разрешения своего главы, должен быть предупреждён, а при повторном нарушении помещен в тюрьму до прибытия следующего транспортного шаттла, который доставит их на места, где они могут быть полезнее.")
 		last_command_report = 4
 
 /datum/faction/revolution/proc/command_report(message)
@@ -241,3 +244,111 @@
 	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
 
 	return dat
+
+/datum/faction/revolution/GetScoreboard()
+	var/count = 1
+	var/score_results = ""
+	if(objective_holder.objectives.len > 0)
+		score_results += "<ul>"
+		var/custom_result = custom_result()
+		score_results += custom_result
+		score_results += "<br><br>"
+		for(var/datum/objective/objective in objective_holder.GetObjectives())
+			objective.extra_info()
+			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
+			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
+			count++
+			if(count <= objective_holder.objectives.len)
+				score_results += "<br>"
+		score_results += "</ul>"
+	score_results += "<ul>"
+
+	var/have_objectives = FALSE
+	var/have_reason_string = FALSE
+	if(reasons.len)
+		have_reason_string = TRUE
+
+	var/list/name_by_members = list()
+	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
+	for(var/datum/role/R in members)
+		if(!name_by_members[R.name])
+			name_by_members[R.name] = list()
+		name_by_members[R.name] += R
+
+	for(var/name in name_by_members)
+		score_results += "<b>[name]:</b><ul>"
+		for(var/datum/role/R in name_by_members[name])
+			var/results = R.GetScoreboard()
+			if(results)
+				score_results += results
+				score_results += "<br>"
+				if(R.objectives.objectives.len)
+					have_objectives = TRUE
+			if(have_reason_string)
+				var/reason_string = reasons[R.antag.key]
+				if(reason_string)
+					score_results += "<DD><B>Reason to join the revolution:</B> [reason_string]</DD><BR>"
+
+		score_results += "</ul>"
+
+	score_results += "</ul>"
+
+	if(!have_objectives)
+		score_results += "<br>"
+
+	return score_results
+
+/datum/faction/revolution/proc/convert_revolutionare_by_invite(mob/possible_rev, mob/inviter)
+	if(!inviter)
+		return FALSE
+	var/datum/role/rev_leader/lead = get_member_by_mind(inviter.mind)
+	var/choice = tgui_alert(possible_rev, "Asked by [inviter]: Do you want to join the revolution?", "Join the Revolution!", list("No!","Yes!"))
+	if(choice == "Yes!")
+		var/reason_string = find_reason(possible_rev)
+		if(!reason_string)
+			to_chat(inviter, "<span class='bold warning'>[possible_rev] has no reason to support the revolution!</span>")
+			lead.rev_cooldown = world.time + 5 SECONDS
+			return FALSE
+		if(add_user_to_rev(possible_rev, reason_string))
+			to_chat(inviter, "<span class='bold_notice'>[possible_rev] has joined the revolution!</span>")
+			add_tc_to_headrev(inviter, lead)
+			return TRUE
+		else
+			to_chat(inviter, "<span class='bold warning'>[possible_rev] cannot be converted.</span>")
+			return FALSE
+	to_chat(possible_rev, "<span class='warning'>You reject this traitorous cause!</span>")
+	to_chat(inviter, "<span class='bold warning'>[possible_rev] does not support the revolution!</span>")
+	lead.rev_cooldown = world.time + 5 SECONDS
+	return FALSE
+
+/datum/faction/revolution/proc/convert_revolutionare(mob/possible_rev)
+	var/reason_string = find_reason(possible_rev)
+	if(!reason_string)
+		return FALSE
+	if(add_user_to_rev(possible_rev, reason_string))
+		return TRUE
+	return FALSE
+
+/datum/faction/revolution/proc/find_reason(mob/user)
+	var/reason_string = sanitize_safe(input(user, "Please write the reason why you want to join the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
+	if(!reason_string)
+		to_chat(user, "<span class='warning'>You have no reason to join the revolution!</span>")
+		return null
+	return reason_string
+
+/datum/faction/revolution/proc/add_user_to_rev(mob/user, reason_string)
+	if(add_faction_member(src, user, TRUE))
+		reasons[user.mind.key] = reason_string
+		to_chat(user, "<span class='notice'>You join the revolution!</span>")
+		return TRUE
+	return FALSE
+
+/datum/faction/revolution/proc/add_tc_to_headrev(mob/headrev, datum/role/headrev_role)
+	var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(headrev)
+	if(!U)
+		return
+	U.uses += 3
+	var/datum/component/gamemode/syndicate/S = headrev_role.GetComponent(/datum/component/gamemode/syndicate)
+	if(!S)
+		return
+	S.total_TC += 3

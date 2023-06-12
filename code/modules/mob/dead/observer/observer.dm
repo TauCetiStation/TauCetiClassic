@@ -134,8 +134,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		return
 
 	if(href_list["track"])
-		var/mob/target = locate(href_list["track"]) in mob_list
-		if(istype(target) && (target != src))
+		var/atom/target = locate(href_list["track"])
+		if(target != src)
 			ManualFollow(target)
 			return
 
@@ -218,7 +218,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/robot = usr
 			robot.set_all_components(FALSE)
-		else
+		else if(!immune_to_ssd)
 			SetCrawling(TRUE)
 			Sleeping(2 SECONDS)
 

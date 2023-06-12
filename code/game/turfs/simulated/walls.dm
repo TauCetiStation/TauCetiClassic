@@ -29,41 +29,8 @@
 
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-	canSmoothWith = list(
-		/turf/simulated/wall,
-		/turf/simulated/wall/r_wall,
-		/obj/structure/falsewall,
-		/obj/structure/falsewall/reinforced,
-		/obj/structure/girder,
-		/obj/structure/girder/reinforced,
-		/obj/machinery/door/airlock,
-		/obj/machinery/door/airlock/command,
-		/obj/machinery/door/airlock/security,
-		/obj/machinery/door/airlock/engineering,
-		/obj/machinery/door/airlock/medical,
-		/obj/machinery/door/airlock/virology,
-		/obj/machinery/door/airlock/maintenance,
-		/obj/machinery/door/airlock/freezer,
-		/obj/machinery/door/airlock/mining,
-		/obj/machinery/door/airlock/atmos,
-		/obj/machinery/door/airlock/research,
-		/obj/machinery/door/airlock/science,
-		/obj/machinery/door/airlock/neutral,
-		/obj/machinery/door/airlock/highsecurity,
-		/obj/machinery/door/airlock/vault,
-		/obj/machinery/door/airlock/external,
-		/obj/machinery/door/airlock/glass,
-		/obj/machinery/door/airlock/command/glass,
-		/obj/machinery/door/airlock/engineering/glass,
-		/obj/machinery/door/airlock/security/glass,
-		/obj/machinery/door/airlock/medical/glass,
-		/obj/machinery/door/airlock/virology/glass,
-		/obj/machinery/door/airlock/research/glass,
-		/obj/machinery/door/airlock/mining/glass,
-		/obj/machinery/door/airlock/atmos/glass,
-		/obj/machinery/door/airlock/science/glass,
-		/obj/machinery/door/airlock/science/neutral,
-		)
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/Destroy()
@@ -471,6 +438,13 @@
 		place_poster(W,user)
 		return
 
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/tied_object_reset_pixel_offset, W))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/tied_object_reset_pixel_offset, W))
+		return
 	else
 		return attack_hand(user)
 
@@ -485,7 +459,7 @@
 
 /turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75) && iswallturf(src))
 		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
 
 /turf/simulated/wall/proc/add_dent(denttype, x, y)
@@ -512,3 +486,9 @@
 
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
+
+/turf/simulated/wall/proc/tied_object_reset_pixel_offset(obj/O)
+	O.pixel_y = rand(-8, 8)
+	O.pixel_x = rand(-9, 9)
+	UnregisterSignal(O, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(O, COMSIG_PARENT_QDELETING)

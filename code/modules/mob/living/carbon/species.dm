@@ -158,6 +158,8 @@
 
 	var/default_mood_event
 
+	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -577,6 +579,8 @@
 			)
 
 	skeleton_type = SKELETON_VOX
+
+	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	..()

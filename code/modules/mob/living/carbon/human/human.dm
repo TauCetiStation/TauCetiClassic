@@ -6,7 +6,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, INSURANCE_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
 	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
@@ -84,6 +84,7 @@
 	my_golem = null
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(organs)
+	QDEL_NULL(vessel)
 	return ..()
 
 /mob/living/carbon/human/skrell/atom_init(mapload)
@@ -96,6 +97,9 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
+	r_belly = HEX_VAL_RED(species.base_color)
+	g_belly = HEX_VAL_GREEN(species.base_color)
+	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
@@ -294,7 +298,7 @@
 			if(prob(current_size * 5) && hand.w_class >= ((STAGE_FIVE-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
-	apply_effect(current_size * 3, IRRADIATE)
+	irradiate_one_mob(src, current_size * 3)
 	if(mob_negates_gravity())//Magboots protection
 		return
 	..()
@@ -905,41 +909,14 @@
 
 
 ///eyecheck()
-///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	if(blinded)
-		return 2
-	var/number = 0
-	if(istype(head, /obj/item/clothing/head/welding))
-		var/obj/item/clothing/head/welding/W = head
-		if(!W.up)
-			number += 2
-	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) || istype(head, /obj/item/clothing/head/helmet/swat))
-		number += 2
-	if(istype(glasses, /obj/item/clothing/glasses/thermal))
-		var/obj/item/clothing/glasses/thermal/G = glasses
-		if(G.active)
-			number -= 1
-	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-		number += 1
-	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
-		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
-		if(!G.active)
-			number += 1
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
-		var/obj/item/clothing/mask/gas/welding/W = wear_mask
-		if(!W.up)
-			number += 2
-	if(istype(glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = glasses
-		if(!W.up)
-			number += 2
-	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-		number -= 1
-	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
-		number += 2
-	return number
-
+		return FLASHES_FULL_PROTECTION
+	var/protection = 0
+	for(var/obj/item/I in get_all_slots())
+		if(I.slot_equipped in I.flash_protection_slots)
+			protection += I.flash_protection
+	return protection
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
@@ -1858,8 +1835,9 @@
 			Stun(2)
 			Weaken(2)
 		else if(istype(hit_atom, /obj/machinery/disposal))
-			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
+			var/atom/old_loc = loc
 			forceMove(hit_atom)
+			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom, old_loc)
 
 	update_canmove()
 
@@ -2095,7 +2073,7 @@
 			electrocuted_sprite += "_skrell"
 		if(VOX)
 			electrocuted_sprite += "_vox"
-	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_ELECTROCUTION_LAYER)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 
