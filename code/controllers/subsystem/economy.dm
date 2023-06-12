@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(economy)
 			intercept.info = message_text
 			intercept.update_icon()
 
-datum/controller/subsystem/economy/proc/handle_subsidions()
+/datum/controller/subsystem/economy/proc/handle_subsidions()
 	for(var/department in subsidion_priority)
 		if(!global.station_account.money)
 			break
