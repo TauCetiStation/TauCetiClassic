@@ -18,10 +18,21 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
-	skillsets = list("Test Subject" = /datum/skillset/random)
+	skillsets = list("Test Subject" = /datum/skillset/test_subject)
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)
 		return list(access_maint_tunnels)
 	else
 		return list()
+
+/datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE, alt_title)
+    . = ..()
+    if(!.)
+        return
+
+    if(!H.mind)
+        return
+
+    H.mind.skills.add_unique_available_skillset(new /datum/skillset/random())
+    H.mind.skills.maximize_active_skills()

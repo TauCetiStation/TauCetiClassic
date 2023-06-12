@@ -87,3 +87,6 @@
 
 /datum/skillset/janitor
 	name = "Janitor"
+
+/datum/skillset/test_subject
+	name = "Test Subject"

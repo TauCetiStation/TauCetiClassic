@@ -53,6 +53,10 @@
 	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [prev_rank] to [new_rank].</span>")
 	active.set_value(skill_type, value)
 
+/datum/skills/proc/add_unique_available_skillset(datum/skillset/S)
+    LAZYADD(available_skillsets, S)
+    update_available()
+
 /mob/living
 	var/list/helpers_skillsets
 
