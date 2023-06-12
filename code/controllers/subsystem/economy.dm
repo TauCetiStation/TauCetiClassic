@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(economy)
 	var/list/roundstart_insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
 	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
 
-	var/list/subsidion_priority = list("Science" = 5000, "Security" = 5000, "Medical" = 5000, "Engineering" = 5000, "Civilian" = 5000)
+	var/list/subsidion_priority = list("Science" = 1000, "Security" = 1000, "Medical" = 1000, "Engineering" = 1000, "Civilian" = 1000)
 
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
