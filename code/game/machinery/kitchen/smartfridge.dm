@@ -109,8 +109,6 @@
 /obj/machinery/smartfridge/secure/medbay
 	name = "Refrigerated Medicine Storage"
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
-	icon_state = "smartfridge" //To fix the icon in the map editor.
-	icon_on = "smartfridge"
 	req_one_access = list(access_medical, access_chemistry)
 	content_overlay = "smartfridge-chem"
 
@@ -127,9 +125,6 @@
 	name = "Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."
 	req_access = list(access_virology)
-	icon_state = "smartfridge"
-	icon_on = "smartfridge"
-	icon_off = "smartfridge-off"
 	content_overlay = "smartfridge-viro"
 
 /obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
