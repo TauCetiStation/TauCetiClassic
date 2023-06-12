@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(economy)
 	var/list/roundstart_insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
 	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
 
+	var/list/subsidion_priority = list("Science" = 5000, "Security" = 5000, "Medical" = 5000, "Engineering" = 5000, "Civilian" = 5000)
+
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
 	LAZYINITLIST(department_dividends)
@@ -85,6 +87,8 @@ SUBSYSTEM_DEF(economy)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
 	handle_insurances()
+
+	handle_subsidions()
 
 
 	monitor_cargo_shop()
@@ -201,3 +205,22 @@ SUBSYSTEM_DEF(economy)
 			intercept.name = "Records With Insurance Problems"
 			intercept.info = message_text
 			intercept.update_icon()
+
+datum/controller/subsystem/economy/proc/handle_subsidions()
+	for(var/department in subsidion_priority)
+		if(!global.station_account.money)
+			break
+		var/subsidion_amount = subsidion_priority[department]
+		var/datum/money_account/department_account = global.department_accounts[department]
+		if(department_account.money < subsidion_amount)
+			var/needed_to_pay = subsidion_amount - department_account.money
+			if(!needed_to_pay || needed_to_pay < 0)
+				continue
+			if(global.station_account.money < needed_to_pay)
+				charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -global.station_account.money)
+				charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", global.station_account.money)
+				break
+			charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -needed_to_pay)
+			charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", needed_to_pay)
+			continue
+
