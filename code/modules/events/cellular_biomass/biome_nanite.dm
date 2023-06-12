@@ -174,9 +174,9 @@
 			S.faction = faction
 			childs += S
 
-/mob/living/simple_animal/hostile/cellular/nanite/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/cellular/nanite/UnarmedAttack(atom/target)
 	. = ..()
-	if(ismonkey(A))
+	if(iscarbon(target))
 		combohit += 1
 		if(combohit == 4)
 			var/mob/L = target

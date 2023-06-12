@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/hostile/octopus/UnarmedAttack(atom/target)
 	. = ..()
-	var/mob/living/L = target
-	if(L && prob(50))
+	if(isliving(target) && prob(50))
+		var/mob/living/L = target
 		L.drop_item()
 		to_chat(L, "<span class='warning'>[src] disarms you with it's tentacles!</span>")
