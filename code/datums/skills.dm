@@ -26,8 +26,7 @@
 		active.set_value(skill, get_max(skill))
 
 /datum/skills/proc/add_available_skillset(skillset_type)
-    LAZYADD(available_skillsets, global.all_skillsets[skillset_type])
-    update_available()
+    add_unique_available_skillset(global.all_skillsets[skillset_type])
 
 /datum/skills/proc/remove_available_skillset(skillset_type)
 	for(var/datum/skillset/s as anything in available_skillsets)
