@@ -256,14 +256,20 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_LARGE
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/RangedAttack(atom/A, params)
+	if(ranged_cooldown < 0)
+		OpenFire(A)
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
+	A.GiveTarget(the_target)
 	A.friends = friends
 	A.faction = faction
+	ranged_cooldown = ranged_cooldown_cap
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/UnarmedAttack(atom/A)
-	OpenFire()
+	if(ranged_cooldown < 0)
+		OpenFire(A)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = MOUSE_OPACITY_ICON

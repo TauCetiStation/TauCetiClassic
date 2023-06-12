@@ -57,12 +57,13 @@
 	melee_damage = 10
 	attacktext = "lash"
 
-/mob/living/simple_animal/hostile/octopus/OpenFire()
+/mob/living/simple_animal/hostile/octopus/OpenFire(target)
 	for(var/obj/item/I in range(src, 1))
 		if(prob(50))
 			I.throw_at(target, 30, 2)
 			visible_message("<span class='warning'>[src] throws [I] at [target]!</span>")
 			ranged_cooldown = 0
+			SetNextMove(CLICK_CD_MELEE)
 
 /mob/living/simple_animal/hostile/octopus/UnarmedAttack(atom/target)
 	. = ..()
