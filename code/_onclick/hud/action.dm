@@ -15,7 +15,7 @@
 	var/action_type = AB_ITEM
 	var/atom/movable/target = null
 	var/check_flags = 0
-	var/restained_check = ARMS // for AB_CHECK_INCAPACITATED
+	var/restrained_check = ARMS // for AB_CHECK_INCAPACITATED
 	var/processing = 0
 	var/active = 0
 	var/atom/movable/screen/movable/action_button/button = null
@@ -113,7 +113,7 @@
 	if(!owner)
 		return FALSE
 	if(check_flags & AB_CHECK_INCAPACITATED)
-		if(owner.incapacitated(restained_check))
+		if(owner.incapacitated(restrained_check))
 			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)

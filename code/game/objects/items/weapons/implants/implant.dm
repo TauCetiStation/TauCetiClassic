@@ -13,9 +13,18 @@
 
 	var/implant_type = "b"
 
+	var/implant_actions_types = list()
+	var/implant_actions = list()
+
+/datum/action/item_action/implant
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+
 /obj/item/weapon/implant/atom_init()
 	. = ..()
 	implant_list += src
+	for(var/path in implant_actions_types)
+		var/datum/action/B = new path (src)
+		implant_actions += B
 
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
@@ -24,9 +33,11 @@
 		part.implants.Remove(src)
 		part = null
 		if(isliving(imp_in))
-			var/mob/living/L = imp_in
-			L.sec_hud_set_implants()
+			imp_in.sec_hud_set_implants()
 	imp_in = null
+	for(var/datum/action/A in implant_actions)
+		if(A.CheckRemoval(imp_in))
+			A.Remove(imp_in)
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -55,12 +66,16 @@
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
+	for(var/datum/action/A in implant_actions)
+		A.Grant(imp_in)
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
+	for(var/datum/action/A in implant_actions)
+		A.Grant(imp_in)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -286,12 +301,12 @@ Implant Specifics:<BR>"}
 	icon_state = "implant"
 	uses = 3
 
-	item_action_types = list(/datum/action/item_action/adrenaline_implant)
+	implant_actions_types = list(/datum/action/item_action/implant/adrenaline_implant)
 
-/datum/action/item_action/adrenaline_implant
+/datum/action/item_action/implant/adrenaline_implant
 	name = "Adrenaline implant"
 
-/datum/action/item_action/adrenaline_implant/Activate()
+/datum/action/item_action/implant/adrenaline_implant/Activate()
 	var/obj/item/weapon/implant/adrenaline/S = target
 	S.uses--
 	to_chat(S.imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
@@ -329,12 +344,12 @@ Implant Specifics:<BR>"}
 	icon_state = "emp"
 	uses = 3
 
-	item_action_types = list(/datum/action/item_action/emp_implant)
+	implant_actions_types = list(/datum/action/item_action/implant/emp_implant)
 
-/datum/action/item_action/emp_implant
+/datum/action/item_action/implant/emp_implant
 	name = "EMP implant"
 
-/datum/action/item_action/emp_implant/Activate()
+/datum/action/item_action/implant/emp_implant/Activate()
 	var/obj/item/weapon/implant/emp/S = target
 	if (S.uses > 0)
 		empulse(S.imp_in, 3, 5)
@@ -552,12 +567,12 @@ var/global/list/death_alarm_stealth_areas = list(
 	icon_state = "implant_evil"
 	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
 	var/obj/item/weapon/storage/internal/imp/storage
-	item_action_types = list(/datum/action/item_action/storage_implant)
+	implant_actions_types = list(/datum/action/item_action/implant/storage_implant)
 
-/datum/action/item_action/storage_implant
+/datum/action/item_action/implant/storage_implant
 	name = "Bluespace pocket"
 
-/datum/action/item_action/storage_implant/Activate()
+/datum/action/item_action/implant/storage_implant/Activate()
 	var/obj/item/weapon/implant/storage/S = target
 	S.storage.open(S.imp_in)
 
