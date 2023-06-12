@@ -1760,7 +1760,7 @@
 		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
 			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
 
-/datum/species/handle_death(mob/living/carbon/human/H, gibbed)
+/datum/species/homunculus/handle_death(mob/living/carbon/human/H, gibbed)
 	if(gibbed)
 		return FALSE
 	for(var/I in H.get_equipped_items())
