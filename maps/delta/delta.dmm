@@ -63421,7 +63421,7 @@
 /area/station/civilian/dormitories)
 "pIu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/item/weapon/aiModule/protectStation{
 	pixel_y = 10
 	},

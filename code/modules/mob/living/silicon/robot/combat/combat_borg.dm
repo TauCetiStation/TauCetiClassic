@@ -3,7 +3,7 @@
 	modtype = "Combat"
 	var/modtype_icon
 
-/mob/living/silicon/robot/combat/atom_init(mapload, name_prefix = "Combat", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
+/mob/living/silicon/robot/combat/atom_init(mapload, name_prefix = "Combat", laws_type = /datum/ai_laws/crewsimov, ai_link = TRUE, datum/religion/R)
 	. = ..()
 	module = new /obj/item/weapon/robot_module/combat(src)
 	updatename(name_prefix)

@@ -40292,7 +40292,7 @@
 /area/shuttle/escape_pod3/station)
 "lSN" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/machinery/alarm{
 	pixel_y = 26
 	},

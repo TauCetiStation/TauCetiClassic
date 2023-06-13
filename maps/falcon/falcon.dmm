@@ -1685,7 +1685,7 @@
 	pixel_x = 28
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/machinery/light/smart{
 	dir = 4
 	},

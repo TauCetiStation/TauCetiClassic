@@ -1,4 +1,4 @@
-var/global/const/base_law_type = /datum/ai_laws/nanotrasen
+var/global/const/base_law_type = /datum/ai_laws/crewsimov
 
 
 /datum/ai_laws
@@ -8,6 +8,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
+
+/datum/ai_laws/crewsimov
+	name = "Три закона робототехники"
 
 /datum/ai_laws/asimov
 	name = "Три закона робототехники"
@@ -57,6 +60,11 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	name = "Три дружелюбных закона робототехники"
 
 /* Initializers */
+
+/datum/ai_laws/crewsimov/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Вы не можете причинить вред членам экипажа или своим бездействием допустить, чтобы членам экипажа был причинён вред.")
+	add_inherent_law("Вы должны повиноваться всем приказам, которые дают члены экипажа, кроме тех случаев, когда эти приказы противоречат Первому Закону.")
+	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит Первому или Второму Законам.")
 
 /datum/ai_laws/asimov/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Вы не можете причинить вред человеку или своим бездействием допустить, чтобы человеку был причинён вред.")

@@ -274,6 +274,11 @@ AI MODULES
 	target.clear_inherent_laws()
 
 /******************** Asimov ********************/
+/obj/item/weapon/aiModule/crewsimov
+	name = "'Crewsimov' core AI module"
+	desc = "Модуль основных законов ИИ 'Asimov': 'Перезаписывает основные законы ИИ на 3 закона робототехники Азимова расчитанных на экипаж станции.'"
+	origin_tech = "programming=3;materials=4"
+	laws_type = /datum/ai_laws/crewsimov
 
 /obj/item/weapon/aiModule/asimov // -- TLE
 	name = "'Asimov' core AI module"

@@ -85941,7 +85941,7 @@
 	},
 /area/station/maintenance/brig)
 "vaM" = (
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/machinery/light/smart{
 	dir = 8
 	},
