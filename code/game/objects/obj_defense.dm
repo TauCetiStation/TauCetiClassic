@@ -34,8 +34,6 @@
 	if(QDELING(src)) //Bullet on_hit effect might have already destroyed this object
 		return
 	// TODO playsound(src, P.hitsound, VOL_EFFECTS_MASTER, 50, TRUE)
-	for(var/mob/Mob in src.loc)
-		Mob.bullet_act(P, P.def_zone)
 	var/damage = take_damage(P.damage, P.damage_type, P.flag, TRUE, turn(P.dir, 180)) // TODO flag -> armor_flag
 	visible_message(
 		"<span class='danger'>[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!</span>",

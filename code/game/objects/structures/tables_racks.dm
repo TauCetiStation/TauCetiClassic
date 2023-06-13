@@ -142,6 +142,15 @@
 			return 1
 	return 0
 
+/obj/structure/table/bullet_act(obj/item/projectile/P)
+	. = ..()
+	var/list/mobs = list()
+	for(var/mob/Mob in src.loc)
+		mobs += Mob
+	if(mobs.len >= 1)
+		var/mob/mob = pick(mobs)
+		mob.bullet_act(P, P.def_zone)
+
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))

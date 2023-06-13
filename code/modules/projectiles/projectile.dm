@@ -184,10 +184,14 @@
 	if(!forcedodge)
 		if(ismob(A))
 			var/list/mobs = list()
-			for(var/mob/ML in get_turf(M.loc))
+			for(var/mob/ML in get_turf(A.loc))
+				if(check_living_shield(A) == ML)
+					ML.bullet_act(src, def_zone)
+					mobs -= ML
 				mobs += ML
-			if(mobs.len <= 1)
-				forcedodge = M.bullet_act(src, def_zone)
+			if(mobs.len >= 2)
+				var/mob/mob = pick(mobs)
+				forcedodge = mob.bullet_act(src, def_zone)
 		else
 			forcedodge = A.bullet_act(src, def_zone) // searches for return value
 
@@ -204,17 +208,6 @@
 		permutated.Add(A)
 
 		return FALSE
-
-	if(ismob(A))
-		var/list/mobs = list()
-		for(var/mob/ML in get_turf(A.loc))
-			mobs += ML
-			if(check_living_shield(A) == ML)
-				ML.bullet_act(src, def_zone)
-				mobs -= ML
-		if(mobs.len >= 2)
-			var/mob/mob = pick(mobs)
-			mob.bullet_act(src, def_zone)
 
 	if(istype(A,/turf))
 		for(var/mob/Mob in A)
@@ -243,7 +236,6 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
-			on_hit(src.loc) //for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
