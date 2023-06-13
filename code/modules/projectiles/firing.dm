@@ -42,7 +42,7 @@
 	if(ismob(curloc))
 		curloc = curloc.loc
 	if(istype(curloc, /obj/item/rig_module/mounted)) // curloc = /obj/item/rig_module/mounted != turf istype
-		curloc = curloc.loc.loc.loc
+		curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)
