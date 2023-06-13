@@ -212,15 +212,16 @@ SUBSYSTEM_DEF(economy)
 			break
 		var/subsidion_amount = subsidion_priority[department]
 		var/datum/money_account/department_account = global.department_accounts[department]
-		if(department_account.money < subsidion_amount)
-			var/needed_to_pay = subsidion_amount - department_account.money
-			if(!needed_to_pay || needed_to_pay < 0)
-				continue
-			if(global.station_account.money < needed_to_pay)
-				charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -global.station_account.money)
-				charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", global.station_account.money)
-				break
-			charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -needed_to_pay)
-			charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", needed_to_pay)
+		if(department_account.money >= subsidion_amount)
 			continue
+		var/needed_to_pay = subsidion_amount - department_account.money
+		if(!needed_to_pay || needed_to_pay < 0)
+			continue
+		if(global.station_account.money < needed_to_pay)
+			charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -global.station_account.money)
+			charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", global.station_account.money)
+			break
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -needed_to_pay)
+		charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", needed_to_pay)
+		continue
 
