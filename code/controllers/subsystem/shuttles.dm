@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
 		//shuttle movement
-	var/at_station = 0
+	var/at_station = TRUE
 	var/movetime = 1200
 	var/moving = 0
 	var/eta_timeofday
