@@ -54,10 +54,10 @@
 		if(!BP)
 			return
 		BP.implants += src
-		C.sec_hud_set_implants()
 		part = BP
 	if(implant_trait)
 		ADD_TRAIT(C, implant_trait, IMPLANT_TRAIT)
+	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
