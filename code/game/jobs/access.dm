@@ -31,7 +31,7 @@
 /var/const/access_cargo = 31
 /var/const/access_construction = 32
 /var/const/access_chemistry = 33
-/var/const/access_cargoshop = 34
+/var/const/access_cargo_bot = 34
 /var/const/access_hydroponics = 35
 /var/const/access_manufacturing = 36
 /var/const/access_library = 37
@@ -262,8 +262,8 @@
 			return "Recycler"
 		if(access_detective)
 			return "Detective"
-		if(access_cargoshop)
-			return "Cargo Delivery"
+		if(access_cargo_bot)
+			return "Cargo Bot Delivery"
 		if(access_security)
 			return "Security"
 		if(access_blueshield)
