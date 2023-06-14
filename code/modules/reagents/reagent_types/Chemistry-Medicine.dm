@@ -311,7 +311,6 @@
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
 	color = "#00a000" // rgb: 200, 165, 220
-	overdose = 0
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -563,7 +562,6 @@
 	description = "Natural xenomorph jelly is released only if the victim hits the nest"
 	reagent_state = LIQUID
 	color = "#3f6d3f"
-	overdose = 0
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
 
@@ -615,7 +613,6 @@
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 	reagent_state = LIQUID
 	color = "#80bfff" // rgb: 200, 165, 220
-	overdose = 0
 	taste_message = null
 
 /datum/reagent/cryoxadone/on_general_digest(mob/living/M)
@@ -632,7 +629,6 @@
 	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 	reagent_state = LIQUID
 	color = "#8080ff" // rgb: 200, 165, 220
-	overdose = 0
 	taste_message = null
 
 /datum/reagent/clonexadone/on_general_digest(mob/living/M)
@@ -719,7 +715,6 @@
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
 	color = "#664330" // rgb: 102, 67, 48
-	overdose = 0
 	taste_message = null
 
 /datum/reagent/vitamin/on_general_digest(mob/living/M)
