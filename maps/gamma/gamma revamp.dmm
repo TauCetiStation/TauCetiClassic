@@ -6189,18 +6189,14 @@
 /turf/simulated/floor/wood,
 /area/station/medical/medbreak)
 "aTX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
@@ -6942,9 +6938,6 @@
 	},
 /area/space)
 "beE" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/batman,
-/obj/item/clothing/head/batman_helmet,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Theater APC";
@@ -6954,6 +6947,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/structure/device/piano/royal,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "beG" = (
@@ -8934,6 +8928,14 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/reception)
+"bzL" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/head/witchwig,
+/obj/item/weapon/staff/broom,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories/theater)
 "bzY" = (
 /obj/structure/closet/l3closet/virology,
 /obj/item/clothing/mask/gas/coloured,
@@ -9533,18 +9535,15 @@
 	},
 /area/space)
 "bIO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grass,
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
@@ -11950,18 +11949,9 @@
 	},
 /area/space)
 "cng" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
@@ -16209,6 +16199,13 @@
 /obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space)
+"dpD" = (
+/obj/structure/table/woodentable,
+/obj/item/device/violin,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories/theater)
 "dqi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 10
@@ -16729,7 +16726,7 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "yellowcorner"
+	icon_state = "blackcorner"
 	},
 /area/station/hallway/primary/central)
 "dvR" = (
@@ -25095,7 +25092,8 @@
 	req_access = list(5,6)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/station/medical/morgue)
 "fGM" = (
@@ -25456,13 +25454,6 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "fLq" = (
-/obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green{
-	on = 0;
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/clothing/suit/superman,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light_switch{
 	pixel_x = 24
@@ -28263,7 +28254,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/wood,
+/turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "guL" = (
 /obj/structure/cable{
@@ -31069,18 +31060,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "heR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "yellowcorner"
+	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
 "hfc" = (
@@ -32200,6 +32182,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"hwj" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blackcorner"
+	},
+/area/station/hallway/primary/central)
 "hwl" = (
 /turf/simulated/floor/carpet,
 /area/station/maintenance/medbay)
@@ -32284,9 +32272,12 @@
 /area/station/rnd/chargebay)
 "hxU" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/head/santahat,
-/obj/item/clothing/suit/santa,
-/obj/item/weapon/storage/backpack/santabag,
+/obj/item/weapon/lipstick/purple{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/lipstick/jade,
+/obj/item/toy/sound_button,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "hxV" = (
@@ -32981,22 +32972,17 @@
 	},
 /area/station/rnd/robotics)
 "hIM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellow"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/station/hallway/primary/central)
+/area/station/maintenance/bridge{
+	name = "Food Court Maintenance"
+	})
 "hIQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -37133,20 +37119,10 @@
 	},
 /area/station/security/secconfhall)
 "iMa" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Theater Maintenance";
-	req_one_access = list(43,44)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/station/civilian/dormitories/theater)
+/area/space)
 "iMb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -37384,7 +37360,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitehall"
 	},
 /area/station/medical/reception)
 "iPP" = (
@@ -44467,7 +44443,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/wood,
+/turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "kLm" = (
 /turf/simulated/floor{
@@ -46594,18 +46570,16 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "loe" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/disposal,
+/obj/structure/sign/warning/smoking{
+	pixel_x = -32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
@@ -51615,6 +51589,13 @@
 	icon_state = "darkredcorners"
 	},
 /area/station/security/warden)
+"mHy" = (
+/obj/structure/closet/theatrecloset,
+/obj/item/clothing/suit/santa,
+/obj/item/clothing/head/santahat,
+/obj/item/weapon/storage/backpack/santabag,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories/theater)
 "mHz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -58032,15 +58013,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "oqj" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
+/obj/structure/table/woodentable,
+/obj/item/device/camera_film,
+/obj/item/device/camera_film,
+/obj/item/device/camera/polar,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "dark"
 	},
-/area/station/hallway/primary/central)
+/area/station/civilian/dormitories/theater)
 "oqx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -59933,9 +59913,6 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/maintenance/medbay)
 "oPD" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/staff/broom,
-/obj/item/clothing/head/witchwig,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -63861,9 +63838,10 @@
 	},
 /area/station/security/warden)
 "pRA" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
@@ -65162,10 +65140,9 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/forensic_office)
 "qjE" = (
-/obj/structure/table/woodentable,
-/obj/item/device/camera_film,
-/obj/item/device/camera_film,
-/obj/item/device/camera/polar,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "qjI" = (
@@ -67208,6 +67185,23 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"qLj" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock{
+	name = "Theater Backroom";
+	req_access = list(46)
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge{
+	name = "Food Court Maintenance"
+	})
 "qLr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -68155,13 +68149,9 @@
 	},
 /area/station/security/prison)
 "qWI" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	dir = 8;
+	icon_state = "blackcorner"
 	},
 /area/station/hallway/primary/central)
 "qWK" = (
@@ -69392,6 +69382,13 @@
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/space)
+"roS" = (
+/obj/structure/closet/theatrecloset,
+/obj/item/clothing/head/batman_helmet,
+/obj/item/clothing/suit/batman,
+/obj/item/clothing/suit/superman,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories/theater)
 "roT" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -70754,14 +70751,13 @@
 	},
 /area/space)
 "rHn" = (
-/obj/structure/table/woodentable,
-/obj/item/device/violin,
 /obj/item/device/radio/intercom{
 	pixel_x = 25
 	},
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
+/obj/structure/stool,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "rHp" = (
@@ -72749,11 +72745,15 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
 "sku" = (
-/obj/structure/rack,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/weapon/packageWrap,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating,
+/obj/structure/window/thin/reinforced,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
@@ -73728,14 +73728,8 @@
 	},
 /area/station/hallway/primary/central)
 "suw" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/bridge{
-	name = "Food Court Maintenance"
-	})
+/turf/simulated/floor/carpet/purple,
+/area/station/civilian/dormitories/theater)
 "suP" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -74347,15 +74341,12 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "sDk" = (
-/obj/machinery/newscaster{
-	dir = 1;
-	pixel_y = 30
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
+/area/space)
 "sDt" = (
 /obj/structure/sink{
 	dir = 8;
@@ -77853,12 +77844,9 @@
 	},
 /area/station/cargo/recycler)
 "tzz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellowcorner"
+	dir = 8;
+	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
 "tzC" = (
@@ -79573,12 +79561,13 @@
 	},
 /area/space)
 "tWu" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
+/obj/machinery/newscaster{
+	dir = 1;
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
 "tWz" = (
@@ -81190,6 +81179,17 @@
 	icon_state = "blue"
 	},
 /area/space)
+"uqh" = (
+/obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp/green{
+	on = 0;
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories/theater)
 "uqk" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -81483,9 +81483,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
+/obj/structure/mirror{
+	pixel_x = -28
 	},
+/turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "usE" = (
 /obj/machinery/light,
@@ -83850,14 +83851,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/medical/virology)
 "uYw" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/station/maintenance/bridge{
-	name = "Food Court Maintenance"
-	})
+/obj/structure/dresser,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories/theater)
 "uYD" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -90886,7 +90882,7 @@
 "wML" = (
 /obj/effect/landmark/start/mime,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor/wood,
+/turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "wMP" = (
 /obj/machinery/door/firedoor,
@@ -93691,10 +93687,13 @@
 	},
 /area/station/bridge/server)
 "xAs" = (
-/obj/machinery/light,
-/obj/structure/device/piano/royal,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories/theater)
+/obj/structure/stool/bed/chair/metal/black,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/maintenance/bridge{
+	name = "Food Court Maintenance"
+	})
 "xAB" = (
 /obj/item/weapon/table_parts/wood/fancy,
 /obj/item/weapon/table_parts/wood/fancy,
@@ -95486,7 +95485,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/wood,
+/turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "xZn" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -123123,7 +123122,7 @@ acF
 acy
 acV
 gYQ
-sku
+bBN
 iai
 bLF
 umV
@@ -123380,7 +123379,7 @@ lbv
 lbv
 mqt
 gYQ
-bBN
+iai
 iai
 dvF
 hfu
@@ -123636,10 +123635,10 @@ ncb
 ncb
 ncb
 wDn
-gYQ
-aTX
+oqj
+iai
 loe
-hIM
+heR
 dwA
 quG
 pYX
@@ -123892,10 +123891,10 @@ wDn
 kEQ
 oRS
 ilL
-xAs
-gYQ
+wDn
+dpD
 bIO
-iai
+xAs
 heR
 cgL
 dEZ
@@ -124150,10 +124149,10 @@ hbw
 eVM
 ncb
 uFX
-gYQ
-bIO
-iai
-sDk
+uqh
+sku
+xAs
+heR
 nBy
 dEZ
 yky
@@ -124407,10 +124406,10 @@ fLq
 heQ
 oPD
 qjE
-gYQ
-bIO
+bzL
 iai
-bOp
+aTX
+heR
 nBy
 dEZ
 yky
@@ -124665,7 +124664,7 @@ ibG
 gYQ
 gYQ
 gYQ
-bIO
+iai
 iai
 tWu
 nBy
@@ -124919,12 +124918,12 @@ gYQ
 rZi
 usu
 kKU
-wUr
-gYQ
-aTX
-cng
+suw
+uYw
 iai
-oqj
+cng
+pRA
+heR
 nBy
 dEZ
 pYX
@@ -125177,11 +125176,11 @@ jEI
 wML
 guD
 xZl
-iMa
-cng
+wDn
+qLj
 pRA
-iai
-bOp
+cng
+heR
 nBy
 bBS
 aiu
@@ -125431,14 +125430,14 @@ exk
 xtC
 gYQ
 hxU
-wUr
+mHy
+roS
 wUr
 lmV
-gYQ
-bBN
-uYw
 iai
-qWI
+cng
+pRA
+heR
 nBy
 oDS
 pGe
@@ -125692,10 +125691,10 @@ gYQ
 gYQ
 gYQ
 gYQ
-suw
 iai
+hIM
 iai
-bOp
+heR
 nBy
 uWp
 pYX
@@ -125948,11 +125947,11 @@ uWp
 unJ
 uWp
 qNn
-itl
-lLc
+evf
+qWI
 tzz
-bOp
-bOp
+tzz
+hwj
 nBy
 uWp
 pYX
@@ -126506,7 +126505,7 @@ ryX
 pNq
 fDh
 hNT
-hNT
+iMa
 hNT
 hNT
 hNT
@@ -126763,7 +126762,7 @@ eRo
 pNq
 fDh
 hNT
-hNT
+sDk
 hNT
 hNT
 hNT
