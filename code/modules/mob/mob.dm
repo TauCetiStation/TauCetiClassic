@@ -1201,7 +1201,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return input_offsets["[dir]"]
 
 /mob/proc/randomise_inputs()
-	if(!confused)
+	if(!confused )
 		return
 	if(next_randomise_inputs > world.time)
 		return
@@ -1246,6 +1246,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		input_offsets = null
 		next_randomise_inputs = world.time
+
+/mob/proc/AdjustHeavyConfused(amount)
+	heavy_confused += amount
+	if(heavy_confused < 0)
+		heavy_confused = 0
+
+/mob/proc/SetHeavyConfused(value)
+	heavy_confused = value
 
 /mob/proc/parse_language(message)
 	if(forced_language)

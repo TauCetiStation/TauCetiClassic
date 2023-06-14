@@ -521,6 +521,7 @@
 		M.dizziness = max(0, M.dizziness - 15)
 	if(M.confused !=0)
 		M.AdjustConfused(-5)
+		M.AdjustHeavyConfused(-5)
 
 /datum/reagent/consumable/honey
 	name = "Honey"

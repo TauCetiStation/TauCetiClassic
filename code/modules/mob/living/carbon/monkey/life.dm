@@ -221,6 +221,7 @@
 			Paralyse(5)
 
 	AdjustConfused(-1)
+	AdjustHeavyConfused(-1)
 	AdjustDrunkenness(-1)
 
 	if(crawling)

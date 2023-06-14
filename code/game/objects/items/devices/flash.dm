@@ -71,12 +71,10 @@
 	var/flashfail = 0
 
 	if(iscarbon(M))
-		var/safety = M:eyecheck()
-		if(safety <= 0)
-			M.MakeConfused(rand(6, 10))
-			M.flash_eyes()
-		else
-			flashfail = 1
+		var/amount_confuse = rand(6, 10)
+		M.MakeConfused(amount_confuse)
+		M.AdjustHeavyConfused(amount_confuse)
+		M.flash_eyes()
 
 	else if(issilicon(M))
 		//M.Weaken(rand(5,10))

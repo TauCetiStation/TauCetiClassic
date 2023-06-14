@@ -33,6 +33,7 @@
 			M.setStuttering(0)
 			M.SetDrunkenness(0)
 			M.SetConfused(0)
+			M.SetHeavyConfused(0)
 			M.jitteriness = 0
 
 /datum/reagent/inaprovaline
@@ -375,6 +376,7 @@
 	M.drowsyness = 0
 	M.setStuttering(0)
 	M.SetConfused(0)
+	M.SetHeavyConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
 
@@ -663,6 +665,7 @@
 	M.drowsyness = max(0, M.drowsyness - 10)
 	M.AdjustStuttering(-10)
 	M.AdjustConfused(-10)
+	M.AdjustHeavyConfused(-10)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 	if(prob(volume))
 		if(!ishuman(M))
