@@ -34,12 +34,11 @@
 /datum/skillset/cadet
 	name = "Security Cadet"
 	initial_skills = list(
-		/datum/skill/firearms = SKILL_LEVEL_MASTER,
-		/datum/skill/police = SKILL_LEVEL_MASTER,
-		/datum/skill/melee = SKILL_LEVEL_MASTER,
-		/datum/skill/medical = SKILL_LEVEL_TRAINED,
-		/datum/skill/research = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat_mech = SKILL_LEVEL_MASTER
+		/datum/skill/firearms = SKILL_LEVEL_PRO,
+		/datum/skill/police = SKILL_LEVEL_PRO,
+		/datum/skill/melee = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat_mech = SKILL_LEVEL_PRO
 	)
 
 /datum/skillset/forensic

@@ -94,13 +94,13 @@
 /datum/skillset/research_assistant
 	name = "Research Assistant"
 	initial_skills = list(
-		/datum/skill/research = SKILL_LEVEL_MASTER,
-		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,
-		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_NOVICE,
+		/datum/skill/construction = SKILL_LEVEL_TRAINED,
 		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
-		/datum/skill/medical = SKILL_LEVEL_PRO,
-		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
-		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
-		/datum/skill/surgery = SKILL_LEVEL_PRO,
-		/datum/skill/engineering = SKILL_LEVEL_MASTER
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
+		/datum/skill/combat_mech = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/engineering = SKILL_LEVEL_PRO
 	)
