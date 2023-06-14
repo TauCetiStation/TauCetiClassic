@@ -45400,7 +45400,7 @@
 "bFr" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Delivery Office";
-	req_access = list(50)
+	req_one_access = list(50, 70)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
