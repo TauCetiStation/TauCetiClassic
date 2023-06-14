@@ -13,27 +13,27 @@
 	name = "Street"
 	icon_state = "street"
 	requires_power = FALSE
-	looped_ambience = 'trainstation13/sound/loop_trainstation.ogg'
+	looped_ambience = 'trainstation13/sound/ambience/loop_trainstation.ogg'
 	ambience = list(
-		'trainstation13/sound/steam_short.ogg',
-		'trainstation13/sound/steam_long.ogg',
-		'trainstation13/sound/dog_distant_1.ogg',
-		'trainstation13/sound/dog_distant_2.ogg',
-		'trainstation13/sound/dog_distant_3.ogg'
+		'trainstation13/sound/ambience/steam_short.ogg',
+		'trainstation13/sound/ambience/steam_long.ogg',
+		'trainstation13/sound/ambience/dog_distant_1.ogg',
+		'trainstation13/sound/ambience/dog_distant_2.ogg',
+		'trainstation13/sound/ambience/dog_distant_3.ogg'
 	)
 
 /area/trainstation/apartment
 	name = "Apartment"
 	icon_state = "apartment"
 	requires_power = FALSE
-	looped_ambience = 'trainstation13/sound/loop_apartment.ogg'
+	looped_ambience = 'trainstation13/sound/ambience/loop_apartment.ogg'
 	ambience = list(
-		'trainstation13/sound/apartment_radio_1.ogg',
-		'trainstation13/sound/apartment_radio_2.ogg',
-		'trainstation13/sound/apartment_radio_3.ogg',
-		'trainstation13/sound/apartment_neighbors_1.ogg',
-		'trainstation13/sound/apartment_neighbors_2.ogg',
-		'trainstation13/sound/apartment_neighbors_3.ogg'
+		'trainstation13/sound/ambience/apartment_radio_1.ogg',
+		'trainstation13/sound/ambience/apartment_radio_2.ogg',
+		'trainstation13/sound/ambience/apartment_radio_3.ogg',
+		'trainstation13/sound/ambience/apartment_neighbors_1.ogg',
+		'trainstation13/sound/ambience/apartment_neighbors_2.ogg',
+		'trainstation13/sound/ambience/apartment_neighbors_3.ogg'
 	)
 	sound_environment = SOUND_ENVIRONMENT_LIVINGROOM
 
@@ -52,18 +52,18 @@
 /area/trainstation/apartment/bathroom
 	name = "Bathroom"
 	icon_state = "bathroom"
-	looped_ambience = 'trainstation13/sound/loop_generic.ogg'
+	looped_ambience = 'trainstation13/sound/ambience/loop_generic.ogg'
 	ambience = null
 	sound_environment = SOUND_ENVIRONMENT_GENERIC
 
 /area/trainstation/apartment/balcony
 	name = "Balcony"
 	icon_state = "balcony"
-	looped_ambience = 'trainstation13/sound/loop_balcony.ogg'
+	looped_ambience = 'trainstation13/sound/ambience/loop_balcony.ogg'
 	ambience = list(
-		'trainstation13/sound/dog_distant_1.ogg',
-		'trainstation13/sound/dog_distant_2.ogg',
-		'trainstation13/sound/dog_distant_3.ogg',
+		'trainstation13/sound/ambience/dog_distant_1.ogg',
+		'trainstation13/sound/ambience/dog_distant_2.ogg',
+		'trainstation13/sound/ambience/dog_distant_3.ogg',
 		'sound/effects/wind/wind_2_1.ogg',
 		'sound/effects/wind/wind_2_2.ogg',
 		'sound/effects/wind/wind_3_1.ogg',
@@ -77,39 +77,39 @@
 	name = "Train Station"
 	icon_state = "station"
 	requires_power = FALSE
-	looped_ambience = 'trainstation13/sound/loop_trainstation.ogg'
-	ambience = list('trainstation13/sound/steam_short.ogg', 'trainstation13/sound/steam_long.ogg')
+	looped_ambience = 'trainstation13/sound/ambience/loop_trainstation.ogg'
+	ambience = list('trainstation13/sound/ambience/steam_short.ogg', 'trainstation13/sound/ambience/steam_long.ogg')
 	sound_environment = SOUND_ENVIRONMENT_HANGAR
 
 /area/trainstation/guard
 	name = "Railway Crossing Guard"
 	icon_state = "guard"
 	requires_power = FALSE
-	looped_ambience = 'trainstation13/sound/loop_trainstation.ogg'
+	looped_ambience = 'trainstation13/sound/ambience/loop_trainstation.ogg'
 	ambience = list(
-		'trainstation13/sound/PRS_1.ogg',
-		'trainstation13/sound/PRS_2.ogg',
-		'trainstation13/sound/PRS_3.ogg',
-		'trainstation13/sound/PRS_4.ogg',
-		'trainstation13/sound/PRS_5.ogg',
-		'trainstation13/sound/PRS_6.ogg',
-		'trainstation13/sound/PRS_7.ogg',
-		'trainstation13/sound/PRS_8.ogg',
-		'trainstation13/sound/PRS_9.ogg',
-		'trainstation13/sound/PRS_10.ogg',
-		'trainstation13/sound/PRS_11.ogg',
-		'trainstation13/sound/PRS_12.ogg',
-		'trainstation13/sound/PRS_13.ogg',
-		'trainstation13/sound/PRS_14.ogg',
-		'trainstation13/sound/PRS_15.ogg',
-		'trainstation13/sound/PRS_16.ogg',
-		'trainstation13/sound/PRS_17.ogg',
-		'trainstation13/sound/PRS_18.ogg',
-		'trainstation13/sound/PRS_19.ogg',
-		'trainstation13/sound/PRS_20.ogg',
-		'trainstation13/sound/PRS_21.ogg',
-		'trainstation13/sound/PRS_22.ogg',
-		'trainstation13/sound/PRS_23.ogg'
+		'trainstation13/sound/machines/PRS_1.ogg',
+		'trainstation13/sound/machines/PRS_2.ogg',
+		'trainstation13/sound/machines/PRS_3.ogg',
+		'trainstation13/sound/machines/PRS_4.ogg',
+		'trainstation13/sound/machines/PRS_5.ogg',
+		'trainstation13/sound/machines/PRS_6.ogg',
+		'trainstation13/sound/machines/PRS_7.ogg',
+		'trainstation13/sound/machines/PRS_8.ogg',
+		'trainstation13/sound/machines/PRS_9.ogg',
+		'trainstation13/sound/machines/PRS_10.ogg',
+		'trainstation13/sound/machines/PRS_11.ogg',
+		'trainstation13/sound/machines/PRS_12.ogg',
+		'trainstation13/sound/machines/PRS_13.ogg',
+		'trainstation13/sound/machines/PRS_14.ogg',
+		'trainstation13/sound/machines/PRS_15.ogg',
+		'trainstation13/sound/machines/PRS_16.ogg',
+		'trainstation13/sound/machines/PRS_17.ogg',
+		'trainstation13/sound/machines/PRS_18.ogg',
+		'trainstation13/sound/machines/PRS_19.ogg',
+		'trainstation13/sound/machines/PRS_20.ogg',
+		'trainstation13/sound/machines/PRS_21.ogg',
+		'trainstation13/sound/machines/PRS_22.ogg',
+		'trainstation13/sound/machines/PRS_23.ogg'
 	)
 
 //PARENT OF ALL TRAIN AREAS
@@ -117,7 +117,7 @@
 /area/trainstation/train
 	name = "Train"
 	icon_state = "train"
-	looped_ambience = 'trainstation13/sound/loop_trainride.ogg' //Potential for quick swap of looped ambience
+	looped_ambience = 'trainstation13/sound/ambience/loop_trainride.ogg' //Potential for quick swap of looped ambience
 
 //LOCOMOTIVE
 
@@ -128,7 +128,7 @@
 /area/trainstation/train/locomotive/engine
 	name = "Locomotive Engine"
 	icon_state = "engine"
-	ambience = list('trainstation13/sound/steam_short.ogg', 'trainstation13/sound/steam_long.ogg')
+	ambience = list('trainstation13/sound/ambience/steam_short.ogg', 'trainstation13/sound/ambience/steam_long.ogg')
 
 /area/trainstation/train/locomotive/crew
 	name = "Locomotive Crew"
@@ -138,29 +138,29 @@
 	name = "Locomotive Cab"
 	icon_state = "cab"
 	ambience = list(
-		'trainstation13/sound/PRS_1.ogg',
-		'trainstation13/sound/PRS_2.ogg',
-		'trainstation13/sound/PRS_3.ogg',
-		'trainstation13/sound/PRS_4.ogg',
-		'trainstation13/sound/PRS_5.ogg',
-		'trainstation13/sound/PRS_6.ogg',
-		'trainstation13/sound/PRS_7.ogg',
-		'trainstation13/sound/PRS_8.ogg',
-		'trainstation13/sound/PRS_9.ogg',
-		'trainstation13/sound/PRS_10.ogg',
-		'trainstation13/sound/PRS_11.ogg',
-		'trainstation13/sound/PRS_12.ogg',
-		'trainstation13/sound/PRS_13.ogg',
-		'trainstation13/sound/PRS_14.ogg',
-		'trainstation13/sound/PRS_15.ogg',
-		'trainstation13/sound/PRS_16.ogg',
-		'trainstation13/sound/PRS_17.ogg',
-		'trainstation13/sound/PRS_18.ogg',
-		'trainstation13/sound/PRS_19.ogg',
-		'trainstation13/sound/PRS_20.ogg',
-		'trainstation13/sound/PRS_21.ogg',
-		'trainstation13/sound/PRS_22.ogg',
-		'trainstation13/sound/PRS_23.ogg'
+		'trainstation13/sound/machines/PRS_1.ogg',
+		'trainstation13/sound/machines/PRS_2.ogg',
+		'trainstation13/sound/machines/PRS_3.ogg',
+		'trainstation13/sound/machines/PRS_4.ogg',
+		'trainstation13/sound/machines/PRS_5.ogg',
+		'trainstation13/sound/machines/PRS_6.ogg',
+		'trainstation13/sound/machines/PRS_7.ogg',
+		'trainstation13/sound/machines/PRS_8.ogg',
+		'trainstation13/sound/machines/PRS_9.ogg',
+		'trainstation13/sound/machines/PRS_10.ogg',
+		'trainstation13/sound/machines/PRS_11.ogg',
+		'trainstation13/sound/machines/PRS_12.ogg',
+		'trainstation13/sound/machines/PRS_13.ogg',
+		'trainstation13/sound/machines/PRS_14.ogg',
+		'trainstation13/sound/machines/PRS_15.ogg',
+		'trainstation13/sound/machines/PRS_16.ogg',
+		'trainstation13/sound/machines/PRS_17.ogg',
+		'trainstation13/sound/machines/PRS_18.ogg',
+		'trainstation13/sound/machines/PRS_19.ogg',
+		'trainstation13/sound/machines/PRS_20.ogg',
+		'trainstation13/sound/machines/PRS_21.ogg',
+		'trainstation13/sound/machines/PRS_22.ogg',
+		'trainstation13/sound/machines/PRS_23.ogg'
 	)
 
 /area/trainstation/train/locomotive/cab/headlights

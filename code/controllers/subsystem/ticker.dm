@@ -47,19 +47,13 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
-	/*
-	'sound/music/space.ogg',\
-	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\	//disgusting
-	*/
-	'sound/music/space_oddity.ogg',\
-	'sound/music/b12_combined_start.ogg',\
-	'sound/music/title2.ogg',\
-	'sound/music/traitor.ogg',\
-	'sound/lobby/sundown.ogg',\
-	'sound/lobby/hanging_masses.ogg',\
-	'sound/lobby/admiral-station-13.ogg',\
-	'sound/lobby/robocop_gb_intro.ogg')
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_01_mg1.ogg',\
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_03_mg3.ogg',\
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_05_mg5.ogg',\
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_09_mg9.ogg',\
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_11_mgb.ogg',\
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_13_mgd.ogg',\
+	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_15_mgf.ogg')
 
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
@@ -298,7 +292,13 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	for(var/mob/M as anything in player_list)
+	/* <base>
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+</base> */
+// <trainstation13>
+		M.playsound_local(null, 'trainstation13/sound/machines/horn.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+// </trainstation13>
 
 	if(length(SSholiday.holidays))
 		to_chat(world, "<span clas='notice'>and...</span>")

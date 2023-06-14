@@ -18,7 +18,23 @@ with
 
 	"commandreport" = 'trainstation13/sound/train_melody.ogg',
 
-#3 In /code/modules/admin/admin_verbs.dm add:
+#3 In /code/controllers/subsystem/ticker.dm replace:
+		
+		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+with
+
+		M.playsound_local(null, 'trainstation13/sound/machines/horn.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+#4 In /code/modules/mob/dead/new_player/lobby.dm replace:
+
+	"lobby" = list("mp4" = 'html/media/lobby.mp4', "png" = 'html/media/lobby.png'),
+
+with
+
+	"lobby" = list("mp4" = 'html/media/lobby.mp4', "png" = 'trainstation13/icons/lobby.png'),
+
+#5 In /code/modules/admin/admin_verbs.dm add:
 
 		// <trainstation13>
 		if(holder.rights & R_EVENT)
@@ -30,7 +46,7 @@ after the line:
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
 
-#4 In /code/modules/recycling/conveyor2.dm add:
+#6 In /code/modules/recycling/conveyor2.dm add:
 
 	// <trainstation13>
 	for(var/obj/effect/trainspawner/TR in trainspawners)

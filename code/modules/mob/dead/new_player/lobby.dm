@@ -1,7 +1,7 @@
 // Possibles title screens
 var/global/custom_lobby_image // admins custom screens
 var/global/lobby_screens = list(
-	"lobby" = list("mp4" = 'html/media/lobby.mp4', "png" = 'html/media/lobby.png'),
+	"lobby" = list("mp4" = 'html/media/lobby.mp4', "png" = 'trainstation13/icons/lobby.png'),
 	"lobby-ny" = list("mp4" = 'html/media/lobby-ny.mp4', "png" = 'html/media/lobby-ny.png'),
 	)
 
@@ -85,8 +85,8 @@ var/global/lobby_screen = "lobby"
 					line-height: 3.6vmin;
 					height: 3.6vmin;
 					letter-spacing: 1px;
-					color: #2baaff;
-					text-shadow: 1px 1px 3px #098fd9, -1px -1px 3px #098fd9;
+					color: #e10000;
+					text-shadow: 1px 1px 3px #9d0000, -1px -1px 3px #9d0000;
 				}
 
 				body.lobby-default .menu_a {
@@ -106,11 +106,11 @@ var/global/lobby_screen = "lobby"
 				}
 
 				.menu_box__check {
-					color: lime;
+					color: yellow;
 				}
 
 				.menu_box__cross {
-					color: red;
+					color: orange;
 				}
 
 			</style>
@@ -137,7 +137,7 @@ var/global/lobby_screen = "lobby"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
 
 	dat += "</div></div>"
-	
+
 	if(global.custom_lobby_image)
 		dat += {"<img src="titlescreen.gif" class="background" alt="">"}
 	else if (client.prefs.lobbyanimation)
