@@ -52,6 +52,8 @@
 	return text
 
 /obj/effect/proc_holder/changeling/implant_managment/Topic(href, href_list)
+	..()
+
 	var/mob/M = usr
 	if(!istype(M))
 		return
