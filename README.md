@@ -1,11 +1,12 @@
-# Tau Ceti Classic
+# Train Station 13 (Tau Ceti Classic)
 
 [![Build Status](https://github.com/TauCetiStation/TauCetiClassic/workflows/CI%20Suite/badge.svg)](https://github.com/TauCetiStation/TauCetiClassic/actions?query=workflow%3A%22CI+Suite%22)
 [![taucetistation.org](https://img.shields.io/badge/site-taucetistation.org-blue.svg)](http://taucetistation.org/)
 [![Discord](https://discordapp.com/api/guilds/401030271417188353/widget.png)](https://discord.gg/YCWRjkb)
 [![Maintainers Wanted](https://img.shields.io/badge/maintainers-wanted-red.svg?style=flat)](https://github.com/TauCetiStation/TauCetiClassic)
 
-* **Code:** https://github.com/TauCetiStation/TauCetiClassic/
+* **Code:** https://github.com/BartNixon/TrainStation13
+* **Site:** https://taucetistation.org/
 * **Wiki:** https://wiki.taucetistation.org/
 * **Changelogs:** https://changelog.taucetistation.org/
 
@@ -20,6 +21,13 @@
 - Проекту остро необходимы мейнтейнеры для поддержания развития. Если у вас есть время и желание, опыт - пишите в ``#rnd`` канал в Дискорде с меншоном на ``@Build Maintainer``
 
 - **[Полезные Ссылки](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/WIKI_LINKS.md)**
+
+---
+
+### SOUNDTRACK
+Soundtrack by State Azure / Azure Studios licensed under CC BY 3.0 and sourced from 2022 album: "Foundations I (24bit)":
+
+* **Source:** https://azurestudios.bandcamp.com/album/foundations-i-24bit
 
 ---
 
