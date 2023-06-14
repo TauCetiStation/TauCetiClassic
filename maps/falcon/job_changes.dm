@@ -97,7 +97,7 @@
 /datum/job/doctor/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_engineering_lobby)
+	access += list(access_external_airlocks, access_sec_doors, access_research, access_engineering_lobby)
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 900
