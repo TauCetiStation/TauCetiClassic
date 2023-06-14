@@ -127,9 +127,12 @@
 					detailed_account_view.adjust_money(amount)
 
 			if("change_export_tax")
-				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
-				amount = clamp(amount, 0, 100)
-				SSeconomy.tax_cargo_export = amount
+				if(access_cargoshop in held_card.GetAccess())
+					var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
+					amount = clamp(amount, 0, 100)
+					SSeconomy.tax_cargo_export = amount
+				else
+					to_chat(usr, "<span class='warning'>You don't have access to tax control.</span>")
 
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num
