@@ -196,6 +196,7 @@
 				victim.blurEyes(25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.AdjustClumsyStatus(4 SECONDS)
+				victim.shock_stage += 30
 
 /datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
 	..()
