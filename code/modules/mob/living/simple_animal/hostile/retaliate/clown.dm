@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/clown
 	name = "Clown"
-	desc = "A denizen of clown planet."
+	desc = "Обитатель планеты клоунов."
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -10,8 +10,8 @@
 	response_help = "pokes the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	speak = list("HONK", "Honk!", "Welcome to clown planet!")
-	emote_see = list("honks")
+	speak = list("ХОНК", "Хонк!", "Добро пожаловать на планету клоунов!")
+	emote_see = list("хонкает")
 	speak_chance = 1
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 75
@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/hostile/clown //Here's CopyPasta!!
 	name = "Clown"
-	desc = "Here's clownny!"
+	desc = "А вот и Клоуни!"
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -52,8 +52,8 @@
 	response_help = "pokes the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	speak = list("HONK!?", "Honk!", "Honk?", "ALL YOUR HONKS BELONGS TO US!", "Hooonk...")
-	emote_see = list("honks")
+	speak = list("ХОНК!?", "Хонк!", "Хонк?", "ВСЕ ВАШИ ХОНКИ ПРИНАДЛЕЖАТ НАМ!", "Хоооонк...")
+	emote_see = list("хонкает")
 	speak_chance = 3
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 75
