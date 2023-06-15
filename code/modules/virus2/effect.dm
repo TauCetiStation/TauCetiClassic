@@ -796,6 +796,31 @@
 		else
 			mob.adjustBrainLoss(10)
 
+/datum/disease2/effect/repairing
+	name = "Mechanical Repair"
+	desc = "The virus produces nanites that fix damage in the host's mechanical limbs."
+	level = 3
+	max_stage = 7
+	cooldown = 10
+
+/datum/disease2/effect/repairing/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!ishuman(mob))
+		return
+	var/mob/living/carbon/human/H = mob
+	var/list/parts = list()
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_robotic())
+			if(BP.get_damage())
+				parts += BP
+	if(!parts.len)
+		return
+	var/countBPhealed = 1
+	for(var/obj/item/organ/external/BP in shuffle(parts))
+		if(countBPhealed > holder.stage)
+			return
+		countBPhealed++
+		BP.heal_damage(1 / parts.len, 1 / parts.len, robo_repair = TRUE)
+
 ////////////////////////STAGE 2/////////////////////////////////
 
 /datum/disease2/effect/beard
@@ -980,6 +1005,39 @@
 			mob.apply_effect(35,AGONY,0)
 		if (prob(30))
 			mob.make_jittery(150)
+
+/datum/disease2/effect/mute
+	name = "Absorption"
+	desc = "The virus produces nanites on the host's skin that absorb sound waves."
+	level = 2
+	max_stage = 3
+	cooldown = 10
+	var/trait_added = FALSE
+	var/comp_added = FALSE
+	COOLDOWN_DECLARE(mute_message)
+
+/datum/disease2/effect/mute/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			if(!COOLDOWN_FINISHED(src, mute_message))
+				return
+			to_chat(mob, "<span class='warning'>You begin to hear your own speech worse.</span>")
+			COOLDOWN_START(src, mute_message, 1 MINUTES)
+		if(2)
+			if(trait_added)
+				return
+			ADD_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
+		if(3)
+			SEND_SIGNAL(mob, COMSIG_START_SUPPRESSING)
+			if(comp_added)
+				return
+			comp_added = TRUE
+			mob.AddComponent(/datum/component/silence, 0, 0.55)
+
+/datum/disease2/effect/mute/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
+	trait_added = FALSE
+	SEND_SIGNAL(mob, COMSIG_STOP_SUPPRESSING)
 
 ////////////////////////STAGE 1/////////////////////////////////
 
@@ -1309,3 +1367,39 @@
 					H.emote("scream")
 				else
 					H.apply_effect(10,AGONY,0)
+
+/datum/disease2/effect/hemocoagulation
+	name = "Rapid Coagulation"
+	desc = "The virus producing nanites that rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
+	level = 1
+	max_stage = 2
+	cooldown = 40
+	var/trait_added = FALSE
+	COOLDOWN_DECLARE(blood_add_message)
+
+/datum/disease2/effect/hemocoagulation/proc/heal_artery(mob/living/carbon/human/H)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_artery_cut())
+			BP.status &= ~ORGAN_ARTERY_CUT
+
+/datum/disease2/effect/hemocoagulation/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			if(COOLDOWN_FINISHED(src, blood_add_message))
+				to_chat(A, "<span class='notice'>You feel like your blood vessels pulsate periodically.</span>")
+				COOLDOWN_START(src, blood_add_message, 1 MINUTE)
+			if(!ishuman(A))
+				return
+			var/mob/living/carbon/human/H = A
+			H.blood_add(1)
+		if(2)
+			if(!trait_added)
+				trait_added = TRUE
+				ADD_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
+			if(!ishuman(A))
+				return
+			heal_artery(A)
+
+/datum/disease2/effect/hemocoagulation/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
+	trait_added = FALSE
