@@ -71,10 +71,14 @@
 	var/flashfail = 0
 
 	if(iscarbon(M))
-		var/amount_confuse = rand(6, 10)
-		M.MakeConfused(amount_confuse)
-		M.AdjustHeavyConfused(amount_confuse)
-		M.flash_eyes(3)
+		var/mob/living/carbon/C = M
+		if(COOLDOWN_FINISHED(C, flash_carbon_use))
+			C.MakeConfused(rand(6, 10))
+			C.AdjustHeavyConfused(6)
+			C.flash_eyes(3)
+			COOLDOWN_START(C, flash_carbon_use, 15 SECONDS)
+		else
+			flashfail = 1
 
 	else if(issilicon(M))
 		//M.Weaken(rand(5,10))

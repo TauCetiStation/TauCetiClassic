@@ -41,3 +41,4 @@
 	var/stamina = 100 //Ian uses this for now.
 
 	COOLDOWN_DECLARE(toggle_throw_message)
+	COOLDOWN_DECLARE(flash_carbon_use)
