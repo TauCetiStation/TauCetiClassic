@@ -196,14 +196,7 @@
 			return helpReaction(attacker)
 
 		if(INTENT_PUSH)
-			var/combo_value = 2
-			if(!anchored && !is_bigger_than(attacker) && src != attacker)
-				var/turf/to_move = get_step(src, get_dir(attacker, src))
-				var/atom/A = get_step_away(src, get_turf(attacker))
-				if(A != to_move)
-					combo_value *= 2
-
-			if(attacker.engage_combat(src, INTENT_PUSH, combo_value)) // We did a combo-wombo of some sort.
+			if(attacker.engage_combat(src, INTENT_PUSH, 4)) // We did a combo-wombo of some sort.
 				return
 			return disarmReaction(attacker)
 
@@ -225,26 +218,6 @@
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src, visual_effect_icon = attacker.attack_disarm_vis_effect)
 
-	if(!anchored && !is_bigger_than(attacker) && src != attacker)
-		var/turf/to_move = get_step(src, get_dir(attacker, src))
-		step_away(src, get_turf(attacker))
-		if(loc != to_move)
-			adjustHalLoss(4)
-
-	if(pulling)
-		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
-		stop_pulling()
-	else
-		//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
-		for(var/obj/item/weapon/grab/G in GetGrabs())
-			if(G.affecting)
-				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
-			qdel(G)
-		//End BubbleWrap
-
-	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-	if(show_message)
-		visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
 	return TRUE
 
 /mob/living/proc/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
