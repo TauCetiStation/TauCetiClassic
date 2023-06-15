@@ -6971,6 +6971,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"bAD" = (
+/obj/machinery/conveyor{
+	id = "QMLoad2";
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "bAH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -28827,7 +28837,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Delivery Office";
-	req_access = list(50, 70)
+	req_access = list(50,70)
 	},
 /obj/structure/disposalpipe/shop_scanner{
 	dir = 4
@@ -56460,7 +56470,7 @@
 /obj/machinery/door/window/westright{
 	dir = 4;
 	name = "Cargo Delivery Door";
-	req_access = list(50, 70)
+	req_access = list(50,70)
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -62911,7 +62921,7 @@
 "pxS" = (
 /obj/machinery/door/window/westleft{
 	dir = 1;
-	req_access = list(50, 70)
+	req_access = list(50,70)
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -67723,6 +67733,9 @@
 /area/station/cargo/recycleroffice)
 "qIe" = (
 /obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -142748,7 +142761,7 @@ meX
 onK
 uRa
 iBL
-uRa
+bAD
 wmd
 bGb
 fqr
