@@ -25,9 +25,9 @@
 ---
 
 ### SOUNDTRACK
-Soundtrack by State Azure / Azure Studios licensed under CC BY 3.0 and sourced from 2022 album: "Foundations I (24bit)":
+Soundtrack by [State Azure](https://stateazure.bandcamp.com/) / [Azure Studios](https://azurestudios.bandcamp.com/) licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) and sourced from 2022 album: ["Foundations I [24bit]"](https://azurestudios.bandcamp.com/album/foundations-i-24bit).
 
-* **Source:** https://azurestudios.bandcamp.com/album/foundations-i-24bit
+End credits song "Energy" by [Scott Holmes](https://scottholmesmusic.com/) licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) and sourced from 2021 album ["Rock Background Music"](https://freemusicarchive.org/music/Scott_Holmes/rock-background-music).
 
 ---
 
