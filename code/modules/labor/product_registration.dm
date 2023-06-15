@@ -4,9 +4,12 @@
 	icon_state = "stacker"
 	density = TRUE
 	anchored = TRUE
+	req_access = list(access_security)
 	speed_process = TRUE
 	max_integrity = 300
 	damage_deflection = 20
+	var/input_dir = SOUTH
+	var/output_dir = NORTH
 	var/obj/machinery/labor_counter_console/console
 	var/list/acceptable_products = list(/obj/item/stack, /obj/item/weapon/reagent_containers/food/snacks/grown)
 
@@ -15,17 +18,49 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/labor_counter_machine/process()
-	var/turf/input_turf = get_step(src, dir)
-	var/turf/output_turf = get_step(src, turn(dir, 180))
+	var/turf/input_turf = get_step(src, input_dir)
 	var/i = 0
 
 	for (var/obj/item/I in input_turf.contents)
 		if(is_type_in_list(I, acceptable_products))
 			count_product(I)
-			I.Move(output_turf)
+			I.Move(src)
 			i++
 			if (i >= 10)
 				return
+
+/obj/machinery/labor_counter_machine/attack_hand(mob/user)
+	add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
+	if(allowed(usr))
+		if(emagged && iscarbon(user))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(3, 1, src)
+			s.start()
+			electrocute_mob(user, get_area(src), src)
+			emagged = FALSE
+		else if(contents.len > 0)
+			visible_message("<span class='notice'>[user] unloads the contents of the [src].</span>")
+			unload()
+	else
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+
+/obj/machinery/labor_counter_machine/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>\The [src]'s safety system is already hacked.</span>")
+		return FALSE
+	to_chat(user, "You hack \the [src] to cause a safety system failure.")
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, src)
+	s.start()
+	visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
+	emagged = TRUE
+	. = TRUE
+
+/obj/machinery/labor_counter_machine/proc/unload()
+	var/turf/output_turf = get_step(src, output_dir)
+	for(var/obj/item/I in contents)
+		I.Move(output_turf)
 
 /obj/machinery/labor_counter_machine/proc/count_product(obj/item/product)
 	var/amount = 1
@@ -51,7 +86,7 @@
 	name = "payout console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = TRUE
+	density = FALSE //it's intended to be wall mounted
 	anchored = TRUE
 	max_integrity = 300
 	damage_deflection = 20
@@ -159,8 +194,6 @@
 			if(inserted_id.labor_credits < inserted_id.labor_sentence)
 				return
 			release_prisoner()
-			inserted_id.labor_credits -= inserted_id.labor_sentence
-			inserted_id.labor_sentence = 0
 
 /obj/machinery/labor_counter_console/proc/release_prisoner()
 	broadcast_security_hud_message("<b>[src.name]</b> Заключенный <b>[inserted_id.registered_name]</b> отработал вынесенный приговор. \
@@ -173,7 +206,7 @@
 				H.sec_hud_set_security_status()
 		add_record(null, inserted_id.security_data, "Отбыл наказание за преступления по статьям: [inserted_id.broken_laws]. Уголовный статус статус был изменен на <b>Released</b>", "NT Security System")
 
-	var/obj/item/weapon/paper/P = new(src.loc)
+	var/obj/item/weapon/paper/P = new(loc)
 	P.name = "Labor completion certificate"
 	P.info = {"
         <center><font size=\"4\"><b>Автоматическая система безопасности НаноТрейзен</b><br>
@@ -188,3 +221,26 @@
 	S.stamp_paper(P, "NT Security System")
 	P.update_icon()
 	P.updateinfolinks()
+
+	//prisoner may be released without enough credits using emag, so extra check is needed
+	inserted_id.labor_credits = max(inserted_id.labor_credits - inserted_id.labor_sentence, 0)
+	inserted_id.labor_sentence = 0
+	pay_cash()
+
+/obj/machinery/labor_counter_console/proc/pay_cash()
+	if(inserted_id.labor_credits <= 0)
+		return
+
+	var/datum/money_account/security_account = global.department_accounts["Security"]
+
+	if(!security_account && security_account.money < inserted_id.labor_credits)
+		audible_message("[bicon(src)] <span class='warning'>Not enough funds on security department account or account is inaccessible!</span>", hearing_distance = 3)
+		return
+	var/obj/item/weapon/ewallet/E = new /obj/item/weapon/ewallet(loc)
+
+	charge_to_account(security_account.account_number, E.name, "Labor Payment", name, -inserted_id.labor_credits)
+	charge_to_account(E.account_number, E.name, "Labor payment", name, inserted_id.labor_credits)
+
+	E.issuer_name = "Security department"
+	E.issuer_account_number = security_account.account_number
+	inserted_id.labor_credits = 0
