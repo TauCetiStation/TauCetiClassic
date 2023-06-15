@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/tree
 	name = "pine tree"
-	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
+	desc = "Бешеная деревяшка. Похоже ему надоели новогодние праздники..."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	icon_living = "pine_1"
