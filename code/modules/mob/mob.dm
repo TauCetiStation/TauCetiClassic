@@ -1201,7 +1201,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return input_offsets["[dir]"]
 
 /mob/proc/randomise_inputs()
-	if(!confused )
+	if(!confused)
 		return
 	if(next_randomise_inputs > world.time)
 		return
