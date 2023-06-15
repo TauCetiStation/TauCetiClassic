@@ -74,7 +74,7 @@
 		var/amount_confuse = rand(6, 10)
 		M.MakeConfused(amount_confuse)
 		M.AdjustHeavyConfused(amount_confuse)
-		M.flash_eyes()
+		M.flash_eyes(3)
 
 	else if(issilicon(M))
 		//M.Weaken(rand(5,10))

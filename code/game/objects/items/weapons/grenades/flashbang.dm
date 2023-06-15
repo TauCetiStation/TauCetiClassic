@@ -51,7 +51,7 @@
 					ear_safety += 1
 
 //Flashing everyone
-	M.flash_eyes()
+	M.flash_eyes(3)
 	M.blurEyes(25)
 
 //Now applying sound
