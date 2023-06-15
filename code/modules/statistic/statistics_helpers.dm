@@ -191,3 +191,15 @@
 
 	stat.set_custom_stat(F)
 	factions += stat
+
+/datum/stat_collector/proc/add_vote(datum/poll/poll)
+	var/datum/stat/vote/stat = new
+	stat.name = poll.name
+	stat.total_votes = poll.total_votes()
+	stat.total_voters = poll.total_voters()
+	stat.winner = poll.winner.text
+
+	for(var/datum/vote_choice/V in poll.choices)
+		stat.results[V.text] = V.total_votes()
+
+	completed_votes += stat

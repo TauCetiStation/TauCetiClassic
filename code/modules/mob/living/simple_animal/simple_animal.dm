@@ -1,6 +1,6 @@
 /mob/living/simple_animal
 	name = "animal"
-	desc = "Just simple animal"
+	desc = "Просто существует."
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20

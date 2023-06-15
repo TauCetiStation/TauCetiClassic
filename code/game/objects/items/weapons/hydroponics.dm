@@ -18,7 +18,7 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/cable_piece = I
 		if(cable_piece.use(3))
-			new /obj/item/clothing/head/sunflower_crown(loc)
+			new /obj/item/clothing/head/sunflower_crown(get_turf(loc))
 			qdel(src)
 			return
 	return ..()
@@ -212,19 +212,20 @@ var/global/gourd_name = null
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attackby(obj/item/I, mob/user)
 	if(I.get_quality(QUALITY_CUTTING))
-		var/turf/T = I.loc
+		var/turf/T = loc
 		if(!isturf(T))
 			T = T.loc
 		if(!isturf(T))
 			return ..()
 
-		user.drop_from_inventory(I)
+		user.drop_from_inventory(src)
 		var/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/G = new /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd(T)
 		G.volume = reagents.maximum_volume * 3
 		G.reagents.maximum_volume = reagents.maximum_volume * 3
 
 		if(user.in_interaction_vicinity(G))
 			user.put_in_hands(G)
+
 		qdel(src)
 		return
 

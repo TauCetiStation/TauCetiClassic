@@ -174,7 +174,8 @@ var/global/can_call_ert
 	H.check_dna(H)
 
 	if(!_name)
-		_name = H.gender == FEMALE ? pick(global.first_names_female) : pick(global.first_names_male)
+		var/first_name = H.gender == FEMALE ? pick(global.first_names_female) : pick(global.first_names_male)
+		_name = "[first_name] [pick(global.last_names)]"
 
 	H.real_name = _name
 	H.name = _name

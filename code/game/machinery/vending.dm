@@ -291,15 +291,10 @@
 		if(check_accounts)
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				var/attempt_pin = 0
 				if(D)
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-						if(isnull(attempt_pin))
-							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
-							return
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
-
+					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)

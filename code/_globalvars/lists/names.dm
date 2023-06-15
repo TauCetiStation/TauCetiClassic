@@ -8,6 +8,7 @@ var/global/list/first_names_male = file2list("config/names/first_male.txt")
 var/global/list/first_names_female = file2list("config/names/first_female.txt")
 var/global/list/last_names = file2list("config/names/last.txt")
 var/global/list/clown_names = file2list("config/names/clown.txt")
+var/global/list/mime_names = file2list("config/names/mime.txt")
 
 // Traitors key-words
 var/global/list/rus_nouns

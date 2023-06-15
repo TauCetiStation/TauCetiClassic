@@ -1,7 +1,7 @@
 //Look Sir, free head!
 /mob/living/simple_animal/head
 	name = "CommandBattle AI"
-	desc = "A standard borg shell on its chest crude marking saying CommandBattle AI MK4 : Head."
+	desc = "Стандартный корпус борга. На груди грубая маркировка с надписью CommandBattle AI MK4: Голова."
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"
@@ -16,22 +16,22 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "punches the"
 	var/list/insults = list(
-	"Man you suck",
-	"You look like the most retarded douche around",
-	"What's up?, oh wait nevermind you are a fucking asshat",
-	"you are just overly retarded",
-	"Whiteman said what?!",)
-	var/list/comments = list("Man have you seen those furry cats?,I mean who in the right mind would like something like that?",
-	"They call me abusive,I just like the truth",
-	"Beeboop, im a robit",
-	"Gooogooooll, break ya bones",
-	"Crab say what?",
-	"Man they say we have space lizards now, man this shit is getting more wack every minute",
-	"The so called \"improved\" station AI is just bullshit, that thing aint fun for noone",
-	"The Captain is a traitor, he took my power core.",
-	"Say \"what\" again. Say \"what\" again. I dare you. I double-dare you, motherfucker. Say \"what\" one more goddamn time.",
-	"Ezekiel 25:17 ,The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who in the name of charity and good will shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who attempt to poison and destroy my brothers. And you will know my name is the Lord... when I lay my vengeance upon thee.",
-	"Did you notice a sign out in front of my house that said \"Dead Nigger Storage\"?")
+	"Чел, ты лох.",
+	"Ты выглядишь как самый отсталый придурок в мире.",
+	"Как дела? О, подожди, неважно, придурок.",
+	"Ты просто слишком отсталый.",
+	"Белый сказал, что?!",)
+	var/list/comments = list("Человек, ты видел этих пушистых кошек? Я имею в виду, кто в здравом уме хотел бы чего-то подобного?",
+	"Они называют меня грубым... Мне просто нравится правда.",
+	"Бип-буп, я робит.",
+	"Гууугооол, сломай себе кости.",
+	"Что говорит краб?",
+	"Они называют меня оскорбительным, мне просто нравится правда, чел, они говорят, что у нас теперь есть космические ящерицы, чел, это дерьмо становится все более сумасшедшим с каждой минутой.",
+	"Так называемый \"улучшенный\" ИИ станции - хрень полная. Шутка, которая никому не понравилась.",
+	"Капитан предатель, он забрал мое ядро.",
+	"Скажи \"что\" снова. Скажи \"что\" снова. Попробуй. Я дважды попрошу тебя, скатина. Скажи \"что\" ещё, блять, раз.",
+	"Иезекииль 25:17, Путь праведника со всех сторон окружен беззакониями эгоистов и тиранией злых людей. Блажен тот, кто во имя милосердия и доброй воли ведет слабых через долину тьмы, ибо он воистину хранитель своего брата и находящий потерянных детей. И я обрушу на тебя с великой местью и яростным гневом тех, кто попытается отравить и уничтожить моих братьев. И ты узнаешь, что имя мое — Господь... когда я совершу над тобой мщение.",
+	"Видел мою вывеску перед домом \"Хранилище мертвых негров\"?")
 	stop_automated_movement = TRUE
 
 /mob/living/simple_animal/head/Life()
@@ -53,7 +53,7 @@
 		return
 	if(prob(30))
 		var/msg = pick(insults)
-		msg = "Hey, [A.name].. [msg]"
+		msg = "Эй, [A.name].. [msg]"
 		say(msg)
 	else
 		var/msg = pick(comments)

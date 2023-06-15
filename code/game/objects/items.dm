@@ -87,6 +87,8 @@
 
 	var/dyed_type
 
+	var/flash_protection = NONE
+	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
 /obj/item/atom_init()
@@ -106,6 +108,9 @@
 		if (!armor)
 			armor = list()
 		atom_integrity = max_integrity
+
+	if(!isturf(loc))
+		flags_2 |= IN_STORAGE
 
 	if(item_state_world)
 		update_world_icon()
@@ -1039,7 +1044,7 @@
 		// moving to inventory, restore icon (big inventory icon)
 		icon_state = initial(icon_state)
 
-	else if(icon_state != item_state_world)
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
 		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 

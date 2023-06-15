@@ -18,6 +18,8 @@
 	COOLDOWN_DECLARE(command_point)
 	COOLDOWN_DECLARE(point_to)
 
+	show_examine_log = FALSE
+
 /mob/camera/eminence/atom_init()
 	. = ..()
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, cult_religion)

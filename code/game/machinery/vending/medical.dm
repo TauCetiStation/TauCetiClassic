@@ -20,11 +20,27 @@
 		/obj/item/stack/medical/advanced/ointment = 3,
 		/obj/item/stack/medical/splint = 2,
 		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 9,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine = 5,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline = 5,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol = 5,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox = 5,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/tox = 3,
 		/obj/item/weapon/reagent_containers/pill/stox = 4,
 		/obj/item/weapon/reagent_containers/pill/dylovene = 6,
+	)
+	prices = list(
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine = 120,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline = 120,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol = 150,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox = 50,
+    )
+	premium = list(
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment = 3,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight = 2,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack = 1,
+		/obj/item/device/sensor_device = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/medical
 	private = TRUE

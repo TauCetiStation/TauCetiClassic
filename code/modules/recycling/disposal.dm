@@ -345,6 +345,14 @@
 
 		if(action == "eject")
 			eject()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				if(HAS_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN))
+					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
+					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>Так...</span>"), 1 SECOND)
+					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
+					new /obj/random/guns/set_special(loc)
+					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
 	return TRUE
 
@@ -1121,6 +1129,19 @@
 
 	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
 	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
+
+	var/static/list/category2color = list(
+		"Еда" = "#ff9300",
+		"Одежда" = "#a8e61d",
+		"Устройства" = "#da00ff",
+		"Инструменты" = "#da0000",
+		"Ресурсы" = "#00b7ef",
+		"Наборы" = "#fff200",
+		// "Разное" = no colour,
+	)
+
+	if(category2color[lot_category])
+		Item.color = category2color[lot_category]
 
 	global.shop_categories[lot_category]++
 

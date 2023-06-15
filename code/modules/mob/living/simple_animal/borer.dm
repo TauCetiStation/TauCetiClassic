@@ -2,6 +2,8 @@
 	name = "host brain"
 	real_name = "host brain"
 
+	show_examine_log = FALSE
+
 /mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
 	var/mob/living/simple_animal/borer/my_borer = loc
 	if(!istype(loc))
@@ -35,9 +37,9 @@
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"
-	desc = "A small, quivering sluglike creature."
-	speak_emote = list("chirrups")
-	emote_hear = list("chirrups")
+	desc = "Маленькое существо, похожее на слизняка."
+	speak_emote = list("шипит")
+	emote_hear = list("шипит")
 	response_help  = "pokes the"
 	response_disarm = "prods the"
 	response_harm   = "stomps on the"
@@ -74,6 +76,8 @@
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
 	var/has_reproduced = FALSE                 // Whether or not the borer has reproduced, for objective purposes.
+
+	show_examine_log = FALSE
 
 /mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1)
 	. = ..()

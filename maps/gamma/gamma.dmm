@@ -8914,9 +8914,6 @@
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder,
 /obj/item/device/camera,
-/obj/item/device/eftpos{
-	eftpos_name = "Library EFTPOS scanner"
-	},
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -20826,9 +20823,6 @@
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/sundress,
-/obj/item/device/eftpos{
-	eftpos_name = "Kitchen EFTPOS scanner"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -34327,9 +34321,6 @@
 /area/station/security/blueshield)
 "jXG" = (
 /obj/item/device/assembly/timer,
-/obj/item/device/eftpos{
-	eftpos_name = "Bridge EFTPOS scanner"
-	},
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
@@ -40421,9 +40412,6 @@
 "lVY" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/device/eftpos{
-	eftpos_name = "Cargo Bay EFTPOS scanner"
-	},
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = 30
 	},
@@ -41731,9 +41719,6 @@
 /area/station/hallway/primary/central)
 "mmV" = (
 /obj/structure/closet,
-/obj/item/device/eftpos{
-	eftpos_name = "Cargo Bay EFTPOS scanner"
-	},
 /obj/item/device/export_scanner,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -55815,9 +55800,6 @@
 "qUl" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/nullrod,
-/obj/item/device/eftpos{
-	eftpos_name = "Chapel EFTPOS scanner"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -66453,9 +66435,6 @@
 	c_tag = "Captain's Office";
 	dir = 4
 	},
-/obj/item/device/eftpos{
-	eftpos_name = "Captain EFTPOS scanner"
-	},
 /obj/item/weapon/skill_cartridge/usp10,
 /obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor/wood,
@@ -67639,9 +67618,6 @@
 /area/station/security/brig)
 "uLT" = (
 /obj/structure/table/woodentable,
-/obj/item/device/eftpos{
-	eftpos_name = "Bridge EFTPOS scanner"
-	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "uLY" = (
@@ -76495,9 +76471,6 @@
 /area/station/bridge/ai_upload)
 "xHQ" = (
 /obj/structure/table,
-/obj/item/device/eftpos{
-	eftpos_name = "HoP EFTPOS scanner"
-	},
 /obj/machinery/door_control{
 	id = "HoP_queue";
 	name = "Queue shutters";
@@ -77763,9 +77736,6 @@
 	pixel_x = -24
 	},
 /obj/item/weapon/book/manual/hydroponics_beekeeping,
-/obj/item/device/eftpos{
-	eftpos_name = "Botany EFTPOS scanner"
-	},
 /obj/item/weapon/paper/hydroponics,
 /obj/structure/table/glass,
 /obj/structure/window/thin/reinforced,
@@ -77784,9 +77754,6 @@
 	},
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
-	},
-/obj/item/device/eftpos{
-	eftpos_name = "Bar EFTPOS scanner"
 	},
 /obj/item/device/radio/intercom{
 	pixel_x = -25
