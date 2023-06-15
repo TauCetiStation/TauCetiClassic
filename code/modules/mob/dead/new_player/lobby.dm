@@ -58,17 +58,17 @@ var/global/lobby_screen = "lobby"
 					width: auto;
 					min-width: 100vmin;
 					min-height: 50vmin;
-					padding-left: 5vmin;
-					padding-top: 50vmin;
+					padding-left: 45vmin;
+					padding-top: 1vmin;
 					box-sizing: border-box;
-					top: 50%;
+					top: 47%;
 					left: 50%;
 					transform: translate(-50%, -50%);
 					z-index: 1;
 				}
 
 				body.lobby-default .container_nav_rot {
-					transform: rotate3d(3, 5, 0, 25deg);
+					transform: rotate3d(0, 0, 0, 25deg);
 					transform-origin: top center;
 				}
 
@@ -81,16 +81,16 @@ var/global/lobby_screen = "lobby"
 					color:white;
 					margin-right: 100%;
 					margin-top: 5px;
-					font-size: 3.6vmin; /* 4vmin if we can make logo small */
-					line-height: 3.6vmin;
-					height: 3.6vmin;
-					letter-spacing: 1px;
+					font-size: 4vmin;
+					line-height: 4vmin;
+					height: 4vmin;
+					letter-spacing: 2px;
 					color: #e10000;
-					text-shadow: 1px 1px 3px #9d0000, -1px -1px 3px #9d0000;
+					text-shadow: 2px 2px 4px #9d0000, -2px -2px 4px #9d0000;
 				}
 
 				body.lobby-default .menu_a {
-					opacity: 0.5;
+					opacity: 0.6
 				}
 
 				.menu_a:hover {
@@ -98,11 +98,11 @@ var/global/lobby_screen = "lobby"
 				}
 
 				body.lobby-default .menu_a:hover {
-					opacity: 0.85;
+					opacity: 0.7
 				}
 
 				.menu_box {
-					text-shadow: 1px 1px 3px, -1px -1px 3px;
+					text-shadow: 2px 2px 4px, -2px -2px 4px;
 				}
 
 				.menu_box__check {
