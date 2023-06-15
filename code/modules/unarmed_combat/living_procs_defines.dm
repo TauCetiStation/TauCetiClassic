@@ -25,6 +25,31 @@
 	var/attack_push_vis_effect
 	var/attack_disarm_vis_effect
 
+/mob/living/proc/read_possible_combos()
+	set name = "Combos Cheat Sheet"
+	set desc = "A list of all possible combos with rough descriptions."
+	set category = "IC"
+
+	var/dat = "<center><b>Combos Cheat Sheet</b></center>"
+	for(var/datum/combat_combo/CC in allowed_combos)
+		dat += "<hr><p>"
+		dat += CC.full_desc
+
+		var/combo_sources = ""
+		var/first = TRUE
+		for(var/datum/combat_moveset/moveset in allowed_combos[CC])
+			if(!first)
+				combo_sources += ", "
+			combo_sources += moveset.name
+			first = FALSE
+		dat += "<span style='font-size: 8px'><i>(Permitted by: [combo_sources])</i></span>"
+
+		dat += "</p></hr>"
+
+	var/datum/browser/popup = new(usr, "combos_list", "Combos Cheat Sheet", 500, 350)
+	popup.set_content(dat)
+	popup.open()
+
 // Should return /datum/unarmed_attack at some later time. ~Luduk
 /mob/living/proc/get_unarmed_attack()
 	var/retDam = 2
