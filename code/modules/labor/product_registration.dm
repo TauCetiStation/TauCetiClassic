@@ -15,6 +15,10 @@
 
 /obj/machinery/labor_counter_machine/atom_init()
 	..()
+	if(!global.labor_rates.len)
+		for(var/T in subtypesof(/datum/labor))
+			var/datum/labor/L = new T()
+			global.labor_rates[L.nametag] = L
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/labor_counter_machine/process()

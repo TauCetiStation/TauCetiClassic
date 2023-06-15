@@ -37,10 +37,6 @@
 /obj/machinery/computer/labor/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
 	radio = new (src)
-	if(!global.labor_rates.len)
-		for(var/T in subtypesof(/datum/labor))
-			var/datum/labor/L = new T()
-			global.labor_rates[L.nametag] = L
 
 /obj/machinery/computer/labor/Destroy()
 	QDEL_NULL(radio)
