@@ -43,7 +43,7 @@
 
 	src.attacker = attacker
 	src.victim = victim
-	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE, visibility=FALSE)
+	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE, visible=FALSE)
 
 	src.max_combo_elements = max_combo_elements // Take note, that there are only sprites for 4 atm.
 
