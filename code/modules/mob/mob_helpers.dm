@@ -402,13 +402,13 @@ var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА",
 	return 0
 
 //converts intent-strings into numbers and back
-var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
 			if(INTENT_HELP)
 				return 0
-			if(INTENT_PUSH)
+			if(INTENT_DISARM)
 				return 1
 			if(INTENT_GRAB)
 				return 2
@@ -419,7 +419,7 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			if(0)
 				return INTENT_HELP
 			if(1)
-				return INTENT_PUSH
+				return INTENT_DISARM
 			if(2)
 				return INTENT_GRAB
 			else
@@ -438,7 +438,7 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 
 	if(isliving(src))
 		switch(input)
-			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 				set_a_intent(input)
 			if(INTENT_HOTKEY_RIGHT)
 				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))

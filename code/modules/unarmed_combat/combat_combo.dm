@@ -105,7 +105,7 @@ var/global/list/combat_combos_by_name = list()
 	var/combo_txt = ""
 	for(var/c_el in combo_elements)
 		switch(c_el)
-			if(INTENT_PUSH)
+			if(INTENT_DISARM)
 				c_el = "<font color='dodgerblue'>[capitalize(c_el)]</font>"
 			if(INTENT_GRAB)
 				c_el = "<font color='yellow'>[capitalize(c_el)]</font>"

@@ -150,7 +150,7 @@
 			switch(c_el)
 				if(INTENT_HELP)
 					CC_icon_state = "combo_element_help"
-				if(INTENT_PUSH)
+				if(INTENT_DISARM)
 					CC_icon_state = "combo_element_disarm"
 				if(INTENT_GRAB)
 					CC_icon_state = "combo_element_grab"
@@ -288,7 +288,7 @@
 
 	update_combo_elements()
 
-	var/static/list/attack_elements = list(INTENT_HELP, INTENT_GRAB, INTENT_PUSH, INTENT_HARM)
+	var/static/list/attack_elements = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	if(combo_element in attack_elements)
 		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
 

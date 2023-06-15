@@ -195,8 +195,8 @@
 				return TRUE
 			return helpReaction(attacker)
 
-		if(INTENT_PUSH)
-			if(attacker.engage_combat(src, INTENT_PUSH, 4)) // We did a combo-wombo of some sort.
+		if(INTENT_DISARM)
+			if(attacker.engage_combat(src, INTENT_DISARM, 4)) // We did a combo-wombo of some sort.
 				return
 			return disarmReaction(attacker)
 

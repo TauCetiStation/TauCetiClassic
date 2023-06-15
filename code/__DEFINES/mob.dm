@@ -64,7 +64,7 @@
 //intent defines
 #define INTENT_HELP   "help"
 #define INTENT_GRAB   "grab"
-#define INTENT_PUSH   "push"
+#define INTENT_DISARM   "disarm"
 #define INTENT_HARM   "harm"
 //NOTE: INTENT_HOTKEY_* defines are not actual intents!
 //they are here to support hotkeys

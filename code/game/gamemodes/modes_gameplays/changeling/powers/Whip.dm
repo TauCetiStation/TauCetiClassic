@@ -38,7 +38,7 @@
 	switch(user.a_intent)
 		if(INTENT_GRAB)
 			LE.grabber = TRUE
-		if(INTENT_PUSH)
+		if(INTENT_DISARM)
 			LE.weaken = 1
 		if(INTENT_HARM)
 			LE.damage = 15

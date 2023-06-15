@@ -220,7 +220,7 @@
 	desc = "A move in which you jump up high, and then fall onto your opponent, hitting them with your elbow."
 	combo_icon_state = "diving_elbow_drop"
 	cost = 50
-	combo_elements = list(COMBO_SUPLEX, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
+	combo_elements = list(COMBO_SUPLEX, INTENT_HARM, INTENT_DISARM, INTENT_HARM)
 
 	// A body dropped on us! Armor ain't helping.
 	armor_pierce = TRUE
@@ -574,7 +574,7 @@
 	desc = "A kick to the head that stuns and confuses the target for a fairly long period of time."
 	combo_icon_state = "highkick_cqc"
 	cost = 50
-	combo_elements = list(COMBO_KICK_CQC, INTENT_HARM, INTENT_HARM, INTENT_PUSH)
+	combo_elements = list(COMBO_KICK_CQC, INTENT_HARM, INTENT_HARM, INTENT_DISARM)
 
 	allowed_target_zones = list(BP_HEAD)
 
@@ -649,7 +649,7 @@
 	desc = "You touch the body of the enemy, and your touch makes their blood boil."
 	combo_icon_state = "blood_boil_cult"
 	cost = 75
-	combo_elements = list(INTENT_PUSH, INTENT_HARM,  INTENT_GRAB, INTENT_GRAB)
+	combo_elements = list(INTENT_DISARM, INTENT_HARM,  INTENT_GRAB, INTENT_GRAB)
 	allowed_target_zones = TARGET_ZONE_ALL
 	armor_pierce = TRUE
 	heavy_animation = TRUE
@@ -710,7 +710,7 @@
 	desc = "A very powerful blow that can damage internal organs."
 	combo_icon_state = "swipe_ling"
 	cost = 90
-	combo_elements = list(INTENT_HARM, INTENT_HARM,  INTENT_PUSH, INTENT_GRAB)
+	combo_elements = list(INTENT_HARM, INTENT_HARM,  INTENT_DISARM, INTENT_GRAB)
 	allowed_target_zones = list(BP_CHEST)
 	scale_size_exponent = 1.0
 	pump_bodyparts = list(

@@ -457,7 +457,7 @@
 	index = 1
 
 /atom/movable/screen/intent/push
-	name = INTENT_PUSH
+	name = INTENT_DISARM
 	index = 2
 
 /atom/movable/screen/intent/grab

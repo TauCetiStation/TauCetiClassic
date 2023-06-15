@@ -1072,7 +1072,7 @@
 		if(chassis.occupant.a_intent == INTENT_HARM)
 			chassis.occupant_message("<span class='warning'>You obliterate [target] with [src.name], leaving blood and guts everywhere.</span>")
 			chassis.visible_message("<span class='warning'>[chassis] destroys [target] in an unholy fury.</span>")
-		else if(chassis.occupant.a_intent == INTENT_PUSH)
+		else if(chassis.occupant.a_intent == INTENT_DISARM)
 			chassis.occupant_message("<span class='warning'>You tear [target]'s limbs off with [src.name].</span>")
 			chassis.visible_message("<span class='warning'>[chassis] rips [target]'s arms off.</span>")
 		else

@@ -547,7 +547,7 @@
 						src.loc = null
 						qdel(src)
 						return
-				if(INTENT_PUSH)
+				if(INTENT_DISARM)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return

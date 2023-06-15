@@ -3,7 +3,7 @@
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
 	cost = 10
-	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
+	combo_elements = list(INTENT_DISARM, INTENT_DISARM, INTENT_DISARM)
 
 	ignore_size = TRUE
 
@@ -95,7 +95,7 @@
 	desc = "A move that simply pushes your opponent to the ground."
 	combo_icon_state = "push"
 	cost = 40
-	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
+	combo_elements = list(COMBO_DISARM, INTENT_DISARM, INTENT_DISARM, INTENT_DISARM)
 
 	check_bodyarmor = TRUE
 
@@ -120,7 +120,7 @@
 	desc = "A move that makes you slide, kicking down people on your way."
 	combo_icon_state = "slide_kick"
 	cost = 40
-	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
+	combo_elements = list(COMBO_DISARM, INTENT_DISARM, INTENT_DISARM, INTENT_DISARM)
 
 	ignore_size = TRUE
 
@@ -236,7 +236,7 @@
 	desc = "A move that allows you to quickly grab your opponent into a jointlock, and press them against the ground."
 	combo_icon_state = "capture"
 	cost = 75
-	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH, INTENT_GRAB)
+	combo_elements = list(INTENT_DISARM, INTENT_DISARM, INTENT_DISARM, INTENT_GRAB)
 
 	scale_size_exponent = 0.0
 
@@ -292,7 +292,7 @@
 	desc = "A move in which you jump with your both legs into opponent's belly, knocking them backwards."
 	combo_icon_state = "dropkick"
 	cost = 25
-	combo_elements = list(INTENT_PUSH, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
+	combo_elements = list(INTENT_DISARM, INTENT_HARM, INTENT_DISARM, INTENT_HARM)
 
 	armor_pierce = TRUE
 
@@ -442,7 +442,7 @@
 	desc = "A move that allows you to quickly grab the opponent's hand, quickly turn it around, breaking it, and then take the opponent into a very strong grab."
 	combo_icon_state = "capture_cqc"
 	cost = 90
-	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM, INTENT_GRAB)
+	combo_elements = list(INTENT_DISARM, INTENT_DISARM, INTENT_HARM, INTENT_GRAB)
 
 	scale_size_exponent = 0.0
 
@@ -499,7 +499,7 @@
 	desc = "A blow to the neck allows you to silence the target, as well as stop their breath."
 	combo_icon_state = "neckblow_cult"
 	cost = 15
-	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	combo_elements = list(INTENT_DISARM, INTENT_DISARM, INTENT_HARM)
 	allowed_target_zones = list(BP_HEAD)
 	require_arm_to_perform = TRUE
 
@@ -521,7 +521,7 @@
 	desc = "You masterfully poke your opponent in the eyes, which allows you to disorient them, as well as damage their eyeballs. Does not work if the target is wearing glasses or a mask."
 	combo_icon_state = "eyes_cult"
 	cost = 10
-	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	combo_elements = list(INTENT_DISARM, INTENT_DISARM, INTENT_HARM)
 	allowed_target_zones = list(O_EYES)
 	require_arm_to_perform = TRUE
 

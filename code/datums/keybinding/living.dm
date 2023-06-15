@@ -87,7 +87,7 @@
 /datum/keybinding/living/select_disarm_intent/down(client/user)
 	if(issilicon(user))
 		return
-	user.mob?.a_intent_change(INTENT_PUSH)
+	user.mob?.a_intent_change(INTENT_DISARM)
 	return TRUE
 
 /datum/keybinding/living/select_grab_intent

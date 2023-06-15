@@ -297,7 +297,7 @@
 	switch(M.a_intent)
 		if(INTENT_HELP)
 			to_chat(seer, "<span class='notice'>They intend to help out.</span>")
-		if(INTENT_PUSH)
+		if(INTENT_DISARM)
 			to_chat(seer, "<span class='notice'>They are very pushy.</span>")
 		if(INTENT_GRAB)
 			to_chat(seer, "<span class='notice'>They will grab whatever.</span>")

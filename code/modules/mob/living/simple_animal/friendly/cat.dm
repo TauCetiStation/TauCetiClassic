@@ -220,7 +220,7 @@ var/global/cat_number = 0
 		if(INTENT_HELP)
 			M.visible_message("<span class='notice'>[M] pets \the [src].</span>")
 
-		if(INTENT_PUSH)
+		if(INTENT_DISARM)
 			M.visible_message("<span class='notice'>[M]'s hand passes through \the [src].</span>")
 			M.do_attack_animation(src)
 
