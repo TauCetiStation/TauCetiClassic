@@ -192,7 +192,7 @@
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
 			else
 				victim.emote("scream")
-				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
+				to_chat(victim, "<span class='userdanger'> You're sprayed with pepperspray!</span>")
 				victim.blurEyes(25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.AdjustClumsyStatus(4 SECONDS)
