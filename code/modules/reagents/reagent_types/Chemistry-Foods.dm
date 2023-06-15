@@ -191,7 +191,7 @@
 			if(mouth_covered)
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
 			else
-				victim.emote("scream")
+				victim.emote("cough")
 				to_chat(victim, "<span class='userdanger'> You're sprayed with pepperspray!</span>")
 				victim.blurEyes(25)
 				victim.eye_blind = max(M.eye_blind, 10)
