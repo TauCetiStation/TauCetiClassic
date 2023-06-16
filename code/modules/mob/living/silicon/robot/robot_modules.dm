@@ -200,7 +200,7 @@
 		W.set_amount(stacktypes[T])
 		modules += W
 
-		/obj/item/weapon/robot_module/security
+/obj/item/weapon/robot_module/security
 	name = "security robot module"
 
 /obj/item/weapon/robot_module/security/atom_init()
