@@ -331,13 +331,13 @@
 	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
 
 
-/datum/quality/positiveish/selfdefense
-	name = "Self Defense"
+/datum/quality/positiveish/petiteprotector
+	name = "Petite Protector"
 	desc = "На станции всё опаснее и опаснее. Руководство выдало тебе новое средство самозащиты."
 	requirement = "Безоружные главы, АВД."
 	jobs_required = list("Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
 
-/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/positiveish/petiteprotector/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
 
 
@@ -390,3 +390,12 @@
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
+
+
+/datum/quality/positiveish/selfdefense
+	name = "Self Defense"
+	desc = "Самооборона - это важно. Ты спрятал пушку в одной из мусорок."
+	requirement = "Нет."
+
+/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)

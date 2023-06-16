@@ -49,7 +49,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	priveleged_player = null
 
 /obj/item/seeds/replicapod/proc/replicate_blood_data(list/data, mob/living/user)
-	blood_source = data["donor"]
+	blood_source = locate(data["donor"])
 	if(!istype(blood_source) || !blood_source.mind)
 		blood_source = null
 		if(user)

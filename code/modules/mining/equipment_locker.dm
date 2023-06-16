@@ -801,7 +801,7 @@
 	minimum_distance = 3
 	icon_state = "mining_drone_offense"
 
-/mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
+/mob/living/simple_animal/hostile/mining_drone/UnarmedAttack(atom/target)
 	if(istype(target, /obj/item/weapon/ore))
 		CollectOre()
 		return

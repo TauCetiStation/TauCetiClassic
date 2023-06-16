@@ -2,7 +2,7 @@
 
 	name = "serpentine alien"
 	real_name = "serpentine alien"
-	desc = "A one-eyed, serpentine creature, half-machine, easily nine feet from tail to beak!"
+	desc = "Одноглазое, пернатое существо. Полумашина, легко достигающая девяти футов от хвоста до клюва!"
 	icon = 'icons/mob/vox.dmi'
 	icon_state = "armalis"
 	icon_living = "armalis"

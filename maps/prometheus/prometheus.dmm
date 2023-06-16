@@ -15903,9 +15903,6 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/coin/silver,
-/obj/item/device/eftpos{
-	eftpos_name = "Quartermaster EFTPOS scanner"
-	},
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
 	dir = 1;
@@ -26989,9 +26986,6 @@
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/sundress,
-/obj/item/device/eftpos{
-	eftpos_name = "Kitchen EFTPOS scanner"
-	},
 /obj/structure/closet,
 /turf/simulated/floor{
 	dir = 1;
@@ -48745,9 +48739,6 @@
 "lAF" = (
 /obj/structure/closet/gmcloset{
 	name = "formal wardrobe"
-	},
-/obj/item/device/eftpos{
-	eftpos_name = "Bar EFTPOS scanner"
 	},
 /obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
@@ -77095,9 +77086,6 @@
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/hydroponics_beekeeping,
 /obj/item/weapon/packageWrap,
-/obj/item/device/eftpos{
-	eftpos_name = "Botany EFTPOS scanner"
-	},
 /obj/machinery/light/small,
 /obj/item/device/tagger/shop,
 /turf/simulated/floor{
@@ -79921,9 +79909,6 @@
 /obj/structure/closet/cabinet,
 /obj/item/device/camera,
 /obj/item/clothing/under/suit_jacket/red,
-/obj/item/device/eftpos{
-	eftpos_name = "Library EFTPOS scanner"
-	},
 /obj/item/device/taperecorder,
 /obj/item/clothing/shoes/leather,
 /obj/item/clothing/suit/wcoat,
