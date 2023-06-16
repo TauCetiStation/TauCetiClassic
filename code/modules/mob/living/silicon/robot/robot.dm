@@ -193,6 +193,10 @@
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
+	if(crisis) //Leaving this in until it's balanced appropriately.
+		to_chat(src, "<span class='warning'>Crisis mode active. Security available.</span>")
+		choose_module["Security"] = image(icon = 'icons/mob/robots.dmi', icon_state = "security")
+
 	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
 	if(!modtype)
 		return
@@ -261,6 +265,24 @@
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 
+
+		if("Security")
+			module = new /obj/item/weapon/robot_module/security(src)
+			module.channels = list("Security" = 1)
+			if(camera && ("Robots" in camera.network))
+				camera.add_network("Security")
+			module_sprites["Basic"] = "secborg"
+			module_sprites["Red Knight"] = "Security"
+			module_sprites["Black Knight"] = "securityrobot"
+			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+			module_sprites["Drone"] = "drone-sec"
+			module_sprites["Acheron"] = "mechoid-Security"
+			module_sprites["Kodiak"] = "kodiak-sec"
+			module_sprites["NO ERP"] = "kerfusNoERP"
+
+
+
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
@@ -298,7 +320,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Medical" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
