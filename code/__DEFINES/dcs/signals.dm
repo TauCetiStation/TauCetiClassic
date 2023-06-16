@@ -345,7 +345,7 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
-/// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
+/// from simple_animal/hostile/proc/UnarmedAttack(): (atom/target)
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
 /// from simple_animal/hostile/proc/Shoot(): (atom/target)
 #define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"

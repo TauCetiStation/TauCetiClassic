@@ -345,6 +345,14 @@
 
 		if(action == "eject")
 			eject()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				if(HAS_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN))
+					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
+					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>Так...</span>"), 1 SECOND)
+					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
+					new /obj/random/guns/set_special(loc)
+					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
 	return TRUE
 

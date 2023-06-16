@@ -57,7 +57,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/replicator/AttackingTarget()
+/mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 
 	if(!target.is_disintegrating && can_disintegrate(target))
