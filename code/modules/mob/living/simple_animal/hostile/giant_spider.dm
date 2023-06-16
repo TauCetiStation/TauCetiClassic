@@ -71,7 +71,7 @@
 	poison_per_bite = 5
 	move_to_delay = 4
 
-/mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/UnarmedAttack(atom/target)
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
