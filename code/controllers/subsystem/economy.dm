@@ -13,7 +13,10 @@ SUBSYSTEM_DEF(economy)
 	var/list/department_dividends
 	var/list/stock_splits
 	var/list/insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
+	var/list/roundstart_insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
 	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
+
+	var/list/subsidion_priority = list("Science" = 1000, "Security" = 1000, "Medical" = 1000, "Engineering" = 1000, "Civilian" = 1000)
 
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
@@ -84,6 +87,8 @@ SUBSYSTEM_DEF(economy)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
 	handle_insurances()
+
+	handle_subsidions()
 
 
 	monitor_cargo_shop()
@@ -171,20 +176,20 @@ SUBSYSTEM_DEF(economy)
 	return R.fields["insurance_type"]
 
 
-/proc/get_next_insurance_type(current_insurance_type, datum/money_account/MA)
+/proc/get_next_insurance_type(current_insurance_type, datum/money_account/MA, list/insurance_prices=SSeconomy.insurance_prices)
 	if(MA.suspended)
 		return INSURANCE_NONE
 
-	var/current_insurance_price = SSeconomy.insurance_prices[current_insurance_type]
+	var/current_insurance_price = insurance_prices[current_insurance_type]
 	if(current_insurance_type == MA.owner_preferred_insurance_type && MA.money >= current_insurance_price  && MA.owner_max_insurance_payment >= current_insurance_price)
 		return current_insurance_type
 
-	var/prefprice = SSeconomy.insurance_prices[MA.owner_preferred_insurance_type]
+	var/prefprice = insurance_prices[MA.owner_preferred_insurance_type]
 	if(MA.money >= prefprice && MA.owner_max_insurance_payment >= prefprice)
 		return MA.owner_preferred_insurance_type
 
 	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
-		var/insprice = SSeconomy.insurance_prices[insurance_type]
+		var/insprice = insurance_prices[insurance_type]
 		if(MA.money >= insprice && MA.owner_max_insurance_payment >= insprice)
 			return insurance_type
 
@@ -200,3 +205,23 @@ SUBSYSTEM_DEF(economy)
 			intercept.name = "Records With Insurance Problems"
 			intercept.info = message_text
 			intercept.update_icon()
+
+/datum/controller/subsystem/economy/proc/handle_subsidions()
+	for(var/department in subsidion_priority)
+		if(!global.station_account.money)
+			break
+		var/subsidion_amount = subsidion_priority[department]
+		var/datum/money_account/department_account = global.department_accounts[department]
+		if(department_account.money >= subsidion_amount)
+			continue
+		var/needed_to_pay = subsidion_amount - department_account.money
+		if(!needed_to_pay || needed_to_pay < 0)
+			continue
+		if(global.station_account.money < needed_to_pay)
+			charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -global.station_account.money)
+			charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", global.station_account.money)
+			break
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -needed_to_pay)
+		charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", needed_to_pay)
+		continue
+

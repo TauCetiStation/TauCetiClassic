@@ -243,5 +243,5 @@ var/global/list/toilet_overlay_cache = list()
 	var/mob/living/L = AM
 	if(L.get_species() == UNATHI)
 		return
-	if(L.crawling)
+	if(L.lying || L.crawling)
 		L.vomit()
