@@ -70,7 +70,7 @@
 
 	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[conversation_timer]"]
 
-	if(stat == UNCONSCIOUS && timer)
+	if(stat != CONSCIOUS && timer)
 		conversation_timer_left = timeleft(conversation_timer)
 		deltimer(conversation_timer)
 
