@@ -2254,7 +2254,7 @@
 
 	else if(href_list["salary"])
 		if(!check_rights(R_EVENT))	return
-		var/datum/money_account/account = locate(href_list["salary"])
+		var/datum/money_account/account = get_account(text2num(href_list["salary"]))
 		if(!account)
 			to_chat(usr, "<span class='warning'>Account not found!</span>")
 			return

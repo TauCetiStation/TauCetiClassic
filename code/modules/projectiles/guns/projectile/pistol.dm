@@ -101,10 +101,22 @@
 	recoil = 2
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
-	name = "Opressor"
+	name = "Oppressor"
 	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
 	icon_state = "synderringer"
 	force = 5
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
 	recoil = 3
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/wjpp
+	name = "W&J PP"
+	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
+	icon_state = "wjpp"
+	item_state = "wjpp"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/wjpp/rubber
+	suitable_mags = list(/obj/item/ammo_box/magazine/wjpp, /obj/item/ammo_box/magazine/wjpp/rubber)
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
+	can_be_holstered = TRUE
+	recoil = 1.5

@@ -139,8 +139,9 @@
 	if(H.stat != DEAD && prob(10))
 		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
 
-/datum/species/zombie/handle_death(mob/living/carbon/human/H)
-	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
+/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
+	if(!gibbed)
+		addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))

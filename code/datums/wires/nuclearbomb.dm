@@ -31,16 +31,16 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 
 		if(NUKE_WIRE_TIMING)
 			if(!N.lighthack && !mended)
-				if(N.icon_state == "nuclearbomb2")
-					N.icon_state = "nuclearbomb1"
 				N.timing = 0
-				bomb_set = 0
+				if(istype(N, /obj/machinery/nuclearbomb/fake))
+					return
 				if(get_security_level() == "delta")
 					set_security_level("red")
 
 		if(NUKE_WIRE_SAFETY)
-			if(N.timing > 0)
+			if(N.timing && !N.detonated)
 				N.explode()
+	N.update_icon()
 
 /datum/wires/nuclearbomb/update_pulsed(index)
 	var/obj/machinery/nuclearbomb/N = holder
@@ -51,7 +51,7 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
 
 		if(NUKE_WIRE_TIMING)
-			if(N.timing > 0)
+			if(N.timing && !N.detonated)
 				N.explode()
 
 		if(NUKE_WIRE_SAFETY)
@@ -59,10 +59,9 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
 			if(N.safety)
 				N.visible_message("<span class='notice'>The [N] quiets down.</span>")
-				if(N.icon_state == "nuclearbomb2")
-					N.icon_state = "nuclearbomb1"
 			else
 				N.visible_message("<span class='notice'>The [N] emits a quiet whirling noise!</span>")
+	N.update_icon()
 
 /datum/wires/nuclearbomb/proc/pulse_reaction(index)
 	var/obj/machinery/nuclearbomb/N = holder
@@ -73,3 +72,4 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 
 		if(NUKE_WIRE_SAFETY)
 			N.safety = !N.safety
+	N.update_icon()

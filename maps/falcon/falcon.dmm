@@ -679,9 +679,6 @@
 /obj/structure/closet/gmcloset{
 	name = "formal wardrobe"
 	},
-/obj/item/device/eftpos{
-	eftpos_name = "Bar EFTPOS scanner"
-	},
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
@@ -965,7 +962,7 @@
 /obj/structure/closet/crate/scicrate,
 /obj/random/tools/technology_scanner,
 /obj/random/tools/technology_scanner,
-/obj/random/science,
+/obj/random/science/science_supply_safe,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -5689,9 +5686,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "akq" = (
-/obj/item/device/eftpos{
-	eftpos_name = "Library EFTPOS scanner"
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -6640,13 +6634,13 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "amC" = (
-/obj/random/science,
+/obj/random/science/science_supply_safe,
 /obj/item/device/transfer_valve{
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/random/science,
-/obj/random/science,
+/obj/random/science/science_supply_safe,
+/obj/random/science/science_supply_safe,
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
@@ -13925,7 +13919,7 @@
 /area/asteroid/mine/dwarf)
 "eBO" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(22, 12)
+	req_one_access = list(22,12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating{
@@ -21350,9 +21344,6 @@
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/under/sundress,
-/obj/item/device/eftpos{
-	eftpos_name = "Kitchen EFTPOS scanner"
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cold Room APC";
@@ -25176,9 +25167,6 @@
 /area/station/engineering/atmos)
 "pEA" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/device/eftpos{
-	eftpos_name = "Chapel EFTPOS scanner"
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Chapel Office APC";
