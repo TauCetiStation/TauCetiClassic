@@ -17,6 +17,8 @@
 
 	process_last = TRUE
 
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NONE)
+
 	var/capacity = 0 // Maximum charge
 	var/charge = 0 // Actual charge
 
@@ -35,7 +37,6 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
