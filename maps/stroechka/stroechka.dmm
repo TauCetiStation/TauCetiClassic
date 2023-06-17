@@ -5291,13 +5291,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "DM" = (
-/obj/random/science,
+/obj/random/science/science_supply_safe,
 /obj/item/device/transfer_valve{
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/random/science,
-/obj/random/science,
+/obj/random/science/science_supply_safe,
+/obj/random/science/science_supply_safe,
 /obj/random/science/matter_bin,
 /obj/random/science/matter_bin,
 /obj/random/science/matter_bin,
