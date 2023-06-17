@@ -87,10 +87,7 @@
 
 /datum/component/mob_modifier/ghostly/apply(update = FALSE)
 	if(!update)
-		var/obj/randomcatcher/CATCH = new
-		possessed = CATCH.get_item(/obj/random/misc/toy)
-		if(!possessed)
-			return FALSE
+		possessed = new PATH_OR_RANDOM_PATH(/obj/random/misc/toy)
 
 	. = ..()
 	if(!.)
