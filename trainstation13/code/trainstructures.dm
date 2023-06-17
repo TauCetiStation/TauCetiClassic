@@ -41,6 +41,16 @@
 		"lofi" = "Sadness/Longing/Loneliness",
 	)
 
+/obj/machinery/computer/security/wooden_tv/train
+	name = "Spektr-88"
+	desc = "An old color TV that is still able to receive few analog channels."
+	icon_state = "security_det_miami"
+	state_broken_preset = null
+	state_nopower_preset = null
+	light_color = "#f535aa"
+	network = list("beach","boxing")
+	pixel_y = 3
+
 /obj/machinery/space_heater/potbellystove
 	name = "potbelly stove"
 	desc = "This little stove will keep you warm and cozy during cold winter."

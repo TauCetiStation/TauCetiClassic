@@ -372,13 +372,13 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 /obj/structure/bear_harmonica
 	name = "bear"
 	desc = "And I'm playing the accordion. And all people gaze at me. It's a pity, that the Birthday is just once a year..."
-	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon = 'trainstation13/icons/television.dmi'
 	icon_state = "bear_harmonica"
 	anchored = FALSE
 
 /obj/structure/bear_vodka
 	name = "bear"
 	desc = "This alien space bear had just enough to dance happily. You see nothing out of the ordinary?"
-	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon = 'trainstation13/icons/television.dmi'
 	icon_state = "bear_vodka"
 	anchored = FALSE

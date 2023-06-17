@@ -22,6 +22,14 @@
 		'trainstation13/sound/ambience/dog_distant_3.ogg'
 	)
 
+/area/trainstation/broadcast
+	name = "Broadcast"
+	icon_state = "broadcast"
+	requires_power = FALSE
+	looped_ambience = 'trainstation13/sound/ambience/loop_generic.ogg'
+	ambience = null
+	sound_environment = SOUND_ENVIRONMENT_GENERIC
+
 /area/trainstation/apartment
 	name = "Apartment"
 	icon_state = "apartment"
