@@ -1,14 +1,14 @@
 //Cat
 /mob/living/simple_animal/cat
 	name = "cat"
-	desc = "A domesticated, feline pet. Has a tendency to adopt crewmembers."
+	desc = "Одомашненный кот. Имеет тенденцию приручать экипаж."
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
-	speak = list("Meow!","Esp!","Purr!","HSSSSS")
-	speak_emote = list("purrs", "meows")
-	emote_hear = list("meows","mews")
-	emote_see = list("shakes its head", "shivers")
+	speak = list("Мяу!","Муррр!","Мя!","Мря!")
+	speak_emote = list("мурчит", "мяукает")
+	emote_hear = list("мурчит","мяукает")
+	emote_see = list("виляет хвостом", "облизывается")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -45,7 +45,7 @@
 
 	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
 		if(prob(15))
-			me_emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
+			me_emote(pick("шипит!","злостно мяукает!"))
 		break
 
 	if(stat == CONSCIOUS && !buckled)
@@ -140,11 +140,11 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 /mob/living/simple_animal/cat/dusty
 	name = "Dusty"
-	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
+	desc = "Его шерсть на вид и ощупь напоминает бархат."
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"
-	desc = "It's a SyndiCat droid."
+	desc = "Это робот СиндиКот."
 	icon_state = "Syndicat"
 	icon_living = "Syndicat"
 	icon_dead = "Syndicat_dead"
