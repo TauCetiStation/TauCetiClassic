@@ -8,7 +8,7 @@
 
 /mob/living/carbon/xenomorph/facehugger
 	name = "alien facehugger"
-	desc = "It has some sort of a tube at the end of its tail."
+	desc = "Из кончика хвоста выступает отросток, похожий на трубочку."
 	real_name = "alien facehugger"
 
 	icon_state = "facehugger"

@@ -173,3 +173,36 @@
 						prob(2);/obj/item/weapon/gun/projectile/revolver,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/syndie\
 					)
+
+/obj/random/guns/set_special
+	name = "Random lethal Weapon"
+	desc = "This is a random weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "saber-18"
+
+/obj/random/guns/set_special/item_to_spawn()
+		return pick(\
+						/obj/item/weapon/gun/projectile/shotgun,\
+						/obj/item/weapon/gun/projectile/shotgun/combat,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off,\
+						/obj/item/weapon/gun/projectile/revolver,\
+						/obj/item/weapon/gun/projectile/revolver/detective,\
+						/obj/item/weapon/gun/projectile/automatic,\
+						/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
+						/obj/item/weapon/gun/projectile/automatic/c20r,\
+						/obj/item/weapon/gun/projectile/automatic/l13,\
+						/obj/item/weapon/gun/projectile/automatic/tommygun,\
+						/obj/item/weapon/gun/projectile/automatic/bulldog,\
+						/obj/item/weapon/gun/projectile/automatic/glock,\
+						/obj/item/weapon/gun/projectile/automatic/pistol,\
+						/obj/item/weapon/gun/projectile/automatic/colt1911,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate,\
+						/obj/item/weapon/gun/projectile/automatic/wjpp\
+					)
+
+/obj/random/guns/set_special/spawn_item()
+	var/obj/item/weapon/gun/projectile/P = ..()
+	P.magazine.make_empty()
+	QDEL_NULL(P.chambered)
