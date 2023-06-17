@@ -4,6 +4,7 @@
 
 /mob/living/carbon/human
 	var/conversation_timer
+	var/conversation_timer_left
 	var/social_state = SOCIALIZATION_NORMAL
 
 /mob/living/carbon/human/atom_init()
@@ -62,6 +63,31 @@
 		return
 
 	set_social_state(SOCIALIZATION_NORMAL)
+
+/mob/living/carbon/human/proc/handle_unconscious_socialization()
+	if(!species.flags[IS_SOCIAL] || HAS_TRAIT(src, TRAIT_LONER))
+		return
+
+	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[conversation_timer]"]
+
+	if(stat == UNCONSCIOUS && timer)
+		conversation_timer_left = timeleft(conversation_timer)
+		deltimer(conversation_timer)
+
+	else if(stat == CONSCIOUS && !timer)
+		switch(social_state)
+			if(SOCIALIZATION_NORMAL)
+				conversation_timer = addtimer(
+					CALLBACK(src, .proc/handle_no_socialization),
+					conversation_timer_left,
+					TIMER_STOPPABLE
+				)
+			if(SOCIALIZATION_LONELY)
+				conversation_timer = addtimer(
+					CALLBACK(src, .proc/handle_prolonged_no_socialization),
+					conversation_timer_left,
+					TIMER_STOPPABLE
+				)
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"

@@ -863,6 +863,8 @@ var/global/list/tourette_bad_words= list(
 		if(gloves && germ_level > gloves.germ_level && prob(10))
 			gloves.germ_level += 1
 
+		handle_unconscious_socialization()
+
 	return 1
 
 /mob/living/carbon/human/update_health_hud()
