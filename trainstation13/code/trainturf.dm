@@ -7,6 +7,13 @@
 	icon_state = "matrix"
 	smooth = FALSE
 
+/turf/unsimulated/wall/nanoconcrete
+	name = "nanoconcrete"
+	desc = "Reinforced concrete with an improved formula, one of the strongest materials ever created in history of mankind.<br>This wall can easily shrug off a nearby nuclear explosion."
+	icon = 'trainstation13/icons/trainturf.dmi'
+	icon_state = "box"
+	canSmoothWith = list(/turf/unsimulated/wall/nanoconcrete)
+
 /turf/unsimulated/floor/still/snow //This snow won't switch to animation if the train is moving
 	name = "snow"
 	desc = "It's cold."

@@ -53,7 +53,7 @@
 
 /obj/structure/rack/traintable //Sort of a table limited to a single tile
 	name = "table"
-	desc = "A wedge shaped piece of metal standing on single metal leg. It can not move, but you can fold it." //Add table folding feature.
+	desc = "A wedge shaped piece of metal standing on single metal leg.<br>It can not move, but you can fold it." //Add table folding feature.
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "table" //Has 4 directions
 
@@ -80,44 +80,6 @@
 	desc = "A linen bin. Don't forget to turn in your bedsheet."
 	icon = 'icons/obj/structures.dmi'
 	amount = 5
-
-//DOORS
-
-/obj/structure/mineral_door/wood/single
-	name = "wooden door"
-	icon = 'trainstation13/icons/traindoors.dmi'
-	icon_state = "wood"
-
-/obj/structure/mineral_door/wood/double
-	name = "wooden double door"
-	icon = 'trainstation13/icons/traindoors.dmi'
-	icon_state = "wooddouble"
-
-/obj/structure/mineral_door/wood/doubledirty
-	name = "dirty wooden double door"
-	icon = 'trainstation13/icons/traindoors.dmi'
-	icon_state = "wooddoubledirty"
-
-/obj/structure/mineral_door/transparent/wood
-	name = "wooden door with doorlight"
-	icon = 'trainstation13/icons/traindoors.dmi'
-	icon_state = "woodglass"
-	sheetType = /obj/item/stack/sheet/wood
-	operating_sound = 'sound/effects/doorcreaky.ogg'
-
-/obj/structure/mineral_door/transparent/wooddouble
-	name = "wooden double door with doorlight"
-	icon = 'trainstation13/icons/traindoors.dmi'
-	icon_state = "wooddoubleglass"
-	sheetType = /obj/item/stack/sheet/wood
-	operating_sound = 'sound/effects/doorcreaky.ogg'
-
-/obj/structure/mineral_door/transparent/metal
-	name = "metal double door with doorlight"
-	icon = 'trainstation13/icons/traindoors.dmi'
-	icon_state = "metaldoubleglass"
-	max_integrity = 300
-	sheetType = /obj/item/stack/sheet/metal
 
 //DECALS
 
@@ -147,6 +109,8 @@
 	desc = "A yellow cab with electric engine powered by micro fusion reactor."
 	icon = 'trainstation13/icons/96x96.dmi'
 	icon_state = "taxi"
+	density = TRUE
+	anchored = TRUE
 	pixel_x = -16
 
 /obj/structure/atomobile/white
@@ -158,3 +122,17 @@
 	name = "blue car"
 	desc = "A blue car with electric engine powered by micro fusion reactor."
 	icon_state = "blue"
+
+/obj/structure/atomobile/derelict
+	name = "scrap car"
+	desc = "A rusty automobile carcass.<br>This car is damaged beyond repair."
+	icon = 'trainstation13/icons/64x64.dmi'
+	icon_state = "derelict_1"
+	density = TRUE
+	anchored = FALSE
+	pixel_x = -20
+
+/obj/structure/atomobile/derelict/atom_init()
+	. = ..()
+	dir = rand(1, 4)
+	icon_state = "derelict_[rand(1, 6)]"
