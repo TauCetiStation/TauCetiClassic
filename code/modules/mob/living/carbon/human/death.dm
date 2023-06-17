@@ -25,6 +25,10 @@
 	if(stat == DEAD)
 		return
 
+	//Handle species-specific deaths.
+	if(species?.handle_death(src, gibbed))
+		return // death handled by species
+
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
@@ -34,10 +38,6 @@
 
 	if(mind && is_station_level(z))
 		global.deaths_during_shift++
-
-	//Handle species-specific deaths.
-	if(species)
-		species.handle_death(src)
 
 	//Check for heist mode kill count.
 	if(find_faction_by_type(/datum/faction/heist))
