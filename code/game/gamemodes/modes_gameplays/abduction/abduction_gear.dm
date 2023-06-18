@@ -25,6 +25,9 @@
 /datum/action/item_action/hands_free/activate_vest
 	name = "Activate Vest"
 
+/obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
+	disguise = entry
+
 /obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
 	if(isabductor(user))
 		return TRUE
