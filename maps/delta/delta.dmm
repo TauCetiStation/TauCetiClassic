@@ -2951,6 +2951,11 @@
 /area/station/medical/chemistry)
 "aBP" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = -30;
+	supply_display = 1
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -11462,6 +11467,11 @@
 "cEH" = (
 /obj/structure/table,
 /obj/item/weapon/tank/phoron,
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = -30;
+	supply_display = 1
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -18920,6 +18930,11 @@
 "eBv" = (
 /obj/structure/table,
 /obj/item/toy/figure/cargotech,
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = -30;
+	supply_display = 1
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -25684,6 +25699,11 @@
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = -30;
+	supply_display = 1
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -28716,11 +28736,6 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
-"gZH" = (
-/obj/item/clothing/shoes/heels/alternate/wizard,
-/obj/item/clothing/suit/armor/hos,
-/turf/simulated/wall,
-/area/station/maintenance/cargo)
 "gZQ" = (
 /obj/machinery/door/poddoor{
 	id = "mixvent";
@@ -34836,6 +34851,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	supply_display = 1;
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -35093,6 +35113,11 @@
 	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	supply_display = 1;
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -41897,6 +41922,11 @@
 	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	supply_display = 1;
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -59389,6 +59419,11 @@
 	},
 /area/station/hallway/primary/fore)
 "oEB" = (
+/obj/machinery/status_display{
+	layer = 3.3;
+	supply_display = 1;
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -71268,6 +71303,11 @@
 /area/station/engineering/atmos)
 "rCx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = 32;
+	supply_display = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "browncorner"
@@ -71579,6 +71619,11 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	pixel_y = 32;
+	supply_display = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -96977,6 +97022,11 @@
 	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	layer = 3.3;
+	supply_display = 1;
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -138455,7 +138505,7 @@ srs
 srs
 srs
 srs
-gZH
+srs
 srs
 sht
 sht
