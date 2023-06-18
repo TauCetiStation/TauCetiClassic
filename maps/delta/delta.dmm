@@ -1604,9 +1604,6 @@
 /area/station/medical/chemistry)
 "alS" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -6372,14 +6369,13 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/medbay)
 "btq" = (
-/obj/machinery/door/airlock/mining{
-	name = "Cargo Bay";
-	req_one_access = list(31,48,67)
-	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/under/lightred,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "bot"
 	},
-/area/station/cargo/qm)
+/area/station/cargo/storage)
 "btA" = (
 /obj/structure/table/woodentable/fancy,
 /turf/simulated/floor,
@@ -7669,7 +7665,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/sortjunction{
+	dir = 2;
+	name = "OnlineShop";
+	sortType = "OnlineShop"
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -26770,6 +26770,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/storage/firstaid/o2,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -28850,7 +28851,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Delivery Office";
-	req_access = list(50,70)
+	req_one_access = list(50,70)
 	},
 /obj/structure/disposalpipe/shop_scanner{
 	dir = 4
@@ -29244,7 +29245,7 @@
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "hhG" = (
-/obj/machinery/computer/export,
+/obj/structure/computerframe,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -33197,12 +33198,6 @@
 /area/station/rnd/xenobiology)
 "idI" = (
 /obj/structure/closet,
-/obj/item/clothing/under/brown,
-/obj/item/clothing/under/darkred,
-/obj/item/clothing/under/aqua,
-/obj/item/clothing/under/lightred,
-/obj/item/clothing/under/lightbrown,
-/obj/item/clothing/under/yellowgreen,
 /obj/item/clothing/under/tourist,
 /turf/simulated/floor{
 	dir = 1;
@@ -38159,9 +38154,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-y"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -40342,6 +40337,14 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"jNK" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/under/yellowgreen,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/cargo/storage)
 "jNT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -43169,7 +43172,6 @@
 /area/station/maintenance/science)
 "kyd" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/stamp/qm,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -43187,6 +43189,10 @@
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	req_access = list(41)
+	},
+/obj/item/weapon/stamp/qm{
+	pixel_y = 12;
+	pixel_x = -6
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -47319,6 +47325,16 @@
 	icon_state = "neutralfull"
 	},
 /area/station/cargo/storage)
+"lxE" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/under/brown,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/cargo/storage)
 "lxG" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -47661,6 +47677,14 @@
 	icon_state = "bot"
 	},
 /area/station/bridge/meeting_room)
+"lCO" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/under/lightbrown,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/cargo/storage)
 "lCV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -49992,6 +50016,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -56496,7 +56523,12 @@
 /obj/machinery/door/window/westright{
 	dir = 4;
 	name = "Cargo Delivery Door";
-	req_access = list(50,70)
+	req_one_access = list(50,70)
+	},
+/obj/item/weapon/clipboard,
+/obj/item/weapon/pen{
+	pixel_x = -1;
+	pixel_y = 7
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -57881,9 +57913,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/packageWrap,
 /obj/item/device/tagger,
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
@@ -61077,6 +61106,7 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Office"
 	},
+/obj/item/weapon/paper_bin,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -62947,7 +62977,7 @@
 "pxS" = (
 /obj/machinery/door/window/westleft{
 	dir = 1;
-	req_access = list(50,70)
+	req_one_access = list(50,70)
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -64133,6 +64163,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -69069,9 +69102,6 @@
 	},
 /area/station/hallway/primary/starboard)
 "qZv" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
@@ -77930,21 +77960,15 @@
 	},
 /area/station/medical/reception)
 "tkh" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/under/aqua,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "bot"
 	},
-/area/station/hallway/primary/central)
+/area/station/cargo/storage)
 "tkF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -79295,6 +79319,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -84367,6 +84392,11 @@
 /area/station/rnd/tox_launch)
 "uUW" = (
 /obj/machinery/power/port_gen/pacman/scrap,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -86374,12 +86404,13 @@
 	},
 /area/station/hallway/primary/central)
 "vwV" = (
-/obj/structure/table,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/under/darkred,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
+	icon_state = "delivery"
 	},
-/area/station/cargo/office)
+/area/station/cargo/storage)
 "vxf" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -96841,6 +96872,8 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -137918,7 +137951,7 @@ sld
 ppa
 nLe
 tvC
-aaP
+kVk
 eJg
 xiM
 bTo
@@ -138175,7 +138208,7 @@ lUh
 qLi
 cEH
 sht
-vwV
+aaP
 eJg
 mUn
 bTo
@@ -138703,7 +138736,7 @@ jvF
 iSh
 tvC
 bzv
-tkh
+lMB
 mXl
 rPX
 plf
@@ -138960,7 +138993,7 @@ khv
 akz
 tvC
 bzv
-tkh
+lMB
 vre
 hBZ
 kHU
@@ -139217,7 +139250,7 @@ cpR
 cQy
 cpR
 qiD
-tkh
+lMB
 mXl
 rPX
 plf
@@ -139474,7 +139507,7 @@ pxS
 moZ
 cpR
 hIp
-tkh
+lMB
 mXl
 rPX
 plf
@@ -139731,7 +139764,7 @@ gtB
 ejv
 cpR
 bzv
-tkh
+lMB
 mXl
 rPX
 plf
@@ -140245,7 +140278,7 @@ snQ
 mEi
 hqz
 bzv
-tkh
+lMB
 wDN
 hBZ
 qIv
@@ -140478,11 +140511,11 @@ ojt
 ojt
 ojt
 ojt
-onK
+lCO
 ojt
 miA
 ojt
-onK
+jNK
 xuQ
 dPT
 ojm
@@ -141512,7 +141545,7 @@ miA
 ojt
 dPT
 fnT
-beO
+tkh
 ojm
 cRT
 wdt
@@ -141759,11 +141792,11 @@ aGL
 nmH
 ojm
 ojt
-dPT
+btq
 xuQ
 beO
 ojt
-beO
+lxE
 ojt
 luW
 ojt
@@ -142024,7 +142057,7 @@ bGb
 ojt
 bGb
 ojt
-onK
+vwV
 nkb
 adb
 hzP
@@ -142803,7 +142836,7 @@ twC
 lva
 rWL
 usB
-btq
+rWL
 nQr
 twC
 iWT
