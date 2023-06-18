@@ -962,7 +962,7 @@
 /obj/structure/closet/crate/scicrate,
 /obj/random/tools/technology_scanner,
 /obj/random/tools/technology_scanner,
-/obj/random/science,
+/obj/random/science/science_supply_safe,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -6634,13 +6634,13 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "amC" = (
-/obj/random/science,
+/obj/random/science/science_supply_safe,
 /obj/item/device/transfer_valve{
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/random/science,
-/obj/random/science,
+/obj/random/science/science_supply_safe,
+/obj/random/science/science_supply_safe,
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},

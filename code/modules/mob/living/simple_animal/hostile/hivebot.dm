@@ -4,7 +4,7 @@
 
 /mob/living/simple_animal/hostile/hivebot
 	name = "Hivebot"
-	desc = "A small robot."
+	desc = "Кажется, оно хочет кого-то убить..."
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "basic"
 	icon_living = "basic"
@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"
-	desc = "A smallish robot, this one is armed!"
+	desc = "Кажется, оно хочет кого-то убить... Даже есть чем!"
 	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/strong
 	name = "Strong Hivebot"
-	desc = "A robot, this one is armed and looks tough!"
+	desc = "Этот робот вооружен и выглядит крутым!"
 	health = 80
 	ranged = TRUE
 
@@ -63,7 +63,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/tele//this still needs work
 	name = "Beacon"
-	desc = "Some odd beacon thing."
+	desc = "Какая-то странная штука с маячком."
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar-off"
 	icon_living = "def_radar-off"

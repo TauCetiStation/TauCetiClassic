@@ -66462,7 +66462,7 @@
 /area/station/security/prison)
 "qbu" = (
 /obj/structure/closet/crate/scicrate,
-/obj/random/science,
+/obj/random/science/science_supply_safe,
 /obj/random/science/stock_part,
 /obj/random/science/stock_part,
 /obj/random/science/stock_part,
