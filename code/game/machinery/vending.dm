@@ -510,7 +510,7 @@
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 
-		addtimer(CALLBACK(src, .proc/say_slogan), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/shoot_inventory_timer()
 	if(stat & (BROKEN|NOPOWER))
@@ -519,16 +519,16 @@
 	if(shoot_inventory)
 		throw_item()
 
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/update_wires_check()
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	if(slogan_list.len > 0 && !shut_up)
-		addtimer(CALLBACK(src, .proc/say_slogan), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 	if(shoot_inventory)
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 
 /obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)

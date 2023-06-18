@@ -308,7 +308,7 @@
 			selectedhairstyle = href_list["haircut"]
 			showui()
 		if("start")
-			INVOKE_ASYNC(src, .proc/dohaircut)
+			INVOKE_ASYNC(src, PROC_REF(dohaircut))
 			clear_character_previews()
 
 /obj/item/weapon/scissors/dropped(mob/user)

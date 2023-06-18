@@ -293,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
-	INVOKE_ASYNC(src, .proc/async_destroying, C)
+	INVOKE_ASYNC(src, PROC_REF(async_destroying), C)
 
 /obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"

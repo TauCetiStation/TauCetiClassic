@@ -391,7 +391,7 @@
 	flick("sound_button_down", src)
 	icon_state = "sound_button_off"
 	cooldown = TRUE
-	addtimer(CALLBACK(src, .proc/release_cooldown), cooldown_max)
+	addtimer(CALLBACK(src, PROC_REF(release_cooldown)), cooldown_max)
 	..()
 
 /obj/item/toy/sound_button/proc/release_cooldown()

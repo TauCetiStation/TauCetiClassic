@@ -91,7 +91,7 @@
 			egg.origin = mind
 		visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
-		addtimer(CALLBACK(src, .proc/death), 100)
+		addtimer(CALLBACK(src, PROC_REF(death)), 100)
 		egg_lain = TRUE
 
 /obj/item/changeling_egg

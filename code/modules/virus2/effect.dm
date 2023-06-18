@@ -192,12 +192,12 @@
 	else if(M.getBruteLoss() + M.getFireLoss() >= 120 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
-		addtimer(CALLBACK(src, .proc/coma, M), 60)
+		addtimer(CALLBACK(src, PROC_REF(coma), M), 60)
 
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")
 	M.add_status_flags(FAKEDEATH)
-	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 300)
 
 /datum/disease2/effect/heal/coma/proc/uncoma(mob/living/carbon/human/M)
 	if(!active_coma)

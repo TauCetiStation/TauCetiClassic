@@ -267,7 +267,7 @@
 					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -2)
 					mode = SECBOT_ARREST
 					visible_message("<span class='warning bold'>[src] is trying to put handcuffs on [target]!</span>")
-					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
+					addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_PREP_ARREST), 60)
 
 			else
 				forgetCurrentTarget()
@@ -286,7 +286,7 @@
 				return
 
 			else if(patrol_target)		// has patrol target already
-				INVOKE_ASYNC(src, .proc/subprocess, SECBOT_START_PATROL)
+				INVOKE_ASYNC(src, PROC_REF(subprocess), SECBOT_START_PATROL)
 
 			else					// no patrol target, so need a new one
 				find_patrol_target()
@@ -295,12 +295,12 @@
 
 		if(SECBOT_PATROL)		// patrol mode
 			patrol_step()
-			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PATROL), 5)
+			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_PATROL), 5)
 
 		if(SECBOT_SUMMON)		// summoned to PDA
 			patrol_step()
-			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_SUMMON), 4)
-			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_SUMMON), 8)
+			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_SUMMON), 4)
+			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_SUMMON), 8)
 
 /obj/machinery/bot/secbot/proc/subprocess(oldmode)
 	switch(oldmode)
@@ -359,7 +359,7 @@
 				blockcount++
 				if(blockcount > 5)	// attempt 5 times before recomputing
 					// find new path excluding blocked turf
-					addtimer(CALLBACK(src, .proc/patrol_substep, next), 2)
+					addtimer(CALLBACK(src, PROC_REF(patrol_substep), next), 2)
 
 		else	// not a valid turf
 			mode = SECBOT_IDLE
@@ -396,7 +396,7 @@
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
-	addtimer(CALLBACK(src, .proc/find_nearest_beacon_substep), 10)
+	addtimer(CALLBACK(src, PROC_REF(find_nearest_beacon_substep)), 10)
 
 /obj/machinery/bot/secbot/proc/find_nearest_beacon_substep()
 	awaiting_beacon = 0

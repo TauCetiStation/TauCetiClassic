@@ -269,7 +269,7 @@ var/global/shutdown_processed = FALSE
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
-	addtimer(CALLBACK(src, .proc/KickInactiveClients), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(KickInactiveClients)), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")

@@ -25,7 +25,7 @@
 		when the above doesn't apply:
 			.proc/procname
 			Example:
-				CALLBACK(src, .proc/some_proc_here)
+				CALLBACK(src, PROC_REF(some_proc_here))
 		proc defined on a parent of a some type:
 		>	/some/type.proc/some_proc_here
 		Other wise you will have to do the full typepath of the proc (/type/of/thing/proc/procname)

@@ -155,7 +155,7 @@
 	if(bruteloss > maxHealth)
 		drop_down()
 	else
-		INVOKE_ASYNC(src, .proc/swing, damage)
+		INVOKE_ASYNC(src, PROC_REF(swing), damage)
 
 /mob/living/pbag/proc/drop_down()
 	if(ckey)

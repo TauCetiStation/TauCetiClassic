@@ -262,7 +262,7 @@
 	set_light(2, 1, screen_color)
 
 	update_inv_mob()
-	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_color)), 2 SECONDS)
 
 /obj/item/device/contraband_finder/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!ismob(loc))
@@ -280,7 +280,7 @@
 		return FALSE
 
 	add_fingerprint(M)
-	INVOKE_ASYNC(src, .proc/scan, over, M)
+	INVOKE_ASYNC(src, PROC_REF(scan), over, M)
 	return TRUE
 
 /obj/item/device/contraband_finder/proc/can_scan(atom/target, mob/user)

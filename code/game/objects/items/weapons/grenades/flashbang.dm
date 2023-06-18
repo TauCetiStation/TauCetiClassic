@@ -161,7 +161,7 @@
 	payload = payload_type
 	active = TRUE
 	walk_away(src,loc,rand(1,4))
-	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
+	addtimer(CALLBACK(src, PROC_REF(prime)), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
 	for(var/i in 1 to numspawned)

@@ -57,7 +57,7 @@ var/global/list/nightmares = list(
 		to_chat(src, "<span class='notice italic'>... [pick(dreams)] ...</span>")
 
 	if(segments)
-		addtimer(CALLBACK(src, .proc/dream_sequence, segments), rand(10,30))
+		addtimer(CALLBACK(src, PROC_REF(dream_sequence), segments), rand(10,30))
 	else
 		dreaming = NOT_DREAMING
 

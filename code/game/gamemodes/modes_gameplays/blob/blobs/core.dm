@@ -19,7 +19,7 @@ var/global/list/blob_nodes = list()
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(!OV)
-		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
+		INVOKE_ASYNC(src, PROC_REF(create_overmind), new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
 	update_integrity(h)

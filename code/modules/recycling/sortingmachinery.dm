@@ -247,7 +247,7 @@
 /obj/item/device/tagger/atom_init()
 	. = ..()
 
-	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
 /obj/item/device/tagger/Destroy()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
@@ -364,7 +364,7 @@
 					return
 				to_chat(user, "<span class='warning'>Маркировщик прикручен.</span>")
 				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 				return
 			to_chat(user, "<span class='notice'>Маркировщик откручен.</span>")
 			anchored = FALSE

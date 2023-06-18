@@ -952,7 +952,7 @@ var/global/list/contributor_names
 		qdel(src)
 		return
 
-	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
 /obj/item/weapon/paper/depacc/Destroy()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)

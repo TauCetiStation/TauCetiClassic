@@ -63,7 +63,7 @@
 		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
 		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
 		new /datum/AI_Module/ai_win(AI)
-	addtimer(CALLBACK(src, .proc/remove_ai_win_verb), 600)
+	addtimer(CALLBACK(src, PROC_REF(remove_ai_win_verb)), 600)
 
 /datum/faction/malf_silicons/check_win()
 	if (AI_win_timeleft <= 0 && !station_captured)

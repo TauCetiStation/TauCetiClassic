@@ -59,7 +59,7 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
 	human_list += src
 
-	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
+	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), PROC_REF(mood_item_equipped))
 
 	if(dna)
 		dna.real_name = real_name
@@ -1803,7 +1803,7 @@
 				V.overload()
 
 	toggle_leap()
-	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, PROC_REF(leap_end), prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	remove_status_flags(LEAPING)
@@ -2345,17 +2345,17 @@
 
 	if(I.wet)
 		AdjustWetClothes(1)
-		RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), PROC_REF(mood_item_make_dry))
 	else
-		RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), PROC_REF(mood_item_make_wet))
 
 	if(I.dirt_overlay)
 		AdjustDirtyClothes(1)
-		RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+		RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), PROC_REF(mood_item_clean_blood))
 	else
-		RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+		RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), PROC_REF(mood_item_add_dirt))
 
-	RegisterSignal(I, list(COMSIG_ITEM_DROPPED), .proc/mood_item_dropped)
+	RegisterSignal(I, list(COMSIG_ITEM_DROPPED), PROC_REF(mood_item_dropped))
 
 /mob/living/carbon/human/proc/mood_item_dropped(datum/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -2383,7 +2383,7 @@
 
 	AdjustDirtyClothes(1)
 
-	RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+	RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), PROC_REF(mood_item_clean_blood))
 	UnregisterSignal(I, list(COMSIG_ATOM_ADD_DIRT))
 
 /mob/living/carbon/human/proc/mood_item_clean_blood(datum/source)
@@ -2393,7 +2393,7 @@
 
 	AdjustDirtyClothes(-1)
 
-	RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+	RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), PROC_REF(mood_item_add_dirt))
 	UnregisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD))
 
 /mob/living/carbon/human/proc/mood_item_make_wet(datum/source)
@@ -2403,7 +2403,7 @@
 
 	AdjustWetClothes(1)
 
-	RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), PROC_REF(mood_item_make_dry))
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_WET))
 
 /mob/living/carbon/human/proc/mood_item_make_dry(datum/source)
@@ -2413,7 +2413,7 @@
 
 	AdjustWetClothes(-1)
 
-	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), PROC_REF(mood_item_make_wet))
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
 
 /mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)

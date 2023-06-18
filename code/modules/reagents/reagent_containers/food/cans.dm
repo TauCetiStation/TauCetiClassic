@@ -113,7 +113,7 @@
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
-			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
+			addtimer(CALLBACK(src, PROC_REF(refill_by_borg), user, refill, trans), 300)
 
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
