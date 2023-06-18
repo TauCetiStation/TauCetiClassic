@@ -10,7 +10,7 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
-	var/implant_trait = ""
+	var/implant_trait
 	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
