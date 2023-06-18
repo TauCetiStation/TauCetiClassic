@@ -637,7 +637,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon/, spin), 1, 1))
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, spin), 1, 1))
 			C.take_bodypart_damage(2) // Was 5 -- TLE
 		else if(lube & SLIDE_ICE)
 			var/has_NOSLIP = FALSE
