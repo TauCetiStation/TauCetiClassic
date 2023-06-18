@@ -9,7 +9,7 @@
 	var/ignore_if_not_on_turf
 	///The signals of the connect range component, needed to monitor the turfs in range.
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)

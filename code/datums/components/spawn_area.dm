@@ -27,7 +27,7 @@ var/global/list/datum/area_group/observer_groups
 	var/spawn_timer = addtimer(
 		CALLBACK(
 			src,
-			.proc/TrySpawn,
+			PROC_REF(TrySpawn),
 			L
 		),
 		delay,
