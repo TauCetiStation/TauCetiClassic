@@ -248,27 +248,21 @@
 	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_additive_speed_modifier = 1.0
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_additive_speed_modifier = 0.5
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_additive_speed_modifier = 0.25
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
