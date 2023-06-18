@@ -800,5 +800,6 @@
 			if(IO.robotic == 1)
 				if(prob(75))
 					data["ticks"]--
-		if(200 to INFINITY && IO.robotic != 2)
-			IO.heart_stop()
+		if(200 to INFINITY)
+			if(IO.robotic != 2)
+				IO.heart_stop()
