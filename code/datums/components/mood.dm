@@ -124,7 +124,6 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 	update_mood_icon()
-	update_mood_client_color()
 
 /datum/component/mood/proc/update_mood_icon()
 	if(!screen_obj)
@@ -176,30 +175,6 @@
 		if(abs(event.mood_change) == highest_absolute_mood)
 			screen_obj.icon_state = "[event.special_screen_obj]"
 			break
-
-/datum/component/mood/proc/update_mood_client_color()
-	var/mob/living/carbon/human/H = parent
-	if(!istype(H))
-		return
-
-	H.moody_color = null
-
-	if(H.stat == DEAD)
-		return
-
-	if(spirit_level < 4)
-		return
-
-	var/dissapointment
-	switch(spirit_level)
-		if(6)
-			dissapointment = 0.8
-		if(5)
-			dissapointment = 0.4
-		if(4)
-			dissapointment = 0.2
-
-	H.moody_color = SADNESS_COLOR(dissapointment)
 
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
@@ -272,7 +247,6 @@
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
-	update_mood_client_color()
 
 	if(spirit_level > prev_spirit_level)
 		to_chat(parent, "<span class='warning'>Ваше настроение ухудшилось.</span>")
@@ -340,7 +314,6 @@
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 	update_mood_icon()
-	update_mood_client_color()
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER
