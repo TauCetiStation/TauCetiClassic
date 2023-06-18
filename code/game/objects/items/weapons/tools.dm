@@ -433,7 +433,7 @@
 				user.eye_blind = 5
 				user.adjustBlurriness(5)
 				user.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-				addtimer(CALLBACK(user, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	return
 
 

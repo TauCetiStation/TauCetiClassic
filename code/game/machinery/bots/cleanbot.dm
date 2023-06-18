@@ -252,7 +252,7 @@
 	if (!next_dest_loc)
 		next_dest_loc = closest_loc
 	if (next_dest_loc)
-		patrol_path = get_path_to(src, next_dest_loc, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=null)
+		patrol_path = get_path_to(src, next_dest_loc, TYPE_PROC_REF(/turf, Distance_cardinal), 0, 120, id=botcard, exclude=null)
 
 /obj/machinery/bot/cleanbot/proc/patrol_move()
 	if (patrol_path.len <= 0)

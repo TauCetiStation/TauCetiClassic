@@ -52,7 +52,7 @@
 	set_m_intent(leader.m_intent)
 	set_state(REPLICATOR_STATE_COMBAT)
 
-	INVOKE_ASYNC(src, /mob/living.proc/help_other, leader)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living, help_other), leader)
 
 	clear_priority_target()
 	LoseTarget()
@@ -71,7 +71,7 @@
 
 /mob/living/simple_animal/hostile/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	Move(get_step(get_turf(src), move_dir), move_dir)
-	INVOKE_ASYNC(src, /mob/living.proc/help_other, leader)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living, help_other), leader)
 
 /mob/living/simple_animal/hostile/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	SIGNAL_HANDLER

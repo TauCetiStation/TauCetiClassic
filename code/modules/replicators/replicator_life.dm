@@ -265,7 +265,7 @@
 			continue
 
 		face_atom(R)
-		INVOKE_ASYNC(src, /mob/living.proc/help_other, R)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living, help_other), R)
 		return
 
 /mob/living/simple_animal/hostile/replicator/proc/check_any_auto_disintegratables(turf/T)

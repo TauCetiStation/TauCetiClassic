@@ -175,7 +175,7 @@
 			continue
 		if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
 			continue
-		INVOKE_ASYNC(mine, /obj/item/mine/replicator.proc/pretend_disintegration)
+		INVOKE_ASYNC(mine, TYPE_PROC_REF(/obj/item/mine/replicator, pretend_disintegration))
 
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)

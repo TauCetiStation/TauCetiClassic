@@ -127,4 +127,4 @@
 	var/obj/structure/bluespace_corridor/BC = locate() in clicker.loc
 	if(!BC)
 		return
-	INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
+	INVOKE_ASYNC(BC, TYPE_PROC_REF(/obj/structure/bluespace_corridor, animate_obstacle))

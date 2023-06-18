@@ -25,8 +25,8 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/fireaxe, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/fireaxe, can_spin))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -96,9 +96,9 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
-	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/dualsaber.proc/get_sweep_objs)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/dualsaber, can_swipe))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/dualsaber, can_swipe))
+	SCB.on_get_sweep_objects = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/dualsaber, get_sweep_objs))
 	AddComponent(/datum/component/swiping, SCB)
 
 	var/datum/twohanded_component_builder/TCB = new

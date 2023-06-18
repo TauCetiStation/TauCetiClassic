@@ -215,7 +215,7 @@
 					if(iscarbon(target))
 						playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 						icon_state = "[icon_state_arrest]"
-						addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
+						addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 						var/mob/living/carbon/M = target
 						do_attack_animation(M)
 						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
@@ -237,7 +237,7 @@
 							playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "[icon_state_arrest]"
-							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
+							addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat != CONSCIOUS)
@@ -536,7 +536,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
-	path = get_path_to(src, patrol_target, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
+	path = get_path_to(src, patrol_target, TYPE_PROC_REF(/turf, Distance), 0, 120, id=botcard, exclude=avoid)
 
 // look for a criminal in view of the bot
 

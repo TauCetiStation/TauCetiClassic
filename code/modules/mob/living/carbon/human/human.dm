@@ -1837,7 +1837,7 @@
 		else if(istype(hit_atom, /obj/machinery/disposal))
 			var/atom/old_loc = loc
 			forceMove(hit_atom)
-			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom, old_loc)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), hit_atom, old_loc)
 
 	update_canmove()
 
@@ -2124,7 +2124,7 @@
 	dizziness = min(1000, dizziness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(dizziness > 100 && !is_dizzy)
-		INVOKE_ASYNC(src, /mob.proc/dizzy_process)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, dizzy_process))
 
 /mob/living/carbon/human/make_jittery(amount)
 	if(species.flags[IS_SYNTHETIC])
@@ -2132,7 +2132,7 @@
 	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
-		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, jittery_process))
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)

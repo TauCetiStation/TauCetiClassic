@@ -294,13 +294,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 				var/obj/structure/bluespace_corridor/BC_anim = locate() in anim_turf
 				if(BC_anim)
-					INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
+					INVOKE_ASYNC(BC, TYPE_PROC_REF(/obj/structure/bluespace_corridor, animate_obstacle))
 
 			return FALSE
 
 		if(BC.neighbor_count > 1)
 			to_chat(src, "<span class='notice'>Can not place Bluespace Corridor, a neighbor has more than one other neighboring Bluespace Corridor.</span>")
-			INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
+			INVOKE_ASYNC(BC, TYPE_PROC_REF(/obj/structure/bluespace_corridor, animate_obstacle))
 			return FALSE
 
 	return TRUE

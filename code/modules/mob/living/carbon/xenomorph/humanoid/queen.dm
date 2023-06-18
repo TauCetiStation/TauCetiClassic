@@ -29,7 +29,7 @@
 	R.my_atom = src
 	name = "alien queen ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, TYPE_PROC_REF(/mob/living/carbon/xenomorph/humanoid, neurotoxin))
 	alien_list[ALIEN_QUEEN] += src
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 	. = ..()

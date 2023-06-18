@@ -307,7 +307,7 @@
 			mob.emote("scream")
 			mob.apply_effect(5, WEAKEN)
 			mob.make_jittery(50)
-			addtimer(CALLBACK(mob, /mob/.proc/gib), 50)
+			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, gib)), 50)
 
 /datum/disease2/effect/vomit
 	name = "Haematemesis's Syndrome"
@@ -894,9 +894,9 @@
 			to_chat(mob, "<span notice='userdanger'>[pick("You have a laughing fit!", "You can't stop laughing!")]</span>")
 			mob.apply_effect(2, WEAKEN)
 			mob.make_jittery(50)
-			addtimer(CALLBACK(mob, /mob/.proc/emote, pick("laugh","giggle")), 6)
-			addtimer(CALLBACK(mob, /mob/.proc/emote, pick("laugh","giggle")), 12)
-			addtimer(CALLBACK(mob, /mob/.proc/emote, pick("laugh","giggle")), 18)
+			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, emote), pick("laugh","giggle")), 6)
+			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, emote), pick("laugh","giggle")), 12)
+			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, emote), pick("laugh","giggle")), 18)
 		else
 			mob.say(pick("haha","ha ha ha","ha","HA","hah","haaaaaa","hehe","hehehe","heh","heh heh","muahaha","mwahaha","heehee","teehee","hahaha","ahahaha","bahaha","gahaha"))
 
@@ -1205,9 +1205,9 @@
 			if(prob(couthing_fit_chance))
 				to_chat(mob, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
 				H.Stun(2)
-				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 6)
-				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 12)
-				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 18)
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
+				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/, emote), "cough"), 18)
 
 /datum/disease2/effect/sneeze
 	name = "Sneezing"
