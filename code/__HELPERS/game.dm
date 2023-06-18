@@ -640,7 +640,7 @@
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/requestCandidate, M, time_passed, candidates, Question, Ignore_Role, poll_time)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(requestCandidate), M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.

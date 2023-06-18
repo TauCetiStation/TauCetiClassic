@@ -776,7 +776,7 @@
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -803,7 +803,7 @@
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn
