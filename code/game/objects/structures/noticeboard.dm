@@ -144,7 +144,7 @@
 		for(var/page in PB.pages)
 			hashes += get_content(page)
 
-		hashes = sortList(hashes, cmp=/proc/cmp_text_asc)
+		hashes = sortList(hashes, cmp=GLOBAL_PROC_REF(cmp_text_asc))
 
 		var/hashstr = ""
 		for(var/hash in hashes)

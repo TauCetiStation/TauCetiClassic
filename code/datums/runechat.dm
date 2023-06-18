@@ -209,7 +209,7 @@
 /datum/runechat/proc/end_of_life(fadetime = RUNECHAT_MESSAGE_EOL_FADE)
 	isFading = TRUE
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), fadetime, TIMER_STOPPABLE, SSrunechat)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src), fadetime, TIMER_STOPPABLE, SSrunechat)
 
 /**
  * Creates a message overlay at a defined location for a given speaker

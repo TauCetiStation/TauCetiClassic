@@ -410,7 +410,7 @@
 		else
 			last_search_log[log_name] = info["color"]
 
-		last_search_log = sortTim(last_search_log, cmp=/proc/cmp_text_asc)
+		last_search_log = sortTim(last_search_log, cmp=GLOBAL_PROC_REF(cmp_text_asc))
 	else
 
 		last_search_log = list("#Error"="Too many items found during scan.")
