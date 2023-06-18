@@ -388,7 +388,7 @@
 	carriers = null
 
 /datum/component/multi_carry/proc/follow_carrier(atom/movable/walker, atom/NewLoc, direction)
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, walker, direction)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(_step), walker, direction)
 
 /datum/component/multi_carry/proc/carrier_move(datum/source, atom/NewLoc, direction)
 	if(next_move > world.time)

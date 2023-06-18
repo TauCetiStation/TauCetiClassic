@@ -44,7 +44,7 @@
 
 	var/datum/announcement/centcomm/malf/declared/announce_declared = new
 	announce_declared.play()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(set_security_level), "delta"), 50)
 
 /datum/faction/malf_silicons/process()
 	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
