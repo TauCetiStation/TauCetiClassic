@@ -307,7 +307,7 @@
 
 /obj/effect/alien/queen_acid/atom_init_late()
 	if(iswallturf(target))
-		target_strength = 4
+		target_strength = 8
 	else if(is_type_in_list(target, ventcrawl_machinery))
 		target_strength = 2
 	else
