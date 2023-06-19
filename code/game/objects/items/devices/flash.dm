@@ -75,7 +75,7 @@
 		if(COOLDOWN_FINISHED(C, flash_carbon_use))
 			C.MakeConfused(rand(6, 10))
 			C.AdjustHeavyConfused(6)
-			C.flash_eyes(3)
+			C.flash_eyes()
 			COOLDOWN_START(C, flash_carbon_use, 15 SECONDS)
 		else
 			flashfail = 1
