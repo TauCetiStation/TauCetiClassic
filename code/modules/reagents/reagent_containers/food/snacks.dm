@@ -574,13 +574,9 @@
 	icon_state = "xenomeat"
 	filling_color = "#43de18"
 	bitesize = 6
-	list_reagents = list("protein" = 3, "vitamin" = 1)
+	list_reagents = list("protein" = 3, "vitamin" = 1, "xenojelly_un" = 5)
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
-
-/obj/item/weapon/reagent_containers/food/snacks/xenomeat/atom_init()
-	. = ..()
-	reagents.add_reagent("xenojelly_un", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	name = "spider meat"
