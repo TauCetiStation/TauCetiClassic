@@ -32,7 +32,7 @@
 		return
 	L.next_replicator_explosion = world.time + 3 SECONDS
 
-	INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L, null, TRUE, "disintegrate", null)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_attack_animation), L, null, TRUE, "disintegrate", null)
 	playsound(L, 'sound/weapons/crystal_explosion.ogg', VOL_EFFECTS_MASTER, vol=150)
 
 /mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/A)
@@ -51,7 +51,7 @@
 		if(L.stat == CONSCIOUS && !L.lying && !L.crawling)
 			addtimer(CALLBACK(src, PROC_REF(check_for_explosion), A), 2 SECONDS)
 
-		INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_attack_animation), L)
 		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
 
 		SetNextMove(CLICK_CD_MELEE)
@@ -118,7 +118,7 @@
 
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
-		INVOKE_ASYNC(D, /obj/item/projectile.proc/Fire, A, src, params)
+		INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/item/projectile, Fire), A, src, params)
 		scatter_offset()
 
 		newtonian_move(get_dir(A, src))

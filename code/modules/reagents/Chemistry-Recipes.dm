@@ -444,7 +444,7 @@
 	for(var/turf/simulated/target_tile in range(1, T))
 		if(!target_tile.blocks_air && !target_tile.density)
 			target_tile.assume_gas("phoron", created_volume * 0.2)
-			INVOKE_ASYNC(target_tile, /turf/simulated.proc/hotspot_expose, 700, 400, holder.my_atom)
+			INVOKE_ASYNC(target_tile, TYPE_PROC_REF(/turf/simulated, hotspot_expose), 700, 400, holder.my_atom)
 	holder.del_reagent("napalm")
 
 /datum/chemical_reaction/chemsmoke

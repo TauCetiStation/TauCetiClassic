@@ -13,9 +13,9 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -193,12 +193,12 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/energy, can_sweep))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/energy, can_sweep_push))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -255,12 +255,12 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/riot/tele, can_sweep))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/riot/tele, can_sweep_push))
 
 	AddComponent(/datum/component/swiping, SCB)
 

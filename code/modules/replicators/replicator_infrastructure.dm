@@ -493,8 +493,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 			R_teleporting.forceMove(RG.loc)
 			teleported_anyone = TRUE
 
-		addtimer(CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
-		addtimer(CALLBACK(RG, /atom.proc/update_icon), teleportation_cooldown)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), teleportation_cooldown)
+		addtimer(CALLBACK(RG, TYPE_PROC_REF(/atom, update_icon)), teleportation_cooldown)
 
 		if(teleported_anyone)
 			playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
@@ -837,7 +837,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(FR.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
 		FR.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
 		victory = TRUE
-		INVOKE_ASYNC(FR, /datum/faction/replicators.proc/victory_animation, get_turf(src))
+		INVOKE_ASYNC(FR, TYPE_PROC_REF(/datum/faction/replicators, victory_animation), get_turf(src))
 
 /obj/machinery/swarm_powered/bluespace_catapult/examine(mob/user)
 	. = ..()

@@ -168,7 +168,7 @@
 		var/obj/item/weapon/grenade/P = new payload(src.loc)
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
-		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
+		addtimer(CALLBACK(P, TYPE_PROC_REF(/obj/item/weapon/grenade, prime)), rand(15,60))
 	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 

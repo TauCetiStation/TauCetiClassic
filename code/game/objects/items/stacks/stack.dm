@@ -335,7 +335,7 @@
 		merge(S)
 		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 		if(!QDELETED(S) && usr.machine == S)
-			INVOKE_ASYNC(S, /obj/item/stack.proc/interact, usr)
+			INVOKE_ASYNC(S, TYPE_PROC_REF(/obj/item/stack, interact), usr)
 		if(!QDELETED(src) && usr.machine == src)
 			INVOKE_ASYNC(src, PROC_REF(interact), usr)
 	else

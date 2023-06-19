@@ -291,7 +291,7 @@
 			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
-			INVOKE_ASYNC(owner, /mob/living/carbon/human.proc/vomit)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/carbon/human, vomit))
 
 	if(owner.life_tick % process_accuracy == 0)
 		if(src.damage < 0)

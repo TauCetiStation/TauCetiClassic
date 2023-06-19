@@ -41,7 +41,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 			reagents.reaction(M, INGEST)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size), 5)
+			addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, gulp_size), 5)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
@@ -65,7 +65,7 @@
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = R.get_master_reagent_id()
-			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
+			addtimer(CALLBACK(R, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1

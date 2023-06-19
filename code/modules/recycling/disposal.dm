@@ -114,7 +114,7 @@
 			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				var/atom/old_loc = GM.loc
 				GM.forceMove(src)
-				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src, old_loc)
+				INVOKE_ASYNC(GM, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
@@ -197,7 +197,7 @@
 
 	var/atom/old_loc = target.loc
 	target.forceMove(src)
-	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src, old_loc)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 	target.instant_vision_update(1,src)
 
 	user.visible_message(msg, self_message = self_msg)
@@ -240,7 +240,7 @@
 
 		var/atom/old_loc = target.loc
 		target.forceMove(src)
-		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src, old_loc)
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 
 		user.visible_message(msg, self_message = self_msg)
 

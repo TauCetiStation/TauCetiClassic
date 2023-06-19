@@ -51,7 +51,7 @@
 	if(!istype(container, /atom/movable))
 		return
 
-	INVOKE_ASYNC(user, /mob.proc/pray_animation)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, pray_animation))
 	sleep(2)
 	if(QDELING(container) || QDELING(user))
 		return
