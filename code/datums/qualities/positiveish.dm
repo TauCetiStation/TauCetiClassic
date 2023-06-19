@@ -171,15 +171,6 @@
 	ADD_TRAIT(H, TRAIT_VACCINATED, QUALITY_TRAIT)
 
 
-/datum/quality/positiveish/happiness
-	name = "Happiness"
-	desc = "Ты очень-очень счастлив! Жизнь прекрасна и люди на станции прекрасны!!!"
-	requirement = "Нет."
-
-/datum/quality/positiveish/happiness/add_effect(mob/living/carbon/human/H, latespawn)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_happiness", /datum/mood_event/happiness)
-
-
 /datum/quality/positiveish/polyglot
 	name = "Polyglot"
 	desc = "Ты знаешь все языки."

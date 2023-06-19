@@ -52,8 +52,6 @@
 	if(istype(H))
 		H.fixblood(FALSE) // to add changeling marker
 
-	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "changeling", /datum/mood_event/changeling)
-
 /datum/role/changeling/proc/set_changeling_identifications()
 	var/honorific
 	if(antag.current.gender == FEMALE)
@@ -108,10 +106,6 @@
 /datum/role/changeling/remove_ui(datum/hud/hud)
 	lingchemdisplay.remove_from_hud(hud)
 	lingstingdisplay.remove_from_hud(hud)
-
-/datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
-	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
-	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)

@@ -610,18 +610,3 @@ var/global/list/death_alarm_stealth_areas = list(
 <b>Function:</b> Contains special hormones which affect host's brain.<BR>
 <b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
 	return dat
-
-/obj/item/weapon/implant/blueshield/implanted(mob/source)
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/implant/blueshield/process()
-	if (!implanted)
-		STOP_PROCESSING(SSobj, src)
-		return
-	if(!imp_in)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	if(world.time > last_examined + 6000)
-		SEND_SIGNAL(imp_in, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-		SEND_SIGNAL(imp_in, COMSIG_ADD_MOOD_EVENT, "blueshield", /datum/mood_event/blueshield)

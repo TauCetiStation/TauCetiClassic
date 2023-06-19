@@ -44,8 +44,6 @@ var/global/list/scrap_base_cache = list()
 	. = ..()
 	update_icon(1)
 
-	AddElement(/datum/element/beauty, -300)
-
 /obj/effect/scrapshot
 	name = "This thins shoots scrap everywhere with a delay"
 	desc = "no data"

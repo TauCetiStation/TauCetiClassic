@@ -99,7 +99,6 @@
 #define SS_WAIT_QUIRKS       10
 #define SS_WAIT_DCS          10
 #define SS_WAIT_PROCESSING   10
-#define SS_WAIT_MOOD         10
 #define SS_WAIT_HOLOMAPS     15
 #define SS_WAIT_GNAW         20
 #define SS_WAIT_DEFAULT      20

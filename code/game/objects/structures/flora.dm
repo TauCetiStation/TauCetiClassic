@@ -7,7 +7,6 @@
 /obj/item/weapon/flora/atom_init()
 	. = ..()
 	AddComponent(/datum/component/tactical, null, FALSE)
-	AddElement(/datum/element/beauty, 300)
 	var/datum/twohanded_component_builder/TCB = new
 	TCB.require_twohands = TRUE
 	TCB.force_wielded = 5

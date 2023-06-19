@@ -70,25 +70,11 @@
 		'sound/ambience/general_12.ogg'
 	)
 
-	/// All beauty in this area combined, only includes indoor area.
-	var/totalbeauty = 0
-	/// Beauty average per open turf in the area
-	var/beauty = 0
-	/// If a room is too big it doesn't have beauty.
-	var/beauty_threshold = BEAUTY_MAX_AREA_SIZE
-
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
-
-	/// Bonus mood for being in this area
-	var/mood_bonus = 0
-	/// Mood message for being here, only shows up if mood_bonus != 0
-	var/mood_message = "<span class='nicegreen'>This area is pretty nice!</span>\n"
-	/// Does the mood bonus require a trait?
-	var/mood_trait
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -138,7 +124,7 @@ var/global/list/ghostteleportlocs = list()
 /area/atom_init()
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
-	..()
+	. = ..()
 
 	if(requires_power)
 		luminosity = 0
@@ -154,11 +140,6 @@ var/global/list/ghostteleportlocs = list()
 	update_areasize()
 	power_change() // all machines set to current power level, also updates lighting icon
 
-	return INITIALIZE_HINT_LATELOAD
-
-/area/atom_init_late()
-	update_beauty()
-
 /**
  * Set the area size of the area
  *
@@ -171,18 +152,6 @@ var/global/list/ghostteleportlocs = list()
 	areasize = 0
 	for(var/turf/simulated/floor/F in contents)
 		areasize++
-
-/// Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
-/area/proc/update_beauty()
-	if(!areasize)
-		beauty = 0
-		return FALSE
-
-	if(areasize >= beauty_threshold)
-		beauty = 0
-		return FALSE
-
-	beauty = totalbeauty / areasize
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)

@@ -14,11 +14,6 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
-	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
-
-	beauty.AddModifier("stat", additive=beauty_living)
-
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
@@ -533,8 +528,6 @@
 
 	if(reagents)
 		reagents.clear_reagents()
-
-	beauty.AddModifier("stat", additive=beauty_living)
 
 	// shut down various types of badness
 	setToxLoss(0)
@@ -1371,7 +1364,6 @@
 				T.add_blood_floor(src)
 			else
 				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 	return TRUE
 
 /mob/living/get_targetzone()
@@ -1421,16 +1413,8 @@
 	return
 
 /mob/living/death(gibbed)
-	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
 	return ..()
-
-/mob/living/proc/update_beauty(datum/source, old_value)
-	if(old_value != 0.0)
-		RemoveElement(/datum/element/beauty, old_value)
-	if(beauty.Get() == 0.0)
-		return
-	AddElement(/datum/element/beauty, beauty.Get())
 
 //Throwing stuff
 /mob/living/proc/toggle_throw_mode()
@@ -1464,15 +1448,7 @@
 /mob/living/proc/handle_drunkenness()
 	if(drunkenness <= 0)
 		drunkenness = 0
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 		return
-
-	if(drunkenness >= DRUNKENNESS_PASS_OUT)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk_catharsis)
-	else if(drunkenness >= DRUNKENNESS_CONFUSED)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/very_drunk)
-	else if(drunkenness >= DRUNKENNESS_SLUR)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 
 	if(drowsyness)
 		AdjustDrunkenness(-1)

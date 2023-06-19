@@ -518,12 +518,6 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_UNIFORM
 
-/obj/item/clothing/under/equipped(mob/user, slot)
-	..()
-	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
-		fresh_laundered_until = world.time
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
-
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
 		new /obj/item/stack/sheet/cloth(get_turf(src), 3, null, crit_fail)

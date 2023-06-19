@@ -260,12 +260,6 @@
 /// from mob/living/silicon/robot/get_active_hand(): (mob/user)
 #define COMSIG_HAND_GET_ITEM "hand_get_item"
 
-//Mood (/datum/component/mood) signals
-///called when you send a mood event from anywhere in the code.
-#define COMSIG_ADD_MOOD_EVENT "add_mood"
-///called when you clear a mood event from anywhere in the code.
-#define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
-
 // mob signals
 /// from base of mob/Login(): ()
 #define COMSIG_LOGIN "mob_login"

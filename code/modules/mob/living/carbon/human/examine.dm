@@ -538,22 +538,6 @@
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
 
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(!skipface && mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
-				msg += "[t_He] appears to be depressed.\n"
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-				msg += "[t_He] appears to be very sad.\n"
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-				msg += "[t_He] appears to be a bit down.\n"
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-				msg += "[t_He] appears to be quite happy.\n"
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				msg += "[t_He] appears to be very happy.\n"
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				msg += "[t_He] appears to be ecstatic.\n"
-
 	if(w_class)
 		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
@@ -571,14 +555,6 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
-	//someone here, but who?
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
-			for(var/obj/item/weapon/implant/blueshield/B in H)
-				B.last_examined = world.time
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)
 		if(isobserver(user))
@@ -586,9 +562,6 @@
 			should_see_quirks = O.started_as_observer
 		if(should_see_quirks)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
-
-	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)
 

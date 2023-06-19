@@ -210,9 +210,7 @@
 #define RELIGION_TRAIT     "religion"
 
 // self explanatory
-#define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define BLUESPACE_MOVE_COMPONENT_TRAIT "bluespace_move_component_trait"
-#define MOOD_COMPONENT_TRAIT "mood_component"
 #define SPAWN_AREA_TRAIT "spawn_area_trait"
 // medical stuff I guess
 #define OBESITY_TRAIT      "obesity"

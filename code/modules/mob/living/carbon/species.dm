@@ -156,8 +156,6 @@
 	// The type of skeleton species they would be turned into. default is human
 	var/skeleton_type = SKELETON
 
-	var/default_mood_event
-
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
 
@@ -250,14 +248,8 @@
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
-	if(default_mood_event)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "species", default_mood_event)
-
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(!flags[IS_SOCIAL])
-		H.handle_socialization()
 
 	H.remove_moveset_source(MOVESET_SPECIES)
 
@@ -265,7 +257,6 @@
 		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
-	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -1019,8 +1010,6 @@
 		/datum/emote/robot/buzz,
 	)
 
-	default_mood_event = /datum/mood_event/machine
-
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
@@ -1131,8 +1120,6 @@
 
 	min_age = 1
 	max_age = 1000
-
-	default_mood_event = /datum/mood_event/undead
 
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
@@ -1373,8 +1360,6 @@
 
 	is_common = TRUE
 
-	default_mood_event = /datum/mood_event/golem
-
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
 	// Clothing on the Golem is created before the hud_list is generated in the atom
@@ -1459,8 +1444,6 @@
 
 	min_age = 25
 	max_age = 85
-
-	default_mood_event = /datum/mood_event/undead
 
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
@@ -1720,8 +1703,6 @@
 	max_age = 10
 
 	is_common = FALSE
-
-	default_mood_event = /datum/mood_event/homunculus
 
 /datum/species/homunculus/on_gain(mob/living/carbon/human/H)
 	..()

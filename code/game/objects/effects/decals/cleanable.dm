@@ -10,8 +10,6 @@
 	. = ..()
 	decal_cleanable += src
 
-	AddElement(/datum/element/beauty, beauty)
-
 /obj/effect/decal/cleanable/Destroy()
 	decal_cleanable -= src
 	return ..()

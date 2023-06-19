@@ -13,10 +13,6 @@
 	if(druggy)
 		. += TK_BONUS_DRUGGED
 
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(mood && mood.mood_level <= 2)
-		. += TK_BONUS_UPSET
-
 /mob/proc/has_tk_power(amount)
 	return FALSE
 

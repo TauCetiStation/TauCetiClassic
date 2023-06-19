@@ -89,7 +89,6 @@
 		if(BP)
 			var/pain_amount = BP.adjust_pumped(1)
 			pedaler.apply_effect(pain_amount, AGONY, 0)
-			SEND_SIGNAL(pedaler, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 			pedaler.update_body()
 
 	buckled_mob.nutrition -= 0.5

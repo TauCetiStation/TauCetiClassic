@@ -6,7 +6,6 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = null
 	var/food_type = TASTY_FOOD
-	var/food_moodlet = /datum/mood_event/tasty_food
 	var/bitesize = 1
 	var/bitecount = 0
 	var/trash = null
@@ -24,14 +23,12 @@
 	if(HAS_TRAIT(src, TRAIT_XENO_FUR))
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && !H.species.flags[FUR])
-			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
+			if(prob(50))
 				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		if(food_type)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "food_type", food_moodlet)
 		SSStatistics.score.foodeaten++
 		usr.drop_from_inventory(src)	//so icons update :[
 
@@ -260,7 +257,6 @@
 	bitesize = 3
 	list_reagents = list("nutriment" = 8, "doctorsdelight" = 8, "vitamin" = 6)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
@@ -270,7 +266,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1, "sugar" = 3)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/donor
 	name = "Donor Candy"
@@ -279,7 +274,6 @@
 	bitesize = 5
 	list_reagents = list("nutriment" = 10, "sugar" = 3)
 	food_type = TASTY_FOOD
-	food_moodlet = /datum/mood_event/tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
@@ -299,7 +293,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment"= 1, "sodiumchloride" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/chips/atom_init()
 	. = ..()
@@ -483,7 +476,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 3, "vitamin" = 2)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed
 	name = "inflamed appendix"
@@ -491,7 +483,6 @@
 	icon_state = "appendixinflamed"
 	filling_color = "#e00d7a"
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "Tofu"
@@ -526,7 +517,6 @@
 	bitesize = 6
 	list_reagents = list("protein" = 3, "carpotoxin" = 3)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "Fish Fingers"
@@ -536,7 +526,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 4, "carpotoxin" = 3)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -546,7 +535,6 @@
 	bitesize = 6
 	list_reagents = list("plantmatter" = 3, "vitamin" = 1)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
 	name = "tomato slice"
@@ -556,7 +544,6 @@
 	bitesize = 6
 	list_reagents = list("protein" = 2)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	name = "bear meat"
@@ -566,7 +553,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 12, "vodka" = 5, "vitamin" = 2)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
@@ -576,7 +562,6 @@
 	bitesize = 6
 	list_reagents = list("protein" = 3, "vitamin" = 1, "xenojelly_un" = 5)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	name = "spider meat"
@@ -585,7 +570,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 3, "toxin" = 2, "vitamin" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
@@ -593,7 +577,6 @@
 	icon_state = "spiderleg"
 	list_reagents = list("protein" = 2, "toxin" = 2)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball
 	name = "meatball"
@@ -603,7 +586,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 4, "vitamin" = 1)
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "Sausage"
@@ -630,7 +612,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 2, "protein" = 4, "alkysine" = 6)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger
 	name = "Ghost Burger"
@@ -640,7 +621,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "ectoplasm" = 1)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/human
 	var/hname = ""
@@ -700,7 +680,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 6, "vitamin" = 1, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
@@ -711,7 +690,6 @@
 	var/cooldown = FALSE
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
 	if(cooldown <= world.time)
@@ -728,7 +706,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 6)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
 	name = "Omelette Du Fromage"
@@ -849,7 +826,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 10, "vitamin" = 2, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 	name = "Wing Fang Chu"
@@ -860,7 +836,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 6, "vitamin" = 2, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kabob
 	name = "-kabob"
@@ -898,7 +873,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 6, "carpotoxin" = 3, "capsaicin" = 3)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn
 	name = "Popcorn"
@@ -929,8 +903,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 1, "sugar" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
-
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
@@ -945,8 +917,6 @@
 	bitesize = 2
 	list_reagents = list("plantmatter" = 1, "sugar" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
-
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin/atom_init()
 	. = ..()
@@ -960,8 +930,6 @@
 	bitesize = 2
 	list_reagents = list("sugar" = 4)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
-
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "Cheesie Honkers"
@@ -973,7 +941,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1, "sugar" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers/atom_init()
 	. = ..()
@@ -1085,7 +1052,6 @@
 	bitesize = 2
 	list_reagents = list("toxin" = 1, "carbon" = 3)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 	name = "Meat steak"
@@ -1195,7 +1161,6 @@
 	bitesize = 5
 	list_reagents = list("nutriment" = 4, "slimejelly" = 5, "water" = 10, "vitamin" = 4)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup
 	name = "Tomato soup"
@@ -1222,7 +1187,6 @@
 	bitesize = 5
 	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 10, "vitamin" = 8)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/vegetablesoup
 	name = "Vegetable soup"
@@ -1327,7 +1291,6 @@
 	trash = /obj/item/trash/snack_bowl
 	list_reagents = list("plantmatter" = 6, "frostoil" = 3, "tomatojuice" = 2, "vitamin" = 2)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /* No more of this
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
@@ -1463,7 +1426,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
 	name = "Big Bite Burger"
@@ -1508,7 +1470,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 6, "carpotoxin" = 3, "vitamin" = 2)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
 	name = "Carp sashimi"
@@ -1517,7 +1478,6 @@
 	bitesize = 3
 	list_reagents = list("protein" = 6, "capsaicin" = 3, "vitamin" = 2)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	name = "Sandwich"
@@ -1578,7 +1538,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime
 	list_reagents = list("slimejelly" = 5)
@@ -1680,7 +1639,6 @@
 	bitesize = 10
 	list_reagents = list("nutriment" = 32, "cheese" = 4, "protein" = 16, "vitamin" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	name = "Candied Apple"
@@ -1723,7 +1681,6 @@
 	bitesize = 3
 	list_reagents = list("nutriment" = 2, "vitamin" = 2)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 	list_reagents = list("slimejelly" = 5)
@@ -1738,7 +1695,6 @@
 	bitesize = 3
 	list_reagents = list("slimejelly" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
 	name = "mint"
@@ -1755,8 +1711,6 @@
 	filling_color = "#cfb4c4"
 	bitesize = 2
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
-
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/atom_init()
 	. = ..()
@@ -1814,7 +1768,6 @@
 	bitesize = 3
 	list_reagents = list("plantmatter" = 8, "gold" = 5, "vitamin" = 4)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -1947,7 +1900,6 @@
 	filling_color = "#8aff75"
 	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/xeno
 	name = "xenomeatbread slice"
@@ -1955,7 +1907,6 @@
 	icon_state = "xenobreadslice"
 	filling_color = "#8aff75"
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/spider
 	name = "spider meat loaf"
@@ -1964,14 +1915,12 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spider
 	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5, "toxin" = 15)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spider
 	name = "spider meat bread slice"
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/banana
@@ -2014,7 +1963,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 20, "sugar" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice
 	name = "Vanilla Cake slice"
@@ -2024,7 +1972,6 @@
 	filling_color = "#f7edd5"
 	bitesize = 2
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/birthday
 	name = "Birthday Cake"
@@ -2034,7 +1981,6 @@
 	filling_color = "#ffd6d6"
 	list_reagents = list("nutriment" = 20, "sprinkles" = 10, "sugar" = 5)
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday
 	name = "Birthday Cake slice"
@@ -2042,7 +1988,6 @@
 	icon_state = "birthdaycakeslice"
 	filling_color = "#ffd6d6"
 	food_type = VERY_TASTY_FOOD
-	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/apple
 	name = "Apple Cake"
@@ -2431,7 +2376,6 @@
 	filling_color = "#fff700"
 	bitesize = 2
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 
 /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
@@ -2441,7 +2385,6 @@
 	filling_color = "#ff3867"
 	bitesize = 2
 	food_type = NATURAL_FOOD
-	food_moodlet = /datum/mood_event/natural_food
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker
 	name = "Cracker"
@@ -2494,7 +2437,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 6)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user, params)
@@ -2521,7 +2463,6 @@
 	slices_num = 3
 	list_reagents = list("nutriment" = 6)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	name = "dough slice"
@@ -2531,7 +2472,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/bun
 	name = "bun"
@@ -2597,7 +2537,6 @@
 	bitesize = 1
 	list_reagents = list("nutriment" = 1)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
@@ -2631,7 +2570,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 2)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
@@ -3400,7 +3338,6 @@
 	icon_state = "ectoplasm"
 	list_reagents = list("ectoplasm" = 5)
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
 
 /obj/item/weapon/reagent_containers/food/snacks/fries/cardboard
 	icon_state = "fries_cardboard"

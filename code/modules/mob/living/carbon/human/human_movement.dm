@@ -139,9 +139,6 @@
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
-	if(mood_additive_speed_modifier < 0 || !nullify_debuffs)
-		tally += mood_additive_speed_modifier
-
 	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)

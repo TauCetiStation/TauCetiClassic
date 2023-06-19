@@ -48,7 +48,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		user.set_dir(dir)
 		to_chat(user, "<span class='notice'>You start doing your business...</span>")
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
-		
+
 		if(do_after(user, rand(5, 20) SECONDS, needhand = FALSE, target = src))
 			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
@@ -63,14 +63,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				if(SSholiday.holidays[APRIL_FOOLS])
 					problem_chance += 25
 
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
-
 			if(prob(problem_chance))
 				broken = TRUE
 				START_PROCESSING(SSobj, src)
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, playsound_local), null, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE, null, null, null, null, null, TRUE), 2 SECOND) // so many nulls just to enable ignore_environment
 				if(HAS_TRAIT(user, TRAIT_CLUMSY))
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clown_evil", /datum/mood_event/clown_evil)
 					to_chat(user, "<span class='notice bold'>Oh yes!</span>")
 				else
 					to_chat(user, "<span class='notice bold'>Oh no!</span>")
@@ -174,11 +171,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		user.set_dir(turn(dir, 180))
 		to_chat(user, "<span class='notice'>You start doing your business...</span>")
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
-		
+
 		if(do_after(user, rand(5, 10) SECONDS, needhand = TRUE, target = src))
 			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER, vol = 50)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
@@ -638,7 +634,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				C.adjustHalLoss(-1)
 				C.AdjustStunned(-1)
 				C.AdjustWeakened(-1)
-				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
 				return
 			if("freezing")
 				C.adjust_bodytemperature(-80, min_temp = 80)

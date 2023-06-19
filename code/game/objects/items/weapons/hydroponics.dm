@@ -169,9 +169,6 @@ var/global/gourd_name = null
 
 	var/bottle_type = /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd
 
-	var/gourd_event = /datum/mood_event/gourd
-	var/unathi_gourd_event = /datum/mood_event/unathi_gourd
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/atom_init()
 	. = ..()
 	name = "[get_gourd_name()]"
@@ -192,9 +189,6 @@ var/global/gourd_name = null
 	restore_reagent = "gourdbeer"
 
 	bottle_type = /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic
-
-	gourd_event = /datum/mood_event/magic_gourd
-	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic/atom_init()
 	. = ..()
@@ -231,13 +225,6 @@ var/global/gourd_name = null
 
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/examine(mob/user)
-	. = ..()
-	if(user.get_species() == UNATHI)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", unathi_gourd_event)
-	else
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", gourd_event)
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attack_self(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, last_maraca))
@@ -258,9 +245,6 @@ var/global/gourd_name = null
 	is_glass = FALSE
 	is_transparent = FALSE
 
-	var/gourd_event = /datum/mood_event/gourd
-	var/unathi_gourd_event = /datum/mood_event/unathi_gourd
-
 	var/broken_type = /obj/item/weapon/broken_bottle/gourd
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/atom_init()
@@ -275,9 +259,6 @@ var/global/gourd_name = null
 	volume = 200
 
 	broken_type = /obj/item/weapon/broken_bottle/gourd/magic
-
-	gourd_event = /datum/mood_event/magic_gourd
-	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic/atom_init()
 	. = ..()
@@ -307,13 +288,6 @@ var/global/gourd_name = null
 	if(isturf(loc))
 		new /obj/effect/decal/cleanable/gourd(loc)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/examine(mob/user)
-	. = ..()
-	if(user.get_species() == UNATHI)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", unathi_gourd_event)
-	else
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", gourd_event)
 
 /obj/item/weapon/broken_bottle/gourd
 	name = "shatttered gourd bottle"

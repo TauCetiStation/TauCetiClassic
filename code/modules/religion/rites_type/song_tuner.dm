@@ -68,9 +68,6 @@
 		return
 	religion.adjust_favor(2)
 
-/datum/religion_rites/song_tuner/evangelism/finish_effect(mob/living/listener, atom/song_source)
-	SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
-
 /datum/religion_rites/song_tuner/life
 	name = "Симфония Жизни"
 	desc = "Спойте спокойную песню, излечив раны ближнего своего"

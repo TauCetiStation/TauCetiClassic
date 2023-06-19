@@ -80,8 +80,6 @@
 	if(!user || !target)
 		return FALSE
 
-	time *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
-
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
 
@@ -148,8 +146,6 @@
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
-
-	delay *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
@@ -370,7 +366,7 @@
 
 	if(insurance_type)
 		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"
-		
+
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
 	return message

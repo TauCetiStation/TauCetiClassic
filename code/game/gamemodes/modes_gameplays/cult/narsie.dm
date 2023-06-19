@@ -35,21 +35,12 @@
 		if(!isnewplayer(M))
 			to_chat(M, "<font size='15' color='red'><b>Н́̿̚Ӓ́̈́Р̔̚͘-̽̔͆С̈́͛͛И̓͊̕ В͒̚͝О̓͒̓С̓̾͑С̔̓͝Т̈́͘̚А͒͑͘Л͐͌̾</b></font>")
 			M.playsound_local(null, pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'), VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			if(!iscultist(M))
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "narsie", /datum/mood_event/narsie)
-			else
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "narsie", /datum/mood_event/narsie_cultists)
 
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.", source = src, action = NOTIFY_ORBIT, header = "Nar'Sie")
 
 	playsound_frequency_admin = -1
-
-/obj/singularity/narsie/Destroy()
-	for(var/mob/M in player_list)
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "narsie")
-	return ..()
 
 /obj/singularity/narsie/proc/begin_the_end()
 	narsie_spawn_animation()
