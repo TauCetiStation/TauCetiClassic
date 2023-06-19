@@ -55,7 +55,7 @@
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return FALSE
 
-		if(isextinguisher(src) && !RD.reagents.has_reagent("aqueous_foam"))
+		if(isextinguisher(src) && !RD.reagents.only_reagent("aqueous_foam"))
 			return FALSE
 
 		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)

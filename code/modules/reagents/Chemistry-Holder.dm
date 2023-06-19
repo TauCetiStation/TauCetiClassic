@@ -498,6 +498,13 @@ var/global/const/INGEST = 2
 
 	return FALSE
 
+/datum/reagents/proc/only_reagent(reagent)
+	for(var/datum/reagent/R in reagent_list)
+		if(R.id != reagent)
+			return FALSE
+
+	return TRUE
+
 /datum/reagents/proc/get_reagent_amount(reagent)
 	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)

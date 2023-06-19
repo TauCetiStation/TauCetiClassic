@@ -70,7 +70,7 @@
 /obj/item/weapon/reagent_containers/pill/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(isextinguisher(target) && !src.reagents.has_reagent("aqueous_foam"))
+	if(isextinguisher(target) && !src.reagents.only_reagent("aqueous_foam"))
 		return
 
 	if(target.is_open_container() && target.reagents)

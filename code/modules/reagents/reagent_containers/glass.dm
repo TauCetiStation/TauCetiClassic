@@ -103,8 +103,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class = 'rose'>[target] is full.</span>")
 			return
-		if(isextinguisher(target) && !src.reagents.has_reagent("aqueous_foam"))
-			to_chat(user, "<span class='notice'>No</span>")
+		if(isextinguisher(target) && !src.reagents.only_reagent("aqueous_foam"))
 			return FALSE
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)

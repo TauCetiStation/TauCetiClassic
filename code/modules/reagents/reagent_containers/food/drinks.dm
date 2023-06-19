@@ -84,7 +84,7 @@
 	if (!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
 		return
-	if(isextinguisher(target) && !src.reagents.has_reagent("aqueous_foam"))
+	if(isextinguisher(target) && !src.reagents.only_reagent("aqueous_foam"))
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 		var/obj/structure/reagent_dispensers/RD = target
