@@ -118,9 +118,9 @@
 	// If it's not a cult type, then don't do it.
 	var/turf/T = target
 	if(T.type in global.cult_religion.wall_types)
-		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/wall)
+		INVOKE_ASYNC(src, PROC_REF(convert_effect), T, /turf/simulated/wall)
 	else if(T.type in global.cult_religion.floor_types)
-		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/floor)
+		INVOKE_ASYNC(src, PROC_REF(convert_effect), T, /turf/simulated/floor)
 
 	next_turf_deconvert = world.time + deconvert_turf_cd
 
@@ -256,7 +256,7 @@
 			light_power = 5
 			searching = TRUE
 			request_player(user)
-			addtimer(CALLBACK(src, .proc/reset_search), 200)
+			addtimer(CALLBACK(src, PROC_REF(reset_search)), 200)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
 	var/list/candidates = pollGhostCandidates("Do you want to serve [user.my_religion.name] in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
@@ -445,10 +445,10 @@
 	down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
 	down_overlay.alpha = 100
 	add_overlay(down_overlay)
-	addtimer(CALLBACK(src, .proc/revert_effect), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(revert_effect)), 5 SECONDS)
 
 	var/shield_type = /obj/item/weapon/shield/riot/roman/religion
-	AddComponent(/datum/component/self_effect, shield_type, "#fffb0064", CALLBACK(src, .proc/only_holy), 3 MINUTE, 30 SECONDS, 1 MINUTE)
+	AddComponent(/datum/component/self_effect, shield_type, "#fffb0064", CALLBACK(src, PROC_REF(only_holy)), 3 MINUTE, 30 SECONDS, 1 MINUTE)
 
 /obj/item/weapon/claymore/religion/proc/only_holy(datum/source, mob/M)
 	if(M?.mind?.holy_role)

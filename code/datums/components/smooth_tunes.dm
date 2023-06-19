@@ -33,7 +33,7 @@
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT, .proc/start_singing)
+	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT, PROC_REF(start_singing))
 
 /datum/component/smooth_tunes/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
@@ -54,10 +54,10 @@
 	///prevent more songs from being blessed concurrently, mob signal
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
 	///and hook into the instrument this time, preventing other weird exploity stuff.
-	RegisterSignal(song.instrument, COMSIG_INSTRUMENT_TEMPO_CHANGE, .proc/tempo_change)
-	RegisterSignal(song.instrument, COMSIG_INSTRUMENT_END, .proc/stop_singing)
+	RegisterSignal(song.instrument, COMSIG_INSTRUMENT_TEMPO_CHANGE, PROC_REF(tempo_change))
+	RegisterSignal(song.instrument, COMSIG_INSTRUMENT_END, PROC_REF(stop_singing))
 	if(!allow_repeats)
-		RegisterSignal(song.instrument, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
+		RegisterSignal(song.instrument, COMSIG_INSTRUMENT_REPEAT, PROC_REF(stop_singing))
 
 	linked_song = song
 	if(particles_path && ismovable(linked_song.instrument))

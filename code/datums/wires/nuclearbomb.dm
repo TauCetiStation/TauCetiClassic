@@ -48,7 +48,7 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 	switch(index)
 		if(NUKE_WIRE_LIGHT)
 			N.lighthack = !N.lighthack
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 
 		if(NUKE_WIRE_TIMING)
 			if(N.timing && !N.detonated)
@@ -56,7 +56,7 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 
 		if(NUKE_WIRE_SAFETY)
 			N.safety = !N.safety
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 			if(N.safety)
 				N.visible_message("<span class='notice'>The [N] quiets down.</span>")
 			else

@@ -349,8 +349,8 @@
 				var/mob/living/carbon/human/H = usr
 				if(HAS_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN))
 					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
-					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>Так...</span>"), 1 SECOND)
-					addtimer(CALLBACK(null, .proc/to_chat, H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
+					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>Так...</span>"), 1 SECOND)
+					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
 					new /obj/random/guns/set_special(loc)
 					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
@@ -407,7 +407,7 @@
 		if( contents.len )
 			if(mode == 2)
 				feedback_inc("disposal_auto_flush",1)
-				INVOKE_ASYNC(src, .proc/flush)
+				INVOKE_ASYNC(src, PROC_REF(flush))
 		flush_count = 0
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
@@ -594,7 +594,7 @@
 	loc = trunk
 	active = 1
 	set_dir(DOWN)
-	addtimer(CALLBACK(src, .proc/move), 1)
+	addtimer(CALLBACK(src, PROC_REF(move)), 1)
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()

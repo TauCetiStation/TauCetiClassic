@@ -68,7 +68,7 @@
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	announcement_timer = addtimer(CALLBACK(src, .proc/stage, FS_START), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)
+	announcement_timer = addtimer(CALLBACK(src, PROC_REF(stage), FS_START), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)
 	spawn_blob_mice()
 	return ..()
 

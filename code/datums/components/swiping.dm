@@ -166,8 +166,8 @@
 		on_sweep_push = SCB.on_sweep_push
 		on_sweep_push_success = SCB.on_sweep_push_success
 
-		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), .proc/try_sweep_push)
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), .proc/try_push_attack)
+		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), PROC_REF(try_sweep_push))
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), PROC_REF(try_push_attack))
 
 	if(SCB.can_pull)
 		can_pull = TRUE
@@ -176,7 +176,7 @@
 		on_sweep_pull = SCB.on_sweep_pull
 		on_sweep_pull_success = SCB.on_sweep_pull_success
 
-		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), .proc/try_sweep_pull)
+		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), PROC_REF(try_sweep_pull))
 
 	on_sweep_move = SCB.on_sweep_move
 	on_can_sweep_hit = SCB.on_can_sweep_hit
@@ -190,15 +190,15 @@
 	if(SCB.can_sweep)
 		can_sweep = TRUE
 		can_sweep_call = SCB.can_sweep_call
-		RegisterSignal(parent, list(COMSIG_ITEM_ALTCLICKWITH), .proc/sweep_facing)
+		RegisterSignal(parent, list(COMSIG_ITEM_ALTCLICKWITH), PROC_REF(sweep_facing))
 
 	if(SCB.can_spin)
 		can_spin = TRUE
 		can_spin_call = SCB.can_spin_call
 		on_spin = SCB.on_spin
-		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
+		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), PROC_REF(sweep_spin_click))
 
-	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
+	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), PROC_REF(sweep_mousedrop))
 
 	var/datum/mechanic_tip/swiping/swipe_tip = new(src)
 	parent.AddComponent(/datum/component/mechanic_desc, list(swipe_tip))
@@ -318,7 +318,7 @@
 		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
 		if(!buckled_to.flipped)
 			var/direction = get_dir(T_target, W_turf)
-			INVOKE_ASYNC(src, .proc/push_on_chair, user.buckled, user, direction)
+			INVOKE_ASYNC(src, PROC_REF(push_on_chair), user.buckled, user, direction)
 			qdel(WS)
 			return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -552,7 +552,7 @@
 
 			user.SetNextMove(sweep_image.sweep_delay * directions.len + 1)
 
-			INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
+			INVOKE_ASYNC(src, PROC_REF(move_sweep_image), current_turf, sweep_image)
 
 		var/continue_sweep = sweep_continue_check(user, sweep_delay)
 		if(!continue_sweep)
@@ -596,7 +596,7 @@
 	if(I.swiping)
 		return
 
-	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay)
+	INVOKE_ASYNC(src, PROC_REF(async_sweep), directions, user, sweep_delay)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -644,7 +644,7 @@
 
 	var/obj/item/W = parent
 
-	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step * 0.5)
+	INVOKE_ASYNC(src, PROC_REF(sweep), directions, user, W.sweep_step * 0.5)
 	return COMPONENT_NO_INTERACT
 
 // A little bootleg for MiddleClick.

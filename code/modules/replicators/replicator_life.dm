@@ -355,7 +355,7 @@
 			continue
 
 		face_atom(to_disintegrate)
-		INVOKE_ASYNC(src, .proc/disintegrate, to_disintegrate)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), to_disintegrate)
 		return
 
 	for(var/t in surrounding_turfs)
@@ -365,18 +365,18 @@
 		if(!can_auto_disintegrate(T))
 			continue
 		face_atom(T)
-		INVOKE_ASYNC(src, .proc/disintegrate, T)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), T)
 		return
 
 	var/to_disintegrate = find_most_clickable(my_turf)
 	if(to_disintegrate)
 		face_atom(to_disintegrate)
-		INVOKE_ASYNC(src, .proc/disintegrate, to_disintegrate)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), to_disintegrate)
 		return
 
 	if(can_auto_disintegrate(my_turf))
 		face_atom(my_turf)
-		INVOKE_ASYNC(src, .proc/disintegrate, my_turf)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), my_turf)
 		return
 
 	set_state(REPLICATOR_STATE_WANDERING)

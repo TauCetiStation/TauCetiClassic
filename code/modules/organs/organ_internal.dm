@@ -149,13 +149,13 @@
 		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
 	else
 		take_damage(1, 0)
-		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+		fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
-	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
 	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
@@ -282,7 +282,7 @@
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	new/obj/item/weapon/stock_parts/cell/crap(src)
-	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(ipc_cell_explode))
 
 /obj/item/organ/internal/liver/process()
 	..()

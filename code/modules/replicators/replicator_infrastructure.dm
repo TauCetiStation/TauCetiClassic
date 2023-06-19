@@ -72,8 +72,8 @@
 	R.visible_message("<span class='notice'>[R] is crumbling apart, holding the portal open.</span>")
 
 	drone_supply = R
-	RegisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING), .proc/stop_drone_energy_supply)
-	RegisterSignal(drone_supply, list(COMSIG_MOVABLE_MOVED), .proc/check_drone_proximity)
+	RegisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING), PROC_REF(stop_drone_energy_supply))
+	RegisterSignal(drone_supply, list(COMSIG_MOVABLE_MOVED), PROC_REF(check_drone_proximity))
 
 	drone_supply.sacrifice_powering = TRUE
 
@@ -401,7 +401,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	if(AM.invisibility <= 0)
 		return ..()
 
-	INVOKE_ASYNC(src, .proc/try_teleport, AM)
+	INVOKE_ASYNC(src, PROC_REF(try_teleport), AM)
 
 /obj/machinery/power/replicator_generator/proc/teleportation_checks(mob/living/simple_animal/hostile/replicator/R, obj/machinery/power/replicator_generator/target)
 	if(!R.is_controlled())
@@ -431,7 +431,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	visible_message("<span class='notice'>[src] appears to be charging up.</span>")
-	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, .proc/teleportation_checks)))
+	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, PROC_REF(teleportation_checks))))
 		return
 
 	var/list/pos_areas = list()

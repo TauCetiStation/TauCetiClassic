@@ -107,8 +107,8 @@
 	TCB.attacksound = hitsound_wielded
 	TCB.force_wielded = 45
 	TCB.force_unwielded = 3
-	TCB.on_wield = CALLBACK(src, .proc/on_wield)
-	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
+	TCB.on_wield = CALLBACK(src, PROC_REF(on_wield))
+	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
 	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/weapon/dualsaber/proc/on_wield()

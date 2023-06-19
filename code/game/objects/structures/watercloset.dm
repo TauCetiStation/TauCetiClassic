@@ -484,12 +484,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			return
 		if(!ismist)
 			if(on)
-				addtimer(CALLBACK(src, .proc/create_mist), 50)
+				addtimer(CALLBACK(src, PROC_REF(create_mist)), 50)
 		else
 			create_mist()
 	else if(ismist)
 		create_mist()
-		addtimer(CALLBACK(src, .proc/del_mist), 250)
+		addtimer(CALLBACK(src, PROC_REF(del_mist)), 250)
 		if(!on)
 			del_mist()
 

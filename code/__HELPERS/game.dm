@@ -698,7 +698,7 @@
 			to_chat(M, "<span class='warning'>You are banned from [be_special_type]!</span>")
 		return
 
-	INVOKE_ASYNC(src, .proc/request_n_transfer, M, Question, be_special_type, Ignore_Role, show_warnings)
+	INVOKE_ASYNC(src, PROC_REF(request_n_transfer), M, Question, be_special_type, Ignore_Role, show_warnings)
 
 /mob/proc/request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
 	var/ans

@@ -110,7 +110,7 @@
 		if(0)
 			explode()
 
-	timer_to_destruct = addtimer(CALLBACK(src, .proc/start_exp, sec - 1), 1 SECOND, TIMER_STOPPABLE)
+	timer_to_destruct = addtimer(CALLBACK(src, PROC_REF(start_exp), sec - 1), 1 SECOND, TIMER_STOPPABLE)
 
 /obj/item/device/taperecorder/proc/record()
 	if(usr.incapacitated())

@@ -25,7 +25,7 @@
 /obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
-		INVOKE_ASYNC(src, .proc/scan)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else
@@ -200,7 +200,7 @@
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', VOL_EFFECTS_MASTER, 10)
-		INVOKE_ASYNC(src, .proc/scan)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else

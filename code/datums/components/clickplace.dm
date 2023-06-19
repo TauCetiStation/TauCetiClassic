@@ -37,8 +37,8 @@
 	on_place = _on_place
 	on_slam = _on_slam
 
-	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/try_place_click)
-	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), .proc/try_place_drag)
+	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), PROC_REF(try_place_click))
+	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), PROC_REF(try_place_drag))
 
 	var/datum/mechanic_tip/clickplace/clickplace_tip = new
 	parent.AddComponent(/datum/component/mechanic_desc, list(clickplace_tip))

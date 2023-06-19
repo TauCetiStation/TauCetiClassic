@@ -287,7 +287,7 @@ Message ends."}
 	sleep(10)
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 	SSticker.station_explosion_cinematic(0, "replicators")
-	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(blue_screen)), 17.6 SECONDS)
 
 	var/obj/effect/cross_action/spacetime_dist/center = new(T)
 	center.linked_dist = center

@@ -327,7 +327,7 @@ for(var/atom in bag_of_atoms)
 //Хорошо:
 /mob/some/class/proc/foo()
 	code
-	addtimer(CALLBACK(src, .proc/do_something_wrapper, variable), 20)
+	addtimer(CALLBACK(src, PROC_REF(do_something_wrapper), variable), 20)
 	addtimer(CALLBACK(other_mob, /mob.proc/do_something_crazy, a, b), 40)
 	VARSET_IN(src, name, "Steve", 30)
 
@@ -381,7 +381,7 @@ for(var/atom in bag_of_atoms)
 //Хорошо:
 /mob/some/class/proc/foo()
 	code
-	INVOKE_ASYNC(src, .proc/do_something_wrapper, variable)
+	INVOKE_ASYNC(src, PROC_REF(do_something_wrapper), variable)
 
 /mob/some/class/proc/do_something_wrapper(variable)
 	switch(variable)

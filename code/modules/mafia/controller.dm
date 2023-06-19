@@ -180,10 +180,10 @@
 		if(turn == 1)
 			send_message("<span class='notice'><b>Выбранная карта: [current_map.name]!</b></br>[current_map.description]</span>")
 			send_message("<b>День [turn] начался! В первый день голосования нет. Скажите всем привет!</b>")
-			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
+			next_phase_timer = addtimer(CALLBACK(src,PROC_REF(check_trial), FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
 			send_message("<b>День [turn] начался! Голосование начнется через одну минуту.</b>")
-			next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
+			next_phase_timer = addtimer(CALLBACK(src,PROC_REF(start_voting_phase)),day_phase_period,TIMER_STOPPABLE)
 
 	SStgui.update_uis(src)
 
@@ -196,7 +196,7 @@
  */
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
-	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
 	send_message("<b>Голосование началось! Проголосуйте, кого вы хотите увидеть на суде сегодня.</b>")
 	SStgui.update_uis(src)
 
@@ -225,7 +225,7 @@
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
-		next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),judgement_phase_period,TIMER_STOPPABLE)
+		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(lynch)),judgement_phase_period,TIMER_STOPPABLE)
 		reset_votes("Day")
 	else
 		if(verbose)
@@ -254,13 +254,13 @@
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message("<span class='red'><b>Большинство считает что подсудимый виновен, [on_trial.body.real_name] был казнен.</b></span>")
 		on_trial.kill(src,lynch = TRUE)
-		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
+		addtimer(CALLBACK(src, PROC_REF(send_home), on_trial),judgement_lynch_period)
 	else
 		send_message("<span class='green'><b>Большинство считает что подсудимый невиновен, [on_trial.body.real_name] был пощажен.</b></span>" )
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	on_trial = null
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
-	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
 
 /**
  * Teenie helper proc to move players back to their home.
@@ -354,7 +354,7 @@
 	for(var/datum/mafia_role/R in all_roles)
 		R.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
-	next_phase_timer = addtimer(CALLBACK(src, .proc/end_game), victory_lap_period, TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(end_game)), victory_lap_period, TIMER_STOPPABLE)
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
@@ -410,7 +410,7 @@
 	phase = MAFIA_PHASE_NIGHT
 	send_message("<b>Ночь [turn] началась! Блокировка закончится через 45 секунд.</b>")
 	SEND_SIGNAL(src,COMSIG_MAFIA_SUNDOWN)
-	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(resolve_night)),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
 /**

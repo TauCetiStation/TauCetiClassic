@@ -85,7 +85,7 @@
 	add_filter("wallshield_outline", 2, outline_filter(1, "#c0c0c0"))
 	update_icon()
 	update_inv_mob()
-	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), .proc/user_moved)
+	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), PROC_REF(user_moved))
 	return TRUE
 
 /obj/item/weapon/shield/proc/disable_wallshield(mob/living/user)

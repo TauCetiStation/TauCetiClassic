@@ -29,7 +29,7 @@
 /obj/singularity/narsie/atom_init(mapload, datum/religion/religion = global.cult_religion)
 	. = ..()
 	my_religion = religion
-	INVOKE_ASYNC(src, .proc/begin_the_end)
+	INVOKE_ASYNC(src, PROC_REF(begin_the_end))
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))

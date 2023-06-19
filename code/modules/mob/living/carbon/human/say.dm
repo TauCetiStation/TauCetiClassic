@@ -22,7 +22,7 @@
 
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
-				CALLBACK(src, .proc/handle_no_socialization),
+				CALLBACK(src, PROC_REF(handle_no_socialization)),
 				5 MINUTES,
 				TIMER_STOPPABLE
 			)
@@ -33,7 +33,7 @@
 
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
-				CALLBACK(src, .proc/handle_prolonged_no_socialization),
+				CALLBACK(src, PROC_REF(handle_prolonged_no_socialization)),
 				5 MINUTES,
 				TIMER_STOPPABLE
 			)

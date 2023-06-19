@@ -183,9 +183,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	AddComponent(/datum/component/replicator_regeneration)
 
-	RegisterSignal(src, COMSIG_LIVING_CAN_TRACK, .proc/can_be_tracked)
+	RegisterSignal(src, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_be_tracked))
 
-	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), .proc/on_clientmob_move)
+	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), PROC_REF(on_clientmob_move))
 
 /mob/living/simple_animal/hostile/replicator/proc/can_be_tracked(datum/source)
 	SIGNAL_HANDLER
@@ -508,7 +508,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		to_chat(R, "<span class='notice'>Issued a self-destruct order to [name].</span>")
 		set_state(REPLICATOR_STATE_HARVESTING)
 		set_last_controller(R.ckey)
-		INVOKE_ASYNC(src, .proc/disintegrate, src)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), src)
 		return
 
 	if(href_list["replicator_objection"])

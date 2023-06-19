@@ -40,11 +40,11 @@
 
 	leader.controlling_drones += 1
 
-	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVING), .proc/_repeat_leader_move)
-	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), .proc/_repeat_leader_attack)
-	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
-	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), .proc/on_leader_m_intent_change)
-	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
+	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVING), PROC_REF(_repeat_leader_move))
+	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), PROC_REF(_repeat_leader_attack))
+	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), PROC_REF(on_leader_intent_change))
+	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), PROC_REF(on_leader_m_intent_change))
+	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), PROC_REF(forget_leader))
 
 	excitement = 30
 
@@ -129,7 +129,7 @@
 		next_pretend_delay_action = world.time + fake_delay + 1
 
 	if(fake_delay > 0)
-		addtimer(CALLBACK(src, .proc/repeat_leader_attack, source, target, params), fake_delay)
+		addtimer(CALLBACK(src, PROC_REF(repeat_leader_attack), source, target, params), fake_delay)
 		return
 	repeat_leader_attack(source, target, params)
 
