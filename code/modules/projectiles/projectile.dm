@@ -236,6 +236,7 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
+			bullet_act(src)
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
