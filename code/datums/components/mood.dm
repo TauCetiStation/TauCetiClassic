@@ -304,7 +304,7 @@
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	mood_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
+	mood_events = sortTim(mood_events, cmp=GLOBAL_PROC_REF(cmp_abs_mood_dsc), associative=TRUE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER

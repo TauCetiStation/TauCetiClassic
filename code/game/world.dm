@@ -208,7 +208,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 	var/list/dellog = list()
 
 	//sort by how long it's wasted hard deleting
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	sortTim(SSgarbage.items, cmp=GLOBAL_PROC_REF(cmp_qdel_item_time), associative = TRUE)
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "Path: [path]"

@@ -55,7 +55,7 @@
 		if(nearby_mob != src && !isslime(nearby_mob))
 			choices += nearby_mob
 
-	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sortTim(choices, /proc/cmp_name_asc))
+	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sortTim(choices, GLOBAL_PROC_REF(cmp_name_asc)))
 	if(!isliving(choice))
 		return
 

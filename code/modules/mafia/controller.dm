@@ -512,7 +512,7 @@
 			tally[votes[vote_type][votee]] = 1
 		else
 			tally[votes[vote_type][votee]] += 1
-	sortTim(tally,/proc/cmp_numeric_dsc,associative=TRUE)
+	sortTim(tally, GLOBAL_PROC_REF(cmp_numeric_dsc), associative=TRUE)
 	return length(tally) ? tally[1] : null
 
 /**
