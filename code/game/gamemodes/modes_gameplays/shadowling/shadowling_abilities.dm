@@ -69,13 +69,13 @@
 			if(get_dist(center, G) <= 2) //Very small radius
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
-		
+
 		if(T.is_light_floor())
 			var/turf/simulated/floor/F = T
 			F.set_lightfloor_on(FALSE)
 			F.visible_message("<span class='danger'>\The [T] suddenly turns off!</span>")
 			F.update_icon()
-				
+
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
@@ -273,7 +273,7 @@
 		var/thralls = 0
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		var/crew = faction.check_crew()
-		var/victory_threshold = max(15, round(crew/2))	
+		var/victory_threshold = max(15, round(crew/2))
 		var/mob/M
 
 		to_chat(user, "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")
