@@ -144,6 +144,8 @@
 
 /obj/structure/table/bullet_act(obj/item/projectile/P)
 	. = ..()
+	if(. != PROJECTILE_ALL_OK)
+		return
 	var/list/mobs = list()
 	for(var/mob/Mob in src.loc)
 		mobs += Mob
