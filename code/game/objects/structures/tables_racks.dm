@@ -151,7 +151,7 @@
 		mobs += Mob
 	if(mobs.len >= 1)
 		var/mob/mob = pick(mobs)
-		mob.bullet_act(P, P.def_zone)
+		. = mob.bullet_act(P, P.def_zone)
 
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
