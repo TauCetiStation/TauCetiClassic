@@ -240,7 +240,7 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NONE)
+	required_skills = null
 
 	var/light_range_on = 1.5
 	var/light_power_on = 3

@@ -17,7 +17,7 @@
 
 	process_last = TRUE
 
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NONE)
+	required_skills = null
 
 	var/capacity = 0 // Maximum charge
 	var/charge = 0 // Actual charge
