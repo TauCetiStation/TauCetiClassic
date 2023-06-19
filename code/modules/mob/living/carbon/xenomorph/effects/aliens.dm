@@ -300,14 +300,14 @@
 	var/ticks = 0
 	var/target_strength = 0
 
-/obj/effect/alien/acid/atom_init(mapload, target)
+/obj/effect/alien/queen_acid/atom_init(mapload, target)
 	..()
 	src.target = target
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/alien/acid/atom_init_late()
+/obj/effect/alien/queen_acid/atom_init_late()
 	if(iswallturf(target))
-		target_strength = 10
+		target_strength = 4
 	else if(is_type_in_list(target, ventcrawl_machinery))
 		target_strength = 2
 	else
@@ -326,8 +326,10 @@
 
 		if(iswallturf(target))
 			var/turf/simulated/wall/W = target
-			var/turf/simulated/wall/r_wall = target
 			W.dismantle_wall(1)
+		else if(isrwallturf(target))
+			var/turf/simulated/wall/r_wall/RW = target
+			RW.dismantle_rwall(1)
 		else if(isfloorturf(target))
 			var/turf/simulated/floor/F = target
 			F.make_plating()

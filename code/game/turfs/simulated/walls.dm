@@ -127,7 +127,6 @@
 		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		var/newgirder = break_wall()
 		transfer_fingerprints_to(newgirder)
-
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/effect/decal/cleanable/crayon))
 			qdel(O)
@@ -137,6 +136,33 @@
 		else
 			O.loc = src
 	ChangeTurf(/turf/simulated/floor/plating)
+
+/turf/simulated/wall/r_wall/proc/dismantle_rwall(devastated=0, explode=0)
+	if(devastated)
+		devastate_rwall()
+	else
+		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+		var/newgirder = break_rwall()
+		transfer_fingerprints_to(newgirder)
+	for(var/obj/O in src.contents) //Eject contents!
+		if(istype(O,/obj/effect/decal/cleanable/crayon))
+			qdel(O)
+		else if(istype(O,/obj/structure/sign/poster))
+			var/obj/structure/sign/poster/P = O
+			P.roll_and_drop(src)
+		else
+			O.loc = src
+	ChangeTurf(/turf/simulated/floor/plating)
+
+/turf/simulated/wall/r_wall/proc/break_rwall()
+	if(istype(src, /turf/simulated/wall/r_wall))
+		new /obj/item/stack/sheet/metal(src)
+		new /obj/item/stack/sheet/plasteel(src)
+
+/turf/simulated/wall/r_wall/proc/devastate_rwall()
+	if(istype(src, /turf/simulated/wall/r_wall))
+		new /obj/item/stack/sheet/metal(src)
+		new /obj/item/stack/sheet/plasteel(src)
 
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
@@ -150,9 +176,6 @@
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
 		new /obj/effect/decal/remains/human(src)
-
-	new sheet_type(src, 2)
-	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)

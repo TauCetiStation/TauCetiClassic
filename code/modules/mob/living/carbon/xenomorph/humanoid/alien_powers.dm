@@ -46,6 +46,35 @@
 		else
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")
 
+/mob/living/carbon/xenomorph/humanoid/proc/queen_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+	set name = "Corrossive Queen Acid (125)"
+	set desc = "Drench an object in queen acid, destroying it over time."
+	set category = "Alien"
+
+	if(powerc(125))
+		if(O in oview(1))
+			// OBJ CHECK
+			if(isobj(O))
+				var/obj/I = O
+				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
+					return
+			// TURF CHECK
+			else if(istype(O, /turf/simulated))
+				var/turf/T = O
+				// R FLOOR
+				if(istype(T, /turf/simulated/floor/engine))
+					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
+					return
+			else// Not a type we can acid.
+				return
+
+			adjustToxLoss(-100)
+			new /obj/effect/alien/queen_acid(get_turf(O), O)
+			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
+		else
+			to_chat(src, "<span class='warning'>Target is too far away.</span>")
+
 /mob/living/carbon/xenomorph/humanoid/proc/toggle_neurotoxin(message = TRUE)
 	switch(neurotoxin_on_click)
 

@@ -273,7 +273,7 @@
 	invocation_type = "none"
 	centcomm_cancast = FALSE
 	action_background_icon_state = "bg_alien"
-	action_icon_state = "secrete_resin"
+	action_icon_state = "queen_acid"
 	sound = 'sound/effects/resin_build.ogg'
 	plasma_cost = 75
 	var/build_name = null
