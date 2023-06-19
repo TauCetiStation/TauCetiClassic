@@ -1395,10 +1395,10 @@
 		if(2)
 			if(!trait_added)
 				trait_added = TRUE
+				if(ishuman(A))
+					var/mob/living/carbon/human/H = A
+					heal_artery(H)
 				ADD_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
-			if(!ishuman(A))
-				return
-			heal_artery(A)
 
 /datum/disease2/effect/hemocoagulation/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	REMOVE_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
