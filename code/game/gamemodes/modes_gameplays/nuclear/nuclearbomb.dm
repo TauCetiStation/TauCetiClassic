@@ -500,7 +500,7 @@ var/global/bomb_set
 	detonated = TRUE
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
 	update_icon()
-	addtimer(CALLBACK(src, .proc/fail), 13 SECONDS) //Good taste, right?
+	addtimer(CALLBACK(src, PROC_REF(fail)), 13 SECONDS) //Good taste, right?
 
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()

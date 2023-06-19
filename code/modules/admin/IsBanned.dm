@@ -197,7 +197,7 @@
 	stoplag()
 	// Restore on 5 seconds
 	global.stickyban_admin_exemption_timer_id = addtimer( \
-		CALLBACK(GLOBAL_PROC, /proc/restore_stickybans),  \
+		CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_stickybans)),  \
 		seconds SECONDS, \
 		TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 

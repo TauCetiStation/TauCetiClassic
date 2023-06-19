@@ -137,7 +137,7 @@
 		var/num_unloaded = 0
 		while (get_ammo() > 0)
 			spawn(3)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round(FALSE)
 			chambered = null

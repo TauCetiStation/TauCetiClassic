@@ -1600,7 +1600,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 			lobby_screen = "lobby"
 
 	for(var/mob/dead/new_player/N as anything in new_player_list)
-		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
+		INVOKE_ASYNC(N, TYPE_PROC_REF(/mob/dead/new_player, show_titlescreen))
 
 // Converts browser keycodes to BYOND keycodes.
 /proc/browser_keycode_to_byond(keycode)

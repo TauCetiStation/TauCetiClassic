@@ -35,7 +35,7 @@
 	if(!isnull(beam_plane))
 		plane = beam_plane
 	if(time < INFINITY)
-		addtimer(CALLBACK(src,.proc/End), time)
+		addtimer(CALLBACK(src,PROC_REF(End)), time)
 
 /datum/beam/proc/Start()
 	visuals = new beam_type()
@@ -69,13 +69,13 @@
 /datum/beam/proc/recalculate_in(time)
 	if(timing_id)
 		deltimer(timing_id)
-	timing_id = addtimer(CALLBACK(src, .proc/recalculate), time, TIMER_STOPPABLE)
+	timing_id = addtimer(CALLBACK(src, PROC_REF(recalculate)), time, TIMER_STOPPABLE)
 
 /datum/beam/proc/after_calculate()
 	if((sleep_time == null) || finished)	//Does not automatically recalculate.
 		return
 	if(isnull(timing_id))
-		timing_id = addtimer(CALLBACK(src, .proc/recalculate), sleep_time, TIMER_STOPPABLE)
+		timing_id = addtimer(CALLBACK(src, PROC_REF(recalculate)), sleep_time, TIMER_STOPPABLE)
 
 /datum/beam/proc/End(destroy_self = TRUE)
 	finished = TRUE
@@ -171,5 +171,5 @@
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane)
-	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
+	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam, Start))
 	return newbeam

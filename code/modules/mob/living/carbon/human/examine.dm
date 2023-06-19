@@ -574,11 +574,6 @@
 	//someone here, but who?
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != ABDUCTOR)
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
-				if(V.stealth_active)
-					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
-					return
 		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
 			for(var/obj/item/weapon/implant/blueshield/B in H)
 				B.last_examined = world.time

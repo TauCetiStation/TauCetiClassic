@@ -1034,7 +1034,7 @@ var/global/list/airlock_overlays = list()
 	if(autoclose)
 		if(close_timer_id)
 			deltimer(close_timer_id)
-		close_timer_id = addtimer(CALLBACK(src, .proc/do_autoclose), normalspeed ? 150 : 5, TIMER_STOPPABLE)
+		close_timer_id = addtimer(CALLBACK(src, PROC_REF(do_autoclose)), normalspeed ? 150 : 5, TIMER_STOPPABLE)
 
 /obj/machinery/door/airlock/proc/do_autoclose()
 	close_timer_id = null

@@ -129,7 +129,6 @@
 	desc = "Creates your new ally"
 	uses = 0
 	icon_state = "species"
-	var/team = 0
 
 /obj/item/gland/abductor/Inject(mob/living/carbon/human/target)
 	. = ..()
@@ -138,14 +137,8 @@
 		host.AdjustConfused(8)
 		host.make_jittery(60)
 		host.emote("scream")
-		var/datum/faction/abductors/req_f
-		for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
-			if(F.team_number == team)
-				req_f = F
-				break
-		if(!req_f)
-			return
 		host.setOxyLoss(0) //They can't heal oxyloss, so we need to deal with it right now
+		var/datum/faction/abductors/req_f = create_uniq_faction(/datum/faction/abductors)
 		var/datum/role/R = SSticker.mode.CreateRole(/datum/role/abductor/assistant, host)
 		req_f.HandleRecruitedRole(R)
 		setup_role(R, TRUE)

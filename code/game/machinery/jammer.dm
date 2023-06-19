@@ -111,7 +111,7 @@
 		return
 	if(prob(80/severity))
 		stat |= EMPED
-		addtimer(CALLBACK(src, .proc/after_emp), 10 MINUTES / severity)
+		addtimer(CALLBACK(src, PROC_REF(after_emp)), 10 MINUTES / severity)
 
 /obj/machinery/telescience_jammer/proc/after_emp()
 	stat &= ~EMPED

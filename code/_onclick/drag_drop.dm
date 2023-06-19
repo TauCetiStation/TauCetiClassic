@@ -28,7 +28,7 @@
 	if(!CanMouseDrop(over, usr))
 		return FALSE
 
-	INVOKE_ASYNC(over, /atom.proc/MouseDrop_T, src, usr)
+	INVOKE_ASYNC(over, TYPE_PROC_REF(/atom, MouseDrop_T), src, usr)
 	return TRUE
 
 // recieve a mousedrop

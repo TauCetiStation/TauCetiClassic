@@ -191,7 +191,7 @@
 		for(var/obj/item/I in changeling) //drops all items
 			changeling.drop_from_inventory(I)
 		changeling.Stun(10)
-		addtimer(CALLBACK(src, .proc/turn_to_abomination), 30)
+		addtimer(CALLBACK(src, PROC_REF(turn_to_abomination)), 30)
 
 /datum/role/changeling/proc/turn_to_abomination()
 	var/mob/living/carbon/human/changeling = antag.current

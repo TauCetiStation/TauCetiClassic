@@ -365,7 +365,7 @@
 			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
 			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
-			addtimer(CALLBACK(src, .proc/print_scan, storedinfo), 1 SECOND)
+			addtimer(CALLBACK(src, PROC_REF(print_scan), storedinfo), 1 SECOND)
 		else
 			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")
 
