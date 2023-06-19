@@ -133,6 +133,8 @@
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				to_chat(user, "<span class='warning'>[target] is full.</span>")
 				return
+			if(isextinguisher(target) && !src.reagents.has_reagent("aqueous_foam"))
+				return
 
 			if(isliving(target))
 				var/mob/living/L = target

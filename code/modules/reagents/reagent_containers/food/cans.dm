@@ -98,7 +98,8 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
-
+		if(isextinguisher(target) && !src.reagents.has_reagent("aqueous_foam"))
+			return
 		var/datum/reagent/refill
 		var/datum/reagent/refillName
 		if(isrobot(user))

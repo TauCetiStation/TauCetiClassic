@@ -161,6 +161,8 @@
 
 #define isunder(A) (istype(A, /obj/item/clothing/under))
 
+#define isextinguisher(A) (istype(A, /obj/item/weapon/reagent_containers/spray/extinguisher))
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))

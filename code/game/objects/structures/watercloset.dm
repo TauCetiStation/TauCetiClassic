@@ -648,7 +648,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if (istype(O, /obj/item/weapon/reagent_containers) && O.is_open_container())
+	if (istype(O, /obj/item/weapon/reagent_containers) && !isextinguisher(O) && O.is_open_container())
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill \the [RG] using \the [src].</span>")
