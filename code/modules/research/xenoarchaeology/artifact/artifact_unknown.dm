@@ -59,8 +59,8 @@
  */
 /obj/machinery/artifact/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), PROC_REF(turf_around_enter))
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), PROC_REF(turf_around_exit))
 		turfs_around += T
 
 /**
@@ -313,7 +313,7 @@
 	if(first_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
 		if(turfs_around.len != 0)
 			clear_turfs_around()
-		addtimer(CALLBACK(src, .proc/init_turfs_around), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(init_turfs_around)), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null

@@ -483,7 +483,7 @@ steam.start() -- spawns the effect
 	MakeSlippery()
 	icon_state = "[metal ? "m" : ""]foam"
 	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
+	addtimer(CALLBACK(src, PROC_REF(disolve_stage), 1), 3 + metal * 3)
 
 /obj/effect/effect/foam/proc/MakeSlippery()
 	if(!metal)
@@ -494,10 +494,10 @@ steam.start() -- spawns the effect
 		if(1)
 			process()
 			checkReagents()
-			addtimer(CALLBACK(src, .proc/disolve_stage, 2), 120)
+			addtimer(CALLBACK(src, PROC_REF(disolve_stage), 2), 120)
 		if(2)
 			STOP_PROCESSING(SSobj, src)
-			addtimer(CALLBACK(src, .proc/disolve_stage, 3), 30)
+			addtimer(CALLBACK(src, PROC_REF(disolve_stage), 3), 30)
 
 		if(3)
 			if(metal)

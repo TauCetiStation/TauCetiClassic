@@ -14,12 +14,12 @@
 
 	START_PROCESSING(SSmood, src)
 
-	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
-	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
-	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
+	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, PROC_REF(add_event))
+	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, PROC_REF(clear_event))
+	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(check_area_mood))
+	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, PROC_REF(on_revive))
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(modify_hud))
+	RegisterSignal(parent, COMSIG_MOB_SLIP, PROC_REF(on_slip))
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -290,7 +290,7 @@
 			clear_event(null, category)
 		else
 			if(the_event.timeout)
-				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+				addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return //Don't have to update the event.
 
 	var/list/params = args.Copy(4)
@@ -302,9 +302,9 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	mood_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
+	mood_events = sortTim(mood_events, cmp=GLOBAL_PROC_REF(cmp_abs_mood_dsc), associative=TRUE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER
@@ -336,8 +336,8 @@
 	screen_obj.color = "#4b96c4"
 	screen_obj.add_to_hud(hud)
 
-	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
-	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, PROC_REF(unmodify_hud))
+	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(hud_click))
 
 	update_mood_icon()
 	update_mood_client_color()

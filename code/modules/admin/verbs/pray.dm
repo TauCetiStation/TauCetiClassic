@@ -104,7 +104,7 @@
 
 /mob/living/carbon/human/pray_act(message, speaking, alt_name, verb_)
 	if(whisper_say(message, speaking, alt_name, "prays quietly"))
-		INVOKE_ASYNC(src, /mob.proc/pray_animation)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, pray_animation))
 	else
 		// Mimes, and other mute beings.
 		emote("pray")

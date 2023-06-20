@@ -15,8 +15,11 @@
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/can_be_crisis = FALSE //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
+
+	// admin-settable for combat module use.
+	var/can_be_crisis = FALSE 
+	var/can_be_security = FALSE
 
 //Hud stuff
 
@@ -70,7 +73,6 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
-	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
@@ -190,10 +192,11 @@
 		for(var/mod in modules)
 			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
 
-	if(can_be_crisis && security_level >= SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "<span class='warning'>Crisis mode active. Combat and Security available.</span>")
+	if(can_be_crisis) //Leaving this in until it's balanced appropriately.
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 	if(can_be_security)
+		to_chat(src, "<span class='warning'>Security mode active. Security module available.</span>")
 		choose_module["Security"] = image(icon = 'icons/mob/robots.dmi', icon_state = "security")
 
 	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
@@ -924,7 +927,7 @@
 
 	update_fire()
 
-	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Security" ||  icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
+	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
 			add_overlay("mechoid-open+w")
 		else if(cell)
