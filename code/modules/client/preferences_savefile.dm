@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 41
+#define SAVEFILE_VERSION_MAX 42
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -228,13 +228,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
 
-	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 38)
-		if(ignore_question && ignore_question.len)
-			var/list/diff = ignore_question - global.full_ignore_question
-			if(diff.len)
-				S["ignore_question"] << ignore_question - diff
-
 	if(current_version < 38)
 		if("Raider" in be_role)
 			be_role -= "Raider"
@@ -250,6 +243,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ignore_question -= "Lavra"
 				ignore_question |= IGNORE_LARVA
 				S["ignore_question"] << ignore_question
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 42)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 42)
+		if(ROLE_NINJA in be_role)
+			be_role -= ROLE_NINJA
+		if(ROLE_ABDUCTOR in be_role)
+			be_role -= ROLE_ABDUCTOR
+		S["be_role"] << be_role
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
