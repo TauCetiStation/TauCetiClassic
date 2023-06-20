@@ -103,6 +103,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 		"station" = list(
 			// benches and stuff
 			"null" = 50,
+			/obj/structure/bench = 50,
 			/obj/structure/closet/crate/bin = 50,
 			/obj/item/weapon/cigbutt = 2,
 			/obj/item/weapon/cigbutt/cigarbutt = 1,
@@ -252,6 +253,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/machinery/floodlight,
 		/obj/machinery/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
+		/obj/structure/bench,
 		/obj/structure/flora/tree/pine/train,
 		/obj/structure/flora/tree/dead/train,
 		/obj/structure/flora/ausbushes/fullgrass/train,

@@ -59,38 +59,6 @@
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "sheater-off"
 
-//FURNITURE
-
-/obj/structure/rack/traintable //Sort of a table limited to a single tile
-	name = "table"
-	desc = "A wedge shaped piece of metal standing on single metal leg.<br>It can not move, but you can fold it." //Add table folding feature.
-	icon = 'trainstation13/icons/trainstructures.dmi'
-	icon_state = "table" //Has 4 directions
-
-/obj/structure/rack/trainshelf //Technically a rack, but really a wall shelf you can pass through because it's attached to a wall slightly above human height.
-	name = "wall shelf"
-	desc = "A sturdy cargo wall shelf attached to a wall with metal pipes."
-	icon = 'trainstation13/icons/trainstructures.dmi'
-	icon_state = "shelf_metal" //Has 4 directions
-	density = FALSE
-
-/obj/structure/stool/bed/chair/wood/fancy //Why does vanilla wooden furniture look so terrible?
-	name = "fancy wooden chair"
-	desc = "Judging by its soft red velour seat, this chair is too expensive for you."
-	icon = 'trainstation13/icons/trainstructures.dmi'
-	icon_state = "wooden_chair_fancy"
-
-/obj/structure/stool/sofa //Technically a stool, until Tau Ceti gets sofas.
-	name = "sofa"
-	icon = 'trainstation13/icons/trainstructures.dmi'
-	icon_state = "sofa"
-
-/obj/structure/bedsheetbin/trainbedsheetbin
-	name = "linen bin"
-	desc = "A linen bin. Don't forget to turn in your bedsheet."
-	icon = 'icons/obj/structures.dmi'
-	amount = 5
-
 //DECALS
 
 /obj/structure/sign/moon
@@ -146,3 +114,67 @@
 	. = ..()
 	dir = rand(1, 4)
 	icon_state = "derelict_[rand(1, 6)]"
+
+//FURNITURE
+
+/obj/structure/rack/traintable //Sort of a table limited to a single tile
+	name = "table"
+	desc = "A wedge shaped piece of metal standing on single metal leg.<br>It can not move, but you can fold it." //Add table folding feature.
+	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon_state = "table" //Has 4 directions
+
+/obj/structure/rack/trainshelf //Technically a rack, but really a wall shelf you can pass through because it's attached to a wall slightly above human height.
+	name = "wall shelf"
+	desc = "A sturdy cargo wall shelf attached to a wall with metal pipes."
+	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon_state = "shelf_metal" //Has 4 directions
+	density = FALSE
+
+/obj/structure/stool/bed/chair/wood/fancy //Why does vanilla wooden furniture look so terrible?
+	name = "fancy wooden chair"
+	desc = "Judging by its soft red velour seat, this chair is too expensive for you."
+	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon_state = "wooden_chair_fancy"
+
+/obj/structure/stool/sofa //Technically a stool, until Tau Ceti gets sofas.
+	name = "sofa"
+	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon_state = "sofa"
+
+/obj/structure/bedsheetbin/trainbedsheetbin
+	name = "linen bin"
+	desc = "A linen bin. Don't forget to turn in your bedsheet."
+	icon = 'icons/obj/structures.dmi'
+	amount = 5
+
+/obj/structure/bench
+	name = "bench"
+	desc = "A wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+	icon = 'trainstation13/icons/64x32.dmi'
+	icon_state = "bench"
+	anchored = FALSE
+
+/obj/structure/bench/attackby(obj/item/O, mob/user)
+	if(iswrenching(O))
+		if(user.is_busy(src))
+			return
+		if (anchored)
+			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
+			if (O.use_tool(src, user, 40, volume = 50))
+				user.visible_message(
+					"<span class='notice'>[user] loosens \the [src]'s casters.</span>",
+					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
+					"<span class='notice'>You hear ratchet.</span>"
+				)
+		else
+			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
+			if(O.use_tool(src, user, 20, volume = 50))
+				user.visible_message(
+					"<span class='notice'>[user] tightens \the [src]'s casters.</span>",
+					"<span class='notice'>You have tightened \the [src]'s casters. No one will be able to pull it away.</span>",
+					"<span class='notice'>You hear ratchet.</span>"
+				)
+
+		anchored = !anchored
+	else
+		..()
