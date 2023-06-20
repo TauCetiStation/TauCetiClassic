@@ -192,10 +192,11 @@
 		for(var/mod in modules)
 			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
 
-	if(can_be_crisis && security_level >= SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "<span class='warning'>Crisis mode active. Combat and Security available.</span>")
+	if(can_be_crisis) //Leaving this in until it's balanced appropriately.
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 	if(can_be_security)
+		to_chat(src, "<span class='warning'>Security mode active. Security module available.</span>")
 		choose_module["Security"] = image(icon = 'icons/mob/robots.dmi', icon_state = "security")
 
 	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
