@@ -247,10 +247,10 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
-	addtimer(CALLBACK(src, .proc/setup_field, NORTH), 1)
-	addtimer(CALLBACK(src, .proc/setup_field, SOUTH), 2)
-	addtimer(CALLBACK(src, .proc/setup_field, EAST), 3)
-	addtimer(CALLBACK(src, .proc/setup_field, WEST), 4)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), NORTH), 1)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), SOUTH), 2)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), EAST), 3)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), WEST), 4)
 	active = FG_ONLINE
 
 /obj/machinery/field_generator/proc/setup_field(NSEW)
@@ -325,7 +325,7 @@ field_generator power level display
 	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
 	//singulo eats the evidence". It's not fool-proof but better than nothing.
 	//I want to avoid using global variables.
-	addtimer(CALLBACK(src, .proc/warn_admins), 1)
+	addtimer(CALLBACK(src, PROC_REF(warn_admins)), 1)
 
 /obj/machinery/field_generator/proc/warn_admins()
 	var/temp = TRUE //stops spam

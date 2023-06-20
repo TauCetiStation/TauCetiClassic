@@ -298,7 +298,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!addedbind)
 			notadded += kb
 	if(length(notadded))
-		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
@@ -526,6 +526,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]          >> r_hair
 	S["hair_green"]        >> g_hair
 	S["hair_blue"]         >> b_hair
+	S["belly_red"]         >> r_belly
+	S["belly_green"]       >> g_belly
+	S["belly_blue"]        >> b_belly
 	S["grad_red"]          >> r_grad
 	S["grad_green"]        >> g_grad
 	S["grad_blue"]         >> b_grad
@@ -575,6 +578,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"]         >> home_system
 	S["citizenship"]         >> citizenship
+	S["insurance"]           >> insurance
 	S["faction"]             >> faction
 	S["religion"]            >> religion
 	S["vox_rank"]            >> vox_rank
@@ -645,6 +649,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
+	if(!insurance)   insurance = INSURANCE_STANDARD
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
 	if(!vox_rank)    vox_rank =    "Larva"
@@ -715,6 +720,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]              << r_hair
 	S["hair_green"]            << g_hair
 	S["hair_blue"]             << b_hair
+	S["belly_red"]             << r_belly
+	S["belly_green"]           << g_belly
+	S["belly_blue"]            << b_belly
 	S["grad_red"]              << r_grad
 	S["grad_green"]            << g_grad
 	S["grad_blue"]             << b_grad
@@ -763,6 +771,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"]         << home_system
 	S["citizenship"]         << citizenship
+	S["insurance"]           << insurance
 	S["faction"]             << faction
 	S["religion"]            << religion
 	S["vox_rank"]            << vox_rank

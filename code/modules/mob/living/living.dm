@@ -15,7 +15,7 @@
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
 
 	beauty.AddModifier("stat", additive=beauty_living)
 
@@ -1038,8 +1038,13 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
+	if(!crawling && HAS_TRAIT(usr, TRAIT_NO_CRAWL))
+		to_chat(usr, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
+		return
+
 	if(crawl_getup)
 		return
+
 
 	if((status_flags & FAKEDEATH) || buckled)
 		return
@@ -1082,7 +1087,7 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
 		return TRUE
 	return FALSE
 

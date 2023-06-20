@@ -133,40 +133,64 @@
 		mob.reagents.remove_reagent("virusfood",0.1)
 		clicks += 10
 
+	//fever
+	mob.adjust_bodytemperature(2 * stage, max_temp = BODYTEMP_NORMAL + 2 * stage)
+	activate_symptom(mob)
+
+/datum/disease2/disease/proc/activate_symptom(atom/A)
 	//Moving to the next stage
-	if(clicks > stage*100 && prob(10) && stage<effects.len)
+	if(clicks > stage * 100 && prob(10) && stage < effects.len)
 		stage++
 
 	//Do nasty effects
 	for(var/i in 1 to effects.len)
 		var/datum/disease2/effectholder/e = effects[i]
 		if(i <= stage)
-			e.runeffect(mob, src)
+			e.runeffect(A, src)
 
 	//Short airborne spread
 	if(spreadtype == DISEASE_SPREAD_AIRBORNE && prob(10))
-		spread(mob, 1)
+		spread(A, 1)
 
-	//fever
-	mob.adjust_bodytemperature(2*stage, max_temp = BODYTEMP_NORMAL + 2*stage)
-	clicks+=speed
+	clicks += speed
+
+/datum/disease2/disease/proc/affect_plants(obj/machinery/hydroponics/tray)
+	activate_symptom(tray)
 
 /datum/disease2/disease/proc/advance_stage()
 	if(stage<effects.len)
 		clicks = stage*100
 		stage++
 
-/datum/disease2/disease/proc/spread(mob/living/carbon/mob, radius = 1)
-	if (spreadtype == DISEASE_SPREAD_BLOOD)
+/datum/disease2/disease/proc/spread(atom/A, radius = 1)
+	if(ismob(A))
+		spread_mob(A, radius)
 		return
-	for(var/mob/living/carbon/M in oview(radius,mob))
-		if (airborne_can_reach(get_turf(mob), get_turf(M)))
-			infect_virus2(M,src)
+	if(istype(A, /obj/machinery/hydroponics))
+		spread_plant(A, radius)
+
+/datum/disease2/disease/proc/spread_mob(mob/living/carbon/mob, radius = 1)
+	if(spreadtype == DISEASE_SPREAD_BLOOD)
+		return
+	for(var/mob/living/carbon/M in oview(radius, mob))
+		if(airborne_can_reach(get_turf(mob), get_turf(M)))
+			infect_virus2(M, src)
 			mob.med_hud_set_status()
 
-/datum/disease2/disease/proc/cure(mob/living/carbon/mob)
+/datum/disease2/disease/proc/spread_plant(obj/machinery/hydroponics/my_tray, radius = 1)
+	if(spreadtype != DISEASE_SPREAD_AIRBORNE)
+		return
+	if(!my_tray.can_be_infected(src))
+		return
+	for(var/obj/machinery/hydroponics/tray in range(radius, my_tray))
+		tray.infect_planttray_virus2(src)
+
+/datum/disease2/disease/proc/deactivate(atom/A)
 	for(var/datum/disease2/effectholder/e in effects)
-		e.effect.deactivate(mob, e, src)
+		e.effect.deactivate(A, e, src)
+
+/datum/disease2/disease/proc/cure(mob/living/carbon/mob)
+	deactivate(mob)
 	mob.virus2.Remove("[uniqueID]")
 	mob.med_hud_set_status()
 

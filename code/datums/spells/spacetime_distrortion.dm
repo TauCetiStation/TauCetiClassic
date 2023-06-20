@@ -27,7 +27,7 @@
 	perform(turf_steps)
 
 /obj/effect/proc_holder/spell/targeted/spacetime_dist/after_cast(list/targets)
-	addtimer(CALLBACK(src, .proc/clean_turfs), duration)
+	addtimer(CALLBACK(src, PROC_REF(clean_turfs)), duration)
 
 /obj/effect/proc_holder/spell/targeted/spacetime_dist/cast(list/targets, mob/user = usr)
 	effects = list()

@@ -109,6 +109,9 @@
 			armor = list()
 		atom_integrity = max_integrity
 
+	if(!isturf(loc))
+		flags_2 |= IN_STORAGE
+
 	if(item_state_world)
 		update_world_icon()
 
@@ -328,7 +331,7 @@
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
-	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	callback = CALLBACK(src, PROC_REF(after_throw), callback) // Replace their callback with our own.
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -713,7 +716,7 @@
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
-		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks, target)
+		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks = tool_check))
@@ -1041,7 +1044,7 @@
 		// moving to inventory, restore icon (big inventory icon)
 		icon_state = initial(icon_state)
 
-	else if(icon_state != item_state_world)
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
 		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 

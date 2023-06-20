@@ -468,4 +468,4 @@
 // explode the light
 /obj/machinery/light/proc/explode()
 	broken()	// break it first to give a warning
-	addtimer(CALLBACK(src, .proc/explosion, get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(explosion), get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)

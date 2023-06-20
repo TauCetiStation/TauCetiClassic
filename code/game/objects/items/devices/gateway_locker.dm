@@ -40,7 +40,7 @@
 	used = TRUE
 	var/turf/turf = Syndie_landmark.loc
 	qdel(Syndie_landmark)
-	addtimer(CALLBACK(src, .proc/perform_gate, turf), GATEWAY_HACK_TIME)
+	addtimer(CALLBACK(src, PROC_REF(perform_gate), turf), GATEWAY_HACK_TIME)
 
 /obj/item/device/gateway_locker/proc/perform_gate(turf/turf)
 	new /obj/effect/effect/sparks(turf)
