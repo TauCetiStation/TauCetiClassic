@@ -98,31 +98,3 @@
 	var/list/mc = ReadRGB(mix_color_from_reagents(reagents.reagent_list))
 	filler.color = RGB_CONTRAST(mc[1], mc[2], mc[3])		// paint in color of drink
 	return filler
-
-//Quality proc. Because the cyanide-syringe is not a child class of the /syringe
-/mob/living/proc/trigger_syringe_fear()
-	to_chat(src, "<span class='userdanger'>IT'S A SYRINGE!!!</span>")
-	if(prob(5))
-		eye_blind = 20
-		blurEyes(40)
-		to_chat(src, "<span class='warning'>Darkness closes in...</span>")
-	if(prob(5))
-		hallucination = max(hallucination, 200)
-		to_chat(src, "<span class='warning'>Ringing in your ears...</span>")
-	if(prob(10))
-		SetSleeping(40 SECONDS)
-		to_chat(src, "<span class='warning'>Your will to fight wavers.</span>")
-	if(prob(30))
-		Paralyse(20)
-	if(prob(40))
-		make_dizzy(150)
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
-
-/mob/living/carbon/human/trigger_syringe_fear()
-	..()
-	if(prob(15))
-		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
-		var/obj/item/organ/external/BP = get_bodypart(bodypart_name)
-		if(BP)
-			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
-			to_chat(src, "<span class='warning'>You got a cut with a syringe.</span>")
