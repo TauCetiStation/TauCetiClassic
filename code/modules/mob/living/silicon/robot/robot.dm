@@ -266,19 +266,23 @@
 
 
 		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			module.channels = list("Security" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Security")
-			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
-			module_sprites["Black Knight"] = "securityrobot"
-			module_sprites["Bloodhound"] = "bloodhound"
-			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-			module_sprites["Drone"] = "drone-sec"
-			module_sprites["Acheron"] = "mechoid-Security"
-			module_sprites["Kodiak"] = "kodiak-sec"
-			module_sprites["NO ERP"] = "kerfusNoERP"
+			if(can_be_security)
+				module = new /obj/item/weapon/robot_module/security(src)
+				module.channels = list("Security" = 1)
+				if(camera && ("Robots" in camera.network))
+					camera.add_network("Security")
+				module_sprites["Basic"] = "secborg"
+				module_sprites["Red Knight"] = "Security"
+				module_sprites["Black Knight"] = "securityrobot"
+				module_sprites["Bloodhound"] = "bloodhound"
+				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+				module_sprites["Drone"] = "drone-sec"
+				module_sprites["Acheron"] = "mechoid-Security"
+				module_sprites["Kodiak"] = "kodiak-sec"
+				module_sprites["NO ERP"] = "kerfusNoERP"
+			else
+				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
+				return
 
 
 
