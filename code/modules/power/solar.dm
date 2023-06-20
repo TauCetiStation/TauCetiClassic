@@ -245,6 +245,8 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
+	required_skills = null
+
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 	var/id = 0
@@ -255,6 +257,8 @@
 	var/trackrate = 60		// Measured in tenths of degree per minute (i.e. defaults to 6.0 deg/min)
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
+
+
 
 /obj/machinery/power/solar_control/atom_init()
 	. = ..()
