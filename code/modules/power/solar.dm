@@ -1,5 +1,5 @@
 #define SOLAR_MAX_DIST 40
-#define SOLARGENRATE 1500
+#define SOLARGENRATE 1800
 
 // This will choose whether to get the solar list from the powernet or the powernet nodes,
 // depending on the size of the nodes.
@@ -136,11 +136,16 @@
 
 	if(obscured)	return
 
-	var/sgen = SOLARGENRATE * sunfrac
+	var/sgen = calculate_energy_incoming()
 	add_avail(sgen)
 	if(powernet && control)
 		if(powernet.nodes[control])
 			control.gen += sgen
+
+//override this if you want more/less power incoming from solars
+/obj/machinery/power/solar/proc/calculate_energy_incoming()
+	//Enough for supply NSS Exodus
+	return SOLARGENRATE * sunfrac
 
 /obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
 	. = ..(mapload, S, 0)
