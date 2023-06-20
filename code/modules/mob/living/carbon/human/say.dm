@@ -78,13 +78,13 @@
 		switch(social_state)
 			if(SOCIALIZATION_NORMAL)
 				conversation_timer = addtimer(
-					CALLBACK(src, .proc/handle_no_socialization),
+					CALLBACK(src, PROC_REF(handle_no_socialization)),
 					conversation_timer_left,
 					TIMER_STOPPABLE
 				)
 			if(SOCIALIZATION_LONELY)
 				conversation_timer = addtimer(
-					CALLBACK(src, .proc/handle_prolonged_no_socialization),
+					CALLBACK(src, PROC_REF(handle_prolonged_no_socialization)),
 					conversation_timer_left,
 					TIMER_STOPPABLE
 				)
