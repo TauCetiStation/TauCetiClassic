@@ -13,8 +13,8 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/energy, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/energy, can_spin))
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/energy/proc/can_sweep(mob/user)

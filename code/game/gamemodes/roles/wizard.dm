@@ -74,7 +74,7 @@
 /datum/role/wizard/OnPostSetup(laterole)
 	. = ..()
 	equip_wizard(antag.current)
-	INVOKE_ASYNC(src, .proc/name_wizard, antag.current)
+	INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
 
 /datum/role/wizard/forgeObjectives()
 	if(!..())
@@ -139,7 +139,7 @@
 		M.current.forceMove(pick(wizardstart))
 
 	else if(href_list["wiz_name"])
-		INVOKE_ASYNC(src, .proc/name_wizard, M.current)
+		INVOKE_ASYNC(src, PROC_REF(name_wizard), M.current)
 
 	else if(href_list["wiz_equip"])
 		equip_wizard(M.current)

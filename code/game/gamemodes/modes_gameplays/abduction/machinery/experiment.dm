@@ -180,14 +180,6 @@
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		if(console.gizmo && console.gizmo.marked == H)
 			console.gizmo.marked = null
-
-		var/datum/faction/abductors/req_f
-		for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
-			if(F.team_number == team)
-				req_f = F
-				break
-
-		add_faction_member(req_f, H, TRUE)
 		for(var/obj/item/gland/G in H)
 			G.Start()
 			point_reward = 1

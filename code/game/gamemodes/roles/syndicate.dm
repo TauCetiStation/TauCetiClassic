@@ -38,7 +38,7 @@
 		H.equipOutfit(nuclear_outfit)
 	antag.current.add_language(LANGUAGE_SYCODE)
 
-	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
+	INVOKE_ASYNC(src, PROC_REF(NukeNameAssign), antag)
 	return ..()
 
 /datum/role/operative/Greet(greeting, custom)

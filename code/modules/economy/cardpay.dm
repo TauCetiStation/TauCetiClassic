@@ -79,7 +79,7 @@
 					return
 				to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
 				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 				return
 			to_chat(user, "<span class='notice'>Сканер откручен.</span>")
 			anchored = FALSE
@@ -131,30 +131,21 @@
 
 	paying = TRUE
 
-	addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(make_transaction), D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/check_pincode(datum/money_account/Acc)
-	var/attempt_pin = 0
-	if(Acc.security_level > 0)
-		var/time_for_pin = world.time
-		if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin)
-			attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
-		else
-			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
-		if(!usr || !usr.Adjacent(src))
-			return FALSE
-		if(world.time - time_for_pin > 300)
-			to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
-			return FALSE
-		if(isnull(attempt_pin))
-			to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
-			return FALSE
-		Acc = attempt_account_access(Acc.account_number, attempt_pin, 2)
-		if(!Acc)
-			to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
-			return FALSE
-
-	return TRUE
+    var/time_for_pin = world.time
+    Acc = attempt_account_access_with_user_input(Acc.account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+    if(usr.incapacitated() || !Adjacent(usr))
+        return FALSE
+    if(world.time - time_for_pin > 300)
+        to_chat(usr, "[bicon(src)] [name] <span class='warning'>Время операции истекло!</span>")
+        return FALSE
+    if(!Acc)
+        to_chat(usr, "[bicon(src)] [name] <span class='warning'>Неверный ПИН-код!</span>")
+        return FALSE
+		
+    return TRUE
 
 /obj/item/device/cardpay/proc/make_transaction(datum/money_account/Acc, amount)
 	if(!src || !Acc)

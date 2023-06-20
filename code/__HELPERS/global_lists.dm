@@ -218,7 +218,7 @@
 		var/datum/bridge_command/C = new command
 		global.bridge_commands[C.name] = C
 
-	sortTim(bridge_commands, /proc/cmp_bridge_commands)
+	sortTim(bridge_commands, GLOBAL_PROC_REF(cmp_bridge_commands))
 
 	global.metahelps = list()
 	for(var/help in subtypesof(/datum/metahelp))

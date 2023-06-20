@@ -47,7 +47,7 @@
 		if(alarm_playing != 1)
 			visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 			alarm_playing = 1
-		addtimer(CALLBACK(src, .proc/alarm_stop), 60)
+		addtimer(CALLBACK(src, PROC_REF(alarm_stop)), 60)
 
 /obj/item/clothing/gloves/pipboy/proc/alarm_stop()
 	alarm_playing = 0
