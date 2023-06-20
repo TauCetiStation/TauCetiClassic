@@ -15,8 +15,11 @@
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/can_be_crisis = FALSE //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
+
+	// admin-settable for combat module use.
+	var/can_be_crisis = FALSE 
+	var/can_be_security = FALSE
 
 //Hud stuff
 
@@ -70,7 +73,6 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
-	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
