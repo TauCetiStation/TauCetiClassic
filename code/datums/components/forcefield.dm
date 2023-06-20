@@ -118,10 +118,10 @@
 	charge_per_tick = max_health / recharge_time
 
 	if(isitem(parent))
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), PROC_REF(toggle))
 
-	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/add_protected)
-	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), .proc/remove_protected)
+	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), PROC_REF(add_protected))
+	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), PROC_REF(remove_protected))
 
 	if(isatom(parent))
 		var/datum/mechanic_tip/forcefielding/forcefielding_tip = new(src)
@@ -158,7 +158,7 @@
 /// Reactivate the shield.
 /datum/component/forcefield/proc/reactivate()
 	if(isitem(parent))
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), PROC_REF(toggle))
 
 	var/atom/play_at = get_sound_atom()
 	if(play_at)
@@ -168,14 +168,14 @@
 
 /datum/component/forcefield/proc/destroy()
 	if(isitem(parent))
-		UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
+		UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), PROC_REF(toggle))
 
 	var/atom/play_at = get_sound_atom()
 	if(play_at)
 		playsound(play_at, destroy_sound, VOL_EFFECTS_MASTER)
 
 	shield_down()
-	addtimer(CALLBACK(src, .proc/reactivate), reactivation_time)
+	addtimer(CALLBACK(src, PROC_REF(reactivate)), reactivation_time)
 
 /// Adjust all the visuals to damage.
 /datum/component/forcefield/proc/update_visuals()
@@ -247,7 +247,7 @@
 
 		deformation_effects(deformation_factor, shield_overlay)
 
-		INVOKE_ASYNC(src, .proc/revert_deformation, deformation_factor)
+		INVOKE_ASYNC(src, PROC_REF(revert_deformation), deformation_factor)
 
 		next_hit_anim = deformation_factor * 2 + 2
 
@@ -333,7 +333,7 @@
 		show_shield(A)
 
 	if(!permit_interaction && ismob(A))
-		RegisterSignal(A, list(COMSIG_MOB_CLICK), .proc/internal_click)
+		RegisterSignal(A, list(COMSIG_MOB_CLICK), PROC_REF(internal_click))
 
 	if(isliving(A))
 		var/mob/living/L = A
@@ -350,7 +350,7 @@
 	var/datum/mechanic_tip/forcefielded/forcefielded_tip = new(src)
 	A.AddComponent(/datum/component/mechanic_desc, list(forcefielded_tip))
 
-	RegisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS), .proc/on_hit)
+	RegisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS), PROC_REF(on_hit))
 
 /// Stop protecting an atom.
 /datum/component/forcefield/proc/stop_protecting(atom/A)
@@ -368,7 +368,7 @@
 /// A wrapper function to add A to protected list from a signal.
 /datum/component/forcefield/proc/add_protected(datum/source, atom/A)
 	LAZYADD(protected, A)
-	RegisterSignal(A, list(COMSIG_PARENT_QDELETING), CALLBACK(src, .proc/stop_protecting, A))
+	RegisterSignal(A, list(COMSIG_PARENT_QDELETING), CALLBACK(src, PROC_REF(stop_protecting), A))
 
 	if(active)
 		start_protecting(A)

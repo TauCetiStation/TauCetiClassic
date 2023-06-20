@@ -1,15 +1,15 @@
 //Look Sir, free crabs!
 /mob/living/simple_animal/crab
 	name = "crab"
-	desc = "A hard-shelled crustacean. Seems quite content to lounge around all the time."
+	desc = "Ракообразное с твердым панцирем. Кажется, он вполне доволен своей безмятежной жизнью."
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"
 	icon_move = "crab_move"
 	w_class = SIZE_TINY
-	speak_emote = list("clicks")
-	emote_hear = list("clicks")
-	emote_see = list("clacks")
+	speak_emote = list("щёлкает")
+	emote_hear = list("щёлкает")
+	emote_see = list("щёлкает")
 	speak_chance = 1
 	turns_per_move = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
@@ -43,7 +43,7 @@
 /mob/living/simple_animal/crab/Coffee
 	name = "Coffee"
 	real_name = "Coffee"
-	desc = "It's Coffee, the other pet!"
+	desc = "Это Кофе. Ещё один питомец!"
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"

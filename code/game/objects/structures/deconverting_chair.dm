@@ -48,7 +48,7 @@
 
 		playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 		on_cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/reset_cooldown), 1 MINUTE, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 1 MINUTE, TIMER_UNIQUE)
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/reset_cooldown()
 	if(on_cooldown)

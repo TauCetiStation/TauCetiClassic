@@ -138,7 +138,7 @@
 				"<span class='danger'>You stagger under the impact!</span>")
 
 			var/atom/throw_target = get_edge_target_turf(src, get_dir(O.throw_source, src))
-			throw_at(throw_target, 5, 1, throwingdatum.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
+			throw_at(throw_target, 5, 1, throwingdatum.thrower, FALSE, null, null, CALLBACK(src, PROC_REF(pin_to_turf), W))
 
 
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
@@ -202,7 +202,7 @@
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
 		ADD_TRAIT(src, TRAIT_ANCHORED, I)
-		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(unpin_signal), I))
 		update_canmove() // instant update, no need to wait Life() tick
 
 /mob/living/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
