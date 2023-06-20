@@ -458,7 +458,7 @@
 		if(prob(1)) // explosion
 			audible_message("<span class='warning'>The [src.name] is making strange noises!</span>")
 			var/time_left = 10 * pick(4, 5, 6, 7, 10, 14)
-			addtimer(CALLBACK(src, .proc/explode), time_left)
+			addtimer(CALLBACK(src, PROC_REF(explode)), time_left)
 			return
 
 		if(prob(15)) // power drain
@@ -489,7 +489,7 @@
 	if (charge < 0)
 		charge = 0
 	stat |= EMPED
-	addtimer(CALLBACK(src, .proc/after_emp), 150 / severity)
+	addtimer(CALLBACK(src, PROC_REF(after_emp)), 150 / severity)
 	..()
 
 /obj/machinery/power/smes/proc/after_emp()

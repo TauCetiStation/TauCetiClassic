@@ -457,7 +457,7 @@ var/global/list/datum/spawners_cooldown = list()
 	mob = _mob
 	add_mob_roles()
 
-	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/self_qdel)
+	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), PROC_REF(self_qdel))
 
 /datum/spawner/living/Destroy()
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
@@ -632,6 +632,11 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
 	wiki_ref = "Vox_Raider"
 
+/datum/spawner/living/abductor
+	name = "Похититель"
+	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
+	wiki_ref = "Abductor"
+
 /datum/spawner/spy
 	name = "Агент Прослушки"
 	id = "spy"
@@ -717,6 +722,29 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/vox/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(global.heiststart)
 	ghost.forceMove(jump_to)
+
+/datum/spawner/abductor
+	name = "Похититель"
+	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
+	wiki_ref = "Abductor"
+
+	ranks = list(ROLE_ABDUCTOR, ROLE_GHOSTLY)
+	time_to_del = 5 MINUTES
+
+/datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
+	// One team. Working together
+	var/datum/faction/abductors/team_fac = create_uniq_faction(/datum/faction/abductors)
+	//Nullspace for spawning and assigned key causes image freeze, so move body to non-playing area
+	var/mob/living/carbon/human/abductor/event/body_abductor = new(pick(newplayer_start))
+	body_abductor.key = ghost.client.key
+	add_faction_member(team_fac, body_abductor, team_fac.get_needed_teamrole())
+
+/datum/spawner/abductor/jump(mob/dead/observer/ghost)
+	var/obj/effect/landmark/L = scientist_landmarks[1]
+	ghost.forceMove(L.loc)
+
+/datum/spawner/abductor/check_cooldown(mob/dead/observer/ghost)
+	return TRUE
 
 /datum/spawner/survival
 	name = "Выживший"

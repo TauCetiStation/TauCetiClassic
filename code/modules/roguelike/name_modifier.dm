@@ -35,9 +35,9 @@
 	saved_name = A.name
 	src.amount_by_group = amount_by_group
 
-	RegisterSignal(parent, list(COMSIG_NAME_MOD_ADD), .proc/AddModifier)
-	RegisterSignal(parent, list(COMSIG_NAME_MOD_REMOVE), .proc/RemoveModifier)
-	RegisterSignal(parent, list(COMSIG_ATOM_GET_EXAMINE_NAME), .proc/AddFullName)
+	RegisterSignal(parent, list(COMSIG_NAME_MOD_ADD), PROC_REF(AddModifier))
+	RegisterSignal(parent, list(COMSIG_NAME_MOD_REMOVE), PROC_REF(RemoveModifier))
+	RegisterSignal(parent, list(COMSIG_ATOM_GET_EXAMINE_NAME), PROC_REF(AddFullName))
 
 /datum/component/name_modifiers/Destroy()
 	var/atom/A = parent

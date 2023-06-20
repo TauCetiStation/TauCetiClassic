@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(ticker)
 						if(!admin_delayed)
 							to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
 
-					end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+					end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/controller/subsystem/ticker/proc/start_rating_vote_if_unexpected_roundend()
 	to_chat(world, "<span class='info bold'><B>Конец раунда задержан из-за голосования.</B></span>")
@@ -182,7 +182,7 @@ SUBSYSTEM_DEF(ticker)
 		delayed = TRUE
 
 	if(delayed)
-		end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 	else
 		world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion")
 
@@ -388,7 +388,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(screen)
 		flick(screen, cinematic)
-	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
+	addtimer(CALLBACK(src, PROC_REF(station_explosion_effects), explosion, summary, cinematic), screen_time)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
 	for(var/mob/M as anything in mob_list) //search any goodest
@@ -397,7 +397,7 @@ SUBSYSTEM_DEF(ticker)
 		flick(explosion,cinematic)
 	if(summary)
 		cinematic.icon_state = summary
-	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(station_explosion_rollback_effects), cinematic), 10 SECONDS)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
 	for(var/mob/M as anything in mob_list)

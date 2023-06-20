@@ -1216,7 +1216,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets["[d]"] = map_to
 		pos_dirs -= map_to
 
-	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(randomise_inputs)), randomise_inputs_cooldown)
 
 /mob/proc/AdjustConfused(amount)
 	confused += amount

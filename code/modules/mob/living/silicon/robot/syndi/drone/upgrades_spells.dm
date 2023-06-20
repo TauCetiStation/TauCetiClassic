@@ -26,9 +26,9 @@
 	var/old_overlay = D.eyes_overlay //If you want to add overlays to another effect, you will need to implement some kind of overlays stack.
 	D.eyes_overlay = "eyes-syndibot" //Otherwise, they will conflict and cause unexpected overlay changes.
 	D.update_icon()
-	addtimer(CALLBACK(src, .proc/melt, D), rand(10, 25))
-	addtimer(CALLBACK(src, .proc/melt, D), rand(35, 50))
-	addtimer(CALLBACK(src, .proc/slow_down, D, old_overlay), duration)
+	addtimer(CALLBACK(src, PROC_REF(melt), D), rand(10, 25))
+	addtimer(CALLBACK(src, PROC_REF(melt), D), rand(35, 50))
+	addtimer(CALLBACK(src, PROC_REF(slow_down), D, old_overlay), duration)
 
 /obj/effect/proc_holder/spell/no_target/syndi_drone/boost/proc/slow_down(mob/living/silicon/robot/drone/D, old_overlay) //reverts the spell effect
 	if(!D || !old_overlay)

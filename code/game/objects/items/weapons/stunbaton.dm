@@ -163,9 +163,9 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/baton/double.proc/can_swipe)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/baton/double.proc/can_swipe)
-	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/melee/baton/double.proc/get_sweep_objs)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/baton/double, can_swipe))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/baton/double, can_swipe))
+	SCB.on_get_sweep_objects = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/baton/double, get_sweep_objs))
 	AddComponent(/datum/component/swiping, SCB)
 
 	var/datum/twohanded_component_builder/TCB = new

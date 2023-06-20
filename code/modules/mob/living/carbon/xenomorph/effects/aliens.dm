@@ -144,7 +144,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/alien/weeds/atom_init_late()
-	addtimer(CALLBACK(src, .proc/Life), rand(150, 200))
+	addtimer(CALLBACK(src, PROC_REF(Life)), rand(150, 200))
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -315,7 +315,7 @@
 	if(status == GROWN)
 		Grow()
 	else
-		timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
 
 /obj/structure/alien/egg/Destroy()
 	if(timer)
@@ -369,7 +369,7 @@
 	icon_state = "egg_hatched"
 	flick("egg_opening", src)
 	status = BURSTING
-	addtimer(CALLBACK(src, .proc/spawn_hugger, kill_fh), 15)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hugger), kill_fh), 15)
 
 /obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)

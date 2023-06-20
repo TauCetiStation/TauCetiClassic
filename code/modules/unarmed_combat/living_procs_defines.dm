@@ -387,3 +387,8 @@
 /mob/living/proc/remove_moveset_source(source)
 	for(var/datum/combat_moveset/moveset in movesets_by_source[source])
 		remove_moveset(moveset, source)
+
+/mob/living/turn_light_off()
+	. = ..()
+	for(var/obj/item/F in contents)
+		F.turn_light_off()
