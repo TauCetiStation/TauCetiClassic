@@ -235,9 +235,17 @@
 
 	return TRUE
 
-//This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
-//The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
-//such as when picking up all the items on a tile with one click.
+// low level proc just to handle Move/ForceMove
+/obj/item/weapon/storage/Entered(obj/item/mover)
+	. = ..()
+
+	if(istype(mover))
+		mover.on_enter_storage(src)
+
+// Handles item insertion with related events and user feedback.
+// It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
+// The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
+// such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
@@ -250,7 +258,6 @@
 	else
 		W.forceMove(src)
 
-	W.on_enter_storage(src)
 	if(usr)
 		add_fingerprint(usr)
 

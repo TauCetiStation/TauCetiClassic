@@ -288,11 +288,10 @@
 		if(SLOT_S_STORE)
 			src.s_store = W
 			W.equipped(src, slot)
-		if(SLOT_IN_BACKPACK) // copypaste from storage/proc/handle_item_insertion
+		if(SLOT_IN_BACKPACK)
 			if(get_active_hand() == W)
 				remove_from_mob(W)
 			W.forceMove(src.back)
-			W.on_enter_storage(src.back)
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
 			uniform.attach_accessory(W, src)
