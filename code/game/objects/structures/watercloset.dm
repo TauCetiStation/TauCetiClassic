@@ -68,7 +68,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			if(prob(problem_chance))
 				broken = TRUE
 				START_PROCESSING(SSobj, src)
-				addtimer(CALLBACK(user, /mob.proc/playsound_local, null, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE, null, null, null, null, null, TRUE), 2 SECOND) // so many nulls just to enable ignore_environment
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, playsound_local), null, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE, null, null, null, null, null, TRUE), 2 SECOND) // so many nulls just to enable ignore_environment
 				if(HAS_TRAIT(user, TRAIT_CLUMSY))
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clown_evil", /datum/mood_event/clown_evil)
 					to_chat(user, "<span class='notice bold'>Oh yes!</span>")
@@ -484,12 +484,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			return
 		if(!ismist)
 			if(on)
-				addtimer(CALLBACK(src, .proc/create_mist), 50)
+				addtimer(CALLBACK(src, PROC_REF(create_mist)), 50)
 		else
 			create_mist()
 	else if(ismist)
 		create_mist()
-		addtimer(CALLBACK(src, .proc/del_mist), 250)
+		addtimer(CALLBACK(src, PROC_REF(del_mist)), 250)
 		if(!on)
 			del_mist()
 

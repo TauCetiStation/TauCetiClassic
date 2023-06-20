@@ -263,7 +263,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(target)
 	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
-	INVOKE_ASYNC(src, .proc/start_shoot, target)
+	INVOKE_ASYNC(src, PROC_REF(start_shoot), target)
 
 	ranged_cooldown = ranged_cooldown_cap
 

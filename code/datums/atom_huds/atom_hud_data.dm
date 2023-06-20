@@ -175,36 +175,34 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(isloyal())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
 
-	if(ismindshielded())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
 		holder.pixel_y = y
 		y += -5
 
-	if(isimplantedobedience())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
 		holder = hud_list[IMPOBED_HUD]
 		holder.icon_state = "hud_imp_obedience"
 		holder.pixel_y = y
 		y += -5
 
-	for(var/obj/item/weapon/implant/I in src)
-		if(istype(I, /obj/item/weapon/implant/chem))
-			if(I.implanted)
-				holder = hud_list[IMPCHEM_HUD]
-				holder.icon_state = "hud_imp_chem"
-				holder.pixel_y = y
-				y += -5
+	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
+		holder = hud_list[IMPCHEM_HUD]
+		holder.icon_state = "hud_imp_chem"
+		holder.pixel_y = y
+		y += -5
 
-		if(istype(I, /obj/item/weapon/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			holder.icon_state = "hud_imp_tracking"
-			holder.pixel_y = y
-			y += -5
+	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
+		holder = hud_list[IMPTRACK_HUD]
+		holder.icon_state = "hud_imp_tracking"
+		holder.pixel_y = y
+		y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]

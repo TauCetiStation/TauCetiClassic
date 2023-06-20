@@ -175,7 +175,7 @@
 			continue
 		if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
 			continue
-		INVOKE_ASYNC(mine, /obj/item/mine/replicator.proc/pretend_disintegration)
+		INVOKE_ASYNC(mine, TYPE_PROC_REF(/obj/item/mine/replicator, pretend_disintegration))
 
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
@@ -287,7 +287,7 @@ Message ends."}
 	sleep(10)
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 	SSticker.station_explosion_cinematic(0, "replicators")
-	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(blue_screen)), 17.6 SECONDS)
 
 	var/obj/effect/cross_action/spacetime_dist/center = new(T)
 	center.linked_dist = center

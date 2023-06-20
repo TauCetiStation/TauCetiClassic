@@ -194,8 +194,8 @@ var/global/cat_number = 0
 	new /obj/effect/temp_visual/sparkles(loc)
 	if(disappear)
 		cat_number += 1
-		addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
-		addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(back_to_bluespace)), cat_life_duration)
+		addtimer(CALLBACK(src, PROC_REF(say_runtime), runtime_line), 5 SECONDS)
 	for(var/i in rand(1, 3))
 		step(src, pick(global.alldirs))
 

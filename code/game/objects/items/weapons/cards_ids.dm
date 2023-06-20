@@ -365,7 +365,7 @@
 /obj/item/weapon/card/id/syndicate/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_ID)
-		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 
