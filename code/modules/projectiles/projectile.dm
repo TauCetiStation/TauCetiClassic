@@ -185,9 +185,6 @@
 		if(ismob(A))
 			var/list/mobs = list()
 			for(var/mob/ML in get_turf(A.loc))
-				if(check_living_shield(A) == ML)
-					ML.bullet_act(src, def_zone)
-					mobs -= ML
 				mobs += ML
 			if(mobs.len >= 2)
 				var/mob/mob = pick(mobs)

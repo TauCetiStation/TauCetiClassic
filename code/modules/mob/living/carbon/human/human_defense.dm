@@ -63,6 +63,7 @@
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
+		show_attack_logs(P, P.silenced, def_zone, P.name, P.fake, P.firer)
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
@@ -82,7 +83,7 @@
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
-		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
+		show_attack_logs(P, P.silenced, def_zone, P.name, P.fake, P.firer)
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
@@ -107,6 +108,7 @@
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
+		show_attack_logs(P, P.silenced, def_zone, P.name, P.fake, P.firer)
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
