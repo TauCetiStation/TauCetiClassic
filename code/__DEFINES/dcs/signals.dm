@@ -190,7 +190,14 @@
 #define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
 /// from datum/orbit/New(): (/atom/orbiting)
 #define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
-
+///when an atom starts playing a song, used in song_tuner rites: (datum/music_player)
+#define COMSIG_ATOM_STARTING_INSTRUMENT "atom_starting_instrument"
+///sent to the instrument when a song stops playing: (datum/music_player)
+#define COMSIG_INSTRUMENT_END "instrument_end"
+///sent to the instrument (and player if available) when a song repeats: (datum/music_player)
+#define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
+///sent to the instrument when tempo changes, skipped on new: (datum/music_player)
+#define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
 #define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
@@ -326,6 +333,9 @@
 	#define COMPONENT_BLOCK_SWAP 1
 ///from mob/living/vomit(): (/mob)
 #define COMSIG_LIVING_VOMITED "living_vomited"
+///from ai_actual_track(): (mob/living)
+#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
+	#define COMPONENT_CANT_TRACK (1<<0)
 
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
@@ -335,7 +345,7 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
-/// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
+/// from simple_animal/hostile/proc/UnarmedAttack(): (atom/target)
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
 /// from simple_animal/hostile/proc/Shoot(): (atom/target)
 #define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"
@@ -369,3 +379,6 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"

@@ -144,7 +144,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/alien/weeds/atom_init_late()
-	addtimer(CALLBACK(src, .proc/Life), rand(150, 200))
+	addtimer(CALLBACK(src, PROC_REF(Life)), rand(150, 200))
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -167,13 +167,19 @@
 			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 				continue
 
+			if(locate(/obj/structure/window/fulltile) in T)
+				continue
+
+			if(locate(/obj/structure/windowsill) in T)
+				continue
+
 			for(var/obj/machinery/door/D in T)
 				if(D.density)
 					continue check_next_dir
 
-			var/obj/structure/window/W = locate() in T
+			var/obj/structure/window/thin/W = locate() in T
 
-			if(W && W.density)
+			if(W && W.density && dirn == turn(dir,180)) // if window is facing us
 				continue
 
 			new /obj/structure/alien/weeds(T, linked_node)
@@ -309,7 +315,7 @@
 	if(status == GROWN)
 		Grow()
 	else
-		timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
 
 /obj/structure/alien/egg/Destroy()
 	if(timer)
@@ -363,7 +369,7 @@
 	icon_state = "egg_hatched"
 	flick("egg_opening", src)
 	status = BURSTING
-	addtimer(CALLBACK(src, .proc/spawn_hugger, kill_fh), 15)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hugger), kill_fh), 15)
 
 /obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)

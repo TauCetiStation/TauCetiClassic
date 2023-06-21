@@ -71,7 +71,7 @@
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = reagents.get_master_reagent_id()
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
+			addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		update_icon()

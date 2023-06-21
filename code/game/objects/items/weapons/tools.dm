@@ -296,10 +296,10 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE)
 	target.add_overlay(welding_sparks)
-	INVOKE_ASYNC(src, .proc/start_welding, target)
-	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
+	INVOKE_ASYNC(src, PROC_REF(start_welding), target)
+	var/datum/callback/checks  = CALLBACK(src, PROC_REF(check_active_and_extra), extra_checks)
 	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
@@ -414,10 +414,12 @@
 			if(0)
 				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
 				IO.damage += rand(2, 4)
+				H.flash_eyes()
 				if(IO.damage > 10)
 					IO.damage += rand(4,10)
 			if(-1)
 				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
+				H.flash_eyes()
 				user.adjustBlurriness(rand(12,20))
 				IO.damage += rand(12, 16)
 		if(safety<2)
@@ -431,7 +433,7 @@
 				user.eye_blind = 5
 				user.adjustBlurriness(5)
 				user.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-				addtimer(CALLBACK(user, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	return
 
 

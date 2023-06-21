@@ -32,6 +32,14 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
+/obj/item/device/flashlight/turn_light_off()
+	. = ..()
+	on = FALSE
+	icon_state = initial(icon_state)
+	last_button_sound = world.time + 3
+	if(button_sound)
+		playsound(src, button_sound, VOL_EFFECTS_MASTER, 20)
+
 /obj/item/device/flashlight/attack_self(mob/user)
 	if (last_button_sound >= world.time)
 		return 0
@@ -211,6 +219,11 @@
 		update_inv_mob()
 	STOP_PROCESSING(SSobj, src)
 
+/obj/item/device/flashlight/flare/turn_light_off()
+	. = ..()
+	fuel = 0
+	turn_off()
+
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
@@ -237,7 +250,7 @@
 	name = "glowing slime extract"
 	desc = "A glowing ball of what appears to be amber."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "floor1" //not a slime extract sprite but... something close enough!
+	icon_state = "floor" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
 	w_class = SIZE_MINUSCULE
 	m_amt = 0
@@ -256,12 +269,17 @@
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
 
+/obj/item/device/flashlight/slime/turn_light_off()
+	. = ..()
+	to_chat(loc, "<span class='notice'>[src] melts!</span>")
+	qdel(src)
+
+
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
-
 
 /obj/item/device/flashlight/emp/atom_init()
 	. = ..()

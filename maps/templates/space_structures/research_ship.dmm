@@ -80,7 +80,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "aY" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater{
@@ -421,37 +421,17 @@
 /obj/structure/alien/weeds/node,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
-"Fq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/grille{
-	destroyed = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/research_ship)
 "Fu" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /obj/structure/alien/weeds/node,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "FD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/research_ship)
 "FL" = (
@@ -629,9 +609,9 @@
 /turf/environment/space,
 /area/space_structures/research_ship)
 "SX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor,
 /turf/simulated/floor/plating,
@@ -884,7 +864,7 @@ Qw
 of
 AC
 ea
-Fq
+FD
 OD
 ab
 UV

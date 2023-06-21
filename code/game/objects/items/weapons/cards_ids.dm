@@ -362,7 +362,20 @@
 	else
 		..()
 
+/obj/item/weapon/card/id/syndicate/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_ID)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 
+/obj/item/weapon/card/id/syndicate/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/weapon/card/id/syndicate/proc/can_track(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
@@ -503,7 +516,7 @@
 	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
 	icon_state = "gold"
 	item_state = "gold_id"
-	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine, access_research, access_tox, access_robotics)
+	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_surgery, access_captain, access_engine, access_research, access_tox, access_robotics, access_heads)
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
@@ -521,4 +534,4 @@
 	item_state = "med_id"
 	rank = "Senior Medic"
 	assignment = "Senior Medic"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research, access_tox, access_robotics)
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_surgery, access_research, access_tox, access_robotics)

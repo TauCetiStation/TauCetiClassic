@@ -74,7 +74,7 @@
 			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
 				grab_chance -= 20
 		if(!T.anchored && prob(grab_chance))
-			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(end_whipping), T))
 	return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)

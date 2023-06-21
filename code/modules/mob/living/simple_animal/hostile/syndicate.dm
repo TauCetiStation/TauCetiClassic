@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
-	desc = "Death to Nanotrasen."
+	desc = "Смерть НаноТрейзен."
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -164,7 +164,7 @@
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
-	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
+	desc = "Небольшая машина с двумя лезвиями, способная наносить смертельные раны."
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE

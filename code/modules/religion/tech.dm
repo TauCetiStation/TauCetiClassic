@@ -24,8 +24,8 @@
 	for(var/mob/M in R.members)
 		give_spell(R, M)
 
-	RegisterSignal(R, list(COMSIG_REL_ADD_MEMBER), .proc/give_spell)
-	RegisterSignal(R, list(COMSIG_REL_REMOVE_MEMBER), .proc/remove_spell)
+	RegisterSignal(R, list(COMSIG_REL_ADD_MEMBER), PROC_REF(give_spell))
+	RegisterSignal(R, list(COMSIG_REL_REMOVE_MEMBER), PROC_REF(remove_spell))
 
 /datum/religion_tech/cult/reusable_runes
 	id = RTECH_REUSABLE_RUNE

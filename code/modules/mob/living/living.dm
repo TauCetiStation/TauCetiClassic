@@ -15,7 +15,7 @@
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
 
 	beauty.AddModifier("stat", additive=beauty_living)
 
@@ -161,16 +161,6 @@
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window)) // Why is it here?
-			var/obj/structure/window/W = AM
-			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-//			if(W.fulltile)
-//				for(var/obj/structure/window/win in get_step(W,t))
-//					now_pushing = 0
-//					return
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
@@ -1048,8 +1038,13 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
+	if(!crawling && HAS_TRAIT(usr, TRAIT_NO_CRAWL))
+		to_chat(usr, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
+		return
+
 	if(crawl_getup)
 		return
+
 
 	if((status_flags & FAKEDEATH) || buckled)
 		return
@@ -1092,7 +1087,7 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
 		return TRUE
 	return FALSE
 
@@ -1302,7 +1297,7 @@
 /mob/living/proc/naturechild_check()
 	return TRUE
 
-/mob/living/proc/get_nutrition()
+/mob/living/proc/get_satiation()
 	// This proc gets nutrition value with all possible alters.
 	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
 	// The difference between this and just nutrition, is that this proc shows how much nutrition a mob has
@@ -1366,7 +1361,7 @@
 
 	var/turf/simulated/T = loc
 	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
-	if(WC && WC.open)
+	if(WC && WC.lid_open)
 		return TRUE
 	if(locate(/obj/structure/sink) in T)
 		return TRUE
@@ -1516,3 +1511,12 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+// return TRUE if we failed our interaction
+/mob/living/interact_prob_brain_damage(atom/object)
+	if(getBrainLoss() >= 60)
+		visible_message("<span class='warning'>[src] stares cluelessly at [isturf(object.loc) ? object : ismob(object.loc) ? object : "something"] and drools.</span>")
+		return TRUE
+	else if(prob(getBrainLoss()))
+		to_chat(src, "<span class='warning'>You momentarily forget how to use [object].</span>")
+		return TRUE

@@ -770,11 +770,13 @@ var/global/list/tourette_bad_words= list(
 				//src << "<span class='notice'>You're in too much pain to keep going...</span>"
 				//for(var/mob/O in oviewers(src, null))
 				//	O.show_messageold("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
-				if(prob(3))
-					Paralyse(10)
-				else
-					Stun(5)
-					Weaken(10)
+				var/long_shock_allowed = !HAS_TRAIT_FROM(src, TRAIT_STEEL_NERVES, VIRUS_TRAIT)
+				if(long_shock_allowed)
+					if(prob(3))
+						Paralyse(10)
+					else
+						Stun(5)
+						Weaken(10)
 				setHalLoss(99)
 
 		if(paralysis)
@@ -994,7 +996,7 @@ var/global/list/tourette_bad_words= list(
 				get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
 		else
 			get_nutrition_max = NUTRITION_LEVEL_FAT
-		full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+		full_perc = clamp(((get_satiation() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
 		nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
 	//OH cmon...

@@ -85,7 +85,7 @@
 			var/matrix/N = matrix()
 			animate(combo_icon, transform=N, time=2)
 
-		INVOKE_ASYNC(src, .proc/shake_combo_icon)
+		INVOKE_ASYNC(src, PROC_REF(shake_combo_icon))
 
 /datum/combo_handler/proc/shake_combo_icon()
 	sleep(2) // This is here for set_combo_icon to properly animate the icon.
@@ -230,7 +230,7 @@
 		next_combo = null
 		CC.pre_execute(victim, attacker)
 
-		INVOKE_ASYNC(src, .proc/do_animation, CC)
+		INVOKE_ASYNC(src, PROC_REF(do_animation), CC)
 
 		CC.execute(victim, attacker)
 		if(!CC.heavy_animation)
@@ -290,7 +290,7 @@
 
 	var/static/list/attack_elements = list(INTENT_HELP, INTENT_GRAB, INTENT_PUSH, INTENT_HARM)
 	if(combo_element in attack_elements)
-		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
+		INVOKE_ASYNC(src, PROC_REF(animate_attack), combo_element, combo_value, victim, attacker)
 
 	return FALSE
 
@@ -299,7 +299,7 @@
 		return
 
 	if(combo_icon && (SSmobs.times_fired % 3) == 0)
-		INVOKE_ASYNC(src, .proc/shake_combo_icon)
+		INVOKE_ASYNC(src, PROC_REF(shake_combo_icon))
 
 	progbar.update(points)
 

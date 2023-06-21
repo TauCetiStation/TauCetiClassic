@@ -27,7 +27,7 @@
 
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
 	attached = H
-	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, .proc/resolve_stranded))
+	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, PROC_REF(resolve_stranded)))
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
 	assist(H)
 	update_icon()

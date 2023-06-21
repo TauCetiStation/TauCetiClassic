@@ -635,6 +635,8 @@
 		var/max_temperature = min(selected[3] - T0C-1, MAX_TEMPERATURE) // (-/+ 1) required because it won't heat/cool, if (target_temperature == TLV)
 		var/min_temperature = max(selected[2] - T0C+1, MIN_TEMPERATURE)
 		var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature] and [max_temperature]C)", "Thermostat Controls", target_temperature - T0C) as num|null
+		if(!can_still_interact_with(usr))
+			return
 		if(isnum(input_temperature))
 			if(input_temperature > max_temperature || input_temperature < min_temperature)
 				to_chat(usr, "Temperature must be between [min_temperature]C and [max_temperature]C")
@@ -654,6 +656,8 @@
 
 				if("set_external_pressure")
 					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(!can_still_interact_with(usr))
+						return
 					if(isnum(input_pressure))
 						send_signal(device_id, list(href_list["command"] = input_pressure))
 					return FALSE
@@ -664,6 +668,8 @@
 
 				if("set_internal_pressure")
 					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(!can_still_interact_with(usr))
+						return
 					if(isnum(input_pressure))
 						send_signal(device_id, list(href_list["command"] = input_pressure))
 					return FALSE
@@ -698,6 +704,8 @@
 					var/list/selected = TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
+					if(!can_still_interact_with(usr))
+						return
 					if (isnull(newval))
 						return TRUE
 					if (newval < 0)

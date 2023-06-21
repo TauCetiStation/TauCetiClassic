@@ -111,7 +111,7 @@
 /mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)
 	LAZYDISTINCTADD(helpers_skillsets, skillset)
 	if(time != -1)
-		addtimer(CALLBACK(src, .proc/remove_skills_buff, skillset), time)
+		addtimer(CALLBACK(src, PROC_REF(remove_skills_buff), skillset), time)
 
 /mob/living/proc/remove_skills_buff(datum/skillset/skillset)
 	LAZYREMOVE(helpers_skillsets, skillset)

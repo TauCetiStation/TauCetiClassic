@@ -28,7 +28,7 @@
 	check_wanted_level()
 	if(world.time > (end_time - 5 MINUTES) && !sent_second_announcement)
 		five_minute_warning()
-		addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(send_in_the_fuzz)), 5 MINUTES)
 
 	..()
 
@@ -80,7 +80,7 @@
 
 	cops_arrived = TRUE
 	update_wanted_level(wanted_level) // gotta make sure everyone's wanted level display looks nice
-	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(end_hostile_sit)), 10 MINUTES)
 
 /// Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.
 /datum/faction/cops/proc/check_wanted_level()

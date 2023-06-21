@@ -139,12 +139,13 @@
 	if(H.stat != DEAD && prob(10))
 		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
 
-/datum/species/zombie/handle_death(mob/living/carbon/human/H)
-	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
+/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
+	if(!gibbed)
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
-		addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
 
 /proc/prerevive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -157,7 +158,7 @@
 						ghost.reenter_corpse()
 
 		H.visible_message("<span class='danger'>[H]'s body starts to move!</span>")
-		addtimer(CALLBACK(null, .proc/revive_zombie, H), 40)
+		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 40)
 
 /proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]

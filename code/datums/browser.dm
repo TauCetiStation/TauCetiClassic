@@ -163,7 +163,7 @@
 					winset(user, "mapwindow", "focus=true")
 				break
 	if(timeout)
-		addtimer(CALLBACK(src, .proc/close), timeout)
+		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
@@ -308,8 +308,8 @@
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	if(browsers[windowid])
-		qdel(browsers[windowid])
+	if(LAZYACCESS(browsers, windowid))
+		qdel(LAZYACCESS(browsers, windowid))
 
 	//world << "windowclose: [atomref]"
 	if(atomref!="null")				// if passed a real atomref

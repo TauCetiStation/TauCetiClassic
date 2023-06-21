@@ -31,7 +31,7 @@
 /var/const/access_cargo = 31
 /var/const/access_construction = 32
 /var/const/access_chemistry = 33
-/var/const/access_cargo_bot = 34
+/var/const/access_cargoshop = 34
 /var/const/access_hydroponics = 35
 /var/const/access_manufacturing = 36
 /var/const/access_library = 37
@@ -96,7 +96,7 @@
 /obj/var/list/req_one_access = list()
 
 //returns 1 if this mob has sufficient access to use this object
-/obj/proc/allowed(mob/M)
+/obj/proc/allowed(mob/M) // todo: rename to try_access or something
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
@@ -112,7 +112,7 @@
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
+		if(check_access(H.wear_id) || check_access(H.get_active_hand()) || check_access(H.get_inactive_hand()))
 			return TRUE
 	else if(isIAN(M))
 		var/mob/living/carbon/ian/IAN = M
@@ -198,7 +198,7 @@
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_blueshield,
-	            access_medical, access_genetics, access_morgue, access_rd,
+	            access_medical, access_genetics, access_morgue, access_rd, access_cargoshop,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
@@ -262,8 +262,8 @@
 			return "Recycler"
 		if(access_detective)
 			return "Detective"
-		if(access_cargo_bot)
-			return "Cargo Bot Delivery"
+		if(access_cargoshop)
+			return "Cargo Delivery"
 		if(access_security)
 			return "Security"
 		if(access_blueshield)

@@ -21,6 +21,7 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/glock, /obj/item/ammo_box/magazine/glock/rubber, /obj/item/ammo_box/magazine/glock/extended, /obj/item/ammo_box/magazine/glock/extended/rubber)
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
+	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/glock/spec
 	name = "G17 GEN3"
@@ -75,6 +76,7 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/colt/rubber, /obj/item/ammo_box/magazine/colt)
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
+	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
@@ -99,10 +101,22 @@
 	recoil = 2
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
-	name = "Opressor"
+	name = "Oppressor"
 	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
 	icon_state = "synderringer"
 	force = 5
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
 	recoil = 3
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/wjpp
+	name = "W&J PP"
+	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
+	icon_state = "wjpp"
+	item_state = "wjpp"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/wjpp/rubber
+	suitable_mags = list(/obj/item/ammo_box/magazine/wjpp, /obj/item/ammo_box/magazine/wjpp/rubber)
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
+	can_be_holstered = TRUE
+	recoil = 1.5

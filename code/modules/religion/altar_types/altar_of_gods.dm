@@ -31,8 +31,8 @@
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
-	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), .proc/start_rite)
-	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
+	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), PROC_REF(start_rite))
+	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), PROC_REF(reset_rite))
 	init_turfs_around()
 
 /obj/structure/altar_of_gods/Destroy()
@@ -126,7 +126,7 @@
 
 		if(max_points > MIN_FAVOUR_GAIN)
 			religion.adjust_favor(max_points, user)
-			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
+			INVOKE_ASYNC(src, PROC_REF(sacrifice_item), I)
 			sacrificed = TRUE
 
 		else if(max_points > 0)
@@ -415,8 +415,8 @@
 
 /obj/structure/altar_of_gods/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), PROC_REF(turf_around_enter))
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), PROC_REF(turf_around_exit))
 		turfs_around += T
 
 /obj/structure/altar_of_gods/proc/clear_turfs_around()

@@ -102,6 +102,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(dest == loc)
 		step_away(src, loc)
 	if(ismob(src))
+		ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_AIRFLOW)
 		to_chat(src, "<span clas='danger'>You are [repelled ? "pushed" : "sucked"] away by airflow!</span>")
 	COOLDOWN_START(src, last_airflow, vsc.airflow_delay)
 	var/airflow_falloff = 9 - get_dist_euclidian(src, dest)
@@ -148,6 +149,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	airflow_dest = null
 	airflow_speed = 0
 	airborne_acceleration = 0
+	REMOVE_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_AIRFLOW)
 
 /atom/movable/Bump(atom/A)
 	if(airflow_speed > 0)

@@ -909,7 +909,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	. = ..()
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
 	if(F)
-		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+		INVOKE_ASYNC(F, TYPE_PROC_REF(/obj/effect/effect/aqueous_foam, performAction)) // So we don't instantinate a new object, but still make the room slightly colder.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 

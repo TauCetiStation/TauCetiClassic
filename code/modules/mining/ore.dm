@@ -108,3 +108,9 @@
 		C.sample_item(src, user)
 	else
 		return ..()
+
+/obj/item/weapon/ore/use(used, transfer = FALSE)
+	if(used == 1)
+		qdel(src)
+		return TRUE
+	return FALSE

@@ -5,12 +5,12 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	var/implanted = null
-	var/mob/imp_in = null
+	var/mob/living/carbon/imp_in = null
 	var/obj/item/organ/external/part = null
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
-
+	var/implant_trait
 	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
@@ -18,15 +18,16 @@
 	implant_list += src
 
 /obj/item/weapon/implant/Destroy()
+	implant_removal(imp_in)
 	implant_list -= src
 	implanted = FALSE
-	imp_in = null
 	if(part)
 		part.implants.Remove(src)
 		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
+	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -53,14 +54,20 @@
 		if(!BP)
 			return
 		BP.implants += src
-		C.sec_hud_set_implants()
 		part = BP
+	if(implant_trait)
+		ADD_TRAIT(C, implant_trait, IMPLANT_TRAIT)
+	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
+
+/obj/item/weapon/implant/proc/implant_removal(mob/host)
+	if(implant_trait && istype(host))
+		REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -87,6 +94,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
+	implant_trait = TRAIT_VISUAL_TRACK
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
@@ -340,6 +348,7 @@ Implant Specifics:<BR>"}
 	name = "chemical implant"
 	desc = "Injects things."
 	allow_reagents = 1
+	implant_trait = TRAIT_VISUAL_CHEM
 
 /obj/item/weapon/implant/chem/get_data()
 	var/dat = {"
@@ -374,7 +383,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")
