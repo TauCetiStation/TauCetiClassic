@@ -8,7 +8,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
-	var/mode = 1
+	var/GypoMode = 1
 	var/reagent_to_recharge = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
@@ -79,7 +79,7 @@
 	R.add_reagent(reagent, volume)
 
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
-	var/datum/reagents/R = reagent_list[mode]
+	var/datum/reagents/R = reagent_list[GypoMode]
 	if(!R.total_volume)
 		to_chat(user, "<span class='warning'>The injector is empty.</span>")
 		return
@@ -94,13 +94,13 @@
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)		//Change the mode
-	mode++
-	if(mode > reagent_list.len)
-		mode = 1
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)		//Change the GypoMode
+	GypoMode++
+	if(GypoMode > reagent_list.len)
+		GypoMode = 1
 
-	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
-	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
+	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through GypoModes.
+	var/datum/reagent/R = chemical_reagents_list[reagent_ids[GypoMode]]
 	to_chat(user, "<span class='notice'>Synthesizer is now producing '[R.name]'.</span>")
 	return
 

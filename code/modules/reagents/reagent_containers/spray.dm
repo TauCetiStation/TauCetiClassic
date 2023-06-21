@@ -12,169 +12,20 @@
 	throw_range = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10) //Set to null instead of list, if there is only one.
-	var/spray_size = 3
+
 	var/list/spray_sizes = list(1,3) // When building this list, take into considiration what's written above.
 	volume = 250
-	var/safety = FALSE
-	var/triple_shot = FALSE
+
 
 	action_button_name = "Switch Spray"
 
-	var/chempuff_dense = TRUE // Whether the chempuff can pass through closets and such(and it should).
-
-	var/spray_sound = 'sound/effects/spray2.ogg'
-	var/volume_modifier = -6
-	var/space_cleaner = "cleaner"
-
-	var/spray_cloud_move_delay = 3
-	var/spray_cloud_react_delay = 2
 
 /obj/item/weapon/reagent_containers/spray/atom_init()
 	. = ..()
 	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/target, mob/user, proximity, params)
-	if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target, /obj/structure/closet) \
-	|| istype(target, /obj/item/weapon/reagent_containers) || istype(target, /obj/structure/sink) || istype(target, /obj/structure/stool/bed/chair/janitorialcart))
-		return FALSE
-
-	if(istype(target, /obj/effect/proc_holder/spell))
-		return FALSE
-
-	if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
-		var/obj/structure/reagent_dispensers/RD = target
-		if(!is_open_container())
-			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
-			return FALSE
-
-		if(!RD.reagents.total_volume && RD.reagents)
-			to_chat(user, "<span class='notice'>[RD] does not have enough liquids.</span>")
-			return FALSE
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
-			return FALSE
-
-		if(isextinguisher(src) && !RD.reagents.only_reagent("aqueous_foam"))
-			return FALSE
-
-		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [RD].</span>")
-		return FALSE
-
-	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
-		return FALSE
-
-	if(safety)
-		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
-		return FALSE
-
-	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
-
-	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
-	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] fired Polyacid from \a [src].")
-	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] fired Space lube from \a [src].")
-
-	user.SetNextMove(CLICK_CD_INTERACT * 2)
-
-	var/turf/T = get_turf(target) // BS12 edit, with the wall spraying.
-	var/turf/T_start = get_turf(src)
-
-	if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
-		var/direction = get_dir(T_start, T)
-
-		var/turf/T1_start = get_step(T_start, turn(direction, 90))
-		var/turf/T2_start = get_step(T_start, turn(direction, -90))
-
-		var/turf/T1 = get_step(T, turn(direction, 90))
-		var/turf/T2 = get_step(T, turn(direction, -90))
-
-		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
-		INVOKE_ASYNC(src, .proc/Spray_at, T1_start, T1)
-		INVOKE_ASYNC(src, .proc/Spray_at, T2_start, T2)
-	else
-		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
-
-	INVOKE_ASYNC(src, .proc/on_spray, T, user) // A proc where we do all the dirty chair riding stuff.
-	return TRUE
-
-/obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
-	if(!triple_shot) // Currently only the big baddies have this mechanic.
-		return
-
-	var/movementdirection = turn(get_dir(get_turf(src), T), 180)
-	if(istype(get_turf(src), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
-		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
-		if(!buckled_to.flipped)
-			if(buckled_to)
-				buckled_to.propelled = 4
-			step(buckled_to, movementdirection)
-			sleep(1)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 3
-			sleep(1)
-			step(buckled_to, movementdirection)
-			sleep(1)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 2
-			sleep(2)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 1
-			sleep(2)
-			step(buckled_to, movementdirection)
-			if(buckled_to)
-				buckled_to.propelled = 0
-			sleep(3)
-			step(buckled_to, movementdirection)
-			sleep(3)
-			step(buckled_to, movementdirection)
-			sleep(3)
-			step(buckled_to, movementdirection)
-	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
-		var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
-		if (ext.chassis)
-			ext.chassis.newtonian_move(movementdirection)
-	else
-		user.newtonian_move(movementdirection)
-
-
-/obj/item/weapon/reagent_containers/spray/proc/Spray_at(turf/start, turf/target)
-	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
-	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount_per_transfer_from_this, 1/spray_size, name_from_reagents = FALSE)
-
-	if(!chempuff_dense)
-		D.pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL
-
-	step_towards(D, start)
-	sleep(spray_cloud_move_delay)
-
-	var/max_steps = spray_size_current
-	for(var/i in 1 to max_steps)
-		step_towards(D, target)
-		var/turf/T = get_turf(D)
-		D.reagents.reaction(T)
-		var/turf/next_T = get_step(T, get_dir(T, target))
-		// When spraying against the wall, also react with the wall, but
-		// not its contents. BS12
-		if(next_T.density)
-			D.reagents.reaction(next_T)
-			sleep(spray_cloud_react_delay)
-		else
-			for(var/atom/A in T)
-				D.reagents.reaction(A)
-				sleep(spray_cloud_react_delay)
-		sleep(spray_cloud_move_delay)
-	qdel(D)
+	. = ..()
 
 /obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 	if(!possible_transfer_amounts)

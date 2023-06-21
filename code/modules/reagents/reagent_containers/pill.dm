@@ -68,27 +68,7 @@
 		return 1
 
 /obj/item/weapon/reagent_containers/pill/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
-		return
-	if(isextinguisher(target) && !src.reagents.only_reagent("aqueous_foam"))
-		return
-
-	if(target.is_open_container() && target.reagents)
-		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty. Cant dissolve pill.</span>")
-			return
-		to_chat(user, "<span class='notice'>You dissolve the pill in [target]</span>")
-
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [target] with a pill. Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) spiked \a [target] with a pill. Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
-
-		reagents.trans_to(target, reagents.total_volume)
-		user.visible_message("<span class='warning'>[user] puts something in \the [target].</span>", viewing_distance = 2)
-
-		spawn(5)
-			qdel(src)
-
-	return
+	..()
 
 /obj/item/weapon/reagent_containers/pill/examine(mob/user)
 	..()

@@ -163,6 +163,20 @@
 
 #define isextinguisher(A) (istype(A, /obj/item/weapon/reagent_containers/spray/extinguisher))
 
+#define issyringe(A) (istype(A, /obj/item/weapon/reagent_containers/syringe))
+
+#define isdrink(A) (istype(A, /obj/item/weapon/reagent_containers/food/drinks))
+
+#define isglass(A) (istype(A, /obj/item/weapon/reagent_containers/glass))
+
+#define iscan(A) (istype(A, /obj/item/weapon/reagent_containers/food/drinks/cans))
+
+#define isspray(A) (istype(A, /obj/item/weapon/reagent_containers/spray))
+
+#define ispill(A) (istype(A, /obj/item/weapon/reagent_containers/pill))
+
+#define isdropper(A) (istype(A, /obj/item/weapon/reagent_containers/dropper))
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))
