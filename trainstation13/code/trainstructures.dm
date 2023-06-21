@@ -48,7 +48,7 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#f535aa"
-	network = list("beach","boxing")
+	network = list("beach","jungle","boxing")
 	pixel_y = 3
 
 /obj/machinery/space_heater/potbellystove
