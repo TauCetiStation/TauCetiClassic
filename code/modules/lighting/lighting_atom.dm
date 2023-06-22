@@ -100,3 +100,5 @@
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _color, _range, _power, _duration)
 	return mob_light_obj
 
+/atom/proc/turn_light_off()
+	set_light(0)

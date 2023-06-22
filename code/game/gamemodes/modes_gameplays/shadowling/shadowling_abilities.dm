@@ -46,29 +46,8 @@
 
 /proc/light_off_range(list/targets, atom/center)
 	for(var/turf/T in targets)
-		for(var/obj/item/F in T.contents)
-			F.set_light(0)
-
-		for(var/obj/machinery/light/L in T.contents)
-			L.on = 0
-			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
-			L.update(0)
-
-		for(var/mob/living/carbon/human/H in T.contents)
-			for(var/obj/item/F in H)
-				F.set_light(0)
-			H.set_light(0) //This is required with the object-based lighting
-
-		for(var/obj/machinery/door/airlock/A in T.contents)
-			if(get_dist(center, A) <= 4)
-				if(A.lights && A.hasPower())
-					A.lights = 0
-					A.update_icon()
-
-		for(var/obj/structure/glowshroom/G in T.contents)
-			if(get_dist(center, G) <= 2) //Very small radius
-				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-				qdel(G)
+		for(var/atom/A in T.contents)
+			A.turn_light_off()
 
 		if(T.is_light_floor())
 			var/turf/simulated/floor/F = T
