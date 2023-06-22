@@ -1641,7 +1641,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "tyrant_aimodule"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.25
+	x = 0.75
 	y = 0.6
 	icon = "module"
 
@@ -1673,7 +1673,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "ai_detector"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.75
+	x = 0.25
 	y = 0.6
 	icon = "aidetector"
 
