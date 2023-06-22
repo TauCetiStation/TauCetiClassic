@@ -1642,7 +1642,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.75
-	y = 0.45
+	y = 0.5
 	icon = "module"
 
 	required_technologies = list("freedom_implant")
@@ -1658,7 +1658,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.50
-	y = 0.45
+	y = 0.5
 	icon = "borgmodule"
 
 	required_technologies = list("tyrant_aimodule")
@@ -1674,7 +1674,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.25
-	y = 0.45
+	y = 0.5
 	icon = "aidetector"
 
 	required_technologies = list("borg_syndicate_module")
@@ -1690,7 +1690,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.25
-	y = 0.7
+	y = 0.8
 	icon = "fakebureucracy"
 
 	required_technologies = list("ai_detector")
@@ -1706,7 +1706,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.50
-	y = 0.7
+	y = 0.8
 	icon = "projector"
 
 	required_technologies = list("fake_bureucracy")
@@ -1722,7 +1722,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.75
-	y = 0.7
+	y = 0.8
 	icon = "camerabug"
 
 	required_technologies = list("chameleon_projector")
