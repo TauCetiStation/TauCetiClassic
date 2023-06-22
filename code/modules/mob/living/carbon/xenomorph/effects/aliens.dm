@@ -296,13 +296,6 @@
 	opacity = FALSE
 	anchored = TRUE
 
-
-
-/obj/effect/alien/acid/queen_acid/atom_init(mapload, target)
-	..()
-	src.target = target
-	return INITIALIZE_HINT_LATELOAD
-
 /obj/effect/alien/acid/queen_acid/atom_init_late()
 	if(iswallturf(target))
 		target_strength = 6
