@@ -105,15 +105,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			"null" = 50,
 			/obj/structure/bench = 50,
 			/obj/structure/closet/crate/bin = 50,
-			/obj/item/weapon/cigbutt = 2,
-			/obj/item/weapon/cigbutt/cigarbutt = 1,
-			/obj/item/trash/semki = 2,
-			/obj/item/trash/popcorn = 2,
-			/obj/item/trash/sosjerky = 2,
-			/obj/item/trash/candy = 2,
-			/obj/item/trash/raisins = 2,
-			/obj/item/trash/chips = 2,
-			/obj/item/trash/pistachios = 2,
 		),
 	)
 

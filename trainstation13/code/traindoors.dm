@@ -38,6 +38,30 @@
 	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/metal
 
+/obj/structure/mineral_door/transparent/automatic
+	name = "automatic door with doorlight"
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "locomotiveglass"
+	max_integrity = 300
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/effects/turret/open.ogg'
+
+/obj/structure/mineral_door/metal/automatic
+	name = "automatic door"
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "locomotive"
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/effects/turret/open.ogg'
+
+/obj/structure/mineral_door/metal/reinforced
+	name = "blast door"
+	desc = "This door is as strong, as it looks."
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "blastdoor"
+	max_integrity = 1000
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/effects/turret/open.ogg'
+
 //GATES
 
 /obj/machinery/door/poddoor/gateleft
