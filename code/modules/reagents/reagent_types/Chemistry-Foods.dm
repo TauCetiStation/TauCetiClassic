@@ -179,24 +179,32 @@
 	if(S && S.flags[NO_PAIN])
 		return
 	if(method == TOUCH)
-		if(ishuman(M))
-			var/mob/living/carbon/human/victim = M
-			var/mouth_covered = 0
-			var/obj/item/safe_thing = null
-			if(victim.wear_mask)
-				if(victim.wear_mask.flags & MASKCOVERSMOUTH)
-					if(istype(victim.wear_mask, /obj/item/clothing/mask/gas))
-						mouth_covered = 1
-						safe_thing = victim.wear_mask
-			if(mouth_covered)
-				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
-			else
-				victim.emote("cough")
-				to_chat(victim, "<span class='userdanger'> You're sprayed with pepperspray!</span>")
-				victim.blurEyes(25)
-				victim.eye_blind = max(M.eye_blind, 10)
-				victim.AdjustClumsyStatus(4 SECONDS)
-				victim.shock_stage += 30
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/victim = M
+		var/mouth_covered = 0
+		var/obj/item/safe_thing = null
+		if(victim.wear_mask?.flags & MASKCOVERSMOUTH)
+			if(istype(victim.wear_mask, /obj/item/clothing/mask/gas))
+				mouth_covered = 1
+				safe_thing = victim.wear_mask
+		if(mouth_covered)
+			to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
+			return
+		victim.emote("cough")
+		to_chat(victim, "<span class='userdanger'> You're sprayed with pepperspray!</span>")
+		victim.blurEyes(25)
+		victim.eye_blind = max(victim.eye_blind, 10)
+		victim.shock_stage = max(victim.shock_stage, 30)
+		var/datum/status_effect/clumsy/clumsy_status = victim.has_status_effect(STATUS_EFFECT_CLUMSY)
+		if(!clumsy_status)
+			victim.AdjustClumsyStatus(4)
+			return
+		var/seconds_remaining = (clumsy_status.duration - world.time) / 10
+		//formula returns the difference between the maximum value (4 SECONDS) and the current remaining
+		var/calculated_duration = round(clamp(4 - seconds_remaining, 0, 4))
+		if(calculated_duration > 0)
+			victim.AdjustClumsyStatus(calculated_duration)
 
 /datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
 	..()
