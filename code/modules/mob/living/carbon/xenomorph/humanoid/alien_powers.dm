@@ -1,6 +1,5 @@
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
-#define QUEEN_ACID 3
 
 
 /mob/living/carbon/xenomorph/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
@@ -35,8 +34,6 @@
 				if(istype(T, /turf/simulated/wall/r_wall) && !isxenoqueen(src))
 					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
 					return
-				if(isxenoqueen(src))
-					new /obj/effect/alien/acid/queen_acid
 				// R FLOOR
 				if(istype(T, /turf/simulated/floor/engine))
 					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
