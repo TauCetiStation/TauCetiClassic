@@ -291,10 +291,6 @@
 	desc = "Burbling corrossive and yellow stuff. I wouldn't want to touch it."
 	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "queen_acid"
-	layer = BELOW_MOB_LAYER
-	density = FALSE
-	opacity = FALSE
-	anchored = TRUE
 
 /obj/effect/alien/acid/queen_acid/atom_init_late()
 	if(iswallturf(target))
