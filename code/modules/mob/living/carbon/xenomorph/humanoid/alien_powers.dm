@@ -46,9 +46,9 @@
 
 			adjustToxLoss(-100)
 			if(isxenoqueen(src))
-				new /obj/effect/alien/acid/queen_acid(get_turf(0), 0)
+				new /obj/effect/alien/acid/queen_acid(get_turf(O), O)
 			else
-				new /obj/effect/alien/acid(get_turf(0), 0)
+				new /obj/effect/alien/acid(get_turf(O), O)
 			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")
