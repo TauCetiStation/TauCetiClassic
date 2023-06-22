@@ -1756,7 +1756,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chameleon
 	name = "Chameleon Kit"
-	desc = "It's a set of clothes with dials on them."
+	desc = "A set of clothes with dials on them."
 	id = "chameleon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
@@ -1765,7 +1765,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ai_detector
 	name = "Artificial Intelligence Detector"
-	desc = "It's an illegal device disguised as a multitool."
+	desc = "An illegal device disguised as a multitool."
 	id = "ai_detector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 500, MAT_GOLD = 500)
@@ -1774,7 +1774,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/fake_bureucracy
 	name = "Fake Bureucracy Set"
-	desc = "It's a kit with a pen and a rubber stamp inside."
+	desc = "A kit with a pen and a rubber stamp inside."
 	id = "fake_bureucracy"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500)
@@ -1783,7 +1783,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chameleon_projector
 	name = "Chameleon-Projector"
-	desc = "It's an illegal device that projects an image across a user, disguising them as an object scanned with it."
+	desc = "An illegal device that projects an image across a user, disguising them as an object scanned with it."
 	id = "chameleon_projector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_DIAMOND = 3000, MAT_SILVER = 500, MAT_GOLD = 500)
@@ -1792,7 +1792,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/camera_bug
 	name = "Camera Bug"
-	desc = "It's an illegal device for illicit snooping through the camera network."
+	desc = "An illegal device for illicit snooping through the camera network."
 	id = "camera_bug"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 3000, MAT_DIAMOND = 2000, MAT_SILVER = 1000, MAT_GOLD = 500)
