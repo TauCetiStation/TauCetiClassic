@@ -153,8 +153,8 @@
 	if(istype(src, /turf/simulated/wall/r_wall))
 		new /obj/item/stack/sheet/plasteel(src)
 
-		new sheet_type(src, 2)
-		new /obj/item/stack/sheet/metal(src)
+	new sheet_type(src, 2)
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
