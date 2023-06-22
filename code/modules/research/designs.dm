@@ -1763,6 +1763,41 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	category = list("Illegal")
 
+/datum/design/ai_detector
+	name = "Artificial Intelligence Detector"
+	desc = "It's an illegal device disguised as a multitool."
+	id = "ai_detector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 500, MAT_GOLD = 500)
+	build_path = /obj/item/device/multitool/ai_detect
+	category = list("Illegal")
+
+/datum/design/fake_bureucracy
+	name = "Fake Bureucracy Set"
+	desc = "It's a kit with a pen and a rubber stamp inside."
+	id = "fake_bureucracy"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 500)
+	build_path = /obj/item/weapon/storage/box/syndie_kit/fake
+	category = list("Illegal")
+
+/datum/design/chameleon_projector
+	name = "Chameleon-Projector"
+	desc = "It's an illegal device that projects an image across a user, disguising them as an object scanned with it."
+	id = "chameleon_projector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_DIAMOND = 3000, MAT_SILVER = 500, MAT_GOLD = 500)
+	build_path = /obj/item/device/chameleon
+	category = list("Illegal")
+
+/datum/design/camera_bug
+	name = "Camera Bug"
+	desc = "It's an illegal device for illicit snooping through the camera network."
+	id = "camera_bug"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 3000, MAT_DIAMOND = 2000, MAT_SILVER = 1000, MAT_GOLD = 500)
+	build_path = /obj/item/device/camera_bug
+	category = list("Illegal")
 
 /datum/design/bluespacebeaker
 	name = "bluespace beaker"
