@@ -359,7 +359,7 @@
 		return
 	print_mood(user)
 
-/datum/component/mood/proc/get_color_matrix(var/amount = 1)
+/datum/component/mood/proc/get_color_matrix(amount = 1)
 	var/sat = 0.2 * amount
 	var/rgb = 1 - 0.25 * amount
 	var/con = -0.08 * amount
