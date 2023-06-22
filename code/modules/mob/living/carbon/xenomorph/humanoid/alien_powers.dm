@@ -16,7 +16,7 @@
 	return TRUE
 
 /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Corrossive Acid (100)"
+	set name = "Corrossive / Queen Acid (100)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
