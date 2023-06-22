@@ -17,8 +17,6 @@
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
 
-#define isrwallturf(A) (istype(A, /turf/simulated/wall/r_wall))
-
 // HUMAN
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))

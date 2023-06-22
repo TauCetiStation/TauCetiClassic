@@ -286,7 +286,7 @@
 			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
-/obj/effect/alien/queen_acid
+/obj/effect/alien/acid/queen_acid
 	name = "queen acid"
 	desc = "Burbling corrossive and yellow stuff. I wouldn't want to touch it."
 	icon = 'icons/mob/xenomorph.dmi'
@@ -296,16 +296,14 @@
 	opacity = FALSE
 	anchored = TRUE
 
-	var/atom/target
-	var/ticks = 0
-	var/target_strength = 0
 
-/obj/effect/alien/queen_acid/atom_init(mapload, target)
+
+/obj/effect/alien/acid/queen_acid/atom_init(mapload, target)
 	..()
 	src.target = target
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/alien/queen_acid/atom_init_late()
+/obj/effect/alien/acid/queen_acid/atom_init_late()
 	if(iswallturf(target))
 		target_strength = 6
 	else if(is_type_in_list(target, ventcrawl_machinery))
@@ -313,48 +311,6 @@
 	else
 		target_strength = 4
 	tick()
-
-/obj/effect/alien/queen_acid/proc/tick()
-	if(!target)
-		qdel(src)
-
-	ticks += 1
-
-	if(ticks >= target_strength)
-
-		audible_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>")
-
-		if(iswallturf(target))
-			var/turf/simulated/wall/W = target
-			W.dismantle_wall(1)
-		else if(isrwallturf(target))
-			var/turf/simulated/wall/r_wall/RW = target
-			RW.dismantle_rwall(1)
-		else if(isfloorturf(target))
-			var/turf/simulated/floor/F = target
-			F.make_plating()
-		else if(is_type_in_list(target, ventcrawl_machinery))
-			var/obj/machinery/atmospherics/components/unary/U = target
-			if(U.welded)
-				U.welded = FALSE
-				U.update_icon()
-			else
-				qdel(target)
-		else
-			qdel(target)
-		qdel(src)
-		return
-
-	switch(target_strength - ticks)
-		if(6)
-			visible_message("<span class='notice'><B>[src.target] is holding up against the acid!</B></span>")
-		if(4)
-			visible_message("<span class='notice'><B>[src.target]\s structure is being melted by the acid!</B></span>")
-		if(2)
-			visible_message("<span class='notice'><B>[src.target] is struggling to withstand the acid!</B></span>")
-		if(0 to 1)
-			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
-	spawn(rand(150, 200)) tick()
 
 
 /*

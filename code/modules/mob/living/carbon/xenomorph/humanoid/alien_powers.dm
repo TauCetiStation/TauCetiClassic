@@ -1,5 +1,7 @@
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
+#define QUEEN_ACID 3
+
 
 /mob/living/carbon/xenomorph/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(incapacitated())
@@ -70,7 +72,7 @@
 				return
 
 			adjustToxLoss(-100)
-			new /obj/effect/alien/queen_acid(get_turf(O), O)
+			new /obj/effect/alien/acid/queen_acid(get_turf(O), O)
 			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")
