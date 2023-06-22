@@ -195,11 +195,11 @@
 		if(6)
 			dissapointment = 0.8
 		if(5)
-			dissapointment = 0.4
+			dissapointment = 0.6
 		if(4)
-			dissapointment = 0.2
+			dissapointment = 0.4
 
-	H.moody_color = SADNESS_COLOR(dissapointment)
+	H.moody_color = get_color_matrix(dissapointment)
 
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
@@ -358,6 +358,16 @@
 	if(user != parent)
 		return
 	print_mood(user)
+
+/datum/component/mood/proc/get_color_matrix(var/amount = 1)
+	var/sat = 0.2 * amount
+	var/rgb = 1 - 0.25 * amount
+	var/con = -0.08 * amount
+	return list(rgb,	sat, 	sat,	0,\
+				sat,	rgb,	sat,	0,\
+				sat,	sat,	rgb,	0,\
+				0,		0,		0,		1,\
+				con,	con,	con,	0)
 
 /datum/component/mood/proc/HandleNutrition()
 	var/mob/living/L = parent
