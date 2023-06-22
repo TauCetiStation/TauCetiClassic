@@ -156,11 +156,13 @@
 
 /turf/simulated/wall/r_wall/proc/break_rwall()
 	if(istype(src, /turf/simulated/wall/r_wall))
+		new sheet_type(src, 2)
 		new /obj/item/stack/sheet/metal(src)
 		new /obj/item/stack/sheet/plasteel(src)
 
 /turf/simulated/wall/r_wall/proc/devastate_rwall()
 	if(istype(src, /turf/simulated/wall/r_wall))
+		new sheet_type(src, 2)
 		new /obj/item/stack/sheet/metal(src)
 		new /obj/item/stack/sheet/plasteel(src)
 
@@ -176,6 +178,8 @@
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
 		new /obj/effect/decal/remains/human(src)
+		new sheet_type(src, 2)
+		new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
