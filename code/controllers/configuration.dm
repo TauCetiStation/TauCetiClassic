@@ -115,6 +115,7 @@ var/global/bridge_secret = null
 	var/health_threshold_softcrit = 0
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
+	var/health_threshold_cpr_allowed = -150
 
 	var/organ_health_multiplier = 1
 	var/organ_regeneration_multiplier = 1

@@ -2185,9 +2185,9 @@
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
 
-	var/needed_massages = 12
+	var/needed_massages = 24
 	if(HAS_TRAIT(src, TRAIT_FAT))
-		needed_massages = 20
+		needed_massages = 42
 	if(Lungs && !Lungs.is_bruised())
 		adjustOxyLoss(-1.5)
 
@@ -2201,7 +2201,7 @@
 			massages_done_right = 0
 			return_to_body_dialog()
 
-			if(health > config.health_threshold_dead)
+			if(health > config.health_threshold_cpr_allowed)
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
@@ -2242,7 +2242,7 @@
 	last_massage = world.time
 
 	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
-	if (((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2) && prob(5))
+	if (((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2) && prob(1))
 		BP.fracture()
 		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
