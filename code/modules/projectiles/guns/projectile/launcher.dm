@@ -9,7 +9,7 @@
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/unchamber()
 	playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)
 	if(chambered)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null

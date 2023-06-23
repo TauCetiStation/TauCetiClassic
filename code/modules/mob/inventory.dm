@@ -180,7 +180,7 @@ var/global/list/slot_equipment_priority = list(
 		W.forceMove(src)		//TODO: move to equipped?
 
 		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
-			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
+			INVOKE_ASYNC(W, TYPE_PROC_REF(/atom/movable, do_pickup_animation), src, old_loc)
 
 		l_hand = W	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
@@ -208,7 +208,7 @@ var/global/list/slot_equipment_priority = list(
 		W.forceMove(src)
 
 		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
-			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
+			INVOKE_ASYNC(W, TYPE_PROC_REF(/atom/movable, do_pickup_animation), src, old_loc)
 
 		r_hand = W
 		W.plane = ABOVE_HUD_PLANE
@@ -265,7 +265,7 @@ var/global/list/slot_equipment_priority = list(
 		return TRUE // self destroying objects (tk, grabs)
 
 	if(target && putdown_anim && was_holding && target != src && target.loc != src)
-		INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
+		INVOKE_ASYNC(W, TYPE_PROC_REF(/atom/movable, do_putdown_animation), target, src, additional_pixel_x, additional_pixel_y)
 
 	return TRUE
 

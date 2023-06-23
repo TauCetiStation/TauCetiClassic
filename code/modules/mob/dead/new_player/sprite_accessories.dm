@@ -984,23 +984,15 @@
 	ipc_head_compatible = null
 	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/ipc_screen_pink
-	name = "pink IPC screen"
-	icon_state = "ipc_pink"
+/datum/sprite_accessory/hair/ipc_screen_alert
+	name = "alert IPC screen"
+	icon_state = "ipc_alert"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_red
-	name = "red IPC screen"
-	icon_state = "ipc_red"
-	species_allowed = list(IPC)
-	do_colouration = FALSE
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_green
-	name = "green IPC screen"
-	icon_state = "ipc_green"
+/datum/sprite_accessory/hair/ipc_aquarium
+	name = "aquarium IPC screen"
+	icon_state = "ipc_aquarium"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
@@ -1019,6 +1011,59 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_chroma
+	name = "chroma IPC screen"
+	icon_state = "ipc_chroma"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_coffee
+	name = "coffee IPC screen"
+	icon_state = "ipc_coffee"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_color_array
+	name = "colored IPC screen with an eye"
+	icon_state = "ipc_color_array"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_color_array_horizontal
+	name = "colored horizontal IPC screen"
+	icon_state = "ipc_color_array_horizontal"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_color_array_vertical
+	name = "colored vertical IPC screen"
+	icon_state = "ipc_color_array_vertical"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_console
+	name = "console IPC screen"
+	icon_state = "ipc_console"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_dot
+	name = "dot IPC screen"
+	icon_state = "ipc_dot"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_ecgwave
+	name = "ecgwave IPC screen"
+	icon_state = "ipc_ecgwave"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_eight
 	name = "eight IPC screen"
 	icon_state = "ipc_eight"
@@ -1026,6 +1071,29 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_eye
+	name = "eye IPC screen"
+	icon_state = "ipc_eye"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_eyes
+	name = "eyes IPC screen"
+	icon_state = "ipc_eyes"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_equalizer
+	name = "equalizer IPC screen"
+	icon_state = "ipc_equalizer"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_four
+	name = "four IPC screen"
+	icon_state = "ipc_four"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
 /datum/sprite_accessory/hair/ipc_screen_goggles
 	name = "goggles IPC screen"
 	icon_state = "ipc_goggles"
@@ -1040,11 +1108,36 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_screen_mask
+	name = "mask IPC screen"
+	icon_state = "ipc_mask"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_screen_matrix
+	name = "matrix IPC screen"
+	icon_state = "ipc_matrix"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_miami
+	name = "miami IPC screen"
+	icon_state = "ipc_miami"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_microwave
+	name = "microwave IPC screen"
+	icon_state = "ipc_microwave"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_monoeye
 	name = "monoeye IPC screen"
 	icon_state = "ipc_monoeye"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_nature
@@ -1054,18 +1147,16 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_orange
-	name = "orange IPC screen"
-	icon_state = "ipc_orange"
+/datum/sprite_accessory/hair/ipc_noise
+	name = "noise IPC screen"
+	icon_state = "ipc_noise"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_purple
-	name = "purple IPC screen"
-	icon_state = "ipc_purple"
+/datum/sprite_accessory/hair/ipc_screen_question
+	name = "question IPC screen"
+	icon_state = "ipc_question"
 	species_allowed = list(IPC)
-	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_shower
@@ -1075,41 +1166,22 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_sinewave
+	name = "sinewave IPC screen"
+	icon_state = "ipc_sinewave"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_smiley
+	name = "smiley IPC screen"
+	icon_state = "ipc_smiley"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 /datum/sprite_accessory/hair/ipc_screen_static
 	name = "static IPC screen"
 	icon_state = "ipc_static"
-	species_allowed = list(IPC)
-	do_colouration = FALSE
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_yellow
-	name = "yellow IPC screen"
-	icon_state = "ipc_yellow"
-	species_allowed = list(IPC)
-	do_colouration = FALSE
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_dot
-	name = "dot IPC screen"
-	icon_state = "ipc_dot"
-	species_allowed = list(IPC)
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_four
-	name = "four IPC screen"
-	icon_state = "ipc_four"
-	species_allowed = list(IPC)
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_eye
-	name = "eye IPC screen"
-	icon_state = "ipc_eye"
-	species_allowed = list(IPC)
-	ipc_head_compatible = "Default"
-
-/datum/sprite_accessory/hair/ipc_screen_eyes
-	name = "eyes IPC screen"
-	icon_state = "ipc_eyes"
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
@@ -1137,9 +1209,9 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Human"
 
-/datum/sprite_accessory/hair/ipc_color_array
-	name = "colored IPC screen with an eye"
-	icon_state = "ipc_color_array"
+/datum/sprite_accessory/hair/ipc_tamagotchi
+	name = "tamagotchi IPC screen"
+	icon_state = "ipc_tamagotchi"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
@@ -1151,23 +1223,23 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_color_array_horizontal
-	name = "horizontal colored IPC screen"
-	icon_state = "ipc_color_array_horizontal"
+/datum/sprite_accessory/hair/ipc_tetris
+	name = "tetris IPC screen"
+	icon_state = "ipc_tetris"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_color_array_vertical
-	name = "vertical colored IPC screen"
-	icon_state = "ipc_color_array_vertical"
+/datum/sprite_accessory/hair/ipc_screen_win
+	name = "win IPC screen"
+	icon_state = "ipc_win"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_miami
-	name = "miami IPC screen"
-	icon_state = "ipc_miami"
+/datum/sprite_accessory/hair/ipc_screen_yellow
+	name = "yellow IPC screen"
+	icon_state = "ipc_yellow"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"

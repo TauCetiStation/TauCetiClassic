@@ -1,46 +1,91 @@
+
+/datum/action/innate/slime
+	var/needs_growth = FALSE
+
+/datum/action/innate/slime/IsAvailable()
+	if(!..())
+		return
+	var/mob/living/carbon/slime/S = owner
+	if(needs_growth && S.amount_grown < 10)
+		return FALSE
+	if(S.incapacitated())
+		return FALSE
+	return TRUE
+
+/datum/action/innate/slime/feed
+	name = "Feed"
+	button_icon_state = "slimeeat"
+
+/datum/action/innate/slime/feed/Activate()
+	var/mob/living/carbon/slime/S = owner
+	S.Feed()
+
+/datum/action/innate/slime/evolve
+	name = "Evolve"
+	button_icon_state = "slimegrow"
+	needs_growth = TRUE
+
+/datum/action/innate/slime/evolve/Activate()
+	var/mob/living/carbon/slime/S = owner
+	S.Evolve()
+
+/datum/action/innate/slime/reproduce
+	name = "Reproduce"
+	button_icon_state = "slimesplit"
+	needs_growth = TRUE
+
+/datum/action/innate/slime/reproduce/Activate()
+	var/mob/living/carbon/slime/S = owner
+	S.Reproduce()
+
 /mob/living/carbon/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
-	if(Victim)
-		Feedstop()
-		return
 
 	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
+	if(Victim)
+		Feedstop()
+		return
+
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && !isslime(C))
-			choices += C
+	for(var/mob/living/nearby_mob in view(1,src))
+		if(nearby_mob != src && !isslime(nearby_mob))
+			choices += nearby_mob
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
-	if(!M) return
-	if(M in view(1, src))
+	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sortTim(choices, GLOBAL_PROC_REF(cmp_name_asc)))
+	if(!isliving(choice))
+		return
 
-		if(!isbrain(src))
-			if(!isslime(M))
-				if(stat != DEAD)
-					if(health > -70)
+	var/mob/living/victim = choice
 
-						for(var/mob/living/carbon/slime/met in view())
-							if(met.Victim == M && met != src)
-								to_chat(src, "<i>The [met.name] is already feeding on this subject...</i>")
-								return
-						to_chat(src, "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>")
-						to_chat(M, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
-						Feedon(M)
+	if(isbrain(victim) || issilicon(victim))
+		to_chat(src, "<i>This subject does not have an edible life energy...</i>")
+		return
 
-					else
-						to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
-				else
-					to_chat(src, "<i>This subject does not have an edible life energy...</i>")
-			else
-				to_chat(src, "<i>I must not feed on my brothers...</i>")
-		else
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(H.species.name in list(IPC, DIONA, GOLEM))
 			to_chat(src, "<i>This subject does not have an edible life energy...</i>")
+			return
 
+	if(victim.stat == DEAD || victim.health < -70 )
+		to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
+		return
 
+	if(!Adjacent(victim))
+		return
+
+	for(var/mob/living/carbon/slime/S in view(1, Victim))
+		if(S.Victim == victim)
+			to_chat(src, "<i>Another slime is already feeding on this subject...</i>")
+			return
+
+	to_chat(src, "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>")
+	to_chat(victim, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
+	Feedon(victim)
 
 /mob/living/carbon/slime/proc/Feedon(mob/living/carbon/M)
 	Victim = M
@@ -48,14 +93,12 @@
 	canmove = 0
 	anchored = TRUE
 	var/lastnut = nutrition
-	//if(M.client) M << "<span class='warning'>You legs become paralyzed!</span>"
 	if(isslimeadult(src))
 		icon_state = "[colour] adult slime eat"
 	else
 		icon_state = "[colour] baby slime eat"
 
 	while(Victim && M.health > -70 && stat != DEAD)
-		// M.canmove = 0
 		canmove = 0
 
 		if(M in view(1, src))

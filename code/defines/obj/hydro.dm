@@ -186,7 +186,7 @@
 	icon_state = "seed-shand"
 	species = "shand"
 	plantname = "S'Rendarr's Hand"
-	product_type = /obj/item/stack/medical/bruise_pack/tajaran
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/shand
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -202,7 +202,7 @@
 	icon_state = "seed-mtear"
 	species = "mtear"
 	plantname = "Messa's Tear"
-	product_type = /obj/item/stack/medical/ointment/tajaran
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mtear
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -859,6 +859,22 @@
 	yield = 3
 	potency = 10
 	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/korta_nut
+	name = "pack of korta nut seeds"
+	desc = "These seeds grow into korta nut bushes, native to Tajaran."
+	icon_state = "seed-korta"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "kortanut"
+	plantname = "Korta Nut Bush"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 5
+	potency = 10
 	growthstages = 6
 
 /obj/item/seeds/ambrosiavulgarisseed

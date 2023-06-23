@@ -367,7 +367,7 @@
 
 /obj/structure/table/glass/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, , CALLBACK(src, .proc/slam))
+	AddComponent(/datum/component/clickplace, , CALLBACK(src, PROC_REF(slam)))
 
 /obj/structure/table/glass/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
@@ -575,13 +575,17 @@
 	. = ..()
 
 	table_attached_to = Table
-	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
+	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
 
 	held_Item = Item
 	Item.forceMove(src)
 
 	add_overlay(Item)
 	name = Item.name
+	var/list/pricetag = Item.price_tag
+	if(pricetag)
+		name = "[name] ([pricetag["price"]]$)"
 
 	var/old_invisibility = invisibility
 	invisibility = INVISIBILITY_ABSTRACT
@@ -593,14 +597,42 @@
 /obj/lot_holder/Destroy()
 	held_Item.forceMove(table_attached_to.loc)
 	held_Item = null
+
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(table_attached_to.loc)
 	table_attached_to = null
+
 	return ..()
 
-/obj/lot_holder/proc/on_table_destroy()
+/obj/lot_holder/proc/destroy_lot_holder()
 	qdel(src)
 
+/obj/lot_holder/container_resist()
+	qdel(src)
+
+/obj/lot_holder/attack_hand(mob/user)
+	if(ishuman(user) && istype(held_Item, /obj/item/smallDelivery))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/weapon/card/id/ID = H.get_idcard()
+		if(ID && (global.access_cargo in ID.GetAccess()))
+			var/obj/item/I = held_Item
+			qdel(src)
+			user.put_in_hands(I)
+			return
+	return ..()
+
 /obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/id))
+	if(istype(held_Item, /obj/item/smallDelivery))
+		return
+
+	if(W.price_tag)
+		var/list/item_click_params = params2list(params)
+		if(!item_click_params || !item_click_params[ICON_X] || !item_click_params[ICON_Y])
+			return
+		item_click_params[ICON_X] = (pixel_x + world.icon_size * 0.5 + rand(-2, 2))
+		item_click_params[ICON_Y] = (pixel_y + world.icon_size * 0.5 + rand(-2, 2))
+		table_attached_to.attackby(W, user, list2params(item_click_params))
+	else if(istype(W, /obj/item/weapon/card/id))
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W
 		scan_card(Card, user)
@@ -608,46 +640,52 @@
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W.GetID()
 		scan_card(Card, user)
+	else if(istype(W, /obj/item/weapon/ewallet))
+		var/obj/item/weapon/ewallet/EW = W
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает чип к столу.</span>")
+		scan_ewallet(EW, user)
 	else
 		return ..()
 
-/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
-	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
-	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
 
+/obj/lot_holder/proc/pay_with_account(datum/money_account/Buyer, mob/user)
 	if(!Buyer)
 		return
 
-	var/attempt_pin = 0
-	if(Buyer.security_level > 0)
-		if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == Buyer.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == Buyer.remote_access_pin)
-			attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
-		else
-			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
-		if(isnull(attempt_pin))
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+	if(Buyer.suspended)
+		table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Оплачивающий аккаунт заблокирован.</span>")
+		return
 
-		if(!Buyer)
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-
+	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
 	var/cost = held_Item.price_tag["price"]
 
-	if(cost > 0 && Seller)
+	if(cost > 0 && Seller && Buyer != Seller)
 		if(Seller.suspended)
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
 			return
+
 		if(cost <= Buyer.money)
-			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
-			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+			charge_to_account(Buyer.account_number, Seller.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Buyer.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+
 		else
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
 	held_Item.remove_price_tag()
 	qdel(src)
+
+/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
+	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!Buyer)
+		to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+		return
+	pay_with_account(Buyer, user)
+
+/obj/lot_holder/proc/scan_ewallet(obj/item/weapon/ewallet/EW, mob/user)
+	pay_with_account(get_account(EW.account_number), user)
 
 /obj/structure/table/reinforced/stall
 	name = "stall table"
@@ -660,10 +698,14 @@
 
 /obj/structure/table/reinforced/stall/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
+	AddComponent(/datum/component/clickplace, CALLBACK(src, PROC_REF(try_magnet)))
 
 /obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user, params)
-	if(I.price_tag)
+	if(I.price_tag || istype(I, /obj/item/smallDelivery))
+		if(istype(I, /obj/item/smallDelivery))
+			var/obj/item/smallDelivery/package = I
+			if(!package.lot_lock_image)
+				return
 		magnet_item(I, params)
 
 /obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I, list/params)

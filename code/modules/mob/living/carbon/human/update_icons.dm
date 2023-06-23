@@ -185,7 +185,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
 		standing += tatoo
 
-	if(species.name == UNATHI)
+	if(species.name == UNATHI && !(HUSK in mutations))
 		var/obj/item/organ/external/Chest = bodyparts_by_name[BP_CHEST]
 		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]", -BODY_LAYER)
 		belly.color = RGB_CONTRAST(r_belly, g_belly, b_belly)

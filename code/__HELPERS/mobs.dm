@@ -252,6 +252,10 @@
 	return FALSE
 
 /proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
+	var/insurance_type
+	if(ishuman(M))
+		insurance_type = get_insurance_type(M)
+
 	var/message = ""
 	if(!output_to_chat)
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
@@ -325,7 +329,6 @@
 		message += "<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span><br>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-
 		var/found_bleed
 		var/found_broken
 		for(var/obj/item/organ/external/BP in H.bodyparts)
@@ -365,6 +368,9 @@
 					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
+	if(insurance_type)
+		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"
+		
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
 	return message

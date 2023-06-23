@@ -31,7 +31,7 @@
 /var/const/access_cargo = 31
 /var/const/access_construction = 32
 /var/const/access_chemistry = 33
-/var/const/access_cargo_bot = 34
+/var/const/access_cargoshop = 34
 /var/const/access_hydroponics = 35
 /var/const/access_manufacturing = 36
 /var/const/access_library = 37
@@ -198,7 +198,7 @@
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_blueshield,
-	            access_medical, access_genetics, access_morgue, access_rd,
+	            access_medical, access_genetics, access_morgue, access_rd, access_cargoshop,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
@@ -262,8 +262,8 @@
 			return "Recycler"
 		if(access_detective)
 			return "Detective"
-		if(access_cargo_bot)
-			return "Cargo Bot Delivery"
+		if(access_cargoshop)
+			return "Cargo Delivery"
 		if(access_security)
 			return "Security"
 		if(access_blueshield)

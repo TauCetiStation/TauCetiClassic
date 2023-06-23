@@ -235,7 +235,7 @@
 /obj/item/weapon/shockpaddles/proc/set_cooldown(delay)
 	cooldown = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reset_cooldown), delay, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), delay, TIMER_UNIQUE)
 
 /obj/item/weapon/shockpaddles/proc/reset_cooldown()
 	if(cooldown)
