@@ -9,7 +9,9 @@
 	var/bar_icon_state = "prog_bar"
 	var/listindex
 
-/datum/progressbar/New(mob/User, goal_number, atom/target, my_icon_state="prog_bar", insert_under=FALSE)
+	var/visible = TRUE
+
+/datum/progressbar/New(mob/User, goal_number, atom/target, my_icon_state="prog_bar", insert_under=FALSE, visible=TRUE)
 	. = ..()
 	if (!istype(target))
 		EXCEPTION("Invalid target given")
@@ -37,8 +39,10 @@
 
 	bar.pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1))
 
+	src.visible = visible
+
 	user = User
-	if(user)
+	if(user && src.visible)
 		client = user.client
 		if(client)
 			client.images += bar
@@ -59,12 +63,12 @@
 	if (user.client != client)
 		if (client)
 			client.images -= bar
-		if (user.client)
+		if (user.client && visible)
 			user.client.images += bar
 
 	progress = clamp(progress, 0, goal)
 	bar.icon_state = "[bar_icon_state]_[round(((progress / goal) * 100), 5)]"
-	if (!shown)
+	if (!shown && visible)
 		user.client.images += bar
 		shown = 1
 
