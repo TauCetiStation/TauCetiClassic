@@ -80,7 +80,7 @@
 		visible_message("<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
 		return FALSE
 	new /obj/effect/temp_visual/teleport_abductor(place)
-	addtimer(CALLBACK(src, .proc/doMobToLoc, place, target), 80)
+	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 80)
 
 /obj/machinery/abductor/pad/proc/doMobToLoc(place, atom/movable/target)
 	flick("alien-pad", src)
@@ -93,7 +93,7 @@
 		visible_message("<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
 		return FALSE
 	new /obj/effect/temp_visual/teleport_abductor(place)
-	addtimer(CALLBACK(src, .proc/doPadToLoc, place), 80)
+	addtimer(CALLBACK(src, PROC_REF(doPadToLoc), place), 80)
 
 /obj/machinery/abductor/pad/proc/doPadToLoc(place)
 	flick("alien-pad", src)

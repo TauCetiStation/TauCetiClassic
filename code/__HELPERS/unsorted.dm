@@ -1520,10 +1520,6 @@ var/global/list/WALLITEMS = typecacheof(list(
 
 	return L
 
-//gives us the stack trace from CRASH() without ending the current proc.
-/proc/stack_trace(msg)
-	CRASH(msg)
-
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
 #define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta - 1, 1)), 1)
@@ -1600,7 +1596,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 			lobby_screen = "lobby"
 
 	for(var/mob/dead/new_player/N as anything in new_player_list)
-		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
+		INVOKE_ASYNC(N, TYPE_PROC_REF(/mob/dead/new_player, show_titlescreen))
 
 // Converts browser keycodes to BYOND keycodes.
 /proc/browser_keycode_to_byond(keycode)

@@ -102,7 +102,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 		energy_to_raise = energy_to_raise * 1.5
 
 		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
-		addtimer(CALLBACK(src, .proc/create_energy_ball), 100)
+		addtimer(CALLBACK(src, PROC_REF(create_energy_ball)), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.5

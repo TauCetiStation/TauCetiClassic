@@ -140,6 +140,11 @@
 	if(initial(inserted_bulb_type.smart))
 		update()
 
+/obj/machinery/light/turn_light_off()
+	on = FALSE
+	visible_message("<span class='danger'>[src] flickers and falls dark.</span>")
+	update(0)
+
 /obj/machinery/light/update_icon()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
@@ -463,4 +468,4 @@
 // explode the light
 /obj/machinery/light/proc/explode()
 	broken()	// break it first to give a warning
-	addtimer(CALLBACK(src, .proc/explosion, get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(explosion), get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)

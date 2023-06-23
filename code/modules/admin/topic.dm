@@ -295,7 +295,7 @@
 						if(timer_maint_revoke_id)
 							deltimer(timer_maint_revoke_id)
 							timer_maint_revoke_id = 0
-						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
+						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
@@ -2254,7 +2254,7 @@
 
 	else if(href_list["salary"])
 		if(!check_rights(R_EVENT))	return
-		var/datum/money_account/account = locate(href_list["salary"])
+		var/datum/money_account/account = get_account(text2num(href_list["salary"]))
 		if(!account)
 			to_chat(usr, "<span class='warning'>Account not found!</span>")
 			return

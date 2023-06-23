@@ -76,7 +76,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_medbay_storage, access_engineering_lobby)
+	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_medbay_storage, access_engineering_lobby)
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic

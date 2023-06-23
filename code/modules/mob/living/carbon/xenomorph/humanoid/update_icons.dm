@@ -225,7 +225,7 @@
 /mob/living/carbon/xenomorph/humanoid/proc/create_shriekwave()
 	overlays_standing[X_SHRIEC_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "shriek_waves", layer = -X_SHRIEC_LAYER)
 	apply_standing_overlay(X_SHRIEC_LAYER)
-	addtimer(CALLBACK(src, .proc/remove_standing_overlay, X_SHRIEC_LAYER), 30)
+	addtimer(CALLBACK(src, PROC_REF(remove_standing_overlay), X_SHRIEC_LAYER), 30)
 
 /mob/living/carbon/xenomorph/proc/update_fire_underlay()
 	if(!fire_underlay_state)

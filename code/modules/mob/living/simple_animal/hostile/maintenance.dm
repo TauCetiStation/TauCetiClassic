@@ -16,8 +16,10 @@
 	has_leg = TRUE
 	alpha = 45
 
-/mob/living/simple_animal/hostile/shade/AttackingTarget()
-	..()
+/mob/living/simple_animal/hostile/shade/UnarmedAttack(atom/target)
+	. = ..()
+	if(!isliving(target))
+		return
 	var/mob/living/L = target
 	if(prob(50))
 		var/sound_to_play = pick('sound/hallucinations/scary_sound_1.ogg', 'sound/hallucinations/scary_sound_2.ogg', 'sound/hallucinations/scary_sound_3.ogg', 'sound/hallucinations/scary_sound_4.ogg')
@@ -55,16 +57,17 @@
 	melee_damage = 10
 	attacktext = "lash"
 
-/mob/living/simple_animal/hostile/octopus/OpenFire()
+/mob/living/simple_animal/hostile/octopus/OpenFire(target)
 	for(var/obj/item/I in range(src, 1))
 		if(prob(50))
 			I.throw_at(target, 30, 2)
 			visible_message("<span class='warning'>[src] throws [I] at [target]!</span>")
 			ranged_cooldown = 0
+			SetNextMove(CLICK_CD_MELEE)
 
-/mob/living/simple_animal/hostile/octopus/AttackingTarget()
-	..()
-	var/mob/living/L = target
-	if(prob(50))
+/mob/living/simple_animal/hostile/octopus/UnarmedAttack(atom/target)
+	. = ..()
+	if(isliving(target) && prob(50))
+		var/mob/living/L = target
 		L.drop_item()
 		to_chat(L, "<span class='warning'>[src] disarms you with it's tentacles!</span>")

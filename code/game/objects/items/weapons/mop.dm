@@ -28,12 +28,12 @@
 	SCB.can_spin = TRUE
 
 
-	SCB.on_sweep_to_check = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_to_check)
-	SCB.on_sweep_finish = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_finish)
+	SCB.on_sweep_to_check = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/mop, on_sweep_to_check))
+	SCB.on_sweep_finish = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/mop, on_sweep_finish))
 
-	SCB.on_sweep_push = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_push)
+	SCB.on_sweep_push = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/mop, on_sweep_push))
 
-	SCB.on_sweep_pull = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_pull)
+	SCB.on_sweep_pull = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/mop, on_sweep_pull))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -112,7 +112,7 @@
 		if(user.is_busy(target))
 			return
 
-		INVOKE_ASYNC(user, /atom/movable.proc/do_attack_animation, target)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/atom/movable, do_attack_animation), target)
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(target)].</span>")
 
 		if(do_after(user, sweep_step SECONDS, target = target))

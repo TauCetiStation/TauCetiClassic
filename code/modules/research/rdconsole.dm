@@ -211,7 +211,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		else
 			screen = "working"
 			griefProtection() //Putting this here because I dont trust the sync process
-			addtimer(CALLBACK(src, .proc/sync_tech), 3 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(sync_tech)), 3 SECONDS)
 	if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
 		sync = !sync
 	if(href_list["select_category"])
@@ -278,7 +278,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		linked_imprinter.eject_sheet(href_list["imprinter_ejectsheet"], desired_num_sheets)
 	if(href_list["find_device"])
 		screen = "working"
-		addtimer(CALLBACK(src, .proc/find_devices), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(find_devices)), 2 SECONDS)
 	if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
 		switch(href_list["disconnect"])
 			if("destroy")

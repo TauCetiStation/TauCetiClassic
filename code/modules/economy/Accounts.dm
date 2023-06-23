@@ -16,9 +16,7 @@
 	var/list/transaction_log = list()
 	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0
-	var/security_level = 1	//0 - auto-identify from worn ID, require only account number
-							//1 - require manual login / account number and pin
-							//2 - require card and manual login
+	var/security_level = ACCOUNT_SECURITY_LEVEL_STANDARD
 	// Whether this account is hidden from databases. In the future, if required, abstract to Database ID, and make the financial database connect to said ID and view accounts only for that ID.
 	var/hidden = FALSE
 
@@ -80,7 +78,7 @@
 			rate = rate.Copy(2,7)
 		else
 			if(tgui_alert(user, "Permanent - only admin can return the base salary.\
-			Temporarily - any head can return the base salary.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
+			Temporarily - any head can return the base salary.", "Choose type of salary change.", list("Permanent", "Temporarily")) == "Permanent")
 				type_change = "perm"
 		input_rate = input(user, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
 		if(!input_rate)
@@ -238,12 +236,26 @@
 	return FALSE
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
-/proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = 0)
-	for(var/datum/money_account/D in all_money_accounts)
-		if(D.account_number == attempt_account_number)
-			if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number) )
-				return D
-			break
+/proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = ACCOUNT_SECURITY_LEVEL_NONE)
+	var/datum/money_account/D = get_account(attempt_account_number)
+	if(!D)
+		return
+	if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number) )
+		return D
+
+//for ATM, cardpay, watercloset, table_rack, vendomat
+/proc/attempt_account_access_with_user_input(attempt_account_number, security_level_passed = ACCOUNT_SECURITY_LEVEL_NONE, mob/user)
+	var/datum/money_account/MA = get_account(attempt_account_number)
+	if(!MA)
+		return
+	if(MA.security_level == ACCOUNT_SECURITY_LEVEL_NONE)
+		return MA
+	var/attempt_pin = 0
+	if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == MA.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == MA.remote_access_pin)
+		attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
+	else
+		attempt_pin = input("Enter pin code", "Money transaction") as num
+	return attempt_account_access(attempt_account_number, attempt_pin, security_level_passed)
 
 /proc/get_account(account_number)
 	for(var/datum/money_account/D in all_money_accounts)
