@@ -1683,37 +1683,37 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("ai_detector")
 
-/datum/technology/fake_bureucracy
-	name = "Fake Bureucracy Set"
-	desc = "Fake Bureucracy Set"
-	id = "fake_bureucracy"
+/datum/technology/smuggler_satch
+	name = "Smuggler's Satchel"
+	desc = "Smuggler's Satchel"
+	id = "smuggler_satch"
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.25
 	y = 0.8
-	icon = "fakebureucracy"
+	icon = "smuggler"
 
 	required_technologies = list("ai_detector")
-	required_tech_levels = list(RESEARCH_ENGINEERING = 10)
+	required_tech_levels = list(RESEARCH_BLUESPACE = 6)
 	cost = 4000
 
-	unlocks_designs = list("fake_bureucracy")
+	unlocks_designs = list("smuggler_satch")
 
-/datum/technology/chameleon_projector
-	name = "Chameleon-Projector"
-	desc = "Chameleon-Projector"
-	id = "chameleon_projector"
+/datum/technology/voice_changer
+	name = "Voice Changer"
+	desc = "Voice Changer"
+	id = "voice_changer"
 	tech_type = RESEARCH_ILLEGAL
 
 	x = 0.50
 	y = 0.8
-	icon = "projector"
+	icon = "voicechanger"
 
-	required_technologies = list("fake_bureucracy")
-	required_tech_levels = list(RESEARCH_BLUESPACE = 5)
+	required_technologies = list("smuggler_satch")
+	required_tech_levels = list(RESEARCH_BIOTECH = 7)
 	cost = 5000
 
-	unlocks_designs = list("chameleon_projector")
+	unlocks_designs = list("voice_changer")
 
 /datum/technology/camera_bug
 	name = "Camera Bug"
@@ -1725,8 +1725,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	y = 0.8
 	icon = "camerabug"
 
-	required_technologies = list("chameleon_projector")
-	required_tech_levels = list(RESEARCH_BLUESPACE = 5)
+	required_technologies = list("voice_changer")
+	required_tech_levels = list(RESEARCH_ENGINEERING = 12)
 	cost = 5000
 
 	unlocks_designs = list("camera_bug")

@@ -1765,29 +1765,29 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ai_detector
 	name = "Artificial Intelligence Detector"
-	desc = "An illegal device disguised as a multitool."
+	desc = "A device disguised as a multitool. Detects the activity of artificial intelligence."
 	id = "ai_detector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 500, MAT_GOLD = 500)
 	build_path = /obj/item/device/multitool/ai_detect
 	category = list("Illegal")
 
-/datum/design/fake_bureucracy
-	name = "Fake Bureucracy Set"
-	desc = "A kit with a pen and a rubber stamp inside."
-	id = "fake_bureucracy"
+/datum/design/smuggler_satch
+	name = "Smuggler's Satchel"
+	desc = "An unusual satchel that fits under the floor tiles."
+	id = "smuggler_satch"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 500)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/fake
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/weapon/storage/backpack/satchel/flat
 	category = list("Illegal")
 
-/datum/design/chameleon_projector
-	name = "Chameleon-Projector"
-	desc = "An illegal device that projects an image across a user, disguising them as an object scanned with it."
-	id = "chameleon_projector"
+/datum/design/voice_changer
+	name = "Voice Changer"
+	desc = "A gas mask with additional filters that affect the timbre of your voice."
+	id = "voice_changer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_DIAMOND = 3000, MAT_SILVER = 500, MAT_GOLD = 500)
-	build_path = /obj/item/device/chameleon
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 500)
+	build_path = /obj/item/clothing/mask/gas/voice
 	category = list("Illegal")
 
 /datum/design/camera_bug
