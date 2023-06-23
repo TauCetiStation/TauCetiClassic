@@ -8,6 +8,7 @@
 	icon = 'trainstation13/icons/64x64.dmi'
 	icon_state = "rtg_off" //Sprite by INFRARED_BARON
 	icon_state_on = "rtg_on"
+	layer = 5
 	power_gen = 40000
 	pixel_x = -16
 	var/sheets = 0

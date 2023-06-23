@@ -478,7 +478,7 @@
 "jj" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "dark"},/area/trainstation/train/locomotive/engine)
 "jk" = (/turf/simulated/floor{dir = 4; icon_state = "warndarkcorners"},/area/trainstation/train/locomotive/engine)
 "jl" = (/turf/simulated/floor{dir = 5; icon_state = "warndark"},/area/trainstation/train/locomotive/engine)
-"jm" = (/obj/machinery/door_control{id = "rpo_top"; name = "RPO Top Shutters Control"; pixel_y = 24},/turf/simulated/floor{dir = 9; icon_state = "warndark"},/area/trainstation/train/locomotive/engine)
+"jm" = (/obj/machinery/door_control{id = "rtg_vent"; name = "Emergency Air Vents Control"; pixel_y = 24},/turf/simulated/floor{dir = 9; icon_state = "warndark"},/area/trainstation/train/locomotive/engine)
 "jn" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/mineral_door/metal/automatic,/turf/simulated/floor{icon_state = "darkbrownfull"},/area/trainstation/train/locomotive/engine)
 "jo" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{dir = 4; icon_state = "darkgreen"},/area/trainstation/train/locomotive/crew)
 "jp" = (/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor{icon_state = "dark"},/area/trainstation/train/locomotive/engine)
