@@ -32,8 +32,13 @@ var/global/spawn_list_type = "normal"
 	set category = "Event"
 	set name = "TS13 Decorations - Change Spawn List Type"
 
+	var/obj/effect/trainspawner/palette = pick(global.trainspawners)
+
 	var/prev_spawn_list_type = global.spawn_list_type
-	global.spawn_list_type = global.spawn_list_type == "normal" ? "station" : "normal"
+	var/chosen_type = input("Choose new Spawn List Type for Decorations", "Search for type") as null|anything in palette.spawn_lists
+	if(!chosen_type)
+		return
+	global.spawn_list_type = chosen_type
 	to_chat(src, "Changed Spawn List Type from [prev_spawn_list_type] to [global.spawn_list_type]")
 
 	for(var/obj/effect/trainspawner/T as anything in global.trainspawners)

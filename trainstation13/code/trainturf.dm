@@ -80,7 +80,9 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 /turf/unsimulated/floor/train/proc/change_movement(moving)
 	icon_state = "[initial(icon_state)]_[moving ? "moving" : "still"]"
 
-ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, global.train_special_effects)
+var/global/list/train_special_effects = list()
+
+ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, train_special_effects)
 
 /obj/effect/decal/train_special_effects
 
