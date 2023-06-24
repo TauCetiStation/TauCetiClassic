@@ -14,7 +14,7 @@
 			trainspawners += TR
 
 var/global/globally_operating = TRUE
-var/global/spawn_list_type = "normal"
+var/global/spawn_list_type = "station"
 
 /client/proc/toggle_train_spawners_and_despawners()
 	set category = "Event"
@@ -28,9 +28,9 @@ var/global/spawn_list_type = "normal"
 //	for(var/obj/effect/traindespawner/T as anything in global.traindespawners)//Toggles despawner if needed
 //		T.globally_operating = global.globally_operating
 
-/client/proc/change_global_spawn_list_type()
+/client/proc/change_global_train_decorations()
 	set category = "Event"
-	set name = "TS13 Decorations - Change Spawn List Type"
+	set name = "TS13 Decorations - Change Decorations Type"
 
 	var/obj/effect/trainspawner/palette = pick(global.trainspawners)
 
@@ -70,6 +70,11 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	var/current_spawn_list_type = "normal"
 
 	var/list/spawn_lists = list(
+		"station" = list(
+			// benches and stuff
+			/obj/structure/bench = 50,
+			/obj/structure/closet/crate/bin = 50,
+		),
 		"normal" = list(
 			// trees grass and stuff, example below
 			"null" = 20,
@@ -84,9 +89,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			/obj/structure/flora/ausbushes/stalkybush/train = 10,
 			/obj/structure/flora/ausbushes/reedbush/train = 10,
 			/obj/structure/flora/mine_rocks/train = 10,
-			/obj/structure/bear_piano = 1,
-			/obj/structure/bear_harmonica = 1,
-			/obj/structure/bear_vodka = 1,
 			/obj/item/stack/rods = 2,
 			/obj/item/weapon/grown/log = 2,
 			/obj/item/weapon/cigbutt = 5,
@@ -108,12 +110,21 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			/obj/structure/scrap/poor/train = 1,
 			/obj/structure/scrap/poor/large/train = 1,
 		),
-		"station" = list(
-			// benches and stuff
-			"null" = 50,
-			/obj/structure/bench = 50,
-			/obj/structure/closet/crate/bin = 50,
-		),
+		"forest" = list(
+			/obj/structure/flora/tree/pine/train = 10,
+			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/ausbushes/fullgrass/train = 30,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
+			/obj/structure/flora/ausbushes/palebush/train = 10,
+			/obj/structure/flora/ausbushes/grassybush/train = 10,
+			/obj/structure/flora/ausbushes/stalkybush/train = 30,
+			/obj/structure/flora/ausbushes/reedbush/train = 20,
+			/obj/structure/flora/mine_rocks/train = 10,
+			/obj/structure/bear_piano = 1,
+			/obj/structure/bear_harmonica = 1,
+			/obj/structure/bear_vodka = 1,
+		)
 	)
 
 	var/min_delay = 2 SECONDS
@@ -153,6 +164,18 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 /obj/effect/trainspawner/close //Closest conveyor relative to the train!
 	name = "close spawner mark"
 	spawn_lists = list(
+		"station" = list(
+			"null" = 80,
+			/obj/item/weapon/cigbutt = 20,
+			/obj/item/weapon/cigbutt/cigarbutt = 1,
+			/obj/item/trash/semki = 2,
+			/obj/item/trash/popcorn =2,
+			/obj/item/trash/sosjerky = 2,
+			/obj/item/trash/candy = 2,
+			/obj/item/trash/raisins = 2,
+			/obj/item/trash/chips = 2,
+			/obj/item/trash/pistachios = 2,
+		),
 		"normal" = list(
 			"null" = 90,
 			/obj/structure/flora/ausbushes/fullgrass/train = 20,
@@ -180,25 +203,26 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/structure/scrap/poor/train = 1,
 			/obj/structure/scrap/poor/large/train = 1,
 		),
-		"station" = list(
-			"null" = 80,
-			/obj/item/weapon/cigbutt = 20,
-			/obj/item/weapon/cigbutt/cigarbutt = 1,
-			/obj/item/trash/semki = 2,
-			/obj/item/trash/popcorn =2,
-			/obj/item/trash/sosjerky = 2,
-			/obj/item/trash/candy = 2,
-			/obj/item/trash/raisins = 2,
-			/obj/item/trash/chips = 2,
-			/obj/item/trash/pistachios = 2,
-		),
 		"forest" = list(
+			/obj/structure/flora/tree/pine/train = 10,
+			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/ausbushes/fullgrass/train = 30,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
+			/obj/structure/flora/ausbushes/palebush/train = 10,
+			/obj/structure/flora/ausbushes/grassybush/train = 10,
+			/obj/structure/flora/ausbushes/stalkybush/train = 30,
+			/obj/structure/flora/ausbushes/reedbush/train = 20,
+			/obj/structure/flora/mine_rocks/train = 10,
 		)
 	)
 
 /obj/effect/trainspawner/far //Furthest conveyor relative to the train!
 	name = "far spawner mark"
 	spawn_lists = list(
+		"station" = list(
+			"null" = 100,
+		),
 		"normal" = list(
 			"null" = 10,
 			/obj/structure/flora/tree/pine/train = 10,
@@ -229,10 +253,17 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/structure/scrap/poor/train = 1,
 			/obj/structure/scrap/poor/large/train = 1,
 		),
-		"station" = list(
-			"null" = 100,
-		),
 		"forest" = list(
+			/obj/structure/flora/tree/pine/train = 10,
+			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/ausbushes/fullgrass/train = 30,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
+			/obj/structure/flora/ausbushes/palebush/train = 10,
+			/obj/structure/flora/ausbushes/grassybush/train = 10,
+			/obj/structure/flora/ausbushes/stalkybush/train = 30,
+			/obj/structure/flora/ausbushes/reedbush/train = 20,
+			/obj/structure/flora/mine_rocks/train = 10,
 		)
 	)
 

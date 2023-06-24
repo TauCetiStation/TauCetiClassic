@@ -21,7 +21,7 @@
 	var/heat = 0
 	var/capacity_scale_with_upgrades = TRUE
 	var/rad_cooef = 40
-	var/rad_range = 3 // Please remake formula so emission range depends on output power.
+	var/rad_range = 1 // Please remake formula so emission range depends on output power.
 
 /obj/machinery/power/port_gen/rtg/atom_init()
 	. = ..()

@@ -6,7 +6,7 @@
 //Admin verb toggles
 
 var/list/admin_verbs_trainstation_event = list(
-	/client/proc/change_global_spawn_list_type, //Event (admin menu) - TS13 Decorations - Change Spawn List Type
+	/client/proc/change_global_train_decorations, //Event (admin menu) - TS13 Decorations - Change Decorations Type
 	/client/proc/toggle_train_spawners_and_despawners, //Event (admin menu) - TS13 Decorations - Toggle Spawners on/off
 	/client/proc/toggle_trainstation_block, //Event (admin menu) - TS13 Movement - Toggle Invisible Wall
 	/client/proc/spawn_signal, //Event (admin menu) - TS13 Signals - Spawn Red Signal
