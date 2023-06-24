@@ -30,6 +30,28 @@
 		H.apply_damage(damage, HALLOSS, BP, armor_block)
 		return TRUE
 
+/obj/item/clothing/gloves/boxing/proc/show_combo_huds(mob/living/user)
+	user.verbs += /mob/living/proc/read_possible_combos
+	for(var/datum/combo_handler/CS in user.combos_saved)
+		CS.show_combo_hud()
+
+/obj/item/clothing/gloves/boxing/proc/hide_combo_huds(mob/living/user)
+	user.verbs -= /mob/living/proc/read_possible_combos
+	for(var/datum/combo_handler/CS in user.combos_saved)
+		CS.hide_combo_hud()
+
+/obj/item/clothing/gloves/boxing/equipped(mob/living/user, slot)
+	..()
+	if(slot == SLOT_GLOVES)
+		show_combo_huds(user)
+	else if(slot_equipped == SLOT_GLOVES)
+		hide_combo_huds(user)
+
+/obj/item/clothing/gloves/boxing/dropped(mob/living/user)
+	..()
+	if(slot_equipped == SLOT_GLOVES)
+		hide_combo_huds(user)
+
 /obj/item/clothing/gloves/boxing/green
 	icon_state = "boxinggreen"
 	item_state = "boxinggreen"
