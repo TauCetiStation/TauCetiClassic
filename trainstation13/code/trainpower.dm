@@ -6,7 +6,7 @@
 	desc = "A radioisotope thermoelectric generator (RTG, RITEG) - a type of nuclear battery that uses an array of thermocouples to convert the heat released by the decay of a suitable radioactive material into electricity by the Seebeck effect."
 	anchored = TRUE
 	icon = 'trainstation13/icons/64x64.dmi'
-	icon_state = "rtg_off" //Sprite by INFRARED_BARON
+	icon_state = "rtg_off" // Sprite by INFRARED_BARON
 	icon_state_on = "rtg_on"
 	layer = 5
 	power_gen = 40000
@@ -21,7 +21,7 @@
 	var/heat = 0
 	var/capacity_scale_with_upgrades = TRUE
 	var/rad_cooef = 40
-	var/rad_range = 1
+	var/rad_range = 3 // Please remake formula so emission range depends on output power.
 
 /obj/machinery/power/port_gen/rtg/atom_init()
 	. = ..()
