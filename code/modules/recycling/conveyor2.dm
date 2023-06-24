@@ -256,6 +256,12 @@
 	// <trainstation13>
 	for(var/obj/effect/trainspawner/TR in trainspawners)
 		TR.operating = position != 0 ? TRUE : FALSE
+
+	for(var/turf/unsimulated/floor/train/T as anything in global.train_turfs)
+		T.change_movement(position != 0 ? TRUE : FALSE)
+
+	for(var/obj/effect/decal/train_special_effects/TRS as anything in global.train_special_effects)
+		TRS.change_movement(position != 0 ? TRUE : FALSE)
 	// </trainstation13>
 
 // attack with hand, switch position
