@@ -32,12 +32,20 @@ var/global/spawn_list_type = "normal"
 	set category = "Event"
 	set name = "TS13 Decorations - Change Spawn List Type"
 
+	var/obj/effect/trainspawner/palette = pick(global.trainspawners)
+
 	var/prev_spawn_list_type = global.spawn_list_type
-	global.spawn_list_type = global.spawn_list_type == "normal" ? "station" : "normal"
+	var/chosen_type = input("Choose new Spawn List Type for Decorations", "Search for type") as null|anything in palette.spawn_lists
+	if(!chosen_type)
+		return
+	global.spawn_list_type = chosen_type
 	to_chat(src, "Changed Spawn List Type from [prev_spawn_list_type] to [global.spawn_list_type]")
 
 	for(var/obj/effect/trainspawner/T as anything in global.trainspawners)
 		T.current_spawn_list_type = global.spawn_list_type
+
+	for(var/turf/unsimulated/floor/train/T as anything in global.train_turfs)
+		T.change_state(global.spawn_list_type)
 
 var/global/list/trainspawners = list()
 ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
@@ -184,6 +192,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/item/trash/chips = 2,
 			/obj/item/trash/pistachios = 2,
 		),
+		"forest" = list(
+		)
 	)
 
 /obj/effect/trainspawner/far //Furthest conveyor relative to the train!
@@ -222,6 +232,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		"station" = list(
 			"null" = 100,
 		),
+		"forest" = list(
+		)
 	)
 
 //DESPAWNER

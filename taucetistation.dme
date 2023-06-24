@@ -2465,6 +2465,7 @@
 #include "trainstation13\code\trainareas.dm"
 #include "trainstation13\code\traindoors.dm"
 #include "trainstation13\code\trainitems.dm"
+#include "trainstation13\code\trainpower.dm"
 #include "trainstation13\code\trainsignals.dm"
 #include "trainstation13\code\trainspawners.dm"
 #include "trainstation13\code\trainstation.dm"

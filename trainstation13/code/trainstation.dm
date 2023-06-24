@@ -23,8 +23,10 @@ var/list/train_block = list()
 /proc/set_event_field_stage(value)
 	event_field_stage = value
 
-	for(var/obj/effect/decal/trainstation/shield in train_block)
+	for(var/obj/effect/decal/trainstation/shield in global.train_block)
 		shield.update_icon()
+
+ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 
 /obj/effect/decal/trainstation
 	name = "..."
@@ -36,15 +38,6 @@ var/list/train_block = list()
 	icon_state = "block"
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
-
-/obj/effect/decal/trainstation/atom_init()
-	. = ..()
-	train_block += src
-	update_icon()
-
-/obj/effect/decal/trainstation/Destroy()
-	train_block -= src
-	return ..()
 
 /obj/effect/decal/trainstation/ex_act()
 	return
