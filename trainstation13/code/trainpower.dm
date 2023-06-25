@@ -9,7 +9,7 @@
 	icon_state = "rtg_off" // Sprite by INFRARED_BARON
 	icon_state_on = "rtg_on"
 	layer = 5
-	power_gen = 40000
+	power_gen = 10000
 	pixel_x = -16
 	var/sheets = 0
 	var/max_sheets = 100
