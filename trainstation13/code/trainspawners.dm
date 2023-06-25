@@ -127,8 +127,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 		)
 	)
 
-	var/min_delay = 2 SECONDS
-	var/max_delay = 16 SECONDS
+	var/min_delay = 1 SECONDS
+	var/max_delay = 8 SECONDS
 
 	var/next_spawn = 0
 

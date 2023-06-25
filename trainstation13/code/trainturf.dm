@@ -71,8 +71,8 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 	name = "platform"
 	desc = "A place for people to stand on."
 	icon = 'trainstation13/icons/turf/trainturf.dmi'
-	icon_state = "snow_still"
-	still_icon_state = "snow"
+	icon_state = "platform_middle_still"
+	still_icon_state = "platform_middle"
 
 /turf/unsimulated/floor/train/platform/change_state(state)
 	switch(state)
@@ -83,11 +83,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 		if("normal")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
 		if("forest")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
 
 /turf/unsimulated/floor/train/platform/top
 	name = "platform"
@@ -96,7 +96,7 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 	icon_state = "platform_top_still"
 	still_icon_state = "platform_top"
 
-/turf/unsimulated/floor/train/platform/change_state(state)
+/turf/unsimulated/floor/train/platform/top/change_state(state)
 	switch(state)
 		if("station")
 			name = "platform"
@@ -111,14 +111,27 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf_platformtop.dmi'
 
+/turf/unsimulated/floor/train/platform/bottom
+	name = "platform"
+	desc = "A place for people to stand on."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "platform_bottom_still"
+	still_icon_state = "platform_bottom"
+
+/turf/unsimulated/floor/train/platform/bottom/change_state(state)
+	switch(state)
+		if("station")
+			name = "platform"
+			desc = "A place for people to stand on."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("normal")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'
+
 /turf/unsimulated/floor/train/proc/change_movement(moving)
 	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"
-
-var/global/list/train_special_effects = list()
-
-ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, train_special_effects)
-
-/obj/effect/decal/train_special_effects
-
-/obj/effect/decal/train_special_effects/proc/change_movement(moving)
-	// here you can spawn the snow thing

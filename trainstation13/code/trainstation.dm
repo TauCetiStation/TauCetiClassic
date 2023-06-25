@@ -97,3 +97,29 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 
 /obj/machinery/conveyor/train/ex_act()
 	return
+
+//EXITING MOVING TRAIN GIBS MOBS
+
+var/global/list/train_special_effects = list()
+
+ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, train_special_effects)
+
+/obj/effect/decal/train_special_effects
+	name = "effect"
+	desc = "You should not see this."
+	icon = 'trainstation13/icons/trainareas.dmi'
+	icon_state = "roger_still"
+	unacidable = TRUE
+	invisibility = INVISIBILITY_ABSTRACT
+	var/still_icon_state = "roger"
+
+/obj/effect/decal/train_special_effects/ex_act()
+	return
+
+/obj/effect/decal/train_special_effects/proc/change_movement(moving)
+	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"
+
+/obj/effect/decal/train_special_effects/Entered(atom/movable/AM)
+	if(icon_state == "roger_moving" && isliving(AM))
+		var/mob/living/L = AM
+		L.gib()

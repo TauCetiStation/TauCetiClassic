@@ -1,6 +1,10 @@
 //TRAIN STATION 13
 
-//STRUCTURES
+//ANIMATED STRUCTURES
+
+var/global/list/train_animated_structures = list()
+
+ADD_TO_GLOBAL_LIST(/obj/structure/alien/resin/wall/gangway, train_animated_structures)
 
 /obj/structure/alien/resin/wall/gangway //Not really a wall, or a turf, but it's made of resin, allright.
 	name = "gangway"
@@ -10,6 +14,10 @@
 	can_block_air = FALSE
 	smooth = FALSE
 	max_integrity = 70
+	var/still_icon_state = "gangway"
+
+/obj/structure/alien/resin/wall/gangway/proc/change_movement(moving)
+	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"
 
 //MACHINES
 
