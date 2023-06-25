@@ -1,5 +1,7 @@
 //TRAIN STATION 13
 
+//STILL - STATIC TURFS
+
 /turf/unsimulated/wall/matrix
 	name = "matrix"
 	desc = "<font color='#157206'>You suddenly realize the truth - there is no spoon.<br>Digital simulation ends here.</font>"
@@ -19,6 +21,8 @@
 	desc = "It's cold."
 	icon = 'trainstation13/icons/turf/trainturf.dmi'
 	icon_state = "snow_still"
+
+//MOVING - ANIMATED TURFS
 
 var/global/list/train_turfs = list()
 

@@ -282,12 +282,12 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 	var/globally_operating = TRUE
 
 	var/list/despawn_list = list(
-		/obj/item/trash/raisins,
-		/obj/item/trash/chips,
 		/obj/machinery/floodlight,
 		/obj/machinery/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
+		/obj/item/weapon/grown/log,
 		/obj/structure/bench,
+		/obj/structure/closet/crate/bin
 		/obj/structure/flora/tree/pine/train,
 		/obj/structure/flora/tree/dead/train,
 		/obj/structure/flora/ausbushes/fullgrass/train,
