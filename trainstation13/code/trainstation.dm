@@ -119,7 +119,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, train_special_effect
 /obj/effect/decal/train_special_effects/proc/change_movement(moving)
 	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"
 
-/obj/effect/decal/train_special_effects/Entered(atom/movable/AM)
+/obj/effect/decal/train_special_effects/Crossed(atom/movable/AM)
 	if(icon_state == "roger_moving" && isliving(AM))
 		var/mob/living/L = AM
 		L.gib()
