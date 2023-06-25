@@ -27,7 +27,7 @@
 				break
 	number_of_possible_security = pos_cadets / 2 + pos_officers
 	for(var/datum/faction/F in factions)
-		var/possible_max_roles = min(number_of_possible_security * 1.5, F.max_roles)
+		var/possible_max_roles = min(round(number_of_possible_security * 1.5), F.max_roles)
 		F.max_roles = clamp(possible_max_roles, F.min_roles, F.max_roles)
 	return ..()
 
