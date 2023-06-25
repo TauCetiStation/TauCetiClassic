@@ -287,7 +287,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
 		/obj/structure/bench,
-		/obj/structure/closet/crate/bin
+		/obj/structure/closet/crate/bin,
 		/obj/structure/flora/tree/pine/train,
 		/obj/structure/flora/tree/dead/train,
 		/obj/structure/flora/ausbushes/fullgrass/train,
