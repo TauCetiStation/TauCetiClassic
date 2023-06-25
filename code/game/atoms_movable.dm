@@ -222,8 +222,6 @@
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	hit_atom.hitby(src, throwingdatum)
-
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
@@ -231,6 +229,8 @@
 
 	if(isturf(hit_atom) && hit_atom.density)
 		Move(get_step(src, turn(dir, 180)))
+
+	return hit_atom.hitby(src, throwingdatum)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)

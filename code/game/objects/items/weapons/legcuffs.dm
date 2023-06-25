@@ -72,7 +72,8 @@
 	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	//if it gets caught or the target can't be cuffed
+	if(..()) //if it gets caught or the target can't be cuffed
+		return
 	if(!isliving(hit_atom))
 		return
 	var/mob/living/L = hit_atom
