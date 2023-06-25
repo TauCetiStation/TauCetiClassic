@@ -263,6 +263,7 @@
 /area/trainstation/train/railcar/post
 	name = "Railway Post Office Cargo" //RPO
 	icon_state = "post"
+	sound_environment = SOUND_ENVIRONMENT_GENERIC
 
 /area/trainstation/train/railcar/main1
 	name = "Railcar 1 Corridor"
