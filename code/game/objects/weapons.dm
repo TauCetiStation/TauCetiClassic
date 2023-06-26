@@ -15,3 +15,4 @@
 	edge = 1
 	can_embed = 1
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	flags_2 = CANT_BE_CATCHED
