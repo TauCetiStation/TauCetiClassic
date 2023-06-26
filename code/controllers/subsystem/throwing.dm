@@ -61,10 +61,11 @@ SUBSYSTEM_DEF(throwing)
 	var/dy
 	var/pure_diagonal
 	var/diagonal_error
+	var/can_be_catched
 	var/datum/callback/callback
 	var/datum/callback/early_callback // used when you want to call something before throw_impact().
 
-/datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback)
+/datum/thrownthing/New(atom/thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback, can_be_catched)
 	src.thrownthing = thrownthing
 	src.target = target
 	src.target_turf = target_turf
@@ -75,10 +76,14 @@ SUBSYSTEM_DEF(throwing)
 	src.diagonals_first = diagonals_first
 	src.callback = callback
 	src.early_callback = early_callback
+	src.can_be_catched = can_be_catched
 
 	if(ismob(thrownthing))
 		var/mob/M = thrownthing
 		ADD_TRAIT(M, TRAIT_ARIBORN, TRAIT_ARIBORN_THROWN)
+
+	if(thrownthing.flags_2 & CANT_BE_CATCHED)
+		src.can_be_catched = FALSE
 
 	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, PROC_REF(on_thrownthing_qdel))
 

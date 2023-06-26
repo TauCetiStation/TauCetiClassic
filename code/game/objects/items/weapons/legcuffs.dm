@@ -66,6 +66,7 @@
 	origin_tech = "engineering=3;combat=1"
 	throw_speed = 5
 	var/weaken = 0.8
+	flags_2 = CANT_BE_CATCHED
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()

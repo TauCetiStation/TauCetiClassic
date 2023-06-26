@@ -646,7 +646,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	qdel(src)
@@ -701,7 +702,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
@@ -724,7 +726,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
@@ -1066,7 +1069,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15

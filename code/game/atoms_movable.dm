@@ -232,7 +232,7 @@
 
 	return hit_atom.hitby(src, throwingdatum)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback, can_be_catched = TRUE)
 	if (!target || speed <= 0)
 		return
 
@@ -263,7 +263,7 @@
 			if (speed <= 0)
 				return //no throw speed, the user was moving too fast.
 
-	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, callback, early_callback)
+	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, callback, early_callback, can_be_catched)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)

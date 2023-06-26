@@ -21,7 +21,7 @@
 	return TRUE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	if(isitem(AM) && can_catch_item() && isturf(AM.loc))
+	if(isitem(AM) && can_catch_item() && isturf(AM.loc) && throwingdatum.can_be_catched)
 		var/obj/item/I = AM
 		put_in_active_hand(I)
 		visible_message("<span class='notice'>[src] catches [I].</span>", "<span class='notice'>You catch [I] in mid-air!</span>")
