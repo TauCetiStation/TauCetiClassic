@@ -109,7 +109,7 @@
 			armor = list()
 		atom_integrity = max_integrity
 
-	if(!isturf(loc))
+	if(istype(loc, /obj/item/weapon/storage)) // todo: need to catch all spawns in /storage/ objects and make them use handle_item_insertion or forceMove, so we can remove this
 		flags_2 |= IN_STORAGE
 
 	if(item_state_world)
@@ -368,12 +368,14 @@
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
 	flags_2 &= ~IN_STORAGE
 	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
 	flags_2 |= IN_STORAGE
 	update_world_icon()
 	return
