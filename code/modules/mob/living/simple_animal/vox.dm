@@ -63,7 +63,7 @@
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
-	Q.throw_at(target,10,30)
+	Q.throw_at(target, 10, 30, can_be_catched = FALSE)
 	quills--
 
 	spawn(100)

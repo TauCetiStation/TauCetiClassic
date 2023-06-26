@@ -500,7 +500,7 @@
 				return
 			else if(target!=locked)
 				if(locked in view(chassis))
-					locked.throw_at(target, 14, 1.5, chassis.occupant)
+					locked.throw_at(target, 14, 1.5, chassis.occupant, can_be_catched = FALSE)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 					set_ready_state(0)
