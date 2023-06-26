@@ -31,7 +31,7 @@
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				// R WALL
-				if(istype(T, /turf/simulated/wall/r_wall) && !isxenoqueen(src))
+				if(istype(T, /turf/simulated/wall/r_wall) && acid_type == /obj/effect/alien/acid)
 					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
 					return
 				// R FLOOR
@@ -42,10 +42,8 @@
 				return
 
 			adjustToxLoss(-100)
-			if(isxenoqueen(src))
-				new /obj/effect/alien/acid/queen_acid(get_turf(O), O)
-			else
-				new /obj/effect/alien/acid(get_turf(O), O)
+			if(acid_type == /obj/effect/alien/acid/queen_acid)
+				new acid_type(get_turf(O), O)
 			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")
