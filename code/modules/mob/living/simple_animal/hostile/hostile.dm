@@ -227,7 +227,6 @@
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
-	A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
