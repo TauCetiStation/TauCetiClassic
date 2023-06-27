@@ -19,6 +19,7 @@
 	var/brightness_on = 3
 
 /obj/machinery/trainsignal/atom_init()
+	on = 1
 	cell = new(src)
 	. = ..()
 
@@ -182,11 +183,11 @@ var/list/railway_signals = list()
 	set name = "TS13 Signals - Toggle Signal Lights"
 
 	var/msg
-	if(event_field_stage==1)
-		event_field_stage=2
+	if(railway_signal_state==1)
+		railway_signal_state=2
 		msg = "ALL railway SIGNALS are GREEN!"
-	else if(event_field_stage==2)
-		event_field_stage=1
+	else if(railway_signal_state==2)
+		railway_signal_state=1
 		msg = "ALL railway SIGNALS are RED!"
 
 	log_admin("[usr.key] has toggled railway signals, now [msg].")

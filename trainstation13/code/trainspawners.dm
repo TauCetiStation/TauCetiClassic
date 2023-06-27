@@ -72,15 +72,19 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	var/list/spawn_lists = list(
 		"station" = list(
 			// benches and stuff
+			/obj/machinery/lamppost = 50,
+			/obj/machinery/lamppost/on = 30,
 			/obj/structure/bench = 50,
 			/obj/structure/closet/crate/bin = 50,
 		),
 		"normal" = list(
 			// trees grass and stuff, example below
 			"null" = 20,
-			/obj/machinery/floodlight = 10,
+			/obj/machinery/lamppost/rural = 5,
+			/obj/machinery/lamppost/rural/on = 5,
 			/obj/structure/flora/tree/pine/train = 20,
 			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/tree/utilitypole = 5,
 			/obj/structure/flora/ausbushes/fullgrass/train = 20,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 20,
 			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
@@ -113,6 +117,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 		"forest" = list(
 			/obj/structure/flora/tree/pine/train = 10,
 			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/tree/utilitypole = 5,
 			/obj/structure/flora/ausbushes/fullgrass/train = 30,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
 			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
@@ -282,12 +287,14 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 	var/globally_operating = TRUE
 
 	var/list/despawn_list = list(
-		/obj/machinery/floodlight,
+		/obj/machinery/lamppost,
+		/obj/machinery/lamppost/rural,
 		/obj/machinery/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
 		/obj/structure/bench,
 		/obj/structure/closet/crate/bin,
+		/obj/structure/flora/tree/utilitypole,
 		/obj/structure/flora/tree/pine/train,
 		/obj/structure/flora/tree/dead/train,
 		/obj/structure/flora/ausbushes/fullgrass/train,
@@ -338,6 +345,14 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 //UNIQUE SPAWNED OBJECTS BELOW
 
 //FLORA
+
+/obj/structure/flora/tree/utilitypole //Typical example of lazy shitcode by BartNixon
+	name = "utility pole"
+	desc = "An old utility pole disconnected from the grid long time ago. It doesn't look sturdy."
+	icon = 'trainstation13/icons/64x32.dmi'
+	icon_state = "utilitypole"
+	anchored = FALSE
+	layer = 5
 
 /obj/structure/flora/tree/pine/train
 	anchored = FALSE
@@ -394,7 +409,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 
 /obj/structure/scrap/poor/large/train
 	anchored = FALSE
-
 
 //EASTER EGGS
 

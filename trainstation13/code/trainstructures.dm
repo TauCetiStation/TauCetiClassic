@@ -67,6 +67,29 @@ ADD_TO_GLOBAL_LIST(/obj/structure/alien/resin/wall/gangway, train_animated_struc
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "sheater-off"
 
+/obj/machinery/lamppost
+	name = "street light"
+	desc = "A traditional, raised source of light with lamp at the top of a metal pole."
+	icon = 'trainstation13/icons/32x96.dmi'
+	icon_state = "lamppost_off"
+	layer = 5
+
+/obj/machinery/lamppost/on
+	icon_state = "lamppost_on"
+	light_power = 1
+	light_range = 7
+
+/obj/machinery/lamppost/rural
+	name = "light pole"
+	desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+	icon_state = "light_pole"
+
+/obj/machinery/lamppost/rural/on
+	icon_state = "light_pole_on"
+	light_power = 1
+	light_range = 5
+	light_color = "#f535aa"
+
 //DECALS
 
 /obj/structure/sign/moon
