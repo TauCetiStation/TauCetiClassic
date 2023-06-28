@@ -71,7 +71,6 @@
 	var/flashfail = 0
 
 	if(iscarbon(M))
-		var/mob/living/carbon/C = M
 		var/safety = M:eyecheck()
 		if(safety <= 0)
 			M.MakeConfused(rand(6, 10))
