@@ -62,7 +62,7 @@
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
 			Stun(1)
-			Weaken(heavy_confused ? 6 : 2)
+			Weaken(2)
 
 	if(ismob(A))
 		var/mob/M = A
