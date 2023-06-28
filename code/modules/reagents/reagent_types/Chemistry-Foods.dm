@@ -193,7 +193,7 @@
 			return
 		victim.emote("cough")
 		to_chat(victim, "<span class='userdanger'> You're sprayed with pepperspray!</span>")
-		victim.blurEyes(25)
+		victim.blurEyes(max(25 - victim.eye_blurry, 0))
 		victim.eye_blind = max(victim.eye_blind, 10)
 		victim.shock_stage = max(victim.shock_stage, 30)
 		var/datum/status_effect/clumsy/clumsy_status = victim.has_status_effect(STATUS_EFFECT_CLUMSY)
