@@ -1,7 +1,7 @@
-#define IDLEMODE "Mode_Idle"
-#define PAYMODE "Mode_Pay"
-#define ACCOUNTMODE "Mode_Account"
-#define ENTERPIN "Mode_EnterPin"
+#define CARDPAY_IDLEMODE "Mode_Idle"
+#define CARDPAY_PAYMODE "Mode_Pay"
+#define CARDPAY_ACCOUNTMODE "Mode_Account"
+#define CARDPAY_ENTERPINMODE "Mode_EnterPin"
 
 /obj/item/device/cardpay
 	name = "Card pay device"
@@ -21,8 +21,8 @@
 
 	var/image/holoprice
 
-	var/mode = ACCOUNTMODE
-	var/prevmode = IDLEMODE
+	var/mode = CARDPAY_ACCOUNTMODE
+	var/prevmode = CARDPAY_IDLEMODE
 
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
@@ -45,10 +45,10 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		switch(mode)
-			if(PAYMODE)
+			if(CARDPAY_PAYMODE)
 				display_numbers = Card.associated_account_number
 				pay_with_account()
-			if(ACCOUNTMODE)
+			if(CARDPAY_ACCOUNTMODE)
 				display_numbers = Card.associated_account_number
 				set_account()
 
@@ -57,10 +57,10 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		switch(mode)
-			if(PAYMODE)
+			if(CARDPAY_PAYMODE)
 				display_numbers = Card.associated_account_number
 				pay_with_account()
-			if(ACCOUNTMODE)
+			if(CARDPAY_ACCOUNTMODE)
 				display_numbers = Card.associated_account_number
 				set_account()
 
@@ -69,10 +69,10 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		switch(mode)
-			if(PAYMODE)
+			if(CARDPAY_PAYMODE)
 				display_numbers = Wallet.account_number
 				pay_with_account()
-			if(ACCOUNTMODE)
+			if(CARDPAY_ACCOUNTMODE)
 				display_numbers = Wallet.account_number
 				set_account()
 
@@ -88,7 +88,7 @@
 					return
 				to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
 				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 				return
 			to_chat(user, "<span class='notice'>Сканер откручен.</span>")
 			anchored = FALSE
@@ -174,45 +174,45 @@
 	display_numbers += num
 
 	switch(mode)
-		if(IDLEMODE)
+		if(CARDPAY_IDLEMODE)
 			if(display_numbers > 999)
 				display_numbers %= 1000
 
-		if(PAYMODE)
+		if(CARDPAY_PAYMODE)
 			if(display_numbers > 999999)
 				display_numbers %= 1000000
 
-		if(ACCOUNTMODE)
+		if(CARDPAY_ACCOUNTMODE)
 			if(display_numbers > 999999)
 				display_numbers %= 1000000
 
-		if(ENTERPIN)
+		if(CARDPAY_ENTERPINMODE)
 			if(display_numbers > 99999)
 				display_numbers %= 100000
 
 /obj/item/device/cardpay/proc/clear_numbers()
 	switch(mode)
-		if(IDLEMODE)
-		if(PAYMODE)
+		if(CARDPAY_IDLEMODE)
+		if(CARDPAY_PAYMODE)
 			if(!display_numbers)
 				pay_amount = 0
 				update_holoprice(clear = TRUE)
-				changemode(IDLEMODE)
+				changemode(CARDPAY_IDLEMODE)
 				visible_message("[bicon(src)] [name] <span class='warning'>Отмена транзакции.</span>")
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 				flick("card-pay-error", src)
 
-		if(ACCOUNTMODE)
+		if(CARDPAY_ACCOUNTMODE)
 			if(!display_numbers)
-				changemode(IDLEMODE)
+				changemode(CARDPAY_IDLEMODE)
 				visible_message("[bicon(src)] [name] <span class='warning'>Отмена ввода счёта.</span>")
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 				flick("card-pay-error", src)
 
-		if(ENTERPIN)
+		if(CARDPAY_ENTERPINMODE)
 			if(!display_numbers)
 				update_holoprice(clear = TRUE)
-				changemode(IDLEMODE)
+				changemode(CARDPAY_IDLEMODE)
 				visible_message("[bicon(src)] [name] <span class='warning'>Отмена ввода пинкода.</span>")
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 				flick("card-pay-error", src)
@@ -221,7 +221,7 @@
 
 /obj/item/device/cardpay/proc/approve()
 	switch(mode)
-		if(IDLEMODE)
+		if(CARDPAY_IDLEMODE)
 			if(!display_numbers)
 				return
 			if(!linked_account)
@@ -235,23 +235,23 @@
 				return
 			pay_amount = display_numbers
 			update_holoprice(clear = FALSE)
-			changemode(PAYMODE)
+			changemode(CARDPAY_PAYMODE)
 
-		if(PAYMODE)
+		if(CARDPAY_PAYMODE)
 			if(!display_numbers)
 				return
 			pay_with_account()
 
-		if(ACCOUNTMODE)
+		if(CARDPAY_ACCOUNTMODE)
 			if(!display_numbers)
 				return
 			set_account()
 
-		if(ENTERPIN)
+		if(CARDPAY_ENTERPINMODE)
 			if(!display_numbers)
 				return
 			switch(prevmode)
-				if(PAYMODE)
+				if(CARDPAY_PAYMODE)
 					var/datum/money_account/Acc = get_account(ram_account)
 					if(!Acc || Acc.suspended)
 						visible_message("[bicon(src)] [name] <span class='warning'>Счёта не существует.</span>")
@@ -264,7 +264,7 @@
 						return
 					make_transaction(Acc, pay_amount)
 
-				if(ACCOUNTMODE)
+				if(CARDPAY_ACCOUNTMODE)
 					var/datum/money_account/Acc = get_account(linked_account)
 					if(!Acc || Acc.suspended)
 						visible_message("[bicon(src)] [name] <span class='warning'>Счёта не существует.</span>")
@@ -274,7 +274,7 @@
 						return
 					if(Acc.remote_access_pin == display_numbers)
 						linked_account = 0
-						changemode(ACCOUNTMODE)
+						changemode(CARDPAY_ACCOUNTMODE)
 					else
 						visible_message("[bicon(src)] [name] <span class='warning'>Неверный пинкод.</span>")
 						flick("card-pay-error", src)
@@ -293,7 +293,7 @@
 	visible_message("[bicon(src)] [name] <span class='notice'>Счёт подключён.</span>")
 	flick("card-pay-complete", src)
 	playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-	changemode(IDLEMODE)
+	changemode(CARDPAY_IDLEMODE)
 
 /obj/item/device/cardpay/proc/pay_with_account()
 	var/datum/money_account/Acc = get_account(display_numbers)
@@ -306,12 +306,12 @@
 		return
 	else
 		ram_account = display_numbers
-		changemode(ENTERPIN)
+		changemode(CARDPAY_ENTERPINMODE)
 
 /obj/item/device/cardpay/proc/enter_account()
 	switch(mode)
-		if(IDLEMODE)
-			changemode(ACCOUNTMODE)
+		if(CARDPAY_IDLEMODE)
+			changemode(CARDPAY_ACCOUNTMODE)
 			if(!linked_account)
 				return
 			var/datum/money_account/Acc = get_account(linked_account)
@@ -323,12 +323,12 @@
 				if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin || Acc.security_level == 0)
 					linked_account = 0
 					return
-				changemode(ENTERPIN)
-		if(PAYMODE)
+				changemode(CARDPAY_ENTERPINMODE)
+		if(CARDPAY_PAYMODE)
 			return
-		if(ACCOUNTMODE)
-			changemode(IDLEMODE)
-		if(ENTERPIN)
+		if(CARDPAY_ACCOUNTMODE)
+			changemode(CARDPAY_IDLEMODE)
+		if(CARDPAY_ENTERPINMODE)
 			return
 
 	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
@@ -339,14 +339,14 @@
 	display_numbers = 0
 
 	switch(newmode)
-		if(IDLEMODE)
+		if(CARDPAY_IDLEMODE)
 			icon_state = "card-pay-idle"
-		if(ENTERPIN)
+		if(CARDPAY_ENTERPINMODE)
 			icon_state = "card-pay-processing"
 
 /obj/item/device/cardpay/proc/reset_anything()
-	mode = IDLEMODE
-	prevmode = IDLEMODE
+	mode = CARDPAY_IDLEMODE
+	prevmode = CARDPAY_IDLEMODE
 	reset = FALSE
 	display_numbers = 0
 	pay_amount = 0
@@ -370,9 +370,9 @@
 	if(reset)
 		pay_amount = 0
 		update_holoprice(clear = TRUE)
-		changemode(IDLEMODE)
+		changemode(CARDPAY_IDLEMODE)
 	else
-		changemode(PAYMODE)
+		changemode(CARDPAY_PAYMODE)
 
 /obj/item/device/cardpay/proc/update_holoprice(clear)
 	cut_overlay(holoprice)
@@ -386,7 +386,7 @@
 		holoprice.icon_state = "holo_overlay_[length(num2text(pay_amount))]"
 	add_overlay(holoprice)
 
-#undef IDLEMODE
-#undef PAYMODE
-#undef ACCOUNTMODE
-#undef ENTERPIN
+#undef CARDPAY_IDLEMODE
+#undef CARDPAY_PAYMODE
+#undef CARDPAY_ACCOUNTMODE
+#undef CARDPAY_ENTERPINMODE
