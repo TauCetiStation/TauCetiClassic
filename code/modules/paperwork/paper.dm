@@ -941,3 +941,43 @@ var/global/list/contributor_names
 	. = ..()
 	var/obj/item/weapon/stamp/centcomm/S = new
 	S.stamp_paper(src, "CentComm Logistics Department")
+
+/obj/item/weapon/paper/depacc
+	name = "Реквизиты счёта отдела "
+	var/department_name = ""
+
+/obj/item/weapon/paper/depacc/atom_init()
+	. = ..()
+	if(!department_name)
+		qdel(src)
+		return
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+/obj/item/weapon/paper/depacc/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return ..()
+
+/obj/item/weapon/paper/depacc/proc/on_round_start()
+	var/datum/money_account/dep = global.department_accounts[department_name]
+	if(!dep)
+		qdel(src)
+		return
+
+	info = {"<h2>Бухгалтерия Центрального Коммитета «ЦК»</h2>
+	<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">[current_date_string]</blockquote>
+	<table align="center" border="3" cellpadding="10" width="100%">
+  		<caption><b><big>Реквизиты счёта отдела</big></b></caption>
+  		<tr><td>Отдел:</td><td>«[department_name]»</td></tr>
+  		<tr><td>Номер счёта:</td><td>№ [dep.account_number]</td></tr>
+  		<tr><td>Пин-код:</td><td>PIN: [dep.remote_access_pin]</td></tr>
+ 	 	<tr><td>Бюджет:</td><td>[dep.money] $</td></tr>
+	</table>
+	<hr>"}
+
+	var/obj/item/weapon/stamp/centcomm/Stamp1 = new
+	Stamp1.stamp_paper(src, "CentComm")
+	var/obj/item/weapon/stamp/copy_correct/Stamp2 = new
+	Stamp2.stamp_paper(src)
+
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)

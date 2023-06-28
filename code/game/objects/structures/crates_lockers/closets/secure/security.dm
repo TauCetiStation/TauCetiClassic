@@ -221,6 +221,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	icon_opened = "secopen"
 	icon_broken = "secbroken"
 	icon_off = "secoff"
+	damage_deflection = 15
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))

@@ -20,7 +20,7 @@
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		activate(user)
 		add_fingerprint(user)
-		addtimer(CALLBACK(src, .proc/prime), 5)
+		addtimer(CALLBACK(src, PROC_REF(prime)), 5)
 		return 0
 	return 1
 
@@ -55,7 +55,7 @@
 	icon_state = initial(icon_state) + "_active"
 	active = 1
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	addtimer(CALLBACK(src, .proc/prime), det_time)
+	addtimer(CALLBACK(src, PROC_REF(prime)), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
 	var/turf/T = get_turf(src)

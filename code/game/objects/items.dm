@@ -109,7 +109,7 @@
 			armor = list()
 		atom_integrity = max_integrity
 
-	if(!isturf(loc))
+	if(istype(loc, /obj/item/weapon/storage)) // todo: need to catch all spawns in /storage/ objects and make them use handle_item_insertion or forceMove, so we can remove this
 		flags_2 |= IN_STORAGE
 
 	if(item_state_world)
@@ -331,7 +331,7 @@
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
-	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	callback = CALLBACK(src, PROC_REF(after_throw), callback) // Replace their callback with our own.
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -368,12 +368,14 @@
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
 	flags_2 &= ~IN_STORAGE
 	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
 	flags_2 |= IN_STORAGE
 	update_world_icon()
 	return
@@ -716,7 +718,7 @@
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
-		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks, target)
+		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks = tool_check))

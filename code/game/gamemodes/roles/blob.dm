@@ -19,9 +19,9 @@
 	var/time_to_stage2 = wait_time * 2
 	var/time_to_stage3 = wait_time * 2 + wait_time / 2
 
-	addtimer(CALLBACK(src, .proc/stage1), time_to_stage1)
-	addtimer(CALLBACK(src, .proc/stage2), time_to_stage2)
-	addtimer(CALLBACK(src, .proc/stage3), time_to_stage3)
+	addtimer(CALLBACK(src, PROC_REF(stage1)), time_to_stage1)
+	addtimer(CALLBACK(src, PROC_REF(stage2)), time_to_stage2)
+	addtimer(CALLBACK(src, PROC_REF(stage3)), time_to_stage3)
 
 /datum/role/blob_overmind/proc/stage1()
 	if(!antag.current)

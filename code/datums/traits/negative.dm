@@ -186,7 +186,7 @@
 /datum/quirk/nyctophobia/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), PROC_REF(on_move))
 
 /datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
 	var/mob/living/carbon/human/H = quirk_holder

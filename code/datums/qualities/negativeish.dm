@@ -56,8 +56,8 @@
 	)
 
 /datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
-	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
+	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
+	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
 
 /datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/security))
@@ -78,8 +78,8 @@
 	)
 
 /datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
-	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
+	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
+	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
 
 /datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/bridge))

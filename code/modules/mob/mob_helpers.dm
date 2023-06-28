@@ -55,6 +55,18 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedchem()
+	for(var/obj/item/weapon/implant/chem/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/isimplantedtrack()
+	for(var/obj/item/weapon/implant/tracking/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST

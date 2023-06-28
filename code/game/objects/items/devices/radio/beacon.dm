@@ -126,7 +126,7 @@
 		var/I = image('icons/obj/device.dmi', "medicon")
 		H.add_overlay(I)
 		to_chat(user, "<span class='notice'>Device has been planted. Timer counting down from [timer].</span>")
-		addtimer(CALLBACK(src, .proc/teleport, H, target_beacon, I), timer * 10)
+		addtimer(CALLBACK(src, PROC_REF(teleport), H, target_beacon, I), timer * 10)
 
 /obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return
