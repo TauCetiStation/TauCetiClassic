@@ -52,7 +52,7 @@
 
 //Flashing everyone
 	M.flash_eyes(3)
-	M.blurEyes(25)
+	M.blurEyes(max(25 - M.eye_blurry, 0))
 
 //Now applying sound
 	var/distance = get_dist(M, T)
