@@ -72,11 +72,10 @@
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(COOLDOWN_FINISHED(C, flash_carbon_use))
-			C.MakeConfused(rand(6, 10))
-			C.AdjustHeavyConfused(6)
-			C.flash_eyes()
-			COOLDOWN_START(C, flash_carbon_use, 15 SECONDS)
+		var/safety = M:eyecheck()
+		if(safety <= 0)
+			M.MakeConfused(rand(6, 10))
+			M.flash_eyes()
 		else
 			flashfail = 1
 

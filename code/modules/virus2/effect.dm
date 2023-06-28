@@ -600,7 +600,6 @@
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
 		M.AdjustConfused(-2)
-		M.AdjustHeavyConfused(-2)
 		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)

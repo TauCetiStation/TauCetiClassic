@@ -98,7 +98,6 @@
 
 		if(confused)
 			SetConfused(0)
-			SetHeavyConfused(0)
 	return 1
 
 /mob/living/carbon/xenomorph/update_sight()
