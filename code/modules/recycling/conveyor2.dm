@@ -263,7 +263,7 @@
 	for(var/obj/effect/decal/train_special_effects/TRS as anything in global.train_special_effects)
 		TRS.change_movement(position != 0 ? TRUE : FALSE)
 
-	for(var/obj/structure/alien/resin/wall/gangway/TRSM as anything in global.train_animated_structures)
+	for(var/obj/structure/train/TRSM as anything in global.train_animated_structures)
 		TRSM.change_movement(position != 0 ? TRUE : FALSE)
 	// </trainstation13>
 

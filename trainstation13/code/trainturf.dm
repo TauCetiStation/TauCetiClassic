@@ -37,7 +37,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 
 /turf/unsimulated/floor/train/proc/change_state(state)
 	switch(state)
-		if("station")
+		if("station - traditional")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
@@ -46,8 +50,8 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
 		if("forest")
-			name = "grass"
-			desc = "A thing to touch."
+			name = "snow"
+			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
 
 /turf/unsimulated/floor/train/rails
@@ -58,7 +62,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 
 /turf/unsimulated/floor/train/rails/change_state(state)
 	switch(state)
-		if("station")
+		if("station - traditional")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
@@ -67,8 +75,8 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
 		if("forest")
-			name = "grass"
-			desc = "A thing to touch."
+			name = "snow"
+			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
 
 /turf/unsimulated/floor/train/platform
@@ -80,7 +88,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 
 /turf/unsimulated/floor/train/platform/change_state(state)
 	switch(state)
-		if("station")
+		if("station - traditional")
+			name = "platform"
+			desc = "A place for people to stand on."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
 			name = "platform"
 			desc = "A place for people to stand on."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
@@ -102,7 +114,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 
 /turf/unsimulated/floor/train/platform/top/change_state(state)
 	switch(state)
-		if("station")
+		if("station - traditional")
+			name = "platform"
+			desc = "A place for people to stand on."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
 			name = "platform"
 			desc = "A place for people to stand on."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
@@ -124,7 +140,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 
 /turf/unsimulated/floor/train/platform/bottom/change_state(state)
 	switch(state)
-		if("station")
+		if("station - traditional")
+			name = "platform"
+			desc = "A place for people to stand on."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
 			name = "platform"
 			desc = "A place for people to stand on."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'

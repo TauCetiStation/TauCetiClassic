@@ -47,6 +47,9 @@ var/global/spawn_list_type = "station"
 	for(var/turf/unsimulated/floor/train/T as anything in global.train_turfs)
 		T.change_state(global.spawn_list_type)
 
+	for(var/obj/structure/chameleon/T as anything in global.train_chameleon)
+		T.change_state(global.spawn_list_type)
+
 var/global/list/trainspawners = list()
 ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 
@@ -70,11 +73,17 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 	var/current_spawn_list_type = "normal"
 
 	var/list/spawn_lists = list(
-		"station" = list(
+		"station - traditional" = list(
 			// benches and stuff
 			/obj/machinery/lamppost = 50,
 			/obj/machinery/lamppost/on = 30,
-			/obj/structure/bench = 50,
+			/obj/structure/chameleon/bench = 50,
+			/obj/structure/closet/crate/bin = 50,
+		),
+		"station - rural" = list(
+			/obj/machinery/lamppost = 50,
+			/obj/machinery/lamppost/on = 30,
+			/obj/structure/chameleon/bench = 50,
 			/obj/structure/closet/crate/bin = 50,
 		),
 		"normal" = list(
@@ -169,7 +178,19 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 /obj/effect/trainspawner/close //Closest conveyor relative to the train!
 	name = "close spawner mark"
 	spawn_lists = list(
-		"station" = list(
+		"station - traditional" = list(
+			"null" = 80,
+			/obj/item/weapon/cigbutt = 20,
+			/obj/item/weapon/cigbutt/cigarbutt = 1,
+			/obj/item/trash/semki = 2,
+			/obj/item/trash/popcorn =2,
+			/obj/item/trash/sosjerky = 2,
+			/obj/item/trash/candy = 2,
+			/obj/item/trash/raisins = 2,
+			/obj/item/trash/chips = 2,
+			/obj/item/trash/pistachios = 2,
+		),
+		"station - rural" = list(
 			"null" = 80,
 			/obj/item/weapon/cigbutt = 20,
 			/obj/item/weapon/cigbutt/cigarbutt = 1,
@@ -225,8 +246,11 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 /obj/effect/trainspawner/far //Furthest conveyor relative to the train!
 	name = "far spawner mark"
 	spawn_lists = list(
-		"station" = list(
+		"station - traditional" = list(
 			"null" = 100,
+		),
+		"station - rural" = list(
+		"null" = 100,
 		),
 		"normal" = list(
 			"null" = 10,
@@ -292,7 +316,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/machinery/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
-		/obj/structure/bench,
+		/obj/structure/chameleon/bench,
 		/obj/structure/closet/crate/bin,
 		/obj/structure/flora/tree/utilitypole,
 		/obj/structure/flora/tree/pine/train,

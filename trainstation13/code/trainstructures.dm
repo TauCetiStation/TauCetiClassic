@@ -4,20 +4,103 @@
 
 var/global/list/train_animated_structures = list()
 
-ADD_TO_GLOBAL_LIST(/obj/structure/alien/resin/wall/gangway, train_animated_structures)
+ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 
-/obj/structure/alien/resin/wall/gangway //Not really a wall, or a turf, but it's made of resin, allright.
+/obj/structure/train
+	name = "mysterious invisible structure"
+	desc = "These aren't the droids you're looking for."
+	var/still_icon_state = "benkenobi"
+
+/obj/structure/train/gangway //Not really a wall, or a turf, but it's made of resin, allright.
 	name = "gangway"
 	desc = "A flexible connector fitted to the end of a railway coach, enabling passengers to move from one coach to another without danger of falling from the train."
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "gangway_still" //Does not animate by default when spawned, but will animate if the train is moving.
-	can_block_air = FALSE
-	smooth = FALSE
 	max_integrity = 70
-	var/still_icon_state = "gangway"
+	still_icon_state = "gangway"
 
-/obj/structure/alien/resin/wall/gangway/proc/change_movement(moving)
+/obj/structure/train/proc/change_movement(moving)
 	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"
+
+//CHAMELEON STRUCTURES
+
+var/global/list/train_chameleon = list()
+
+ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
+
+/obj/structure/chameleon
+	name = "spock"
+	desc = "Live long and prosper!"
+
+/obj/structure/chameleon/proc/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("station - rural")
+			name = "wooden bench"
+			desc = "A green wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_green"
+		if("normal")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("forest")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+
+/obj/structure/chameleon/bench
+	name = "wooden bench"
+	desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+	icon = 'trainstation13/icons/64x32.dmi'
+	icon_state = "bench_wood_brown"
+	anchored = FALSE
+
+/obj/structure/chameleon/bench/attackby(obj/item/O, mob/user)
+	if(iswrenching(O))
+		if(user.is_busy(src))
+			return
+		if (anchored)
+			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s bolts...</span>")
+			if (O.use_tool(src, user, 40, volume = 50))
+				user.visible_message(
+					"<span class='notice'>[user] loosens \the [src]'s bolts.</span>",
+					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
+					"<span class='notice'>You hear ratchet.</span>"
+				)
+		else
+			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
+			if(O.use_tool(src, user, 20, volume = 50))
+				user.visible_message(
+					"<span class='notice'>[user] tightens \the [src]'s bolts.</span>",
+					"<span class='notice'>You have tightened \the [src]'s bolts. No one will be able to pull it away.</span>",
+					"<span class='notice'>You hear ratchet.</span>"
+				)
+
+		anchored = !anchored
+	else
+		..()
+
+/obj/structure/chameleon/bench/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("station - rural")
+			name = "wooden bench"
+			desc = "A green wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_green"
+		if("normal")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("forest")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
 
 //MACHINES
 
@@ -177,35 +260,3 @@ ADD_TO_GLOBAL_LIST(/obj/structure/alien/resin/wall/gangway, train_animated_struc
 	desc = "A linen bin. Don't forget to turn in your bedsheet."
 	icon = 'icons/obj/structures.dmi'
 	amount = 5
-
-/obj/structure/bench
-	name = "bench"
-	desc = "A wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-	icon = 'trainstation13/icons/64x32.dmi'
-	icon_state = "bench"
-	anchored = FALSE
-
-/obj/structure/bench/attackby(obj/item/O, mob/user)
-	if(iswrenching(O))
-		if(user.is_busy(src))
-			return
-		if (anchored)
-			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
-			if (O.use_tool(src, user, 40, volume = 50))
-				user.visible_message(
-					"<span class='notice'>[user] loosens \the [src]'s casters.</span>",
-					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
-					"<span class='notice'>You hear ratchet.</span>"
-				)
-		else
-			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
-			if(O.use_tool(src, user, 20, volume = 50))
-				user.visible_message(
-					"<span class='notice'>[user] tightens \the [src]'s casters.</span>",
-					"<span class='notice'>You have tightened \the [src]'s casters. No one will be able to pull it away.</span>",
-					"<span class='notice'>You hear ratchet.</span>"
-				)
-
-		anchored = !anchored
-	else
-		..()
