@@ -104,8 +104,6 @@
 				if(!M.blinded)
 					M.flash_eyes()	//flash the affected mob
 					to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
-			if(isipc(M))
-				to_chat(user, "<span class='notice'>[M] - is IPC! IPC don't have pupils!</span>")
 	else
 		return ..()
 
