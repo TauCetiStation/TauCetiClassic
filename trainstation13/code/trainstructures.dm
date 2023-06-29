@@ -183,6 +183,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 			icon_state = "light_pole_off"
 			light_power = 0
 			light_range = 0
+	update_light()
 
 //REGULAR STRUCTURES
 

@@ -71,6 +71,7 @@ var/list/railway_signals = list()
 			light_color = "#da0205"
 		if(2)
 			light_color = "#66ff66"
+	update_light()
 
 /client/proc/toggle_signals()
 	set category = "Event"

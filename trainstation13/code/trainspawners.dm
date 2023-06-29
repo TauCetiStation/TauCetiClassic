@@ -257,8 +257,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/item/trash/pistachios = 2,
 		),
 		"forest" = list(
-			/obj/structure/flora/tree/pine/train = 10,
-			/obj/structure/flora/tree/dead/train = 90,
 			/obj/structure/flora/ausbushes/fullgrass/train = 30,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
 			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
@@ -356,6 +354,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/structure/trainstation/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
+		/obj/item/stack/rods,
 		/obj/structure/chameleon/bench,
 		/obj/structure/trainstation/bench,
 		/obj/structure/trainstation/bench/green,
