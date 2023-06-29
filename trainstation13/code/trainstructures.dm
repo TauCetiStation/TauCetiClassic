@@ -157,22 +157,32 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 			name = "street light"
 			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
 			icon_state = "lamppost_on"
+			light_power = 1
+			light_range = 7
 		if("station - rural")
 			name = "light pole"
 			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
 			icon_state = "light_pole_on"
+			light_power = 1
+			light_range = 7
 		if("suburb")
 			name = "street light"
 			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
-			icon_state = "lamppost_on"
+			icon_state = "lamppost_off"
+			light_power = 0
+			light_range = 0
 		if("field")
 			name = "light pole"
 			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
-			icon_state = "light_pole_on"
+			icon_state = "light_pole_off"
+			light_power = 0
+			light_range = 0
 		if("forest")
 			name = "light pole"
 			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
-			icon_state = "light_pole_on"
+			icon_state = "light_pole_off"
+			light_power = 0
+			light_range = 0
 
 //REGULAR STRUCTURES
 

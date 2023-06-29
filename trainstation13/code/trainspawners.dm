@@ -353,7 +353,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/structure/trainstation/lamppost/on,
 		/obj/structure/trainstation/lamppost/rural,
 		/obj/structure/trainstation/lamppost/rural/on,
-		/obj/machinery/trainsignal,
+		/obj/structure/trainstation/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
 		/obj/structure/chameleon/bench,
