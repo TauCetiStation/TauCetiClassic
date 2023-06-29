@@ -108,7 +108,7 @@
 	icon_state = "bola_r"
 	breakouttime = LEGCUFF_BREAKTIME_REINFORCED_BOLA
 	origin_tech = "engineering=4;combat=3"
-	weaken = 2
+	weaken = 6
 	throw_range = 5
 
 #undef LEGCUFF_BREAKTIME_DEFAULT
