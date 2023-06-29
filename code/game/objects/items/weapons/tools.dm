@@ -541,7 +541,7 @@
 				return
 
 		if(H.check_pierce_protection(target_zone = def_zone))
-			to_chat(user, "<span class='rose'>There is no exposed surface for repair.")
+			to_chat(user, "<span class='rose'>There is no exposed surface for repair.</span>")
 			return
 
 		if(BP.brute_dam)
