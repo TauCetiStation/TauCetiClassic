@@ -26,7 +26,12 @@
 		if(21 to 40)
 			AppendObjective(/datum/objective/target/harm, TRUE)
 		if(41 to 50)
-			AppendObjective(/datum/objective/research_sabotage, TRUE)
+			for(var/datum/role/roles in faction.members)
+				if(locate(/datum/objective/research_sabotage) in roles.objectives.GetObjectives())
+					add_one_objective()
+					return
+				else
+					AppendObjective(/datum/objective/research_sabotage, TRUE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
@@ -62,16 +67,6 @@
 	if(locate(/datum/objective/target/harm) in objectives.GetObjectives())
 		for(var/datum/objective/target/harm/H in objectives.GetObjectives())
 			H.check_completion()
-
-	if(locate(/datum/objective/research_sabotage) in objectives.GetObjectives())
-		for(var/datum/objective/research_sabotage/S in objectives.GetObjectives())
-			if(S.already_completed)
-				for(var/datum/role/roles in faction.members)
-					if(locate(/datum/objective/research_sabotage) in roles.objectives.GetObjectives())
-						for(var/datum/objective/research_sabotage/SR in roles.objectives.GetObjectives())
-							SR.already_completed = TRUE
-
-
 
 /datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Выполните свои цели любой ценой. Вы можете игнорировать все остальные законы."
