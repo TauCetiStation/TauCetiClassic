@@ -168,7 +168,7 @@
 		name = "[area.name] APC"
 		stat |= MAINT
 		update_icon()
-		addtimer(CALLBACK(src, .proc/update), 5)
+		addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 	init_smartlight()
 
@@ -224,7 +224,7 @@
 
 	make_terminal()
 
-	addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -967,7 +967,7 @@
 	to_chat(ai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	ai.malfhack = src
 	ai.malfhacking = TRUE
-	addtimer(CALLBACK(src, .proc/malf_hack_done, ai), 600)
+	addtimer(CALLBACK(src, PROC_REF(malf_hack_done), ai), 600)
 
 /obj/machinery/power/apc/proc/malf_hack_done(mob/living/silicon/ai/ai)
 	if(!aidisabled)
@@ -1220,7 +1220,7 @@
 	environ = APC_CHANNEL_OFF
 	stat |= EMPED
 	update()
-	addtimer(CALLBACK(src, .proc/after_emp), 600 / severity)
+	addtimer(CALLBACK(src, PROC_REF(after_emp)), 600 / severity)
 	..()
 
 /obj/machinery/power/apc/proc/after_emp()

@@ -2,14 +2,14 @@
 /mob/living/simple_animal/pug
 	name = "pug"
 	real_name = "pug"
-	desc = "It's a pug."
+	desc = "Это мопс."
 	icon_state = "pug"
 	icon_living = "pug"
 	icon_dead = "pug_dead"
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
-	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "yaps","pants")
-	emote_see = list("shakes its head", "chases its tail","shivers")
+	speak = list("Гав!", "Вуф!", "АУУУУ!")
+	speak_emote = list("лает", "воет")
+	emote_hear = list("лает", "воет")
+	emote_see = list("виляет хвостом", "облизываетася")
 	speak_chance = 1
 	turns_per_move = 10
 	w_class = SIZE_NORMAL

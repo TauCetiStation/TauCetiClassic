@@ -43,7 +43,7 @@
 		return FALSE
 	if(!isturf(user.loc))
 		return FALSE
-	if(!AStar(user, target.loc, /turf/proc/Distance, C.sting_range, simulated_only = FALSE))
+	if(!AStar(user, target.loc, TYPE_PROC_REF(/turf, Distance), C.sting_range, simulated_only = FALSE))
 		return FALSE //hope this ancient magic still works
 	if(ischangeling(target))
 		sting_feedback(user,target)
@@ -246,7 +246,7 @@
 		return FALSE
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-	addtimer(CALLBACK(target, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
 	target.eye_blind = 20
 	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")

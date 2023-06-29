@@ -517,7 +517,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/reload), recharge_time)
+	addtimer(CALLBACK(src, PROC_REF(reload)), recharge_time)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)

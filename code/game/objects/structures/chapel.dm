@@ -201,7 +201,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	stun_insides(1)
 
-	INVOKE_ASYNC(src, .proc/swing, swing_angle, 2 SECONDS, 2)
+	INVOKE_ASYNC(src, PROC_REF(swing), swing_angle, 2 SECONDS, 2)
 
 /obj/effect/effect/bell/proc/announce_global(text, strength)
 	for(var/mob/M in player_list)
@@ -214,7 +214,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	stun_insides(2)
 
-	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
+	INVOKE_ASYNC(src, PROC_REF(swing), swing_angle, 9 SECONDS, 6)
 
 /obj/effect/effect/bell/proc/ring_global(mob/user, strength)
 	if(!user.mind || !user.mind.holy_role)
@@ -356,8 +356,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		/obj/item/weapon/storage/bible,
 	)
 
-	RegisterSignal(book, list(COMSIG_STORAGE_ENTERED), .proc/add_book)
-	RegisterSignal(book, list(COMSIG_STORAGE_EXITED), .proc/remove_book)
+	RegisterSignal(book, list(COMSIG_STORAGE_ENTERED), PROC_REF(add_book))
+	RegisterSignal(book, list(COMSIG_STORAGE_EXITED), PROC_REF(remove_book))
 
 	lectern_overlay = image(icon, "lectern_overlay")
 	lectern_overlay.layer = INFRONT_MOB_LAYER

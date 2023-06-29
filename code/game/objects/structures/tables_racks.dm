@@ -367,7 +367,7 @@
 
 /obj/structure/table/glass/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, , CALLBACK(src, .proc/slam))
+	AddComponent(/datum/component/clickplace, , CALLBACK(src, PROC_REF(slam)))
 
 /obj/structure/table/glass/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
@@ -575,8 +575,8 @@
 	. = ..()
 
 	table_attached_to = Table
-	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/destroy_lot_holder)
-	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), .proc/destroy_lot_holder)
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
+	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
 
 	held_Item = Item
 	Item.forceMove(src)
@@ -676,23 +676,12 @@
 	qdel(src)
 
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
-	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
-
-	var/attempt_pin = 0
-	if(Buyer.security_level > 0)
-		if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == Buyer.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == Buyer.remote_access_pin)
-			attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
-		else
-			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
-		if(isnull(attempt_pin))
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
-
-		if(!Buyer)
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-
+	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!Buyer)
+		to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+		return
 	pay_with_account(Buyer, user)
 
 /obj/lot_holder/proc/scan_ewallet(obj/item/weapon/ewallet/EW, mob/user)
@@ -709,7 +698,7 @@
 
 /obj/structure/table/reinforced/stall/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
+	AddComponent(/datum/component/clickplace, CALLBACK(src, PROC_REF(try_magnet)))
 
 /obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user, params)
 	if(I.price_tag || istype(I, /obj/item/smallDelivery))

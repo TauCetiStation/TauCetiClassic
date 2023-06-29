@@ -20,7 +20,7 @@
 // This is copypaste of death proc of human, but only necessary ones are left
 /mob/living/carbon/human/mafia/death()
 	SEND_SIGNAL(src, COMSIG_MOB_DIED)
-	INVOKE_ASYNC(src, .proc/emote, "deathgasp")
+	INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp")
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
