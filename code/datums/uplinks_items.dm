@@ -1048,6 +1048,13 @@
 	item = /obj/item/weapon/storage/fancy/donut_box/traitor
 	cost = 2
 
+/datum/uplink_item/dangerous/disk
+	name = "Disk For Sabotaging"
+	desc = "Data disc for sabotaging R&D systems. In case you have lost what was originally given to you. Or if you want to play a joke on someone..."
+	item = /obj/item/weapon/disk/data/syndi
+	cost = 5
+	uplink_types = list("traitor")
+
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \

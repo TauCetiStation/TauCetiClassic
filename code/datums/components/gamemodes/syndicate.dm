@@ -188,25 +188,26 @@
 			total_TC = uplink_uses
 
 	var/datum/role/R = parent
-	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
-		var/obj/item/device/biocan/B = new (traitor_mob.loc)
-		var/list/slots = list(
-			"backpack" = SLOT_IN_BACKPACK,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-		traitor_mob.update_icons()
-		if (!where)
-			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
-		else
-			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
-
+	give_equipment_for_the_objective(/datum/objective/target/dehead, /obj/item/device/biocan, R, traitor_mob)
+	give_equipment_for_the_objective(/datum/objective/research_sabotage, /obj/item/weapon/disk/data/syndi, R, traitor_mob)
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
+/datum/component/gamemode/syndicate/proc/give_equipment_for_the_objective(datum/objective/O, obj/item/I, datum/role/R, mob/living/carbon/human/traitor)
+	for(O in R.objectives.GetObjectives())
+		I = new (traitor.loc)
+		var/list/slots = list(
+			"backpack" = SLOT_IN_BACKPACK,
+			"left hand" = SLOT_L_HAND,
+			"right hand" = SLOT_R_HAND,
+		)
+		var/where = traitor.equip_in_one_of_slots(I, slots)
+		traitor.update_icons()
+		if (!where)
+			to_chat(traitor, "Unfortunately, the Syndicate was unable to provide you with the equipment to complete the task. You will have to buy in the uplink with telecrystals.")
 
 /datum/component/gamemode/syndicate/proc/take_uplink()
 	var/mob/living/carbon/human/traitor_mob = get_current()

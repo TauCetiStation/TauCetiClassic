@@ -296,7 +296,10 @@
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()
-	updateUsrDialog()
+	if(istype(D, /obj/item/weapon/disk/data/syndi))
+		sabotage(user)
+	else
+		updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)
@@ -309,7 +312,7 @@
 	return FALSE
 
 
-/obj/machinery/computer/rdservercontrol/AltClick(mob/user)
+/obj/machinery/computer/rdservercontrol/proc/sabotage(mob/user, obj/item/weapon/disk/data/syndi/d)
 	if(!user.Adjacent(src))
 		return
 	if(!isliving(user) && !user.mind)
@@ -328,6 +331,7 @@
 	playsound(src, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
 	if(!do_after(user, sabotage_time, target = src))
 		return
+	qdel(d)
 	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
 		for(var/i in 1 to 3)
 			s.files.forget_random_technology()
