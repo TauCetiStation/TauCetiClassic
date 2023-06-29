@@ -1679,10 +1679,10 @@
 "Go" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/goonplaque,/area/trainstation/train/railcar/main9)
 "Gp" = (/obj/structure/stool/bed/chair/metal/red{dir = 1},/turf/simulated/floor{dir = 8; icon_state = "black"},/area/trainstation/train/railcar/main9)
 "Gq" = (/obj/structure/stool/bed/chair/metal/green{dir = 1},/turf/simulated/floor{dir = 4; icon_state = "black"},/area/trainstation/train/railcar/main9)
-"Gr" = (/obj/machinery/conveyor/train{dir = 8; id = "train"},/obj/machinery/lamppost,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
+"Gr" = (/obj/machinery/conveyor/train{dir = 8; id = "train"},/obj/structure/chameleon/lamppost,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
 "Gs" = (/obj/machinery/power/apc{dir = 8; name = "Railcar 10 Aux APC"; pixel_x = -24},/obj/structure/cable{d2 = 4; icon_state = "0-4"},/turf/simulated/floor{dir = 8; icon_state = "darkbrown"},/area/trainstation/train/railcar/aux0)
 "Gt" = (/obj/machinery/conveyor/train{dir = 8; id = "train"},/obj/structure/closet/crate/bin,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
-"Gu" = (/obj/machinery/lamppost,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
+"Gu" = (/obj/structure/chameleon/lamppost,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
 "Gv" = (/obj/structure/stool/bed/chair/metal/blue{dir = 1},/turf/simulated/floor{dir = 10; icon_state = "black"},/area/trainstation/train/railcar/main9)
 "Gw" = (/obj/structure/stool/bed/chair/metal/yellow{dir = 1},/turf/simulated/floor{dir = 6; icon_state = "black"},/area/trainstation/train/railcar/main9)
 "Gx" = (/obj/structure/window/fulltile,/obj/structure/curtain/open/bed{anchored = 1; color = "#8a2639"; name = "curtain"},/turf/simulated/floor/plating,/area/trainstation/train/railcar/aux8)
@@ -1821,8 +1821,8 @@
 "Ja" = (/turf/unsimulated/floor/velocity,/area/trainstation/apartment)
 "Jb" = (/obj/structure/closet/crate/bin,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
 "Jc" = (/obj/structure/chameleon/bench,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
-"Jd" = (/obj/machinery/lamppost/on,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
-"Je" = (/obj/machinery/conveyor/train{dir = 8; id = "train"},/obj/machinery/lamppost/on,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
+"Jd" = (/obj/structure/chameleon/lamppost/on,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
+"Je" = (/obj/machinery/conveyor/train{dir = 8; id = "train"},/obj/structure/chameleon/lamppost/on,/turf/unsimulated/floor/train/platform,/area/trainstation/street)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

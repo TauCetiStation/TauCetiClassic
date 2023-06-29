@@ -45,7 +45,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
-		if("normal")
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("field")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
@@ -70,7 +74,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
-		if("normal")
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("field")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
@@ -96,7 +104,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			name = "platform"
 			desc = "A place for people to stand on."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
-		if("normal")
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
+		if("field")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
@@ -122,7 +134,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			name = "platform"
 			desc = "A place for people to stand on."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
-		if("normal")
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_platformtop.dmi'
+		if("field")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf_platformtop.dmi'
@@ -148,7 +164,11 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			name = "platform"
 			desc = "A place for people to stand on."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
-		if("normal")
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'
+		if("field")
 			name = "snow"
 			desc = "It's cold."
 			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'

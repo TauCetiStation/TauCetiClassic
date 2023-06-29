@@ -14,7 +14,7 @@
 			trainspawners += TR
 
 var/global/globally_operating = TRUE
-var/global/spawn_list_type = "station"
+var/global/spawn_list_type = "station - traditional"
 
 /client/proc/toggle_train_spawners_and_despawners()
 	set category = "Event"
@@ -70,27 +70,27 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 
 	var/operating = FALSE
 
-	var/current_spawn_list_type = "normal"
+	var/current_spawn_list_type = "station - traditional"
 
 	var/list/spawn_lists = list(
 		"station - traditional" = list(
 			// benches and stuff
-			/obj/machinery/lamppost = 50,
-			/obj/machinery/lamppost/on = 30,
-			/obj/structure/chameleon/bench = 50,
+			/obj/structure/trainstation/lamppost = 50,
+			/obj/structure/trainstation/lamppost/on = 30,
+			/obj/structure/trainstation/bench = 50,
 			/obj/structure/closet/crate/bin = 50,
 		),
 		"station - rural" = list(
-			/obj/machinery/lamppost = 50,
-			/obj/machinery/lamppost/on = 30,
-			/obj/structure/chameleon/bench = 50,
+			/obj/structure/trainstation/lamppost/rural = 50,
+			/obj/structure/trainstation/lamppost/rural/on = 30,
+			/obj/structure/trainstation/bench/green = 50,
 			/obj/structure/closet/crate/bin = 50,
 		),
-		"normal" = list(
+		"suburb" = list(
 			// trees grass and stuff, example below
 			"null" = 20,
-			/obj/machinery/lamppost/rural = 5,
-			/obj/machinery/lamppost/rural/on = 5,
+			/obj/structure/trainstation/lamppost/rural = 10,
+			/obj/structure/trainstation/lamppost/rural/on = 10,
 			/obj/structure/flora/tree/pine/train = 20,
 			/obj/structure/flora/tree/dead/train = 90,
 			/obj/structure/flora/tree/utilitypole = 5,
@@ -122,6 +122,16 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			/obj/structure/scrap/food/large/train = 1,
 			/obj/structure/scrap/poor/train = 1,
 			/obj/structure/scrap/poor/large/train = 1,
+		),
+		"field" = list(
+			/obj/structure/flora/tree/utilitypole = 5,
+			/obj/structure/flora/ausbushes/fullgrass/train = 70,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 60,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
+			/obj/structure/flora/ausbushes/palebush/train = 2,
+			/obj/structure/flora/ausbushes/grassybush/train = 2,
+			/obj/structure/flora/ausbushes/stalkybush/train = 10,
+			/obj/structure/flora/ausbushes/reedbush/train = 10,
 		),
 		"forest" = list(
 			/obj/structure/flora/tree/pine/train = 10,
@@ -202,7 +212,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/item/trash/chips = 2,
 			/obj/item/trash/pistachios = 2,
 		),
-		"normal" = list(
+		"suburb" = list(
 			"null" = 90,
 			/obj/structure/flora/ausbushes/fullgrass/train = 20,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 20,
@@ -219,7 +229,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/item/trash/candy = 5,
 			/obj/item/trash/raisins = 5,
 			/obj/item/trash/chips = 5,
-			/obj/item/trash/pistachios = 10,
+			/obj/item/trash/pistachios = 5,
 			/obj/structure/scrap/medical/train = 1,
 			/obj/structure/scrap/medical/large/train = 1,
 			/obj/structure/scrap/vehicle/train = 1,
@@ -228,6 +238,23 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/structure/scrap/food/large/train = 1,
 			/obj/structure/scrap/poor/train = 1,
 			/obj/structure/scrap/poor/large/train = 1,
+		),
+		"field" = list(
+			"null" = 50,
+			/obj/structure/flora/ausbushes/fullgrass/train = 70,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 60,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
+			/obj/structure/flora/ausbushes/palebush/train = 2,
+			/obj/structure/flora/ausbushes/grassybush/train = 2,
+			/obj/structure/flora/ausbushes/stalkybush/train = 10,
+			/obj/structure/flora/ausbushes/reedbush/train = 10,
+			/obj/item/trash/semki = 2,
+			/obj/item/trash/popcorn =2,
+			/obj/item/trash/sosjerky = 2,
+			/obj/item/trash/candy = 2,
+			/obj/item/trash/raisins = 2,
+			/obj/item/trash/chips = 2,
+			/obj/item/trash/pistachios = 2,
 		),
 		"forest" = list(
 			/obj/structure/flora/tree/pine/train = 10,
@@ -252,7 +279,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		"station - rural" = list(
 		"null" = 100,
 		),
-		"normal" = list(
+		"suburb" = list(
 			"null" = 10,
 			/obj/structure/flora/tree/pine/train = 10,
 			/obj/structure/flora/tree/dead/train = 90,
@@ -281,6 +308,15 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 			/obj/structure/scrap/food/large/train = 1,
 			/obj/structure/scrap/poor/train = 1,
 			/obj/structure/scrap/poor/large/train = 1,
+		),
+		"field" = list(
+			/obj/structure/flora/ausbushes/fullgrass/train = 30,
+			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
+			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
+			/obj/structure/flora/ausbushes/palebush/train = 10,
+			/obj/structure/flora/ausbushes/grassybush/train = 10,
+			/obj/structure/flora/ausbushes/stalkybush/train = 30,
+			/obj/structure/flora/ausbushes/reedbush/train = 20,
 		),
 		"forest" = list(
 			/obj/structure/flora/tree/pine/train = 10,
@@ -311,12 +347,18 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 	var/globally_operating = TRUE
 
 	var/list/despawn_list = list(
-		/obj/machinery/lamppost,
-		/obj/machinery/lamppost/rural,
+		/obj/structure/chameleon/lamppost,
+		/obj/structure/chameleon/lamppost/on,
+		/obj/structure/trainstation/lamppost,
+		/obj/structure/trainstation/lamppost/on,
+		/obj/structure/trainstation/lamppost/rural,
+		/obj/structure/trainstation/lamppost/rural/on,
 		/obj/machinery/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
 		/obj/structure/chameleon/bench,
+		/obj/structure/trainstation/bench,
+		/obj/structure/trainstation/bench/green,
 		/obj/structure/closet/crate/bin,
 		/obj/structure/flora/tree/utilitypole,
 		/obj/structure/flora/tree/pine/train,

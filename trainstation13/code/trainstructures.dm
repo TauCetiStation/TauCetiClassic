@@ -7,7 +7,7 @@ var/global/list/train_animated_structures = list()
 ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 
 /obj/structure/train
-	name = "mysterious invisible structure"
+	name = "mysterious force"
 	desc = "These aren't the droids you're looking for."
 	var/still_icon_state = "benkenobi"
 
@@ -17,6 +17,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "gangway_still" //Does not animate by default when spawned, but will animate if the train is moving.
 	max_integrity = 70
+	opacity = 1
+	anchored = TRUE
+	density = TRUE
 	still_icon_state = "gangway"
 
 /obj/structure/train/proc/change_movement(moving)
@@ -29,27 +32,32 @@ var/global/list/train_chameleon = list()
 ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 
 /obj/structure/chameleon
-	name = "spock"
-	desc = "Live long and prosper!"
+	name = "bear referee" //Bears can shapeshift now!
+	desc = "It's nice to see you!"
+	icon = 'trainstation13/icons/television.dmi'
 
 /obj/structure/chameleon/proc/change_state(state)
 	switch(state)
 		if("station - traditional")
-			name = "wooden bench"
-			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_brown"
+			name = "bear referee"
+			desc = "It's nice to see you!"
+			icon_state = "bear_referee"
 		if("station - rural")
-			name = "wooden bench"
-			desc = "A green wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_green"
-		if("normal")
-			name = "wooden bench"
-			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_brown"
+			name = "bear with vodka"
+			desc = "Let's have some fun!"
+			icon_state = "bear_vodka"
+		if("suburb")
+			name = "bear with harmonica"
+			desc = "Let's play!"
+			icon_state = "bear_harmonica"
+		if("field")
+			name = "red boxing bear"
+			desc = "Game over!"
+			icon_state = "bear_red"
 		if("forest")
-			name = "wooden bench"
-			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_brown"
+			name = "blue boxing bear"
+			desc = "You stepped into wrong forest."
+			icon_state = "bear_blue"
 
 /obj/structure/chameleon/bench
 	name = "wooden bench"
@@ -57,6 +65,29 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	icon = 'trainstation13/icons/64x32.dmi'
 	icon_state = "bench_wood_brown"
 	anchored = FALSE
+
+/obj/structure/chameleon/bench/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "wooden bench"
+			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("station - rural")
+			name = "wooden bench"
+			desc = "A wooden bench painted green. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_green"
+		if("suburb")
+			name = "wooden bench"
+			desc = "A wooden bench coated with transparent varnish. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("field")
+			name = "wooden bench"
+			desc = "A wooden bench coated with transparent varnish. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
+		if("forest")
+			name = "wooden bench"
+			desc = "A wooden bench coated with transparent varnish. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+			icon_state = "bench_wood_brown"
 
 /obj/structure/chameleon/bench/attackby(obj/item/O, mob/user)
 	if(iswrenching(O))
@@ -83,24 +114,106 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	else
 		..()
 
-/obj/structure/chameleon/bench/change_state(state)
+/obj/structure/chameleon/lamppost
+	name = "street light"
+	desc = "A traditional, raised source of light with lamp at the top of a pole."
+	icon = 'trainstation13/icons/32x96.dmi'
+	icon_state = "lamppost_off"
+	anchored = FALSE
+	density = TRUE
+	layer = 5
+
+/obj/structure/chameleon/lamppost/change_state(state)
 	switch(state)
 		if("station - traditional")
-			name = "wooden bench"
-			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_brown"
+			name = "street light"
+			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
+			icon_state = "lamppost_off"
 		if("station - rural")
-			name = "wooden bench"
-			desc = "A green wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_green"
-		if("normal")
-			name = "wooden bench"
-			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_brown"
+			name = "light pole"
+			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+			icon_state = "light_pole_off"
+		if("suburb")
+			name = "street light"
+			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
+			icon_state = "lamppost_off"
+		if("field")
+			name = "light pole"
+			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+			icon_state = "light_pole_off"
 		if("forest")
-			name = "wooden bench"
-			desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
-			icon_state = "bench_wood_brown"
+			name = "light pole"
+			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+			icon_state = "light_pole_off"
+
+/obj/structure/chameleon/lamppost/on
+	icon_state = "lamppost_on"
+	light_power = 1
+	light_range = 7
+
+/obj/structure/chameleon/lamppost/on/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "street light"
+			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
+			icon_state = "lamppost_on"
+		if("station - rural")
+			name = "light pole"
+			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+			icon_state = "light_pole_on"
+		if("suburb")
+			name = "street light"
+			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
+			icon_state = "lamppost_on"
+		if("field")
+			name = "light pole"
+			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+			icon_state = "light_pole_on"
+		if("forest")
+			name = "light pole"
+			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+			icon_state = "light_pole_on"
+
+//REGULAR STRUCTURES
+
+/obj/structure/trainstation/bench
+	name = "wooden bench"
+	desc = "A wooden bench coated with transparent varnish. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+	icon = 'trainstation13/icons/64x32.dmi'
+	icon_state = "bench_wood_brown"
+	anchored = FALSE
+
+/obj/structure/trainstation/bench/green
+	name = "wooden bench"
+	desc = "A wooden bench painted green. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
+	icon = 'trainstation13/icons/64x32.dmi'
+	icon_state = "bench_wood_green"
+	anchored = FALSE
+
+/obj/structure/trainstation/lamppost
+	name = "street light"
+	desc = "A traditional, raised source of light with lamp at the top of a pole."
+	icon = 'trainstation13/icons/32x96.dmi'
+	icon_state = "lamppost_off"
+	layer = 5
+	anchored = FALSE
+	density = TRUE
+
+/obj/structure/trainstation/lamppost/on
+	icon_state = "lamppost_on"
+	light_power = 1
+	light_range = 7
+
+/obj/structure/trainstation/lamppost/rural
+	name = "light pole"
+	desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
+	icon_state = "light_pole_off"
+
+/obj/structure/trainstation/lamppost/rural/on
+	icon_state = "light_pole_on"
+	light_power = 1
+	light_range = 7
+	light_color = "#a0a080"
 
 //MACHINES
 
@@ -149,29 +262,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	density = TRUE
 	icon = 'trainstation13/icons/trainstructures.dmi'
 	icon_state = "sheater-off"
-
-/obj/machinery/lamppost
-	name = "street light"
-	desc = "A traditional, raised source of light with lamp at the top of a metal pole."
-	icon = 'trainstation13/icons/32x96.dmi'
-	icon_state = "lamppost_off"
-	layer = 5
-
-/obj/machinery/lamppost/on
-	icon_state = "lamppost_on"
-	light_power = 1
-	light_range = 7
-
-/obj/machinery/lamppost/rural
-	name = "light pole"
-	desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
-	icon_state = "light_pole"
-
-/obj/machinery/lamppost/rural/on
-	icon_state = "light_pole_on"
-	light_power = 1
-	light_range = 5
-	light_color = "#f535aa"
 
 //DECALS
 
