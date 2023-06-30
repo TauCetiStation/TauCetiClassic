@@ -263,9 +263,10 @@
 	global.virus_by_pool = list()
 	for(var/e in subtypesof(/datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
-		if(!f.pools.len)
+		var/list/L = f.pools
+		if(!L.len)
 			continue
-		for(var/pool in f.pools)
+		for(var/pool in L)
 			LAZYADD(virus_by_pool[pool], f)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs

@@ -33,7 +33,7 @@
 	var/level = 1
 	var/max_stage = 1
 	var/cooldown = 0
-	var/pools = list(POOL_NEUTRAL_VIRUS)
+	var/pools = list()
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -43,7 +43,6 @@
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
 	level = 0 // can't get this one
-	pools = list()
 
 /datum/disease2/effect/invisible/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	return
@@ -56,7 +55,7 @@
 	cooldown = 0
 	chance_minm = 100
 	chance_maxm = 100
-	pools = list()
+	pools = list(POOL_POSITIVE_VIRUS)
 	var/passive_message = "" //random message to infected but not actively healing people
 	COOLDOWN_DECLARE(heal_message)
 
@@ -173,7 +172,6 @@
 	name = "Toxolysis"
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 	level = 4
-	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/heal/chem/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
@@ -187,7 +185,6 @@
 	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
 	level = 4
 	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
-	pools = list(POOL_POSITIVE_VIRUS)
 	var/active_coma = FALSE
 
 /datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
@@ -483,7 +480,6 @@
 	desc = "The virus reacts to direct starlight, producing regenerative chemicals. Works best against toxin-based damage."
 	level = 3
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
-	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/heal/starlight/proc/calculate_spacepower(atom/A)
 	if(isspaceturf(get_turf(A)))
@@ -533,7 +529,6 @@
 	desc = "The virus is able to mend the host's flesh when in conditions of low light, repairing physical damage. More effective against brute damage."
 	level = 3
 	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
-	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	var/light_amount = 0
