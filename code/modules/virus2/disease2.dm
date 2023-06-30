@@ -1,6 +1,7 @@
 #define POOL_POSITIVE_VIRUS "pool_positive_virus"
 #define POOL_NEUTRAL_VIRUS "pool_neutral_virus"
 #define POOL_NEGATIVE_VIRUS "pool_negative_virus"
+var/global/list/virus_by_pool
 
 /datum/disease2/disease
 	var/infectionchance = 70
@@ -30,24 +31,21 @@
 	return FALSE
 
 /datum/disease2/disease/proc/getrandomeffect(minlevel = 1, maxlevel = 4)
-	var/list/virus_by_pool = list()
 	var/static/list/pool_distribution = list(
 		POOL_POSITIVE_VIRUS = 25,
 		POOL_NEUTRAL_VIRUS = 25,
 		POOL_NEGATIVE_VIRUS = 50,
 	)
-	for(var/e in subtypesof(/datum/disease2/effect))
-		var/datum/disease2/effect/f = new e
-		if(f.level > maxlevel)	//we don't want such strong effects
-			continue
-		if(f.level < minlevel)
-			continue
-		if(haseffect(f))
-			continue
-		for(var/pool in f.pools)
-			LAZYADD(virus_by_pool[pool], f)
 	var/pickedpool = pickweight(pool_distribution)
-	var/list/effects_pool_list = virus_by_pool[pickedpool]
+	var/list/effects_pool_list = global.virus_by_pool[pickedpool]
+	for(var/datum/disease2/effect/e as anything in effects_pool_list)
+		var/datum/disease2/effect/f = new e.type
+		if(f.level > maxlevel)
+			effects_pool_list -= f
+		if(f.level < minlevel)
+			effects_pool_list -= f
+		if(haseffect(f))
+			effects_pool_list -= f
 	if(!effects_pool_list.len)
 		return null
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder

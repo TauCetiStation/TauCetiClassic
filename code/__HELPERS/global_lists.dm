@@ -260,6 +260,14 @@
 	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
 		smartlight_presets[initial(type.name)] = type
 
+	global.virus_by_pool = list()
+	for(var/e in subtypesof(/datum/disease2/effect))
+		var/datum/disease2/effect/f = new e
+		if(!f.pools.len)
+			continue
+		for(var/pool in f.pools)
+			LAZYADD(virus_by_pool[pool], f)
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
