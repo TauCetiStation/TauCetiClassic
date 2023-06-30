@@ -15,3 +15,9 @@
 	name = "RnD Lobby"
 	ambience = null
 	sound_environment = SOUND_AREA_STATION_HALLWAY
+
+/area/station/security/brig/equipment
+	name = "Brig Equipment"
+
+/area/station/security/brig/storage
+	name = "Brig Storage"

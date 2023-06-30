@@ -511,7 +511,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "adb" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -1835,7 +1835,7 @@
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "anP" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -2940,6 +2940,25 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"aBB" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Brig Lockdown Blast Doors";
+	name = "Brig Lockdown Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/storage)
 "aBG" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/stamp/ce,
@@ -3797,7 +3816,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "aMG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -8132,7 +8151,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "bMR" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
@@ -12114,7 +12133,7 @@
 	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "cMg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
@@ -13863,7 +13882,7 @@
 	dir = 8;
 	icon_state = "darkred"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "diI" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -15082,7 +15101,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "dzc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -15218,6 +15237,22 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
+"dBf" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/security/brig/equipment)
 "dBj" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -18165,7 +18200,7 @@
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "eqn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
@@ -22148,7 +22183,7 @@
 	dir = 4;
 	icon_state = "warndark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "frM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -23558,7 +23593,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "fJs" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -26028,7 +26063,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "goU" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/smart,
@@ -26810,7 +26845,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "gxO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command{
@@ -30599,7 +30634,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "huS" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -32017,7 +32052,7 @@
 	dir = 6;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "hMc" = (
 /obj/structure/table,
 /obj/item/toy/ammo/gun,
@@ -32838,7 +32873,7 @@
 	dir = 4;
 	icon_state = "warndark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "hWV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -34075,7 +34110,7 @@
 	dir = 4;
 	icon_state = "warndark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "ils" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas/sechailer,
@@ -34962,7 +34997,7 @@
 	dir = 1;
 	icon_state = "bot"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "ixC" = (
 /obj/item/target/syndicate,
 /turf/simulated/floor{
@@ -36581,7 +36616,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "iQE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -37720,7 +37755,7 @@
 	dir = 8;
 	icon_state = "darkred"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "jfF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -38742,7 +38777,7 @@
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "jsw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
@@ -38868,7 +38903,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "jtU" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -39241,7 +39276,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "jxt" = (
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload Chamber";
@@ -43600,7 +43635,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "kzh" = (
 /turf/simulated/floor,
 /area/station/maintenance/brig)
@@ -48129,6 +48164,12 @@
 	icon_state = "vault"
 	},
 /area/station/tcommsat/chamber)
+"lFb" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redcorner"
+	},
+/area/station/security/brig/equipment)
 "lFe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -48506,6 +48547,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"lJk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
+/area/station/security/brig/equipment)
 "lJP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -50117,7 +50164,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "mfI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50656,7 +50703,7 @@
 	dir = 1;
 	icon_state = "bot"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "mmf" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -51348,7 +51395,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "mtX" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
@@ -52352,7 +52399,7 @@
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "mHj" = (
 /obj/machinery/computer/card,
 /obj/machinery/light/smart,
@@ -55100,7 +55147,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "nsa" = (
 /turf/simulated/wall/r_wall,
 /area/station/engineering/engine)
@@ -55767,6 +55814,14 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/lab)
+"nAx" = (
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE"
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/brig/equipment)
 "nAD" = (
 /obj/item/weapon/flora/random,
 /obj/structure/window/thin/reinforced{
@@ -57188,7 +57243,7 @@
 	dir = 1;
 	icon_state = "bot"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "nSF" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -57690,6 +57745,9 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/library)
+"nYx" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/brig/equipment)
 "nYz" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/test_area)
@@ -60957,7 +61015,7 @@
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "oTC" = (
 /obj/structure/table/woodentable,
 /obj/item/device/paicard,
@@ -63991,7 +64049,7 @@
 	dir = 9;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "pFc" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -67011,7 +67069,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "qsp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -68463,7 +68521,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "qMt" = (
 /obj/machinery/iv_drip,
 /obj/structure/sink{
@@ -69297,6 +69355,25 @@
 	icon_state = "yellowpatch"
 	},
 /area/station/engineering/atmos/supermatter)
+"qWM" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Brig Lockdown Blast Doors";
+	name = "Brig Lockdown Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/equipment)
 "qWU" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -69658,6 +69735,11 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
+"rbT" = (
+/turf/simulated/floor{
+	icon_state = "red"
+	},
+/area/station/security/brig/equipment)
 "rbW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -73045,7 +73127,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "rRF" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73198,7 +73280,7 @@
 	dir = 5;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "rUi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -76910,6 +76992,12 @@
 	icon_state = "vault"
 	},
 /area/station/security/forensic_office)
+"sRs" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "red"
+	},
+/area/station/security/brig/equipment)
 "sRL" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/soda{
@@ -77796,7 +77884,7 @@
 	dir = 8;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "tdH" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
@@ -80978,7 +81066,7 @@
 	dir = 10;
 	icon_state = "red"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "tVQ" = (
 /obj/machinery/telepad,
 /turf/simulated/floor/engine,
@@ -90587,6 +90675,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/civilian/toilet)
+"wAg" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/brig/storage)
 "wAl" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -91045,7 +91136,7 @@
 	dir = 8;
 	icon_state = "darkred"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "wEV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -93124,7 +93215,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "xhn" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway North";
@@ -93873,7 +93964,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/brig/storage)
 "xrk" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -96873,7 +96964,7 @@
 	req_access = list(1)
 	},
 /turf/simulated/floor,
-/area/station/security/brig)
+/area/station/security/brig/equipment)
 "ycg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -149299,9 +149390,9 @@ iTl
 bkz
 iTl
 iTl
-cHH
+wAg
 iQz
-cHH
+wAg
 aoj
 fDm
 cin
@@ -149314,7 +149405,7 @@ fDm
 aoj
 yce
 acS
-cHH
+nYx
 ujC
 pzr
 mMl
@@ -149826,8 +149917,8 @@ dHU
 kmK
 gPY
 bEB
-oSd
-vzx
+sRs
+dBf
 mGO
 oTu
 ujC
@@ -150083,8 +150174,8 @@ pBY
 aox
 pff
 aMz
-oSd
-vzx
+sRs
+dBf
 mGO
 epp
 ujC
@@ -150599,9 +150690,9 @@ bUn
 uKd
 dza
 aMD
-gFh
+rbT
 anO
-cHH
+nYx
 plf
 plf
 plf
@@ -150858,7 +150949,7 @@ gxz
 jxs
 mGO
 oTu
-cHH
+nYx
 plf
 plf
 plf
@@ -151111,11 +151202,11 @@ ekd
 lZw
 gqC
 dHv
-dkh
+lJk
 xhl
 mGO
 epp
-cHH
+nYx
 plf
 plf
 plf
@@ -151368,11 +151459,11 @@ xiS
 mNC
 gqC
 dHv
-bFt
+lFb
 xhl
 mGO
 oTu
-cHH
+nYx
 plf
 plf
 plf
@@ -151612,9 +151703,9 @@ hLk
 gFW
 rFB
 iXe
-cHH
-rbW
-cHH
+wAg
+aBB
+wAg
 uKd
 ils
 dxq
@@ -151628,8 +151719,8 @@ hPH
 rUh
 nrO
 hMb
-cHH
-cHH
+nYx
+nYx
 plf
 kHU
 plf
@@ -151882,10 +151973,10 @@ fUB
 mxb
 tAW
 uKd
-cHH
-rbW
-rbW
-iGO
+nYx
+qWM
+qWM
+nAx
 kHU
 kHU
 kHU
