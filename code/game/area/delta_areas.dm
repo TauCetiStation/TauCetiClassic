@@ -4,6 +4,14 @@
 	power_light = 0
 	power_environ = 0
 
+/area/station/engineering/atmos/distribution
+	name = "Distribution Loop"
+	ambience = null
+
+/area/station/engineering/atmos/atmos_office
+	name = "Atmospheric Office"
+	ambience = null
+
 /area/station/engineering/minisat_secure_area
 	name = "Minisat Access Area"
 
