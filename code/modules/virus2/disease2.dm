@@ -39,17 +39,19 @@ var/global/list/virus_by_pool
 	var/pickedpool = pickweight(pool_distribution)
 	var/list/effects_pool_list = global.virus_by_pool[pickedpool]
 	for(var/datum/disease2/effect/e as anything in effects_pool_list)
-		var/datum/disease2/effect/f = new e.type
-		if(f.level > maxlevel)
-			effects_pool_list -= f
-		if(f.level < minlevel)
-			effects_pool_list -= f
-		if(haseffect(f))
-			effects_pool_list -= f
+		if(e.level > maxlevel)
+			effects_pool_list -= e
+		if(e.level < minlevel)
+			effects_pool_list -= e
+		if(haseffect(e))
+			effects_pool_list -= e
 	if(!effects_pool_list.len)
 		return null
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
-	holder.effect = pick(effects_pool_list)
+	var/datum/disease2/effect/effect = pick(effects_pool_list)
+	//create a copy of effect
+	var/datum/disease2/effect/f = new effect.type
+	holder.effect = f
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
