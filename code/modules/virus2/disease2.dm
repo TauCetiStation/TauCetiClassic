@@ -31,7 +31,7 @@
 
 /datum/disease2/disease/proc/getrandomeffect(minlevel = 1, maxlevel = 4)
 	var/list/virus_by_pool = list()
-	var/list/pool_distribution = list(
+	var/static/list/pool_distribution = list(
 		POOL_POSITIVE_VIRUS = 25,
 		POOL_NEUTRAL_VIRUS = 25,
 		POOL_NEGATIVE_VIRUS = 50,
