@@ -1920,6 +1920,8 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
+	else
+		boss_PDA = 0
 
 /obj/item/device/pda/proc/check_pda_server()
 	if(!global.message_servers)
