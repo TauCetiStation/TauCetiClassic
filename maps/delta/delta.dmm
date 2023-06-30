@@ -12645,6 +12645,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"cSx" = (
+/turf/simulated/floor/wood,
+/area/station/civilian/barbershop)
 "cSB" = (
 /obj/structure/object_wall/mining{
 	icon_state = "1-8"
@@ -16118,6 +16121,11 @@
 	name = "Barbershop";
 	sortType = "Barbershop"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -16198,9 +16206,8 @@
 	},
 /area/station/hallway/primary/fore)
 "dRd" = (
-/obj/structure/sign/warning/secure_area,
 /turf/simulated/wall/r_wall,
-/area/station/rnd/chargebay)
+/area/station/civilian/barbershop)
 "dRh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 4;
@@ -20209,7 +20216,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "eSi" = (
 /obj/machinery/telecomms/processor/preset_one,
 /turf/simulated/floor/bluegrid{
@@ -24592,6 +24599,10 @@
 	icon_state = "neutral"
 	},
 /area/station/engineering/chiefs_office)
+"fZv" = (
+/obj/structure/sign/warning/secure_area,
+/turf/simulated/wall/r_wall,
+/area/station/civilian/barbershop)
 "fZz" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -27612,7 +27623,7 @@
 	name = "Barbershop"
 	},
 /turf/simulated/floor,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "gJC" = (
 /obj/structure/closet/l3closet/general,
 /obj/item/clothing/mask/gas/coloured,
@@ -28820,7 +28831,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "gZp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -29242,7 +29253,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "hfu" = (
 /obj/machinery/vending/tool,
 /turf/simulated/floor{
@@ -30169,7 +30180,7 @@
 /turf/simulated/floor{
 	icon_state = "redchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "hrc" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -31540,7 +31551,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "hGJ" = (
 /obj/structure/closet/secure_closet/brig{
 	name = "Prisoner Locker"
@@ -31982,7 +31993,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "hMR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/blue{
 	dir = 4
@@ -32134,7 +32145,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "hOR" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -37122,16 +37133,21 @@
 /obj/machinery/door/airlock/glass{
 	name = "Barbershop"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "iYY" = (
 /obj/structure/dryer{
 	pixel_y = 14
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "iZg" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -39206,7 +39222,7 @@
 "jxP" = (
 /obj/machinery/vending/barbervend,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "jxX" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -39584,7 +39600,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "jCI" = (
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone,
@@ -40677,10 +40693,15 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "jPt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
@@ -41535,7 +41556,7 @@
 /turf/simulated/floor{
 	icon_state = "redchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "jYV" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -56602,6 +56623,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hallway)
+"nNe" = (
+/turf/simulated/wall,
+/area/station/civilian/barbershop)
 "nNm" = (
 /obj/structure/stool,
 /obj/machinery/alarm{
@@ -57406,6 +57430,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -58821,8 +58850,16 @@
 	},
 /area/station/rnd/hallway)
 "oqZ" = (
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "ord" = (
 /obj/structure/cable,
 /turf/simulated/floor/plating{
@@ -63982,6 +64019,22 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/minisat_secure_area)
+"pGj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/hallway/primary/port)
 "pGn" = (
 /turf/simulated/wall/r_wall,
 /area/station/aisat/teleport)
@@ -64082,7 +64135,7 @@
 	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "pHc" = (
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -65488,7 +65541,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "pZs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -70531,7 +70584,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "rqZ" = (
 /obj/structure/scrap_beacon,
 /turf/simulated/floor/airless/ceiling,
@@ -70564,10 +70617,15 @@
 /area/station/civilian/hydroponics)
 "rru" = (
 /obj/machinery/light/small,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "rrv" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -71011,7 +71069,7 @@
 /turf/simulated/floor{
 	icon_state = "redchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "rwJ" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil{
@@ -80290,7 +80348,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "tMY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -82268,7 +82326,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "uos" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light/small{
@@ -84830,10 +84888,15 @@
 /area/station/cargo/qm)
 "uZe" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "uZl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -89041,7 +89104,7 @@
 /turf/simulated/floor{
 	icon_state = "redchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "wfw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -89249,7 +89312,7 @@
 "wiG" = (
 /obj/structure/closet/secure_closet/barber,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "wiV" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -91761,7 +91824,7 @@
 /turf/simulated/floor{
 	icon_state = "redchecker"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/barbershop)
 "wRP" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor,
@@ -128298,10 +128361,10 @@ aiN
 bzt
 ksv
 idK
-kGI
-kGI
-kGI
-kGI
+nNe
+nNe
+nNe
+nNe
 xgp
 moc
 iUy
@@ -128555,7 +128618,7 @@ kRw
 qEZ
 nWG
 gib
-kGI
+nNe
 eRU
 hML
 gZh
@@ -128810,12 +128873,12 @@ wwi
 wwi
 wwi
 oqH
-fVi
+pGj
 dPx
 iYX
 uZe
 jPe
-xgp
+dRd
 xgp
 wSp
 inP
@@ -129069,10 +129132,10 @@ aVs
 oqH
 fVi
 mwU
-kGI
+nNe
 jCA
 rru
-xgp
+fZv
 tzm
 xUX
 eed
@@ -129585,8 +129648,8 @@ fVi
 mwU
 pHa
 wiG
-oqZ
-xgp
+cSx
+dRd
 naF
 tvF
 xQR
@@ -129843,7 +129906,7 @@ vzh
 pHa
 jxP
 hOL
-xgp
+dRd
 xgp
 ohp
 qoI
@@ -130097,7 +130160,7 @@ jHQ
 oqH
 fVi
 kIB
-kGI
+nNe
 iYY
 tMV
 rwI
@@ -130611,7 +130674,7 @@ dka
 oqH
 fVN
 jPx
-kGI
+nNe
 uoi
 rqA
 jYR
@@ -130868,10 +130931,10 @@ aVs
 rfw
 thB
 buL
-kGI
+nNe
 wRM
 hqT
-kGI
+nNe
 xgp
 mcr
 mcr
@@ -131125,10 +131188,10 @@ aVs
 tLU
 bed
 iYt
-kGI
+nNe
 pHa
 pHa
-kGI
+nNe
 yhw
 awU
 awU
