@@ -10,3 +10,8 @@
 /area/station/bridge/corp_lounge
 	name = "Corporate Lounge"
 	ambience = null
+
+/area/station/rnd/hallway/lobby
+	name = "RnD Lobby"
+	ambience = null
+	sound_environment = SOUND_AREA_STATION_HALLWAY
