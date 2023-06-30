@@ -6,3 +6,7 @@
 
 /area/station/engineering/minisat_secure_area
 	name = "Minisat Access Area"
+
+/area/station/bridge/corp_lounge
+	name = "Corporate Lounge"
+	ambience = null
