@@ -21,3 +21,6 @@
 
 /area/station/security/brig/storage
 	name = "Brig Storage"
+
+/area/station/civilian/dormitories/service_bedrooms
+	name = "Service Bedrooms"

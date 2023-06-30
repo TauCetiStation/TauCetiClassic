@@ -2777,7 +2777,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "aAr" = (
 /obj/machinery/camera{
 	c_tag = "Drone Fabrication";
@@ -3961,7 +3961,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "aPN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/warning/fire{
@@ -5630,10 +5630,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "bkq" = (
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
@@ -5695,6 +5700,11 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/dormitories)
+"bll" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories/service_bedrooms)
 "blp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -7177,7 +7187,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "bCO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7245,7 +7255,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "bDj" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -7280,7 +7290,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "bDP" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 1
@@ -10213,7 +10223,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "cmm" = (
 /obj/structure/sign/mark{
 	icon_state = "ylf";
@@ -16720,7 +16730,7 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/rainbow,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "dVZ" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor{
@@ -16827,7 +16837,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "dXZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -17525,7 +17535,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "egV" = (
 /obj/machinery/disposal,
 /turf/simulated/floor{
@@ -18523,7 +18533,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "evk" = (
 /obj/machinery/door/airlock/security{
 	name = "Brig";
@@ -20024,10 +20034,15 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "eOx" = (
 /obj/structure/bookcase/manuals/medical,
 /turf/simulated/floor{
@@ -20674,10 +20689,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "eYj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -23678,7 +23698,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "fJU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -23782,7 +23802,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "fLh" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -24449,7 +24469,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "fWo" = (
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Launch Site";
@@ -24620,14 +24640,19 @@
 	dir = 9
 	},
 /obj/machinery/light/small,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "fYg" = (
 /obj/structure/closet/theatrecloset,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "fYv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -26139,7 +26164,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "gqg" = (
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -27244,7 +27269,7 @@
 	},
 /obj/effect/landmark/start/assistant/waiter,
 /turf/simulated/floor/carpet/red,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "gCd" = (
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -32521,7 +32546,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "hSV" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -32561,7 +32586,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "hTh" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -33326,7 +33351,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "iby" = (
 /turf/environment/space,
 /area/shuttle/syndicate/south)
@@ -33636,7 +33661,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "ige" = (
 /obj/structure/weightlifter,
 /turf/simulated/floor{
@@ -35293,7 +35318,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "iBx" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -35567,7 +35592,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "iES" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/girder,
@@ -35982,7 +36007,7 @@
 	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "iJj" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -38292,7 +38317,7 @@
 "jmu" = (
 /obj/structure/dresser,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "jmS" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -41066,7 +41091,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "jSW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -41386,7 +41411,7 @@
 /obj/item/weapon/bedsheet/mime,
 /obj/structure/stool/bed,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "jWH" = (
 /obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor{
@@ -44061,7 +44086,7 @@
 	},
 /obj/effect/landmark/start/assistant/waiter,
 /turf/simulated/floor/carpet/red,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "kEU" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
@@ -46332,7 +46357,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "lfY" = (
 /obj/structure/cult/statue/camera/jew,
 /turf/simulated/floor/wood,
@@ -50008,7 +50033,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "mdF" = (
 /obj/structure/stool/bed/chair/pedalgen{
 	anchored = 1;
@@ -50195,7 +50220,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "mgg" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51082,7 +51107,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "mqL" = (
 /obj/machinery/recharge_station,
 /obj/effect/decal/cleanable/dirt,
@@ -54891,7 +54916,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "npF" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -56135,8 +56160,13 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant/waiter,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "nEG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -56444,7 +56474,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "nIE" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
@@ -57185,7 +57215,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "nSm" = (
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
@@ -57665,7 +57695,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "nXZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -59833,14 +59863,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "oEB" = (
 /obj/machinery/status_display{
 	layer = 3.3;
@@ -60992,7 +61023,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "oTu" = (
 /obj/structure/closet/secure_closet/security,
 /turf/simulated/floor{
@@ -61004,8 +61035,13 @@
 /obj/item/device/paicard,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "oTI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -61468,7 +61504,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "oZB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/table_parts/wood,
@@ -63408,7 +63444,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor/carpet/red,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "pyk" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -63471,7 +63507,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "pyz" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
@@ -63748,21 +63784,26 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "pBC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "pBD" = (
 /obj/structure/table/woodentable,
 /obj/item/device/radio/intercom,
@@ -64764,7 +64805,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "pPg" = (
 /obj/structure/table/reinforced,
 /obj/machinery/kitchen_machine/microwave{
@@ -66040,7 +66081,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "qee" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/black,
@@ -67753,7 +67794,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "qCM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/boozeomat,
@@ -68783,7 +68824,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "qQp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -69611,7 +69652,7 @@
 	id = "jani_shutters"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "raB" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -70820,7 +70861,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "rrT" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -71268,6 +71309,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -73020,7 +73066,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "rQw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73431,7 +73477,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "rWn" = (
 /obj/machinery/gateway{
 	dir = 1
@@ -73530,7 +73576,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "rXM" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -73555,8 +73601,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "rYi" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -77364,7 +77415,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "sWI" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -79279,7 +79330,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "txp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
@@ -79879,7 +79930,7 @@
 	id = "jani_shutters"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "tED" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -81949,7 +82000,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "uiq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -86182,7 +86233,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "vow" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -88411,10 +88462,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "vTR" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/requests_console/rd{
@@ -88972,7 +89032,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "waz" = (
 /obj/machinery/camera{
 	c_tag = "Security Hallway";
@@ -89339,7 +89399,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "wgr" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -89418,7 +89478,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall,
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "whI" = (
 /obj/structure/table,
 /turf/simulated/floor/plating,
@@ -90272,6 +90332,9 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"wts" = (
+/turf/simulated/wall,
+/area/station/civilian/janitor)
 "wtC" = (
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
@@ -93342,7 +93405,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "xjp" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -93704,7 +93767,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "xoe" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -93954,10 +94017,18 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "xqY" = (
 /obj/structure/closet{
 	name = "evidence closet"
@@ -94248,7 +94319,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "xuw" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -95966,7 +96037,7 @@
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "xPZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -96151,10 +96222,15 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/janitor)
 "xSd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -96409,6 +96485,9 @@
 	icon_state = "darkbrown"
 	},
 /area/station/medical/chemistry)
+"xVN" = (
+/turf/simulated/wall,
+/area/station/civilian/dormitories/service_bedrooms)
 "xVQ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -132649,8 +132728,8 @@ gvF
 fDL
 vDr
 whB
-ffS
-ffS
+wts
+wts
 uDx
 pZG
 liS
@@ -132905,11 +132984,11 @@ ffS
 eQO
 fDL
 wAW
-ffS
+wts
 qQo
-ffS
-ffS
-ffS
+wts
+wts
+wts
 hXb
 hXb
 hXb
@@ -133166,11 +133245,11 @@ hSR
 xoc
 fWg
 aPM
-ffS
+wts
 lfJ
 iIZ
 lfJ
-tJq
+xVN
 bjH
 cRp
 gpG
@@ -133419,15 +133498,15 @@ yaE
 hkD
 fYS
 nEU
-ffS
+wts
 mge
 qed
 jSU
-ffS
+wts
 cmk
 hTg
-iPZ
-tJq
+bll
+xVN
 sdL
 jvg
 uSN
@@ -133683,8 +133762,8 @@ eYc
 xRZ
 bkp
 fJT
-iPZ
-tJq
+bll
+xVN
 qNO
 bKT
 uSN
@@ -133937,11 +134016,11 @@ tEo
 nIB
 iEL
 fYe
-ffS
-vTO
+wts
+oEp
 aAi
 pPd
-tJq
+xVN
 bqI
 dhW
 uSN
@@ -134190,15 +134269,15 @@ yaE
 csG
 fYS
 wtr
-ffS
+wts
 npC
 txi
 xqX
-ffS
+wts
 oEp
 vou
 rQp
-tJq
+xVN
 vQu
 vhI
 giU
@@ -134447,16 +134526,16 @@ yaE
 csG
 fYS
 wtr
-ffS
+wts
 bCJ
 euO
-ffS
-ffS
+wts
+wts
 vTO
 ibt
-iPZ
-tJq
-tJq
+bll
+xVN
+xVN
 kvu
 qup
 quV
@@ -134704,15 +134783,15 @@ ffS
 wii
 fYS
 iLV
-ffS
-ffS
-ffS
-ffS
+wts
+wts
+wts
+wts
 wfP
 eOt
 uio
-iPZ
-iPZ
+bll
+bll
 xPY
 mUa
 pZq
@@ -134961,15 +135040,15 @@ ffS
 uAC
 fYS
 wtr
-tJq
+xVN
 iga
 dXT
-tJq
-iPZ
+xVN
+bll
 rXS
 gBW
-iPZ
-iPZ
+bll
+bll
 mdE
 kvu
 miU
@@ -135218,7 +135297,7 @@ urv
 hkD
 fYS
 raR
-tJq
+xVN
 fLd
 was
 mqK
@@ -135226,8 +135305,8 @@ xjf
 oTC
 pxZ
 oZA
-tJq
-tJq
+xVN
+xVN
 kvu
 kvu
 noq
@@ -135475,15 +135554,15 @@ alc
 gHT
 fYS
 wtr
-tJq
+xVN
 nXN
 rVS
-tJq
+xVN
 rrR
 nEE
 kET
 pPd
-tJq
+xVN
 fYg
 gqd
 srs
@@ -135732,10 +135811,10 @@ hbE
 npi
 npi
 rBj
-tJq
+xVN
 dVV
 jmu
-tJq
+xVN
 egT
 pBC
 nSb
@@ -135995,9 +136074,9 @@ srs
 srs
 srs
 qCK
-iPZ
+bll
 oTt
-tJq
+xVN
 rVS
 sWC
 srs
@@ -136252,9 +136331,9 @@ hSq
 fKS
 srs
 bDf
-iPZ
+bll
 oTt
-tJq
+xVN
 jmu
 jWv
 srs
