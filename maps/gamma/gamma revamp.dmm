@@ -146,9 +146,7 @@
 "aaK" = (
 /obj/structure/mopbucket,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "aaL" = (
@@ -1815,7 +1813,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "aej" = (
 /obj/decal/boxingrope{
 	dir = 9
@@ -2090,7 +2088,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/station/aisat)
 "aeG" = (
 /obj/effect/landmark/start/medical_doctor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3549,6 +3547,15 @@
 	icon_state = "wood-broken6"
 	},
 /area/space)
+"aqb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/brig)
 "aqg" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4533,6 +4540,9 @@
 /area/space)
 "aDf" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "Stairs2_wide"
@@ -6211,7 +6221,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "bcu" = (
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -6487,7 +6497,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "bgi" = (
 /obj/machinery/bodyscanner,
 /obj/item/device/radio/intercom{
@@ -6767,7 +6777,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "biR" = (
 /obj/machinery/newscaster{
 	pixel_x = 28
@@ -8301,6 +8311,16 @@
 /obj/item/clothing/under/rainbow,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
+"bAj" = (
+/obj/structure/cable/white{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/space)
 "bAp" = (
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
@@ -8459,7 +8479,8 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/pen,
 /obj/structure/curtain/open/bed{
-	pixel_y = -32
+	pixel_y = -32;
+	anchored = 1
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
@@ -8640,7 +8661,8 @@
 "bFf" = (
 /obj/structure/table/woodentable,
 /obj/structure/curtain/open/bed{
-	pixel_y = -32
+	pixel_y = -32;
+	anchored = 1
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
@@ -8809,9 +8831,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "bIO" = (
@@ -9552,6 +9572,18 @@
 	icon_state = "dark"
 	},
 /area/station/security/execution)
+"bTD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "bTI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -11434,6 +11466,11 @@
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/plating,
 /area/station/solar/auxstarboard)
+"ctQ" = (
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/space)
 "ctS" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -11808,6 +11845,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "escape";
 	dir = 1
@@ -11933,9 +11973,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "cAm" = (
@@ -12667,6 +12705,20 @@
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
+"cIR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "cIW" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -12973,7 +13025,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "cNa" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science,
@@ -13430,7 +13482,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "cRA" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -13803,9 +13855,7 @@
 "cWv" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/space)
 "cWA" = (
@@ -14879,6 +14929,14 @@
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
 	})
+"dlq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/cigbutt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "dlu" = (
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -14920,9 +14978,7 @@
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "dlY" = (
@@ -15504,6 +15560,15 @@
 "dtQ" = (
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"dtV" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/device/assembly/mousetrap/armed,
+/turf/simulated/floor/plating,
+/area/space)
 "dud" = (
 /obj/machinery/shower/free{
 	dir = 8
@@ -16106,9 +16171,7 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "dBS" = (
@@ -16400,9 +16463,7 @@
 "dGo" = (
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/bridge/meeting_room)
 "dGu" = (
@@ -16714,9 +16775,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/spacecash/c10,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "dLg" = (
@@ -16829,9 +16888,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/space)
 "dLX" = (
@@ -17073,9 +17130,7 @@
 "dPP" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "dPT" = (
@@ -17573,9 +17628,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/cargo)
 "dZf" = (
@@ -17586,6 +17639,17 @@
 	icon_state = "vault"
 	},
 /area/station/medical/cryo)
+"dZo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "dZx" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -17601,9 +17665,7 @@
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "dZC" = (
@@ -17911,9 +17973,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "eer" = (
@@ -18174,9 +18234,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "egI" = (
@@ -18607,6 +18665,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"enj" = (
+/obj/item/stack/sheet/wood,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "enp" = (
 /obj/machinery/vending/donut,
 /obj/structure/sign/departments/restroom{
@@ -19051,7 +19118,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "esD" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
 	dir = 8
@@ -19546,6 +19613,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
+"ezf" = (
+/obj/item/weapon/scrap_lump,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "ezm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19749,6 +19823,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
+"eBN" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "eBQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet,
@@ -21185,9 +21266,7 @@
 "eXZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "eYh" = (
@@ -21897,6 +21976,14 @@
 /obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
+"fjN" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "fkk" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity South-East";
@@ -22916,7 +23003,7 @@
 	req_access = list(13)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "fwP" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -24458,6 +24545,7 @@
 	},
 /area/station/rnd/hallway)
 "fSf" = (
+/obj/random/foods/food_trash,
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "fSg" = (
@@ -24662,7 +24750,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "fUD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -25073,6 +25161,15 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"fZZ" = (
+/obj/structure/table,
+/obj/item/clothing/suit/storage/hazardvest{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/space)
 "gab" = (
 /obj/machinery/light_switch{
 	pixel_y = -26
@@ -26173,6 +26270,10 @@
 	icon_state = "warnplate"
 	},
 /area/station/maintenance/medbay)
+"goZ" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "gpa" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -26663,6 +26764,14 @@
 	icon_state = "warning"
 	},
 /area/station/civilian/kitchen)
+"gwf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/brig)
 "gwh" = (
 /obj/item/weapon/table_parts/wood/fancy/black,
 /turf/simulated/floor/plating,
@@ -27148,9 +27257,7 @@
 "gBo" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "gBq" = (
@@ -27632,9 +27739,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "gIw" = (
@@ -28015,6 +28120,20 @@
 	icon_state = "black"
 	},
 /area/station/security/prison)
+"gNI" = (
+/obj/structure/grille,
+/obj/structure/cable/pink{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable/pink{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "gNJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -28613,9 +28732,7 @@
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "gVP" = (
@@ -28663,6 +28780,9 @@
 /turf/simulated/floor/engine/phoron,
 /area/space)
 "gWH" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
@@ -30650,6 +30770,14 @@
 	icon_state = "asteroid"
 	},
 /area/station/hallway/primary/central)
+"hCi" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "hCo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -30884,6 +31012,14 @@
 	icon_state = "warnplate"
 	},
 /area/space)
+"hFR" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "hGd" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -31876,7 +32012,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "hUC" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating{
@@ -32310,7 +32446,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "iaW" = (
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/belt/utility,
@@ -32376,6 +32512,19 @@
 /obj/effect/decal/cleanable/generic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"ibB" = (
+/obj/item/stack/sheet/glass{
+	amount = 32;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "ibG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -32487,6 +32636,12 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"icF" = (
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
 "icH" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -33042,6 +33197,10 @@
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
+"ikj" = (
+/obj/random/scrap/safe_even,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "ikl" = (
 /obj/structure/table,
 /obj/item/weapon/circular_saw,
@@ -33315,9 +33474,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/engineering/engine)
 "inm" = (
@@ -33450,7 +33607,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "ioJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -33827,9 +33984,7 @@
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "iut" = (
@@ -35769,7 +35924,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/station/aisat)
 "iSZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -36219,6 +36374,10 @@
 	icon_state = "dark"
 	},
 /area/station/medical/hallway)
+"jcE" = (
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "jcG" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
@@ -36295,9 +36454,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "jdp" = (
@@ -37311,6 +37468,17 @@
 	icon_state = "cult"
 	},
 /area/station/civilian/library)
+"jqE" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "escape"
+	},
+/area/station/hallway/secondary/exit)
 "jqH" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -37324,6 +37492,12 @@
 	icon_state = "bot"
 	},
 /area/station/cargo/storage)
+"jqN" = (
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space)
 "jqP" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -37414,7 +37588,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "jsz" = (
 /obj/structure/window/shuttle/reinforced/mining{
 	icon_state = "3-9"
@@ -38833,6 +39007,14 @@
 "jIL" = (
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
+"jIN" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "jIO" = (
 /obj/structure/flora/ausbushes,
 /turf/simulated/floor/grass,
@@ -39338,14 +39520,12 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/station/aisat)
 "jRd" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "jRk" = (
@@ -39660,9 +39840,7 @@
 "jWD" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/dormitory)
 "jWH" = (
@@ -40172,7 +40350,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "kec" = (
 /obj/machinery/recharge_station,
 /obj/machinery/alarm{
@@ -40902,6 +41080,22 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"kpE" = (
+/obj/item/stack/sheet/wood,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/brig)
+"kpG" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/brig)
 "kpN" = (
 /obj/structure/grille,
 /turf/simulated/wall/r_wall,
@@ -41541,7 +41735,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "kzC" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
@@ -41788,6 +41982,19 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"kDE" = (
+/obj/structure/grille,
+/obj/structure/cable/pink,
+/obj/structure/cable/pink{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "kDV" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 8
@@ -41799,9 +42006,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "kEx" = (
@@ -41814,9 +42019,7 @@
 "kEz" = (
 /obj/structure/closet/toolcloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/cargo)
 "kEM" = (
@@ -42727,6 +42930,17 @@
 "kTN" = (
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
+"kTQ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
 "kTR" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -43182,9 +43396,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "kZm" = (
@@ -43976,9 +44188,7 @@
 	},
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/bridge/hop_office)
 "lhG" = (
@@ -44322,6 +44532,13 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/central)
+"lnu" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/glowstick,
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
+/area/space)
 "lnx" = (
 /obj/item/weapon/table_parts/wood,
 /turf/simulated/floor/plating,
@@ -44434,6 +44651,14 @@
 	icon_state = "darkredcorners"
 	},
 /area/station/security/brig)
+"lpy" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "lpA" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -44987,9 +45212,7 @@
 "lzU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/rnd/robotics)
 "lzW" = (
@@ -45023,6 +45246,10 @@
 	},
 /turf/simulated/floor,
 /area/space)
+"lAi" = (
+/obj/item/weapon/scrap_lump,
+/turf/simulated/wall,
+/area/station/civilian/dormitories/dormtwo)
 "lAk" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -45191,6 +45418,13 @@
 	icon_state = "neutralfull"
 	},
 /area/station/medical/surgery)
+"lCy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "lCz" = (
 /obj/machinery/dna_scannernew,
 /turf/simulated/floor{
@@ -45365,6 +45599,9 @@
 "lFm" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -45406,9 +45643,7 @@
 /area/station/medical/cmo)
 "lGy" = (
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "lGE" = (
@@ -46692,9 +46927,7 @@
 "lYg" = (
 /obj/structure/closet/crate/trashcart,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "lYj" = (
@@ -47076,6 +47309,10 @@
 	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
+"mbU" = (
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "mbV" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod1"
@@ -47878,9 +48115,7 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "mnx" = (
@@ -48280,7 +48515,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "msY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -48412,7 +48647,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "muS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
@@ -48724,9 +48959,7 @@
 "myU" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "myV" = (
@@ -48931,6 +49164,15 @@
 	icon_state = "whitepurplefull"
 	},
 /area/station/rnd/xenobiology)
+"mCv" = (
+/obj/random/foods/food_trash,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "mCI" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
@@ -49159,6 +49401,15 @@
 	dir = 4
 	},
 /area/space)
+"mHN" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "mHZ" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -49795,6 +50046,7 @@
 "mQu" = (
 /obj/structure/barricade/wooden,
 /obj/structure/door_assembly/door_assembly_med,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/space)
 "mQz" = (
@@ -49936,6 +50188,16 @@
 /mob/living/carbon/slime,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
+"mTC" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "mUm" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/junglebush/large{
@@ -50036,9 +50298,7 @@
 "mWh" = (
 /obj/structure/stool,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "mWq" = (
@@ -50407,9 +50667,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "nai" = (
@@ -50545,9 +50803,7 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/fawkes,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "naY" = (
@@ -50833,6 +51089,12 @@
 	icon_state = "damaged1"
 	},
 /area/station/maintenance/incinerator)
+"ngm" = (
+/turf/simulated/floor/plating{
+	dir = 5;
+	icon_state = "warnplate"
+	},
+/area/space)
 "ngp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -51166,6 +51428,11 @@
 	icon_state = "wood_stairs2"
 	},
 /area/station/hallway/secondary/entry)
+"nmb" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/hallway/secondary/exit)
 "nmc" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -52122,9 +52389,7 @@
 "nAh" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/space)
 "nAl" = (
@@ -52610,9 +52875,7 @@
 "nGy" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "nGA" = (
@@ -52733,6 +52996,11 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/tools)
+"nIw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "nII" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/window/thin/reinforced,
@@ -52831,7 +53099,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "nKx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -53634,9 +53902,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "nTJ" = (
@@ -53982,7 +54248,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "nWQ" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -54381,6 +54647,15 @@
 	icon_state = "platebot"
 	},
 /area/station/engineering/engine)
+"obD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "obJ" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -54971,6 +55246,9 @@
 "olP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "olU" = (
@@ -55836,9 +56114,7 @@
 /obj/item/device/flashlight,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "ozQ" = (
@@ -57181,6 +57457,17 @@
 	icon_state = "whiteyellow"
 	},
 /area/station/medical/chemistry)
+"oRA" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space)
 "oRJ" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8;
@@ -57596,6 +57883,13 @@
 "oXy" = (
 /turf/environment/space,
 /area/station/storage/tech/north)
+"oXD" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
+/area/space)
 "oXJ" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -57704,9 +57998,7 @@
 /area/space)
 "oYT" = (
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "oYU" = (
@@ -57791,9 +58083,7 @@
 	},
 /obj/item/clothing/head/rabbitears,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "oZN" = (
@@ -58358,9 +58648,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "piU" = (
@@ -58372,9 +58660,7 @@
 "pje" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "pjf" = (
@@ -58569,6 +58855,15 @@
 "plf" = (
 /turf/environment/space,
 /area/space)
+"plg" = (
+/obj/structure/barricade/wooden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "plR" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -58799,9 +59094,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/engineering/engine)
 "por" = (
@@ -58841,6 +59134,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
+"poH" = (
+/obj/random/scrap/safe_even,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "poS" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/item/weapon/wrench,
@@ -60004,6 +60302,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"pHs" = (
+/obj/structure/cable/white,
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/space)
 "pHv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -60054,6 +60359,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"pIs" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/brig)
 "pIy" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 9
@@ -60446,9 +60761,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "pNq" = (
@@ -60659,6 +60972,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"pPh" = (
+/obj/structure/table,
+/obj/item/device/assembly/infra{
+	pixel_x = 12
+	},
+/obj/item/weapon/screwdriver,
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "pPn" = (
 /obj/machinery/vending/wallmed2{
 	pixel_y = 30
@@ -60780,9 +61105,7 @@
 "pRd" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "pRg" = (
@@ -61315,9 +61638,7 @@
 "pYk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "pYz" = (
@@ -61394,7 +61715,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "pZK" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -62873,6 +63194,11 @@
 "qsH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -63448,6 +63774,14 @@
 	icon_state = "warnplate"
 	},
 /area/station/maintenance/medbay)
+"qBo" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "qBr" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/briefcase/inflatable{
@@ -63529,7 +63863,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "qCG" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -63683,9 +64017,7 @@
 "qFX" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/space)
 "qGb" = (
@@ -63942,6 +64274,18 @@
 	icon_state = "escapecorner"
 	},
 /area/station/medical/surgery)
+"qIH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/cigbutt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/brig)
 "qIP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	frequency = 1441;
@@ -64279,6 +64623,22 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor,
+/area/space)
+"qNB" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
 /area/space)
 "qNG" = (
 /obj/structure/table,
@@ -65489,6 +65849,15 @@
 	icon_state = "white"
 	},
 /area/station/medical/reception)
+"rdY" = (
+/obj/item/weapon/scrap_lump,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "rej" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65634,9 +66003,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "rgR" = (
@@ -65907,7 +66274,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "rnh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -66420,7 +66787,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "rvf" = (
 /obj/structure/table,
 /obj/item/weapon/kitchenknife/plastic,
@@ -66524,6 +66891,15 @@
 "rwD" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/chargebay)
+"rwL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "rwR" = (
 /obj/machinery/computer/atmoscontrol,
 /turf/simulated/floor{
@@ -66775,9 +67151,7 @@
 "rzJ" = (
 /obj/structure/table,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "rzL" = (
@@ -68368,9 +68742,7 @@
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "rZw" = (
@@ -69047,7 +69419,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "sjC" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -71729,6 +72101,15 @@
 	icon_state = "darkredfull"
 	},
 /area/station/security/lobby)
+"sVe" = (
+/obj/item/stack/rods,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/brig)
 "sVo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -73351,6 +73732,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"tqw" = (
+/obj/item/weapon/scrap_lump,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/maintenance/brig)
 "tqP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -73470,6 +73860,10 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/station/rnd/hallway)
+"tsh" = (
+/obj/structure/table,
+/turf/simulated/floor/plating,
+/area/space)
 "tsu" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -74095,6 +74489,14 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge/captain_quarters)
+"tAz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "tAH" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -74308,9 +74710,7 @@
 "tDi" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/space)
 "tDo" = (
@@ -74548,6 +74948,7 @@
 /area/station/security/brig)
 "tHz" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -75234,7 +75635,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "tRC" = (
 /obj/structure/dresser,
 /turf/simulated/floor{
@@ -75354,6 +75755,11 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"tTc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/refined_scrap,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "tTw" = (
 /obj/machinery/vending/security,
 /obj/machinery/alarm{
@@ -75877,7 +76283,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "uah" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -76785,7 +77191,15 @@
 	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/aisat)
+"ulS" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "ulW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -76831,6 +77245,14 @@
 	},
 /turf/simulated/floor,
 /area/station/gateway)
+"ums" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/brig)
 "umt" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -77241,9 +77663,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "uqZ" = (
@@ -77615,9 +78035,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "uvH" = (
@@ -77802,7 +78220,8 @@
 	pixel_y = -5
 	},
 /obj/structure/curtain/open/bed{
-	pixel_x = 32
+	pixel_x = 32;
+	anchored = 1
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
@@ -78950,6 +79369,11 @@
 	icon_state = "wood_siding1"
 	},
 /area/station/hallway/primary/central)
+"uQs" = (
+/obj/item/weapon/scrap_lump,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "uQA" = (
 /obj/machinery/light,
 /obj/machinery/alarm{
@@ -79136,9 +79560,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "uST" = (
@@ -79171,9 +79593,7 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "uTu" = (
@@ -79274,6 +79694,7 @@
 	name = "North Tech Storage";
 	req_access = list(23)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/space)
 "uUE" = (
@@ -79524,7 +79945,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "uXx" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -79540,7 +79961,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "uXz" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -79872,9 +80293,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "vdZ" = (
@@ -80193,7 +80612,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "vjn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -81152,9 +81571,7 @@
 "vxY" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "vyd" = (
@@ -81704,9 +82121,7 @@
 "vFq" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "vFy" = (
@@ -81836,9 +82251,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/space)
 "vHk" = (
@@ -82184,7 +82597,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "vKA" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -82624,9 +83037,7 @@
 	},
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "vQB" = (
@@ -82637,6 +83048,20 @@
 /obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
+"vQF" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating{
+	dir = 9;
+	icon_state = "warnplate"
+	},
+/area/space)
 "vQH" = (
 /obj/machinery/camera{
 	c_tag = "Central Hallway South";
@@ -83466,6 +83891,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
+"waN" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "wbc" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
@@ -83899,7 +84333,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "who" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -85801,9 +86235,7 @@
 "wJn" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "wJz" = (
@@ -86156,6 +86588,13 @@
 	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
+"wOg" = (
+/obj/effect/decal/cleanable/generic,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "wOl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -86371,9 +86810,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "wTc" = (
@@ -86411,9 +86848,7 @@
 "wTH" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "wTJ" = (
@@ -86606,6 +87041,12 @@
 	icon_state = "floorgrime"
 	},
 /area/station/maintenance/medbay)
+"wWE" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/brig)
 "wWK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
@@ -86680,6 +87121,12 @@
 	icon_state = "warnplate"
 	},
 /area/station/maintenance/science)
+"wXH" = (
+/turf/simulated/floor/plating{
+	dir = 10;
+	icon_state = "warnplate"
+	},
+/area/space)
 "wXM" = (
 /turf/simulated/floor{
 	icon_state = "warnwhite"
@@ -86824,9 +87271,7 @@
 /obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "wZv" = (
@@ -86900,6 +87345,7 @@
 	name = "Fore Starboard Solar Access";
 	req_access = list(10)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/space)
 "xaN" = (
@@ -87468,9 +87914,7 @@
 "xjO" = (
 /obj/structure/closet/toolcloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/science)
 "xjP" = (
@@ -87506,6 +87950,10 @@
 /obj/effect/decal/cleanable/egg_smudge,
 /turf/simulated/floor,
 /area/space)
+"xkM" = (
+/obj/item/stack/sheet/wood,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "xkR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -87633,6 +88081,14 @@
 	icon_state = "wood_siding4"
 	},
 /area/station/hallway/primary/central)
+"xmk" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/brig)
 "xmp" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
@@ -87849,6 +88305,20 @@
 "xoQ" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/captain_quarters)
+"xps" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
 "xpt" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
@@ -88281,9 +88751,7 @@
 	amount = 5
 	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "xut" = (
@@ -89288,9 +89756,7 @@
 "xLd" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/medbay)
 "xLh" = (
@@ -89468,7 +89934,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/station/aisat)
 "xNF" = (
 /obj/item/weapon/caution/cone{
 	pixel_x = -3;
@@ -90132,6 +90598,13 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
 /area/station/storage/primary)
+"xYF" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "xYO" = (
 /obj/structure/flora/rock/jungle,
 /turf/simulated/floor/grass,
@@ -90317,6 +90790,11 @@
 /area/station/medical/cryo)
 "yby" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "Stairs_wide"
@@ -90804,9 +91282,7 @@
 "yiV" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	icon_state = "platebot"
 	},
 /area/station/maintenance/brig)
 "yja" = (
@@ -105179,7 +105655,7 @@ mUq
 rSX
 xcS
 xcS
-xcS
+kDE
 xcS
 rZO
 sHj
@@ -105953,7 +106429,7 @@ gbs
 mUA
 uUs
 hJQ
-aOT
+gNI
 mRW
 kZL
 naE
@@ -106475,7 +106951,7 @@ jXq
 wqE
 wqE
 czc
-vbK
+jqE
 coY
 pyM
 qJH
@@ -106710,10 +107186,10 @@ hNT
 hNT
 hNT
 sDc
-hNT
-hNT
+hCi
+tAz
 bJV
-wYS
+wWE
 mRW
 vdZ
 gUJ
@@ -106732,7 +107208,7 @@ cnu
 wqE
 cfk
 vKL
-vbK
+jqE
 coY
 pyM
 qJH
@@ -106965,9 +107441,9 @@ hNT
 hNT
 hNT
 hNT
-hNT
 sDc
-hNT
+sDc
+tvZ
 sDc
 mRW
 mRW
@@ -107222,12 +107698,12 @@ beG
 beG
 beG
 hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
+jzm
+vQF
+xps
+kTQ
+icF
+wXH
 mRW
 mRW
 psW
@@ -107479,13 +107955,13 @@ beG
 gsQ
 beG
 hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
+sDc
+bAj
+sDc
+tvZ
+sDc
+ctQ
+nAh
 mRW
 dkd
 apT
@@ -107736,13 +108212,13 @@ qQK
 beG
 beG
 hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
+sDc
+ngm
+jqN
+oRA
+qNB
+pHs
+nAh
 mRW
 oit
 iqE
@@ -107993,13 +108469,13 @@ beG
 beG
 beG
 hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
+sDc
+sDc
+sDc
+sDc
+dtV
+sDc
+sDc
 mRW
 mRW
 mRW
@@ -108251,11 +108727,11 @@ hNT
 hNT
 hNT
 hNT
+sDc
+pPh
 hNT
-hNT
-hNT
-hNT
-hNT
+ibB
+sDc
 hNT
 hNT
 hNT
@@ -108282,7 +108758,7 @@ dnf
 jNW
 bkt
 wqE
-dCU
+nmb
 gbs
 wRi
 cmw
@@ -108508,11 +108984,11 @@ hNT
 hNT
 hNT
 hNT
+sDc
+tsh
 hNT
-hNT
-hNT
-hNT
-hNT
+tvZ
+eBN
 hNT
 hNT
 hNT
@@ -108522,13 +108998,13 @@ rfL
 lvj
 eBq
 mRW
-dVb
-gbs
-cbQ
-dVb
-qcu
-dVb
-gbs
+jIN
+dlq
+xYF
+ums
+wOg
+gwf
+rwL
 wqE
 oas
 evu
@@ -108540,7 +109016,7 @@ wqE
 wqE
 wqE
 cuY
-gbs
+nIw
 wRi
 cmw
 gRD
@@ -108766,11 +109242,11 @@ ruI
 ruI
 ruI
 ruI
+fZZ
 hNT
-hNT
-hNT
-hNT
-hNT
+tvZ
+sDc
+sDc
 hNT
 hNT
 mRW
@@ -108779,13 +109255,13 @@ wyo
 iTk
 ikn
 mRW
-gbs
+obD
 gbs
 yba
+nIw
 gbs
 gbs
-gbs
-dVb
+mCv
 wqE
 wqE
 hQN
@@ -109023,13 +109499,13 @@ mot
 tmV
 eHq
 ruI
+tsh
+tsh
+tvZ
 hNT
-hNT
-hNT
-hNT
-hNT
-hNT
-hNT
+sDc
+sDc
+sDc
 mRW
 mRW
 mRW
@@ -109042,8 +109518,8 @@ mRW
 mRW
 mRW
 mRW
-gbs
-gbs
+qIH
+icu
 wqE
 wqE
 wqE
@@ -109282,10 +109758,10 @@ rRv
 tOl
 ruI
 ruI
-hNT
-hNT
-hNT
-hNT
+lpy
+qBo
+sDc
+dLS
 hWg
 kcP
 mRW
@@ -109299,9 +109775,9 @@ mRW
 qJw
 gbs
 mRW
-dVb
-gbs
-dVb
+kpG
+lCy
+hFR
 naX
 mRW
 uvA
@@ -109540,35 +110016,35 @@ mgx
 tod
 ruI
 hNT
-hNT
-hNT
-hNT
-hNT
+lpy
+jzm
+jzm
+jzm
 aDf
 lFm
-wYS
-gbs
+xmk
+aqb
 gWH
 olP
-wYS
+pIs
 nht
 mRW
 tcG
-dVb
+ndT
 mRW
 mRW
-dVb
-gbs
-dVb
-yba
-gbs
-gbs
-dVb
-aKC
-gbs
-gbs
-dVb
-gbs
+qcu
+cIR
+ezf
+fjN
+lCy
+lCy
+sVe
+mTC
+lCy
+dlq
+tqw
+apT
 gbs
 gbs
 mRW
@@ -109815,16 +110291,16 @@ gbs
 nMd
 mHl
 jwN
-gbs
+obD
 nGy
 wkp
-dVb
+mbU
 gbs
 dVb
 qHX
 gKq
-dVb
-gbs
+ikj
+tTc
 gbs
 gbs
 dVb
@@ -109835,7 +110311,7 @@ wYS
 dEM
 gbs
 gbs
-gbs
+nIw
 dVb
 wRi
 wRi
@@ -110053,8 +110529,8 @@ aWu
 ruI
 aEs
 aWu
-hNT
-hNT
+oXD
+lnu
 oMm
 oMm
 oMm
@@ -110072,11 +110548,11 @@ hQO
 apT
 mRW
 lUn
-gbs
+obD
 mRW
 mRW
 dVb
-dVb
+ikj
 cNr
 cNr
 cNr
@@ -110092,7 +110568,7 @@ lUL
 mRW
 dVb
 dVb
-dVb
+mbU
 gbs
 gbs
 gbs
@@ -110329,7 +110805,7 @@ sCr
 sCr
 sCr
 sCr
-gbs
+obD
 tGU
 wZr
 gbs
@@ -110354,7 +110830,7 @@ sDc
 nWM
 sDc
 sDc
-dVb
+jcE
 gbs
 mHl
 cgV
@@ -110586,7 +111062,7 @@ ery
 gSc
 sbr
 sCr
-dVb
+ahO
 wkp
 rZn
 gbs
@@ -110843,7 +111319,7 @@ rtc
 odx
 odx
 sCr
-cbQ
+mHN
 mRW
 mRW
 cbQ
@@ -110879,7 +111355,7 @@ fjj
 tHz
 keN
 xiE
-eXd
+uQs
 keN
 wiX
 agH
@@ -111100,8 +111576,8 @@ vCc
 xht
 odx
 sCr
-gbs
-dVb
+obD
+qcu
 gbs
 dVb
 cNr
@@ -111134,7 +111610,7 @@ sfz
 bdz
 fjj
 wNt
-bqB
+poH
 fjj
 hAI
 keN
@@ -111357,8 +111833,8 @@ ncT
 ncT
 rBn
 sCr
-gbs
-dVb
+bTD
+kpE
 gbs
 cNr
 cNr
@@ -111404,7 +111880,7 @@ agH
 pKS
 nNU
 keN
-fBx
+lAi
 eAA
 liX
 isQ
@@ -111614,8 +112090,8 @@ wdJ
 ncT
 aXh
 sCr
-dVb
-dVb
+rdY
+mbU
 cNr
 cNr
 xFK
@@ -111871,8 +112347,8 @@ wzE
 ncT
 jXX
 sCr
-dVb
-dVb
+ahO
+goZ
 cNr
 vOu
 jfG
@@ -112128,8 +112604,8 @@ qJx
 ncT
 ncT
 sCr
-dVb
-dVb
+waN
+npU
 cNr
 vaB
 eXj
@@ -112385,7 +112861,7 @@ bVm
 tCc
 nFW
 oMm
-dVb
+enj
 dVb
 cNr
 iuX
@@ -112642,8 +113118,8 @@ tZu
 dFm
 mWe
 oMm
-dVb
-dVb
+plg
+xkM
 cNr
 cNr
 uaj
@@ -112899,8 +113375,8 @@ dFm
 xIQ
 ttu
 oMm
-dVb
-dVb
+dZo
+ndT
 dVb
 cNr
 cNr
@@ -113156,7 +113632,7 @@ xIQ
 dFm
 cqS
 oMm
-dVb
+ahO
 dVb
 dVb
 dVb
@@ -113413,7 +113889,7 @@ wtX
 dFm
 bqz
 oMm
-dVb
+ahO
 dVb
 dVb
 dVb
@@ -113670,8 +114146,8 @@ urk
 goa
 goa
 oMm
-dVb
-dVb
+ulS
+hFR
 dVb
 dVb
 rKF
@@ -116710,10 +117186,10 @@ sDc
 sDc
 yjy
 dpt
-fpr
+wfE
 mFg
 kSF
-fpr
+wfE
 hWg
 hNT
 xdP
@@ -119023,7 +119499,7 @@ ouf
 sDc
 sDc
 sDc
-fpr
+wfE
 sDc
 sDc
 tgL
@@ -120310,7 +120786,7 @@ sDc
 sDc
 sDc
 sDc
-fpr
+wfE
 sDc
 hMZ
 sDc
@@ -121078,7 +121554,7 @@ mcl
 hNT
 hNT
 hNT
-fpr
+wfE
 kSF
 hNT
 hNT
@@ -141458,7 +141934,7 @@ tkA
 tkA
 klH
 fwL
-pEu
+klH
 kHU
 goK
 kHU
@@ -141715,7 +142191,7 @@ tkA
 tkA
 ejc
 ulr
-lQP
+ejc
 plf
 kHU
 plf
