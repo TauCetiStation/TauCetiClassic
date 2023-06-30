@@ -27009,7 +27009,7 @@
 "gxz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/door_control{
-	id = "Armory Blast Doors";
+	id = "armouryaccess";
 	name = "Armory Blast Doors";
 	pixel_y = 26;
 	req_access = list(3)
@@ -28856,7 +28856,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door_control{
-	id = "Armory Blast Doors";
+	id = "armouryaccess";
 	name = "Armory Blast Doors";
 	pixel_y = -26
 	},
