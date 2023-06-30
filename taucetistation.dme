@@ -491,6 +491,7 @@
 #include "code\game\area\awaymission_areas.dm"
 #include "code\game\area\centcom_areas.dm"
 #include "code\game\area\custom_areas.dm"
+#include "code\game\area\delta_areas.dm"
 #include "code\game\area\gamma_areas.dm"
 #include "code\game\area\main_areas.dm"
 #include "code\game\area\shuttle_areas.dm"
