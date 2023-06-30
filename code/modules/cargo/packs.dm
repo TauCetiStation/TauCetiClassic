@@ -727,16 +727,22 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 //-----------------ENGINEERING------------------
 //----------------------------------------------
 
-/datum/supply_pack/internals
-	name = "Internals crate"
-	contains = list(/obj/item/clothing/mask/gas/coloured,
+/datum/supply_pack/budget_space_suits
+	name = "Budget space gear"
+	contains = list(/obj/item/clothing/suit/space/cheap,
+					/obj/item/clothing/suit/space/cheap,
+					/obj/item/clothing/suit/space/cheap,
+					/obj/item/clothing/head/helmet/space/cheap,
+					/obj/item/clothing/head/helmet/space/cheap,
+					/obj/item/clothing/head/helmet/space/cheap,
+					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air)
 	crate_type = /obj/structure/closet/crate/internals
-	crate_name = "Internals crate"
+	crate_name = "Space gear crate"
 	group = "Engineering"
 
 /datum/supply_pack/sleeping_agent
