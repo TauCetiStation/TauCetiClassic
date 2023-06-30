@@ -32,3 +32,6 @@
 
 /area/station/civilian/dormitories/service_bedrooms
 	name = "Service Bedrooms"
+
+/area/station/cargo/lobby
+	name = "Cargo Lobby"
