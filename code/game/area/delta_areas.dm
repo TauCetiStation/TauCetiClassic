@@ -33,5 +33,23 @@
 /area/station/civilian/dormitories/service_bedrooms
 	name = "Service Bedrooms"
 
+/area/station/civilian/dormitories/courtroom
+	name = "Courtroom"
+
 /area/station/cargo/lobby
 	name = "Cargo Lobby"
+
+/area/station/security/checkpoint/escape
+	name = "Security Escape Checkpoint"
+
+/area/station/security/checkpoint/escape_custom_desk
+	name = "Custom Escape Desk"
+
+/area/station/security/checkpoint/cargo
+	name = "Security Cargo Checkpoint"
+
+/area/station/security/checkpoint/medbay
+	name = "Security Medbay Checkpoint"
+
+/area/station/security/checkpoint/engi
+	name = "Security Engi Checkpoint"
