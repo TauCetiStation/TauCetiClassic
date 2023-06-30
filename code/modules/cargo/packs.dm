@@ -732,7 +732,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/clothing/mask/gas/coloured,
 					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air)
