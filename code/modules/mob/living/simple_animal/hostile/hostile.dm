@@ -227,7 +227,6 @@
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
-	A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -263,7 +262,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(target)
 	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
-	INVOKE_ASYNC(src, .proc/start_shoot, target)
+	INVOKE_ASYNC(src, PROC_REF(start_shoot), target)
 
 	ranged_cooldown = ranged_cooldown_cap
 

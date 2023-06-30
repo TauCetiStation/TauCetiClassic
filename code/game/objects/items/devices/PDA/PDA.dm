@@ -186,7 +186,7 @@
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
+	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
 
 /obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))
@@ -220,8 +220,8 @@
 			remove_user_slip(user)
 
 /obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
-	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
-	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, PROC_REF(make_user_slip))
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, PROC_REF(remove_user_slip))
 
 /obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
 	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))

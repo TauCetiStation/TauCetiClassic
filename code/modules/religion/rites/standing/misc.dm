@@ -242,7 +242,7 @@
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 		I.override = TRUE
 		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS * divine_power)
+		addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), M), 10 SECONDS * divine_power)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))

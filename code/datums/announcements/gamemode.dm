@@ -12,6 +12,16 @@
 			"Персонал должен предотвратить распространение заражения. " + \
 			"Активирован протокол изоляции экипажа станции."
 
+/datum/announcement/centcomm/blob/half
+	name = "Blob: Dangerous Level Spread"
+	subtitle = "Распространение биоугрозы"
+	sound = "commandreport"
+
+/datum/announcement/centcomm/blob/half/New()
+	message = "Биоугроза продолжает своё распространение на [station_name_ru()]. \
+			Персоналу предписывается любой ценой остановить распространение заражения по станции. \
+			Высылаем через шаттл карго дополнительные средства по борьбе с угрозой."
+
 /datum/announcement/centcomm/blob/critical
 	name = "Blob: Blob Critical Mass"
 	subtitle = "Тревога. Биоугроза"

@@ -26,6 +26,21 @@
 		return
 	var/mob/living/carbon/human/H = target
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
+	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_OBEY, FAKE_IMPLANT_TRAIT))
+		//like clumsy
+		explosion(user.loc, 0, 0, 1, 7)
+		to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")
+		if(isliving(user))
+			var/mob/living/living_user = user
+			living_user.Sleeping(15 SECONDS)
+			if(ishuman(user))
+				var/mob/living/carbon/human/user_human = living_user
+				var/obj/item/organ/external/BP = user_human.get_bodypart(BP_ACTIVE_ARM)
+				if(BP)
+					BP.droplimb(FALSE, FALSE, DROPLIMB_BLUNT)
+		to_chat(target, "<span class='userdanger'>COVER BLOWN!!! THEY KNOW ABOUT US!!!</span>")
+		qdel(src)
+		return
 	if(!H.isimplantedobedience())
 		return
 	H.Stun(5)

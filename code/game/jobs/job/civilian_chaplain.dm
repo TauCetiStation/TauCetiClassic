@@ -18,4 +18,4 @@
 
 /datum/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly && H.mind)
-		INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)
+		INVOKE_ASYNC(global.chaplain_religion, TYPE_PROC_REF(/datum/religion/chaplain, create_by_chaplain), H)

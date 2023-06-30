@@ -165,7 +165,7 @@
 	H.emote("scream")
 	H.update_body()
 
-	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), .proc/battlecry)
+	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), PROC_REF(battlecry))
 
 
 /datum/quality/quirkieish/kamikaze
