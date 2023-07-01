@@ -124,11 +124,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			if("[t_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
 
-	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
+	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
-		var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
+		var/mutable_appearance/bloodsies = mutable_appearance(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
 		bloodsies.color = dirt_overlay.color
 		I.add_overlay(bloodsies)
 

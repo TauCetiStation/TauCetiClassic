@@ -171,6 +171,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
 
+/obj/machinery/smartfridge/secure/bluespace/create_fridge_states()
+	return
+
 /obj/machinery/smartfridge/secure/bluespace/update_icon()
 	if(stat & BROKEN)
 		icon_state = "bluespace-broken"
