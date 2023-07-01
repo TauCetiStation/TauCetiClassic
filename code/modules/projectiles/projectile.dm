@@ -10,7 +10,8 @@
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
-	var/mob/firer = null//Who shot it
+	var/mob/firer = null // who shot it, can be changed after reflecs/redirects
+	var/redirected = FALSE // if projectile was redirected and firer changed
 	var/silenced = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -139,6 +140,7 @@
 	current = starting_loc
 	if(new_firer)
 		firer = new_firer
+		redirected = TRUE
 
 	yo = new_y - starting_loc.y
 	xo = new_x - starting_loc.x
