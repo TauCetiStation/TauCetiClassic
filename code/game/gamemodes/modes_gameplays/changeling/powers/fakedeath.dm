@@ -29,7 +29,7 @@
 		user.fake_death = FALSE
 		return FALSE
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
-	addtimer(CALLBACK(src, PROC_REF(give_revive_ability), user), rand(1200, 2400))
+	addtimer(CALLBACK(src, PROC_REF(give_revive_ability), user), rand(2, 3) MINUTES)
 
 	feedback_add_details("changeling_powers","FD")
 	return TRUE
