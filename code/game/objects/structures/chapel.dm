@@ -339,9 +339,9 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	var/obj/item/weapon/storage/internal/book
 
-	var/image/lectern_overlay
-	var/image/book_overlay
-	var/image/emblem_overlay
+	var/mutable_appearance/lectern_overlay
+	var/mutable_appearance/book_overlay
+	var/mutable_appearance/emblem_overlay
 
 /obj/structure/stool/bed/chair/lectern/atom_init()
 	. = ..()
@@ -359,13 +359,13 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	RegisterSignal(book, list(COMSIG_STORAGE_ENTERED), PROC_REF(add_book))
 	RegisterSignal(book, list(COMSIG_STORAGE_EXITED), PROC_REF(remove_book))
 
-	lectern_overlay = image(icon, "lectern_overlay")
+	lectern_overlay = mutable_appearance(icon, "lectern_overlay")
 	lectern_overlay.layer = INFRONT_MOB_LAYER
 
-	book_overlay = image(icon, "book")
+	book_overlay = mutable_appearance(icon, "book")
 	book_overlay.layer = INFRONT_MOB_LAYER
 
-	emblem_overlay = image(icon, "general")
+	emblem_overlay = mutable_appearance(icon, "general")
 	emblem_overlay.layer = INFRONT_MOB_LAYER
 	lectern_overlay.add_overlay(emblem_overlay)
 	add_overlay(emblem_overlay)
