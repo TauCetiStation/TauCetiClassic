@@ -63,7 +63,6 @@
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -82,7 +81,6 @@
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -98,7 +96,6 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.pierce_protection & BP.body_part) // Is that body part being targeted covered?
 					visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
-					qdel(P)
 					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
@@ -106,7 +103,6 @@
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)

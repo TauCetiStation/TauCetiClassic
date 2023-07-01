@@ -142,16 +142,22 @@
 			return 1
 	return 0
 
-/obj/structure/table/bullet_act(obj/item/projectile/P)
+/obj/structure/table/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(. != PROJECTILE_ALL_OK)
+
+	if(. == PROJECTILE_ABSORBED)
 		return
+
+	// try to shot mobs under table
 	var/list/mobs = list()
-	for(var/mob/Mob in src.loc)
-		mobs += Mob
-	if(mobs.len >= 1)
-		var/mob/mob = pick(mobs)
-		. = mob.bullet_act(P, P.def_zone)
+	for(var/mob/M in get_turf(loc)) // todo: check only for crawling/lying
+		if(M in Proj.permutated)
+			continue
+		mobs += M
+
+	if(length(mobs))
+		var/mob/M = pick(mobs)
+		M.bullet_act(Proj, def_zone)
 
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)

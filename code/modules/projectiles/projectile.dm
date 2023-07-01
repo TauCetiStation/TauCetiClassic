@@ -1,3 +1,5 @@
+// keep in mind that projectile is mutable object and should not be used to shot multiple objects at the same time
+
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -184,15 +186,19 @@
 			forcedodge = PROJECTILE_FORCE_MISS
 
 	if(!forcedodge)
-		if(ismob(A))
+		if(istype(A,/turf) && A.density) // if it's a wall - try to pick stuck mob first to prevent abuses (why? it's better to prevent mobs in the walls at all)
+			for(var/mob/ML in A)
+				A = ML
+				// todo: exeption?
+				break
+
+		if(ismob(A)) // if it's a mob - pick one random from turf, not the one with biggest layer. Prevents some abuses with crawl.
 			var/list/mobs = list()
 			for(var/mob/ML in get_turf(A.loc))
 				mobs += ML
-			if(mobs.len >= 2)
-				var/mob/mob = pick(mobs)
-				forcedodge = mob.bullet_act(src, def_zone)
-		else
-			forcedodge = A.bullet_act(src, def_zone) // searches for return value
+			A = pick(mobs)
+
+		forcedodge = A.bullet_act(src, def_zone) // finally try to shot something
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
@@ -207,10 +213,6 @@
 		permutated.Add(A)
 
 		return FALSE
-
-	if(istype(A,/turf))
-		for(var/mob/Mob in A)
-			Mob.bullet_act(src, def_zone)
 
 	density = FALSE
 	invisibility = 101
@@ -235,7 +237,7 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
-			bullet_act(src)
+			bullet_act(src) //for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
