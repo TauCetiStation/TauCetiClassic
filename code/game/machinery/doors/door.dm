@@ -372,7 +372,7 @@ var/global/list/wedge_image_cache = list()
 				density = TRUE
 				wedging = TRUE
 
-				INVOKE_ASYNC(src, .proc/crush_wedge_animation, I)
+				INVOKE_ASYNC(src, PROC_REF(crush_wedge_animation), I)
 				return
 
 	if(close_checks(forced))
@@ -436,7 +436,7 @@ var/global/list/wedge_image_cache = list()
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
-	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/on_wedge_destroy)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), PROC_REF(on_wedge_destroy))
 
 /obj/machinery/door/proc/try_wedge_item(mob/living/user)
 	if(!can_wedge_items)

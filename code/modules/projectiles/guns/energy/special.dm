@@ -534,7 +534,7 @@
 
 /obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
-	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -614,10 +614,10 @@
 		return
 
 	current_target = target
-	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, .proc/LoseTarget)
+	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, PROC_REF(LoseTarget))
 	active = TRUE
 	current_beam = new(user, current_target, time = 6000, beam_icon_state = beam_state, btype = /obj/effect/ebeam/medical)
-	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+	INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
 	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
 

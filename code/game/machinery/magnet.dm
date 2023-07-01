@@ -34,7 +34,7 @@
 	hide(T.intact)
 	center = T
 	radio_controller.add_object(src, freq, RADIO_MAGNETS)
-	INVOKE_ASYNC(src, .proc/magnetic_process)
+	INVOKE_ASYNC(src, PROC_REF(magnetic_process))
 
 	// update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)

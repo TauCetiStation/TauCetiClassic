@@ -56,8 +56,8 @@
 	)
 
 /datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
-	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
+	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
+	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
 
 /datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/security))
@@ -78,8 +78,8 @@
 	)
 
 /datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
-	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
+	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
+	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
 
 /datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/bridge))
@@ -302,3 +302,11 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
 	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+
+/datum/quality/negativeish/proudandwalking
+	name = "Proud and Walking"
+	desc = "Рождённый ходить ползать не может. Ты слишком горд, чтобы собирать животом пыль с полов станции."
+	requirement = "Нет."
+
+/datum/quality/negativeish/proudandwalking/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_NO_CRAWL, QUALITY_TRAIT)

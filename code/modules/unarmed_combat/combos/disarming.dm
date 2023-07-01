@@ -408,7 +408,7 @@
 							event_log(new_mover, attacker, "Forced Dropkick Stun")
 
 			for(var/mob/living/L in cur_movers)
-				INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
+				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(_step), L, dropkick_dir)
 
 			// Since they were the one to push.
 			if(!do_combo(victim, attacker, attacker.movement_delay() * 0.5))

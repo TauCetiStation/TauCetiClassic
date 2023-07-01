@@ -196,7 +196,7 @@
 					if(!co.crit_fail)
 						part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, /proc/cmp_rped_sort)
+				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
@@ -551,6 +551,16 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/smartfridge/secure/bluespace
+	name = "circuit board (Bluespace Storage)"
+	build_path = /obj/machinery/smartfridge/secure/bluespace
+	board_type = "machine"
+	origin_tech = "programming=4;engineering=4;bluespace=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace = 3,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "circuit board (Monkey Recycler)"

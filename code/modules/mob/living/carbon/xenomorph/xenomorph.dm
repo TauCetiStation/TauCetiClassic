@@ -34,6 +34,8 @@
 
 	var/list/alien_spells = list()
 
+	show_examine_log = FALSE
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language(LANGUAGE_XENOMORPH)

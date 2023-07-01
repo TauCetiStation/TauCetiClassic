@@ -337,7 +337,7 @@
 	for(var/datum/language/L in M.languages)
 		add_language(L.name)
 
-	addtimer(CALLBACK(src, .proc/update_progression), 25)
+	addtimer(CALLBACK(src, PROC_REF(update_progression)), 25)
 
 /mob/living/carbon/monkey/diona/proc/update_progression()
 	if(!donors.len)

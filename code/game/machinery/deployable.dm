@@ -39,7 +39,7 @@ for reference:
 	access_cargo = 31
 	access_construction = 32
 	access_chemistry = 33
-	access_cargo_bot = 34
+	access_cargoshop = 34
 	access_hydroponics = 35
 	access_manufacturing = 36
 	access_library = 37

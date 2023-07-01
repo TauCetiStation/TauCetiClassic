@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
 		//shuttle movement
-	var/at_station = 0
+	var/at_station = TRUE
 	var/movetime = 1200
 	var/moving = 0
 	var/eta_timeofday
@@ -71,6 +71,9 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
+
+	if(!exports_list.len)
+		setupExports()
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
@@ -294,7 +297,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod2")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge, "pod2")
+					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/civilian/gym, "pod2")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -305,7 +308,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod3")
-					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
+					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig || /area/station/security/prison, "pod3")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -316,7 +319,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = WEST
 					start_location.move_contents_to(end_location, null, EAST)
 					undock_act(start_location, "pod4")
-					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
+					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig || /area/station/hallway/secondary/entry, "pod4")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
