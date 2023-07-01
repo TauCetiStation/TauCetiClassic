@@ -124,7 +124,6 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 	update_mood_icon()
-	update_mood_client_color()
 
 /datum/component/mood/proc/update_mood_icon()
 	if(!screen_obj)
@@ -177,30 +176,6 @@
 			screen_obj.icon_state = "[event.special_screen_obj]"
 			break
 
-/datum/component/mood/proc/update_mood_client_color()
-	var/mob/living/carbon/human/H = parent
-	if(!istype(H))
-		return
-
-	H.moody_color = null
-
-	if(H.stat == DEAD)
-		return
-
-	if(spirit_level < 4)
-		return
-
-	var/dissapointment
-	switch(spirit_level)
-		if(6)
-			dissapointment = 0.8
-		if(5)
-			dissapointment = 0.4
-		if(4)
-			dissapointment = 0.2
-
-	H.moody_color = SADNESS_COLOR(dissapointment)
-
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
 	var/mob/living/moody_fellow = parent
@@ -248,31 +223,24 @@
 	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_additive_speed_modifier = 1.0
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_additive_speed_modifier = 0.5
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_additive_speed_modifier = 0.25
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
-	update_mood_client_color()
 
 	if(spirit_level > prev_spirit_level)
 		to_chat(parent, "<span class='warning'>Ваше настроение ухудшилось.</span>")
@@ -340,7 +308,6 @@
 	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(hud_click))
 
 	update_mood_icon()
-	update_mood_client_color()
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER
