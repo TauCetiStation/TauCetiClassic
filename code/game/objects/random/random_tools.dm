@@ -24,7 +24,7 @@
 		return pick(\
 						prob(5);/obj/item/device/t_scanner,\
 						prob(2);/obj/item/device/radio,\
-						prob(5);/obj/item/device/analyzer\
+						prob(5);/obj/item/device/analyzer/default\
 					)
 
 

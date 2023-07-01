@@ -114,7 +114,7 @@
 /mob/living/silicon/robot/proc/statelaws() // -- TLE
 //	set category = "AI Commands"
 //	set name = "State Laws"
-	say("Current Active Laws:")
+	say("Список действующих законов:")
 	//laws_sanity_check()
 	//laws.show_laws(world)
 	var/number = 1

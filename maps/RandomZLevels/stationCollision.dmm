@@ -2189,7 +2189,7 @@
 /area/awaymission/stationcollision/research)
 "fC" = (
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/device/mass_spectrometer{
 	pixel_x = 5;
 	pixel_y = 5

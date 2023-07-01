@@ -75,7 +75,7 @@
 		if("Holopad") prefix = ":h "
 		else prefix = ""
 
-	if(say("[prefix]Current Active Laws:") != 1)
+	if(say("[prefix]Список действующих законов:") != 1)
 		return
 
 	//laws_sanity_check()

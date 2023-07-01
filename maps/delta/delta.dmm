@@ -8632,7 +8632,7 @@
 /area/shuttle/mining/station)
 "bTE" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/weapon/wrench,
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
@@ -15277,7 +15277,7 @@
 /area/station/maintenance/medbay)
 "dDW" = (
 /obj/structure/rack,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "dEa" = (
@@ -23654,7 +23654,7 @@
 "fKV" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
@@ -29134,7 +29134,7 @@
 /area/station/civilian/dormitories)
 "hdU" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /turf/simulated/floor,
 /area/station/storage/tech)
 "hdV" = (
@@ -57252,7 +57252,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/module/power_control,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -70363,7 +70363,7 @@
 "roG" = (
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/signaler,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -96282,7 +96282,7 @@
 "xXs" = (
 /obj/structure/rack,
 /obj/item/weapon/wrench,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},

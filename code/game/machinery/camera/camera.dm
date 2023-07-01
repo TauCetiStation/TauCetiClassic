@@ -155,7 +155,7 @@
 	else if(iswelding(W) && wires.is_deconstructable())
 		if(weld(W, user))
 			deconstruct(TRUE)
-	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
+	else if(istype(W, /obj/item/device/analyzer/default) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)

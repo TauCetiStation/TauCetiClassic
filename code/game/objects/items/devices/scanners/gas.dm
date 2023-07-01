@@ -30,6 +30,18 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	var/advanced_mode = 0
 	COOLDOWN_DECLARE(sound_play_cd)
 
+/obj/item/device/analyzer/cyborg
+	desc = "A hand-held environmental scanner which reports current gas levels and radiation."
+	name = "analyzer"
+	icon_state = "atmos"
+	item_state = "multitool"
+
+/obj/item/device/analyzer/default
+	desc = "A hand-held environmental scanner which reports current gas levels and radiation."
+	name = "analyzer"
+	icon_state = "atmos"
+	item_state = "multitool"
+
 /obj/item/device/analyzer/verb/verbosity(mob/user as mob)
 	set name = "Toggle Advanced Gas Analysis"
 	set category = "Object"

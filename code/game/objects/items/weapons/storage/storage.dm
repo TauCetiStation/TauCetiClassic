@@ -330,10 +330,10 @@
 /obj/item/weapon/storage/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
 		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
-		return //Robots can't interact with storage items. FALSE
+		return TRUE //Robots can't interact with storage items. FALSE //Nani?
 
 	if(!can_be_inserted(I))
-		return FALSE
+		return TRUE
 
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE

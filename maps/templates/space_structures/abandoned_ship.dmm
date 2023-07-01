@@ -428,7 +428,7 @@
 /area/space)
 "bn" = (
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor{
 	icon_state = "dark"
