@@ -49,6 +49,24 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedblueshield()
+	for(var/obj/item/weapon/implant/blueshield/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/isimplantedchem()
+	for(var/obj/item/weapon/implant/chem/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/isimplantedtrack()
+	for(var/obj/item/weapon/implant/tracking/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
@@ -312,13 +330,27 @@
 
 	return jointext(message_list, " ")
 
-/proc/turret_talk(message)
+/proc/turret_talk(message, species)
+	if(!(species in tourette_bad_words))
+		return message
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
 		var/insertpos = rand(1, message_list.len)
-		message_list[insertpos] = pick(tourette_bad_words)
+		message_list[insertpos] = pick(tourette_bad_words[species])
 	return jointext(message_list, " ")
+
+var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА", "БУРЯ", "ВОЙНА", "ПУТЬ НА КОТОРОМ НЕ СНОСИТЬ ГОЛОВЫ", "КОПЬЕ", "УБИТЬ", "КРОВЬ",  "ЧИСТИЛИЩЕ", "МУЧИТЕЛЬНАЯ БОЛЬ", "МЯСО", "БОЙНЯ", "ПЫТКИ", "КРОВАВЫЙ ДОЖДЬ", "РАЗРЫВАЮЩИЕСЯ ГЛАЗНЫЕ ЯБЛОКИ", "ХАОС", "ВЗРЫВНОЕ УСТРОЙСТВО", "ДЕМОНИЧЕСКИЕ ВРАТА", "ЛАВА", "СМЕРТЬ", "РАЗОРВАННОЕ СЕРДЦЕ", "МУЧЕНИЯ", "СЖЕЧЬ", "РВОТА", "ВЫРВАННЫЙ ЯЗЫК", "ЗАБВЕНИЕ", "БЕЗЫСХОДНОСТЬ", "СУИЦИД", "БЕЗДНА", "ОБЕЗГЛАВЛИВАНИЕ", "РАЗРЫВ", "ДЫХАНИЕ СМЕРТИ", "УЖАСНАЯ УЧАСТЬ", "РАЗРУШЕНИЯ", "ГЛАЗНИЦА")
+/proc/cursed_talk(message)
+	var/text = ""
+	var/words = round(length_char(message)/6)
+	for(var/i in 1 to max(1, words))
+		text += pick(cursed_words)
+		if(i != words)
+			text += " "
+
+	return text
+
 
 #define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
@@ -545,3 +577,52 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 
 /mob/proc/become_not_busy(_hand = 0)
 	busy_with_action = FALSE
+
+/**
+ * Fancy notifications for ghosts
+ *
+ * The kitchen sink of notification procs
+ *
+ * Arguments:
+ * * message
+ * * ghost_sound sound to play
+ * * enter_link Href link to enter the ghost role being notified for
+ * * source The source of the notification
+ * * alert_overlay The alert overlay to show in the alert message
+ * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
+ * * header The header of the notifiaction
+ * * notify_volume How loud the sound should be to spook the user
+ */
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, header, notify_volume = 100) //Easy notification of ghosts.
+	for(var/mob/dead/observer/ghost as anything in observer_list)
+		var/orbit_link
+		if(source && action == NOTIFY_ORBIT)
+			orbit_link = " <span class='ghostalert'>[FOLLOW_LINK(ghost, source)]</span>"
+		to_chat(ghost, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
+		if(ghost_sound)
+			playsound(ghost, ghost_sound, VOL_EFFECTS_MASTER, notify_volume)
+		if(!source)
+			continue
+		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action, new_master=source)
+		if(!alert)
+			continue
+		if (header)
+			alert.name = header
+		alert.desc = message
+		alert.action = action
+		alert.target = source
+		if(!alert_overlay)
+			alert_overlay = new(source)
+			var/icon/size_check = icon(source.icon, source.icon_state)
+			var/scale = 1
+			var/width = size_check.Width()
+			var/height = size_check.Height()
+			if(width > world.icon_size || height > world.icon_size)
+				if(width >= height)
+					scale = world.icon_size / width
+				else
+					scale = world.icon_size / height
+			alert_overlay.transform = alert_overlay.transform.Scale(scale)
+			alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.plane = ABOVE_HUD_PLANE
+		alert.add_overlay(alert_overlay)

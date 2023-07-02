@@ -6,6 +6,7 @@
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -42,7 +43,7 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/tagger))
+	if(istagger(W))
 		var/obj/item/device/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -69,6 +70,7 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -104,7 +106,7 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -145,6 +147,8 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
+	if(O.flags_2 & CANT_BE_INSERTED)
+		return
 	if(O.anchored)
 		return
 	if(O in user)
@@ -163,18 +167,14 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			if(P.w_class <= SIZE_MINUSCULE)
-				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= SIZE_TINY)
-				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= SIZE_SMALL)
-				P.icon_state = "deliverycrate3"
-			else
-				P.icon_state = "deliverycrate4"
-			I.loc = P
 			var/i = round(I.w_class)
-			if(i in list(1,2,3,4,5))
-				P.icon_state = "deliverycrate[i]"
+			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+				if(istype(I, /obj/item/pizzabox))
+					var/obj/item/pizzabox/B = I
+					P.icon_state = "deliverypizza[length(B.boxes)]"
+				else
+					P.icon_state = "deliverycrate[i]"
+			I.loc = P
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
 			add_fingerprint(usr)
@@ -217,7 +217,8 @@
 /obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, ценников и бирок."
-	icon_state = "dest_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler_shop"
 	var/currTag = 0
 
 	w_class = SIZE_TINY
@@ -232,7 +233,7 @@
 	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
 
 	var/lot_description = "Это что-то"
-	var/lot_account_number = 111111
+	var/lot_account_number = null
 	var/lot_category = "Разное"
 	var/lot_price = 0
 
@@ -241,10 +242,30 @@
 
 	var/label = ""
 
+	var/next_instruction = 0
+
+/obj/item/device/tagger/atom_init()
+	. = ..()
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+/obj/item/device/tagger/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return ..()
+
+/obj/item/device/tagger/proc/on_round_start(datum/source)
+	SIGNAL_HANDLER
+	lot_account_number = global.cargo_account.account_number
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/item/device/tagger/shop/on_round_start(datum/source)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
 /obj/item/device/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
-	icon_state = "shop_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler0"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
@@ -269,8 +290,8 @@
 			else
 				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
 			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
-			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
 			else
@@ -330,18 +351,58 @@
 	openwindow(user)
 	return
 
+/obj/item/device/tagger/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && isturf(src.loc))
+		var/obj/item/weapon/wrench/Tool = W
+		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			user.SetNextMove(CLICK_CD_INTERACT)
+			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
+			if(!anchored)
+				if(!Table)
+					to_chat(user, "<span class='warning'>Маркировщик можно прикрутить только к столу.</span>")
+					return
+				to_chat(user, "<span class='warning'>Маркировщик прикручен.</span>")
+				anchored = TRUE
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
+				return
+			to_chat(user, "<span class='notice'>Маркировщик откручен.</span>")
+			anchored = FALSE
+			UnregisterSignal(Table, list(COMSIG_PARENT_QDELETING))
+	else if(istagger(W))
+		return ..()
+	else if(can_apply_action(W, user))
+		get_action(W, user)
+
+/obj/item/device/tagger/proc/unwrench()
+	anchored = FALSE
+
 /obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
-		return
-	if(target.anchored)
-		return
-	if(user in target)
-		return
-	if(target == loc)
-		return
 
+	if(can_apply_action(target, user))
+		get_action(target, user)
+
+/obj/item/device/tagger/proc/can_apply_action(obj/target, mob/user)
+	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
+		return FALSE
+	if(target.anchored)
+		return FALSE
+	if(user in target)
+		return FALSE
+	if(target == loc)
+		return FALSE
+	if(target.flags & ABSTRACT)
+		return FALSE
+	if(isitem(target))
+		var/obj/item/I = target
+		if(I.abstract)
+			return FALSE
+
+	return TRUE
+
+/obj/item/device/tagger/proc/get_action(obj/target, mob/user)
 	switch(modes[mode])
 		if("Метка")
 			return
@@ -358,6 +419,16 @@
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
+	if((src in user) && (user.get_inactive_hand() == target || user.get_active_hand() == target))
+		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
+		if(user.get_active_hand() != src && user.get_active_hand() != target && user.get_inactive_hand() != src && user.get_inactive_hand() != target)
+			return
+		if(user.incapacitated())
+			return
+
+		if(new_price && isnum(new_price) && new_price >= 0)
+			lot_price = min(new_price, 5000)
+
 	user.visible_message("<span class='notice'>[user] adds a price tag to [target].</span>", \
 						 "<span class='notice'>You added a price tag to [target].</span>")
 
@@ -367,10 +438,24 @@
 	if(autocategory)
 		lot_category = get_category(target)
 
+	if(!lot_account_number)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID)
+				lot_account_number = ID.associated_account_number
+
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
-	target.verbs += /obj/verb/remove_price_tag
+	target.verbs += /obj/proc/remove_price_tag
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
+	if(next_instruction < world.time)
+		next_instruction = world.time + 30 SECONDS
+		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+
+	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
+		openwindow(user)
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
@@ -441,39 +526,41 @@
 	return
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
-	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))	return
+	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))
+		return
 	switch(dir)
 		if(NORTH)
-			if(AM.loc.y != src.loc.y+1) return
+			if(AM.loc.y != src.loc.y+1)
+				return
 		if(EAST)
-			if(AM.loc.x != src.loc.x+1) return
+			if(AM.loc.x != src.loc.x+1)
+				return
 		if(SOUTH)
-			if(AM.loc.y != src.loc.y-1) return
+			if(AM.loc.y != src.loc.y-1)
+				return
 		if(WEST)
-			if(AM.loc.x != src.loc.x-1) return
+			if(AM.loc.x != src.loc.x-1)
+				return
 
-	if(istype(AM, /obj))
-		var/obj/O = AM
-		O.loc = src
-	else if(istype(AM, /mob))
-		var/mob/M = AM
-		M.loc = src
-	flush()
+	if(istype(AM, /obj) || istype(AM, /mob)) // istype(AM) ?
+		AM.forceMove(src)
+		flush()
 
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1
 	flick("intake-closing", src)
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-												// travels through the pipes.
-	air_contents = new()		// new empty gas resv.
 
 	sleep(10)
 	playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	sleep(5) // wait for animation to finish
 
-	H.init(src)	// copy the contents of disposer to holder
+	var/obj/structure/disposalholder/H = new(null, contents, new /datum/gas_mixture)
 
-	H.start(src) // start the holder processing movement
+	if(!trunk)
+		expel(H)
+		return
+
+	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -486,7 +573,7 @@
 	if(!I || !user)
 		return
 
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(c_mode==0)
 			c_mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -497,7 +584,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelder(I) && c_mode==1 && !user.is_busy())
+	else if(iswelding(I) && c_mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")

@@ -56,8 +56,8 @@
 	)
 
 /datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
-	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
+	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
+	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
 
 /datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/security))
@@ -78,8 +78,8 @@
 	)
 
 /datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
-	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
+	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
+	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
 
 /datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/bridge))
@@ -216,8 +216,7 @@
 	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
-	H.mutations.Add(CLUMSY)
-
+	ADD_TRAIT(H, TRAIT_CLUMSY, QUALITY_TRAIT)
 
 var/global/list/allergen_reagents_list
 /datum/quality/negativeish/allergies
@@ -287,3 +286,27 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
 	H.ChangeToHusk()
+
+/datum/quality/negativeish/delicate
+	name = "Quality Food Enjoyer"
+	desc = "Ты всегда кушал только самую лучшую еду шеф-поваров и не собираешься останавливаться."
+	requirement = "Нет."
+
+/datum/quality/negativeish/delicate/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_PICKY_EATER, QUALITY_TRAIT)
+
+/datum/quality/negativeish/greatappetite
+	name = "Great Appetite"
+	desc = "У тебя большой аппетит, что всегда приводило тебя к неприятностям."
+	requirement = "Нет."
+
+/datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
+	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+
+/datum/quality/negativeish/proudandwalking
+	name = "Proud and Walking"
+	desc = "Рождённый ходить ползать не может. Ты слишком горд, чтобы собирать животом пыль с полов станции."
+	requirement = "Нет."
+
+/datum/quality/negativeish/proudandwalking/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_NO_CRAWL, QUALITY_TRAIT)

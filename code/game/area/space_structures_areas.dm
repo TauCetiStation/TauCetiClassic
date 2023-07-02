@@ -212,3 +212,139 @@
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = TRUE
+
+// Old Station
+/area/space_structures/old_station
+	name = "OldStation"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+
+/area/space_structures/old_station/Entered()
+	. = ..()
+	for(var/obj/effect/spawner/mob_spawn/alien/M in src)
+		M.creatMob()
+
+/area/space_structures/old_station/central
+	name = "Central Station"
+	icon_state = "hallC"
+	sound_environment = SOUND_AREA_LARGE_METALLIC
+	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
+
+/area/space_structures/old_station/central/kitchen
+	name = "Kitchen"
+	icon_state = "kitchen"
+
+/area/space_structures/old_station/central/hydro
+	name = "Hydroponic"
+	icon_state = "hydro"
+
+/area/space_structures/old_station/central/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/area/space_structures/old_station/central/brig
+	name = "Brig"
+	icon_state = "brig"
+
+/area/space_structures/old_station/central/solars_c
+	name = "Solars control room"
+	icon_state = "yellow"
+
+
+
+/area/space_structures/old_station/left
+	name = "Left Station"
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+	is_force_ambience = TRUE
+	ambience = list(
+		'sound/ambience/space_1.ogg',
+		'sound/ambience/space_2.ogg',
+		'sound/ambience/space_3.ogg',
+		'sound/ambience/space_4.ogg',
+		'sound/ambience/space_5.ogg',
+		'sound/ambience/space_6.ogg',
+		'sound/ambience/space_7.ogg',
+		'sound/ambience/space_8.ogg'
+	)
+
+/area/space_structures/old_station/left/med
+	name = "Medbay"
+	icon_state = "medbay"
+	ambience = list('sound/ambience/morgue_1.ogg', 'sound/ambience/morgue_2.ogg', 'sound/ambience/morgue_3.ogg')
+
+
+
+/area/space_structures/old_station/right
+	name = "Right Station"
+	icon_state = "scilab"
+	sound_environment = SOUND_AREA_LARGE_METALLIC
+	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
+
+/area/space_structures/old_station/right/rnd
+	name = "Research and Development"
+	icon_state = "research"
+
+/area/space_structures/old_station/satellite
+	name = "Satellite"
+	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+
+/area/space_structures/old_station/warehouse
+	name = "Warehouse"
+	icon_state = "purple"
+
+/area/space_structures/old_station/armory
+	name = "Armory"
+	icon_state = "purple"
+
+/area/space_structures/carp_space
+	name = "dangerous space"
+	icon_state = "space_carps"
+	var/static/list/mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/carp = 5,
+		/mob/living/simple_animal/hostile/carp/megacarp = 1
+	)
+
+/area/space_structures/carp_space/atom_init()
+	. = ..()
+	InitSpawnArea()
+
+// Creates the spawn area component for this area.
+/area/space_structures/carp_space/proc/InitSpawnArea()
+	// 8 is 1 more than client's view. So mobs spawn right after the view's border
+	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
+	AddComponent(/datum/component/spawn_area,
+		"space",
+		CALLBACK(src, PROC_REF(spawnmob)),
+		CALLBACK(src, PROC_REF(despawn)),
+		CALLBACK(src, PROC_REF(checkspawn)),
+		8,
+		16,
+		1 MINUTE,
+		1 MINUTE,
+	)
+
+/area/space_structures/carp_space/proc/spawnmob(turf/T)
+	var/to_spawn = pickweight(mob_spawn_list)
+	var/atom/A = new to_spawn(T)
+	if(A)
+		return list(A)
+	return null
+
+
+/area/space_structures/carp_space/proc/despawn(atom/movable/instance)
+	var/mob/M = instance
+	if(M.stat == DEAD)
+		return
+	qdel(M)
+
+/area/space_structures/carp_space/proc/checkspawn(turf/T)
+	if(!isspaceturf(T))
+		return FALSE
+	return T.is_mob_placeable(null)

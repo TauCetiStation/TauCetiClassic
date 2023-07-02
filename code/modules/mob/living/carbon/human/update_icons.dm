@@ -124,29 +124,19 @@ Please contact me on #coderbus IRC. ~Carn x
 			if("[t_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
 
-	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
+	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
-		var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
+		var/mutable_appearance/bloodsies = mutable_appearance(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
 		bloodsies.color = dirt_overlay.color
 		I.add_overlay(bloodsies)
 
 	return I
 
 /mob/living/carbon/human
-	var/list/overlays_standing[TOTAL_LAYERS]
+	overlays_standing = new /list(TOTAL_LAYERS)
 	var/list/overlays_damage[TOTAL_LIMB_LAYERS]
-
-/mob/living/carbon/human/proc/apply_overlay(cache_index)
-	var/image/I = overlays_standing[cache_index]
-	if(I)
-		add_overlay(I)
-
-/mob/living/carbon/human/proc/remove_overlay(cache_index)
-	if(overlays_standing[cache_index])
-		cut_overlay(overlays_standing[cache_index])
-		overlays_standing[cache_index] = null
 
 /mob/living/carbon/human/proc/apply_damage_overlay(cache_index)
 	var/image/I = overlays_damage[cache_index]
@@ -178,7 +168,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
-	remove_overlay(BODY_LAYER)
+	remove_standing_overlay(BODY_LAYER)
 	var/list/standing = list()
 
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
@@ -194,6 +184,19 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
 		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
 		standing += tatoo
+
+	if(species.name == UNATHI && !(HUSK in mutations))
+		var/obj/item/organ/external/Chest = bodyparts_by_name[BP_CHEST]
+		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]", -BODY_LAYER)
+		belly.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+		standing += belly
+
+		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
+		if(Head && !Head.is_stump)
+			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -FACEMASK_LAYER)
+			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+			standing += jaw
+
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
@@ -213,14 +216,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	for(var/image/I in standing)
 		I = update_height(I)
 	overlays_standing[BODY_LAYER] = standing
-	apply_overlay(BODY_LAYER)
+	apply_standing_overlay(BODY_LAYER)
 
 
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
 	//Reset our hair
-	remove_overlay(HAIR_LAYER)
+	remove_standing_overlay(HAIR_LAYER)
 
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
@@ -270,11 +273,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			I = human_update_offset(I, TRUE)
 		overlays_standing[HAIR_LAYER]	= standing
 
-	apply_overlay(HAIR_LAYER)
+	apply_standing_overlay(HAIR_LAYER)
 
 
 /mob/living/carbon/human/update_mutations()
-	remove_overlay(MUTATIONS_LAYER)
+	remove_standing_overlay(MUTATIONS_LAYER)
 
 	var/list/standing = list()
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
@@ -307,23 +310,23 @@ Please contact me on #coderbus IRC. ~Carn x
 			I = update_height(I)
 		overlays_standing[MUTATIONS_LAYER]	= standing
 
-	apply_overlay(MUTATIONS_LAYER)
+	apply_standing_overlay(MUTATIONS_LAYER)
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted()
-	remove_overlay(TARGETED_LAYER)
+	remove_standing_overlay(TARGETED_LAYER)
 
 	if(targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= image("icon"=target_locked, "layer"=-TARGETED_LAYER)
 	else if (!targeted_by && target_locked)
 		qdel(target_locked)
 
-	apply_overlay(TARGETED_LAYER)
+	apply_standing_overlay(TARGETED_LAYER)
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
-	remove_overlay(FIRE_LOWER_LAYER)
-	remove_overlay(FIRE_UPPER_LAYER)
+	remove_standing_overlay(FIRE_LOWER_LAYER)
+	remove_standing_overlay(FIRE_UPPER_LAYER)
 
 	if(on_fire)
 		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
@@ -333,8 +336,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[FIRE_LOWER_LAYER] = under
 		overlays_standing[FIRE_UPPER_LAYER] = over
 
-	apply_overlay(FIRE_LOWER_LAYER)
-	apply_overlay(FIRE_UPPER_LAYER)
+	apply_standing_overlay(FIRE_LOWER_LAYER)
+	apply_standing_overlay(FIRE_UPPER_LAYER)
 
 
 /* --------------------------------------- */
@@ -377,11 +380,11 @@ Please contact me on #coderbus IRC. ~Carn x
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 /mob/living/carbon/human/update_inv_w_uniform()
-	remove_overlay(UNIFORM_LAYER)
+	remove_standing_overlay(UNIFORM_LAYER)
 
 	var/default_path = 'icons/mob/uniform.dmi'
 	var/uniform_sheet = SPRITE_SHEET_UNIFORM
-	if(istype(w_uniform, /obj/item/clothing/under))
+	if(isunder(w_uniform))
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
@@ -418,11 +421,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
 			drop_from_inventory(thing)
 
-	apply_overlay(UNIFORM_LAYER)
+	apply_standing_overlay(UNIFORM_LAYER)
 
 
 /mob/living/carbon/human/update_inv_wear_id()
-	remove_overlay(ID_LAYER)
+	remove_standing_overlay(ID_LAYER)
 	if(wear_id)
 		wear_id.screen_loc = ui_id
 		if(client && hud_used)
@@ -431,10 +434,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[ID_LAYER]	= standing
 
-	apply_overlay(ID_LAYER)
+	apply_standing_overlay(ID_LAYER)
 
 /mob/living/carbon/human/update_inv_gloves()
-	remove_overlay(GLOVES_LAYER)
+	remove_standing_overlay(GLOVES_LAYER)
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
@@ -451,11 +454,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			overlays_standing[GLOVES_LAYER]	= bloodsies
 
-	apply_overlay(GLOVES_LAYER)
+	apply_standing_overlay(GLOVES_LAYER)
 
 
 /mob/living/carbon/human/update_inv_glasses()
-	remove_overlay(GLASSES_LAYER)
+	remove_standing_overlay(GLASSES_LAYER)
 
 	if(glasses)
 		if(client && hud_used && hud_used.hud_shown)
@@ -467,11 +470,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[GLASSES_LAYER] = standing
 
-	apply_overlay(GLASSES_LAYER)
+	apply_standing_overlay(GLASSES_LAYER)
 
 
 /mob/living/carbon/human/update_inv_ears()
-	remove_overlay(EARS_LAYER)
+	remove_standing_overlay(EARS_LAYER)
 
 	if(l_ear || r_ear)
 		if(l_ear)
@@ -493,11 +496,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing = human_update_offset(standing, TRUE)
 			overlays_standing[EARS_LAYER] = standing
 
-	apply_overlay(EARS_LAYER)
+	apply_standing_overlay(EARS_LAYER)
 
 
 /mob/living/carbon/human/update_inv_shoes()
-	remove_overlay(SHOES_LAYER)
+	remove_standing_overlay(SHOES_LAYER)
 
 	if(shoes)
 		if(client && hud_used && hud_used.hud_shown)
@@ -515,11 +518,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		else
 			overlays_standing[SHOES_LAYER] = null
 
-	apply_overlay(SHOES_LAYER)
+	apply_standing_overlay(SHOES_LAYER)
 
 
 /mob/living/carbon/human/update_inv_s_store()
-	remove_overlay(SUIT_STORE_LAYER)
+	remove_standing_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
 		s_store.screen_loc = ui_sstore1
@@ -533,11 +536,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[SUIT_STORE_LAYER]	= standing
 
-	apply_overlay(SUIT_STORE_LAYER)
+	apply_standing_overlay(SUIT_STORE_LAYER)
 
 
 /mob/living/carbon/human/update_inv_head()
-	remove_overlay(HEAD_LAYER)
+	remove_standing_overlay(HEAD_LAYER)
 
 	if(head)
 		if(client && hud_used && hud_used.hud_shown)
@@ -561,11 +564,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[HEAD_LAYER] = standing
 
-	apply_overlay(HEAD_LAYER)
+	apply_standing_overlay(HEAD_LAYER)
 
 
 /mob/living/carbon/human/update_inv_belt()
-	remove_overlay(BELT_LAYER)
+	remove_standing_overlay(BELT_LAYER)
 
 	if(belt)
 		belt.screen_loc = ui_belt
@@ -576,10 +579,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[BELT_LAYER] = standing
 
-	apply_overlay(BELT_LAYER)
+	apply_standing_overlay(BELT_LAYER)
 
 /mob/living/carbon/human/update_inv_wear_suit()
-	remove_overlay(SUIT_LAYER)
+	remove_standing_overlay(SUIT_LAYER)
 	var/default_path = 'icons/mob/suit.dmi'
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
@@ -625,7 +628,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_tail_showing()
 	update_collar()
 
-	apply_overlay(SUIT_LAYER)
+	apply_standing_overlay(SUIT_LAYER)
 
 
 /mob/living/carbon/human/update_inv_pockets()
@@ -640,7 +643,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
-	remove_overlay(FACEMASK_LAYER)
+	remove_standing_overlay(FACEMASK_LAYER)
 
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory))
 		if(client && hud_used && hud_used.hud_shown)
@@ -652,11 +655,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[FACEMASK_LAYER]	= standing
 
-	apply_overlay(FACEMASK_LAYER)
+	apply_standing_overlay(FACEMASK_LAYER)
 
 
 /mob/living/carbon/human/update_inv_back()
-	remove_overlay(BACK_LAYER)
+	remove_standing_overlay(BACK_LAYER)
 
 	if(back)
 		back.screen_loc = ui_back
@@ -666,7 +669,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER)
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[BACK_LAYER] = standing
-	apply_overlay(BACK_LAYER)
+	apply_standing_overlay(BACK_LAYER)
 
 
 /mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
@@ -678,7 +681,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
+	remove_standing_overlay(HANDCUFF_LAYER)
 
 	if(handcuffed)
 		drop_r_hand()
@@ -687,11 +690,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[HANDCUFF_LAYER]	= standing
-	apply_overlay(HANDCUFF_LAYER)
+	apply_standing_overlay(HANDCUFF_LAYER)
 
 
 /mob/living/carbon/human/update_inv_legcuffed()
-	remove_overlay(LEGCUFF_LAYER)
+	remove_standing_overlay(LEGCUFF_LAYER)
 
 	if(legcuffed)
 		set_m_intent(MOVE_INTENT_WALK)
@@ -699,11 +702,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.appearance_flags |= KEEP_APART
 		overlays_standing[LEGCUFF_LAYER]	= standing
 
-	apply_overlay(LEGCUFF_LAYER)
+	apply_standing_overlay(LEGCUFF_LAYER)
 
 
 /mob/living/carbon/human/update_inv_r_hand()
-	remove_overlay(R_HAND_LAYER)
+	remove_standing_overlay(R_HAND_LAYER)
 
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand
@@ -716,11 +719,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(handcuffed)
 			drop_r_hand()
 
-	apply_overlay(R_HAND_LAYER)
+	apply_standing_overlay(R_HAND_LAYER)
 
 
 /mob/living/carbon/human/update_inv_l_hand()
-	remove_overlay(L_HAND_LAYER)
+	remove_standing_overlay(L_HAND_LAYER)
 
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand
@@ -736,10 +739,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(handcuffed)
 			drop_l_hand()
 
-	apply_overlay(L_HAND_LAYER)
+	apply_standing_overlay(L_HAND_LAYER)
 
 /mob/living/carbon/human/proc/update_tail_showing()
-	remove_overlay(TAIL_LAYER)
+	remove_standing_overlay(TAIL_LAYER)
 
 	if((random_tail_holder || species.tail) && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
@@ -749,7 +752,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tail_gender_appendix = null
 			if(species.gender_tail_icons && gender == FEMALE)
 				tail_gender_appendix = "_fem"
-			
+
 			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
@@ -767,13 +770,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing = human_update_offset(standing, FALSE)
 			overlays_standing[TAIL_LAYER] = standing
 
-	apply_overlay(TAIL_LAYER)
+	apply_standing_overlay(TAIL_LAYER)
 
 
 //Adds a collar overlay above the helmet layer if the suit has one
 //	Suit needs an identically named sprite in icons/mob/collar.dmi
 /mob/living/carbon/human/proc/update_collar()
-	remove_overlay(COLLAR_LAYER)
+	remove_standing_overlay(COLLAR_LAYER)
 
 	if(wear_suit)
 		var/icon/C = new('icons/mob/collar.dmi')
@@ -784,11 +787,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing = human_update_offset(standing, TRUE)
 			overlays_standing[COLLAR_LAYER]	= standing
 
-	apply_overlay(COLLAR_LAYER)
+	apply_standing_overlay(COLLAR_LAYER)
 
 
 /mob/living/carbon/human/proc/update_surgery()
-	remove_overlay(SURGERY_LAYER)
+	remove_standing_overlay(SURGERY_LAYER)
 
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -800,10 +803,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			I = update_height(I)
 		overlays_standing[SURGERY_LAYER] = standing
 
-	apply_overlay(SURGERY_LAYER)
+	apply_standing_overlay(SURGERY_LAYER)
 
 /mob/living/carbon/human/proc/update_bandage()
-	remove_overlay(BANDAGE_LAYER)
+	remove_standing_overlay(BANDAGE_LAYER)
 
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -819,7 +822,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			I = update_height(I)
 		overlays_standing[BANDAGE_LAYER] = standing
 
-	apply_overlay(BANDAGE_LAYER)
+	apply_standing_overlay(BANDAGE_LAYER)
 
 
 /mob/living/carbon/human/proc/get_overlays_copy()

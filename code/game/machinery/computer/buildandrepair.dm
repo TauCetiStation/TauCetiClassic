@@ -218,10 +218,6 @@
 	origin_tech = "programming=3"
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
-/obj/item/weapon/circuitboard/computer/stockexchange
-	name = "Circuit board (Stock exchange computer)"
-	build_path = /obj/machinery/computer/stockexchange
-	origin_tech = "programming=3"
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
@@ -280,7 +276,7 @@
 
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
-	if(ismultitool(I))
+	if(ispulsing(I))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)
@@ -309,7 +305,7 @@
 	return TRUE
 
 /obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
 			build_path = /obj/machinery/computer/libraryconsole
@@ -331,7 +327,7 @@
 			to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock the circuit controls.</span>")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-	else if(ismultitool(I))
+	else if(ispulsing(I))
 		if(locked)
 			to_chat(user, "<span class='warning'>Circuit controls are locked.</span>")
 			return
@@ -388,7 +384,7 @@
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 
-	if((state != 0) && (state != 1) && iswrench(P))
+	if((state != 0) && (state != 1) && iswrenching(P))
 		if(user.is_busy(src))
 			return
 
@@ -409,14 +405,14 @@
 
 	switch(state)
 		if(0)
-			if(iswrench(P))
+			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = TRUE
 					src.state = 1
-			if(iswelder(P))
+			if(iswelding(P))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(WT.use(0, user))
 					to_chat(user, "<span class='notice'>You start deconstruct the frame.</span>")
@@ -425,7 +421,7 @@
 						new /obj/item/stack/sheet/metal( src.loc, 5 )
 						qdel(src)
 		if(1)
-			if(iswrench(P))
+			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
@@ -444,12 +440,12 @@
 					P.loc = null
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(isscrewdriver(P) && circuit)
+			if(isscrewing(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
-			if(iscrowbar(P) && circuit)
+			if(isprying(P) && circuit)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
@@ -457,7 +453,7 @@
 				circuit.loc = src.loc
 				src.circuit = null
 		if(2)
-			if(isscrewdriver(P) && circuit)
+			if(isscrewing(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
@@ -473,7 +469,7 @@
 						src.state = 3
 						src.icon_state = "3"
 		if(3)
-			if(iswirecutter(P))
+			if(iscutter(P))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
@@ -489,13 +485,13 @@
 						src.state = 4
 						src.icon_state = "4"
 		if(4)
-			if(iscrowbar(P))
+			if(isprying(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
-			if(isscrewdriver(P))
+			if(isscrewing(P))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
@@ -536,7 +532,7 @@
 
 	var/obj/item/I = usr.get_active_hand()
 
-	if (!I || !iswrench(I))
+	if (!I || !iswrenching(I))
 		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
 		return
 

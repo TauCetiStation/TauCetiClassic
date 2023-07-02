@@ -163,7 +163,7 @@
 /mob/living/simple_animal/hostile/blob/blobspore/blob_act()
 	return
 
-/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0)
 	if(isblob(mover))
 		return TRUE
 	return ..()

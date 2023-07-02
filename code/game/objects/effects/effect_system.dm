@@ -247,15 +247,14 @@ steam.start() -- spawns the effect
 	if (!..())
 		return 0
 	M.drop_item()
-	M.adjustOxyLoss(1)
+	M.losebreath = max(M.losebreath + 1, 2)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
 		spawn ( 20 )
 			M.coughedtime = 0
 
-/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -484,7 +483,7 @@ steam.start() -- spawns the effect
 	MakeSlippery()
 	icon_state = "[metal ? "m" : ""]foam"
 	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
+	addtimer(CALLBACK(src, PROC_REF(disolve_stage), 1), 3 + metal * 3)
 
 /obj/effect/effect/foam/proc/MakeSlippery()
 	if(!metal)
@@ -495,10 +494,10 @@ steam.start() -- spawns the effect
 		if(1)
 			process()
 			checkReagents()
-			addtimer(CALLBACK(src, .proc/disolve_stage, 2), 120)
+			addtimer(CALLBACK(src, PROC_REF(disolve_stage), 2), 120)
 		if(2)
 			STOP_PROCESSING(SSobj, src)
-			addtimer(CALLBACK(src, .proc/disolve_stage, 3), 30)
+			addtimer(CALLBACK(src, PROC_REF(disolve_stage), 3), 30)
 
 		if(3)
 			if(metal)
@@ -609,6 +608,7 @@ steam.start() -- spawns the effect
 	density = TRUE
 	opacity = FALSE
 	anchored = TRUE
+	can_block_air = TRUE
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
@@ -616,13 +616,13 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/atom_init()
 	. = ..()
 	set_opacity(TRUE)
-	update_nearby_tiles(1)
+	update_nearby_tiles()
 
 
 
 /obj/structure/foamedmetal/Destroy()
 	density = FALSE
-	update_nearby_tiles(1)
+	update_nearby_tiles()
 	return ..()
 
 /obj/structure/foamedmetal/proc/updateicon()
@@ -682,9 +682,10 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
-	if(air_group)
-		return 0
+/obj/structure/foamedmetal/c_airblock(turf/other)
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5)
 	return !density
 
 /datum/effect/effect/system/reagents_explosion

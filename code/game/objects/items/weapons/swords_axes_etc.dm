@@ -32,7 +32,7 @@
 	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
@@ -47,7 +47,7 @@
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[blade_color]"
-		w_class = SIZE_NORMAL
+		w_class = SIZE_SMALL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
@@ -55,6 +55,7 @@
 		qualities = null
 		sharp = FALSE
 		force = 3
+		flags = NOBLOODY
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
@@ -64,14 +65,13 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	add_fingerprint(user)
-	return
 
+/obj/item/weapon/melee/energy/sword/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	if(active)
+		attack_self(usr)
 
 /*
  * Classic Baton
@@ -98,7 +98,7 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Stun(16)
 		user.Weaken(16)
@@ -152,10 +152,10 @@
 
 	SCB.can_pull = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_pull)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_spin))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep_push))
+	SCB.can_pull_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep_pull))
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/telebaton/proc/can_sweep()
@@ -191,17 +191,13 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if(user.ClumsyProbabilityCheck(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 			user.adjustHalLoss(70)
 			if(ishuman(user))
@@ -210,26 +206,20 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
+		if(!isliving(target))
+			return ..()
+		var/mob/living/L = target
+		var/target_armor = L.run_armor_check(user.get_targetzone(), MELEE)
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
+			H.apply_effect(35, AGONY, target_armor)
 			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
-
-			if(H.wear_suit)
-				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor[MELEE]
-				if(meleearm)
-					if(meleearm != 100)
-						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
-				else
-					H.adjustHalLoss(35)
-			else
-				H.adjustHalLoss(35)
-
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
+			L.apply_effect(30, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
@@ -306,7 +296,7 @@
 	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)
@@ -321,15 +311,13 @@
 
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
-	icon_state = "eshield[active]"
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
 
 /obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
 	force = 3
-	icon_state = "eshield[active]"
 	w_class = SIZE_MINUSCULE
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -337,7 +325,5 @@
 		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")
 
 /obj/item/weapon/shield/energy/update_icon()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	icon_state = "eshield[active]"
+	update_inv_mob()

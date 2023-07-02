@@ -37,7 +37,11 @@
 	if(!(volume >= 3))
 		return
 
-	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
+	var/mob/living/carbon/donor = locate(self.data["donor"])
+	if(!istype(donor)) // if donor was deleted and ref changed to random thing
+		donor = null
+
+	if(!donor || ishuman(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
 			blood_prop = new(T)
@@ -50,13 +54,13 @@
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
-	else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+	else if(ismonkey(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
 
-	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
+	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
@@ -231,34 +235,29 @@
 		if(C.l_hand)
 			C.l_hand.clean_blood()
 		if(C.wear_mask)
-			if(C.wear_mask.clean_blood())
-				C.update_inv_wear_mask()
+			C.wear_mask.clean_blood()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = C
 			if(H.head)
-				if(H.head.clean_blood())
-					H.update_inv_head()
+				H.head.clean_blood()
 			if(H.wear_suit)
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
+				H.wear_suit.clean_blood()
 			else if(H.w_uniform)
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
+				H.w_uniform.clean_blood()
 			if(H.shoes)
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
+				H.shoes.clean_blood()
 			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 			var/no_legs = FALSE
 			if(!l_foot && !r_foot)
 				no_legs = TRUE
 			if(!no_legs)
-				if(H.shoes && H.shoes.clean_blood())
-					H.update_inv_shoes()
+				if(H.shoes)
+					H.shoes.clean_blood()
 				else
 					H.feet_blood_DNA = null
 					H.feet_dirt_color = null
-					H.update_inv_shoes()
+					H.update_inv_slot(SLOT_SHOES)
 		M.clean_blood()
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -296,21 +295,21 @@
 				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
 				alert_time = world.time
 			if(prob(60))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 		if(volume < 0.7)
 			if(prob(10))
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
 		if(volume > 1)
 			if(prob(80))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 				M.drowsyness = min(40, (M.drowsyness + 2))
 			if(prob(3) & ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.invoke_vomit_async()
 		if(volume > 5)
 			if(prob(70))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 	if(holder.has_reagent("anti_toxin"))
 		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
@@ -401,7 +400,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.invoke_vomit_async()
-		H.apply_effect(1,IRRADIATE,0)
+	irradiate_one_mob(M, 1)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
@@ -910,7 +909,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	. = ..()
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
 	if(F)
-		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+		INVOKE_ASYNC(F, TYPE_PROC_REF(/obj/effect/effect/aqueous_foam, performAction)) // So we don't instantinate a new object, but still make the room slightly colder.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 

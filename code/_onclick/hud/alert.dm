@@ -71,7 +71,6 @@
 
 /datum/tgui_modal/Destroy(force, ...)
 	SStgui.close_uis(src)
-	QDEL_NULL(buttons)
 	. = ..()
 
 /**
@@ -214,7 +213,7 @@
 	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(thealert.timeout)
-		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
+		addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
 
@@ -443,6 +442,28 @@
 	icon_state = "newlaw"
 	timeout = 300
 
+/atom/movable/screen/alert/swarm_hunger
+	name = "Swarm's Hunger"
+	desc = "This reality can not support your presence... You must consume to live."
+	icon_state = "swarm_hunger"
+
+/atom/movable/screen/alert/swarm_upgrade
+	name = "Array Upgrade"
+	desc = "There is an array upgrade available. Examine yourself to reflect on prospective adaptabilities."
+	icon_state = "swarm_upgrade"
+
+/atom/movable/screen/alert/swarm_upgrade/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.incapacitated())
+		return
+	if(!mob_viewer.mind)
+		return
+	if(!isreplicator(mob_viewer))
+		return
+	var/mob/living/simple_animal/hostile/replicator/R = mob_viewer
+	R.acquire_array_upgrade()
+
 //OBJECT-BASED
 
 /atom/movable/screen/alert/buckled
@@ -469,6 +490,32 @@
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
+
+/atom/movable/screen/alert/notify_action
+	name = "Body created"
+	desc = "A body was created. You can enter it."
+	icon_state = "template"
+	timeout = 300
+	var/atom/target = null
+	var/action = NOTIFY_JUMP
+
+/atom/movable/screen/alert/notify_action/Click()
+	. = ..()
+	if(!target)
+		return
+	var/mob/dead/observer/ghost_owner = mob_viewer
+	if(!istype(ghost_owner))
+		return
+	switch(action)
+		if(NOTIFY_ATTACK)
+			target.attack_ghost(ghost_owner)
+		if(NOTIFY_JUMP)
+			var/turf/target_turf = get_turf(target)
+			if(target_turf && isturf(target_turf))
+				ghost_owner.abstract_move(target_turf)
+		if(NOTIFY_ORBIT)
+			ghost_owner.ManualFollow(target)
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
@@ -481,7 +528,8 @@
 	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
-			alert.icon = ui_style
+			if(ui_style)
+				alert.icon = ui_style
 		switch(i)
 			if(1)
 				. = ui_alert1

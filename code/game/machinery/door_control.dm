@@ -14,6 +14,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
+	layer = ABOVE_WINDOW_LAYER
 	power_channel = STATIC_ENVIRON
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -108,7 +109,7 @@
 			if(!wiresexposed)
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
-				else if(isscrewdriver(W))
+				else if(isscrewing(W))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
@@ -129,7 +130,7 @@
 				else
 					return attack_hand(user)
 			else
-				if(isscrewdriver(W))
+				if(isscrewing(W))
 					wiresexposed = FALSE
 					panel_locked = TRUE
 					controls_locked = TRUE
@@ -144,7 +145,7 @@
 					else
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
 						return
-				else if(ismultitool(W) && !(stat & NOPOWER))
+				else if(ispulsing(W) && !(stat & NOPOWER))
 					if(!controls_locked || emagged || issilicon(user))
 						set_up_door_control(user)
 						update_icon()
@@ -152,7 +153,7 @@
 					else
 						to_chat(usr, "<span class='warning'>Controls are locked!</span>")
 						return
-				else if(iswirecutter(W))
+				else if(iscutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					new /obj/item/stack/cable_coil/random(loc, 1)
@@ -180,7 +181,7 @@
 					return
 				name = t
 				return
-			else if(iswrench(W))
+			else if(iswrenching(W))
 				to_chat(user, "You remove the door control assembly from the wall!")
 				deconstruct(TRUE)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -269,7 +270,9 @@
 	. = ..()
 	if(!.)
 		return
-	if(!ismultitool(usr.get_active_hand()))
+	var/obj/item/I = usr.get_active_hand()
+
+	if(I && !ispulsing(I))
 		to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 		return
 	if(href_list["show_accesses"])
@@ -340,8 +343,8 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 	for(var/door in connected_doors)
-		INVOKE_ASYNC(src, .proc/toggle_door, door)
-	addtimer(CALLBACK(src, /atom.proc/update_icon), 15)
+		INVOKE_ASYNC(src, PROC_REF(toggle_door), door)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 15)
 
 /obj/machinery/door_control/proc/toggle_door(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
@@ -423,7 +426,7 @@
 	icon_state = "doorctrl_assembly0"
 
 /obj/item/door_control_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 		return

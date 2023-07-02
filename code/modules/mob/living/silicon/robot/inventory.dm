@@ -14,8 +14,6 @@
 	return module_active
 
 /mob/living/silicon/robot/put_in_active_hand(obj/item/W)
-	if(lying && !(W.flags & ABSTRACT))
-		return FALSE
 	if(!istype(W))
 		return FALSE
 	if(W.anchored)
@@ -49,7 +47,7 @@
 
 	return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
 
-/mob/living/silicon/robot/u_equip(obj/W)
+/mob/living/silicon/robot/u_equip(obj/item/W)
 	if(!W || (W != module_active))
 		return 0
 	uneq_active()

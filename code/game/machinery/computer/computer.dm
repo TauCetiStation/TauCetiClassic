@@ -147,6 +147,11 @@
 		set_light(light_range_on, light_power_on)
 	return
 
+/obj/machinery/computer/turn_light_off()
+	. = ..()
+	stat |= NOPOWER
+	update_icon()
+	update_power_use()
 
 /obj/machinery/computer/proc/set_broken()
 	if(circuit) //no circuit, no breaking
@@ -164,11 +169,11 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
-	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
+	if(isscrewing(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
 		if(I.use_tool(src, user, 20, volume = 50))
 			deconstruct(TRUE)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(user.is_busy(src))
 			return
 
@@ -203,7 +208,7 @@
 
 	var/obj/item/I = usr.get_active_hand()
 
-	if (!I || !iswrench(I))
+	if (!I || !iswrenching(I))
 		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
 		return
 
@@ -245,7 +250,7 @@
 				return 1
 			else if(emp_luck == 10)
 				emp_act(3)
-				to_chat(H, "<span class='warning'>You poured water on the device.</span>") 
+				to_chat(H, "<span class='warning'>You poured water on the device.</span>")
 				return 1
 	. = ..()
 

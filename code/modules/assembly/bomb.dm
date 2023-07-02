@@ -27,7 +27,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		return bombtank.attackby(I, user, params)
 
-	if(iswrench(I) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+	if(iswrenching(I) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
 		bombassembly.forceMove(user.loc)
@@ -41,7 +41,7 @@
 		qdel(src)
 		return
 
-	if((iswelder(I)))
+	if((iswelding(I)))
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.isOn())
 			if(!status)

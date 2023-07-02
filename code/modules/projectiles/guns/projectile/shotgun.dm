@@ -8,11 +8,13 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot
-	var/recentpump = 0 // to prevent spammage
-	var/pumped = 0
+	initial_mag = /obj/item/ammo_box/magazine/internal/shot
+	var/recentpump = FALSE // to prevent spammage
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	can_be_holstered = FALSE
+	two_hand_weapon = ONLY_TWOHAND
+	var/pump_cooldown = 10
+	var/pump_sound = list('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg')
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)
@@ -29,25 +31,24 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
-	if(recentpump)	return
+	if(recentpump)
+		return
 	pump(user)
-	recentpump = 1
-	spawn(10)
-		recentpump = 0
-	return
+	recentpump = TRUE
+	VARSET_IN(src, recentpump, FALSE, pump_cooldown)
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
-	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
-	pumped = 0
+	playsound(M, pick(pump_sound), VOL_EFFECTS_MASTER, null, FALSE)
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
-	if(!magazine.ammo_count())	return 0
+	if(!magazine.ammo_count())
+		return FALSE
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 	update_icon()	//I.E. fix the desc
-	return 1
+	return TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
@@ -59,11 +60,11 @@
 	icon_state = "cshotgun"
 	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
+	initial_mag = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = SIZE_BIG
 
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
-	mag_type = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
+	initial_mag = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
@@ -74,8 +75,9 @@
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
+	two_hand_weapon = DESIRABLE_TWOHAND
 	origin_tech = "combat=3;materials=1"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	can_be_holstered = FALSE
 	var/open = FALSE
 	var/short = FALSE
@@ -135,9 +137,9 @@
 		var/num_unloaded = 0
 		while (get_ammo() > 0)
 			spawn(3)
-				playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
 			var/obj/item/ammo_casing/CB
-			CB = magazine.get_round(0)
+			CB = magazine.get_round(FALSE)
 			chambered = null
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
@@ -151,24 +153,25 @@
 			to_chat(user, "<span class = 'notice'>You break open \the [src].</span>")
 
 	update_icon()
-//	var/num_unloaded = 0
-//	while (get_ammo() > 0)
-//		var/obj/item/ammo_casing/CB
-//		CB = magazine.get_round(0)
-//		chambered = null
-//		CB.loc = get_turf(src.loc)
-//		CB.update_icon()
-//		num_unloaded++
-//	if (num_unloaded)
-//		user << "<span class = 'notice'>You unload [num_unloaded] shell\s.</span>"
-//	else
-//		user << "<span class='notice'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/special_check(mob/user)
 	if(open)
 		to_chat(user, "<span class='warning'>You can't fire [src] while its open!</span>")
-		return 0
+		return FALSE
 	return ..()
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
+	icon_state = "dshotgun"
+	item_state = "shotgun-short"
+	w_class = SIZE_SMALL
+	slot_flags = SLOT_FLAGS_BELT
+	name = "sawn-off shotgun"
+	desc = "Omar's coming!"
+	can_be_holstered = TRUE
+	short = TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/repeater
 	name = "repeater rifle"
@@ -176,29 +179,11 @@
 	icon_state = "repeater"
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/repeater
+	initial_mag = /obj/item/ammo_box/magazine/internal/repeater
 	w_class = SIZE_BIG
-	slot_flags = 0
-
-/obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
-	if(recentpump)	return
-	pump(user)
-	recentpump = 1
-	spawn(6)
-		recentpump = 0
-	return
-
-/obj/item/weapon/gun/projectile/shotgun/repeater/pump(mob/M)
-	playsound(M, 'sound/weapons/guns/reload_repeater.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	pumped = 0
-	if(chambered)
-		chambered.loc = get_turf(src)
-		chambered = null
-	if(!magazine.ammo_count())	return 0
-	var/obj/item/ammo_casing/AC = magazine.get_round()
-	chambered = AC
-	update_icon()
-	return 1
+	slot_flags = null
+	pump_sound = list('sound/weapons/guns/reload_repeater.ogg')
+	pump_cooldown = 6
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
 	name = "Mosin-Nagant"
@@ -206,31 +191,23 @@
 	icon_state = "bolt-action"
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/a774clip
+	initial_mag = /obj/item/ammo_box/magazine/a774clip
 	w_class = SIZE_BIG
 	slot_flags = SLOT_FLAGS_BACK
+	pump_sound = list('sound/weapons/guns/reload_bolt.ogg')
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
-	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	pumped = 0
-	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
-		chambered = null
+	..()
 	if(magazine && !magazine.ammo_count())
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
-		return 0
-	if(magazine && magazine.ammo_count())
-		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
-		chambered = AC
-		update_icon()	//I.E. fix the desc
-		return 1
+		return FALSE
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = I
-		if(!magazine && istype(AM, mag_type))
+		if(!magazine && istype(AM, initial_mag))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.forceMove(src)
@@ -247,4 +224,4 @@
 	return ..()
 
 /obj/item/weapon/gun/projectile/shotgun/dungeon
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/dungeon
+	initial_mag = /obj/item/ammo_box/magazine/internal/shot/dungeon

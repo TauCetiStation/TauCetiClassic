@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
 		//shuttle movement
-	var/at_station = 0
+	var/at_station = TRUE
 	var/movetime = 1200
 	var/moving = 0
 	var/eta_timeofday
@@ -71,6 +71,9 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
+
+	if(!exports_list.len)
+		setupExports()
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
@@ -255,15 +258,6 @@ SUBSYSTEM_DEF(shuttle)
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				//if(alert == 1)
-				//	sleep(100)
-				// Turn on the star effects
-
-				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in not_world)
-					if(!S.spawning)
-						spawn() S.startspawn()
-				*/
 
 				departed = 1 // It's going!
 				location = SHUTTLE_IN_TRANSIT // in deep space
@@ -303,7 +297,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod2")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge, "pod2")
+					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/civilian/gym, "pod2")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -314,7 +308,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod3")
-					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
+					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig || /area/station/security/prison, "pod3")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -325,7 +319,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = WEST
 					start_location.move_contents_to(end_location, null, EAST)
 					undock_act(start_location, "pod4")
-					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
+					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig || /area/station/hallway/secondary/entry, "pod4")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -334,6 +328,8 @@ SUBSYSTEM_DEF(shuttle)
 					announce_emer_left.play()
 				else
 					announce_crew_left.play()
+
+				start_transit()
 
 				return TRUE
 
@@ -512,8 +508,8 @@ SUBSYSTEM_DEF(shuttle)
 
 		msg += export_text + "\n"
 		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
-		station_account.money += tax
-		global.cargo_account.money += E.total_cost - tax
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "NTS Велосити", tax)
+		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "NTS Велосити", E.total_cost - tax)
 		E.export_end()
 
 	centcom_message = msg
@@ -649,6 +645,9 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
 	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
+
+/datum/controller/subsystem/shuttle/proc/start_transit()
+	SSrating.start_rating_collection()
 
 /obj/effect/bgstar
 	name = "star"

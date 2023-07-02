@@ -10,15 +10,17 @@
 	QDEL_NULL(knife)
 	return ..()
 
+/obj/item/clothing/shoes/boots/update_icon()
+	if(icon_state == "wjboots" || icon_state == "wjbootsknifed")
+		icon_state = "wjboots[knife ? "knifed" : ""]"
+		update_inv_mob()
+
 /obj/item/clothing/shoes/boots/attack_hand(mob/living/user)
 	if(knife && loc == user && !user.incapacitated())
 		if(user.put_in_active_hand(knife))
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
 			remove_knife()
-			if(icon_state == "wjbootsknifed")
-				icon_state = "wjboots"
-				user.update_inv_shoes()
 			update_icon()
 	else
 		return ..()
@@ -27,14 +29,11 @@
 	if(knife)
 		return ..()
 
-	if(I.get_quality(QUALITY_CUTTING) > 0)
+	if((iscutter(I) > 0) && I.w_class <= SIZE_TINY)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 		add_knife(I)
-		if(icon_state == "wjboots")
-			icon_state = "wjbootsknifed"
-			user.update_inv_shoes()
 		update_icon()
 		return
 
@@ -42,7 +41,7 @@
 
 /obj/item/clothing/shoes/boots/proc/add_knife(obj/item/K)
 	knife = K
-	RegisterSignal(knife, list(COMSIG_PARENT_QDELETING), .proc/remove_knife)
+	RegisterSignal(knife, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_knife))
 
 /obj/item/clothing/shoes/boots/proc/remove_knife()
 	UnregisterSignal(knife, list(COMSIG_PARENT_QDELETING))

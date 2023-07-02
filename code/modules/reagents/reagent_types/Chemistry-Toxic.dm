@@ -19,6 +19,8 @@
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M)
 	..()
+
+	M.nutrition += 4 * REM
 	return !flags[IS_ORGANIC]
 
 /datum/reagent/toxin/amatoxin
@@ -56,7 +58,7 @@
 
 /datum/reagent/toxin/mutagen/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(10, IRRADIATE, 0)
+	irradiate_one_mob(M, 10)
 
 /datum/reagent/toxin/phoron
 	name = "Phoron"
@@ -148,7 +150,7 @@
 	toxpwr = 4
 	custom_metabolism = 0.4
 	restrict_species = list(IPC, DIONA)
-	flags = list()
+	flags = list(IS_ORGANIC = TRUE) // We do not have a division into organic and inorganic cyanides.
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
@@ -198,18 +200,25 @@
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
-	..()
-	M.add_status_flags(FAKEDEATH)
-	M.adjustOxyLoss(0.5 * REM)
-	M.Stun(10)
-	M.Weaken(10)
+	if(data["ticks"])
+		data["ticks"]++
+	else
+		data["ticks"] = 1
+
+	if(data["ticks"] < 5)
+		return
+
+	if(data["ticks"] == 5)
+		M.add_status_flags(FAKEDEATH)
+		M.tod = worldtime2text()
+
 	M.silent = max(M.silent, 10)
-	M.tod = worldtime2text()
 
 /datum/reagent/toxin/zombiepowder/Destroy()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
+	if(holder && isliving(holder.my_atom))
+		var/mob/living/M = holder.my_atom
 		M.remove_status_flags(FAKEDEATH)
+		M.adjustToxLoss(toxpwr * REM * data["ticks"])
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
@@ -319,7 +328,7 @@
 	custom_metabolism = 0.1
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
-	flags = list()
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
 	..()
@@ -479,8 +488,6 @@
 				if(prob(meltprob) && !H.head.unacidable)
 					to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
 					qdel(H.head)
-					H.update_inv_head()
-					H.update_hair()
 				else
 					to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
 				return
@@ -489,8 +496,6 @@
 				if(prob(meltprob) && !H.wear_mask.unacidable)
 					to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 					qdel(H.wear_mask)
-					H.update_inv_wear_mask()
-					H.update_hair()
 				else
 					to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
@@ -499,7 +504,6 @@
 				if(prob(meltprob) && !H.glasses.unacidable)
 					to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
 					qdel(H.glasses)
-					H.update_inv_glasses()
 
 		else if(ismonkey(M))
 			var/mob/living/carbon/monkey/MK = M
@@ -507,7 +511,6 @@
 				if(!MK.wear_mask.unacidable)
 					to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 					qdel(MK.wear_mask)
-					MK.update_inv_wear_mask()
 				else
 					to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
@@ -556,6 +559,7 @@
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/alphaamanitin/on_general_digest(mob/living/M)
 	..()
@@ -571,6 +575,7 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
+	flags = list(IS_ORGANIC = TRUE)
 
 	data = list()
 
@@ -582,7 +587,7 @@
 
 	if(data["ticks"] >= 165)
 		M.adjustToxLoss(4)
-		M.apply_effect(5*REM,IRRADIATE,0)
+		irradiate_one_mob(M, 5 * REM)
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
@@ -607,6 +612,60 @@
 		M.death(0)
 		M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
 	data["ticks"]++
+
+/datum/reagent/sanguisacid
+	name = "Sanguis Acid"
+	id = "sanguisacid"
+	description = "A toxin that burns the blood in the body causes hematemesis. Only works on humanoids."
+	reagent_state = LIQUID
+	color = "#861102"
+	custom_metabolism = 0.05
+	taste_message = "bitter blood"
+	restrict_species = list(IPC, DIONA)
+
+
+/datum/reagent/sanguisacid/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(!ishuman(H))
+		return
+	H.blood_remove(2)
+	if(prob(15))
+		H.blood_remove(5)
+		H.adjustHalLoss(10)
+		H.adjustFireLoss(5)
+		to_chat(H,"<span class='warning'><b>You feel a burning sensation inside!</b></span>")
+	else if(prob(5))
+		H.blood_remove(150)
+		H.vomit(vomit_type = VOMIT_BLOOD)
+
+/datum/reagent/bonebreaker
+	name = "BB EX-01"
+	id = "bonebreaker"
+	description = "Experimental poison of unknown origin. When introduced into the body of a living being, the poison relaxes the structure of the bones, and then breaks them."
+	reagent_state = LIQUID
+	color = "#3d3549"
+	custom_metabolism = 0.1
+	taste_message = "something disgusting"
+	restrict_species = list(IPC, DIONA)
+	data = list()
+
+/datum/reagent/bonebreaker/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(!ishuman(H))
+		return
+	if(!data["ticks"])
+		data["ticks"] = 1
+
+	data["ticks"]++
+	switch(data["ticks"])
+		if(1 to 30)
+			if(prob(15))
+				to_chat(H, "<span class='warning'>You feel something strange and unpleasant inside of you.</span>")
+		if(30 to INFINITY)
+			holder.remove_reagent("bonebreaker", 100)
+			for(var/obj/item/organ/external/E in H.bodyparts)
+				H.apply_effect(100, AGONY)
+				E.fracture()
 
 /datum/reagent/dioxin
 	name = "Dioxin"
@@ -767,12 +826,56 @@
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
-	if(isturf(M.loc) && !isspaceturf(M.loc))
-		if(M.canmove && !M.incapacitated())
-			if(prob(10))
-				step(M, pick(cardinal))
+	if(prob(10))
+		M.random_move()
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
+
+/datum/reagent/space_drugs/on_skrell_digest(mob/living/M)
+	M.nutrition += 4 * REM
+	M.adjustDrugginess(2)
+	return FALSE
+
+/datum/reagent/ambrosium
+	name = "Ambrosium"
+	id = "ambrosium"
+	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
+	reagent_state = LIQUID
+	color = "#003b08"
+	taste_message = "hash"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/ambrosium/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(2)
+	if(prob(10))
+		M.random_move()
+	if(prob(25))
+		M.emote(pick("cough","laugh","giggle"))
+	if(prob(15))
+		M.adjustToxLoss(1)
+
+/datum/reagent/jenkem
+	name = "Space jenkem"
+	id = "jenkem"
+	description = "A homemade illegal chemical compound used by the poor as a substitute for better quality drugs. Very toxic."
+	reagent_state = LIQUID
+	color = "#3f2020"
+	custom_metabolism = 0.4
+	overdose = 15
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/jenkem/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(1)
+	if(prob(30))
+		M.random_move()
+	if(prob(25))
+		M.emote(pick("twitch","drool","moan","giggle"))
+	if(prob(60))
+		M.adjustToxLoss(1)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"

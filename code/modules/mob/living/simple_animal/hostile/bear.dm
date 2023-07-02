@@ -1,15 +1,15 @@
 //Space bears!
 /mob/living/simple_animal/hostile/bear
 	name = "space bear"
-	desc = "RawrRawr!!"
+	desc = "МЕДВЕДЬ!!"
 	icon_state = "bear"
 	icon_living = "bear"
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
-	speak = list("RAWR!","Rawr!","GRR!","Growl!")
-	speak_emote = list("growls", "roars")
-	emote_hear = list("rawrs","grumbles","grawls")
-	emote_see = list("stares ferociously", "stomps")
+	speak = list("РРРА!","Ррра!","ГРР!","Грра!")
+	speak_emote = list("рычит")
+	emote_hear = list("рычит")
+	emote_see = list("свирепо смотрит", "топает")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -46,7 +46,7 @@
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
 	name = "Hudson"
-	desc = ""
+	desc = "Что за..."
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "pokes"
@@ -96,7 +96,7 @@
 
 		if(HOSTILE_STANCE_ATTACKING)
 			if(stance_step >= 20)	//attacks for 20 ticks, then it gets tired and needs to rest
-				me_emote("is worn out and needs to rest.")
+				me_emote("устал.")
 				stance = HOSTILE_STANCE_TIRED
 				stance_step = 0
 				walk(src, 0) //This stops the bear's walking
@@ -130,7 +130,7 @@
 /mob/living/simple_animal/hostile/bear/LoseTarget()
 	..(5)
 
-/mob/living/simple_animal/hostile/bear/AttackingTarget()
+/mob/living/simple_animal/hostile/bear/UnarmedAttack(atom/target)
 	if(!Adjacent(target))
 		return
 	me_emote(pick(list("slashes at [target].", "bites [target].")))

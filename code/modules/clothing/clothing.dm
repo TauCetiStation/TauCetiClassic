@@ -354,8 +354,6 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = SIZE_TINY
-	var/blockTracking = 0
-
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
 //Mask
@@ -436,6 +434,8 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -621,7 +621,7 @@ BLIND     // can't see anything
 		basecolor = item_state
 	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
-		usr.update_inv_w_uniform()
+		update_inv_mob()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 

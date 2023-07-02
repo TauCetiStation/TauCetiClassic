@@ -22,7 +22,7 @@
 
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
-				CALLBACK(src, .proc/handle_no_socialization),
+				CALLBACK(src, PROC_REF(handle_no_socialization)),
 				5 MINUTES,
 				TIMER_STOPPABLE
 			)
@@ -33,7 +33,7 @@
 
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
-				CALLBACK(src, .proc/handle_prolonged_no_socialization),
+				CALLBACK(src, PROC_REF(handle_prolonged_no_socialization)),
 				5 MINUTES,
 				TIMER_STOPPABLE
 			)
@@ -152,13 +152,16 @@
 					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
 					if(!(human in A.faction.members))
 						continue
-					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
+					to_chat(H, "<span class='abductor_team[1]'><b>[user.real_name]:</b> [sm]</span>")
 					//return - technically you can add more aliens to a team
 				for(var/mob/M as anything in observer_list)
 					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
+					to_chat(M, "[link]<span class='abductor_team[1]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
+
+	if(get_species() == HOMUNCULUS)
+		message = cursed_talk(message)
 
 	message = capitalize(trim(message))
 	message = add_period(message)
@@ -405,7 +408,7 @@
 		handled = 1
 	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(prob(50))
-			message = turret_talk(message)
+			message = turret_talk(message, get_species())
 	if(slurring)
 		message = slur(message)
 		verb = pick("stammers","stutters")

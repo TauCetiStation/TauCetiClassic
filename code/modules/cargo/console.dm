@@ -9,7 +9,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	state_broken_preset = "techb"
 	state_nopower_preset = "tech0"
 	light_color = "#b88b2e"
-	req_access = list(access_cargo)
+	req_access = list(access_cargoshop)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
@@ -44,11 +44,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	if(temp)
 		dat = temp
 	else
-		dat += {"<BR><B>Supply shuttle</B><HR>
-		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Cargo Dep credits: [global.cargo_account.money]<BR>
-		Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>
-		<HR>Export tax: [SSeconomy.tax_cargo_export]%<BR>\n<BR>"}
+		dat += "<HR><B>Supply shuttle Location:</B> [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>"
+		if(!requestonly)
+			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]$<BR>"
+			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
+			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
+			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
+			dat += "'[CARGOSHOPNAME]' discount: <A href='?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
+			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
+		else
+			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: [global.online_shop_delivery_cost*100]%<BR>\n<BR>"
 		if(requestonly)
 			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
 		else
@@ -201,6 +206,18 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 					temp = "Not enough credits.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
+
+	if(href_list["online_shop_delivery_cost"])
+		var/cost = input("Delivery Cost: 0% - 100%", "[global.online_shop_delivery_cost]") as num
+		cost = round(clamp(cost, 0, 100))
+
+		global.online_shop_delivery_cost = cost/100
+
+	if(href_list["online_shop_discount"])
+		var/discount = input("Discount: 0% - 100%", "[global.online_shop_discount]") as num
+		discount = round(clamp(discount, 0, 100))
+
+		global.online_shop_discount = discount/100
 
 	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"

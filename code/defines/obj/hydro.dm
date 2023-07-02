@@ -186,7 +186,7 @@
 	icon_state = "seed-shand"
 	species = "shand"
 	plantname = "S'Rendarr's Hand"
-	product_type = /obj/item/stack/medical/bruise_pack/tajaran
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/shand
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -202,7 +202,7 @@
 	icon_state = "seed-mtear"
 	species = "mtear"
 	plantname = "Messa's Tear"
-	product_type = /obj/item/stack/medical/ointment/tajaran
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mtear
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -505,6 +505,7 @@
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/durathread)
 
 /obj/item/seeds/riceseed
 	name = "pack of rice seeds"
@@ -860,6 +861,22 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/korta_nut
+	name = "pack of korta nut seeds"
+	desc = "These seeds grow into korta nut bushes, native to Tajaran."
+	icon_state = "seed-korta"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "kortanut"
+	plantname = "Korta Nut Bush"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 5
+	potency = 10
+	growthstages = 6
+
 /obj/item/seeds/ambrosiavulgarisseed
 	name = "pack of ambrosia vulgaris seeds"
 	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
@@ -943,6 +960,7 @@
 	potency = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/gourdseed)
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -960,7 +978,51 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed)
 
+/obj/item/seeds/gourdseed
+	name = "pack of gourd seeds"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "gourd"
+	plantname = "Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed, /obj/item/seeds/magicgourdseed)
+
+/obj/item/seeds/gourdseed/atom_init()
+	. = ..()
+	name = "pack of [get_gourd_name()] seeds"
+
+/obj/item/seeds/magicgourdseed
+	name = "pack of gourd seeds"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd_magic"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "magic_gourd"
+	plantname = "Refreshing Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 20
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed, /obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed)
+
+/obj/item/seeds/magicgourdseed/atom_init()
+	. = ..()
+	name = "pack of refreshing [get_gourd_name()] seeds"
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
@@ -1139,6 +1201,22 @@
 	new /obj/effect/spacevine_controller(user.loc)
 	qdel(src)
 
+/obj/item/seeds/durathread
+	name = "pack of durathread seeds"
+	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
+	icon_state = "seed-durathread"
+	species = "durathread"
+	plantname = "Durathread"
+	product_type = /obj/item/weapon/grown/durathread
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 2
+	potency = 5
+	growthstages = 3
+
+
 // **********************
 // Other harvested materials from plants (that are not food)
 // **********************
@@ -1248,12 +1326,19 @@
 	. = ..()
 	spawn(5)
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
-		reagents.add_reagent("pacid", round(potency, 1))
+		reagents.add_reagent("sanguisacid", round(potency, 1))
 		force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
+
+/obj/item/weapon/grown/durathread
+	seed_type = /obj/item/seeds/durathread
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	name = "durathread bundle"
+	desc = "A tough bundle of durathread, good luck unraveling this."
+	icon_state = "durathread"
 
 // *************************************
 // Pestkiller defines for hydroponics

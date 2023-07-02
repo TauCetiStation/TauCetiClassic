@@ -14,6 +14,8 @@
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
 	var/start_brightness = 4
+	food_type = JUNK_FOOD
+	food_moodlet = /datum/mood_event/junk_food
 	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
@@ -59,6 +61,14 @@
 		update_brightness(U)
 	else
 		update_brightness(null)
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/turn_light_off()
+	. = ..()
+	on = FALSE
+	if(liquid_fuel)
+		reagents.remove_reagent("luminophore", liquid_fuel.volume)
+	icon_state = "glowstick_[colourName]-over"
+	STOP_PROCESSING(SSobj, src)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)

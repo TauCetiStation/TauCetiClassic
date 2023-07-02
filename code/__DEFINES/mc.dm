@@ -54,6 +54,8 @@
 /// This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 32
 
+// temporary for MC tab cleaning, we need https://github.com/TauCetiStation/TauCetiClassic/pull/7601 asap
+#define SS_SHOW_IN_MC_TAB 64
 
 //SUBSYSTEM STATES
 #define SS_IDLE     0  // Aint doing shit.

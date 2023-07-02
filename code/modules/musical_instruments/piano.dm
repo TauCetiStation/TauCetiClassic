@@ -26,7 +26,7 @@
 	MP.interact(user)
 
 /obj/structure/device/piano/attackby(obj/item/O, mob/user)
-	if(iswrench(O))
+	if(iswrenching(O))
 		if(user.is_busy(src))
 			return
 		if (anchored)

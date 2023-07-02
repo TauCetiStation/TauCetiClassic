@@ -14,6 +14,8 @@
 
 	handle_combat()
 
+	handle_nutrition()
+
 	if(client)
 		handle_regular_hud_updates()
 
@@ -96,14 +98,6 @@
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
-			if(!ishuman(src))
-				if(disabilities & NEARSIGHTED)
-					overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, 1)
-				else
-					clear_fullscreen("impaired")
-
-					update_eye_blur()
-
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)
@@ -164,3 +158,6 @@
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
+
+/mob/living/proc/handle_nutrition()
+	return

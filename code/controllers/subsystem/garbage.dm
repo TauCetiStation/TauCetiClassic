@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(garbage)
 	priority      = SS_PRIORITY_GARBAGE
 	wait          = SS_WAIT_GARBAGE
 
-	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT | SS_SHOW_IN_MC_TAB
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/list/collection_timeout = list(GC_FILTER_QUEUE, GC_CHECK_QUEUE, GC_DEL_QUEUE)	// deciseconds to wait before moving something up in the queue to the next level
@@ -161,11 +161,11 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				if(reference_find_on_fail[refID] && !ref_search_stop)
-					INVOKE_ASYNC(D, /datum/proc/find_references)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum, find_references))
 					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else if (!ref_search_stop)
-					INVOKE_ASYNC(D, /datum/proc/find_references)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum, find_references))
 					ref_searching = TRUE
 				#endif
 				reference_find_on_fail -= refID
@@ -383,7 +383,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 
 		if(!skip_alert)
-			if(tgui_alert(usr, "Running this will lock everything up for about 5 minutes. Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+			if(tgui_alert(usr, "Running this will lock everything up for about 5 minutes. Would you like to begin the search?", "Find References", list("Yes", "No")) != "Yes")
 				running_find_references = null
 				return
 

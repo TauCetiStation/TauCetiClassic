@@ -28,7 +28,7 @@
 			var/datum/skill/skill = all_skills[skill_type]
 			if(skill.name == skill_name)
 				selected_buffs[skill_type] = skills_list[skill_name]
-		
+
 /obj/item/weapon/skill_cartridge/proc/get_used_points()
 	var/result = 0
 	for(var/skill_type in selected_buffs)
@@ -93,7 +93,7 @@
 	if(!compatible)
 		H.adjustBrainLoss(100)
 		meltdown()
-	if(H.ismindprotect())
+	if(HAS_TRAIT(H, TRAIT_VISUAL_MINDSHIELD) || HAS_TRAIT(H, TRAIT_VISUAL_LOYAL))
 		H.adjustBrainLoss(25)
 		meltdown()
 		return
@@ -107,7 +107,7 @@
 			H.adjustToxLoss(50)
 			H.Stun(5)
 			H.Weaken(5)
-	
+
 	H.add_skills_buff(added_skillset)
 	return TRUE
 

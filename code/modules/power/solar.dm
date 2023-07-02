@@ -1,5 +1,5 @@
 #define SOLAR_MAX_DIST 40
-#define SOLARGENRATE 1500
+#define SOLARGENRATE 1800
 
 // This will choose whether to get the solar list from the powernet or the powernet nodes,
 // depending on the size of the nodes.
@@ -61,7 +61,7 @@
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
-	if(iscrowbar(W))
+	if(isprying(W))
 		if(user.is_busy()) return
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 50,target = src))
@@ -136,11 +136,16 @@
 
 	if(obscured)	return
 
-	var/sgen = SOLARGENRATE * sunfrac
+	var/sgen = calculate_energy_incoming()
 	add_avail(sgen)
 	if(powernet && control)
 		if(powernet.nodes[control])
 			control.gen += sgen
+
+//override this if you want more/less power incoming from solars
+/obj/machinery/power/solar/proc/calculate_energy_incoming()
+	//Enough for supply NSS Exodus
+	return SOLARGENRATE * sunfrac
 
 /obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
 	. = ..(mapload, S, 0)
@@ -184,12 +189,12 @@
 
 /obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
 	if(!anchored && isturf(loc))
-		if(iswrench(I))
+		if(iswrenching(I))
 			anchored = TRUE
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
 			return TRUE
 	else
-		if(iswrench(I))
+		if(iswrenching(I))
 			anchored = FALSE
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
 			return TRUE
@@ -213,7 +218,7 @@
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
 			return TRUE
 	else
-		if(iscrowbar(I))
+		if(isprying(I))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
@@ -240,6 +245,8 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
+	required_skills = null
+
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 	var/id = 0
@@ -250,6 +257,8 @@
 	var/trackrate = 60		// Measured in tenths of degree per minute (i.e. defaults to 6.0 deg/min)
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
+
+
 
 /obj/machinery/power/solar_control/atom_init()
 	. = ..()
@@ -286,8 +295,8 @@
 		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return
 
-/obj/machinery/power/solar_control/attackby(I, mob/user)
-	if(isscrewdriver(I))
+/obj/machinery/power/solar_control/attackby(obj/item/weapon/I, mob/user)
+	if(isscrewing(I))
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 20, target = src))

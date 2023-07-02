@@ -21,11 +21,16 @@
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
-	clumsy_check = 0
+	clumsy_check = FALSE
+
+/obj/item/weapon/gun/energy/laser/selfcharging
+	name = "selfcharging laser gun"
+	var/charge_rate = 30
 
 /obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
 	. = ..()
-	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, .proc/update_selfrecharger_icon)
+	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, PROC_REF(update_selfrecharger_icon))
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, charge_rate)
 
 /obj/item/weapon/gun/energy/laser/selfcharging/proc/update_selfrecharger_icon()
 	SIGNAL_HANDLER
@@ -41,11 +46,6 @@
 	icon_state = "laser"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
-
-
-/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
-	. = ..()
-	power_supply.AddComponent(/datum/component/cell_selfrecharge, 30)
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/newshot()
 	if(!isrobot(loc))
@@ -64,10 +64,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = null
 	can_be_holstered = TRUE
-
-/obj/item/weapon/gun/energy/laser/selfcharging/captain/atom_init()
-	. = ..()
-	power_supply.AddComponent(/datum/component/cell_selfrecharge, 25)
+	charge_rate = 25
 
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"
@@ -75,10 +72,7 @@
 	desc = " The object menaces with spikes of energy. You don't kmown what kind of weapon."
 	force = 5
 	origin_tech = null
-
-/obj/item/weapon/gun/energy/laser/selfcharging/alien/atom_init()
-	. = ..()
-	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+	charge_rate = 50
 
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
@@ -128,54 +122,34 @@
 
 ////////Laser Tag////////////////////
 
-/obj/item/weapon/gun/energy/laser/lasertag
+/obj/item/weapon/gun/energy/laser/selfcharging/lasertag
 	name = "laser tag gun"
 	icon_state = "retro"
 	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/omnitag)
 	origin_tech = "combat=1;magnets=2"
-	clumsy_check = 0
+	clumsy_check = FALSE
 	can_be_holstered = TRUE
-	var/charge_tick = 0
 
 	var/lasertag_color = "none"
 
-/obj/item/weapon/gun/energy/laser/lasertag/special_check(mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/lasertag))
 			var/obj/item/clothing/suit/lasertag/L = M.wear_suit
 			if(L.lasertag_color == lasertag_color)
 				return ..()
 		to_chat(M, "<span class='warning'>You need to be wearing your appropriate color laser tag vest!</span>")
-	return 0
+	return FALSE
 
-/obj/item/weapon/gun/energy/laser/lasertag/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/gun/energy/laser/lasertag/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/gun/energy/laser/lasertag/process()
-	charge_tick++
-	if(charge_tick < 4)
-		return FALSE
-	charge_tick = 0
-	if(!power_supply)
-		return FALSE
-	power_supply.give(130)
-	update_icon()
-	return TRUE
-
-/obj/item/weapon/gun/energy/laser/lasertag/bluetag
+/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag
 	fire_delay = 5
 	icon_state = "bluetag"
 	item_state = "l_tag_blue"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	lasertag_color = "blue"
 
-/obj/item/weapon/gun/energy/laser/lasertag/redtag
+/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag
 	fire_delay = 5
 	icon_state = "redtag"
 	item_state = "l_tag_red"

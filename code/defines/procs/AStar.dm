@@ -90,7 +90,7 @@
 
 		maxnodedepth = maxnodes  // No need to consider path longer than maxnodes
 
-	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare)  // The open list
+	var/Heap/open = new /Heap(GLOBAL_PROC_REF(HeapPathWeightCompare))  // The open list
 	var/list/closed = list()                                // The closed list
 
 	var/list/path = null  // The returned path, if any
@@ -180,7 +180,7 @@
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
-	for(var/obj/structure/window/W in src)
+	for(var/obj/structure/window/thin/W in src)
 		if(!W.CanAStarPass(ID, adir))
 			return TRUE
 

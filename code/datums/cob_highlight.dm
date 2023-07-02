@@ -74,7 +74,7 @@
 		to_chat(M, "<span class='warning'>\The [from_recipe.title] must be constructed on the floor!</span>")
 	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.
 		. = FALSE
-	else if(!(origin.CanPass(null, here, 0, 0) && here.CanPass(null, origin, 0, 0)))
+	else if(!origin.CanPass(null, here, 0))
 		. = FALSE
 	else
 		for(var/atom/movable/AM in here)

@@ -11,6 +11,9 @@
 	anchored = FALSE
 	opacity = 0
 	plane = GAME_PLANE
+	flags = NODECONSTRUCT
+	w_class = SIZE_MASSIVE
+
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,
@@ -34,16 +37,16 @@
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
 	var/salvage_with = ""
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	if(iswirecutter(W))
+	if(iscutter(W))
 		salvage_with = "wirecutter"
-	if(iscrowbar(W))
+	if(isprying(W))
 		salvage_with = "crowbar"
 	if(!salvage_with)
 		..()
@@ -125,8 +128,8 @@
 			/obj/item/weapon/circuitboard/mecha/ultra/targeting,
 			/obj/item/weapon/circuitboard/mecha/ultra/peripherals,
 			/obj/item/weapon/circuitboard/mecha/ultra/main,
-			/obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/capacitor/adv/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 			/obj/item/stack/rods
 			),
 		"crowbar" = list(
@@ -271,8 +274,8 @@
 			/obj/item/weapon/circuitboard/mecha/vindicator/targeting,
 			/obj/item/weapon/circuitboard/mecha/vindicator/peripherals,
 			/obj/item/weapon/circuitboard/mecha/vindicator/main,
-			/obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/capacitor/adv/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 			/obj/item/stack/rods
 			),
 		"crowbar" = list(

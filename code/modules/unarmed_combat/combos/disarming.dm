@@ -81,7 +81,7 @@
 		victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
-	if(!(CLUMSY in attacker.mutations))
+	if(!(attacker.IsClumsy()))
 		return
 
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
@@ -209,7 +209,7 @@
 
 				// Clowns take off the uniform while slidekicking.
 				// A little funny.
-				if(CLUMSY in attacker.mutations)
+				if(attacker.IsClumsy())
 					var/temp_end_string = take_pants_off(L, attacker)
 					if(temp_end_string != "")
 						end_string = temp_end_string
@@ -408,7 +408,7 @@
 							event_log(new_mover, attacker, "Forced Dropkick Stun")
 
 			for(var/mob/living/L in cur_movers)
-				INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
+				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(_step), L, dropkick_dir)
 
 			// Since they were the one to push.
 			if(!do_combo(victim, attacker, attacker.movement_delay() * 0.5))
@@ -434,3 +434,113 @@
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)
 	return
+
+
+
+/datum/combat_combo/capture_cqc
+	name = COMBO_CAPTURE_CQC
+	desc = "A move that allows you to quickly grab the opponent's hand, quickly turn it around, breaking it, and then take the opponent into a very strong grab."
+	combo_icon_state = "capture_cqc"
+	cost = 90
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM, INTENT_GRAB)
+
+	scale_size_exponent = 0.0
+
+	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
+
+	require_arm = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+	)
+
+/datum/combat_combo/capture_cqc/execute(mob/living/victim, mob/living/attacker)
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
+
+	victim.Stun(2)
+
+	if(victim.buckled)
+		victim.buckled.unbuckle_mob()
+	if(attacker.buckled)
+		attacker.buckled.unbuckle_mob()
+
+	var/obj/item/weapon/grab/victim_G = prepare_grab(victim, attacker, GRAB_NECK)
+	if(!istype(victim_G))
+		return
+
+	var/target_zone = attacker.get_targetzone()
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
+
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+		victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
+		to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
+		victim.adjustHalLoss(clamp(0, 40 - victim.halloss, 40)) // up to 40 halloss
+		if(armor_check < 30)
+			BP.fracture()
+
+	victim_G.force_down = TRUE
+	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=2)
+	apply_effect(3, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=2)
+	victim.visible_message("<span class='danger'>[attacker] bends [victim] arm sharply!</span>")
+
+	step_to(attacker, victim)
+	attacker.set_dir(EAST) //face the victim
+	victim.set_dir(SOUTH) //face up
+
+
+
+/datum/combat_combo/neck_blow
+	name = COMBO_NECK_CULT
+	desc = "A blow to the neck allows you to silence the target, as well as stop their breath."
+	combo_icon_state = "neckblow_cult"
+	cost = 15
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	allowed_target_zones = list(BP_HEAD)
+	require_arm_to_perform = TRUE
+
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7
+	)
+
+/datum/combat_combo/neck_blow/execute(mob/living/victim, mob/living/attacker)
+	victim.losebreath += 40
+	victim.silent += 15
+	victim.visible_message("<span class='danger'>[attacker] punches [victim] in the neck!</span>")
+	playsound(victim, 'sound/effects/mob/hits/medium_1.ogg', VOL_EFFECTS_MASTER)
+
+
+
+/datum/combat_combo/eyes
+	name = COMBO_EYES_CULT
+	desc = "You masterfully poke your opponent in the eyes, which allows you to disorient them, as well as damage their eyeballs. Does not work if the target is wearing glasses or a mask."
+	combo_icon_state = "eyes_cult"
+	cost = 10
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	allowed_target_zones = list(O_EYES)
+	require_arm_to_perform = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7
+	)
+
+/datum/combat_combo/eyes/execute(mob/living/victim, mob/living/attacker)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// you can't stab someone in the eyes wearing a mask!
+			to_chat(attacker, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
+			return
+	victim.MakeConfused(5)
+	victim.adjustBlurriness(5)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		IO.damage += 20
+	victim.flash_eyes()
+	victim.visible_message("<span class='danger'>[attacker] pokes [victim] in the eye!</span>")

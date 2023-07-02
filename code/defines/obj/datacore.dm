@@ -45,32 +45,32 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		var/rank = sanitize(t.fields["rank"])
 		var/real_rank = t.fields["real_rank"]
 		var/isactive = t.fields["p_stat"]
+
 		var/account_number = t.fields["acc_number"]
-		var/account_datum = t.fields["acc_datum"]
 		var/in_department = FALSE
 
 		if(real_rank in command_positions)
-			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = command_positions.Find(real_rank))
+			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = command_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in security_positions)
-			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = security_positions.Find(real_rank))
+			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = security_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in engineering_positions)
-			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = engineering_positions.Find(real_rank))
+			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = engineering_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in medical_positions)
-			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = medical_positions.Find(real_rank))
+			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = medical_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in science_positions)
-			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = science_positions.Find(real_rank))
+			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in civilian_positions)
-			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = civilian_positions.Find(real_rank))
+			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = civilian_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in nonhuman_positions)
@@ -78,15 +78,15 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			in_department = TRUE
 
 		if(!in_department)
-			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 
-	sortTim(heads, /proc/cmp_job_titles, FALSE)
-	sortTim(sec,   /proc/cmp_job_titles, FALSE)
-	sortTim(eng,   /proc/cmp_job_titles, FALSE)
-	sortTim(med,   /proc/cmp_job_titles, FALSE)
-	sortTim(sci,   /proc/cmp_job_titles, FALSE)
-	sortTim(civ,   /proc/cmp_job_titles, FALSE)
-	sortTim(bot,   /proc/cmp_job_titles, FALSE)
+	sortTim(heads, GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(sec,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(eng,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(med,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(sci,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(civ,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(bot,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 
 	remove_priority_field(heads)
 	remove_priority_field(sec)
@@ -136,7 +136,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			prio = 1
 		Silicon_Manifest[++Silicon_Manifest.len] = list("name" = name, "rank" = rank, "active" = is_active, "net" = net, "priority" = prio)
 
-	sortTim(Silicon_Manifest, /proc/cmp_job_titles, FALSE)
+	sortTim(Silicon_Manifest, GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 	remove_priority_field(Silicon_Manifest)
 
 /obj/effect/datacore/proc/get_manifest()
@@ -293,6 +293,8 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
+		G.fields["insurance_account_number"] = H.mind.get_key_memory(MEM_ACCOUNT_NUMBER)
+		G.fields["insurance_type"] = H.roundstart_insurance
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
@@ -307,12 +309,12 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			G.fields["notes"] = H.gen_record
 		else
 			G.fields["notes"] = "No notes found."
-		if(H.mind.initial_account)
-			G.fields["acc_number"]	= H.mind.initial_account.account_number
-			G.fields["acc_datum"] = H.mind.initial_account
-		else
-			G.fields["acc_number"]	= 0
-			G.fields["acc_datum"] =	0
+
+		var/acc_number = H.mind.get_key_memory(MEM_ACCOUNT_NUMBER)
+		if(!acc_number)
+			acc_number = 0
+		G.fields["acc_number"] = acc_number
+
 		general += G
 
 		//Medical Record

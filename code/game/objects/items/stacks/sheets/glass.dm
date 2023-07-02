@@ -17,7 +17,7 @@
 	icon_state = "sheet-glass"
 	g_amt = 3750
 	origin_tech = "materials=1"
-	var/created_window = /obj/structure/window/basic
+	var/created_window = /obj/structure/window/thin
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/sheet/glass/cyborg
@@ -26,7 +26,7 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 0
-	created_window = /obj/structure/window/basic
+	created_window = /obj/structure/window/thin
 
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
@@ -94,8 +94,8 @@
 	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, required_skills, "<span class='notice'>You fumble around figuring out how to use glass to make window.</span>"))
 		return
 	title += " ([get_amount()] sheet\s left)"
-	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
-		if("One Direction")
+	switch(input(title, "What would you like to make?", "Thin Windows") in list("Thin Windows", "Glass Table Parts", "Cancel"))
+		if("Thin Windows")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
@@ -103,7 +103,7 @@
 
 			var/list/directions = global.cardinal.Copy()
 			var/i = 0
-			for(var/obj/structure/window/win in user.loc)
+			for(var/obj/structure/window/thin/win in user.loc)
 				i++
 				if(i >= 4)
 					to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
@@ -128,31 +128,12 @@
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
-			var/obj/structure/window/W
+			var/obj/structure/window/thin/W
 			W = new created_window(user.loc)
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = FALSE
-		if("Full Window")
-			if(QDELETED(src))
-				return 1
-			if(src.loc != user)
-				return 1
-			var/step = get_step(user, user.dir)
-			var/turf/T = get_turf(step)
-			if(T.density || (locate(/obj/structure/window) in step))
-				to_chat(user, "<span class='warning'>There is something in the way.</span>")
-				return 1
 
-			if(!use(2))
-				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
-
-			var/obj/structure/window/W
-			W = new created_window(step)
-			W.set_dir(SOUTHWEST)
-			W.ini_dir = SOUTHWEST
-			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
@@ -169,7 +150,7 @@
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc) // todo: phoron shard types
 	set_amount(get_amount() - rand(5,35))
 
 /obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
@@ -214,15 +195,15 @@
 	title += " ([get_amount()] sheet\s left)"
 	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, required_skills, "<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>"))
 		return
-	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
-		if("One Direction")
+	switch(input(title, "Would you like thin windows glass pane or a windoor?") in list("Thin Windows", "Windoor", "Cancel"))
+		if("Thin Windows")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
 			var/list/directions = global.cardinal.Copy()
 			var/i = 0
-			for (var/obj/structure/window/win in user.loc)
+			for (var/obj/structure/window/thin/win in user.loc)
 				i++
 				if(i >= 4)
 					to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
@@ -247,32 +228,10 @@
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
-			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced(user.loc)
-			W.state = 0
+			var/obj/structure/window/thin/W
+			W = new /obj/structure/window/thin/reinforced(user.loc)
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = FALSE
-
-		if("Full Window")
-			if(QDELETED(src))
-				return 1
-			if(src.loc != user)
-				return 1
-			var/step = get_step(user, user.dir)
-			var/turf/T = get_turf(step)
-			if(T.density || (locate(/obj/structure/window) in step))
-				to_chat(user, "<span class='warning'>There is something in the way.</span>")
-				return 1
-			if(!use(2))
-				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
-			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced(step)
-			W.state = 0
-			W.set_dir(SOUTHWEST)
-			W.ini_dir = SOUTHWEST
-			W.state = 0
 			W.anchored = FALSE
 
 		if("Windoor")
@@ -315,79 +274,6 @@
 	return 0
 
 /*
- * Glass shards - TODO: Move this into code/game/object/item/weapons
- */
-/obj/item/weapon/shard/Bump()
-	if(prob(20))
-		force = 15
-	else
-		force = 4
-	..()
-
-/obj/item/weapon/shard/atom_init()
-	. = ..()
-
-	icon_state = pick("large", "medium", "small")
-	switch(icon_state)
-		if("small")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("medium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("large")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
-
-/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.use(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for(var/obj/item/stack/sheet/glass/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.get_amount() >= G.max_amount)
-					continue
-				G.attackby(NG, user)
-				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.get_amount()] sheets.")
-			qdel(src)
-
-	else
-		return ..()
-
-/obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
-		var/mob/M = AM
-		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
-		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-
-			if(H.species.flags[IS_SYNTHETIC])
-				return
-
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
-				return
-
-			if(H.species.flags[NO_MINORCUTS])
-				return
-
-			if(H.buckled)
-				return
-
-			if(!H.shoes)
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.is_robotic())
-					return
-				BP.take_damage(5, 0)
-				if(!H.species.flags[NO_PAIN])
-					H.Stun(1)
-					H.Weaken(3)
-				H.updatehealth()
-	. = ..()
-
-/*
  * Phoron Glass sheets
  */
 /obj/item/stack/sheet/glass/phoronglass
@@ -397,7 +283,7 @@
 	icon_state = "sheet-phoronglass"
 	g_amt = 7500
 	origin_tech = "materials=3;phorontech=2"
-	created_window = /obj/structure/window/phoronbasic
+	created_window = /obj/structure/window/thin/phoron
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
@@ -414,7 +300,7 @@
 	g_amt = 7500
 	m_amt = 1875
 	origin_tech = "materials=4;phorontech=2"
-	created_window = /obj/structure/window/phoronreinforced
+	created_window = /obj/structure/window/thin/reinforced/phoron
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_MASTER)
 
 /obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)

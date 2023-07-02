@@ -102,7 +102,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	if (panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
@@ -219,7 +219,7 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/M in D.materials)
 		loaded_materials[M].amount = max(0, (loaded_materials[M].amount - (D.materials[M] / efficiency_coeff * amount)))
 
-	addtimer(CALLBACK(src, .proc/create_design, RNDD), 32 * amount / efficiency_coeff)
+	addtimer(CALLBACK(src, PROC_REF(create_design), RNDD), 32 * amount / efficiency_coeff)
 
 /obj/machinery/r_n_d/protolathe/proc/create_design(datum/rnd_queue_design/RNDD)
 	if(!linked_console)

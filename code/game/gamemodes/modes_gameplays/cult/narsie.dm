@@ -9,15 +9,6 @@
 	layer = SINGULARITY_LAYER
 	density = TRUE
 
-/atom/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
-	for(var/mob/M as anything in observer_list)
-		if(!M.client)
-			continue
-		var/turf/T = get_turf(src)
-		to_chat(M, "<span class='ghostalert'>[FOLLOW_OR_TURF_LINK(M, src, T)] [message]</span>")
-		if(ghost_sound)
-			M.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
-
 /obj/singularity/narsie
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
@@ -38,7 +29,7 @@
 /obj/singularity/narsie/atom_init(mapload, datum/religion/religion = global.cult_religion)
 	. = ..()
 	my_religion = religion
-	INVOKE_ASYNC(src, .proc/begin_the_end)
+	INVOKE_ASYNC(src, PROC_REF(begin_the_end))
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
@@ -51,7 +42,7 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.")
+		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.", source = src, action = NOTIFY_ORBIT, header = "Nar'Sie")
 
 	playsound_frequency_admin = -1
 
@@ -67,7 +58,7 @@
 	new /datum/event/anomaly/cult_portal/massive(new /datum/event_meta(EVENT_LEVEL_MAJOR, "Massive Cult Portals"))
 	log_debug("Force starting event for nar-sie 'Massive Cult Portals'.")
 
-	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.3), 70)
+	addtimer(CALLBACK(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, incall), 0.3), 70)
 
 /obj/singularity/narsie/process()
 	eat()

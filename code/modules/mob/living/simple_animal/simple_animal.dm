@@ -1,6 +1,6 @@
 /mob/living/simple_animal
 	name = "animal"
-	desc = "Just simple animal"
+	desc = "Просто существует."
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
@@ -60,6 +60,8 @@
 	var/has_arm = FALSE
 	var/has_leg = FALSE
 
+	can_point = FALSE
+
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
@@ -78,6 +80,14 @@
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+
+/mob/living/simple_animal/Login()
+	. = ..()
+	stop_automated_movement = TRUE
+
+/mob/living/simple_animal/Logout()
+	. = ..()
+	stop_automated_movement = initial(stop_automated_movement)
 
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
@@ -379,6 +389,9 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	else
+		stat = CONSCIOUS
+		blinded = FALSE
 	med_hud_set_status()
 
 /mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)

@@ -8,6 +8,7 @@ var/global/list/wedge_image_cache = list()
 	anchored = TRUE
 	opacity = 1
 	density = TRUE
+	can_block_air = TRUE
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)
@@ -54,7 +55,7 @@ var/global/list/wedge_image_cache = list()
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 
 /obj/machinery/door/Destroy()
@@ -138,8 +139,12 @@ var/global/list/wedge_image_cache = list()
 	else
 		underlays += global.wedge_image_cache[cache_string]
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+/obj/machinery/door/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -360,14 +365,14 @@ var/global/list/wedge_image_cache = list()
 			for(var/obj/item/I in turf)
 				if(I.w_class < SIZE_SMALL)
 					continue
-				if(I.get_quality(QUALITY_PRYING) <= 0.0)
+				if(isprying(I) <= 0.0)
 					continue
 
 				operating = TRUE
 				density = TRUE
 				wedging = TRUE
 
-				INVOKE_ASYNC(src, .proc/crush_wedge_animation, I)
+				INVOKE_ASYNC(src, PROC_REF(crush_wedge_animation), I)
 				return
 
 	if(close_checks(forced))
@@ -431,7 +436,7 @@ var/global/list/wedge_image_cache = list()
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
-	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/on_wedge_destroy)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), PROC_REF(on_wedge_destroy))
 
 /obj/machinery/door/proc/try_wedge_item(mob/living/user)
 	if(!can_wedge_items)
@@ -444,7 +449,7 @@ var/global/list/wedge_image_cache = list()
 	if(I.w_class < SIZE_SMALL)
 		return FALSE
 
-	if(I.get_quality(QUALITY_PRYING) <= 0.0)
+	if(isprying(I) <= 0.0)
 		return FALSE
 
 	if(density)
@@ -560,7 +565,7 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/update_nearby_tiles(need_rebuild)
+/obj/machinery/door/update_nearby_tiles()
 	. = ..()
 
 	if(.)

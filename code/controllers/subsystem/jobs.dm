@@ -470,7 +470,7 @@ SUBSYSTEM_DEF(job)
 			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary + job.starting_money, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -483,6 +483,9 @@ SUBSYSTEM_DEF(job)
 			remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
 
 		H.mind.store_memory(remembered_info)
+
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER, department_account.account_number)
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_PIN, department_account.remote_access_pin)
 
 	spawn(0)
 		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
@@ -582,9 +585,21 @@ SUBSYSTEM_DEF(job)
 		C.assign(H.real_name)
 
 		//put the player's account number onto the ID
-		if(H.mind && H.mind.initial_account)
-			C.associated_account_number = H.mind.initial_account.account_number
-			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
+		if(H.mind)
+			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+			if(MA)
+				C.associated_account_number = MA.account_number
+				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
+				MA.owner_preferred_insurance_type = job.is_head ? SSeconomy.insurance_quality_decreasing[1] : H.roundstart_insurance
+				MA.owner_max_insurance_payment = job.is_head ? SSeconomy.roundstart_insurance_prices[MA.owner_preferred_insurance_type] : SSeconomy.roundstart_insurance_prices[H.roundstart_insurance]
+				var/insurance_type = get_next_insurance_type(H.roundstart_insurance, MA, SSeconomy.roundstart_insurance_prices)
+				H.roundstart_insurance = insurance_type
+				var/med_account_number = global.department_accounts["Medical"].account_number
+				var/insurance_price = SSeconomy.roundstart_insurance_prices[insurance_type]
+				charge_to_account(med_account_number, med_account_number, "[insurance_type] Insurance payment", "NT Insurance", insurance_price)
+				charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+
+
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
@@ -595,9 +610,11 @@ SUBSYSTEM_DEF(job)
 		pda.assign(H.real_name)
 		pda.ownrank = C.rank
 		pda.check_rank(C.rank)
-		pda.owner_account = H.mind.initial_account		//bind the account to the pda
-		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
-		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
+
+		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+		pda.owner_account = MA.account_number //bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
+		MA.owner_PDA = pda //add PDA in /datum/money_account
 
 	return TRUE
 

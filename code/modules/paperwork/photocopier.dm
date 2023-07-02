@@ -46,7 +46,7 @@
 
 	switch(action)
 		if("make_copy")
-			addtimer(CALLBACK(src, .proc/copy_operation, usr), 0)
+			addtimer(CALLBACK(src, PROC_REF(copy_operation), usr), 0)
 			. = TRUE
 		if("remove")
 			if(copyitem)
@@ -176,7 +176,7 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
-	else if(iswrench(O))
+	else if(iswrenching(O))
 		default_unfasten_wrench(user, O)
 
 /obj/machinery/photocopier/atom_break(damage_flag)

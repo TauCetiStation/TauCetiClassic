@@ -127,6 +127,8 @@
 #define TRAIT_IMMOBILIZED "immobilized"
 /// Prevents hands and legs usage
 #define TRAIT_INCAPACITATED "incapacitated"
+/// This mob overrides certian SSlag_switch measures with this special trait
+#define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
 
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
@@ -154,6 +156,7 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
+#define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
@@ -164,9 +167,25 @@
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_ANATOMIST           "anatomist"
 #define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
+#define TRAIT_PICKY_EATER         "picky_eater"
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
 #define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
+#define TRAIT_HEMOCOAGULATION     "hemocoagulation"
+#define TRAIT_CLUMSY              "clumsy"
+#define TRAIT_CLUMSY_IMMUNE       "clumsy_immune"
+#define TRAIT_SHOCKIMMUNE         "shockimmune"
+#define TRAIT_NATURAL_AGILITY     "natural_agility"
+#define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
+#define TRAIT_STEEL_NERVES        "steel_nerves"
+#define TRAIT_ARIBORN             "ariborn"
+#define TRAIT_NO_CRAWL            "nocrawl"
+#define TRAIT_HIDDEN_TRASH_GUN    "hidden_trash_gun"
+#define TRAIT_VISUAL_MINDSHIELD   "visual_mindshield"
+#define TRAIT_VISUAL_LOYAL        "visual_loyal"
+#define TRAIT_VISUAL_OBEY         "visual_obey"
+#define TRAIT_VISUAL_CHEM         "visual_chem"
+#define TRAIT_VISUAL_TRACK        "visual_track"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -192,6 +211,7 @@
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
+#define BLUESPACE_MOVE_COMPONENT_TRAIT "bluespace_move_component_trait"
 #define MOOD_COMPONENT_TRAIT "mood_component"
 #define SPAWN_AREA_TRAIT "spawn_area_trait"
 // medical stuff I guess
@@ -201,3 +221,20 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+
+// trait sources
+#define EYE_DAMAGE_TRAIT "eye_damage"
+#define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
+#define GENETIC_MUTATION_TRAIT "genetic"
+#define QUIRK_TRAIT "quirk"
+#define VIRUS_TRAIT "virus"
+#define STATUS_EFFECT_TRAIT "status_effect"
+#define IMPLANT_TRAIT "implant"
+#define FAKE_IMPLANT_TRAIT "fake_implant"
+
+
+// airborn trait surces
+#define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself
+#define TRAIT_ARIBORN_AIRFLOW "trait_ariborn_airflow" // from atmos
+#define TRAIT_ARIBORN_THROWN "trait_ariborn_trown" // if someone thrown it
+//#define TRAIT_ARIBORN_NO_GRAVITY "trait_ariborn_no_gravity" // todo?

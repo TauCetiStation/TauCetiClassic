@@ -145,8 +145,7 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	for(var/mob/living/L in range (3,src))
-		L.apply_effect(15, IRRADIATE, 0)
+	irradiate_in_dist(get_turf(src), 15, 3)
 
 /obj/machinery/door/airlock/phoron
 	name = "phoron airlock"
@@ -165,7 +164,7 @@
 /obj/machinery/door/airlock/phoron/proc/PhoronBurn(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2, loc))
 		target_tile.assume_gas("phoron", 35, 400 + T0C)
-		INVOKE_ASYNC(target_tile, /turf/simulated/floor.proc/hotspot_expose, temperature, 400)
+		INVOKE_ASYNC(target_tile, TYPE_PROC_REF(/turf/simulated/floor, hotspot_expose), temperature, 400)
 
 	for(var/obj/structure/falsewall/phoron/F in range(3, src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)

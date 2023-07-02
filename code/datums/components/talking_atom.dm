@@ -11,7 +11,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/talking_atom/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/catchMessage)
+	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(catchMessage))
 
 	var/atom/movable/talking_parent = parent
 	talking_parent.flags ^= HEAR_TA_SAY // only one such component currently

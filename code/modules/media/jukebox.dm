@@ -147,7 +147,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(user.is_busy(src))
 			return
 		var/un = !anchored ? "" : "un"
@@ -195,7 +195,7 @@ var/global/loopModeNames=list(
 		if(!check_reload())
 			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return FALSE
-		addtimer(CALLBACK(src, .proc/updateUsrDialog), JUKEBOX_RELOAD_COOLDOWN, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(updateUsrDialog)), JUKEBOX_RELOAD_COOLDOWN, TIMER_UNIQUE)
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
 		playlist = null
@@ -378,7 +378,7 @@ var/global/loopModeNames=list(
 	update_music()
 
 /obj/machinery/media/jukebox/syndi/attackby(obj/item/W, mob/user, params)
-	if(iswrench(W))
+	if(iswrenching(W))
 		return
 	else
 		..()

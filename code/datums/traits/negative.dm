@@ -87,6 +87,8 @@
 	gain_text = "<span class='danger'>Вас начинает трясти!</span>"
 	lose_text = "<span class='notice'>Вас перестаёт трясти.</span>"
 
+	incompatible_species = list(SKRELL, DIONA, IPC, ABDUCTOR)
+
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
 	)
@@ -103,6 +105,7 @@
 
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
+	H.become_nearsighted(QUIRK_TRAIT)
 	var/obj/item/clothing/glasses/regular/G = new
 	if(!H.equip_to_slot_if_possible(G, SLOT_GLASSES, null, TRUE))
 		H.put_in_hands(G)
@@ -183,7 +186,7 @@
 /datum/quirk/nyctophobia/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), PROC_REF(on_move))
 
 /datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
 	var/mob/living/carbon/human/H = quirk_holder

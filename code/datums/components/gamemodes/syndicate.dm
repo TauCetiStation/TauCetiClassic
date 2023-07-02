@@ -121,6 +121,8 @@
 		total_TC += R.hidden_uplink.uses
 		R.hidden_uplink.uplink_type = uplink_type
 
+	R.hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(R.hidden_uplink))
+
 /datum/component/gamemode/syndicate/proc/give_codewords()
 	var/mob/traitor_mob = get_current()
 	if(!traitor_mob)
@@ -177,7 +179,7 @@
 
 	if (traitor_mob.mind?.assigned_role == "Clown")
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		traitor_mob.mutations.Remove(CLUMSY)
+		REMOVE_TRAIT(traitor_mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	if(uplink_uses > 0)
 		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)

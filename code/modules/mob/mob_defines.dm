@@ -50,6 +50,7 @@
 	var/computer_id = null
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
+	var/last_examined = ""
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -173,9 +174,6 @@
 
 	var/area/lastarea = null
 
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-	var/image/digitaldisguise = null  //what does the AI see instead of them?
-
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
@@ -232,3 +230,9 @@
 
 	/// List of action hud items the user has
 	var/list/datum/action/actions = list()
+
+	// Used for statistics of death
+	var/last_phrase
+
+	var/can_point = TRUE
+	var/show_examine_log = TRUE

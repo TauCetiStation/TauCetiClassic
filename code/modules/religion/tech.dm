@@ -10,7 +10,10 @@
 	id = RTECH_MEMORIZE_RUNE
 
 /datum/religion_tech/cult/memorizing_rune/proc/give_spell(datum/religion/R, mob/M, holy_role)
-	var/obj/effect/proc_holder/spell/no_target/memorize_rune/MR = new
+	var/obj/effect/proc_holder/spell/no_target/memorize_rune/MR = M.GetSpell(/obj/effect/proc_holder/spell/no_target/memorize_rune)
+	if(MR || M.GetSpell(/obj/effect/proc_holder/spell/no_target/scribe_rune))
+		return
+	MR = new
 	M.AddSpell(MR)
 
 /datum/religion_tech/cult/memorizing_rune/proc/remove_spell(datum/religion/R, mob/M)
@@ -21,8 +24,8 @@
 	for(var/mob/M in R.members)
 		give_spell(R, M)
 
-	RegisterSignal(R, list(COMSIG_REL_ADD_MEMBER), .proc/give_spell)
-	RegisterSignal(R, list(COMSIG_REL_REMOVE_MEMBER), .proc/remove_spell)
+	RegisterSignal(R, list(COMSIG_REL_ADD_MEMBER), PROC_REF(give_spell))
+	RegisterSignal(R, list(COMSIG_REL_REMOVE_MEMBER), PROC_REF(remove_spell))
 
 /datum/religion_tech/cult/reusable_runes
 	id = RTECH_REUSABLE_RUNE

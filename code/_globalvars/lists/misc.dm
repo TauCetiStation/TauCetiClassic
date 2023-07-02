@@ -25,11 +25,10 @@ var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_DRONE = 1440,
 	ROLE_CULTIST = 3600,
 	ROLE_BLOB = 2880,
-	ROLE_NINJA = 4320,
 	ROLE_MALF = 3600,
 	ROLE_SHADOWLING = 4320,
-	ROLE_ABDUCTOR = 2880,
 	ROLE_FAMILIES = 2160,
+	ROLE_REPLICATOR = 2880,
 	ROLE_GHOSTLY = 360,
 )
 
@@ -96,25 +95,25 @@ var/global/list/cash_increase_list = list()
 //TODO: make the function the same as in cash_increase_list
 var/global/static/list/stock_parts_increase_list = list(
 	/obj/item/weapon/stock_parts/capacitor = /obj/item/weapon/stock_parts/capacitor/adv,
-	/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/super,
-	/obj/item/weapon/stock_parts/capacitor/super = /obj/item/weapon/stock_parts/capacitor/quadratic,
-	/obj/item/weapon/stock_parts/capacitor/quadratic = /obj/item/weapon/stock_parts/capacitor,
+	/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/adv/super,
+	/obj/item/weapon/stock_parts/capacitor/adv/super = /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic,
+	/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = /obj/item/weapon/stock_parts/capacitor,
 	/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/adv,
-	/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/phasic,
-	/obj/item/weapon/stock_parts/scanning_module/phasic = /obj/item/weapon/stock_parts/scanning_module/triphasic,
-	/obj/item/weapon/stock_parts/scanning_module/triphasic = /obj/item/weapon/stock_parts/scanning_module,
+	/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/adv/phasic,
+	/obj/item/weapon/stock_parts/scanning_module/adv/phasic = /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic,
+	/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = /obj/item/weapon/stock_parts/scanning_module,
 	/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/nano,
-	/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/pico,
-	/obj/item/weapon/stock_parts/manipulator/pico = /obj/item/weapon/stock_parts/manipulator/femto,
-	/obj/item/weapon/stock_parts/manipulator/femto = /obj/item/weapon/stock_parts/manipulator,
+	/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/nano/pico,
+	/obj/item/weapon/stock_parts/manipulator/nano/pico = /obj/item/weapon/stock_parts/manipulator/nano/pico/femto,
+	/obj/item/weapon/stock_parts/manipulator/nano/pico/femto = /obj/item/weapon/stock_parts/manipulator,
 	/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/high,
-	/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/ultra,
-	/obj/item/weapon/stock_parts/micro_laser/ultra = /obj/item/weapon/stock_parts/micro_laser/quadultra,
-	/obj/item/weapon/stock_parts/micro_laser/quadultra = /obj/item/weapon/stock_parts/micro_laser,
+	/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/high/ultra,
+	/obj/item/weapon/stock_parts/micro_laser/high/ultra = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra,
+	/obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra = /obj/item/weapon/stock_parts/micro_laser,
 	/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/adv,
-	/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/super,,
-	/obj/item/weapon/stock_parts/matter_bin/super = /obj/item/weapon/stock_parts/matter_bin/bluespace,
-	/obj/item/weapon/stock_parts/matter_bin/bluespace = /obj/item/weapon/stock_parts/matter_bin,
+	/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/adv/super,,
+	/obj/item/weapon/stock_parts/matter_bin/adv/super = /obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace,
+	/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace = /obj/item/weapon/stock_parts/matter_bin,
 )
 
 var/global/static/list/radial_question = list(
@@ -196,3 +195,5 @@ var/global/static/list/color_by_hex = list(
 
 // role_id = list(names)
 var/global/list/deconverted_roles = list()
+
+var/global/list/reagents_list = typecacheof(/datum/reagent)

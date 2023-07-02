@@ -72,8 +72,19 @@ What is the naming convention for planes or layers?
   #define SPACE_PARALLAX_3_LAYER 3
   #define SPACE_PARALLAX_PLANET_LAYER 10
 
-#define GRAVITY_PULSE_PLANE -11
-  #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
+//SINGULARITY EFFECT
+#define SINGULARITY_EFFECT_PLANE_0 -25
+#define SINGULARITY_EFFECT_PLANE_1 -24
+#define SINGULARITY_EFFECT_PLANE_2 -23
+#define SINGULARITY_EFFECT_PLANE_3 -22
+#define SINGULO_RENDER_TARGET_0 "*SINGULOEFFECT_RENDER_TARGET_0"
+#define SINGULO_RENDER_TARGET_1 "*SINGULOEFFECT_RENDER_TARGET_1"
+#define SINGULO_RENDER_TARGET_2 "*SINGULOEFFECT_RENDER_TARGET_2"
+#define SINGULO_RENDER_TARGET_3 "*SINGULOEFFECT_RENDER_TARGET_3"
+
+//ANOMALIES EFFECT
+#define ANOMALY_PLANE -21
+#define ANOMALY_RENDER_TARGET "*ANOM_RENDER_TARGET"
 
 #define FLOOR_PLANE -7
 
@@ -90,7 +101,8 @@ What is the naming convention for planes or layers?
   #define GAS_FILTER_LAYER                2.48
   #define GAS_PUMP_LAYER                  2.49
   #define LOW_OBJ_LAYER                   2.491 // Currently used only by unused machinery
-  #define FIREDOOR_LAYER                  2.5
+  #define SAFEDOOR_LAYER                  2.5   // firedoors, poddoors, and someone used this for safe for some reason
+  #define ABOVE_SAFEDOOR_LAYER            2.51  // poddoors default, they should be around SAFEDOOR_LAYER (see SAFEDOOR_CLOSED_MOD_*) but little above firedoors
   #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
   #define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
   #define DOOR_LAYER                      2.82
@@ -99,7 +111,8 @@ What is the naming convention for planes or layers?
   #define BELOW_OBJ_LAYER                 2.9
   //efine OBJ_LAYER                       3     // For easy recordkeeping; this is a byond define
   #define ABOVE_OBJ_LATER                 3.01
-  #define SHUTTERS_LAYER                  3.1
+  #define TRANSIT_TUBE_LAYER              3.1
+  #define WINDOWS_LAYER                   3.2
   #define ABOVE_WINDOW_LAYER              3.3
   #define SIGN_LAYER                      3.4   // Default value for /obj/structure/sign
   #define BELOW_MOB_LAYER                 3.7   // Currently used only by fluff struct in bluespace shelter
@@ -107,6 +120,8 @@ What is the naming convention for planes or layers?
   #define BELL_LAYER                      4.20
   #define INFRONT_MOB_LAYER               4.25
   //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define
+  #define LAMPS_LAYER                     5
+  #define MOB_ELECTROCUTION_LAYER         5.01
   #define INDICATOR_LAYER                 5.01  // Emotes should be above this as they are shown only temporary.
   #define EMOTE_LAYER                     5.02
   #define ABOVE_FLY_LAYER                 5.1
@@ -166,5 +181,5 @@ What is the naming convention for planes or layers?
 //--------------------MISC-----------------------
 //modifiers for /obj/machinery/door (and subtypes) layers
 #define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
-#define PODDOOR_CLOSED_MOD  0.31
-#define FIREDOOR_CLOSED_MOD 0.31
+#define SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW (ABOVE_WINDOW_LAYER - SAFEDOOR_LAYER)
+#define SAFEDOOR_CLOSED_MOD_BEFORE_DOOR  (DOOR_LAYER - SAFEDOOR_LAYER - 0.01)

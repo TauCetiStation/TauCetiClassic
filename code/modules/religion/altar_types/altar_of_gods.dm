@@ -31,14 +31,15 @@
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
-	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), .proc/start_rite)
-	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
+	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), PROC_REF(start_rite))
+	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), PROC_REF(reset_rite))
 	init_turfs_around()
 
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
-	religion.altars -= src
+	if(religion)
+		religion.altars -= src
 	qdel(experiments)
 	return ..()
 
@@ -125,7 +126,7 @@
 
 		if(max_points > MIN_FAVOUR_GAIN)
 			religion.adjust_favor(max_points, user)
-			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
+			INVOKE_ASYNC(src, PROC_REF(sacrifice_item), I)
 			sacrificed = TRUE
 
 		else if(max_points > 0)
@@ -391,7 +392,7 @@
 	return reactions
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(iswrench(C))
+	if(iswrenching(C))
 		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
@@ -407,20 +408,15 @@
 
 	return ..()
 
-/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
-/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 
 /obj/structure/altar_of_gods/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), PROC_REF(turf_around_enter))
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), PROC_REF(turf_around_exit))
 		turfs_around += T
 
 /obj/structure/altar_of_gods/proc/clear_turfs_around()

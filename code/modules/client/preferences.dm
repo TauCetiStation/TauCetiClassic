@@ -1,6 +1,8 @@
 var/global/list/preferences_datums = list()
 
-var/global/const/MAX_SAVE_SLOTS = 10
+#define MAX_SAVE_SLOTS 10
+#define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
+#define GET_MAX_SAVE_SLOTS(Client) ((Client && Client.supporter) ? MAX_SAVE_SLOTS_SUPPORTER : MAX_SAVE_SLOTS)
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
@@ -103,8 +105,12 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
+	var/r_belly = 0
+	var/g_belly = 0
+	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
+	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -157,6 +163,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
+	var/lobbyanimation = FALSE
 
   //custom loadout
 	var/list/gear = list()
@@ -382,6 +389,10 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	character.g_hair = g_hair
 	character.b_hair = b_hair
 
+	character.r_belly = r_belly
+	character.g_belly = g_belly
+	character.b_belly = b_belly
+
 	character.r_grad = r_grad
 	character.g_grad = g_grad
 	character.b_grad = b_grad
@@ -402,6 +413,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	character.home_system = home_system
 	character.citizenship = citizenship
+	character.roundstart_insurance = insurance
 	character.personal_faction = faction
 	character.religion = religion
 	character.vox_rank = vox_rank

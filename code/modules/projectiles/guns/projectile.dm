@@ -8,16 +8,17 @@
 	fire_delay = 0
 	recoil = 1
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
-	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
-	var/mag_type2
-	var/istwohanded = FALSE
+	var/initial_mag = /obj/item/ammo_box/magazine/stechkin
+	var/list/suitable_mags = list()
 	var/has_cover = FALSE //does this gun has cover
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()
-	magazine = new mag_type(src)
+	magazine = new initial_mag(src)
+	if(!suitable_mags.len)
+		suitable_mags += initial_mag
 	chamber_round()
 	update_icon()
 
@@ -30,6 +31,7 @@
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))
 		chamber_round()
+		update_icon()
 		return
 	if(eject_casing)
 		AC.loc = get_turf(src) //Eject casing onto ground.
@@ -41,6 +43,7 @@
 	if(no_casing)
 		qdel(AC)
 	chamber_round()
+	update_icon()
 	return
 
 /obj/item/weapon/gun/projectile/proc/chamber_round()
@@ -59,7 +62,7 @@
 /obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = I
-		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
+		if (!magazine && (AM.type in suitable_mags))
 			user.drop_from_inventory(AM, src)
 			magazine = AM
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
@@ -86,8 +89,6 @@
 			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
 			update_icon()
 			return
-		return ..()
-	if(istwohanded)
 		return ..()
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)
@@ -140,7 +141,7 @@
 	if(!user.is_in_hands(src))
 		to_chat(user, "<span class='warning'>[src] must be in your hand to do that.</span>")
 		return
-	if(!(istype(new_magazine, mag_type) || (istype(new_magazine, mag_type2))) || mag_type == null)
+	if(!(new_magazine.type in suitable_mags) || initial_mag == null)
 		return
 
 	to_chat(user, "<span class='notice'>You start a tactical reload.</span>")

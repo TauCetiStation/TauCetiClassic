@@ -77,28 +77,21 @@
 
 
 //SLIME BOOM
-/obj/item/gland/slime_boom
-	desc = "Explodes the host into slimes."
+/obj/item/gland/true_form
+	desc = "Reveals true form of the host"
 	cooldown_low = 1200
 	cooldown_high = 2400
 	uses = 1
 
-/obj/item/gland/slime_boom/activate()
-	to_chat(host, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
-	to_chat(host, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
-	host.visible_message("<span class='danger'>[host] explodes into slimes!</span>")
+/obj/item/gland/true_form/activate()
+	host.visible_message("<span class='danger'>[host] explodes into creatures!</span>")
 	var/turf/pos = get_turf(host)
 	new /mob/living/carbon/slime(pos)
-	new /mob/living/carbon/slime(pos)
-	var/mob/living/simple_animal/slime/S = new /mob/living/carbon/slime(pos)
-	S.loc = pos
-	if(host.mind)
-		host.mind.transfer_to(S)
-	host.gib()
-	return
-
+	new /mob/living/simple_animal/corgi(pos)
+	new /mob/living/simple_animal/mouse(pos)
+	var/obj/effect/proc_holder/spell/S = new /obj/effect/proc_holder/spell/no_target/shapeshift/abductor()
+	host.AddSpell(S)
+	S.cast(null, host)
 
 //MINDSHOCK
 /obj/item/gland/mindshock
@@ -131,6 +124,28 @@
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
 	host.set_species_soft(pick(HUMAN, UNATHI, TAJARAN, SKRELL, DIONA, PODMAN, VOX))
 
+//Abductor
+/obj/item/gland/abductor
+	desc = "Creates your new ally"
+	uses = 0
+	icon_state = "species"
+
+/obj/item/gland/abductor/Inject(mob/living/carbon/human/target)
+	. = ..()
+	if(tgui_alert(target, "Вы станете новым членом команды пришельцев, и за одно предадите всё человечество!", "Стать ассистентом пришельцев?", list("Да", "Нет"), 15 SECONDS) == "Да")
+		to_chat(host, "<span class='notice'>You feel something moving in your brain.</span>")
+		host.AdjustConfused(8)
+		host.make_jittery(60)
+		host.emote("scream")
+		host.setOxyLoss(0) //They can't heal oxyloss, so we need to deal with it right now
+		var/datum/faction/abductors/req_f = create_uniq_faction(/datum/faction/abductors)
+		var/datum/role/R = SSticker.mode.CreateRole(/datum/role/abductor/assistant, host)
+		req_f.HandleRecruitedRole(R)
+		setup_role(R, TRUE)
+	else
+		host = null
+		target.organs -= src
+		forceMove(get_turf(target))
 
 //VENTCRAWLING
 /obj/item/gland/ventcrawling
@@ -158,7 +173,7 @@
 	to_chat(host, "<span class='warning'>You feel sick.</span>")
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
-	D.makerandom()
+	D.makerandom(spread_vector = DISEASE_SPREAD_AIRBORNE)
 	D.infectionchance = rand(1,100)
 
 	if(ishuman(host))
@@ -231,10 +246,8 @@
 	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		if(H.wear_suit)
 			H.wear_suit.add_blood(host)
-			H.update_inv_wear_suit()
 		else if(H.w_uniform)
 			H.w_uniform.add_blood(host)
-			H.update_inv_w_uniform()
 
 
 //BODYSNATCH

@@ -76,10 +76,8 @@
 /obj/machinery/camera/update_icon()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
-	else if(stat & EMPED)
-		icon_state = "[initial(icon_state)]emp"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[isXRay() ? "xray" : ""][initial(icon_state)]"
 
 /obj/machinery/camera/examine(mob/user)
 	..()
@@ -89,11 +87,12 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
+			addtimer(CALLBACK(src, PROC_REF(fix_emp_state), network), 900)
 			network = list()
 			stat |= EMPED
 			toggle_cam(TRUE)
 			triggerCameraAlarm()
+			flick("[isXRay() ? "xray" : ""][initial(icon_state)]emp", src)
 			..()
 
 /obj/machinery/camera/proc/fix_emp_state(list/previous_network)
@@ -137,12 +136,12 @@
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		toggle_cam(FALSE, user)
 
-/obj/machinery/camera/attackby(W, mob/living/user)
+/obj/machinery/camera/attackby(obj/item/weapon/W, mob/living/user)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
 	// DECONSTRUCTION
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
@@ -153,7 +152,7 @@
 	else if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
 
-	else if(iswelder(W) && wires.is_deconstructable())
+	else if(iswelding(W) && wires.is_deconstructable())
 		if(weld(W, user))
 			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
@@ -224,7 +223,7 @@
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
 	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		if(W:force > 3)
+		if(W.force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
 			var/datum/effect/effect/system/spark_spread/spark_system = new()
@@ -271,6 +270,28 @@
 		assembly.forceMove(loc)
 		assembly.update_icon()
 		assembly = null
+
+/obj/machinery/camera/examine(mob/user)
+	. = ..()
+	if(isEmpProof())
+		to_chat(user, "It has electromagnetic interference shielding installed.")
+	else
+		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>phoron</b>.</span>")
+	if(isXRay())
+		to_chat(user, "It has an X-ray photodiode installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
+	if(isMotion())
+		to_chat(user, "It has a proximity sensor installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>")
+
+	if(!status)
+		to_chat(user, "<span class='info'>It's currently deactivated.</span>")
+	if(panel_open)
+		to_chat(user, "<span class='info'>Its maintenance panel is currently open. You can close it with a <b>screwdriver</b>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You can open its maintenance panel with a <b>screwdriver</b>.</span>")
 
 /obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
 	status = !status

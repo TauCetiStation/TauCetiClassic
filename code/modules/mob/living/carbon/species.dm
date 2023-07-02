@@ -158,6 +158,8 @@
 
 	var/default_mood_event
 
+	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -271,14 +273,7 @@
 /datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
 	return TRUE
 
-/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
-	if(flags[IS_SYNTHETIC])
- //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
-		H.h_style = ""
-		spawn(100)
-			//H.is_jittery = 0
-			//H.jitteriness = 0
-			H.update_hair()
+/datum/species/proc/handle_death(mob/living/carbon/human/H, gibbed) //Handles any species-specific death events (such nymph spawns).
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 	if(!IO)
 		return
@@ -400,7 +395,11 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+	breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
+
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
@@ -436,6 +435,14 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
+
+/datum/species/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -573,6 +580,8 @@
 
 	skeleton_type = SKELETON_VOX
 
+	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
+
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	..()
 	H.gender = NEUTER
@@ -599,7 +608,6 @@
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
-
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
@@ -611,7 +619,6 @@
 
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
-
 	..()
 
 // At 25 damage - no protection at all.
@@ -823,7 +830,7 @@
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
 
-/datum/species/diona/handle_death(mob/living/carbon/human/H)
+/datum/species/diona/handle_death(mob/living/carbon/human/H, gibbed)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
 	S.real_name = H.real_name
 	S.name = S.real_name
@@ -909,7 +916,7 @@
 	qdel(component)
 	return ..()
 
-/datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
+/datum/species/diona/podman/handle_death(mob/living/carbon/human/H, gibbed)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
@@ -1032,7 +1039,7 @@
 		H.set_light(0)
 	..()
 
-/datum/species/machine/handle_death(mob/living/carbon/human/H)
+/datum/species/machine/handle_death(mob/living/carbon/human/H, gibbed)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.r_hair = 15
@@ -1440,12 +1447,13 @@
 	,NO_EMBED = TRUE
 	)
 
-	brute_mod = 2
+	brute_mod = 1.8
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
 	speed_mod = -0.2
+	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
@@ -1457,6 +1465,8 @@
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
 
+	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+
 	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
 
 	H.drop_l_hand()
@@ -1465,9 +1475,14 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
+	var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
+	O.max_damage = 1000
+
 	add_zombie(H)
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
+	REMOVE_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -1486,7 +1501,7 @@
 	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 
-	brute_mod = 2.2
+	brute_mod = 2
 	burn_mod = 1.2
 	speed_mod = -0.8
 
@@ -1510,6 +1525,14 @@
 	min_age = 25
 	max_age = 85
 
+/datum/species/zombie/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/zombie/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
 
@@ -1529,7 +1552,7 @@
 	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
 	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
 
-	brute_mod = 1.80
+	brute_mod = 1.6
 	burn_mod = 0.90
 	speed_mod = -0.2
 
@@ -1610,9 +1633,9 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 10
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 
 	darksight = 8
 
@@ -1740,3 +1763,11 @@
 		O.adjust_pumped(rand(0, 60))
 		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
 			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
+
+/datum/species/homunculus/handle_death(mob/living/carbon/human/H, gibbed)
+	if(gibbed)
+		return FALSE
+	for(var/I in H.get_equipped_items())
+		H.remove_from_mob(I)
+	H.dust()
+	return TRUE

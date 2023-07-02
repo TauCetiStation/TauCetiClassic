@@ -19,7 +19,7 @@
 
 	var/being_shocked = 0
 
-	var/list/price_tag = null
+	var/list/price_tag = null //list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 
 	uses_integrity = TRUE
 
@@ -28,10 +28,6 @@
 /obj/process()
 	STOP_PROCESSING(SSobj, src)
 	return 0
-
-/obj/atom_init()
-	. = ..()
-	verbs -= /obj/verb/remove_price_tag
 
 /obj/Destroy()
 	if(!ismachinery(src))
@@ -43,16 +39,16 @@
 	. = ..()
 
 	if(price_tag)
-		to_chat(user, "It has a price tag attached. Description: [price_tag["description"]], Price: [price_tag["price"]]$")
+		to_chat(user, "Прикреплён ценник. Описание: [price_tag["description"]], Цена: [price_tag["price"]]$")
 
-/obj/verb/remove_price_tag()
+/obj/proc/remove_price_tag()
 	set name = "Снять ценник"
 	set src in view(1)
 	set category = "Object"
 
 	price_tag = null
 	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
-	verbs -= /obj/verb/remove_price_tag
+	verbs -= /obj/proc/remove_price_tag
 
 /obj/proc/get_current_temperature()
 	/*

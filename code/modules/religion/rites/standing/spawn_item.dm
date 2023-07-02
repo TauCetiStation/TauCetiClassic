@@ -10,7 +10,7 @@
 	var/adding_favor = 75
 
 /datum/religion_rites/standing/spawn_item/New()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, .proc/modify_item))
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, PROC_REF(modify_item)))
 
 // Used to apply some effect to an item after its spawn.
 /datum/religion_rites/standing/spawn_item/proc/modify_item(atom/item)
@@ -50,7 +50,7 @@
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
-		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(M.IsClumsy()))
 			M.flash_eyes()
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
@@ -85,7 +85,7 @@
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
-		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(M.IsClumsy()))
 			M.flash_eyes()
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
@@ -102,7 +102,7 @@
 /datum/religion_rites/standing/spawn_item/call_animal
 	name = "Призыв Животного"
 	desc = "Создаёт случайного дружелюбного помощника."
-	ritual_length = (1.3 MINUTES)
+	ritual_length = (1 MINUTES)
 	ritual_invocations = list("As these complex nodules of the world are interconnected...",
 						"...so even my animal will be connected with this place...",
 						"...My will has allowed me to create and call you to life...",
@@ -119,7 +119,7 @@
 
 /datum/religion_rites/standing/spawn_item/call_animal/New()
 	spawn_type = choose_spawn_type()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, .proc/modify_item), CALLBACK(src, .proc/choose_spawn_type), "This ritual creates a <i>random friendly animal</i>.")
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, PROC_REF(modify_item)), CALLBACK(src, PROC_REF(choose_spawn_type)), "This ritual creates a <i>random friendly animal</i>.")
 
 /datum/religion_rites/standing/spawn_item/call_animal/proc/choose_spawn_type()
 	return pick(summon_type)
@@ -139,7 +139,7 @@
 	animal.universal_understand = TRUE
 
 /datum/religion_rites/standing/spawn_item/call_animal/modify_item(mob/animal)
-	INVOKE_ASYNC(src, .proc/call_ghost, animal)
+	INVOKE_ASYNC(src, PROC_REF(call_ghost), animal)
 
 /datum/religion_rites/standing/spawn_item/call_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
@@ -157,7 +157,7 @@
 /datum/religion_rites/standing/spawn_item/create_sword
 	name = "Создание Меча"
 	desc = "Создаёт меч во имя Бога."
-	ritual_length = (50 SECONDS)
+	ritual_length = (40 SECONDS)
 	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
 						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
 						"...who abides with all the storms of life...",

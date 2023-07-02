@@ -280,8 +280,9 @@
 
 /obj/structure/droppod/proc/SimpleAiming()
 	flags |= STATE_AIMING
-	var/A
-	A = input("Select Area for Droping Pod", "Select", A) in allowed_areas.areas
+	var/A = input("Select Area for Droping Pod", "Select") in allowed_areas.areas
+	if(intruder != usr)
+		return
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
@@ -337,7 +338,7 @@
 /obj/structure/droppod/verb/Start_Verb()
 	set category = "Drop Pod"
 	set name = "Start Drop"
-	set src = orange(1)
+	set src = usr.loc
 	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
@@ -382,7 +383,7 @@
 	loc = AimTarget
 	sleep(10)
 	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20, easing = CUBIC_EASING)
-	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+	addtimer(CALLBACK(src, PROC_REF(perform_drop)), 20)
 
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
@@ -416,7 +417,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewdriver(O))
+	if(isscrewing(O))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -427,7 +428,7 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelder(O))
+	else if(iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(get_integrity() < max_integrity && WT.use(0, user))
@@ -775,7 +776,7 @@
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -802,7 +803,7 @@
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn

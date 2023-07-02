@@ -132,7 +132,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(iswirecutter(W))
+	if(iscutter(W))
 
 		if (shock(user, 50))
 			return
@@ -146,7 +146,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(ismultitool(W))
+	else if(ispulsing(W))
 		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
@@ -467,6 +467,10 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(H == user)
 				to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
+
+		if(H.check_pierce_protection(target_zone = def_zone))
+			to_chat(user, "<span class='rose'>There is no exposed surface for repair.</span>")
+			return
 
 		if(BP.burn_dam > 0)
 			if(use(1))

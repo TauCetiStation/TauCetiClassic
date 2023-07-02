@@ -22,10 +22,12 @@
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
+#define F_REPLICATORS        "Replicators"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
 #define ABDUCTOR_SCI "Abductor Scientist"
+#define ABDUCTOR_ASSISTANT "Abductor Assistant"
 #define ABDUCTED "Abducted"
 #define BORER "Cortical Borer"
 #define BLOBOVERMIND "Blob Overmind"
@@ -43,6 +45,7 @@
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
 #define NUKE_OP_LEADER "Nuclear Operative Leader"
+#define LONE_OP "Solo Nuclear Operative"
 #define NINJA "Space Ninja"
 #define PROP "Prop"
 #define REV "Revolutionary"
@@ -59,6 +62,7 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
+#define REPLICATOR "Replicator"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
@@ -72,9 +76,11 @@
 ///////////////// FACTION STAGES //////////////////////
 #define FS_DEFEATED    -1
 #define FS_DORMANT      0
-#define FS_ACTIVE       1
-#define FS_ENDGAME      2
-#define FS_VICTORY      3
+#define FS_START        1
+#define FS_ACTIVE       2
+#define FS_MIDGAME      3
+#define FS_ENDGAME      4
+#define FS_VICTORY      5
 
 /////////////////////// OTHERS ////////////////////////
 

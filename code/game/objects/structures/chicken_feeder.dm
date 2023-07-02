@@ -25,7 +25,7 @@ var/global/list/chicken_feeder_list = list()
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>Already full</span>")
-	if(iswrench(O))
+	if(iswrenching(O))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(!user.is_busy() && do_after(user, 4 SECONDS, target = src))
