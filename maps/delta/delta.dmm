@@ -437,6 +437,11 @@
 /area/station/engineering/engine)
 "acH" = (
 /obj/structure/table/woodentable,
+/obj/machinery/computer/security/telescreen{
+	layer = 4;
+	name = "Observation Screen";
+	network = list("Interrogation")
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
@@ -1865,14 +1870,8 @@
 	pixel_y = -32
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/machinery/recharger{
-	pixel_x = 6;
-	pixel_y = 2
-	},
+/obj/machinery/light/smart,
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -6838,6 +6837,9 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
@@ -7401,6 +7403,18 @@
 /area/station/medical/chemistry)
 "bCI" = (
 /obj/structure/table,
+/obj/item/device/radio/off{
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -12104,15 +12118,6 @@
 	icon_state = "delivery"
 	},
 /area/station/engineering/monitoring)
-"cGA" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "red"
-	},
-/area/station/security/brig)
 "cGC" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
@@ -14355,9 +14360,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "diD" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/door_control{
 	id = "Prison Lockdown";
 	name = "Prison Wing Lockdown";
@@ -18819,12 +18821,14 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "epp" = (
-/obj/structure/closet/secure_closet/security,
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	icon_state = "redfull"
+/obj/machinery/light/smart{
+	dir = 4
 	},
-/area/station/security/brig/equipment)
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/station/security/prison)
 "eqn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
@@ -18874,9 +18878,6 @@
 	},
 /area/station/security/forensic_office)
 "ery" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -23083,9 +23084,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/light/smart{
-	dir = 1
 	},
 /obj/item/device/radio/intercom{
 	frequency = 1475;
@@ -27914,9 +27912,6 @@
 /area/station/civilian/chapel/crematorium)
 "gzf" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -33122,14 +33117,9 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "hLk" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/station/security/range)
+/obj/item/device/radio/off,
+/turf/simulated/wall,
+/area/station/security/detectives_office)
 "hLq" = (
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
@@ -39367,6 +39357,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -41971,9 +41964,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "jNI" = (
@@ -42788,7 +42778,7 @@
 /obj/structure/safe,
 /obj/item/stack/sheet/mineral/diamond,
 /obj/machinery/light/small,
-/obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold,
+/obj/item/weapon/gun/projectile/automatic/deagle/weakened,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -54134,7 +54124,6 @@
 /area/station/security/brig/equipment)
 "mHj" = (
 /obj/machinery/computer/card,
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55572,16 +55561,15 @@
 	},
 /area/shuttle/mining/station)
 "mZI" = (
-/obj/structure/closet/secure_closet/brig{
-	name = "Prisoner Locker"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "bot"
+	dir = 4;
+	icon_state = "redcorner"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "mZM" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker,
@@ -56795,9 +56783,6 @@
 /area/station/engineering/chiefs_office)
 "nqk" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/item/device/radio/intercom{
 	frequency = 1475;
 	name = "Station Intercom (Security)";
@@ -63894,9 +63879,6 @@
 "pfc" = (
 /obj/machinery/iv_drip,
 /obj/structure/stool/bed/roller,
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitered"
@@ -75010,22 +74992,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor,
 /area/station/engineering/atmos/distribution)
-"rLH" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/light/smart{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "redcorner"
-	},
-/area/station/security/prison)
 "rLJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77329,14 +77295,7 @@
 /area/station/hallway/primary/central)
 "spi" = (
 /obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/machinery/recharger{
-	pixel_x = 6;
-	pixel_y = 2
-	},
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -79346,7 +79305,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor/northleft{
-	dir = 4;
+	dir = 8;
 	name = "Brig Desk";
 	req_access = list(63)
 	},
@@ -81811,9 +81770,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -93085,9 +93041,6 @@
 /area/station/medical/reception)
 "wsw" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/figure/warden{
-	pixel_y = 3
-	},
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -93097,6 +93050,9 @@
 /obj/machinery/door_control{
 	id = "Prison Lockdown";
 	name = "Prison Wing Lockdown"
+	},
+/obj/item/toy/figure/warden{
+	pixel_y = 14
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -149462,7 +149418,7 @@ jxX
 iEF
 mBz
 kHU
-xyC
+hLk
 jPU
 kXw
 pgt
@@ -150494,7 +150450,7 @@ nsn
 fbW
 vXb
 emw
-lvZ
+mZI
 emw
 emw
 emw
@@ -151745,7 +151701,7 @@ mBo
 kfy
 kfy
 pTE
-rLH
+ppb
 xxh
 oGp
 nKH
@@ -152000,13 +151956,13 @@ aaW
 aEB
 duT
 mVk
-fgx
+epp
 fAF
 fgx
 fgx
 fAF
 fgx
-fgx
+epp
 fAF
 fgx
 oPD
@@ -152289,7 +152245,7 @@ ntf
 vSz
 mxD
 adp
-cGA
+fqK
 oBN
 fqK
 sac
@@ -153333,7 +153289,7 @@ aMz
 mwW
 qPR
 mGO
-epp
+oTu
 onz
 hMJ
 hsi
@@ -153829,7 +153785,7 @@ hlK
 jGU
 qIl
 mRW
-rFB
+aIf
 iTl
 cMd
 kze
@@ -154361,7 +154317,7 @@ dHv
 ouN
 xhl
 mGO
-epp
+oTu
 onz
 plf
 plf
@@ -154584,7 +154540,7 @@ hlv
 qZx
 tnw
 czU
-mZI
+qQq
 qZx
 plf
 plf
@@ -154855,7 +154811,7 @@ aEQ
 nll
 lAt
 iXe
-hLk
+qIl
 gFW
 rFB
 iXe
