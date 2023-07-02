@@ -1036,7 +1036,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				SSair.tiles_to_update += T1*/
 
 	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+		O:update_nearby_tiles()
 
 
 
