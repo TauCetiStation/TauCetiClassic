@@ -83,7 +83,7 @@ var/global/list/GPS_list = list()
 
 
 /obj/item/device/gps/proc/OnVector(list/First, list/Second, list/Third)
-	if( ((Second["x"]-First["x"]) * (Third["y"] - First["y"])) - ((Second["y"]-First["y"]) * (Third["x"]-First["x"])) == 0)
+	if( ((Second["x"] - First["x"]) * (Third["y"] - First["y"])) - ((Second["y"] - First["y"]) * (Third["x"] - First["x"])) == 0)
 		return TRUE
 	return FALSE
 
