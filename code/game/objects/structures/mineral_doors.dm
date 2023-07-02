@@ -20,7 +20,7 @@
 
 /obj/structure/mineral_door/atom_init()
 	. = ..()
-	update_nearby_tiles(need_rebuild = TRUE)
+	update_nearby_tiles()
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
