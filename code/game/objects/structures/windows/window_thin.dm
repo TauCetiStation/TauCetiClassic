@@ -16,15 +16,13 @@
 	var/ini_dir = null
 
 /obj/structure/window/thin/atom_init()
-	. = ..()
-
 	ini_dir = dir
 	color = SSstation_coloring.get_default_color()
 
 	if(dir in cornerdirs)
 		world.log << "WARNING: [x].[y].[z]: DIR [dir]"
 
-	update_nearby_tiles()
+	return ..()
 
 /obj/structure/window/thin/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
 	. = ..()
