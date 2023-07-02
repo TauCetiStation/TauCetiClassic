@@ -5,12 +5,12 @@
 /obj/structure/trainstation/trainsignal
 	name = "railway signal"
 	desc = "A visual display device that conveys instructions or provides warning of instructions regarding the driver’s authority to proceed."
-	icon = 'icons/obj/machines/floodlight.dmi'
-	icon_state = "flood00"
+	icon = 'trainstation13/icons/32x64.dmi'
+	icon_state = "signal_red"
 	density = TRUE
 	light_power = 1
 	light_range = 4
-	light_color = "#da0205"
+	light_color = "#f47a7a"
 
 
 //SIGNAL SPAWNER AND SWITCH
@@ -50,7 +50,7 @@ var/list/signal_spawner = list()
 		if(T.anchored)
 			T.do_spawn()
 
-var/railway_signal_state = 1 //1 - red, 2 - green
+var/railway_signal_state = 1 //1 - red, 2 - green, 3 - off, 4 - blue, 5 - white
 
 var/list/railway_signals = list()
 
@@ -68,9 +68,30 @@ var/list/railway_signals = list()
 /obj/structure/trainstation/trainsignal/update_icon()
 	switch(railway_signal_state)
 		if(1)
-			light_color = "#da0205"
+			icon_state = "signal_red"
+			light_color = "#f47a7a"
+			light_power = 1
+			light_range = 4
 		if(2)
-			light_color = "#66ff66"
+			icon_state = "signal_green"
+			light_color = "#c0ff9e"
+			light_power = 1
+			light_range = 4
+		if(3)
+			icon_state = "signal_off"
+			light_color = "#ffffff"
+			light_power = 0
+			light_range = 0
+		if(4)
+			icon_state = "signal_blue"
+			light_color = "#7db3f6"
+			light_power = 1
+			light_range = 4
+		if(5)
+			icon_state = "signal_white"
+			light_color = "#fff1ce"
+			light_power = 1
+			light_range = 4
 	update_light()
 
 /client/proc/toggle_signals()
@@ -82,6 +103,15 @@ var/list/railway_signals = list()
 		railway_signal_state=2
 		msg = "ALL railway SIGNALS are GREEN!"
 	else if(railway_signal_state==2)
+		railway_signal_state=3
+		msg = "ALL railway SIGNALS are OFF!"
+	else if(railway_signal_state==3)
+		railway_signal_state=4
+		msg = "ALL railway SIGNALS are BLUE!"
+	else if(railway_signal_state==4)
+		railway_signal_state=5
+		msg = "ALL railway SIGNALS are WHITE!"
+	else if(railway_signal_state==5)
 		railway_signal_state=1
 		msg = "ALL railway SIGNALS are RED!"
 

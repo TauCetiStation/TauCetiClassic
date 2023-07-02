@@ -315,11 +315,11 @@
 
 /area/trainstation/train/railcar/main7
 	name = "Railcar 7 Corridor"
-	icon_state = "main5"
+	icon_state = "main7"
 
 /area/trainstation/train/railcar/aux7
 	name = "Railcar 7 Compartments"
-	icon_state = "aux5"
+	icon_state = "aux7"
 
 /area/trainstation/train/railcar/main8
 	name = "Railcar 8 Corridor"
