@@ -145,6 +145,7 @@
 		if(exchange_parts(user, O))
 			return
 
+/* Don't even think about it!
 		if(iswrenching(O))
 
 			if(!anchored && !isinspace())
@@ -157,6 +158,7 @@
 				anchored = FALSE
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+*/
 
 		else if(isscrewing(O))
 			panel_open = !panel_open
@@ -209,14 +211,14 @@
 	if(href_list["action"])
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
-				active = TRUE
-				icon_state = icon_state_on
-				playsound(src, 'sound/machines/pacman_on.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'trainstation13/sound/machines/rtg_on.ogg', VOL_EFFECTS_MASTER, vol = 250, vary = FALSE, extrarange = 5)
+				VARSET_IN(src, active, TRUE, 13 SECONDS)
+				VARSET_IN(src, icon_state, icon_state_on, 13 SECONDS)
 		if(href_list["action"] == "disable")
 			if (active)
-				active = FALSE
-				icon_state = initial(icon_state)
-				playsound(src, 'sound/machines/pacman_off.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'trainstation13/sound/machines/rtg_off.ogg', VOL_EFFECTS_MASTER, vol = 250, vary = FALSE, extrarange = 5)
+				VARSET_IN(src, active, FALSE, 22 SECONDS)
+				VARSET_IN(src, icon_state, initial(icon_state), 22 SECONDS)
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()

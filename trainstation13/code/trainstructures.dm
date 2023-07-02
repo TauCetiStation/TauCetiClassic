@@ -159,12 +159,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 			icon_state = "lamppost_on"
 			light_power = 1
 			light_range = 7
+			light_color = "#a0a080"
 		if("station - rural")
 			name = "light pole"
 			desc = "A wooden pole with lamp on top. Typical way of lighting up the street at night in rural areas."
 			icon_state = "light_pole_on"
 			light_power = 1
-			light_range = 7
+			light_range = 5
+			light_color = "#ffffff"
 		if("suburb")
 			name = "street light"
 			desc = "A traditional, raised source of light with lamp at the top of a metal pole."
@@ -214,6 +216,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	icon_state = "lamppost_on"
 	light_power = 1
 	light_range = 7
+	light_color = "#a0a080"
 
 /obj/structure/trainstation/lamppost/rural
 	name = "light pole"
@@ -223,8 +226,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 /obj/structure/trainstation/lamppost/rural/on
 	icon_state = "light_pole_on"
 	light_power = 1
-	light_range = 7
-	light_color = "#a0a080"
+	light_range = 5
 
 //MACHINES
 

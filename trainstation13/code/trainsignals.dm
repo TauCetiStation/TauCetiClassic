@@ -41,7 +41,7 @@ var/list/signal_spawner = list()
 
 /client/proc/spawn_signal()
 	set category = "Event"
-	set name = "TS13 Signals - Spawn Red Signal"
+	set name = "TS13 Signals - Spawn Signal"
 
 	log_admin("[usr.key] has spawned railway signal.")
 	message_admins("[key_name_admin(usr)] has spawned railway signal.")

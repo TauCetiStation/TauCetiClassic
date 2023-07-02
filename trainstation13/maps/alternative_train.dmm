@@ -254,7 +254,7 @@
 "gT" = (/obj/machinery/light_switch{pixel_x = -27},/obj/structure/table,/obj/machinery/computer/libraryconsole,/turf/simulated/floor{icon_state = "cult"},/area/trainstation/train/railcar/maintenance)
 "gU" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/trainstation/train/railcar/maintenance)
 "gW" = (/obj/machinery/light{dir = 8; light_color = "fff6d9"; light_range = 10},/turf/unsimulated/floor/train,/area/trainstation/train/locomotive/cab/spotlight)
-"gX" = (/obj/structure/alien/resin/wall/gangway,/turf/unsimulated/floor/train,/area/trainstation/train/gangway)
+"gX" = (/obj/structure/train/gangway,/turf/unsimulated/floor/train,/area/trainstation/train/gangway)
 "hj" = (/obj/machinery/power/apc{dir = 8; name = "Railcar 8 Conductor APC"; pixel_x = -24},/obj/structure/cable{d2 = 4; icon_state = "0-4"},/obj/structure/stool/bed,/obj/machinery/light_switch{pixel_y = -25},/obj/item/weapon/bedsheet/red,/turf/simulated/floor{icon_state = "cult"},/area/trainstation/train/locomotive/cab/conductor8)
 "hk" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/blue,/turf/simulated/floor{icon_state = "cult"},/area/trainstation/train/railcar/aux6)
 "hl" = (/obj/machinery/door/poddoor{id = "top_left"; name = "Automatic Door"},/turf/simulated/floor{dir = 1; icon_state = "darkstairs_alone"},/area/trainstation/train/railcar/main6)
