@@ -194,7 +194,7 @@
 
 		if(ismob(A)) // if it's a mob - pick one random from turf, not the one with biggest layer. Prevents some abuses with crawl.
 			var/list/mobs = list()
-			for(var/mob/ML in get_turf(A.loc))
+			for(var/mob/living/ML in get_turf(A.loc))
 				mobs += ML
 			A = pick(mobs)
 
