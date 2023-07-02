@@ -43,6 +43,8 @@
 	else
 		glass_color = new_color
 
+	update_nearby_tiles()
+
 	. = ..()
 
 /obj/structure/window/fulltile/change_color(new_color)
