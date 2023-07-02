@@ -18,8 +18,8 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	name = "Default"
 
 	color = "#fff9fd"
-	power = 0.8
-	range = DEFAULT_RANGE
+	power = 1.2
+	range = 7
 
 /datum/light_mode/default/bulb
 	name = "Default Bulb"
