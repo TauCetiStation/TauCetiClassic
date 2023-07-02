@@ -1973,6 +1973,7 @@
 	pixel_x = 22
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/gun/energy/laser/practice,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -8394,7 +8395,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 8;
 	icon_state = "vault"
 	},
 /area/station/rnd/mixing)
@@ -9432,8 +9433,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/mixing)
 "caD" = (
@@ -12361,8 +12361,8 @@
 	},
 /area/station/rnd/robotics)
 "cLY" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12795,12 +12795,12 @@
 /area/shuttle/mining/station)
 "cQN" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/camera{
 	c_tag = "Research Ordnance Lab";
 	network = list("SS13","Research");
 	dir = 9
 	},
+/obj/item/weapon/book/manual/wiki/guide_to_toxins,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -17527,9 +17527,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "ebr" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/binary/pump,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
 "ebv" = (
@@ -22467,18 +22468,14 @@
 /turf/simulated/floor/carpet/green,
 /area/station/hallway/primary/fore)
 "fqg" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 4
-	},
+/obj/structure/rack,
+/obj/item/device/multitool,
+/obj/item/weapon/stock_parts/cell/high,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/misc_lab)
 "fqh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -25854,9 +25851,7 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "ghN" = (
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -30102,8 +30097,8 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
 "hhJ" = (
@@ -33648,7 +33643,7 @@
 "hXp" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/simulated/floor{
-	dir = 5;
+	dir = 8;
 	icon_state = "vault"
 	},
 /area/station/rnd/mixing)
@@ -34631,6 +34626,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/clothing/gloves/latex,
+/obj/item/weapon/gun/energy/pyrometer/science_phoron,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -34926,6 +34924,10 @@
 "imt" = (
 /obj/machinery/cell_charger,
 /obj/structure/table,
+/obj/item/rig_module/device/science_tool{
+	pixel_y = 12
+	},
+/obj/item/weapon/screwdriver,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34952,11 +34954,15 @@
 	},
 /area/station/bridge)
 "imR" = (
-/obj/structure/dispenser,
+/obj/structure/table,
+/obj/item/rig_module/grenade_launcher/smoke,
+/obj/item/rig_module/med_teleport{
+	pixel_y = 18
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/misc_lab)
 "imT" = (
 /obj/machinery/portable_atmospherics/powered/pump,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -36528,6 +36534,14 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
+/obj/item/rig_module/grenade_launcher/cleaner{
+	pixel_y = -18
+	},
+/obj/item/weapon/crowbar,
+/obj/item/weapon/reagent_containers/glass/beaker,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -42632,14 +42646,6 @@
 	icon_state = "neutral"
 	},
 /area/station/hallway/primary/fore)
-"kcG" = (
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/mixing)
 "kcS" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -42878,7 +42884,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 8;
 	icon_state = "vault"
 	},
 /area/station/rnd/mixing)
@@ -48593,7 +48599,7 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/item/weapon/gun/energy/pyrometer/science_phoron,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "neutral"
@@ -51511,6 +51517,9 @@
 /area/station/security/checkpoint/engi)
 "mjO" = (
 /obj/structure/table,
+/obj/item/rig_module/simple_ai{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -54245,13 +54254,15 @@
 	},
 /area/station/engineering/engine)
 "mRQ" = (
-/obj/structure/table,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
 	},
 /obj/structure/window/thin/reinforced,
+/obj/machinery/doppler_array{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -63575,6 +63586,9 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -66627,9 +66641,6 @@
 	},
 /area/station/medical/chemistry)
 "pVb" = (
-/obj/machinery/doppler_array{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -68229,8 +68240,8 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
 "qou" = (
@@ -71516,6 +71527,12 @@
 /obj/structure/table,
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/item/rig_module/device/orescanner{
+	pixel_y = -6
+	},
+/obj/item/rig_module/cooling_unit{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -78550,9 +78567,7 @@
 	},
 /area/station/medical/hallway)
 "sSh" = (
-/obj/structure/stool/bed/chair/office/light{
-	dir = 8
-	},
+/obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -78813,7 +78828,6 @@
 /area/station/aisat/ai_chamber)
 "sVd" = (
 /obj/machinery/hologram/holopad,
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -85183,8 +85197,7 @@
 	sensors = list("rnd_sensor"="Heat Room")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/mixing)
 "uDI" = (
@@ -86977,8 +86990,8 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
 "vdj" = (
@@ -89963,8 +89976,8 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
 "vRM" = (
@@ -90204,11 +90217,15 @@
 	},
 /area/station/engineering/singularity)
 "vVj" = (
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/structure/table,
+/obj/item/rig_module/device/extinguisher,
+/obj/item/rig_module/device/healthscanner{
+	pixel_y = 12
 	},
-/area/station/rnd/mixing)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/misc_lab)
 "vVA" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -90558,6 +90575,9 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "vYN" = (
+/obj/structure/rack,
+/obj/item/weapon/wirecutters,
+/obj/item/weapon/screwdriver,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -92922,7 +92942,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "wFq" = (
-/obj/structure/rack,
+/obj/machinery/mecha_part_fabricator/mining_fabricator,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -93773,12 +93793,10 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/distribution)
 "wRs" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
-	},
+/obj/structure/dispenser,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/mixing)
 "wRx" = (
@@ -95841,9 +95859,9 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
 	},
+/obj/machinery/meter,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/mixing)
 "xrB" = (
@@ -129470,7 +129488,7 @@ eHM
 jdg
 mYb
 rhi
-mjO
+vVj
 imt
 pkL
 dNy
@@ -129979,7 +129997,7 @@ jlJ
 iXs
 eZB
 agq
-wFq
+fqg
 pTY
 snA
 nmq
@@ -130243,7 +130261,7 @@ khz
 cpL
 iGG
 mjO
-mjO
+imR
 oin
 lwi
 iKZ
@@ -131538,7 +131556,7 @@ eFP
 mYj
 cit
 ydN
-ebr
+lhd
 mYj
 fby
 ilN
@@ -132052,7 +132070,7 @@ vdO
 mYj
 sBk
 ydN
-imR
+lhd
 imv
 djG
 xrA
@@ -132310,8 +132328,8 @@ kAn
 ipk
 rVw
 ghN
-kVW
-kVW
+ghN
+ebr
 cLY
 iMf
 mYj
@@ -132566,7 +132584,7 @@ ijn
 sfV
 sfV
 sFw
-kcG
+lhd
 lhd
 lhd
 lhd
@@ -132823,7 +132841,7 @@ hUo
 nYQ
 hgm
 nUb
-fqg
+kZQ
 kZQ
 kZQ
 kZQ
@@ -133079,10 +133097,10 @@ mYj
 wRj
 mYj
 qom
-vVj
+kVW
 wRs
 vcL
-vVj
+kVW
 vRC
 hhG
 dGh
@@ -133335,8 +133353,8 @@ ruF
 tyr
 pOP
 jom
-vVj
-vVj
+lhd
+lhd
 uDA
 bNA
 hXp
