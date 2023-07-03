@@ -1280,6 +1280,9 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/phone,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -19363,11 +19366,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Access";
-	dir = 1;
-	network = list("SS13","Research")
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -25303,11 +25301,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "Research Division North-East";
-	dir = 8;
-	network = list("SS13","Research")
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -31264,6 +31257,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/camera{
+	c_tag = "Virology Access South";
+	network = list("SS13","Medical");
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "warnwhite"
@@ -39410,10 +39408,12 @@
 	},
 /area/station/cargo/recycleroffice)
 "buC" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/structure/stool/bed/chair/comfy/teal,
+/obj/machinery/camera{
+	c_tag = "Medbay South";
+	dir = 4;
+	network = list("SS13","Medical")
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -41622,11 +41622,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Medbay South";
-	dir = 4;
-	network = list("SS13","Medical")
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
 	pixel_y = 1
@@ -42649,10 +42644,6 @@
 	name = "Loading Doors";
 	pixel_x = 6;
 	pixel_y = -32
-	},
-/obj/machinery/camera{
-	c_tag = "Cargo Recieving Dock";
-	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -66649,11 +66640,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/camera{
-	c_tag = "Virology Access";
-	dir = 1;
-	network = list("SS13","Medical")
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -76961,11 +76947,6 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/briefcase/inflatable,
-/obj/machinery/camera{
-	c_tag = "Virology Access South";
-	network = list("SS13","Medical");
-	dir = 6
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warnwhite"
@@ -79399,6 +79380,24 @@
 	icon_state = "warnplatecorner"
 	},
 /area/station/engineering/singularity)
+"qPS" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Research Division North-East";
+	dir = 8;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/hallway)
 "qQb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/bodybags{
@@ -127282,7 +127281,7 @@ aJw
 aLv
 aNC
 aQB
-aQB
+qPS
 aUD
 bSk
 aWi
