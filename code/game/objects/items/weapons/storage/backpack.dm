@@ -384,6 +384,13 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
+	new /obj/item/weapon/reagent_containers/syringe/antiviral(src)
+	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/clothing/accessory/stethoscope(src)
+	new /obj/item/device/mmi(src)
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"
