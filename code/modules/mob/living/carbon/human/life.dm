@@ -782,6 +782,8 @@ var/global/list/tourette_bad_words= list(
 		if(paralysis)
 			blinded = 1
 			stat = UNCONSCIOUS
+			drop_from_inventory(l_hand)
+			drop_from_inventory(r_hand)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else if(IsSleeping())

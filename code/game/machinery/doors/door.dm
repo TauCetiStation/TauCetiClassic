@@ -55,7 +55,7 @@ var/global/list/wedge_image_cache = list()
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 
 /obj/machinery/door/Destroy()
@@ -565,7 +565,7 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/update_nearby_tiles(need_rebuild)
+/obj/machinery/door/update_nearby_tiles()
 	. = ..()
 
 	if(.)

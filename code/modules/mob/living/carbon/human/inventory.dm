@@ -291,7 +291,7 @@
 		if(SLOT_IN_BACKPACK)
 			if(get_active_hand() == W)
 				remove_from_mob(W)
-			W.loc = src.back
+			W.forceMove(src.back)
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
 			uniform.attach_accessory(W, src)
