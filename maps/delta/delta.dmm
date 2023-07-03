@@ -55561,12 +55561,11 @@
 	},
 /area/shuttle/mining/station)
 "mZI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "redcorner"
 	},
 /area/station/security/lobby)
@@ -149935,7 +149934,7 @@ hYT
 nsn
 kLF
 kLF
-kLF
+mZI
 hFb
 kLF
 wkd
@@ -150450,7 +150449,7 @@ nsn
 fbW
 vXb
 emw
-mZI
+emw
 emw
 emw
 emw
