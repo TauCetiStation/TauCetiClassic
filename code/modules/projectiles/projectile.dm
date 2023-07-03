@@ -187,7 +187,7 @@
 
 	if(!forcedodge)
 		if(istype(A,/turf) && A.density) // if it's a wall - try to pick stuck mob first to prevent abuses (why? it's better to prevent mobs in the walls at all)
-			for(var/mob/ML in A)
+			for(var/mob/living/ML in A)
 				A = ML
 				// todo: exeption?
 				break

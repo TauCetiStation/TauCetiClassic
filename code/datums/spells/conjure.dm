@@ -96,7 +96,7 @@
 	// to prevent abuses
 	// todo: should be impossible to abuse so we can remove this hack
 	var/list/mobs = list()
-	for(var/mob/M in get_turf(loc))
+	for(var/mob/living/M in get_turf(loc))
 		if(M in Proj.permutated)
 			continue
 		mobs += M
