@@ -2048,6 +2048,12 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway)
+"apA" = (
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "apV" = (
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
@@ -3247,6 +3253,12 @@
 	icon_state = "neutralfull"
 	},
 /area/station/hallway/secondary/entry)
+"aES" = (
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "aEY" = (
 /obj/item/roller{
 	pixel_y = 6
@@ -4490,6 +4502,9 @@
 	pixel_y = 22
 	},
 /obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -4581,7 +4596,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins Test Area");
+	network = list("Toxins  Test  Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -5070,6 +5085,9 @@
 "bcy" = (
 /obj/effect/decal/remains/human,
 /obj/structure/kitchenspike_frame,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bcz" = (
@@ -7999,6 +8017,9 @@
 /area/station/security/checkpoint/escape_custom_desk)
 "bGV" = (
 /obj/effect/decal/cleanable/generic,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "bGW" = (
@@ -8171,6 +8192,9 @@
 	},
 /area/station/rnd/hor)
 "bJz" = (
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8971,6 +8995,9 @@
 "bUt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -12714,6 +12741,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
+"cNO" = (
+/obj/machinery/hydroponics/soil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "cNU" = (
 /turf/simulated/floor/plating/airless{
 	dir = 10;
@@ -15013,6 +15048,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -15468,6 +15506,9 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "dwJ" = (
@@ -15797,6 +15838,9 @@
 /area/station/bridge/hop_office)
 "dAX" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/storage/emergency2)
 "dAY" = (
@@ -17284,7 +17328,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
+	network = list("Toxins  Test  Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -18500,6 +18544,9 @@
 "ekH" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -19390,7 +19437,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon  Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous  Oxide","waste_sensor"="Gas  Mix  Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -20106,6 +20153,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"eGo" = (
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor,
+/area/station/maintenance/engineering)
 "eGJ" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -23368,7 +23421,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
+	network = list("Toxins  Test  Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23831,7 +23884,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat Room");
+	sensors = list("rnd_sensor"="Heat  Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -28545,6 +28598,9 @@
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomit_4"
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "gIb" = (
@@ -28941,6 +28997,9 @@
 "gNj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "gNE" = (
@@ -29257,7 +29316,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
+	network = list("Engineering","Engineering  Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -30676,6 +30735,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -31521,6 +31583,9 @@
 /area/station/hallway/secondary/entry)
 "hsx" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -36553,6 +36618,9 @@
 	id = "Gateway_shutters";
 	name = "Gateway Shutters";
 	pixel_y = -26
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -44637,6 +44705,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -45602,6 +45673,9 @@
 /obj/machinery/recharge_station,
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -51458,6 +51532,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "lYm" = (
@@ -54681,7 +54758,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	sensors = list("in_sm_meter"="Supermatter  In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter  Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -55353,6 +55430,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -58204,6 +58284,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
@@ -62442,6 +62525,9 @@
 /area/station/engineering/engine)
 "oKx" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -62539,6 +62625,9 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "oLy" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -66815,6 +66904,9 @@
 /area/station/security/prison)
 "pLx" = (
 /obj/effect/decal/cleanable/gourd,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "pLy" = (
@@ -70001,6 +70093,9 @@
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomittox_2"
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "qzO" = (
@@ -70492,6 +70587,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bar,
 /obj/effect/decal/cleanable/vomit,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "redyellowfull"
 	},
@@ -76774,6 +76872,13 @@
 "sgS" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"sgZ" = (
+/obj/structure/displaycase_chassis,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "shg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/plating,
@@ -77276,6 +77381,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -79234,6 +79342,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "sMw" = (
@@ -80041,6 +80152,9 @@
 	pixel_x = 22
 	},
 /obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -84333,6 +84447,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -84449,6 +84566,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86307,6 +86427,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"uCJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/science)
 "uDb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -86365,7 +86492,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat Room")
+	sensors = list("rnd_sensor"="Heat  Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86436,6 +86563,9 @@
 	},
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/machinery/light/small,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -86621,7 +86751,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins Test Area","Robots","Anomaly Isolation");
+	network = list("Research","Toxins  Test  Area","Robots","Anomaly  Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -87104,6 +87234,9 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/item/device/radio/beacon,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "uOM" = (
@@ -87466,6 +87599,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "uUa" = (
@@ -89685,6 +89821,9 @@
 /area/station/aisat/ai_chamber)
 "vwv" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -93121,6 +93260,9 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "wqS" = (
@@ -93586,6 +93728,9 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/toilet)
 "wxL" = (
@@ -98959,6 +99104,9 @@
 /area/station/maintenance/atmos)
 "xLT" = (
 /obj/effect/decal/cleanable/greenglow,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "xLY" = (
@@ -123779,7 +123927,7 @@ nyM
 cjx
 qOn
 fbF
-fVu
+uCJ
 nub
 fbi
 ymd
@@ -129875,7 +130023,7 @@ nVH
 wwi
 oJn
 qeY
-xYP
+cNO
 kop
 hHI
 wwi
@@ -129924,7 +130072,7 @@ evL
 wtC
 vxV
 ijY
-jyh
+eGo
 ijY
 qAA
 wtC
@@ -130189,7 +130337,7 @@ lTI
 jyh
 wtC
 mkc
-sgS
+apA
 wtC
 aTn
 pYO
@@ -131255,7 +131403,7 @@ cEI
 tIo
 ghi
 jAz
-hRk
+sgZ
 hRk
 pPp
 nCX
@@ -132041,7 +132189,7 @@ qYf
 pgo
 bJs
 lDg
-vtb
+aES
 foh
 xbY
 jLq
