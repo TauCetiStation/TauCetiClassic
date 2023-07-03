@@ -150,7 +150,7 @@
 
 	// try to shot mobs under table
 	var/list/mobs = list()
-	for(var/mob/M in get_turf(loc)) // todo: check only for crawling/lying
+	for(var/mob/living/M in get_turf(loc)) // todo: check only for crawling/lying
 		if(M in Proj.permutated)
 			continue
 		mobs += M
