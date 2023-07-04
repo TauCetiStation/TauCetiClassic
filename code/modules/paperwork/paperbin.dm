@@ -26,13 +26,6 @@
 	if(user && user.a_intent == INTENT_GRAB)
 		return ..()
 
-	var/response = ""
-	if(!papers.len)
-		response = tgui_alert(user, "Would you like to take Regular paper or Carbon copy paper?", "Paper type request", list("Regular", "Carbon-Copy", "Cancel"))
-		if (response != "Regular" && response != "Carbon-Copy")
-			add_fingerprint(user)
-			return
-
 	if(amount >= 1)
 		amount--
 		if(amount == 0)
@@ -43,15 +36,12 @@
 			P = papers[papers.len]
 			papers.Remove(P)
 		else
-			if(response == "Regular")
-				P = new /obj/item/weapon/paper
-				if(SSholiday.holidays[APRIL_FOOLS])
-					if(prob(30))
-						P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-						P.rigged = 1
-						P.updateinfolinks()
-			else if (response == "Carbon-Copy")
-				P = new /obj/item/weapon/paper/carbon
+			P = new /obj/item/weapon/paper
+			if(SSholiday.holidays[APRIL_FOOLS])
+				if(prob(30))
+					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+					P.rigged = 1
+					P.updateinfolinks()
 
 		user.try_take(P, loc)
 		to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
