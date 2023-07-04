@@ -230,6 +230,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 
 //MACHINES
 
+/obj/machinery/conveyor_switch/oneway/train
+	name = "power throttle"
+	desc = "A throttle (or regulator) is a handle that controls the speed or direction of rotation in the train engine."
+	icon = 'trainstation13/icons/trainstructures.dmi'
+
 /obj/machinery/media/jukebox/trainjukebox
 	name = "wall radio"
 	desc = "A modern wall mounted radio with audio visualizer."
@@ -265,7 +270,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#f535aa"
-	network = list("beach","jungle","boxing")
+	network = list("TV")
 	pixel_y = 3
 
 /obj/machinery/space_heater/potbellystove
