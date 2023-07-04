@@ -7,6 +7,7 @@
 
 	var/target_amount = 0					//If they are focused on a particular number. Steal objectives have their own counter.
 	var/auto_target = TRUE //Whether we pick a target automatically on PostAppend()
+	var/required_equipment = null
 
 /datum/objective/New(text, _auto_target = TRUE)
 	auto_target = _auto_target
@@ -52,3 +53,18 @@
 
 /datum/objective/proc/ShuttleDocked()
 	return
+
+/datum/objective/proc/give_required_equipment()
+	if(isnull(required_equipment))
+		return
+	var/mob/living/carbon/human/H = owner.current
+	required_equipment = new required_equipment(H.loc)
+	var/list/slots = list(
+		"backpack" = SLOT_IN_BACKPACK,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
+	)
+	var/where = H.equip_in_one_of_slots(required_equipment, slots)
+	H.update_icons()
+	if(where)
+		to_chat(H, "You have been given some equipment for the mission, check your backpack or hands.")

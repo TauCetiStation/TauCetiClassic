@@ -190,8 +190,8 @@
 			total_TC = uplink_uses
 
 	var/datum/role/R = parent
-	give_equipment_for_the_objective(/datum/objective/target/dehead, /obj/item/device/biocan, R, traitor_mob)
-	give_equipment_for_the_objective(/datum/objective/research_sabotage, /obj/item/weapon/disk/data/syndi, R, traitor_mob)
+	for(var/datum/objective/O in R.objectives.GetObjectives())
+		O.give_required_equipment()
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)
