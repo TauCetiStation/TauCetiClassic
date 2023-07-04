@@ -202,6 +202,25 @@
 		H.mutations.Remove(HUSK)
 		H.update_body()
 
+/datum/reagent/biracerm
+	name = "Biracerm"
+	description = "An emergency generic treatment with extreme side effects."
+	color = "#3d0000" // rgb: 200, 165, 220
+	custom_metabolism = REAGENTS_METABOLISM * 5
+	overdose = REAGENTS_OVERDOSE * 0.5
+
+
+/datum/reagent/biracerm/on_general_digest(mob/living/M)
+	if(TIMER_COOLDOWN_CHECK(M, name) || M.stat == DEAD)
+		return
+	if(M.health < M.health_threshold_crit && volume > 9) //If you are in crit, and someone injects at least 9u into you, you will heal 20% of your physical damage instantly.
+		to_chat(M, "You feel a power. But it's a little tiring...")
+		M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.20)
+		M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.20)
+		M.jitter(10)
+		TIMER_COOLDOWN_START(L, name, 300 SECONDS)
+
+
 /datum/reagent/dexalin
 	name = "Dexalin"
 	id = "dexalin"
