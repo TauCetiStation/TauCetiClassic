@@ -10757,6 +10757,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"coc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "coi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/monkeycubes,
@@ -12212,6 +12221,16 @@
 	icon_state = "bot"
 	},
 /area/station/storage/tech)
+"cGO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/maintenance/medbay)
 "cGS" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -12261,6 +12280,15 @@
 	},
 /area/station/gateway)
 "cHl" = (
+/obj/machinery/door/airlock/glass{
+	autoclose = 0;
+	frequency = 1379;
+	heat_proof = 1;
+	id_tag = "incinerator_airlock_interior";
+	locked = 1;
+	name = "Mixing Room Interior Airlock";
+	req_access = list(12)
+	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -33738,14 +33766,6 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway)
-"hRL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/science)
 "hRR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -40293,6 +40313,14 @@
 	icon_state = "vault"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
+"jtk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "jtp" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -44988,6 +45016,13 @@
 	icon_state = "grimy"
 	},
 /area/station/bridge/hop_office)
+"kva" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "kvb" = (
 /obj/structure/stool/bed/chair/metal/red,
 /turf/simulated/floor{
@@ -45747,6 +45782,15 @@
 "kFd" = (
 /turf/simulated/wall,
 /area/station/rnd/scibreak)
+"kFh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
 "kFj" = (
 /obj/machinery/door/airlock{
 	name = "Mime's Backstage Room";
@@ -47670,13 +47714,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/hallway/secondary/entry)
-"laq" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/medbay)
 "lat" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
@@ -48235,16 +48272,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/fore)
-"liV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/maintenance/medbay)
 "ljb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 9
@@ -59744,14 +59771,6 @@
 	icon_state = "warning"
 	},
 /area/station/engineering/atmos)
-"nWZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
 "nXd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -63153,6 +63172,14 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/locker)
+"oQk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/incinerator)
 "oQG" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
@@ -65753,6 +65780,15 @@
 	},
 /area/station/medical/hallway)
 "pxm" = (
+/obj/machinery/door/airlock/glass{
+	autoclose = 0;
+	frequency = 1379;
+	heat_proof = 1;
+	id_tag = "incinerator_airlock_exterior";
+	locked = 1;
+	name = "Mixing Room Exterior Airlock";
+	req_access = list(12)
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "pxn" = (
@@ -70156,6 +70192,14 @@
 	icon_state = "vault"
 	},
 /area/station/storage/tech)
+"qAe" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/science)
 "qAl" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -86573,13 +86617,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/maintenance/science)
-"uDN" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/medbay)
 "uDS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -91918,14 +91955,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"vXS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/incinerator)
 "vYb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -92060,15 +92089,6 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine/n20,
 /area/station/engineering/atmos)
-"vZm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/medbay)
 "vZt" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -93347,6 +93367,13 @@
 	},
 /turf/simulated/floor,
 /area/station/gateway)
+"wqY" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
 "wra" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -95770,15 +95797,6 @@
 	icon_state = "vault"
 	},
 /area/station/maintenance/science)
-"wWX" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "wXp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -126081,7 +126099,7 @@ kNm
 fUZ
 fnE
 qAG
-hRL
+qAe
 adZ
 kNm
 jBD
@@ -130354,7 +130372,7 @@ qDI
 rdK
 aUN
 rYj
-wWX
+coc
 kdf
 qTX
 jbF
@@ -130732,7 +130750,7 @@ iSo
 iSo
 iSo
 bbr
-liV
+cGO
 rMR
 oxL
 tIo
@@ -130861,7 +130879,7 @@ fsg
 gfW
 qAy
 vsu
-vXS
+oQk
 cYr
 cLm
 nwl
@@ -131769,7 +131787,7 @@ bbl
 hJI
 pfx
 vtb
-vZm
+kFh
 xbY
 hHr
 dkB
@@ -134080,7 +134098,7 @@ kCy
 wBm
 tIo
 gld
-laq
+kva
 qhp
 fqg
 tIo
@@ -134332,7 +134350,7 @@ hqd
 xbY
 ubb
 tBe
-uDN
+wqY
 kCy
 nba
 tIo
@@ -152544,7 +152562,7 @@ qsp
 fkM
 xln
 gCM
-nWZ
+jtk
 nKx
 gzt
 tnq
@@ -154603,7 +154621,7 @@ sfm
 pSP
 urO
 qVx
-nWZ
+jtk
 oUF
 sfm
 bAC
