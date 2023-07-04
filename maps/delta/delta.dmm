@@ -4596,7 +4596,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins  Test  Area");
+	network = list("Toxins    Test    Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -17328,7 +17328,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins  Test  Area");
+	network = list("Toxins    Test    Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -19437,7 +19437,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon  Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous  Oxide","waste_sensor"="Gas  Mix  Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon    Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous    Oxide","waste_sensor"="Gas    Mix    Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23421,7 +23421,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins  Test  Area");
+	network = list("Toxins    Test    Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23884,7 +23884,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat  Room");
+	sensors = list("rnd_sensor"="Heat    Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -29316,7 +29316,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering  Robots");
+	network = list("Engineering","Engineering    Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -33738,6 +33738,14 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway)
+"hRL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/science)
 "hRR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -47662,6 +47670,13 @@
 	icon_state = "warnplate"
 	},
 /area/station/hallway/secondary/entry)
+"laq" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "lat" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
@@ -48220,6 +48235,16 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/fore)
+"liV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/maintenance/medbay)
 "ljb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 9
@@ -49753,6 +49778,10 @@
 "lCV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "lDb" = (
@@ -54405,6 +54434,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "mIZ" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
 "mJa" = (
@@ -54758,7 +54791,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter  In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter  Out")
+	sensors = list("in_sm_meter"="Supermatter    In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter    Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -59711,6 +59744,14 @@
 	icon_state = "warning"
 	},
 /area/station/engineering/atmos)
+"nWZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "nXd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -68692,6 +68733,10 @@
 	},
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
@@ -82470,6 +82515,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "tBX" = (
@@ -86492,7 +86541,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat  Room")
+	sensors = list("rnd_sensor"="Heat    Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86524,6 +86573,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"uDN" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
 "uDS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -86751,7 +86807,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins  Test  Area","Robots","Anomaly  Isolation");
+	network = list("Research","Toxins    Test    Area","Robots","Anomaly    Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -91862,6 +91918,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"vXS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/incinerator)
 "vYb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -91996,6 +92060,15 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine/n20,
 /area/station/engineering/atmos)
+"vZm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
 "vZt" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -93819,6 +93892,10 @@
 /obj/structure/stool/bed/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -95693,6 +95770,15 @@
 	icon_state = "vault"
 	},
 /area/station/maintenance/science)
+"wWX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "wXp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -98865,6 +98951,10 @@
 	},
 /area/station/hallway/primary/fore)
 "xJv" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -101056,6 +101146,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -125987,7 +126081,7 @@ kNm
 fUZ
 fnE
 qAG
-kNm
+hRL
 adZ
 kNm
 jBD
@@ -130260,7 +130354,7 @@ qDI
 rdK
 aUN
 rYj
-vhm
+wWX
 kdf
 qTX
 jbF
@@ -130638,7 +130732,7 @@ iSo
 iSo
 iSo
 bbr
-bbr
+liV
 rMR
 oxL
 tIo
@@ -130767,7 +130861,7 @@ fsg
 gfW
 qAy
 vsu
-bCG
+vXS
 cYr
 cLm
 nwl
@@ -131675,7 +131769,7 @@ bbl
 hJI
 pfx
 vtb
-gZg
+vZm
 xbY
 hHr
 dkB
@@ -133986,7 +134080,7 @@ kCy
 wBm
 tIo
 gld
-pPp
+laq
 qhp
 fqg
 tIo
@@ -134238,7 +134332,7 @@ hqd
 xbY
 ubb
 tBe
-xbY
+uDN
 kCy
 nba
 tIo
@@ -152450,7 +152544,7 @@ qsp
 fkM
 xln
 gCM
-mUb
+nWZ
 nKx
 gzt
 tnq
@@ -154509,7 +154603,7 @@ sfm
 pSP
 urO
 qVx
-mUb
+nWZ
 oUF
 sfm
 bAC
