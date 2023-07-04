@@ -5524,15 +5524,6 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/chiefs_office)
-"bgC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "bgI" = (
 /obj/machinery/shieldwallgen,
 /turf/simulated/floor/plating,
@@ -8644,6 +8635,16 @@
 /obj/machinery/vending/medical,
 /turf/simulated/floor,
 /area/station/medical/storage)
+"bPi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/maintenance/medbay)
 "bPp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -18962,6 +18963,13 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/library)
+"eqK" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
 "ern" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -28753,6 +28761,14 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/barbershop)
+"gJA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "gJC" = (
 /obj/structure/closet/l3closet/general,
 /obj/item/clothing/mask/gas/coloured,
@@ -30419,6 +30435,14 @@
 	icon_state = "vault"
 	},
 /area/station/security/checkpoint)
+"hem" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/incinerator)
 "heu" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
@@ -32725,6 +32749,18 @@
 	icon_state = "neutralfull"
 	},
 /area/station/security/prison)
+"hEK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/landmark{
+	name = "lightsout"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/chapel)
 "hER" = (
 /obj/machinery/porta_turret/station_default{
 	dir = 4
@@ -34465,13 +34501,6 @@
 "hZU" = (
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
-"hZZ" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/medbay)
 "iag" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -41055,6 +41084,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/minisat_secure_area)
+"jAS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/science)
 "jBe" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -46390,14 +46427,6 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/xenobiology)
-"kKQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
 "kKU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random{
@@ -53270,13 +53299,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/library)
-"mtr" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/medbay)
 "mts" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical{
@@ -55442,18 +55464,6 @@
 	icon_state = "bot"
 	},
 /area/station/cargo/office)
-"mUF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/effect/landmark{
-	name = "lightsout"
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/civilian/chapel)
 "mUL" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -56132,6 +56142,15 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
+"ndy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "ndF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -58825,6 +58844,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"nLi" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "nLr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/gourd,
@@ -64678,14 +64704,6 @@
 /obj/item/device/paicard,
 /turf/simulated/floor,
 /area/station/storage/tech)
-"pkK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/incinerator)
 "pkL" = (
 /obj/item/stack/sheet/glass{
 	amount = 20;
@@ -68842,6 +68860,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/civilian/toilet)
+"qhS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
 "qim" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -69707,14 +69734,6 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
-"qsG" = (
-/obj/effect/landmark{
-	name = "lightsout"
-	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "gcircuit"
-	},
-/area/station/tcommsat/chamber)
 "qsN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -74479,6 +74498,14 @@
 /obj/structure/sign/warning/vacuum,
 /turf/simulated/wall,
 /area/station/aisat)
+"rBu" = (
+/obj/effect/landmark{
+	name = "lightsout"
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
+	},
+/area/station/tcommsat/chamber)
 "rBG" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -87980,16 +88007,6 @@
 	icon_state = "purple"
 	},
 /area/station/rnd/xenobiology)
-"uXq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/maintenance/medbay)
 "uXz" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
@@ -90887,15 +90904,6 @@
 "vIX" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
-"vJd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/medbay)
 "vJf" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -91282,14 +91290,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/recycleroffice)
-"vOz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/science)
 "vOB" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -101049,6 +101049,12 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/gym)
+"yia" = (
+/obj/effect/landmark{
+	name = "Holodeck Base"
+	},
+/turf/simulated/floor/engine,
+/area/station/civilian/holodeck/alphadeck)
 "yid" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -126140,7 +126146,7 @@ kNm
 fUZ
 fnE
 qAG
-vOz
+jAS
 adZ
 kNm
 jBD
@@ -130413,7 +130419,7 @@ qDI
 rdK
 aUN
 rYj
-bgC
+ndy
 kdf
 qTX
 jbF
@@ -130791,7 +130797,7 @@ iSo
 iSo
 iSo
 bbr
-uXq
+bPi
 rMR
 oxL
 tIo
@@ -130920,7 +130926,7 @@ fsg
 gfW
 qAy
 vsu
-pkK
+hem
 cYr
 cLm
 nwl
@@ -131828,7 +131834,7 @@ bbl
 hJI
 pfx
 vtb
-vJd
+qhS
 xbY
 hHr
 dkB
@@ -134139,7 +134145,7 @@ kCy
 wBm
 tIo
 gld
-mtr
+nLi
 qhp
 fqg
 tIo
@@ -134391,7 +134397,7 @@ hqd
 xbY
 ubb
 tBe
-hZZ
+eqK
 kCy
 nba
 tIo
@@ -138948,7 +138954,7 @@ geq
 kxd
 geq
 geq
-qsG
+rBu
 vyg
 xMO
 aMC
@@ -147744,7 +147750,7 @@ mDI
 mDI
 mDI
 ozQ
-mUF
+hEK
 cUU
 cUU
 qWs
@@ -152603,7 +152609,7 @@ qsp
 fkM
 xln
 gCM
-kKQ
+gJA
 nKx
 gzt
 tnq
@@ -154662,7 +154668,7 @@ sfm
 pSP
 urO
 qVx
-kKQ
+gJA
 oUF
 sfm
 bAC
@@ -157476,7 +157482,7 @@ jjS
 jjS
 jjS
 jjS
-jjS
+yia
 lMz
 plf
 dJL
