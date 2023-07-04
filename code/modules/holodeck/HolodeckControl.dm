@@ -327,3 +327,14 @@
 	active = 0
 	set_power_use(IDLE_POWER_USE)
 	current_scene = null
+
+/obj/machinery/computer/HolodeckControl/horizontal
+	supported_programs = list( \
+	"Empty Court" = "emptycourt", \
+	"Beach" = "beach",	\
+	"Desert" = "desert",	\
+	"Space" = "space",	\
+	"Snow Field" = "snowfield",	\
+	"Meeting Hall" = "meetinghall",	\
+	"Theatre" = "theatre", \
+	)
