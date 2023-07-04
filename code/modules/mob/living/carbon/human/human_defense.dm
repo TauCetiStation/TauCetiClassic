@@ -162,6 +162,9 @@
 	var/armorval = 0
 	var/organnum = 0
 
+	if(species.name == SKELETON)
+		return 0
+
 	if(def_zone)
 		if(isbodypart(def_zone))
 			return getarmor_organ(def_zone, type)
