@@ -6,7 +6,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	icon_dead = "robot_rd_died"
 	desc = "Digital Explorer Theory - 5. Робот с блестящими колесами. Иногда из его корпуса вылетают искры."
 
-	speak = list("Бип", "Буп", "Биииибски...",
+	speak = list("Бип", "Буп", "Биииипски...",
 				 "Один...два...три...ещё...",
 				 "Но-о-о-оль", "Один...нуль...Бип",
 				 "Анализирую...", "Успешно",
