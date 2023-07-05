@@ -18418,11 +18418,6 @@
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"eiC" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/red,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "eiG" = (
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -23385,6 +23380,11 @@
 	icon_state = "blue"
 	},
 /area/station/engineering/atmos)
+"ftK" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/blue,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "ftS" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/structure/cable{
@@ -24359,11 +24359,6 @@
 	icon_state = "neutral"
 	},
 /area/station/rnd/xenobiology)
-"fGD" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/purple,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "fGG" = (
 /mob/living/carbon/monkey,
 /turf/simulated/floor{
@@ -28715,16 +28710,14 @@
 /area/station/maintenance/atmos)
 "gIb" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
-	},
 /obj/machinery/door_control{
 	id = "rd_shutters";
 	name = "Research Director Shutters";
 	pixel_x = 26
+	},
+/obj/item/toy/figure/rd{
+	pixel_y = 10;
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -44399,13 +44392,6 @@
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "medbay_biohazard";
-	name = "Medbay Biohazard Blast Doors";
-	opacity = 0
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -45105,6 +45091,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
+"kvJ" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/green,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "kvR" = (
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/hologram/holopad,
@@ -47764,15 +47755,15 @@
 	},
 /area/station/security/brig)
 "kZU" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -48123,6 +48114,11 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/storage)
+"leX" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "lfm" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -60163,6 +60159,9 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -61192,11 +61191,6 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/xenobiology)
-"opn" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/yellow,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "opq" = (
 /obj/machinery/optable,
 /turf/simulated/floor{
@@ -61828,6 +61822,11 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/engine)
+"oyE" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/orange,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "oyG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -67245,11 +67244,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/science)
-"pNr" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "pNw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -73226,6 +73220,11 @@
 /obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"rlQ" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/red,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "rmc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -90083,11 +90082,6 @@
 	icon_state = "dark"
 	},
 /area/station/maintenance/medbay)
-"vvN" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/orange,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "vwl" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -92808,7 +92802,7 @@
 /area/station/rnd/tox_launch)
 "wgL" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/green,
+/obj/item/weapon/bedsheet/yellow,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "whi" = (
@@ -151989,9 +151983,9 @@ xUx
 wtL
 myv
 ihW
-wgL
+kvJ
 xUx
-pNr
+ftK
 wiv
 gVF
 iQn
@@ -154038,7 +154032,7 @@ kRe
 vst
 xUx
 jtu
-vvN
+oyE
 xUx
 xzC
 qBh
@@ -154298,15 +154292,15 @@ wQU
 noh
 xUx
 rDT
-fGD
+leX
 wNl
 xUx
 xzC
-eiC
+rlQ
 rDT
 xUx
 gGH
-opn
+wgL
 rDT
 xUx
 gex
