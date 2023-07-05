@@ -88,10 +88,13 @@
 // Message types are bitflags, so you can specify multiple types for messages, ex. SHOWMSG_VISUAL | SHOWMSG_FEEL:
 // show_message("message", SHOWMSG_AUDIO, "message2", SHOWMSG_VISUAL | SHOWMSG_FEEL)
 // User will see first message with suitable type for his (dis)abilities, so sort messages in priority
+// Optional last odd argument - common messages bitfield with SHOWMSG_ACTION_* flags
 // If you don't need all this, want to show just a feedback or OOC message - use to_chat()
 
 /mob/proc/show_message()
-	ASSERT(!(args.len % 2))
+	var/action_flags = 0
+	if(args.len % 2)
+		action_flags = args[args.len]
 
 	if(!client && !length(src.parasites))
 		return FALSE
@@ -124,7 +127,11 @@
 		return FALSE
 
 	to_chat(src, msg)
-	return list(msg, type) // should pass args to parasites
+
+	//if(action_flags & SHOWMSG_ACTION_SOCIALIZATION)
+	//	do something
+
+	return list(msg, type, action_flags) // should pass args to parasites
 
 /mob/living/carbon/show_message()
 	. = ..()
