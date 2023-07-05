@@ -225,8 +225,8 @@
 	name = "Biracerm"
 	id = "biracerm"
 	result = "biracerm"
-	required_reagents = list("bicaridine" = 2,  "tricordrazine" = 2, "dermaline" = 2)
-	required_catalysts = list ("phoron" = 6)
+	required_reagents = list("metatrombine" = 3,  "doctorsdelight" = 2, "dermaline" = 2, "oxycodone" = 1)
+	required_catalysts = list ("phoron" = 4)
 	result_amount = 3
 
 /datum/chemical_reaction/virus_food

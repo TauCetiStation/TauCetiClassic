@@ -121,6 +121,15 @@
 	desc = "Used to treat burns."
 	icon_state = "pill11"
 
+/obj/item/weapon/reagent_containers/pill/biracerm
+	name = "Biracerm pill (15u)"
+	desc = "Used to heal brute and burn damage in emergency situations"
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_containers/pill/biracerm/atom_init()
+	. = ..()
+	reagents.add_reagent("biracerm", 15)
+
 /obj/item/weapon/reagent_containers/pill/dermaline/atom_init()
 	. = ..()
 	reagents.add_reagent("dermaline", 15)
