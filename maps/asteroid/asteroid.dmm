@@ -2547,7 +2547,7 @@
 /obj/item/weapon/melee/baton,
 /obj/machinery/light/smart,
 /obj/item/weapon/lighter/random,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer.default,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -5460,7 +5460,7 @@
 	specialfunctions = 4
 	},
 /obj/item/weapon/folder/purple,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer.default,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "lp" = (

@@ -30,7 +30,7 @@
 		/obj/item/device/flashlight,
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
-		/obj/item/device/analyzer,
+		/obj/item/device/analyzer/default,
 		/obj/item/taperoll/engineering,
 		/obj/item/weapon/gun/energy/pyrometer,
 		/obj/item/device/science_tool,

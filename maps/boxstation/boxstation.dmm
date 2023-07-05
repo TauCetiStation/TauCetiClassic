@@ -15009,7 +15009,7 @@
 	pixel_y = -25
 	},
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/device/flash,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -26516,7 +26516,7 @@
 "aWF" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "neutral"
@@ -48052,7 +48052,7 @@
 /area/station/storage/tech)
 "bKo" = (
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)

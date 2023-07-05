@@ -57678,7 +57678,7 @@
 /area/station/hallway/primary/central)
 "rxe" = (
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/device/flash,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor{

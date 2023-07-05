@@ -684,7 +684,7 @@
 /area/awaymission/BMPship1)
 "cr" = (
 /obj/structure/closet/crate,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/weapon/spacecash/c10,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"

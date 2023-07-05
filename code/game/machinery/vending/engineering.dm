@@ -47,7 +47,7 @@
 		/obj/item/weapon/weldingtool/largetank = 3,
 		/obj/item/weapon/wirecutters = 5,
 		/obj/item/weapon/wrench = 5,
-		/obj/item/device/analyzer = 5,
+		/obj/item/device/analyzer/default = 5,
 		/obj/item/device/t_scanner = 5,
 		/obj/item/weapon/screwdriver = 5,
 	)

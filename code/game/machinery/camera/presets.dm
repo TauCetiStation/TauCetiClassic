@@ -62,7 +62,7 @@
 	return O
 
 /obj/machinery/camera/proc/isXRay()
-	var/O = locate(/obj/item/device/analyzer) in assembly.upgrades
+	var/O = locate(/obj/item/device/analyzer/default) in assembly.upgrades
 	return O
 
 /obj/machinery/camera/proc/isMotion()
@@ -76,7 +76,7 @@
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeXRay()
-	assembly.upgrades.Add(new /obj/item/device/analyzer(assembly))
+	assembly.upgrades.Add(new /obj/item/device/analyzer/default(assembly))
 	update_icon()
 
 // If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.

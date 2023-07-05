@@ -1935,7 +1935,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "adb" = (
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "adc" = (
@@ -39649,7 +39649,7 @@
 /area/station/maintenance/medbay)
 "jgr" = (
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/item/device/healthanalyzer,
 /obj/machinery/firealarm{
 	pixel_y = 22
@@ -56112,7 +56112,7 @@
 "nny" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer/default,
 /obj/random/tools/tool,
 /turf/simulated/floor{
 	icon_state = "dark"

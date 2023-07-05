@@ -9,7 +9,7 @@
 	g_amt = 300
 
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/phoron, /obj/item/device/analyzer)
+	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/phoron, /obj/item/device/analyzer/default)
 	var/list/upgrades = list()
 	var/state = 0
 	/*
