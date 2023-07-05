@@ -214,6 +214,8 @@
 /datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
 	M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.55)
 	M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.55)
+	if(!ishuman(M))
+		return
 	if(M.stat == DEAD)
 		return
 	if(M.maxHealth == 100)
