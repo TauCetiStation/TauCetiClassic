@@ -165,7 +165,7 @@
 				blockcount++
 				if(blockcount > 5)	// attempt 5 times before recomputing
 					// find new path excluding blocked turf
-					addtimer(CALLBACK(src, .proc/patrol_substep, next), 2)
+					addtimer(CALLBACK(src, PROC_REF(patrol_substep), next), 2)
 
 		else	// not a valid turf
 			mode = SECBOT_IDLE
@@ -504,7 +504,7 @@
 		if(L.lasertag_color != lasertag_color)
 			turn_off()
 			qdel(Proj)
-			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
+			on_timer_id = addtimer(CALLBACK(src, PROC_REF(turn_on_cb)), 100, TIMER_STOPPABLE)
 
 /obj/machinery/bot/secbot/ed209/bluetag
 	lasertag_color = "blue"

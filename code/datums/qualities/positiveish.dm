@@ -309,7 +309,7 @@
 		to_chat(seer, "<span class='notice'>Their gaze is somewhere at the level of \the [parse_zone(target_zone)].</span>")
 
 /datum/quality/positiveish/eye_reading/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)
+	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), PROC_REF(see_intent))
 
 
 /datum/quality/positiveish/deathalarm

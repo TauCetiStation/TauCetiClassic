@@ -47,9 +47,9 @@
 	add_overlay(fore_image)
 
 	if(loc.density || !has_gravity(loc))
-		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(disolve)), 5 SECONDS)
 
-	INVOKE_ASYNC(src, .proc/performAction)
+	INVOKE_ASYNC(src, PROC_REF(performAction))
 
 /obj/effect/effect/aqueous_foam/Destroy()
 	if(smooth)
@@ -120,7 +120,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.lying || L.crawling)
-			INVOKE_ASYNC(src, .proc/shake)
+			INVOKE_ASYNC(src, PROC_REF(shake))
 			return
 
 		if(L.get_species() == SLIME) // Slimes are vulnerable to us and shouldn't be able to destroy us.
@@ -128,7 +128,7 @@
 			L.adjustToxLoss(rand(15, 20))
 			return
 
-	INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
+	INVOKE_ASYNC(src, PROC_REF(disolve)) // You should never call procs with delay from BYOND movement procs.
 
 /obj/effect/effect/aqueous_foam/attack_hand(mob/user)
 	disolve()

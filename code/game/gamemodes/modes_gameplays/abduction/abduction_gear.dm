@@ -9,81 +9,24 @@
 	name = "agent vest"
 	desc = "A vest outfitted with mind influence stealth technology. It has two modes - combat and stealth."
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "vest_stealth"
+	icon_state = "vest_combat"
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
 	action_button_name = "Activate"
 	action_button_is_hands_free = 1
-	var/mode = VEST_STEALTH
-	var/stealth_active = 0
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
-	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
 	action_button_name = "Toggle Vest"
 
-/obj/item/clothing/suit/armor/abductor/vest/atom_init()
-	. = ..()
-	armor = mode == VEST_STEALTH ? stealth_armor : combat_armor
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
-	switch(mode)
-		if(VEST_STEALTH)
-			mode = VEST_COMBAT
-			DeactivateStealth()
-			armor = combat_armor
-			icon_state = "vest_combat"
-			body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-			pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-			cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-			heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-		if(VEST_COMBAT)// TO STEALTH
-			mode = VEST_STEALTH
-			armor = stealth_armor
-			icon_state = "vest_stealth"
-			body_parts_covered = initial(body_parts_covered)
-			pierce_protection = initial(pierce_protection)
-			cold_protection = initial(cold_protection)
-			heat_protection = initial(heat_protection)
-	update_inv_mob()
-
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
-	if(disguise == null)
-		return
-	stealth_active = 1
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
-		M.name_override = disguise.name
-		M.icon = disguise.icon
-		M.icon_state = disguise.icon_state
-		M.copy_overlays(disguise, TRUE)
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
-	if(!stealth_active)
-		return
-	stealth_active = 0
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
-		M.name_override = null
-		M.cut_overlays()
-		M.regenerate_icons()
-	return
-
-/obj/item/clothing/suit/armor/abductor/vest/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
-	if(reaction_type == REACTION_ITEM_TAKE)
-		return
-
-	DeactivateStealth()
-
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
 	if(isabductor(user))
@@ -97,14 +40,7 @@
 	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
-	switch(mode)
-		if(VEST_COMBAT)
-			Adrenaline()
-		if(VEST_STEALTH)
-			if(stealth_active)
-				DeactivateStealth()
-			else
-				ActivateStealth()
+	Adrenaline()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
 	if(ishuman(src.loc))
@@ -197,14 +133,6 @@
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
 	if(isabductor(target) || istype(target, /mob/living/simple_animal/cow))
-		var/mob/M = target
-		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
-		if(R) // Now, we shouldn't let two teams to steal one another
-			var/datum/role/R2 = user.mind.GetRoleByType(/datum/role/abductor)
-			if(R.faction != R2.faction)
-				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by these means!</span>")
-				user.burn_skin(40) //You dont wanna to repeat, yea?
-				return
 		marked = target
 		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
@@ -286,7 +214,7 @@
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
+		INVOKE_ASYNC(src, PROC_REF(start_recharge), imp_in)
 	else
 		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
 	return
@@ -328,7 +256,6 @@
 	origin_tech = "materials=5;biotech=5"
 	action_button_name = "Activate Helmet"
 
-	var/team
 	var/obj/machinery/camera/helm_cam
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
@@ -338,19 +265,24 @@
 	if(helm_cam)
 		..(user)
 	else
+		var/computer_detected = FALSE
+		var/obj/machinery/computer/security/abductor_ag/comp
+		for(var/obj/machinery/computer/security/abductor_ag/C in range(2, get_turf(src)))
+			if(C.network.len < 1)
+				computer_detected = TRUE
+				comp = C
+				break
+		if(!computer_detected)
+			to_chat(user, "<span class='warning'>No computers nearby. Helmet deactivated.</span>")
+			return
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
 		update_inv_mob()
-		var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
-		team = A.get_team_num()
 		helm_cam = new /obj/machinery/camera(src)
 		helm_cam.c_tag = "[user.real_name] Cam"
-		helm_cam.replace_networks(list("Abductor[team]"))
+		helm_cam.replace_networks(list("Abductor[comp.team]"))
 
-		for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
-			if(C.team == team)
-				if(C.network.len < 1)
-					C.network = helm_cam.network
+		comp.network = helm_cam.network
 
 		helm_cam.hidden = 1
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
@@ -359,7 +291,7 @@
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot == SLOT_HEAD)
-		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 

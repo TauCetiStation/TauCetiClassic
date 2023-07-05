@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/faithless
 	name = "Faithless"
-	desc = "The Wish Granter's faith in humanity, incarnate."
+	desc = "Воплощенная вера Исполнителя желаний."
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
@@ -45,10 +45,10 @@
 	if(.)
 		me_emote("wails at [.]")
 
-/mob/living/simple_animal/hostile/faithless/AttackingTarget()
+/mob/living/simple_animal/hostile/faithless/UnarmedAttack(atom/target)
 	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(12))
 			L.Stun(1)
 			L.Weaken(3)

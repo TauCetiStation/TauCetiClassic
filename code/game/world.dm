@@ -208,7 +208,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 	var/list/dellog = list()
 
 	//sort by how long it's wasted hard deleting
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	sortTim(SSgarbage.items, cmp=GLOBAL_PROC_REF(cmp_qdel_item_time), associative = TRUE)
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "Path: [path]"
@@ -269,7 +269,7 @@ var/global/shutdown_processed = FALSE
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/KickInactiveClients), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(KickInactiveClients)), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")

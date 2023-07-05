@@ -70,7 +70,7 @@
 			cult_religion.send_message_to_members("[nominee] предлагает призракам стать Возвышенным! Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3)
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
-	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
+	selection_timer = addtimer(CALLBACK(src, PROC_REF(kingmaker)), 30 SECONDS, TIMER_STOPPABLE)
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)

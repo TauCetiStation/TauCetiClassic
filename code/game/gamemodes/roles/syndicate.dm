@@ -38,7 +38,7 @@
 		H.equipOutfit(nuclear_outfit)
 	antag.current.add_language(LANGUAGE_SYCODE)
 
-	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
+	INVOKE_ASYNC(src, PROC_REF(NukeNameAssign), antag)
 	return ..()
 
 /datum/role/operative/Greet(greeting, custom)
@@ -90,13 +90,12 @@
 		P.update_icon()
 		var/mob/living/carbon/human/H = antag.current
 		P.loc = H.loc
-		H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
+		H.equip_to_slot_or_del(P, SLOT_R_HAND, 0)
 		H.update_icons()
 
 /datum/role/operative/lone
 	name = LONE_OP
 	id = LONE_OP
-	nuclear_outfit = /datum/outfit/nuclear/solo
 	skillset_type = /datum/skillset/max
 
 /datum/role/operative/lone/OnPostSetup(laterole)

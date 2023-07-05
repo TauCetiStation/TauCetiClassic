@@ -1119,3 +1119,14 @@
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='notice'>You hear a splat and a crackle.</span>")
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut
+	name = "Korta Nut"
+	icon_state = "kortanut"
+	desc = "A little nut of great importance. Has a peppery shell and a soft, pulpy interior. Or you can eat them whole, as a quick snack"
+	potency = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 5))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)

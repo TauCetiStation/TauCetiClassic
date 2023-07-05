@@ -174,8 +174,8 @@
 		var/datum/dance_move/DM = new dance_type
 		LAZYSET(dance_moves, DM.name, DM)
 
-	RegisterSignal(carry_obj, list(COMSIG_ATOM_START_PULL), .proc/carrier_join)
-	RegisterSignal(carry_obj, list(COMSIG_ATOM_STOP_PULL), .proc/carrier_leave)
+	RegisterSignal(carry_obj, list(COMSIG_ATOM_START_PULL), PROC_REF(carrier_join))
+	RegisterSignal(carry_obj, list(COMSIG_ATOM_STOP_PULL), PROC_REF(carrier_leave))
 
 	var/datum/mechanic_tip/clickplace/carry_tip = new(src)
 	parent.AddComponent(/datum/component/mechanic_desc, list(carry_tip))
@@ -196,16 +196,16 @@
 
 // This proc is used to register all required signals on carrier.
 /datum/component/multi_carry/proc/register_carrier(mob/carrier)
-	RegisterSignal(carrier, list(COMSIG_LIVING_MOVE_PULLED), .proc/on_pull)
-	RegisterSignal(carrier, list(COMSIG_CLIENTMOB_MOVE), .proc/carrier_move)
-	RegisterSignal(carrier, list(COMSIG_CLIENTMOB_POSTMOVE), .proc/carrier_postmove)
-	RegisterSignal(carrier, list(COMSIG_MOVABLE_MOVED), .proc/check_proximity)
-	RegisterSignal(carrier, list(COMSIG_ATOM_CANPASS), .proc/check_canpass)
+	RegisterSignal(carrier, list(COMSIG_LIVING_MOVE_PULLED), PROC_REF(on_pull))
+	RegisterSignal(carrier, list(COMSIG_CLIENTMOB_MOVE), PROC_REF(carrier_move))
+	RegisterSignal(carrier, list(COMSIG_CLIENTMOB_POSTMOVE), PROC_REF(carrier_postmove))
+	RegisterSignal(carrier, list(COMSIG_MOVABLE_MOVED), PROC_REF(check_proximity))
+	RegisterSignal(carrier, list(COMSIG_ATOM_CANPASS), PROC_REF(check_canpass))
 	// Prevents funny bugs from occuring.
-	RegisterSignal(carrier, list(COMSIG_MOVABLE_TRY_GRAB), .proc/on_grabbed)
-	RegisterSignal(carrier, list(COMSIG_MOVABLE_WADDLE), .proc/carrier_waddle)
-	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL), .proc/on_ctrl_click)
-	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL_SHIFT), .proc/on_ctrl_shift_click)
+	RegisterSignal(carrier, list(COMSIG_MOVABLE_TRY_GRAB), PROC_REF(on_grabbed))
+	RegisterSignal(carrier, list(COMSIG_MOVABLE_WADDLE), PROC_REF(carrier_waddle))
+	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL), PROC_REF(on_ctrl_click))
+	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL_SHIFT), PROC_REF(on_ctrl_shift_click))
 
 // This proc is used to unregister all signals from carrier.
 /datum/component/multi_carry/proc/unregister_carrier(mob/carrier)
@@ -247,7 +247,7 @@
 		var/list/pos = positions.get_pos(carry_obj.dir, i)
 		i++
 
-		INVOKE_ASYNC(src, .proc/move_to_pos, carrier, pos)
+		INVOKE_ASYNC(src, PROC_REF(move_to_pos), carrier, pos)
 
 // This proc is used to swap positions of two carriers.
 /datum/component/multi_carry/proc/swap_positions(mob/carrier1, mob/carrier2)
@@ -259,8 +259,8 @@
 	carriers[pos1] = carrier2
 	carriers[pos2] = carrier1
 
-	INVOKE_ASYNC(src, .proc/move_to_pos, carrier1, positions.get_pos(prev_dir, pos2))
-	INVOKE_ASYNC(src, .proc/move_to_pos, carrier2, positions.get_pos(prev_dir, pos1))
+	INVOKE_ASYNC(src, PROC_REF(move_to_pos), carrier1, positions.get_pos(prev_dir, pos2))
+	INVOKE_ASYNC(src, PROC_REF(move_to_pos), carrier2, positions.get_pos(prev_dir, pos1))
 
 // This proc is used to swap positions of all carriers by a full rotation.
 /datum/component/multi_carry/proc/rotate_positions(clockwise=TRUE)
@@ -340,10 +340,10 @@
 	if(carry_obj.buckled_mob)
 		on_buckle(carry_obj, carry_obj.buckled_mob)
 
-	RegisterSignal(carry_obj, list(COMSIG_ATOM_CANPASS), .proc/check_canpass)
-	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_MOVED), .proc/check_carriers)
-	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_BUCKLE), .proc/on_buckle)
-	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_UNBUCKLE), .proc/on_unbuckle)
+	RegisterSignal(carry_obj, list(COMSIG_ATOM_CANPASS), PROC_REF(check_canpass))
+	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_MOVED), PROC_REF(check_carriers))
+	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_BUCKLE), PROC_REF(on_buckle))
+	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_UNBUCKLE), PROC_REF(on_unbuckle))
 
 	carried = TRUE
 
@@ -388,7 +388,7 @@
 	carriers = null
 
 /datum/component/multi_carry/proc/follow_carrier(atom/movable/walker, atom/NewLoc, direction)
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, walker, direction)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(_step), walker, direction)
 
 /datum/component/multi_carry/proc/carrier_move(datum/source, atom/NewLoc, direction)
 	if(next_move > world.time)
@@ -448,7 +448,7 @@
 /datum/component/multi_carry/proc/check_carriers()
 	if(carry_obj.dir != prev_dir && !positions.one_dir)
 		prev_dir = carry_obj.dir
-		INVOKE_ASYNC(src, .proc/rotate_dir, prev_dir)
+		INVOKE_ASYNC(src, PROC_REF(rotate_dir), prev_dir)
 
 	for(var/mob/carrier in carriers)
 		if(!check_proximity(carrier))
