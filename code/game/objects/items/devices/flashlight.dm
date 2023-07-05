@@ -96,7 +96,7 @@
 			if(H.stat == DEAD || H.sdisabilities & BLIND)	//mob is dead or fully blind
 				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
 			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(user, "<span class='notice'>[M] - is IPC! IPC don't have pupils!</span>")
+				to_chat(user, "<span class='warning'>[M]'s robotic screen glances the flash back at you. You wonder whether that was wise.</span>")
 			else if(XRAY in H.mutations)	//mob has X-RAY vision
 				H.flash_eyes() //Yes, you can still get flashed wit X-Ray.
 				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
