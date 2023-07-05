@@ -160,6 +160,11 @@
 	if(spare_slots <= 0)
 		return
 
+	if(istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if((!user.delay_clothing_unequip(C)) && (C.slot_equipped))
+			return
+
 	var/atom/old_loc = I.loc
 
 	jump_out(I, user.loc)
