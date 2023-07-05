@@ -204,29 +204,37 @@
 
 /datum/reagent/biracerm
 	name = "Biracerm"
+	id = "biracerm"
 	description = "An emergency generic treatment with extreme side effects."
 	color = "#3d0000" // rgb: 200, 165, 220
-	custom_metabolism = REAGENTS_METABOLISM * 5
+	custom_metabolism = REAGENTS_METABOLISM * 2
 	overdose = REAGENTS_OVERDOSE * 0.5
 
 
-/datum/reagent/biracerm/on_general_digest(mob/living/M)
+/datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
+	M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.55)
+	M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.55)
 	if(M.stat == DEAD)
 		return
-	if(M.health < volume > 9) //If you are in crit, and someone injects at least 9u into you, you will heal 20% of your physical damage instantly.
-		M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.20)
-		M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.20)
 	if(M.maxHealth == 100)
 		M.maxHealth = 85
 		to_chat(M, "I feel weak in my body...")
-	if(M.maxHealth == 85)
-		M.maxHealth = 50
+	else if(M.maxHealth == 85)
+		M.maxHealth = 65
 		to_chat(M, "I'm getting weaker...")
-	if(M.maxHealth == 50)
+	else if(M.maxHealth == 65)
+		M.maxHealth = 50
+	else if(M.maxHealth == 50)
 		M.maxHealth = 25
 		to_chat(M, "I am very... Tired. Let me rest.")
-	if(M.maxHealth == 25)
-		M.adjustToxLoss(-2 * REM)
+	else if(M.maxHealth == 25)
+		M.adjustToxLoss(-5 * REM)
+	if(prob(50))
+		for(var/obj/item/organ/external/B in M.bodyparts)
+			to_chat(M, "<span class='notice'>You feel that your bones in [B.name] have begun to heal rapidly.</span>")
+			B.perma_injury = 0
+			B.status &= ~ORGAN_BROKEN
+			holder.remove_reagent("biracerm", 10)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
