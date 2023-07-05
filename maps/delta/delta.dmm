@@ -12462,11 +12462,6 @@
 	icon_state = "bot"
 	},
 /area/station/rnd/chargebay)
-"cJE" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/green,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "cJM" = (
 /obj/machinery/shieldgen,
 /turf/simulated/floor{
@@ -16637,6 +16632,11 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
+"dKX" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/yellow,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "dLb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -22422,11 +22422,6 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/atmos)
-"fgX" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "fha" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -25732,6 +25727,11 @@
 	icon_state = "neutral"
 	},
 /area/station/engineering/chiefs_office)
+"fZg" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/orange,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "fZz" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -28269,6 +28269,11 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"gBg" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "gBi" = (
 /obj/machinery/power/tesla_coil,
 /obj/structure/cable{
@@ -38572,6 +38577,11 @@
 	icon_state = "darkgreen"
 	},
 /area/station/civilian/hydroponics)
+"iWu" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/red,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "iWv" = (
 /obj/structure/sign/poster/official/ian{
 	pixel_y = -32
@@ -39797,6 +39807,9 @@
 /area/station/civilian/locker)
 "jlJ" = (
 /obj/effect/landmark/start/research_director,
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "whitepurple"
@@ -56336,11 +56349,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/ai_monitored/storage_secure)
-"nfK" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/purple,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "nfV" = (
 /obj/machinery/bookbinder,
 /turf/simulated/floor/wood,
@@ -60524,11 +60532,6 @@
 "oer" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/ai_upload)
-"oev" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/orange,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "oex" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -67709,11 +67712,6 @@
 	icon_state = "purplecorner"
 	},
 /area/station/engineering/drone_fabrication)
-"pRt" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/red,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "pRL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -67758,6 +67756,11 @@
 	icon_state = "vault"
 	},
 /area/station/maintenance/chapel)
+"pSS" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/green,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "pSU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -92829,7 +92832,7 @@
 /area/station/rnd/tox_launch)
 "wgL" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/yellow,
+/obj/item/weapon/bedsheet/blue,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "whi" = (
@@ -152011,9 +152014,9 @@ xUx
 wtL
 myv
 ihW
-cJE
+pSS
 xUx
-fgX
+wgL
 wiv
 gVF
 iQn
@@ -154060,7 +154063,7 @@ kRe
 vst
 xUx
 jtu
-oev
+fZg
 xUx
 xzC
 qBh
@@ -154320,15 +154323,15 @@ wQU
 noh
 xUx
 rDT
-nfK
+gBg
 wNl
 xUx
 xzC
-pRt
+iWu
 rDT
 xUx
 gGH
-wgL
+dKX
 rDT
 xUx
 gex
