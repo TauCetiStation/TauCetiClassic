@@ -3098,6 +3098,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/item/weapon/bedsheet/hop,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -4620,7 +4621,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -17387,7 +17388,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -17454,7 +17455,7 @@
 /area/station/engineering/atmos)
 "dVV" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/weapon/bedsheet/clown,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "dVZ" = (
@@ -18417,6 +18418,11 @@
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"eiC" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/red,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "eiG" = (
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -19528,7 +19534,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                Mix                                                                                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -22043,6 +22049,7 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -23514,7 +23521,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23974,7 +23981,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                Room");
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -24352,6 +24359,11 @@
 	icon_state = "neutral"
 	},
 /area/station/rnd/xenobiology)
+"fGD" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "fGG" = (
 /mob/living/carbon/monkey,
 /turf/simulated/floor{
@@ -24392,6 +24404,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/weapon/bedsheet/rd,
 /turf/simulated/floor{
 	icon_state = "purple"
 	},
@@ -29413,7 +29426,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                                                                                                                                Robots");
+	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -54899,7 +54912,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                Out")
+	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -61179,6 +61192,11 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/xenobiology)
+"opn" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/yellow,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "opq" = (
 /obj/machinery/optable,
 /turf/simulated/floor{
@@ -61226,6 +61244,7 @@
 	network = list("SS13","Security");
 	dir = 6
 	},
+/obj/item/weapon/bedsheet/hos,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -65295,6 +65314,7 @@
 /area/station/civilian/chapel)
 "ppD" = (
 /obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitered"
@@ -67225,6 +67245,11 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"pNr" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/blue,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "pNw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -67642,6 +67667,7 @@
 /area/station/medical/hallway)
 "pRf" = (
 /obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/blue,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -86743,7 +86769,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                Room")
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -87002,7 +87028,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                                                                                                                                Test                                                                                                                                Area","Robots","Anomaly                                                                                                                                Isolation");
+	network = list("Research","Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -90057,6 +90083,11 @@
 	icon_state = "dark"
 	},
 /area/station/maintenance/medbay)
+"vvN" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/orange,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "vwl" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -92777,6 +92808,7 @@
 /area/station/rnd/tox_launch)
 "wgL" = (
 /obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/green,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "whi" = (
@@ -100875,6 +100907,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitered"
@@ -151958,7 +151991,7 @@ myv
 ihW
 wgL
 xUx
-wgL
+pNr
 wiv
 gVF
 iQn
@@ -154005,7 +154038,7 @@ kRe
 vst
 xUx
 jtu
-wgL
+vvN
 xUx
 xzC
 qBh
@@ -154265,15 +154298,15 @@ wQU
 noh
 xUx
 rDT
-wgL
+fGD
 wNl
 xUx
 xzC
-wgL
+eiC
 rDT
 xUx
 gGH
-wgL
+opn
 rDT
 xUx
 gex
