@@ -127,6 +127,7 @@
 		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		var/newgirder = break_wall()
 		transfer_fingerprints_to(newgirder)
+
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/effect/decal/cleanable/crayon))
 			qdel(O)
@@ -144,7 +145,6 @@
 
 	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
-
 
 /turf/simulated/wall/proc/devastate_wall()
 	if(istype(src, /turf/simulated/wall/cult))
