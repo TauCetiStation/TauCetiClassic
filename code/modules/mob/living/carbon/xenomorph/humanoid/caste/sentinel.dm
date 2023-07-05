@@ -8,7 +8,6 @@
 	speed = 1
 	icon_state = "aliens_s"
 	plasma_rate = 10
-	acid_type = /obj/effect/alien/acid
 
 /mob/living/carbon/xenomorph/humanoid/sentinel/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
