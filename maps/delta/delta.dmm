@@ -4620,7 +4620,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                                                                Test                                                                Area");
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -17387,7 +17387,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                Test                                                                Area");
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -19528,7 +19528,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                Oxide","waste_sensor"="Gas                                                                Mix                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                Mix                                                                                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23514,7 +23514,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                Test                                                                Area");
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23974,7 +23974,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                Room");
+	sensors = list("rnd_sensor"="Heat                                                                                                                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -27676,7 +27676,7 @@
 	},
 /area/station/security/brig)
 "gvl" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "gvm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -29413,7 +29413,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                                                                Robots");
+	network = list("Engineering","Engineering                                                                                                                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -37446,12 +37446,11 @@
 	},
 /area/station/security/brig)
 "iJw" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	id = "toxinsdriver";
 	name = "Toxins Launcher Bay Door"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "iJx" = (
 /obj/item/weapon/flora/random,
@@ -54900,7 +54899,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                Out")
+	sensors = list("in_sm_meter"="Supermatter                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -86744,7 +86743,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                Room")
+	sensors = list("rnd_sensor"="Heat                                                                                                                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -87003,7 +87002,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
+	network = list("Research","Toxins                                                                                                                                Test                                                                                                                                Area","Robots","Anomaly                                                                                                                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -92774,7 +92773,7 @@
 	dir = 8;
 	id = "toxinsdriver"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "wgL" = (
 /obj/structure/stool/bed,
@@ -113186,9 +113185,9 @@ plf
 plf
 plf
 plf
-nHd
 plf
-nHd
+plf
+plf
 plf
 plf
 plf
@@ -113443,9 +113442,9 @@ plf
 plf
 plf
 plf
-kHU
 plf
-kHU
+plf
+plf
 plf
 plf
 plf
@@ -113699,11 +113698,11 @@ plf
 plf
 plf
 plf
-kHU
-kHU
 plf
-kHU
-kHU
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -113955,13 +113954,13 @@ plf
 plf
 plf
 plf
-kHU
-kHU
-dnW
-nYz
-dnW
-kHU
-kHU
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -114211,15 +114210,15 @@ plf
 plf
 plf
 plf
-kHU
-kHU
-nYz
-dnW
-rXz
-dnW
-nYz
-kHU
-kHU
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -114467,17 +114466,17 @@ plf
 plf
 plf
 plf
-kHU
-kHU
-dnW
-dnW
-wQM
-aVD
-bxO
-dnW
-dnW
-kHU
-kHU
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -114722,21 +114721,21 @@ plf
 plf
 plf
 plf
-nHd
-kHU
-kHU
-nYz
-nYz
-gka
-adk
-yfc
-wtH
-bxO
-nYz
-nYz
-kHU
-kHU
-nHd
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -114982,15 +114981,15 @@ plf
 plf
 plf
 plf
-dnW
-hIU
-voT
-yfc
-umH
-gYB
-mGg
-hIU
-dnW
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -115236,21 +115235,21 @@ plf
 plf
 plf
 plf
-nHd
-kHU
-kHU
-nYz
-nYz
-njC
-fBF
-yfc
-kUo
-aIb
-nYz
-nYz
-kHU
-kHU
-nHd
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -115495,17 +115494,17 @@ plf
 plf
 plf
 plf
-kHU
-kHU
-dnW
-dnW
-njC
-iIM
-irW
-dnW
-dnW
-kHU
-kHU
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -115753,15 +115752,15 @@ plf
 plf
 plf
 plf
-kHU
-kHU
-nYz
-dnW
-yfc
-dnW
-nYz
-kHU
-kHU
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -116011,13 +116010,13 @@ plf
 plf
 plf
 plf
-kHU
-kHU
-dnW
-yfc
-dnW
-kHU
-kHU
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -116269,11 +116268,11 @@ plf
 plf
 plf
 plf
-kHU
-kHU
 plf
-kHU
-kHU
+plf
+plf
+plf
+plf
 plf
 plf
 plf
@@ -116527,9 +116526,9 @@ plf
 plf
 plf
 plf
-kHU
 plf
-kHU
+plf
+plf
 plf
 plf
 plf
@@ -116784,9 +116783,9 @@ plf
 plf
 plf
 plf
-nHd
 plf
-nHd
+plf
+plf
 plf
 plf
 plf
@@ -117041,9 +117040,9 @@ plf
 plf
 plf
 plf
-kHU
+nHd
 plf
-kHU
+nHd
 plf
 plf
 plf
@@ -117554,11 +117553,11 @@ plf
 plf
 plf
 plf
-plf
+kHU
 kHU
 plf
 kHU
-plf
+kHU
 plf
 plf
 plf
@@ -117810,13 +117809,13 @@ plf
 plf
 plf
 plf
-plf
-plf
 kHU
-plf
 kHU
-plf
-plf
+dnW
+nYz
+dnW
+kHU
+kHU
 plf
 plf
 plf
@@ -118066,15 +118065,15 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 kHU
-plf
 kHU
-plf
-plf
-plf
+nYz
+dnW
+rXz
+dnW
+nYz
+kHU
+kHU
 plf
 plf
 plf
@@ -118322,17 +118321,17 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
 kHU
-plf
 kHU
-plf
-plf
-plf
-plf
+dnW
+dnW
+wQM
+aVD
+bxO
+dnW
+dnW
+kHU
+kHU
 plf
 plf
 plf
@@ -118577,21 +118576,21 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
-plf
+nHd
 kHU
-plf
 kHU
-plf
-plf
-plf
-plf
-plf
-plf
+nYz
+nYz
+gka
+adk
+yfc
+wtH
+bxO
+nYz
+nYz
+kHU
+kHU
+nHd
 plf
 plf
 plf
@@ -118837,15 +118836,15 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-kHU
-plf
-kHU
-plf
-plf
-plf
+dnW
+hIU
+voT
+yfc
+umH
+gYB
+mGg
+hIU
+dnW
 plf
 plf
 plf
@@ -119091,21 +119090,21 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
-plf
+nHd
 kHU
-plf
 kHU
-plf
-plf
-plf
-plf
-plf
-plf
+nYz
+nYz
+njC
+fBF
+yfc
+kUo
+aIb
+nYz
+nYz
+kHU
+kHU
+nHd
 plf
 plf
 plf
@@ -119350,17 +119349,17 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
 kHU
-plf
 kHU
-plf
-plf
-plf
-plf
+dnW
+dnW
+njC
+iIM
+irW
+dnW
+dnW
+kHU
+kHU
 plf
 plf
 plf
@@ -119608,15 +119607,15 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 kHU
-plf
 kHU
-plf
-plf
-plf
+nYz
+dnW
+yfc
+dnW
+nYz
+kHU
+kHU
 plf
 plf
 plf
@@ -119866,13 +119865,13 @@ plf
 plf
 plf
 plf
-plf
-plf
 kHU
-plf
 kHU
-plf
-plf
+dnW
+yfc
+dnW
+kHU
+kHU
 plf
 plf
 plf
@@ -120124,11 +120123,11 @@ plf
 plf
 plf
 plf
-plf
+kHU
 kHU
 plf
 kHU
-plf
+kHU
 plf
 plf
 plf
@@ -120639,9 +120638,9 @@ plf
 plf
 plf
 plf
-kHU
+nHd
 plf
-kHU
+nHd
 plf
 plf
 plf
