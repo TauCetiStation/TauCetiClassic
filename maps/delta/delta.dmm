@@ -4606,7 +4606,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                Test                Area");
+	network = list("Toxins                                Test                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -6349,13 +6349,10 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "bpV" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/window/southright{
-	dir = 4;
-	name = "Medbay Reception";
-	req_access = list(72)
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -6616,9 +6613,6 @@
 	},
 /area/station/engineering/atmos)
 "btc" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/computer/skills_console,
 /turf/simulated/floor{
@@ -15585,7 +15579,6 @@
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_y = -32
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -16133,9 +16126,6 @@
 /area/station/engineering/engine)
 "dFp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	name = "Locker Room"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -16149,6 +16139,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -16942,12 +16935,11 @@
 	},
 /area/station/rnd/robotics)
 "dQj" = (
-/obj/machinery/light/small,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+/obj/machinery/light/smart{
+	dir = 1
 	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor/engine,
+/area/station/civilian/holodeck/alphadeck)
 "dQz" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
@@ -17369,7 +17361,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                Test                Area");
+	network = list("Toxins                                Test                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -18471,15 +18463,25 @@
 	},
 /area/station/security/checkpoint/engi)
 "ejI" = (
-/obj/machinery/disposal,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -28;
-	pixel_y = -5
-	},
-/obj/structure/disposalpipe/trunk{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/clothing/suit/space/rig/medical,
+/obj/item/clothing/head/helmet/space/rig/medical,
+/obj/item/device/sensor_device,
+/obj/machinery/door/window/southright{
+	dir = 4;
+	name = "Paramedic equipment";
+	req_access = list(70)
+	},
+/obj/item/weapon/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
+/obj/structure/window/thin/reinforced,
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -19473,7 +19475,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                Oxide","waste_sensor"="Gas                Mix                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                Oxide","waste_sensor"="Gas                                Mix                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23457,7 +23459,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                Test                Area");
+	network = list("Toxins                                Test                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23917,7 +23919,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                Room");
+	sensors = list("rnd_sensor"="Heat                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -27920,8 +27922,11 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/obj/structure/window/thin/reinforced,
+/obj/machinery/door/window/southright{
+	dir = 4;
+	name = "Medbay Reception";
+	req_access = list(72)
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -29353,7 +29358,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                Robots");
+	network = list("Engineering","Engineering                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -31414,32 +31419,12 @@
 	},
 /area/station/gateway)
 "hqS" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/item/device/sensor_device,
-/obj/machinery/door/window/southright{
-	dir = 4;
-	name = "Paramedic equipment";
-	req_access = list(70)
-	},
-/obj/item/weapon/storage/belt/medical,
-/obj/item/clothing/glasses/hud/health,
-/obj/structure/window/thin/reinforced,
-/obj/item/device/gps/medical,
-/obj/machinery/light/smart{
-	dir = 8
-	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
-	icon_state = "bot"
+	dir = 2;
+	icon_state = "bluecorner"
 	},
-/area/station/medical/storage)
+/area/station/hallway/primary/central)
 "hqT" = (
 /obj/machinery/color_mixer,
 /turf/simulated/floor{
@@ -31976,9 +31961,6 @@
 	},
 /area/station/bridge/ai_upload)
 "hxh" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/crema_switch{
 	pixel_x = 28
 	},
@@ -33283,6 +33265,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -34062,9 +34045,6 @@
 /area/station/maintenance/escape)
 "hVZ" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -36546,13 +36526,15 @@
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "izs" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced/tinted{
-	grilled = 1;
-	icon_state = "gr_window_reinforced_tinted"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/locker)
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/central)
 "izt" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -37442,9 +37424,6 @@
 /area/station/civilian/library)
 "iJP" = (
 /obj/structure/dresser,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Chapel Private Room";
 	dir = 6
@@ -43238,12 +43217,15 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "jZA" = (
-/obj/machinery/computer/med_data,
 /obj/machinery/requests_console/medbay{
 	pixel_y = 32
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
-	icon_state = "bot"
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /area/station/medical/storage)
 "jZH" = (
@@ -48058,6 +48040,11 @@
 /obj/item/weapon/storage/firstaid/adv{
 	pixel_x = 2;
 	pixel_y = 2
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = -32
 	},
 /turf/simulated/floor,
 /area/station/medical/storage)
@@ -54837,7 +54824,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                Out")
+	sensors = list("in_sm_meter"="Supermatter                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -61502,7 +61489,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/light/small,
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
@@ -61528,8 +61514,9 @@
 	},
 /area/station/security/checkpoint)
 "ouz" = (
-/obj/structure/table,
-/obj/item/weapon/pen,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -65439,7 +65426,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "psH" = (
-/obj/machinery/light/smart,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -67560,9 +67546,6 @@
 /area/station/rnd/xenobiology)
 "pRe" = (
 /obj/effect/landmark/start/medical_doctor,
-/obj/structure/stool/bed/chair{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -72859,7 +72842,6 @@
 	},
 /area/station/hallway/primary/central)
 "rih" = (
-/obj/machinery/photocopier,
 /obj/machinery/camera{
 	c_tag = "Medbay Wing Mid";
 	network = list("SS13","Medical");
@@ -73877,8 +73859,8 @@
 /area/station/hallway/primary/central)
 "rwb" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	name = "Locker Room"
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -84139,8 +84121,8 @@
 "tWU" = (
 /obj/effect/landmark/start/medical_doctor,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "loadingarea"
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/medical/storage)
 "tWZ" = (
@@ -85617,7 +85599,9 @@
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
 "upe" = (
-/obj/structure/table,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -86634,7 +86618,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                Room")
+	sensors = list("rnd_sensor"="Heat                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86893,7 +86877,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                Test                Area","Robots","Anomaly                Isolation");
+	network = list("Research","Toxins                                Test                                Area","Robots","Anomaly                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -89110,6 +89094,9 @@
 	pixel_x = 22
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -89559,7 +89546,7 @@
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = -32
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -91240,15 +91227,9 @@
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "vNk" = (
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
+/obj/machinery/light/smart,
+/turf/simulated/floor/engine,
+/area/station/civilian/holodeck/alphadeck)
 "vNs" = (
 /obj/machinery/light,
 /turf/simulated/shuttle/floor/cargo{
@@ -94323,9 +94304,6 @@
 	},
 /area/station/rnd/chargebay)
 "wBI" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/structure/closet/secure_closet/usp_cartridges,
 /turf/simulated/floor{
 	dir = 8;
@@ -96280,9 +96258,6 @@
 "xbZ" = (
 /obj/structure/table,
 /obj/item/weapon/poster/legit,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
@@ -98501,6 +98476,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/vending/blood,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -101241,6 +101217,9 @@
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -135406,11 +135385,11 @@ bbt
 vpT
 vpT
 opJ
-vpT
+oFM
 icQ
 qqI
 mZI
-oFM
+vpT
 vpT
 vpT
 vpT
@@ -135921,7 +135900,7 @@ vAu
 fZz
 cLd
 cwM
-vNk
+cwM
 nXD
 hwe
 cwM
@@ -139484,7 +139463,7 @@ bRX
 bRX
 xIQ
 srs
-nvi
+wVZ
 itF
 vAu
 rPX
@@ -139741,7 +139720,7 @@ tCp
 dXF
 oiR
 srs
-wVZ
+nvi
 itF
 smU
 hBZ
@@ -140771,7 +140750,7 @@ pBf
 xdk
 bzv
 lMB
-dQj
+wDN
 hBZ
 kHU
 shk
@@ -140838,7 +140817,7 @@ sBD
 gys
 bpV
 ejI
-hqS
+ejI
 lRD
 lRD
 sBD
@@ -142097,7 +142076,7 @@ ktc
 wqS
 gfs
 rZn
-nvi
+wVZ
 xag
 vof
 bRY
@@ -143898,7 +143877,7 @@ mql
 iss
 mgK
 ogP
-mso
+hqS
 nPb
 gQq
 uPV
@@ -144369,7 +144348,7 @@ mEi
 hqz
 bzv
 lMB
-wDN
+mXl
 hBZ
 qIv
 qIv
@@ -145139,7 +145118,7 @@ cpR
 gtK
 cpR
 pxL
-fZz
+hRd
 ffJ
 ape
 fZz
@@ -145951,7 +145930,7 @@ tcX
 uWE
 hTc
 knL
-hTc
+izs
 itC
 xvQ
 kbS
@@ -148771,7 +148750,7 @@ vst
 vst
 sXW
 rwb
-izs
+mFY
 dFp
 bYH
 bYH
@@ -157006,7 +156985,7 @@ dJL
 nRG
 oXA
 oXA
-nJn
+oXA
 dJL
 plf
 cdR
@@ -158028,7 +158007,7 @@ pVo
 adB
 kHU
 kVf
-jjS
+dQj
 jjS
 jjS
 jjS
@@ -159065,7 +159044,7 @@ jjS
 jjS
 jjS
 jjS
-jjS
+vNk
 pVE
 kHU
 dJL
@@ -160344,7 +160323,7 @@ kHU
 fMh
 plf
 dJL
-nRG
+oXA
 oXA
 oXA
 nJn
