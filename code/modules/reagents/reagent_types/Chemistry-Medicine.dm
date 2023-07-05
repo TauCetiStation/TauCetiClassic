@@ -235,8 +235,8 @@
 			B.perma_injury = 0
 			B.status &= ~ORGAN_BROKEN
 			holder.remove_reagent("biracerm", 10)
-	M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.55)
-	M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.55)
+	M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.10)
+	M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.10)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
