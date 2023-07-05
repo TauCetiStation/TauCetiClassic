@@ -198,19 +198,6 @@
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
-/datum/component/gamemode/syndicate/proc/give_equipment_for_the_objective(datum/objective/O, obj/item/I, datum/role/R, mob/living/carbon/human/traitor)
-	for(O in R.objectives.GetObjectives())
-		I = new (traitor.loc)
-		var/list/slots = list(
-			"backpack" = SLOT_IN_BACKPACK,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor.equip_in_one_of_slots(I, slots)
-		traitor.update_icons()
-		if (!where)
-			to_chat(traitor, "Unfortunately, the Syndicate was unable to provide you with the equipment to complete the task. You will have to buy in the uplink with telecrystals.")
-
 /datum/component/gamemode/syndicate/proc/take_uplink()
 	var/mob/living/carbon/human/traitor_mob = get_current()
 	if(!traitor_mob || !istype(traitor_mob))
