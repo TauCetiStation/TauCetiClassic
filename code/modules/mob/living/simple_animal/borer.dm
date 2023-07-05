@@ -38,8 +38,8 @@
 	name = "cortical borer"
 	real_name = "cortical borer"
 	desc = "Маленькое существо, похожее на слизняка."
-	speak_emote = list("шипит")
-	emote_hear = list("шипит")
+	speak_emote = list("стрекочет")
+	emote_hear = list("стрекочет")
 	response_help  = "pokes the"
 	response_disarm = "prods the"
 	response_harm   = "stomps on the"

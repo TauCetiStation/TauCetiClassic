@@ -160,7 +160,7 @@
 	speak = list("Пии.","Пии?","Пи-пии.","Пиии!")
 	speak_emote = list("пищит")
 	emote_hear = list("пищит")
-	emote_see = list("клюёт пол","машет своими маленькими крылышками")
+	emote_see = list("что-то клюёт","машет своими маленькими крылышками")
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
