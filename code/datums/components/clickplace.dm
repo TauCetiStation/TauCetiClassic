@@ -162,8 +162,9 @@
 
 	if(istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
-		if((!user.delay_clothing_unequip(C)) && (C.slot_equipped))
-			return
+		if(C.slot_equipped)
+			if((!user.delay_clothing_unequip(C)))
+				return
 
 	var/atom/old_loc = I.loc
 
