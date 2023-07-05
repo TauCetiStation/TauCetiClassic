@@ -856,6 +856,8 @@
 			slowdown = initial(slowdown)
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 			armor = space_armor
+		if(magpulse)
+			slowdown += boots.slowdown_off
 		update_icon(usr)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/heavy
