@@ -176,6 +176,9 @@
 	name = "pill bottle (Bicaridine)"
 	desc = "Contains pills used to stabilize the severely injured."
 
+	startswith = list(/obj/item/weapon/reagent_containers/pill/bicaridine = 12)
+	wrapper_color = COLOR_MAROON
+
 /obj/item/weapon/storage/pill_bottle/biracerm
 	name = "pill bottle (Biracerm)"
 	desc = "Contains pills used to heal brute and burn damage in emergency situations"
