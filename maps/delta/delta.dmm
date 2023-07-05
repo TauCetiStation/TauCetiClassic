@@ -1479,19 +1479,7 @@
 /turf/environment/space,
 /area/shuttle/mining/station)
 "ajP" = (
-/obj/structure/closet/crate/scicrate,
-/obj/item/robot_parts/l_leg{
-	pixel_x = -6
-	},
-/obj/item/robot_parts/r_leg{
-	pixel_x = 6
-	},
-/obj/item/device/mmi/posibrain,
-/obj/item/device/robotanalyzer,
-/obj/item/borg/upgrade/rename,
-/obj/item/borg/upgrade/reset{
-	pixel_y = 6
-	},
+/obj/machinery/computer/aifixer,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -6328,6 +6316,7 @@
 /area/station/maintenance/atmos)
 "bpx" = (
 /obj/structure/table/reinforced,
+/obj/item/device/mmi/posibrain,
 /obj/item/stack/cable_coil,
 /obj/item/device/flash,
 /obj/item/device/flash,
@@ -8206,9 +8195,16 @@
 /area/station/maintenance/medbay)
 "bJu" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp,
 /obj/machinery/firealarm{
 	pixel_y = 22
+	},
+/obj/item/clothing/glasses/welding/superior{
+	pixel_y = -5;
+	pixel_x = 5
+	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -12466,6 +12462,11 @@
 	icon_state = "bot"
 	},
 /area/station/rnd/chargebay)
+"cJE" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/green,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "cJM" = (
 /obj/machinery/shieldgen,
 /turf/simulated/floor{
@@ -18023,6 +18024,12 @@
 /obj/structure/window/thin{
 	dir = 8
 	},
+/obj/item/robot_parts/r_leg{
+	pixel_x = 6
+	},
+/obj/item/robot_parts/l_leg{
+	pixel_x = -6
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -21671,11 +21678,11 @@
 /area/station/security/detectives_office)
 "eZB" = (
 /obj/structure/table/reinforced,
-/obj/item/device/megaphone,
-/obj/item/toy/figure/rd,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/device/megaphone,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -22415,6 +22422,11 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/atmos)
+"fgX" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/blue,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "fha" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -23380,11 +23392,6 @@
 	icon_state = "blue"
 	},
 /area/station/engineering/atmos)
-"ftK" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "ftS" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/structure/cable{
@@ -28718,6 +28725,9 @@
 /obj/item/toy/figure/rd{
 	pixel_y = 10;
 	pixel_x = -1
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Science"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -45091,11 +45101,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
-"kvJ" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/green,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "kvR" = (
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/hologram/holopad,
@@ -48114,11 +48119,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/storage)
-"leX" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/purple,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "lfm" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -52923,6 +52923,13 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/weapon/screwdriver,
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mon" = (
@@ -53202,8 +53209,9 @@
 /area/station/bridge)
 "mrt" = (
 /obj/structure/table/woodentable,
-/obj/item/device/paicard,
 /obj/machinery/light/small,
+/obj/item/device/paicard,
+/obj/item/weapon/storage/secure/briefcase,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -56328,6 +56336,11 @@
 	icon_state = "warnplate"
 	},
 /area/station/ai_monitored/storage_secure)
+"nfK" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "nfV" = (
 /obj/machinery/bookbinder,
 /turf/simulated/floor/wood,
@@ -57100,19 +57113,16 @@
 /area/station/civilian/janitor)
 "npF" = (
 /obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/screwdriver,
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/requests_console/robotics{
 	pixel_x = 32
 	},
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000;
-	pixel_x = 5;
-	pixel_y = -5
+/obj/item/device/robotanalyzer,
+/obj/item/borg/upgrade/rename,
+/obj/item/borg/upgrade/reset{
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -60154,7 +60164,6 @@
 /area/station/engineering/engine)
 "nZH" = (
 /obj/structure/table/reinforced,
-/obj/item/device/aicard,
 /obj/item/weapon/circuitboard/aicore{
 	pixel_x = -2;
 	pixel_y = 4
@@ -60162,6 +60171,8 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
+/obj/item/weapon/circuitboard/teleporter,
+/obj/item/borg/upgrade/security,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -60273,6 +60284,7 @@
 /area/station/civilian/dormitories/courtroom)
 "oba" = (
 /obj/machinery/hologram/holopad,
+/obj/machinery/computer/aifixer,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -60512,6 +60524,11 @@
 "oer" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/ai_upload)
+"oev" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/orange,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "oex" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -61822,11 +61839,6 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/engine)
-"oyE" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/orange,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "oyG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -67697,6 +67709,11 @@
 	icon_state = "purplecorner"
 	},
 /area/station/engineering/drone_fabrication)
+"pRt" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/red,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "pRL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -68492,12 +68509,12 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
 "qbC" = (
-/obj/machinery/computer/rdconsole{
-	dir = 8
-	},
 /obj/machinery/keycard_auth{
 	pixel_x = 24;
 	pixel_y = -4
+	},
+/obj/machinery/computer/aifixer{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
@@ -73220,11 +73237,6 @@
 /obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"rlQ" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/red,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "rmc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78469,6 +78481,15 @@
 "syE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper/monitorkey,
+/obj/item/weapon/cartridge/signal/science{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/cartridge/signal/science{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/weapon/cartridge/signal/science,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -88443,6 +88464,12 @@
 /area/station/maintenance/atmos)
 "vaP" = (
 /obj/structure/table/reinforced,
+/obj/item/stack/sheet/mineral/diamond{
+	layer = 4.1;
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/weapon/changeling_test,
 /obj/item/weapon/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
@@ -93932,8 +93959,9 @@
 /area/station/maintenance/atmos)
 "wwp" = (
 /obj/structure/table/reinforced,
+/obj/item/device/aicard,
 /obj/item/device/taperecorder{
-	pixel_x = -3
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -151983,9 +152011,9 @@ xUx
 wtL
 myv
 ihW
-kvJ
+cJE
 xUx
-ftK
+fgX
 wiv
 gVF
 iQn
@@ -154032,7 +154060,7 @@ kRe
 vst
 xUx
 jtu
-oyE
+oev
 xUx
 xzC
 qBh
@@ -154292,11 +154320,11 @@ wQU
 noh
 xUx
 rDT
-leX
+nfK
 wNl
 xUx
 xzC
-rlQ
+pRt
 rDT
 xUx
 gGH
