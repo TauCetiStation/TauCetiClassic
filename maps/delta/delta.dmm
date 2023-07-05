@@ -2932,10 +2932,6 @@
 /area/station/ai_monitored/storage_secure)
 "aAT" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	dir = 4;
-	network = list("xeno")
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -2946,6 +2942,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "aAZ" = (
@@ -4610,7 +4607,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                                Test                                Area");
+	network = list("Toxins                                                                Test                                                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -8581,6 +8578,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -13795,7 +13793,6 @@
 	req_access = list(55)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "dbB" = (
@@ -17366,7 +17363,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                Test                                Area");
+	network = list("Toxins                                                                Test                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -17662,6 +17659,17 @@
 	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape)
+"dZp" = (
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/sparker{
+	id = "Xenobio";
+	pixel_y = 25
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/rnd/xenobiology)
 "dZC" = (
 /obj/structure/lattice,
 /obj/structure/sign/nanotrasen{
@@ -19480,7 +19488,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                Oxide","waste_sensor"="Gas                                Mix                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                Oxide","waste_sensor"="Gas                                                                Mix                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23466,7 +23474,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                Test                                Area");
+	network = list("Toxins                                                                Test                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23926,7 +23934,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                Room");
+	sensors = list("rnd_sensor"="Heat                                                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -29365,7 +29373,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                                Robots");
+	network = list("Engineering","Engineering                                                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -30310,6 +30318,18 @@
 /obj/random/foods/food_trash,
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
+"hcI" = (
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
+/obj/item/stack/cable_coil/red,
+/obj/item/device/multitool,
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/rnd/xenobiology)
 "hcM" = (
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/stool/bed/chair/metal/blue{
@@ -33775,9 +33795,12 @@
 /area/station/maintenance/cargo)
 "hSw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/syringes,
 /obj/structure/window/thin/reinforced{
 	dir = 4
+	},
+/obj/item/weapon/folder/blue,
+/obj/item/weapon/pen{
+	layer = 3.1
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -34031,12 +34054,12 @@
 /area/station/engineering/singularity)
 "hVD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/blue,
 /obj/machinery/camera{
 	c_tag = "Xenobiology Access";
 	dir = 6;
 	network = list("SS13","Research")
 	},
+/obj/item/weapon/storage/box/syringes,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "hVJ" = (
@@ -34200,7 +34223,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/light/smart,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "hXl" = (
@@ -39855,9 +39877,6 @@
 /area/station/ai_monitored/storage_secure)
 "joj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/pen{
-	layer = 3.1
-	},
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -39865,6 +39884,8 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/item/clothing/gloves/latex,
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purple"
@@ -43126,7 +43147,6 @@
 /area/station/civilian/locker)
 "jYs" = (
 /obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -43136,6 +43156,11 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/machinery/ignition_switch{
+	id = "Xenobio";
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -46764,6 +46789,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"kQe" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/rnd/xenobiology)
 "kQf" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/crowbar,
@@ -48514,7 +48548,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/station/rnd/xenobiology)
+/area/station/rnd/misc_lab)
 "llM" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -54157,6 +54191,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -54837,7 +54872,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                Out")
+	sensors = list("in_sm_meter"="Supermatter                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -62350,7 +62385,7 @@
 	},
 /area/station/engineering/engine)
 "oGK" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67538,6 +67573,26 @@
 	icon_state = "vault"
 	},
 /area/station/tcommsat/chamber)
+"pQI" = (
+/obj/machinery/cell_charger{
+	pixel_y = 5
+	},
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/rnd/xenobiology)
 "pQK" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
@@ -70768,9 +70823,6 @@
 	icon_state = "1-8"
 	},
 /obj/structure/window/thin/reinforced,
-/obj/item/device/radio/intercom{
-	pixel_y = 10
-	},
 /obj/machinery/door_control{
 	id = "xenobiomisc";
 	name = "Containment Blast Doors"
@@ -76930,7 +76982,6 @@
 	},
 /area/station/security/checkpoint/medbay)
 "sfP" = (
-/obj/machinery/light/small,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -82399,14 +82450,14 @@
 	},
 /obj/machinery/door_control{
 	id = "xenobiosouth";
-	name = "Containment Blast Doors";
+	name = "South Containment Blast Doors";
 	req_access = list(55);
 	pixel_y = -26;
 	pixel_x = 6
 	},
 /obj/machinery/door_control{
 	id = "xenobionorth";
-	name = "Containment Blast Doors";
+	name = "North Containment Blast Doors";
 	req_access = list(55);
 	pixel_y = -26;
 	pixel_x = -6
@@ -86246,7 +86297,6 @@
 	},
 /area/station/engineering/atmos)
 "uwI" = (
-/obj/machinery/portable_atmospherics/canister,
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
@@ -86658,7 +86708,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                Room")
+	sensors = list("rnd_sensor"="Heat                                                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86917,7 +86967,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                                Test                                Area","Robots","Anomaly                                Isolation");
+	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -88020,12 +88070,12 @@
 /area/station/maintenance/auxsolarstarboard)
 "uWZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	pixel_y = 5
-	},
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 5;
 	layer = 2.9
+	},
+/obj/machinery/reagentgrinder{
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "purple"
@@ -95997,12 +96047,12 @@
 	},
 /area/station/bridge/corp_lounge)
 "wYO" = (
-/mob/living/simple_animal/slime,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/carbon/slime,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -100309,6 +100359,8 @@
 /area/station/ai_monitored/storage_secure)
 "xXL" = (
 /obj/machinery/light/smart,
+/obj/item/device/radio/electropack,
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -120016,7 +120068,7 @@ fRJ
 nFd
 fRJ
 fRJ
-fRJ
+pQI
 cjx
 lUT
 vee
@@ -120524,13 +120576,13 @@ rrY
 cjx
 lUT
 cjx
+dZp
 fRJ
 fRJ
 fRJ
 fRJ
 fRJ
-fRJ
-fRJ
+hcI
 cjx
 lUT
 gPj
@@ -122074,7 +122126,7 @@ vHf
 xZd
 siE
 gVW
-fRJ
+kQe
 hxs
 cjx
 cjx
@@ -125665,11 +125717,11 @@ jwI
 gVW
 wBr
 gVW
-ddl
+oGK
 gdS
 wgr
 gdS
-gdS
+ddl
 gVW
 wBr
 gVW
@@ -127463,7 +127515,7 @@ jwI
 fQK
 iJV
 ivl
-llw
+mhk
 bfh
 uGd
 cjx
@@ -132617,7 +132669,7 @@ uot
 vCH
 wPi
 daS
-xYg
+llw
 uEC
 gkn
 jDw
