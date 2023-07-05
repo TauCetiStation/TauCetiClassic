@@ -221,6 +221,13 @@
 	required_catalysts = list("phoron" = 5)
 	result_amount = 2
 
+/datum/chemical_reaction/biracerm
+	name = "Biracerm"
+	id = "biracerm"
+	result = "biracerm"
+	required_reagents = list("bicaridine" = 2, "sugar" = 2, "kelotane" = 2)
+	result_amount = 2
+
 /datum/chemical_reaction/virus_food
 	name = "Virus Food"
 	id = "virusfood"

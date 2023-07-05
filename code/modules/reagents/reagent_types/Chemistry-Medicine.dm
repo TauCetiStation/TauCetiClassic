@@ -214,9 +214,19 @@
 	if(M.stat == DEAD)
 		return
 	if(M.health < volume > 9) //If you are in crit, and someone injects at least 9u into you, you will heal 20% of your physical damage instantly.
-		to_chat(M, "You feel a power. But it's a little tiring...")
 		M.adjustBruteLoss(-M.getBruteLoss(TRUE) * 0.20)
 		M.adjustFireLoss(-M.getFireLoss(TRUE) * 0.20)
+	if(M.maxHealth == 100)
+		M.maxHealth = 85
+		to_chat(M, "I feel weak in my body...")
+	if(M.maxHealth == 85)
+		M.maxHealth = 50
+		to_chat(M, "I'm getting weaker...")
+	if(M.maxHealth == 50)
+		M.maxHealth = 25
+		to_chat(M, "I am very... Tired. Let me rest.")
+	if(M.maxHealth == 25)
+		M.adjustToxLoss(-2 * REM)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
