@@ -1471,14 +1471,18 @@
 /turf/environment/space,
 /area/shuttle/mining/station)
 "ajP" = (
-/obj/structure/rack,
-/obj/item/toy/figure/roboticist{
-	pixel_y = 4
+/obj/structure/closet/crate/scicrate,
+/obj/item/robot_parts/l_leg{
+	pixel_x = -6
 	},
-/obj/item/device/paicard,
-/obj/item/weapon/book/manual/wiki/guide_to_robotics{
-	pixel_x = 2;
-	pixel_y = 5
+/obj/item/robot_parts/r_leg{
+	pixel_x = 6
+	},
+/obj/item/device/mmi/posibrain,
+/obj/item/device/robotanalyzer,
+/obj/item/borg/upgrade/rename,
+/obj/item/borg/upgrade/reset{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -4748,7 +4752,7 @@
 "aXS" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "aYb" = (
@@ -5320,12 +5324,7 @@
 /turf/simulated/wall,
 /area/station/medical/morgue)
 "beK" = (
-/obj/item/stack/cable_coil,
 /obj/structure/table,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/robot_parts/l_leg,
-/obj/item/robot_parts/r_leg,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -5333,6 +5332,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
+	},
+/obj/item/stack/sheet/plasteel{
+	amount = 50
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -6315,9 +6317,9 @@
 /area/station/maintenance/atmos)
 "bpx" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/cable_coil,
+/obj/item/device/flash,
+/obj/item/device/flash,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "bpA" = (
@@ -10234,7 +10236,7 @@
 "chV" = (
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "cie" = (
@@ -13547,9 +13549,6 @@
 "cWE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/visuals/surgery/full,
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Robotics Surgery Wing";
 	network = list("SS13","Research");
@@ -14521,6 +14520,7 @@
 	network = list("SS13","Research");
 	dir = 10
 	},
+/obj/item/device/radio/headset/headset_sci,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -16931,15 +16931,20 @@
 	},
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "dQj" = (
-/obj/machinery/light/smart{
-	dir = 1
+/obj/machinery/door_control{
+	id = "Skynet_launch";
+	name = "Mech Bay Door Control";
+	pixel_x = 24
 	},
-/turf/simulated/floor/engine,
-/area/station/civilian/holodeck/alphadeck)
+/obj/effect/landmark/start/cyborg,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/rnd/chargebay)
 "dQz" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
@@ -19581,11 +19586,11 @@
 /area/station/bridge/hop_office)
 "exH" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/latex,
-/obj/item/weapon/storage/box/bodybags,
 /obj/structure/window/thin{
 	dir = 8
 	},
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/clothing/head/welding,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -21920,6 +21925,8 @@
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
 	},
+/obj/item/weapon/folder/purple,
+/obj/item/weapon/pen,
 /turf/simulated/floor/plating,
 /area/station/rnd/robotics)
 "fct" = (
@@ -30188,7 +30195,7 @@
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /turf/simulated/floor{
-	dir = 6;
+	dir = 4;
 	icon_state = "warning"
 	},
 /area/station/rnd/robotics)
@@ -31419,12 +31426,11 @@
 	},
 /area/station/gateway)
 "hqS" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "bluecorner"
+/obj/machinery/light/smart{
+	dir = 1
 	},
-/area/station/hallway/primary/central)
+/turf/simulated/floor/engine,
+/area/station/civilian/holodeck/alphadeck)
 "hqT" = (
 /obj/machinery/color_mixer,
 /turf/simulated/floor{
@@ -36526,13 +36532,10 @@
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "izs" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "yellowcorner"
+	dir = 2;
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "izt" = (
@@ -37528,7 +37531,7 @@
 	},
 /area/station/engineering/engine)
 "iLo" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/life_assist/external_cooling_device,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38326,7 +38329,6 @@
 /area/station/maintenance/chapel)
 "iUy" = (
 /obj/structure/table,
-/obj/item/clothing/head/welding,
 /obj/item/device/tagger/shop,
 /obj/item/weapon/packageWrap,
 /obj/machinery/alarm{
@@ -39588,10 +39590,12 @@
 /area/station/engineering/singularity)
 "jjV" = (
 /obj/structure/table,
-/obj/item/clothing/head/welding,
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_y = 4
+/obj/item/weapon/book/manual/wiki/guide_to_exosuits,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics{
+	pixel_x = 2;
+	pixel_y = 5
 	},
+/obj/item/device/paicard,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "jjY" = (
@@ -40927,6 +40931,10 @@
 /area/station/medical/morgue)
 "jzs" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/item/toy/figure/roboticist{
+	pixel_y = 10;
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -43090,7 +43098,7 @@
 /area/station/storage/primary)
 "jYc" = (
 /obj/structure/sign/warning/secure_area,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall,
 /area/station/civilian/barbershop)
 "jYh" = (
 /obj/structure/cable{
@@ -46217,12 +46225,11 @@
 	},
 /area/station/civilian/library)
 "kJd" = (
-/obj/structure/table/reinforced,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "delivery"
 	},
-/area/station/rnd/robotics)
+/area/station/rnd/chargebay)
 "kJf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -46804,7 +46811,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "kRn" = (
-/obj/machinery/computer/rdconsole/robotics,
+/obj/machinery/computer/rdconsole/robotics{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -52840,6 +52849,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
+	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mon" = (
@@ -55967,7 +55980,10 @@
 /obj/structure/sign/poster/official/build{
 	pixel_y = 32
 	},
-/obj/machinery/computer/mecha,
+/obj/machinery/recharge_station,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -57022,6 +57038,15 @@
 /obj/item/weapon/screwdriver,
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/requests_console/robotics{
+	pixel_x = 32
+	},
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -62243,7 +62268,6 @@
 	},
 /area/station/hallway/primary/central)
 "oFV" = (
-/obj/effect/landmark/start/cyborg,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Mech Bay APC";
@@ -63932,13 +63956,12 @@
 	},
 /area/station/medical/virology)
 "paX" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/wrench,
+/obj/item/device/multitool,
+/turf/simulated/floor,
 /area/station/rnd/robotics)
 "pbb" = (
 /obj/structure/table,
@@ -66870,7 +66893,7 @@
 "pJW" = (
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "pJZ" = (
@@ -70873,8 +70896,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/atmos)
 "qIL" = (
-/obj/structure/closet/crate/scicrate,
-/obj/item/weapon/book/manual/wiki/guide_to_exosuits,
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/gun/energy/pyrometer/engineering/robotics,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -75747,7 +75774,7 @@
 /obj/effect/landmark/start/roboticist,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "rPX" = (
@@ -76684,10 +76711,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "sdo" = (
-/turf/simulated/floor{
-	icon_state = "warning"
-	},
-/area/station/rnd/robotics)
+/obj/machinery/light/smart,
+/turf/simulated/floor/engine,
+/area/station/civilian/holodeck/alphadeck)
 "sdC" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -80692,26 +80718,33 @@
 	},
 /area/station/cargo/qm)
 "tcM" = (
-/obj/item/clothing/glasses/welding,
 /obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/glass{
 	amount = 50
 	},
 /obj/item/stack/sheet/metal{
-	amount = 50
+	amount = 50;
+	pixel_y = -16
 	},
 /obj/item/stack/sheet/metal{
-	amount = 50
+	amount = 50;
+	pixel_y = -16
 	},
 /obj/item/stack/sheet/metal{
-	amount = 50
+	amount = 50;
+	pixel_y = -16
 	},
 /obj/item/stack/sheet/metal{
-	amount = 50
+	amount = 50;
+	pixel_y = -16
 	},
 /obj/item/stack/sheet/metal{
-	amount = 50
+	amount = 50;
+	pixel_y = -16
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50;
+	pixel_y = -16
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -82351,11 +82384,15 @@
 	},
 /area/station/medical/virology)
 "tzm" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/simulated/floor{
-	icon_state = "bot"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/area/station/rnd/chargebay)
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/central)
 "tzn" = (
 /obj/machinery/computer/camera_advanced/xenobio{
 	dir = 1
@@ -85151,9 +85188,12 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ukI" = (
+/obj/machinery/optable{
+	name = "Robotics Operating Table"
+	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "ukM" = (
@@ -88042,11 +88082,11 @@
 /area/station/security/prison)
 "uYf" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/purple,
-/obj/item/weapon/pen,
 /obj/structure/window/thin{
 	dir = 1
 	},
+/obj/item/weapon/storage/box/bodybags,
+/obj/item/weapon/pen,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "uYh" = (
@@ -91226,10 +91266,6 @@
 	icon_state = "bluefull"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
-"vNk" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor/engine,
-/area/station/civilian/holodeck/alphadeck)
 "vNs" = (
 /obj/machinery/light,
 /turf/simulated/shuttle/floor/cargo{
@@ -93434,7 +93470,7 @@
 "wrb" = (
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "brownold"
+	icon_state = "whitehall"
 	},
 /area/station/rnd/robotics)
 "wrg" = (
@@ -96321,14 +96357,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "xdd" = (
-/obj/item/borg/upgrade/rename{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/structure/table,
-/obj/machinery/requests_console/robotics{
-	pixel_x = 32
-	},
+/obj/machinery/vending/robotics,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -132035,12 +132064,12 @@ wtC
 agb
 aqF
 waU
-xgp
-xgp
-xgp
+uJi
+uJi
+uJi
 lsB
-xgp
-xgp
+uJi
+uJi
 xgp
 eay
 iax
@@ -132292,12 +132321,12 @@ pbn
 pbn
 pbn
 pbn
-xgp
+uJi
 moc
 iUy
 oNS
 oFV
-hsx
+kJd
 qrX
 vID
 xXU
@@ -132549,7 +132578,7 @@ pbn
 eRU
 hML
 gZh
-xgp
+uJi
 ctR
 kMJ
 jgx
@@ -132805,8 +132834,8 @@ dPx
 iYX
 uZe
 jPe
-dRd
-xgp
+pbn
+uJi
 wSp
 inP
 fnr
@@ -132818,7 +132847,7 @@ vlJ
 fGP
 vlJ
 sbp
-kJd
+cVA
 cWM
 aqC
 qXN
@@ -133063,7 +133092,7 @@ pbn
 jCA
 rru
 jYc
-tzm
+hsx
 xUX
 eed
 lcX
@@ -133075,7 +133104,7 @@ wHq
 fGP
 wHq
 sbp
-sdo
+cVA
 pJW
 aXS
 aXS
@@ -133319,7 +133348,7 @@ mwU
 pHa
 hfj
 gyw
-dRd
+pbn
 cJC
 mfT
 ixJ
@@ -133332,7 +133361,7 @@ cLW
 rjR
 qgs
 aqC
-sdo
+cVA
 wrb
 chV
 rPS
@@ -133576,20 +133605,20 @@ mwU
 pHa
 wiG
 oqZ
-dRd
+pbn
 naF
 tvF
 xQR
 oHA
 xQR
 qzy
-xgp
+uJi
 qIL
 pQt
 kTN
 gkZ
 wZZ
-sdo
+cVA
 xdd
 kid
 uYf
@@ -133834,7 +133863,7 @@ pHa
 jxP
 hOL
 dRd
-xgp
+uJi
 ohp
 qoI
 fnr
@@ -134091,7 +134120,7 @@ pbn
 iYY
 tMV
 rwI
-xgp
+uJi
 tvF
 dJe
 mlT
@@ -134348,7 +134377,7 @@ gJg
 pZr
 hGE
 wfp
-xgp
+uJi
 fhn
 wPt
 eei
@@ -134605,13 +134634,13 @@ pbn
 uoi
 rqA
 jYR
-xgp
+uJi
 wIf
 wIf
 neh
 roT
-hsx
-xgp
+dQj
+uJi
 jzs
 sLV
 oEK
@@ -134862,13 +134891,13 @@ pbn
 wRM
 hqT
 pbn
-xgp
+uJi
 mcr
 mcr
 eFu
 xXy
-xgp
-xgp
+uJi
+uJi
 bSg
 fcg
 oZa
@@ -135387,9 +135416,9 @@ vpT
 opJ
 oFM
 icQ
-qqI
-mZI
 vpT
+mZI
+qqI
 vpT
 vpT
 vpT
@@ -143877,7 +143906,7 @@ mql
 iss
 mgK
 ogP
-hqS
+izs
 nPb
 gQq
 uPV
@@ -145930,7 +145959,7 @@ tcX
 uWE
 hTc
 knL
-izs
+tzm
 itC
 xvQ
 kbS
@@ -158007,7 +158036,7 @@ pVo
 adB
 kHU
 kVf
-dQj
+hqS
 jjS
 jjS
 jjS
@@ -159044,7 +159073,7 @@ jjS
 jjS
 jjS
 jjS
-vNk
+sdo
 pVE
 kHU
 dJL
