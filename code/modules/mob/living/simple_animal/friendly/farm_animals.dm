@@ -197,10 +197,10 @@ var/global/chicken_count = 0
 	icon_living = "chicken"
 	icon_dead = "chicken_dead"
 	icon_move = "chicken_move"
-	speak = list("Ко-ко!","ПОАК ПОАК ПОАК!","Коооо коооо.")
+	speak = list("Ко-ко!","Ко-ко-ко!","Коооо коооо.")
 	speak_emote = list("кудахчет")
 	emote_hear = list("кудахчет")
-	emote_see = list("клюёт пол","машет своими крыльями")
+	emote_see = list("что-то клюёт","машет своими крыльями")
 	speak_chance = 2
 	turns_per_move = 3
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
