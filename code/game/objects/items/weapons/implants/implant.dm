@@ -4,6 +4,7 @@
 	name = "implant"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
+	item_actions_special = TRUE
 	var/implanted = null
 	var/mob/living/carbon/imp_in = null
 	var/obj/item/organ/external/part = null
@@ -13,18 +14,12 @@
 
 	var/implant_type = "b"
 
-	var/implant_actions_types = list()
-	var/implant_actions = list()
-
 /datum/action/item_action/implant
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
 	implant_list += src
-	for(var/path in implant_actions_types)
-		var/datum/action/B = new path (src)
-		implant_actions += B
 
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
@@ -35,9 +30,6 @@
 		if(isliving(imp_in))
 			imp_in.sec_hud_set_implants()
 	imp_in = null
-	for(var/datum/action/A in implant_actions)
-		if(A.CheckRemoval(imp_in))
-			A.Remove(imp_in)
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -66,7 +58,7 @@
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
-	for(var/datum/action/A in implant_actions)
+	for(var/datum/action/A in item_actions)
 		A.Grant(imp_in)
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
@@ -74,7 +66,7 @@
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
-	for(var/datum/action/A in implant_actions)
+	for(var/datum/action/A in item_actions)
 		A.Grant(imp_in)
 
 /obj/item/weapon/implant/proc/get_data()
@@ -301,7 +293,7 @@ Implant Specifics:<BR>"}
 	icon_state = "implant"
 	uses = 3
 
-	implant_actions_types = list(/datum/action/item_action/implant/adrenaline_implant)
+	item_action_types = list(/datum/action/item_action/implant/adrenaline_implant)
 
 /datum/action/item_action/implant/adrenaline_implant
 	name = "Adrenaline implant"
@@ -344,7 +336,7 @@ Implant Specifics:<BR>"}
 	icon_state = "emp"
 	uses = 3
 
-	implant_actions_types = list(/datum/action/item_action/implant/emp_implant)
+	item_action_types = list(/datum/action/item_action/implant/emp_implant)
 
 /datum/action/item_action/implant/emp_implant
 	name = "EMP implant"
@@ -567,7 +559,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	icon_state = "implant_evil"
 	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
 	var/obj/item/weapon/storage/internal/imp/storage
-	implant_actions_types = list(/datum/action/item_action/implant/storage_implant)
+	item_action_types = list(/datum/action/item_action/implant/storage_implant)
 
 /datum/action/item_action/implant/storage_implant
 	name = "Bluespace pocket"

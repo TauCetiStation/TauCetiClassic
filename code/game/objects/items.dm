@@ -26,8 +26,12 @@
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/list/item_action_types = list() //Actions that item spawns on atom_init(), paths
-	var/list/item_actions = list()      //Spawned actions, datums
+	///Actions that item spawns on atom_init(), paths
+	var/list/item_action_types = list()
+	///Spawned actions, datums
+	var/list/item_actions = list()
+	///Add actions on equip(), otherwise we have a special behavior
+	var/item_actions_special = FALSE
 
 	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
@@ -363,9 +367,10 @@
 		qdel(src)
 	update_world_icon()
 	set_alt_apperances_layers()
-	for(var/datum/action/A in item_actions)
-		if(A.CheckRemoval(user))
-			A.Remove(user)
+	if(!item_actions_special)
+		for(var/datum/action/A in item_actions)
+			if(A.CheckRemoval(user))
+				A.Remove(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -403,8 +408,9 @@
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	update_world_icon()
 	set_alt_apperances_layers()
-	for(var/datum/action/A in item_actions)
-		A.Grant(user)
+	if(!item_actions_special)
+		for(var/datum/action/A in item_actions)
+			A.Grant(user)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
