@@ -9,6 +9,32 @@
 
 //AREAS OUTSIDE OF THE TRAIN
 
+/area/trainstation/broadcast
+	name = "Broadcast"
+	icon_state = "broadcast"
+	requires_power = FALSE
+	looped_ambience = 'trainstation13/sound/ambience/loop_generic.ogg'
+	ambience = null
+	sound_environment = SOUND_ENVIRONMENT_GENERIC
+
+/area/trainstation/soyuz
+	name = "Soyuz"
+	icon_state = "soyuz"
+	requires_power = FALSE
+	looped_ambience = 'sound/ambience/loop_regular_vents.ogg'
+	ambience = list('sound/machines/signal.ogg')
+	sound_environment = SOUND_ENVIRONMENT_GENERIC
+
+/area/trainstation/soyuz/solar
+	name = "Soyuz Solar Array"
+	icon_state = "sun"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	valid_territory = 0
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+	outdoors = TRUE
+
 /area/trainstation/street
 	name = "Street"
 	icon_state = "street"
@@ -21,14 +47,6 @@
 		'trainstation13/sound/ambience/dog_distant_2.ogg',
 		'trainstation13/sound/ambience/dog_distant_3.ogg'
 	)
-
-/area/trainstation/broadcast
-	name = "Broadcast"
-	icon_state = "broadcast"
-	requires_power = FALSE
-	looped_ambience = 'trainstation13/sound/ambience/loop_generic.ogg'
-	ambience = null
-	sound_environment = SOUND_ENVIRONMENT_GENERIC
 
 /area/trainstation/apartment
 	name = "Apartment"

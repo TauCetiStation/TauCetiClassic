@@ -93,7 +93,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			/obj/structure/trainstation/lamppost/rural/on = 10,
 			/obj/structure/flora/tree/pine/train = 20,
 			/obj/structure/flora/tree/dead/train = 90,
-			/obj/structure/flora/tree/utilitypole = 5,
+			/obj/structure/trainstation/utilitypole = 5,
 			/obj/structure/flora/ausbushes/fullgrass/train = 20,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 20,
 			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
@@ -124,7 +124,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			/obj/structure/scrap/poor/large/train = 1,
 		),
 		"field" = list(
-			/obj/structure/flora/tree/utilitypole = 5,
+			/obj/structure/trainstation/utilitypole = 5,
 			/obj/structure/flora/ausbushes/fullgrass/train = 70,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 60,
 			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
@@ -136,7 +136,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 		"forest" = list(
 			/obj/structure/flora/tree/pine/train = 10,
 			/obj/structure/flora/tree/dead/train = 90,
-			/obj/structure/flora/tree/utilitypole = 5,
+			/obj/structure/trainstation/utilitypole = 5,
 			/obj/structure/flora/ausbushes/fullgrass/train = 30,
 			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
 			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
@@ -351,6 +351,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/structure/trainstation/lamppost/on,
 		/obj/structure/trainstation/lamppost/rural,
 		/obj/structure/trainstation/lamppost/rural/on,
+		/obj/structure/trainstation/utilitypole,
 		/obj/structure/trainstation/trainsignal,
 		/obj/item/weapon/stock_parts/cell/high,
 		/obj/item/weapon/grown/log,
@@ -359,7 +360,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		/obj/structure/trainstation/bench,
 		/obj/structure/trainstation/bench/green,
 		/obj/structure/closet/crate/bin,
-		/obj/structure/flora/tree/utilitypole,
 		/obj/structure/flora/tree/pine/train,
 		/obj/structure/flora/tree/dead/train,
 		/obj/structure/flora/ausbushes/fullgrass/train,
@@ -410,14 +410,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 //UNIQUE SPAWNED OBJECTS BELOW
 
 //FLORA
-
-/obj/structure/flora/tree/utilitypole //Typical example of lazy shitcode by BartNixon
-	name = "utility pole"
-	desc = "An old utility pole disconnected from the grid long time ago. It doesn't look sturdy."
-	icon = 'trainstation13/icons/64x32.dmi'
-	icon_state = "utilitypole"
-	anchored = FALSE
-	layer = 5
 
 /obj/structure/flora/tree/pine/train
 	anchored = FALSE

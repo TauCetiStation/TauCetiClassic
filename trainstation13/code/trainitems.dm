@@ -9,6 +9,7 @@
 
 /obj/item/weapon/card/id/passport/atom_init()
 	. = ..()
+	desc = "Upon closer inspection you notice a nine-digit number: №[rand(111, 999)]-[rand(111, 999)]-[rand(111, 999)]."
 	icon_state = "passport_[rand(1, 6)]"
 
 /obj/item/weapon/paper/ticket

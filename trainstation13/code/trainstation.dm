@@ -165,7 +165,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, train_special_effect
 		var/mob/living/L = AM
 		L.Stun(5)
 		L.Weaken(5)
-		L.adjustBruteLoss(3)
+		L.adjustBruteLoss(2)
 
 /obj/effect/decal/train_special_effects/killbox
 	name = "kill box"
