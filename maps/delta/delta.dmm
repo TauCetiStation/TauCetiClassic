@@ -715,18 +715,18 @@
 /area/station/maintenance/science)
 "adM" = (
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "adN" = (
@@ -18167,16 +18167,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
-"ees" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/security/detectives_office)
 "eeB" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/engineering{
@@ -20090,7 +20080,7 @@
 	},
 /area/station/storage/tech)
 "eCe" = (
-/obj/structure/stool/bed/chair/pew/left,
+/obj/structure/stool/bed/chair/metal/white,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -21042,10 +21032,6 @@
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/supply/station)
-"ePc" = (
-/obj/machinery/deployable/barrier,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "ePi" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -25393,7 +25379,6 @@
 /turf/simulated/floor,
 /area/station/civilian/toilet)
 "fTo" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
@@ -31502,12 +31487,14 @@
 /turf/simulated/wall,
 /area/station/maintenance/escape)
 "hqe" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper/wires,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
+/obj/machinery/telescience_jammer{
+	radius = 5
 	},
-/area/station/engineering/chiefs_office)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warndark"
+	},
+/area/station/security/armoury)
 "hqf" = (
 /obj/machinery/alarm{
 	pixel_x = 29;
@@ -33611,21 +33598,14 @@
 	},
 /area/station/civilian/theatre)
 "hNE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/telescience_jammer{
+	radius = 5
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/station/security/brig)
+/area/station/tcommsat/chamber)
 "hNK" = (
 /turf/simulated/wall,
 /area/station/engineering/atmos/supermatter)
@@ -39622,6 +39602,9 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"jhM" = (
+/turf/simulated/wall/r_wall,
+/area/station/hallway/primary/central)
 "jhQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -40858,6 +40841,10 @@
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
+"jwv" = (
+/obj/item/toy/figure/ninja,
+/turf/environment/space,
+/area/space)
 "jwD" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -42770,10 +42757,6 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
-"jRm" = (
-/obj/machinery/telescience_jammer,
-/turf/simulated/floor/wood,
-/area/station/bridge/captain_quarters)
 "jRv" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -52484,7 +52467,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	req_one_access = list(12,22)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -54912,7 +54895,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "mMq" = (
-/obj/structure/stool/bed/chair/pew/left,
+/obj/structure/stool/bed/chair/metal/white,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
@@ -69841,9 +69824,9 @@
 	},
 /area/station/hallway/primary/fore)
 "qqG" = (
-/obj/item/toy/figure/ninja,
-/turf/environment/space,
-/area/space)
+/obj/machinery/deployable/barrier,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "qqI" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -69912,6 +69895,16 @@
 	icon_state = "grimy"
 	},
 /area/station/civilian/library)
+"qrU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
 "qrX" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile{
@@ -77426,6 +77419,13 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
+"sim" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper/wires,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/engineering/chiefs_office)
 "sit" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -78396,10 +78396,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "stM" = (
@@ -78866,7 +78866,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "sAQ" = (
-/obj/structure/stool/bed/chair/pew/right,
+/obj/structure/stool/bed/chair/metal/white,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -82330,7 +82330,7 @@
 	},
 /area/station/bridge)
 "tvk" = (
-/obj/structure/stool/bed/chair/pew/right,
+/obj/structure/stool/bed/chair/metal/white,
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
@@ -82912,9 +82912,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"tBK" = (
-/turf/simulated/wall/r_wall,
-/area/station/hallway/primary/central)
 "tBX" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -84881,14 +84878,21 @@
 	},
 /area/station/rnd/hallway)
 "ucx" = (
-/obj/machinery/telescience_jammer{
-	radius = 5
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
-/area/station/tcommsat/chamber)
+/area/station/security/brig)
 "ucF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -93987,14 +93991,9 @@
 	},
 /area/station/security/warden)
 "wsS" = (
-/obj/machinery/telescience_jammer{
-	radius = 5
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warndark"
-	},
-/area/station/security/armoury)
+/obj/machinery/telescience_jammer,
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
 "wtb" = (
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -96638,9 +96637,12 @@
 	},
 /area/station/engineering/engine)
 "xby" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/firealarm{
 	pixel_y = 22
+	},
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -124757,7 +124759,7 @@ hkb
 ehA
 fUz
 fLQ
-hqe
+sim
 aBG
 acc
 tUJ
@@ -139437,7 +139439,7 @@ efb
 vAu
 ogP
 tGK
-tBK
+jhM
 bZk
 bZk
 bZk
@@ -140182,7 +140184,7 @@ gqg
 ggs
 eXe
 rQV
-ucx
+hNE
 xMO
 raJ
 cCX
@@ -141210,7 +141212,7 @@ gqg
 cWR
 eXe
 tWZ
-ucx
+hNE
 aty
 wEV
 fAH
@@ -143262,7 +143264,7 @@ iaL
 cUZ
 hZU
 ibm
-jRm
+wsS
 sTY
 bIZ
 cPN
@@ -147111,7 +147113,7 @@ pDa
 esk
 bmq
 hpt
-qqG
+jwv
 cmN
 bKg
 isH
@@ -149427,7 +149429,7 @@ plf
 pBv
 jGA
 tzR
-ees
+qrU
 mDl
 qHr
 maQ
@@ -151219,7 +151221,7 @@ iGB
 qJx
 tTk
 qMX
-hNE
+adM
 fKP
 vTX
 dhy
@@ -151497,7 +151499,7 @@ cyx
 xxb
 bfu
 adp
-ePc
+qqG
 wzd
 vAP
 vst
@@ -151992,7 +151994,7 @@ kGr
 rjb
 bXA
 rfz
-adM
+ucx
 gvj
 cHH
 pQo
@@ -156114,7 +156116,7 @@ tte
 xCO
 fUB
 fUB
-wsS
+hqe
 fUB
 mxb
 tAW
