@@ -231,8 +231,8 @@
 		for(var/obj/item/organ/external/B in M.bodyparts)
 			B.status &= ~ORGAN_BROKEN
 			holder.remove_reagent("biracerm", 10)
-	M.adjustBruteLoss(-M.getBruteLoss() * 0.1)
-	M.adjustFireLoss(-M.getFireLoss() * 0.1)
+	M.adjustBruteLoss(-M.getBruteLoss() * 0.3)
+	M.adjustFireLoss(-M.getFireLoss() * 0.3)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
