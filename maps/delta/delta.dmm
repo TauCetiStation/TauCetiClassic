@@ -31466,8 +31466,9 @@
 /turf/simulated/wall,
 /area/station/maintenance/escape)
 "hqe" = (
-/turf/simulated/wall/r_wall,
-/area/station/hallway/primary/central)
+/obj/item/toy/figure/ninja,
+/turf/environment/space,
+/area/space)
 "hqf" = (
 /obj/machinery/alarm{
 	pixel_x = 29;
@@ -31697,6 +31698,9 @@
 /area/station/rnd/misc_lab)
 "hsd" = (
 /obj/item/device/radio/beacon,
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "hsi" = (
@@ -33718,22 +33722,6 @@
 /obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor,
 /area/station/civilian/gym)
-"hPx" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/brig)
 "hPD" = (
 /turf/simulated/floor/carpet/blue2,
 /area/station/security/vacantoffice)
@@ -34291,6 +34279,9 @@
 "hWI" = (
 /obj/machinery/door/window/brigdoor/westleft{
 	req_access = list(20)
+	},
+/obj/machinery/telescience_jammer{
+	radius = 2
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -36792,6 +36783,15 @@
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
+"iAo" = (
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warndark"
+	},
+/area/station/security/armoury)
 "iAp" = (
 /mob/living/carbon/monkey{
 	name = "Butters"
@@ -40365,6 +40365,9 @@
 	icon_state = "vault"
 	},
 /area/station/security/execution)
+"jrF" = (
+/turf/simulated/wall/r_wall,
+/area/station/hallway/primary/central)
 "jrT" = (
 /turf/simulated/floor{
 	icon_state = "blue"
@@ -45458,6 +45461,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/telescience_jammer{
+	radius = 2
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -49575,6 +49581,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/telescience_jammer{
+	radius = 5
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -53834,6 +53843,10 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
+"myq" = (
+/obj/machinery/telescience_jammer,
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
 "myv" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
@@ -63869,9 +63882,21 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "oXw" = (
-/obj/item/toy/figure/ninja,
-/turf/environment/space,
-/area/space)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/station/security/brig)
 "oXx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -66581,6 +66606,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/machinery/telescience_jammer{
+	radius = 2
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -69264,6 +69292,10 @@
 	icon_state = "bot"
 	},
 /area/station/engineering/engine)
+"qjX" = (
+/obj/machinery/deployable/barrier,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "qkc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -84819,21 +84851,14 @@
 	},
 /area/station/rnd/hallway)
 "ucx" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/telescience_jammer{
+	radius = 5
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/station/security/brig)
+/area/station/tcommsat/chamber)
 "ucF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -96596,9 +96621,21 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "xbM" = (
-/obj/machinery/deployable/barrier,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/brig)
 "xbN" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -139361,7 +139398,7 @@ efb
 vAu
 ogP
 tGK
-hqe
+jrF
 bZk
 bZk
 bZk
@@ -140106,7 +140143,7 @@ gqg
 ggs
 eXe
 rQV
-geq
+ucx
 xMO
 raJ
 cCX
@@ -141134,7 +141171,7 @@ gqg
 cWR
 eXe
 tWZ
-geq
+ucx
 aty
 wEV
 fAH
@@ -143186,7 +143223,7 @@ iaL
 cUZ
 hZU
 ibm
-hZU
+myq
 sTY
 bIZ
 cPN
@@ -147035,7 +147072,7 @@ pDa
 esk
 bmq
 hpt
-oXw
+hqe
 cmN
 bKg
 isH
@@ -151143,7 +151180,7 @@ iGB
 qJx
 tTk
 qMX
-ucx
+oXw
 fKP
 vTX
 dhy
@@ -151421,7 +151458,7 @@ cyx
 xxb
 bfu
 adp
-xbM
+qjX
 wzd
 vAP
 vst
@@ -151910,7 +151947,7 @@ lDQ
 mAH
 cHH
 ifR
-hPx
+xbM
 ekD
 kGr
 rjb
@@ -156038,7 +156075,7 @@ tte
 xCO
 fUB
 fUB
-fUB
+iAo
 fUB
 mxb
 tAW
