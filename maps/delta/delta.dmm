@@ -74337,6 +74337,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
+"ryx" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/syringe,
+/obj/item/weapon/medical/teleporter,
+/obj/item/weapon/medical/teleporter,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/medical/storage)
 "ryF" = (
 /obj/machinery/door/airlock{
 	name = "Bar Backroom";
@@ -90531,15 +90540,6 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/storage)
-"vBg" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/medical/teleporter,
-/obj/item/weapon/medical/teleporter,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/medical/storage)
 "vBv" = (
 /obj/structure/cable,
 /obj/structure/window/fulltile/reinforced{
@@ -141540,9 +141540,9 @@ nPb
 tpH
 krJ
 wSk
-rHU
-nYh
 fWT
+nYh
+sew
 sew
 eQU
 phG
@@ -142842,7 +142842,7 @@ gqx
 yiz
 sBD
 dfS
-vBg
+ryx
 aKs
 kpS
 fOF
