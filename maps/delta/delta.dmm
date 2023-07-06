@@ -4609,7 +4609,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -12878,10 +12878,10 @@
 /obj/structure/table/reinforced,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/weldingtool,
-/obj/item/clothing/head/welding,
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/item/clothing/head/collectable/welding,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "cPf" = (
@@ -17389,7 +17389,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -17561,7 +17561,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/item/clothing/head/soft/rainbow,
+/obj/item/clothing/head/collectable/police,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "dXZ" = (
@@ -19536,7 +19536,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23523,7 +23523,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -23983,7 +23983,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                Room");
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -29434,7 +29434,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                Robots");
+	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -54929,7 +54929,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                Out")
+	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -72219,7 +72219,9 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "qYj" = (
-/obj/item/toy/figure/mime,
+/obj/item/toy/figure/mime{
+	pixel_y = 6
+	},
 /obj/structure/table/woodentable/fancy/black,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -86792,7 +86794,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                Room")
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -87051,7 +87053,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                Isolation");
+	network = list("Research","Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
