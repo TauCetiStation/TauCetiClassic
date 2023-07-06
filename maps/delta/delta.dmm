@@ -1600,20 +1600,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
-"alr" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/station/medical/storage)
 "alz" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -17477,14 +17463,12 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "dVZ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/rack,
+/obj/item/weapon/gun/syringe,
+/obj/item/weapon/medical/teleporter,
+/obj/item/weapon/medical/teleporter,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
+	icon_state = "bot"
 	},
 /area/station/medical/storage)
 "dWt" = (
@@ -36278,10 +36262,8 @@
 	pixel_y = -32
 	},
 /obj/item/ashtray/bronze,
-/obj/item/weapon/lighter/random{
-	pixel_x = 11
-	},
 /obj/structure/table,
+/obj/item/weapon/lighter/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blackcorner"
@@ -39774,7 +39756,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "jkw" = (
-/obj/item/weapon/storage/box/cdeathalarm_kit,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -39971,23 +39963,6 @@
 "jnw" = (
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos/distribution)
-"jnB" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/station/medical/storage)
 "jnQ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel,
 /turf/simulated/floor,
@@ -52224,13 +52199,13 @@
 /area/station/civilian/chapel)
 "mfj" = (
 /obj/structure/table/glass,
+/obj/item/weapon/wrench,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/wrench,
 /obj/structure/window/thin,
 /obj/machinery/camera{
 	c_tag = "Medbay Cryogenics";
@@ -59689,19 +59664,14 @@
 	},
 /area/station/hallway/primary/starboard)
 "nTu" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/sign/departments/chemistry{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "barber"
+	icon_state = "whiteblue"
 	},
-/area/station/medical/storage)
+/area/station/medical/reception)
 "nTN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -66825,6 +66795,17 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/storage/primary)
+"pGz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/storage)
 "pGE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -72939,6 +72920,20 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/security/brig)
+"rgY" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/storage)
 "rgZ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -74339,6 +74334,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
+"ryx" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/storage)
 "ryF" = (
 /obj/machinery/door/airlock{
 	name = "Bar Backroom";
@@ -80523,15 +80535,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
-"sXO" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/medical/teleporter,
-/obj/item/weapon/medical/teleporter,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/medical/storage)
 "sXQ" = (
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -90554,6 +90557,20 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/storage)
+"vBg" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/storage)
 "vBv" = (
 /obj/structure/cable,
 /obj/structure/window/fulltile/reinforced{
@@ -94671,17 +94688,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "wDh" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/item/weapon/storage/box/cdeathalarm_kit,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -95749,15 +95756,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge/corp_lounge)
-"wSk" = (
-/obj/structure/sign/departments/chemistry{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/reception)
 "wSl" = (
 /obj/structure/table/woodentable,
 /obj/machinery/door_control{
@@ -141591,7 +141589,7 @@ ktg
 fMw
 fMw
 fMw
-wDh
+ryx
 leI
 sBD
 qQK
@@ -141827,7 +141825,7 @@ vof
 tDl
 hFc
 dyz
-wSk
+nTu
 bUf
 phG
 nPb
@@ -141848,7 +141846,7 @@ xai
 fMw
 dPF
 xxd
-jnB
+jkw
 fgs
 sbr
 hdN
@@ -142105,7 +142103,7 @@ fMw
 fMw
 iqO
 jPQ
-nTu
+vBg
 mQw
 sbr
 pxa
@@ -142362,7 +142360,7 @@ fMw
 fMw
 oUW
 mqF
-alr
+rgY
 oJu
 sBD
 ing
@@ -142616,10 +142614,10 @@ dTh
 mOv
 sbr
 xai
-jkw
+wDh
 mbK
 vVA
-dVZ
+pGz
 bOW
 sBD
 qjH
@@ -142873,7 +142871,7 @@ gqx
 yiz
 sBD
 dfS
-sXO
+dVZ
 aKs
 kpS
 fOF
@@ -143372,7 +143370,7 @@ kzl
 xzh
 hRl
 pSX
-saP
+osT
 dhG
 igW
 gwH
