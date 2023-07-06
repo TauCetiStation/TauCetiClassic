@@ -1,9 +1,9 @@
-.CardPay_Window {
+.cardpay_window {
 	background: #D0D2DD !important;
-    border-radius: 5px 5px 15px 15px;
+	border-radius: 5px 5px 15px 15px;
 }
 
-.CardPay_Monitor {
+.cardpay_monitor {
 	width: 208px;
 	height: 50px;
 	background: #111111;
@@ -15,22 +15,7 @@
 	margin-bottom: 5px;
 }
 
-.CardPay_Button.Button--selected {
-	height: 48px;
-	width: 48px;
-	background: #9497AB;
-	outline: #1B1C23 solid 3px; 
-	border: 4px solid #9497AB;
-	border-top: 6px solid #B9BBCB;
-	padding: 0px;
-	margin-left: 2.5px;
-	&:hover {
-		border-top-width: 8px;
-		background: #9497AB !important;
-	}
-}
-
-%All_CardPay_Buttons {
+%cardpay_button_general {
 	height: 48px;
 	width: 48px;
 	background: #9497AB;
@@ -45,15 +30,30 @@
 	}
 }
 
-.CardPay_Button {
-	@extend %All_CardPay_Buttons;
+.cardpay_button_variant-normal {
+	@extend %cardpay_button_general;
 	background: #9497AB;
 	border-color: #9497AB;
 	border-top-color: #B9BBCB;
 }
 
-.CardPay_Button_Red {
-	@extend %All_CardPay_Buttons;
+.cardpay_button_variant-normal.Button--selected {
+	height: 48px;
+	width: 48px;
+	background: #9497AB;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid #9497AB;
+	border-top: 6px solid #B9BBCB;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 8px;
+		background: #9497AB !important;
+	}
+}
+
+.cardpay_button_variant-red {
+	@extend %cardpay_button_general;
 	background: #991000;
 	border-color: #991000;
 	border-top-color: #ca201a;
@@ -62,8 +62,8 @@
 	}
 }
 
-.CardPay_Button_Green {
-	@extend %All_CardPay_Buttons;
+.cardpay_button_variant-green {
+	@extend %cardpay_button_general;
 	top:-2px;
 	background: #105735;
 	border-color: #105735;
@@ -73,11 +73,11 @@
 	}
 }
 
-%All_CardPay_Buttons_inside {
-    height: 40px;
+%cardpay_button-inside_general {
+	height: 40px;
 	width: 40px;
 	background: #D0D2DD;
-    border-bottom: 5px solid;
+	border-bottom: 5px solid;
 	border-radius: 5px;
 	text-align: center;
 	font-size: 35px;
@@ -88,31 +88,31 @@
 	position: absolute;
 }
 
-.CardPay_Button_inside {
-	@extend %All_CardPay_Buttons_inside;
+.cardpay_button-inside_variant-normal {
+	@extend %cardpay_button-inside_general;
 	background: #D0D2DD;
-    border-bottom-color: #E8E9EF;
+	border-bottom-color: #E8E9EF;
 	color: #333344;
 }
 
-.CardPay_Button_Red_inside {
-	@extend %All_CardPay_Buttons_inside;
+.cardpay_button-inside_variant-red {
+	@extend %cardpay_button-inside_general;
 	background: #e81b1d;
-    border-bottom-color: #e13a3b;
+	border-bottom-color: #e13a3b;
 	color: #e81b1d;
 	text-shadow: 0px -1px 1px #e13a3b, 0px -3px 5px #e13a3b, 0px 1px 1px #991000, 0px 1px 5px #991000;
 }
 
-.CardPay_Button_Green_inside {
-	@extend %All_CardPay_Buttons_inside;
+.cardpay_button-inside_variant-green {
+	@extend %cardpay_button-inside_general;
 	background: #009853;
-    border-bottom-color: #05a05b;
+	border-bottom-color: #05a05b;
 	color: #009853;
 	text-shadow: 0px -1px 1px #02b46a, 0px -3px 5px #02b46a, 0px 1px 1px #105735, 0px 1px 5px #105735;
 }
 
 
-.CardPay_Switch {
+.cardpay_switch {
 	height: 24px;
 	width: 64px;
 	background: #9497AB;
@@ -127,7 +127,7 @@
 	}
 }
 
-.CardPay_Switch.Button--selected {
+.cardpay_switch.Button--selected {
 	height: 24px;
 	width: 64px;
 	background: #9497AB;
@@ -141,11 +141,11 @@
 	}
 }
 
-.CardPay_Switch_inside {
-    height: 22px;
+.cardpay_switch-inside {
+	height: 22px;
 	width: 22px;
 	background: #D0D2DD;
-    border-bottom: 5px #E8E9EF solid;
+	border-bottom: 5px #E8E9EF solid;
 	border-radius: 5px;
 	text-align: center;
 	font-size: 13px;
@@ -155,7 +155,7 @@
 	position: absolute;
 }
 
-.CardPay_ResetHole {
+.cardpay_resethole {
 	height: 9px;
 	width: 9px;
 	background: #9497AB;
