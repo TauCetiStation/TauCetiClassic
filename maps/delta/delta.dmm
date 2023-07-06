@@ -10318,7 +10318,6 @@
 	},
 /area/station/rnd/hallway)
 "ciN" = (
-/obj/structure/closet/firecloset,
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
@@ -10327,6 +10326,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -17467,12 +17467,6 @@
 /obj/item/weapon/bedsheet/clown,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
-"dVZ" = (
-/obj/structure/closet/firecloset,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/hallway/secondary/entry)
 "dWt" = (
 /obj/machinery/computer/security/engineering/drone,
 /obj/machinery/camera{
@@ -39740,12 +39734,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
-"jkw" = (
-/obj/structure/closet/firecloset,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/hallway/primary/starboard)
 "jky" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -44391,7 +44379,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "kms" = (
-/obj/structure/closet/firecloset,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -44402,6 +44389,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -67936,10 +67924,10 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "pUK" = (
-/obj/structure/closet/radiation,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/closet/firecloset,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
@@ -74316,12 +74304,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
-"ryx" = (
-/obj/structure/closet/firecloset,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/hallway/primary/port)
 "ryF" = (
 /obj/machinery/door/airlock{
 	name = "Bar Backroom";
@@ -90537,12 +90519,6 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/storage)
-"vBg" = (
-/obj/structure/closet/firecloset,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/hallway/primary/central)
 "vBv" = (
 /obj/structure/cable,
 /obj/structure/window/fulltile/reinforced{
@@ -129430,7 +129406,7 @@ iky
 gUo
 qTx
 abU
-ryx
+abU
 uSc
 uSc
 uSc
@@ -132957,7 +132933,7 @@ yaE
 aqg
 aqg
 mlH
-dVZ
+aqg
 yaE
 qgt
 yaE
@@ -135035,7 +135011,7 @@ mlH
 miI
 ffS
 jjY
-dVZ
+aqg
 wwi
 pkS
 wwi
@@ -136357,7 +136333,7 @@ fIn
 ogP
 vwM
 fjy
-vBg
+qIv
 qIv
 qIv
 lYH
@@ -141692,7 +141668,7 @@ aev
 yaE
 qgt
 yaE
-dVZ
+aqg
 mlH
 aqg
 aqg
@@ -144583,7 +144559,7 @@ mXl
 hBZ
 qIv
 qIv
-vBg
+qIv
 lYH
 mzR
 aVI
@@ -145670,7 +145646,7 @@ efB
 hPG
 sLR
 lez
-jkw
+lez
 efB
 wOB
 wOB
