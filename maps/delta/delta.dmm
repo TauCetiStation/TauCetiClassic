@@ -254,6 +254,11 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -16530,13 +16535,6 @@
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
-"dJY" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	req_access = list(35)
-	},
-/turf/simulated/floor,
-/area/station/civilian/kitchen)
 "dKa" = (
 /obj/machinery/computer/prisoner{
 	dir = 8
@@ -17422,19 +17420,14 @@
 	},
 /area/station/security/brig)
 "dVK" = (
-/obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/structure/condiment_shelf{
 	pixel_y = 32
 	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "kitchen_shuttes";
-	name = "KitchenShutters";
-	opacity = 0
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
 	},
-/turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "dVL" = (
 /obj/structure/cable{
@@ -42965,6 +42958,9 @@
 "jVV" = (
 /obj/structure/dryer{
 	pixel_y = 24
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
@@ -73828,7 +73824,7 @@
 	req_access = list(35)
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/kitchen)
+/area/station/civilian/hydroponics)
 "rub" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -78783,13 +78779,11 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
 "sCp" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo"
-	},
 /obj/machinery/camera{
 	c_tag = "Kitchen";
 	dir = 5
 	},
+/obj/machinery/kitchen_machine/candymaker,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -78801,6 +78795,7 @@
 	amount = 30
 	},
 /obj/item/stack/cable_coil,
+/obj/item/device/cardpay,
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
@@ -91287,6 +91282,9 @@
 	desc = "It's a storage unit for kitchen clothes and equipment.";
 	name = "Kitchen Crate"
 	},
+/obj/item/clothing/head/chefhat,
+/obj/item/clothing/under/rank/chef,
+/obj/item/device/radio/headset,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -97441,9 +97439,12 @@
 	c_tag = "Kitchen Corridor";
 	dir = 5
 	},
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
+	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutral"
+	icon_state = "escape"
 	},
 /area/station/civilian/kitchen)
 "xoQ" = (
@@ -132164,7 +132165,7 @@ xDe
 xaF
 jne
 bLF
-srt
+qTX
 iNc
 srt
 srt
@@ -132421,7 +132422,7 @@ sWq
 xDe
 xaF
 xaF
-dJY
+lsX
 asq
 exU
 xoM
@@ -132935,7 +132936,7 @@ wrF
 nIT
 xaF
 arC
-srt
+qTX
 wKd
 hjY
 jOY
@@ -133192,7 +133193,7 @@ lUq
 nIT
 xaF
 lwz
-srt
+qTX
 srt
 srt
 rIS
@@ -133449,7 +133450,7 @@ xBp
 mnt
 cvo
 smf
-tJq
+qTX
 bxB
 mnW
 dOC
@@ -133706,7 +133707,7 @@ rrn
 ouf
 tCb
 pLk
-tJq
+qTX
 ohm
 vIX
 rAY
@@ -133963,7 +133964,7 @@ xaF
 tCb
 eph
 qTX
-tJq
+qTX
 tuz
 wWa
 sTk
