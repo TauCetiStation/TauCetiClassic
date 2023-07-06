@@ -16541,19 +16541,19 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "dJY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitepurplecorner"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/station/rnd/hallway)
+/area/station/medical/genetics)
 "dKa" = (
 /obj/machinery/computer/prisoner{
 	dir = 8
@@ -28982,7 +28982,6 @@
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	dir = 5;
@@ -38177,6 +38176,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"iRi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/medical/genetics)
 "iRo" = (
 /obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor,
@@ -42532,6 +42540,7 @@
 /area/station/civilian/theatre)
 "jQh" = (
 /obj/structure/closet/secure_closet/medical1,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkbluecorners"
@@ -66704,7 +66713,7 @@
 "pFz" = (
 /obj/machinery/door/airlock/research{
 	name = "Medsci Airlock";
-	req_one_access = list(9,47)
+	req_access = list(47)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
@@ -68984,6 +68993,20 @@
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/civilian/toilet)
+"qhP" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurplecorner"
+	},
+/area/station/rnd/hallway)
 "qim" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -80908,20 +80931,6 @@
 	icon_state = "yellowpatch_inv"
 	},
 /area/station/hallway/primary/central)
-"tde" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/medical/genetics)
 "tdg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -99539,15 +99548,6 @@
 	icon_state = "neutral"
 	},
 /area/station/security/brig)
-"xMt" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/medical/genetics)
 "xMv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -138456,12 +138456,12 @@ lIe
 agv
 qxW
 vJT
-tde
-tde
+dJY
+dJY
 ydI
 rwf
 wix
-dJY
+qhP
 fQf
 dEr
 jfv
@@ -138712,7 +138712,7 @@ awU
 hZf
 wMl
 aMG
-xMt
+iRi
 jTk
 kLr
 xxm
