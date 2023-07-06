@@ -225,7 +225,7 @@
 		for(var/obj/item/organ/external/B in M.bodyparts)
 			B.status &= ~ORGAN_BROKEN
 			holder.remove_reagent("biracerm", 10)
-	M.maxHealth -= our_brute_heal + our_burn_heal / 3
+	M.maxHealth -= (our_brute_heal + our_burn_heal) / 3
 	M.adjustBruteLoss(-our_brute_heal / 4)
 	M.adjustFireLoss(-our_brute_heal / 4)
 
