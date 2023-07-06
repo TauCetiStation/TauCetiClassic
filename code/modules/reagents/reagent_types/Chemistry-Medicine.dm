@@ -214,16 +214,10 @@
 
 
 /datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
-	var/cured_damage = M.getBruteLoss() + M.getFireLoss() / 2
-	var/initial_brutedamage = 0
-	var/obj/item/organ/external/BP = pick(M.bodyparts)
+	var/our_brute_heal = min(M.getBruteLoss(), 6)
+	var/our_burn_heal = min(M.getFireLoss(), 6)
 	if(!ishuman(M))
 		return
-	initial_brutedamage = M.getBruteLoss()
-	if(initial_brutedamage > cured_damage)
-		M.adjustBruteLoss(-(cured_damage))
-		M.adjustFireLoss(-(cured_damage))
-		BP.perma_injury = cured_damage * 2
 	if(M.stat == DEAD)
 		return
 	if(prob(50))
@@ -231,8 +225,9 @@
 		for(var/obj/item/organ/external/B in M.bodyparts)
 			B.status &= ~ORGAN_BROKEN
 			holder.remove_reagent("biracerm", 10)
-	M.adjustBruteLoss(-M.getBruteLoss() * 0.3)
-	M.adjustFireLoss(-M.getFireLoss() * 0.3)
+	M.maxHealth -= our_brute_heal + our_burn_heal / 3
+	M.adjustBruteLoss(-our_brute_heal / 4)
+	M.adjustFireLoss(-our_brute_heal / 4)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
