@@ -3748,9 +3748,7 @@
 	name = "Medbay Storage APC";
 	pixel_x = 28
 	},
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
+/turf/simulated/floor,
 /area/station/medical/storage)
 "aKu" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -3935,7 +3933,7 @@
 	location = "Medbay"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/medical/storage)
 "aNa" = (
 /obj/machinery/status_display{
@@ -14133,8 +14131,16 @@
 	},
 /area/space)
 "dfS" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor,
+/obj/structure/rack,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/cane,
+/obj/item/weapon/cane,
+/obj/item/clothing/mask/muzzle,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
 /area/station/medical/storage)
 "dfV" = (
 /obj/structure/disposalpipe/segment{
@@ -21224,11 +21230,42 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "eSA" = (
-/obj/structure/rack,
+/obj/item/weapon/reagent_containers/blood/AMinus{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/blood/APlus{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /obj/machinery/light/smart,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/structure/rack,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -24926,12 +24963,14 @@
 /area/station/security/armoury)
 "fOF" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/storage/box/cdeathalarm_kit,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/device/lens/rentgene,
+/obj/item/device/camera,
+/obj/item/weapon/packageWrap,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor,
 /area/station/medical/storage)
 "fOK" = (
@@ -27893,13 +27932,8 @@
 /area/station/security/brig)
 "gwH" = (
 /obj/structure/table/glass,
-/obj/item/weapon/folder/brown{
-	pixel_x = 4
-	},
 /obj/machinery/light/smart,
-/obj/item/toy/figure/md{
-	pixel_y = 4
-	},
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -38574,15 +38608,6 @@
 /area/station/engineering/engine)
 "iWo" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/bell{
-	pixel_x = 4
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -5
-	},
-/obj/item/weapon/pen{
-	pixel_x = -5
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastleft{
 	dir = 1;
@@ -38595,6 +38620,7 @@
 	name = "Medical Lobby Shutters";
 	opacity = 0
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor/plating,
 /area/station/medical/reception)
 "iWq" = (
@@ -39025,7 +39051,6 @@
 /area/station/hallway/primary/central)
 "jbV" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/light/small{
 	dir = 4
@@ -39034,6 +39059,7 @@
 	c_tag = "Medbay Paramedic Dispatch";
 	network = list("SS13","Medical")
 	},
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -39734,6 +39760,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
+"jkw" = (
+/obj/item/weapon/storage/box/cdeathalarm_kit,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/storage)
 "jky" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -44707,17 +44740,13 @@
 /area/station/maintenance/medbay)
 "kpS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/gloves,
-/obj/item/weapon/storage/box/masks{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/structure/window/thin{
 	dir = 1
 	},
+/obj/item/weapon/storage/box/cdeathalarm_kit,
 /turf/simulated/floor,
 /area/station/medical/storage)
 "kqa" = (
@@ -51205,8 +51234,8 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "lQT" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -51248,7 +51277,7 @@
 	},
 /area/station/gateway)
 "lRD" = (
-/obj/structure/closet/l3closet/virology,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -57466,6 +57495,10 @@
 /area/station/civilian/library)
 "nsX" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/item/toy/figure/md{
+	pixel_y = 10;
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -58568,6 +58601,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/item/stack/medical/bruise_pack/rags/not_old,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -65639,8 +65673,7 @@
 "pto" = (
 /obj/machinery/smartfridge/secure/virology,
 /turf/simulated/floor{
-	dir = 7;
-	icon_state = "whiteyellow"
+	icon_state = "dark"
 	},
 /area/station/medical/virology)
 "ptr" = (
@@ -77449,7 +77482,6 @@
 /area/station/maintenance/science)
 "sjN" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/bruise_pack/rags/not_old,
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
 	},
@@ -77459,6 +77491,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
+/obj/item/stack/medical/bruise_pack,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -79878,39 +79911,15 @@
 	},
 /area/station/engineering/monitoring)
 "sPy" = (
-/obj/item/weapon/reagent_containers/blood/AMinus{
-	pixel_x = -7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = 4;
-	pixel_y = 2
-	},
 /obj/structure/table/glass,
 /obj/machinery/light/smart,
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 6
+	},
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = -6
+	},
+/obj/item/weapon/reagent_containers/blood/empty,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -82674,10 +82683,6 @@
 "tAV" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
 /obj/structure/window/thin{
 	dir = 1
 	},
@@ -82687,6 +82692,13 @@
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
+	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/folder/brown{
+	pixel_x = 4
+	},
+/obj/item/weapon/pen{
+	pixel_x = -5
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/reception)
@@ -90519,6 +90531,15 @@
 	icon_state = "warnwhite"
 	},
 /area/station/rnd/storage)
+"vBg" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/syringe,
+/obj/item/weapon/medical/teleporter,
+/obj/item/weapon/medical/teleporter,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/medical/storage)
 "vBv" = (
 /obj/structure/cable,
 /obj/structure/window/fulltile/reinforced{
@@ -141025,7 +141046,7 @@ gys
 bpV
 ejI
 ejI
-lRD
+mAx
 lRD
 sBD
 jMv
@@ -142564,7 +142585,7 @@ dTh
 mOv
 sbr
 xai
-fMw
+jkw
 mbK
 fMw
 fMw
@@ -142821,7 +142842,7 @@ gqx
 yiz
 sBD
 dfS
-mAx
+vBg
 aKs
 kpS
 fOF
