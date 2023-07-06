@@ -209,34 +209,30 @@
 	color = "#3d0000" // rgb: 200, 165, 220
 	custom_metabolism = REAGENTS_METABOLISM * 2
 	overdose = REAGENTS_OVERDOSE * 0.5
+	taste_message = null
+	restrict_species = list(IPC, DIONA)
 
 
 /datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
+	var/cured_damage = M.getBruteLoss() + M.getFireLoss()
+	var/initial_brutedamage = 0
+	var/obj/item/organ/external/BP = pick(M.bodyparts)
 	if(!ishuman(M))
 		return
+	initial_brutedamage = M.getBruteLoss()
+	if(initial_brutedamage > cured_damage)
+		M.adjustBruteLoss(-(cured_damage))
+		M.adjustFireLoss(-(cured_damage))
+		BP.perma_injury = cured_damage * 2
 	if(M.stat == DEAD)
 		return
-	if(M.maxHealth == 100)
-		M.maxHealth = 85
-		to_chat(M, "I feel weak in my body...")
-	else if(M.maxHealth == 85)
-		M.maxHealth = 65
-		to_chat(M, "I'm getting weaker...")
-	else if(M.maxHealth == 65)
-		M.maxHealth = 50
-	else if(M.maxHealth == 50)
-		M.maxHealth = 25
-		to_chat(M, "I am very... Tired. Let me rest.")
-	else if(M.maxHealth == 25)
-		M.adjustToxLoss(-5 * REM)
 	if(prob(50))
+		to_chat(M, "<span class='notice'>You feel that your bones have begun to heal rapidly.</span>")
 		for(var/obj/item/organ/external/B in M.bodyparts)
-			to_chat(M, "<span class='notice'>You feel that your bones in [B.name] have begun to heal rapidly.</span>")
-			B.perma_injury = 0
 			B.status &= ~ORGAN_BROKEN
 			holder.remove_reagent("biracerm", 10)
-	M.adjustBruteLoss(-M.getBruteLoss() * 0.05)
-	M.adjustFireLoss(-M.getFireLoss() * 0.05)
+	M.adjustBruteLoss(-M.getBruteLoss() * 0.1)
+	M.adjustFireLoss(-M.getFireLoss() * 0.1)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
