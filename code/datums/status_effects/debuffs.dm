@@ -33,6 +33,8 @@
 	owner.stunned = TRUE
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE
@@ -68,6 +70,8 @@
 		return
 	owner.weakened = TRUE
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /datum/status_effect/incapacitating/weakened/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
@@ -89,6 +93,11 @@
 			carbon_owner = owner
 		if(ishuman(owner))
 			human_owner = owner
+		ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	return ..()
 
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
@@ -113,6 +122,8 @@
 		if(prob(10) && owner.health)
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"

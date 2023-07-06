@@ -1,6 +1,7 @@
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
 
+
 /mob/living/carbon/xenomorph/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that while being incapacitated.</span>")
@@ -14,7 +15,7 @@
 	return TRUE
 
 /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Corrossive Acid (100)"
+	set name = "Corrossive / Queen Acid (100)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
@@ -30,7 +31,7 @@
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				// R WALL
-				if(istype(T, /turf/simulated/wall/r_wall))
+				if(istype(T, /turf/simulated/wall/r_wall) && acid_type == /obj/effect/alien/acid)
 					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
 					return
 				// R FLOOR
@@ -41,7 +42,7 @@
 				return
 
 			adjustToxLoss(-100)
-			new /obj/effect/alien/acid(get_turf(O), O)
+			new acid_type(get_turf(O), O)
 			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")

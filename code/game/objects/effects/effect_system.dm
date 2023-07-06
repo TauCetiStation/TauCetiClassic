@@ -616,13 +616,13 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/atom_init()
 	. = ..()
 	set_opacity(TRUE)
-	update_nearby_tiles(1)
+	update_nearby_tiles()
 
 
 
 /obj/structure/foamedmetal/Destroy()
 	density = FALSE
-	update_nearby_tiles(1)
+	update_nearby_tiles()
 	return ..()
 
 /obj/structure/foamedmetal/proc/updateicon()

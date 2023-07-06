@@ -5,6 +5,7 @@
  *		Weeds
  *		Egg
  *	effect/alien/Acid
+ *	effect/alien/Queen_Acid
  */
 
 #define WEED_SOUTH_EDGING 1
@@ -76,7 +77,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	update_nearby_tiles(need_rebuild = TRUE)
+	update_nearby_tiles()
 
 /obj/structure/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
@@ -284,6 +285,22 @@
 		if(0 to 1)
 			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
+
+/obj/effect/alien/acid/queen_acid
+	name = "queen acid"
+	desc = "Burbling corrossive and yellow stuff. I wouldn't want to touch it."
+	icon = 'icons/mob/xenomorph.dmi'
+	icon_state = "queen_acid"
+
+/obj/effect/alien/acid/queen_acid/atom_init_late()
+	if(iswallturf(target))
+		target_strength = 6
+	else if(is_type_in_list(target, ventcrawl_machinery))
+		target_strength = 2
+	else
+		target_strength = 4
+	tick()
+
 
 /*
  * Egg
