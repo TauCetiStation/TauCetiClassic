@@ -144,6 +144,10 @@
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
 		/obj/item/weapon/newspaper
+		/obj/item/weapon/newspaper,
+		/obj/item/device/pda,
+		/obj/item/weapon/stamp,
+		/obj/item/device/taperecorder
 		)
 
 /obj/item/weapon/gripper/service
@@ -157,8 +161,8 @@
 		/obj/item/weapon/reagent_containers/food
 		)
 
-/obj/item/weapon/gripper/science
-	name = "science gripper"
+/obj/item/weapon/gripper/magnetic
+	name = "magnetic gripper"
 	desc = "A complex grasping tool for science work."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
@@ -181,6 +185,37 @@
 		/obj/item/robot_parts,
 		/obj/item/weapon/stock_parts,
 		/obj/item/device/flash
+		/obj/item/device/assembly/igniter,
+		/obj/item/device/analyzer,
+		/obj/item/device/flashlight,
+		/obj/item/bluespace_crystal,
+		/obj/item/stack/sheet,
+		/obj/item/weapon/storage,
+		/obj/item/weapon/stock_parts/cell,
+		/obj/item/weapon/firealarm_electronics,
+		/obj/item/weapon/airalarm_electronics,
+		/obj/item/weapon/airlock_electronics,
+		/obj/item/weapon/module/power_control,
+		/obj/item/weapon/stock_parts,
+		/obj/item/light_fixture_frame,
+		/obj/item/apc_frame,
+		/obj/item/alarm_frame,
+		/obj/item/door_control_frame,
+		/obj/item/firealarm_frame,
+		/obj/item/weapon/table_parts,
+		/obj/item/weapon/rack_parts,
+		/obj/item/weapon/camera_assembly,
+		/obj/item/weapon/tank,
+		/obj/item/weapon/circuitboard,
+		/obj/item/weapon/light/tube,
+		/obj/item/weapon/light/bulb,
+		/obj/item/device/assembly/prox_sensor,
+		/obj/item/device/healthanalyzer,
+		/obj/item/device/assembly/timer,
+		/obj/item/device/transfer_valve,
+		/obj/item/inflatable,
+		/obj/item/device/gps,
+		/obj/item/weapon/storage/part_replacer
 		)
 
 /obj/item/weapon/gripper/medical
@@ -203,6 +238,9 @@
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
 		/obj/item/weapon/tank/anesthetic,
+		/obj/item/organ/external,
+		/obj/item/bodybag,
+		/obj/item/weapon/reagent_containers/syringe
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)

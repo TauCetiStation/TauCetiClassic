@@ -137,6 +137,7 @@
 	modules += new /obj/item/weapon/gripper/medical(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
+	modules += new /obj/item/device/sensor_device(src)
 	modules += new /obj/item/stack/medical/splint(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
@@ -167,6 +168,7 @@
 
 	stacktypes = list(
 		/obj/item/stack/sheet/metal/cyborg = 50,
+		/obj/item/stack/sheet/plasteel/cyborg = 50,
 		/obj/item/stack/sheet/glass/cyborg = 50,
 		/obj/item/stack/sheet/rglass/cyborg = 50,
 		/obj/item/stack/cable_coil/cyborg = 50,
@@ -179,6 +181,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/airlock_painter(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -187,9 +190,9 @@
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/weapon/rcd/borg(src)
 	modules += new /obj/item/device/t_scanner(src)
-	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/device/analyzer/cyborg(src)
 	modules += new /obj/item/taperoll/engineering(src)
-	modules += new /obj/item/weapon/gripper(src)
+	modules += new /obj/item/weapon/gripper/magnetic(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
@@ -260,6 +263,7 @@
 	modules += new /obj/item/weapon/gripper/paperwork(src)
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+	modules += new /obj/item/device/tagger(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -372,8 +376,8 @@
 /obj/item/weapon/robot_module/science/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/gripper/science(src)
-	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/weapon/gripper/magnetic(src)
+	modules += new /obj/item/device/analyzer/cyborg(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
 	modules += new /obj/item/device/science_tool(src)
