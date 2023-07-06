@@ -267,7 +267,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Security Transferring Center";
-	req_access = list(63)
+	req_access = list(1)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -280,7 +280,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
 /area/station/security/brig)
 "abN" = (
 /obj/machinery/light,
@@ -690,7 +692,7 @@
 /obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "adH" = (
@@ -1923,7 +1925,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "aoy" = (
@@ -2868,7 +2870,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
 /area/station/security/brig)
 "aAA" = (
 /obj/structure/window/thin/reinforced{
@@ -3227,7 +3231,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/eastleft{
-	req_access = list(1);
+	req_access = list(63);
 	name = "Security Delivery";
 	dir = 1
 	},
@@ -4605,7 +4609,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -7560,8 +7564,7 @@
 "bDv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "red"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "bDE" = (
@@ -7772,7 +7775,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "bFD" = (
@@ -8547,7 +8550,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warndark"
 	},
 /area/station/security/brig)
 "bND" = (
@@ -9134,7 +9137,7 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "bVQ" = (
@@ -10449,7 +10452,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warndark"
 	},
 /area/station/security/brig)
 "cjX" = (
@@ -11389,6 +11392,10 @@
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 4
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13065,7 +13072,7 @@
 	},
 /obj/machinery/light/smart,
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "cQU" = (
@@ -14295,7 +14302,7 @@
 	},
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "dhG" = (
@@ -16263,7 +16270,7 @@
 /obj/structure/stool/bed/chair/office/dark,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "dHb" = (
@@ -16354,7 +16361,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "dHY" = (
@@ -16627,7 +16634,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "dKX" = (
@@ -17385,7 +17392,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -18626,7 +18633,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "ekH" = (
@@ -18927,7 +18934,8 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 8;
+	icon_state = "warndarkcorners"
 	},
 /area/station/security/brig)
 "eoB" = (
@@ -19415,7 +19423,7 @@
 	req_access = list(3)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkredfull"
 	},
 /area/station/security/warden)
 "evL" = (
@@ -19544,7 +19552,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -21880,7 +21888,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "fbg" = (
@@ -22734,7 +22742,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "fkz" = (
@@ -23566,7 +23574,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -24026,7 +24034,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room");
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -24777,8 +24785,8 @@
 "fKP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "red"
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "fKS" = (
@@ -26733,6 +26741,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -27191,7 +27202,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warndark"
 	},
 /area/station/security/brig)
 "goT" = (
@@ -27730,7 +27741,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "gvl" = (
@@ -27916,7 +27927,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "gwH" = (
@@ -28532,7 +28543,7 @@
 /area/station/rnd/misc_lab)
 "gFh" = (
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "gFl" = (
@@ -29344,7 +29355,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "gQf" = (
@@ -29479,7 +29490,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Robots");
+	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -32042,17 +32053,12 @@
 /area/station/hallway/primary/fore)
 "hwM" = (
 /obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_x = 6
-	},
-/obj/machinery/recharger{
-	pixel_x = -5
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
@@ -34485,7 +34491,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warndark"
 	},
 /area/station/security/brig)
 "hYY" = (
@@ -35047,7 +35053,7 @@
 /obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "iga" = (
@@ -35462,7 +35468,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "ikZ" = (
@@ -37265,7 +37271,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "iGF" = (
@@ -38070,7 +38076,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "iQm" = (
@@ -38647,9 +38653,11 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "gulagdoor";
 	name = "Security Transferring Center";
-	req_access = list(63)
+	req_access = list(1)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
 /area/station/security/brig)
 "iWS" = (
 /obj/machinery/door/firedoor,
@@ -41892,7 +41900,8 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "jJK" = (
@@ -44427,7 +44436,8 @@
 	},
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 1;
+	icon_state = "warndarkcorners"
 	},
 /area/station/security/brig)
 "kmx" = (
@@ -44456,7 +44466,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "kmW" = (
@@ -47331,7 +47341,7 @@
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "kVb" = (
@@ -47825,8 +47835,7 @@
 /obj/item/device/radio/headset,
 /obj/item/device/radio/headset,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "red"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "kZU" = (
@@ -47865,7 +47874,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "laC" = (
@@ -54943,7 +54952,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Out")
+	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -57734,7 +57743,7 @@
 	},
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "nwH" = (
@@ -58075,6 +58084,22 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/hallway)
+"nAp" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/brig)
 "nAv" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor{
@@ -59368,7 +59393,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "nQN" = (
@@ -59660,7 +59685,7 @@
 "nTP" = (
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "nTT" = (
@@ -61268,7 +61293,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warndark"
 	},
 /area/station/security/brig)
 "opy" = (
@@ -64060,7 +64085,7 @@
 /obj/machinery/computer/crew,
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "paD" = (
@@ -64392,7 +64417,7 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "pfo" = (
@@ -64537,7 +64562,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "pgW" = (
@@ -66460,7 +66485,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "pCp" = (
@@ -67112,6 +67137,22 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"pLf" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/brig)
 "pLk" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
@@ -71163,8 +71204,8 @@
 /area/station/security/iaa_office)
 "qJx" = (
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "red"
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "qJA" = (
@@ -71433,7 +71474,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkredfull"
 	},
 /area/station/security/brig)
 "qNE" = (
@@ -72818,8 +72859,7 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "red"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "rfC" = (
@@ -74246,7 +74286,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/security/warden)
 "rxU" = (
 /obj/structure/stool/bed/chair{
@@ -74784,7 +74826,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "rCY" = (
@@ -77950,7 +77992,7 @@
 /obj/machinery/recharger,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "spq" = (
@@ -78360,7 +78402,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "suL" = (
@@ -82908,7 +82950,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "tDl" = (
@@ -83121,7 +83163,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "tFG" = (
@@ -83436,7 +83478,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "tKR" = (
@@ -83542,7 +83584,8 @@
 	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "tMa" = (
@@ -83756,7 +83799,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "tPd" = (
@@ -83978,7 +84021,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "tSG" = (
@@ -84043,7 +84086,8 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "tTn" = (
@@ -84879,7 +84923,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/security{
 	name = "Security Maintenance";
-	req_access = list(1)
+	req_access = list(63)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -86855,7 +86899,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room")
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86873,7 +86917,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "uDL" = (
@@ -87114,7 +87158,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Isolation");
+	network = list("Research","Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -87300,7 +87344,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "uLf" = (
@@ -88081,8 +88125,8 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "red"
+	dir = 4;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "uVq" = (
@@ -91949,7 +91993,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "vUe" = (
@@ -93858,7 +93902,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "red"
+	icon_state = "darkred"
 	},
 /area/station/security/warden)
 "wsS" = (
@@ -96533,17 +96577,17 @@
 "xbM" = (
 /obj/structure/cable{
 	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "red"
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/station/security/brig)
 "xbN" = (
@@ -100026,7 +100070,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/security/warden)
 "xRL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -151083,7 +151129,7 @@ iGB
 qJx
 tTk
 qMX
-utF
+xbM
 fKP
 vTX
 dhy
@@ -151850,13 +151896,13 @@ lDQ
 mAH
 cHH
 ifR
-uLX
+nAp
 ekD
 kGr
 rjb
 bXA
 rfz
-vzx
+pLf
 gvj
 cHH
 pQo
@@ -152108,7 +152154,7 @@ kjL
 cHH
 bFz
 gwA
-xbM
+nRZ
 jJG
 cHH
 tLX
