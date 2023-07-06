@@ -214,7 +214,7 @@
 
 
 /datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
-	var/cured_damage = M.getBruteLoss() + M.getFireLoss()
+	var/cured_damage = M.getBruteLoss() + M.getFireLoss() / 2
 	var/initial_brutedamage = 0
 	var/obj/item/organ/external/BP = pick(M.bodyparts)
 	if(!ishuman(M))
