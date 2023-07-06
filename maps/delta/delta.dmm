@@ -4605,7 +4605,7 @@
 /obj/item/target,
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless{
@@ -4653,18 +4653,27 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/monkeycubes{
+	pixel_y = 16
+	},
+/obj/item/weapon/storage/box/monkeycubes{
+	pixel_y = 16
+	},
+/obj/item/weapon/storage/box/monkeycubes{
+	pixel_y = 16
+	},
 /obj/item/weapon/storage/box/disks{
 	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -6;
 	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/rxglasses{
-	pixel_x = -6
+	pixel_x = 6
 	},
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = -1;
-	pixel_y = -2
-	},
-/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -7289,7 +7298,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bAN" = (
-/obj/machinery/dna_scannernew,
+/obj/machinery/computer/scan_consolenew,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -11762,9 +11771,6 @@
 /area/station/civilian/locker)
 "cAY" = (
 /obj/effect/landmark/start/geneticist,
-/obj/structure/stool/bed/chair/office/light{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkbluecorners"
@@ -13507,11 +13513,6 @@
 	},
 /area/station/medical/hallway)
 "cWi" = (
-/obj/machinery/door_control{
-	id = "genetic_shutters";
-	name = "Genetic Shutters";
-	pixel_x = 26
-	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -16524,12 +16525,12 @@
 "dJY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17384,7 +17385,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -18885,6 +18886,12 @@
 	name = "Science Lab Shutters";
 	pixel_x = 26
 	},
+/obj/item/weapon/stock_parts/console_screen,
+/obj/item/weapon/stock_parts/console_screen,
+/obj/item/weapon/stock_parts/micro_laser,
+/obj/item/weapon/stock_parts/micro_laser,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -19537,7 +19544,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Mix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23559,7 +23566,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
+	network = list("Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area");
 	dir = 4;
 	pixel_x = -30
 	},
@@ -24019,7 +24026,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room");
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room");
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -24084,7 +24091,10 @@
 /area/station/medical/surgeryobs)
 "fCg" = (
 /obj/structure/closet/wardrobe/genetics_white,
-/obj/item/device/cardpay,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkblue"
@@ -28985,14 +28995,17 @@
 /area/station/engineering/engine)
 "gLx" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/figure/geneticist,
 /obj/machinery/requests_console/genetics{
 	pixel_x = 32
 	},
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/machinery/door_control{
+	id = "genetic_shutters";
+	name = "Genetic Shutters"
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_y = 12;
+	pixel_x = -6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -29466,7 +29479,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Robots");
+	network = list("Engineering","Engineering                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -30737,11 +30750,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "hid" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 4
-	},
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/machinery/computer/scan_consolenew{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -31962,11 +31975,11 @@
 	},
 /area/station/bridge/captain_quarters)
 "hvY" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 8
-	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -34137,7 +34150,14 @@
 	dir = 6;
 	network = list("SS13","Research")
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/box/syringes{
+	pixel_x = -14;
+	pixel_y = 1
+	},
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "hVJ" = (
@@ -34486,13 +34506,6 @@
 "hZf" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/white{
-	pixel_x = -6;
-	pixel_y = -4
-	},
-/obj/item/weapon/bell{
-	pixel_x = 4
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -34503,6 +34516,12 @@
 /obj/machinery/door/window/southright{
 	name = "Genetics Desk";
 	req_access = list(9)
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = -6
+	},
+/obj/item/weapon/bell{
+	pixel_x = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics)
@@ -36114,7 +36133,6 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
-/obj/item/toy/figure/chemist,
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "isX" = (
@@ -53908,6 +53926,9 @@
 /turf/simulated/floor/carpet/orange,
 /area/station/civilian/dormitories)
 "mAf" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -54922,7 +54943,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Out")
+	sensors = list("in_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -56174,7 +56195,6 @@
 /area/station/maintenance/engineering)
 "nda" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
@@ -56182,6 +56202,10 @@
 /obj/machinery/requests_console/science{
 	pixel_x = 32
 	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -82663,10 +82687,10 @@
 /area/station/rnd/lab)
 "tAS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/beakers,
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/item/toy/figure/scientist,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "tAV" = (
@@ -86831,7 +86855,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room")
+	sensors = list("rnd_sensor"="Heat                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -87018,11 +87042,11 @@
 /area/station/maintenance/cargo)
 "uGd" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/glasses/science,
 /obj/item/weapon/wrench,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/item/clothing/glasses/science,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -87090,7 +87114,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Isolation");
+	network = list("Research","Toxins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Area","Robots","Anomaly                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -90675,7 +90699,7 @@
 	},
 /area/station/rnd/lab)
 "vDf" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/dna_scannernew,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -91184,16 +91208,16 @@
 /area/station/security/prison)
 "vJT" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -95230,6 +95254,9 @@
 /obj/structure/sign/poster/official/fruit_bowl{
 	pixel_x = -32
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warndark"
@@ -96036,9 +96063,18 @@
 /area/station/medical/virology)
 "wVL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 4
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/weapon/stock_parts/scanning_module{
+	pixel_x = 2;
+	pixel_y = 3
 	},
+/obj/item/weapon/stock_parts/scanning_module{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
