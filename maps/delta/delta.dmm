@@ -12956,11 +12956,10 @@
 /area/station/rnd/server)
 "cPC" = (
 /obj/structure/table,
+/obj/item/weapon/airlock_painter,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/gloves/latex,
-/obj/item/clothing/glasses/science{
-	pixel_y = 3
-	},
+/obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -17473,6 +17472,15 @@
 /obj/item/weapon/bedsheet/clown,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
+"dVZ" = (
+/obj/structure/sign/departments/chemistry{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/reception)
 "dWt" = (
 /obj/machinery/computer/security/engineering/drone,
 /obj/machinery/camera{
@@ -36135,6 +36143,7 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/item/toy/figure/chemist,
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "isX" = (
@@ -39761,12 +39770,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "jkw" = (
-/obj/item/weapon/storage/box/cdeathalarm_kit,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/area/station/medical/storage)
+/obj/structure/sign/departments/medbay{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "jky" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -42157,6 +42171,10 @@
 /obj/item/weapon/grenade/chem_grenade{
 	pixel_x = 6;
 	pixel_y = 5
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = 3;
+	pixel_y = -7
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -56763,9 +56781,7 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/dropper{
-	pixel_y = -4
-	},
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -57699,15 +57715,12 @@
 /area/station/civilian/gym)
 "nvX" = (
 /obj/structure/closet/secure_closet/medical1,
-/obj/structure/window/thin{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "warndark"
+	dir = 8;
+	icon_state = "yellowcorner"
 	},
 /area/station/medical/chemistry)
 "nwl" = (
@@ -60551,7 +60564,6 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/dropper/precision,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -60559,6 +60571,7 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor{
 	icon_state = "yellowpatch_inv"
 	},
@@ -80531,9 +80544,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "sXO" = (
-/obj/structure/sign/departments/medbay,
-/turf/simulated/wall/r_wall,
-/area/station/medical/chemistry)
+/obj/item/weapon/storage/box/cdeathalarm_kit,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/storage)
 "sXQ" = (
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -84704,9 +84720,6 @@
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "ucg" = (
-/obj/structure/table,
-/obj/item/device/tagger/shop,
-/obj/item/weapon/packageWrap,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -84715,6 +84728,13 @@
 	name = "Chemistry Shutters";
 	pixel_x = 26
 	},
+/obj/structure/closet/secure_closet/chemical,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/pill_bottle/inaprovaline,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -86258,7 +86278,12 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "uuG" = (
 /obj/structure/table,
-/obj/item/toy/figure/chemist,
+/obj/item/device/tagger/shop,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
+	name = "Chemistry Cleaner"
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -95727,10 +95752,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge/corp_lounge)
-"wSk" = (
-/obj/structure/sign/departments/chemistry,
-/turf/simulated/wall/r_wall,
-/area/station/medical/chemistry)
 "wSl" = (
 /obj/structure/table/woodentable,
 /obj/machinery/door_control{
@@ -96593,27 +96614,27 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/device/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/device/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/device/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/device/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
 /obj/structure/table,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_y = 22
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/device/assembly/timer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/timer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = 2;
+	pixel_y = -1
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -97466,14 +97487,25 @@
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "xot" = (
-/obj/structure/closet/secure_closet/chemical,
-/obj/item/weapon/storage/box/syringes,
-/obj/structure/window/thin{
-	dir = 8
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/dropper/precision,
+/obj/item/weapon/reagent_containers/dropper/precision,
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
+	pixel_x = -4;
+	pixel_y = -3
 	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "warndark"
+	dir = 8;
+	icon_state = "yellowcorner"
 	},
 /area/station/medical/chemistry)
 "xov" = (
@@ -141278,8 +141310,8 @@ ogP
 vSe
 vSe
 lNz
-vof
-sXO
+jkw
+sew
 rHU
 rHU
 sew
@@ -141539,7 +141571,7 @@ rrl
 nPb
 tpH
 krJ
-wSk
+sew
 fWT
 nYh
 sew
@@ -141796,7 +141828,7 @@ vof
 tDl
 hFc
 dyz
-bUf
+dVZ
 bUf
 phG
 nPb
@@ -142585,7 +142617,7 @@ dTh
 mOv
 sbr
 xai
-jkw
+sXO
 mbK
 fMw
 fMw
