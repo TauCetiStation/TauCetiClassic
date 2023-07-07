@@ -18,6 +18,7 @@
 	var/metadata
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
+	var/reagenttimer = null
 
 	var/last_massage = 0
 	var/massages_done_right = 0
@@ -2261,7 +2262,6 @@
 
 /mob/living/carbon/human/proc/return_max_health()
 	maxHealth = 85
-
 
 /mob/living/carbon/human/proc/reanimate_body()
 	var/deadtime = world.time - timeofdeath

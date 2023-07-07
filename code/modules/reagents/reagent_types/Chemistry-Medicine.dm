@@ -216,7 +216,6 @@
 /datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
 	var/our_brute_heal = min(M.getBruteLoss(), 6)
 	var/our_burn_heal = min(M.getFireLoss(), 6)
-	mob/living/carbon/human/proc/return_max_health()
 	if(!ishuman(M))
 		return
 	if(M.stat == DEAD)
@@ -229,7 +228,7 @@
 	M.maxHealth -= our_brute_heal + our_burn_heal / 2
 	M.adjustBruteLoss(-our_brute_heal / 2)
 	M.adjustFireLoss(-our_brute_heal / 2)
-	addtimer(CALLBACK(src, PROC_REF(return_max_health), user), rand(8, 10)MINUTES)
+	M.reagenttimer = addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/living/carbon/human, return_max_health)), rand(8, 10)MINUTES)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
