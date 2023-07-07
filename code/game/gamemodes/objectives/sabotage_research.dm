@@ -4,7 +4,6 @@
 	var/already_completed = FALSE
 
 /datum/objective/research_sabotage/check_completion()
-	..()
 	if(!already_completed)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
