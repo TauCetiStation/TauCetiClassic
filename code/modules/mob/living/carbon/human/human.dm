@@ -2259,6 +2259,10 @@
 					ghost.reenter_corpse()
 				break
 
+/mob/living/carbon/human/proc/return_max_health()
+	M.maxHealth = 85
+
+
 /mob/living/carbon/human/proc/reanimate_body()
 	var/deadtime = world.time - timeofdeath
 	tod = null
