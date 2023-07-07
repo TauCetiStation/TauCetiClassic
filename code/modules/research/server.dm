@@ -297,8 +297,7 @@
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()
 	if(istype(D, /obj/item/weapon/disk/data/syndi))
-		var/obj/item/weapon/disk/data/syndi/S = D
-		sabotage(user, S)
+		sabotage(user, D)
 	else
 		updateUsrDialog()
 
