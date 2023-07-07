@@ -208,7 +208,7 @@
 	description = "An emergency generic treatment with extreme side effects."
 	color = "#3d0000" // rgb: 200, 165, 220
 	custom_metabolism = REAGENTS_METABOLISM * 2
-	overdose = REAGENTS_OVERDOSE * 0.5
+	overdose = (REAGENTS_OVERDOSE * 0.5) - 5
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -216,6 +216,7 @@
 /datum/reagent/biracerm/on_general_digest(mob/living/carbon/human/M)
 	var/our_brute_heal = min(M.getBruteLoss(), 6)
 	var/our_burn_heal = min(M.getFireLoss(), 6)
+	mob/living/carbon/human/proc/return_max_health()
 	if(!ishuman(M))
 		return
 	if(M.stat == DEAD)
@@ -225,9 +226,10 @@
 		for(var/obj/item/organ/external/B in M.bodyparts)
 			B.status &= ~ORGAN_BROKEN
 			holder.remove_reagent("biracerm", 10)
-	M.maxHealth -= (our_brute_heal + our_burn_heal) / 3
-	M.adjustBruteLoss(-our_brute_heal / 4)
-	M.adjustFireLoss(-our_brute_heal / 4)
+	M.maxHealth -= our_brute_heal + our_burn_heal / 2
+	M.adjustBruteLoss(-our_brute_heal / 2)
+	M.adjustFireLoss(-our_brute_heal / 2)
+	addtimer(CALLBACK(src, PROC_REF(return_max_health), user), rand(8, 10)MINUTES)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
