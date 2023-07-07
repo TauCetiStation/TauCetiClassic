@@ -5,7 +5,7 @@
 
 /datum/objective/research_sabotage/check_completion()
 	..()
-	if((!already_completed))
+	if(!already_completed)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
