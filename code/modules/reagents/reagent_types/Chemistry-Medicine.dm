@@ -228,7 +228,7 @@
 	M.maxHealth -= our_brute_heal + our_burn_heal / 2
 	M.adjustBruteLoss(-our_brute_heal / 2)
 	M.adjustFireLoss(-our_brute_heal / 2)
-	M.reagenttimer = addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/living/carbon/human, return_max_health)), rand(8, 10)MINUTES)
+	M.reagenttimer = addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/living/carbon/human, return_max_health)), rand(8, 15)MINUTES)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
