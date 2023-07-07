@@ -31,7 +31,7 @@
 /obj/structure/windoor_assembly/atom_init(mapload, dir = NORTH)
 	. = ..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/structure/windoor_assembly/Destroy()
 	density = FALSE
@@ -272,12 +272,12 @@
 		to_chat(usr, "It is fastened to the floor; therefore, you can't rotate it!")
 		return 0
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		update_nearby_tiles() //Compel updates before
 
 	set_dir(turn(src.dir, 270))
 
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
 	src.ini_dir = src.dir
 	update_icon()
