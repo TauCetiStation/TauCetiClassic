@@ -2260,7 +2260,7 @@
 				break
 
 /mob/living/carbon/human/proc/return_max_health()
-	M.maxHealth = 85
+	maxHealth = 85
 
 
 /mob/living/carbon/human/proc/reanimate_body()
