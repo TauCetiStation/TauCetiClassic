@@ -30,4 +30,16 @@
 	total_positions = 6
 	spawn_positions = 6
 
+/datum/job/cadet/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 6
+	spawn_positions = 6
+
+/datum/job/cargo_tech/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 4
+	spawn_positions = 4
+
 #undef JOB_MODIFICATION_MAP_NAME
