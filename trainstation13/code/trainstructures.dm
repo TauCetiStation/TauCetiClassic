@@ -231,7 +231,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 /obj/structure/trainstation/utilitypole
 	name = "utility pole"
 	desc = "An old utility pole disconnected from the grid long time ago. It doesn't look sturdy."
-	icon = 'trainstation13/icons/64x32.dmi'
+	icon = 'trainstation13/icons/32x96.dmi'
 	icon_state = "utilitypole"
 	anchored = FALSE
 	layer = 5

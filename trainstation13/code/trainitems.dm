@@ -19,7 +19,7 @@
 	icon_state = "ticket_blue"
 	info = "<center><b>УНИВЕРСАЛЬНЫЙ БИЛЕТ:</b></center><br> \
 			<hr><b><i>Предъявителю билета разрешается занять любое свободное место для пассажиров первого и второго класса, \
-			в вагонах общего назначения - от вагона №5 до вагона №10.</i></b>"
+			в вагонах общего назначения - от вагона №5 до вагона №9.</i></b>"
 
 //we don't want the silly text overlay of basic paper!
 /obj/item/weapon/paper/ticket/update_icon()
