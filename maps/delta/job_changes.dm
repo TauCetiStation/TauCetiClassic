@@ -24,4 +24,10 @@
 	total_positions = 8
 	spawn_positions = 8
 
+/datum/job/mining/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 6
+	spawn_positions = 6
+
 #undef JOB_MODIFICATION_MAP_NAME
