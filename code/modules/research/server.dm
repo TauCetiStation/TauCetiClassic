@@ -312,7 +312,7 @@
 	return FALSE
 
 
-/obj/machinery/computer/rdservercontrol/proc/sabotage(mob/user, obj/item/weapon/disk/data/syndi/d)
+/obj/machinery/computer/rdservercontrol/proc/sabotage(mob/user, obj/item/weapon/disk/data/syndi/D)
 	if(!user.Adjacent(src))
 		return
 	if(!isliving(user) && !user.mind)
@@ -331,7 +331,7 @@
 	playsound(src, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
 	if(!do_after(user, sabotage_time, target = src))
 		return
-	qdel(d)
+	qdel(D)
 	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
 		for(var/i in 1 to 3)
 			s.files.forget_random_technology()
