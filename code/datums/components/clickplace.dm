@@ -160,11 +160,8 @@
 	if(spare_slots <= 0)
 		return
 
-	if(istype(I, /obj/item/clothing))
-		var/obj/item/clothing/C = I
-		if(C.slot_equipped)
-			if((!user.delay_clothing_unequip(C)))
-				return
+	if((!user.delay_clothing_unequip(I)))
+		return
 
 	var/atom/old_loc = I.loc
 
