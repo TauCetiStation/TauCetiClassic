@@ -27,24 +27,6 @@
 	var/safetieson = 1
 	var/cycletime_left = 0
 
-
-//The units themselves/////////////////
-
-/obj/machinery/suit_storage_unit/standard_unit
-	SUIT_TYPE = /obj/item/clothing/suit/space/globose
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
-	MASK_TYPE = /obj/item/clothing/mask/breath
-
-/obj/machinery/suit_storage_unit/syndicate_unit
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-
-/obj/machinery/suit_storage_unit/science
-	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
-	MASK_TYPE = /obj/item/clothing/mask/breath
-
 /obj/machinery/suit_storage_unit/atom_init()
 	. = ..()
 	if(SUIT_TYPE)
@@ -555,3 +537,76 @@
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
 	return
+
+/obj/machinery/suit_storage_unit/standard_unit
+	SUIT_TYPE = /obj/item/clothing/suit/space/globose
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/nt_breacher
+	SUIT_TYPE = /obj/item/clothing/suit/space/unathi/rig_cheap
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/skrellian
+	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/white
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/white
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/skrellian/black
+	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/black
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/black
+
+/obj/machinery/suit_storage_unit/captain
+	SUIT_TYPE = /obj/item/clothing/suit/armor/captain
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
+	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
+
+/obj/machinery/suit_storage_unit/medical
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
+	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
+
+/obj/machinery/suit_storage_unit/medical/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/cmo/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical/cmo
+
+/obj/machinery/suit_storage_unit/security
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
+	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+
+/obj/machinery/suit_storage_unit/security/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/hos/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security/hos
+
+/obj/machinery/suit_storage_unit/engineering
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering
+	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
+
+/obj/machinery/suit_storage_unit/engineering/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
+
+/obj/machinery/suit_storage_unit/engineering/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/chief/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering/chief
+
+/obj/machinery/suit_storage_unit/science
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/science/standart
+	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
+
+/obj/machinery/suit_storage_unit/science/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science/rd/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science/rd
+
+/obj/machinery/suit_storage_unit/syndicate_unit
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
+	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate

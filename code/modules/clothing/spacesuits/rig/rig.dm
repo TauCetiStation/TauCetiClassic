@@ -607,6 +607,10 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
 
+/obj/item/clothing/suit/space/rig/engineering/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
+
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
@@ -627,6 +631,10 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 7
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/emp_shield)
+
+/obj/item/clothing/suit/space/rig/engineering/chief/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -998,6 +1006,10 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/healthscanner)
 
+/obj/item/clothing/suit/space/rig/medical/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
+
 //CMO Rig
 /obj/item/clothing/head/helmet/space/rig/medical/cmo
 	name = "advanced medical hardsuit helmet"
@@ -1014,6 +1026,10 @@
 	slowdown = 0.2
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
+
+/obj/item/clothing/suit/space/rig/medical/cmo/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/security
@@ -1053,6 +1069,10 @@
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
+/obj/item/clothing/suit/space/rig/security/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
+
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
 	name = "advanced security hardsuit helmet"
@@ -1071,6 +1091,10 @@
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
 
 	action_button_name = FALSE
+
+/obj/item/clothing/suit/space/rig/security/hos/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
@@ -1091,6 +1115,10 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+
+/obj/item/clothing/suit/space/rig/atmos/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
 
 //Science rig
 /obj/item/clothing/head/helmet/space/rig/science
@@ -1113,6 +1141,10 @@
 	slowdown = 0.2
 	offline_slowdown = 3.5
 	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer , /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner)
+
+/obj/item/clothing/suit/space/rig/science/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and integrated HUD."
@@ -1146,3 +1178,7 @@
 	slowdown = 0.2
 	offline_slowdown = 4
 	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)
+
+/obj/item/clothing/suit/space/rig/science/rd/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
