@@ -6554,11 +6554,14 @@
 	},
 /area/station/civilian/gym)
 "brW" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/rack,
+/obj/item/weapon/scalpel,
+/obj/item/weapon/circular_saw{
+	pixel_y = 7
 	},
-/obj/machinery/disposal,
-/turf/simulated/floor/plating,
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor,
 /area/station/maintenance/science)
 "bsc" = (
 /obj/machinery/door/firedoor,
@@ -12021,6 +12024,13 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/locker)
+"cDJ" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor/plating,
+/area/station/maintenance/science)
 "cDM" = (
 /obj/machinery/computer/station_alert{
 	dir = 8
@@ -15987,6 +15997,7 @@
 /obj/item/stack/cable_coil/red{
 	amount = 5
 	},
+/obj/item/weapon/circuitboard/crew,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dBW" = (
@@ -19438,6 +19449,7 @@
 "euu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/shard,
+/obj/machinery/iv_drip,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "euJ" = (
@@ -21584,9 +21596,9 @@
 /area/station/tcommsat/chamber)
 "eVC" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/crate,
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/structure/computerframe{
+	anchored = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "eVM" = (
@@ -41337,16 +41349,10 @@
 	},
 /area/station/engineering/engine)
 "jBf" = (
-/obj/effect/decal/cleanable/greenglow,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
-/area/station/maintenance/science)
+/obj/effect/decal/cleanable/dirt,
+/obj/item/roller,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "jBn" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -48126,6 +48132,7 @@
 /area/station/security/armoury)
 "lbq" = (
 /obj/item/weapon/table_parts/reinforced,
+/obj/structure/closet/crate,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "lbB" = (
@@ -58665,7 +58672,6 @@
 /area/station/hallway/secondary/entry)
 "nFa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/greenglow,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -58675,6 +58681,7 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
+/obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "nFd" = (
@@ -60697,10 +60704,6 @@
 	icon_state = "darkyellowcorners"
 	},
 /area/station/engineering/drone_fabrication)
-"odH" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/wall,
-/area/station/maintenance/science)
 "odI" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/cardboard{
@@ -62172,16 +62175,6 @@
 	},
 /turf/simulated/wall,
 /area/station/civilian/kitchen)
-"ozY" = (
-/obj/structure/rack,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/circular_saw{
-	pixel_y = 7
-	},
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor,
-/area/station/maintenance/science)
 "oAi" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
@@ -67375,7 +67368,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "pLE" = (
-/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/simulated/floor{
 	icon_state = "redyellowfull"
 	},
@@ -76856,6 +76849,7 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/effect/decal/cleanable/spiderling_remains,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "rZG" = (
@@ -83361,8 +83355,13 @@
 	},
 /area/station/rnd/server)
 "tFU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/iv_drip,
+/obj/structure/closet/crate,
+/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = -2;
+	pixel_y = 3
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "tGH" = (
@@ -84781,6 +84780,7 @@
 /area/station/hallway/primary/central)
 "tZU" = (
 /obj/structure/closet/wardrobe/white,
+/obj/item/weapon/reagent_containers/food/drinks/britcup,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "tZW" = (
@@ -90513,10 +90513,9 @@
 	},
 /area/station/hallway/primary/fore)
 "vxm" = (
-/obj/structure/table/reinforced,
-/obj/item/device/flashlight/lamp/green,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "vxs" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -97268,7 +97267,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scalpel,
 /obj/structure/rack,
-/obj/item/weapon/hemostat,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "xim" = (
@@ -99782,10 +99782,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "xLT" = (
-/obj/effect/decal/cleanable/greenglow,
 /obj/effect/landmark{
 	name = "blobstart"
 	},
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "xLY" = (
@@ -127700,7 +127700,7 @@ rkE
 dTf
 coi
 cjx
-ozY
+brW
 jBD
 fUZ
 xLT
@@ -128216,8 +128216,8 @@ gNg
 cjx
 wug
 fHN
-odH
-brW
+vxm
+cDJ
 hAt
 fUZ
 fUZ
@@ -129765,7 +129765,7 @@ uLI
 kHU
 vee
 sMR
-jBf
+sIc
 aiQ
 sIc
 sIc
@@ -143276,8 +143276,8 @@ kAA
 lgb
 lgb
 eVC
-oOP
-nyv
+jBf
+tFU
 euu
 nbP
 kEH
@@ -143533,8 +143533,8 @@ aex
 pwd
 lgb
 tZU
-tFU
-vxm
+oOP
+nyv
 oOP
 lMh
 xhV
