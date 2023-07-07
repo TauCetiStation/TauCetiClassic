@@ -1,7 +1,7 @@
 /datum/objective/research_sabotage
 	explanation_text = "Sabotage the R&D servers and systems. Insert the disc you were given into the R&D Server Controller to complete the objective."
-	var/already_completed = FALSE
 	required_equipment = /obj/item/weapon/disk/data/syndi
+	var/already_completed = FALSE
 
 /datum/objective/research_sabotage/check_completion()
 	..()
