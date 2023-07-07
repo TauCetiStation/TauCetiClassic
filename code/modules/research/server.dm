@@ -315,7 +315,7 @@
 /obj/machinery/computer/rdservercontrol/proc/sabotage(mob/user, obj/item/weapon/disk/data/syndi/D)
 	if(!user.Adjacent(src))
 		return
-	if(!isliving(user) && !user.mind)
+	if(!isliving(user))
 		return
 	if(!isanyantag(user))
 		return
