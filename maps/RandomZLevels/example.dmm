@@ -653,7 +653,7 @@
 /area/awaymission/example)
 "bT" = (
 /obj/structure/table,
-/obj/item/device/analyzer/default,
+/obj/item/device/analyzer/defaultr/default,
 /turf/simulated/floor,
 /area/awaymission/example)
 "bU" = (
