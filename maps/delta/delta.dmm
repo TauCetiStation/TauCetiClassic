@@ -15,8 +15,8 @@
 /area/station/civilian/theatre)
 "aaj" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	name = "Unfiltered & Air to Mix";
-	dir = 8
+	dir = 8;
+	name = "Unfiltered & Air to Mix"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -1197,8 +1197,8 @@
 /obj/machinery/door_control{
 	id = "toxin_science_hazard";
 	name = "Toxin Biohazard Control";
-	req_access = list(47);
-	pixel_y = 26
+	pixel_y = 26;
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1631,8 +1631,8 @@
 /obj/machinery/door_control{
 	id = "Singularity";
 	name = "Shutters Control";
-	req_access = list(10);
-	pixel_y = 25
+	pixel_y = 25;
+	req_access = list(10)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2055,8 +2055,8 @@
 "aqm" = (
 /obj/machinery/camera{
 	c_tag = "Research Division Internal Hallway West";
-	network = list("SS13","Research");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -2785,8 +2785,8 @@
 "aAr" = (
 /obj/machinery/camera{
 	c_tag = "Drone Fabrication";
-	network = list("SS13","Engineering");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -3160,9 +3160,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/eastleft{
-	req_access = list(1);
+	dir = 1;
 	name = "Security Delivery";
-	dir = 1
+	req_access = list(1)
 	},
 /turf/simulated/floor{
 	icon_state = "red"
@@ -4791,8 +4791,8 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/camera{
 	c_tag = "Research Division Access";
-	network = list("SS13","Research");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -4861,8 +4861,8 @@
 /area/station/hallway/primary/central)
 "bbY" = (
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 1
+	dir = 1;
+	id = "QMLoad"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -5036,8 +5036,8 @@
 /area/station/maintenance/chapel)
 "beb" = (
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 5
+	dir = 5;
+	id = "QMLoad"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -6926,12 +6926,12 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "recycler_airlock";
+	pixel_y = 25;
 	req_access = list(67);
 	tag_airpump = "recycler_pump";
 	tag_chamber_sensor = "recycler_sensor";
 	tag_exterior_door = "recycler_outer";
-	tag_interior_door = "recycler_inner";
-	pixel_y = 25
+	tag_interior_door = "recycler_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "recycler_sensor";
@@ -6980,8 +6980,8 @@
 /area/station/maintenance/chapel)
 "bAD" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -8363,8 +8363,8 @@
 /area/station/cargo/qm)
 "bPy" = (
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 4
+	dir = 4;
+	id = "QMLoad"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -10110,15 +10110,15 @@
 /obj/machinery/door_control{
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
-	pixel_y = -26;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -26
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
 	id = "psych_ex";
 	name = "Psych Bolts Door Control";
-	pixel_y = -26;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -26
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -10618,8 +10618,8 @@
 /area/station/civilian/chapel)
 "ctX" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 8
+	dir = 8;
+	id = "QMLoad2"
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/supply/station)
@@ -10638,12 +10638,12 @@
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_west_airlock";
+	pixel_y = -25;
 	req_access = list(10,13);
 	tag_airpump = "engineering_west_pump";
 	tag_chamber_sensor = "engineering_west_sensor";
 	tag_exterior_door = "engineering_west_outer";
-	tag_interior_door = "engineering_west_inner";
-	pixel_y = -25
+	tag_interior_door = "engineering_west_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "engineering_west_sensor";
@@ -10852,16 +10852,16 @@
 /obj/machinery/door_control{
 	id = "east_science_hazard";
 	name = "East Science Biohazard Control";
-	req_access = list(30);
 	pixel_x = 12;
-	pixel_y = 8
+	pixel_y = 8;
+	req_access = list(30)
 	},
 /obj/machinery/door_control{
 	id = "toxin_science_hazard";
 	name = "Toxin Biohazard Control";
-	req_access = list(30);
 	pixel_x = 12;
-	pixel_y = -3
+	pixel_y = -3;
+	req_access = list(30)
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -11197,8 +11197,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Quarters";
-	network = list("SS13","Engineering");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -11751,8 +11751,8 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure Tech Storage";
-	network = list("SS13","Engineering");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -12469,8 +12469,8 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/camera{
 	c_tag = "Research Ordnance Lab";
-	network = list("SS13","Research");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -12965,8 +12965,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Robotics Surgery Wing";
-	network = list("SS13","Research");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -13784,8 +13784,8 @@
 /obj/machinery/door_control{
 	id = "Prison Lockdown";
 	name = "Prison Wing Lockdown";
-	req_access = list(2);
-	pixel_x = 26
+	pixel_x = 26;
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13861,8 +13861,8 @@
 /obj/structure/closet/wardrobe/robotics_black,
 /obj/machinery/camera{
 	c_tag = "Robotics Fabrication Wing";
-	network = list("SS13","Research");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -13932,8 +13932,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Monitoring Room";
-	network = list("SS13","Engineering");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -16648,8 +16648,8 @@
 /obj/machinery/computer/security/engineering/drone,
 /obj/machinery/camera{
 	c_tag = "Engineering Shared Storage";
-	network = list("SS13","Engineering");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -19119,8 +19119,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Enginnering Access";
-	network = list("SS13","Engineering");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -19378,8 +19378,8 @@
 "eHM" = (
 /obj/machinery/camera{
 	c_tag = "Research Circuits Lab";
-	network = list("SS13","Research");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -19428,9 +19428,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/westright{
+	dir = 1;
 	name = "Kitchen Maintenance";
-	req_access = list(28);
-	dir = 1
+	req_access = list(28)
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -19721,8 +19721,8 @@
 /obj/structure/cable/yellow,
 /obj/machinery/power/emitter{
 	anchored = 1;
-	state = 2;
-	dir = 1
+	dir = 1;
+	state = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -19971,8 +19971,8 @@
 /area/station/civilian/bar)
 "eOR" = (
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 4
+	dir = 4;
+	id = "QMLoad"
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/supply/station)
@@ -20380,9 +20380,9 @@
 "eUv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
+	id_tag = "psych_ex";
 	name = "Psychiatric Office";
-	req_access = list(64);
-	id_tag = "psych_ex"
+	req_access = list(64)
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -21177,25 +21177,25 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "p_security_airlock";
+	pixel_x = 26;
 	pixel_y = -6;
 	req_one_access = list(13,45,1);
 	tag_airpump = "p_security_pump";
 	tag_chamber_sensor = "p_security_sensor";
 	tag_exterior_door = "p_security_outer";
-	tag_interior_door = "p_security_inner";
-	pixel_x = 26
+	tag_interior_door = "p_security_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "p_security_sensor";
+	pixel_x = 26;
 	pixel_y = 6;
-	req_one_access = list(13,45,1);
-	pixel_x = 26
+	req_one_access = list(13,45,1)
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "p_security_pump";
-	name = "Security Large Air Vent";
-	dir = 1
+	name = "Security Large Air Vent"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
@@ -21305,8 +21305,8 @@
 /area/station/aisat)
 "fgh" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 8
+	dir = 8;
+	id = "QMLoad2"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -21861,8 +21861,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics Mixing Room";
-	network = list("SS13","Engineering");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -22195,8 +22195,8 @@
 /area/station/ai_monitored/storage_secure)
 "fte" = (
 /obj/machinery/door/window/brigdoor{
-	req_access = list(7);
-	dir = 1
+	dir = 1;
+	req_access = list(7)
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22246,8 +22246,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "MiniSat Transit Tube Access Room";
-	network = list("SS13","Engineering");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -22492,8 +22492,8 @@
 /obj/item/clothing/mask/gas,
 /obj/machinery/camera{
 	c_tag = "Enginnering Mid";
-	network = list("SS13","Engineering");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /obj/item/weapon/screwdriver,
 /turf/simulated/floor{
@@ -22717,8 +22717,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Toxin Storage";
-	network = list("SS13","Research");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -23159,8 +23159,8 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/camera{
 	c_tag = "Medbay Psychiatrist Office";
-	network = list("SS13","Medical");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -23490,8 +23490,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Engineering Foyer";
-	network = list("SS13","Engineering");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -25020,8 +25020,8 @@
 "gfj" = (
 /obj/machinery/camera{
 	c_tag = "Server Room";
-	network = list("SS13","Research");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Research")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -25884,8 +25884,8 @@
 /obj/machinery/vending/assist,
 /obj/machinery/camera{
 	c_tag = "Research Firing Range";
-	network = list("SS13","Research");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -26110,9 +26110,9 @@
 /area/station/rnd/scibreak)
 "grm" = (
 /obj/machinery/power/solar_control{
+	dir = 8;
 	id = "auxsolareast";
-	name = "Fore Port Solar Control";
-	dir = 8
+	name = "Fore Port Solar Control"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -26375,8 +26375,8 @@
 /obj/machinery/photocopier,
 /obj/machinery/camera{
 	c_tag = "Research Division West";
-	network = list("SS13","Research");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -26456,8 +26456,8 @@
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/firedoor,
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 4
+	dir = 4;
+	id = "QMLoad"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -27519,8 +27519,8 @@
 /area/station/bridge/meeting_room)
 "gIl" = (
 /obj/machinery/door/window/eastleft{
-	req_access = list(46);
-	dir = 8
+	dir = 8;
+	req_access = list(46)
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -28125,8 +28125,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Office";
-	network = list("SS13","Engineering");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -29205,9 +29205,9 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -29813,8 +29813,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "MiniSat Interior Access";
-	network = list("MiniSat");
-	dir = 1
+	dir = 1;
+	network = list("MiniSat")
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -30017,8 +30017,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Division Internal Hallway East";
-	network = list("SS13","Research");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -30075,8 +30075,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "MiniSat Access Room";
-	network = list("SS13","Engineering");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -32175,9 +32175,9 @@
 /obj/item/weapon/handcuffs,
 /obj/item/device/flash,
 /obj/machinery/door/window/brigdoor{
+	dir = 1;
 	name = "Armory Desk";
-	req_access = list(3);
-	dir = 1
+	req_access = list(3)
 	},
 /obj/machinery/door/window/eastleft{
 	dir = 2
@@ -33166,13 +33166,13 @@
 "ibr" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "arrival_exit";
+	pixel_x = 26;
+	pixel_y = 6;
 	req_one_access = list(13);
 	tag_airpump = "arrival_vent";
 	tag_chamber_sensor = "arrival_sens";
 	tag_exterior_door = "arrival_outer";
-	tag_interior_door = "arrival_inner";
-	pixel_y = 6;
-	pixel_x = 26
+	tag_interior_door = "arrival_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "arrival_sens";
@@ -33432,8 +33432,8 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "minisat blast";
 	name = "MiniSat Blast Doors";
-	req_access = list(56);
-	pixel_x = -26
+	pixel_x = -26;
+	req_access = list(56)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -34006,11 +34006,11 @@
 	network = list("Tcomsat")
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8;
 	icon_state = "freezer_1";
 	power_setting = 20;
 	set_temperature = 73;
-	use_power = 1;
-	dir = 8
+	use_power = 1
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -34093,8 +34093,8 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/camera{
 	c_tag = "Research Toxin Lab";
-	network = list("SS13","Research");
-	dir = 4
+	dir = 4;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -34125,8 +34125,8 @@
 "ing" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Wing East";
-	network = list("SS13","Medical");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -34723,8 +34723,8 @@
 /area/station/civilian/chapel/mass_driver)
 "ivk" = (
 /obj/structure/object_wall/cargo{
-	icon_state = "4,7";
-	dir = 1
+	dir = 1;
+	icon_state = "4,7"
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
@@ -34824,8 +34824,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Breakroom";
-	network = list("SS13","Research");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor,
 /area/station/rnd/scibreak)
@@ -34972,8 +34972,8 @@
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
-	supply_display = 1;
-	pixel_x = -32
+	pixel_x = -32;
+	supply_display = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -35220,16 +35220,16 @@
 /area/station/civilian/dormitories)
 "iBL" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
-	supply_display = 1;
-	pixel_x = 32
+	pixel_x = 32;
+	supply_display = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -35980,8 +35980,8 @@
 /mob/living/simple_animal/corgi/borgi,
 /obj/machinery/camera{
 	c_tag = "Head of Security Office";
-	network = list("SS13","Security");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -36790,8 +36790,8 @@
 /obj/machinery/door_control{
 	id = "Singularity";
 	name = "Shutters Control";
-	req_access = list(10);
-	pixel_y = 25
+	pixel_y = 25;
+	req_access = list(10)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -41104,8 +41104,8 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "engi blast";
 	name = "Engineers Blast Doors";
-	req_access = list(10);
-	pixel_y = -26
+	pixel_y = -26;
+	req_access = list(10)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -41313,7 +41313,7 @@
 "jWU" = (
 /obj/structure/safe,
 /obj/item/stack/sheet/mineral/diamond,
-/obj/item/weapon/gun/projectile/automatic/deagle,
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -42122,8 +42122,8 @@
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
-	supply_display = 1;
-	pixel_x = 32
+	pixel_x = 32;
+	supply_display = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -42750,8 +42750,8 @@
 "kpo" = (
 /obj/machinery/camera{
 	c_tag = "MiniSat Transit Hallway";
-	network = list("SS13","Engineering");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -43117,8 +43117,8 @@
 /obj/machinery/computer/cargo/request,
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
-	network = list("SS13","Medical");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -43411,8 +43411,8 @@
 	req_access = list(41)
 	},
 /obj/item/weapon/stamp/qm{
-	pixel_y = 12;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -43565,8 +43565,8 @@
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
 	pixel_x = -24;
-	req_access = list(8);
-	pixel_y = -8
+	pixel_y = -8;
+	req_access = list(8)
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "tox_airlock_control";
@@ -43663,8 +43663,8 @@
 /obj/machinery/door_control{
 	id = "Dorm6";
 	name = "Dorm 6";
-	specialfunctions = 4;
-	pixel_x = 28
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories)
@@ -44132,8 +44132,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Cargo Checkpoint";
-	network = list("SS13","Security");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -45184,8 +45184,8 @@
 /area/station/medical/reception)
 "kTj" = (
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 4
+	dir = 4;
+	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
@@ -46562,8 +46562,8 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/camera{
 	c_tag = "Upper Atmospherics East";
-	network = list("SS13","Engineering");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -47548,19 +47548,19 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "toxin_test_airlock";
+	pixel_x = 6;
 	pixel_y = 25;
 	req_one_access = list(13,45,1);
 	tag_airpump = "toxin_test_pump";
 	tag_chamber_sensor = "toxin_test_sensor";
 	tag_exterior_door = "toxin_test_outer";
-	tag_interior_door = "toxin_test_inner";
-	pixel_x = 6
+	tag_interior_door = "toxin_test_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "toxin_test_sensor";
+	pixel_x = -6;
 	pixel_y = 25;
-	req_one_access = list(13,45,1);
-	pixel_x = -6
+	req_one_access = list(13,45,1)
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -49431,8 +49431,8 @@
 "lWs" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics North";
-	network = list("SS13","Engineering");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -49634,8 +49634,8 @@
 /area/shuttle/mining/station)
 "lZw" = (
 /obj/machinery/bot/secbot/beepsky{
-	name = "Officer Beepsky";
-	auto_patrol = 0
+	auto_patrol = 0;
+	name = "Officer Beepsky"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -50504,8 +50504,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Director Quarters";
-	network = list("SS13","Research");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -52423,8 +52423,8 @@
 /obj/machinery/door_control{
 	id = "Singularity";
 	name = "Shutters Control";
-	req_access = list(10);
-	pixel_y = -25
+	pixel_y = -25;
+	req_access = list(10)
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -54838,12 +54838,12 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_east_airlock";
+	pixel_y = 25;
 	req_access = list(10,13);
 	tag_airpump = "engineering_east_pump";
 	tag_chamber_sensor = "engineering_east_sensor";
 	tag_exterior_door = "engineering_east_outer";
-	tag_interior_door = "engineering_east_inner";
-	pixel_y = 25
+	tag_interior_door = "engineering_east_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "engineering_east_sensor";
@@ -55349,8 +55349,8 @@
 /obj/machinery/door_control{
 	id = "Singularity";
 	name = "Shutters Control";
-	req_access = list(10);
-	pixel_y = -25
+	pixel_y = -25;
+	req_access = list(10)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -56167,8 +56167,8 @@
 "nHb" = (
 /obj/machinery/camera{
 	c_tag = "Security Office";
-	network = list("SS13","Security");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -57133,8 +57133,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chief Medical Officer Quarters";
-	network = list("SS13","Medical");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -57692,10 +57692,10 @@
 /area/station/hallway/primary/starboard)
 "nZC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "engineering_east_pump";
-	name = "Engineering East Large Air Vent";
-	dir = 1
+	name = "Engineering East Large Air Vent"
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/plating{
@@ -58258,8 +58258,8 @@
 "ohp" = (
 /obj/machinery/camera{
 	c_tag = "Robotics Mech Bay";
-	network = list("SS13","Research");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -58714,8 +58714,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Head of Security Quarters";
-	network = list("SS13","Security");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "red"
@@ -59697,8 +59697,8 @@
 "oEB" = (
 /obj/machinery/status_display{
 	layer = 3.3;
-	supply_display = 1;
-	pixel_x = -32
+	pixel_x = -32;
+	supply_display = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -59714,8 +59714,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Robotics Workspace";
-	network = list("SS13","Research");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -60523,8 +60523,8 @@
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
-	supply_display = 1;
-	pixel_x = 32
+	pixel_x = 32;
+	supply_display = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -61229,8 +61229,8 @@
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/machinery/camera{
 	c_tag = "Enginnering Engine EVA";
-	network = list("SS13","Engineering");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -61990,8 +61990,8 @@
 /obj/machinery/door_control{
 	id = "Sm";
 	name = "Shutters Control";
-	req_access = list(10);
-	pixel_y = 28
+	pixel_y = 28;
+	req_access = list(10)
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -62144,8 +62144,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chemistry";
-	network = list("SS13","Medical");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -63095,18 +63095,18 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "solar_chapel_airlock";
 	pixel_x = -6;
+	pixel_y = 26;
 	req_access = list(13);
 	tag_airpump = "solar_chapel_pump";
 	tag_chamber_sensor = "solar_chapel_sensor";
 	tag_exterior_door = "solar_chapel_outer";
-	tag_interior_door = "solar_chapel_inner";
-	pixel_y = 26
+	tag_interior_door = "solar_chapel_inner"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "solar_chapel_pump";
-	name = "Solar Chapel Large Air Vent";
-	dir = 8
+	name = "Solar Chapel Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -64095,8 +64095,8 @@
 /obj/machinery/door_control{
 	id = "Visit Shutters";
 	name = "Visit Shutters";
-	req_access = list(2);
-	pixel_y = 26
+	pixel_y = 26;
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -64407,18 +64407,18 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_xeno_sensor";
 	layer = 3.3;
-	pixel_y = 25;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 25
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "solar_xeno_airlock";
 	pixel_x = -6;
+	pixel_y = 25;
 	req_access = list(13);
 	tag_airpump = "solar_xeno_pump";
 	tag_chamber_sensor = "solar_xeno_sensor";
 	tag_exterior_door = "solar_xeno_outer";
-	tag_interior_door = "solar_xeno_inner";
-	pixel_y = 25
+	tag_interior_door = "solar_xeno_inner"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
@@ -64671,8 +64671,8 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
 /obj/machinery/door/window/eastleft{
-	name = "Virology Reception";
 	dir = 8;
+	name = "Virology Reception";
 	req_access = list(39)
 	},
 /obj/machinery/door/poddoor{
@@ -64921,8 +64921,8 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/camera{
 	c_tag = "Research Division Internal Drone Fabrication";
-	network = list("SS13","Research");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 3;
@@ -65082,8 +65082,8 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/camera{
 	c_tag = "Atmospherics West";
-	network = list("SS13","Engineering");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -65326,8 +65326,8 @@
 	},
 /obj/machinery/door_control{
 	id = "cmo_shutters";
-	pixel_x = 6;
 	name = "CMO Shutters";
+	pixel_x = 6;
 	req_access = list(40)
 	},
 /turf/simulated/floor{
@@ -67024,8 +67024,8 @@
 /area/station/security/prison)
 "qtm" = (
 /obj/machinery/door/window/brigdoor{
-	req_access = list(8);
-	dir = 1
+	dir = 1;
+	req_access = list(8)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -69365,8 +69365,8 @@
 /area/station/bridge/ai_upload)
 "qZV" = (
 /obj/machinery/door/window/eastleft{
-	req_access = list(25);
-	dir = 8
+	dir = 8;
+	req_access = list(25)
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -69960,8 +69960,8 @@
 /obj/machinery/photocopier,
 /obj/machinery/camera{
 	c_tag = "Medbay Wing Mid";
-	network = list("SS13","Medical");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -70648,8 +70648,8 @@
 "rsB" = (
 /obj/machinery/camera{
 	c_tag = "Enginnering Engine South";
-	network = list("SS13","Engineering");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Engineering")
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -70880,8 +70880,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Mass Driver";
-	network = list("SS13","Research");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -71157,8 +71157,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Enginnering Storage";
-	network = list("SS13","Engineering");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -71521,8 +71521,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Enginnering SMES";
-	network = list("SS13","Engineering");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Engineering")
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -71656,11 +71656,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8;
 	icon_state = "freezer_1";
 	power_setting = 20;
 	set_temperature = 73;
-	use_power = 1;
-	dir = 8
+	use_power = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -72470,8 +72470,8 @@
 /obj/machinery/computer/skills,
 /obj/machinery/camera{
 	c_tag = "Research Director";
-	network = list("SS13","Research");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -73028,9 +73028,9 @@
 	dir = 8
 	},
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73456,8 +73456,8 @@
 /obj/structure/morgue,
 /obj/machinery/camera{
 	c_tag = "Medbay Morgue";
-	network = list("SS13","Medical");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -73521,8 +73521,8 @@
 /area/station/medical/reception)
 "sbg" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 8
+	dir = 8;
+	id = "QMLoad2"
 	},
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/poddoor{
@@ -73988,8 +73988,8 @@
 /obj/machinery/door_control{
 	id = "Dorm3";
 	name = "Dorm 3";
-	specialfunctions = 4;
-	pixel_x = -28
+	pixel_x = -28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
@@ -75967,8 +75967,8 @@
 /mob/living/carbon/monkey,
 /obj/machinery/camera{
 	c_tag = "Microbiology";
-	network = list("SS13","Medical");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -76135,8 +76135,8 @@
 "sJb" = (
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 6;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /obj/structure/sign/departments/holy{
 	pixel_x = 32
@@ -76439,8 +76439,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Lobby";
-	network = list("SS13","Medical");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -77177,8 +77177,8 @@
 /obj/machinery/cell_charger,
 /obj/machinery/camera{
 	c_tag = "Tech Storage";
-	network = list("SS13","Engineering");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -77481,8 +77481,8 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/camera{
 	c_tag = "Medbay Wing North";
-	network = list("SS13","Medical");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -79223,16 +79223,16 @@
 /obj/machinery/door_control{
 	id = "xenobiosouth";
 	name = "Containment Blast Doors";
-	req_access = list(55);
+	pixel_x = 6;
 	pixel_y = -26;
-	pixel_x = 6
+	req_access = list(55)
 	},
 /obj/machinery/door_control{
 	id = "xenobionorth";
 	name = "Containment Blast Doors";
-	req_access = list(55);
+	pixel_x = -6;
 	pixel_y = -26;
-	pixel_x = -6
+	req_access = list(55)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -80042,8 +80042,8 @@
 "tKg" = (
 /obj/machinery/camera{
 	c_tag = "Upper Atmospherics North";
-	network = list("SS13","Engineering");
-	dir = 4
+	dir = 4;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -80685,8 +80685,8 @@
 "tUk" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Wing South";
-	network = list("SS13","Medical");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -80720,8 +80720,8 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/camera{
 	c_tag = "Atmospherics Distribution Loop";
-	network = list("SS13","Engineering");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -81395,8 +81395,8 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/bell,
 /obj/machinery/door/window/westright{
-	req_access = list(35);
-	name = "Hydroponics"
+	name = "Hydroponics";
+	req_access = list(35)
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
@@ -83120,9 +83120,9 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -83164,8 +83164,8 @@
 /obj/item/device/radio/headset/headset_med,
 /obj/machinery/camera{
 	c_tag = "Microbiology Research Room";
-	network = list("SS13","Medical");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -84195,8 +84195,8 @@
 /area/station/maintenance/engineering)
 "uRa" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -84392,8 +84392,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/camera{
 	c_tag = "Medbay Breakroom";
-	network = list("SS13","Medical");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor,
 /area/station/medical/medbreak)
@@ -86098,8 +86098,8 @@
 /obj/machinery/door_control{
 	id = "Dorm5";
 	name = "Dorm 5";
-	specialfunctions = 4;
-	pixel_x = 28
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/carpet/orange,
 /area/station/civilian/dormitories)
@@ -86308,8 +86308,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/westleft{
-	name = "Hydroponics";
-	dir = 4
+	dir = 4;
+	name = "Hydroponics"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86622,8 +86622,8 @@
 "vyR" = (
 /obj/machinery/power/emitter{
 	anchored = 1;
-	state = 2;
-	dir = 1
+	dir = 1;
+	state = 2
 	},
 /obj/structure/cable/yellow,
 /turf/simulated/floor/plating/airless,
@@ -87475,8 +87475,8 @@
 	},
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 6;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -88365,8 +88365,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics Access";
-	network = list("SS13","Engineering");
-	dir = 4
+	dir = 4;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -89533,8 +89533,8 @@
 /area/station/rnd/hor)
 "wmd" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 9
+	dir = 9;
+	id = "QMLoad2"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -89933,8 +89933,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics South";
-	network = list("SS13","Engineering");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -90294,8 +90294,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Enginnering Engine Access";
-	network = list("SS13","Engineering");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor/plating{
 	dir = 6;
@@ -90360,8 +90360,8 @@
 /obj/machinery/door_control{
 	id = "Prison Lockdown";
 	name = "Prison Wing Lockdown";
-	req_access = list(2);
-	pixel_y = 26
+	pixel_y = 26;
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -91201,8 +91201,8 @@
 "wJi" = (
 /obj/machinery/camera{
 	c_tag = "Science Lobby";
-	network = list("SS13","Research");
-	dir = 9
+	dir = 9;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -91784,8 +91784,8 @@
 /obj/machinery/door_control{
 	id = "Dorm4";
 	name = "Dorm 4";
-	specialfunctions = 4;
-	pixel_x = -28
+	pixel_x = -28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
@@ -92243,8 +92243,8 @@
 /obj/structure/closet/secure_closet/atmos_personal,
 /obj/machinery/camera{
 	c_tag = "Atmospherics Storage";
-	network = list("SS13","Engineering");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -92284,8 +92284,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chief Medical Officer";
-	network = list("SS13","Medical");
-	dir = 7
+	dir = 7;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor,
 /area/station/medical/cmo)
@@ -92824,8 +92824,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Treatment Center";
-	network = list("SS13","Medical");
-	dir = 4
+	dir = 4;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -93420,10 +93420,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
 	base_state = "left";
+	dir = 8;
 	icon_state = "left";
 	name = "Security Desk";
-	req_access = list(1);
-	dir = 8
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
@@ -94952,8 +94952,8 @@
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/firedoor,
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 8
+	dir = 8;
+	id = "QMLoad2"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -96711,8 +96711,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Wing Entry";
-	network = list("SS13","Medical");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -96740,9 +96740,9 @@
 /area/station/engineering/atmos)
 "ycQ" = (
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/visible{
@@ -97041,16 +97041,16 @@
 /area/station/security/prison)
 "yhv" = (
 /obj/machinery/conveyor{
-	id = "QMLoad";
-	dir = 1
+	dir = 1;
+	id = "QMLoad"
 	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
-	supply_display = 1;
-	pixel_x = 32
+	pixel_x = 32;
+	supply_display = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
