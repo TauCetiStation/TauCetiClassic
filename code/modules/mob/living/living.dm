@@ -161,6 +161,8 @@
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(moving_diagonally)
+		return 1
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
