@@ -96,7 +96,7 @@
 
 			moving_diagonally = FIRST_DIAG_STEP
 			. = step(src, v)
-			if(moving_diagonally) // forcemove can interrupt diagonal movement
+			if(moving_diagonally) // forcemove, bump, etc. can interrupt diagonal movement
 				if(.)
 					moving_diagonally = SECOND_DIAG_STEP
 					if(!step(src, h))
