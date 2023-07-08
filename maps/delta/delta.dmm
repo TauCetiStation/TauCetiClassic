@@ -43329,7 +43329,7 @@
 /obj/structure/safe,
 /obj/item/stack/sheet/mineral/diamond,
 /obj/machinery/light/small,
-/obj/item/weapon/gun/projectile/automatic/deagle/weakened,
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
