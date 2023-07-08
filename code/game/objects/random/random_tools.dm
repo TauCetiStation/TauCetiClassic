@@ -75,7 +75,7 @@
 	desc = "This is a random piece of technology supplies."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
-	spawn_nothing_percentage = 50
+	spawn_nothing_chance = 50
 /obj/random/tools/tech_supply/item_to_spawn()
 		return pick(\
 						prob(3);/obj/random/tools/powercell,\
@@ -90,4 +90,4 @@
 						prob(5);/obj/random/tools/tool\
 					)
 /obj/random/tools/tech_supply/guaranteed
-	spawn_nothing_percentage = 0
+	spawn_nothing_chance = 0

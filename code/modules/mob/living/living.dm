@@ -90,6 +90,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
+	if(moving_diagonally)
+		return 1
+
 	if(M.pulling == src)
 		M.stop_pulling()
 
@@ -157,6 +160,8 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
+		return 1
+	if(moving_diagonally)
 		return 1
 	if(!AM.anchored)
 		now_pushing = 1
@@ -704,7 +709,7 @@
 
 		. = ..()
 
-		if(pulling && !restrained())
+		if(pulling && !restrained() && old_loc != loc)
 			var/diag = get_dir(src, pulling)
 			if(get_dist(src, pulling) > 1 || ISDIAGONALDIR(diag))
 				if(isliving(pulling))
