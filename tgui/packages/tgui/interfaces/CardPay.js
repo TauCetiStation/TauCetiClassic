@@ -15,8 +15,8 @@ export const CardPay = (props, context) => {
   for (let row = 0; row < 3; row++) {
     for (let col = 1; col < 4; col++) {
       buttons.push(<Button
-        className="cardpay_button_variant-normal"
-        content={<Box className="cardpay_button-inside_variant-normal">{row * 3 + col}</Box>}
+        className="cardpay_button_general cardpay_button_variant-normal"
+        content={<Box className="cardpay_button-inside_general cardpay_button-inside_variant-normal">{row * 3 + col}</Box>}
         onClick={() => act("pressnumber", { number: row * 3 + col })}
       />);
     }
@@ -67,18 +67,18 @@ export const CardPay = (props, context) => {
         <Box width="158px" height="208px" position="absolute" left="32px" top="95px">
           {buttons}
           <Button
-            className="cardpay_button_variant-red"
-            content={<Box className="cardpay_button-inside_variant-red">{"X"}</Box>}
+            className="cardpay_button_general cardpay_button_variant-red"
+            content={<Box className="cardpay_button-inside_general cardpay_button-inside_variant-red">{"X"}</Box>}
             onClick={() => act("clearnumbers")}
           />
           <Button
-            className="cardpay_button_variant-normal"
-            content={<Box className="cardpay_button-inside_variant-normal">{0}</Box>}
+            className="cardpay_button_general cardpay_button_variant-normal"
+            content={<Box className="cardpay_button-inside_general cardpay_button-inside_variant-normal">{0}</Box>}
             onClick={() => act("pressnumber", { number: 0 })}
           />
           <Button
-            className="cardpay_button_variant-green"
-            content={<Box className="cardpay_button-inside_variant-green">{"O"}</Box>}
+            className="cardpay_button_general cardpay_button_variant-green"
+            content={<Box className="cardpay_button-inside_general cardpay_button-inside_variant-green">{"O"}</Box>}
             onClick={() => act("approveprice")}
           />
         </Box>
