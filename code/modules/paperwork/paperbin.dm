@@ -38,6 +38,8 @@
 	if(papers.len > 0) // If there's any custom paper on the stack, use that instead of creating a new paper.
 		P = papers[papers.len]
 		papers.Remove(P)
+		user.try_take(P, loc)
+		return
 
 	var/selection = show_radial_menu(user, src, paper_types, require_near = TRUE, tooltips = TRUE)
 
