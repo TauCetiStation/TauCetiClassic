@@ -704,7 +704,7 @@
 
 		. = ..()
 
-		if(pulling && !restrained())
+		if(pulling && !restrained() && old_loc != loc)
 			var/diag = get_dir(src, pulling)
 			if(get_dist(src, pulling) > 1 || ISDIAGONALDIR(diag))
 				if(isliving(pulling))
