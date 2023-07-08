@@ -161,7 +161,7 @@
 				continue
 			to_chat(user, "<span class='warning'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
 			return FALSE	
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(give_telecrystal), target.type, user))
 	if(!..())
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		return FALSE

@@ -124,7 +124,7 @@
 					to_chat(usr, "You set the pinpointer to locate [target]")
 
 	if(mode && target)
-		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), .proc/reset_target)
+		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
 
 	return attack_self(usr)
 
@@ -147,7 +147,7 @@
 				return
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)	//Plays a beep
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
-			RegisterSignal(target, list(COMSIG_PARENT_QDELETING), .proc/reset_target)
+			RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
 	else
 		if(istype(target, /obj/machinery/computer/syndicate_station))
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

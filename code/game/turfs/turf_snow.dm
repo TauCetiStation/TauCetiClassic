@@ -255,7 +255,7 @@
 	transform = Mx
 
 	if(catch_target_turf)
-		INVOKE_ASYNC(src, .proc/play_catch_anim, catch_target_turf)
+		INVOKE_ASYNC(src, PROC_REF(play_catch_anim), catch_target_turf)
 
 /obj/item/fish_carp/update_icon()
 	var/carp_color = pick(

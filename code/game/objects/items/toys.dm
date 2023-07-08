@@ -988,11 +988,11 @@ Owl & Griffin toys
 	cooldown = world.time + 3 MINUTES
 	user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 	icon_state = "nuketoy"
-	addtimer(CALLBACK(src, .proc/alarm), 5, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(alarm)), 5, TIMER_STOPPABLE)
 
 /obj/item/toy/nuke/proc/alarm() //first timer
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	addtimer(CALLBACK(src, .proc/boom), 115, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 115, TIMER_STOPPABLE)
 
 /obj/item/toy/nuke/proc/boom() //second timer
 	if(emagged)

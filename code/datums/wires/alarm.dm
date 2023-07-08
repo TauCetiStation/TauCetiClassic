@@ -57,12 +57,12 @@ var/global/const/AALARM_WIRE_AALARM     = 16
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_icon()
-				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 1200)
+				addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 1200)
 
 		if (AALARM_WIRE_AI_CONTROL)
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+				addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 
 		if(AALARM_WIRE_SYPHON)
 			A.mode = AALARM_MODE_REPLACEMENT

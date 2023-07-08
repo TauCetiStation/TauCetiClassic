@@ -207,7 +207,7 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/pickup_animation, i, imgs[i], target, old_loc)
+		INVOKE_ASYNC(src, PROC_REF(pickup_animation), i, imgs[i], target, old_loc)
 	sleep(5)
 	if(QDELETED(src))
 		return
@@ -277,7 +277,7 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/putdown_animation, i, imgs[i], target, user, additional_pixel_x, additional_pixel_y)
+		INVOKE_ASYNC(src, PROC_REF(putdown_animation), i, imgs[i], target, user, additional_pixel_x, additional_pixel_y)
 
 	sleep(PUTDOWN_ANIMATION_DURATION)
 	if (QDELETED(src))
@@ -329,7 +329,7 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/simple_move_animation, i, imgs[i], target, old_loc)
+		INVOKE_ASYNC(src, PROC_REF(simple_move_animation), i, imgs[i], target, old_loc)
 
 	sleep(3)
 	if (QDELETED(src))
