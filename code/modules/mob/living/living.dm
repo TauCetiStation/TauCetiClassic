@@ -90,6 +90,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
+	if(moving_diagonally)
+		return 1
+
 	if(M.pulling == src)
 		M.stop_pulling()
 
