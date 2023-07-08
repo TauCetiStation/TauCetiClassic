@@ -201,8 +201,3 @@
 						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate,\
 						/obj/item/weapon/gun/projectile/automatic/pistol/wjpp\
 					)
-
-/obj/random/guns/set_special/spawn_item()
-	var/obj/item/weapon/gun/projectile/P = ..()
-	P.magazine.make_empty()
-	QDEL_NULL(P.chambered)
