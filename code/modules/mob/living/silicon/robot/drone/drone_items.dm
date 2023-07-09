@@ -183,7 +183,7 @@
 		/obj/item/device/mmi/posibrain,
 		/obj/item/robot_parts,
 		/obj/item/weapon/stock_parts,
-		/obj/item/device/flash
+		/obj/item/device/flash,
 		/obj/item/device/assembly/igniter,
 		/obj/item/device/analyzer,
 		/obj/item/device/flashlight,
