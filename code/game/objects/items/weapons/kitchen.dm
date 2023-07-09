@@ -335,7 +335,7 @@
 			T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
 			I.throw_at(T, rand(1, 2), 1, user)
 
-/obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, can_be_catched)
+/obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
 	dropitems(user = thrower, target = target, scatter = TRUE)
 

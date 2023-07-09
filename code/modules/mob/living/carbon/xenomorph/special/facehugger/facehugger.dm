@@ -204,7 +204,7 @@
 		return HasProximity(finder)
 	return FALSE
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first = FALSE, datum/callback/callback, can_be_catched)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first = FALSE, datum/callback/callback)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)

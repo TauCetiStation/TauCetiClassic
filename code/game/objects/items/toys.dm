@@ -142,7 +142,7 @@
 
 	. = ..()
 
-/obj/item/toy/spinningtoy/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, can_be_catched)
+/obj/item/toy/spinningtoy/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
 
 /obj/item/toy/spinningtoy/attack_hand(mob/user)

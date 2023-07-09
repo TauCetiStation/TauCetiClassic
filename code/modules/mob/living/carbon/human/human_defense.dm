@@ -21,7 +21,7 @@
 	return TRUE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	if(isitem(AM) && can_catch_item() && throwingdatum.can_be_catched)
+	if(isitem(AM) && AM.flags_2 & CANT_BE_CATCHED && can_catch_item())
 		var/obj/item/I = AM
 		var/oldloc = AM.loc
 		if(put_in_active_hand(I))

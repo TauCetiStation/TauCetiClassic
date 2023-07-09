@@ -114,7 +114,7 @@
 	if(storage_ui)
 		storage_ui.show_to(user)
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, can_be_catched)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	if(storage_ui)
 		storage_ui.close_all()
 	return ..()

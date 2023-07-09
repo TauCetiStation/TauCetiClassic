@@ -330,9 +330,9 @@
 			return FALSE
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, can_be_catched)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) // Replace their callback with our own.
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, can_be_catched = can_be_catched)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
