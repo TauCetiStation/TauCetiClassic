@@ -860,6 +860,15 @@
 			slowdown += boots.slowdown_off
 		update_icon(usr)
 
+/obj/item/clothing/suit/space/rig/syndi/disable_magpulse(mob/user)
+	flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
+	if(combat_mode)
+		slowdown = combat_slowdown
+	else
+		slowdown = initial(slowdown)
+	magpulse = FALSE
+	to_chat(user, "You disable \the [src] the mag-pulse traction system.")
+
 /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 	name = "heavy hybrid helmet"
 	desc = "An advanced helmet designed for work in special operations. Created using older design of armored hardsuits."
