@@ -33,7 +33,7 @@
 	required_pref = ROLE_REV
 	logo_state = "rev_head-logo"
 
-	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent", "Blueshield Officer")
+	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent", "Blueshield Officer")
 
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "hudheadrevolutionary"
