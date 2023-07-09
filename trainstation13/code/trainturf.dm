@@ -180,6 +180,8 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
 			icon = 'trainstation13/icons/turf/trainturf.dmi'
 
+//REAL RAILS
+
 /turf/unsimulated/floor/train/rails/real
 	name = "railway track"
 	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
@@ -989,6 +991,698 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 			name = "railway track"
 			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
 			icon = 'trainstation13/icons/turf/trainturf_realrails_right13.dmi'
+
+//FAKE RAILS
+
+/turf/unsimulated/floor/train/rails/fake
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "ban"
+	still_icon_state = "ban"
+
+/turf/unsimulated/floor/train/rails/fake/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("field")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("forest")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_2
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_2_still"
+	still_icon_state = "rails_left_2"
+
+/turf/unsimulated/floor/train/rails/fake/left_2/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left2.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left2.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left2.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_2
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_2_still"
+	still_icon_state = "rails_right_2"
+
+/turf/unsimulated/floor/train/rails/fake/right_2/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right2.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right2.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right2.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_3
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_3_still"
+	still_icon_state = "rails_left_3"
+
+/turf/unsimulated/floor/train/rails/fake/left_3/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left3.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left3.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left3.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_3
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_3_still"
+	still_icon_state = "rails_right_3"
+
+/turf/unsimulated/floor/train/rails/fake/right_3/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right3.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right3.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right3.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_4
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_4_still"
+	still_icon_state = "rails_left_4"
+
+/turf/unsimulated/floor/train/rails/fake/left_4/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left4.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left4.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left4.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_4
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_4_still"
+	still_icon_state = "rails_right_4"
+
+/turf/unsimulated/floor/train/rails/fake/right_4/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right4.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right4.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right4.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_5
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_5_still"
+	still_icon_state = "rails_left_5"
+
+/turf/unsimulated/floor/train/rails/fake/left_5/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left5.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left5.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left5.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_5
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_5_still"
+	still_icon_state = "rails_right_5"
+
+/turf/unsimulated/floor/train/rails/fake/right_5/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right5.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right5.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right5.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_6
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_6_still"
+	still_icon_state = "rails_left_6"
+
+/turf/unsimulated/floor/train/rails/fake/left_6/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left6.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left6.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left6.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_6
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_6_still"
+	still_icon_state = "rails_right_6"
+
+/turf/unsimulated/floor/train/rails/fake/right_6/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right6.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right6.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right6.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_7
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_7_still"
+	still_icon_state = "rails_left_7"
+
+/turf/unsimulated/floor/train/rails/fake/left_7/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left7.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left7.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left7.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_7
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_7_still"
+	still_icon_state = "rails_right_7"
+
+/turf/unsimulated/floor/train/rails/fake/right_7/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right7.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right7.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right7.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_8
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_8_still"
+	still_icon_state = "rails_left_8"
+
+/turf/unsimulated/floor/train/rails/fake/left_8/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left8.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left8.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left8.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_8
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_8_still"
+	still_icon_state = "rails_right_8"
+
+/turf/unsimulated/floor/train/rails/fake/right_8/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right8.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right8.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right8.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_9
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_9_still"
+	still_icon_state = "rails_left_9"
+
+/turf/unsimulated/floor/train/rails/fake/left_9/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left9.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left9.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left9.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_9
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_9_still"
+	still_icon_state = "rails_right_9"
+
+/turf/unsimulated/floor/train/rails/fake/right_9/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right9.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right9.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right9.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_10
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_10_still"
+	still_icon_state = "rails_left_10"
+
+/turf/unsimulated/floor/train/rails/fake/left_10/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left10.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left10.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left10.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_10
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_10_still"
+	still_icon_state = "rails_right_10"
+
+/turf/unsimulated/floor/train/rails/fake/right_10/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right10.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right10.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right10.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_11
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_11_still"
+	still_icon_state = "rails_left_11"
+
+/turf/unsimulated/floor/train/rails/fake/left_11/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left11.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left11.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left11.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_11
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_11_still"
+	still_icon_state = "rails_right_11"
+
+/turf/unsimulated/floor/train/rails/fake/right_11/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right11.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right11.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right11.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/left_12
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_12_still"
+	still_icon_state = "rails_left_12"
+
+/turf/unsimulated/floor/train/rails/fake/left_12/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left12.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left12.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_left12.dmi'
+
+/turf/unsimulated/floor/train/rails/fake/right_12
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_right_12_still"
+	still_icon_state = "rails_right_12"
+
+/turf/unsimulated/floor/train/rails/fake/right_12/change_state(state)
+	switch(state)
+		if("station - traditional")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("station - rural")
+			name = "railway track"
+			desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+			icon = 'trainstation13/icons/turf/trainturf.dmi'
+		if("suburb")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right12.dmi'
+		if("field")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right12.dmi'
+		if("forest")
+			name = "snow"
+			desc = "It's cold."
+			icon = 'trainstation13/icons/turf/trainturf_fakerails_right12.dmi'
 
 //ANIMATION SWITCH
 
