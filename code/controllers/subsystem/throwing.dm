@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(throwing)
 	var/datum/callback/callback
 	var/datum/callback/early_callback // used when you want to call something before throw_impact().
 
-/datum/thrownthing/New(atom/thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback)
+/datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback)
 	src.thrownthing = thrownthing
 	src.target = target
 	src.target_turf = target_turf
