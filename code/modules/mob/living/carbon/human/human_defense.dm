@@ -23,7 +23,9 @@
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && can_catch_item() && throwingdatum.can_be_catched)
 		var/obj/item/I = AM
+		var/oldloc = AM.loc
 		if(put_in_active_hand(I))
+			do_attack_animation(oldloc, has_effect = FALSE)
 			visible_message("<span class='notice'>[src] catches [I].</span>", "<span class='notice'>You catch [I] in mid-air!</span>")
 			throw_mode_off()
 			return TRUE // aborts throw_impact
