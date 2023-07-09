@@ -2429,6 +2429,7 @@
 #include "code\modules\tgui_panel\telemetry.dm"
 #include "code\modules\tgui_panel\tgui_panel.dm"
 #include "code\modules\tooltip\tooltip.dm"
+#include "code\modules\translation\cases.dm"
 #include "code\modules\unarmed_combat\combat_combo.dm"
 #include "code\modules\unarmed_combat\combat_moveset.dm"
 #include "code\modules\unarmed_combat\combo_handler.dm"
