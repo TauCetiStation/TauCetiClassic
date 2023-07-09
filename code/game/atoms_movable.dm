@@ -236,7 +236,7 @@
 
 	return hit_atom.hitby(src, throwingdatum)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
+/atom/movable/proc/throw_at(target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
 		return
 
