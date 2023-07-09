@@ -16,9 +16,9 @@
 	// Thus it shouldn't also protect you from pew pew.
 	flag = BULLET
 
-/obj/item/projectile/disabler/on_impact(atom/A)
+/obj/item/projectile/disabler/on_hit(atom/target)
 	..()
-	spit_prismaline(src, A, 1.5)
+	spit_prismaline(src, target, 1.5)
 
 
 /mob/living
@@ -52,7 +52,10 @@
 			addtimer(CALLBACK(src, PROC_REF(check_for_explosion), A), 2 SECONDS)
 
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_attack_animation), L)
-		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
+		if(!attack_sound.len)
+			playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(L, pick(attack_sound), VOL_EFFECTS_MASTER)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
@@ -106,7 +109,12 @@
 
 	if(a_intent == INTENT_HARM && get_turf(A) && get_turf(src))
 		SetNextMove(CLICK_CD_MELEE)
-		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
+
+		if(!attack_sound.len)
+			playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, pick(attack_sound), VOL_EFFECTS_MASTER)
+
 		var/obj/item/projectile/disabler/D = new(loc)
 		D.color = color
 

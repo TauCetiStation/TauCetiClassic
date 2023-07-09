@@ -351,7 +351,11 @@
 					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
 					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>Так...</span>"), 1 SECOND)
 					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
-					new /obj/random/guns/set_special(loc)
+
+					var/weapon_type = PATH_OR_RANDOM_PATH(/obj/random/guns/set_special)
+					var/obj/item/weapon/gun/projectile/P = new weapon_type(loc)
+					P.magazine.make_empty()
+					QDEL_NULL(P.chambered)
 					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
 	return TRUE

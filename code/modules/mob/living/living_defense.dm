@@ -1,10 +1,10 @@
-/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE)
+/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE, redirected = FALSE)
 	if(!logs_combat)
 		return
-	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])</font>"
-	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])</font>"
+	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])[redirected ? " (redirected)" : ""]</font>"
+	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])[redirected ? " (redirected)" : ""]</font>"
 	if(alert_admins)
-		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
+		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
@@ -57,6 +57,20 @@
 		return PROJECTILE_ABSORBED
 
 	. = mob_bullet_act(P, def_zone)
+
+	if(. == PROJECTILE_ACTED || . == PROJECTILE_ALL_OK) // logs
+		if(P.silenced)
+			to_chat(src, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [P.name]!</span>")
+		else if(!P.fake)
+			visible_message("<span class='userdanger'>[name] is hit by the [P.name] in the [parse_zone(def_zone)]!</span>")
+			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(P.firer)
+			log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
+		else
+			attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[src]/[ckey]</b> with a <b>[src]</b>"
+			if(!P.fake)
+				msg_admin_attack("UNKNOWN shot [name] ([ckey]) with a [P][P.redirected ? " (redirected)" : ""]", src) //BS12 EDIT ALG
+
 	if(. != PROJECTILE_ALL_OK)
 		return
 

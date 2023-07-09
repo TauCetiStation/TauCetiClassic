@@ -233,7 +233,7 @@
 			visible_message("<span class='notice'>[user] stops fishing.</span>")
 
 /obj/random/misc/all/high
-	spawn_nothing_percentage = 40
+	spawn_nothing_chance = 40
 
 /obj/item/fish_carp
 	name = "space carp"
