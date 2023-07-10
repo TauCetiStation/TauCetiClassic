@@ -5,21 +5,21 @@
 
 ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian
-	name = "Ian"
-	real_name = "Ian"
+	name = "Coconut"
+	real_name = "Coconut"
 	icon = 'icons/mob/corgi.dmi'
 	icon_state = "corgi"
 	gender = MALE
-	desc = "Это корги."
+	desc = "Капибара - очень социональное животное."
 
 	var/response_help  = "pets"
 	var/response_disarm = "bops"
 	var/response_harm   = "kicks"
 
-	var/list/speak = list("Гав!", "Вуф!", "АУУУУ!")
+	var/list/speak = list("Иу!", "УФ!", "Гоп!")
 	speak_emote = list("лает", "воет")
 	var/list/emote_hear = list("лает", "воет")
-	var/list/emote_see = list("виляет хвостом", "облизывается")
+	var/list/emote_see = list("чешется", "невозмутима")
 	var/speak_chance = 1
 
 	var/turns_per_move = 10
