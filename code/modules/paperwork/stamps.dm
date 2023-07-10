@@ -6,7 +6,7 @@
 	item_state = "stamp"
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
-	throw_speed = 7
+	throw_speed = 4
 	throw_range = 15
 	m_amt = 60
 	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build

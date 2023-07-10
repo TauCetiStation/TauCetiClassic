@@ -64,7 +64,7 @@
 	icon_state = "bola"
 	breakouttime = LEGCUFF_BREAKTIME_BOLA
 	origin_tech = "engineering=3;combat=1"
-	throw_speed = 5
+	throw_speed = 4
 	var/weaken = 0.8
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
@@ -111,7 +111,7 @@
 	origin_tech = "engineering=4;combat=3"
 	weaken = 2
 	throw_range = 5
-	flags_2 = CANT_BE_CATCHED
+	throw_speed = 5
 
 #undef LEGCUFF_BREAKTIME_DEFAULT
 #undef LEGCUFF_BREAKTIME_BOLA

@@ -198,7 +198,6 @@
 	throw_speed = 6
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "throwing_knife"
-	flags_2 = CANT_BE_CATCHED
 
 /*
  * Bucher's cleaver
