@@ -194,7 +194,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = TRUE
-		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
+		addtimer(CALLBACK(src, PROC_REF(burrow_check)), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
 	if(alerted)
@@ -308,7 +308,7 @@
 
 /obj/item/asteroid/hivelord_core/atom_init()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/make_inert), 1200)
+	addtimer(CALLBACK(src, PROC_REF(make_inert)), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = TRUE
@@ -454,7 +454,7 @@
 	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
 		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
 		A.gets_dug()
-	addtimer(CALLBACK(src, .proc/Trip), 20)
+	addtimer(CALLBACK(src, PROC_REF(Trip)), 20)
 
 /obj/effect/goliath_tentacle/original
 

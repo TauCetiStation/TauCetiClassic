@@ -205,7 +205,7 @@
 	var/sorted_max = list()
 	for(var/skill_type in all_skills)
 		sorted_max[skill_type] = skills.get_max(skill_type)
-	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
+	sorted_max = sortTim(sorted_max, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	var/row = 0
 	for(var/skill_type in sorted_max)
 		var/datum/skill/skill = all_skills[skill_type]
@@ -559,7 +559,7 @@
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER

@@ -1072,7 +1072,7 @@
 
 /obj/machinery/reagentgrinder/proc/shake_for(duration)
 	start_shaking() //start shaking
-	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
+	addtimer(CALLBACK(src, PROC_REF(stop_shaking)), duration)
 
 /obj/machinery/reagentgrinder/proc/stop_shaking()
 	update_icon()
@@ -1087,7 +1087,7 @@
 		else
 			playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER, 20)
 	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
-	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
+	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	inuse = FALSE

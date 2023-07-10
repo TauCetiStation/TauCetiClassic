@@ -19,10 +19,10 @@
 	
 	zoom_view_range = _zoom_view_range
 	can_move = _can_move
-	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/on_drop)
-	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), .proc/toggle_zoom)
-	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
+	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), PROC_REF(on_equip))
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), PROC_REF(on_drop))
+	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), PROC_REF(toggle_zoom))
+	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_PARENT_QDELETING), PROC_REF(reset_zoom))
 	button = new(parent)
 
 /datum/component/zoom/Destroy()
@@ -74,6 +74,6 @@
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
 	zoomer.client?.change_view(zoom_view_range)
-	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
+	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(reset_zoom))
 	if(!can_move)
-		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), .proc/reset_zoom)
+		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), PROC_REF(reset_zoom))

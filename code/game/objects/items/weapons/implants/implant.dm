@@ -11,7 +11,7 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
-
+	var/implant_trait
 	var/implant_type = "b"
 
 /datum/action/item_action/implant
@@ -22,6 +22,7 @@
 	implant_list += src
 
 /obj/item/weapon/implant/Destroy()
+	implant_removal(imp_in)
 	implant_list -= src
 	implanted = FALSE
 	if(part)
@@ -56,10 +57,15 @@
 		if(!BP)
 			return
 		BP.implants += src
-		C.sec_hud_set_implants()
 		part = BP
+
 	for(var/datum/action/A in item_actions)
 		A.Grant(imp_in)
+
+	if(implant_trait)
+		ADD_TRAIT(C, implant_trait, IMPLANT_TRAIT)
+	C.sec_hud_set_implants()
+
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
@@ -68,6 +74,10 @@
 	C.sec_hud_set_implants()
 	for(var/datum/action/A in item_actions)
 		A.Grant(imp_in)
+
+/obj/item/weapon/implant/proc/implant_removal(mob/host)
+	if(implant_trait && istype(host))
+		REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -94,6 +104,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
+	implant_trait = TRAIT_VISUAL_TRACK
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
@@ -353,6 +364,7 @@ Implant Specifics:<BR>"}
 	name = "chemical implant"
 	desc = "Injects things."
 	allow_reagents = 1
+	implant_trait = TRAIT_VISUAL_CHEM
 
 /obj/item/weapon/implant/chem/get_data()
 	var/dat = {"

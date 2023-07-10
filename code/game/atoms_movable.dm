@@ -96,19 +96,20 @@
 
 			moving_diagonally = FIRST_DIAG_STEP
 			. = step(src, v)
-			if(.)
-				moving_diagonally = SECOND_DIAG_STEP
-				if(!step(src, h))
-					set_dir(v)
-			else
-				dir = old_dir // blood trails uses dir
-				. = step(src, h)
+			if(moving_diagonally) // forcemove, bump, etc. can interrupt diagonal movement
 				if(.)
 					moving_diagonally = SECOND_DIAG_STEP
-					if(!step(src, v))
-						set_dir(h)
+					if(!step(src, h))
+						set_dir(v)
+				else
+					dir = old_dir // blood trails uses dir
+					. = step(src, h)
+					if(.)
+						moving_diagonally = SECOND_DIAG_STEP
+						if(!step(src, v))
+							set_dir(h)
 
-			moving_diagonally = 0
+				moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
@@ -170,7 +171,7 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
 	if(destination)
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
@@ -180,6 +181,9 @@
 		var/area/destarea = get_area(destination)
 
 		loc = destination
+
+		if(!keep_moving_diagonally)
+			moving_diagonally = FALSE
 
 		if(!same_loc)
 			if(oldloc)
@@ -401,7 +405,7 @@
 /// See traits.dm. Use this in place of ADD_TRAIT.
 /atom/movable/proc/become_area_sensitive(trait_source = GENERIC_TRAIT)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
-		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), PROC_REF(on_area_sensitive_trait_loss))
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADD(location.area_sensitive_contents, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)

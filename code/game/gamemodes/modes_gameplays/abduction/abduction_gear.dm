@@ -214,7 +214,7 @@
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
+		INVOKE_ASYNC(src, PROC_REF(start_recharge), imp_in)
 	else
 		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
 	return
@@ -295,7 +295,7 @@
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot == SLOT_HEAD)
-		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 

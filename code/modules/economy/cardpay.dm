@@ -79,7 +79,7 @@
 					return
 				to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
 				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 				return
 			to_chat(user, "<span class='notice'>Сканер откручен.</span>")
 			anchored = FALSE
@@ -131,7 +131,7 @@
 
 	paying = TRUE
 
-	addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(make_transaction), D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/check_pincode(datum/money_account/Acc)
     var/time_for_pin = world.time
