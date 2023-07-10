@@ -44,6 +44,7 @@
 	icon_state = "rig[on]-[rig_variant]"
 //	item_state = "rig[on]-[color]"
 	update_inv_mob()
+	update_item_actions()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
@@ -864,6 +865,7 @@
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 			armor = space_armor
 		update_icon(usr)
+		update_item_actions()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 	name = "heavy hybrid helmet"
@@ -1059,6 +1061,7 @@
 	on = !on
 	icon_state = "rig-sec[on ? "-light" : ""]"
 	update_inv_mob()
+	update_item_actions()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)

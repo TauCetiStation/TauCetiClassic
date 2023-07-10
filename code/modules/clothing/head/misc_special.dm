@@ -57,6 +57,7 @@
 			flash_protection = NONE
 			to_chat(usr, "You push the [src] up out of your face.")
 		update_inv_mob() //so our mob-overlays update
+		update_item_actions()
 
 
 /*

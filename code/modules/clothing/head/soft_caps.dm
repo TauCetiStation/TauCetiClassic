@@ -39,6 +39,7 @@
 		to_chat(user, "You flip the hat back in normal position.")
 
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

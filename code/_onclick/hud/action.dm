@@ -77,8 +77,7 @@
 		var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
 		N.owner = src.owner
 		button = N
-	var/atom/movable/screen/movable/action_button/B = button
-	B.UpdateIcon()
+	button.UpdateIcon()
 	return
 
 /datum/action/proc/Activate()

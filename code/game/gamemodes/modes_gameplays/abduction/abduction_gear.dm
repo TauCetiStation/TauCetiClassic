@@ -289,6 +289,7 @@
 
 		helm_cam.hidden = 1
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
+		update_item_actions()
 		return
 
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
@@ -354,6 +355,7 @@
 	to_chat(user, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)

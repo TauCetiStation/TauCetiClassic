@@ -37,6 +37,7 @@
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			update_inv_mob()
 			H.update_sight()
+			update_item_actions()
 
 /obj/item/clothing/glasses/equipped(mob/user, slot)
 	. = ..()
@@ -81,6 +82,7 @@
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
+
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
@@ -226,6 +228,7 @@
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		update_inv_mob()
+		update_item_actions()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"

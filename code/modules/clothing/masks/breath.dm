@@ -31,6 +31,7 @@
 			icon_state = "breath"
 			to_chat(usr, "You pull the mask up to cover your face.")
 		update_inv_mob()
+		update_item_actions()
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."

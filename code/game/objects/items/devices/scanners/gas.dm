@@ -55,6 +55,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 		var/image/I = image(icon, icon_state = "atmos_overlay")
 		add_overlay(I)
 		to_chat(user, "<span class='notice'>You turn on [src].</span>")
+	update_item_actions()
 	playsound(user, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, 20)
 	return TRUE
 

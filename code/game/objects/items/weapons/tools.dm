@@ -398,6 +398,7 @@
 		src.active = FALSE
 
 	update_inv_mob()
+	update_item_actions()
 
 // Decides whether or not to damage a player's eyes based on what they're wearing as protection
 // Note: This should probably be moved to mob
@@ -592,6 +593,7 @@
 		)
 		icon_state = "drill_bolt"
 		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
+	update_item_actions()
 
 /obj/item/weapon/multi/jaws_of_life
 	name = "Jaws of Life"
@@ -628,3 +630,4 @@
 		sharp = 1
 		icon_state = "jaws_cutter"
 		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
+	update_item_actions()

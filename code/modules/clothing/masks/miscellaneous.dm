@@ -115,6 +115,7 @@
 		icon_state = "[initial(icon_state)]"
 		to_chat(user, "You pull the scarf up to cover your face.")
 	update_inv_mob()
+	update_item_actions()
 
 
 
@@ -214,6 +215,7 @@
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
 		update_inv_mob()
+		update_item_actions()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)

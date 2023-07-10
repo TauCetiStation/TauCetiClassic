@@ -26,6 +26,7 @@
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+	update_item_actions()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
@@ -34,6 +35,7 @@
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+	update_item_actions()
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if (last_button_sound >= world.time)
@@ -213,6 +215,7 @@
 		icon_state = "[initial(icon_state)]-burned"
 		item_state = "[initial(item_state)]-burned"
 		update_inv_mob()
+		update_item_actions()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)

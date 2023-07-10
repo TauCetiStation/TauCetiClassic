@@ -58,6 +58,7 @@
 			cell_use = 0
 			siemens_coefficient = 0
 	to_chat(user, "<span class='notice'>You change the power gloves mode to</span> <span class='danger'>[selected_mode]</span>.")
+	update_item_actions()
 
 /obj/item/clothing/gloves/power/proc/turn_off(mob/user)
 	selected_mode = GLOVES_MODE_OFF

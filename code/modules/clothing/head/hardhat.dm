@@ -31,6 +31,7 @@
 		set_light(0)
 
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/hardhat/update_icon()
 	icon_state = "[initial(icon_state)][on]"

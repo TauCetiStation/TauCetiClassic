@@ -22,6 +22,7 @@
 	on = !on
 	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
 	update_inv_mob()
+	update_item_actions()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
@@ -70,6 +71,7 @@
 
 	light_color = "#00ffff"
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
+
 /datum/action/item_action/hands_free/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
@@ -80,6 +82,7 @@
 	on = !on
 	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
 	update_inv_mob()
+	update_item_actions()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)

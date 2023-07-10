@@ -46,6 +46,7 @@
 	lit = !lit
 	set_light(lit ? brightness : 0)
 	update_icon(user)
+	update_item_actions()
 
 
 //Civilian syndicate space suit

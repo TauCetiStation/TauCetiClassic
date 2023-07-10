@@ -56,6 +56,7 @@
 	else
 		icon_state = "glowstick_[colourName]"
 		set_light(0)
+	update_item_actions()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/turn_off()
 	on = 0
@@ -64,6 +65,7 @@
 		update_brightness(U)
 	else
 		update_brightness(null)
+	update_item_actions()
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)

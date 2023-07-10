@@ -135,6 +135,7 @@
 				broken = 1
 				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
+				update_item_actions()
 				return
 			times_used++
 		else	//can only use it  5 times a minute
@@ -169,6 +170,7 @@
 			if(prob(2*times_used))
 				broken = 1
 				icon_state = "flashburnt"
+				update_item_actions()
 				return
 			times_used++
 			if(iscarbon(loc))

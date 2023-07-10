@@ -125,6 +125,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
 		update_inv_mob() //so our mob-overlays update
+		update_item_actions()
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -212,6 +213,7 @@
 	on = !on
 	icon_state = "shitcuritron_[on]"
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"

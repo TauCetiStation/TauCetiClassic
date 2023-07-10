@@ -505,6 +505,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 			set_light(0)
 			STOP_PROCESSING(SSobj, src)
+		update_item_actions()
 	else
 		return ..()
 	return

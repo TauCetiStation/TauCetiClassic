@@ -132,6 +132,7 @@
 
 	if(paddles.loc != src)
 		reattach_paddles(user) //Remove from their hands and back onto the defib unit
+		update_item_actions()
 		return
 
 	if(!slot_check())
@@ -140,6 +141,7 @@
 		if(!usr.put_in_hands(paddles)) //Detach the paddles into the user's hands
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 		update_icon() //success
+		update_item_actions()
 
 //checks that the base unit is in the correct slot to be used
 /obj/item/weapon/defibrillator/proc/slot_check()

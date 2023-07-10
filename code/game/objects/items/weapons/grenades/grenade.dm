@@ -56,6 +56,7 @@
 			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
 	icon_state = initial(icon_state) + "_active"
+	update_item_actions()
 	active = 1
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	addtimer(CALLBACK(src, .proc/prime), det_time)

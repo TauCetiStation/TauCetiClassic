@@ -118,6 +118,10 @@
 	if(item_state_world)
 		update_world_icon()
 
+	for(var/path in item_action_types)
+		var/datum/action/B = new path (src)
+		item_actions += B
+
 	return INITIALIZE_HINT_NORMAL
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -128,12 +132,6 @@
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
-
-/obj/item/atom_init(mapload, ...)
-	. = ..()
-	for(var/path in item_action_types)
-		var/datum/action/B = new path (src)
-		item_actions += B
 
 /obj/item/Destroy()
 	for(var/datum/action/A in item_actions)
@@ -156,6 +154,11 @@
 
 /obj/item/blob_act()
 	return
+
+///Updates all action buttons associated with this item
+/obj/item/proc/update_item_actions()
+	for(var/datum/action/A as anything in item_actions)
+		A.button.UpdateIcon()
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user

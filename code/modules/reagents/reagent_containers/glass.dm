@@ -67,6 +67,7 @@
 		to_chat(usr, "<span class = 'notice'>You take the lid off \the [src].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
+	update_item_actions()
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 

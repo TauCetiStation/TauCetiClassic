@@ -59,6 +59,7 @@
 	else
 		icon_state = initial(icon_state)
 		ion_trail.stop()
+	update_item_actions()
 
 /obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
