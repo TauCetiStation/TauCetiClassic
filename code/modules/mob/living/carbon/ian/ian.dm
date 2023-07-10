@@ -10,7 +10,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	icon = 'icons/mob/corgi.dmi'
 	icon_state = "corgi"
 	gender = MALE
-	desc = "Капибара - очень социональное животное."
+	desc = "Капибара - очень социальное животное."
 
 	var/response_help  = "pets"
 	var/response_disarm = "bops"
