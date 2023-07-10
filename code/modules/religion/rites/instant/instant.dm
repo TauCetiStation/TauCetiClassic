@@ -650,10 +650,14 @@
 	if(length(heretics) < 1)
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
-	var/stun_modifier = 12 / length(heretics) * divine_power
+	var/stun_modifier = 12 / length(heretics) * round(sqrt(divine_power)) //Even 12 I think too much
 	for(var/mob/living/L in heretics)
-		L.flash_eyes()
-		L.Stun(stun_modifier)
+		if(!(L.status_flags & CANSTUN)) //Hulks
+			L.Stun(stun_modifier / 2, TRUE)
+			flash_color(L, flash_time = stun_modifier / 2 SECONDS)
+		else
+			L.Stun(stun_modifier)
+			flash_color(L, flash_time = stun_modifier SECONDS)
 		if(!(HULK in L.mutations))
 			L.Stuttering(1)
 			L.Weaken(stun_modifier)
