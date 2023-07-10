@@ -152,10 +152,10 @@
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
 	if(religion && user.my_religion != religion)
 		to_chat(user, "<span class='notice'>Это алтарь иной религии</span>")
-		if(!iscultist(user))
+		if(!iscultist(user) || user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='warning'>Но...</span>")
-		if(do_after(user, 2 SECONDS, target = src))
+		if(do_after(user, 4 SECONDS, target = src))
 			var/answer = tgui_alert(user, "Мы можем оквернить этот алтарь, и заполучить его силу! Однако, это займёт время, а еретики обязательно узнают об этом!", "Осквернение алтаря", list("Deus Vult!","Не стоит"))
 			if(answer == "Deus Vult!")
 				religion.send_message_to_members("Еретики пытаются осквернить священный алтарь! НА ЗАЩИТУ!", user)
@@ -419,8 +419,8 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	if(iswrenching(C))
-		if((iscultist(user) && user.my_religion != religion) || user.mind.holy_role < HOLY_ROLE_HIGHPRIEST)
-			to_chat(user, "<span class='warning'>Сила самого алтаря не даёт к нему приблизиться!</span>")
+		if(user.my_religion != religion)
+			to_chat(user, "<span class='warning'>Странная сила алтаря не даёт к нему приблизиться!</span>")
 			return
 		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
 			anchored = !anchored
