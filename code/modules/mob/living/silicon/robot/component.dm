@@ -75,8 +75,11 @@
 /datum/robot_component/armour
 	name = "armour plating"
 	external_type = /obj/item/robot_parts/robot_component/armour
-	max_damage = 25
+	max_damage = 5
 
+/datum/robot_component/armour/security
+	name = "security armor plating"
+	max_damage = 25
 
 // ACTUATOR
 // Enables movement.
@@ -161,6 +164,8 @@
 	components["camera"] = new/datum/robot_component/camera(src)
 	components["comms"] = new/datum/robot_component/binary_communication(src)
 	components["armour"] = new/datum/robot_component/armour(src)
+	if(can_be_security)
+		components["armour"] = new/datum/robot_component/armour/security(src)
 
 // Checks if component is functioning
 /mob/living/silicon/robot/proc/is_component_functioning(module_name)
