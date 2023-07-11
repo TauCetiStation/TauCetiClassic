@@ -661,7 +661,7 @@
 		if(!(HULK in L.mutations))
 			L.Stuttering(stun_modifier)
 			L.Weaken(stun_modifier)
-			L.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
+			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 	return TRUE
 
 /datum/religion_rites/instant/communicate
