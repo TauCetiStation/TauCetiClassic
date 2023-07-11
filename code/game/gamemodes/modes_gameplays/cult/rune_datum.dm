@@ -92,7 +92,9 @@
 	if(!destination)
 		var/area/A = locate(religion.area_type)
 		destination = get_turf(pick(A.contents))
-	teleporting(destination	, user)
+	var/list/acolytes = religion.nearest_acolytes(holder, 1)
+		for(var/mob/living/L in acolytes)
+			teleporting(destination	, L)
 
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(isenvironmentturf(target))
