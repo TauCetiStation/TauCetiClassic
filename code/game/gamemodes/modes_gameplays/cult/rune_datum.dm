@@ -81,6 +81,13 @@
 	words = list("travel", "self", "hell")
 	var/turf/destination
 
+/datum/rune/cult/teleport/teleport_to_heaven/can_action(mob/living/carbon/user)
+	var/list/acolytes = religion.nearest_acolytes(holder, 1)
+	if(length(acolytes) < 2)
+		to_chat(user, "<span class='[religion.style_text]'>Телепортироваться в РАЙ можно только вдвоем!</span>")
+		return FALSE
+	return TRUE
+
 /datum/rune/cult/teleport/teleport_to_heaven/action(mob/living/carbon/user)
 	if(!destination)
 		var/area/A = locate(religion.area_type)
