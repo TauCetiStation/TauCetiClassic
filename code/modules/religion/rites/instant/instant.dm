@@ -650,11 +650,11 @@
 	if(length(heretics) < 1)
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
-	var/stun_modifier = 12 / length(heretics) * round(sqrt(divine_power)) //Even 12 I think too much
+	var/stun_modifier = 12 / length(heretics) * round(sqrt(divine_power))
 	for(var/mob/living/L in heretics)
-		if(!(L.status_flags & CANSTUN)) //Hulks
+		if(!(L.status_flags & CANSTUN)) //Hulks, golems
 			L.Stun(stun_modifier / 2, TRUE)
-			flash_color(L, flash_time = stun_modifier / 2 SECONDS)
+			flash_color(L, flash_time = stun_modifier * 5)
 		else
 			L.Stun(stun_modifier * 0.8)
 			flash_color(L, flash_time = stun_modifier SECONDS)
