@@ -15,12 +15,12 @@ var/global/list/scrap_base_cache = list()
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
-		/obj/random/materials/rods_scrap,
-		/obj/random/materials/plastic_scrap,
-		/obj/random/materials/metal_scrap,
-		/obj/random/materials/glass_scrap,
-		/obj/random/materials/plasteel_scrap,
-		/obj/random/materials/wood_scrap,
+		/obj/item/stack/rods/random,
+		/obj/item/stack/sheet/mineral/plastic/random,
+		/obj/item/stack/sheet/metal/random,
+		/obj/item/stack/sheet/glass/random,
+		/obj/item/stack/sheet/plasteel/random,
+		/obj/item/stack/sheet/wood/random,
 		/obj/item/weapon/shard
 	)
 	var/dig_amount = 7
@@ -300,7 +300,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
-		/obj/random/materials/rods_scrap,
+		/obj/item/stack/rods/random,
 		/obj/item/weapon/shard
 	)
 
@@ -315,8 +315,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
-		/obj/random/materials/rods_scrap,
-		/obj/random/materials/metal_scrap,
+		/obj/item/stack/rods/random,
+		/obj/item/stack/sheet/metal/random,
 		/obj/item/weapon/shard
 	)
 
@@ -332,7 +332,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/random/materials/rods_scrap
+		/obj/item/stack/rods/random
 	)
 
 /obj/structure/scrap/guns
@@ -348,8 +348,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/item/toy/gun,
 		/obj/item/toy/crossbow,
 		/obj/item/weapon/shard,
-		/obj/random/materials/metal_scrap,
-		/obj/random/materials/rods_scrap
+		/obj/item/stack/sheet/metal/random,
+		/obj/item/stack/rods/random
 	)
 
 /obj/structure/scrap/science
@@ -417,7 +417,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/misc/pack,
 		/obj/random/misc/pack,
 		/obj/item/weapon/shard,
-		/obj/random/materials/rods_scrap
+		/obj/item/stack/rods/random
 	)
 
 /obj/structure/scrap/poor/large
