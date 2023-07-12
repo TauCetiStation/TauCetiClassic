@@ -7,4 +7,5 @@
 #define CASE(item, case) (item.cases && item.cases[case] ? item.cases[case] : item.name)
 
 /atom
-	var/list/cases = list(GENITIVE_CASE = null, DATIVE_CASE = null, ACCUSATIVE_CASE = null, ABLATIVE_CASE = null, PREPOSITIONAL_CASE = null)
+	var/list/cases = null
+// 	var/list/cases = list(GENITIVE_CASE = "атома", DATIVE_CASE = "атому", ACCUSATIVE_CASE = "атом", ABLATIVE_CASE = "атомом", PREPOSITIONAL_CASE = "атоме")
