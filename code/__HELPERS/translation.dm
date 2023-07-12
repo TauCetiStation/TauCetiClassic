@@ -8,4 +8,4 @@
 
 /atom
 	var/list/cases = null
-// 	var/list/cases = list(GENITIVE_CASE = "атома", DATIVE_CASE = "атому", ACCUSATIVE_CASE = "атом", ABLATIVE_CASE = "атомом", PREPOSITIONAL_CASE = "атоме")
+// 	var/list/cases = list("атома", "атому", "атом", "атомом", "атоме")
