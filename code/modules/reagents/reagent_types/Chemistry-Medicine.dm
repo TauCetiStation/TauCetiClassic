@@ -770,8 +770,8 @@
 	description = "Highly advanced nanites equipped with calcium payloads designed to repair bones. Nanomachines son."
 	reagent_state = LIQUID
 	color = "#9b3401"
-	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.0001
+	overdose = REAGENTS_OVERDOSE / 10
+	custom_metabolism = 0.15
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
@@ -780,26 +780,23 @@
 	..()
 	if(!ishuman(M))
 		return
-
 	if(!data["ticks"])
-		data["ticks"] = 1
+		data["ticks"] = 0
 	data["ticks"]++
 	switch(data["ticks"])
+		if(1)
+			to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
 		if(1 to 5)
 			M.make_dizzy(1)
-			if(prob(10))
-				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
 		if(5 to 10)
 			M.apply_effect(10, AGONY)
 			M.AdjustConfused(2)
 		if(10 to INFINITY)
 			for(var/obj/item/organ/external/E in M.bodyparts)
-				if(E.is_broken())
+				if(E.status & ORGAN_BROKEN && (E.brute_dam < E.min_broken_damage))
 					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-					E.heal_damage(30)
 					E.status &= ~ORGAN_BROKEN
-					E.perma_injury = 0
-					holder.remove_reagent("nanocalcium", 10)
+			holder.remove_reagent("nanocalcium", volume)
 
 /datum/reagent/metatrombine
 	name = "Metatrombine"

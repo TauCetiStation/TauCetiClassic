@@ -75,8 +75,8 @@
 	desc = "Getting your bones repaired. Use carefully."
 	icon_state = "bonepen"
 	item_state = "bonepen"
-	volume = 30
-	list_reagents = list("nanocalcium" = 30)
+	volume = 3
+	list_reagents = list("nanocalcium" = 3)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola
 	name = "nuka cola autoinjector"
