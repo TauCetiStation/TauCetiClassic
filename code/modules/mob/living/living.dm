@@ -1037,14 +1037,8 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if(isrobot(usr))
-		var/mob/living/silicon/robot/R = usr
-		R.toggle_all_components()
-		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
-		return
-
-	if(!crawling && HAS_TRAIT(usr, TRAIT_NO_CRAWL))
-		to_chat(usr, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
+	if(!crawling && HAS_TRAIT(src, TRAIT_NO_CRAWL))
+		to_chat(src, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
 		return
 
 	if(crawl_getup)
