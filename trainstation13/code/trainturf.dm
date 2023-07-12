@@ -1,5 +1,7 @@
 //TRAIN STATION 13
 
+//Walls and floors, all turfs are here!
+
 //STILL - STATIC TURFS
 
 /turf/unsimulated/wall/matrix

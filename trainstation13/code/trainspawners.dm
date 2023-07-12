@@ -1,7 +1,7 @@
 //TRAIN STATION 13
 
-//Code by Luduk/LudwigVonChesterfield.
 //This module is responsible for spawning and cleaning up the decorations moving past the train.
+//Code by Luduk/LudwigVonChesterfield.
 
 /obj/machinery/conveyor_switch
 	var/list/trainspawners

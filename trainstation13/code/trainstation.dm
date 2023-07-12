@@ -1,7 +1,7 @@
 //TRAIN STATION 13
 
-//Code by VoLas and Luduk/LudwigVonChesterfield.
 //This module is responsible for train movement and train stations along the way with a couple others train specific features.
+//Code by VoLas and Luduk/LudwigVonChesterfield.
 
 //Admin verb toggles
 

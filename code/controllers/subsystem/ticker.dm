@@ -45,6 +45,25 @@ SUBSYSTEM_DEF(ticker)
 
 	var/end_timer_id
 
+/* <base>
+/datum/controller/subsystem/ticker/PreInit()
+	login_music = pick(\
+	/*
+	'sound/music/space.ogg',\
+	'sound/music/clouds.s3m',\
+	'sound/music/title1.ogg',\	//disgusting
+	*/
+	'sound/music/space_oddity.ogg',\
+	'sound/music/b12_combined_start.ogg',\
+	'sound/music/title2.ogg',\
+	'sound/music/traitor.ogg',\
+	'sound/lobby/sundown.ogg',\
+	'sound/lobby/hanging_masses.ogg',\
+	'sound/lobby/admiral-station-13.ogg',\
+	'sound/lobby/robocop_gb_intro.ogg')
+</base> */
+
+// <basecodetrainstation13>
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
 	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_01_mg1.ogg',\
@@ -54,7 +73,7 @@ SUBSYSTEM_DEF(ticker)
 	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_11_mgb.ogg',\
 	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_13_mgd.ogg',\
 	'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_15_mgf.ogg')
-
+// </basecodetrainstation13>
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	global.syndicate_code_phrase = generate_code_phrase()
@@ -295,10 +314,10 @@ SUBSYSTEM_DEF(ticker)
 	/* <base>
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 </base> */
-// <trainstation13>
+// <basecodetrainstation13>
 		M.playsound_local(null, 'trainstation13/sound/machines/horn.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
-// </trainstation13>
+// </basecodetrainstation13>
 
 	if(length(SSholiday.holidays))
 		to_chat(world, "<span clas='notice'>and...</span>")
@@ -600,7 +619,12 @@ SUBSYSTEM_DEF(ticker)
 		M.mind.transfer_to(L)
 	else
 		L.key = M.key
+	/* <base>
+	L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	</base> */
+	// <basecodetrainstation13>
 	L.playsound_local(null, 'trainstation13/sound/music/Scott_Holmes_Energy.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	// </basecodetrainstation13>
 	L.equipOutfit(/datum/outfit/arena)
 	L.name = L.key
 	L.real_name = L.name

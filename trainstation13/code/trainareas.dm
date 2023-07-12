@@ -1,5 +1,7 @@
 //TRAIN STATION 13
 
+//This module includes all specialized areas for power distribution, TV channels and more.
+
 /area/trainstation //Everything begins here.
 	name = "Train Station 13"
 	icon = 'trainstation13/icons/trainareas.dmi'
@@ -8,6 +10,14 @@
 	ambience = null
 
 //AREAS OUTSIDE OF THE TRAIN
+
+/area/trainstation/beach
+	name = "Vai Beach"
+	icon_state = "beach"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = 0
+	looped_ambience = 'sound/ambience/specific/shore.ogg'
+	ambience = list('sound/ambience/specific/seag2.ogg')
 
 /area/trainstation/broadcast
 	name = "Broadcast"

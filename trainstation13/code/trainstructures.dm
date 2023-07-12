@@ -1,5 +1,7 @@
 //TRAIN STATION 13
 
+//All train related structures are in this module.
+
 //ANIMATED STRUCTURES
 
 var/global/list/train_animated_structures = list()

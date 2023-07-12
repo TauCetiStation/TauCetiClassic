@@ -1,6 +1,7 @@
 //TRAIN STATION 13
 
 //A fairly powerful radioisotope thermoelectric generator that runs on tritium isotopes.
+
 /obj/machinery/power/port_gen/rtg
 	name = "R.T.G."
 	desc = "A radioisotope thermoelectric generator (RTG, RITEG) - a type of nuclear battery that uses an array of thermocouples to convert the heat released by the decay of a suitable radioactive material into electricity by the Seebeck effect."

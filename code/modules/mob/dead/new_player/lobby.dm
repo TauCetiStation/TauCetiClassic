@@ -1,3 +1,5 @@
+// <basecodetrainstation13> WARNING! THIS FILE WAS ENTIRELY CHANGED FOR TRAIN STATION 13 EVENT!
+
 // Possibles title screens
 var/global/custom_lobby_image // admins custom screens
 var/global/lobby_screens = list(

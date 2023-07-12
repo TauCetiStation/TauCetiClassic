@@ -336,10 +336,10 @@ var/global/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_whitelist
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
-		// <trainstation13>
+		// <basecodetrainstation13>
 		if(holder.rights & R_EVENT)
 			verbs += global.admin_verbs_trainstation_event
-		// </trainstation13>
+		// </basecodetrainstation13>
 		if(holder.rights & R_LOG)
 			verbs += admin_verbs_log
 		if(holder.rights & R_VAREDIT)

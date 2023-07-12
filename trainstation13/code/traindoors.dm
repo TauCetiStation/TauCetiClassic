@@ -1,6 +1,8 @@
 //TRAIN STATION 13
 
-//DOORS
+//This module is all about doors.
+
+//Like a dog without a bone, an actor out on loan, riders on the storm! - The DOORS
 
 /obj/structure/mineral_door/wood/single
 	name = "wooden door"

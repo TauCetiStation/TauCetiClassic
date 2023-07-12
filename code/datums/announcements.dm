@@ -22,9 +22,9 @@ var/global/list/announcement_sounds = list(
 /* <base>
 	"commandreport" = 'sound/AI/commandreport.ogg',
 </base> */
-// <trainstation13>
+// <basecodetrainstation13>
 	"commandreport" = 'trainstation13/sound/ambience/train_melody.ogg',
-// </trainstation13>
+// </basecodetrainstation13>
 	"announce" = 'sound/AI/announce.ogg',
 	"aiannounce" = 'sound/AI/aiannounce.ogg',
 	"portal" = 'sound/AI/portal.ogg',

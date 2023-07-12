@@ -1,5 +1,7 @@
 //TRAIN STATION 13
 
+//This module includes all unique items necessary for passengers and specialized workers
+
 /obj/item/weapon/card/id/passport
 	name = "passport"
 	desc = "Leeloo Dallas, multipass!"

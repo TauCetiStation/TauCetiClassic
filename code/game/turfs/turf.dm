@@ -4,9 +4,9 @@
 	/* <base>
 	var/turf/basetype = /turf/environment/space
 	</base> */
-	// <trainstation13>
+	// <basecodetrainstation13>
 	var/turf/basetype = /turf/simulated/floor/plating
-	// </trainstation13>
+	// </basecodetrainstation13>
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 	var/can_deconstruct = FALSE
