@@ -786,7 +786,7 @@
 	switch(data["ticks"])
 		if(1)
 			to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
-		if(1 to 5)
+		if(2 to 5)
 			M.make_dizzy(1)
 		if(5 to 10)
 			M.apply_effect(10, AGONY)
