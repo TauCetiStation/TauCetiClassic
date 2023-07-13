@@ -1143,7 +1143,6 @@
 #include "code\game\objects\random\random_cloth.dm"
 #include "code\game\objects\random\random_foods.dm"
 #include "code\game\objects\random\random_guns.dm"
-#include "code\game\objects\random\random_materials.dm"
 #include "code\game\objects\random\random_mecha.dm"
 #include "code\game\objects\random\random_meds.dm"
 #include "code\game\objects\random\random_melee.dm"

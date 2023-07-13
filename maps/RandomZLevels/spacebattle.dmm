@@ -1453,7 +1453,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/projectile/automatic/deagle,
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},

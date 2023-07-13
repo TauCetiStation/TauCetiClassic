@@ -109,6 +109,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	recipes = metal_recipes
 	. = ..()
 
+/obj/item/stack/sheet/metal/random/atom_init()
+	amount = rand(8, 12)
+	. = ..()
 
 /*
  * Plasteel
@@ -131,6 +134,10 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 
 /obj/item/stack/sheet/plasteel/atom_init()
 	recipes = plasteel_recipes
+	. = ..()
+
+/obj/item/stack/sheet/plasteel/random/atom_init()
+	amount = rand(1, 3)
 	. = ..()
 
 /*
@@ -171,6 +178,10 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 
 /obj/item/stack/sheet/wood/atom_init()
 	recipes = wood_recipes
+	. = ..()
+
+/obj/item/stack/sheet/wood/random/atom_init()
+	amount = rand(3, 8)
 	. = ..()
 
 /*
