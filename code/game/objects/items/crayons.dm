@@ -285,7 +285,7 @@
 
 /obj/item/toy/crayon/spraycan
 	icon_state = "spraycan_cap"
-	desc = "A metallic container containing tasty paint."
+	desc = "A metallic container containing tasty paint. Do not spray into someone eyes or face."
 	var/capped = 1
 	instant = 1
 	edible = 0
@@ -299,9 +299,10 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	..()
 	if(uses)
-		to_chat(user, "It has [uses] uses left.")
+		to_chat(user, "<span class='notice'>It has [uses] uses left.</span>")
 	else
-		to_chat(user, "It is empty.")
+		to_chat(user, "<span class='notice'>It is empty.</span>")
+	to_chat(user, "<span class='notice'>- Can be used to repaint IPC in the Disarm intent.</span>")
 
 /obj/item/toy/crayon/spraycan/verb/toggle_cap()
 	set name = "Toggle Cap"
@@ -325,17 +326,37 @@
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	if(iscarbon(target) && uses - 10 >= 0)
-		uses -= 10
 		var/mob/living/carbon/C = target
-		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
-		if(C.client)
-			C.blurEyes(3)
-			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			H.lip_style = "spray_face"
-			H.lip_color = colour
-			H.update_body()
+			if(user.a_intent == INTENT_PUSH && H.get_species() == IPC){
+				var/new_skin = input(user, "Select IPC body color", "IPC body color") as null|color
+				if(new_skin)
+					uses -= 15
+					C.blurEyes(3)
+					C.eye_blind = max(C.eye_blind, 1)
+					if(do_after(user, 60, needhand = TRUE, target = target)){
+						H.r_skin = hex2num(copytext(new_skin, 2, 4))
+						H.g_skin = hex2num(copytext(new_skin, 4, 6))
+						H.b_skin = hex2num(copytext(new_skin, 6, 8))
+						H.apply_recolor()
+						H.update_body()
+					}
+			}
+			else{
+				uses -= 10
+				C.blurEyes(3)
+				C.eye_blind = max(C.eye_blind, 1)
+				H.lip_style = "spray_face"
+				H.lip_color = colour
+				H.update_body()
+				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+			}
+		else if (iscarbon(C)){
+			uses -= 10
+			C.blurEyes(3)
+			C.eye_blind = max(C.eye_blind, 1)
+		}
 	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
