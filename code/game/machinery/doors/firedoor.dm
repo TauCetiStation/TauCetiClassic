@@ -212,7 +212,6 @@
 				if(blocked && density && hatch_open)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
-					new /obj/item/weapon/airalarm_electronics(loc)
 
 					deconstruct(TRUE)
 		return
@@ -256,6 +255,7 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	take_out_wedged_item()
+	new /obj/item/weapon/airalarm_electronics(loc)
 	if(disassembled || prob(40))
 		var/obj/structure/firedoor_assembly/FA = new (loc)
 		if(disassembled)
