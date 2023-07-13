@@ -58,13 +58,13 @@
 	if(isnull(required_equipment))
 		return
 	var/mob/living/carbon/human/H = owner.current
-	required_equipment = new required_equipment(H.loc)
+	var/RE = new required_equipment(H.loc)
 	var/list/slots = list(
 		"backpack" = SLOT_IN_BACKPACK,
 		"left hand" = SLOT_L_HAND,
 		"right hand" = SLOT_R_HAND,
 	)
-	var/where = H.equip_in_one_of_slots(required_equipment, slots)
+	var/where = H.equip_in_one_of_slots(RE, slots)
 	H.update_icons()
 	if(where)
 		to_chat(H, "You have been given some equipment for the mission, check your backpack or hands.")
