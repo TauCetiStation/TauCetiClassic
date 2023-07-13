@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into hammer."
 	helptext = "Can break walls, airlocks, windows and humans, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 2
+	genomecost = 3
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
