@@ -1152,7 +1152,9 @@ var/global/list/common_tools = list(
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/wirecutters,
 /obj/item/device/multitool,
-/obj/item/weapon/crowbar)
+/obj/item/weapon/crowbar,
+/obj/item/weapon/multi/hand_drill,
+/obj/item/weapon/multi/jaws_of_life)
 
 /proc/istool(O)
 	if(O && is_type_in_list(O, common_tools))
