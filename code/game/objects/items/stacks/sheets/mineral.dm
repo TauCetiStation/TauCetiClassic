@@ -173,6 +173,10 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	. = ..()
 	recipes = plastic_recipes
 
+/obj/item/stack/sheet/mineral/plastic/random/atom_init()
+	amount = rand(5, 10)
+	. = ..()
+
 /*
  * Gold
  */

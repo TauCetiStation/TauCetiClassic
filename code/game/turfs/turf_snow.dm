@@ -3,7 +3,7 @@
 	name = "snow"
 	icon_state = "snow0"
 	plane = FLOOR_PLANE
-	
+
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	force_lighting_update = TRUE
 
@@ -233,13 +233,14 @@
 			visible_message("<span class='notice'>[user] stops fishing.</span>")
 
 /obj/random/misc/all/high
-	spawn_nothing_percentage = 40
+	spawn_nothing_chance = 40
 
 /obj/item/fish_carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
 	icon = 'icons/mob/carp.dmi'
 	icon_state = "purple_dead"
+	var/scale_icon = 0.5
 	var/meat_amount_max = 1
 	var/loot_amount = 1
 
@@ -250,11 +251,11 @@
 
 	appearance_flags |= PIXEL_SCALE
 	var/matrix/Mx = matrix()
-	Mx.Scale(0.5)
+	Mx.Scale(scale_icon)
 	transform = Mx
 
 	if(catch_target_turf)
-		INVOKE_ASYNC(src, .proc/play_catch_anim, catch_target_turf)
+		INVOKE_ASYNC(src, PROC_REF(play_catch_anim), catch_target_turf)
 
 /obj/item/fish_carp/update_icon()
 	var/carp_color = pick(
@@ -305,3 +306,6 @@
 
 /obj/item/fish_carp/mega/update_icon()
 	return
+
+/obj/item/fish_carp/full_size
+	scale_icon = 1

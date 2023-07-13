@@ -759,6 +759,11 @@ th.cargo {
 .sciTechTreeIcon.icon-module { background-position: -192px -288px; }
 .sciTechTreeIcon.icon-borgmodule { background-position: -224px -288px; }
 
+.sciTechTreeIcon.icon-aidetector { background-position: 0px -320px; }
+.sciTechTreeIcon.icon-voicechanger { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-camerabug { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-smuggler { background-position: -96px -320px; }
+
 .sciMenuButton {
     width: 300px;
     float: left;

@@ -110,6 +110,7 @@ var/global/list/preferences_datums = list()
 	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
+	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -412,6 +413,7 @@ var/global/list/preferences_datums = list()
 
 	character.home_system = home_system
 	character.citizenship = citizenship
+	character.roundstart_insurance = insurance
 	character.personal_faction = faction
 	character.religion = religion
 	character.vox_rank = vox_rank

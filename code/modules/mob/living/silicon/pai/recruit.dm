@@ -213,7 +213,7 @@ var/global/datum/paiController/paiController			// Global handler for pAI candida
 /datum/paiController/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	if(!p.searching)
 		p.searching = TRUE
-		addtimer(CALLBACK(p, /obj/item/device/paicard.proc/reset_searching), 3 MINUTES)
+		addtimer(CALLBACK(p, TYPE_PROC_REF(/obj/item/device/paicard, reset_searching)), 3 MINUTES)
 		requestRecruits()
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in paiController.pai_candidates)

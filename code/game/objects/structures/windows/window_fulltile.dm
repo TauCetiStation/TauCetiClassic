@@ -36,7 +36,8 @@
 	if(grill)
 		grilled = TRUE
 
-	var/new_color = SSstation_coloring.get_default_color()
+	var/new_color = color || SSstation_coloring.get_default_color()
+	color = null
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else

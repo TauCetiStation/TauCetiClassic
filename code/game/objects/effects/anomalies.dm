@@ -271,7 +271,7 @@
 	if(ismob(B.parent))
 		var/mob/M = B.parent
 		if(M.ckey)
-			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, PROC_REF(extencion), B), extencion_cd, TIMER_STOPPABLE)
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/remove_beam(datum/source)
 	beams -= source
@@ -294,7 +294,7 @@
 			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
 				P = P.activate(null, global.cult_religion)
 			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = ABOVE_LIGHTING_PLANE)
-			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), .proc/remove_beam)
+			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_beam))
 			beams += B
 
 		// Iterating through all possible coordinates
@@ -358,7 +358,7 @@
 				30; /mob/living/simple_animal/construct/builder,\
 				10;/mob/living/simple_animal/construct/harvester,\
 				1;  /mob/living/simple_animal/construct/behemoth)
-		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
+		INVOKE_ASYNC(src, PROC_REF(create_shell), slave, type)
 		spawns--
 
 	if(spawns == 0)
@@ -385,4 +385,4 @@
 		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7)
 		var/mob/M = B.parent
 		if(M.ckey)
-			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, PROC_REF(extencion), B), extencion_cd, TIMER_STOPPABLE)

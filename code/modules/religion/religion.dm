@@ -513,7 +513,7 @@
 // Is called after any addition of new aspects.
 // Manages new spells and rites, gained by adding the new aspects.
 /datum/religion/proc/update_aspects()
-	var/datum/callback/aspect_pred = CALLBACK(src, .proc/satisfy_requirements)
+	var/datum/callback/aspect_pred = CALLBACK(src, PROC_REF(satisfy_requirements))
 
 	for(var/aspect_name in aspects)
 		var/datum/aspect/asp = aspects[aspect_name]
@@ -620,7 +620,7 @@
 	init_subtypes(tech_agent_type, available_techs)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
-	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)
+	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), PROC_REF(holy_reagent_react_turf))
 
 /datum/religion/proc/holy_reagent_react_turf(datum/source, turf/T, volume)
 	if(!isfloorturf(T))

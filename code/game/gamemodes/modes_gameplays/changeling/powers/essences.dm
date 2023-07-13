@@ -45,7 +45,7 @@
 	if(phantom)
 		phantom.hide_phantom()
 	if(is_changeling)
-		rehost_timer_id = addtimer(CALLBACK(src, .proc/change_main_changeling), 10 MINUTES, TIMER_STOPPABLE)
+		rehost_timer_id = addtimer(CALLBACK(src, PROC_REF(change_main_changeling)), 10 MINUTES, TIMER_STOPPABLE)
 	return ..()
 
 /mob/living/parasite/essence/proc/change_main_changeling()

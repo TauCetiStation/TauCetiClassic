@@ -131,7 +131,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height", "belly")
 
 	switch(choice)
 		if("name")
@@ -275,3 +275,12 @@
 				H.update_body()
 				H.regenerate_icons()
 				H.check_dna(H)
+		if("belly")
+			var/new_belly = input(H, "Choose your belly color (UNATHI ONLY)", "Belly Color") as null|color
+			if(new_belly)
+				H.r_belly = hex2num(copytext(new_belly, 2, 4))
+				H.g_belly = hex2num(copytext(new_belly, 4, 6))
+				H.b_belly = hex2num(copytext(new_belly, 6, 8))
+			H.update_hair()
+			H.update_body()
+			H.check_dna(H)

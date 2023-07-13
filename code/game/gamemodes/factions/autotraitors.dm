@@ -26,7 +26,7 @@
 		return
 
 	if(SSshuttle.online) //shuttle in the way, but may be revoked
-		addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
+		addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), SPAWN_CD)
 		log_mode("But shuttle was online.")
 		return
 
@@ -63,16 +63,16 @@
 			log_mode("Making a new Traitor.")
 			if(!possible_autotraitor.len)
 				log_mode("No potential traitors.  Cancelling new traitor.")
-				addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
+				addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), SPAWN_CD)
 				return
 
 			var/mob/living/newtraitor = pick(possible_autotraitor)
 			add_faction_member(src, newtraitor, TRUE, TRUE)
 
-	addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
+	addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), SPAWN_CD)
 
 /datum/faction/traitor/auto/OnPostSetup()
-	addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
+	addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), SPAWN_CD)
 	return ..()
 
 #undef SPAWN_CD

@@ -302,7 +302,7 @@ var/global/list/turret_icons
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		addtimer(CALLBACK(src, .proc/power_change_post), rand(1, 15))
+		addtimer(CALLBACK(src, PROC_REF(power_change_post)), rand(1, 15))
 	update_power_use()
 
 /obj/machinery/porta_turret/proc/power_change_post()
