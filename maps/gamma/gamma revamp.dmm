@@ -3160,10 +3160,7 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "ajk" = (
-/obj/machinery/camera{
-	c_tag = "Docks Central";
-	dir = 10
-	},
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -16868,6 +16865,11 @@
 "dmD" = (
 /obj/item/weapon/scrap_lump,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -23280,7 +23282,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                Oxide","waste_sensor"="Gas                                Mix                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                Oxide","waste_sensor"="Gas                                                                Mix                                                                Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23853,6 +23855,9 @@
 /area/space)
 "eVA" = (
 /obj/machinery/washing_machine,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -24474,7 +24479,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed                                Air                                In","air_sensor"="Mixed                                Air                                Supply                                Tank","mair_out_meter"="Mixed                                Air                                Out","dloop_atm_meter"="Distribution                                Loop","wloop_atm_meter"="Waste                                Loop")
+	sensors = list("mair_in_meter"="Mixed                                                                Air                                                                In","air_sensor"="Mixed                                                                Air                                                                Supply                                                                Tank","mair_out_meter"="Mixed                                                                Air                                                                Out","dloop_atm_meter"="Distribution                                                                Loop","wloop_atm_meter"="Waste                                                                Loop")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24674,6 +24679,11 @@
 /area/station/engineering/chiefs_office)
 "fgC" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "black"
@@ -27186,9 +27196,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "fJL" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/structure/stool/bed/chair/metal/black,
 /turf/simulated/floor{
 	icon_state = "warningcorner"
@@ -31945,6 +31952,9 @@
 	},
 /area/station/security/execution)
 "gMa" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "Stairs_wide"
 	},
@@ -41830,6 +41840,12 @@
 	icon_state = "vault"
 	},
 /area/station/gateway)
+"jfL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "jfR" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -42007,7 +42023,7 @@
 "jht" = (
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber North";
-	network = list("Toxins                                Test                                Area")
+	network = list("Toxins                                                                Test                                                                Area")
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
@@ -45768,7 +45784,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                Oxide","waste_sensor"="Gas                                Mix                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                Oxide","waste_sensor"="Gas                                                                Mix                                                                Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -46204,6 +46220,15 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
+"kgj" = (
+/obj/structure/stool/bed/chair/metal/black,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/science)
 "kgl" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/firealarm{
@@ -56490,6 +56515,22 @@
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"mGt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "mGD" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/sugar,
@@ -57335,7 +57376,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	name = "Research Monitor";
-	network = list("Research","Toxins                                Test                                Area","Robots","Anomaly                                Isolation");
+	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
 	pixel_y = 2
 	},
 /turf/simulated/floor{
@@ -58132,6 +58173,12 @@
 /obj/structure/flora/junglebush/c,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/central)
+"nay" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "naA" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
@@ -58854,6 +58901,9 @@
 /area/station/aisat)
 "njk" = (
 /obj/machinery/disposal,
+/obj/structure/sign/departments/evac{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61376,7 +61426,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed                                Air                                In","air_sensor"="Mixed                                Air                                Supply                                Tank","mair_out_meter"="Mixed                                Air                                Out","dloop_atm_meter"="Distribution                                Loop","wloop_atm_meter"="Waste                                Loop")
+	sensors = list("mair_in_meter"="Mixed                                                                Air                                                                In","air_sensor"="Mixed                                                                Air                                                                Supply                                                                Tank","mair_out_meter"="Mixed                                                                Air                                                                Out","dloop_atm_meter"="Distribution                                                                Loop","wloop_atm_meter"="Waste                                                                Loop")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -62193,6 +62243,11 @@
 	req_access = list(12)
 	},
 /obj/structure/barricade/wooden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -70523,7 +70578,7 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber East";
 	dir = 8;
-	network = list("Toxins                                Test                                Area")
+	network = list("Toxins                                                                Test                                                                Area")
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
@@ -79085,6 +79140,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
 	},
@@ -80462,7 +80520,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                Test                                Area");
+	network = list("Toxins                                                                Test                                                                Area");
 	pixel_x = 32
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -80602,7 +80660,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -86691,6 +86749,15 @@
 	icon_state = "whitecorner"
 	},
 /area/station/medical/surgery2)
+"tNy" = (
+/obj/structure/closet/secure_closet/miner,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/cargo/miningoffice)
 "tNz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -90998,6 +91065,9 @@
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = -32
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -96378,7 +96448,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                Test                                Area");
+	network = list("Toxins                                                                Test                                                                Area");
 	pixel_x = 32
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -96556,7 +96626,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                Test                                Area");
+	network = list("Toxins                                                                Test                                                                Area");
 	pixel_x = 32
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -97007,6 +97077,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/civilian/market)
@@ -98105,7 +98180,15 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "wsF" = (
-/obj/item/apc_frame,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -100644,10 +100727,19 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber South";
 	dir = 1;
-	network = list("Toxins                                Test                                Area")
+	network = list("Toxins                                                                Test                                                                Area")
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
+"xdJ" = (
+/obj/machinery/camera{
+	c_tag = "Docks Central";
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "arrival"
+	},
+/area/station/hallway/secondary/entry)
 "xdL" = (
 /obj/machinery/disposal,
 /turf/simulated/floor{
@@ -117677,7 +117769,7 @@ qcn
 iGt
 wce
 wce
-qmE
+jfL
 wce
 wce
 czH
@@ -118727,7 +118819,7 @@ czH
 grO
 wUR
 dqu
-dqu
+tNy
 dqu
 shl
 wUR
@@ -118979,7 +119071,7 @@ mcz
 mcz
 mcz
 mun
-mcz
+nay
 mcz
 hyT
 xLy
@@ -120243,7 +120335,7 @@ drv
 drv
 ibW
 nKm
-dFQ
+xdJ
 czH
 aFN
 gxL
@@ -124090,7 +124182,7 @@ dVb
 nlL
 kMD
 bOT
-bOT
+mGt
 bOT
 vSF
 paT
@@ -146508,7 +146600,7 @@ wiO
 wiO
 naT
 mSb
-sce
+wiO
 cSV
 bFh
 uKG
@@ -146765,7 +146857,7 @@ wiO
 wiO
 wiO
 wiO
-wiO
+sce
 cSV
 aaE
 eha
@@ -150851,7 +150943,7 @@ eha
 fcY
 eha
 eha
-ylm
+kgj
 agM
 oHf
 eha
