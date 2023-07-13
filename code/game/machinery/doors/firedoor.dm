@@ -212,6 +212,7 @@
 				if(blocked && density && hatch_open)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
+					new /obj/item/weapon/airalarm_electronics(loc)
 
 					deconstruct(TRUE)
 		return
