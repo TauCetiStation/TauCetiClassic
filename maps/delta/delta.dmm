@@ -5880,26 +5880,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
-"bkc" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
-/obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(11)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "bkf" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door_control{
@@ -6296,6 +6276,13 @@
 "bnx" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/woodentable,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar_reva_shuttes";
+	name = "Bar Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7419,6 +7406,11 @@
 "bBh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/machinery/door_control{
+	id = "bar_reva_shuttes";
+	name = "Bar Shutters";
+	pixel_x = -25
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13452,13 +13444,6 @@
 	icon_state = "red"
 	},
 /area/station/security/prison)
-"cUa" = (
-/obj/machinery/bodyscanner,
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "cUf" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -14647,6 +14632,13 @@
 	icon_state = "black"
 	},
 /area/station/hallway/secondary/exit)
+"djd" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/sleeper)
 "djv" = (
 /obj/structure/closet/wardrobe/robotics_black,
 /obj/machinery/camera{
@@ -17627,26 +17619,6 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
-"dWO" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/machinery/door/window/brigdoor/westright{
-	req_access = list(5)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "dXa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24607,6 +24579,26 @@
 	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
+"fGw" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/medical,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/medical,
+/obj/machinery/door/window/brigdoor/westright{
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "fGy" = (
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -38444,6 +38436,24 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
+"iQZ" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/door/window/brigdoor/westright,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "iRb" = (
 /obj/structure/stool,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -39141,26 +39151,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/recycleroffice)
-"jag" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(5)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "jat" = (
 /obj/machinery/porta_turret/station_default{
 	dir = 4
@@ -50692,24 +50682,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
-"lHa" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westright,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "lHk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -51526,6 +51498,9 @@
 /area/station/engineering/monitoring)
 "lPT" = (
 /obj/structure/flora/tree/jungle,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "lQn" = (
@@ -52686,6 +52661,18 @@
 	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
+"mgI" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/skrell/black,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/skrell/black,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/skrell/white,
+/obj/item/clothing/head/helmet/space/skrell/white,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "mgK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54131,6 +54118,13 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar_reva_shuttes";
+	name = "Bar Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -56098,15 +56092,6 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
-"mWj" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/unathi/rig_cheap,
-/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "mWz" = (
 /turf/simulated/floor,
 /area/station/civilian/gym)
@@ -57153,17 +57138,19 @@
 "nkW" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
+/obj/item/clothing/suit/space/rig/engineering,
 /obj/structure/window/thin/reinforced,
 /obj/structure/window/thin/reinforced{
-	dir = 4
+	dir = 8
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westleft,
+/obj/item/clothing/head/helmet/space/rig/engineering,
+/obj/machinery/door/window/brigdoor/eastright{
+	req_access = list(11)
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -58564,6 +58551,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"nBp" = (
+/obj/structure/window/fulltile,
+/turf/simulated/floor/grass,
+/area/station/hallway/primary/fore)
 "nBv" = (
 /obj/item/clothing/accessory/armband/hydro,
 /obj/item/toy/figure/botanist,
@@ -66594,6 +66585,13 @@
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/entry)
+"pzk" = (
+/obj/machinery/bodyscanner,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/sleeper)
 "pzr" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -70467,6 +70465,13 @@
 /obj/structure/sign/monkey_painting{
 	pixel_y = 32
 	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar_reva_shuttes";
+	name = "Bar Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -70540,6 +70545,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/woodentable,
 /obj/item/weapon/bell,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar_reva_shuttes";
+	name = "Bar Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73300,26 +73312,6 @@
 	icon_state = "red"
 	},
 /area/station/security/prison)
-"rga" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(24)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "rgg" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -76662,6 +76654,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/wallet/random,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar_reva_shuttes";
+	name = "Bar Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -77192,6 +77191,26 @@
 	icon_state = "gcircuit"
 	},
 /area/station/rnd/server)
+"saI" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/medical,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/medical,
+/obj/machinery/door/window/brigdoor/eastleft{
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "saP" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -81710,6 +81729,15 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/library)
+"tha" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/unathi/rig_cheap,
+/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "thh" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
@@ -90696,13 +90724,6 @@
 	icon_state = "dark"
 	},
 /area/station/maintenance/medbay)
-"vwc" = (
-/obj/machinery/body_scanconsole,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "vwl" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -91802,18 +91823,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/cargo/miningoffice)
-"vKr" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/skrell/black,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/black,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/white,
-/obj/item/clothing/head/helmet/space/skrell/white,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "vKC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
@@ -93134,6 +93143,26 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway/lobby)
+"wbS" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/atmos,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/atmos,
+/obj/machinery/door/window/brigdoor/eastleft{
+	req_access = list(24)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "wcp" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
@@ -100270,6 +100299,24 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"xNi" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/door/window/brigdoor/westleft,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "xNJ" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/simulated/floor/engine,
@@ -136476,7 +136523,7 @@ cIy
 lfs
 sEI
 xKF
-tJq
+nBp
 lPT
 jaZ
 koo
@@ -137301,9 +137348,9 @@ vIk
 aVg
 jWO
 lrQ
-mWj
+tha
 gxv
-vKr
+mgI
 qfb
 mNo
 aVg
@@ -137815,9 +137862,9 @@ bXp
 hvB
 bCO
 jQJ
-jag
-rga
-bkc
+saI
+wbS
+nkW
 rTk
 aQq
 aVg
@@ -138843,9 +138890,9 @@ pym
 xZC
 iWg
 baa
-dWO
-lHa
-nkW
+fGw
+iQZ
+xNi
 rTk
 uUR
 aVg
@@ -142210,7 +142257,7 @@ aPP
 tWR
 ekL
 qQA
-vwc
+djd
 sPy
 sBD
 ktg
@@ -143495,7 +143542,7 @@ aNG
 ibQ
 eQI
 dTh
-cUa
+pzk
 yiz
 sBD
 dfS
