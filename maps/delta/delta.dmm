@@ -9759,6 +9759,9 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -11807,6 +11810,9 @@
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
+	},
+/obj/item/device/cardpay{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -13918,8 +13924,8 @@
 	},
 /area/station/civilian/gym)
 "dbi" = (
-/obj/structure/closet/crate/bin,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate,
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "dbo" = (
@@ -14671,6 +14677,9 @@
 	network = list("SS13","Research")
 	},
 /obj/item/device/radio/headset/headset_sci,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -17772,6 +17781,9 @@
 /area/station/hallway/secondary/exit)
 "dYt" = (
 /obj/structure/closet/secure_closet/RD,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -20843,6 +20855,9 @@
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = 32
 	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -21910,6 +21925,9 @@
 	dir = 5
 	},
 /obj/structure/closet/secure_closet/detective,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -28562,6 +28580,9 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -32882,7 +32903,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "hBo" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/closet/crate,
 /obj/item/clothing/shoes/orange/candals,
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
@@ -35142,6 +35163,15 @@
 "idI" = (
 /obj/structure/closet,
 /obj/item/clothing/under/tourist,
+/obj/item/device/cardpay{
+	dir = 1
+	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -35255,10 +35285,6 @@
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
-"ieR" = (
-/obj/structure/closet/crate/bin,
-/turf/simulated/floor,
-/area/station/security/prison)
 "ifb" = (
 /obj/machinery/door_control{
 	desc = "A remote control-switch for secure storage.";
@@ -36676,6 +36702,9 @@
 /obj/item/weapon/storage/box/evidence,
 /obj/item/device/detective_scanner,
 /obj/item/weapon/folder/red,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -39305,6 +39334,9 @@
 /area/station/hallway/primary/fore)
 "jbl" = (
 /obj/structure/closet/secure_closet/scientist,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -40577,6 +40609,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
+	},
+/obj/item/device/cardpay{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -54380,6 +54415,9 @@
 /area/station/maintenance/engineering)
 "mAx" = (
 /obj/structure/closet/wardrobe/medic_white,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -58124,6 +58162,9 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -60565,6 +60606,9 @@
 /area/station/maintenance/medbay)
 "nYM" = (
 /obj/structure/closet/wardrobe/engineering_yellow,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -60836,6 +60880,9 @@
 	pixel_x = 28
 	},
 /obj/machinery/light/small,
+/obj/item/device/cardpay{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62498,6 +62545,9 @@
 /area/station/security/blueshield)
 "oBa" = (
 /obj/structure/closet/lawcloset,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -84520,11 +84570,11 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "tSi" = (
-/obj/structure/closet/crate/bin,
 /obj/item/toy/figure/syndie,
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/structure/closet/crate,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "tSt" = (
@@ -85283,6 +85333,9 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/pill_bottle/inaprovaline,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -91863,19 +91916,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/minisat_secure_area)
-"vKb" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "evacbar_shutters"
-	},
-/obj/item/device/cardpay{
-	dir = 8;
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "vKc" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -92742,6 +92782,9 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 22
+	},
+/obj/item/device/cardpay{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -93703,6 +93746,9 @@
 /area/station/security/checkpoint/medbay)
 "wiG" = (
 /obj/structure/closet/secure_closet/barber,
+/obj/item/device/cardpay{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/barbershop)
 "wiV" = (
@@ -95192,11 +95238,11 @@
 /turf/simulated/wall/r_wall,
 /area/station/rnd/xenobiology)
 "wBs" = (
-/obj/structure/closet/crate/bin,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate,
 /turf/simulated/floor,
 /area/station/maintenance/escape)
 "wBB" = (
@@ -143870,7 +143916,7 @@ gyn
 nGt
 aMr
 nGt
-vKb
+mSl
 kWl
 djc
 bAQ
@@ -155318,7 +155364,7 @@ dBe
 qZx
 qZx
 aXC
-ieR
+bZu
 pLw
 unD
 unD
