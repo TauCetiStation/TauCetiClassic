@@ -303,8 +303,11 @@
 	},
 /area/station/bridge)
 "abQ" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+/obj/machinery/door_control{
+	desc = "A remote control switch for the medbay foyer.";
+	id = "MedbayFoyerOut";
+	name = "Medbay Doors Control";
+	pixel_y = -26
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -3087,13 +3090,6 @@
 	icon_state = "bot"
 	},
 /area/station/engineering/engine)
-"aCo" = (
-/obj/machinery/bodyscanner,
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "aCD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -14298,6 +14294,24 @@
 	icon_state = "vault"
 	},
 /area/station/storage/tech)
+"dgs" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/door/window/brigdoor/westright,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "dgu" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/light/small{
@@ -17635,6 +17649,26 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"dXh" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/medical,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/medical,
+/obj/machinery/door/window/brigdoor/eastleft{
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "dXp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19283,6 +19317,15 @@
 /obj/structure/sign/warning,
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/engineering)
+"esX" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/unathi/rig_cheap,
+/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "esZ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -21287,13 +21330,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerOut";
-	name = "Medbay Doors Control";
-	pixel_y = 26;
-	req_access = list(5)
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -22262,7 +22298,9 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
-/obj/machinery/body_scanconsole,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -26452,15 +26490,6 @@
 "geE" = (
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/starboardsolar)
-"gff" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/unathi/rig_cheap,
-/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "gfj" = (
 /obj/machinery/camera{
 	c_tag = "Server Room";
@@ -39528,6 +39557,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -44585,6 +44617,26 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/library)
+"kkU" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/atmos,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/atmos,
+/obj/machinery/door/window/brigdoor/eastleft{
+	req_access = list(24)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "kkY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -47194,26 +47246,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"kPK" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
-/obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(11)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "kQf" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/crowbar,
@@ -47911,24 +47943,6 @@
 	icon_state = "warning"
 	},
 /area/station/maintenance/medbay)
-"kXq" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westright,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "kXw" = (
 /obj/structure/table/woodentable,
 /obj/item/device/tagger/shop,
@@ -48180,12 +48194,39 @@
 	icon_state = "bot"
 	},
 /area/station/rnd/hor)
+"kZY" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/door/window/brigdoor/westleft,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "lae" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating{
 	dir = 1;
 	icon_state = "warnplate"
 	},
+/area/station/hallway/secondary/entry)
+"lag" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/sign/warning/pods,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "lat" = (
 /obj/structure/stool/bed/chair/metal/black{
@@ -49236,26 +49277,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/maintenance/portsolar)
-"lpc" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/machinery/door/window/brigdoor/westright{
-	req_access = list(5)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "lpw" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -55107,6 +55128,13 @@
 	icon_state = "warnplate"
 	},
 /area/station/engineering/engine)
+"mKI" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/sleeper)
 "mKJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -55130,24 +55158,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
-"mKS" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westleft,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "mKV" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
@@ -56330,26 +56340,6 @@
 	icon_state = "grimy"
 	},
 /area/station/civilian/chapel/office)
-"mZf" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(5)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "mZg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -57199,12 +57189,20 @@
 /area/station/bridge/meeting_room)
 "nkW" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/space/skrell/black,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/medical,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/black,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/white,
-/obj/item/clothing/head/helmet/space/skrell/white,
+/obj/item/clothing/head/helmet/space/rig/medical,
+/obj/machinery/door/window/brigdoor/westright{
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -60435,13 +60433,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"nXB" = (
-/obj/machinery/body_scanconsole,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "nXD" = (
 /obj/machinery/alarm{
 	pixel_x = 29;
@@ -65754,6 +65745,10 @@
 	icon_state = "warnplate"
 	},
 /area/station/civilian/gym)
+"poW" = (
+/obj/structure/window/fulltile,
+/turf/simulated/floor/grass,
+/area/station/hallway/primary/fore)
 "ppa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -67754,26 +67749,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/cargo/miningoffice)
-"pNl" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(24)
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/ai_monitored/eva)
 "pNq" = (
 /obj/structure/sign/poster/official/ion_rifle{
 	pixel_x = 32
@@ -68481,6 +68456,18 @@
 	icon_state = "grimy"
 	},
 /area/station/security/detectives_office)
+"pVz" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/skrell/black,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/skrell/black,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/skrell/white,
+/obj/item/clothing/head/helmet/space/skrell/white,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "pVE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -73553,7 +73540,8 @@
 /obj/machinery/vending/wallmed2{
 	pixel_y = 28
 	},
-/obj/structure/table/glass,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -91792,15 +91780,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/library)
-"vJP" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/structure/sign/warning/pods,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "vJQ" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing Cell 3";
@@ -92785,10 +92764,6 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/lobby)
-"vXc" = (
-/obj/structure/window/fulltile,
-/turf/simulated/floor/grass,
-/area/station/hallway/primary/fore)
 "vXd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -94584,6 +94559,26 @@
 /obj/machinery/shieldgen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"wum" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/engineering,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/engineering,
+/obj/machinery/door/window/brigdoor/eastright{
+	req_access = list(11)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/ai_monitored/eva)
 "wun" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/pill_bottle/dice{
@@ -97448,6 +97443,13 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"xeW" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/sleeper)
 "xfr" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -97494,14 +97496,12 @@
 	},
 /area/station/rnd/tox_launch)
 "xfO" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Medbay Treatment Center";
 	dir = 4;
 	network = list("SS13","Medical")
 	},
+/obj/machinery/bodyscanner,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -134439,7 +134439,7 @@ plf
 plf
 yaE
 lae
-vJP
+lag
 lNN
 eyw
 eyw
@@ -136545,7 +136545,7 @@ cIy
 lfs
 sEI
 xKF
-vXc
+poW
 lPT
 jaZ
 koo
@@ -137370,9 +137370,9 @@ vIk
 aVg
 jWO
 lrQ
-gff
+esX
 gxv
-nkW
+pVz
 qfb
 mNo
 aVg
@@ -137884,9 +137884,9 @@ bXp
 hvB
 bCO
 jQJ
-mZf
-pNl
-kPK
+dXh
+kkU
+wum
 rTk
 aQq
 aVg
@@ -138551,7 +138551,7 @@ plf
 plf
 yaE
 iYf
-vJP
+lag
 sUt
 uqt
 uqt
@@ -138912,9 +138912,9 @@ pym
 xZC
 iWg
 baa
-lpc
-kXq
-mKS
+nkW
+dgs
+kZY
 rTk
 uUR
 aVg
@@ -142274,12 +142274,12 @@ eQU
 phG
 mne
 sjN
-qly
+xeW
 aPP
 tWR
 ekL
 qQA
-nXB
+mKI
 sPy
 sBD
 ktg
@@ -143564,7 +143564,7 @@ aNG
 ibQ
 eQI
 dTh
-aCo
+gqx
 yiz
 sBD
 dfS
