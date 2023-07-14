@@ -65,6 +65,11 @@
 	for(var/obj/machinery/door/window/W in windowdoor_list)
 		if(W.id == id)
 			connected_doors += W
+// <basecodetrainstation13>
+	for(var/obj/machinery/door/traindoor/T in traindoor_list)
+		if(T.id == id)
+			connected_doors += T
+// </basecodetrainstation13>
 	update_icon()
 
 /obj/machinery/door_control/Destroy()
@@ -353,6 +358,10 @@
 		toggle_poddoor(D)
 	else if(istype(D, /obj/machinery/door/window))
 		toggle_windowdoor(D)
+// <basecodetrainstation13>
+	else if(istype(D, /obj/machinery/door/traindoor))
+		toggle_traindoor(D)
+// </basecodetrainstation13>
 
 /obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
 	if(!A.isAllPowerCut() && A.hasPower())
@@ -413,6 +422,14 @@
 		W.open()
 	else
 		W.close()
+
+// <basecodetrainstation13>
+/obj/machinery/door_control/proc/toggle_traindoor(obj/machinery/door/traindoor/T)
+	if(T.density)
+		T.open()
+	else
+		T.close()
+// </basecodetrainstation13>
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -515,6 +532,22 @@
 			spawn( 0 )
 				M.close()
 				return
+
+// <basecodetrainstation13>
+	for(var/obj/machinery/door/traindoor/M in traindoor_list)
+		if (M.id == src.id)
+			spawn( 0 )
+				M.open()
+				return
+
+	sleep(20)
+
+	for(var/obj/machinery/door/traindoor/M in traindoor_list)
+		if (M.id == src.id)
+			spawn( 0 )
+				M.close()
+				return
+// </basecodetrainstation13>
 
 	icon_state = "launcherbtt"
 	active = 0

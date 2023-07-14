@@ -24,6 +24,16 @@
 	icon = 'trainstation13/icons/turf/trainturf.dmi'
 	icon_state = "snow_still"
 
+//PASTIC WALL
+
+/turf/simulated/wall/mineral/plastic
+	name = "plastic wall"
+	desc = "Пластмассовый мир победил. Пакет оказался сильней."
+	icon = 'trainstation13/icons/turf/plastic_wall.dmi'
+	mineral = "plastic"
+	sheet_type = /obj/item/stack/sheet/mineral/plastic
+	canSmoothWith = list(/turf/simulated/wall/mineral/plastic, /turf/simulated/wall/mineral/plastic)
+
 //MOVING - ANIMATED TURFS
 
 var/global/list/train_turfs = list()
