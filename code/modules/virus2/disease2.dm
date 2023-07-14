@@ -75,7 +75,7 @@ var/global/list/virus_by_pool
 	if(effects.len > min_symptoms)
 		effects -= pick(effects) //remove random effect
 
-/datum/disease2/disease/proc/get_random_effect_total(minlvl = 1, maxlvl = 4, pool_name)
+/datum/disease2/disease/proc/get_random_effect_total(minlvl = 1, maxlvl = 4, pool_name = null)
 	var/static/list/pool_distribution = list(
 		POOL_POSITIVE_VIRUS = 25,
 		POOL_NEUTRAL_VIRUS = 25,
