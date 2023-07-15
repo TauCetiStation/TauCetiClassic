@@ -19,15 +19,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-/mob/living/proc/handle_actions()
-	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
-	for(var/datum/action/A in actions)
-		if(A.CheckRemoval(src))
-			A.Remove(src)
-	for(var/obj/item/I in src)
-		for(var/datum/action/A in I.item_actions)
-			A.Grant(src)
-
 /mob/living/proc/update_health_hud()
 	if(!healths)
 		return

@@ -59,12 +59,11 @@
 		BP.implants += src
 		part = BP
 
-	for(var/datum/action/A in item_actions)
-		A.Grant(imp_in)
-
 	if(implant_trait)
 		ADD_TRAIT(C, implant_trait, IMPLANT_TRAIT)
 	C.sec_hud_set_implants()
+
+	add_item_actions(C)
 
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
@@ -72,12 +71,12 @@
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
-	for(var/datum/action/A in item_actions)
-		A.Grant(imp_in)
+	add_item_actions(C)
 
 /obj/item/weapon/implant/proc/implant_removal(mob/host)
 	if(implant_trait && istype(host))
 		REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
+	remove_item_actions(host)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
