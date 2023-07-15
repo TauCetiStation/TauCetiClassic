@@ -48,6 +48,20 @@
 	sheetType = /obj/item/stack/sheet/metal
 	operating_sound = 'sound/effects/turret/open.ogg'
 
+/obj/structure/mineral_door/transparent/traindouble
+	name = "metal sliding door with doorlight"
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "traindouble"
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/machines/shutter_open.ogg'
+
+/obj/structure/mineral_door/transparent/trainglass
+	name = "metal door with doorlight"
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "trainglass"
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/effects/doorcreaky.ogg'
+
 /obj/structure/mineral_door/metal/automatic
 	name = "automatic door"
 	icon = 'trainstation13/icons/traindoors.dmi'
@@ -63,6 +77,13 @@
 	max_integrity = 1000
 	sheetType = /obj/item/stack/sheet/metal
 	operating_sound = 'sound/machines/firedoor_open.ogg'
+
+/obj/structure/mineral_door/metal/train
+	name = "metal door"
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "train"
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/effects/doorcreaky.ogg'
 
 //GATES
 
