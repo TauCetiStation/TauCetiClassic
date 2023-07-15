@@ -327,7 +327,7 @@
 			for(var/datum/objective/research_sabotage/rs in R.objectives.objectives)
 				if(rs.already_completed)
 					return //in order to avoid that the antagonist will constantly do this.
-	to_chat(user, "<span class='warning'>Так-с, эта процедура займёт [sabotage_time / 10] секунд.</span>")
+	to_chat(user, "<span class='warning'>Эта процедура займёт некоторое время...</span>")
 	playsound(src, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
 	if(!do_after(user, sabotage_time, target = src))
 		return
