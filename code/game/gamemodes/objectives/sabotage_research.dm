@@ -12,5 +12,5 @@
 
 /obj/item/weapon/disk/data/syndi/examine(mob/user)
 	. = ..()
-	if(is_skill_competent(user, list(/datum/skill/research = SKILL_LEVEL_TRAINED)))
+	if(user.mind.special_role)
 		to_chat(user, "<span class='warning'>This disk contains a computer virus to sabotage the station's systems!</span>")
