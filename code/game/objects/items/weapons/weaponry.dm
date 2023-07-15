@@ -6,7 +6,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 0
 	w_class = SIZE_TINY
-	throw_speed = 7
+	throw_speed = 4
 	throw_range = 15
 	attack_verb = list("banned")
 
