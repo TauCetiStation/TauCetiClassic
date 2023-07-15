@@ -63,6 +63,7 @@
 	return QDEL_HINT_QUEUE
 
 /datum/proc/process()
+	SHOULD_NOT_SLEEP(TRUE)
 	set waitfor = FALSE
 	STOP_PROCESSING(SSobj, src)
 	return FALSE
