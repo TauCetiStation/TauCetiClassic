@@ -15,12 +15,12 @@ var/global/list/scrap_base_cache = list()
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
-		/obj/item/stack/rods/random,
-		/obj/item/stack/sheet/mineral/plastic/random,
-		/obj/item/stack/sheet/metal/random,
-		/obj/item/stack/sheet/glass/random,
-		/obj/item/stack/sheet/plasteel/random,
-		/obj/item/stack/sheet/wood/random,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/mineral/plastic,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/sheet/wood,
 		/obj/item/weapon/shard
 	)
 	var/dig_amount = 7
@@ -105,13 +105,42 @@ var/global/list/scrap_base_cache = list()
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
-		new loot_path(src)
+		if (loot_path in typesof(/obj/item/stack))
+			var/obj/item/stack/S = new loot_path(src)
+			var/borders = borders_random_items(loot_path)
+			S.set_random_amount(borders["bottom"], borders["top"])
+		else
+			new loot_path(src)
 	for(var/obj/item/I in contents)
 		if(prob(66))
 			I.make_old()
 	loot = new(src)
 	loot.set_slots(slots = 7, slot_size = SIZE_BIG)
 	shuffle_loot()
+
+/obj/structure/scrap/proc/borders_random_items(obj/item/stack/path)
+	var/borders[0]
+	borders["bottom"] = 10
+	borders["top"] = 20
+	if (path in typesof(/obj/item/stack/rods))
+		borders["bottom"] = 3
+		borders["top"] = 8
+	if (path in typesof(/obj/item/stack/sheet/mineral/plastic))
+		borders["bottom"] = 5
+		borders["top"] = 10
+	if (path in typesof(/obj/item/stack/sheet/metal))
+		borders["bottom"] = 8
+		borders["top"] = 12
+	if (path in typesof(/obj/item/stack/sheet/glass))
+		borders["bottom"] = 5
+		borders["top"] = 10
+	if (path in typesof(/obj/item/stack/sheet/plasteel))
+		borders["bottom"] = 1
+		borders["top"] = 3
+	if (path in typesof(/obj/item/stack/sheet/wood))
+		borders["bottom"] = 3
+		borders["top"] = 8
+	return borders
 
 /obj/structure/scrap/Destroy()
 	for (var/obj/item in loot)
@@ -300,7 +329,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
-		/obj/item/stack/rods/random,
+		/obj/item/stack/rods,
 		/obj/item/weapon/shard
 	)
 
@@ -315,8 +344,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
-		/obj/item/stack/rods/random,
-		/obj/item/stack/sheet/metal/random,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/metal,
 		/obj/item/weapon/shard
 	)
 
@@ -332,7 +361,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/random
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/guns
@@ -348,8 +377,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/item/toy/gun,
 		/obj/item/toy/crossbow,
 		/obj/item/weapon/shard,
-		/obj/item/stack/sheet/metal/random,
-		/obj/item/stack/rods/random
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/science
@@ -417,7 +446,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/misc/pack,
 		/obj/random/misc/pack,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/random
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/poor/large
