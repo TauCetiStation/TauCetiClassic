@@ -387,3 +387,6 @@
 	src.title = title
 	src.recipes = recipes
 	src.req_amount = req_amount
+
+/obj/item/stack/proc/set_random_amount(var/bottom_rand = 1, var/top_rand = max_amount)
+	src.amount = rand(bottom_rand, top_rand)
