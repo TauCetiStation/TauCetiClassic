@@ -23,9 +23,11 @@ SUBSYSTEM_DEF(mapping)
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
 
+// <basecodetrainstation13>
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
 		config = load_map_config(filename = "maps/train.json", error_if_missing = FALSE)
+// </basecodetrainstation13>
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	LoadMapConfig()

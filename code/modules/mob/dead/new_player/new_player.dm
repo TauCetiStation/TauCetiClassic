@@ -85,6 +85,7 @@
 		return
 
 	if(href_list["lobby_ready"])
+// <basecodetrainstation13>
 		if(!Master || Master.current_runlevel < RUNLEVEL_LOBBY)
 			to_chat(src, "<span class='warning'>Init in progress, please wait.</span>")
 			return
@@ -92,6 +93,7 @@
 		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 			ready = FALSE
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
+// </basecodetrainstation13>
 			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")

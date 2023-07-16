@@ -171,11 +171,12 @@ var/global/datum/controller/master/Master = new()
 	log_initialization("Initializations complete in [time] second[time == 1 ? "" : "s"]!")
 	to_chat(world, "<span class='success'>Инициализация завершена за [time] сек.!</span>")
 
-
+// <basecodetrainstation13>
 	// event module
 	config.allow_random_events = FALSE
 	SSlag_switch.set_measure(DISABLE_PARALLAX, TRUE)
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
+// </basecodetrainstation13>
 
 	SetRunLevel(RUNLEVEL_LOBBY)
 
