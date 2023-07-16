@@ -325,7 +325,7 @@
 		return
 	qdel(D)
 	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
-		for(var/i in 1 to 3)
+		for(var/i in 1 to s.files.researched_tech.len)
 			s.files.forget_random_technology()
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
 		explosion(c.loc, 3, 2, 1)
