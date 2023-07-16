@@ -1,0 +1,4 @@
+# temp, same format as /config/maps.txt
+
+map train
+endmap

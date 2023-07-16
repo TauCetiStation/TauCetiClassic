@@ -2476,5 +2476,4 @@
 #include "trainstation13\code\trainstation.dm"
 #include "trainstation13\code\trainstructures.dm"
 #include "trainstation13\code\trainturf.dm"
-#include "trainstation13\maps\trainstation13.dmm"
 // END_INCLUDE

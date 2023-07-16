@@ -1,0 +1,16 @@
+{
+    "map_name": "Train Station 13",
+    "map_path": "_event",
+    "map_file": "trainstation13.dmm",
+    "station_name": "Train",
+    "system_name" : "Sol",
+    "traits":[{
+        "Linkage": null,
+        "Environment Type": "Snow",
+        "Station": true
+    }],
+    "space_ruin_levels": 0,
+    "space_empty_levels": 0,
+    "load_junkyard": 0,
+    "minetype": null
+}

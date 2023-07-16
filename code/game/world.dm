@@ -409,6 +409,7 @@ var/global/shutdown_processed = FALSE
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
 	config.loadmaplist("config/maps.txt")
+	config.loadmaplist("maps/_event/config.txt")
 	config.load_announcer_config("config/announcer")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
