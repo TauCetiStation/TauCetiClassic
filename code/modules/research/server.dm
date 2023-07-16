@@ -319,14 +319,6 @@
 		return
 	if(!isanyantag(user))
 		return
-	for(var/role in user.mind.antag_roles)
-		var/datum/role/R = user.mind.antag_roles[role]
-		if(!locate(/datum/objective/research_sabotage) in R.objectives.objectives)
-			return
-		else
-			for(var/datum/objective/research_sabotage/rs in R.objectives.objectives)
-				if(rs.already_completed)
-					return //in order to avoid that the antagonist will constantly do this.
 	to_chat(user, "<span class='warning'>Эта процедура займёт некоторое время...</span>")
 	playsound(src, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
 	if(!do_after(user, sabotage_time, target = src))

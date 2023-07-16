@@ -751,6 +751,13 @@
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
 
+/datum/uplink_item/device_tools/disk
+	name = "Diskette With Virus"
+	desc = "A floppy disk containing a virus to sabotage R&D systems. Insert this diskette into the R&D Server Controller to destroy scientific data."
+	item = /obj/item/weapon/disk/data/syndi
+	cost = 10
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
@@ -1095,13 +1102,6 @@
 	desc = "Special offer from Waffle Co., the box of 6 delicious donuts! But be careful, some of them are posioned!"
 	item = /obj/item/weapon/storage/fancy/donut_box/traitor
 	cost = 2
-
-/datum/uplink_item/dangerous/disk
-	name = "Disk For Sabotaging"
-	desc = "Data disc for sabotaging R&D systems. In case you have lost what was originally given to you. Or if you want to play a joke on someone..."
-	item = /obj/item/weapon/disk/data/syndi
-	cost = 5
-	uplink_types = list("traitor")
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
