@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
-		config = load_map_config(error_if_missing = FALSE)
+		config = load_map_config(filename = "maps/train.json", error_if_missing = FALSE)
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	LoadMapConfig()
