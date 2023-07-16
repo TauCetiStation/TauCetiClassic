@@ -95,8 +95,6 @@
 	stack_paths["plasteel"] = /obj/item/stack/sheet/plasteel
 	stack_storage["phoron glass"] = 0
 	stack_paths["phoron glass"] = /obj/item/stack/sheet/glass/phoronglass
-	stack_storage["plastic"] = 0
-	stack_paths["plastic"] = /obj/item/stack/sheet/mineral/plastic
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/mineral/stacking_machine/atom_init_late()
