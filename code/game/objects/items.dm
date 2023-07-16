@@ -162,11 +162,15 @@
 
 ///Adds action buttons to user associated with this item
 /obj/item/proc/add_item_actions(mob/user)
+	if(item_actions_special)
+		return
 	for(var/datum/action/A in item_actions)
 		A.Grant(user)
 
 ///Removes all action buttons from user associated with this item
 /obj/item/proc/remove_item_actions(mob/user)
+	if(item_actions_special)
+		return
 	for(var/datum/action/A in item_actions)
 		if(A.CheckRemoval(user))
 			A.Remove(user)
@@ -381,8 +385,7 @@
 		qdel(src)
 	update_world_icon()
 	set_alt_apperances_layers()
-	if(!item_actions_special)
-		remove_item_actions(user)
+	remove_item_actions(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -422,8 +425,7 @@
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	update_world_icon()
 	set_alt_apperances_layers()
-	if(!item_actions_special)
-		add_item_actions(user)
+	add_item_actions(user)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
