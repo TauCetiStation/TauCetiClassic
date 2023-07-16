@@ -41,7 +41,7 @@
 			W.embedded_objects -= obj_to_remove
 			break
 	obj_to_remove.forceMove(get_turf(target))
-	if(istype(obj_to_remove, /obj/item))
+	if(isitem(obj_to_remove))
 		var/obj/item/I = obj_to_remove
 		I.remove_item_actions(target)
 	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
