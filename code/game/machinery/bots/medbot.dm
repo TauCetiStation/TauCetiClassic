@@ -281,7 +281,7 @@
 				last_found = world.time
 				spawn(0)
 					if((last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/list/messagevoice = list("Хэй, [C.name]! Подождите, я иду!" = 'sound/voice/medbot/coming.ogg',"Подождите, [C.name]! Я хочу помочь!" = 'sound/voice/medbot/help.ogg',"[C.name], должно быть, вы поранились!" = 'sound/voice/medbot/injured.ogg')
+						var/list/messagevoice = list("[C.name]! Держитесь, я иду!" = 'sound/voice/medbot/coming.ogg',"Подождите, [C.name]! Я хочу помочь!" = 'sound/voice/medbot/help.ogg',"[C.name], должно быть, вы поранились!" = 'sound/voice/medbot/injured.ogg')
 						var/message = pick(messagevoice)
 						speak(message)
 						last_newpatient_speak = world.time
