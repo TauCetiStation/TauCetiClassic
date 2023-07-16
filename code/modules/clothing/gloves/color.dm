@@ -101,12 +101,19 @@
 	icon_state = "brown"
 	item_state = "browngloves"
 
+/obj/item/clothing/gloves/realyellow
+	name = "yellow gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "realyellow"
+	item_state = "ygloves"
+
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "random_gloves"
 	loot = list(
+		/obj/item/clothing/gloves/realyellow = 1,
 		/obj/item/clothing/gloves/orange = 1,
 		/obj/item/clothing/gloves/red = 1,
 		/obj/item/clothing/gloves/blue = 1,
