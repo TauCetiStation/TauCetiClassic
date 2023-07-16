@@ -41,6 +41,9 @@
 			W.embedded_objects -= obj_to_remove
 			break
 	obj_to_remove.forceMove(get_turf(target))
+	if(istype(obj_to_remove, /obj/item))
+		var/obj/item/I = obj_to_remove
+		I.remove_item_actions(target)
 	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 
@@ -152,6 +155,7 @@
 	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
 	BP.cavity = 0
+	tool.add_item_actions(target)
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
@@ -260,6 +264,7 @@
 			BP.hidden.blood_DNA = list()
 		BP.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type
 		BP.hidden.update_icon()
+		tool.remove_item_actions(target)
 		BP.hidden = null
 	else
 		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
