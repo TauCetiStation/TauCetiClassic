@@ -17,10 +17,6 @@
 		QUALITY_PRYING = 0.5
 	)
 
-/obj/item/stack/rods/random/atom_init()
-	amount = rand(3, 8)
-	. = ..()
-
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
 	if((amount <= 5) && (amount > 0))
