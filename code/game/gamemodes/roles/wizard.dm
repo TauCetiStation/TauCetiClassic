@@ -168,3 +168,11 @@
 			if(antag.current.spell_list.len > i)
 				. += ", "
 			i++
+
+/datum/role/wizard_apprentice/CanBeAssigned(datum/mind/M)
+	. = ..()
+	if(!.)
+		return
+	var/datum/role/R = M.GetRole(EVIL_SHADE)
+	if(R)
+		R.Deconvert()

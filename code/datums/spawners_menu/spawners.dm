@@ -614,6 +614,10 @@ var/global/list/datum/spawners_cooldown = list()
 	id = "evil_shade"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
 
+/datum/spawner/living/evil_shade/spawn_ghost(mob/dead/observer/ghost)
+	..()
+	create_and_setup_role(/datum/role/evil_shade, mob)
+
 /datum/spawner/living/rat
 	name = "Крыса"
 	id = "rat"
