@@ -103,21 +103,30 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 	color = "#4fff43"
 	operating = 1
 	var/list/affecting_turfs = list()
+	var/dist_north = 2
+	var/dist_south = 2
 
 /obj/machinery/conveyor/train/main/atom_init()
 	. = ..()
-	affecting_turfs += get_turf(get_step(get_turf(get_step(src, NORTH)), NORTH))
-	affecting_turfs += get_turf(get_step(src, NORTH))
 	affecting_turfs += get_turf(src)
-	affecting_turfs += get_turf(get_step(src, SOUTH))
-	affecting_turfs += get_turf(get_step(get_turf(get_step(src, SOUTH)), SOUTH))
+
+	if(dist_north)
+		for(var/i in 1 to dist_north)
+			var/turf/T = locate(x,y+i,z)
+			if(T)
+				affecting_turfs += T
+	if(dist_south)
+		for(var/i in 1 to dist_south)
+			var/turf/T = locate(x,y-i,z)
+			if(T)
+				affecting_turfs += T
 
 /obj/machinery/conveyor/train/main/process()
 	if(stat & (BROKEN | NOPOWER))
 		return
 	if(!operating)
 		return
-	use_power(100)
+	//use_power(100)
 	affecting = list()
 	for(var/turf/T in affecting_turfs)
 		affecting += T.contents - src
@@ -125,9 +134,10 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 	sleep(1)    // slight delay to prevent infinite propagation due to map order
 	var/items_moved = 0
 	for(var/atom/movable/A in affecting)
-		if(!A.anchored && !(A.flags & ABSTRACT))
-			step(A,movedir)
-		items_moved++
+		if(!isobserver(A))
+			if(A.loc == src.loc)
+				step(A,movedir)
+				items_moved++
 		if(items_moved >= 10)
 			break
 
