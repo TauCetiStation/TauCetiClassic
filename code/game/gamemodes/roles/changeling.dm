@@ -229,7 +229,7 @@
 	. = ..()
 	var/datum/role/R = T.mind.GetRole(CHANGELING)
 	if(R)
-		for(var/datum/objective/absorb_changeling/objective in objectives)
+		for(var/datum/objective/absorb_changeling/objective in objectives.GetObjectives())
 			objective.completed = OBJECTIVE_WIN
 		log_debug("IMPOSTERS: [src] absorbs [T], who has Changeling Role")
 #undef OVEREATING_AMOUNT
