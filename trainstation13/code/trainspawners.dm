@@ -344,58 +344,13 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 
 	var/globally_operating = TRUE
 
-	var/list/despawn_list = list(
-		/obj/structure/chameleon/lamppost,
-		/obj/structure/chameleon/lamppost/on,
-		/obj/structure/trainstation/lamppost,
-		/obj/structure/trainstation/lamppost/on,
-		/obj/structure/trainstation/lamppost/rural,
-		/obj/structure/trainstation/lamppost/rural/on,
-		/obj/structure/trainstation/utilitypole,
-		/obj/structure/trainstation/trainsignal,
-		/obj/item/weapon/stock_parts/cell/high,
-		/obj/item/weapon/grown/log,
-		/obj/item/stack/rods,
-		/obj/structure/chameleon/bench,
-		/obj/structure/trainstation/bench,
-		/obj/structure/trainstation/bench/green,
-		/obj/structure/closet/crate/bin,
-		/obj/structure/flora/tree/pine/train,
-		/obj/structure/flora/tree/dead/train,
-		/obj/structure/flora/ausbushes/fullgrass/train,
-		/obj/structure/flora/ausbushes/sparsegrass/train,
-		/obj/structure/flora/ausbushes/lavendergrass/train,
-		/obj/structure/flora/ausbushes/palebush/train,
-		/obj/structure/flora/ausbushes/grassybush/train,
-		/obj/structure/flora/ausbushes/stalkybush/train,
-		/obj/structure/flora/ausbushes/reedbush/train,
-		/obj/structure/flora/mine_rocks/train,
-		/obj/structure/bear_piano,
-		/obj/structure/bear_harmonica,
-		/obj/structure/bear_vodka,
-		/obj/item/weapon/cigbutt,
-		/obj/item/weapon/cigbutt/cigarbutt,
-		/obj/item/trash/semki,
-		/obj/item/trash/popcorn,
-		/obj/item/trash/sosjerky,
-		/obj/item/trash/candy,
-		/obj/item/trash/raisins,
-		/obj/item/trash/chips,
-		/obj/item/trash/pistachios,
-		/obj/structure/atomobile/derelict,
-		/obj/structure/scrap/medical/train,
-		/obj/structure/scrap/medical/large/train,
-		/obj/structure/scrap/vehicle/train,
-		/obj/structure/scrap/vehicle/large/train,
-		/obj/structure/scrap/food/train,
-		/obj/structure/scrap/food/large/train,
-		/obj/structure/scrap/poor/train,
-		/obj/structure/scrap/poor/large/train,
+	var/list/despawn_white_list = list(
+		/obj/machinery/conveyor,
 	)
 
 /obj/effect/traindespawner/atom_init()
 	. = ..()
-	despawn_list = typecacheof(despawn_list, FALSE)
+	despawn_white_list = typecacheof(despawn_white_list, FALSE)
 
 	globally_operating = global.globally_operating
 
@@ -404,8 +359,12 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 	if(!globally_operating)
 		return
 
-	if(is_type_in_typecache(AM, despawn_list))
-		qdel(AM)
+	if(is_type_in_typecache(AM, despawn_white_list))
+		return
+	if(ismob(AM))
+		return
+
+	qdel(AM)
 
 //UNIQUE SPAWNED OBJECTS BELOW
 
