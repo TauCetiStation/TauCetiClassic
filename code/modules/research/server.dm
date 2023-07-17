@@ -329,9 +329,9 @@
 			s.files.forget_random_technology()
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
 		explosion(c.loc, 3, 2, 1)
-	for(var/role in user.mind.antag_roles)
-		var/datum/role/R = user.mind.antag_roles[role]
-		for(var/datum/objective/research_sabotage/rs in R.objectives.objectives)
+	var/datum/faction/traitor/faction = find_faction_by_type(/datum/faction/traitor)
+	for(var/datum/role/traitor/T in faction.members)
+		for(var/datum/objective/research_sabotage/rs in T.objectives.objectives)
 			rs.already_completed = TRUE
 	add_fingerprint(user)
 	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
