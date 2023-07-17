@@ -10,6 +10,7 @@
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
+	var/give_uplink = TRUE
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
 	moveset_type = /datum/combat_moveset/cqc
@@ -17,7 +18,8 @@
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
+	if(give_uplink)
+		AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -145,6 +147,7 @@
 	//No restricts, everyone can be a traitor
 	restricted_jobs = list()
 	//Challenge
+	give_uplink = FALSE
 	telecrystals = 0
 
 /datum/role/traitor/imposter/add_one_objective(datum/mind/traitor)
