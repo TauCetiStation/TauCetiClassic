@@ -13,8 +13,25 @@
 		return
 	..()
 
+/mob/living/carbon/proc/can_catch_item()
+	if(!in_throw_mode)
+		return
+	if(incapacitated())
+		return
+	if(get_active_hand()) // yes, it returns thing in the hand, not the hand (#10051)
+		return
+	return TRUE
+
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(isitem(AM) && throwingdatum.speed < 5 && can_catch_item())
+		var/obj/item/I = AM
+		do_attack_animation(I, has_effect = FALSE)
+		put_in_active_hand(I)
+		visible_message("<span class='notice'>[src] catches [I].</span>", "<span class='notice'>You catch [I] in mid-air!</span>")
+		throw_mode_off()
+		return TRUE // aborts throw_impact
+
+	..()
 	if(!ismob(AM))
 		return
 

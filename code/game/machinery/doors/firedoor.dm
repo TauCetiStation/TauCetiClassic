@@ -255,6 +255,7 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	take_out_wedged_item()
+	new /obj/item/weapon/airalarm_electronics(loc)
 	if(disassembled || prob(40))
 		var/obj/structure/firedoor_assembly/FA = new (loc)
 		if(disassembled)
