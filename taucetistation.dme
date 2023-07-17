@@ -2469,6 +2469,7 @@
 #include "trainstation13\code\trainareas.dm"
 #include "trainstation13\code\traindoors.dm"
 #include "trainstation13\code\trainitems.dm"
+#include "trainstation13\code\trainmachines.dm"
 #include "trainstation13\code\trainmobs.dm"
 #include "trainstation13\code\trainoutfits.dm"
 #include "trainstation13\code\trainpower.dm"
