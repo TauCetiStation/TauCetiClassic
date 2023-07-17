@@ -106,9 +106,7 @@ var/global/list/scrap_base_cache = list()
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
 		if (loot_path in typesof(/obj/item/stack))
-			var/obj/item/stack/S = new loot_path(src)
-			var/borders = borders_random_items(loot_path)
-			S.set_random_amount(borders["bottom"], borders["top"])
+			new loot_path(src, amount_in_stack(loot_path))
 		else
 			new loot_path(src)
 	for(var/obj/item/I in contents)
@@ -118,29 +116,22 @@ var/global/list/scrap_base_cache = list()
 	loot.set_slots(slots = 7, slot_size = SIZE_BIG)
 	shuffle_loot()
 
-/obj/structure/scrap/proc/borders_random_items(obj/item/stack/path)
-	var/borders[0]
-	borders["bottom"] = 10
-	borders["top"] = 20
+/obj/structure/scrap/proc/amount_in_stack(path)
+	var/amount
+	amount = rand(20, 40)
 	if (path in typesof(/obj/item/stack/rods))
-		borders["bottom"] = 3
-		borders["top"] = 8
+		amount = rand(3, 8)
 	if (path in typesof(/obj/item/stack/sheet/mineral/plastic))
-		borders["bottom"] = 5
-		borders["top"] = 10
+		amount = rand(5, 10)
 	if (path in typesof(/obj/item/stack/sheet/metal))
-		borders["bottom"] = 8
-		borders["top"] = 12
+		amount = rand(8, 12)
 	if (path in typesof(/obj/item/stack/sheet/glass))
-		borders["bottom"] = 5
-		borders["top"] = 10
+		amount = rand(5, 10)
 	if (path in typesof(/obj/item/stack/sheet/plasteel))
-		borders["bottom"] = 1
-		borders["top"] = 3
+		amount = rand(1, 3)
 	if (path in typesof(/obj/item/stack/sheet/wood))
-		borders["bottom"] = 3
-		borders["top"] = 8
-	return borders
+		amount = rand(3, 8)
+	return amount
 
 /obj/structure/scrap/Destroy()
 	for (var/obj/item in loot)
