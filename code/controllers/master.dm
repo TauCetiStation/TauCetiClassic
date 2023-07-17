@@ -175,7 +175,7 @@ var/global/datum/controller/master/Master = new()
 	// event module
 	config.allow_random_events = FALSE
 	SSlag_switch.set_measure(DISABLE_PARALLAX, TRUE)
-	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
+//	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 // </basecodetrainstation13>
 
 	SetRunLevel(RUNLEVEL_LOBBY)

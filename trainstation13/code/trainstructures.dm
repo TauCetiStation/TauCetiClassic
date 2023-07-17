@@ -37,6 +37,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	name = "bear referee" //Bears can shapeshift now!
 	desc = "It's nice to see you!"
 	icon = 'trainstation13/icons/television.dmi'
+	icon_state = "bear_referee"
 
 /obj/structure/chameleon/proc/change_state(state)
 	switch(state)
@@ -90,31 +91,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 			name = "wooden bench"
 			desc = "A wooden bench coated with transparent varnish. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
 			icon_state = "bench_wood_brown"
-
-/obj/structure/chameleon/bench/attackby(obj/item/O, mob/user)
-	if(iswrenching(O))
-		if(user.is_busy(src))
-			return
-		if (anchored)
-			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s bolts...</span>")
-			if (O.use_tool(src, user, 40, volume = 50))
-				user.visible_message(
-					"<span class='notice'>[user] loosens \the [src]'s bolts.</span>",
-					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
-					"<span class='notice'>You hear ratchet.</span>"
-				)
-		else
-			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
-			if(O.use_tool(src, user, 20, volume = 50))
-				user.visible_message(
-					"<span class='notice'>[user] tightens \the [src]'s bolts.</span>",
-					"<span class='notice'>You have tightened \the [src]'s bolts. No one will be able to pull it away.</span>",
-					"<span class='notice'>You hear ratchet.</span>"
-				)
-
-		anchored = !anchored
-	else
-		..()
 
 /obj/structure/chameleon/lamppost
 	name = "street light"
@@ -205,6 +181,31 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	icon_state = "bench_wood_green"
 	anchored = FALSE
 
+/obj/structure/trainstation/bench/attackby(obj/item/O, mob/user)
+	if(iswrenching(O))
+		if(user.is_busy(src))
+			return
+		if (anchored)
+			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s bolts...</span>")
+			if (O.use_tool(src, user, 40, volume = 50))
+				user.visible_message(
+					"<span class='notice'>[user] loosens \the [src]'s bolts.</span>",
+					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
+					"<span class='notice'>You hear ratchet.</span>"
+				)
+		else
+			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
+			if(O.use_tool(src, user, 20, volume = 50))
+				user.visible_message(
+					"<span class='notice'>[user] tightens \the [src]'s bolts.</span>",
+					"<span class='notice'>You have tightened \the [src]'s bolts. No one will be able to pull it away.</span>",
+					"<span class='notice'>You hear ratchet.</span>"
+				)
+
+		anchored = !anchored
+	else
+		..()
+
 /obj/structure/trainstation/lamppost
 	name = "street light"
 	desc = "A traditional, raised source of light with lamp at the top of a pole."
@@ -237,59 +238,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	icon_state = "utilitypole"
 	anchored = FALSE
 	layer = 5
-
-//MACHINES
-
-/obj/machinery/conveyor_switch/oneway/train
-	name = "power throttle"
-	desc = "A throttle (or regulator) is a handle that controls the speed or direction of rotation in the train engine."
-	icon = 'trainstation13/icons/trainstructures.dmi'
-
-/obj/machinery/media/jukebox/trainjukebox
-	name = "wall radio"
-	desc = "A modern wall mounted radio with audio visualizer."
-	icon = 'trainstation13/icons/trainstructures.dmi'
-	density = 0
-	playlist_id="train"
-	// Must be defined on your server.
-	playlists=list(
-		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moghes FM-84",
-		"moges" = "Moghes Club Music",
-		"club" = "Club Mix",
-		"customs" = "Customs Music",
-		"japan" = "Banzai Radio",
-		"govnar" = "Soviet Radio",
-		"classic" = "Classical Music",
-		"ussr_disco" = "Disco USSR-89s",
-		"topreptilian" = "Top Reptillian",
-		"zvukbanok" = "Sounds of beer cans",
-		"eurobeat" = "Eurobeat",
-		"finland" = "Suomi wave",
-		"dreamsofvenus" = "Dreams of Venus",
-		"hiphop" = "Hip-Hop for Space Gangstas",
-		"vaporfunk" = "Qerrbalak VaporFunkFM",
-		"thematic" = "Side-Bursting Tunes",
-		"lofi" = "Sadness/Longing/Loneliness",
-	)
-
-/obj/machinery/computer/security/wooden_tv/train
-	name = "Spektr-88"
-	desc = "An old color TV that is still able to receive few analog channels."
-	icon_state = "security_det_miami"
-	state_broken_preset = null
-	state_nopower_preset = null
-	light_color = "#f535aa"
-	network = list("TV")
-	pixel_y = 3
-
-/obj/machinery/space_heater/potbellystove
-	name = "potbelly stove"
-	desc = "This little stove will keep you warm and cozy during cold winter."
-	anchored = TRUE
-	density = TRUE
-	icon = 'trainstation13/icons/trainstructures.dmi'
-	icon_state = "sheater-off"
 
 //DECALS
 

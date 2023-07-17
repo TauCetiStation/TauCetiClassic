@@ -11,6 +11,7 @@
 	power_equip = 0
 	power_environ = 0
 	valid_territory = 0
+/* <base>
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 	is_force_ambience = TRUE
 	ambience = list(
@@ -22,7 +23,20 @@
 		'sound/ambience/space_6.ogg',
 		'sound/ambience/space_7.ogg',
 		'sound/ambience/space_8.ogg'
+</base> */
+// <basecodetrainstation13>
+	looped_ambience = 'trainstation13/sound/ambience/loop_street.ogg'
+	is_force_ambience = FALSE
+	ambience = list(
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_01_mg1.ogg',\
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_03_mg3.ogg',\
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_05_mg5.ogg',\
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_09_mg9.ogg',\
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_11_mgb.ogg',\
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_13_mgd.ogg',\
+		'trainstation13/sound/music/Azure_Studios_Foundations_I_24bit_15_mgf.ogg'
 	)
+// </basecodetrainstation13>
 	outdoors = TRUE
 
 /area/start            // will be unused once kurper gets his login interface patch done

@@ -90,15 +90,15 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 		if("suburb")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_middle.dmi'
 		if("field")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_middle.dmi'
 		if("forest")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformmiddle.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_middle.dmi'
 
 /turf/unsimulated/floor/train/platform/top
 	name = "platform"
@@ -120,15 +120,15 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 		if("suburb")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformtop.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_top.dmi'
 		if("field")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformtop.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_top.dmi'
 		if("forest")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformtop.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_top.dmi'
 
 /turf/unsimulated/floor/train/platform/bottom
 	name = "platform"
@@ -150,15 +150,15 @@ ADD_TO_GLOBAL_LIST(/turf/unsimulated/floor/train, global.train_turfs)
 		if("suburb")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_bottom.dmi'
 		if("field")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_bottom.dmi'
 		if("forest")
 			name = "snow"
 			desc = "It's cold."
-			icon = 'trainstation13/icons/turf/trainturf_platformbottom.dmi'
+			icon = 'trainstation13/icons/turf/trainturf_platform_bottom.dmi'
 
 //RAILS
 

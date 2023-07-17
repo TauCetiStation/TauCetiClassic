@@ -188,7 +188,7 @@ var/global/list/traindoor_list = list()
 	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = 0
-	layer = base_layer
+	layer = 3.3
 	density = FALSE
 	set_opacity(FALSE)
 	update_nearby_tiles()
@@ -203,7 +203,7 @@ var/global/list/traindoor_list = list()
 	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = initial(explosion_resistance)
-	layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
+	layer = 3.3 + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 	density = TRUE
 	set_opacity(FALSE)
 	do_afterclose()
@@ -217,3 +217,11 @@ var/global/list/traindoor_list = list()
 		if("closing")
 			flick("automatic_closing", src)
 	return
+
+/obj/machinery/door/traindoor/display
+	name = "automatic doors display"
+	desc = "A display device that accurately shows status of automatic doors."
+	icon = 'trainstation13/icons/trainmachines.dmi'
+	layer = 3.3
+	door_open_sound  = 'sound/effects/triple_beep.ogg'
+	door_close_sound = 'sound/effects/triple_beep.ogg'
