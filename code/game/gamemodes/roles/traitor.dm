@@ -26,12 +26,7 @@
 		if(21 to 40)
 			AppendObjective(/datum/objective/target/harm, TRUE)
 		if(41 to 50)
-			for(var/datum/role/roles in faction.members)
-				if(locate(/datum/objective/research_sabotage) in roles.objectives.GetObjectives())
-					add_one_objective()
-					return
-				else
-					AppendObjective(/datum/objective/research_sabotage, TRUE)
+			AppendObjective(/datum/objective/research_sabotage, TRUE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
