@@ -101,3 +101,16 @@
 
 	holy_rank = CULT_ROLE_MASTER
 	skillset_type = /datum/skillset/cultist/leader
+
+/datum/role/cultist/leader/heretic
+	name = "Heretic"
+
+//one objective about killing chaplain / other good boy
+/datum/role/cultist/leader/heretic/proc/create_heretic_objectives()
+	AppendObjective(/datum/objective/target/assassinate/religious)
+
+/datum/role/cultist/leader/heretic/forgeObjectives()
+	if(!..())
+		return FALSE
+	create_heretic_objectives()
+	return TRUE

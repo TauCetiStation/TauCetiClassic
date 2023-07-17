@@ -8,3 +8,18 @@
 			return OBJECTIVE_WIN
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/target/assassinate/religious
+	var/datum/religion/religion = null
+
+/datum/objective/target/assassinate/religious/New(_religion)
+	. = ..()
+	religion = _religion
+
+/datum/objective/target/assassinate/religious/get_targets()
+	var/list/targets = list()
+	for(var/datum/mind/possible_target in SSticker.minds)
+		if(!religion.can_convert(possible_target.current))
+			targets += possible_target
+	log_debug("IMPOSTERS: Heretic objective has [targets.len] possible targets")
+	return targets

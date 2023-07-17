@@ -87,6 +87,10 @@
 /datum/role/changeling/forgeObjectives()
 	if(!..())
 		return FALSE
+	create_changeling_objectives()
+	return TRUE
+
+/datum/role/changeling/proc/create_changeling_objectives()
 	AppendObjective(/datum/objective/absorb)
 	AppendObjective(/datum/objective/target/assassinate)
 	AppendObjective(/datum/objective/steal)
@@ -94,7 +98,6 @@
 		AppendObjective(/datum/objective/survive)
 	else
 		AppendObjective(/datum/objective/escape)
-	return TRUE
 
 /datum/role/changeling/add_ui(datum/hud/hud)
 	if(!lingchemdisplay)
@@ -206,4 +209,27 @@
 			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")
 			M.playsound_local(null, 'sound/antag/abomination_start.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
+/datum/role/changeling/imposter
+	name = "Changeling imposter"
+	//Objectives imply the ability to destroy the security, and this is easiest to do when equipped and with access to the armory
+	restricted_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Head of Security", "Captain", "Blueshield Officer")
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
+
+/datum/role/changeling/imposter/create_changeling_objectives()
+	AppendObjective(/datum/objective/absorb)
+	AppendObjective(/datum/objective/target/assassinate)
+	AppendObjective(/datum/objective/absorb_changeling)
+	// Escape is more interesting
+	if(prob(1))
+		AppendObjective(/datum/objective/survive)
+	else
+		AppendObjective(/datum/objective/escape)
+
+/datum/role/changeling/imposter/absorb_dna(mob/living/carbon/T)
+	. = ..()
+	var/datum/role/R = T.mind.GetRole(CHANGELING)
+	if(R)
+		for(var/datum/objective/absorb_changeling/objective in objectives)
+			objective.completed = OBJECTIVE_WIN
+		log_debug("IMPOSTERS: [src] absorbs [T], who has Changeling Role")
 #undef OVEREATING_AMOUNT

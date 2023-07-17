@@ -25,3 +25,6 @@
 		if(C && C.absorbed_dna && (C.absorbedcount >= target_amount))
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/absorb_changeling
+	explanation_text = "Absorb another Changeling."

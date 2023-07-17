@@ -39,9 +39,11 @@
 /datum/faction/cult/forgeObjectives()
 	if(!..())
 		return FALSE
+	create_cult_faction_objectives()
+	return TRUE
 
+/datum/faction/cult/proc/create_cult_faction_objectives()
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
-
 	var/objectives_weight = 0
 	while(objectives_weight < 5)
 		var/datum/objective/O = AppendObjective(pick(possibles_objectives), TRUE)
@@ -51,8 +53,6 @@
 		var/datum/objective/cult/C = O
 		objectives_weight += C.weight
 		possibles_objectives -= C.type
-
-	return TRUE
 
 /datum/faction/cult/AdminPanelEntry()
 	. = ..()
@@ -160,3 +160,47 @@
 
 	if(possible_targets.len)
 		sacrifice_target = pick(possible_targets)
+
+/datum/faction/cult/heretics
+	name = "Heretics"
+	initroletype = /datum/role/cultist/leader/heretic
+	min_roles = 1
+	max_roles = 1
+	//Brotherhood of Assassins
+	var/assassins = FALSE
+
+/datum/faction/cult/heretics/proc/add_rev_objectives()
+	var/list/heads = get_living_heads()
+	for(var/datum/mind/head_mind in heads)
+		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
+		if(rev_obj)
+			rev_obj.target = head_mind
+			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+
+/datum/faction/cult/heretics/create_cult_faction_objectives()
+	if(assassins)
+		for(var/i in 1 to 5)
+			AppendObjective(/datum/objective/target/assassinate, TRUE)
+		return
+	if(prob(70))
+		for(var/i in 1 to 5)
+			AppendObjective(/datum/objective/target/sacrifice, TRUE)
+		return
+	log_debug("IMPOSTERS: Cult of Blood converted to Revolution of Nar-Sie")
+	add_rev_objectives()
+	//10% probability to revolution objectives + keep security alive
+	if(prob(10))
+		AppendObjective(/datum/objective/gang/protect_security)
+
+
+/datum/faction/cult/heretics/get_initrole_type()
+	return /datum/role/cultist/leader/heretic
+
+/datum/faction/cult/heretics/process()
+	return PROCESS_KILL
+
+/datum/faction/cult/heretics/forgeObjectives()
+	if(prob(25))
+		assassins = TRUE
+		log_debug("IMPOSTERS: Cult of Blood converted to Assassins")
+	return ..()

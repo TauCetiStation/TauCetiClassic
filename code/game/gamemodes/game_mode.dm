@@ -171,6 +171,8 @@
 			continue
 		if(!F.can_join_faction(mob))
 			continue
+		if(!F.can_latespawn_mob(mob))
+			continue
 		possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
