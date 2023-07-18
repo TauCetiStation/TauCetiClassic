@@ -52,6 +52,7 @@
 		/datum/game_mode/shadowling,
 		/datum/game_mode/families,
 		/datum/game_mode/replicators,
+		/datum/game_mode/malfunction,
 	)
 
 /datum/modesbundle/mix
@@ -88,7 +89,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended)
 	..()
 
 /datum/modesbundle/run_anyway
