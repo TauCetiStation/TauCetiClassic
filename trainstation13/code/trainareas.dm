@@ -9,6 +9,14 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambience = null
 
+/area/trainstation/spawnzone
+	name = "Spawn"
+	icon_state = "rails"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+	looped_ambience = 'trainstation13/sound/ambience/loop_street.ogg'
+	ambience = null
+
 //AREAS OUTSIDE OF THE TRAIN
 
 /area/trainstation/beach
@@ -30,7 +38,6 @@
 /area/trainstation/soyuz
 	name = "Soyuz"
 	icon_state = "soyuz"
-	requires_power = FALSE
 	looped_ambience = 'sound/ambience/loop_regular_vents.ogg'
 	ambience = list('sound/machines/signal.ogg')
 	sound_environment = SOUND_ENVIRONMENT_GENERIC
