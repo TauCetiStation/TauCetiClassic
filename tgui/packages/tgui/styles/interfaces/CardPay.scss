@@ -1,6 +1,27 @@
-.cardpay_window {
+.cardpay_window-titlebar {
 	background: #D0D2DD !important;
-	border-radius: 5px 5px 15px 15px;
+	border-radius: 5px 5px 0px 0px;
+	box-shadow: 0px 0px 0px rgba(1,1,1,0) !important;
+	border-bottom: transparent !important;
+
+	.TitleBar__title{
+		font-weight: bold;
+		color: #333344;
+		left: 15px;
+	}
+	.TitleBar__close {
+		background: transparent !important;
+		color: #333344;
+		font-weight: bold;
+	}
+	.TitleBar__statusIcon {
+		color: transparent !important;
+	}
+}
+
+.cardpay_window-contents {
+	background: #D0D2DD !important;
+	border-radius: 0px 0px 15px 15px;
 }
 
 .cardpay_monitor {
@@ -15,7 +36,7 @@
 	margin-bottom: 5px;
 }
 
-.cardpay_button_general {
+.cardpay_button {
 	height: 48px;
 	width: 48px;
 	background: #9497AB;
@@ -30,13 +51,13 @@
 	}
 }
 
-.cardpay_button_variant-normal {
+.cardpay_button--normal {
 	background: #9497AB;
 	border-color: #9497AB;
 	border-top-color: #B9BBCB;
 }
 
-.cardpay_button_variant-normal.Button--selected {
+.cardpay_button--normal.Button--selected {
 	height: 48px;
 	width: 48px;
 	background: #9497AB;
@@ -51,7 +72,7 @@
 	}
 }
 
-.cardpay_button_variant-red {
+.cardpay_button--red {
 	background: #991000;
 	border-color: #991000;
 	border-top-color: #ca201a;
@@ -60,7 +81,7 @@
 	}
 }
 
-.cardpay_button_variant-green {
+.cardpay_button--green {
 	top:-2px;
 	background: #105735;
 	border-color: #105735;
@@ -70,7 +91,7 @@
 	}
 }
 
-.cardpay_button-inside_general {
+.cardpay_button-inside {
 	height: 40px;
 	width: 40px;
 	background: #D0D2DD;
@@ -85,24 +106,26 @@
 	position: absolute;
 }
 
-.cardpay_button-inside_variant-normal {
+.cardpay_button-inside--normal {
 	background: #D0D2DD;
 	border-bottom-color: #E8E9EF;
 	color: #333344;
 }
 
-.cardpay_button-inside_variant-red {
+.cardpay_button-inside--red {
 	background: #e81b1d;
 	border-bottom-color: #e13a3b;
 	color: #e81b1d;
 	text-shadow: 0px -1px 1px #e13a3b, 0px -3px 5px #e13a3b, 0px 1px 1px #991000, 0px 1px 5px #991000;
+	box-shadow: inset 0px 0px 10px #e13a3b;
 }
 
-.cardpay_button-inside_variant-green {
+.cardpay_button-inside--green {
 	background: #009853;
 	border-bottom-color: #05a05b;
 	color: #009853;
 	text-shadow: 0px -1px 1px #02b46a, 0px -3px 5px #02b46a, 0px 1px 1px #105735, 0px 1px 5px #105735;
+	box-shadow: inset 0px 0px 10px #05a05b;
 }
 
 
@@ -119,19 +142,15 @@
 	&:hover, &:focus {
 		background: #9497AB !important;
 	}
+	&:hover {
+		padding-left: 3px;
+	}
 }
 
 .cardpay_switch.Button--selected {
-	height: 24px;
-	width: 64px;
-	background: #9497AB;
-	border-bottom: 1px solid #E8E9EF;
-	border-top: 2px solid #474A5B;
-	padding: 0px;
 	padding-left: 41px;
-	margin-left: 2.5px;
-	&:hover, &:focus {
-		background: #9497AB !important;
+	&:hover {
+		padding-left: 39px;
 	}
 }
 
@@ -158,7 +177,11 @@
 	border-radius: 10px;
 	padding: 0px;
 	margin-left: 2.5px;
-	&:hover {
+	&:focus {
 		background: #9497AB !important;
+	}
+	&:hover {
+		border-top-width: 3px;
+		background: #767989 !important;
 	}
 }
