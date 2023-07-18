@@ -366,6 +366,23 @@
 		/obj/machinery/door/airlock/science/glass, \
 		/obj/machinery/door/airlock/science/neutral, \
 		/obj/machinery/door/airlock/maintenance_hatch, \
+		/obj/machinery/door/airlock/maintenance_hatch, \
+		/turf/simulated/wall/mineral/plastic, \
+		/obj/machinery/door/traindoor, \
+		/obj/structure/mineral_door/wood/single, \
+		/obj/structure/mineral_door/wood/double, \
+		/obj/structure/mineral_door/wood/doubledirty, \
+		/obj/structure/mineral_door/transparent/wood, \
+		/obj/structure/mineral_door/transparent/wooddouble, \
+		/obj/structure/mineral_door/transparent/metal, \
+		/obj/structure/mineral_door/transparent/automatic, \
+		/obj/structure/mineral_door/transparent/traindouble, \
+		/obj/structure/mineral_door/transparent/trainglass, \
+		/obj/structure/mineral_door/metal/automatic, \
+		/obj/structure/mineral_door/metal/reinforced, \
+		/obj/structure/mineral_door/metal/train, \
+		/obj/machinery/door/poddoor/gateleft, \
+		/obj/machinery/door/poddoor/gateright, \
 )
 
 #define SMOOTH_ADAPTERS_WALLS list( \

@@ -32,7 +32,7 @@
 	icon = 'trainstation13/icons/turf/plastic_wall.dmi'
 	mineral = "plastic"
 	sheet_type = /obj/item/stack/sheet/mineral/plastic
-	canSmoothWith = list(/turf/simulated/wall/mineral/plastic, /turf/simulated/wall/mineral/plastic)
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
 
 //MOVING - ANIMATED TURFS
 
