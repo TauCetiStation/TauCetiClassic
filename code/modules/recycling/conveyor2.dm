@@ -112,7 +112,7 @@
 	sleep(1)	// slight delay to prevent infinite propagation due to map order
 	var/items_moved = 0
 	for(var/atom/movable/A in affecting)
-		if(!A.anchored)
+		if(!isobserver(A))
 			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 				step(A,movedir)
 				items_moved++
