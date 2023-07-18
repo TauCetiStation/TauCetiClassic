@@ -555,6 +555,9 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -7500,6 +7503,9 @@
 /area/station/engineering/atmos)
 "bCv" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreencorner"
@@ -10696,6 +10702,7 @@
 /obj/structure/table,
 /obj/item/device/tagger/shop,
 /obj/item/weapon/packageWrap,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
@@ -21327,6 +21334,9 @@
 "eQU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -39887,6 +39897,15 @@
 	icon_state = "red"
 	},
 /area/station/security/checkpoint)
+"jhB" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/station/medical/hallway)
 "jhH" = (
 /obj/machinery/telecomms/bus/preset_two,
 /turf/simulated/floor/bluegrid{
@@ -46272,9 +46291,6 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "kEm" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
@@ -51751,6 +51767,7 @@
 /area/station/gateway)
 "lRD" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -59006,12 +59023,14 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "nEU" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+/obj/machinery/light/smart{
+	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/port)
 "nFa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -65651,6 +65670,9 @@
 /area/station/civilian/chapel/mass_driver)
 "png" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -72171,7 +72193,6 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -74281,6 +74302,17 @@
 	icon_state = "bluecorner"
 	},
 /area/station/civilian/hydroponics)
+"rro" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/hallway/secondary/entry)
 "rru" = (
 /obj/machinery/light/small,
 /obj/structure/cable{
@@ -74329,9 +74361,10 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warning"
 	},
-/area/station/civilian/dormitories/service_bedrooms)
+/area/station/hallway/secondary/entry)
 "rrT" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -81655,6 +81688,9 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
 	},
@@ -82065,9 +82101,11 @@
 	},
 /area/station/hallway/secondary/exit)
 "tjv" = (
-/obj/structure/sign/warning/pods,
-/turf/simulated/wall,
-/area/station/hallway/secondary/mine_sci_shuttle)
+/obj/machinery/light/smart,
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "tjw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -82262,8 +82300,9 @@
 	},
 /area/station/medical/cryo)
 "tmk" = (
-/obj/machinery/light/smart{
-	dir = 8
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -82554,6 +82593,9 @@
 /area/station/hallway/secondary/entry)
 "tpH" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/medical/reception)
 "tpQ" = (
@@ -83907,6 +83949,9 @@
 /obj/machinery/flasher{
 	id = "HoP_flasher";
 	pixel_y = 25
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -85743,12 +85788,11 @@
 	},
 /area/station/civilian/chapel/office)
 "ugB" = (
-/obj/structure/stool/bed/roller,
 /obj/machinery/light/smart,
 /turf/simulated/floor{
-	icon_state = "whiteblue"
+	icon_state = "delivery"
 	},
-/area/station/medical/reception)
+/area/station/hallway/secondary/entry)
 "ugF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -87329,9 +87373,6 @@
 "uAC" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
-	},
-/obj/machinery/light/smart{
-	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -92262,6 +92303,9 @@
 "vNW" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -92987,6 +93031,7 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "vXE" = (
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
@@ -93092,6 +93137,9 @@
 	},
 /obj/structure/window/thin{
 	dir = 1
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -99004,9 +99052,6 @@
 "xvB" = (
 /obj/machinery/status_display{
 	pixel_x = -32
-	},
-/obj/machinery/light/smart{
-	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -133919,7 +133964,7 @@ aVs
 aVs
 aVs
 aVs
-oqH
+nEU
 vsU
 dPx
 iYX
@@ -136998,7 +137043,7 @@ iFx
 uzw
 uzw
 mTV
-koY
+qDF
 vAu
 vAu
 vAu
@@ -138238,7 +138283,7 @@ kHU
 yaE
 hkD
 fYS
-nEU
+vDr
 wts
 mge
 qed
@@ -139009,7 +139054,7 @@ kHU
 yaE
 csG
 fYS
-wtr
+tjv
 wts
 npC
 txi
@@ -140294,12 +140339,12 @@ gHT
 alc
 gHT
 fYS
-wtr
+tjv
 xVN
 nXN
 rVS
 xVN
-rrR
+bll
 nEE
 kET
 pPd
@@ -141318,7 +141363,7 @@ bvL
 bvL
 bvL
 paD
-paD
+ugB
 ffS
 uAC
 fYS
@@ -141941,7 +141986,7 @@ ejI
 mAx
 lRD
 sBD
-jMv
+jhB
 yey
 hZB
 rPr
@@ -142339,7 +142384,7 @@ plf
 ffS
 jUI
 fYS
-nEU
+vDr
 omV
 ouq
 lcf
@@ -143087,7 +143132,7 @@ lgc
 kHU
 kHU
 ffS
-kma
+rrR
 oaP
 fYS
 fYS
@@ -143602,7 +143647,7 @@ kHU
 kHU
 uEm
 ffS
-tjv
+lgb
 lgb
 lgb
 lgb
@@ -143613,7 +143658,7 @@ mlH
 kma
 vUe
 cPu
-cPu
+rro
 cPu
 kma
 mZg
@@ -143718,7 +143763,7 @@ add
 kzl
 ljv
 hRl
-ugB
+pSX
 nPb
 pyC
 sSj
