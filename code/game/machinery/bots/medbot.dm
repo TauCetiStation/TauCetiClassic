@@ -260,7 +260,7 @@
 
 	if(!patient)
 		if(!shut_up && prob(1))
-			var/list/messagevoice = list("Радар, надень маску!" = 'sound/voice/medbot/radar.ogg',"Всегда есть подвох, и вам повезло, что есть я" = 'sound/voice/medbot/catch.ogg',"Я так и знал! Нужно было учиться на пластического хирурга!" = 'sound/voice/medbot/surgeon.ogg',"Что это за медотсек такой? Все мрут как мухи!" = 'sound/voice/medbot/flies.ogg',"Великолепно!" = 'sound/voice/medbot/delicious.ogg')
+			var/list/messagevoice = list("Без маски не пущу!" = 'sound/voice/medbot/mask.ogg',"Сомнения порождают страх, но со мной тебе нечего бояться!" = 'sound/voice/medbot/catch.ogg',"Я так и знал! Нужно было учиться на пластического хирурга!" = 'sound/voice/medbot/surgeon.ogg',"Что это за медотсек такой? Все мрут как мухи!" = 'sound/voice/medbot/flies.ogg',"Великолепно!" = 'sound/voice/medbot/delicious.ogg', "Разгерма не в дормах, а в головах." = 'sound/voice/medbot/heads.ogg', "Пустите доброго человека, а не то он выломает дверь!" = 'sound/voice/medbot/door.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
@@ -281,7 +281,7 @@
 				last_found = world.time
 				spawn(0)
 					if((last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/list/messagevoice = list("[C.name]! Держитесь, я иду!" = 'sound/voice/medbot/coming.ogg',"Подождите, [C.name]! Я хочу помочь!" = 'sound/voice/medbot/help.ogg',"[C.name], должно быть, вы поранились!" = 'sound/voice/medbot/injured.ogg')
+						var/list/messagevoice = list("[C.name]! Держись, я иду!" = 'sound/voice/medbot/coming.ogg',"Стой, [C.name]! Я хочу помочь!" = 'sound/voice/medbot/help.ogg',"[C.name], должно быть, тебе нужна помощь!" = 'sound/voice/medbot/injured.ogg')
 						var/message = pick(messagevoice)
 						speak(message)
 						last_newpatient_speak = world.time
@@ -374,7 +374,7 @@
 		return
 
 	if(C.stat == DEAD)
-		var/list/messagevoice = list("Нет! Не бросай меня!" = 'sound/voice/medbot/no.ogg',"Жить, чёрт! ЖИТЬ!" = 'sound/voice/medbot/live.ogg',"Я... Я никогда ещё не терял пациента... По крайней мере сегодня." = 'sound/voice/medbot/lost.ogg')
+		var/list/messagevoice = list("Нет! Не бросай нас!" = 'sound/voice/medbot/no.ogg',"Проклятье! Не закрывай глаза!" = 'sound/voice/medbot/live.ogg',"Я... Я ещё никогда не терял пациента... До сегодняшнего дня." = 'sound/voice/medbot/lost.ogg', "Глупцы, героя строя, Бросаются вперёд, Нормальные герои — Всегда наоборот" = 'sound/voice/medbot/heroes.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
@@ -417,7 +417,7 @@
 		patient = null
 		currently_healing = 0
 		last_found = world.time
-		var/list/messagevoice = list("Всё залатал!" = 'sound/voice/medbot/patchedup.ogg',"Яблочко на ужин, и врач не нужен!" = 'sound/voice/medbot/apple.ogg',"Выздоравливайте!" = 'sound/voice/medbot/feelbetter.ogg')
+		var/list/messagevoice = list("Как новенький!" = 'sound/voice/medbot/patchedup.ogg',"Яблочко на ужин, и врач не нужен!" = 'sound/voice/medbot/apple.ogg',"Поправляйся!" = 'sound/voice/medbot/feelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
