@@ -169,7 +169,7 @@
 				. += ", "
 			i++
 
-/datum/role/wizard_apprentice/CanBeAssigned(datum/mind/M)
+/datum/role/wizard_apprentice/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	. = ..()
 	if(!.)
 		return
