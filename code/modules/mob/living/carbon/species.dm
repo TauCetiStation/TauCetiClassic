@@ -532,8 +532,6 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	eyes = "skrell_eyes"
-	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#EF763E"
 	base_color = "#BC5A31"
 
@@ -543,6 +541,12 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
+
+/datum/species/vulpkanin/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_vulpkanin_digest(M)
+
+/datum/species/vulpkanin/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.vulpkanin_equip(H)
 /datum/species/vox
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
