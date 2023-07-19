@@ -66,27 +66,6 @@
 		if(emagged)
 			icon_state += "_e"
 
-	if(beaker_update)
-		cut_overlays()
-
-		for(var/tank_id in tanks)
-			var/obj/item/weapon/reagent_containers/glass/tank = beakers[tank_id]
-			if(!tank)
-				continue
-			if(!tank.reagents.total_volume)
-				add_overlay(icon('icons/obj/barber.dmi', "[tank_id]_[filling_tank_id == tank_id ? "open" : "closed"]"))
-				continue
-
-			var/fill_perc = round(tank.reagents.total_volume * 100 / tank.reagents.maximum_volume, 25)
-			var/tank_color = mix_color_from_reagents(tank.reagents.reagent_list)
-			var/is_open = "[filling_tank_id == tank_id ? "open" : "closed"]"
-
-			var/image/I = image('icons/obj/reagentfillings.dmi', "[tank_id]_[fill_perc]")
-			var/list/r_g_b = ReadRGB(tank_color)
-			I.color = RGB_CONTRAST(r_g_b[1], r_g_b[2], r_g_b[3])
-			I.add_overlay(icon('icons/obj/barber.dmi', "[tank_id]_[is_open]"))
-			add_overlay(I)
-
 /obj/machinery/color_mixer/proc/isWireCut(wireIndex)
 	return wires.is_index_cut(wireIndex)
 
