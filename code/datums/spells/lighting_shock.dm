@@ -17,7 +17,7 @@
 /obj/effect/proc_holder/spell/targeted/lighting_shock/atom_init()
 	. = ..()
 	if(!compatible_mobs)
-		compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey, /mob/living/carbon/monkey/punpun, /mob/living/carbon/human/tajaran, /mob/living/carbon/human/skrell, /mob/living/carbon/human/unathi, /mob/living/carbon/human/diona, /mob/living/carbon/human/abductor, /mob/living/carbon/human/golem, /mob/living/carbon/human/vox)
+		compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey, /mob/living/carbon/monkey/punpun, /mob/living/carbon/human/tajaran, /mob/living/carbon/human/skrell, /mob/living/carbon/human/unathi, /mob/living/carbon/human/diona, /mob/living/carbon/human/abductor, /mob/living/carbon/human/golem, /mob/living/carbon/human/vox, /mob/living/carbon/human/vulpkanin)
 
 /obj/effect/proc_holder/spell/targeted/lighting_shock/cast(list/targets, mob/user = usr)
 	if(!targets.len)

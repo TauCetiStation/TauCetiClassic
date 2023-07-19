@@ -460,7 +460,7 @@
 	dietflags = DIET_PLANT
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
-	siemens_coefficient = 1.3 // Because they are wet and slimy.
+
 	has_gendered_icons = FALSE
 
 	flags = list(
@@ -498,6 +498,57 @@
 
 /datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.skrell_equip(H)
+
+/datum/species/vulpkanin
+	name = VULPKANIN
+	icobase = 'icons/mob/human_races/r_vulpkanin.dmi'
+	language = LANGUAGE_CANILUNZT
+	primitive = /mob/living/simple_animal/corgi
+	unarmed_type = /datum/unarmed_attack/claws
+	dietflags = DIET_MEAT
+	taste_sensitivity = TASTE_SENSITIVITY_SHARP
+	darksight = 8
+	nighteyes = 1
+
+	burn_mod = 1.50
+	has_gendered_icons = FALSE
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
+	)
+
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
+		O_LIVER   = /obj/item/organ/internal/liver,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
+	eyes = "skrell_eyes"
+	blood_datum_path = /datum/dirt_cover/purple_blood
+	flesh_color = "#EF763E"
+	base_color = "#BC5A31"
+
+	min_age = 18
+	max_age = 80
+
+	is_common = TRUE
+
+	skeleton_type = SKELETON_TAJARAN
+
+/datum/species/vulpkanin/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_vulpkanin_digest(M)
+
+/datum/species/vulpkanin/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.vulpkanin_equip(H)
 
 /datum/species/vox
 	name = VOX

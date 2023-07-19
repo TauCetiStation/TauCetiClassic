@@ -229,6 +229,16 @@
 	key = list("p", "з")
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
 
+/datum/language/vulpkanin
+	name = LANGUAGE_CANILUNZT
+	desc = "The sonorous and melodic language of one of the most educated species in the galaxy."
+	speech_verb = "woofs"
+	ask_verb = "barks"
+	exclaim_verb = "roars"
+	colour = "vulpkanin"
+	key = list("u", "г")
+	syllables = list("rrr", "rwaar", "uwu", "vore", "woaf", "owo")
+
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
 	name = LANGUAGE_TRADEBAND

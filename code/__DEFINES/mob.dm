@@ -85,6 +85,7 @@
 #define IPC            	 "Machine"
 #define VOX            	 "Vox"
 #define VOX_ARMALIS    	 "Vox Armalis"
+#define VULPKANIN		 "Vulpkanin"
 #define ABDUCTOR       	 "Abductor"
 #define SKELETON       	 "Skeleton"
 #define SKELETON_UNATHI	 "Skeleton Unathi"
