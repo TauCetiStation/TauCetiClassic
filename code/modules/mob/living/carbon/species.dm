@@ -542,9 +542,6 @@
 
 	skeleton_type = SKELETON_TAJARAN
 
-/datum/species/vulpkanin/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_vulpkanin_digest(M)
-
 /datum/species/vulpkanin/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vulpkanin_equip(H)
 /datum/species/vox
