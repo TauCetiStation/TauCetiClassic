@@ -37,7 +37,7 @@
 
 // Station has other antags
 /datum/faction/traitor/imposter/limit_roles(num_players)
-	max_roles = ..()
+	..()
 	max_roles /= 3
 	log_mode("IMPOSTERS: [src] faction has [max_roles] limit of roundstart roles")
 	return max_roles
