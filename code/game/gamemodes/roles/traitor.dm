@@ -175,22 +175,22 @@
 	if(issilicon(antag.current))
 		//probability 10% for default silent assassin AI
 		if(prob(10))
-			log_debug("IMPOSTERS: silicon imposter ([antag.current]) has standart objectives")
+			log_mode("IMPOSTERS: silicon imposter ([antag.current]) has standart objectives")
 			return ..()
 		//probability 90% for peace-protecter AI
 		AppendObjective(/datum/objective/target/protect, TRUE)
 		AppendObjective(/datum/objective/target/protect, TRUE)
 		AppendObjective(/datum/objective/survive)
-		log_debug("IMPOSTERS: silicon imposter ([antag.current]) has protect objectives")
+		log_mode("IMPOSTERS: silicon imposter ([antag.current]) has protect objectives")
 		//and 10% prob to hijack shuttle when has protect objective
 		if(prob(10))
 			AppendObjective(/datum/objective/block)
-			log_debug("IMPOSTERS: silicon [antag.current] has hijack with protect objectives")
+			log_mode("IMPOSTERS: silicon [antag.current] has hijack with protect objectives")
 		return
 	//1% prob to killhead objectives for non-silicon imposter
 	if(prob(1))
 		add_killhead_objectives()
-		log_debug("IMPOSTERS: Non-silicon imposter ([antag.current]) has killhead objectives")
+		log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has killhead objectives")
 		return
 	//default traitor objectives
 	for(var/i in 1 to 3)
@@ -204,4 +204,4 @@
 			AppendObjective(/datum/objective/survive)
 		else
 			AppendObjective(/datum/objective/hijack)
-	log_debug("IMPOSTERS: Non-silicon imposter ([antag.current]) has standart traitor objectives")
+	log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has standart traitor objectives")
