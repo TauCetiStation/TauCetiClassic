@@ -115,7 +115,7 @@
 	. = ..(mapload, DIONA)
 
 /mob/living/carbon/human/vulpkanin/atom_init(mapload)
-	. = ..(mapload, VULKPANIN)
+	. = ..(mapload, VULPKANIN)
 
 /mob/living/carbon/human/podman/atom_init(mapload)
 	. = ..(mapload, PODMAN)
