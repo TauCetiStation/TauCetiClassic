@@ -45,6 +45,8 @@
 /datum/outfit/nuclear/skrell_equip()
 	backpack_contents += list(/obj/item/device/modkit/skrell)
 
+/datum/outfit/nuclear/vulpkanin_equip()
+
 /datum/outfit/nuclear/vox_equip()
 	backpack_contents += list(/obj/item/device/modkit/vox)
 	l_hand = /obj/item/weapon/tank/nitrogen
