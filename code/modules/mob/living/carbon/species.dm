@@ -503,7 +503,7 @@
 	name = VULPKANIN
 	icobase = 'icons/mob/human_races/r_vulpkanin.dmi'
 	language = LANGUAGE_CANILUNZT
-	primitive = /mob/living/simple_animal/corgi
+	primitive = /mob/living/simple_animal/corgi/puppy
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_MEAT
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP

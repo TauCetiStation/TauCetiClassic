@@ -236,7 +236,7 @@
 	ask_verb = "barks"
 	exclaim_verb = "roars"
 	colour = "vulpkanin"
-	key = list("u", "г")
+	key = list("7")
 	syllables = list("rrr", "rwaar", "uwu", "vore", "woaf", "owo")
 
 // Galactic common languages (systemwide accepted standards).
