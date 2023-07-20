@@ -460,6 +460,7 @@
 	dietflags = DIET_PLANT
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
+	siemens_coefficient = 1.3 // Because they are wet and slimy.
 
 	has_gendered_icons = FALSE
 
@@ -527,13 +528,13 @@
 		O_HEART   = /obj/item/organ/internal/heart,
 		O_BRAIN   = /obj/item/organ/internal/brain,
 		O_EYES    = /obj/item/organ/internal/eyes,
-		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
+		O_LUNGS   = /obj/item/organ/internal/lungs,
 		O_LIVER   = /obj/item/organ/internal/liver,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	flesh_color = "#EF763E"
-	base_color = "#BC5A31"
+	flesh_color = "#cf6413"
+	base_color = "#8a420b"
 
 	min_age = 18
 	max_age = 80
@@ -544,6 +545,7 @@
 
 /datum/species/vulpkanin/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vulpkanin_equip(H)
+
 /datum/species/vox
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
