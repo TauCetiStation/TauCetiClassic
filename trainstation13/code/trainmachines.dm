@@ -15,14 +15,15 @@
 	icon = 'trainstation13/icons/trainmachines.dmi'
 	icon_state = "sheater-off"
 
-/obj/machinery/media/jukebox/trainjukebox
+/obj/machinery/media/jukebox/train
 	name = "wall radio"
-	desc = "A modern wall mounted radio with audio visualizer."
+	desc = "A modern wall mounted radio with audio visualizer. You see some text in Russian on maintenance panel: \"Не влезай! Убьет!\""
 	icon = 'trainstation13/icons/trainmachines.dmi'
 	density = 0
 	playlist_id="train"
 	// Must be defined on your server.
 	playlists=list(
+		"train"  = "Train Tunes",
 		"bar"  = "Bar Mix",
 		"mogesfm84"  = "Moghes FM-84",
 		"moges" = "Moghes Club Music",
@@ -42,6 +43,26 @@
 		"thematic" = "Side-Bursting Tunes",
 		"lofi" = "Sadness/Longing/Loneliness",
 	)
+
+/obj/machinery/media/jukebox/train/attackby(obj/item/W, mob/user, params)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(iswrenching(W))
+		if(user.is_busy(src))
+			return
+		user.visible_message("<span class='notice'>[user.name] attempts to disassemble \the [src.name].</span>","<span class='notice'>You attempt to disasemble \the [src.name].</span>")
+		if(W.use_tool(src, user, 30, volume = 50))
+			user.visible_message("<span class='notice'>[user.name] has failed to disassemble \the [src.name]. In Soviet Union [src.name] disassembles you!</span>","<span class='warning'>You have failed to disassemble \the [src.name]. In Soviet Union [src.name] disassembles you!</span>")
+			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+
+			Disassemble(user)
+	else
+		..()
+
+/obj/machinery/media/jukebox/train/proc/Disassemble(mob/living/user)
+	if(istype(user))
+		user.dust()
+	else
+		qdel(user)
 
 /obj/machinery/computer/security/wooden_tv/train
 	name = "Spektr-88"

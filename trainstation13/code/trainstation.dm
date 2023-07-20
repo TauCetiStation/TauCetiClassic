@@ -103,8 +103,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 	color = "#4fff43"
 	operating = 1
 	var/list/affecting_turfs = list()
-	var/dist_north = 2
-	var/dist_south = 2
+	var/dist_north = 3
+	var/dist_south = 3
 
 /obj/machinery/conveyor/train/main/atom_init()
 	. = ..()
