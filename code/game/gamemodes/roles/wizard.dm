@@ -17,7 +17,7 @@
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<B>Космическая Федерайия Магов отправила вас выполнить определенные цели:</B>")
+	to_chat(antag.current, "<B>Космическая Федерация Магов отправила вас выполнить определенные цели:</B>")
 
 /datum/role/wizard/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
