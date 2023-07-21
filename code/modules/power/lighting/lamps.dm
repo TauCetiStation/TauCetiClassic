@@ -14,6 +14,8 @@
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
 
+	flags_2 = IMMUNE_CONVEYOR_2
+
 	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
 	var/fitting = LAMP_FITTING_TUBE
 

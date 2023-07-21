@@ -95,6 +95,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 	color = "#ff4343"
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
+	flags_2 = IMMUNE_CONVEYOR_2
 
 /obj/machinery/conveyor/train/ex_act()
 	return
@@ -134,10 +135,11 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 	sleep(1)    // slight delay to prevent infinite propagation due to map order
 	var/items_moved = 0
 	for(var/atom/movable/A in affecting)
-		if(!isobserver(A))
-			if(A.loc == src.loc)
-				step(A,movedir)
-				items_moved++
+		if(flags & ABSTRACT || flags_2 & IMMUNE_CONVEYOR_2 || A.loc != src.loc)
+			continue
+
+		step(A,movedir)
+		items_moved++
 		if(items_moved >= 10)
 			break
 
@@ -156,6 +158,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/train_special_effects, train_special_effect
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	var/still_icon_state = "trainstation13"
+	flags_2 = IMMUNE_CONVEYOR_2
 
 /obj/effect/decal/train_special_effects/ex_act()
 	return

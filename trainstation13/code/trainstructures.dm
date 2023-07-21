@@ -23,6 +23,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 	anchored = TRUE
 	density = TRUE
 	still_icon_state = "gangway"
+	flags_2 = IMMUNE_CONVEYOR_2
 
 /obj/structure/train/proc/change_movement(moving)
 	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"
