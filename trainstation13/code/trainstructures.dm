@@ -24,6 +24,41 @@ ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 	density = TRUE
 	still_icon_state = "gangway"
 	flags_2 = IMMUNE_CONVEYOR_2
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/train/gangway/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			if(damage_amount)
+				playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/train/gangway/attack_alien(mob/user, damage)
+	if (!isxenoadult(user) || user.a_intent != INTENT_HARM)	//Safety check for larva.
+		return FALSE
+	attack_generic(user, damage, BRUTE, MELEE)
+
+/obj/structure/train/gangway/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(HULK in user.mutations)
+		if(user.a_intent != INTENT_HARM)
+			return FALSE
+		user.do_attack_animation(src)
+		user.visible_message("<span class='warning'>[user] destroys the [name]!</span>", self_message = "<span class='notice'>You easily destroy the [name].</span>")
+		take_damage(INFINITY, BRUTE, MELEE)
+	else
+		user.visible_message("<span class='warning'>[user] claws at the [name]!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
+	return
+
+/obj/structure/train/gangway/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/train/gangway/attack_alien(mob/user, damage)
+	..(user, rand(40, 60))
 
 /obj/structure/train/proc/change_movement(moving)
 	icon_state = "[still_icon_state]_[moving ? "moving" : "still"]"

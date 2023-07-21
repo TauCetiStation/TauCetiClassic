@@ -5,6 +5,7 @@ var/global/join_motd = null
 var/global/host_announcements
 var/global/join_test_merge = null
 var/global/test_merges
+/* <base>
 var/global/station_name = "NSS Exodus"
 var/global/station_name_ru = "КСН Исход"
 var/global/system_name = "Tau Ceti"
@@ -12,6 +13,18 @@ var/global/system_name_ru = "Tay Кита"
 var/global/game_version = "TauCetiStation"
 var/global/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
 var/global/gamestory_start_year = 2213
+</base> */
+
+// <basecodetrainstation13>
+var/global/station_name = "Atomic train \"Aurora Borealis\"" //Ah- Aurora Borealis?! At this time of year, at this time of day, in this part of the country, localized entirely within your kitchen?
+var/global/station_name_ru = "Атомовоз «Северное Сияние»"
+var/global/system_name = "Empire of Greater Rus"
+var/global/system_name_ru = "Империя Великой Руси"
+var/global/game_version = "TauCetiStation"
+var/global/game_year = (text2num(time2text(world.realtime, "YYYY")) - rand(28, 38))
+var/global/gamestory_start_year = 1961
+// </basecodetrainstation13>
+
 var/global/changelog_hash = ""
 
 var/global/list/donators = list()
