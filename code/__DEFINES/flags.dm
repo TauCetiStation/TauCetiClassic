@@ -22,7 +22,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
 
 #define ABSTRACT               (1<<6)   // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
-#define NODECONSTRUCT          (1<<6)   // For machines and structures that should just dissapear when deconstructed without breaking into parts, eg, holodeck stuff.
+
 
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
@@ -49,7 +49,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
-#define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
+//#define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
+#define NODECONSTRUCT          (1<<17)   // For machines and structures that should just dissapear when deconstructed without breaking into parts, eg, holodeck stuff.
 
 #define NOSLIP                 (1<<18)   // Prevents from slipping on wet floors, in space etc.
 
@@ -75,6 +76,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IN_INVENTORY           (1<<3)
 #define IN_STORAGE             (1<<4)
 #define CANT_BE_INSERTED       (1<<5)   // Prohibits putting an item in a containers
+#define IMMUNE_CONVEYOR_2      (1<<6)
+
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)

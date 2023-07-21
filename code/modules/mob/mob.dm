@@ -1175,7 +1175,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if((spintime < 1) || (speed < 1) || !spintime|| !speed)
 		return
 
-	flags |= IS_SPINNING
+	//flags |= IS_SPINNING
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -1189,7 +1189,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				D = NORTH
 		set_dir(D)
 		spintime -= speed
-	flags &= ~IS_SPINNING
+	//flags &= ~IS_SPINNING
 
 /mob/proc/in_interaction_vicinity(atom/target)
 	return Adjacent(target)

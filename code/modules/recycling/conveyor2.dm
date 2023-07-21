@@ -16,6 +16,8 @@
 	var/backwards		// hopefully self-explanatory
 	var/movedir			// the actual direction to move stuff in
 
+	flags_2 = IMMUNE_CONVEYOR_2
+
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
@@ -112,10 +114,11 @@
 	sleep(1)	// slight delay to prevent infinite propagation due to map order
 	var/items_moved = 0
 	for(var/atom/movable/A in affecting)
-		if(!isobserver(A))
-			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-				step(A,movedir)
-				items_moved++
+		if(flags & ABSTRACT || flags_2 & IMMUNE_CONVEYOR_2 || A.loc != src.loc)
+			continue
+
+		step(A,movedir)
+		items_moved++
 		if(items_moved >= 10)
 			break
 
