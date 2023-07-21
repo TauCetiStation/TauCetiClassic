@@ -42,15 +42,15 @@
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
 			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в ПДА!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в Гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "PDA")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
-			to_chat(traitor_mob, "ПДА не обнаружен, установка портативного телепортационного реле AntagCorp в Гарнитуру!")
+			to_chat(traitor_mob, "ПДА не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в Гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
 		var/list/station_intercom_list = list()
@@ -67,7 +67,7 @@
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
 			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в ПДА!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в Гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "None")
 		to_chat(traitor_mob, "Вы отказались от установки портативного телепортационного реле AntagCorp! Удачи.")
@@ -78,9 +78,9 @@
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if (!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
-			to_chat(traitor_mob, "ПДА не обнаружен, установка портативного телепортационного реле AntagCorp в Гарнитуру!")
+			to_chat(traitor_mob, "ПДА не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в Гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
 
 	if (istype(R, /obj/item/device/radio))
 		// generate list of radio freqs
