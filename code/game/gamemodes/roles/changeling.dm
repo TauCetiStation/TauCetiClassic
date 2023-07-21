@@ -76,10 +76,11 @@
 		return FALSE
 
 	antag.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	to_chat(antag.current, "<span class='danger'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span>")
+	to_chat(antag.current, "<span class='danger'>Воспользуйтесь \":g message\" для комуникации с остальными Генокрадами. Помните: вы поглощаете все образцы ДНКа которые поглатила ваша жертва-генокрад.</span>")
+	to_chat(antag.current, "<span class='notice'>Мы Генокрад, существо из далеких уголков космоса. У нас есть задачи на эту станцию которые нужно выполнить используя свою сообразительность и при необходимости свои генетические возможности(возле вкладки Status в правой-верхней части экрана, у вас появилась вкладка Changelling в которой вы можете приобрети и использовать свои способности).</span>")
 
 	if(antag.current.mind && antag.current.mind.assigned_role == "Clown")
-		to_chat(antag.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
+		to_chat(antag.current, "Вы развились за пределы своей клоунской природы, что позволит вам пользоватся боевым вооружением без вреда для вас.")
 		REMOVE_TRAIT(antag.current, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	return TRUE
@@ -181,13 +182,13 @@
 	var/mob/living/carbon/human/changeling = antag.current
 
 	if(absorbedamount == round(OVEREATING_AMOUNT / 2))
-		to_chat(changeling, "<span class='warning'>Absorbing that many made us realise that we are halfway to becoming a threat to all - even ourselves. We should be more careful with absorbings.</span>")
+		to_chat(changeling, "<span class='warning'>Поглощая так много заставило нас осознать что мы на полпути до перевоплощения в большую угрозу для всех - даже для самих себя. Мы должны быть более осторожны с поглощением.</span>")
 
 	else if(absorbedamount == OVEREATING_AMOUNT - 1)
-		to_chat(changeling, "<span class='warning'>We feel like we're near the edge to transforming to something way more brutal and inhuman - <B>and there will be no way back</B>.</span>")
+		to_chat(changeling, "<span class='warning'>Мы ощущаем грань за которой находится еще более жестокое и нечеловеческое обличие - <B>и это необратимо</B>.</span>")
 
 	else if(absorbedamount == OVEREATING_AMOUNT)
-		to_chat(changeling, "<span class='danger'>We feel our flesh mutate, ripping all our belongings from our body. Additional limbs burst out of our chest along with deadly claws - we've become <B>The Abomination</B>. The end approaches.</span>")
+		to_chat(changeling, "<span class='danger'>Ощущение мутации по всему нашему телу, разрывание всего от прошлой оболочки, дополнительные конечности вырывающиеся из грудной клетки обножая на своих концах смертоносные когти - мы преобразились. <B>Мы Абоминация</B>. Конец близится.</span>")
 		for(var/obj/item/I in changeling) //drops all items
 			changeling.drop_from_inventory(I)
 		changeling.Stun(10)
