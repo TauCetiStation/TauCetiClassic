@@ -23,6 +23,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 	anchored = TRUE
 	density = TRUE
 	still_icon_state = "gangway"
+	flags_2 = IMMUNE_CONVEYOR_2
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/train/gangway/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
