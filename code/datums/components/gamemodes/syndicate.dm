@@ -62,7 +62,7 @@
 			R = pick(station_intercom_list)
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
-			to_chat(traitor_mob, "Не обнаружено подходящего Интеркома внутренней связи станции, установка портативного телепортационного реле AntagCorp в Гарнитуру!")
+			to_chat(traitor_mob, "Не обнаружено подходящего Интеркома внутренней связи станции, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
 			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в ПДА!")
@@ -74,7 +74,7 @@
 		R = null
 
 	else
-		to_chat(traitor_mob, "Вы не указали место установки портативного телепортационного реле AntagCorp в настройках антагонистов! По умолчанию в ПДА!")
+		to_chat(traitor_mob, "Вы не указали место установки портативного телепортационного реле AntagCorp в настройках антагонистов(перед началом раунда, зайдите в Setup, далее во вкладку Roles и нажмите на PDA, чтобы вам был выдан список где может быть установлен Аплинк)! По умолчанию в ПДА!")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if (!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
