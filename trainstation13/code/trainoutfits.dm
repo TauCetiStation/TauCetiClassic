@@ -82,62 +82,120 @@
 	id = /obj/item/weapon/card/id/passport
 	shoes = /obj/item/clothing/shoes/boots/work
 
-/*
 /datum/outfit/train/chef
 	name = "Train Station 13: Chef"
-	head = /obj/item/clothing/head/mailman
+	head = /obj/item/clothing/head/chefhat
+	suit = /obj/item/clothing/suit/chef
 	gloves = /obj/item/clothing/gloves/pipboy/pipboy3000mark4
-	uniform = /obj/item/clothing/under/rank/mailman
-	uniform_f = /obj/item/clothing/under/train/mailwoman
+	uniform = /obj/item/clothing/under/rank/chef
+	uniform_f = /obj/item/clothing/under/rank/chef
 	id = /obj/item/weapon/card/id/passport
-	shoes = /obj/item/clothing/shoes/boots/work
+	shoes = /obj/item/clothing/shoes/leather
 
 /datum/outfit/train/bartender
 	name = "Train Station 13: Bartender"
-	head = /obj/item/clothing/head/mailman
+	head = /obj/item/clothing/head/that
 	gloves = /obj/item/clothing/gloves/pipboy/pimpboy3billion
-	uniform = /obj/item/clothing/under/rank/mailman
-	uniform_f = /obj/item/clothing/under/train/mailwoman
+	uniform = /obj/item/clothing/under/rank/bartender
+	uniform_f = /obj/item/clothing/under/rank/bartender_fem
 	id = /obj/item/weapon/card/id/passport
-	shoes = /obj/item/clothing/shoes/boots/work
+	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/train/waiter
 	name = "Train Station 13: Waiter"
-	head = /obj/item/clothing/head/mailman
 	gloves = /obj/item/clothing/gloves/pipboy
-	uniform = /obj/item/clothing/under/rank/mailman
-	uniform_f = /obj/item/clothing/under/train/mailwoman
+	uniform = /obj/item/clothing/under/waiter
+	uniform_f = /obj/item/clothing/under/waiter
 	id = /obj/item/weapon/card/id/passport
-	shoes = /obj/item/clothing/shoes/boots/work
-
-/datum/outfit/train/police
-	name = "Train Station 13: Police"
-	head = /obj/item/clothing/head/mailman
-	gloves = /obj/item/clothing/gloves/pipboy
-	uniform = /obj/item/clothing/under/rank/mailman
-	uniform_f = /obj/item/clothing/under/train/mailwoman
-	id = /obj/item/weapon/card/id/passport
-	shoes = /obj/item/clothing/shoes/boots/work
-
-/datum/outfit/train/kgb
-	name = "Train Station 13: Secret Police"
-	head = /obj/item/clothing/head/mailman
-	gloves = /obj/item/clothing/gloves/pipboy
-	uniform = /obj/item/clothing/under/rank/mailman
-	uniform_f = /obj/item/clothing/under/train/mailwoman
-	id = /obj/item/weapon/card/id/passport
-	shoes = /obj/item/clothing/shoes/boots/work
+	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/train/janitor
 	name = "Train Station 13: Janitor"
-	head = /obj/item/clothing/head/mailman
+	head = /obj/item/clothing/head/soft/trash
 	gloves = /obj/item/clothing/gloves/pipboy
-	uniform = /obj/item/clothing/under/rank/mailman
-	uniform_f = /obj/item/clothing/under/train/mailwoman
+	uniform = /obj/item/clothing/under/rank/recycler
+	uniform_f = /obj/item/clothing/under/rank/recycler
 	id = /obj/item/weapon/card/id/passport
-	shoes = /obj/item/clothing/shoes/boots/work
+	shoes = /obj/item/clothing/shoes/boots/galoshes
 
-*/
+/obj/item/weapon/storage/belt/security/police
+	startswith = list(/obj/item/weapon/melee/classic_baton = 1, /obj/item/weapon/reagent_containers/spray/pepper = 1, /obj/item/ammo_box/magazine/colt/rubber = 2, /obj/item/weapon/handcuffs = 3)
+
+/datum/outfit/train/police
+	name = "Train Station 13: Police"
+	head = /obj/item/clothing/head/spacepolice
+	suit = /obj/item/clothing/suit/storage/forensics/blue //Also /obj/item/clothing/suit/storage/forensics/red
+	back = /obj/item/weapon/storage/backpack/satchel/sec/cops
+	gloves = /obj/item/clothing/gloves/pipboy
+	uniform = /obj/item/clothing/under/train/police
+	uniform_f = /obj/item/clothing/under/train/police
+	belt = /obj/item/weapon/storage/belt/security/police
+	id = /obj/item/weapon/card/id/passport
+	r_pocket = /obj/item/device/radio
+	l_pocket = /obj/item/device/flashlight/seclite
+	shoes = /obj/item/clothing/shoes/boots
+
+	backpack_contents = list(
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian = 1,
+		/obj/item/clothing/gloves/security = 1,
+		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
+		/obj/item/ammo_box/c45r = 3,
+	)
+
+/datum/outfit/train/secretpolice
+	name = "Train Station 13: Secret Police"
+	l_ear = /obj/item/device/radio/headset/headset_sec
+	back = /obj/item/weapon/storage/backpack/satchel
+	gloves = /obj/item/clothing/gloves/pipboy
+	uniform = /obj/item/clothing/under/suit_jacket
+	uniform_f = /obj/item/clothing/under/suit_jacket
+	id = /obj/item/weapon/card/id/passport
+	l_pocket = /obj/item/device/flashlight/seclite
+	shoes = /obj/item/clothing/shoes/laceup
+
+	backpack_contents = list(
+		/obj/item/weapon/gun/energy/taser = 1,
+		/obj/item/weapon/gun/projectile/automatic/pistol/stechkin = 1,
+		/obj/item/weapon/silencer = 1,
+		/obj/item/ammo_box/magazine/stechkin/extended = 2,
+		/obj/item/ammo_box/c9mmr = 2,
+		/obj/item/ammo_box/c9mm = 2,
+		/obj/item/weapon/handcuffs = 2,
+		/obj/item/weapon/grenade/flashbang = 1,
+		/obj/item/weapon/grenade/chem_grenade/teargas = 1,
+	)
+
+/obj/item/device/radio/headset/headset_int/scp
+	name = "advanced radio headset"
+	icon_state = "blueshield"
+	desc = "The cavalry has arrived... To access the security channel, use :s. For command, use :c."
+
+/datum/outfit/train/verysecretpolice
+	name = "Train Station 13: Very Secret Police"
+	head = /obj/item/clothing/head/bio_hood/new_hazmat/cmo
+	mask = /obj/item/clothing/mask/gas/coloured
+	l_ear = /obj/item/device/radio/headset/headset_int/scp
+	glasses = /obj/item/clothing/glasses/meson
+	suit = /obj/item/clothing/suit/bio_suit/new_hazmat/cmo
+	back = /obj/item/weapon/storage/backpack/satchel/med
+	belt = /obj/item/weapon/storage/belt/utility/atmostech
+	gloves = /obj/item/clothing/gloves/latex/nitrile //Two by two, hands of blue!
+	uniform = /obj/item/clothing/under/rank/medical/blue
+	uniform_f = /obj/item/clothing/under/rank/medical/blue
+	id = /obj/item/weapon/card/id/passport
+	r_pocket = /obj/item/weapon/tank/emergency_oxygen/double
+	l_pocket = /obj/item/device/flashlight
+	shoes = /obj/item/clothing/shoes/blue
+
+	backpack_contents = list(
+		/obj/item/weapon/melee/baton = 1,
+		/obj/item/weapon/grenade/chem_grenade/teargas = 2,
+		/obj/item/weapon/gun/energy/taser = 1,
+		/obj/item/weapon/grenade/chem_grenade/metalfoam = 2,
+		/obj/item/weapon/storage/box/handcuffs = 1,
+		/obj/item/weapon/grenade/flashbang = 2,
+		/obj/item/weapon/grenade/chem_grenade/incendiary = 2,
+	)
 
 //MODIFIED VANILLA CLOTHING SUBTYPES
 
@@ -197,3 +255,10 @@
 	desc = "<i>'Very special delivery!'</i>"
 	icon_state = "capcamisole"
 	item_state = "capcamisole"
+
+/obj/item/clothing/under/train/police
+	name = "police uniform"
+	desc = "A typical police uniform with yellow lampasses on the trousers."
+	icon_state = "blueshield"
+	item_state = "blueshield"
+	flags = ONESIZEFITSALL
