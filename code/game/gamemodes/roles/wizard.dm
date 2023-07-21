@@ -28,7 +28,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 
-	var/newname = sanitize_safe(input(wizard_mob, "Вы Космический Волшебник. Желаете ли вы изменить свое имя?", "Name change", randomname) as null|text, MAX_NAME_LEN)
+	var/newname = sanitize_safe(input(wizard_mob, "Вы Космический Маг. Желаете ли вы изменить свое имя?", "Name change", randomname) as null|text, MAX_NAME_LEN)
 
 	if(!newname)
 		newname = randomname
