@@ -96,6 +96,10 @@
 	//abstract variable which helps decide how much imposters we need
 	var/antag_counting = 0
 
+/datum/faction/traitor/auto/imposter/can_setup(num_players)
+	limit_roles(num_players)
+	return TRUE
+
 /datum/faction/traitor/auto/imposter/OnPostSetup()
 	. = ..()
 	antag_counting = members.len
