@@ -54,6 +54,9 @@
 		return FALSE
 	return TRUE
 
+/datum/faction/traitor/proc/get_max_traitors(playercount)
+	return round(playercount / 10) + 1
+
 /datum/faction/traitor/proc/traitorcheckloop()
 	if(!is_shuttle_staying())
 		return FALSE
@@ -72,9 +75,8 @@
 					possible_autotraitor += player
 
 	var/list/sorted_players = sort_possible_traitors(possible_autotraitor)
-	var/max_traitors = 1
+	var/max_traitors = get_max_traitors(playercount)
 	var/traitor_prob = 0
-	max_traitors = round(playercount / 10) + 1
 	traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
 	if(traitorcount < max_traitors - 1)
 		traitor_prob += 50
@@ -119,6 +121,9 @@
 	var/mob/M = pick(mindprotected_list)
 	add_faction_member(src, M)
 	antag_counting++
+
+/datum/faction/traitor/imposter/get_max_traitors(playercount)
+	return antag_counting
 
 /datum/faction/traitor/imposter/traitorcheckloop()
 	log_mode("IMPOSTERS: Try add new auto-imposter.")
