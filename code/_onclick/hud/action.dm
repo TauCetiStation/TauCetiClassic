@@ -72,7 +72,8 @@
 				Activate()
 			else
 				Deactivate()
-
+	if(!owner)
+		return
 	if(button == null)
 		var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
 		N.owner = src.owner
