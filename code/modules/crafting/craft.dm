@@ -16,20 +16,19 @@
 */
 
 /datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
-	main_loop:
-		for(var/A in R.reqs)
-			var/needed_amount = R.reqs[A]
-			for(var/B in contents)
-				if(ispath(B, A) || R.blacklist.Find(B))
-					if(contents[B] >= R.reqs[A])
-						continue main_loop
-					else
-						needed_amount -= contents[B]
-						if(needed_amount <= 0)
-							continue main_loop
-						else
-							continue
-			return 0
+	for(var/A in R.reqs)
+		var/needed_amount = R.reqs[A]
+		for(var/B in contents)
+			if(!ispath(B, A) || R.blacklist.Find(B))
+				continue
+
+			needed_amount -= contents[B]
+			if(needed_amount <= 0)
+				break
+
+		if(needed_amount > 0)
+			return FALSE
+
 	for(var/A in R.chem_catalysts)
 		if(contents[A] < R.chem_catalysts[A])
 			return 0
