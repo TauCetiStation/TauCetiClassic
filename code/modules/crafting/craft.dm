@@ -20,7 +20,7 @@
 		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
 			for(var/B in contents)
-				if(ispath(B, A))
+				if(ispath(B, A) || R.blacklist.Find(B))
 					if(contents[B] >= R.reqs[A])
 						continue main_loop
 					else
@@ -35,7 +35,7 @@
 			return 0
 	return 1
 
-/datum/personal_crafting/proc/get_environment(mob/user)
+/datum/personal_crafting/proc/get_environment(mob/user, list/blacklist=null)
 	. = list()
 	for(var/obj/item/I in list(user.l_hand, user.r_hand))
 		. += I
@@ -47,13 +47,13 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags_2 & HOLOGRAM_2)
+				if(AM.flags_2 & HOLOGRAM_2 || (blacklist && (AM.type in blacklist)))
 					continue
 				. += AM
 
-/datum/personal_crafting/proc/get_surroundings(mob/user)
+/datum/personal_crafting/proc/get_surroundings(mob/user, list/blacklist=null)
 	. = list()
-	for(var/obj/I in get_environment(user))
+	for(var/obj/I in get_environment(user, blacklist))
 		if(I.flags_2 & HOLOGRAM_2)
 			continue
 		if(istype(I, /obj/item/stack))
@@ -85,7 +85,7 @@
 	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R, overrided_time = null)
-	var/list/contents = get_surroundings(user)
+	var/list/contents = get_surroundings(user, R.blacklist)
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
 			var/required_time = overrided_time
@@ -94,7 +94,7 @@
 			if(R.required_proficiency)
 				required_time = apply_skill_bonus(user, R.time, R.required_proficiency, multiplier = -0.4)
 			if(do_after(user, required_time, target = user))
-				contents = get_surroundings(user)
+				contents = get_surroundings(user, R.blacklist)
 				if(!check_contents(R, contents))
 					return ", missing component."
 				if(!check_tools(user, R, contents))
