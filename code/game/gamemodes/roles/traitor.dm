@@ -153,11 +153,11 @@
 /datum/role/traitor/imposter/add_one_objective(datum/mind/traitor)
 	switch(rand(1, 100))
 		//most imposters is just stealers
-		if(1 to 90)
+		if(1 to 70)
 			AppendObjective(/datum/objective/steal, TRUE)
-		if(91 to 93)
+		if(71 to 80)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(94 to 96)
+		if(81 to 90)
 			AppendObjective(/datum/objective/target/harm, TRUE)
 		else
 			AppendObjective(/datum/objective/target/dehead, TRUE)
@@ -187,8 +187,8 @@
 			AppendObjective(/datum/objective/block)
 			log_mode("IMPOSTERS: silicon [antag.current] has hijack with protect objectives")
 		return
-	//1% prob to killhead objectives for non-silicon imposter
-	if(prob(1))
+	//5% prob to killhead objectives for non-silicon imposter
+	if(prob(5))
 		add_killhead_objectives()
 		log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has killhead objectives")
 		return
