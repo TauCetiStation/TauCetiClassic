@@ -135,7 +135,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/trainstation, global.train_block)
 	sleep(1)    // slight delay to prevent infinite propagation due to map order
 	var/items_moved = 0
 	for(var/atom/movable/A in affecting)
-		if(flags & ABSTRACT || flags_2 & IMMUNE_CONVEYOR_2 || A.loc != src.loc)
+		if(A.flags & ABSTRACT || A.flags_2 & IMMUNE_CONVEYOR_2 || A.loc != src.loc)
 			continue
 
 		step(A,movedir)
