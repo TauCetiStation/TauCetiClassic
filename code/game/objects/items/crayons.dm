@@ -330,15 +330,14 @@
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(user.a_intent == INTENT_PUSH && H.get_species() == IPC){
-				var/new_skin = input(user, "Select IPC body color", "IPC body color") as null|color
-				if(new_skin)
+				if(colour)
 					uses -= 15
 					C.blurEyes(3)
 					C.eye_blind = max(C.eye_blind, 1)
 					if(do_after(user, 60, needhand = TRUE, target = target)){
-						H.r_skin = hex2num(copytext(new_skin, 2, 4))
-						H.g_skin = hex2num(copytext(new_skin, 4, 6))
-						H.b_skin = hex2num(copytext(new_skin, 6, 8))
+						H.r_skin = hex2num(copytext(colour, 2, 4))
+						H.g_skin = hex2num(copytext(colour, 4, 6))
+						H.b_skin = hex2num(copytext(colour, 6, 8))
 						H.apply_recolor()
 						H.update_body()
 					}
