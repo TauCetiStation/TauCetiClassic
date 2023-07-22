@@ -135,7 +135,7 @@
 
 /datum/faction/traitor/auto/imposter/can_latespawn_mob(mob/P)
 	//Not every joined human can start with traitor role
-	if(prob(80))
+	if(prob(50))
 		log_mode("IMPOSTERS: [P] latespawned without adding to [src] faction")
 		return FALSE
 	//calculate every time which members are succeed, stop spawn when at least 1 succeeded
@@ -143,7 +143,7 @@
 		if(member_role.IsSuccessful())
 			log_mode("IMPOSTERS: [P] wanna be a member of [src], but [src] faction members have completed objectives")
 			return FALSE
-	//probability 20% to increase amount of imposters by ~20%
+	//probability 50% to increase amount of imposters by ~20%
 	if(members.len < calculate_traitor_scaling(player_list.len))
 		return TRUE
 	log_mode("IMPOSTERS: Members ([members.len]) has enough people for current players amount ([player_list.len])")
