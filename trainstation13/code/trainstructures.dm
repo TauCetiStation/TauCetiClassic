@@ -11,6 +11,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 /obj/structure/train
 	name = "mysterious force"
 	desc = "These aren't the droids you're looking for."
+	anchored = TRUE
 	var/still_icon_state = "benkenobi"
 
 /obj/structure/train/gangway //Not really a wall, or a turf, but it's made of resin, allright.
@@ -20,7 +21,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/train, global.train_animated_structures)
 	icon_state = "gangway_still" //Does not animate by default when spawned, but will animate if the train is moving.
 	max_integrity = 70
 	opacity = 1
-	anchored = TRUE
 	density = TRUE
 	still_icon_state = "gangway"
 	flags_2 = IMMUNE_CONVEYOR_2
@@ -74,6 +74,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	desc = "It's nice to see you!"
 	icon = 'trainstation13/icons/television.dmi'
 	icon_state = "bear_referee"
+	anchored = TRUE
 
 /obj/structure/chameleon/proc/change_state(state)
 	switch(state)
@@ -91,11 +92,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 			icon_state = "bear_harmonica"
 		if("field")
 			name = "red boxing bear"
-			desc = "Game over!"
+			desc = "You stepped into wrong forest."
 			icon_state = "bear_red"
 		if("forest")
 			name = "blue boxing bear"
-			desc = "You stepped into wrong forest."
+			desc = "This bear is swole and flexing its muscles. Game over!"
 			icon_state = "bear_blue"
 
 /obj/structure/chameleon/bench
@@ -103,7 +104,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	desc = "A brown wooden bench. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
 	icon = 'trainstation13/icons/64x32.dmi'
 	icon_state = "bench_wood_brown"
-	anchored = FALSE
 
 /obj/structure/chameleon/bench/change_state(state)
 	switch(state)
@@ -133,7 +133,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	desc = "A traditional, raised source of light with lamp at the top of a pole."
 	icon = 'trainstation13/icons/32x96.dmi'
 	icon_state = "lamppost_off"
-	anchored = FALSE
 	density = TRUE
 	layer = 5
 
@@ -203,19 +202,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 
 //REGULAR STRUCTURES
 
+/obj/structure/trainstation
+	name = "BAM 6AH"
+	desc = "TE6E 6AHXAMMEP!"
+	icon = 'trainstation13/icons/trainstructures.dmi'
+	icon_state = "ban"
+	anchored = TRUE
+
 /obj/structure/trainstation/bench
 	name = "wooden bench"
 	desc = "A wooden bench coated with transparent varnish. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
 	icon = 'trainstation13/icons/64x32.dmi'
 	icon_state = "bench_wood_brown"
-	anchored = FALSE
 
 /obj/structure/trainstation/bench/green
 	name = "wooden bench"
 	desc = "A wooden bench painted green. It's tougher than it looks, and a lot heavier than you would expect.<br>It's so heavy you can't pick it up even if you tried."
 	icon = 'trainstation13/icons/64x32.dmi'
 	icon_state = "bench_wood_green"
-	anchored = FALSE
 
 /obj/structure/trainstation/bench/attackby(obj/item/O, mob/user)
 	if(iswrenching(O))
@@ -248,7 +252,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	icon = 'trainstation13/icons/32x96.dmi'
 	icon_state = "lamppost_off"
 	layer = 5
-	anchored = FALSE
 	density = TRUE
 
 /obj/structure/trainstation/lamppost/on
@@ -272,7 +275,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	desc = "An old utility pole disconnected from the grid long time ago. It doesn't look sturdy."
 	icon = 'trainstation13/icons/32x96.dmi'
 	icon_state = "utilitypole"
-	anchored = FALSE
 	layer = 5
 
 //DECALS

@@ -91,63 +91,61 @@ ADD_TO_GLOBAL_LIST(/obj/effect/trainspawner, trainspawners)
 			"null" = 20,
 			/obj/structure/trainstation/lamppost/rural = 10,
 			/obj/structure/trainstation/lamppost/rural/on = 10,
-			/obj/structure/flora/tree/pine/train = 20,
-			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/tree/pine = 20,
+			/obj/structure/flora/tree/dead = 90,
 			/obj/structure/trainstation/utilitypole = 5,
-			/obj/structure/flora/ausbushes/fullgrass/train = 20,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 20,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
-			/obj/structure/flora/ausbushes/palebush/train = 5,
-			/obj/structure/flora/ausbushes/grassybush/train = 5,
-			/obj/structure/flora/ausbushes/stalkybush/train = 10,
-			/obj/structure/flora/ausbushes/reedbush/train = 10,
-			/obj/structure/flora/mine_rocks/train = 10,
+			/obj/structure/flora/ausbushes/fullgrass = 20,
+			/obj/structure/flora/ausbushes/sparsegrass = 20,
+			/obj/structure/flora/ausbushes/lavendergrass = 20,
+			/obj/structure/flora/ausbushes/palebush = 5,
+			/obj/structure/flora/ausbushes/grassybush = 5,
+			/obj/structure/flora/ausbushes/stalkybush = 10,
+			/obj/structure/flora/ausbushes/reedbush = 10,
+			/obj/structure/flora/mine_rocks = 10,
 			/obj/item/stack/rods = 2,
 			/obj/item/weapon/grown/log = 2,
 			/obj/item/weapon/cigbutt = 5,
 			/obj/item/weapon/cigbutt/cigarbutt = 1,
-			/obj/item/trash/semki = 2,
-			/obj/item/trash/popcorn = 2,
-			/obj/item/trash/sosjerky = 2,
-			/obj/item/trash/candy = 2,
-			/obj/item/trash/raisins = 2,
-			/obj/item/trash/chips = 2,
-			/obj/item/trash/pistachios = 2,
+			/obj/random/foods/food_trash = 10,
 			/obj/structure/atomobile/derelict = 1,
-			/obj/structure/scrap/medical/train = 1,
-			/obj/structure/scrap/medical/large/train = 1,
-			/obj/structure/scrap/vehicle/train = 1,
-			/obj/structure/scrap/vehicle/large/train = 1,
-			/obj/structure/scrap/food/train = 1,
-			/obj/structure/scrap/food/large/train = 1,
-			/obj/structure/scrap/poor/train = 1,
-			/obj/structure/scrap/poor/large/train = 1,
+			/obj/structure/scrap/medical = 1,
+			/obj/structure/scrap/medical/large = 1,
+			/obj/structure/scrap/vehicle = 1,
+			/obj/structure/scrap/vehicle/large = 1,
+			/obj/structure/scrap/food = 1,
+			/obj/structure/scrap/food/large = 1,
+			/obj/structure/scrap/poor = 1,
+			/obj/structure/scrap/poor/large = 1,
 		),
 		"field" = list(
 			/obj/structure/trainstation/utilitypole = 5,
-			/obj/structure/flora/ausbushes/fullgrass/train = 70,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 60,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
-			/obj/structure/flora/ausbushes/palebush/train = 2,
-			/obj/structure/flora/ausbushes/grassybush/train = 2,
-			/obj/structure/flora/ausbushes/stalkybush/train = 10,
-			/obj/structure/flora/ausbushes/reedbush/train = 10,
+			/obj/structure/trainstation/lamppost/rural/on = 2,
+			/obj/structure/flora/ausbushes/fullgrass = 70,
+			/obj/structure/flora/ausbushes/sparsegrass = 60,
+			/obj/structure/flora/ausbushes/lavendergrass = 20,
+			/obj/structure/flora/ausbushes/palebush = 2,
+			/obj/structure/flora/ausbushes/grassybush = 2,
+			/obj/structure/flora/ausbushes/stalkybush = 10,
+			/obj/structure/flora/ausbushes/reedbush = 10,
 		),
 		"forest" = list(
-			/obj/structure/flora/tree/pine/train = 10,
-			/obj/structure/flora/tree/dead/train = 90,
+			/obj/structure/flora/tree/pine = 10,
+			/obj/structure/flora/tree/dead = 90,
 			/obj/structure/trainstation/utilitypole = 5,
-			/obj/structure/flora/ausbushes/fullgrass/train = 30,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
-			/obj/structure/flora/ausbushes/palebush/train = 10,
-			/obj/structure/flora/ausbushes/grassybush/train = 10,
-			/obj/structure/flora/ausbushes/stalkybush/train = 30,
-			/obj/structure/flora/ausbushes/reedbush/train = 20,
-			/obj/structure/flora/mine_rocks/train = 10,
-			/obj/structure/bear_piano = 1,
-			/obj/structure/bear_harmonica = 1,
-			/obj/structure/bear_vodka = 1,
+			/obj/structure/flora/ausbushes/fullgrass = 30,
+			/obj/structure/flora/ausbushes/sparsegrass = 30,
+			/obj/structure/flora/ausbushes/lavendergrass = 30,
+			/obj/structure/flora/ausbushes/palebush = 10,
+			/obj/structure/flora/ausbushes/grassybush = 10,
+			/obj/structure/flora/ausbushes/stalkybush = 30,
+			/obj/structure/flora/ausbushes/reedbush = 20,
+			/obj/structure/flora/mine_rocks = 10,
+			/obj/structure/bear = 1,
+			/obj/structure/bear/bear_red = 1,
+			/obj/structure/bear/bear_blue = 1,
+			/obj/structure/bear/bear_piano = 1,
+			/obj/structure/bear/bear_harmonica = 1,
+			/obj/structure/bear/bear_vodka = 1,
 		)
 	)
 
@@ -190,81 +188,57 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 	spawn_lists = list(
 		"station - traditional" = list(
 			"null" = 80,
+			/obj/random/foods/food_trash = 10,
 			/obj/item/weapon/cigbutt = 20,
 			/obj/item/weapon/cigbutt/cigarbutt = 1,
-			/obj/item/trash/semki = 2,
-			/obj/item/trash/popcorn =2,
-			/obj/item/trash/sosjerky = 2,
-			/obj/item/trash/candy = 2,
-			/obj/item/trash/raisins = 2,
-			/obj/item/trash/chips = 2,
-			/obj/item/trash/pistachios = 2,
 		),
 		"station - rural" = list(
 			"null" = 80,
+			/obj/random/foods/food_trash = 10,
 			/obj/item/weapon/cigbutt = 20,
 			/obj/item/weapon/cigbutt/cigarbutt = 1,
-			/obj/item/trash/semki = 2,
-			/obj/item/trash/popcorn =2,
-			/obj/item/trash/sosjerky = 2,
-			/obj/item/trash/candy = 2,
-			/obj/item/trash/raisins = 2,
-			/obj/item/trash/chips = 2,
-			/obj/item/trash/pistachios = 2,
 		),
 		"suburb" = list(
 			"null" = 90,
-			/obj/structure/flora/ausbushes/fullgrass/train = 20,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 20,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
-			/obj/structure/flora/ausbushes/palebush/train = 2,
-			/obj/structure/flora/ausbushes/grassybush/train = 2,
-			/obj/structure/flora/ausbushes/stalkybush/train = 10,
-			/obj/structure/flora/ausbushes/reedbush/train = 10,
+			/obj/structure/flora/ausbushes/fullgrass = 20,
+			/obj/structure/flora/ausbushes/sparsegrass = 20,
+			/obj/structure/flora/ausbushes/lavendergrass = 20,
+			/obj/structure/flora/ausbushes/palebush = 2,
+			/obj/structure/flora/ausbushes/grassybush = 2,
+			/obj/structure/flora/ausbushes/stalkybush = 10,
+			/obj/structure/flora/ausbushes/reedbush = 10,
 			/obj/item/weapon/cigbutt = 30,
 			/obj/item/weapon/cigbutt/cigarbutt = 2,
-			/obj/item/trash/semki = 5,
-			/obj/item/trash/popcorn =5,
-			/obj/item/trash/sosjerky = 5,
-			/obj/item/trash/candy = 5,
-			/obj/item/trash/raisins = 5,
-			/obj/item/trash/chips = 5,
-			/obj/item/trash/pistachios = 5,
-			/obj/structure/scrap/medical/train = 1,
-			/obj/structure/scrap/medical/large/train = 1,
-			/obj/structure/scrap/vehicle/train = 1,
-			/obj/structure/scrap/vehicle/large/train = 1,
-			/obj/structure/scrap/food/train = 1,
-			/obj/structure/scrap/food/large/train = 1,
-			/obj/structure/scrap/poor/train = 1,
-			/obj/structure/scrap/poor/large/train = 1,
+			/obj/random/foods/food_trash = 10,
+			/obj/structure/scrap/medical = 1,
+			/obj/structure/scrap/medical/large = 1,
+			/obj/structure/scrap/vehicle = 1,
+			/obj/structure/scrap/vehicle/large = 1,
+			/obj/structure/scrap/food = 1,
+			/obj/structure/scrap/food/large = 1,
+			/obj/structure/scrap/poor = 1,
+			/obj/structure/scrap/poor/large = 1,
 		),
 		"field" = list(
 			"null" = 50,
-			/obj/structure/flora/ausbushes/fullgrass/train = 70,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 60,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 20,
-			/obj/structure/flora/ausbushes/palebush/train = 2,
-			/obj/structure/flora/ausbushes/grassybush/train = 2,
-			/obj/structure/flora/ausbushes/stalkybush/train = 10,
-			/obj/structure/flora/ausbushes/reedbush/train = 10,
-			/obj/item/trash/semki = 2,
-			/obj/item/trash/popcorn =2,
-			/obj/item/trash/sosjerky = 2,
-			/obj/item/trash/candy = 2,
-			/obj/item/trash/raisins = 2,
-			/obj/item/trash/chips = 2,
-			/obj/item/trash/pistachios = 2,
+			/obj/structure/flora/ausbushes/fullgrass = 70,
+			/obj/structure/flora/ausbushes/sparsegrass = 60,
+			/obj/structure/flora/ausbushes/lavendergrass = 20,
+			/obj/structure/flora/ausbushes/palebush = 2,
+			/obj/structure/flora/ausbushes/grassybush = 2,
+			/obj/structure/flora/ausbushes/stalkybush = 10,
+			/obj/structure/flora/ausbushes/reedbush = 10,
+			/obj/random/foods/food_trash = 10,
 		),
 		"forest" = list(
-			/obj/structure/flora/ausbushes/fullgrass/train = 30,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
-			/obj/structure/flora/ausbushes/palebush/train = 10,
-			/obj/structure/flora/ausbushes/grassybush/train = 10,
-			/obj/structure/flora/ausbushes/stalkybush/train = 30,
-			/obj/structure/flora/ausbushes/reedbush/train = 20,
-			/obj/structure/flora/mine_rocks/train = 10,
+			/obj/structure/flora/ausbushes/fullgrass = 30,
+			/obj/structure/flora/ausbushes/sparsegrass = 30,
+			/obj/structure/flora/ausbushes/lavendergrass = 30,
+			/obj/structure/flora/ausbushes/palebush = 10,
+			/obj/structure/flora/ausbushes/grassybush = 10,
+			/obj/structure/flora/ausbushes/stalkybush = 30,
+			/obj/structure/flora/ausbushes/reedbush = 20,
+			/obj/structure/flora/mine_rocks = 10,
 		)
 	)
 
@@ -279,54 +253,48 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 		),
 		"suburb" = list(
 			"null" = 10,
-			/obj/structure/flora/tree/pine/train = 10,
-			/obj/structure/flora/tree/dead/train = 90,
-			/obj/structure/flora/ausbushes/fullgrass/train = 30,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
-			/obj/structure/flora/ausbushes/palebush/train = 10,
-			/obj/structure/flora/ausbushes/grassybush/train = 10,
-			/obj/structure/flora/ausbushes/stalkybush/train = 30,
-			/obj/structure/flora/ausbushes/reedbush/train = 20,
-			/obj/structure/flora/mine_rocks/train = 10,
+			/obj/structure/flora/tree/pine = 10,
+			/obj/structure/flora/tree/dead = 90,
+			/obj/structure/flora/ausbushes/fullgrass = 30,
+			/obj/structure/flora/ausbushes/sparsegrass = 30,
+			/obj/structure/flora/ausbushes/lavendergrass = 30,
+			/obj/structure/flora/ausbushes/palebush = 10,
+			/obj/structure/flora/ausbushes/grassybush = 10,
+			/obj/structure/flora/ausbushes/stalkybush = 30,
+			/obj/structure/flora/ausbushes/reedbush = 20,
+			/obj/structure/flora/mine_rocks = 10,
 			/obj/item/stack/rods = 2,
 			/obj/item/weapon/grown/log = 2,
-			/obj/item/trash/semki = 1,
-			/obj/item/trash/popcorn = 1,
-			/obj/item/trash/sosjerky = 1,
-			/obj/item/trash/candy = 1,
-			/obj/item/trash/raisins = 1,
-			/obj/item/trash/chips = 1,
-			/obj/item/trash/pistachios = 1,
-			/obj/structure/scrap/medical/train = 1,
-			/obj/structure/scrap/medical/large/train = 1,
-			/obj/structure/scrap/vehicle/train = 1,
-			/obj/structure/scrap/vehicle/large/train = 1,
-			/obj/structure/scrap/food/train = 1,
-			/obj/structure/scrap/food/large/train = 1,
-			/obj/structure/scrap/poor/train = 1,
-			/obj/structure/scrap/poor/large/train = 1,
+			/obj/random/foods/food_trash = 10,
+			/obj/structure/scrap/medical = 1,
+			/obj/structure/scrap/medical/large = 1,
+			/obj/structure/scrap/vehicle = 1,
+			/obj/structure/scrap/vehicle/large = 1,
+			/obj/structure/scrap/food = 1,
+			/obj/structure/scrap/food/large = 1,
+			/obj/structure/scrap/poor = 1,
+			/obj/structure/scrap/poor/large = 1,
 		),
 		"field" = list(
-			/obj/structure/flora/ausbushes/fullgrass/train = 30,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
-			/obj/structure/flora/ausbushes/palebush/train = 10,
-			/obj/structure/flora/ausbushes/grassybush/train = 10,
-			/obj/structure/flora/ausbushes/stalkybush/train = 30,
-			/obj/structure/flora/ausbushes/reedbush/train = 20,
+			/obj/structure/flora/ausbushes/fullgrass = 30,
+			/obj/structure/flora/ausbushes/sparsegrass = 30,
+			/obj/structure/flora/ausbushes/lavendergrass = 30,
+			/obj/structure/flora/ausbushes/palebush = 10,
+			/obj/structure/flora/ausbushes/grassybush = 10,
+			/obj/structure/flora/ausbushes/stalkybush = 30,
+			/obj/structure/flora/ausbushes/reedbush = 20,
 		),
 		"forest" = list(
-			/obj/structure/flora/tree/pine/train = 10,
-			/obj/structure/flora/tree/dead/train = 90,
-			/obj/structure/flora/ausbushes/fullgrass/train = 30,
-			/obj/structure/flora/ausbushes/sparsegrass/train = 30,
-			/obj/structure/flora/ausbushes/lavendergrass/train = 30,
-			/obj/structure/flora/ausbushes/palebush/train = 10,
-			/obj/structure/flora/ausbushes/grassybush/train = 10,
-			/obj/structure/flora/ausbushes/stalkybush/train = 30,
-			/obj/structure/flora/ausbushes/reedbush/train = 20,
-			/obj/structure/flora/mine_rocks/train = 10,
+			/obj/structure/flora/tree/pine = 10,
+			/obj/structure/flora/tree/dead = 90,
+			/obj/structure/flora/ausbushes/fullgrass = 30,
+			/obj/structure/flora/ausbushes/sparsegrass = 30,
+			/obj/structure/flora/ausbushes/lavendergrass = 30,
+			/obj/structure/flora/ausbushes/palebush = 10,
+			/obj/structure/flora/ausbushes/grassybush = 10,
+			/obj/structure/flora/ausbushes/stalkybush = 30,
+			/obj/structure/flora/ausbushes/reedbush = 20,
+			/obj/structure/flora/mine_rocks = 10,
 		)
 	)
 
@@ -366,85 +334,41 @@ ADD_TO_GLOBAL_LIST(/obj/effect/traindespawner, traindespawners)
 
 	qdel(AM)
 
-//UNIQUE SPAWNED OBJECTS BELOW
-
-//FLORA
-
-/obj/structure/flora/tree/pine/train
-	anchored = FALSE
-
-/obj/structure/flora/tree/dead/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/fullgrass/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/sparsegrass/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/lavendergrass/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/palebush/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/grassybush/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/stalkybush/train
-	anchored = FALSE
-
-/obj/structure/flora/ausbushes/reedbush/train
-	anchored = FALSE
-
-/obj/structure/flora/mine_rocks/train
-	anchored = FALSE
-
-//GARBAGE
-
-/obj/structure/scrap/medical/train
-	anchored = FALSE
-
-/obj/structure/scrap/medical/large/train
-	anchored = FALSE
-
-/obj/structure/scrap/vehicle/train
-	anchored = FALSE
-
-/obj/structure/scrap/vehicle/large/train
-	anchored = FALSE
-
-/obj/structure/scrap/food/train
-	anchored = FALSE
-
-/obj/structure/scrap/food/large/train
-	anchored = FALSE
-
-/obj/structure/scrap/poor/train
-	anchored = FALSE
-
-/obj/structure/scrap/poor/large/train
-	anchored = FALSE
-
 //EASTER EGGS
 
-/obj/structure/bear_piano
+/obj/structure/bear
+	name = "bear"
+	desc = "A brown bear wearing slick formal suit. You see nothing out of the ordinary."
+	icon = 'trainstation13/icons/television.dmi'
+	icon_state = "bear_referee"
+	anchored = FALSE
+
+/obj/structure/bear/bear_red
+	name = "bear"
+	desc = "You stepped into wrong forest."
+	icon = 'trainstation13/icons/television.dmi'
+	icon_state = "bear_red"
+
+/obj/structure/bear/bear_blue
+	name = "bear"
+	desc = "This bear is swole and flexing its muscles. Game over!"
+	icon = 'trainstation13/icons/television.dmi'
+	icon_state = "bear_blue"
+
+/obj/structure/bear/bear_piano
 	name = "bear"
 	desc = "Looks like this is not your common black bear, it's an alien space bear playing a piano. You see nothing out of the ordinary?"
 	icon = 'trainstation13/icons/64x32.dmi'
 	icon_state = "bear_piano"
-	anchored = FALSE
 
-/obj/structure/bear_harmonica
+/obj/structure/bear/bear_harmonica
 	name = "bear"
 	desc = "And I'm playing the accordion. And all people gaze at me. It's a pity, that the Birthday is just once a year..."
 	icon = 'trainstation13/icons/television.dmi'
 	icon_state = "bear_harmonica"
-	anchored = FALSE
 
-/obj/structure/bear_vodka
+/obj/structure/bear/bear_vodka
 	name = "bear"
 	desc = "This alien space bear had just enough to dance happily. You see nothing out of the ordinary?"
 	icon = 'trainstation13/icons/television.dmi'
 	icon_state = "bear_vodka"
-	anchored = FALSE

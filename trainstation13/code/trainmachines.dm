@@ -10,7 +10,6 @@
 /obj/machinery/space_heater/potbellystove
 	name = "potbelly stove"
 	desc = "This little stove will keep you warm and cozy during cold winter."
-	anchored = TRUE
 	density = TRUE
 	icon = 'trainstation13/icons/trainmachines.dmi'
 	icon_state = "sheater-off"
