@@ -28,6 +28,7 @@
 	uniform = /obj/item/clothing/under/train/driver
 	uniform_f = /obj/item/clothing/under/train/driver
 	id = /obj/item/weapon/card/id/passport
+	l_pocket = /obj/item/weapon/book/manual/driver
 	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/train/conductor
@@ -38,6 +39,7 @@
 	uniform = /obj/item/clothing/under/train/conductor
 	uniform_f = /obj/item/clothing/under/train/conductordress
 	id = /obj/item/weapon/card/id/passport
+	r_pocket = /obj/item/weapon/book/manual/conductor
 	l_pocket = /obj/item/device/flashlight/seclite
 	shoes = /obj/item/clothing/shoes/brown
 
@@ -118,6 +120,30 @@
 	id = /obj/item/weapon/card/id/passport
 	shoes = /obj/item/clothing/shoes/boots/galoshes
 
+/datum/outfit/train/doctor
+	name = "Train Station 13: Doctor"
+	suit = /obj/item/clothing/suit/storage/labcoat
+	suit_store = /obj/item/device/flashlight/pen
+	back = /obj/item/weapon/storage/backpack/satchel/med
+	gloves = /obj/item/clothing/gloves/pipboy
+	uniform = /obj/item/clothing/under/rank/medical
+	uniform_f = /obj/item/clothing/under/rank/medical/skirt
+	belt = /obj/item/weapon/storage/belt/medical/surg/full
+	id = /obj/item/weapon/card/id/passport
+	r_pocket = /obj/item/weapon/paper/ticket/secretpass
+	l_pocket = /obj/item/device/flashlight/seclite
+	shoes = /obj/item/clothing/shoes/white
+
+	backpack_contents = list(
+		/obj/item/weapon/storage/firstaid/adv = 1,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike = 2,
+		/obj/item/clothing/gloves/latex/nitrile = 1,
+		/obj/item/weapon/storage/box/syringes = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/stoxin = 1,
+	)
+
 /obj/item/weapon/storage/belt/security/police
 	startswith = list(/obj/item/weapon/melee/classic_baton = 1, /obj/item/weapon/reagent_containers/spray/pepper = 1, /obj/item/ammo_box/magazine/colt/rubber = 2, /obj/item/weapon/handcuffs = 3)
 
@@ -150,6 +176,7 @@
 	uniform = /obj/item/clothing/under/suit_jacket
 	uniform_f = /obj/item/clothing/under/suit_jacket
 	id = /obj/item/weapon/card/id/passport
+	r_pocket = /obj/item/weapon/paper/ticket/secretpass
 	l_pocket = /obj/item/device/flashlight/seclite
 	shoes = /obj/item/clothing/shoes/laceup
 
