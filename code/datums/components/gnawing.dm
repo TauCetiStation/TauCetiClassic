@@ -11,7 +11,7 @@
 		return
 	var/list/attack = animal.get_unarmed_attack()
 	for(var/obj/structure/cable/C in animal.loc)
-		C.take_damage(attack["damage"], attack["type"], MELEE)
+		C.take_damage(attack["damage"], attack["type"], MELEE, FALSE)
 
 /datum/component/gnawing/Destroy()
 	STOP_PROCESSING(SSgnaw, src)
