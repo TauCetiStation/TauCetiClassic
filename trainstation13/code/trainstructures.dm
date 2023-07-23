@@ -277,6 +277,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chameleon, global.train_chameleon)
 	icon_state = "utilitypole"
 	layer = 5
 
+/obj/structure/trainstation/narnia
+	name = "wooden wardrobe"
+	desc = "Fancy wooden wardrobe, looks like it was made with apple wood."
+	icon = 'icons/obj/closet.dmi'
+	icon_state = "cabinet_open"
+
 //DECALS
 
 /obj/structure/sign/moon

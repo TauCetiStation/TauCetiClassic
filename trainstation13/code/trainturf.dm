@@ -24,6 +24,12 @@
 	icon = 'trainstation13/icons/turf/trainturf.dmi'
 	icon_state = "snow_still"
 
+/turf/unsimulated/floor/still/rails //This snow won't switch to animation if the train is moving
+	name = "railway track"
+	desc = "A structure that enables trains to move by providing a dependable surface for their wheels to roll upon."
+	icon = 'trainstation13/icons/turf/trainturf.dmi'
+	icon_state = "rails_left_1_still"
+
 //PASTIC WALL
 
 /turf/simulated/wall/mineral/plastic

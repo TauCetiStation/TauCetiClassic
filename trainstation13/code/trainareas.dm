@@ -11,7 +11,7 @@
 
 /area/trainstation/spawnzone
 	name = "Spawn"
-	icon_state = "rails"
+	icon_state = "trainstation13"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
 	looped_ambience = 'trainstation13/sound/ambience/loop_street.ogg'
@@ -56,6 +56,7 @@
 	name = "Street"
 	icon_state = "street"
 	requires_power = FALSE
+	outdoors = TRUE
 	looped_ambience = 'trainstation13/sound/ambience/loop_trainstation.ogg'
 	ambience = list(
 		'trainstation13/sound/ambience/steam_short.ogg',

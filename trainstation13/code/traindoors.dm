@@ -41,7 +41,7 @@
 	sheetType = /obj/item/stack/sheet/metal
 
 /obj/structure/mineral_door/transparent/automatic
-	name = "automatic door with doorlight"
+	name = "semi-automatic door with doorlight"
 	icon = 'trainstation13/icons/traindoors.dmi'
 	icon_state = "locomotiveglass"
 	max_integrity = 300
@@ -63,7 +63,7 @@
 	operating_sound = 'sound/effects/doorcreaky.ogg'
 
 /obj/structure/mineral_door/metal/automatic
-	name = "automatic door"
+	name = "semi-automatic door"
 	icon = 'trainstation13/icons/traindoors.dmi'
 	icon_state = "locomotive"
 	sheetType = /obj/item/stack/sheet/metal
@@ -75,6 +75,13 @@
 	icon = 'trainstation13/icons/traindoors.dmi'
 	icon_state = "blastdoor"
 	max_integrity = 1000
+	sheetType = /obj/item/stack/sheet/metal
+	operating_sound = 'sound/machines/firedoor_open.ogg'
+
+/obj/structure/mineral_door/metal/coupe
+	name = "metal sliding door"
+	icon = 'trainstation13/icons/traindoors.dmi'
+	icon_state = "coupe"
 	sheetType = /obj/item/stack/sheet/metal
 	operating_sound = 'sound/machines/firedoor_open.ogg'
 
