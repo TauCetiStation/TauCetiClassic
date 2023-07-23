@@ -8,6 +8,7 @@ var/global/list/image/splatter_cache=list()
 	gender = PLURAL
 	density = FALSE
 	anchored = TRUE
+	flags = 0
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "mfloor1"
