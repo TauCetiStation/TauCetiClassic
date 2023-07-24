@@ -66,6 +66,10 @@
 	///Damage under this value will be completely ignored
 	var/damage_deflection = 0
 
+	///How much this atom resists explosions by, in the end
+	///In terms of explosion, you can read it as additional distance for explosion to spend on this turf
+	var/explosive_resistance = 0
+
 	var/resistance_flags = FULL_INDESTRUCTIBLE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 /atom/New(loc, ...)

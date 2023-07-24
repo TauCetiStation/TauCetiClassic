@@ -104,13 +104,25 @@ SUBSYSTEM_DEF(explosions)
  * - heavy_impact_range: The range at which the effects of the explosion are relatively severe.
  * - light_impact_range: The range at which the effects of the explosion are relatively weak.
  * - flash_range: The range at which the explosion flashes people.
+ * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, explosion_cause)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
+
+	// Now begins a bit of a logic train to find out whodunnit.
+	//var/who_did_it = "N/A"
+	//var/who_did_it_game_log = "N/A"
+
+	//message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
+	//log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
+
+
+	message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range]) in area [epicenter.loc.name] ([COORD(epicenter)] - [ADMIN_JMP(epicenter)])")
+	log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name]")
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
@@ -121,12 +133,35 @@ SUBSYSTEM_DEF(explosions)
 			Mob_to_flash.flash_eyes()
 
 	var/list/affected_turfs = prepare_explosion_turfs(max_range, epicenter)
+
+	// this list is setup in the form position -> block for that position
+	// we assert that turfs will be processed closed to farthest, so we can build this as we go along
+	// This is gonna be an array, index'd by turfs
+	var/list/cached_exp_block = list()
+
 	//lists are guaranteed to contain at least 1 turf at this point
 	//we presuppose that we'll be iterating away from the epicenter
 	for(var/turf/explode as anything in affected_turfs) // todo: ex resistance
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = HYPOTENUSE(our_x, our_y, x0, y0)
+
+		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
+		// This is safe because if get_step_towards is ever anything but caridnally off, it'll do a diagonal move
+		// So we always sample from a "loop" closer
+		// It's kind of behaviorly unimpressive that that's a problem for the future
+		if(config.reactionary_explosions)
+			var/resistance = explode.explosive_resistance // should we use armor instead?
+			for(var/atom/A in explode) // tg has a way to optimize it, but it's soo tg so i don't want to port it
+				if(A.explosive_resistance)
+					resistance += A.explosive_resistance
+
+			if(explode == epicenter)
+				cached_exp_block[explode] = resistance
+			else
+				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
+				dist += our_block // resistance actually just "pushing" next turf from explosion range
+				cached_exp_block[explode] = our_block + resistance
 
 		var/severity = EXPLODE_NONE
 		if(dist < devastation_range)
