@@ -22958,6 +22958,9 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"cOr" = (
+/turf/environment/space,
+/area/shuttle/escape_pod5/centcom)
 "cPb" = (
 /obj/structure/dryer{
 	dir = 8;
@@ -23260,6 +23263,16 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"dkx" = (
+/obj/machinery/light,
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_x = 30
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/evac)
 "dlb" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -24296,6 +24309,9 @@
 	icon_state = "vel_f01"
 	},
 /area/shuttle/officer/velocity)
+"fjX" = (
+/turf/environment/space,
+/area/shuttle/escape_pod5/transit)
 "fkb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -24504,6 +24520,16 @@
 	icon_state = "warning"
 	},
 /area/velocity)
+"fJf" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod5";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor5"
+	},
+/area/centcom/evac)
 "fLb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
@@ -26106,6 +26132,9 @@
 	icon_state = "warnplate"
 	},
 /area/centcom/evac)
+"iRy" = (
+/turf/environment/space,
+/area/shuttle/escape_pod6/transit)
 "iSb" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/light{
@@ -26808,6 +26837,16 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
+"kri" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod6";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor5"
+	},
+/area/centcom/evac)
 "ksb" = (
 /obj/machinery/gateway{
 	dir = 8
@@ -29310,6 +29349,14 @@
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"slT" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/centcom/evac)
 "ssN" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien3";
@@ -29442,6 +29489,9 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"vYm" = (
+/turf/environment/space,
+/area/shuttle/escape_pod6/centcom)
 "wfy" = (
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
@@ -48608,14 +48658,14 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -48872,7 +48922,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49129,7 +49179,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49207,10 +49257,10 @@ aCe
 aBp
 aCe
 aBp
-aaM
-aaM
-aaM
-aaM
+cOr
+cOr
+cOr
+cOr
 aHv
 abn
 eNc
@@ -49386,7 +49436,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49464,14 +49514,14 @@ aCe
 aBp
 aCe
 aBp
-aaM
-aaM
-aaM
-aHv
-aHv
-hwb
+cOr
+cOr
+cOr
+cOr
+fJf
 hGb
 hGb
+slT
 aHv
 aHv
 aHv
@@ -49643,7 +49693,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49721,11 +49771,11 @@ aCe
 aBp
 aCe
 aBp
-aaM
-aaM
-aaM
+cOr
+cOr
+cOr
+cOr
 aHv
-hgb
 hxb
 hHb
 hNb
@@ -49900,7 +49950,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49978,11 +50028,11 @@ aCe
 aBp
 aCe
 aBp
+aaM
 aaM
 aaM
 aaM
 aHv
-hgb
 hyb
 aIy
 hOb
@@ -50157,7 +50207,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50235,11 +50285,11 @@ aCe
 aBp
 aCe
 aBp
-aaM
-aaM
-aaM
+vYm
+vYm
+vYm
+vYm
 aHv
-hhb
 hzb
 hIb
 hPb
@@ -50414,7 +50464,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50492,14 +50542,14 @@ aCe
 aBp
 aCe
 aBp
-aaM
-aaM
-aaM
-aHv
-aHv
+vYm
+vYm
+vYm
+vYm
+kri
 aIy
 aIy
-aJe
+dkx
 aHv
 aHv
 aHv
@@ -50655,6 +50705,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -50665,13 +50721,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50749,10 +50799,10 @@ aDt
 aBp
 aFT
 aBp
-aaM
-aaM
-aaM
-aaM
+vYm
+vYm
+vYm
+vYm
 aHv
 aHv
 aIO
@@ -50912,6 +50962,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+fjX
+fjX
+fjX
+fjX
+ahG
 aaM
 aaM
 aaM
@@ -50922,13 +50978,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51169,6 +51219,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+fjX
+fjX
+fjX
+fjX
+ahG
 aaM
 aaM
 aaM
@@ -51179,13 +51235,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51426,6 +51476,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+fjX
+fjX
+fjX
+fjX
+ahG
 aaM
 aaM
 aaM
@@ -51436,13 +51492,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51683,6 +51733,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -51693,13 +51749,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51956,7 +52006,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52213,7 +52263,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52470,7 +52520,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52727,7 +52777,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52984,7 +53034,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53241,7 +53291,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53498,7 +53548,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53729,33 +53779,33 @@ aaM
 aaM
 aaM
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -54012,7 +54062,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54269,7 +54319,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54526,7 +54576,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54783,7 +54833,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55040,7 +55090,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55297,7 +55347,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55554,7 +55604,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55795,6 +55845,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -55805,13 +55861,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -56052,6 +56102,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+iRy
+iRy
+iRy
+iRy
+ahG
 aaM
 aaM
 aaM
@@ -56062,13 +56118,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -56309,6 +56359,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+iRy
+iRy
+iRy
+iRy
+ahG
 aaM
 aaM
 aaM
@@ -56319,13 +56375,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -56566,6 +56616,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+iRy
+iRy
+iRy
+iRy
+ahG
 aaM
 aaM
 aaM
@@ -56576,13 +56632,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -56812,6 +56862,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -56822,6 +56873,12 @@ aaM
 aaM
 aaM
 aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -56832,14 +56889,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -57069,6 +57119,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -57095,8 +57146,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -57326,6 +57376,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -57352,8 +57403,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -57583,6 +57633,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -57609,8 +57660,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -57840,6 +57890,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -57866,8 +57917,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -58097,6 +58147,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -58123,8 +58174,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -58354,6 +58404,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -58380,8 +58431,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -58611,6 +58661,7 @@ aaM
 aaM
 aaM
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -58637,8 +58688,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -58868,34 +58918,34 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
