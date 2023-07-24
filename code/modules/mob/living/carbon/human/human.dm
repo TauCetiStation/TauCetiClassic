@@ -1713,7 +1713,7 @@
 		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
-				if((!stealth) && (user != src))
+				if(!stealth && user != src)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
 				if(!do_mob(user, src, injection_time / 2, TRUE))
 					return FALSE
