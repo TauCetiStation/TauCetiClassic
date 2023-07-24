@@ -72,7 +72,7 @@
 	}
 }
 
-.cardpay_button--color--red {
+.cardpay_button--red {
 	background: #991000;
 	border-color: #991000;
 	border-top-color: #ca201a;
@@ -81,7 +81,7 @@
 	}
 }
 
-.cardpay_button--color--green {
+.cardpay_button--green {
 	top:-2px;
 	background: #105735;
 	border-color: #105735;
@@ -106,13 +106,13 @@
 	position: absolute;
 }
 
-.cardpay_button-inside--color--normal {
+.cardpay_button-inside--normal {
 	background: #D0D2DD;
 	border-bottom-color: #E8E9EF;
 	color: #333344;
 }
 
-.cardpay_button-inside--color--red {
+.cardpay_button-inside--red {
 	background: #e81b1d;
 	border-bottom-color: #e13a3b;
 	color: #e81b1d;
@@ -120,7 +120,7 @@
 	box-shadow: inset 0px 0px 10px #e13a3b;
 }
 
-.cardpay_button-inside--color--green {
+.cardpay_button-inside--green {
 	background: #009853;
 	border-bottom-color: #05a05b;
 	color: #009853;

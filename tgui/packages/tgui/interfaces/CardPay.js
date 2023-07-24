@@ -68,8 +68,8 @@ export const CardPay = (props, context) => {
         <Box width="158px" height="208px" position="absolute" left="32px" top="95px">
           {buttons}
           <Button
-            className="cardpay_button cardpay_button--color--red"
-            content={<Box className="cardpay_button-inside cardpay_button-inside--color--red">{"X"}</Box>}
+            className="cardpay_button cardpay_button--red"
+            content={<Box className="cardpay_button-inside cardpay_button-inside--red">{"X"}</Box>}
             onClick={() => act("clearnumbers")}
           />
           <Button
@@ -78,8 +78,8 @@ export const CardPay = (props, context) => {
             onClick={() => act("pressnumber", { number: 0 })}
           />
           <Button
-            className="cardpay_button cardpay_button--color--green"
-            content={<Box className="cardpay_button-inside cardpay_button-inside--color--green">{"O"}</Box>}
+            className="cardpay_button cardpay_button--green"
+            content={<Box className="cardpay_button-inside cardpay_button-inside--green">{"O"}</Box>}
             onClick={() => act("approveprice")}
           />
         </Box>
