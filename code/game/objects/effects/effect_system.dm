@@ -166,6 +166,7 @@ steam.start() -- spawns the effect
 		location = get_turf(loca)
 
 /datum/effect/effect/system/spark_spread/start()
+	set waitfor = FALSE
 	var/i = 0
 	for(i=0, i<src.number, i++)
 		if(src.total_sparks > 20)
