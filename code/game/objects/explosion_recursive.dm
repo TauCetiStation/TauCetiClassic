@@ -124,4 +124,4 @@ var/global/list/explosion_turfs = list()
 	return //So it doesn't get to the parent proc, which simulates explosions
 
 /client/verb/explode()
-	explosion(get_turf(mob), 15, 70, 200)
+	SSticker.station_explosion_detonation(get_turf(mob))

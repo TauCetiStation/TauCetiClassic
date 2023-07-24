@@ -422,6 +422,16 @@ SUBSYSTEM_DEF(ticker)
 				player.create_character()
 		CHECK_TICK
 
+/datum/controller/subsystem/ticker/proc/station_explosion_detonation(source)
+
+	// unfortunately airnet and powernet don't have own SS, so we need to break them completly to make things less laggy
+	// no one will notice anyway
+	SSair.stop_airnet_processing = TRUE
+	SSmachines.stop_powernet_processing = TRUE
+
+	explosion(get_turf(source), 30, 60, 120)
+
+
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
 		if(player.mind)
