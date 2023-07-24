@@ -50,7 +50,7 @@
 
 //Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
-	wet_timer_id = addtimer(CALLBACK(src, .proc/make_dry_floor), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	wet_timer_id = addtimer(CALLBACK(src, PROC_REF(make_dry_floor)), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(wet < severity)
 		wet = severity
 		UpdateSlip()

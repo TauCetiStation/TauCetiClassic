@@ -5,6 +5,7 @@
  *		Weeds
  *		Egg
  *	effect/alien/Acid
+ *	effect/alien/Queen_Acid
  */
 
 #define WEED_SOUTH_EDGING 1
@@ -76,7 +77,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	update_nearby_tiles(need_rebuild = TRUE)
+	update_nearby_tiles()
 
 /obj/structure/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
@@ -144,7 +145,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/alien/weeds/atom_init_late()
-	addtimer(CALLBACK(src, .proc/Life), rand(150, 200))
+	addtimer(CALLBACK(src, PROC_REF(Life)), rand(150, 200))
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -165,6 +166,12 @@
 			var/turf/T = get_step(src, dirn)
 
 			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
+				continue
+
+			if(locate(/obj/structure/window/fulltile) in T)
+				continue
+
+			if(locate(/obj/structure/windowsill) in T)
 				continue
 
 			for(var/obj/machinery/door/D in T)
@@ -279,6 +286,22 @@
 			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
+/obj/effect/alien/acid/queen_acid
+	name = "queen acid"
+	desc = "Burbling corrossive and yellow stuff. I wouldn't want to touch it."
+	icon = 'icons/mob/xenomorph.dmi'
+	icon_state = "queen_acid"
+
+/obj/effect/alien/acid/queen_acid/atom_init_late()
+	if(iswallturf(target))
+		target_strength = 6
+	else if(is_type_in_list(target, ventcrawl_machinery))
+		target_strength = 2
+	else
+		target_strength = 4
+	tick()
+
+
 /*
  * Egg
  */
@@ -309,7 +332,7 @@
 	if(status == GROWN)
 		Grow()
 	else
-		timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
 
 /obj/structure/alien/egg/Destroy()
 	if(timer)
@@ -363,7 +386,7 @@
 	icon_state = "egg_hatched"
 	flick("egg_opening", src)
 	status = BURSTING
-	addtimer(CALLBACK(src, .proc/spawn_hugger, kill_fh), 15)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hugger), kill_fh), 15)
 
 /obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)

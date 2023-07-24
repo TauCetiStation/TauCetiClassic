@@ -61,7 +61,7 @@
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
 
-/obj/machinery/vending/atom_init(mapload)
+/obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -75,11 +75,11 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
-	build_inventory(products, mapload)
+	build_inventory(products)
 	 //Add hidden inventory
-	build_inventory(contraband, mapload, hidden = 1)
-	build_inventory(premium, mapload, req_coin = 1)
-	build_inventory(syndie, mapload, req_emag = 1)
+	build_inventory(contraband, hidden = 1)
+	build_inventory(premium, req_coin = 1)
+	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
 
@@ -108,19 +108,9 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(!hidden && !req_coin && !req_emag)
-			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
-				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
-
-				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
-
-				if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
-					amount = 1
 
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -297,15 +287,10 @@
 		if(check_accounts)
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				var/attempt_pin = 0
 				if(D)
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-						if(isnull(attempt_pin))
-							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
-							return
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
-
+					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
@@ -525,7 +510,7 @@
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 
-		addtimer(CALLBACK(src, .proc/say_slogan), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/shoot_inventory_timer()
 	if(stat & (BROKEN|NOPOWER))
@@ -534,16 +519,16 @@
 	if(shoot_inventory)
 		throw_item()
 
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/update_wires_check()
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	if(slogan_list.len > 0 && !shut_up)
-		addtimer(CALLBACK(src, .proc/say_slogan), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 	if(shoot_inventory)
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 
 /obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
@@ -569,6 +554,12 @@
 				stat |= NOPOWER
 				set_light(0)
 				update_power_use()
+	update_power_use()
+
+/obj/machinery/vending/turn_light_off()
+	. = ..()
+	stat |= NOPOWER
+	icon_state = "[initial(icon_state)]-off"
 	update_power_use()
 
 //Oh no we're malfunctioning!  Dump out some product and break.

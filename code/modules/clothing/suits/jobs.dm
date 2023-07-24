@@ -156,12 +156,14 @@
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
 	desc = "A red forensics technician jacket."
-	icon_state = "forensics_red"
+	icon_state = "forensicsredsuit"
+	item_state = "forensicsredsuit"
 
 /obj/item/clothing/suit/storage/forensics/blue
 	name = "blue jacket"
 	desc = "A blue forensics technician jacket."
-	icon_state = "forensics_blue"
+	icon_state = "forensicsblusuit"
+	item_state = "forensicsblusuit"
 
 //Engineering
 /obj/item/clothing/suit/storage/hazardvest

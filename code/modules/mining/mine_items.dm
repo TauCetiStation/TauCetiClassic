@@ -504,7 +504,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
-	var/recharge_time = 2.1 SECONDS
+	var/recharge_time = 2.0 SECONDS
 	var/damage = 10
 	var/range = 3
 	var/mineral_multiply_coefficient = 1.0
@@ -517,7 +517,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/reload), recharge_time)
+	addtimer(CALLBACK(src, PROC_REF(reload)), recharge_time)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)
@@ -708,6 +708,41 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
 	return TRUE
 
+/obj/item/weapon/gun/energy/laser/cutter/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
+			power_supply.give(1000)
+			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+			update_icon()
+	else if(istype(A, /obj/item/weapon/ore/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		if (A.use_tool(A, user, 10, amount = 1, can_move = TRUE))
+			power_supply.give(500)
+			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+			update_icon()
+	else if(istype(A, /obj/item/weapon/storage/bag/ore))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
+			return
+		var/obj/item/weapon/storage/bag/ore/O = A
+		for(var/obj/item/weapon/ore/phoron/P in O.contents)
+			if(power_supply.charge >= power_supply.maxcharge)
+				return
+			if (P.use_tool(O, user, 10, amount = 1, can_move = TRUE))
+				O.remove_from_storage(P)
+				power_supply.give(500)
+				to_chat(user, "<span class='notice'>You insert [P] in [src], recharging it.</span>")
+				update_icon()
+			else
+				return
+	else
+		return ..()
+
 /obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
 	emagged = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter/emagged)
@@ -807,7 +842,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/speed
 	name = "accelerator upgrade(speed)"
 	icon_state = "accelerator_upg_speed"
-	var/cooldown_reduction = 0.35 SECOND
+	var/cooldown_reduction = 0.4 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()
 	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунды."

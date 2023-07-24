@@ -87,6 +87,8 @@
 
 	var/dyed_type
 
+	var/flash_protection = NONE
+	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
 /obj/item/atom_init()
@@ -106,6 +108,9 @@
 		if (!armor)
 			armor = list()
 		atom_integrity = max_integrity
+
+	if(istype(loc, /obj/item/weapon/storage)) // todo: need to catch all spawns in /storage/ objects and make them use handle_item_insertion or forceMove, so we can remove this
+		flags_2 |= IN_STORAGE
 
 	if(item_state_world)
 		update_world_icon()
@@ -326,7 +331,7 @@
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
-	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	callback = CALLBACK(src, PROC_REF(after_throw), callback) // Replace their callback with our own.
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -363,12 +368,14 @@
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
 	flags_2 &= ~IN_STORAGE
 	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
 	flags_2 |= IN_STORAGE
 	update_world_icon()
 	return
@@ -678,7 +685,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -711,14 +718,14 @@
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
-		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
+		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks = tool_check))
 				return
 
 		else
-			if(!do_after(user, delay, target=target, extra_checks = tool_check))
+			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check))
 				return
 	else
 		// Invoke the extra checks once, just in case.
@@ -761,8 +768,8 @@
 	return !used
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
-/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks, target)
+	return tool_use_check(user, amount, target) && (!extra_checks || extra_checks.Invoke())
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
 //The default action is attack_self().
@@ -1039,7 +1046,7 @@
 		// moving to inventory, restore icon (big inventory icon)
 		icon_state = initial(icon_state)
 
-	else if(icon_state != item_state_world)
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
 		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 

@@ -24,7 +24,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel.my_atom = src
 
 	blood_add(BLOOD_VOLUME_NORMAL)
-	addtimer(CALLBACK(src, .proc/fixblood), 1)
+	addtimer(CALLBACK(src, PROC_REF(fixblood)), 1)
 
 // Resets blood data
 /mob/living/carbon/human/proc/fixblood(clean = TRUE)

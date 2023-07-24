@@ -143,3 +143,7 @@
 /obj/structure/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		take_damage(5, BURN, FIRE, FALSE)
+
+/obj/structure/glowshroom/turn_light_off()
+	visible_message("<span class='warning'>\The [src] withers away!</span>")
+	qdel(src)

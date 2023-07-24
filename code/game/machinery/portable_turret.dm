@@ -302,7 +302,7 @@ var/global/list/turret_icons
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		addtimer(CALLBACK(src, .proc/power_change_post), rand(1, 15))
+		addtimer(CALLBACK(src, PROC_REF(power_change_post)), rand(1, 15))
 	update_power_use()
 
 /obj/machinery/porta_turret/proc/power_change_post()
@@ -851,13 +851,11 @@ var/global/list/turret_icons
 				return
 
 	if(istype(I, /obj/item/weapon/pen))	//you can rename turrets like bots!
-		var/t = sanitize_safe(input(user, "Enter new turret name", name, input_default(finish_name)), MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!Adjacent(user))
+		var/new_name = sanitize_safe(input(user, "Enter new turret name", name, input_default(finish_name)), MAX_NAME_LEN)
+		if(!length(new_name) || !Adjacent(user))
 			return
 
-		finish_name = t
+		finish_name = new_name
 		return
 
 	..()

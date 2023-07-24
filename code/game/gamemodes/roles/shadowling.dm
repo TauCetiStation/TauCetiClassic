@@ -3,7 +3,7 @@
 	id = SHADOW
 
 	required_pref = ROLE_SHADOWLING
-	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Blueshield Officer")
+	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Head of Security", "Captain", "Blueshield Officer")
 	restricted_species_flags = list(IS_SYNTHETIC)
 
 	antag_hud_type = ANTAG_HUD_SHADOW
@@ -52,4 +52,6 @@
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
+	for(var/obj/effect/proc_holder/spell/targeted/shadowling_hivemind/S in antag.current.spell_list)
+		antag.current.RemoveSpell(S)
 	..()

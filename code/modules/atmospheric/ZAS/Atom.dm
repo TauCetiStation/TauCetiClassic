@@ -39,7 +39,7 @@
 		return TRUE
 
 //Convenience function for atoms to update turfs they occupy
-/atom/movable/proc/update_nearby_tiles(need_rebuild)
+/atom/movable/proc/update_nearby_tiles()
 	if(!SSair)
 		return FALSE
 

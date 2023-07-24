@@ -235,7 +235,7 @@
 /obj/item/weapon/shockpaddles/proc/set_cooldown(delay)
 	cooldown = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reset_cooldown), delay, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), delay, TIMER_UNIQUE)
 
 /obj/item/weapon/shockpaddles/proc/reset_cooldown()
 	if(cooldown)
@@ -530,7 +530,7 @@
 /obj/item/weapon/shockpaddles/linked/make_announcement(message)
 	base_unit.audible_message("<b>\The [base_unit]</b> [message]", "\The [base_unit] vibrates slightly.")
 
-/obj/item/weapon/shockpaddles/update_icon()
+/obj/item/weapon/shockpaddles/linked/update_icon()
 	icon_state = "defibpaddleslinked[is_wielded()]"
 	if(cooldown)
 		icon_state = "defibpaddleslinked[is_wielded()]_cooldown"

@@ -96,7 +96,7 @@
 
 /datum/religion_rites/proc/start(mob/user, obj/AOG)
 	SEND_SIGNAL(src, list(COMSIG_RITE_STARTED), user, AOG)
-	RegisterSignal(src, list(COMSIG_RITE_STEP_ENDED), .proc/try_next_step)
+	RegisterSignal(src, list(COMSIG_RITE_STEP_ENDED), PROC_REF(try_next_step))
 	try_next_step(src, user, AOG, 1)
 
 /datum/religion_rites/proc/try_next_step(datum/source, mob/user, obj/AOG, current_stage)
@@ -142,7 +142,7 @@
 	return TRUE
 
 /datum/religion_rites/proc/perform_rite(mob/user, obj/AOG)
-	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
+	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), PROC_REF(reset_rite_wrapper))
 	SEND_SIGNAL(AOG, COMSIG_OBJ_START_RITE)
 	if(!on_chosen(user, AOG))
 		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)

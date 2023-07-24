@@ -223,3 +223,15 @@
 /datum/stat/rating
 	// map of [string, float] where float is [0..5]
 	var/list/ratings = list()
+
+/datum/stat/vote
+	// string from /datum/poll name
+	var/name
+	// int, [0...]
+	var/total_votes
+	// int, [0...]
+	var/total_voters
+	// string rfom /datum/vote_choice
+	var/winner
+	// map of [string, int] where int is [0...]
+	var/list/results = list()

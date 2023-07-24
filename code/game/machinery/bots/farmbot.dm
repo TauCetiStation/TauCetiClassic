@@ -344,14 +344,14 @@
 		spawn(0)
 			var/turf/dest = get_step_towards(target,src)  //Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
 
-			src.path = get_path_to(src, dest, /turf/proc/Distance, 0, 30,id=botcard)
+			src.path = get_path_to(src, dest, TYPE_PROC_REF(/turf, Distance), 0, 30,id=botcard)
 			if(src.path.len == 0)
 				for ( var/turf/spot in orange(1,target) ) //The closest one is unpathable, try  the other spots
 					if ( spot == dest ) //We already tried this spot
 						continue
 					if ( spot.density )
 						continue
-					src.path = get_path_to(src, spot, /turf/proc/Distance, 0, 30,id=botcard)
+					src.path = get_path_to(src, spot, TYPE_PROC_REF(/turf, Distance), 0, 30,id=botcard)
 					if ( src.path.len > 0 )
 						break
 

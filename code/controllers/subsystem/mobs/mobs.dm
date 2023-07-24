@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(mobs)
 
 	var/list/currentrun = list()
 
+	var/list/virus_monitored_mobs = list()
+
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[mob_list.len]")
 

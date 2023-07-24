@@ -43,7 +43,7 @@
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.last_controller_ckey)
 
-	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
+	var/datum/callback/checks = CALLBACK(src, PROC_REF(replicator_checks_do_after_handler))
 	. = user_replicator.do_after_objections(objection_delay, message, extra_checks=checks)
 	if(!.)
 		FR.adjust_materials(material_cost, adjusted_by=user_replicator.last_controller_ckey)
@@ -101,7 +101,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
+	var/datum/callback/checks = CALLBACK(src, PROC_REF(replicator_checks_do_after_handler))
 
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 	FR.bandwidth_borrowed += 1
@@ -459,10 +459,14 @@
 
 	for(var/r in global.alive_replicators)
 		var/mob/living/simple_animal/hostile/replicator/R = r
-		if(R.ckey || R.incapacitated())
+		if(R.is_controlled() || R.incapacitated())
 			continue
 		var/area/A = get_area(R)
 		pos_areas[A.name] = A
+
+	if(length(pos_areas) <= 0)
+		to_chat(user, "<span class='notice'>No suitable hosts found.</span>")
+		return FALSE
 
 	var/area_name = tgui_input_list(user, "Choose an area with replicators in it.", "Area Transfer", pos_areas)
 	if(!area_name)

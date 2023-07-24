@@ -325,9 +325,12 @@
 		smooth_icon_initial = icon
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		// has_false_walls is a file PATH flag, yes
-		var/icon/I = SliceNDice(icon(smooth_icon_initial), !!findtext("[smooth_icon_initial]", "has_false_walls"))
-		global.baked_smooth_icons[cache_string] = I // todo: we can filecache it
+		var/icon/I = try_access_persistent_cache("[ckey(cache_string)].dmi", path2text(smooth_icon_initial))
+		if(!I)
+			// has_false_walls is a file PATH flag, yes
+			I = SliceNDice(icon(smooth_icon_initial), !!findtext("[smooth_icon_initial]", "has_false_walls"))
+			save_persistent_cache(I, "[ckey(cache_string)].dmi", path2text(smooth_icon_initial))
+		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]
 	icon_state = "[adjacencies]"
@@ -352,19 +355,22 @@
 		cache_string += "_grilled"
 
 	if(!global.baked_smooth_icons[cache_string])
+		var/icon/I = try_access_persistent_cache("[ckey(cache_string)].dmi", path2text(smooth_icon_windowstill), path2text(smooth_icon_grille), path2text(smooth_icon_window))
+		if(!I)
+			var/icon/blended = new(smooth_icon_windowstill)
 
-		var/icon/blended = new(smooth_icon_windowstill)
+			if(grilled)
+				var/icon/grille = new(smooth_icon_grille)
+				blended.Blend(grille,ICON_OVERLAY)
 
-		if(grilled)
-			var/icon/grille = new(smooth_icon_grille)
-			blended.Blend(grille,ICON_OVERLAY)
+			var/icon/window = new(smooth_icon_window)
+			if(glass_color)
+				window.Blend(glass_color, ICON_MULTIPLY)
+			blended.Blend(window,ICON_OVERLAY)
 
-		var/icon/window = new(smooth_icon_window)
-		if(glass_color)
-			window.Blend(glass_color, ICON_MULTIPLY)
-		blended.Blend(window,ICON_OVERLAY)
+			I = SliceNDice(blended)
+			save_persistent_cache(I, "[ckey(cache_string)].dmi", path2text(smooth_icon_windowstill), path2text(smooth_icon_grille), path2text(smooth_icon_window))
 
-		var/icon/I = SliceNDice(blended)
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]
@@ -496,6 +502,8 @@
 	var/list/types = list(
 		/obj/structure/window/fulltile,
 		/obj/structure/window/fulltile/phoron,
+		/obj/structure/window/fulltile/tinted,
+		/obj/structure/window/fulltile/polarized,
 		/obj/structure/window/fulltile/reinforced,
 		/obj/structure/window/fulltile/reinforced/phoron,
 		/obj/structure/window/fulltile/reinforced/tinted,
@@ -522,7 +530,7 @@
 		F.smooth_set_icon(0)
 		var/icon/state_grilled = icon(F.icon, "0")
 
-		if(type == /obj/structure/window/fulltile/reinforced/polarized) // polarized don't have own blend color so we need to make it different
+		if(type == /obj/structure/window/fulltile/reinforced/polarized || type == /obj/structure/window/fulltile/polarized) // polarized don't have own blend color so we need to make it different
 			for(var/x in 1 to 32)
 				for(var/y in 1 to 32)
 					if (x == y || x == (32-y+1))

@@ -84,6 +84,16 @@
 		/datum/aspect/resources = 1,
 	)
 
+/datum/religion_sect/preset/chaplain/sounds
+	name = "The Artists of "
+	desc = "Bring a Colors to this world!"
+	convert_opener = "Art already on the way!"
+	aspect_preset = list(
+		/datum/aspect/rescue = 1,
+		/datum/aspect/lightbending/light = 1,
+		/datum/aspect/mystic = 1,
+	)
+
 /datum/religion_sect/custom/chaplain
 	aspects_count = 3
 
@@ -171,6 +181,19 @@
 		/datum/aspect/lightbending/darkness = 3,
 		/datum/aspect/weapon = 2,
 		/datum/aspect/technology = 1,
+	)
+
+/datum/religion_sect/preset/cult/songs
+	name = "The Cult of Sound"
+	desc = "Sound can lead the masses, and you will become its source"
+	convert_opener = "And let your moment be illuminated by the Sound"
+	aspect_preset = list(
+		/datum/aspect/rescue = 1,
+		/datum/aspect/lightbending/light = 1,
+		/datum/aspect/death = 1,
+		/datum/aspect/mystic = 1,
+		/datum/aspect/conjure = 1,
+		/datum/aspect/chaos = 1,
 	)
 
 /datum/religion_sect/custom/cult

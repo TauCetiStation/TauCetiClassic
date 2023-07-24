@@ -9,7 +9,7 @@
 		if(get_dist(src, R) > 7)
 			continue
 
-		if(R.last_controller_ckey != last_controller_ckey)
+		if(!R.is_same_array_as(src))
 			continue
 
 		if(a_intent == INTENT_HARM)
@@ -57,11 +57,11 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/replicator/AttackingTarget()
+/mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 
 	if(!target.is_disintegrating && can_disintegrate(target))
-		INVOKE_ASYNC(src, .proc/disintegrate, target)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), target)
 		return
 
 	if(target.Adjacent(src))
@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/hostile/replicator/EscapeConfinement()
 	if(buckled && can_disintegrate(buckled))
-		INVOKE_ASYNC(src, .proc/disintegrate, buckled)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), buckled)
 		return
 
 	if(isturf(loc))
@@ -84,7 +84,7 @@
 	if(!can_disintegrate(loc))
 		return
 
-	INVOKE_ASYNC(src, .proc/disintegrate, loc)
+	INVOKE_ASYNC(src, PROC_REF(disintegrate), loc)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_priority_target(atom/target)
 	if(is_priority_target(target))
@@ -93,7 +93,7 @@
 	if(priority_target_ref)
 		clear_priority_target()
 
-	RegisterSignal(target, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/clear_priority_target)
+	RegisterSignal(target, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(clear_priority_target))
 	priority_target_ref = "\ref[target]"
 	brave_up()
 

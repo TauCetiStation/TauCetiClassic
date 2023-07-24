@@ -659,7 +659,7 @@ var/global/list/blacklisted_builds = list(
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/getFilesSlow, src, SSassets.preload, FALSE), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(getFilesSlow), src, SSassets.preload, FALSE), 5 SECONDS)
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -752,7 +752,7 @@ var/global/list/blacklisted_builds = list(
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
 					communication_hotkeys += key
 				if("Me")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.me")
 					communication_hotkeys += key
 				if("LOOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")
