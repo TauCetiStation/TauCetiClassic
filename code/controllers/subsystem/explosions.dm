@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(explosions)
 				cached_exp_block[explode] = resistance
 			else
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
-				dist += our_block // resistance actually just "pushing" next turf from explosion range
+				dist += our_block + resistance / 2 // resistance actually just "pushing" turf from explosion range
 				cached_exp_block[explode] = our_block + resistance
 
 		var/severity = EXPLODE_NONE
