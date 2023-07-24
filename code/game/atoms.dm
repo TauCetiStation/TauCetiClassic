@@ -339,6 +339,8 @@
 	return
 
 /atom/proc/ex_act()
+	//SHOULD_NOT_SLEEP(TRUE) // todo
+	set waitfor = FALSE
 	return
 
 /atom/proc/blob_act()
