@@ -105,12 +105,12 @@
 
 /datum/quality/positiveish/big_iron/add_effect(mob/living/carbon/human/H, latespawn)
 	if(prob(50))
-		H.equip_or_collect(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
+		H.equip_to_slot(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
 	else
-		H.equip_or_collect(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
-	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
-	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
+		H.equip_to_slot(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
+	H.equip_to_slot(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
+	H.equip_to_slot(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
+	H.equip_to_slot(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
 	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
 	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)

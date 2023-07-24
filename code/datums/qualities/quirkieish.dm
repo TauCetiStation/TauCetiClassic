@@ -360,3 +360,38 @@
 		var/datum/quality/quality = SSqualities.qualities_by_type[quality_type]
 		if(quality.satisfies_requirements(H, latespawn))
 			quality.add_effect(H, latespawn)
+
+
+/datum/quality/quirkieish/orderly
+	name = "Orderly"
+	desc = "Ты - Санитар! Сильный и ловкий младший медработник, умеющий усмирять неблагодарных пациентов."
+	requirement = "Психиатр."
+
+/datum/quality/quirkieish/orderly/add_effect(mob/living/carbon/human/H, latespawn)
+	H.h_style = "Bald"
+
+	qdel(H.wear_suit)
+
+	H.equip_to_slot(new /obj/item/clothing/under/rank/orderly(H), SLOT_W_UNIFORM)
+	H.equip_to_slot(new /obj/item/clothing/gloves/latex/nitrile(H), SLOT_GLOVES)
+	H.equip_to_slot(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
+
+	H.equip_or_collect(new /obj/item/weapon/gun/syringe/rapidsyringe(H), SLOT_L_HAND)
+
+	var/obj/item/weapon/card/id/id = H.wear_id
+
+	id.name = "[id.registered_name]'s ID Card (Orderly)"
+	id.assignment = "Orderly"
+	id.rank = "Orderly"
+
+	var/obj/item/device/pda/pda = H.belt
+	pda.name = "PDA-[pda.owner] (Orderly)"
+	pda.ownjob = "Orderly"
+	pda.ownrank = "Orderly"
+
+	data_core.manifest_modify(id.registered_name, id.assignment)
+
+	H.regenerate_icons()
+
+	H.mind.skills.add_available_skillset(/datum/skillset/orderly)
+	H.mind.skills.maximize_active_skills()

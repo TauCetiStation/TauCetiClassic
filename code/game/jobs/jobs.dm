@@ -96,7 +96,8 @@ var/global/list/medical_positions = list(
 	"Geneticist", //Part of both medical and science
 	"Virologist",
 	"Psychiatrist",
-	"Medical Intern"
+	"Medical Intern",
+	"Orderly"
 )
 
 var/global/list/science_positions = list(

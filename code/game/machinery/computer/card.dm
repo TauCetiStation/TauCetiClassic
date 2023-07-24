@@ -108,7 +108,7 @@
 	data["regions"] = null
 
 	data["engineering_jobs"] = format_jobs(engineering_positions)
-	data["medical_jobs"] = format_jobs(medical_positions)
+	data["medical_jobs"] = format_jobs(medical_positions - "Orderly")
 	data["science_jobs"] = format_jobs(science_positions)
 	data["security_jobs"] = format_jobs(security_positions)
 	data["civilian_jobs"] = format_jobs(civilian_positions)

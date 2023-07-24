@@ -530,7 +530,7 @@
 			return ID.registered_name
 
 /proc/get_all_job_icons() //For all existing HUD icons
-	return joblist + list("Prisoner")
+	return joblist + list("Prisoner", "Orderly")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
