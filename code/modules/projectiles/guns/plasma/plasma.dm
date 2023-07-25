@@ -17,12 +17,10 @@
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
 	fire_delay = 1
-	w_class = SIZE_NORMAL
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
-	two_hand_weapon = ONLY_TWOHAND
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -50,7 +48,7 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge/massive
 		)
 
-	w_class = SIZE_BIG
+	w_class = SIZE_NORMAL
 	fire_delay = 15
 	number_of_shots = 7 // It can be more than that (but no more than 1 extra), if there is a bit of charge left after 7th shot.
 	max_projectile_per_fire = 5
