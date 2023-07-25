@@ -608,11 +608,13 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Оживлённый предмет"
 	id = "mimic"
 	desc = "Вы магическим образом ожили на станции"
+	cooldown = 1 MINUTES
 
 /datum/spawner/living/evil_shade
 	name = "Злой Дух"
 	id = "evil_shade"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+	cooldown = 2 MINUTES
 
 /datum/spawner/living/rat
 	name = "Крыса"
