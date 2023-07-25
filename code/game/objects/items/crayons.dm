@@ -353,7 +353,7 @@
 			uses -= 10
 			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
-
+		
 	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
