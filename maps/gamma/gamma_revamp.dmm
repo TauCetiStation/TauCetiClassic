@@ -6904,10 +6904,14 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/machinery/power/smes,
 /obj/structure/cable/orange{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/smes{
+	outputting = 1;
+	input_level = 90000;
+	input_attempt = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -55555,7 +55559,8 @@
 /obj/machinery/power/solar_control{
 	dir = 8;
 	id = "aionesolar";
-	name = "First AI Solar Control"
+	name = "First AI Solar Control";
+	track = 2
 	},
 /obj/structure/cable/yellow,
 /turf/simulated/floor{
@@ -62280,7 +62285,8 @@
 /obj/machinery/power/solar_control{
 	dir = 4;
 	id = "aitwosolar";
-	name = "Second AI Solar Control"
+	name = "Second AI Solar Control";
+	track = 2
 	},
 /obj/structure/cable/yellow,
 /turf/simulated/floor{
@@ -95085,7 +95091,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/machinery/power/smes,
+/obj/machinery/power/smes{
+	outputting = 1;
+	input_level = 90000;
+	input_attempt = 1
+	},
 /obj/structure/cable/orange{
 	d2 = 4;
 	icon_state = "0-4"
