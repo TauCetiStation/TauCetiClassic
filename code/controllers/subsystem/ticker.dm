@@ -391,8 +391,8 @@ SUBSYSTEM_DEF(ticker)
 	addtimer(CALLBACK(src, PROC_REF(station_explosion_effects), explosion, summary, cinematic), screen_time)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
-	for(var/mob/M as anything in mob_list) //search any goodest
-		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+/*	for(var/mob/M as anything in mob_list) //search any goodest
+		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)*/
 	if(explosion)
 		flick(explosion,cinematic)
 	if(summary)

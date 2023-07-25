@@ -19,8 +19,8 @@ var/global/list/explosion_turfs = list()
 		if(get_dist(W, epicenter) < 10)
 			W.react_explosion(epicenter, power)
 
-	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, round(power*2,1) )
-	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, FALSE, null, round(power,1) )
+/*	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, round(power*2,1) )
+	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, FALSE, null, round(power,1) )*/
 
 	explosion_in_progress = 1
 	explosion_turfs = list()
@@ -123,5 +123,17 @@ var/global/list/explosion_turfs = list()
 /turf/unsimulated/explosion_spread(power)
 	return //So it doesn't get to the parent proc, which simulates explosions
 
-/client/verb/explode()
-	SSticker.station_explosion_detonation(get_turf(mob))
+/client/verb/explode_nuke()
+	var/T = get_turf(mob)
+	tgui_alert(mob, "Confirm", "Confirm", list("Ok"))
+	SSticker.station_explosion_detonation(T)
+
+/client/verb/explode_12_13_14()
+	var/T = get_turf(mob)
+	tgui_alert(mob, "Confirm", "Confirm", list("Ok"))
+	explosion(get_turf(T), 12, 13, 14)
+
+/client/verb/explode_3_5_7()
+	var/T = get_turf(mob)
+	tgui_alert(mob, "Confirm", "Confirm", list("Ok"))
+	explosion(get_turf(T), 3, 5, 7)
