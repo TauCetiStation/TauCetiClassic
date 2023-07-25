@@ -329,7 +329,7 @@
 		var/mob/living/carbon/C = target
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			if(user.a_intent == INTENT_PUSH && H.get_species() == IPC){
+			if(user.a_intent == INTENT_PUSH && H.get_species() == IPC)
 				if(colour)
 					uses -= 15
 					C.blurEyes(3)
