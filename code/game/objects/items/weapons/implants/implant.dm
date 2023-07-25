@@ -20,6 +20,8 @@
 /obj/item/weapon/implant/atom_init()
 	. = ..()
 	implant_list += src
+	if(ismob(loc))
+		add_item_actions(loc)
 
 /obj/item/weapon/implant/Destroy()
 	implant_removal(imp_in)

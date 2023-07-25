@@ -203,6 +203,7 @@
 
 /datum/action/item_action/hands_free/activate_implant
 	name = "Activate Implant"
+	check_flags = AB_CHECK_INSIDE
 
 /obj/item/weapon/implant/abductor/attack_self()
 	var/turf/T = get_turf(src)
