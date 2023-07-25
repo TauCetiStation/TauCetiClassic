@@ -4123,9 +4123,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "auc" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -5652,9 +5650,7 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "aLu" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 28
@@ -7711,9 +7707,7 @@
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "bjf" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
@@ -8517,9 +8511,7 @@
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "bqL" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -13290,9 +13282,7 @@
 	})
 "cuU" = (
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "cuX" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/blueshield)
@@ -15365,9 +15355,7 @@
 	},
 /obj/machinery/light/smart,
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "cQp" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -19676,9 +19664,7 @@
 "dQa" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "dQQ" = (
 /obj/item/ashtray/bronze,
 /obj/item/weapon/table_parts/wood/fancy/black,
@@ -25412,9 +25398,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "fjj" = (
 /turf/simulated/wall,
 /area/station/maintenance/dormitory)
@@ -29303,9 +29287,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "fZM" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -29314,9 +29296,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "fZR" = (
 /obj/structure/table/woodentable,
 /obj/structure/cable{
@@ -29328,9 +29308,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "fZZ" = (
 /obj/structure/table,
 /obj/item/clothing/suit/storage/hazardvest{
@@ -29363,9 +29341,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "gah" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -29780,9 +29756,7 @@
 	dir = 9;
 	icon_state = "warndark"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "geO" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
@@ -31010,9 +30984,7 @@
 	dir = 6;
 	icon_state = "warndark"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "guA" = (
 /obj/decal/boxingrope{
 	density = 0;
@@ -32226,9 +32198,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "gHK" = (
 /obj/structure/table/glass,
 /obj/machinery/camera{
@@ -32581,9 +32551,7 @@
 	dir = 8;
 	icon_state = "warndark"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "gLM" = (
 /obj/machinery/power/apc/smallcell{
 	dir = 4;
@@ -37228,9 +37196,7 @@
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "hRv" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -38328,9 +38294,7 @@
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "pod2"
 	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
+/turf/simulated/shuttle/floor/erokez,
 /area/shuttle/escape_pod5/station)
 "ifl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -38913,9 +38877,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "ils" = (
 /obj/machinery/computer/rdconsole/core{
 	dir = 4
@@ -43392,9 +43354,7 @@
 	id = "Courtroom"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "jny" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -43572,9 +43532,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "jpq" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -45203,9 +45161,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "jGg" = (
 /obj/structure/flora/junglebush/b,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -46575,9 +46531,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "jYq" = (
 /obj/structure/closet/toolcloset,
 /turf/simulated/floor{
@@ -48303,9 +48257,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "kvD" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -48685,9 +48637,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "kzx" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -50073,9 +50023,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "kSN" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -50813,9 +50761,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "lar" = (
 /obj/structure/table,
 /obj/item/weapon/storage/briefcase/inflatable{
@@ -51481,9 +51427,7 @@
 /obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "lhr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -53369,9 +53313,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "lFd" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -53457,9 +53399,7 @@
 	},
 /obj/item/device/megaphone,
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "lGr" = (
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 8
@@ -61491,9 +61431,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "nyV" = (
 /obj/item/stack/sheet/metal,
 /turf/simulated/floor/plating{
@@ -62745,9 +62683,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "nNU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -63854,9 +63790,7 @@
 	name = "Central Access"
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "nZi" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -65620,9 +65554,7 @@
 	dir = 4;
 	icon_state = "warndark"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "owM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/machinery/light{
@@ -67192,9 +67124,7 @@
 /obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "oOs" = (
 /obj/structure/barricade/wooden,
 /obj/effect/decal/cleanable/dirt,
@@ -70149,9 +70079,7 @@
 "pyG" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "pyJ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/green{
 	dir = 4
@@ -73067,9 +72995,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "qhy" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
@@ -73311,9 +73237,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "qkf" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
@@ -73765,9 +73689,7 @@
 /area/station/rnd/mixing)
 "qoI" = (
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "qoL" = (
 /obj/structure/sign/departments/chemistry{
 	pixel_x = -32
@@ -76385,9 +76307,7 @@
 	dir = 10;
 	icon_state = "warndark"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "qTK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark{
@@ -76920,9 +76840,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "rai" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
@@ -77787,9 +77705,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "rmC" = (
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
@@ -79729,9 +79645,7 @@
 /area/station/maintenance/brig)
 "rKF" = (
 /turf/simulated/wall,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "rKJ" = (
 /obj/item/weapon/folder/white,
 /obj/item/device/radio/headset/headset_med,
@@ -82437,9 +82351,7 @@
 	dir = 5;
 	icon_state = "warndark"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "srN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -85248,9 +85160,7 @@
 "sYn" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "sYv" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
@@ -87075,9 +86985,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "ttu" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
@@ -89169,9 +89077,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "tSz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -91740,9 +91646,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "uth" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -93027,9 +92931,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "uKj" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -93302,9 +93204,7 @@
 	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "uNP" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
@@ -95900,9 +95800,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "vuK" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -95914,9 +95812,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "vuL" = (
 /obj/machinery/camera{
 	c_tag = "Brig Lobby";
@@ -98330,9 +98226,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "vVg" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -103975,9 +103869,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "xoO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -105067,9 +104959,7 @@
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/carpet/red,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "xCE" = (
 /turf/simulated/floor/carpet,
 /area/station/security/vacantoffice)
@@ -105362,9 +105252,7 @@
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "xHM" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Upload Access";
@@ -105923,9 +105811,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/area/station/security/tribunal)
 "xOp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
