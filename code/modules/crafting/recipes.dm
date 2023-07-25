@@ -8,7 +8,7 @@
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
 	var/required_proficiency
-	var/blacklist[] = list()		///type paths of items explicitly not allowed as an ingredient
+	var/list/blacklist = list()		///type paths of items explicitly not allowed as an ingredient
 
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return

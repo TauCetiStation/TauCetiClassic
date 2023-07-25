@@ -205,14 +205,14 @@
 	force = 9
 	throwforce = 5
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "shiv"
+	icon_state = "glass"
 
 /obj/item/weapon/kitchenknife/makeshift_shiv/phoron
 	name = "phoron glass shiv"
 	desc = "A shard of sharp glass with a rag tied around. Considerably tougher than regular glass shiv."
 	force = 13
 	throwforce = 9
-	icon_state = "phoronshiv"
+	icon_state = "pglass"
 
 
 /*
