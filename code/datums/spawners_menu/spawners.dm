@@ -583,6 +583,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/religion_familiar
 	name = "Фамильяр Религии"
 	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+	cooldown = 2 MINUTES
 
 	var/datum/religion/religion
 
