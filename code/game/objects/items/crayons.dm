@@ -334,15 +334,13 @@
 					uses -= 15
 					C.blurEyes(3)
 					C.eye_blind = max(C.eye_blind, 1)
-					if(do_after(user, 60, needhand = TRUE, target = target)){
+					if(do_after(user, 60, needhand = TRUE, target = target))
 						H.r_skin = hex2num(copytext(colour, 2, 4))
 						H.g_skin = hex2num(copytext(colour, 4, 6))
 						H.b_skin = hex2num(copytext(colour, 6, 8))
 						H.apply_recolor()
 						H.update_body()
-					}
-			}
-			else{
+			else
 				uses -= 10
 				C.blurEyes(3)
 				C.eye_blind = max(C.eye_blind, 1)
@@ -350,12 +348,12 @@
 				H.lip_color = colour
 				H.update_body()
 				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
-			}
-		else if (iscarbon(C)){
+
+		else if (iscarbon(C))
 			uses -= 10
 			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
-		}
+
 	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
