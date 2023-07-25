@@ -374,7 +374,7 @@
 		return
 
 	if(C.stat == DEAD)
-		var/list/messagevoice = list("Нет! Не бросай нас!" = 'sound/voice/medbot/no.ogg',"Проклятье! Не закрывай глаза!" = 'sound/voice/medbot/live.ogg',"Я... Я ещё никогда не терял пациента... До сегодняшнего дня." = 'sound/voice/medbot/lost.ogg', "Глупцы, героя строя, Бросаются вперёд, Нормальные герои — Всегда наоборот" = 'sound/voice/medbot/heroes.ogg')
+		var/list/messagevoice = list("Нет! Не бросай нас!" = 'sound/voice/medbot/no.ogg',"Проклятье! Не закрывай глаза!" = 'sound/voice/medbot/live.ogg',"Я... Я ещё никогда не терял пациента... До сегодняшнего дня." = 'sound/voice/medbot/lost.ogg', "Глупцы, героя строя, Бросаются вперёд, Нормальные герои — Всегда наоборот." = 'sound/voice/medbot/heroes.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
