@@ -254,18 +254,18 @@ SUBSYSTEM_DEF(explosions)
 			distance = 0
 		var/base_shake_amount = sqrt(near_distance / (distance + 1))
 		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
-			listener.playsound_local(epicenter, near_sound, volume_channel = VOL_EFFECTS_MASTER, vol = 100, vary = TRUE)
+			listener.playsound_local(epicenter, near_sound, VOL_EFFECTS_MASTER, vol = 100, vary = TRUE)
 			if(base_shake_amount > 0)
 				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
 
 		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
 			var/far_volume = clamp(far_distance / 2, FAR_LOWER, FAR_UPPER)
 			if(creaking)
-				listener.playsound_local(epicenter, creaking_sound, volume_channel = VOL_EFFECTS_MASTER, vol = far_volume, vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
+				listener.playsound_local(epicenter, creaking_sound, VOL_EFFECTS_MASTER, vol = far_volume, vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
 			else if(prob(FAR_SOUND_PROB)) // Sound variety during meteor storm/tesloose/other bad event
-				listener.playsound_local(epicenter, far_sound, volume_channel = VOL_EFFECTS_MASTER, vol = far_volume, vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
+				listener.playsound_local(epicenter, far_sound, VOL_EFFECTS_MASTER, vol = far_volume, vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
 			else
-				listener.playsound_local(epicenter, echo_sound, volume_channel = VOL_EFFECTS_MASTER, vol = far_volume, vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
+				listener.playsound_local(epicenter, echo_sound, VOL_EFFECTS_MASTER, vol = far_volume, vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
 
 			if(base_shake_amount || quake_factor)
 				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(explosions)
 				shake_camera(listener, FAR_SHAKE_DURATION, clamp(quake_factor / 4, 0, FAR_SHAKE_CAP))
 			else
 				echo_volume = 40
-			listener.playsound_local(epicenter, echo_sound, volume_channel = VOL_EFFECTS_MASTER, vol = echo_volume, vary = TRUE, distance_multiplier = 0)
+			listener.playsound_local(epicenter, echo_sound, VOL_EFFECTS_MASTER, vol = echo_volume, vary = TRUE, distance_multiplier = 0)
 
 		if(creaking) // 5 seconds after the bang (~duration of SOUNDIN_EXPLOSION_CREAK), the station begins to creak
 			listener.playsound_local_timed(CREAK_DELAY, epicenter, hull_creaking_sound, volume_channel = VOL_EFFECTS_MASTER, vol = rand(CREAC_LOWER_VOL, CREAC_UPPER_VOL), vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)

@@ -19,7 +19,7 @@
 	T = locate(T.x - round(asteroid.width/2), T.y - round(asteroid.height/2) , T.z)
 	var/list/bounds = list(T.x, T.y, T.z, T.x + asteroid.width + 1, T.y + asteroid.height + 1, T.z)
 
-	//shake_the_room(T, orig_max_distance, far_dist, devastation_range, heavy_impact_range)
+	//todo: shake_the_room(T, orig_max_distance, far_dist, devastation_range, heavy_impact_range)
 /*	for(var/mob/M in player_list)
 		if(M.z == T.z)
 			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)*/
