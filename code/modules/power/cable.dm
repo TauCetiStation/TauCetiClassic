@@ -174,6 +174,18 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return 0
 
+//Intent harm attackby. Destroying cable makes shock to user
+/obj/structure/cable/attacked_by(obj/item/attacking_item, mob/living/user, def_zone, power)
+	if(attacking_item.flags & CONDUCT)
+		shock(user, 100)
+	return ..()
+
+//Damage reduction to spend at least 2 hits cutting wires
+/obj/structure/cable/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(damage_type == BRUTE)
+		return damage_amount * 0.2
+	return ..()
+
 //explosion handling
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
