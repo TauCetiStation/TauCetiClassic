@@ -88,3 +88,8 @@
 /area/station/rnd/hallway/florahall
 	name = "Flora Reserach"
 	icon_state = "research"
+
+/area/station/security/tribunal
+	name = "Courtroom"
+	icon_state = "security"
+	ambience = list('sound/ambience/vacant_1.ogg')
