@@ -3223,6 +3223,10 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=DS";
+	location = "DN-W"
+	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "ajA" = (
@@ -20593,6 +20597,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=CN-AR";
+	location = "N-Es"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "edW" = (
@@ -29550,6 +29558,10 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=S-MB";
+	location = "N-MB"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -81459,6 +81471,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SSW-B";
+	location = "S-MB"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "she" = (
@@ -105522,6 +105538,16 @@
 	icon_state = "darkyellow"
 	},
 /area/station/engineering/monitoring)
+"xKA" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=N-MB";
+	location = "NNW-B"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/station/hallway/primary/bridgehall)
 "xKI" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -142522,7 +142548,7 @@ kdr
 aFz
 bBh
 gOh
-jYk
+xKA
 fpc
 eDJ
 uth
