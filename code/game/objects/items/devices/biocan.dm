@@ -99,6 +99,8 @@
 	return
 
 /obj/item/device/biocan/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
 	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
 	extract_head(brain_destroyed = TRUE)
 	new /obj/item/weapon/shard(loc)

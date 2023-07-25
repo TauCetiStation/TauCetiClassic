@@ -23,7 +23,7 @@
 		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !player.ismindprotect())
 
 			possible_traitors += player
-			for(var/job in list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain"))
+			for(var/job in list("Internal Affairs Agent", "Security Officer", "Warden", "Head of Security", "Captain"))
 				if(player.mind.assigned_role == job)
 					possible_traitors -= player
 
