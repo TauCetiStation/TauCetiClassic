@@ -146,6 +146,7 @@
 
 
 /datum/role/syndicate_responder/OnPostSetup(laterole)
+	. = ..()
 	antag.current.faction = "syndicate"
 	antag.current.add_language(LANGUAGE_SYCODE)
 
