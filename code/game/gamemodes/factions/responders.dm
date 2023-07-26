@@ -21,4 +21,4 @@
 	name = F_EMERNUKE
 	ID = F_EMERNUKE
 	logo_state = "nuke-logo"
-	initroletype = /datum/role/operative/responder
+	initroletype = /datum/role/syndicate_responder

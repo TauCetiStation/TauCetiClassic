@@ -130,9 +130,26 @@
 		if(51 to 100)
 			AppendObjective(/datum/objective/nuclear)
 
-/datum/role/operative/responder/OnPostSetup(laterole)
+/datum/role/syndicate_responder
+	name = NUKE_OP
+	id = NUKE_OP
+	disallow_job = TRUE
+
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "hudsyndicate"
+
+	logo_state = "nuke-logo"
+
+	skillset_type = /datum/skillset/nuclear_operative
+
+	moveset_type = /datum/combat_moveset/cqc
+
+
+/datum/role/syndicate_responder/OnPostSetup(laterole)
 	antag.current.faction = "syndicate"
 	antag.current.add_language(LANGUAGE_SYCODE)
+	return ..()
+
 
 	var/datum/objective/nuclear/N = objectives.FindObjective(/datum/objective/nuclear)
 	if(!N)
@@ -154,7 +171,7 @@
 	to_chat(antag.current, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
 	antag.current.mind.store_memory("Код от бомбы: [nukecode]")
 
-/datum/role/operative/responder/forgeObjectives()
+/datum/role/syndicate_responder/forgeObjectives()
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/nuclear)
