@@ -572,7 +572,7 @@ var/global/list/admin_verbs_hideable = list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/turf/epicenter = mob.loc
-	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb", "Cancel")
+	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Cap Bomb", "Nuke", "Custom Bomb", "Cancel")
 	var/choice = input("What size explosion would you like to produce?") in choices
 	switch(choice)
 		if(null)
