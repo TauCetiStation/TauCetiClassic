@@ -85,14 +85,14 @@ var/global/can_call_ert
 		return 0
 
 	var/datum/response_team/team
-	var/confirm = tgui_alert(usr, "Хотите указать, какой ОБР вызвать?", "ERT", list("Да", "Случайное", "Отмена"))
+	var/confirm = tgui_alert(usr, "Хотите указать, какой ОБР вызвать?", "ERT", list("Да", "Случайный", "Отмена"))
 	if(confirm == "Отмена")
 		return
-	if(confirm == "Случайное")
+	if(confirm == "Случайный")
 		team = get_random_responders()
 
 	if(confirm == "Да")
-		var/choice = input("Какое?") as anything in allowed_ert_teams
+		var/choice = input("Какой?") as anything in allowed_ert_teams
 		team = choice
 	var/objective = "Help the station crew."
 	if(team.can_specify_objective)
