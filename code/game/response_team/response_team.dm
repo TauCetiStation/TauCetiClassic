@@ -85,7 +85,7 @@ var/global/can_call_ert
 		return 0
 
 	var/datum/response_team/team
-	var/confirm = tgui_alert(src, "Хотите указать, какой ОБР вызвать?", "ERT", list("Да", "Случайное", "Отмена"))
+	var/confirm = tgui_alert(usr, "Хотите указать, какой ОБР вызвать?", "ERT", list("Да", "Случайное", "Отмена"))
 	if(confirm == "Отмена")
 		return
 	if(confirm == "Случайное")
