@@ -1044,11 +1044,10 @@
 	name = "Absorption"
 	desc = "The virus produces nanites on the host's skin that absorb sound waves."
 	level = 2
-	max_stage = 3
+	max_stage = 2
 	cooldown = 10
 	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 	var/trait_added = FALSE
-	var/comp_added = FALSE
 	COOLDOWN_DECLARE(mute_message)
 
 /datum/disease2/effect/mute/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -1062,17 +1061,10 @@
 			if(trait_added)
 				return
 			ADD_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
-		if(3)
-			SEND_SIGNAL(mob, COMSIG_START_SUPPRESSING)
-			if(comp_added)
-				return
-			comp_added = TRUE
-			mob.AddComponent(/datum/component/silence, 0, 0.55)
 
 /datum/disease2/effect/mute/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	REMOVE_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
 	trait_added = FALSE
-	SEND_SIGNAL(mob, COMSIG_STOP_SUPPRESSING)
 
 ////////////////////////STAGE 1/////////////////////////////////
 
