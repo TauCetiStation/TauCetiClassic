@@ -147,7 +147,7 @@
 			return
 		if((localopened) && (!smashed))
 			to_chat(user, "<span class='notice'>You closed the [name].</span>")
-			localopened = FALSE //I'm pretty sure we don't need an if(src.smashed) in here. In case I'm wrong and it fucks up teh cabinet, **MARKER**. -Agouri
+			localopened = FALSE
 			add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 			return
 
