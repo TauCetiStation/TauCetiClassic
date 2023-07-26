@@ -30,6 +30,24 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
 
+
+/obj/structure/closet/secure_closet/freezer/kitchen/kitchenbig
+
+/obj/structure/closet/secure_closet/freezer/kitchen/kitchenbig/PopulateContents()
+	for (var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/storage/fancy/egg_box(src)
+	for (var/i in 1 to 6)
+		new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+
+
+
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
 	req_access = list()
 
