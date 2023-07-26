@@ -164,7 +164,7 @@
 	var/heavy_impact_range = 0
 	// int, [-infinity...]
 	var/light_impact_range = 0
-	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
+	// int, [-infinity...]
 	var/flash_range = 0
 	// string, [hh:mm]
 	var/occurred_time

@@ -271,7 +271,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
-	explosion(src.loc,0,3,5,7,10)
+	explosion(src.loc,0,3,5,7)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/virusfood

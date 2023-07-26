@@ -28,6 +28,13 @@ SUBSYSTEM_DEF(explosions)
 
 	var/currentpart = SSAIR_PIPENETS
 
+	// cap, usual ratio ~1:2:3:3:3
+	var/MAX_EX_DEVESTATION_RANGE = 3
+	var/MAX_EX_HEAVY_RANGE = 7
+	var/MAX_EX_LIGHT_RANGE = 14
+	var/MAX_EX_FLASH_RANGE = 14
+	//var/MAX_EX_FLAME_RANGE = 14
+
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
 	msg += "LT:[round(cost_lowturf, 1)]|"
@@ -66,8 +73,8 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
-/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 1)
-	. = SSexplosions.explode(arglist(args))
+/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
+	. = SSexplosions.explode(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, explosion_cause)
 
 /**
  * Makes a given turf explode. Now on the explosions subsystem!
@@ -80,14 +87,11 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
-/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, z_transfer = TRUE)
+/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
 
 	SSStatistics.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
-	if(isnull(flash_range))
-		flash_range = devastation_range
-
-	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, explosion_cause)
 	return
 
 /**
@@ -106,12 +110,22 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, explosion_cause) // ignorecap
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, explosion_cause)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
 
+	if(isnull(flash_range))
+		flash_range = devastation_range
+
 	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range)
+
+	if(!ignorecap)
+		devastation_range = min(MAX_EX_DEVESTATION_RANGE , devastation_range)
+		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
+		//flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
 
@@ -144,7 +158,6 @@ SUBSYSTEM_DEF(explosions)
 	shake_the_room(epicenter, near_distance = orig_max_distance, far_distance = far_dist, quake_factor = devastation_range, echo_factor = heavy_impact_range)
 
 	if(flash_range)
-		flash_range = min(flash_range, MAX_EXPLOSION_RANGE)
 		for(var/mob/living/Mob_to_flash in viewers(flash_range, epicenter))
 			Mob_to_flash.flash_eyes()
 
@@ -217,9 +230,9 @@ SUBSYSTEM_DEF(explosions)
 /// The duration of the screenshake for distant explosions.
 #define FAR_SHAKE_DURATION (1 SECONDS)
 /// The lower limit for the randomly selected hull creaking volume.
-#define CREAC_LOWER_VOL 55
+#define CREAK_LOWER_VOL 55
 /// The upper limit for the randomly selected hull creaking volume.
-#define CREAC_UPPER_VOL 70
+#define CREAK_UPPER_VOL 70
 
 /**
  * Handles the sfx and screenshake caused by an explosion.
@@ -283,7 +296,7 @@ SUBSYSTEM_DEF(explosions)
 			listener.playsound_local(epicenter, echo_sound, VOL_EFFECTS_MASTER, vol = echo_volume, vary = TRUE, distance_multiplier = 0)
 
 		if(creaking) // 5 seconds after the bang (~duration of SOUNDIN_EXPLOSION_CREAK), the station begins to creak
-			listener.playsound_local_timed(CREAK_DELAY, epicenter, hull_creaking_sound, volume_channel = VOL_EFFECTS_MASTER, vol = rand(CREAC_LOWER_VOL, CREAC_UPPER_VOL), vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
+			listener.playsound_local_timed(CREAK_DELAY, epicenter, hull_creaking_sound, volume_channel = VOL_EFFECTS_MASTER, vol = rand(CREAK_LOWER_VOL, CREAK_UPPER_VOL), vary = TRUE, voluminosity = FALSE, distance_multiplier = 0)
 
 #undef CREAK_DELAY
 #undef QUAKE_CREAK_PROB
@@ -295,8 +308,8 @@ SUBSYSTEM_DEF(explosions)
 #undef FAR_SHAKE_CAP
 #undef NEAR_SHAKE_DURATION
 #undef FAR_SHAKE_DURATION
-#undef CREAC_LOWER_VOL
-#undef CREAC_UPPER_VOL
+#undef CREAK_LOWER_VOL
+#undef CREAK_UPPER_VOL
 
 /// Returns a list of turfs in X range from the epicenter
 /// Returns in a unique order, spiraling outwards

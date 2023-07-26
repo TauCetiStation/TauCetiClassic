@@ -429,7 +429,7 @@ SUBSYSTEM_DEF(ticker)
 	SSair.stop_airnet_processing = TRUE
 	SSmachines.stop_powernet_processing = TRUE
 
-	explosion(get_turf(source), 30, 60, 120)
+	explosion(get_turf(source), 30, 60, 120, ignorecap = TRUE)
 
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
