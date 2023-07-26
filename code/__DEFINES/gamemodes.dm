@@ -9,6 +9,7 @@
 #define F_CUSTOMSQUAD        "Custom Squad"
 #define F_DEATHSQUAD         "Nanotrasen Deathsquad"
 #define F_EMERSQUAD          "Emergency Response Team"
+#define F_EMERNUKE           "Gorlex Marauders Recon Squad"
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"

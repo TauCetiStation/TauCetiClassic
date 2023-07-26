@@ -129,3 +129,32 @@
 
 		if(51 to 100)
 			AppendObjective(/datum/objective/nuclear)
+
+/datum/role/operative/responder/OnPostSetup(laterole)
+	antag.current.faction = "syndicate"
+	antag.current.add_language(LANGUAGE_SYCODE)
+
+	var/datum/objective/nuclear/N = objectives.FindObjective(/datum/objective/nuclear)
+	if(!N)
+		return
+
+	var/nukecode = "ERROR"
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
+		if(!bomb.r_code)
+			continue
+		if(bomb.r_code == "LOLNO")
+			continue
+		if(bomb.r_code == "ADMIN")
+			continue
+		if(bomb.nuketype != "NT")
+			continue
+
+		nukecode = bomb.r_code
+
+	to_chat(antag.current, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
+	antag.current.mind.store_memory("Код от бомбы: [nukecode]")
+
+/datum/role/operative/responder/forgeObjectives()
+	if(!..())
+		return FALSE
+	AppendObjective(/datum/objective/nuclear)
