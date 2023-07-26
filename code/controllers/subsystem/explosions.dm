@@ -129,16 +129,16 @@ SUBSYSTEM_DEF(explosions)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
 
-	// Now begins a bit of a logic train to find out whodunnit.
-	//var/who_did_it = "N/A"
-	//var/who_did_it_game_log = "N/A"
+	if(adminlog)
+		// Now begins a bit of a logic train to find out whodunnit.
+		//var/who_did_it = "N/A"
+		//var/who_did_it_game_log = "N/A"
 
-	//message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
-	//log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
+		//message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
+		//log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
 
-
-	message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range]) in area [epicenter.loc.name] ([COORD(epicenter)] - [ADMIN_JMP(epicenter)])")
-	log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name]")
+		message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range]) in area [epicenter.loc.name] ([COORD(epicenter)] - [ADMIN_JMP(epicenter)])")
+		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name]")
 
 	SEND_SIGNAL(src, COMSIG_EXPLOSIONS_EXPLODE, epicenter, devastation_range, heavy_impact_range, light_impact_range)
 
