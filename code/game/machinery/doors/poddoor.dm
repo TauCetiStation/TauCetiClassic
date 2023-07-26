@@ -8,7 +8,7 @@
 	layer = ABOVE_SAFEDOOR_LAYER
 	base_layer = ABOVE_SAFEDOOR_LAYER
 	var/id = 1.0
-	explosive_resistance = 4
+	explosive_resistance = 3
 	block_air_zones = 0
 	door_open_sound  = 'sound/machines/blast_door.ogg'
 	door_close_sound = 'sound/machines/blast_door.ogg'

@@ -20,7 +20,7 @@
 	explosive_resistance = 5
 
 /turf/simulated/wall
-	explosive_resistance = 5
+	explosive_resistance = 3
 
 /turf/simulated/wall/r_wall
-	explosive_resistance = 10
+	explosive_resistance = 5
