@@ -148,7 +148,6 @@
 /datum/role/syndicate_responder/OnPostSetup(laterole)
 	antag.current.faction = "syndicate"
 	antag.current.add_language(LANGUAGE_SYCODE)
-	return ..()
 
 
 	var/datum/objective/nuclear/N = objectives.FindObjective(/datum/objective/nuclear)
@@ -170,6 +169,7 @@
 
 	to_chat(antag.current, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
 	antag.current.mind.store_memory("Код от бомбы: [nukecode]")
+	return ..()
 
 /datum/role/syndicate_responder/forgeObjectives()
 	if(!..())
