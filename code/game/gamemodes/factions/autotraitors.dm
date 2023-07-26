@@ -110,6 +110,8 @@
 	var/list/mindprotected_list = list()
 	var/static/list/unusual_position_list = list("Cyborg", "Captain", "Blueshield Officer") + security_positions
 	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(!player.mind || !player.client)
+			continue
 		if(isanyantag(player))
 			continue
 		if(player.mind.assigned_role in unusual_position_list)
