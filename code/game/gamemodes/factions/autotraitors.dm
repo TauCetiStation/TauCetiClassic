@@ -130,7 +130,6 @@
 	else
 		log_mode("IMPOSTERS: Imposter count is [antag_counting], members count is [members.len]. Adding auto-imposters failed")
 
-// Station has other antags
 /datum/faction/traitor/auto/imposter/limit_roles(num_players)
 	..()
 	max_roles /= 3
