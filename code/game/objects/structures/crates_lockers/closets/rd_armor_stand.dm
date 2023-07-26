@@ -41,7 +41,7 @@
 				return
 		if(istype(O, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/I = O
-			if(!access_rd in I.access)
+			if(!(access_rd in I.access))
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 				return
 			else
@@ -72,7 +72,7 @@
 					return
 		if(istype(O, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/ID = O
-			if(!access_rd in ID.access)
+			if(!(access_rd in ID.access))
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 				return
 			if(localopened)
