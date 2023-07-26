@@ -15,9 +15,10 @@ var/global/list/explosion_turfs = list()
 	epicenter = get_turf(epicenter)
 	if(!epicenter) return
 
-	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
+/*	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
 		if(get_dist(W, epicenter) < 10)
-			W.react_explosion(epicenter, power)
+			W.react_explosion(epicenter, power)*/
+
 
 /*	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, round(power*2,1) )
 	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, FALSE, null, round(power,1) )*/

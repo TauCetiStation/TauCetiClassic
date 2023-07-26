@@ -126,6 +126,8 @@ SUBSYSTEM_DEF(explosions)
 	message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range]) in area [epicenter.loc.name] ([COORD(epicenter)] - [ADMIN_JMP(epicenter)])")
 	log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name]")
 
+	SEND_SIGNAL(src, COMSIG_EXPLOSIONS_EXPLODE, epicenter, devastation_range, heavy_impact_range, light_impact_range)
+
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 
