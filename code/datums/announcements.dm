@@ -208,6 +208,19 @@ var/global/list/announcement_sounds = list(
 				C.messagetitle.Add("[P.name]")
 				C.messagetext.Add(P.info)
 
+	if(announce_text)
+		for(var/datum/feed_channel/FC in news_network.network_channels)
+			if(FC.channel_name == "Station Announcements")
+				var/datum/feed_message/newMsg = new /datum/feed_message
+				var/datum/comment_pages/CP = new /datum/comment_pages
+				newMsg.pages += CP
+				newMsg.author = station_name()
+				newMsg.body = announce_text
+				FC.messages += newMsg
+				break
+		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+			NEWSCASTER.newsAlert("Station Announcements")
+
 
 /datum/announcement/ping
 	sound = "commandreport"
