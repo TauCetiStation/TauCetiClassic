@@ -48,7 +48,6 @@
 				locked = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				return
-			..()
 
 	else if (istype(O, /obj/item/clothing/suit/armor/vest/reactive) && localopened)
 		if(!reactive)
