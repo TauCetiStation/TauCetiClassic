@@ -105,6 +105,8 @@
 	. = ..()
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
+	else
+		take_dehead_biogel_equip()
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
 	if(isAI(M.current))

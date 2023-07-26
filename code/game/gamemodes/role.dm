@@ -481,3 +481,18 @@
 
 /datum/role/proc/remove_ui(datum/hud/hud)
 	return
+
+/datum/role/proc/take_dehead_biogel_equip()
+	for(var/datum/objective/target/dehead/D in objectives.GetObjectives())
+		var/obj/item/device/biocan/B = new(antag.loc)
+		var/list/slots = list(
+			"backpack" = SLOT_IN_BACKPACK,
+			"left hand" = SLOT_L_HAND,
+			"right hand" = SLOT_R_HAND,
+		)
+		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
+		antag.update_icons()
+		if(!where)
+			to_chat(antag, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
+		else
+			to_chat(antag, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")

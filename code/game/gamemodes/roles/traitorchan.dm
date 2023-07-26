@@ -9,3 +9,7 @@
 /datum/role/changeling/traitor/New()
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, 20, "traitor")
+
+/datum/role/changeling/traitor/OnPostSetup(laterole)
+	. = ..()
+	take_dehead_biogel_equip()
