@@ -8258,9 +8258,9 @@
 	},
 /area/station/security/prison)
 "bya" = (
+/obj/structure/closet/rd_armor_stand,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "warndark"
+	icon_state = "warndarkcorners"
 	},
 /area/station/rnd/hor)
 "byb" = (
@@ -25294,13 +25294,11 @@
 	},
 /area/station/security/forensic_office)
 "fGi" = (
-/obj/structure/displaycase/labcage,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/hor)
 "fGt" = (
@@ -70898,9 +70896,10 @@
 	},
 /area/station/hallway/primary/central)
 "rfE" = (
+/obj/structure/displaycase/labcage,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "warndark"
+	icon_state = "warndarkcorners"
 	},
 /area/station/rnd/hor)
 "rfF" = (
