@@ -1175,11 +1175,11 @@
 /obj/structure/disposalpipe/sortjunction/proc/updatedesc()
 	desc = initial(desc)
 	if(sortType)
-		desc += "\nIt's filtering objects with the '[sortType]' tag."
+		desc += "\nIt's filtering objects with the '[istext(sortType) ? sortType : "multiple"]' tag."
 
 /obj/structure/disposalpipe/sortjunction/proc/updatename()
 	if(sortType)
-		name = "[initial(name)] ([sortType])"
+		name = "[initial(name)] ([istext(sortType) ? sortType : "multiple"])"
 	else
 		name = initial(name)
 
@@ -1196,7 +1196,7 @@
 
 /obj/structure/disposalpipe/sortjunction/atom_init()
 	. = ..()
-	if(sortType)
+	if(sortType && istext(sortType))
 		tagger_locations |= sortType
 
 	updatedir()
@@ -1219,7 +1219,14 @@
 			updatedesc()
 
 /obj/structure/disposalpipe/sortjunction/proc/divert_check(checkTag)
-	return sortType == checkTag
+	if(sortType && istext(sortType))
+		return sortType == checkTag
+	else if(islist(sortType))
+		for(var/sortType_variant in sortType)
+			if(sortType_variant == checkTag)
+				return TRUE
+				break
+		return FALSE
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir
