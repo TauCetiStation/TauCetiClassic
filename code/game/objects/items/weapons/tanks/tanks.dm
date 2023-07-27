@@ -272,6 +272,9 @@
 	else if(integrity < 3)
 		integrity++
 
+/obj/item/weapon/tank/ex_act(severity) // todo
+	return
+
 #undef TANK_MIN_RELEASE_PRESSURE
 #undef TANK_MAX_RELEASE_PRESSURE
 #undef TANK_DEFAULT_RELEASE_PRESSURE

@@ -208,3 +208,7 @@
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/device/transfer_valve/proc/c_state()
 	return
+
+/obj/item/device/transfer_valve/ex_act(severity) // todo
+	//process_activation() ?
+	return // nope, spacemans want to explode multiple bombs at the same time
