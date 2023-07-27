@@ -6458,6 +6458,14 @@
 	icon_state = "sandwater"
 	},
 /area/velocity)
+"apG" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Special Operations"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "apH" = (
 /obj/machinery/door/window/brigdoor/northright{
 	req_access = list(150)
@@ -60871,7 +60879,7 @@ bib
 aEl
 aBp
 aaR
-aDI
+apG
 aaR
 aBp
 aaR
