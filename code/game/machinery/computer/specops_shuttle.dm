@@ -27,9 +27,9 @@ var/global/specops_shuttle_timeleft = 0
 	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN"//Initial message shown.
+	var/message = "Unidentified shuttle is preparing to undock"//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+		announcer.autosay(message, "Automated Docking System", "Response Team")
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -45,7 +45,7 @@ var/global/specops_shuttle_timeleft = 0
 				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
 				if(rounded_time_left==0)
 					message = "ALERT: TAKEOFF"
-				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+				announcer.autosay(message, "Automated Docking System", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -109,9 +109,9 @@ var/global/specops_shuttle_timeleft = 0
 	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH\""//Initial message shown.
+	var/message = "\"Unidentified shuttle is preparing to undock\""//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+		announcer.autosay(message, "Automated Docking System", "Response Team")
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
 //		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
@@ -129,7 +129,7 @@ var/global/specops_shuttle_timeleft = 0
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
-				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+				announcer.autosay(message, "Automated Docking System", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
