@@ -30,6 +30,13 @@
 		return FALSE
 	return TRUE
 
+/datum/faction/traitor/auto/proc/calculate_autotraitor_probability(playercount, current_traitors, max_traitors)
+	var/traitor_prob = 0
+	traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
+	if(current_traitors < max_traitors - 1)
+		traitor_prob += 50
+	return traitor_prob
+
 /datum/faction/traitor/auto/proc/traitorcheckloop()
 	log_mode("Try add new autotraitor.")
 	if(!is_shuttle_staying())
@@ -49,11 +56,11 @@
 					possible_autotraitor += player
 
 	var/list/sorted_players = sort_possible_traitors(possible_autotraitor)
+	log_mode("AUTOTRAITORS: [sorted_players.len] candidates picked to antag adding.")
 	var/max_traitors = get_max_traitors(playercount)
-	var/traitor_prob = 0
-	traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
-	if(traitorcount < max_traitors - 1)
-		traitor_prob += 50
+	log_mode("AUTOTRAITORS: [max_traitors] calcalated traitors can be total.")
+	var/traitor_prob = calculate_autotraitor_probability(playercount, traitorcount, max_traitors)
+	log_mode("AUTOTRAITORS: [traitor_prob]% probability to add new traitor.")
 
 	if(traitorcount < max_traitors)
 		if(prob(traitor_prob))
@@ -123,6 +130,16 @@
 
 /datum/faction/traitor/auto/imposter/get_max_traitors(playercount)
 	return antag_counting
+
+//less maths
+/datum/faction/traitor/auto/imposter/calculate_autotraitor_probability(playercount, current_traitors, max_traitors)
+	var/traitor_prob = 100
+	log_mode("IMPOSTERS: Current count of roles on station is [current_traitors].")
+	var/border_of_traitors = min(playercount, max_traitors)
+	log_mode("IMPOSTERS: Calculated border of roles is [border_of_traitors].")
+	if(current_traitors > border_of_traitors)
+		traitor_prob = 0
+	return traitor_prob
 
 /datum/faction/traitor/auto/imposter/traitorcheckloop()
 	log_mode("IMPOSTERS: Try add new auto-imposter.")
