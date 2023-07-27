@@ -66,15 +66,12 @@ var/global/list/wedge_image_cache = list()
 	QDEL_NULL(wedged_item)
 	return ..()
 
-//process()
-	//return
-
 /obj/machinery/door/Bumped(atom/AM)
 	if(p_open || operating) return
+	if(world.time - last_bumped <= 7) return	//Can bump-open one airlock per animation. This is to prevent shock spam.
+	last_bumped = world.time
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
