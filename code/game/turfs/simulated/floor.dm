@@ -105,12 +105,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 						break_tile_to_plating()
 					else
 						break_tile()
-					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(EXPLODE_LIGHT)
 			if(prob(50))
 				break_tile()
-				hotspot_expose(1000,CELL_VOLUME)
 
 /turf/simulated/floor/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!burnt && prob(5))

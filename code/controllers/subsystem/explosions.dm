@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(explosions)
 	var/cost_lowturf = 0
 	var/cost_medturf = 0
 	var/cost_highturf = 0
+	var/cost_flameturf = 0
 
 	var/cost_low_mov_atom = 0
 	var/cost_med_mov_atom = 0
@@ -21,6 +22,7 @@ SUBSYSTEM_DEF(explosions)
 	var/list/lowturf = list()
 	var/list/medturf = list()
 	var/list/highturf = list()
+	var/list/flameturf = list()
 
 	var/list/low_mov_atom = list()
 	var/list/med_mov_atom = list()
@@ -33,13 +35,14 @@ SUBSYSTEM_DEF(explosions)
 	var/MAX_EX_HEAVY_RANGE = 7
 	var/MAX_EX_LIGHT_RANGE = 14
 	var/MAX_EX_FLASH_RANGE = 14
-	//var/MAX_EX_FLAME_RANGE = 14
+	var/MAX_EX_FLAME_RANGE = 14
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
 	msg += "LT:[round(cost_lowturf, 1)]|"
 	msg += "MT:[round(cost_medturf, 1)]|"
 	msg += "HT:[round(cost_highturf, 1)]|"
+	msg += "HT:[round(cost_flameturf, 1)]|"
 
 	msg += "LO:[round(cost_low_mov_atom, 1)]|"
 	msg += "MO:[round(cost_med_mov_atom, 1)]|"
@@ -51,6 +54,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "LT:[lowturf.len]|"
 	msg += "MT:[medturf.len]|"
 	msg += "HT:[highturf.len]|"
+	msg += "FT:[flameturf.len]||"
 
 	msg += "LO:[low_mov_atom.len]|"
 	msg += "MO:[med_mov_atom.len]|"
@@ -73,8 +77,8 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
-/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
-	. = SSexplosions.explode(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, explosion_cause)
+/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
+	. = SSexplosions.explode(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, explosion_cause)
 
 /**
  * Makes a given turf explode. Now on the explosions subsystem!
@@ -87,11 +91,11 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
-/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
+/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
 
-	SSStatistics.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	SSStatistics.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
 
-	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, explosion_cause)
+	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, explosion_cause)
 	return
 
 /**
@@ -110,24 +114,26 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, explosion_cause)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, explosion_cause)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
 
+	if(isnull(flame_range))
+		flame_range = light_impact_range
 	if(isnull(flash_range))
 		flash_range = devastation_range
 
-	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
 
 	if(!ignorecap)
 		devastation_range = min(MAX_EX_DEVESTATION_RANGE , devastation_range)
 		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
 		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
 		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
-		//flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
+		flame_range = min(MAX_EX_FLAME_RANGE, flame_range)
 
-	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
+	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
 	if(adminlog)
 		// Now begins a bit of a logic train to find out whodunnit.
@@ -207,6 +213,9 @@ SUBSYSTEM_DEF(explosions)
 				SSexplosions.medturf += explode
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += explode
+
+		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
+			flameturf += explode
 
 // Explosion SFX defines...
 /// The probability that a quaking explosion will make the station creak per unit. Maths!
@@ -383,6 +392,14 @@ SUBSYSTEM_DEF(explosions)
 		for(var/turf/turf_thing as anything in high_turf)
 			EX_ACT(turf_thing, EXPLODE_DEVASTATE)
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		timer = TICK_USAGE_REAL
+		var/list/flame_turf = flameturf
+		flameturf = list()
+		for(var/turf/turf_thing as anything in flame_turf)
+			//Mostly for ambience!
+			new /obj/effect/firewave(turf_thing)
+		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		if(low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()

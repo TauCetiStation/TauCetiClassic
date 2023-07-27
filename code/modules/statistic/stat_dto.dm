@@ -166,6 +166,8 @@
 	var/light_impact_range = 0
 	// int, [-infinity...]
 	var/flash_range = 0
+	// int, [-infinity...]
+	var/flame_range = 0
 	// string, [hh:mm]
 	var/occurred_time
 

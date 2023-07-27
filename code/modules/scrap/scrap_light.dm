@@ -164,7 +164,7 @@
 	Burn()
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
+/obj/structure/bonfire/fire_act()
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
