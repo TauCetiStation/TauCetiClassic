@@ -151,7 +151,7 @@
 	antag.current.add_language(LANGUAGE_SYCODE)
 
 
-	var/datum/objective/nuclear/N = objectives.FindObjective(/datum/objective/nuclear)
+	var/datum/objective/nuclear/N = faction.objective_holder.FindObjective(/datum/objective/nuclear)
 	if(!N)
 		return
 
@@ -170,9 +170,3 @@
 
 	to_chat(antag.current, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
 	antag.current.mind.store_memory("Код от бомбы: [nukecode]")
-	return ..()
-
-/datum/role/syndicate_responder/forgeObjectives()
-	if(!..())
-		return FALSE
-	AppendObjective(/datum/objective/nuclear)

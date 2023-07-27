@@ -6,7 +6,7 @@ var/global/can_call_ert
 	var/spawners_amount = 6
 	var/faction = /datum/faction/responders
 	var/probability = 0
-	var/can_specify_objective = TRUE
+	var/fixed_objective = null
 
 /proc/populate_response_teams()
 	if(length(allowed_ert_teams)) //It's already been set up.
@@ -34,8 +34,8 @@ var/global/can_call_ert
 	spawner = /datum/spawner/responders/gorlex
 	spawners_amount = 3
 	probability = 20
-	can_specify_objective = FALSE
 	faction = /datum/faction/responders/gorlex
+	fixed_objective = /datum/objective/nuclear
 
 /datum/response_team/deathsquad
 	name = "Death Esquadron"
@@ -94,14 +94,25 @@ var/global/can_call_ert
 	if(confirm == "Да")
 		var/choice = input("Какой?") as anything in allowed_ert_teams
 		team = choice
-	var/objective = "Help the station crew."
-	if(team.can_specify_objective)
-		objective = sanitize(input(usr, "Custom ERT objective", "Setup objective", "Help the station crew"))
+	var/changing_objective = FALSE
+	var/custom_objective = "Help the station crew."
+	if(team.fixed_objective)
+		var/objective_choice = tgui_alert(usr, "У этого ОБР есть предусмотренная задача. Хотите поменять?", "ERT", list("Нет", "Да"))
+		if(objective_choice == "Да")
+			changing_objective = TRUE
+			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Help the station crew"))
+	else
+		custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Help the station crew"))
+		changing_objective = TRUE
 
-	create_spawners(team.spawner, team.spawners_amount, objective)
+	create_spawners(team.spawner, team.spawners_amount)
 	var/datum/faction/responders/ERT = SSticker.mode.CreateFaction(team.faction)
-	if(objective)
-		ERT.forgeObjectives(objective)
+	if(changing_objective)
+		var/datum/objective/custom/C = new /datum/objective/custom
+		C.explanation_text = custom_objective
+		ERT.AppendObjective(C)
+	else
+		ERT.AppendObjective(team.fixed_objective)
 
 /client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.

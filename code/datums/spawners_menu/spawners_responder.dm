@@ -2,7 +2,6 @@
 	name = "Emergency Responder"
 	desc = "Вы появляетесь на корабле на подходе к станции Нанотрейзен с какой-то задачей..."
 	wiki_ref = "Emergency_Response_Team"
-	important_info = "Ваша цель: "
 
 	ranks = list(ROLE_ERT, "Security Officer")
 	time_to_del = 5 MINUTES
