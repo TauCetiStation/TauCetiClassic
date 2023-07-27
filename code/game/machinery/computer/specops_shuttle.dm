@@ -109,7 +109,7 @@ var/global/specops_shuttle_timeleft = 0
 	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "\"Unidentified shuttle is preparing to undock\""//Initial message shown.
+	var/message = "\"Unidentified shuttle is preparing to dock.\""//Initial message shown.
 	if(announcer)
 		announcer.autosay(message, "Automated Docking System", "Response Team")
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
