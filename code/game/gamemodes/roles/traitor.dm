@@ -105,7 +105,8 @@
 	. = ..()
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
-	else
+		return
+	for(var/datum/objective/target/dehead/D in objectives.GetObjectives())
 		take_dehead_biogel_equip()
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
@@ -145,7 +146,8 @@
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
 
 /datum/role/traitor/imposter
-	name = "Imposter"
+	name = IMPOSTER
+	id = IMPOSTER
 	//No restricts, everyone can be a imposter
 	restricted_jobs = list()
 	//Challenge

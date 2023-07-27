@@ -88,7 +88,7 @@
 	return ..()
 
 /datum/faction/traitor/auto/imposter
-	name = "Imposters"
+	name = F_IMPOSTERS
 	roletype = /datum/role/traitor/imposter
 	initroletype = /datum/role/traitor/imposter
 	//latespawned human can be imposter
