@@ -182,8 +182,8 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+500)
+/obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C+500)
 		if(explode())
 			return
 	return ..()
