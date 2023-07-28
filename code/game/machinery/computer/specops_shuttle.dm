@@ -16,7 +16,6 @@ var/global/specops_shuttle_timeleft = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	light_color = "#00ffff"
-	req_access = list(access_captain)
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
