@@ -220,24 +220,6 @@
 	rank = list("Lieutenant", "Captain", "Major")
 	assignment = "Deathsquad Leader"
 
-/obj/item/weapon/storage/belt/security/ert
-	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
-
-/obj/item/weapon/storage/pouch/pistol_holster/ert
-	startswith = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec)
-
-/obj/item/clothing/accessory/storage/black_vest/ert/atom_init()
-	. = ..()
-	new /obj/item/weapon/plastique(hold)
-	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat(hold)
-	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(hold)
-	new /obj/item/ammo_box/magazine/glock/extended(hold)
-	new /obj/item/ammo_box/magazine/glock/extended(hold)
-
-/obj/item/weapon/rcd/ert
-	name = "advanced RCD"
-	matter = 100
-
 /datum/outfit/responders/pirate
 	name = "Responders: Pirate"
 
@@ -253,16 +235,18 @@
 	suit_store = /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 
 	backpack_contents = list(
+		/obj/item/weapon/tank/emergency_oxygen/double,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/plastique,
-		/obj/item/weapon/gun/projectile/automatic/pistol/silenced,
 		/obj/item/weapon/grenade/empgrenade,
+		/obj/item/ammo_box/shotgun/beanbag,
 		/obj/item/weapon/extraction_pack/pirates
 	)
 
 	l_pocket = /obj/item/weapon/melee/energy/sword/pirate
-	r_pocket = /obj/item/weapon/tank/emergency_oxygen/double
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/pirates
+
 	belt = /obj/item/weapon/storage/belt/utility/full
 
 	id = /obj/item/weapon/card/id/syndicate
@@ -284,3 +268,24 @@
 	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
 	W.assignment = "Pirate Captain"
 	W.assign(H.real_name)
+
+/obj/item/weapon/storage/belt/security/ert
+	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
+
+/obj/item/weapon/storage/pouch/pistol_holster/ert
+	startswith = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec)
+
+/obj/item/weapon/storage/pouch/pistol_holster/pirates
+	startswith = list(/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/beanbag)
+
+/obj/item/clothing/accessory/storage/black_vest/ert/atom_init()
+	. = ..()
+	new /obj/item/weapon/plastique(hold)
+	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat(hold)
+	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(hold)
+	new /obj/item/ammo_box/magazine/glock/extended(hold)
+	new /obj/item/ammo_box/magazine/glock/extended(hold)
+
+/obj/item/weapon/rcd/ert
+	name = "advanced RCD"
+	matter = 100
