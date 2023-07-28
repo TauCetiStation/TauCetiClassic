@@ -58,7 +58,7 @@
 	var/list/sorted_players = sort_possible_traitors(possible_autotraitor)
 	log_mode("AUTOTRAITORS: [sorted_players.len] candidates picked to antag adding.")
 	var/max_traitors = get_max_traitors(playercount)
-	log_mode("AUTOTRAITORS: [max_traitors] calcalated traitors can be total.")
+	log_mode("AUTOTRAITORS: [max_traitors] calculated traitors can be total.")
 	var/traitor_prob = calculate_autotraitor_probability(playercount, traitorcount, max_traitors)
 	log_mode("AUTOTRAITORS: [traitor_prob]% probability to add new traitor.")
 
