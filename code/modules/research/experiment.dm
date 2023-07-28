@@ -284,11 +284,11 @@
 	var/calculated_research_points = research_interaction("Explosion", power, new_score_coeff=1600, repeat_score_coeff=320)
 
 	if(calculated_research_points > 0)
-		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
 	else if (calculated_research_points == 0)
-		autosay("Detected explosion with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
-		autosay("Detected explosion with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
 /obj/item/device/radio/beacon/interaction_watcher/proc/react_empulse(datum/source, turf/epicenter, heavy_range, light_range)
 
