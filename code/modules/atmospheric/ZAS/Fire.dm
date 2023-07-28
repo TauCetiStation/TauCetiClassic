@@ -136,24 +136,30 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	var/turf/T = get_turf(src)
 
+	if(isspaceturf(T))
+		return INITIALIZE_HINT_QDEL
+
 	var/datum/gas_mixture/air_contents = T.return_air()
 	if(!air_contents)
 		return INITIALIZE_HINT_QDEL
-
-	color = heat2color(temperature)
-	set_light(3, 3, color)
 
 	// todo: increase air temperature?
 	// todo: should FireBurn and fire_act be part of hotspot_expose?
 
 	var/fire_started = T.hotspot_expose(temperature) // can start real fire if possible
 
-	if(!fire_started) // if fire started - fire will burn them all, else do this once here
-		// part copypaste from obj/fire below
-		T.fire_act(exposed_temperature = temperature)
+	// part copypaste from obj/fire below
+	T.fire_act(exposed_temperature = temperature)
 
-		for(var/atom/A in T)
-			A.fire_act(exposed_temperature = temperature)
+	for(var/atom/A in T)
+		A.fire_act(exposed_temperature = temperature)
+
+	if(fire_started) // fire will handle visual
+		return INITIALIZE_HINT_QDEL
+
+	// else do temp fire flash
+	color = heat2color(temperature)
+	set_light(3, 3, color)
 
 	QDEL_IN(src, 2 SECONDS)
 
