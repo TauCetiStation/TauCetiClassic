@@ -22,3 +22,10 @@
 	ID = F_EMERNUKE
 	logo_state = "nuke-logo"
 	initroletype = /datum/role/syndicate_responder
+
+/datum/faction/responders/pirates
+	name = F_EMERPIRATES
+	ID = F_EMERPIRATES
+	logo_state = "raider-logo"
+	initroletype = /datum/role/pirate
+	var/booty = 0 //money stolen from station

@@ -1,5 +1,6 @@
 var/global/allowed_ert_teams = list()
 var/global/can_call_ert
+
 /datum/response_team
 	var/name = ""
 	var/spawner = /datum/spawner/responders
@@ -21,28 +22,6 @@ var/global/can_call_ert
 		if(!D.name)
 			continue //The default parent, don't add it
 		allowed_ert_teams += D
-
-/datum/response_team/nt_ert
-	name = "NT ERT"
-	spawner = /datum/spawner/responders/nt_ert
-	spawners_amount = 6
-	probability = 80
-	faction = /datum/faction/responders/nt_ert
-
-/datum/response_team/gorlex
-	name = "Gorlex Marauders"
-	spawner = /datum/spawner/responders/gorlex
-	spawners_amount = 3
-	probability = 20
-	faction = /datum/faction/responders/gorlex
-	fixed_objective = /datum/objective/nuclear
-
-/datum/response_team/deathsquad
-	name = "Death Esquadron"
-	spawner = /datum/spawner/responders/deathsquad
-	spawners_amount = 6
-	probability = 1
-	faction = /datum/faction/responders/deathsquad
 
 /client/proc/response_team()
 	set name = "Dispatch Emergency Response Team"

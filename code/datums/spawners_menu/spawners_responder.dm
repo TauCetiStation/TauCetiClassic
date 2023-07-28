@@ -102,3 +102,11 @@
 	fluff_text = "Ты - боец Отряда Смерти. Закалённые ветераны множества конфликтов и зачисток, вы должны выполнить своё задание с минимумом дипломатии и максимумом кровопролития."
 	naming_allowed = FALSE
 	faction = /datum/faction/responders/deathsquad
+
+/datum/spawner/responders/pirates
+	outfit = /datum/outfit/responders/pirate
+	leader_outfit = /datum/outfit/responders/pirate/leader
+	leader_text = "Яррр! Ты - <B>капитан</B> космических пиратов! Жалкие сухопутные крысы подали сигнал о помощи и должны за это расплатиться своим добром! Свистать всех наверх, сегодня грабим (но не мочим, фортуна тебя дери!) корпоратов!"
+	fluff_text = "Яррр! Ты - космический пират! Жалкие сухопутные крысы подали сигнал о помощи и должны за это расплатиться своим добром! Слушайся капитана и старайся никого не прикончить!"
+	naming_allowed = FALSE
+	faction = /datum/faction/responders/pirates

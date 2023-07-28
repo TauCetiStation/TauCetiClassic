@@ -48,6 +48,10 @@
 	icon_state = "glob_pirate"
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 
+/obj/item/clothing/head/helmet/space/globose/black/pirate/leader
+	name = "pirate captain space helmet"
+	desc = "Space helmet, which belongs to infamous pirate Redskull!"
+	icon_state = "glob_pirate_leader"
 
 /***********-Mining-***********/
 /obj/item/clothing/suit/space/globose/mining

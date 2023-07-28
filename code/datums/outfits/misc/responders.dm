@@ -237,3 +237,50 @@
 /obj/item/weapon/rcd/ert
 	name = "advanced RCD"
 	matter = 100
+
+/datum/outfit/responders/pirate
+	name = "Responders: Pirate"
+
+	l_ear = /obj/item/device/radio/headset
+	uniform = /obj/item/clothing/under/pirate
+	shoes = /obj/item/clothing/shoes/boots/combat
+	suit = /obj/item/clothing/suit/space/globose/black/pirate
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/helmet/space/globose/black/pirate
+	mask = /obj/item/clothing/mask/gas/coloured
+	glasses = /obj/item/clothing/glasses/eyepatch
+	back = /obj/item/weapon/storage/backpack/santabag
+	suit_store = /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
+
+	backpack_contents = list(
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+		/obj/item/device/flashlight/seclite,
+		/obj/item/weapon/plastique,
+		/obj/item/weapon/gun/projectile/automatic/pistol/silenced,
+		/obj/item/weapon/grenade/empgrenade,
+		/obj/item/weapon/extraction_pack/pirates
+	)
+
+	l_pocket = /obj/item/weapon/melee/energy/sword/pirate
+	r_pocket = /obj/item/weapon/tank/emergency_oxygen/double
+	belt = /obj/item/weapon/storage/belt/utility/full
+
+	id = /obj/item/weapon/card/id/syndicate
+
+/datum/outfit/responders/pirate/post_equip(mob/living/carbon/human/H)
+	H.real_name = "[pick(global.first_names_male)] [pick(global.pirate_first)][pick(global.pirate_second)]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
+	W.assignment = "Pirate"
+	W.assign(H.real_name)
+
+/datum/outfit/responders/pirate/leader
+	head = /obj/item/clothing/head/helmet/space/globose/black/pirate/leader
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+
+/datum/outfit/responders/pirate/leader/post_equip(mob/living/carbon/human/H)
+	H.real_name = "Captain [pick(global.first_names_male)] Redskull"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
+	W.assignment = "Pirate Captain"
+	W.assign(H.real_name)
