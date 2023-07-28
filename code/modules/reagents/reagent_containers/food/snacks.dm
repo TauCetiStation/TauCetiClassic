@@ -410,7 +410,8 @@
 	list_reagents = list("nutriment" = 1, "egg" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
 		if(global.chicken_count < MAX_CHICKENS)
@@ -757,7 +758,8 @@
 	list_reagents = list("plantmatter" = 6, "banana" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
 	qdel(src)
