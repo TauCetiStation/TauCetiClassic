@@ -327,7 +327,7 @@
 	if(prob(10))
 		return
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
-	L.stealth_inject(H)
+	L.inject(H, BP_CHEST)
 
 
 /datum/quality/quirkieish/slime_person

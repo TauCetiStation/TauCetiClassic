@@ -209,3 +209,15 @@
 		else
 			AppendObjective(/datum/objective/hijack)
 	log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has standart traitor objectives")
+
+/datum/role/traitor/imposter/OnPostSetup(laterole)
+	. = ..()
+	if(antag.current.isloyal() && iscarbon(antag.current))
+		var/mob/living/carbon/C = antag.current
+		C.fake_loyal_implant_replacement()
+
+/mob/living/carbon/proc/fake_loyal_implant_replacement()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		qdel(L)
+	var/obj/item/weapon/implant/fake_loyal/F = new(src)
+	F.inject(src, BP_CHEST)
