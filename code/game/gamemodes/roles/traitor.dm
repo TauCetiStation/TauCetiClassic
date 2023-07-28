@@ -158,7 +158,11 @@
 	switch(rand(1, 100))
 		//most imposters is just stealers
 		if(1 to 70)
-			AppendObjective(/datum/objective/steal, TRUE)
+			//remove objectives for heads of staff to steal own items
+			if(antag.assigned_role in global.command_positions - list("Blueshield Officer"))
+				AppendObjective(/datum/objective/steal/non_heads_items, TRUE)
+			else
+				AppendObjective(/datum/objective/steal, TRUE)
 		if(71 to 80)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
 		if(81 to 90)
