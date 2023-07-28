@@ -238,7 +238,7 @@
 /datum/quirk/slow_equip
 	name = QUIRK_SLOW_EQUIP
 	desc = "Вы не можете одеваться быстрее."
-	value = -2
+	value = -1
 	mob_trait = TRAIT_SLOW_EQUIP
 	lose_text = "<span class='notice'Годы жизни на станции научили вас кое-чему.</span>"
 	gain_text = "<span class='danger'>Ваша координация стремительно деградировала.</span>"
