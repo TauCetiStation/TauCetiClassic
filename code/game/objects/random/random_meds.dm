@@ -117,8 +117,7 @@
 						prob(30);/obj/item/weapon/reagent_containers/pill/lipozine,\
 						prob(15);/obj/item/weapon/reagent_containers/pill/spaceacillin,\
 						prob(15);/obj/item/weapon/reagent_containers/pill/antirad,\
-						prob(5);/obj/item/weapon/reagent_containers/pill/cyanide,\
-						prob(1);/obj/item/weapon/reagent_containers/pill/adminordrazine\
+						prob(5);/obj/item/weapon/reagent_containers/pill/cyanide\
 					)
 
 /obj/random/meds/medical_autoinjectors
