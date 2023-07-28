@@ -218,9 +218,6 @@ var/global/list/announcement_sounds = list(
 				newMsg.body = announce_text
 				FC.messages += newMsg
 				break
-		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-			NEWSCASTER.newsAlert("Station Announcements")
-
 
 /datum/announcement/ping
 	sound = "commandreport"
