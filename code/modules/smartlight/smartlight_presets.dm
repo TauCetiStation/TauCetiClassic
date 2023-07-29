@@ -48,7 +48,7 @@ var/global/list/smartlight_presets
 	available_modes = base.available_modes | available_modes
 	disabled_modes = base.disabled_modes | disabled_modes
 
-/* 
+/*
    Global Map presets
 */
 
@@ -78,14 +78,14 @@ var/global/list/smartlight_presets
 		/datum/light_mode/horror,
 	)
 
-/* 
+/*
    Local APC presets (will expand global one)
 */
 
 /datum/smartlight_preset/bar
 	name = "bar"
 
-	default_mode = /datum/light_mode/blue_night
+	default_mode = /datum/light_mode/default
 	no_nightshift_mode = TRUE
 
 	available_modes = list(
