@@ -7,13 +7,16 @@
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_SLOWDOWN_HUMAN, PROC_REF(slowdown_user))
 
-//marine armor, detective suit exclude
+//marine armor exclude
 /datum/element/satchel_slowdown/proc/is_armorsuit_weared(list/slots_list)
 	. = FALSE
 	for(var/i in slots_list)
 		if(istype(i, /obj/item/clothing/suit/armor))
 			//no debuff nuclear operatives until space suits slow down with backpacks
 			if(istype(i, /obj/item/clothing/suit/armor/syndiassault))
+				continue
+			//detective suit exclude
+			if(istype(i, /obj/item/clothing/suit/armor/det_suit))
 				continue
 			. = TRUE
 			break
