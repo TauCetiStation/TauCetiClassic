@@ -111,6 +111,13 @@
 	else
 		tally += species.speed_mod_no_shoes
 
+	var/list/all_human_cloth = get_all_slots()
+	// Need to wrap this in a list so we can pass a reference
+	var/list/reflist = list(tally, all_human_cloth)
+	for(var/obj/item/cloth in all_human_cloth)
+		SEND_SIGNAL(cloth, COMSIG_SLOWDOWN_HUMAN, reflist)
+	tally = reflist[1]
+
 	if(weight_tally > weight_negation)
 		tally += weight_tally - weight_negation
 

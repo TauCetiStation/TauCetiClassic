@@ -15,6 +15,10 @@
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
 
+/obj/item/weapon/storage/backpack/New()
+	. = ..()
+	AddElement(/datum/element/satchel_slowdown)
+
 /obj/item/weapon/storage/backpack/ui_action_click()
 	if(!opened)
 		open(loc)
