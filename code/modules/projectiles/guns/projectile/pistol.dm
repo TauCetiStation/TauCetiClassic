@@ -117,3 +117,6 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
 	recoil = 1.5
+
+/obj/item/weapon/gun/projectile/automatic/pistol/wjpp/lethal
+	initial_mag = /obj/item/ammo_box/magazine/wjpp

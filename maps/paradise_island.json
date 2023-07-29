@@ -1,0 +1,12 @@
+{
+    "map_name": "Deathmatch Paradise Island",
+    "map_path": "deathmatch/paradise_island",
+    "map_file": "paradise_island.dmm",
+    "station_name": "Paradise Island",
+    "system_name" : "Tau Ceti",
+    "station_image": "paradise_island",
+    "space_ruin_levels": 0,
+    "space_empty_levels": 0,
+    "load_junkyard": 0,
+    "minetype": null
+}
