@@ -2843,9 +2843,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/eastleft{
-	req_access = list(1);
+	dir = 1;
 	name = "Security Delivery";
-	dir = 1
+	req_access = list(1)
 	},
 /turf/simulated/floor{
 	icon_state = "red"
@@ -17007,9 +17007,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/westright{
+	dir = 1;
 	name = "Kitchen Maintenance";
-	req_access = list(28);
-	dir = 1
+	req_access = list(28)
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -19433,8 +19433,8 @@
 	opacity = 0
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(47);
-	dir = 1
+	dir = 1;
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -24132,8 +24132,8 @@
 /area/station/bridge/meeting_room)
 "gIl" = (
 /obj/machinery/door/window/eastleft{
-	req_access = list(46);
-	dir = 8
+	dir = 8;
+	req_access = list(46)
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -25583,9 +25583,9 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -28190,9 +28190,9 @@
 /obj/item/weapon/handcuffs,
 /obj/item/device/flash,
 /obj/machinery/door/window/brigdoor{
+	dir = 1;
 	name = "Armory Desk";
-	req_access = list(3);
-	dir = 1
+	req_access = list(3)
 	},
 /obj/machinery/door/window/eastleft{
 	dir = 2
@@ -29592,7 +29592,7 @@
 	},
 /area/station/hallway/primary/central)
 "iih" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -31016,8 +31016,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/door/window/westright{
-	req_access = list(35);
-	name = "Hydroponics"
+	name = "Hydroponics";
+	req_access = list(35)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -56732,8 +56732,8 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
 /obj/machinery/door/window/eastleft{
-	name = "Virology Reception";
 	dir = 8;
+	name = "Virology Reception";
 	req_access = list(39)
 	},
 /turf/simulated/floor/plating,
@@ -58871,8 +58871,8 @@
 /area/station/security/prison)
 "qtm" = (
 /obj/machinery/door/window/brigdoor{
-	req_access = list(8);
-	dir = 1
+	dir = 1;
+	req_access = list(8)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -60853,8 +60853,8 @@
 /area/station/bridge/ai_upload)
 "qZV" = (
 /obj/machinery/door/window/eastleft{
-	req_access = list(25);
-	dir = 8
+	dir = 8;
+	req_access = list(25)
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -63973,9 +63973,9 @@
 	dir = 8
 	},
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -71431,8 +71431,8 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/bell,
 /obj/machinery/door/window/westright{
-	req_access = list(35);
-	name = "Hydroponics"
+	name = "Hydroponics";
+	req_access = list(35)
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
@@ -72995,9 +72995,9 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -75773,9 +75773,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/westleft{
+	dir = 4;
 	name = "Hydroponics";
-	req_access = list(35);
-	dir = 4
+	req_access = list(35)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -85136,9 +85136,9 @@
 /area/station/engineering/drone_fabrication)
 "ycQ" = (
 /obj/machinery/door/window{
+	dir = 1;
 	name = "AI Satellite";
-	req_access = list(66);
-	dir = 1
+	req_access = list(66)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/visible{

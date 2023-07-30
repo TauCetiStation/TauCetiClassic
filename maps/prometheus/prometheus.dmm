@@ -64627,7 +64627,7 @@
 	},
 /area/station/engineering/equip)
 "pBY" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar_of_gods/chaplain,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},

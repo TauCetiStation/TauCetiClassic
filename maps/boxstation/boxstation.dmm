@@ -1121,8 +1121,8 @@
 /obj/machinery/constructable_frame/machine_frame,
 /obj/machinery/camera{
 	c_tag = "Labor Shuttle Dock North";
-	network = list("SS13","Security");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -3493,8 +3493,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Head of Security";
-	network = list("SS13","Security");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7363,8 +7363,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Brig Center-West";
-	network = list("SS13","Security");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -15265,8 +15265,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Toxins Launch Room";
-	network = list("SS13","Research");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Research")
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -23844,7 +23844,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/storage)
 "aRT" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -42194,8 +42194,8 @@
 "bzv" = (
 /obj/machinery/camera{
 	c_tag = "Research Division West";
-	network = list("SS13","Research");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -57648,8 +57648,8 @@
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /obj/machinery/camera{
 	c_tag = "Atmospherics Access";
-	network = list("SS13","Engineering");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -59785,8 +59785,8 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber South";
-	network = list("RD","MiniSat");
-	dir = 6
+	dir = 6;
+	network = list("RD","MiniSat")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62669,8 +62669,8 @@
 "cxN" = (
 /obj/machinery/camera{
 	c_tag = "Brig Center-East";
-	network = list("SS13","Security");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -63502,8 +63502,8 @@
 /obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Surgery Operating 2";
-	network = list("SS13","Medical");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Medical")
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
@@ -66563,8 +66563,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics North North";
-	network = list("SS13","Engineering");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -76680,8 +76680,8 @@
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/machinery/camera{
 	c_tag = "Virology Access South";
-	network = list("SS13","Medical");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 9;

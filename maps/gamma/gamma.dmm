@@ -63431,7 +63431,7 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "tuv" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
