@@ -16,7 +16,6 @@
 
 	var/chosen_aspect = FALSE
 	var/look_piety = FALSE
-	var/chaplain_altar = TRUE
 
 	// It's fucking science! I ain't gotta explain this.
 	var/datum/experiment_data/experiments
@@ -61,9 +60,9 @@
 
 	var/piety = ""
 	if(look_piety)
-		piety = "and <span class='[religion.style_text]'>[round(religion.piety)] piety</span>"
+		piety = "and <span class=' [religion.style_text]'>[round(religion.piety)] piety</span>"
 
-	msg += "<span class='notice'>The religion currently has [round(religion.favor)] favor [piety] with [pick(religion.deity_names)].\n</span>"
+	msg += "<span class='notice'>The religion currently has [round(religion.favor)] favor[piety] with [pick(religion.deity_names)].\n</span>"
 
 	to_chat(user, msg)
 
@@ -147,42 +146,49 @@
 	if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
 		sacrifice(user)
 	else
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+		to_chat(user, "<span class='warning'>Не знаю что с этим делать.</span>")
 
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
+	if(!user.mind)
+		return FALSE
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		to_chat(user, "<span class='notice'>Не знаю что с этим делать.</span>")
+		return FALSE
 	if(religion && user.my_religion != religion)
 		to_chat(user, "<span class='notice'>Это алтарь иной религии</span>")
 		if(!iscultist(user) || user.is_busy(src))
 			return FALSE
-		to_chat(user, "<span class='warning'>Но...</span>")
-		if(do_after(user, 4 SECONDS, target = src))
-			var/answer = tgui_alert(user, "Мы можем оквернить этот алтарь, и заполучить его силу! Однако, это займёт время, а еретики обязательно узнают об этом!", "Осквернение алтаря", list("Deus Vult!","Не стоит"))
-			if(answer == "Deus Vult!")
-				religion.send_message_to_members("Еретики пытаются осквернить священный алтарь! НА ЗАЩИТУ!", user)
-				user.add_filter("altar_defile", 2, outline_filter(1, "#990021"))
-				user.whisper("Вакабаи хиж фен жусвикс!")
-				new /obj/effect/temp_visual/cult/sparks(loc)
-				if(!do_after(user, 25 SECONDS, FALSE, src))
-					user.remove_filter("altar_defile")
-					return FALSE
-				chaplain_altar = FALSE
-				chosen_aspect = FALSE
-				religion = user.my_religion
-				religion.altars |= src
-				user.remove_filter("altar_defile")
-				user.say("Вакабаи хиж фен жусвикс!")
-				new /obj/effect/temp_visual/cult/sparks(loc)
-				return TRUE
-		return FALSE
-	if(iscultist(user) && chaplain_altar)
+		if(altar_corruption(user))
+			return TRUE
+	return TRUE
+
+/obj/structure/altar_of_gods/chaplain/can_interact(mob/user)
+	if(!religion && iscultist(user))
 		to_chat(user, "<span class='warning'>Получить силу чужих алтарей можно только осквернив уже действующий алтарь!</span>")
 		return FALSE
-	if(!user.mind)
-		return FALSE
-	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
-		to_chat(user, "<span class='notice'>Не знаю что делать с этим</span>")
-		return FALSE
-	return TRUE
+	return ..()
+
+/obj/structure/altar_of_gods/proc/altar_corruption(mob/user)
+	to_chat(user, "<span class='warning'>Но...</span>")
+	if(do_after(user, 4 SECONDS, target = src))
+		var/answer = tgui_alert(user, "Мы можем оквернить этот алтарь, и заполучить его силу! Однако, это займёт время, а еретики обязательно узнают об этом!", "Осквернение алтаря", list("Deus Vult!","Не стоит"))
+		if(answer == "Deus Vult!")
+			religion.send_message_to_members("Еретики пытаются осквернить священный алтарь! НА ЗАЩИТУ!", user)
+			user.add_filter("altar_defile", 2, outline_filter(1, COLOR_CRIMSON_RED))
+			user.whisper("Вакабаи хиж фен жусвикс!")
+			new /obj/effect/temp_visual/cult/sparks(loc)
+			if(!do_after(user, 25 SECONDS, FALSE, src))
+				user.remove_filter("altar_defile")
+				return FALSE
+			chosen_aspect = FALSE
+			religion = user.my_religion
+			religion.altars |= src
+			look_piety = TRUE
+			user.remove_filter("altar_defile")
+			user.say("Вакабаи хиж фен жусвикс!")
+			new /obj/effect/temp_visual/cult/sparks(loc)
+			return TRUE
+	return FALSE
 
 /obj/structure/altar_of_gods/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -5,7 +5,6 @@
 	icon_state = "cultaltar"
 
 	look_piety = TRUE
-	chaplain_altar = FALSE
 
 /obj/structure/altar_of_gods/cult/start_rite()
 	. = ..()
