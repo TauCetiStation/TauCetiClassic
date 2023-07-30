@@ -5,7 +5,7 @@
 
 var/global/list/geiger_items_list = list()
 
-ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
+ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list, )
 /obj/item/device/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels and radiation."
 	name = "analyzer"
@@ -31,6 +31,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	COOLDOWN_DECLARE(sound_play_cd)
 
 /obj/item/device/analyzer/cyborg
+CYBORG_ITEM_TRAIT
 
 /obj/item/device/analyzer/default
 

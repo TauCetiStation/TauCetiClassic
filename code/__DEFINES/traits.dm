@@ -232,6 +232,8 @@
 #define IMPLANT_TRAIT "implant"
 #define FAKE_IMPLANT_TRAIT "fake_implant"
 
+// cyborg trait
+#define CYBORG_ITEM_TRAIT "cyborg_item"
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself
