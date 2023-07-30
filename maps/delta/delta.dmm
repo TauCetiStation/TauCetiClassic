@@ -85426,7 +85426,7 @@
 	},
 /area/station/medical/chemistry)
 "tZl" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
