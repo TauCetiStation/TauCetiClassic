@@ -39093,6 +39093,7 @@
 "btW" = (
 /obj/machinery/media/jukebox/bar,
 /obj/structure/window/thin/reinforced,
+/obj/item/weapon/book/manual/wiki/jukebox,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
