@@ -363,6 +363,8 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/tgui_act(action, params)
 	. = ..()
+	if(. || isAI(usr))
+		return
 	switch(action)
 		if("relabel")
 			if (can_label)
