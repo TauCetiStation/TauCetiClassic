@@ -379,7 +379,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/magnetic(src)
 	modules += new /obj/item/device/analyzer(src)
-	modules += new /obj/item/taperoll/science
+	modules += new /obj/item/taperoll/science(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
 	modules += new /obj/item/device/science_tool(src)
