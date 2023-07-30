@@ -24,16 +24,16 @@
 	suit = /obj/item/clothing/suit/dutch
 	head = /obj/item/clothing/head/beret/black
 	back = PREFERENCE_BACKPACK
-	l_hand = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold
+	l_hand = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened/gold
 	r_hand = /obj/item/device/megaphone
 	l_pocket = /obj/item/weapon/shield/energy
 	backpack_contents = list(
         /obj/item/weapon/gun/energy/laser/selfcharging/captain,
-        /obj/item/ammo_box/magazine/deagle,
-        /obj/item/ammo_box/magazine/deagle,
-		/obj/item/ammo_box/magazine/deagle,
-		/obj/item/ammo_box/magazine/deagle,
-        /obj/item/ammo_box/magazine/deagle
+        /obj/item/ammo_box/magazine/deagle/weakened,
+        /obj/item/ammo_box/magazine/deagle/weakened,
+		/obj/item/ammo_box/magazine/deagle/weakened,
+		/obj/item/ammo_box/magazine/deagle/weakened,
+        /obj/item/ammo_box/magazine/deagle/weakened
         )
 
 /datum/outfit/deathmatch/blue_team/medic
@@ -42,9 +42,9 @@
 	head = /obj/item/clothing/head/surgery/blue
 	back = PREFERENCE_BACKPACK
 	r_hand = /obj/item/weapon/gun/medbeam
-	l_pocket = /obj/item/weapon/gun/projectile/automatic/pistol/wjpp/lethal
 	backpack_contents = list(
 		/obj/item/weapon/storage/firstaid/tactical,
+		/obj/item/weapon/gun/projectile/automatic/pistol/wjpp/lethal,
 		/obj/item/ammo_box/magazine/wjpp,
 		/obj/item/ammo_box/magazine/wjpp,
 		/obj/item/ammo_box/magazine/wjpp,
@@ -56,7 +56,8 @@
 	suit = /obj/item/clothing/suit/serifcoat
 	head = /obj/item/clothing/head/western/cowboy
 	back = /obj/item/weapon/gun/energy/sniperrifle
-	l_pocket = /obj/item/weapon/storage/pouch/pistol_holster/stechkin
+	belt = /obj/item/weapon/storage/pouch/pistol_holster/stechkin
+	l_pocket = /obj/item/ammo_box/magazine/stechkin/extended
 	r_pocket = /obj/item/ammo_box/magazine/stechkin/extended
 
 /datum/outfit/deathmatch/blue_team/scout
@@ -92,17 +93,14 @@
 		/obj/item/weapon/shovel/deathmatch
     )
 
-/datum/outfit/deathmatch/blue_team/berserker
-	name = "Blue Team Berserker"
-	suit = /obj/item/clothing/suit/jacket/letterman
-	head = /obj/item/clothing/head/sec_peakedcap
+/datum/outfit/deathmatch/blue_team/pirate
+	name = "Blue Team Pirate"
+	suit = /obj/item/clothing/suit/pirate
+	head = /obj/item/clothing/head/pirate
 	back = PREFERENCE_BACKPACK
-	r_hand = /obj/item/weapon/melee/energy/sword/pirate
-	implants = list(
-		/obj/item/weapon/implant/dexplosive,
-		/obj/item/weapon/implant/adrenaline
-		)
+	r_hand = /obj/item/weapon/melee/energy/sword/blue
 	backpack_contents = list(
+		/obj/item/weapon/implanter/adrenaline,
 		/obj/item/weapon/legcuffs/bola/tactical,
 		/obj/item/weapon/legcuffs/bola/tactical,
 		/obj/item/weapon/legcuffs/bola/tactical,
@@ -153,16 +151,16 @@
 	suit = /obj/item/clothing/suit/dutch
 	head = /obj/item/clothing/head/beret/black
 	back = PREFERENCE_BACKPACK
-	l_hand = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold
+	l_hand = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened/gold
 	r_hand = /obj/item/device/megaphone
 	l_pocket = /obj/item/weapon/shield/energy
 	backpack_contents = list(
         /obj/item/weapon/gun/energy/laser/selfcharging/captain,
-        /obj/item/ammo_box/magazine/deagle,
-        /obj/item/ammo_box/magazine/deagle,
-		/obj/item/ammo_box/magazine/deagle,
-		/obj/item/ammo_box/magazine/deagle,
-        /obj/item/ammo_box/magazine/deagle
+        /obj/item/ammo_box/magazine/deagle/weakened,
+        /obj/item/ammo_box/magazine/deagle/weakened,
+		/obj/item/ammo_box/magazine/deagle/weakened,
+		/obj/item/ammo_box/magazine/deagle/weakened,
+        /obj/item/ammo_box/magazine/deagle/weakened
         )
 
 /datum/outfit/deathmatch/red_team/medic
@@ -174,6 +172,7 @@
 	l_pocket = /obj/item/weapon/gun/projectile/automatic/pistol/wjpp/lethal
 	backpack_contents = list(
 		/obj/item/weapon/storage/firstaid/tactical,
+		/obj/item/weapon/gun/projectile/automatic/pistol/wjpp/lethal,
 		/obj/item/ammo_box/magazine/wjpp,
 		/obj/item/ammo_box/magazine/wjpp,
 		/obj/item/ammo_box/magazine/wjpp,
@@ -185,7 +184,8 @@
 	suit = /obj/item/clothing/suit/serifcoat
 	head = /obj/item/clothing/head/western/cowboy
 	back = /obj/item/weapon/gun/energy/sniperrifle
-	l_pocket = /obj/item/weapon/storage/pouch/pistol_holster/stechkin
+	belt = /obj/item/weapon/storage/pouch/pistol_holster/stechkin
+	l_pocket = /obj/item/ammo_box/magazine/stechkin/extended
 	r_pocket = /obj/item/ammo_box/magazine/stechkin/extended
 
 /datum/outfit/deathmatch/red_team/scout
@@ -215,17 +215,14 @@
 		/obj/item/weapon/shovel/deathmatch
     )
 
-/datum/outfit/deathmatch/red_team/berserker
-	name = "Red Team Berserker"
-	suit = /obj/item/clothing/suit/jacket/letterman
-	head = /obj/item/clothing/head/sec_peakedcap
+/datum/outfit/deathmatch/red_team/pirate
+	name = "Red Team Pirate"
+	suit = /obj/item/clothing/suit/pirate
+	head = /obj/item/clothing/head/pirate
 	back = PREFERENCE_BACKPACK
-	r_hand = /obj/item/weapon/melee/energy/sword/pirate
-	implants = list(
-		/obj/item/weapon/implant/dexplosive,
-		/obj/item/weapon/implant/adrenaline
-		)
+	r_hand = /obj/item/weapon/melee/energy/sword/red
 	backpack_contents = list(
+		/obj/item/weapon/implanter/adrenaline,
 		/obj/item/weapon/legcuffs/bola/tactical,
 		/obj/item/weapon/legcuffs/bola/tactical,
 		/obj/item/weapon/legcuffs/bola/tactical,
