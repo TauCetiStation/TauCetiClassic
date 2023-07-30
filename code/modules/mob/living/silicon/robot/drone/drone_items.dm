@@ -146,7 +146,6 @@
 		/obj/item/weapon/newspaper,
 		/obj/item/device/pda,
 		/obj/item/weapon/stamp,
-		/obj/item/device/taperecorder
 		)
 
 /obj/item/weapon/gripper/service
