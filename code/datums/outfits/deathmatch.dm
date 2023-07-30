@@ -112,6 +112,7 @@
     )
 
 /obj/item/weapon/claymore/deathmatch
+	force = 50
 	can_embed = 0
 
 /datum/outfit/deathmatch/blue_team/crusader
