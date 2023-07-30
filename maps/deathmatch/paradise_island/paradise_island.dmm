@@ -354,7 +354,7 @@
 	})
 "cM" = (
 /obj/effect/landmark/start/roboticist{
-	name = "Red Team Berserker"
+	name = "Red Team Pirate"
 	},
 /turf/unsimulated/floor/abductor,
 /area/station{
@@ -5109,7 +5109,7 @@
 	})
 "TZ" = (
 /obj/effect/landmark/start/psychiatrist{
-	name = "Blue Team Berserker"
+	name = "Blue Team Pirate"
 	},
 /turf/unsimulated/floor/abductor,
 /area/station{
