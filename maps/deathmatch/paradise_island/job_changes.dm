@@ -114,7 +114,7 @@
 /datum/job/psychiatrist/New()
 	..()
 	MAP_JOB_CHECK
-	title = "Blue Team Pirate"
+	title = "Blue Team Crusader"
 	alt_titles = null
 	selection_color = "#b0eaf6"
 	total_positions = 0
@@ -124,7 +124,7 @@
 	access = list()
 	salary = 0
 	restricted_species = list()
-	outfit = /datum/outfit/deathmatch/blue_team/pirate
+	outfit = /datum/outfit/deathmatch/blue_team/crusader
 	skillsets = list("Maximum skillset" = /datum/skillset/max)
 	minimal_player_ingame_minutes = 0
 	give_loadout_items = FALSE
@@ -260,7 +260,7 @@
 /datum/job/hos/New()
 	..()
 	MAP_JOB_CHECK
-	title = "Red Team Pirate"
+	title = "Red Team Crusader"
 	alt_titles = null
 	selection_color = "#e67c34"
 	total_positions = 0
@@ -270,7 +270,7 @@
 	access = list()
 	salary = 0
 	restricted_species = list()
-	outfit = /datum/outfit/deathmatch/red_team/pirate
+	outfit = /datum/outfit/deathmatch/red_team/crusader
 	skillsets = list("Maximum skillset" = /datum/skillset/max)
 	minimal_player_ingame_minutes = 0
 	give_loadout_items = FALSE
