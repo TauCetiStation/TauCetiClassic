@@ -71,7 +71,7 @@
 	icon_state = "red_1"
 	light_color = "#ff0000"
 
-/obj/item/projectile/magic/animate/on_impact(atom/change)
+/obj/item/projectile/magic/animate/on_hit(atom/change)
 	. = ..()
 	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change

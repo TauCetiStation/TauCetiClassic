@@ -105,7 +105,7 @@
 		return
 
 	electrocuted = TRUE
-	addtimer(CALLBACK(src, .proc/reset_electrocuted), 10)
+	addtimer(CALLBACK(src, PROC_REF(reset_electrocuted)), 10)
 
 	if(prob(80))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

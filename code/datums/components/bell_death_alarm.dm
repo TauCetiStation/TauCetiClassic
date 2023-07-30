@@ -7,7 +7,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.force = force
-	RegisterSignal(parent, COMSIG_MOB_DIED, .proc/on_parent_death)
+	RegisterSignal(parent, COMSIG_MOB_DIED, PROC_REF(on_parent_death))
 
 /datum/component/bell_death_alarm/proc/on_parent_death()
 	SIGNAL_HANDLER

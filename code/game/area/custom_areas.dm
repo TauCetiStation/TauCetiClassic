@@ -27,6 +27,7 @@
 	icon_state = "syndie-ship"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_nuke_ops.ogg'
 
 /area/custom/syndicate_mothership/control
 	name = "Syndicate Control Room"

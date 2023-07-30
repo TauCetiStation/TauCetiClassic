@@ -2,7 +2,7 @@ var/global/list/datum/light_mode/light_modes_by_type
 var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ in content from light_modes_by_type
 
 #define DEFAULT_RANGE 8
-#define DEFAULT_POWER 2
+#define DEFAULT_POWER 2 // new more common default - 0.8
 
 /datum/light_mode
 	var/name
@@ -17,9 +17,9 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/default
 	name = "Default"
 
-	color = "#ffffff" // todo: replace with softer light (6500К - #FFF9FD?)
-	power = DEFAULT_POWER
-	range = DEFAULT_RANGE
+	color = "#fff9fd"
+	power = 1.2
+	range = 7
 
 /datum/light_mode/default/bulb
 	name = "Default Bulb"

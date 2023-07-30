@@ -154,7 +154,7 @@
 	cooldown_time = delay
 	set_maptext(cooldown_time)
 	if(need_timer)
-		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(tick)), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/tick()
 	if(cooldown_time == 1)
@@ -163,7 +163,7 @@
 	cooldown_time--
 	set_maptext(cooldown_time)
 	if(timer)
-		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(tick)), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/stop_cooldown()
 	if(cooldown_time == 0)

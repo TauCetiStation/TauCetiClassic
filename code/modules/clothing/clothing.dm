@@ -354,8 +354,6 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = SIZE_TINY
-	var/blockTracking = 0
-
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
 //Mask

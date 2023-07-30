@@ -9,6 +9,7 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
@@ -27,6 +28,8 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
+
+	department_stocks = list("Medical" = 40)
 
 
 /datum/job/doctor
@@ -60,6 +63,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
+	department_stocks = list("Medical" = 20)
+
 
 /datum/job/paramedic
 	title = "Paramedic"
@@ -71,7 +76,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_medbay_storage, access_engineering_lobby)
+	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_medbay_storage, access_engineering_lobby)
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic
@@ -83,6 +88,8 @@
 		~Luduk
 	*/
 	restricted_species = list(IPC)
+
+	department_stocks = list("Medical" = 15)
 
 // Slow species shouldn't be paramedics.
 /datum/job/paramedic/special_species_check(datum/species/S)
@@ -107,6 +114,8 @@
 	outfit = /datum/outfit/job/chemist
 	skillsets = list("Chemist" = /datum/skillset/chemist)
 
+	department_stocks = list("Medical" = 10)
+
 
 /datum/job/geneticist
 	title = "Geneticist"
@@ -123,6 +132,8 @@
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/geneticist
 	skillsets = list("Geneticist" = /datum/skillset/geneticist)
+
+	department_stocks = list("Medical" = 10)
 
 
 /datum/job/virologist
@@ -149,6 +160,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
+	department_stocks = list("Medical" = 10)
+
 
 /datum/job/psychiatrist
 	title = "Psychiatrist"
@@ -167,6 +180,8 @@
 	outfit = /datum/outfit/job/psychiatrist
 	skillsets = list("Psychiatrist" = /datum/skillset/psychiatrist)
 
+	department_stocks = list("Medical" = 10)
+
 
 /datum/job/intern
 	title = "Medical Intern"
@@ -183,3 +198,4 @@
 	outfit = /datum/outfit/job/intern
 	skillsets = list("Medical Intern" = /datum/skillset/intern)
 
+	department_stocks = list("Medical" = 5)

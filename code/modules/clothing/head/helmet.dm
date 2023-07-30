@@ -320,3 +320,13 @@
 	desc = "An advanced helmet issued to blueshield officers."
 	icon_state = "blueshield_helmet"
 	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/durathread
+	name = "durathread helmet"
+	desc = "A helmet crafted from a bunch of metal, durathread, and God's help."
+	icon_state = "Durahelmet"
+	item_state = "Durahelmet"
+	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
+
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE

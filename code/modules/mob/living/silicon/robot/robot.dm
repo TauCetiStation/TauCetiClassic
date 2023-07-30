@@ -783,6 +783,8 @@
 			to_chat(usr, "The borg must choose a module before he can be upgraded!")
 		else if(U.locked)
 			to_chat(usr, "The upgrade is locked and cannot be used yet!")
+		else if(cell)
+			to_chat(usr, "Remove the power cell first.")
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
@@ -1192,3 +1194,7 @@
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
+
+/mob/living/silicon/robot/crawl()
+	toggle_all_components()
+	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
