@@ -48,3 +48,6 @@ endmap
 map delta
 	disabled
 endmap
+
+map paradise_island
+endmap
