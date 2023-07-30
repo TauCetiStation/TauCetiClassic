@@ -64,6 +64,7 @@
 	name = "Blue Team Scout"
 	suit = /obj/item/clothing/suit/storage/miljacket_army
 	head = /obj/item/clothing/head/ushanka/black_white
+	shoes = /obj/item/clothing/shoes/boots/work/jak
 	back = PREFERENCE_BACKPACK
 	r_hand = /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	l_hand = /obj/item/weapon/kitchenknife/combat
@@ -192,6 +193,7 @@
 	name = "Red Team Scout"
 	suit = /obj/item/clothing/suit/storage/miljacket_army
 	head = /obj/item/clothing/head/ushanka/black_white
+	shoes = /obj/item/clothing/shoes/boots/work/jak
 	back = PREFERENCE_BACKPACK
 	r_hand = /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	l_hand = /obj/item/weapon/kitchenknife/combat
