@@ -87,10 +87,7 @@
 
 /datum/component/mob_modifier/ghostly/apply(update = FALSE)
 	if(!update)
-		var/obj/randomcatcher/CATCH = new
-		possessed = CATCH.get_item(/obj/random/misc/toy)
-		if(!possessed)
-			return FALSE
+		possessed = new PATH_OR_RANDOM_PATH(/obj/random/misc/toy)
 
 	. = ..()
 	if(!.)
@@ -117,7 +114,7 @@
 
 	// ghostly_filter = filter(type="color", color=ghostly_matrix)
 
-	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETING), .proc/on_phylactery_destroyed)
+	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETING), PROC_REF(on_phylactery_destroyed))
 	possessed.forceMove(H.loc)
 
 	if(QDELING(possessed) || !get_turf(possessed))
@@ -132,7 +129,7 @@
 	H.AddComponent(/datum/component/bounded, possessed, 0, 3)
 
 	// THE RECIPY OF IMMORTALITY BUAHAHAHA
-	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/retreat)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), PROC_REF(retreat))
 
 	// H.filters += ghostly_filter
 
@@ -176,7 +173,7 @@
 	qdel(H.GetComponent(/datum/component/bounded))
 	H.forceMove(possessed)
 
-	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_STOPPABLE)
+	rejuve_timer = addtimer(CALLBACK(src, PROC_REF(come_back)), rand(6, 10) MINUTES, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/ghostly/proc/come_back()
 	if(!possessed)
@@ -293,7 +290,7 @@
 	if(update)
 		return
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), PROC_REF(shake_ground))
 
 /datum/component/mob_modifier/strong/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -388,8 +385,8 @@
 	H.plane = ABOVE_GAME_PLANE
 
 	START_PROCESSING(SSmob_modifier, src)
-	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
-	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_pulling)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), PROC_REF(stop_pulling))
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), PROC_REF(start_pulling))
 
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
@@ -473,10 +470,10 @@
 	if(update)
 		return
 
-	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT, COMSIG_MOB_DIED), .proc/reveal)
-	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_hiding)
+	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT, COMSIG_MOB_DIED), PROC_REF(reveal))
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), PROC_REF(start_hiding))
 
-	INVOKE_ASYNC(src, .proc/start_hiding)
+	INVOKE_ASYNC(src, PROC_REF(start_hiding))
 
 /datum/component/mob_modifier/invisible/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -508,10 +505,10 @@
 		add_invis_timer()
 
 /datum/component/mob_modifier/invisible/proc/add_vis_timer()
-	invis_timer = addtimer(CALLBACK(src, .proc/become_visible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
+	invis_timer = addtimer(CALLBACK(src, PROC_REF(become_visible)), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/invisible/proc/add_invis_timer()
-	invis_timer = addtimer(CALLBACK(src, .proc/become_invisible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
+	invis_timer = addtimer(CALLBACK(src, PROC_REF(become_invisible)), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/invisible/proc/become_visible()
 	var/mob/living/simple_animal/hostile/H = parent

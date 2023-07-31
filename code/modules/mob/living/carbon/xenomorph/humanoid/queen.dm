@@ -13,6 +13,7 @@
 	speed = 3
 	neurotoxin_delay = 10
 	ventcrawler = 0
+	acid_type = /obj/effect/alien/acid/queen_acid
 	w_class = SIZE_GYGANT
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
 						/obj/effect/proc_holder/spell/targeted/xeno_whisp,

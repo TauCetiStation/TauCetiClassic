@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(economy)
 
 	qdel(announcer)
 
-	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
+	addtimer(CALLBACK(src, PROC_REF(dividend_payment)), 1 MINUTE)
 
 /datum/controller/subsystem/economy/proc/dividend_payment()
 	// All investors should have an equal opportunity to profit. Thus capital amount should be tallied before dividend distribution.

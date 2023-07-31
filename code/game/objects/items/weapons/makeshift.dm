@@ -19,8 +19,8 @@
 	SCB.can_push = TRUE
 	SCB.can_pull = TRUE
 
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/spear, can_sweep_push))
+	SCB.can_pull_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/spear, can_sweep_pull))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -72,7 +72,8 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 
 /obj/item/weapon/melee/cattleprod/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(..())
+		return
 	if (!prob(50))
 		return
 	if(!ishuman(hit_atom))

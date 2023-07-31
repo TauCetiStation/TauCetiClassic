@@ -172,9 +172,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/automatic/glock,
-					/obj/item/weapon/gun/projectile/automatic/glock,
-					/obj/item/weapon/gun/projectile/automatic/glock)
+	contains = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock,
+					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
+					/obj/item/weapon/gun/projectile/automatic/pistol/glock)
 	additional_costs = 760
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
@@ -1914,6 +1914,53 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Xeno arsonist crate"
 	group = "xeno"
 	hidden = TRUE
+
+//----------------------------------------------
+//-----------------BLOB THREAT-------------------
+//----------------------------------------------
+/datum/supply_pack/blob_equipment
+	name = "Anti-blob equipment: Personal set"
+	contains = list(/obj/item/clothing/suit/space/rig/atmos,
+					/obj/item/clothing/head/helmet/space/rig/atmos,
+					/obj/item/clothing/shoes/magboots,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/oxygen,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/weapon/gun/energy/gun/nuclear,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+	additional_costs = 9300
+	crate_name = "Anti-blob equipment: Personal set"
+	group = "blob"	//there is no such category, so these crates will not be visible in the console
+	hidden = TRUE
+
+/datum/supply_pack/blob_equipment/group
+	name = "Anti-blob equipment: Group supply"
+	contains = list(/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser,
+					/obj/machinery/recharger,
+					/obj/machinery/recharger,
+					/obj/machinery/recharger,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
+					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/gun/energy/laser/cutter,
+					/obj/machinery/power/emitter,
+					/obj/machinery/power/emitter)
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_mint
+	additional_costs = 9300
+	crate_name = "Anti-blob equipment: Group supply"
 
 //----------------------------------------------
 //-------------SMARTLIGHT PROGRAMMS-------------

@@ -29,7 +29,7 @@
 
 /obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
 	. = ..()
-	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, .proc/update_selfrecharger_icon)
+	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, PROC_REF(update_selfrecharger_icon))
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, charge_rate)
 
 /obj/item/weapon/gun/energy/laser/selfcharging/proc/update_selfrecharger_icon()

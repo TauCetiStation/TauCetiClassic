@@ -127,7 +127,7 @@
 	},
 /area/awaymission)
 "v" = (
-/obj/item/weapon/gun/projectile/automatic/deagle/gold,
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

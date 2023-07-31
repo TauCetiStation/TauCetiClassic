@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
 		//shuttle movement
-	var/at_station = 0
+	var/at_station = TRUE
 	var/movetime = 1200
 	var/moving = 0
 	var/eta_timeofday
@@ -319,11 +319,33 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = WEST
 					start_location.move_contents_to(end_location, null, EAST)
 					undock_act(start_location, "pod4")
-					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig || /area/station/hallway/secondary/entry, "pod4")
+					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, EAST)
+
+					start_location = locate(/area/shuttle/escape_pod5/station)
+					end_location = locate(/area/shuttle/escape_pod5/transit)
+					end_location.parallax_movedir = NORTH
+					start_location.move_contents_to(end_location, null, SOUTH)
+					undock_act(start_location, "pod5")
+					undock_act(/area/station/hallway/secondary/entry, "pod5")
+
+					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
+					shake_mobs_in_area(end_location, SOUTH)
+
+					start_location = locate(/area/shuttle/escape_pod6/station)
+					end_location = locate(/area/shuttle/escape_pod6/transit)
+					end_location.parallax_movedir = NORTH
+					start_location.move_contents_to(end_location, null, SOUTH)
+					undock_act(start_location, "pod6")
+					undock_act(/area/station/hallway/secondary/entry, "pod6")
+
+					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
+					shake_mobs_in_area(end_location, SOUTH)
 
 					announce_emer_left.play()
 				else

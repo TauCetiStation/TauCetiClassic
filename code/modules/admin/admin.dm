@@ -266,7 +266,7 @@ var/global/BSACooldown = 0
 		merged += file_notes
 	if(length(db_notes))
 		merged += db_notes
-	merged = sortMerge(merged, /proc/cmp_days_timestamp, FALSE)
+	merged = sortMerge(merged, GLOBAL_PROC_REF(cmp_days_timestamp), FALSE)
 	return merged
 
 /proc/cmp_days_timestamp(datum/player_info/a, datum/player_info/b)

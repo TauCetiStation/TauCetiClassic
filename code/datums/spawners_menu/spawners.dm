@@ -457,7 +457,7 @@ var/global/list/datum/spawners_cooldown = list()
 	mob = _mob
 	add_mob_roles()
 
-	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/self_qdel)
+	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), PROC_REF(self_qdel))
 
 /datum/spawner/living/Destroy()
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
@@ -583,6 +583,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/religion_familiar
 	name = "Фамильяр Религии"
 	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+	cooldown = 2 MINUTES
 
 	var/datum/religion/religion
 
@@ -608,11 +609,13 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Оживлённый предмет"
 	id = "mimic"
 	desc = "Вы магическим образом ожили на станции"
+	cooldown = 1 MINUTES
 
 /datum/spawner/living/evil_shade
 	name = "Злой Дух"
 	id = "evil_shade"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+	cooldown = 2 MINUTES
 
 /datum/spawner/living/rat
 	name = "Крыса"

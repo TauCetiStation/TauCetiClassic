@@ -233,7 +233,7 @@
 			visible_message("<span class='notice'>[user] stops fishing.</span>")
 
 /obj/random/misc/all/high
-	spawn_nothing_percentage = 40
+	spawn_nothing_chance = 40
 
 /obj/item/fish_carp
 	name = "space carp"
@@ -255,7 +255,7 @@
 	transform = Mx
 
 	if(catch_target_turf)
-		INVOKE_ASYNC(src, .proc/play_catch_anim, catch_target_turf)
+		INVOKE_ASYNC(src, PROC_REF(play_catch_anim), catch_target_turf)
 
 /obj/item/fish_carp/update_icon()
 	var/carp_color = pick(
