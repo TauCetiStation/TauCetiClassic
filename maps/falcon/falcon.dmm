@@ -8748,6 +8748,7 @@
 	pixel_x = -22;
 	pixel_y = 0
 	},
+/obj/item/weapon/book/manual/wiki/jukebox,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
