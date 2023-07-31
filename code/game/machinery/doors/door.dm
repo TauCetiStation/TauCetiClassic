@@ -71,15 +71,16 @@ var/global/list/wedge_image_cache = list()
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 7)
-			return	//Can bump-open one airlock per animation. This is to prevent shock spam.
+		if(world.time - M.last_bumped <= 10)
+			return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
 	else if(isitem(AM))
-		if(AM.w_class < SIZE_NORMAL && !AM.GetAccess())
-			return
+		if(AM.w_class < SIZE_NORMAL)
+			if(!length(AM.GetAccess()) || check_access(null))
+				return
 		if(allowed(AM))
 			open()
 		return
