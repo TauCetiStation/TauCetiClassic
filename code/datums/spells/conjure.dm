@@ -89,7 +89,20 @@
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
+
+	if(. == PROJECTILE_ABSORBED)
+		return
+
+	// to prevent abuses
+	// todo: should be impossible to abuse so we can remove this hack
+	var/list/mobs = list()
 	for(var/mob/living/M in get_turf(loc))
+		if(M in Proj.permutated)
+			continue
+		mobs += M
+
+	if(length(mobs))
+		var/mob/M = pick(mobs)
 		M.bullet_act(Proj, def_zone)
 
 /obj/effect/forcefield/magic

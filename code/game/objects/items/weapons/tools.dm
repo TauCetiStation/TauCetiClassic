@@ -540,7 +540,13 @@
 				to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
 
+		if(H.check_pierce_protection(target_zone = def_zone))
+			to_chat(user, "<span class='rose'>There is no exposed surface for repair.</span>")
+			return
+
 		if(BP.brute_dam)
+			if(!use(1, user))
+				return
 			BP.heal_damage(15,0,0,1)
 			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 		else
