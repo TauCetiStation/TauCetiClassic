@@ -17357,11 +17357,6 @@
 	name = "Bar Backroom";
 	req_access = list(25)
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -17371,7 +17366,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/bar)
 "dUz" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -17826,11 +17821,6 @@
 	},
 /area/station/storage/emergency2)
 "eao" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -20455,16 +20445,20 @@
 	},
 /area/station/ai_monitored/eva)
 "eHx" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Bar APC";
+	pixel_y = 28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -40430,18 +40424,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
-"jqU" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Bar APC";
-	pixel_x = 28
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
-	},
-/area/station/hallway/primary/fore)
 "jra" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -139427,7 +139409,7 @@ eEt
 eEt
 ieG
 eao
-jqU
+eEt
 uUD
 tJq
 ohV
@@ -139682,11 +139664,11 @@ noq
 sRL
 fSx
 ulH
-tJq
+kvu
 dUy
-tJq
-tJq
-tJq
+kvu
+kvu
+kvu
 nHp
 tAg
 ahQ
