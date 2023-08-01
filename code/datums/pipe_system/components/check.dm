@@ -49,7 +49,7 @@
 	if(!fail_component)
 		return FALSE
 
-	return ChangeNextComponent(fail_component.CopyComponent())
+	return InsertNextComponent(fail_component.CopyComponent())
 
 /datum/pipe_system/component/check/proc/SuccessCheck(datum/pipe_system/process/process)
 
@@ -58,4 +58,4 @@
 	if(!success_component)
 		return FALSE
 
-	return ChangeNextComponent(success_component.CopyComponent())
+	return InsertNextComponent(success_component.CopyComponent())

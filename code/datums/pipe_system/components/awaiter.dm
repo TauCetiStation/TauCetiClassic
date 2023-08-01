@@ -117,4 +117,4 @@
 /datum/pipe_system/component/awaiter/proc/InsertComponent(datum/pipe_system/process/process, datum/pipe_system/component/insert_component)
 
 	var/datum/pipe_system/component/active_component = process.GetActiveComponent()
-	active_component.ChangeNextComponent(insert_component.CopyComponent())
+	active_component.InsertNextComponent(insert_component.CopyComponent())

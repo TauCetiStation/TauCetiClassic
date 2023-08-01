@@ -7,7 +7,9 @@
 /datum/pipe_system/component/New(datum/P)
 	parent = P
 
-/datum/pipe_system/component/proc/ChangeNextComponent(datum/pipe_system/component/C)
+/datum/pipe_system/component/proc/InsertNextComponent(datum/pipe_system/component/C)
+
+	C.previous_component = src
 
 	if(!next_component)
 		next_component = C
@@ -18,7 +20,6 @@
 	next_component = C
 	old_next_component.previous_component = C.GetLastComponent()
 	old_next_component.previous_component.next_component = old_next_component
-	C.previous_component = src
 	return TRUE
 
 /datum/pipe_system/component/proc/DeleteNextComponent()
@@ -107,7 +108,7 @@
 		return CopyComponent()
 
 	if(href_list["change_next_component"])
-		return ChangeNextComponent(href_list["change_next_component"])
+		return InsertNextComponent(href_list["change_next_component"])
 
 	if(href_list["add_last_component"])
 		return AddLastComponent(href_list["add_last_component"])
