@@ -3,7 +3,9 @@
 	var/list/datum/pipe_system/component/saved_components = list()
 	var/datum/pipe_system/component/first_component_program
 	var/datum/pipe_system/component/selected_component
-
+	var/datum/pipe_system/process/active_process
+	var/ram_used = 0
+	var/ram_max = 10
 
 /obj/item/device/terminal/atom_init()
 	. = ..()
