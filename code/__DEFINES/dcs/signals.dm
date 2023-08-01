@@ -382,3 +382,10 @@
 
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+
+
+// pipe_system signals
+#define COMSIG_PIPE_CHECK_FAIL "pipe_check_fail"
+#define COMSIG_PIPE_CHECK_SUCCESS "pipe_check_success"
+#define COMSIG_PIPE_COMPONENT_ACTION "pipe_component_action"
+#define COMSIG_PIPE_COMPONENT_ACTION_LAST "pipe_component_action_last"
