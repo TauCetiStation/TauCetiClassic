@@ -4,11 +4,19 @@
 	var/datum/pipe_system/component/first_component_program
 	var/datum/pipe_system/component/selected_component
 	var/datum/pipe_system/process/active_process
+	var/list/console_output = list()
 	var/ram_used = 0
 	var/ram_max = 10
 
 /obj/item/device/terminal/atom_init()
 	. = ..()
+
+/obj/item/device/terminal/proc/AddConsoleOutput(console_message)
+
+	LAZYINITLIST(console_output)
+	LAZYADD(console_output, console_message)
+
+	return console_output
 
 /obj/item/device/terminal/proc/SelectComponent(datum/pipe_system/component/C)
 
@@ -21,6 +29,9 @@
 
 /obj/item/device/terminal/Topic(href, href_list)
 	. = ..()
+
+	if(href_list["clear_console"])
+		LAZYCLEARLIST(console_output)
 
 	if(href_list["get_saved_components"])
 		return saved_components
