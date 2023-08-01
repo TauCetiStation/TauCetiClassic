@@ -39,6 +39,11 @@
 		P = papers[papers.len]
 		papers.Remove(P)
 		user.try_take(P, loc)
+		amount--
+		return
+
+	if(!amount)
+		to_chat(user, "<span class='notice'>[src] is empty!</span>")
 		return
 
 	var/selection = show_radial_menu(user, src, paper_types, require_near = TRUE, tooltips = TRUE)
@@ -58,18 +63,14 @@
 		if("carbon-copy paper")
 			P = new /obj/item/weapon/paper/carbon
 
-	if(amount >= 1)
-		amount--
-		if(amount == 0)
-			update_icon()
 
-		user.try_take(P, loc)
-		to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
-	else
-		to_chat(user, "<span class='notice'>[src] is empty!</span>")
+	user.try_take(P, loc)
+	amount--
+	to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
 
 	add_fingerprint(user)
-	return
+
+	update_icon()
 
 /obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/weapon/paper))
