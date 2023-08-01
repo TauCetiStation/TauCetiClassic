@@ -32,6 +32,18 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	color = SSstation_coloring.get_default_color()
 
+	if(unres_sides)
+		//remove unres_sides from directions it can't be bumped from
+		switch(dir)
+			if(NORTH,SOUTH)
+				unres_sides &= ~EAST
+				unres_sides &= ~WEST
+			if(EAST,WEST)
+				unres_sides &= ~NORTH
+				unres_sides &= ~SOUTH
+
+	src.unres_sides = unres_sides
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	update_nearby_tiles()
@@ -147,6 +159,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		return !density
 	else
 		return 1
+
+/obj/machinery/door/window/unrestricted_side(mob/opener)
+	if(get_turf(opener) == loc)
+		return turn(dir,180) & unres_sides
+	return ..()
 
 /obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
