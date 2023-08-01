@@ -98,28 +98,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		color = new_color
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)
-	if( operating || !src.density )
+	if(operating || !src.density)
 		return
-	if (!( ismob(AM) ))
-		var/obj/machinery/bot/bot = AM
-		if(istype(bot))
-			if(check_access(bot.botcard))
-				open_and_close()
-			else
-				do_animate("deny")
-		else if(istype(AM, /obj/mecha))
-			var/obj/mecha/mecha = AM
-			if(mecha.occupant && allowed(mecha.occupant))
-				open_and_close()
-			else
-				do_animate("deny")
+	if(!ismob(AM))
+		if(allowed(AM))
+			open_and_close()
+		else
+			do_animate("deny")
 		return
-	if (!( SSticker ))
+	if(!SSticker)
 		return
 	var/mob/M = AM
 	if(!M.restrained())
 		bumpopen(M)
-	return
 
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
