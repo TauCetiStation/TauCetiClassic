@@ -37,6 +37,7 @@
 			LAZYREMOVE(saved_components, component)
 			return saved_components
 
-	selected_component.ApiChange(href_list)
+	if(selected_component)
+		selected_component.ApiChange(href_list)
 
 	return selected_component
