@@ -27,6 +27,19 @@
 
 	return new_component
 
+/datum/pipe_system/component/data/ApiChange(href_list)
+
+	if(href_list["change_data"])
+		return ChangeData(href_list["change_data"])
+
+	if(href_list["get_data"])
+		return GetData()
+
+	if(href_list["is_valid"])
+		return IsValid()
+
+	return ..()
+
 /datum/pipe_system/component/data/proc/ChangeData(datum/pipe_system/component/data/data)
 
 	value = data.value

@@ -153,6 +153,7 @@ Class Procs:
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
+	InitializeProgram()
 
 	if (speed_process)
 		START_PROCESSING(SSfastprocess, src)
@@ -608,8 +609,12 @@ Class Procs:
 
 /obj/machinery/proc/InitializeProgram()
 	program_action = new /datum/pipe_system/component/data/initial_machinery(src, name)
+	program_action.AddLastComponent(new /datum/pipe_system/component/data/target_program(src, src))
+	program_action.AddLastComponent(new /datum/pipe_system/component/proc_component/clear_active_awaiters(src))
+	program_action.AddLastComponent(new /datum/pipe_system/component/data/req_access(src, req_access))
+	program_action.AddLastComponent(new /datum/pipe_system/component/proc_component/machinery_drop_contents(src))
 	return TRUE
 
 /obj/machinery/proc/interact_program(datum/pipe_system/process/process)
-	process.AddLastComponent(program_action)
+	process.AddComponentPipe(program_action.CopyComponent())
 	process.RunComponents()

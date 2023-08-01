@@ -2,7 +2,28 @@
 	var/datum/pipe_system/component/first_component
 	var/list/datum/pipe_system/component/data/cache_data = list()
 	var/datum/pipe_system/component/active_component = null
+	var/list/datum/pipe_system/component/awaiter/active_awaiters = list()
 	var/activate = 0
+
+/datum/pipe_system/process/proc/PrepareActiveAwaiters()
+
+	LAZYINITLIST(active_awaiters)
+
+	return TRUE
+
+/datum/pipe_system/process/proc/AddActiveAwaiter(datum/pipe_system/component/awaiter/active)
+
+	PrepareActiveAwaiters()
+
+	LAZYADD(active_awaiters, active)
+
+	return TRUE
+
+/datum/pipe_system/process/proc/GetActiveAwaiters()
+
+	PrepareActiveAwaiters()
+
+	return active_awaiters
 
 /datum/pipe_system/process/proc/PrepareCacheData()
 
@@ -32,9 +53,9 @@
 
 	return TRUE
 
-/datum/pipe_system/process/proc/AddComponentGun(datum/pipe_system/component/C)
+/datum/pipe_system/process/proc/AddComponentPipe(datum/pipe_system/component/C)
 
-	var/datum/pipe_system/component/adding_component = C.CopyComponentGun()
+	var/datum/pipe_system/component/adding_component = C.CopyComponent()
 
 	if(!istype(adding_component))
 		return FALSE

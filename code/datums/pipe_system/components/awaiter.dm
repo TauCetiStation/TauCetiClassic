@@ -38,13 +38,7 @@
 
 	return new_component
 
-/datum/pipe_system/component/check/ApiChange(href_list)
-
-	if(href_list["get_fail_component"])
-		return fail_component
-
-	if(href_list["get_success_component"])
-		return success_component
+/datum/pipe_system/component/awaiter/ApiChange(href_list)
 
 	if(href_list["change_waiting_component"])
 		return ChangeWaitingComponent(href_list["change_waiting_component"])

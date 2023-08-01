@@ -11,6 +11,31 @@
 /obj/item/device/terminal/atom_init()
 	. = ..()
 
+/obj/item/device/terminal/attack_atom(atom/attacked_atom, mob/living/user, params)
+	. = ..()
+
+	if(!istype(attacked_atom, /obj/machinery))
+		return
+
+	var/obj/machinery/target = attacked_atom
+
+	var/datum/pipe_system/process/process = new()
+
+	var/datum/pipe_system/component/data/log_target/terminal_logger = new(src, src)
+	var/datum/pipe_system/component/awaiter/logger = new(src, null, terminal_logger, null)
+	process.AddComponentPipe(logger)
+
+	var/datum/pipe_system/component/data/target_program/target_machinery = new(src, target)
+	process.AddComponentPipe(target_machinery)
+
+	var/datum/pipe_system/component/data/program_command/program_command = new(src, "drop_contents")
+	process.AddComponentPipe(program_command)
+
+	var/datum/pipe_system/component/data/access/access = new(src, 1)
+	process.AddComponentPipe(access)
+
+	target.interact_program(process)
+
 /obj/item/device/terminal/proc/AddConsoleOutput(console_message)
 
 	LAZYINITLIST(console_output)
