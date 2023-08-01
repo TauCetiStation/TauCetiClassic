@@ -14,6 +14,9 @@
 
 	return selected_component
 
+/obj/item/device/terminal/proc/RestoreSavedComponents()
+	return TRUE
+
 /obj/item/device/terminal/Topic(href, href_list)
 	. = ..()
 
@@ -36,6 +39,9 @@
 		if(istype(component))
 			LAZYREMOVE(saved_components, component)
 			return saved_components
+
+	if(href_list["restore_saved_components"])
+		return RestoreSavedComponents()
 
 	if(selected_component)
 		selected_component.ApiChange(href_list)

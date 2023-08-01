@@ -148,6 +148,7 @@ Class Procs:
 
 	var/list/required_skills //e.g. medical, engineering
 	var/fumbling_time = 5 SECONDS
+	var/datum/pipe_system/component/program_action
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -604,3 +605,11 @@ Class Procs:
 	if (!required_skills || !user || issilicon(user) || isobserver(user))
 		return TRUE
 	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)
+
+/obj/machinery/proc/InitializeProgram()
+	program_action = new /datum/pipe_system/component/data(src, name)
+	return TRUE
+
+/obj/machinery/proc/interact_program(datum/pipe_system/process/process)
+	process.AddLastComponent(program_action)
+	process.RunComponents()
