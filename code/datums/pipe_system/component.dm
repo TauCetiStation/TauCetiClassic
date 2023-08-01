@@ -107,8 +107,8 @@
 	if(href_list["get_copy_component"])
 		return CopyComponent()
 
-	if(href_list["change_next_component"])
-		return InsertNextComponent(href_list["change_next_component"])
+	if(href_list["insert_next_component"])
+		return InsertNextComponent(href_list["insert_next_component"])
 
 	if(href_list["add_last_component"])
 		return AddLastComponent(href_list["add_last_component"])
