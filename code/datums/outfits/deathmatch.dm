@@ -53,6 +53,7 @@
 
 /datum/outfit/deathmatch/blue_team/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch)
 
 /datum/outfit/deathmatch/blue_team/sniper
@@ -66,6 +67,7 @@
 
 /datum/outfit/deathmatch/blue_team/sniper/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/charge)
 
 
@@ -124,6 +126,7 @@
 
 /datum/outfit/deathmatch/blue_team/crusader/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/hulk_dash)
 
 /datum/outfit/deathmatch/blue_team/experimental
@@ -151,6 +154,7 @@
 
 /datum/outfit/deathmatch/blue_team/mage/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall)
 
 ////////////////////////////////////////////////////
@@ -201,6 +205,7 @@
 
 /datum/outfit/deathmatch/red_team/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch)
 
 /datum/outfit/deathmatch/red_team/sniper
@@ -214,6 +219,7 @@
 
 /datum/outfit/deathmatch/red_team/sniper/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/charge)
 
 /datum/outfit/deathmatch/red_team/scout
@@ -260,6 +266,7 @@
 
 /datum/outfit/deathmatch/red_team/crusader/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/hulk_dash)
 
 /datum/outfit/deathmatch/red_team/experimental
@@ -282,4 +289,5 @@
 
 /datum/outfit/deathmatch/red_team/mage/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
+		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall)
