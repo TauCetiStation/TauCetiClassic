@@ -607,7 +607,7 @@ Class Procs:
 	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)
 
 /obj/machinery/proc/InitializeProgram()
-	program_action = new /datum/pipe_system/component/data(src, name)
+	program_action = new /datum/pipe_system/component/data/initial_machinery(src, name)
 	return TRUE
 
 /obj/machinery/proc/interact_program(datum/pipe_system/process/process)

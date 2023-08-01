@@ -21,18 +21,18 @@
 
 	return ..()
 
-/datum/pipe_system/component/awaiter/CopyComponentGun()
+/datum/pipe_system/component/awaiter/CopyComponent()
 
 	var/datum/pipe_system/component/awaiter/new_component = ..()
 
 	if(checker)
-		new_component.checker = checker.CopyComponentGun()
+		new_component.checker = checker.CopyComponent()
 
 	if(waiting_component)
-		new_component.waiting_component = waiting_component.CopyComponentGun()
+		new_component.waiting_component = waiting_component.CopyComponent()
 
 	if(timeout_component)
-		new_component.timeout_component = timeout_component.CopyComponentGun()
+		new_component.timeout_component = timeout_component.CopyComponent()
 
 	new_component.signal_checker_wait = signal_checker_wait
 
@@ -117,4 +117,4 @@
 /datum/pipe_system/component/awaiter/proc/InsertComponent(datum/pipe_system/process/process, datum/pipe_system/component/insert_component)
 
 	var/datum/pipe_system/component/active_component = process.GetActiveComponent()
-	active_component.ChangeNextComponent(insert_component.CopyComponentGun())
+	active_component.ChangeNextComponent(insert_component.CopyComponent())

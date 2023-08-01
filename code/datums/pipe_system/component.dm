@@ -87,14 +87,14 @@
 
 	return next_component.Action(process)
 
-/datum/pipe_system/component/proc/CopyComponentGun()
+/datum/pipe_system/component/proc/CopyComponent()
 
 	var/datum/pipe_system/component/new_component = new type(parent)
 
 	new_component.id_component = id_component
 
 	if(next_component)
-		new_component.next_component = next_component.CopyComponentGun()
+		new_component.next_component = next_component.CopyComponent()
 
 	return new_component
 
@@ -104,7 +104,7 @@
 		return src
 
 	if(href_list["get_copy_component"])
-		return CopyComponentGun()
+		return CopyComponent()
 
 	if(href_list["change_next_component"])
 		return ChangeNextComponent(href_list["change_next_component"])

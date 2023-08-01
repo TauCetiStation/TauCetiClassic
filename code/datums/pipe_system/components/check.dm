@@ -8,15 +8,15 @@
 	src.success_component = success_component
 	src.fail_component = fail_component
 
-/datum/pipe_system/component/check/CopyComponentGun()
+/datum/pipe_system/component/check/CopyComponent()
 
 	var/datum/pipe_system/component/check/new_component = ..()
 
 	if(success_component)
-		new_component.success_component = success_component.CopyComponentGun()
+		new_component.success_component = success_component.CopyComponent()
 
 	if(fail_component)
-		new_component.fail_component = fail_component.CopyComponentGun()
+		new_component.fail_component = fail_component.CopyComponent()
 
 	return new_component
 
@@ -49,7 +49,7 @@
 	if(!fail_component)
 		return FALSE
 
-	return ChangeNextComponent(fail_component.CopyComponentGun())
+	return ChangeNextComponent(fail_component.CopyComponent())
 
 /datum/pipe_system/component/check/proc/SuccessCheck(datum/pipe_system/process/process)
 
@@ -58,4 +58,4 @@
 	if(!success_component)
 		return FALSE
 
-	return ChangeNextComponent(success_component.CopyComponentGun())
+	return ChangeNextComponent(success_component.CopyComponent())
