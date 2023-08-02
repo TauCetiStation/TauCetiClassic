@@ -1,12 +1,9 @@
 /obj/structure/rd_armor_stand
 	name = "Experimental Armor Storage"
 	desc = "Storage of experimental teleportation armor."
-
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telearmorstand"
-	icon_closed = "telearmorstand"
-	icon_opened = "telearmorstand" // uses overlay
 	anchored = TRUE
-
 	integrity_failure = 0.5
 
 	var/obj/item/clothing/suit/armor/vest/reactive/reactive
@@ -17,8 +14,8 @@
 /obj/structure/rd_armor_stand/atom_init(mapload)
 	. = ..()
 	reactive = new /obj/item/clothing/suit/armor/vest/reactive(src)
-	add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "telearmor_overlay"))
-	add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
+	add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
+	add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 
 /obj/structure/rd_armor_stand/Destroy()
 	QDEL_NULL(reactive)
@@ -51,14 +48,14 @@
 			user.drop_from_inventory(O, src)
 			reactive = O
 			to_chat(user, "<span class='notice'>You place the armor back in the [src.name].</span>")
-			add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "telearmor_overlay"))
+			add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
 	else
 		if(smashed)
 			return
 		if(ispulsing(O))
 			if(opened)
 				opened = FALSE
-				add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
+				add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 				if(O.use_tool(src, user, 100, volume = 50))
@@ -73,7 +70,7 @@
 				return
 			if(opened)
 				opened = FALSE
-				add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
+				add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 				return
 			if((!opened) && (!lock))
 				lock = TRUE
@@ -82,7 +79,7 @@
 		else
 			if(opened)
 				opened = FALSE
-				add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
+				add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 
 /obj/structure/rd_armor_stand/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -100,8 +97,8 @@
 	smashed = TRUE
 	opened = TRUE
 	lock = FALSE
-	cut_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
-	add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_broken_overlay"))
+	cut_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+	add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_broken_overlay"))
 	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	new /obj/item/weapon/shard(loc)
 	new /obj/item/weapon/shard(loc)
@@ -130,7 +127,7 @@
 		return
 	if((!opened) && (!smashed))
 		opened = TRUE
-		cut_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
+		cut_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 		to_chat(user, "<span class='notice'>You opened the [name].</span>")
 		return
 
@@ -140,12 +137,12 @@
 			reactive = null
 			to_chat(user, "<span class='notice'>You take the armor from the [name].</span>")
 			add_fingerprint(user)
-			cut_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "telearmor_overlay"))
+			cut_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
 			return
 		if((opened) && (!smashed))
 			to_chat(user, "<span class='notice'>You closed the [name].</span>")
 			opened = FALSE
-			add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
+			add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 			return
 
 /obj/structure/rd_armor_stand/attack_paw(mob/user)
@@ -161,12 +158,6 @@
 		else
 			lock = FALSE
 			to_chat(user, "<span class='notice'>Storage unlocked.</span>")
-
-/obj/structure/rd_armor_stand/open()
-	return
-
-/obj/structure/rd_armor_stand/close()
-	return
 
 /obj/structure/rd_armor_stand/emag_act()
 	lock = FALSE
