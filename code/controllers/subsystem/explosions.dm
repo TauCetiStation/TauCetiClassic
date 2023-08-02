@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(explosions)
 		// So we always sample from a "loop" closer
 		// It's kind of behaviorly unimpressive that that's a problem for the future
 		if(config.reactionary_explosions)
-			var/resistance = explode.explosive_resistance // should we use armor instead?
+			var/resistance = explode.explosive_resistance / 4 // should we use armor instead?
 			for(var/atom/A in explode) // tg has a way to optimize it, but it's soo tg so i don't want to port it
 				if(A.explosive_resistance)
 					resistance += A.explosive_resistance
