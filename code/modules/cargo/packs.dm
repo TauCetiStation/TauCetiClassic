@@ -162,8 +162,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/melee/baton,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/flashbangs)
+					/obj/item/weapon/grenade/flashbang,
+					/obj/item/weapon/grenade/flashbang)
 	additional_costs = 760
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Weapons crate"
@@ -241,9 +241,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
-					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/flashbangs,
-					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/grenade/flashbang,
+					/obj/item/weapon/grenade/flashbang,
+					/obj/item/weapon/grenade/flashbang,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
