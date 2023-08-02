@@ -31,7 +31,7 @@
 	var/datum/pipe_system/component/data/program_command/program_command = new(src, "drop_contents")
 	process.AddComponentPipe(program_command)
 
-	var/datum/pipe_system/component/data/access/access = new(src, 1)
+	var/datum/pipe_system/component/data/access/access = new(src)
 	process.AddComponentPipe(access)
 
 	target.interact_program(process)

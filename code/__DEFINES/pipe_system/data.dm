@@ -3,3 +3,5 @@
 #define TARGET_PROGRAM_DATA "target_program_data"
 #define PROGRAM_COMMAND_DATA "program_command_data"
 #define LOG_TARGET_DATA "log_target_data"
+#define FOR_CYCLE_INITIAL_DATA "for_cycle_initial_data"
+#define FOR_CYCLE_COUNT_DATA "for_cycle_count_data"
