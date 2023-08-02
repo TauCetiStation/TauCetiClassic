@@ -14,8 +14,7 @@
 /obj/structure/rd_armor_stand/atom_init(mapload)
 	. = ..()
 	reactive = new /obj/item/clothing/suit/armor/vest/reactive(src)
-	add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
-	add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+	update_icon()
 
 /obj/structure/rd_armor_stand/Destroy()
 	QDEL_NULL(reactive)
@@ -48,14 +47,14 @@
 			user.drop_from_inventory(O, src)
 			reactive = O
 			to_chat(user, "<span class='notice'>You place the armor back in the [src.name].</span>")
-			add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
+			update_icon()
 	else
 		if(smashed)
 			return
 		if(ispulsing(O))
 			if(opened)
 				opened = FALSE
-				add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+				update_icon()
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 				if(O.use_tool(src, user, 100, volume = 50))
@@ -70,7 +69,7 @@
 				return
 			if(opened)
 				opened = FALSE
-				add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+				update_icon()
 				return
 			if((!opened) && (!lock))
 				lock = TRUE
@@ -79,7 +78,7 @@
 		else
 			if(opened)
 				opened = FALSE
-				add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+				update_icon()
 
 /obj/structure/rd_armor_stand/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -97,8 +96,7 @@
 	smashed = TRUE
 	opened = TRUE
 	lock = FALSE
-	cut_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
-	add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_broken_overlay"))
+	update_icon()
 	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	new /obj/item/weapon/shard(loc)
 	new /obj/item/weapon/shard(loc)
@@ -127,7 +125,7 @@
 		return
 	if((!opened) && (!smashed))
 		opened = TRUE
-		cut_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+		update_icon()
 		to_chat(user, "<span class='notice'>You opened the [name].</span>")
 		return
 
@@ -137,12 +135,12 @@
 			reactive = null
 			to_chat(user, "<span class='notice'>You take the armor from the [name].</span>")
 			add_fingerprint(user)
-			cut_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
+			update_icon()
 			return
 		if((opened) && (!smashed))
 			to_chat(user, "<span class='notice'>You closed the [name].</span>")
 			opened = FALSE
-			add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+			update_icon()
 			return
 
 /obj/structure/rd_armor_stand/attack_paw(mob/user)
@@ -163,3 +161,13 @@
 	lock = FALSE
 	visible_message("<span class='warning'>[name] lock sparkles!</span>")
 	return
+
+
+/obj/structure/rd_armor_stand/update_icon()
+	cut_overlays()
+	if(reactive)
+		add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
+	if((!opened) && (!smashed))
+		add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
+	if(smashed)
+		add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_broken_overlay"))
