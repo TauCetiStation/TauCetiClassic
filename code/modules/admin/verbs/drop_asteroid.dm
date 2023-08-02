@@ -19,21 +19,17 @@
 	T = locate(T.x - round(asteroid.width/2), T.y - round(asteroid.height/2) , T.z)
 	var/list/bounds = list(T.x, T.y, T.z, T.x + asteroid.width + 1, T.y + asteroid.height + 1, T.z)
 
-	//todo: shake_the_room(T, orig_max_distance, far_dist, devastation_range, heavy_impact_range)
-/*	for(var/mob/M in player_list)
-		if(M.z == T.z)
-			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)*/
+	var/shake_distance = max(side_x, side_y)
+	shake_the_room(T, near_distance = shake_distance, far_distance = shake_distance*30, quake_factor = 100, echo_factor = TRUE)
 
 	//shake the station!
 	for(var/mob/living/carbon/C as anything in carbon_list)
 		if(C.z == T.z)
 			if(C.buckled)
-				shake_camera(C, 4, 1)
-			else
-				shake_camera(C, 10, 2)
-				C.Stun(4)
-				C.Weaken(8)
-				C.throw_at(get_step(C,pick(1,2,4,8)),16,3)
+				continue
+			C.Stun(4)
+			C.Weaken(8)
+			C.throw_at(get_step(C,pick(1,2,4,8)),16,3)
 
 	var/list/targetAtoms = list()
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
