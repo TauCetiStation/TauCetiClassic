@@ -98215,7 +98215,7 @@
 	},
 /area/station/bridge/hop_office)
 "xkc" = (
-/obj/structure/closet/rd_armor_stand,
+/obj/structure/rd_armor_stand,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"

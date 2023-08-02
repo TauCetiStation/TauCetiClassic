@@ -22974,7 +22974,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = -32
 	},
-/obj/structure/closet/rd_armor_stand{
+/obj/structure/rd_armor_stand{
 	pixel_y = 17
 	},
 /turf/simulated/floor{

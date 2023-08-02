@@ -1,4 +1,4 @@
-/obj/structure/closet/rd_armor_stand
+/obj/structure/rd_armor_stand
 	name = "Experimental Armor Storage"
 	desc = "Storage of experimental teleportation armor."
 
@@ -6,37 +6,34 @@
 	icon_closed = "telearmorstand"
 	icon_opened = "telearmorstand" // uses overlay
 	anchored = TRUE
-	opened = TRUE
-	locked = TRUE
 
 	integrity_failure = 0.5
 
 	var/obj/item/clothing/suit/armor/vest/reactive/reactive
-	var/localopened = FALSE
+	var/opened = FALSE
 	var/smashed = FALSE
+	var/lock = TRUE
 
-/obj/structure/closet/rd_armor_stand/atom_init(mapload)
+/obj/structure/rd_armor_stand/atom_init(mapload)
 	. = ..()
+	reactive = new /obj/item/clothing/suit/armor/vest/reactive(src)
 	add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "telearmor_overlay"))
 	add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 
-/obj/structure/closet/rd_armor_stand/Destroy()
+/obj/structure/rd_armor_stand/Destroy()
 	QDEL_NULL(reactive)
 	return ..()
 
-/obj/structure/closet/rd_armor_stand/PopulateContents()
-	reactive = new /obj/item/clothing/suit/armor/vest/reactive(src)
-
-/obj/structure/closet/rd_armor_stand/attackby(obj/item/O, mob/living/user)
+/obj/structure/rd_armor_stand/attackby(obj/item/O, mob/living/user)
 	if (user.is_busy(src))
 		return
 
-	if (isrobot(usr) || locked)
+	if (isrobot(usr) || lock)
 		if(ispulsing(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
 			if (do_after(user, 100, target = src))
-				locked = FALSE
+				lock = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				return
 		if(istype(O, /obj/item/weapon/card/id))
@@ -45,11 +42,11 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 				return
 			else
-				locked = FALSE
+				lock = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				return
 
-	else if (istype(O, /obj/item/clothing/suit/armor/vest/reactive) && localopened)
+	else if (istype(O, /obj/item/clothing/suit/armor/vest/reactive) && opened)
 		if(!reactive)
 			user.drop_from_inventory(O, src)
 			reactive = O
@@ -59,13 +56,13 @@
 		if(smashed)
 			return
 		if(ispulsing(O))
-			if(localopened)
-				localopened = FALSE
+			if(opened)
+				opened = FALSE
 				add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 				if(O.use_tool(src, user, 100, volume = 50))
-					locked = TRUE
+					lock = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)
 					return
@@ -74,20 +71,20 @@
 			if(!(access_rd in ID.access))
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 				return
-			if(localopened)
-				localopened = FALSE
+			if(opened)
+				opened = FALSE
 				add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 				return
-			if((!localopened) && (!locked))
-				locked = TRUE
+			if((!opened) && (!lock))
+				lock = TRUE
 				to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 				playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)
 		else
-			if(localopened)
-				localopened = FALSE
+			if(opened)
+				opened = FALSE
 				add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 
-/obj/structure/closet/rd_armor_stand/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/rd_armor_stand/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(smashed)
@@ -97,12 +94,12 @@
 		if(BURN)
 			playsound(loc, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/closet/rd_armor_stand/atom_break(damage_flag)
+/obj/structure/rd_armor_stand/atom_break(damage_flag)
 	if(smashed || flags & NODECONSTRUCT)
 		return ..()
 	smashed = TRUE
-	localopened = TRUE
-	locked = FALSE
+	opened = TRUE
+	lock = FALSE
 	cut_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 	add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_broken_overlay"))
 	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
@@ -110,7 +107,7 @@
 	new /obj/item/weapon/shard(loc)
 	. = ..()
 
-/obj/structure/closet/rd_armor_stand/deconstruct(disassembled = TRUE)
+/obj/structure/rd_armor_stand/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
 
@@ -123,21 +120,21 @@
 		new /obj/item/weapon/shard(loc)
 	return ..()
 
-/obj/structure/closet/rd_armor_stand/attack_hand(mob/living/user)
+/obj/structure/rd_armor_stand/attack_hand(mob/living/user)
 	if(user.is_busy(src))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(locked)
+	if(lock)
 		to_chat(user, "<span class='warning'>The storage won't budge!</span>")
 		return
-	if((!localopened) && (!smashed))
-		localopened = TRUE
+	if((!opened) && (!smashed))
+		opened = TRUE
 		cut_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 		to_chat(user, "<span class='notice'>You opened the [name].</span>")
 		return
 
-	if((localopened) || (smashed))
+	if((opened) || (smashed))
 		if(reactive)
 			user.try_take(reactive, loc)
 			reactive = null
@@ -145,33 +142,33 @@
 			add_fingerprint(user)
 			cut_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "telearmor_overlay"))
 			return
-		if((localopened) && (!smashed))
+		if((opened) && (!smashed))
 			to_chat(user, "<span class='notice'>You closed the [name].</span>")
-			localopened = FALSE
+			opened = FALSE
 			add_overlay(image(icon = 'icons/obj/closet.dmi', icon_state = "standglass_overlay"))
 			return
 
-/obj/structure/closet/rd_armor_stand/attack_paw(mob/user)
+/obj/structure/rd_armor_stand/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/closet/rd_armor_stand/attack_ai(mob/user)
+/obj/structure/rd_armor_stand/attack_ai(mob/user)
 	if(smashed)
 		to_chat(user, "<span class='warning'>The security of the storage is compromised.</span>")
 	else
-		if(locked)
-			locked = TRUE
+		if(lock)
+			lock = TRUE
 			to_chat(user, "<span class='warning'>Storage locked.</span>")
 		else
-			locked = FALSE
+			lock = FALSE
 			to_chat(user, "<span class='notice'>Storage unlocked.</span>")
 
-/obj/structure/closet/rd_armor_stand/open()
+/obj/structure/rd_armor_stand/open()
 	return
 
-/obj/structure/closet/rd_armor_stand/close()
+/obj/structure/rd_armor_stand/close()
 	return
 
-/obj/structure/closet/rd_armor_stand/emag_act()
-	locked = FALSE
+/obj/structure/rd_armor_stand/emag_act()
+	lock = FALSE
 	visible_message("<span class='warning'>[name] lock sparkles!</span>")
 	return

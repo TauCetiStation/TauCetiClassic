@@ -8258,7 +8258,7 @@
 	},
 /area/station/security/prison)
 "bya" = (
-/obj/structure/closet/rd_armor_stand,
+/obj/structure/rd_armor_stand,
 /turf/simulated/floor{
 	icon_state = "warndarkcorners"
 	},
