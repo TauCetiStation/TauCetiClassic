@@ -207,16 +207,17 @@ SUBSYSTEM_DEF(explosions)
 		// So we always sample from a "loop" closer
 		// It's kind of behaviorly unimpressive that that's a problem for the future
 		if(config.reactionary_explosions)
-			var/resistance = explode.explosive_resistance / 4 // should we use armor instead?
+			// resistance actually just "pushing" turf from explosion range
+			var/resistance = explode.explosive_resistance // should we use armor instead?
 			for(var/atom/A in explode) // tg has a way to optimize it, but it's soo tg so i don't want to port it
 				if(A.explosive_resistance)
 					resistance += A.explosive_resistance
 
 			if(explode == epicenter)
-				cached_exp_block[explode] = resistance
+				cached_exp_block[explode] = resistance / 4 // inner explosion - resistance less effective
 			else
 				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
-				dist += our_block + resistance / 2 // resistance actually just "pushing" turf from explosion range
+				dist += our_block + resistance / 2 // use half of own resistance, full resistance for turfs behind
 				cached_exp_block[explode] = our_block + resistance
 
 		var/severity = EXPLODE_NONE

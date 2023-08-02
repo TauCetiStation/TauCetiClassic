@@ -20,7 +20,7 @@
 	var/list/bounds = list(T.x, T.y, T.z, T.x + asteroid.width + 1, T.y + asteroid.height + 1, T.z)
 
 	var/shake_distance = max(side_x, side_y)
-	shake_the_room(T, near_distance = shake_distance, far_distance = shake_distance*30, quake_factor = 100, echo_factor = TRUE)
+	SSexplosions.shake_the_room(T, near_distance = shake_distance, far_distance = shake_distance*30, quake_factor = 100, echo_factor = TRUE)
 
 	//shake the station!
 	for(var/mob/living/carbon/C as anything in carbon_list)
