@@ -293,7 +293,7 @@
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked))
 		return
-	user.loc = picked
+	user.forceMove(picked)
 	playsound(user, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
