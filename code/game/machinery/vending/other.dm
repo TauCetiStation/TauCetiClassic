@@ -65,7 +65,7 @@
 	req_access = list(1)
 	products = list(
 		/obj/item/weapon/handcuffs = 8,
-		/obj/item/weapon/grenade/flashbang = 4,
+		/obj/item/weapon/grenade/flashbang = 2,
 		/obj/item/device/flash = 5,
 		/obj/item/weapon/storage/box/evidence = 6,
 		/obj/item/ammo_box/magazine/glock/extended/rubber = 5,
