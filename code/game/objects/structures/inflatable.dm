@@ -147,7 +147,8 @@
 
 /obj/structure/inflatable/door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates) return
-	if(world.time - last_bumped <= 22) return
+	if(world.time - last_bumped <= 22)
+		return
 	last_bumped = world.time
 	if(ismob(user))
 		var/mob/M = user
