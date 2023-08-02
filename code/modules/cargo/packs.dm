@@ -1163,6 +1163,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Civilian Medkits crate"
 	group = "Medical / Science"
 
+/datum/supply_pack/adv_medkit
+	name = "Advanced Medkits"
+	contains = list(/obj/item/weapon/storage/firstaid/adv,
+					/obj/item/weapon/storage/firstaid/adv,
+					/obj/item/weapon/storage/firstaid/adv)
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "Advanced Medkits crate"
+	group = "Medical / Science"
+
 /datum/supply_pack/roller_beds
 	name = "Roller beds crate"
 	contains = list(/obj/item/roller, /obj/item/roller,
