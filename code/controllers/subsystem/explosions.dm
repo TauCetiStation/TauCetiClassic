@@ -77,8 +77,8 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
-/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
-	. = SSexplosions.explode(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, explosion_cause)
+/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, smoke = TRUE, atom/explosion_cause = null)
+	. = SSexplosions.explode(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, smoke, explosion_cause)
 
 /**
  * Makes a given turf explode. Now on the explosions subsystem!
@@ -91,11 +91,11 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
  */
-/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, atom/explosion_cause = null)
+/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, smoke = TRUE, atom/explosion_cause = null)
 
 	SSStatistics.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
 
-	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, explosion_cause)
+	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, smoke, explosion_cause)
 	return
 
 /**
@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(explosions)
  * - flash_range: The range at which the explosion flashes people.
  * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, explosion_cause)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, smoke, explosion_cause)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
@@ -162,6 +162,18 @@ SUBSYSTEM_DEF(explosions)
 	far_dist += devastation_range * 20
 
 	shake_the_room(epicenter, near_distance = orig_max_distance, far_distance = far_dist, quake_factor = devastation_range, echo_factor = heavy_impact_range)
+
+	if(heavy_impact_range > 1)
+		var/datum/effect/system/explosion/explosion_effect = new
+		var/practicles_num = max(devastation_range * 2, heavy_impact_range)
+		explosion_effect.set_up(epicenter, practicles_num)
+		INVOKE_ASYNC(explosion_effect, TYPE_PROC_REF(/datum/effect/system/explosion, start))
+
+		if(smoke)
+			var/datum/effect/effect/system/smoke_spread/bad/smoke_effect = new
+			var/smoke_num = max(devastation_range, round(sqrt(heavy_impact_range)))
+			smoke_effect.set_up(smoke_num, 0, epicenter)
+			addtimer(CALLBACK(smoke_effect, TYPE_PROC_REF(/datum/effect/effect/system/smoke_spread, start)), 5)
 
 	if(flash_range)
 		for(var/mob/living/Mob_to_flash in viewers(flash_range, epicenter))
