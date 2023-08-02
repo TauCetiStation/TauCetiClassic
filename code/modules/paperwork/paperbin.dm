@@ -15,7 +15,7 @@
 	. = ..()
 	paper_types = list(
 		"paper" = image(icon = 'icons/obj/bureaucracy.dmi', icon_state = "paper"),
-		"carbon-copy paper" = image(icon = 'icons/obj/bureaucracy.dmi', icon_state = "cpaper"),
+		"carbon copy paper" = image(icon = 'icons/obj/bureaucracy.dmi', icon_state = "cpaper"),
 		)
 
 /obj/item/weapon/paper_bin/MouseDrop(mob/user)
@@ -39,10 +39,12 @@
 		P = papers[papers.len]
 		papers.Remove(P)
 		user.try_take(P, loc)
+		add_fingerprint(user)
+		update_icon()
 		amount--
 		return
 
-	if(!amount)
+	if(amount < 1)
 		to_chat(user, "<span class='notice'>[src] is empty!</span>")
 		return
 
