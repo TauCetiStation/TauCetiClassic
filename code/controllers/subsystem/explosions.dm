@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(explosions)
 	var/list/med_mov_atom = list()
 	var/list/high_mov_atom = list()
 
-	var/currentpart = SSAIR_PIPENETS
+	var/currentpart = SSEXPLOSIONS_TURFS
 
 	// cap, usual ratio ~1:2:3:3:3
 	var/MAX_EX_DEVESTATION_RANGE = 3
