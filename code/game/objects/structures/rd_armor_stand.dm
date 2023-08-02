@@ -27,10 +27,11 @@
 	if (isrobot(usr) || lock)
 		if(ispulsing(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
 			if (do_after(user, 100, target = src))
 				lock = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
+				playsound(src, 'sound/machines/airlock/bolts_up_2.ogg', VOL_EFFECTS_MASTER)
 				return
 		if(istype(O, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/I = O
@@ -40,6 +41,7 @@
 			else
 				lock = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
+				playsound(src, 'sound/machines/airlock/bolts_up_2.ogg', VOL_EFFECTS_MASTER)
 				return
 
 	else if (istype(O, /obj/item/clothing/suit/armor/vest/reactive) && opened)
@@ -54,13 +56,14 @@
 		if(ispulsing(O))
 			if(opened)
 				opened = FALSE
+				to_chat(user, "<span class='notice'>You closed the [name].</span>")
 				update_icon()
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 				if(O.use_tool(src, user, 100, volume = 50))
 					lock = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
-					playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)
+					playsound(src, 'sound/machines/airlock/bolts_down_2.ogg', VOL_EFFECTS_MASTER)
 					return
 		if(istype(O, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/ID = O
@@ -69,14 +72,16 @@
 				return
 			if(opened)
 				opened = FALSE
+				to_chat(user, "<span class='notice'>You closed the [name].</span>")
 				update_icon()
 				return
 			if((!opened) && (!lock))
 				lock = TRUE
 				to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
-				playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/machines/airlock/bolts_down_2.ogg', VOL_EFFECTS_MASTER)
 		else
 			if(opened)
+				to_chat(user, "<span class='notice'>You closed the [name].</span>")
 				opened = FALSE
 				update_icon()
 
@@ -160,8 +165,8 @@
 /obj/structure/rd_armor_stand/emag_act()
 	lock = FALSE
 	visible_message("<span class='warning'>[name] lock sparkles!</span>")
+	playsound(src, 'sound/machines/airlock/bolts_up_2.ogg', VOL_EFFECTS_MASTER)
 	return
-
 
 /obj/structure/rd_armor_stand/update_icon()
 	cut_overlays()
