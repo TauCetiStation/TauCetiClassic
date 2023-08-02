@@ -353,7 +353,8 @@
 /atom/proc/airlock_crush_act()
 	return
 
-/atom/proc/fire_act()
+// todo: exposed_temperature is only arg currently used, rest is some legacy (idk what they should do anyway)
+/atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/singularity_act()
