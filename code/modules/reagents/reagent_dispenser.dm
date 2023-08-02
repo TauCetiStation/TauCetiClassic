@@ -174,11 +174,11 @@
 		return FALSE
 	switch(fuel_am)
 		if(0 to 100)
-			explosion(loc, -1, 1, 2)
+			explosion(loc, 0, 1, 2)
 		if(100 to 500)
 			explosion(loc, 0, 1, 3)
 		else
-			explosion(loc, 1, 2, 4)
+			explosion(loc, 0, 2, 4)
 	qdel(src)
 	return TRUE
 
