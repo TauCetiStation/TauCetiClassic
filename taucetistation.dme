@@ -430,6 +430,7 @@
 #include "code\datums\pipe_system\components\proc_components\proc_log_terminal.dm"
 #include "code\datums\pipe_system\components\proc_components\proc_machinery_drop_contents.dm"
 #include "code\datums\pipe_system\components\proc_components\proc_skip_component.dm"
+#include "code\datums\pipe_system\components\proc_components\proc_stop_program.dm"
 #include "code\datums\qualities\negativeish.dm"
 #include "code\datums\qualities\positiveish.dm"
 #include "code\datums\qualities\quality.dm"
