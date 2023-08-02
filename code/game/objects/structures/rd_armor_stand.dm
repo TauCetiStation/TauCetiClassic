@@ -158,9 +158,11 @@
 		if(lock)
 			lock = TRUE
 			to_chat(user, "<span class='warning'>Storage locked.</span>")
+			playsound(src, 'sound/machines/airlock/bolts_down_2.ogg', VOL_EFFECTS_MASTER)
 		else
 			lock = FALSE
 			to_chat(user, "<span class='notice'>Storage unlocked.</span>")
+			playsound(src, 'sound/machines/airlock/bolts_up_2.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/rd_armor_stand/emag_act()
 	lock = FALSE
