@@ -83,6 +83,8 @@
 
 /datum/emote/human/surrender/do_emote(mob/living/carbon/human/user)
 	. = ..()
+	user.drop_from_inventory(user.l_hand)
+	user.drop_from_inventory(user.r_hand)
 	user.AdjustStunned(10)
 
 /datum/emote/human/clap
