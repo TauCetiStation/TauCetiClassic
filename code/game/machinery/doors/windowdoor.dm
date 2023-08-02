@@ -106,8 +106,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		else
 			do_animate("deny")
 		return
-	if(!SSticker)
-		return
 	var/mob/M = AM
 	if(!M.restrained())
 		bumpopen(M)
