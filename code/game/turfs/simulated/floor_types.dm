@@ -151,6 +151,8 @@
 	density = TRUE
 	blocks_air = AIR_BLOCKED
 
+	explosive_resistance = 5
+
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
@@ -167,6 +169,8 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+	explosive_resistance = 1
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.

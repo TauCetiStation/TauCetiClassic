@@ -926,8 +926,6 @@
 #include "code\game\objects\boxingrope.dm"
 #include "code\game\objects\buckling.dm"
 #include "code\game\objects\empulse.dm"
-#include "code\game\objects\explosion.dm"
-#include "code\game\objects\explosion_recursive.dm"
 #include "code\game\objects\fitness.dm"
 #include "code\game\objects\game_kit.dm"
 #include "code\game\objects\items.dm"

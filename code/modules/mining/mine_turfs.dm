@@ -16,6 +16,8 @@
 	blocks_air = AIR_BLOCKED
 	temperature = TCMB
 
+	explosive_resistance = 1
+
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0

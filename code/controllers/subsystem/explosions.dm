@@ -1,4 +1,4 @@
-/// A wrapper for [/atom/proc/ex_act] for tg compability, we can need in the future this for signals and contents_explosion
+/// A wrapper for [/atom/proc/ex_act] for tg compability, we can need it in the future for signals and contents_explosion
 #define EX_ACT(target, args...)\
 	target.ex_act(##args);
 
@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "LT:[round(cost_lowturf, 1)]|"
 	msg += "MT:[round(cost_medturf, 1)]|"
 	msg += "HT:[round(cost_highturf, 1)]|"
-	msg += "HT:[round(cost_flameturf, 1)]|"
+	msg += "FT:[round(cost_flameturf, 1)]|"
 
 	msg += "LO:[round(cost_low_mov_atom, 1)]|"
 	msg += "MO:[round(cost_med_mov_atom, 1)]|"
@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(explosions)
 	return ..()
 
 /datum/controller/subsystem/explosions/proc/is_exploding()
-	return (lowturf.len || medturf.len || highturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
+	return (lowturf.len || medturf.len || highturf.len || flameturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
 /**
  * Makes a given atom explode.
@@ -76,9 +76,14 @@ SUBSYSTEM_DEF(explosions)
  * - light_impact_range: The range at which the effects of the explosion are relatively weak.
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
+ * - ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
+ * - flame_range: The range at which the explosion should produce hotspots.
+ * - silent: Whether to generate/execute sound effects.
+ * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, smoke = TRUE, atom/explosion_cause = null)
-	. = SSexplosions.explode(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, smoke, explosion_cause)
+/proc/explosion(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = TRUE, atom/explosion_cause = null)
+	. = SSexplosions.explode(arglist(args))
 
 /**
  * Makes a given turf explode. Now on the explosions subsystem!
@@ -90,21 +95,26 @@ SUBSYSTEM_DEF(explosions)
  * - light_impact_range: The range at which the effects of the explosion are relatively weak.
  * - flash_range: The range at which the explosion flashes people.
  * - adminlog: Whether to log the explosion/report it to the administration.
+ * - ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
+ * - flame_range: The range at which the explosion should produce hotspots.
+ * - silent: Whether to generate/execute sound effects.
+ * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, smoke = TRUE, atom/explosion_cause = null)
+/datum/controller/subsystem/explosions/proc/explode(turf/epicenter, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = TRUE, atom/explosion_cause = null)
 
 	SSStatistics.add_explosion_stat(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
 
-	propagate_blastwave(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, smoke, explosion_cause)
+	propagate_blastwave(arglist(args))
 	return
 
 /**
  * Handles the effects of an explosion originating from a given point.
  *
  * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
- * Also handles the fireball from the explosion. (todo)
- * Also handles the smoke cloud from the explosion. (todo)
- * Also handles sfx and screenshake. (todo)
+ * Also handles the fireball from the explosion.
+ * Also handles the smoke cloud from the explosion.
+ * Also handles sfx and screenshake.
  *
  * Arguments:
  * - [epicenter][/atom]: The location of the explosion rounded to the nearest turf.
@@ -112,9 +122,14 @@ SUBSYSTEM_DEF(explosions)
  * - heavy_impact_range: The range at which the effects of the explosion are relatively severe.
  * - light_impact_range: The range at which the effects of the explosion are relatively weak.
  * - flash_range: The range at which the explosion flashes people.
+ * - adminlog: Whether to log the explosion/report it to the administration.
+ * - ignorecap: Whether to ignore the relevant bombcap. Defaults to TRUE for some mysterious reason.
+ * - flame_range: The range at which the explosion should produce hotspots.
+ * - silent: Whether to generate/execute sound effects.
+ * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, smoke, explosion_cause)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, silent, smoke, explosion_cause)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
@@ -136,13 +151,6 @@ SUBSYSTEM_DEF(explosions)
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
 	if(adminlog)
-		// Now begins a bit of a logic train to find out whodunnit.
-		//var/who_did_it = "N/A"
-		//var/who_did_it_game_log = "N/A"
-
-		//message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
-		//log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
-
 		message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range]) in area [epicenter.loc.name] ([COORD(epicenter)] - [ADMIN_JMP(epicenter)])")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name]")
 
@@ -161,7 +169,8 @@ SUBSYSTEM_DEF(explosions)
 	far_dist += heavy_impact_range * 10
 	far_dist += devastation_range * 20
 
-	shake_the_room(epicenter, near_distance = orig_max_distance, far_distance = far_dist, quake_factor = devastation_range, echo_factor = heavy_impact_range)
+	if(!silent)
+		shake_the_room(epicenter, near_distance = orig_max_distance, far_distance = far_dist, quake_factor = devastation_range, echo_factor = heavy_impact_range)
 
 	if(heavy_impact_range > 1)
 		var/datum/effect/system/explosion/explosion_effect = new
@@ -188,7 +197,7 @@ SUBSYSTEM_DEF(explosions)
 
 	//lists are guaranteed to contain at least 1 turf at this point
 	//we presuppose that we'll be iterating away from the epicenter
-	for(var/turf/explode as anything in affected_turfs) // todo: ex resistance
+	for(var/turf/explode as anything in affected_turfs)
 		var/our_x = explode.x
 		var/our_y = explode.y
 		var/dist = HYPOTENUSE(our_x, our_y, x0, y0)
