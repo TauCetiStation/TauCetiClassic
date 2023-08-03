@@ -144,7 +144,7 @@
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		names += "[DNA.original_essence_name]"
+		names += "[DNA.original_character_name]"
 
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
@@ -169,11 +169,11 @@
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	target.visible_message("<span class='warning'>[target] transforms!</span>")
 	//save original
-	var/essence_name = target.dna.original_essence_name
+	var/essence_name = target.dna.original_character_name
 	target.dna = selected_dna.Clone()
 	target.real_name = selected_dna.real_name
 	//unchange this
-	target.dna.original_essence_name = essence_name
+	target.dna.original_character_name = essence_name
 	domutcheck(target, null)
 	target.UpdateAppearance()
 
