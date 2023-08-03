@@ -6287,7 +6287,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/t_scanner,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -21141,7 +21141,7 @@
 	},
 /area/station/ai_monitored/eva)
 "aMG" = (
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet,
 /turf/simulated/floor/plating,
@@ -21302,7 +21302,7 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/clothing/suit/storage/hazardvest,
 /obj/item/device/multitool,
 /turf/simulated/floor{
@@ -52270,7 +52270,7 @@
 "bSJ" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
@@ -54047,7 +54047,7 @@
 /area/station/maintenance/engineering)
 "bYb" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/stack/cable_coil/red{
 	amount = 5
 	},
@@ -73576,7 +73576,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "jMb" = (
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,

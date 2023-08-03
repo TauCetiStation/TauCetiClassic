@@ -167,7 +167,6 @@
 	STOP_THROWING(src, A)
 
 	if(A && non_native_bump)
-		A.last_bumped = world.time
 		A.Bumped(src)
 
 

@@ -66,6 +66,9 @@
 /area/station/maintenance/outerlabs
 	name = "REDACTED"
 	icon_state = "fmaint"
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
 
 /area/station/civilian/market
 	name = "Marketplace"
@@ -73,3 +76,20 @@
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
+
+/area/station/security/secdorm
+	name = "Security Dormitory"
+	icon_state = "brig"
+
+/area/station/security/seclunch
+	name = "Security Lunch Room"
+	icon_state = "brig"
+
+/area/station/rnd/hallway/florahall
+	name = "Flora Reserach"
+	icon_state = "research"
+
+/area/station/security/tribunal
+	name = "Courtroom"
+	icon_state = "security"
+	ambience = list('sound/ambience/vacant_1.ogg')
