@@ -140,7 +140,7 @@
 	//create a new account
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
-	M.remote_access_pin = rand(1111, 111111)
+	M.remote_access_pin = rand(1111, 9999)
 	M.adjust_money(starting_funds)
 
 	//create an entry in the account transaction log for when it was created
