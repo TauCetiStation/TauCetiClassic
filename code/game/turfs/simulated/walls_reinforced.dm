@@ -8,6 +8,8 @@
 	damage_cap = 200
 	max_temperature = 20000
 
+	explosive_resistance = 5
+
 	sheet_type = /obj/item/stack/sheet/plasteel
 
 	seconds_to_melt = 60
