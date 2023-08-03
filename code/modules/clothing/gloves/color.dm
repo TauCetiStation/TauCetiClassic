@@ -83,6 +83,12 @@
 	icon_state = "green"
 	item_state = "greengloves"
 
+/obj/item/clothing/gloves/yellow
+	name = "yellow gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "yellow"
+	item_state = "ygloves"
+
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -101,10 +107,10 @@
 	icon_state = "brown"
 	item_state = "browngloves"
 
-/obj/item/clothing/gloves/realyellow
+/obj/item/clothing/gloves/yellow
 	name = "yellow gloves"
 	desc = "A pair of gloves, they don't look special in any way."
-	icon_state = "realyellow"
+	icon_state = "yellow"
 	item_state = "ygloves"
 
 /obj/effect/spawner/lootdrop/gloves
@@ -113,7 +119,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "random_gloves"
 	loot = list(
-		/obj/item/clothing/gloves/realyellow = 1,
+		/obj/item/clothing/gloves/yellow = 1,
 		/obj/item/clothing/gloves/orange = 1,
 		/obj/item/clothing/gloves/red = 1,
 		/obj/item/clothing/gloves/blue = 1,
