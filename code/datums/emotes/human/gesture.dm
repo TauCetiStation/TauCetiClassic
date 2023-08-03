@@ -71,7 +71,7 @@
 	message_1p = "You surrender!"
 	message_3p = "surrenders!"
 	cloud = "cloud-white_flag"
-	cooldown = 20 SECONDS
+	cooldown = 15 SECONDS
 	cloud_duration = 20 SECONDS
 
 	message_type = SHOWMSG_VISUAL
@@ -83,9 +83,7 @@
 
 /datum/emote/human/surrender/do_emote(mob/living/carbon/human/user)
 	. = ..()
-	user.drop_from_inventory(user.l_hand)
-	user.drop_from_inventory(user.r_hand)
-	user.AdjustStunned(10)
+	user.AdjustWeakened(10)
 
 /datum/emote/human/clap
 	key = "clap"
