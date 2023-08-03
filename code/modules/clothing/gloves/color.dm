@@ -83,12 +83,6 @@
 	icon_state = "green"
 	item_state = "greengloves"
 
-/obj/item/clothing/gloves/yellow
-	name = "yellow gloves"
-	desc = "A pair of gloves, they don't look special in any way."
-	icon_state = "yellow"
-	item_state = "ygloves"
-
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
 	desc = "A pair of gloves, they don't look special in any way."
