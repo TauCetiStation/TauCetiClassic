@@ -13,6 +13,6 @@
 	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
 	popup.open()
 
-/obj/item/station_map/prometheus
+/obj/item/station_map/prometheusmap
 	icon_state = "prometheus"
 	img = 'nano/images/nanomap_prometheus_1_small.png'

@@ -1597,10 +1597,10 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/glasses/welding,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -2180,7 +2180,7 @@
 	pixel_y = 28;
 	req_access = list(42)
 	},
-/obj/item/station_map/prometheus,
+/obj/item/station_map/prometheusmap,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -10196,7 +10196,7 @@
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -13664,7 +13664,7 @@
 /obj/item/weapon/storage/bible{
 	pixel_y = 6
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor/wood,
@@ -18416,7 +18416,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -24568,7 +24568,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /obj/item/weapon/stamp/denied{
@@ -25082,7 +25082,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table/woodentable,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /obj/item/weapon/stamp/denied{
@@ -26501,7 +26501,7 @@
 /obj/item/weapon/newspaper{
 	pixel_y = 5
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -27554,10 +27554,10 @@
 /obj/item/weapon/book/manual/wiki/supply_crates{
 	pixel_y = 2
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -29832,7 +29832,7 @@
 	pixel_y = 4
 	},
 /obj/item/device/megaphone,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -33142,11 +33142,11 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_x = 10;
 	pixel_y = 2
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -34940,10 +34940,10 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -35140,7 +35140,7 @@
 	id = "Detective";
 	pixel_x = -26
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -2
 	},
 /obj/item/weapon/handcuffs{
@@ -38240,7 +38240,7 @@
 	pixel_y = -5
 	},
 /obj/structure/table,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -40442,10 +40442,10 @@
 	pixel_x = -10;
 	pixel_y = 8
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -49176,7 +49176,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -51774,7 +51774,7 @@
 "mkm" = (
 /obj/machinery/computer/skills,
 /obj/structure/table/glass,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -53594,10 +53594,10 @@
 	icon_state = "0-4"
 	},
 /obj/item/device/tagger,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -55708,7 +55708,7 @@
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_x = -6;
 	pixel_y = 2
 	},
@@ -60230,10 +60230,10 @@
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /turf/simulated/floor,
@@ -62493,7 +62493,7 @@
 	pixel_x = -8;
 	pixel_y = 16
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 2
 	},
 /turf/simulated/floor{
@@ -63918,7 +63918,7 @@
 	req_access = list(70)
 	},
 /obj/structure/window/thin/reinforced,
-/obj/item/station_map/prometheus,
+/obj/item/station_map/prometheusmap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -64022,7 +64022,7 @@
 	pixel_y = 2
 	},
 /obj/structure/table/woodentable,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -66531,7 +66531,7 @@
 	pixel_x = -9;
 	pixel_y = 2
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -68132,7 +68132,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/red,
@@ -71915,7 +71915,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = 6
 	},
 /turf/simulated/floor{
@@ -78807,7 +78807,7 @@
 	pixel_y = 2
 	},
 /obj/item/clothing/gloves/latex,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -82028,7 +82028,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -87095,7 +87095,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/station_map/prometheus,
+/obj/item/station_map/prometheusmap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -91277,7 +91277,7 @@
 /obj/structure/sign/poster/official/ian{
 	pixel_x = 32
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor/wood,
@@ -92370,7 +92370,7 @@
 	name = "Paramedic equipment";
 	req_access = list(70)
 	},
-/obj/item/station_map/prometheus,
+/obj/item/station_map/prometheusmap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -92901,9 +92901,9 @@
 /obj/item/weapon/storage/secure/briefcase{
 	pixel_y = 6
 	},
-/obj/item/station_map/prometheus,
-/obj/item/station_map/prometheus,
-/obj/item/station_map/prometheus,
+/obj/item/station_map/prometheusmap,
+/obj/item/station_map/prometheusmap,
+/obj/item/station_map/prometheusmap,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -95028,7 +95028,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
@@ -95524,7 +95524,7 @@
 "xpb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/donut_box,
-/obj/item/station_map/prometheus{
+/obj/item/station_map/prometheusmap{
 	pixel_y = -8
 	},
 /turf/simulated/floor{
