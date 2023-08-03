@@ -4,17 +4,17 @@
 	name = "station map"
 	desc = "A framed picture of the station."
 
-/obj/structure/sign/map/boxmap-left
+/obj/structure/sign/map/boxmap_left
 	icon_state = "map-left"
 
-/obj/structure/sign/map/boxmap-right
+/obj/structure/sign/map/boxmap_right
 	icon_state = "map-right"
 
-/obj/structure/sign/map/gammamap-left
-	icon_state = "gammamap-left"
+/obj/structure/sign/map/gammamap_left
+	icon_state = "gammamap_left"
 
-/obj/structure/sign/map/gammamap-right
-	icon_state = "gammamap-right"
+/obj/structure/sign/map/gammamap_right
+	icon_state = "gammamap_right"
 
 /obj/structure/sign/map/prometheusmap
 	icon_state = "prometheus"

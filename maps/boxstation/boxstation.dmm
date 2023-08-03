@@ -27790,11 +27790,11 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aYX" = (
-/obj/structure/sign/map/boxmap-left,
+/obj/structure/sign/map/boxmap_left,
 /turf/simulated/wall,
 /area/station/storage/primary)
 "aYY" = (
-/obj/structure/sign/map/boxmap-right,
+/obj/structure/sign/map/boxmap_right,
 /turf/simulated/wall,
 /area/station/storage/primary)
 "aYZ" = (

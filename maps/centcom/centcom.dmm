@@ -4018,7 +4018,7 @@
 	},
 /area/custom/syndicate_mothership)
 "akc" = (
-/obj/structure/sign/map/boxmap-right{
+/obj/structure/sign/map/boxmap_right{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
@@ -4586,7 +4586,7 @@
 /turf/unsimulated/floor,
 /area/start)
 "alB" = (
-/obj/structure/sign/map/boxmap-left{
+/obj/structure/sign/map/boxmap_left{
 	pixel_y = 32
 	},
 /obj/machinery/light{
