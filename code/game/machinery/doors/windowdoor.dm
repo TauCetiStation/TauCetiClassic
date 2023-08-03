@@ -8,7 +8,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
-	explosion_resistance = 5
+	explosive_resistance = 0
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
@@ -178,7 +178,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	sleep(10)
 	density = FALSE
 	block_air_zones = FALSE // We merge zones if door is open.
-	explosion_resistance = 0
+	explosive_resistance = 0
 	update_nearby_tiles()
 
 /obj/machinery/door/window/do_close()
@@ -189,7 +189,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	icon_state = base_state
 	density = TRUE
 	block_air_zones = TRUE
-	explosion_resistance = initial(explosion_resistance)
+	explosive_resistance = initial(explosive_resistance)
 	update_nearby_tiles()
 
 /obj/machinery/door/window/do_animate(animation)

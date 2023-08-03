@@ -346,7 +346,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/t_scanner,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 1;

@@ -29353,7 +29353,7 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/storage/hazardvest,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 8;
@@ -36288,7 +36288,7 @@
 /area/station/medical/cryo)
 "hpg" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/flashlight,
 /turf/simulated/floor{
 	dir = 5;
@@ -73152,7 +73152,7 @@
 "pEk" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
@@ -74357,7 +74357,7 @@
 "pRv" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
@@ -86385,7 +86385,7 @@
 /area/station/medical/sleeper)
 "sBB" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor{
 	dir = 8;

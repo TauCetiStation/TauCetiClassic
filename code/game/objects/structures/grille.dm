@@ -8,7 +8,6 @@
 	anchored = TRUE
 	flags = CONDUCT
 	layer = BELOW_MACHINERY_LAYER
-	explosion_resistance = 5
 
 	integrity_failure = 0.4
 	max_integrity = 20
