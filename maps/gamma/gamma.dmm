@@ -10214,7 +10214,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 4;
 	frequency = 1441;
-	id_tag = "waste_out";
+	id_tag = "rust_out";
 	name = "(A) Waste Vent"
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -49362,7 +49362,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
 	frequency = 1441;
-	id = "waste_in";
+	id = "rust_in";
 	name = "waste air injector"
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -59838,7 +59838,7 @@
 "meG" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
-	id_tag = "waste_sensor";
+	id_tag = "rust_sensor";
 	output = 63
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -92965,10 +92965,10 @@
 "tnG" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
 	dir = 4;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor"="Tank")
+	input_tag = "rust_in";
+	name = "R-UST Mixing Tank Supply Control";
+	output_tag = "rust_out";
+	sensors = list("rust_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
