@@ -24,7 +24,6 @@ var/global/list/mechtoys = list(
 	anchored = TRUE
 	can_block_air = TRUE
 	layer = 4
-	explosion_resistance = 5
 
 	resistance_flags = CAN_BE_HIT
 
