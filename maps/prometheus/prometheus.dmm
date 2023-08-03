@@ -1371,7 +1371,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -5798,7 +5798,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -10846,7 +10846,7 @@
 	c_tag = "Arrival Hallway North";
 	pixel_x = 20
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -19731,7 +19731,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -20807,7 +20807,7 @@
 	},
 /area/station/hallway/primary/port)
 "eFo" = (
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -29294,7 +29294,7 @@
 "gDL" = (
 /obj/machinery/computer/mine_sci_shuttle,
 /obj/machinery/light/smart,
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -35886,7 +35886,7 @@
 	c_tag = "Cargo Lobby West";
 	dir = 4
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -36289,7 +36289,7 @@
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -53143,7 +53143,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -56599,7 +56599,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -66331,7 +66331,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 1
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -71267,7 +71267,7 @@
 "rkn" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/small,
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -81004,7 +81004,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -87025,7 +87025,7 @@
 "vjG" = (
 /obj/structure/stool/bed/chair/metal/red,
 /obj/effect/landmark/start/assistant/test_subject,
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -91489,7 +91489,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -97085,7 +97085,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/research_assistant,
-/obj/structure/sign/map/prometheus{
+/obj/structure/sign/map/prometheusmap{
 	pixel_y = 32
 	},
 /turf/simulated/floor{

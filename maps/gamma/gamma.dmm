@@ -53741,7 +53741,7 @@
 /area/station/cargo/office)
 "qhF" = (
 /obj/structure/stool/bed/chair/metal/black,
-/obj/structure/sign/map/left{
+/obj/structure/sign/map/boxmap-left{
 	pixel_y = 32
 	},
 /obj/machinery/light/smart{
@@ -58445,7 +58445,7 @@
 /area/station/security/iaa_office)
 "rKF" = (
 /obj/structure/stool/bed/chair/metal/black,
-/obj/structure/sign/map/right{
+/obj/structure/sign/map/boxmap-right{
 	pixel_y = 32
 	},
 /obj/effect/landmark/start/assistant/test_subject,

@@ -4,17 +4,23 @@
 	name = "station map"
 	desc = "A framed picture of the station."
 
-/obj/structure/sign/map/left
+/obj/structure/sign/map/boxmap-left
 	icon_state = "map-left"
 
-/obj/structure/sign/map/right
+/obj/structure/sign/map/boxmap-right
 	icon_state = "map-right"
 
-/obj/structure/sign/map/prometheus
+/obj/structure/sign/map/gammamap-left
+	icon_state = "gammamap-left"
+
+/obj/structure/sign/map/gammamap-right
+	icon_state = "gammamap-right"
+
+/obj/structure/sign/map/prometheusmap
 	icon_state = "prometheus"
 	var/icon/img = 'nano/images/nanomap_prometheus_1_small.png'
 
-/obj/structure/sign/map/prometheus/examine(mob/user)
+/obj/structure/sign/map/prometheusmap/examine(mob/user)
 	..()
 	user << browse_rsc(img, "nanomap.png")
 	var/datum/browser/popup = new(user, "window=[name]", "[name]", 700, 700, ntheme = CSS_THEME_DARK)
