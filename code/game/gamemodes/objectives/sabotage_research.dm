@@ -9,8 +9,3 @@
 	return OBJECTIVE_WIN
 
 /obj/item/weapon/disk/data/syndi
-
-/obj/item/weapon/disk/data/syndi/examine(mob/user)
-	. = ..()
-	if(user.mind.special_role)
-		to_chat(user, "<span class='warning'>This disk contains a computer virus to sabotage the station's systems!</span>")
