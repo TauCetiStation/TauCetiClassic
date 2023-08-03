@@ -3203,7 +3203,7 @@
 /area/station/solar/starboard)
 "ajk" = (
 /obj/machinery/light,
-/obj/structure/sign/map/left{
+/obj/structure/sign/map/boxmap_left{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -4992,7 +4992,7 @@
 /area/station/medical/sleeper)
 "aBM" = (
 /obj/machinery/door/firedoor,
-/obj/structure/sign/map/right{
+/obj/structure/sign/map/boxmap_right{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
