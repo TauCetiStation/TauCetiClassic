@@ -729,7 +729,7 @@
 /area/awaymission/wildwest/mansion)
 "cD" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)

@@ -4186,7 +4186,7 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/device/multitool,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -11250,7 +11250,7 @@
 "cuH" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/rack,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
@@ -16669,7 +16669,7 @@
 /area/station/civilian/gym)
 "dJV" = (
 /obj/structure/closet/toolcloset,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "dJY" = (
@@ -37008,7 +37008,7 @@
 /area/station/engineering/monitoring)
 "iyJ" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -41709,7 +41709,7 @@
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "jBH" = (
@@ -71130,7 +71130,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -89477,7 +89477,7 @@
 "val" = (
 /obj/item/weapon/storage/belt/utility,
 /obj/structure/closet/secure_closet/engineering_welding,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},

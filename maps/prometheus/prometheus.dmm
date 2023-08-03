@@ -1731,7 +1731,7 @@
 /area/station/civilian/library)
 "acE" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/random/tools/tool,
 /obj/random/tools/tool,
 /obj/random/tools/tool,
@@ -33494,7 +33494,7 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light/small,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/random/tools/tool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
@@ -38482,7 +38482,7 @@
 "iPU" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/device/multitool,
 /obj/item/stack/cable_coil/random,
@@ -70155,7 +70155,7 @@
 "qWo" = (
 /obj/structure/table,
 /obj/item/device/t_scanner,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/random/tools/tool,
 /obj/structure/sign/directions/security{
 	buildable_sign = 0;
@@ -71224,7 +71224,7 @@
 "rjX" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
