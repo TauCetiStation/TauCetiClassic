@@ -161,7 +161,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
