@@ -862,8 +862,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Electrical maintenance crate"
 	contains = list(/obj/item/weapon/storage/toolbox/electrical,
 					/obj/item/weapon/storage/toolbox/electrical,
-					/obj/item/clothing/gloves/yellow,
-					/obj/item/clothing/gloves/yellow,
+					/obj/item/clothing/gloves/insulated,
+					/obj/item/clothing/gloves/insulated,
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell/high,

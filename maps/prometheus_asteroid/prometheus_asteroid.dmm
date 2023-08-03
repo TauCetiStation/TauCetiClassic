@@ -8997,7 +8997,7 @@
 /area/asteroid/research_outpost/anomaly)
 "Oc" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/random/tools/tool,
