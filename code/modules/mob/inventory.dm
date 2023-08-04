@@ -275,16 +275,12 @@ var/global/list/slot_equipment_priority = list(
 /mob/proc/drop_l_hand(atom/Target)
 	if(isitem(l_hand))
 		var/obj/item/W = l_hand
-		if(W.flags & NODROP)
-			return FALSE
 	return drop_from_inventory(l_hand, Target)
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
 	if(isitem(r_hand))
 		var/obj/item/W = r_hand
-		if(W.flags & NODROP)
-			return FALSE
 	return drop_from_inventory(r_hand, Target)
 
 //Drops the item in our active hand.
