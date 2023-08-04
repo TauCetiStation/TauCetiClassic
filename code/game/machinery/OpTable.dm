@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	active_power_usage = 5
+	var/undressing_time = 6 SECONDS
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 
@@ -118,6 +119,40 @@
 		return
 
 	take_victim(usr,usr)
+
+/obj/machinery/optable/verb/undress()
+	set name = "Undress Patient"
+	set category = "Object"
+	set src in oview(1)
+
+	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
+		return
+
+	if(!src.victim)
+		to_chat(usr, "<span class='notice'>No one is on the table.</span>")
+		return
+
+	if(src.victim == usr)
+		to_chat(usr, "<span class='notice'>You can't undress yourself.</span>")
+		return
+
+	var/list/dropping_items = list()
+	for(var/obj/item/clothing/C in src.victim.contents)
+		if(C.slot_equipped in list(SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES))
+			if((C.slot_equipped == SLOT_WEAR_SUIT || C.slot_equipped == SLOT_HEAD) && (C.flags & NODROP || !C.canremove))
+				to_chat(usr, "<span class='notice'>You can't use fast undress on patient, because of his unremovable helmet or suit.</span>")
+				return
+			dropping_items += C
+
+	if(dropping_items.len == 0)
+		to_chat(usr, "<span class='notice'>Patient is undressed already.</span>")
+		return
+
+	visible_message("<span class='danger'>[usr.name] starts undressing [victim.name]...</span>")
+	if(do_after(usr, undressing_time, target = src, can_move=FALSE))
+		for(var/obj/item/I in dropping_items)
+			src.victim.drop_from_inventory(I)
+		playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if (istype(W, /obj/item/weapon/grab))

@@ -514,6 +514,7 @@
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
+	undressing_time = 3 SECONDS
 	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null

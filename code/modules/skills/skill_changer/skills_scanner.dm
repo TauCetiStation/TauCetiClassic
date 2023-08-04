@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 10000
+	undressing_time = 10 SECONDS
 	var/obj/machinery/computer/skills_console/console = null
 	var/obj/item/weapon/skill_cartridge/cartridge = null
 
