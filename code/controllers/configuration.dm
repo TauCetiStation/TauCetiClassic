@@ -211,6 +211,8 @@ var/global/bridge_secret = null
 
 	var/use_persistent_cache = FALSE
 
+	var/reactionary_explosions = TRUE
+
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 

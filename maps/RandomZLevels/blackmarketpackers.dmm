@@ -2983,7 +2983,7 @@
 	},
 /area/awaymission/BMPship1)
 "iz" = (
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/awaymission)
 "iA" = (

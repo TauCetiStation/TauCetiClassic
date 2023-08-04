@@ -348,7 +348,7 @@
 		return
 	var/turf/T = get_turf(owner.loc)
 	if(owner.nutrition > (C.maxcharge * 1.2))
-		explosion(T, 1, 0, 1, 1)
+		explosion(T, 0, 1, 2)
 		C.ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/organ/internal/kidneys

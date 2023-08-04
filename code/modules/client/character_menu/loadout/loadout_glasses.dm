@@ -39,3 +39,8 @@
 /datum/gear/eyes/glasses/Jerusalem_Glasses
 	display_name = "Jerusalem Glasses"
 	path = /obj/item/clothing/glasses/jerusalem
+
+/datum/gear/eyes/glasses/sec_hud
+	display_name = "Security HUD"
+	path = /obj/item/clothing/glasses/hud/security
+	allowed_roles = list("Security Officer", "Warden", "Head of Security")
