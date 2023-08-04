@@ -11,6 +11,20 @@
 //BLUE TEAM
 ////////////////////////////////////////////////////
 
+/datum/outfit/deathmatch/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	H.species.flags |= list(
+		NO_BLOOD,
+		NO_BREATHE,
+		NO_EMBED
+	)
+	H.bodyparts_by_name[BP_CHEST].min_broken_damage = 200
+	H.bodyparts_by_name[BP_GROIN].min_broken_damage = 200
+	H.bodyparts_by_name[BP_HEAD].min_broken_damage  = 200
+	H.bodyparts_by_name[BP_L_ARM].min_broken_damage = 200
+	H.bodyparts_by_name[BP_R_ARM].min_broken_damage = 200
+	H.bodyparts_by_name[BP_L_LEG].min_broken_damage = 200
+	H.bodyparts_by_name[BP_R_LEG].min_broken_damage = 200
+
 /datum/outfit/deathmatch/blue_team
 	mask = /obj/item/clothing/mask/scarf/blue
 	uniform = /obj/item/clothing/under/color/blue
@@ -52,6 +66,7 @@
 	)
 
 /datum/outfit/deathmatch/blue_team/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch)
@@ -66,6 +81,7 @@
 	r_pocket = /obj/item/ammo_box/magazine/stechkin/extended
 
 /datum/outfit/deathmatch/blue_team/sniper/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/charge)
@@ -125,6 +141,7 @@
 	r_pocket = /obj/item/weapon/implanter/adrenaline
 
 /datum/outfit/deathmatch/blue_team/crusader/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/hulk_dash)
@@ -153,6 +170,7 @@
 	l_hand = /obj/item/weapon/katana
 
 /datum/outfit/deathmatch/blue_team/mage/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall)
@@ -204,6 +222,7 @@
 	)
 
 /datum/outfit/deathmatch/red_team/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch)
@@ -265,6 +284,7 @@
 	r_pocket = /obj/item/weapon/implanter/adrenaline
 
 /datum/outfit/deathmatch/red_team/crusader/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/hulk_dash)
@@ -288,6 +308,7 @@
 	l_hand = /obj/item/weapon/katana
 
 /datum/outfit/deathmatch/red_team/mage/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	if(!visualsOnly)
 		H.ClearSpells()
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall)

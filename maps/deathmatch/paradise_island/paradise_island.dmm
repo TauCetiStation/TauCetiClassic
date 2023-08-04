@@ -22,6 +22,24 @@
 	name = "Paradise Island";
 	requires_power = 0
 	})
+"ad" = (
+/obj/effect/landmark/latejoin,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/dormitories{
+	requires_power = 0
+	})
+"ae" = (
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
+/turf/unsimulated/desert,
+/area/station/civilian/garden{
+	dynamic_lighting = 0;
+	name = "Paradise Island";
+	requires_power = 0
+	})
 "ai" = (
 /obj/structure/flora/tree/jungle/small,
 /obj/structure/flora/ausbushes/fullgrass{
@@ -11208,7 +11226,7 @@ PA
 PA
 PA
 PA
-PA
+ae
 PA
 PA
 PA
@@ -18443,7 +18461,7 @@ Vt
 sU
 vC
 vC
-vC
+ad
 vC
 WG
 gX
