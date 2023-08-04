@@ -31691,7 +31691,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction{
 	dir = 4;
-	sortType = list("Ординаторская","Хранилище Медбея","Генетика","Морг","Офис СМО",,"Химия","Вирусология")
+	sortType = list("Ординаторская","Хранилище Медбея","Генетика","Морг","Офис СМО","Химия","Вирусология")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
