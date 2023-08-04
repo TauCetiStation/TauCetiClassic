@@ -57,7 +57,7 @@
 			. += "</font></td></tr>"
 
 		if(G.whitelisted)
-			. += "<tr><td colspan=3><font size=2>Species: [G.whitelisted]"
+			. += "<tr><td colspan=3><font size=2>Species: [G.whitelisted]</font></td></tr>"
 
 		if(ticked)
 			. += "<tr><td colspan=3>"
