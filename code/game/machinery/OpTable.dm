@@ -37,7 +37,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
-		src.density = FALSE
+		density = FALSE
 		qdel(src)
 	return
 
@@ -46,7 +46,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
-		src.density = FALSE
+		density = FALSE
 		qdel(src)
 	else
 		return ..() // for fun, for braindamage and fingerprints.
@@ -71,16 +71,16 @@
 
 /obj/machinery/optable/proc/check_victim()
 	if(panel_open)
-		src.victim = null
+		victim = null
 		icon_state = "table_surgey_open"
 		return 0
-	if(locate(/mob/living/carbon/human, src.loc))
-		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
+	if(locate(/mob/living/carbon/human, loc))
+		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
 		if(!panel_open && M.crawling)
-			src.victim = M
+			victim = M
 			icon_state = M.pulse ? icon_state_active : initial(icon_state)
 			return 1
-	src.victim = null
+	victim = null
 	icon_state = initial(icon_state)
 	return 0
 
@@ -96,12 +96,12 @@
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
 	C.SetCrawling(TRUE)
-	C.loc = src.loc
+	C.loc = loc
 
 	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		src.victim = H
+		victim = H
 		icon_state = H.pulse ? icon_state_active : initial(icon_state)
 	else
 		icon_state = initial(icon_state)
@@ -114,7 +114,7 @@
 	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
-	if(src.victim)
+	if(victim)
 		to_chat(usr, "<span class='rose'>The table is already occupied!</span>")
 		return
 
@@ -128,16 +128,16 @@
 	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
-	if(!src.victim)
+	if(!victim)
 		to_chat(usr, "<span class='notice'>No one is on the table.</span>")
 		return
 
-	if(src.victim == usr)
+	if(victim == usr)
 		to_chat(usr, "<span class='notice'>You can't undress yourself.</span>")
 		return
 
 	var/list/dropping_items = list()
-	for(var/obj/item/clothing/C in src.victim.contents)
+	for(var/obj/item/clothing/C in victim.contents)
 		if(C.slot_equipped in list(SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES))
 			if((C.slot_equipped == SLOT_WEAR_SUIT || C.slot_equipped == SLOT_HEAD) && (C.flags & NODROP || !C.canremove))
 				to_chat(usr, "<span class='notice'>You can't use fast undress on patient, because of his unremovable helmet or suit.</span>")
@@ -151,7 +151,7 @@
 	visible_message("<span class='danger'>[usr.name] starts undressing [victim.name]...</span>")
 	if(do_after(usr, undressing_time, target = src, can_move=FALSE))
 		for(var/obj/item/I in dropping_items)
-			src.victim.drop_from_inventory(I)
+			victim.drop_from_inventory(I)
 		playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
