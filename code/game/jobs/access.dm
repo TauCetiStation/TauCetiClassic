@@ -111,6 +111,7 @@
 		return TRUE
 	return FALSE
 
+///Internal proc. Use allowed() if possible. TRUE if src has the necessary access for obj
 /atom/movable/proc/try_access(obj/O)
 	return FALSE
 
@@ -121,10 +122,14 @@
 	return O.check_access(get_active_hand())
 
 /mob/living/carbon/human/try_access(obj/O) //if they are holding or wearing a card that has access, that works
-	return O.check_access(wear_id) || O.check_access(get_active_hand()) || O.check_access(get_inactive_hand())
+	for(var/obj/item/I in list(wear_id) + get_hand_slots())
+		if(O.check_access(I))
+			return TRUE
 
 /mob/living/carbon/ian/try_access(obj/O)
-	return O.check_access(mouth) || O.check_access(neck)
+	for(var/obj/item/I in list(neck) + get_hand_slots())
+		if(O.check_access(I))
+			return TRUE
 
 /obj/machinery/bot/try_access(obj/O)
 	return O.check_access(botcard)
