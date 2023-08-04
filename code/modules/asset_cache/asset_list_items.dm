@@ -155,6 +155,7 @@
 		var/icon/I = getFlatIcon(product)
 		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
+		qdel(product)
 	return ..()
 
 /datum/asset/spritesheet/sheetmaterials
@@ -166,6 +167,7 @@
 		var/icon/I = getFlatIcon(item)
 		var/imgid = replacetext(replacetext("[type]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
+		qdel(item)
 	return ..()
 /datum/asset/spritesheet/equipment_locker
 	name = "equipment_locker"
@@ -202,6 +204,7 @@
 		var/icon/I = getFlatIcon(product)
 		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
+		qdel(product)
 	return ..()
 
 /datum/asset/spritesheet/autolathe
@@ -249,5 +252,6 @@
 			var/obj/supply = new content
 			sprite = getFlatIcon(supply)
 			imgid = replacetext(replacetext("[content]", "[/obj]/", ""), "/", "-")
+			qdel(supply)
 		insert_icon_in_list(imgid, sprite)
 	return ..()
