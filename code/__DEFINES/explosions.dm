@@ -3,3 +3,8 @@
 #define EXPLODE_HEAVY     2 /// The (current) middling explosion severity.
 #define EXPLODE_LIGHT     3 /// The (current) lowest possible explosion severity.
 #define EXPLODE_NONE      0 /// The default explosion severity used to mark that an object is beyond the impact range of the explosion.
+
+// Explosion Subsystem subtasks
+#define SSEXPLOSIONS_MOVABLES 1
+#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_THROWS 3

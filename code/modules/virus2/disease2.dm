@@ -1,3 +1,8 @@
+#define POOL_POSITIVE_VIRUS "pool_positive_virus"
+#define POOL_NEUTRAL_VIRUS "pool_neutral_virus"
+#define POOL_NEGATIVE_VIRUS "pool_negative_virus"
+var/global/list/virus_by_pool
+
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
@@ -70,12 +75,38 @@
 	if(effects.len > min_symptoms)
 		effects -= pick(effects) //remove random effect
 
+/datum/disease2/disease/proc/get_random_effect_total(minlvl = 1, maxlvl = 4, pool_name = null)
+	var/static/list/pool_distribution = list(
+		POOL_POSITIVE_VIRUS = 25,
+		POOL_NEUTRAL_VIRUS = 25,
+		POOL_NEGATIVE_VIRUS = 50,
+	)
+	var/pickedpool = pool_name ? pool_name : pickweight(pool_distribution)
+	var/list/effects_pool_list = global.virus_by_pool[pickedpool]
+	for(var/datum/disease2/effect/e as anything in effects_pool_list)
+		if(e.level > maxlvl)
+			effects_pool_list -= e
+		if(e.level < minlvl)
+			effects_pool_list -= e
+		if(haseffect(e))
+			effects_pool_list -= e
+	if(!effects_pool_list.len)
+		//recursive
+		return get_random_effect_total(max(minlvl - 1, 1), maxlvl + 1, pickedpool)
+	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+	var/datum/disease2/effect/effect = pick(effects_pool_list)
+	//create a copy of effect
+	var/datum/disease2/effect/f = new effect.type
+	holder.effect = f
+	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
+	return holder
+
 /datum/disease2/disease/proc/makerandom(greater = 0, spread_vector)
 	for(var/i in 1 to 4) //random viruses always have 4 effects
 		if(greater)
-			addeffect(getrandomeffect(i, 4))
+			addeffect(get_random_effect_total(i, 4))
 		else
-			addeffect(getrandomeffect(1, 2))
+			addeffect(get_random_effect_total(1, 2))
 	uniqueID = rand(0,10000)
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))

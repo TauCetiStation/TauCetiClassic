@@ -27,7 +27,7 @@
 			new /obj/item/device/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/clothing/gloves/yellow(src)
+			new /obj/item/clothing/gloves/insulated(src)
 			new /obj/item/weapon/plastique(src)
 
 		if("guns")

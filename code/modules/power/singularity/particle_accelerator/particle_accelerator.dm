@@ -125,9 +125,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
-	if(istool(W))
-		if(process_tool_hit(W,user))
-			return
+	if(process_tool_hit(W,user))
+		return
 	..()
 	return
 
@@ -306,9 +305,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
-	if(istool(W))
-		if(process_tool_hit(W,user))
-			return
+	if(process_tool_hit(W,user))
+		return
 	..()
 	return
 

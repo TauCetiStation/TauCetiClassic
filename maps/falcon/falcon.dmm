@@ -8748,6 +8748,7 @@
 	pixel_x = -22;
 	pixel_y = 0
 	},
+/obj/item/weapon/book/manual/wiki/jukebox,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -9302,7 +9303,7 @@
 "arx" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
@@ -22987,7 +22988,7 @@
 "nsG" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
@@ -33032,7 +33033,7 @@
 "wXt" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/random/tools/tool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)

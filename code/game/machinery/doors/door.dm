@@ -44,11 +44,11 @@ var/global/list/wedge_image_cache = list()
 	. = ..()
 	if(density)
 		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
+		explosive_resistance = initial(explosive_resistance)
 		update_heat_protection(get_turf(src))
 	else
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
+		explosive_resistance = 0
 
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
@@ -69,10 +69,11 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/Bumped(atom/movable/AM)
 	if(p_open || operating)
 		return
+	if(world.time - last_bumped <= 7)
+		return //Can bump-open one airlock per animation. This is to prevent shock spam.
+	last_bumped = world.time
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
@@ -513,7 +514,7 @@ var/global/list/wedge_image_cache = list()
 	density = FALSE
 	sleep(4)
 	layer = base_layer
-	explosion_resistance = 0
+	explosive_resistance = 0
 	update_icon()
 	update_nearby_tiles()
 
@@ -526,7 +527,7 @@ var/global/list/wedge_image_cache = list()
 	if(visible && !glass)
 		set_opacity(TRUE)
 	layer = base_layer + DOOR_CLOSED_MOD
-	explosion_resistance = initial(explosion_resistance)
+	explosive_resistance = initial(explosive_resistance)
 	do_afterclose()
 	update_icon()
 	update_nearby_tiles()

@@ -583,6 +583,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/religion_familiar
 	name = "Фамильяр Религии"
 	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+	cooldown = 2 MINUTES
 
 	var/datum/religion/religion
 
@@ -608,11 +609,17 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Оживлённый предмет"
 	id = "mimic"
 	desc = "Вы магическим образом ожили на станции"
+	cooldown = 1 MINUTES
 
 /datum/spawner/living/evil_shade
 	name = "Злой Дух"
 	id = "evil_shade"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+	cooldown = 2 MINUTES
+
+/datum/spawner/living/evil_shade/spawn_ghost(mob/dead/observer/ghost)
+	..()
+	create_and_setup_role(/datum/role/evil_shade, mob)
 
 /datum/spawner/living/rat
 	name = "Крыса"

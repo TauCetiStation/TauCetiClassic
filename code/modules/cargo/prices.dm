@@ -92,7 +92,7 @@
 /obj/item/clothing/gloves/boxing/price = 63
 /obj/item/clothing/gloves/combat/price = 880
 /obj/item/clothing/gloves/rainbow/price = 443
-/obj/item/clothing/gloves/yellow/price = 2181
+/obj/item/clothing/gloves/insulated/price = 2181
 
 /obj/item/clothing/head/helmet/price = 3000
 /obj/item/clothing/head/helmet/gladiator/price = 432

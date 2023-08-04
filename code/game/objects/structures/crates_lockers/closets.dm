@@ -91,11 +91,9 @@
 			I.forceMove(src)
 			itemcount++
 
-	for(var/mob/M in src.loc)
+	for(var/mob/living/M in loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
-			continue
 		if(M.buckled)
 			continue
 
@@ -155,8 +153,14 @@
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
-	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-		A.ex_act(severity++)
+	for(var/atom/A in src)//pulls everything out of the locker and hits it with an explosion
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	dump_contents()
 	qdel(src)
 
