@@ -609,10 +609,16 @@ Class Procs:
 
 /obj/machinery/proc/InitializeProgram()
 	program_action = new /datum/pipe_system/component/data/initial_machinery(src, name)
+
 	program_action.AddLastComponent(new /datum/pipe_system/component/data/target_program(src, src))
 	program_action.AddLastComponent(new /datum/pipe_system/component/proc_component/clear_active_awaiters(src))
 	program_action.AddLastComponent(new /datum/pipe_system/component/data/req_access(src, req_access))
-	program_action.AddLastComponent(new /datum/pipe_system/component/proc_component/machinery_drop_contents(src))
+
+	var/datum/pipe_system/component/proc_component/machinery_drop_contents/machinery_drop_contents_proc = new(src)
+	var/datum/pipe_system/component/proc_component/stop_program/stop_program_proc = new(src)
+	var/datum/pipe_system/component/check/req_access/firewall_check_req_access = new(src, machinery_drop_contents_proc, stop_program_proc)
+	program_action.AddLastComponent(firewall_check_req_access)
+
 	return TRUE
 
 /obj/machinery/proc/interact_program(datum/pipe_system/process/process)
