@@ -2068,7 +2068,7 @@
 /area/space_structures/old_station/central/kitchen)
 "mP" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"

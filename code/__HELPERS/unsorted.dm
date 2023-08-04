@@ -1143,22 +1143,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_turf_or_move(turf/location)
 	return get_turf(location)
 
-
-//Quick type checks for some tools
-var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
-
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return TRUE
-	return FALSE
-
 // For items that can puncture e.g. thick plastic but aren't necessarily sharp
 // Returns TRUE if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
 /obj/item/proc/can_puncture()

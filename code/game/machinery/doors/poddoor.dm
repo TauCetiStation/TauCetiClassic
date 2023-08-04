@@ -8,7 +8,7 @@
 	layer = ABOVE_SAFEDOOR_LAYER
 	base_layer = ABOVE_SAFEDOOR_LAYER
 	var/id = 1.0
-	explosion_resistance = 25
+	explosive_resistance = 3
 	block_air_zones = 0
 	door_open_sound  = 'sound/machines/blast_door.ogg'
 	door_close_sound = 'sound/machines/blast_door.ogg'
@@ -86,7 +86,7 @@
 	icon_state = icon_state_open
 	SSdemo.mark_dirty(src)
 	sleep(3)
-	explosion_resistance = 0
+	explosive_resistance = 0
 	layer = base_layer
 	density = FALSE
 	set_opacity(FALSE)
@@ -101,7 +101,7 @@
 	icon_state = icon_state_close
 	SSdemo.mark_dirty(src)
 	sleep(3)
-	explosion_resistance = initial(explosion_resistance)
+	explosive_resistance = initial(explosive_resistance)
 	layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 	density = TRUE
 	set_opacity(TRUE)

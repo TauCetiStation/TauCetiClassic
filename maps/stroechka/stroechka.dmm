@@ -420,7 +420,7 @@
 	pixel_y = -5
 	},
 /obj/item/device/radio/off,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -544,7 +544,7 @@
 	},
 /obj/item/device/gps/engineering,
 /obj/item/device/radio/off,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1055,7 +1055,7 @@
 	pixel_y = -6
 	},
 /obj/item/device/radio/off,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1896,7 +1896,7 @@
 /area/station/engineering/chiefs_office)
 "dz" = (
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/gps/engineering,
 /obj/structure/closet/secure_closet/atmos_personal{
 	req_access = list(71)
@@ -3771,7 +3771,7 @@
 	req_access = list(71)
 	},
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/gps/engineering,
 /obj/item/device/radio/off,
 /turf/simulated/floor{
@@ -3829,7 +3829,7 @@
 "ph" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/gps/engineering,
 /obj/structure/closet/secure_closet/atmos_personal{
 	req_access = list(71)
@@ -6011,7 +6011,7 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/device/t_scanner,
 /obj/item/weapon/wirecutters,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
