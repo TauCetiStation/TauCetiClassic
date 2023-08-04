@@ -1225,7 +1225,6 @@
 		for(var/sortType_variant in sortType)
 			if(sortType_variant == checkTag)
 				return TRUE
-				break
 		return FALSE
 
 // next direction to move
