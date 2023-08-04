@@ -3906,7 +3906,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "api" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -7531,9 +7531,9 @@
 	dir = 1
 	},
 /obj/machinery/power/smes{
-	outputting = 1;
+	input_attempt = 1;
 	input_level = 90000;
-	input_attempt = 1
+	outputting = 1
 	},
 /obj/structure/cable/orange{
 	d2 = 8;
@@ -12088,9 +12088,9 @@
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
+	dir = 1;
 	name = "Engineering Monitor";
-	network = list("Engineering");
-	dir = 1
+	network = list("Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -16580,8 +16580,8 @@
 /area/station/medical/surgery3)
 "cRj" = (
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-y";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe-y"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -21647,8 +21647,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -22019,7 +22019,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "edl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -22722,7 +22722,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "ejo" = (
 /obj/item/device/radio/intercom{
 	dir = 0;
@@ -24702,7 +24702,7 @@
 	dir = 4;
 	icon_state = "blue"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "eEY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -24904,8 +24904,8 @@
 "eHo" = (
 /obj/effect/landmark/start/medical_intern,
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-y";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-y"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -30399,7 +30399,7 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/storage/hazardvest,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 8;
@@ -33395,15 +33395,6 @@
 	},
 /area/station/engineering/rust)
 "gvJ" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Brig APC";
-	pixel_x = 24
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment{
@@ -35794,7 +35785,7 @@
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "gTC" = (
 /obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
@@ -36288,7 +36279,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "gYW" = (
 /turf/simulated/floor/plating{
 	dir = 6;
@@ -37639,7 +37630,7 @@
 /area/shuttle/supply/station)
 "hpg" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/flashlight,
 /turf/simulated/floor{
 	dir = 5;
@@ -38479,7 +38470,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "hAt" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -46663,8 +46654,8 @@
 /area/shuttle/escape_pod5/station)
 "jnT" = (
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 2
+	dir = 2;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -49117,9 +49108,6 @@
 /area/station/maintenance/brig)
 "jMq" = (
 /obj/machinery/portable_atmospherics/powered/pump,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
@@ -53273,19 +53261,8 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "kLH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/scrap_lump,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/brigright)
+/turf/simulated/wall/r_wall,
+/area/station/bridge/teleporter)
 "kLI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -58038,7 +58015,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "lME" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -62046,7 +62023,7 @@
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "mGl" = (
 /obj/item/stack/rods,
 /obj/item/weapon/shard{
@@ -64632,7 +64609,7 @@
 	dir = 10
 	},
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "niT" = (
 /obj/structure/stool,
 /turf/simulated/floor/wood,
@@ -66525,8 +66502,8 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -70735,7 +70712,7 @@
 "ozx" = (
 /obj/machinery/teleport/hub,
 /turf/simulated/floor/plating,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "ozz" = (
 /obj/structure/rack,
 /obj/item/device/flashlight,
@@ -74171,7 +74148,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "pkN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -75728,7 +75705,7 @@
 "pEk" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
@@ -76979,7 +76956,7 @@
 "pRv" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
@@ -87515,11 +87492,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/structure/disposalpipe/segment{
 	icon_state = "pipe-c"
 	},
@@ -89460,7 +89432,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "sBo" = (
 /obj/structure/grille,
 /obj/structure/window/thin/reinforced{
@@ -89488,7 +89460,7 @@
 /area/station/medical/sleeper)
 "sBB" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor{
 	dir = 8;
@@ -92698,7 +92670,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "tkA" = (
 /turf/environment/space,
 /area/station/aisat)
@@ -93823,19 +93795,8 @@
 	},
 /area/station/medical/cryo)
 "tuW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brigright)
+/turf/simulated/floor,
+/area/station/bridge/teleporter)
 "tvb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 8;
@@ -94327,7 +94288,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "tBk" = (
 /obj/structure/sign/directions/supply{
 	buildable_sign = 0;
@@ -94992,12 +94953,12 @@
 "tHO" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/welding{
-	pixel_y = 6;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 6
 	},
 /obj/item/clothing/glasses/welding{
-	pixel_y = 3;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /obj/item/clothing/glasses/welding{
 	pixel_x = -1
@@ -97810,7 +97771,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "ums" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -100446,7 +100407,7 @@
 "uQk" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/plating,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "uQo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -104152,7 +104113,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "vGU" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -104563,9 +104524,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/smes{
-	outputting = 1;
+	input_attempt = 1;
 	input_level = 90000;
-	input_attempt = 1
+	outputting = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -106875,8 +106836,8 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -108754,7 +108715,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "wDV" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -110331,7 +110292,7 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "wYb" = (
 /obj/structure/grille,
 /obj/machinery/meter,
@@ -113369,7 +113330,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "xJK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -114090,7 +114051,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/gateway)
+/area/station/bridge/teleporter)
 "xSm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -148569,7 +148530,7 @@ vAm
 vAm
 vAm
 xrf
-tuW
+fWU
 ePR
 ePR
 ePR
@@ -148826,7 +148787,7 @@ lqC
 bgO
 fWU
 piZ
-kLH
+jCB
 yhE
 oXy
 nmC
@@ -155046,12 +155007,12 @@ nQC
 nQC
 nQC
 kHU
-cNr
-cNr
-cNr
-cNr
-cNr
-cNr
+kLH
+kLH
+kLH
+kLH
+kLH
+kLH
 gGg
 eAd
 jWS
@@ -155303,14 +155264,14 @@ bqP
 tWZ
 nQC
 plf
-cNr
+kLH
 sBn
 edk
 edk
 edk
-cNr
+kLH
 xSa
-cNr
+kLH
 jWS
 fjy
 wZZ
@@ -155560,14 +155521,14 @@ uNg
 pNO
 nQC
 kHU
-cNr
+kLH
 uQk
 mGk
 gYT
-vEL
+tuW
 vGN
 umq
-cNr
+kLH
 izf
 boQ
 oex
@@ -155817,7 +155778,7 @@ gYz
 nQC
 nQC
 plf
-cNr
+kLH
 lMB
 wDO
 niR
@@ -156074,14 +156035,14 @@ nQC
 nQC
 plf
 plf
-cNr
+kLH
 ozx
 wXS
 eEW
 eEW
 eEW
 eEW
-cNr
+kLH
 fjy
 wOp
 oex
@@ -156331,14 +156292,14 @@ kHU
 plf
 plf
 rRo
-cNr
-cNr
-cNr
+kLH
+kLH
+kLH
 xJH
 ape
 pkM
 eje
-cNr
+kLH
 hqw
 wZZ
 wZZ
@@ -156590,12 +156551,12 @@ rRo
 rRo
 tlI
 pEz
-rRo
-rRo
-rRo
-xfs
-xfs
-xfs
+kLH
+kLH
+kLH
+kLH
+kLH
+kLH
 wSp
 oex
 oex
