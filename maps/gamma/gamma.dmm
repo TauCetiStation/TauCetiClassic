@@ -30383,12 +30383,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "fPR" = (
-/obj/effect/landmark{
-	name = "carpspawn"
+/obj/machinery/light/smart,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
+/area/station/medical/virology)
 "fQh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -53250,6 +53250,9 @@
 /obj/structure/reagent_dispensers/virusfood{
 	pixel_y = 32
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitegreen"
@@ -60300,6 +60303,13 @@
 	icon_state = "dark"
 	},
 /area/station/bridge)
+"mkD" = (
+/obj/effect/landmark{
+	name = "carpspawn"
+	},
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
 "mkG" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -60586,9 +60596,6 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/phoron,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
@@ -62338,6 +62345,7 @@
 "mJZ" = (
 /obj/structure/table/glass,
 /obj/item/trash/candy,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -76362,6 +76370,9 @@
 	},
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitegreen"
@@ -154829,7 +154840,7 @@ kLv
 klm
 kKC
 vsX
-utR
+fPR
 uYo
 bcf
 bcf
@@ -162960,7 +162971,7 @@ kHU
 kHU
 kHU
 kHU
-fPR
+mkD
 kHU
 kHU
 kHU
