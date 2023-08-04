@@ -7,6 +7,6 @@
 	icon_state = "security_det_miami"
 	networks = list("deathmatch")
 
-/obj/machinery/computer/camera_advanced/abductor/CreateEye()
+/obj/machinery/computer/camera_advanced/deathmatch/CreateEye()
 	eyeobj = new /mob/camera/Eye/remote/deathmatch(get_turf(src))
 	eyeobj.origin = src
