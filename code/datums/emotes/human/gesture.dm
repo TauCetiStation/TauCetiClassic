@@ -65,6 +65,7 @@
 	. = ..()
 	user.play_rock_paper_scissors_animation(emote_key)
 
+
 /datum/emote/human/clap
 	key = "clap"
 
