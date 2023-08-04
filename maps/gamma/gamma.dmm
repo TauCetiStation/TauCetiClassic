@@ -25029,13 +25029,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
-"eJy" = (
-/obj/effect/landmark{
-	name = "carpspawn"
-	},
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
 "eJI" = (
 /obj/machinery/newscaster{
 	pixel_x = 28
@@ -30390,24 +30383,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "fPR" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Secure Gate";
-	name = "Security Blast Door";
-	opacity = 0
+/obj/effect/landmark{
+	name = "carpspawn"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "BrigFoyer";
-	name = "Security";
-	req_access = list(63)
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkredfull"
-	},
-/area/station/security/lobby)
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
 "fQh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -140601,7 +140582,7 @@ uMT
 tdz
 nCp
 nCp
-fPR
+lYb
 nlK
 cQg
 iJQ
@@ -142400,7 +142381,7 @@ oxf
 tdz
 nCp
 nCp
-fPR
+lYb
 vuL
 lKd
 nCp
@@ -162979,7 +162960,7 @@ kHU
 kHU
 kHU
 kHU
-eJy
+fPR
 kHU
 kHU
 kHU
