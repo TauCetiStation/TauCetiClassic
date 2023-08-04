@@ -67698,6 +67698,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/item/weapon/book/manual/wiki/jukebox,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"

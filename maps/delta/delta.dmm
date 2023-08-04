@@ -6298,7 +6298,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "bnB" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -7429,7 +7429,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "bBm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -17407,11 +17407,6 @@
 	name = "Bar Backroom";
 	req_access = list(25)
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -17883,11 +17878,6 @@
 	},
 /area/station/storage/emergency2)
 "eao" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -17898,7 +17888,7 @@
 	dir = 4;
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "eap" = (
 /obj/machinery/door/window{
 	base_state = "rightsecure";
@@ -20310,7 +20300,7 @@
 	dir = 4;
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "eEE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -20513,16 +20503,20 @@
 	},
 /area/station/ai_monitored/eva)
 "eHx" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Bar APC";
+	pixel_y = 28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -25565,7 +25559,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "fSC" = (
 /obj/machinery/vending/theater,
 /turf/simulated/floor{
@@ -28781,7 +28775,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "gEa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -35335,7 +35329,7 @@
 	dir = 4;
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "ieI" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -40646,18 +40640,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
-"jqU" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Bar APC";
-	pixel_x = 28
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
-	},
-/area/station/civilian/bar)
 "jra" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -43074,7 +43056,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "jQJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -53050,7 +53032,7 @@
 	dir = 5;
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "miY" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -54351,7 +54333,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "myv" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
@@ -56143,7 +56125,7 @@
 "mUa" = (
 /obj/structure/sign/double/barsign,
 /turf/simulated/wall,
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "mUb" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -57665,7 +57647,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "nos" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -61768,7 +61750,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "olT" = (
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/machinery/light/small{
@@ -69034,11 +69016,13 @@
 	},
 /area/station/engineering/chiefs_office)
 "pZq" = (
+/obj/item/weapon/book/manual/wiki/jukebox,
+/obj/machinery/media/jukebox,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "pZr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -70792,7 +70776,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "quq" = (
 /turf/simulated/floor/plating,
 /area/space)
@@ -70872,7 +70856,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "qvd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -76998,7 +76982,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "rSY" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/woodentable,
@@ -77013,7 +76997,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "rTk" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -80944,7 +80928,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "sRN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -85698,7 +85682,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "ucX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -86426,7 +86410,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "ulK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -88980,7 +88964,7 @@
 	dir = 6;
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "uUJ" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -99987,7 +99971,7 @@
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/fore)
 "xDD" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/simulated/floor{
@@ -139532,7 +139516,7 @@ ibt
 bll
 xVN
 xVN
-kvu
+tJq
 qup
 quV
 bnx
@@ -139540,9 +139524,9 @@ rSY
 bnx
 mye
 bnx
-kvu
+tJq
 ucP
-kvu
+tJq
 fSC
 mOU
 ktM
@@ -139799,7 +139783,7 @@ jQB
 olO
 bBh
 xDn
-kvu
+tJq
 bRX
 scp
 bRX
@@ -140046,7 +140030,7 @@ gBW
 bll
 bll
 mdE
-kvu
+tJq
 miU
 eEt
 eEt
@@ -140054,9 +140038,9 @@ eEt
 eEt
 ieG
 eao
-jqU
+eEt
 uUD
-kvu
+tJq
 ohV
 hNp
 bHC
@@ -140303,8 +140287,8 @@ pxZ
 oZA
 xVN
 xVN
-kvu
-kvu
+tJq
+tJq
 noq
 sRL
 fSx
