@@ -10073,7 +10073,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "cgE" = (
@@ -13125,7 +13125,7 @@
 /area/station/civilian/toilet)
 "dej" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -16092,7 +16092,7 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
@@ -26444,7 +26444,7 @@
 /area/station/maintenance/cargo)
 "hpg" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/flashlight,
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -35417,7 +35417,7 @@
 /area/station/bridge/ai_upload)
 "kpc" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/stack/cable_coil/red{
 	amount = 5
 	},
@@ -61059,7 +61059,7 @@
 /area/station/rnd/hallway)
 "sBB" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -65099,7 +65099,7 @@
 /area/station/maintenance/brig)
 "tQN" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "tQP" = (
@@ -65509,7 +65509,7 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
