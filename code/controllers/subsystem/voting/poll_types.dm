@@ -259,9 +259,9 @@
 
 
 /datum/poll/nextmap/proc/get_voteweights()
-	var/list/voteweights = list()
 	if(!establish_db_connection("erro_round"))
 		return FALSE
+	var/list/voteweights = list()
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round ORDER BY id DESC LIMIT 10")
 	select_query.Execute()
 	var/map_name = ""
