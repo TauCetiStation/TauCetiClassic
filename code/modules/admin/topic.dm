@@ -2387,5 +2387,26 @@
 				log_admin("[key_name(usr)] disabled Demo recording for this round.")
 				message_admins("[key_name_admin(usr)] disabled Demo recording for this round.")
 
+			if("STOP_AIRNET")
+				if(!SSair.stop_airnet_processing)
+					to_chat(usr, "<span class='notice'>Airnet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Трубы и прочая атмосферная машинерия перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Атмос?", list("Нет", "Да")) != "Да")
+					return
+
+				SSair.stop_airnet_processing = TRUE
+				log_admin("[key_name(usr)] broke airnet for this round.")
+				message_admins("[key_name_admin(usr)] broke airnet for this round.")
+
+			if("STOP_POWERNET")
+				if(!SSmachines.stop_powernet_processing)
+					to_chat(usr, "<span class='notice'>Powernet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Проводка перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Проводку?", list("Нет", "Да")) != "Да")
+					return
+
+				SSmachines.stop_powernet_processing = TRUE
+				log_admin("[key_name(usr)] broke powernet for this round.")
+				message_admins("[key_name_admin(usr)] broke powernet for this round.")
 
 		show_lag_switch_panel()

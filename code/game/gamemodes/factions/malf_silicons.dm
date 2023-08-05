@@ -119,7 +119,7 @@
 	SSticker.station_explosion_cinematic(0, null)
 	if(malf_turf)
 		sleep(20)
-		explosion(malf_turf, 15, 70, 200)
+		SSticker.station_explosion_detonation(malf_turf)
 	SSticker.station_was_nuked = TRUE
 	SSticker.explosion_in_progress = FALSE
 

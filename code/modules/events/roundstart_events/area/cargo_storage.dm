@@ -22,7 +22,7 @@
 				if(prob(50))
 					new /obj/item/weapon/storage/toolbox/mechanical(R.loc)
 				if(prob(20))
-					new /obj/item/clothing/gloves/fyellow(R.loc)
+					new /obj/item/clothing/gloves/budget_insulated(R.loc)
 				if(prob(30))
 					new /obj/item/device/flashlight(R.loc)
 				if(prob(40))

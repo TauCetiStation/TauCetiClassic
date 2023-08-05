@@ -324,18 +324,17 @@
 		if("togglebombcap")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
-			switch(MAX_EXPLOSION_RANGE)
-				if(14)	MAX_EXPLOSION_RANGE = 16
-				if(16)	MAX_EXPLOSION_RANGE = 20
-				if(20)	MAX_EXPLOSION_RANGE = 28
-				if(28)	MAX_EXPLOSION_RANGE = 56
-				if(56)	MAX_EXPLOSION_RANGE = 128
-				if(128)	MAX_EXPLOSION_RANGE = 14
-			var/range_dev = MAX_EXPLOSION_RANGE *0.25
-			var/range_high = MAX_EXPLOSION_RANGE *0.5
-			var/range_low = MAX_EXPLOSION_RANGE
-			message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b></span>")
-			log_admin("[key_name(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+			var/new_cap = input("Enter new cap value, up to 128. Default is [SSexplosions.MAX_EX_LIGHT_RANGE].", "Set Cap") as num|null
+			if(isnull(new_cap))
+				return
+			new_cap = clamp(round(new_cap), 0, 128)
+			SSexplosions.MAX_EX_DEVESTATION_RANGE = round(new_cap * 0.25)
+			SSexplosions.MAX_EX_HEAVY_RANGE = round(new_cap * 0.5)
+			SSexplosions.MAX_EX_LIGHT_RANGE = new_cap
+			SSexplosions.MAX_EX_FLASH_RANGE = new_cap
+			//SSexplosions.MAX_EX_FLAME_RANGE = new_cap
+			message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [SSexplosions.MAX_EX_DEVESTATION_RANGE], [SSexplosions.MAX_EX_HEAVY_RANGE], [SSexplosions.MAX_EX_LIGHT_RANGE]</b></span>")
+			log_admin("[key_name(usr)] changed the bomb cap to [new_cap]")
 		// Ghost Mode
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
