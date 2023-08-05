@@ -313,7 +313,7 @@
 	return !(target in user)
 
 /datum/action/item_action/hands_free
-	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE|AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE|AB_CHECK_ALIVE
 
 
 //Preset for spells
