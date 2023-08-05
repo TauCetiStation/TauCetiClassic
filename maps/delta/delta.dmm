@@ -2532,13 +2532,13 @@
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "avb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
 	},
-/turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories)
 "avo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -2689,8 +2689,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass{
-	name = "Cell 5"
+/obj/machinery/door/poddoor{
+	id = "cell5";
+	name = "Cell Door"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -3222,6 +3223,10 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/door_timer/cell_5{
+	pixel_x = 32;
+	pixel_y = 0
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -4650,7 +4655,7 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
 	dir = 4;
-	network = list("Toxins Test Area")
+	network = list("Toxins  Test  Area")
 	},
 /turf/simulated/floor/plating/airless{
 	dir = 8;
@@ -5994,6 +5999,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 4";
+	name = "Cell 4 Locker"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "blj" = (
@@ -6669,8 +6678,8 @@
 /area/station/rnd/storage)
 "bsV" = (
 /obj/structure/object_wall/pod{
-	icon_state = "1,2";
-	dir = 4
+	dir = 4;
+	icon_state = "1,2"
 	},
 /turf/environment/space,
 /area/shuttle/escape_pod6/station)
@@ -7100,9 +7109,6 @@
 /area/station/engineering/atmos/distribution)
 "byk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -9908,10 +9914,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -14551,18 +14555,19 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "diq" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Wing Cell 1";
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "cell3";
+	name = "Cell 3 Doors";
+	normaldoorcontrol = 0;
+	pixel_x = 32;
+	range = 10;
 	req_access = list(2)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
 /area/station/security/prison)
 "diz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -17532,19 +17537,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "dVr" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 4;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
-	pixel_x = -30
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warning"
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 3";
+	name = "Cell 3 Locker"
 	},
-/area/station/rnd/tox_launch)
+/turf/simulated/floor,
+/area/station/security/prison)
 "dVA" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -19172,6 +19174,10 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/door_timer/cell_4{
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -19717,7 +19723,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon  Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous  Oxide","waste_sensor"="Gas  Mix  Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -20646,10 +20652,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "eIL" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Wing Cell 5";
-	req_access = list(2)
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -20662,6 +20664,12 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	id = "Cell 5";
+	name = "Cell 5";
+	req_access = list(2)
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "eIU" = (
@@ -20941,8 +20949,9 @@
 /area/station/rnd/xenobiology)
 "eNj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Cell 3"
+/obj/machinery/door/poddoor{
+	id = "cell3";
+	name = "Cell Door"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -21522,19 +21531,18 @@
 	},
 /area/station/engineering/engine)
 "eTq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/door_timer/cell_2{
+	pixel_x = 32;
+	pixel_y = 0
 	},
-/obj/machinery/door/airlock{
-	id_tag = "Dorm6";
-	name = "Dorm 6"
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/station/civilian/dormitories)
+/area/station/security/prison)
 "eTx" = (
 /obj/structure/fireplace,
 /turf/simulated/floor{
@@ -22651,6 +22659,15 @@
 /turf/simulated/floor,
 /area/station/medical/storage)
 "fgx" = (
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "cell4";
+	name = "Cell 4 Doors";
+	normaldoorcontrol = 0;
+	pixel_x = 32;
+	range = 10;
+	req_access = list(2)
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -23012,8 +23029,8 @@
 /area/station/engineering/atmos)
 "flh" = (
 /obj/structure/object_wall/pod{
-	icon_state = "1,2";
-	dir = 4
+	dir = 4;
+	icon_state = "1,2"
 	},
 /turf/environment/space,
 /area/shuttle/escape_pod5/station)
@@ -23819,18 +23836,21 @@
 	},
 /area/station/cargo/office)
 "fvA" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/firealarm{
 	dir = 4;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
-	pixel_x = -30
+	pixel_x = 22
 	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "warndark"
+	dir = 4;
+	icon_state = "neutral"
 	},
-/area/station/rnd/tox_launch)
+/area/station/civilian/dormitories)
 "fvE" = (
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
@@ -24279,18 +24299,16 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "fBm" = (
-/obj/machinery/computer/general_air_control/large_tank_control{
-	dir = 8;
-	frequency = 1444;
-	input_tag = "rnd_in";
-	name = "Heat Supply Control";
-	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat Room")
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "bot"
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 2";
+	name = "Cell 2 Locker"
 	},
-/area/station/rnd/misc_lab)
+/turf/simulated/floor,
+/area/station/security/prison)
 "fBr" = (
 /obj/item/clothing/shoes/sandal,
 /obj/structure/sign/poster/ripped{
@@ -25080,8 +25098,8 @@
 	layer = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor";
-	dir = 8
+	dir = 8;
+	icon_state = "floor"
 	},
 /area/shuttle/escape_pod5/station)
 "fLh" = (
@@ -25930,13 +25948,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock{
-	id_tag = "Dorm5";
-	name = "Dorm 5"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	id = "Cell 1";
+	name = "Cell 1";
+	req_access = list(2)
+	},
 /turf/simulated/floor,
-/area/station/civilian/dormitories)
+/area/station/security/prison)
 "fXS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -29801,7 +29821,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
+	network = list("Engineering","Engineering  Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -30192,9 +30212,13 @@
 	},
 /area/station/rnd/hallway)
 "gVF" = (
-/obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/carpet/orange,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "gVI" = (
 /obj/structure/sign/poster/official/report_crimes{
@@ -32396,7 +32420,9 @@
 /area/station/hallway/secondary/entry)
 "hwE" = (
 /obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+	locked = 1;
+	name = "Labor Camp Shuttle Airlock";
+	req_access = list(2)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -34444,8 +34470,8 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor";
-	dir = 8
+	dir = 8;
+	icon_state = "floor"
 	},
 /area/shuttle/escape_pod5/station)
 "hVa" = (
@@ -34996,8 +35022,8 @@
 	dock_tag = "pod5"
 	},
 /turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor";
-	dir = 8
+	dir = 8;
+	icon_state = "floor"
 	},
 /area/shuttle/escape_pod5/station)
 "iaL" = (
@@ -35341,11 +35367,10 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "ieL" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
 	},
-/obj/item/weapon/flora/random,
-/turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "ifb" = (
 /obj/machinery/door_control{
@@ -35637,10 +35662,14 @@
 	},
 /area/station/engineering/chiefs_office)
 "ihW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/machinery/computer/cryopod{
+	density = 0;
+	pixel_x = 32
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
+	},
 /area/station/civilian/dormitories)
 "ihX" = (
 /obj/structure/cable{
@@ -38027,7 +38056,6 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/mob/living/simple_animal/corgi/borgi,
 /obj/machinery/camera{
 	c_tag = "Head of Security Office";
 	dir = 6;
@@ -38483,12 +38511,18 @@
 	},
 /area/station/maintenance/science)
 "iQn" = (
-/obj/structure/table/woodentable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
 	},
-/obj/item/clothing/head/that,
-/turf/simulated/floor/wood,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "iQp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -41953,6 +41987,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 5";
+	name = "Cell 5 Locker"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "jGc" = (
@@ -42693,12 +42731,14 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "jNt" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/clipboard,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Cryogenic Storage"
+	},
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "jNu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -43329,10 +43369,6 @@
 	},
 /area/station/security/checkpoint/escape)
 "jUy" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Wing Cell 4";
-	req_access = list(2)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -43340,6 +43376,12 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	id = "Cell 4";
+	name = "Cell 4";
+	req_access = list(2)
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "jUE" = (
@@ -45891,12 +45933,12 @@
 	},
 /obj/structure/sign/directions/security{
 	dir = 4;
-	pixel_y = 8;
-	pixel_x = 32
+	pixel_x = 32;
+	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	pixel_y = -8;
-	pixel_x = 32
+	pixel_x = 32;
+	pixel_y = -8
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -46079,13 +46121,13 @@
 	},
 /area/station/security/main)
 "kBl" = (
-/obj/machinery/door_control{
-	id = "Dorm6";
-	name = "Dorm 6";
-	pixel_x = 28;
-	specialfunctions = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
+	},
 /area/station/civilian/dormitories)
 "kBq" = (
 /obj/structure/table,
@@ -48888,8 +48930,8 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor";
-	dir = 8
+	dir = 8;
+	icon_state = "floor"
 	},
 /area/shuttle/escape_pod6/station)
 "liC" = (
@@ -54134,10 +54176,24 @@
 	},
 /area/station/rnd/lab)
 "mvv" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/cane,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
+/obj/machinery/computer/mecha{
+	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 8;
+	name = "Research Monitor";
+	network = list("Research","Toxins  Test  Area","Robots","Anomaly  Isolation");
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "neutral"
+	},
+/area/station/rnd/hor)
 "mvD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54335,17 +54391,18 @@
 	},
 /area/station/hallway/primary/fore)
 "myv" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 8
+/obj/machinery/computer/general_air_control/large_tank_control{
+	dir = 8;
+	frequency = 1444;
+	input_tag = "rnd_in";
+	name = "Heat Supply Control";
+	output_tag = "rnd_out";
+	sensors = list("rnd_sensor"="Heat  Room")
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "bot"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/turf/simulated/floor/carpet/red,
-/area/station/civilian/dormitories)
+/area/station/rnd/misc_lab)
 "myA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/free_drone{
@@ -54480,13 +54537,13 @@
 	},
 /area/station/security/main)
 "mAe" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
 	},
-/turf/simulated/floor/carpet/orange,
 /area/station/civilian/dormitories)
 "mAf" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -55519,7 +55576,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	sensors = list("in_sm_meter"="Supermatter  In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter  Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -56213,6 +56270,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "cell5";
+	name = "Cell 5 Doors";
+	normaldoorcontrol = 0;
+	pixel_x = 32;
+	range = 10;
+	req_access = list(2)
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -56726,10 +56792,18 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "naR" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/head/hairflower,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the test chamber.";
+	dir = 4;
+	layer = 4;
+	name = "Test Chamber Telescreen";
+	network = list("Toxins  Test  Area");
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/station/rnd/tox_launch)
 "naW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -62283,8 +62357,8 @@
 	layer = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor";
-	dir = 8
+	dir = 8;
+	icon_state = "floor"
 	},
 /area/shuttle/escape_pod6/station)
 "ouf" = (
@@ -63972,6 +64046,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/door_timer/cell_1{
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -65158,8 +65236,9 @@
 /area/station/maintenance/atmos)
 "pfR" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Cell 4"
+/obj/machinery/door/poddoor{
+	id = "cell4";
+	name = "Cell Door"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -65690,7 +65769,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/item/weapon/flora/random,
+/obj/structure/closet/secure_closet/hop2,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "pmn" = (
@@ -68510,10 +68589,19 @@
 	},
 /area/station/maintenance/chapel)
 "pSS" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/green,
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the test chamber.";
+	dir = 4;
+	layer = 4;
+	name = "Test Chamber Telescreen";
+	network = list("Toxins  Test  Area");
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/station/rnd/tox_launch)
 "pSU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -75736,8 +75824,9 @@
 /area/station/maintenance/atmos)
 "rFp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Cell 1"
+/obj/machinery/door/poddoor{
+	id = "cell1";
+	name = "Cell Door"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -75908,6 +75997,15 @@
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "cell1";
+	name = "Cell 1 Doors";
+	normaldoorcontrol = 0;
+	pixel_x = 32;
+	range = 10;
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -76807,17 +76905,12 @@
 /turf/simulated/floor,
 /area/station/civilian/library)
 "rQZ" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
 	},
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -78139,10 +78232,6 @@
 	},
 /area/station/rnd/xenobiology)
 "siI" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Wing Cell 2";
-	req_access = list(2)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -78150,6 +78239,12 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	id = "Cell 2";
+	name = "Cell 2";
+	req_access = list(2)
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "siM" = (
@@ -84111,16 +84206,10 @@
 	dock_tag = "pod6"
 	},
 /turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor";
-	dir = 8
+	dir = 8;
+	icon_state = "floor"
 	},
 /area/shuttle/escape_pod6/station)
-"tHh" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
 "tHk" = (
 /obj/decal/boxingrope{
 	density = 0;
@@ -87757,7 +87846,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat Room")
+	sensors = list("rnd_sensor"="Heat  Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -88033,24 +88122,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "uHN" = (
-/obj/machinery/computer/mecha{
-	dir = 8
-	},
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the RD's goons from the safety of his office.";
-	dir = 8;
-	name = "Research Monitor";
-	network = list("Research","Toxins Test Area","Robots","Anomaly Isolation");
-	pixel_x = 32
+/obj/machinery/door_timer/cell_3{
+	pixel_x = 32;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "neutral"
+	dir = 8;
+	icon_state = "redcorner"
 	},
-/area/station/rnd/hor)
+/area/station/security/prison)
 "uHX" = (
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
@@ -90728,14 +90808,16 @@
 	},
 /area/station/engineering/minisat_secure_area)
 "vqQ" = (
-/obj/machinery/door_control{
-	id = "Dorm5";
-	name = "Dorm 5";
-	pixel_x = 28;
-	specialfunctions = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/simulated/floor/carpet/orange,
-/area/station/civilian/dormitories)
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 1";
+	name = "Cell 1 Locker"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/prison)
 "vqV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/bodybags,
@@ -92163,10 +92245,6 @@
 	},
 /area/station/civilian/library)
 "vJQ" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Prison Wing Cell 3";
-	req_access = list(2)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -92174,6 +92252,12 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	id = "Cell 3";
+	name = "Cell 3";
+	req_access = list(2)
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "vJT" = (
@@ -93905,9 +93989,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "wgL" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
-/turf/simulated/floor/wood,
+/obj/structure/cryofeed/right,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "whi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -93999,13 +94082,13 @@
 	},
 /area/station/rnd/misc_lab)
 "wiv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/orange,
+/obj/machinery/door/airlock/glass{
+	name = "Cryogenic Storage"
+	},
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "wix" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -94911,9 +94994,11 @@
 	},
 /area/station/civilian/hydroponics)
 "wtL" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/folder/red,
-/turf/simulated/floor/wood,
+/obj/machinery/cryopod/right,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "wtR" = (
 /obj/machinery/computer/card{
@@ -96475,11 +96560,19 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
 "wNM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "cell2";
+	name = "Cell 2 Doors";
+	normaldoorcontrol = 0;
+	pixel_x = 32;
+	range = 10;
+	req_access = list(2)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
 /area/station/security/prison)
 "wNU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -97300,12 +97393,11 @@
 	},
 /area/shuttle/supply/station)
 "wZg" = (
-/obj/structure/dresser,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warnwhite"
 	},
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
+/area/station/maintenance/brig)
 "wZn" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/stethoscope,
@@ -100930,8 +101022,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
-	name = "Cell 2"
+/obj/machinery/door/poddoor{
+	id = "cell2";
+	name = "Cell Door"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -131132,8 +131225,8 @@ vee
 plf
 eWN
 kLU
-fvA
-dVr
+naR
+pSS
 tRp
 mRQ
 gvl
@@ -133427,7 +133520,7 @@ mKy
 blq
 syE
 qbC
-uHN
+mvv
 iVU
 agq
 wFq
@@ -136516,7 +136609,7 @@ sSE
 lyC
 qbr
 cQN
-fBm
+myv
 iiE
 dNy
 qUz
@@ -139565,7 +139658,7 @@ sse
 adf
 pxq
 tMh
-aFt
+gGp
 plZ
 mUn
 mmd
@@ -151903,7 +151996,7 @@ adp
 bLN
 wzd
 pHC
-vst
+wZg
 sXW
 sXW
 ize
@@ -152941,15 +153034,15 @@ cAW
 tAM
 cNZ
 xUx
-xpn
-jNt
-tHh
-xzC
-xUx
-xzC
-tHh
-xpn
-naR
+wgL
+wgL
+wgL
+wgL
+wgL
+wgL
+wgL
+wgL
+wgL
 xUx
 lJP
 iBz
@@ -153199,14 +153292,14 @@ tAM
 uQA
 xUx
 wtL
-myv
-ihW
-pSS
-xUx
-wgL
-wiv
-gVF
-iQn
+wtL
+wtL
+wtL
+wtL
+wtL
+wtL
+wtL
+wtL
 xUx
 iXC
 hdR
@@ -153458,12 +153551,12 @@ xUx
 ieL
 avb
 kBl
-rDT
-xUx
-wZg
+ieL
+ihW
+ieL
 mAe
-vqQ
-mvv
+avb
+ieL
 xUx
 xKj
 eUY
@@ -153713,12 +153806,12 @@ xUx
 xUx
 xUx
 xUx
-eTq
+xUx
+wiv
 xUx
 xUx
 xUx
-xUx
-fXG
+jNt
 xUx
 xUx
 xUx
@@ -153910,12 +154003,12 @@ mVk
 epp
 fAF
 fgx
-fgx
+uHN
 fAF
-fgx
-epp
+diq
+eTq
 fAF
-fgx
+wNM
 oPD
 tif
 rHZ
@@ -153970,8 +154063,8 @@ lCq
 lCq
 lCq
 tpp
-byk
 lCq
+gVF
 lCq
 lCq
 lCq
@@ -154174,7 +154267,7 @@ qZx
 siI
 qZx
 qZx
-diq
+fXG
 qZx
 tnw
 czU
@@ -154228,8 +154321,8 @@ raM
 mti
 dcN
 rQZ
-raM
-mti
+fvA
+iQn
 raM
 sUU
 ccQ
@@ -154681,13 +154774,13 @@ hlv
 blh
 cra
 hlv
-jFZ
+dVr
 gQC
 hlv
-blh
+fBm
 bvC
 hlv
-wNM
+vqQ
 gQC
 qZx
 tnw
