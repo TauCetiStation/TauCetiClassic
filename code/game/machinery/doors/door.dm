@@ -66,8 +66,9 @@ var/global/list/wedge_image_cache = list()
 	QDEL_NULL(wedged_item)
 	return ..()
 
-/obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
+/obj/machinery/door/Bumped(atom/movable/AM)
+	if(p_open || operating)
+		return
 	if(world.time - last_bumped <= 7)
 		return //Can bump-open one airlock per animation. This is to prevent shock spam.
 	last_bumped = world.time
@@ -76,32 +77,18 @@ var/global/list/wedge_image_cache = list()
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
-
-	if(isbot(AM))
-		var/obj/machinery/bot/bot = AM
-		if(check_access(bot.botcard) || emergency)
-			if(density)
-				open()
+	else if(isitem(AM))
+		if(AM.w_class < SIZE_NORMAL)
+			if(!length(AM.GetAccess()) || check_access(null))
+				return
+		if(allowed(AM))
+			open()
 		return
 
-	if(istype(AM, /obj/mecha))
-		var/obj/mecha/mecha = AM
-		if(density)
-			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)) || emergency)
-				open()
-			else
-				do_animate("deny")
-		return
-
-	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
-		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
-		if(density)
-			if((wheel.pulling && allowed(wheel.pulling)) || emergency)
-				open()
-			else
-				do_animate("deny")
-		return
-	return
+	if(allowed(AM))
+		open()
+	else
+		do_animate("deny")
 
 /obj/machinery/door/AltClick(mob/user)
 	if(user.incapacitated())
@@ -180,7 +167,7 @@ var/global/list/wedge_image_cache = list()
 	if(!requiresID())
 		check_access = null
 
-	if(allowed(check_access) || emergency)
+	if(allowed(check_access))
 		if(density)
 			open()
 		else
@@ -189,6 +176,11 @@ var/global/list/wedge_image_cache = list()
 
 	if(density)
 		do_animate("deny")
+
+/obj/machinery/door/allowed(atom/movable/M)
+	if(emergency)
+		return TRUE
+	return ..()
 
 /obj/machinery/door/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
