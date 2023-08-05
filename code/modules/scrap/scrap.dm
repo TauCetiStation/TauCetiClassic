@@ -148,7 +148,7 @@ var/global/list/scrap_base_cache = list()
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
+			if( ( !H.shoes && H.get_species() != SKRELL )  && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.is_robotic())
 					return

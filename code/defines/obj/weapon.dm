@@ -195,7 +195,7 @@
 			if(H.buckled)
 				return
 
-			if(!H.shoes)
+			if(!H.shoes && H.get_species() != SKRELL)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.is_robotic())
 					return
