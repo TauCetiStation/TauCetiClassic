@@ -27,6 +27,10 @@ map gamma
 	votable
 endmap
 
+map delta
+	votable
+endmap
+
 map testmap
 endmap
 
@@ -43,8 +47,4 @@ endmap
 map stroechka
 	votable
 	maxplayers 10
-endmap
-
-map delta
-	disabled
 endmap
