@@ -131,9 +131,10 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		tally += T.slowdown
+		if(istype(T, /turf/simulated/floor/beach/water) && (get_species() != SKRELL || shoes))
+			tally += T.slowdown
 		var/obj/effect/fluid/F = locate(/obj/effect/fluid) in T
-		if(F)
+		if(F && (get_species() != SKRELL || shoes))
 			tally += F.fluid_amount * 0.005
 
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)

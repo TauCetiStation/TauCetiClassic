@@ -228,7 +228,9 @@
 	return
 
 /mob/living/carbon/human/exited_water_turf()
-	Stun(2)
+	var/mob/M = src
+	if(M.get_species() != SKRELL)
+		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/silicon/robot/exited_water_turf()
@@ -243,7 +245,9 @@
 		playsound(src, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/entered_water_turf()
-	Stun(2)
+	var/mob/M = src
+	if(M.get_species() != SKRELL)
+		Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	wear_suit?.make_wet()
 	w_uniform?.make_wet()

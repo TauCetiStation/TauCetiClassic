@@ -27,7 +27,7 @@
 
 /datum/species/skrell/water_act(mob/living/carbon/human/H, depth)
 	..()
-	if(depth >= 40)
+	if(depth >= 40 || istype(T, /turf/simulated/floor/beach/water))
 		if(H.traumatic_shock)
 			H.traumatic_shock -= 25 // Slightly more than being drunk because it fires less often (10 ticks as opposed to 4)
 		if(H.getBruteLoss() || H.getFireLoss())
