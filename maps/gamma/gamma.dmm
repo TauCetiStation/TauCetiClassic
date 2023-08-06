@@ -30923,13 +30923,13 @@
 	},
 /area/station/rnd/mixing)
 "fSx" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
-	},
 /obj/structure/cable/cyan{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -58232,9 +58232,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "lKv" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -84478,6 +84476,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
@@ -85723,12 +85724,15 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
 /obj/structure/cable/cyan,
+/obj/machinery/atmospherics/components/trinary/filter/on{
+	dir = 4;
+	filter_type = "nitrogen";
+	name = "Gas filter (N2 tank)"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/engineering/rust)
 "rFr" = (
@@ -90289,14 +90293,6 @@
 	icon_state = "blue"
 	},
 /area/station/medical/sleeper)
-"sCO" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
-/area/station/engineering/rust)
 "sCV" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -101417,7 +101413,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "uSY" = (
-/obj/machinery/atmospherics/pipe/manifold/visible,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -154292,7 +154290,7 @@ bFi
 bFi
 kSE
 rFq
-sCO
+jQT
 tbp
 mev
 fse
