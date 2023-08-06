@@ -24359,8 +24359,8 @@
 	},
 /area/station/maintenance/chapel)
 "fBQ" = (
-/obj/machinery/iv_drip,
-/obj/structure/stool/bed/roller,
+/obj/machinery/life_assist/artificial_ventilation,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -25223,6 +25223,13 @@
 	icon_state = "darkbrown"
 	},
 /area/station/medical/virology)
+"fNi" = (
+/obj/machinery/iv_drip,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/surgeryobs)
 "fNC" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/blue,
@@ -58540,6 +58547,24 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
+"nxq" = (
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "nxC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
@@ -84274,24 +84299,6 @@
 "tIa" = (
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/library)
-"tIj" = (
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "tIm" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/mineral/phoron{
@@ -141794,7 +141801,7 @@ pxa
 uVF
 kpr
 eOb
-kmx
+fNi
 kmx
 fJt
 beJ
@@ -146622,7 +146629,7 @@ fZz
 lMB
 vAu
 kzb
-tIj
+nxq
 psV
 aNa
 vAu
