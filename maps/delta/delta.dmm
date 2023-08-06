@@ -4655,7 +4655,7 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
 	dir = 4;
-	network = list("Toxins  Test  Area")
+	network = list("Toxins    Test    Area")
 	},
 /turf/simulated/floor/plating/airless{
 	dir = 8;
@@ -12607,6 +12607,9 @@
 	dir = 8
 	},
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/prison/toilet)
 "cJY" = (
@@ -19723,7 +19726,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon  Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous  Oxide","waste_sensor"="Gas  Mix  Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon    Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous    Oxide","waste_sensor"="Gas    Mix    Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -29821,7 +29824,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering  Robots");
+	network = list("Engineering","Engineering    Robots");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -42541,6 +42544,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -54186,7 +54192,7 @@
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
 	name = "Research Monitor";
-	network = list("Research","Toxins  Test  Area","Robots","Anomaly  Isolation");
+	network = list("Research","Toxins    Test    Area","Robots","Anomaly    Isolation");
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -54397,7 +54403,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat  Room")
+	sensors = list("rnd_sensor"="Heat    Room")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -55576,7 +55582,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter  In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter  Out")
+	sensors = list("in_sm_meter"="Supermatter    In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter    Out")
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -56797,7 +56803,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins  Test  Area");
+	network = list("Toxins    Test    Area");
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -63471,6 +63477,9 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -68594,7 +68603,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins  Test  Area");
+	network = list("Toxins    Test    Area");
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -80812,6 +80821,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -87846,7 +87858,7 @@
 	input_tag = "rnd_in";
 	name = "Heat Supply Control";
 	output_tag = "rnd_out";
-	sensors = list("rnd_sensor"="Heat  Room")
+	sensors = list("rnd_sensor"="Heat    Room")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -89304,6 +89316,9 @@
 /area/shuttle/supply/station)
 "uYb" = (
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -97100,6 +97115,9 @@
 /obj/structure/stool,
 /obj/structure/window/thin{
 	dir = 1
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
