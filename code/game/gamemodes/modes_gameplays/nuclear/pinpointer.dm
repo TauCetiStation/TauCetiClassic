@@ -139,7 +139,7 @@
 
 	switch(tgui_alert(usr, "Please select the mode you want to put the pinpointer in.", "Pinpointer Mode Select", list("Shuttle Location", "Disk", "Nuclear Warhead")))
 
-		if("Disk Recovery")
+		if("Disk")
 			mode = SEARCH_FOR_DISK
 		if("Shuttle Location")
 			mode = SEARCH_FOR_OBJECT
