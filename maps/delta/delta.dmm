@@ -10249,9 +10249,6 @@
 	},
 /area/station/rnd/hor)
 "cgR" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
@@ -10261,7 +10258,18 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
+/obj/structure/closet/crate/secure/medical{
+	req_access = list(58)
+	},
+/obj/item/weapon/reagent_containers/ld50_syringe/choral{
+	pixel_x = 3
+	},
+/obj/item/weapon/reagent_containers/ld50_syringe/choral{
+	pixel_x = -2
+	},
+/obj/item/weapon/reagent_containers/ld50_syringe/choral{
+	pixel_x = -6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -15825,22 +15833,11 @@
 /area/station/hallway/primary/central)
 "dxL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/ld50_syringe/choral{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/ld50_syringe/choral{
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/weapon/reagent_containers/ld50_syringe/choral{
-	pixel_x = 3;
-	pixel_y = 10
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -84277,6 +84274,24 @@
 "tIa" = (
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/library)
+"tIj" = (
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "tIm" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/mineral/phoron{
@@ -97327,24 +97342,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
-"wYf" = (
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "wYl" = (
 /obj/machinery/light/smart,
 /turf/simulated/floor{
@@ -146625,7 +146622,7 @@ fZz
 lMB
 vAu
 kzb
-wYf
+tIj
 psV
 aNa
 vAu
