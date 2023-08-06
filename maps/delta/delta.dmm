@@ -1515,7 +1515,7 @@
 "akg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "side_door_bolt";
+	id_tag = "med_second_ex";
 	name = "Medbay Side Entrance";
 	req_access = list(5)
 	},
@@ -8474,6 +8474,13 @@
 	icon_state = "redyellowfull"
 	},
 /area/station/hallway/primary/fore)
+"bLc" = (
+/obj/machinery/iv_drip,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/surgeryobs)
 "bLg" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
@@ -25223,13 +25230,6 @@
 	icon_state = "darkbrown"
 	},
 /area/station/medical/virology)
-"fNi" = (
-/obj/machinery/iv_drip,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/surgeryobs)
 "fNC" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/blue,
@@ -48891,6 +48891,24 @@
 	icon_state = "red"
 	},
 /area/station/security/prison)
+"lhp" = (
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "lhw" = (
 /obj/structure/filingcabinet/medical,
 /obj/structure/sign/poster/official/do_not_question{
@@ -58547,24 +58565,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
-"nxq" = (
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "nxC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
@@ -72723,7 +72723,8 @@
 	desc = "A remote control switch for the medbay foyer.";
 	id = "med_second_ex";
 	name = "Medical Bolts Door Control";
-	pixel_y = 26
+	pixel_y = 26;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -141801,7 +141802,7 @@ pxa
 uVF
 kpr
 eOb
-fNi
+bLc
 kmx
 fJt
 beJ
@@ -146629,7 +146630,7 @@ fZz
 lMB
 vAu
 kzb
-nxq
+lhp
 psV
 aNa
 vAu
