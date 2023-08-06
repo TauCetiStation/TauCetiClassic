@@ -173,7 +173,10 @@
 /obj/structure/rd_armor_stand/update_icon()
 	cut_overlays()
 	if(reactive)
-		add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "telearmor_overlay"))
+		var/mutable_appearance/showpiece_overlay = mutable_appearance(reactive.icon, reactive.icon_state)
+		showpiece_overlay.copy_overlays(reactive)
+		showpiece_overlay.transform *= 0.75
+		add_overlay(showpiece_overlay)
 	if((!opened) && (!smashed))
 		add_overlay(image(icon = 'icons/obj/stationobjs.dmi', icon_state = "standglass_overlay"))
 	if(smashed)
