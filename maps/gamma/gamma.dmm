@@ -8659,6 +8659,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10220,6 +10223,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10839,6 +10845,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17385,7 +17394,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("Роботехника","�?сследования Плазмы","Офис Главы �?сследований","Комната отдыха РнД","Ксенобиология","Научная лаборатория","Прочие �?сследования")
+	sortType = list("Роботехника","�?сследования  Плазмы","Офис  Главы  �?сследований","Комната  отдыха  РнД","Ксенобиология","Научная  лаборатория","Прочие  �?сследования")
 	},
 /turf/simulated/floor{
 	icon_state = "purplefull"
@@ -25741,7 +25750,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                Oxide","waste_sensor"="Gas                                                                Mix                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                Mix                                                                                                                                Tank")
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics Control Room";
@@ -27083,7 +27092,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed                                                                Air                                                                In","air_sensor"="Mixed                                                                Air                                                                Supply                                                                Tank","mair_out_meter"="Mixed                                                                Air                                                                Out","dloop_atm_meter"="Distribution                                                                Loop","wloop_atm_meter"="Waste                                                                Loop")
+	sensors = list("mair_in_meter"="Mixed                                                                                                                                Air                                                                                                                                In","air_sensor"="Mixed                                                                                                                                Air                                                                                                                                Supply                                                                                                                                Tank","mair_out_meter"="Mixed                                                                                                                                Air                                                                                                                                Out","dloop_atm_meter"="Distribution                                                                                                                                Loop","wloop_atm_meter"="Waste                                                                                                                                Loop")
 	},
 /obj/machinery/alarm{
 	pixel_x = -28;
@@ -32029,7 +32038,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction{
 	dir = 4;
-	sortType = list("Ординаторская","Хранилище Медбея","Генетика","Морг","Офис СМО","Химия","Вирусология")
+	sortType = list("Ординаторская","Хранилище  Медбея","Генетика","Морг","Офис  СМО","Химия","Вирусология")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -46621,7 +46630,7 @@
 "jht" = (
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber North";
-	network = list("Toxins                                                                Test                                                                Area")
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area")
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
@@ -50513,6 +50522,9 @@
 /obj/structure/toilet{
 	dir = 8
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/prison/toilet)
 "jYi" = (
@@ -50700,7 +50712,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                Oxide","waste_sensor"="Gas                                                                Mix                                                                Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon                                                                                                                                Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous                                                                                                                                Oxide","waste_sensor"="Gas                                                                                                                                Mix                                                                                                                                Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -51494,7 +51506,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	sortType = list("Тренажерный Зал","Барбершоп","Гардероб","Храм")
+	sortType = list("Тренажерный  Зал","Барбершоп","Гардероб","Храм")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -60827,7 +60839,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза")
+	sortType = list("Мусоросброс","Карго  Офис", "Кабинет  Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -62419,7 +62431,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 2;
-	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория", "Вирусология","Прочие �?сследования")
+	sortType = list("Парк","Производство  Дронов","Кабинет  ГП","Роботехника","�?сследования  Плазмы","Ординаторская","Комната  Отдыха  �?нженеров","Хранилище  Медбея","Офис  Главы  �?сследований","Генетика","Морг","Двигатель","Офис  Главного  �?нженера","Атмосферный  Контроль","Комната  отдыха  РнД","Офис  СМО","Ксенобиология","Каюта  Капитана","Конференц-Зал","Химия","Научная  лаборатория", "Вирусология","Прочие  �?сследования")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -63583,7 +63595,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	name = "Research Monitor";
-	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
+	network = list("Research","Toxins                                                                                                                                Test                                                                                                                                Area","Robots","Anomaly                                                                                                                                Isolation");
 	pixel_y = 2
 	},
 /turf/simulated/floor{
@@ -68121,7 +68133,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed                                                                Air                                                                In","air_sensor"="Mixed                                                                Air                                                                Supply                                                                Tank","mair_out_meter"="Mixed                                                                Air                                                                Out","dloop_atm_meter"="Distribution                                                                Loop","wloop_atm_meter"="Waste                                                                Loop")
+	sensors = list("mair_in_meter"="Mixed                                                                                                                                Air                                                                                                                                In","air_sensor"="Mixed                                                                                                                                Air                                                                                                                                Supply                                                                                                                                Tank","mair_out_meter"="Mixed                                                                                                                                Air                                                                                                                                Out","dloop_atm_meter"="Distribution                                                                                                                                Loop","wloop_atm_meter"="Waste                                                                                                                                Loop")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -78341,7 +78353,7 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber East";
 	dir = 8;
-	network = list("Toxins                                                                Test                                                                Area")
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area")
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
@@ -83646,7 +83658,7 @@
 "rcv" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("Карго Офис", "Кабинет Завхоза")
+	sortType = list("Карго  Офис", "Кабинет  Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -84813,7 +84825,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	sortType = list("Переработка", "Карго шаттл")
+	sortType = list("Переработка", "Карго  шаттл")
 	},
 /turf/simulated/floor{
 	icon_state = "warningcorner"
@@ -87996,7 +88008,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Карго Офис", "Кабинет Завхоза")
+	sortType = list("Карго  Офис", "Кабинет  Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -89351,7 +89363,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                Test                                                                Area");
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
 	pixel_x = 32
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -90444,7 +90456,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 4;
-	sortType = list("Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Зал Суда")
+	sortType = list("Офис  ГСБ","Агенция  Внутренних  Дел","Снаряжение  СБ","Детектив","Офис  Синего  Щита","Зал  Суда")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -91178,7 +91190,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/sortjunction{
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","Парк","Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Тренажерный Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка Уборщика")
+	sortType = list("Мусоросброс","Карго  Офис", "Кабинет  Завхоза","Парк","Офис  ГСБ","Агенция  Внутренних  Дел","Снаряжение  СБ","Детектив","Офис  Синего  Щита","Тренажерный  Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка  Уборщика")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -100298,7 +100310,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction{
 	dir = 8;
-	sortType = list("Комната Отдыха �?нженеров","Двигатель","Офис Главного �?нженера","Атмосферный Контроль")
+	sortType = list("Комната  Отдыха  �?нженеров","Двигатель","Офис  Главного  �?нженера","Атмосферный  Контроль")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -102482,7 +102494,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 4;
-	sortType = list("OnlineShop", "Карго шаттл")
+	sortType = list("OnlineShop", "Карго  шаттл")
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -107212,7 +107224,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                Test                                                                Area");
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
 	pixel_x = 32
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -107393,7 +107405,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins                                                                Test                                                                Area");
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area");
 	pixel_x = 32
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -112001,7 +112013,7 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber South";
 	dir = 1;
-	network = list("Toxins                                                                Test                                                                Area")
+	network = list("Toxins                                                                                                                                Test                                                                                                                                Area")
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
