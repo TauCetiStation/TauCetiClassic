@@ -11081,11 +11081,6 @@
 "bMk" = (
 /obj/machinery/computer/med_data/laptop,
 /obj/structure/table/woodentable,
-/obj/machinery/door_control{
-	id = "Medical_Psychiatry";
-	name = "Privacy Shutters";
-	pixel_y = -25
-	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bMo" = (
