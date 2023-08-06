@@ -2115,6 +2115,25 @@
 "adx" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/mixing)
+"ady" = (
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1441;
+	name = "Tank Monitor";
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon    Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous    Oxide","waste_sensor"="Gas    Mix    Tank")
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/engineering/monitoring)
 "adz" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -2277,6 +2296,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"adP" = (
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter    In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter    Out")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/monitoring)
 "adQ" = (
 /obj/effect/decal/remains/robot,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -2292,6 +2323,19 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
+"adR" = (
+/obj/machinery/computer/general_air_control{
+	dir = 4;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter    In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter    Out")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "adS" = (
 /obj/machinery/door/airlock/vault{
 	name = "Blueshield Storage";
@@ -8252,6 +8296,10 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10134,6 +10182,10 @@
 	},
 /obj/effect/landmark{
 	name = "blobstart"
+	},
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -20352,11 +20404,9 @@
 /area/station/civilian/bar)
 "eAh" = (
 /obj/structure/stool,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -26236,7 +26286,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
+	network = list("Toxins    Test    Area");
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom{
@@ -34756,16 +34806,20 @@
 	},
 /area/station/tcommsat/computer)
 "hTr" = (
-/obj/machinery/computer/general_air_control{
-	frequency = 1444;
-	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
-/area/station/engineering/engine)
+/area/station/security/prison)
 "hTs" = (
 /turf/simulated/wall,
 /area/station/cargo/office)
@@ -36282,21 +36336,19 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "imp" = (
-/obj/machinery/computer/general_air_control{
-	dir = 4;
-	frequency = 1443;
-	level = 3;
-	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
+/obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/structure/sign/map/prometheus{
-	pixel_x = -32
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
 	},
-/area/station/engineering/monitoring)
+/turf/simulated/floor,
+/area/station/security/prison)
 "imv" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -48264,6 +48316,10 @@
 /obj/item/weapon/storage/fancy/cigarettes{
 	pixel_y = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "lrU" = (
@@ -48844,24 +48900,16 @@
 	},
 /area/station/rnd/test_area)
 "lAm" = (
-/obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1441;
-	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "vault"
+	icon_state = "cafeteria"
 	},
-/area/station/engineering/monitoring)
+/area/station/security/prison)
 "lAp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -64018,7 +64066,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	name = "Research Monitor";
-	network = list("Research","Toxins Test Area","Robots","Anomaly Isolation");
+	network = list("Research","Toxins    Test    Area","Robots","Anomaly    Isolation");
 	pixel_y = 2
 	},
 /obj/structure/table/woodentable,
@@ -69351,17 +69399,15 @@
 /area/station/civilian/garden)
 "qJU" = (
 /obj/machinery/computer/general_air_control{
-	dir = 4;
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	sensors = list("in_sm_meter"="Supermatter    In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter    Out")
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkyellow"
+	icon_state = "dark"
 	},
-/area/station/engineering/chiefs_office)
+/area/station/engineering/engine)
 "qJZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -71602,6 +71648,10 @@
 	dir = 4
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "rqE" = (
@@ -72803,14 +72853,18 @@
 /area/station/cargo/storage)
 "rFw" = (
 /obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1444;
+	dir = 4;
+	frequency = 1443;
 	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	name = "Distribution and Waste Monitor";
+	sensors = list("mair_in_meter"="Mixed    Air    In","air_sensor"="Mixed    Air    Supply    Tank","mair_out_meter"="Mixed    Air    Out","dloop_atm_meter"="Distribution    Loop","wloop_atm_meter"="Waste    Loop")
+	},
+/obj/structure/sign/map/prometheus{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/engineering/monitoring)
 "rFM" = (
@@ -73454,6 +73508,10 @@
 /area/station/security/interrogation)
 "rOJ" = (
 /obj/structure/stool/bed/chair/metal,
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -85080,7 +85138,7 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
 	dir = 4;
-	network = list("Toxins Test Area")
+	network = list("Toxins    Test    Area")
 	},
 /turf/simulated/floor/plating/airless{
 	dir = 8;
@@ -88475,7 +88533,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area")
+	network = list("Toxins    Test    Area")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -131375,7 +131433,7 @@ eKW
 fmz
 pyu
 pyu
-imp
+rFw
 gNu
 oxd
 pyu
@@ -132919,10 +132977,10 @@ pyu
 pyu
 pyu
 pyu
-lAm
+ady
 fNz
 oEg
-rFw
+adP
 xAj
 oop
 vnU
@@ -133436,7 +133494,7 @@ sWO
 fLZ
 cOA
 qaA
-qJU
+adR
 tsa
 sWO
 sWO
@@ -139084,7 +139142,7 @@ vdJ
 kVn
 nZt
 tye
-hTr
+qJU
 hvk
 tcP
 rJO
@@ -141116,11 +141174,11 @@ bRM
 mKe
 kaa
 vix
-pdA
+hTr
 pdA
 dlG
 gJs
-npE
+lAm
 rwr
 ndk
 vBG
@@ -142401,7 +142459,7 @@ aHv
 aHv
 twd
 xcr
-kkO
+eAh
 xor
 vXi
 xcr
@@ -142657,10 +142715,10 @@ sEy
 mlq
 eKA
 foN
-kkO
+eAh
 eKn
 lrM
-eAh
+imp
 xcr
 dyg
 vgT

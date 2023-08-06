@@ -12065,6 +12065,10 @@
 	dir = 1
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -15609,6 +15613,10 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -24287,7 +24295,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	name = "Research Monitor";
-	network = list("Research","Toxins Test Area","Robots","Anomaly Isolation");
+	network = list("Research","Toxins    Test    Area","Robots","Anomaly    Isolation");
 	pixel_y = 28
 	},
 /obj/machinery/light/smart{
@@ -25893,7 +25901,7 @@
 /obj/machinery/camera{
 	c_tag = "Misc Test Chamber";
 	dir = 8;
-	network = list("Anomaly Isolation")
+	network = list("Anomaly    Isolation")
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -27559,6 +27567,10 @@
 	dir = 10
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart";
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
