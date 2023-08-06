@@ -5896,7 +5896,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "aJV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15450,7 +15450,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "cGi" = (
 /obj/structure/window/thin/reinforced,
 /obj/structure/window/thin/reinforced{
@@ -17484,7 +17484,7 @@
 "cYS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "cZe" = (
 /obj/structure/table/glass,
 /obj/machinery/kitchen_machine/microwave{
@@ -19281,7 +19281,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "dug" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
@@ -21348,7 +21348,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "dSU" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
@@ -24353,7 +24353,7 @@
 /obj/structure/drain,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "ezd" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -29616,7 +29616,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "fFp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark/start/assistant/waiter,
@@ -42242,7 +42242,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/bridgehall)
 "img" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light/small{
@@ -48714,7 +48714,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "jEf" = (
 /turf/simulated/floor/plating/airless{
 	dir = 9;
@@ -75560,7 +75560,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "puZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/visible,
@@ -80000,7 +80000,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "qqZ" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -88772,7 +88772,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "soy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -109097,7 +109097,7 @@
 /area/station/maintenance/science)
 "wzm" = (
 /turf/simulated/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/toilet)
 "wzn" = (
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -135794,11 +135794,11 @@ cWa
 wsm
 ewq
 vdM
-gOl
+ncT
 fFk
 qqY
 wzm
-gOl
+ncT
 lXz
 sCr
 sCr
@@ -136051,11 +136051,11 @@ iIz
 akQ
 xXy
 bnJ
-gOl
+ncT
 puY
 dSL
 eyV
-gOl
+ncT
 giR
 rrx
 ery
@@ -136565,11 +136565,11 @@ gri
 blI
 lJo
 cHA
-gOl
+ncT
 dud
 cYS
 cGg
-gOl
+ncT
 xmp
 hZC
 vCc
@@ -136822,11 +136822,11 @@ mir
 mir
 xcF
 raq
-gOl
-gOl
-gOl
-gOl
-gOl
+ncT
+ncT
+ncT
+ncT
+ncT
 nCU
 mbb
 ncT
