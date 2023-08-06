@@ -61028,7 +61028,6 @@
 /area/station/civilian/dormitories/courtroom)
 "oba" = (
 /obj/machinery/hologram/holopad,
-/obj/machinery/computer/aifixer,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -100302,6 +100301,24 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"xGk" = (
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "xGo" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -146591,7 +146608,7 @@ fZz
 lMB
 vAu
 kzb
-vAu
+xGk
 psV
 aNa
 vAu
