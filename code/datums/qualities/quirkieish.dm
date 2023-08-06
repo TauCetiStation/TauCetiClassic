@@ -371,8 +371,8 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/prisoner/add_effect(mob/living/carbon/human/H, latespawn)
-	if(latespawn)
-		to_chat(H, "<span class='notice'>Тебя недавно отпустили по УДО. Больше не нарушай!</span>")
+	if(latespawn == TRUE)
+		to_chat(H, "<span class='notice'>Тебя недавно отпустили по УДО. чтобы ты мог начать жизнь с чистого листа.</span>")
 		return
 
 	var/turf/T = pick(prisonerstart)
