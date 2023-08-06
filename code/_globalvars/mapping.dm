@@ -35,6 +35,7 @@ var/global/list/reverse_dir = list(2, 1, 3, 8, 10, 9, 11, 4, 6, 5, 7, 12, 14, 13
 var/global/list/espionageagent_start = list()
 var/global/list/survivalist_start= list()
 var/global/list/loneopstart = list()
+var/global/list/prisonerstart = list()
 	//away missions
 var/global/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 
