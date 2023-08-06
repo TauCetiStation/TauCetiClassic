@@ -30676,6 +30676,10 @@
 "hbe" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -46672,6 +46676,24 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
+"kHH" = (
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "kHJ" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
@@ -58772,6 +58794,10 @@
 /area/station/medical/hallway)
 "nAv" = (
 /obj/machinery/r_n_d/destructive_analyzer,
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -100301,24 +100327,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"xGk" = (
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "xGo" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -146608,7 +146616,7 @@ fZz
 lMB
 vAu
 kzb
-xGk
+kHH
 psV
 aNa
 vAu
