@@ -19289,6 +19289,10 @@
 	dir = 4;
 	name = "Toxin Air Vent"
 	},
+/obj/machinery/sparker{
+	id = "mixingsparker";
+	pixel_y = -23
+	},
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "erZ" = (
@@ -46676,24 +46680,6 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
-"kHH" = (
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "kHJ" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
@@ -50042,6 +50028,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/ignition_switch{
+	id = "mixingsparker";
+	pixel_x = -24;
+	layer = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -97336,6 +97327,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"wYf" = (
+/obj/structure/sign/directions/evac{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "wYl" = (
 /obj/machinery/light/smart,
 /turf/simulated/floor{
@@ -146616,7 +146625,7 @@ fZz
 lMB
 vAu
 kzb
-kHH
+wYf
 psV
 aNa
 vAu
