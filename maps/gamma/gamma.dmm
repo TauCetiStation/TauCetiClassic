@@ -12063,7 +12063,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	sortType = "Прочие �?сследования"
+	sortType = "Прочие Исследования"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -12351,13 +12351,13 @@
 	},
 /obj/machinery/windowtint{
 	id = "psych";
-	pixel_y = -28;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -28
 	},
 /obj/machinery/windowtint{
 	id = "geneticpenpsych2";
-	pixel_y = -28;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = -28
 	},
 /turf/simulated/floor/carpet,
 /area/station/medical/psych)
@@ -37673,12 +37673,12 @@
 /obj/structure/table,
 /obj/random/foods/donuts,
 /obj/random/foods/donuts{
-	pixel_y = 6;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /obj/item/weapon/reagent_containers/food/drinks/coffee{
-	pixel_y = 11;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 11
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -41153,12 +41153,12 @@
 "iaS" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "outter_lab_north";
+	pixel_x = 7;
 	pixel_y = 25;
 	tag_airpump = "outter_lab_north_pump";
 	tag_chamber_sensor = "outter_lab_north_sensor";
 	tag_exterior_door = "outter_lab_north_outer";
-	tag_interior_door = "outter_lab_north_inner";
-	pixel_x = 7
+	tag_interior_door = "outter_lab_north_inner"
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
@@ -92116,8 +92116,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airlock_sensor{
 	id_tag = "forestar_north_sensor";
-	pixel_y = 25;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 25
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
@@ -103373,8 +103373,8 @@
 "vkP" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "outter_lab_north_sensor";
-	pixel_y = 25;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 25
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
@@ -112031,12 +112031,12 @@
 "xdR" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "forestar_north";
+	pixel_x = 7;
 	pixel_y = 25;
 	tag_airpump = "forestar_north_pump";
 	tag_chamber_sensor = "forestar_north_sensor";
 	tag_exterior_door = "forestar_north_outer";
-	tag_interior_door = "forestar_north_inner";
-	pixel_x = 7
+	tag_interior_door = "forestar_north_inner"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
