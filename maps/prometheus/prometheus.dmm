@@ -32605,10 +32605,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/item/device/camera/polar{
-	pixel_y = -8
-	},
-/obj/item/device/tagger/shop,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "hoy" = (
@@ -86497,7 +86494,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/obj/item/device/tagger/shop,
+/obj/item/device/tagger/shop{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecorner"
@@ -93781,10 +93780,11 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film{
 	pixel_x = 4;
-	pixel_y = 6
+	pixel_y = 12
 	},
 /obj/item/device/camera_film{
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
