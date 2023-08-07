@@ -96,9 +96,7 @@
 	if(href_list["lobby_be_special"])
 		if(client.prefs.selected_quality_name)
 			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
-			to_chat(src, "<font color='green'><b>Вы особенный.</b></font><br>\
-		<font color='green'><b>Ваша особенность:</b> [quality.desc]</font><br>\
-		<font color='green'><b>Требования:</b> [quality.requirement]</font>")
+			SSqualities.announce_quality(client, quality)
 			return
 		if(!client.prefs.selecting_quality)
 			var/datum/preferences/P = client.prefs
