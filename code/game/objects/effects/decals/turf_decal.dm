@@ -4,14 +4,19 @@
 	name = "Turf Decals"
 	icon = 'icons/turf/turf_decals.dmi'
 
-/obj/effect/decal/turf_decal/atom_init()
-	..()
+/obj/effect/decal/turf_decal/atom_init(mapload, new_state, new_color, new_alpha)
+	. = ..()
+
+	icon_state = new_state || icon_state
+
+	if(!icon_state)
+		CRASH("Attempt to create turf decal with no state! [x].[y].[z]")
 
 	var/turf/T = get_turf(src)
 
 	var/mutable_appearance/MA = mutable_appearance(icon, icon_state)
-	MA.color = color
-	MA.alpha = alpha
+	MA.color = new_color || color
+	MA.alpha = new_alpha || alpha
 
 	T.add_turf_decal(MA)
 
@@ -19,13 +24,18 @@
 
 // It's just for quick access, feel free to varset decals with any color and alpha in map editor
 
-/obj/effect/decal/turf_decal/alpha // for strips and text decals
+// strips and text decals
+/obj/effect/decal/turf_decal/alpha 
 	name = "Transparent Turf Decals"
 	alpha = 100
 
 /obj/effect/decal/turf_decal/alpha/yellow
 	name = "Transparent Yellow Turf Decals"
 	color = "#ffff00"
+
+/obj/effect/decal/turf_decal/alpha/cyan
+	name = "Transparent Cyan Turf Decals"
+	color = "#00ffff"
 
 /obj/effect/decal/turf_decal/alpha/black
 	name = "Transparent Black Turf Decals"
@@ -35,6 +45,24 @@
 	name = "Transparent Red Turf Decals"
 	color = "#ff0000"
 
-/obj/effect/decal/turf_decal/wood // sidings / borders
+// sidings / borders
+/obj/effect/decal/turf_decal/wood
 	name = "Wood Turf Decals"
 	color = "#ffc500"
+
+/obj/effect/decal/turf_decal/metal
+	name = "Metal Turf Decals"
+	color = "#404040"
+
+// special decals
+/obj/effect/decal/turf_decal/goonplaque
+	name = "Goon Plaque"
+	icon_state = "plaque" // who resprited it as Tau Ceti? Possible we lost some goon reference
+
+/obj/effect/decal/turf_decal/goonplaque/atom_init()
+	. = ..()
+
+	// maybe not the best way, but i want to get rid of plaque-turf
+	var/turf/T = get_turf(src)
+	T.name = "Comemmorative Plaque";
+	T.desc = "\"Это металлический диск в честь наших товарищей на станциях G4407. Недеемся, модель TG4407 сможет служить на ваше благо.\" Ниже выцарапано грубое изображение метеора и космонавта. Космонавт смеется. Метеор взрывается.";

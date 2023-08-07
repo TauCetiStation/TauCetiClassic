@@ -1716,7 +1716,6 @@
 #include "code\modules\locations\shuttles\signs.dm"
 #include "code\modules\locations\shuttles\trusters.dm"
 #include "code\modules\locations\shuttles\wall.dm"
-#include "code\modules\locations\shuttles\warning_stripes.dm"
 #include "code\modules\mafia\_defines.dm"
 #include "code\modules\mafia\controller.dm"
 #include "code\modules\mafia\immortal_human.dm"

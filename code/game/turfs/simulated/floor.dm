@@ -236,20 +236,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				update_visuals(air)*/
 	..()
 
-/turf/simulated/floor/return_siding_icon_state()
-	..()
-	if(is_grass_floor())
-		var/dir_sum = 0
-		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
-			if(!(T.is_grass_floor()))
-				dir_sum += direction
-		if(dir_sum)
-			return "wood_siding[dir_sum]"
-		else
-			return 0
-
-
 /turf/simulated/floor/attack_paw(mob/user)
 	return attack_hand(user)
 

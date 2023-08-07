@@ -42,11 +42,6 @@
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
 
-/turf/simulated/floor/goonplaque
-	name = "Comemmorative Plaque";
-	desc = "\"Это металлический диск в честь наших товарищей на станциях G4407. Недеемся модель TG4407 сможет служить на ваше благо.\" Ниже выцарапано грубое изображение метеора и космонавта. Космонавт смеется. Метеор взрывается.";
-	icon_state = "plaque";
-
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrenching(C))
 		if(user.is_busy(src))
@@ -452,5 +447,3 @@
 
 /turf/simulated/floor/plating/airless/catwalk/is_catwalk()
 	return TRUE
-
-/turf/simulated/floor/exodus
