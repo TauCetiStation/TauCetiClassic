@@ -6108,7 +6108,6 @@
 	},
 /area/station/maintenance/cargo)
 "aVq" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -63254,10 +63253,14 @@
 	},
 /area/station/security/secconfhall)
 "pfO" = (
-/obj/structure/stool,
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced/stall,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "green"
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
 "pfX" = (
@@ -63881,7 +63884,10 @@
 	req_access = list(35)
 	},
 /obj/structure/table/reinforced/stall,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/civilian/hydroponics)
 "ppb" = (
 /obj/structure/closet/emcloset,
@@ -132866,7 +132872,7 @@ tBH
 dIA
 nAb
 tBH
-ocK
+pfO
 poQ
 aWw
 eDs
@@ -133124,7 +133130,7 @@ nZj
 uce
 cZc
 uce
-pfO
+uce
 jjN
 sNF
 rbG
