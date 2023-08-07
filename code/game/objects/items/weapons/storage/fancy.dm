@@ -47,8 +47,6 @@
 	startswith = list(/obj/random/foods/donuts = 6)
 
 /obj/item/weapon/storage/fancy/donut_box/update_icon()
-	if(!loc) // idk why but update_icon breaks asset generation
-		return
 	cut_overlays()
 
 	for(var/i in 1 to contents.len)
