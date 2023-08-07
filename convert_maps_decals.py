@@ -260,9 +260,9 @@ def main():
 
 				# whitebot
 				mapfile = re.sub(r'/turf/simulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "whitebot"\s+}', 
-				r'/obj/effect/decal/turf_decal/yellow{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor{\n\ticon_state = "white"\n\t}', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor{\n\ticon_state = "white"\n\t}', mapfile)
 				mapfile = re.sub(r'/turf/unsimulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "whitebot"\s+}', 
-				r'/obj/effect/decal/turf_decal/yellow{\n\ticon_state = "bot"\n\t},\n/turf/unsimulated/floor{\n\ticon_state = "white"\n\t}', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/unsimulated/floor{\n\ticon_state = "white"\n\t}', mapfile)
 
 				## plates
 				# space station 13 (not on the maps)
