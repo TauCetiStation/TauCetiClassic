@@ -36,4 +36,5 @@
 	color = "#ff0000"
 
 /obj/effect/decal/turf_decal/wood // sidings / borders
-	color = "#cb9e04"
+	name = "Wood Turf Decals"
+	color = "#ffc500"
