@@ -4,7 +4,7 @@
 	name = "Turf Decals"
 	icon = 'icons/turf/turf_decals.dmi'
 
-/obj/effect/decal/turf_decal/atom_init(mapload, new_state, new_color, new_alpha)
+/obj/effect/decal/turf_decal/atom_init(mapload, new_state, new_dir, new_color, new_alpha)
 	. = ..()
 
 	icon_state = new_state || icon_state
@@ -14,10 +14,11 @@
 
 	var/turf/T = get_turf(src)
 
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state)
+	var/image/I = image(icon, icon_state, dir = (new_dir || dir)) // temp image to work around mutable_appearance dir problem (thx tg for this solution)
+
+	var/mutable_appearance/MA = new(I)
 	MA.color = new_color || color
 	MA.alpha = new_alpha || alpha
-
 	T.add_turf_decal(MA)
 
 	return INITIALIZE_HINT_QDEL
