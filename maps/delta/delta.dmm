@@ -25229,9 +25229,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"fOb" = (
-/turf/simulated/wall,
-/area/station/rnd/telesci)
 "fOp" = (
 /turf/simulated/floor{
 	dir = 3;
@@ -38506,7 +38503,7 @@
 	},
 /area/station/maintenance/science)
 "iQn" = (
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall,
 /area/station/rnd/telesci)
 "iQp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -48864,23 +48861,8 @@
 	},
 /area/station/security/prison)
 "lhp" = (
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "lhw" = (
 /obj/structure/filingcabinet/medical,
 /obj/structure/sign/poster/official/do_not_question{
@@ -132185,11 +132167,11 @@ wtC
 wtC
 wtC
 uZl
+lhp
+lhp
+lhp
+lhp
 iQn
-iQn
-iQn
-iQn
-fOb
 aqm
 nCa
 gWl
@@ -132442,7 +132424,7 @@ ylt
 ylt
 omz
 vil
-iQn
+lhp
 bks
 ldt
 bks
@@ -132956,7 +132938,7 @@ wtC
 wtC
 ijY
 evL
-iQn
+lhp
 bks
 bks
 bks
@@ -133470,7 +133452,7 @@ ijY
 dyG
 bwi
 evL
-iQn
+lhp
 bks
 bks
 bks
@@ -133984,7 +133966,7 @@ oZa
 oZa
 daK
 pPD
-iQn
+lhp
 bks
 bks
 bks
@@ -134241,11 +134223,11 @@ xyY
 oZa
 jwI
 hCP
+lhp
+iXE
+iXE
+iXE
 iQn
-iXE
-iXE
-iXE
-fOb
 wnJ
 bzw
 wJj
@@ -134498,11 +134480,11 @@ dQa
 bSg
 uar
 aJe
-iQn
+lhp
 nHE
 prx
 sBT
-fOb
+iQn
 frF
 rzd
 iFV
@@ -134755,7 +134737,7 @@ ukI
 bSg
 qou
 awA
-iQn
+lhp
 kjX
 vMS
 bUb
@@ -135012,11 +134994,11 @@ cWE
 oZa
 nDw
 iAz
-iQn
+lhp
 dSC
 jjo
 pRs
-fOb
+iQn
 pqq
 pGN
 hqf
@@ -135269,11 +135251,11 @@ oZa
 oZa
 ajx
 kek
-iQn
+lhp
 mGu
-iQn
-iQn
-iQn
+lhp
+lhp
+lhp
 vCH
 vCH
 vCH
@@ -146554,7 +146536,7 @@ fZz
 lMB
 vAu
 kzb
-lhp
+vAu
 psV
 aNa
 vAu
