@@ -25229,6 +25229,9 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"fOb" = (
+/turf/simulated/wall,
+/area/station/rnd/telesci)
 "fOp" = (
 /turf/simulated/floor{
 	dir = 3;
@@ -63694,9 +63697,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"oLY" = (
-/turf/simulated/wall,
-/area/station/rnd/telesci)
 "oMd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bar,
@@ -86690,6 +86690,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/weapon/folder/brown,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "unL" = (
@@ -132184,7 +132189,7 @@ iQn
 iQn
 iQn
 iQn
-oLY
+fOb
 aqm
 nCa
 gWl
@@ -134240,7 +134245,7 @@ iQn
 iXE
 iXE
 iXE
-oLY
+fOb
 wnJ
 bzw
 wJj
@@ -134497,7 +134502,7 @@ iQn
 nHE
 prx
 sBT
-oLY
+fOb
 frF
 rzd
 iFV
@@ -135011,7 +135016,7 @@ iQn
 dSC
 jjo
 pRs
-oLY
+fOb
 pqq
 pGN
 hqf
