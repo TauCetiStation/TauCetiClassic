@@ -16585,6 +16585,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "dIJ" = (
@@ -49053,10 +49057,11 @@
 /obj/item/weapon/pen{
 	pixel_x = -5
 	},
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
 /obj/item/device/multitool,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -64872,6 +64877,9 @@
 	c_tag = "Cargo Office"
 	},
 /obj/item/weapon/paper_bin,
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -76775,6 +76783,16 @@
 	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape)
+"rPo" = (
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/security/brig)
 "rPr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -84112,6 +84130,10 @@
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Civilian"
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
@@ -102086,6 +102108,10 @@
 	dir = 5;
 	network = list("SS13","Medical")
 	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -102181,12 +102207,12 @@
 	},
 /area/station/security/prison)
 "ydE" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
 /obj/machinery/computer/skills,
 /obj/structure/table/woodentable,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "ydI" = (
@@ -102565,6 +102591,10 @@
 /area/station/maintenance/chapel)
 "yjQ" = (
 /obj/structure/table,
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitepurple"
@@ -154264,7 +154294,7 @@ fqK
 fqK
 fqK
 fqK
-fqK
+rPo
 bGz
 qeL
 iho
