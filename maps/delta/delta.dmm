@@ -22967,15 +22967,6 @@
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "fkt" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Security Processing APC";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -61423,6 +61414,9 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"ogv" = (
+/turf/simulated/wall,
+/area/station/rnd/telesci)
 "ogy" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -65298,18 +65292,13 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "pgT" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -65458,6 +65447,9 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/chiefs_office)
+"piT" = (
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "piY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -77743,9 +77735,6 @@
 /obj/item/weapon/cigbutt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"scB" = (
-/turf/simulated/wall,
-/area/station/rnd/telesci)
 "scI" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -84073,9 +84062,6 @@
 	icon_state = "warning"
 	},
 /area/station/medical/hallway)
-"tFb" = (
-/turf/simulated/wall/r_wall,
-/area/station/rnd/telesci)
 "tFn" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/brflowers,
@@ -132208,11 +132194,11 @@ wtC
 wtC
 wtC
 uZl
-tFb
-tFb
-tFb
-tFb
-scB
+piT
+piT
+piT
+piT
+ogv
 aqm
 nCa
 gWl
@@ -132465,7 +132451,7 @@ ylt
 ylt
 omz
 vil
-tFb
+piT
 bks
 ldt
 bks
@@ -132979,7 +132965,7 @@ wtC
 wtC
 ijY
 evL
-tFb
+piT
 bks
 bks
 bks
@@ -133493,7 +133479,7 @@ ijY
 dyG
 bwi
 evL
-tFb
+piT
 bks
 bks
 bks
@@ -134007,7 +133993,7 @@ oZa
 oZa
 daK
 pPD
-tFb
+piT
 bks
 bks
 bks
@@ -134264,11 +134250,11 @@ xyY
 oZa
 jwI
 hCP
-tFb
+piT
 iXE
 iXE
 iXE
-scB
+ogv
 wnJ
 bzw
 wJj
@@ -134521,11 +134507,11 @@ dQa
 bSg
 uar
 aJe
-tFb
+piT
 nHE
 prx
 sBT
-scB
+ogv
 frF
 rzd
 iFV
@@ -134778,7 +134764,7 @@ ukI
 bSg
 qou
 awA
-tFb
+piT
 kjX
 vMS
 bUb
@@ -135035,11 +135021,11 @@ cWE
 oZa
 nDw
 iAz
-tFb
+piT
 dSC
 jjo
 pRs
-scB
+ogv
 pqq
 pGN
 hqf
@@ -135292,11 +135278,11 @@ oZa
 oZa
 ajx
 kek
-tFb
+piT
 mGu
-tFb
-tFb
-tFb
+piT
+piT
+piT
 vCH
 vCH
 vCH
