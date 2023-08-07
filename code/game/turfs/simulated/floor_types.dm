@@ -275,6 +275,22 @@
 /turf/simulated/floor/beach/water/burn_tile()
 	return
 
+// indoor wariant of asteroid turfs
+// todo: craft
+// todo: rename?
+// todo: why flood.dmi icons, and not asteroid.dmi
+/turf/simulated/floor/garden
+	icon_state = "asteroid"
+	icon_plating = "asteroid"
+
+/turf/simulated/floor/garden/update_icon() // parent update_icon bad, we don't want it: https://github.com/TauCetiStation/TauCetiClassic/issues/11873
+	return 0
+
+/*
+/turf/simulated/floor/garden/update_icon()
+	icon_state = "asteroid[pick(123)]"
+*/
+
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass1"

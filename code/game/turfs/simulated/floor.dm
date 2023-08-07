@@ -152,6 +152,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
+// todo: sort this between floor/type/update_icon, wtf
 /turf/simulated/floor/update_icon()
 	if(is_plasteel_floor())
 		if(!broken && !burnt)
@@ -381,6 +382,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	broken = 0
 	burnt = 0
 
+	clean_turf_decals()
 	update_icon()
 	levelupdate()
 

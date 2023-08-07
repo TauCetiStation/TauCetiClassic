@@ -239,24 +239,30 @@ def main():
 
 				# platebot
 				mapfile = re.sub(r'/turf/simulated/floor/plating{\s+(dir = [0-9]*;\n\t)?icon_state = "platebot"\s+}', 
-				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\t\1icon_state = "bot"\n\t},\n/turf/simulated/floor/plating', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor/plating', mapfile)
 				mapfile = re.sub(r'/turf/simulated/floor/plating/airless{\s+(dir = [0-9]*;\n\t)?icon_state = "platebot"\s+}', 
-				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\t\1icon_state = "bot"\n\t},\n/turf/simulated/floor/plating/airless', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor/plating/airless', mapfile)
 				mapfile = re.sub(r'/turf/unsimulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "platebot"\s+}', 
-				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\t\1icon_state = "bot"\n\t},\n/turf/unsimulated/floor', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/unsimulated/floor', mapfile)
 
 				mapfile = re.sub(r'/turf/simulated/floor/plating{\s+(dir = [0-9]*;\n\t)?icon_state = "platebot";\n\tnitrogen = 0.01;\n\toxygen = 0.01\s+}',
-				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\t\1icon_state = "bot"\n\t},\n/turf/simulated/floor/plating', mapfile) # lolwut
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor/plating', mapfile) # lolwut
 				mapfile = re.sub(r'/turf/unsimulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "platebot";\n\tname = "plating"\s+}',
-				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\t\1icon_state = "bot"\n\t},\n/turf/unsimulated/floor', mapfile) # lolwut2
+				r'/obj/effect/decal/turf_decal/alpha/yellow{\n\ticon_state = "bot"\n\t},\n/turf/unsimulated/floor', mapfile) # lolwut2
 
 				# platebotc
 				mapfile = re.sub(r'/turf/simulated/floor/plating{\s+(dir = [0-9]*;\n\t)?icon_state = "platebotc"\s+}', 
-				r'/obj/effect/decal/turf_decal/alpha/cyan{\n\t\1icon_state = "bot"\n\t},\n/turf/simulated/floor/plating', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/cyan{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor/plating', mapfile)
 				mapfile = re.sub(r'/turf/simulated/floor/plating/airless{\s+(dir = [0-9]*;\n\t)?icon_state = "platebotc"\s+}', 
-				r'/obj/effect/decal/turf_decal/alpha/cyan{\n\t\1icon_state = "bot"\n\t},\n/turf/simulated/floor/plating/airless', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/cyan{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor/plating/airless', mapfile)
 				mapfile = re.sub(r'/turf/unsimulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "platebotc"\s+}', 
-				r'/obj/effect/decal/turf_decal/alpha/cyan{\n\t\1icon_state = "bot"\n\t},\n/turf/unsimulated/floor', mapfile)
+				r'/obj/effect/decal/turf_decal/alpha/cyan{\n\ticon_state = "bot"\n\t},\n/turf/unsimulated/floor', mapfile)
+
+				# whitebot
+				mapfile = re.sub(r'/turf/simulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "whitebot"\s+}', 
+				r'/obj/effect/decal/turf_decal/yellow{\n\ticon_state = "bot"\n\t},\n/turf/simulated/floor{\n\ticon_state = "white"\n\t}', mapfile)
+				mapfile = re.sub(r'/turf/unsimulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "whitebot"\s+}', 
+				r'/obj/effect/decal/turf_decal/yellow{\n\ticon_state = "bot"\n\t},\n/turf/unsimulated/floor{\n\ticon_state = "white"\n\t}', mapfile)
 
 				## plates
 				# space station 13 (not on the maps)
@@ -300,6 +306,10 @@ def main():
 					r'/obj/effect/decal/cleanable/dirt,\n/turf/simulated/floor/airless', mapfile)
 				mapfile = re.sub(r'/turf/unsimulated/floor{\s+icon_state = "floorgrime"\s+}', 
 					r'/obj/effect/decal/cleanable/dirt,\n/turf/unsimulated/floor', mapfile)
+
+				# Fix indoor icon_state = "asteroid" turfs to new path, see https://github.com/TauCetiStation/TauCetiClassic/issues/11873
+				mapfile = re.sub(r'/turf/simulated/floor{\s+(dir = [0-9]*;\n\t)?icon_state = "asteroid([0-9]*)"\s+}', 
+					r'/turf/simulated/floor/garden{\n\ticon_state = "asteroid\2"\n\t}', mapfile)
 
 				## error state
 				# removed, only one used from all set
