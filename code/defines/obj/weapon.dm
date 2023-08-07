@@ -218,11 +218,11 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
+		if(!H.gloves && !H.species.flags[NO_MINORCUTS] && user.get_species() != SKRELL) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(force / 2, null, damage_flags())
-	else if(ismonkey(user))
+	else if(ismonkey(user) && user.get_species() != SKRELL)
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)
