@@ -3237,7 +3237,7 @@
 /area/station/solar/starboard)
 "ajk" = (
 /obj/machinery/light/smart,
-/obj/structure/sign/map/left{
+/obj/structure/sign/map/gamma_left{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -5128,7 +5128,7 @@
 /area/station/medical/sleeper)
 "aBM" = (
 /obj/machinery/door/firedoor,
-/obj/structure/sign/map/right{
+/obj/structure/sign/map/gamma_right{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -84077,7 +84077,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/sign/map/right{
+/obj/structure/sign/map/gamma_right{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -88621,7 +88621,7 @@
 	},
 /area/station/medical/genetics)
 "siR" = (
-/obj/structure/sign/map/left{
+/obj/structure/sign/map/gamma_left{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
