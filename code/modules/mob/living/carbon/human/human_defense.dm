@@ -293,7 +293,8 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	if (!BP)
+	var/check_with_stump = istype(I, /obj/item/weapon/melee/baton)
+	if(check_with_stump ? (!BP || BP.is_stump) : !BP)
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
@@ -331,7 +332,12 @@
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
 	var/armor = run_armor_check(BP, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
-	if(armor >= 100 || !I.force)
+	if(armor >= 100)
+		return FALSE
+	if(!I.force)
+		//return success for apply agony effect
+		if(istype(I, /obj/item/weapon/melee/baton))
+			return TRUE
 		return FALSE
 
 	//Apply weapon damage

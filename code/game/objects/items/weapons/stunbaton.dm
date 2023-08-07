@@ -54,53 +54,43 @@
 		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/attack(mob/M, mob/living/user)
-	if(status && user.ClumsyProbabilityCheck(50))
+/obj/item/weapon/melee/baton/proc/set_force_by_intent(mob/living/user)
+	if(user.a_intent == INTENT_HARM)
+		return initial(force)
+	return 0
+
+/obj/item/weapon/melee/baton/attack(mob/living/M, mob/living/user, def_zone)
+	force = set_force_by_intent(user)
+	if(!status && user.a_intent != INTENT_HARM)
+		user.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+		return
+	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
-
-	if(isrobot(M))
-		return ..()
-
-	var/mob/living/carbon/human/H = M
-
-	if(user.a_intent == INTENT_HARM)
-		. = ..()
-		// A mob can be deleted after the attack, so we gotta be wary of that.
-		if(!. || QDELETED(H))
-			return
-		//H.apply_effect(5, WEAKEN, 0)
-		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
-
-		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-
-	if(!status)
-		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+	. = ..()
+	//legacy. Mob can be deleted after the attack, so we gotta be wary of that.
+	if(QDELETED(M))
 		return
-	else
-		user.do_attack_animation(M)
-		//H.apply_effect(10, STUN, 0)
-		//H.apply_effect(10, WEAKEN, 0)
-		//H.apply_effect(10, STUTTER, 0)
-		H.apply_effect(agony,AGONY,0)
-		H.set_lastattacker_info(user)
-		if(isrobot(src.loc))
-			var/mob/living/silicon/robot/R = src.loc
-			if(R && R.cell)
-				R.cell.use(50)
-		else
-			discharge()
-		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
+	if(!.)
+		return
+	if(!status)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+		return
+	//Help for administration
+	M.log_combat(user, "stunned (attempt) with [name]")
+	if(charges < 0)
+		return
+	//cant stun anyone without charge in cell
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(!R || !R.cell || !R.cell.use(50))
+			return
+	M.apply_effect(agony, AGONY, 0)
+	discharge()
+	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
-		if(!(user.a_intent == INTENT_HARM))
-			H.log_combat(user, "stunned (attempt) with [name]")
-
-		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
-
-
-	add_fingerprint(user)
 /obj/item/weapon/melee/baton/proc/set_status(value)
 	if(value)
 		START_PROCESSING(SSobj, src)
