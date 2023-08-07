@@ -301,7 +301,10 @@ def main():
 				mapfile = re.sub(r'/turf/unsimulated/floor{\s+icon_state = "floorgrime"\s+}', 
 					r'/obj/effect/decal/cleanable/dirt,\n/turf/unsimulated/floor', mapfile)
 
-				# error state
+				## error state
+				# removed, only one used from all set
+				mapfile = re.sub(r'whiteblue_ex', 
+					r'whiteblue', mapfile)
 
 				with open(file_path, 'w') as file :
 					file.write(mapfile)
