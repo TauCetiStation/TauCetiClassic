@@ -195,7 +195,7 @@
 			if(H.buckled)
 				return
 
-			if(!H.shoes && H.get_species() != SKRELL)
+			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.is_robotic())
 					return
@@ -218,11 +218,11 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.species.flags[NO_MINORCUTS] && user.get_species() != SKRELL) //specflags please..
+		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(force / 2, null, damage_flags())
-	else if(ismonkey(user) && user.get_species() != SKRELL)
+	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)

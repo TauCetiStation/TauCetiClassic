@@ -474,6 +474,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_organ = list(
