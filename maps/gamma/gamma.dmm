@@ -41332,13 +41332,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outerlabs)
 "iaW" = (
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/belt/utility,
-/obj/structure/table/glass,
-/obj/item/clothing/gloves/latex,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 2
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -42445,9 +42441,17 @@
 	},
 /area/station/cargo/office)
 "ikN" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
+/obj/structure/table/glass,
+/obj/item/clothing/gloves/latex,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -66554,13 +66558,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"ntV" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkstairs_alone"
-	},
-/area/station/maintenance/medbay)
 "nug" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/wooden_tv,
@@ -69382,14 +69379,12 @@
 	},
 /area/station/security/seclunch)
 "nXs" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = -32
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "purplecorner"
+	dir = 8;
+	icon_state = "darkstairs_alone"
 	},
-/area/station/hallway/primary/bridgehall)
+/area/station/maintenance/medbay)
 "nXu" = (
 /obj/machinery/computer/card,
 /obj/machinery/status_display{
@@ -78702,6 +78697,15 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
+"pXH" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "purplecorner"
+	},
+/area/station/hallway/primary/bridgehall)
 "pXN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -149259,7 +149263,7 @@ kVA
 hkf
 lnr
 pYX
-ntV
+nXs
 xdd
 rYe
 iry
@@ -157737,7 +157741,7 @@ wOp
 oex
 pWN
 oex
-nXs
+pXH
 xLZ
 iaW
 ikN
