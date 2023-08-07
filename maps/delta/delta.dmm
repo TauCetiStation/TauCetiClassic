@@ -98248,6 +98248,13 @@
 	icon_state = "grimy"
 	},
 /area/station/bridge/hop_office)
+"xkc" = (
+/obj/structure/rd_armor_stand,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/rnd/hor)
 "xkd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -132946,7 +132953,7 @@ mkl
 svQ
 vxf
 kiL
-mKy
+xkc
 mKy
 hzm
 vaP
@@ -133203,7 +133210,7 @@ fte
 uly
 vxf
 kiL
-yfN
+mKy
 wmV
 wlU
 cwe
@@ -133460,7 +133467,7 @@ mkl
 svQ
 vxf
 kiL
-mKy
+yfN
 mKy
 blq
 syE
