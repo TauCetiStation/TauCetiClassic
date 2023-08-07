@@ -5954,7 +5954,7 @@
 /area/station/storage/tools)
 "bks" = (
 /turf/simulated/floor/engine,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "bkz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -8717,7 +8717,7 @@
 "bOA" = (
 /obj/structure/sign/warning,
 /turf/simulated/wall/r_wall,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "bOD" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -9096,7 +9096,7 @@
 /turf/simulated/floor{
 	icon_state = "purple"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "bUf" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -9555,7 +9555,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "bYD" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
@@ -12780,7 +12780,7 @@
 /turf/simulated/floor{
 	icon_state = "purplefull"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "cMl" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -17230,7 +17230,7 @@
 	dir = 4;
 	icon_state = "purplecorner"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "dSE" = (
 /obj/machinery/cell_charger,
 /obj/structure/table/reinforced,
@@ -17633,6 +17633,9 @@
 	icon_state = "brown"
 	},
 /area/station/engineering/break_room)
+"dWw" = (
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "dWD" = (
 /obj/structure/table/woodentable/fancy,
 /obj/item/stack/sheet/wood{
@@ -18771,7 +18774,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "ekm" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
@@ -22173,7 +22176,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "fbu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -23612,7 +23615,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "ftg" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -39179,7 +39182,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "iYf" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -40152,7 +40155,7 @@
 	dir = 4;
 	icon_state = "purple"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "jjD" = (
 /obj/effect/landmark/start/chaplain,
 /turf/simulated/floor{
@@ -41276,7 +41279,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "jwM" = (
 /obj/effect/landmark/start/chief_medical_officer,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -44717,7 +44720,7 @@
 	dir = 1;
 	icon_state = "purple"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "kjY" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/storage/hazardvest,
@@ -48651,7 +48654,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor/engine,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "ldE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -53241,7 +53244,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "mko" = (
 /obj/machinery/alarm{
 	pixel_y = 22
@@ -55154,7 +55157,7 @@
 "mGu" = (
 /obj/structure/sign/departments/science,
 /turf/simulated/wall/r_wall,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "mGz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -59441,7 +59444,7 @@
 	dir = 1;
 	icon_state = "purplecorner"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "nHH" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/stool/bed/chair/office/dark{
@@ -66271,7 +66274,7 @@
 	dir = 8;
 	icon_state = "purple"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "pry" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -68581,7 +68584,7 @@
 	dir = 3;
 	icon_state = "purplecorner"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "pRL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -77649,7 +77652,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "saE" = (
 /obj/machinery/r_n_d/server/robotics,
 /turf/simulated/floor/bluegrid{
@@ -79826,7 +79829,7 @@
 	dir = 8;
 	icon_state = "purplecorner"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "sBX" = (
 /obj/structure/lattice,
 /obj/structure/window/thin/reinforced/phoron{
@@ -85285,7 +85288,7 @@
 "tVQ" = (
 /obj/machinery/telepad,
 /turf/simulated/floor/engine,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "tWr" = (
 /obj/structure/table/reinforced,
 /obj/item/device/mmi,
@@ -90548,7 +90551,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "vnf" = (
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -92255,6 +92258,9 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"vJt" = (
+/turf/simulated/wall,
+/area/station/rnd/telesci)
 "vJD" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -92546,7 +92552,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/engineering/drone_fabrication)
+/area/station/rnd/telesci)
 "vNc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
@@ -132261,11 +132267,11 @@ wtC
 wtC
 wtC
 uZl
-jbr
-jbr
-jbr
-jbr
-rkx
+dWw
+dWw
+dWw
+dWw
+vJt
 aqm
 nCa
 gWl
@@ -132518,7 +132524,7 @@ ylt
 ylt
 omz
 vil
-jbr
+dWw
 bks
 ldt
 bks
@@ -133032,7 +133038,7 @@ wtC
 wtC
 ijY
 evL
-jbr
+dWw
 bks
 bks
 bks
@@ -133546,7 +133552,7 @@ ijY
 dyG
 bwi
 evL
-jbr
+dWw
 bks
 bks
 bks
@@ -134060,7 +134066,7 @@ oZa
 oZa
 daK
 pPD
-jbr
+dWw
 bks
 bks
 bks
@@ -134317,11 +134323,11 @@ xyY
 oZa
 jwI
 hCP
-jbr
+dWw
 iXE
 iXE
 iXE
-rkx
+vJt
 wnJ
 bzw
 wJj
@@ -134574,11 +134580,11 @@ dQa
 bSg
 uar
 aJe
-jbr
+dWw
 nHE
 prx
 sBT
-rkx
+vJt
 frF
 rzd
 iFV
@@ -134831,7 +134837,7 @@ ukI
 bSg
 qou
 awA
-jbr
+dWw
 kjX
 vMS
 bUb
@@ -135088,11 +135094,11 @@ cWE
 oZa
 nDw
 iAz
-jbr
+dWw
 dSC
 jjo
 pRs
-rkx
+vJt
 pqq
 pGN
 hqf
@@ -135345,11 +135351,11 @@ oZa
 oZa
 ajx
 kek
-jbr
+dWw
 mGu
-jbr
-jbr
-jbr
+dWw
+dWw
+dWw
 vCH
 vCH
 vCH
