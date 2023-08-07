@@ -1016,8 +1016,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/hydroponics)
@@ -10585,7 +10584,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/civilian/garden)
@@ -23464,8 +23463,7 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -23713,7 +23711,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
@@ -25652,7 +25650,7 @@
 	},
 /area/station/maintenance/outerlabs)
 "eIO" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/civilian/garden)
@@ -26060,8 +26058,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -33643,8 +33640,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -34331,8 +34327,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -37262,8 +37257,7 @@
 /area/station/maintenance/brig)
 "gZo" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench,
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -39654,8 +39648,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -43472,7 +43465,7 @@
 	pixel_x = -1;
 	pixel_y = -5
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/outerlabs)
@@ -43713,7 +43706,7 @@
 	pixel_x = -9;
 	pixel_y = 10
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/outerlabs)
@@ -45728,8 +45721,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -45982,8 +45974,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -51648,7 +51639,7 @@
 	},
 /area/station/solar/port)
 "kbS" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
@@ -52512,8 +52503,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -54441,8 +54431,7 @@
 /area/station/medical/cryo)
 "kHN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -55696,8 +55685,7 @@
 	},
 /area/station/aisat)
 "kVA" = (
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -56434,8 +56422,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -59087,8 +59074,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -60644,7 +60630,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
@@ -63590,7 +63576,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/outerlabs)
@@ -64098,8 +64084,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -64459,7 +64444,7 @@
 	},
 /area/station/maintenance/brigright)
 "mPo" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid6"
 	},
 /area/station/civilian/garden)
@@ -69384,8 +69369,7 @@
 /area/station/maintenance/portsolar)
 "nQs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -76080,8 +76064,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -77312,7 +77295,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/outerlabs)
@@ -82143,7 +82126,7 @@
 	},
 /area/station/rnd/mixing)
 "qyu" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/civilian/garden)
@@ -84331,8 +84314,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -87699,8 +87681,7 @@
 	dir = 5;
 	icon_state = "spline_fancy"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -93199,7 +93180,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/civilian/garden)
@@ -93837,8 +93818,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -99026,8 +99006,7 @@
 "tZc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -102018,8 +101997,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -103124,8 +103102,7 @@
 	dir = 1;
 	icon_state = "spline_fancy"
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -109425,8 +109402,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -111751,8 +111727,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "whitebot"
+	icon_state = "white"
 	},
 /area/station/rnd/robotics)
 "wFj" = (
@@ -115016,8 +114995,7 @@
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/turf/simulated/floor{
-	dir = 1;
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -116768,8 +116746,11 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "whitebot"
+	icon_state = "white"
 	},
 /area/station/medical/morgue)
 "xNd" = (
@@ -117688,7 +117669,7 @@
 	pixel_y = 9
 	},
 /obj/item/weapon/ore/iron,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/outerlabs)

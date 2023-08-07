@@ -12167,7 +12167,7 @@
 /area/station/civilian/chapel)
 "avn" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/civilian/garden)
@@ -58491,7 +58491,7 @@
 /area/station/civilian/garden)
 "cla" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -58499,7 +58499,7 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -58883,7 +58883,7 @@
 "clU" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -60302,7 +60302,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -62416,7 +62416,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "cuE" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -62495,7 +62495,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "cuN" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid6"
 	},
 /area/station/civilian/garden)
@@ -62699,7 +62699,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -63029,7 +63029,7 @@
 /area/station/maintenance/starboardsolar)
 "cwV" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
@@ -63037,7 +63037,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/civilian/garden)
@@ -63164,7 +63164,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
@@ -63197,7 +63197,7 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "cxs" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/civilian/garden)
@@ -63211,7 +63211,7 @@
 	},
 /area/station/hallway/primary/central)
 "cxu" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/civilian/garden)
@@ -63233,8 +63233,11 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/server)
 "cxy" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "whitebot"
+	icon_state = "white"
 	},
 /area/station/medical/reception)
 "cxz" = (
@@ -63242,7 +63245,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -65060,7 +65063,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -65192,7 +65195,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
@@ -65200,7 +65203,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -67759,7 +67762,7 @@
 	dir = 1;
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -67894,7 +67897,7 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
@@ -83398,7 +83401,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid6"
 	},
 /area/station/civilian/garden)

@@ -239,7 +239,7 @@
 /area/station/maintenance/science)
 "aav" = (
 /obj/effect/decal/cleanable/cellular/mine,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid6"
 	},
 /area/station/maintenance/science)
@@ -643,7 +643,7 @@
 /area/station/civilian/bar)
 "abc" = (
 /obj/item/ammo_casing,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/science)
@@ -3862,7 +3862,7 @@
 /area/station/maintenance/science)
 "agY" = (
 /obj/random/scrap/safe_even,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -4108,7 +4108,7 @@
 /obj/machinery/atm{
 	pixel_x = 28
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/hallway/secondary/arrival)
@@ -6287,7 +6287,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/hallway/secondary/arrival)
@@ -6320,7 +6320,7 @@
 /obj/structure/sign/painting{
 	pixel_x = 30
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -9873,7 +9873,7 @@
 "awb" = (
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/generic,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/maintenance/science)
@@ -9912,7 +9912,7 @@
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/science)
@@ -10575,7 +10575,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -11067,7 +11067,7 @@
 /area/station/civilian/bar)
 "byb" = (
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/maintenance/science)
@@ -11649,7 +11649,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -12080,7 +12080,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cxV" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -13460,7 +13460,7 @@
 "dNp" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -14161,12 +14161,12 @@
 	pixel_y = 32
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
 "eAC" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/hallway/secondary/arrival)
@@ -14979,7 +14979,7 @@
 /obj/item/weapon/rack_parts,
 /obj/item/ammo_casing,
 /obj/effect/decal/cleanable/cellular/meat,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -15083,7 +15083,7 @@
 /area/station/bridge)
 "fCc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -15614,8 +15614,11 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "gfT" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "whitebot"
+	icon_state = "white"
 	},
 /area/station/hallway/primary/central)
 "ggc" = (
@@ -16714,7 +16717,7 @@
 "hbt" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/game_kit/random,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -16890,7 +16893,7 @@
 	location = "Arrival2"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -16951,7 +16954,7 @@
 /obj/structure/computerframe{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -19140,7 +19143,7 @@
 /area/station/medical/storage)
 "jDs" = (
 /obj/effect/decal/cleanable/cellular/meat,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -19347,7 +19350,7 @@
 /area/station/rnd/telesci)
 "jNU" = (
 /obj/random/foods/food_trash,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -20693,7 +20696,7 @@
 /area/station/rnd/lab)
 "kXa" = (
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/maintenance/science)
@@ -20744,7 +20747,7 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "kZg" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/hallway/secondary/arrival)
@@ -20817,7 +20820,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -21071,7 +21074,7 @@
 /area/station/maintenance/medbay)
 "lss" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/hallway/secondary/arrival)
@@ -21108,7 +21111,7 @@
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -21417,7 +21420,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -22616,7 +22619,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -25268,7 +25271,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 30
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/hallway/secondary/arrival)
@@ -26525,7 +26528,7 @@
 /area/station/civilian/kitchen)
 "qqb" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -27063,7 +27066,7 @@
 /area/station/maintenance/dormitory)
 "qHC" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -27557,7 +27560,7 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -30576,7 +30579,7 @@
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = 5
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid6"
 	},
 /area/station/maintenance/science)
@@ -30649,7 +30652,7 @@
 /obj/item/device/camera{
 	pixel_y = -12
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -31937,7 +31940,7 @@
 /area/station/civilian/hydroponics)
 "vEl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -32011,7 +32014,7 @@
 /area/station/hallway/primary/central)
 "vJa" = (
 /obj/structure/easel,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
 /area/station/hallway/secondary/arrival)
@@ -32057,7 +32060,7 @@
 /area/station/engineering/atmos)
 "vKN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
 /area/station/hallway/secondary/arrival)
@@ -32195,7 +32198,7 @@
 	},
 /area/station/security/prison)
 "vTC" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -33330,7 +33333,7 @@
 	},
 /area/shuttle/supply/station)
 "wWt" = (
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
 /area/station/maintenance/science)
@@ -33443,7 +33446,7 @@
 "xbG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/maintenance/science)
@@ -34710,7 +34713,7 @@
 	location = "Arrival1"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
@@ -34803,7 +34806,7 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)

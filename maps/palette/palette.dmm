@@ -4594,8 +4594,11 @@
 	},
 /area/space)
 "VI" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "whitebot"
+	icon_state = "white"
 	},
 /area/space)
 "VJ" = (
