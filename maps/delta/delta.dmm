@@ -23834,7 +23834,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -38504,19 +38503,8 @@
 	},
 /area/station/maintenance/science)
 "iQn" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
-	},
-/area/station/civilian/dormitories)
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "iQp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -61414,9 +61402,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
-"ogv" = (
-/turf/simulated/wall,
-/area/station/rnd/telesci)
 "ogy" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -63709,6 +63694,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"oLY" = (
+/turf/simulated/wall,
+/area/station/rnd/telesci)
 "oMd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bar,
@@ -65447,9 +65435,6 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/chiefs_office)
-"piT" = (
-/turf/simulated/wall/r_wall,
-/area/station/rnd/telesci)
 "piY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -76909,6 +76894,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -132194,11 +132180,11 @@ wtC
 wtC
 wtC
 uZl
-piT
-piT
-piT
-piT
-ogv
+iQn
+iQn
+iQn
+iQn
+oLY
 aqm
 nCa
 gWl
@@ -132451,7 +132437,7 @@ ylt
 ylt
 omz
 vil
-piT
+iQn
 bks
 ldt
 bks
@@ -132965,7 +132951,7 @@ wtC
 wtC
 ijY
 evL
-piT
+iQn
 bks
 bks
 bks
@@ -133479,7 +133465,7 @@ ijY
 dyG
 bwi
 evL
-piT
+iQn
 bks
 bks
 bks
@@ -133993,7 +133979,7 @@ oZa
 oZa
 daK
 pPD
-piT
+iQn
 bks
 bks
 bks
@@ -134250,11 +134236,11 @@ xyY
 oZa
 jwI
 hCP
-piT
+iQn
 iXE
 iXE
 iXE
-ogv
+oLY
 wnJ
 bzw
 wJj
@@ -134507,11 +134493,11 @@ dQa
 bSg
 uar
 aJe
-piT
+iQn
 nHE
 prx
 sBT
-ogv
+oLY
 frF
 rzd
 iFV
@@ -134764,7 +134750,7 @@ ukI
 bSg
 qou
 awA
-piT
+iQn
 kjX
 vMS
 bUb
@@ -135021,11 +135007,11 @@ cWE
 oZa
 nDw
 iAz
-piT
+iQn
 dSC
 jjo
 pRs
-ogv
+oLY
 pqq
 pGN
 hqf
@@ -135278,11 +135264,11 @@ oZa
 oZa
 ajx
 kek
-piT
+iQn
 mGu
-piT
-piT
-piT
+iQn
+iQn
+iQn
 vCH
 vCH
 vCH
@@ -154294,7 +154280,7 @@ mti
 dcN
 rQZ
 fvA
-iQn
+mti
 raM
 sUU
 ccQ
