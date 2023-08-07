@@ -4691,11 +4691,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"Xd" = (
-/turf/simulated/floor{
-	icon_state = "whiteblue_ex"
-	},
-/area/space)
 "Xe" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
@@ -5296,7 +5291,7 @@ rO
 qi
 wj
 Hr
-Xd
+GD
 gW
 xP
 lc

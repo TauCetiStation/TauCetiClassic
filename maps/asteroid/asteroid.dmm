@@ -658,7 +658,7 @@
 /obj/structure/rack,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/asteroid/research_outpost/spectro)
 "bI" = (
@@ -726,7 +726,7 @@
 "bQ" = (
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/asteroid/research_outpost/spectro)
 "bR" = (
@@ -1385,7 +1385,7 @@
 /obj/machinery/chem_master,
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/asteroid/research_outpost/sample)
 "dm" = (
@@ -1682,7 +1682,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/asteroid/research_outpost/spectro)
 "dO" = (

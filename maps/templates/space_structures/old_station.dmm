@@ -1882,7 +1882,7 @@
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left/med)
 "lj" = (
@@ -2292,7 +2292,7 @@
 "nW" = (
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/central)
 "oa" = (
@@ -5053,7 +5053,7 @@
 /obj/structure/computerframe,
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left/med)
 "Ff" = (
@@ -5480,7 +5480,7 @@
 	},
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/central)
 "HG" = (
@@ -6083,7 +6083,7 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "whiteblue_ex"
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left/med)
 "Ld" = (
