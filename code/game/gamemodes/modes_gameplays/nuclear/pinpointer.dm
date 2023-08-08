@@ -141,18 +141,20 @@
 
 		if("Disk")
 			mode = SEARCH_FOR_DISK
+			to_chat(usr, "<span class='notice'>Authentication Disk Locator active.</span>")
 		if("Shuttle Location")
 			mode = SEARCH_FOR_OBJECT
 			target = locate(/obj/machinery/computer/syndicate_station)
-			to_chat(usr, "You set the pinpointer to locate [target]")
+			to_chat(usr, "<span class='notice'>Shuttle Locator active.</span>")
 
 		if("Nuclear Warhead")
 			mode = SEARCH_FOR_OBJECT
 			for (var/obj/machinery/nuclearbomb/N in poi_list)
 				if(N.nuketype == "Syndi")
 					target = locate(N)
-					to_chat(usr, "You set the pinpointer to locate [target]")
+					to_chat(usr, "<span class='notice'>Nuclear Warhead Locator active.</span>")
 
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 	if(mode && target)
 		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
