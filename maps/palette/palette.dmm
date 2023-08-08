@@ -1991,7 +1991,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "wv" = (
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/space)
 "ww" = (
 /turf/simulated/floor/plating{

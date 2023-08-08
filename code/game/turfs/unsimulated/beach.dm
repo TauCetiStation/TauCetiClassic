@@ -11,15 +11,12 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
 
-/turf/unsimulated/water
+/turf/unsimulated/beach/water
 	name = "Water"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "water"
 	depth = FLUID_DEEP
 
-/turf/unsimulated/water/atom_init()
+/turf/unsimulated/beach/water/atom_init()
 	. = ..()
 	add_overlay(image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=MOB_LAYER+0.1))
-
-/turf/unsimulated/water/beach
-	depth = FLUID_SHALLOW

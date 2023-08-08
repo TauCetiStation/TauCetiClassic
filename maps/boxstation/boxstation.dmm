@@ -15178,7 +15178,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aBh" = (
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "aBi" = (
 /obj/structure/table,
@@ -44391,7 +44391,7 @@
 /area/station/hallway/primary/central)
 "bDz" = (
 /obj/structure/window/thin/reinforced,
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "bDA" = (
 /obj/structure/cable{

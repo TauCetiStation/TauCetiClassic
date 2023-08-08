@@ -390,7 +390,7 @@
 /area/space_structures/space_villa)
 "nK" = (
 /obj/machinery/light,
-/turf/simulated/floor/water/beach,
+/turf/simulated/floor/beach/water,
 /area/space_structures/space_villa)
 "oa" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
@@ -448,7 +448,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/water/beach,
+/turf/simulated/floor/beach/water,
 /area/space_structures/space_villa)
 "qp" = (
 /obj/structure/table/woodentable,
@@ -1025,7 +1025,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "KI" = (
-/turf/simulated/floor/water/beach,
+/turf/simulated/floor/beach/water,
 /area/space_structures/space_villa)
 "KN" = (
 /obj/machinery/access_button{
@@ -1152,7 +1152,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/water/beach,
+/turf/simulated/floor/beach/water,
 /area/space_structures/space_villa)
 "Pf" = (
 /obj/item/weapon/flora/random,

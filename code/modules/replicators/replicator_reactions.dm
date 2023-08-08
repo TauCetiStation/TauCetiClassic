@@ -50,7 +50,7 @@
 	return TRUE
 
 
-/turf/simulated/floor/water/beach/waterpool/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+/turf/simulated/floor/beach/water/waterpool/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	R.try_spawn_node(src)
 	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
 	return TRUE

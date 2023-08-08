@@ -15842,7 +15842,7 @@
 /area/station/security/armoury)
 "dxL" = (
 /obj/structure/window/thin/reinforced,
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "dxM" = (
 /obj/structure/rack,
@@ -26605,7 +26605,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "fVC" = (
 /obj/machinery/door/firedoor,
@@ -43930,7 +43930,7 @@
 /area/station/engineering/engine)
 "kpI" = (
 /obj/item/weapon/bikehorn/rubberducky,
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "kqa" = (
 /obj/machinery/door/firedoor,
@@ -45216,7 +45216,7 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "kGT" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -59853,7 +59853,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "omZ" = (
 /obj/structure/stool/bed/roller,
@@ -82883,7 +82883,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "uir" = (
 /obj/structure/table,
@@ -96426,7 +96426,7 @@
 /turf/environment/space,
 /area/shuttle/transport1/station)
 "xBu" = (
-/turf/simulated/floor/water/beach/waterpool,
+/turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "xBv" = (
 /obj/machinery/computer/security/mining,
