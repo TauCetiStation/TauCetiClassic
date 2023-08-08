@@ -9897,6 +9897,10 @@
 	pixel_x = 26;
 	req_access = list(31)
 	},
+/obj/machinery/camera{
+	c_tag = "Cargo Bay Storage";
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -39195,14 +39199,9 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "hAF" = (
-/obj/machinery/camera{
-	c_tag = "Cargo Bay Storage";
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/station/cargo/storage)
+/obj/item/device/radio/electropack,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "hAG" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,6"
@@ -52517,14 +52516,6 @@
 	icon_state = "whitecorner"
 	},
 /area/station/hallway/primary/central)
-"krB" = (
-/obj/machinery/atm{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/secondary/exit)
 "krD" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/wood{
@@ -58145,10 +58136,6 @@
 /area/station/medical/genetics)
 "lCE" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering";
-	req_one_access = list(11,24)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -58162,6 +58149,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Break Room";
+	req_access = list(71)
 	},
 /turf/simulated/floor{
 	icon_state = "redyellowfull"
@@ -70635,9 +70626,13 @@
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/monitoring)
 "oka" = (
-/obj/item/device/radio/electropack,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/obj/machinery/atm{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "okd" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -131292,7 +131287,7 @@ iea
 nsa
 jtL
 bwZ
-hAF
+jPC
 fBa
 rRX
 pOd
@@ -134306,7 +134301,7 @@ qtN
 lSb
 wqE
 wqE
-krB
+oka
 gBk
 jNW
 vSV
@@ -135819,7 +135814,7 @@ mRW
 kiW
 beG
 mRW
-oka
+hAF
 ruI
 xiP
 rRv
