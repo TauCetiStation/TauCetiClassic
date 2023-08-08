@@ -69538,9 +69538,11 @@
 	req_access = list(47)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "whitedelivery"
+	icon_state = "white"
 	},
 /area/station/rnd/hallway)
 "nRJ" = (
@@ -78247,9 +78249,11 @@
 "pKH" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/landmark/start/chemist,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "whitedelivery"
+	icon_state = "white"
 	},
 /area/station/medical/chemistry)
 "pKK" = (
@@ -90201,9 +90205,11 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/chemist,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "whitedelivery"
+	icon_state = "white"
 	},
 /area/station/medical/chemistry)
 "slu" = (

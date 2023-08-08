@@ -1951,8 +1951,11 @@
 /turf/simulated/floor/carpet/orange,
 /area/space)
 "uW" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor{
-	icon_state = "whitedelivery"
+	icon_state = "white"
 	},
 /area/space)
 "va" = (
