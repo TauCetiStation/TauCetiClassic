@@ -8681,7 +8681,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aqy" = (
-/obj/skeleton,
+/obj/structure/rd_armor_stand,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -20680,6 +20680,7 @@
 /turf/simulated/wall,
 /area/station/civilian/dormitories/dormone)
 "lmB" = (
+/mob/living/simple_animal/det5,
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -30971,7 +30972,6 @@
 	},
 /area/station/maintenance/medbay)
 "uVc" = (
-/mob/living/simple_animal/det5,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
