@@ -10878,6 +10878,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories/theater)
 "bIX" = (
@@ -11420,6 +11421,9 @@
 /area/station/medical/genetics)
 "bPj" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/departments/security{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -20533,6 +20537,9 @@
 	c_tag = "Escape Bar Outter";
 	dir = 8
 	},
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -28994,6 +29001,7 @@
 /area/station/hallway/primary/bridgehall)
 "fuP" = (
 /obj/structure/stool/bed/chair/metal/black,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "fuV" = (
@@ -33780,6 +33788,9 @@
 "guy" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
+	},
+/obj/structure/sign/departments/security{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -40729,6 +40740,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories/theater)
 "hSM" = (
@@ -52499,8 +52511,13 @@
 	},
 /area/station/hallway/primary/central)
 "krB" = (
-/turf/simulated/wall/r_wall,
-/area/station/maintenance/brig)
+/obj/machinery/atm{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "krD" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/wood{
@@ -63261,22 +63278,6 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/rag,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 11;
-	pixel_y = 18
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 3;
-	pixel_y = 18
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = -5;
-	pixel_y = 18
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = -13;
-	pixel_y = 18
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 12
 	},
@@ -63294,6 +63295,13 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -6
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 6
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -64788,6 +64796,10 @@
 	icon_state = "0-8"
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
@@ -69760,11 +69772,21 @@
 	},
 /area/station/civilian/gym)
 "oas" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/visuals/tray,
+/obj/item/weapon/storage/visuals/tray,
+/obj/item/weapon/storage/visuals/tray,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/item/device/cardpay{
+	dir = 8
 	},
 /obj/machinery/alarm{
 	pixel_y = 22
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -70606,19 +70628,9 @@
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/monitoring)
 "oka" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 2;
-	sortType = "Храм"
-	},
-/turf/simulated/floor,
-/area/station/civilian/dormitories)
+/obj/item/device/radio/electropack,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "okd" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -134287,7 +134299,7 @@ qtN
 lSb
 wqE
 wqE
-evu
+krB
 gBk
 jNW
 vSV
@@ -135544,7 +135556,7 @@ fSo
 mRW
 mRW
 mRW
-krB
+ruI
 ruI
 sUz
 mot
@@ -135800,8 +135812,8 @@ mRW
 kiW
 beG
 mRW
-dVb
-krB
+oka
+ruI
 xiP
 rRv
 rRv
@@ -136058,7 +136070,7 @@ oDE
 lry
 mRW
 fuP
-krB
+ruI
 lPD
 oGm
 hGG
@@ -136315,7 +136327,7 @@ lry
 lry
 mRW
 xxP
-krB
+ruI
 bYa
 bTs
 krg
@@ -143352,7 +143364,7 @@ mWq
 mWq
 mWq
 mWq
-oka
+mWq
 vjJ
 wos
 eTe
