@@ -38874,6 +38874,13 @@
 	pixel_x = 3;
 	pixel_y = -7
 	},
+/obj/machinery/door_control{
+	id = "Biohazard";
+	name = "Biohazard Shutter Control";
+	pixel_x = -17;
+	pixel_y = 5;
+	req_access = list(47)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -52511,13 +52518,9 @@
 	},
 /area/station/hallway/primary/central)
 "krB" = (
-/obj/machinery/atm{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/secondary/exit)
+/obj/item/device/radio/electropack,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "krD" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/wood{
@@ -70628,9 +70631,13 @@
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/monitoring)
 "oka" = (
-/obj/item/device/radio/electropack,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/obj/machinery/atm{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "okd" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -134299,7 +134306,7 @@ qtN
 lSb
 wqE
 wqE
-krB
+oka
 gBk
 jNW
 vSV
@@ -135812,7 +135819,7 @@ mRW
 kiW
 beG
 mRW
-oka
+krB
 ruI
 xiP
 rRv
