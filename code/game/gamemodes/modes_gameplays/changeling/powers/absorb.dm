@@ -30,12 +30,11 @@
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
-	var/datum/mind/target_mind = target.mind
 	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				if(target_mind)
+				if(target.mind)
 					to_chat(user, "<span class='notice'>This creature has mind. We will become one.</span>")
 				else
 					to_chat(user, "<span class='notice'>This creature is mindless. We'll just satisfy our hunger.</span>")
@@ -78,12 +77,12 @@
 	if(target.species && !(target.species.name in changeling.absorbed_species))
 		changeling.absorbed_species += target.species.name
 
-	if(target_mind)//if the victim has got a mind
+	if(target.mind)//if the victim has got a mind
 
-		target_mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
+		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
-		user.mind.skills.transfer_skills(target_mind)
-		var/datum/role/changeling/C = target_mind.GetRoleByType(/datum/role/changeling)
+		user.mind.skills.transfer_skills(target.mind)
+		var/datum/role/changeling/C = target.mind.GetRoleByType(/datum/role/changeling)
 		if(C)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(C.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += C.absorbedcount
