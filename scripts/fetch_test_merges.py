@@ -64,9 +64,9 @@ def fetch_merge(args: FetchArgs):
 
 
 def main(options):
-    cache_path = Path("data/testMergeCache.txt")
+    cache_path = Path("cache/testMergeCache.txt")
 
-    test_merges = {}
+    test_merges = {}    
     if cache_path.exists():
         with open(cache_path, "r", encoding="utf-8") as file:
             for line in file:

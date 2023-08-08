@@ -32,7 +32,7 @@ var/global/it_is_a_snow_day = FALSE
 	load_last_mode()
 	load_motd()
 	load_host_announcements()
-	load_test_merge()
+	load_test_merge_fast()
 	load_admins()
 	load_mentors()
 	load_supporters()
@@ -320,19 +320,29 @@ var/global/shutdown_processed = FALSE
 
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
-/world/proc/load_test_merge()
-	set waitfor = FALSE
+/world/proc/load_test_merge_fast()
 	if(fexists("test_merge.txt"))
-		var/arguments = trim(file2text("test_merge.txt"))
-		if(config.github_token)
-			arguments += " -t '[config.github_token]'"
-		if(config.repository_link)
-			arguments += " -r '[config.github_repository_owner]/[config.github_repository_name]'"
-
-		test_merges = json_decode(world.ext_python("fetch_test_merges.py", arguments))
-		join_test_merge = "<strong>Test merged PRs:</strong><br>"
+		join_test_merge = "<strong>Test merged PRs:</strong> "
+		test_merges = splittext(trim(file2text("test_merge.txt")), " ")
 		for(var/pr in test_merges)
-			join_test_merge += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
+			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+		fetch_test_merge()
+
+/world/proc/fetch_test_merge()
+	set waitfor = FALSE
+	var/arguments = trim(file2text("test_merge.txt"))
+	if(config.github_token)
+		arguments += " -t '[config.github_token]'"
+	if(config.repository_link)
+		arguments += " -r '[config.github_repository_owner]/[config.github_repository_name]'"
+
+	var/json_content = world.ext_python("fetch_test_merges.py", arguments)
+	if(!json_content)
+		return
+	test_merges = json_decode(json_content)
+	join_test_merge = "<strong>Test merged PRs:</strong><br>"
+	for(var/pr in test_merges)
+		join_test_merge += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)
