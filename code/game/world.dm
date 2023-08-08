@@ -326,6 +326,7 @@ var/global/shutdown_processed = FALSE
 		test_merges = splittext(trim(file2text("test_merge.txt")), " ")
 		for(var/pr in test_merges)
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+		join_test_merge += "<br>You can press OOC - Show Test Merges a bit later for more information about current test merges."
 		fetch_test_merge()
 
 /world/proc/fetch_test_merge()
