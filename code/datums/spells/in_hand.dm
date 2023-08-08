@@ -141,7 +141,7 @@
 		var/mob/living/M = target
 		M.fire_act()
 		M.adjust_fire_stacks(5)
-	explosion(get_turf(target), 0, 2)
+	explosion(get_turf(target), 0, 0, 1, adminlog = FALSE)
 	return ..()
 
 ///////////////////////////////////////////
