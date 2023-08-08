@@ -51,20 +51,23 @@
 	locked = 1;
 	req_access = list(101)
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/mafia)
 "m" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/mafia)
 "o" = (
 /obj/structure/temple_falsewall,
@@ -76,8 +79,9 @@
 /turf/unsimulated/floor,
 /area/mafia)
 "q" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/mafia)
 "s" = (
 /turf/unsimulated/floor/fakespace,

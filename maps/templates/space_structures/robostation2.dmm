@@ -1,11 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "aM" = (
 /obj/item/clothing/head/collectable/petehat,
@@ -59,10 +58,9 @@
 /obj/structure/kitchenspike,
 /obj/item/mecha_parts/chassis/honker,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "cw" = (
 /obj/item/weapon/flora/pottedplant/crystal,
@@ -332,10 +330,9 @@
 /obj/structure/sign/warning/airlock{
 	pixel_x = -32
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "nj" = (
 /obj/item/clothing/mask/gas/sexyclown,
@@ -575,10 +572,9 @@
 /area/space_structures/robostation2)
 "Aw" = (
 /obj/machinery/door/airlock/clown,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "AP" = (
 /obj/item/weapon/flora/pottedplant/unusual,
@@ -699,10 +695,9 @@
 /area/space_structures/robostation2)
 "Hg" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "HE" = (
 /obj/item/weapon/flora/pottedplant/sticky,
@@ -740,11 +735,10 @@
 /obj/structure/sign/warning/airlock{
 	pixel_x = -32
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "IJ" = (
 /obj/machinery/porta_turret/stationary{
@@ -836,11 +830,10 @@
 /area/space_structures/robostation2)
 "Lc" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Ld" = (
 /obj/machinery/kitchen_machine/microwave,
@@ -875,11 +868,10 @@
 /area/space_structures/robostation2)
 "Nf" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Nj" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1043,20 +1035,18 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "VV" = (
 /obj/machinery/porta_turret/stationary{
 	check_n_synth = 1;
 	shot_synth = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "VW" = (
 /obj/machinery/door/airlock/clown,
@@ -1104,10 +1094,9 @@
 "YO" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "YY" = (
 /obj/effect/decal/cleanable/dirt,

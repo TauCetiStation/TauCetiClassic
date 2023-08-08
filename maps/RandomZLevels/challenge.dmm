@@ -213,10 +213,9 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aO" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/awaymission/challenge/main)
 "aP" = (
 /turf/unsimulated/wall{
@@ -249,11 +248,8 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aU" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
 /turf/simulated/shuttle/floor{
-	icon_state = "podhatchfull"
+	icon_state = "podhatch"
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
@@ -265,11 +261,10 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aX" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/awaymission/challenge/main)
 "aY" = (
 /obj/item/device/multitool,
@@ -318,12 +313,9 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
-	},
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 5;
+	icon_state = "podhatch"
 	},
 /area/awaymission/challenge/main)
 "be" = (
@@ -390,11 +382,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/main)
 "bm" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
 /turf/simulated/shuttle/floor{
-	icon_state = "podhatchfull"
+	icon_state = "podhatch"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/main)
@@ -424,12 +413,9 @@
 /area/awaymission/challenge/main)
 "bq" = (
 /obj/structure/window/thin/reinforced,
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 10;
+	icon_state = "podhatch"
 	},
 /area/awaymission/challenge/main)
 "br" = (
@@ -454,27 +440,24 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/awaymission/challenge/main)
 "bu" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/awaymission/challenge/main)
 "bw" = (
 /obj/item/clothing/gloves/insulated,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/awaymission/challenge/main)
 "bx" = (
 /obj/structure/window/thin/reinforced{

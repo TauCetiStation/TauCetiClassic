@@ -193,12 +193,9 @@
 	dir = 1
 	},
 /obj/effect/decal/mecha_wreckage/durand/vindicator,
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 9;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "mH" = (
@@ -302,12 +299,9 @@
 	dir = 1
 	},
 /obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "um" = (
@@ -407,12 +401,9 @@
 /area/space_structures/nt_fighter_blaton)
 "zU" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 9;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ad" = (
@@ -608,12 +599,9 @@
 	name = "Weapons locker"
 	},
 /obj/machinery/light,
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "Lj" = (
@@ -624,12 +612,9 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "Lp" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Lt" = (
@@ -732,12 +717,9 @@
 /area/space_structures/nt_fighter_blaton)
 "Sg" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "warndark"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ss" = (

@@ -75,11 +75,10 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "ap" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "aq" = (
 /obj/machinery/light/small{
@@ -188,11 +187,10 @@
 /area/space_structures/robostatoin)
 "aL" = (
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "aM" = (
 /obj/structure/table/reinforced,
@@ -201,11 +199,10 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "aN" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "aO" = (
 /obj/structure/closet/lasertag/blue,
@@ -265,11 +262,10 @@
 /area/space_structures/robostatoin)
 "ba" = (
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bb" = (
 /obj/effect/decal/remains/human,
@@ -363,10 +359,9 @@
 "bu" = (
 /obj/item/mecha_parts/chassis/honker,
 /obj/structure/kitchenspike,
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bv" = (
 /obj/structure/table/reinforced,
@@ -658,10 +653,9 @@
 /obj/structure/trap/stun,
 /obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /turf/environment/space,
 /area/space_structures/robostatoin)
 "cy" = (
@@ -691,11 +685,10 @@
 	dir = 1
 	},
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cF" = (
 /mob/living/simple_animal/hostile/hivebot/range,
@@ -757,11 +750,10 @@
 	dir = 8
 	},
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cQ" = (
 /mob/living/simple_animal/hostile/hivebot/strong,
@@ -793,10 +785,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 0.01;
+	oxygen = 0.01
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cV" = (
 /obj/structure/trap/stun,
@@ -804,11 +797,10 @@
 	dir = 1
 	},
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cW" = (
 /obj/structure/trap/stun,
@@ -819,11 +811,10 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cX" = (
 /obj/structure/trap/stun,
@@ -831,11 +822,10 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cZ" = (
 /turf/simulated/floor{
@@ -881,11 +871,10 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "dk" = (
 /turf/simulated/shuttle/wall{
@@ -931,11 +920,10 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "en" = (
 /obj/machinery/porta_turret/stationary{

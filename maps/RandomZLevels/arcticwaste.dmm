@@ -57,25 +57,22 @@
 /turf/simulated/floor/plating,
 /area/awaymission)
 "n" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "o" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "p" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "q" = (
 /obj/machinery/light{
@@ -85,45 +82,40 @@
 /area/awaymission)
 "r" = (
 /obj/machinery/vending/robotics,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "s" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "t" = (
 /obj/item/weapon/paper/pamphlet,
 /turf/simulated/floor/plating,
 /area/awaymission)
 "u" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "v" = (
 /obj/machinery/vending/engineering,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "w" = (
 /obj/machinery/vending/tool,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "x" = (
 /obj/machinery/gateway{
@@ -145,19 +137,17 @@
 /area/awaymission)
 "A" = (
 /obj/machinery/vending/assist,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "B" = (
 /obj/machinery/vending/cigarette,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "C" = (
 /obj/machinery/gateway{
@@ -179,34 +169,30 @@
 /area/awaymission)
 "F" = (
 /obj/machinery/vending/engivend,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "G" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "H" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "I" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "J" = (
 /obj/machinery/gateway,
@@ -216,25 +202,22 @@
 /obj/machinery/gateway{
 	dir = 6
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "L" = (
 /obj/machinery/space_heater,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "M" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission)
 "N" = (
 /obj/machinery/light,

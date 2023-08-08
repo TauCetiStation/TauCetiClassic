@@ -34,8 +34,9 @@
 /obj/structure/table,
 /obj/item/ashtray/bronze,
 /obj/item/weapon/cigbutt/cigarbutt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "ah" = (
 /obj/structure/computerframe{
@@ -46,8 +47,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "ai" = (
 /obj/structure/table,
@@ -55,8 +57,9 @@
 /obj/item/clothing/head/beret/centcomcaptain{
 	desc = "A white beret."
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aj" = (
 /obj/structure/window/fulltile/reinforced{
@@ -69,15 +72,17 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "al" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "am" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "an" = (
 /turf/simulated/floor/plating,
@@ -99,14 +104,16 @@
 /area/space)
 "ar" = (
 /obj/structure/filingcabinet/filingcabinet,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "as" = (
 /obj/item/weapon/gun/energy/retro,
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "at" = (
 /turf/simulated/shuttle/wall{
@@ -117,8 +124,9 @@
 /obj/machinery/door/airlock/hatch{
 	locked = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "av" = (
 /turf/simulated/shuttle/wall{
@@ -128,33 +136,38 @@
 /area/space_structures/iss)
 "aw" = (
 /obj/machinery/door/airlock/hatch,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "ax" = (
 /obj/structure/closet/crate/freezer/rations,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "ay" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/civilian,
 /obj/item/clothing/head/helmet/space/syndicate/civilian,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "az" = (
 /obj/structure/rack,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aA" = (
 /obj/structure/rack,
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aB" = (
 /obj/structure/closet/crate,
@@ -162,37 +175,43 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aC" = (
 /obj/structure/table,
 /obj/item/weapon/storage/belt/utility/full,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aD" = (
 /obj/machinery/portable_atmospherics/canister/empty/oxygen,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aE" = (
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/tank/oxygen,
 /obj/structure/rack,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aF" = (
 /obj/machinery/power/port_gen/pacman/mrs,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aG" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aH" = (
 /turf/environment/space,
@@ -209,35 +228,41 @@
 /area/space_structures/iss)
 "aJ" = (
 /obj/machinery/power/smes,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aK" = (
 /obj/structure/showcase,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aL" = (
 /obj/machinery/power/solar_control,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aM" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/item/weapon/coin/silver,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aN" = (
 /obj/structure/stool/bed,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aO" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aP" = (
 /obj/machinery/power/port_gen/pacman/mrs,
@@ -246,28 +271,32 @@
 "aQ" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aS" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aT" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/storage/bible,
 /obj/item/clothing/gloves/fingerless,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aU" = (
 /obj/structure/table,
@@ -275,46 +304,53 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aV" = (
 /obj/structure/closet/emcloset/legacy,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aW" = (
 /obj/structure/closet/secure_closet/medical2,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aX" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/reagent_containers/blood/AMinus,
 /obj/item/weapon/reagent_containers/blood/BPlus,
 /obj/item/weapon/reagent_containers/blood/empty,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aY" = (
 /obj/structure/closet/crate/secure/loot,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "aZ" = (
 /obj/machinery/door/airlock/hatch{
 	name = "E.V.A"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "ba" = (
 /obj/structure/stool/bed,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bb" = (
 /obj/structure/table,
@@ -323,52 +359,59 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bc" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bd" = (
 /obj/structure/closet/emcloset/legacy,
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "be" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Engineering"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bf" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Dormitories"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bg" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Medbay"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bh" = (
 /obj/machinery/door/airlock/hatch{
 	name = "External Airlock"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/space_structures/iss)
 "bi" = (
 /obj/machinery/door/airlock/hatch{

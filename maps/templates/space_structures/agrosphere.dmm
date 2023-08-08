@@ -1032,10 +1032,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/space_structures/agrospheregarden)
 "co" = (
 /obj/structure/disposalpipe/segment{
@@ -1171,10 +1170,9 @@
 	external_pressure_bound_default = 140;
 	name = "(OUT) Space Large Air Vent"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/space_structures/agrospheregarden)
 "cC" = (
 /turf/simulated/shuttle/wall{
@@ -1221,11 +1219,10 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump/on,
 /obj/machinery/door/firedoor,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cH" = (
 /obj/structure/stool/bed/roller,
@@ -1298,10 +1295,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1314,10 +1310,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cP" = (
 /obj/structure/table/glass,
@@ -1373,10 +1368,9 @@
 	name = "Agrosphere Large Air Vent"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cT" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
@@ -1399,10 +1393,9 @@
 	id_tag = "agrosphere_pump";
 	name = "Agrosphere Large Air Vent"
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cV" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1422,10 +1415,9 @@
 	frequency = 1380;
 	id_tag = "agrosphere_outer"
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cX" = (
 /obj/structure/shuttle/engine/propulsion{

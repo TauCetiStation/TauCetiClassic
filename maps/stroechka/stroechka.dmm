@@ -41,10 +41,9 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "ag" = (
 /obj/structure/cable/yellow{
@@ -205,10 +204,9 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "ay" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
@@ -219,10 +217,9 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aA" = (
 /obj/machinery/vending/cigarette,
@@ -248,10 +245,9 @@
 /obj/item/clothing/head/helmet/space/rig/atmos,
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "aC" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -318,10 +314,9 @@
 	external_pressure_bound_default = 140;
 	name = "(OUT) Space Large Air Vent"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "aJ" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -332,10 +327,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aK" = (
 /turf/simulated/floor/plating{
@@ -350,10 +344,9 @@
 /area/station/engineering/engine)
 "aM" = (
 /obj/machinery/space_heater,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aN" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -371,17 +364,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aP" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -409,11 +400,10 @@
 	},
 /area/station/hallway/primary/central)
 "aT" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aU" = (
 /turf/simulated/floor/plating,
@@ -469,10 +459,9 @@
 /obj/machinery/atmospherics/components/unary/tank/phoron{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aZ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
@@ -499,10 +488,9 @@
 	dir = 10
 	},
 /obj/structure/closet/firecloset,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bd" = (
 /obj/structure/cable/yellow{
@@ -588,10 +576,9 @@
 /obj/machinery/atmospherics/components/unary/tank/phoron{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bl" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -602,19 +589,17 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bm" = (
 /obj/machinery/atmospherics/components/unary/tank/oxygen{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bn" = (
 /obj/machinery/door/airlock/external{
@@ -652,10 +637,9 @@
 	node1_concentration = 0.7;
 	node2_concentration = 0.3
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bs" = (
 /turf/simulated/wall,
@@ -710,10 +694,9 @@
 	tag_exterior_door = "starboardsolar_outer";
 	tag_interior_door = "starboardsolar_inner"
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "by" = (
 /obj/machinery/conveyor{
@@ -728,10 +711,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "bA" = (
 /turf/simulated/wall/r_wall,
@@ -821,10 +803,9 @@
 	},
 /obj/machinery/scrap/stacking_machine,
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "bK" = (
 /obj/structure/cable/yellow{
@@ -872,10 +853,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -932,10 +912,9 @@
 	id = "stationscrap"
 	},
 /obj/machinery/recycler,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "bW" = (
 /obj/structure/cable/yellow,
@@ -974,10 +953,9 @@
 	id_tag = "recycler_pump";
 	name = "Recycler Large Air Vent"
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "cb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -1109,10 +1087,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "cn" = (
 /obj/machinery/alarm{
@@ -1128,10 +1105,9 @@
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 25
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
@@ -1375,10 +1351,9 @@
 	pixel_x = -28;
 	pixel_y = 6
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cG" = (
 /turf/simulated/floor{
@@ -1515,31 +1490,28 @@
 	},
 /area/station/engineering/chiefs_office)
 "cN" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cO" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "stationscrap"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cP" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 1
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cQ" = (
 /obj/machinery/conveyor{
@@ -1567,10 +1539,9 @@
 	id = "stationscrap"
 	},
 /obj/machinery/pile_ripper,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cT" = (
 /obj/machinery/light/smart,
@@ -1581,10 +1552,9 @@
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1619,12 +1589,9 @@
 /obj/item/stack/sheet/refined_scrap{
 	amount = 50
 	},
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "cX" = (
@@ -1633,22 +1600,20 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cY" = (
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cZ" = (
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "da" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench,
@@ -1678,10 +1643,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dd" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "de" = (
 /obj/machinery/conveyor{
@@ -1805,17 +1769,15 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dm" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dn" = (
 /turf/simulated/floor/airless/ceiling,
@@ -1836,11 +1798,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dr" = (
 /obj/machinery/power/apc/largecell{
@@ -1853,10 +1814,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ds" = (
 /obj/machinery/alarm{
@@ -1968,10 +1928,9 @@
 /area/station/maintenance/auxsolarport)
 "dB" = (
 /obj/machinery/power/port_gen/pacman/scrap,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dC" = (
 /obj/random/foods/food_trash,
@@ -1979,18 +1938,16 @@
 /turf/simulated/floor/airless/ceiling,
 /area/station/cargo/recycler)
 "dD" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dE" = (
 /obj/structure/closet/crate/engi,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dF" = (
 /obj/structure/closet/crate/engi,
@@ -2132,10 +2089,9 @@
 /area/station/engineering/chiefs_office)
 "dO" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dP" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -2151,10 +2107,9 @@
 /area/station/cargo/storage)
 "dQ" = (
 /obj/structure/closet/crate/scicrate,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dR" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -2164,22 +2119,18 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "dS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "dT" = (
@@ -2189,39 +2140,31 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "dU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "dV" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dW" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dX" = (
 /obj/item/weapon/scrap_lump,
@@ -2246,10 +2189,9 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "eb" = (
 /obj/machinery/conveyor{
@@ -2266,11 +2208,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ed" = (
 /obj/structure/cable{
@@ -2320,11 +2261,10 @@
 /area/station/cargo/recycler)
 "eg" = (
 /obj/structure/closet/crate,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eh" = (
 /obj/structure/closet/crate,
@@ -2334,11 +2274,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ej" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -2348,11 +2287,10 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ek" = (
 /obj/machinery/light/smart{
@@ -2487,20 +2425,18 @@
 /area/station/cargo/recycler)
 "ez" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eA" = (
 /obj/mecha/working/ripley,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eB" = (
 /obj/structure/disposalpipe/segment{
@@ -2526,11 +2462,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eF" = (
 /obj/structure/closet/crate{
@@ -2553,10 +2488,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "eG" = (
 /obj/machinery/conveyor{
@@ -2584,10 +2518,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eJ" = (
 /obj/structure/disposalpipe/segment{
@@ -2609,32 +2542,28 @@
 /area/station/cargo/storage)
 "eL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn_corner"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eO" = (
 /obj/random/misc/all,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eP" = (
 /obj/structure/cable{
@@ -2643,19 +2572,17 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eR" = (
 /obj/item/weapon/scrap_lump,
@@ -2665,20 +2592,18 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "eT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eU" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2694,11 +2619,10 @@
 "eW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
@@ -2714,11 +2638,10 @@
 /area/station/engineering/atmos)
 "eY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eZ" = (
 /obj/machinery/vending/coffee,
@@ -2728,11 +2651,10 @@
 /area/station/hallway/secondary/arrival)
 "fa" = (
 /obj/random/misc/all,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 4;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "fb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2757,19 +2679,17 @@
 /area/station/hallway/secondary/arrival)
 "fd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "fe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ff" = (
 /obj/random/foods/food_trash,
@@ -2886,10 +2806,9 @@
 /area/station/engineering/engine)
 "gr" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "gs" = (
 /obj/machinery/door/firedoor,
@@ -3033,11 +2952,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "hu" = (
 /obj/structure/cable{
@@ -3091,11 +3009,10 @@
 /turf/environment/space,
 /area/space)
 "hU" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "hX" = (
 /obj/machinery/door/airlock/external{
@@ -3128,10 +3045,9 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "il" = (
 /obj/machinery/door/firedoor,
@@ -3234,10 +3150,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "iP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -3254,10 +3169,9 @@
 	node1_concentration = 0.8;
 	node2_concentration = 0.2
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "iR" = (
 /obj/structure/object_wall/cargo{
@@ -3274,11 +3188,10 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "jb" = (
 /turf/simulated/floor,
@@ -3366,21 +3279,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal{
-	dir = 6;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "warndark"
 	},
 /area/station/engineering/engine)
 "jH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "jR" = (
 /obj/machinery/door/firedoor,
@@ -3388,10 +3297,9 @@
 	id = "Skynet_launch";
 	name = "Mech Bay"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "jW" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
@@ -3416,12 +3324,9 @@
 	pixel_y = -2
 	},
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/lab)
 "kf" = (
@@ -3569,19 +3474,15 @@
 /area/station/engineering/engine)
 "lK" = (
 /obj/mecha/working/ripley/firefighter,
-/obj/effect/decal/turf_decal{
-	icon_state = "recharge_floor"
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/rnd/chargebay)
 "lN" = (
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "lR" = (
 /obj/structure/object_wall/cargo{
@@ -3620,18 +3521,16 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "mp" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mq" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
@@ -3655,10 +3554,9 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "mr" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mu" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -3666,21 +3564,19 @@
 	},
 /area/shuttle/supply/station)
 "mw" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mz" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
 	},
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
 "mE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -3723,10 +3619,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mS" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -3779,11 +3674,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "nI" = (
 /obj/machinery/vending/clothing,
@@ -3810,10 +3704,7 @@
 /area/station/hallway/primary/central)
 "oj" = (
 /obj/mecha/working/ripley,
-/obj/effect/decal/turf_decal{
-	icon_state = "recharge_floor"
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/rnd/chargebay)
 "ot" = (
 /obj/machinery/light/smart{
@@ -3841,10 +3732,9 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
 "oy" = (
 /obj/structure/cable/yellow{
@@ -3855,11 +3745,10 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "oz" = (
 /obj/machinery/door/firedoor,
@@ -3992,11 +3881,10 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "qg" = (
 /obj/machinery/vending/donut,
@@ -4020,12 +3908,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/lab)
 "qn" = (
@@ -4044,10 +3929,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "qs" = (
 /turf/simulated/wall,
@@ -4094,10 +3978,9 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "qF" = (
 /obj/machinery/light/small,
@@ -4131,18 +4014,17 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "qS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "qY" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -4191,10 +4073,9 @@
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "rH" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -4231,11 +4112,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "rV" = (
 /turf/simulated/floor{
@@ -4308,10 +4188,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "sD" = (
 /obj/machinery/computer/drone_control,
@@ -4347,11 +4226,10 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "sO" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "sS" = (
 /obj/machinery/door/firedoor,
@@ -4363,11 +4241,10 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
 "tk" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "to" = (
 /obj/structure/closet/emcloset,
@@ -4383,18 +4260,16 @@
 "tw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "ty" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "tB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -4425,15 +4300,10 @@
 	},
 /area/station/engineering/atmos)
 "tY" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	dir = 8;
 	icon_state = "loadingarea"
 	},
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 8;
-	icon_state = "arrow"
-	},
-/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ur" = (
 /obj/structure/closet/secure_closet/recycler{
@@ -4474,12 +4344,9 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "uJ" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/lab)
 "uM" = (
@@ -4539,28 +4406,25 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "vx" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "vy" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "vD" = (
 /obj/structure/cable{
@@ -4625,10 +4489,9 @@
 /area/station/engineering/equip)
 "vM" = (
 /obj/machinery/pipedispenser,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "vN" = (
 /turf/simulated/floor{
@@ -4656,11 +4519,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "wi" = (
 /obj/structure/cable{
@@ -4738,11 +4600,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "wN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -4758,10 +4619,9 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "wQ" = (
 /obj/structure/cable{
@@ -4778,10 +4638,9 @@
 /area/space)
 "wV" = (
 /obj/item/weapon/wrench,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "xg" = (
 /obj/structure/object_wall/cargo{
@@ -4818,10 +4677,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "xL" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -4859,12 +4718,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/lab)
 "yu" = (
@@ -4875,12 +4731,9 @@
 	},
 /area/station/engineering/atmos)
 "yK" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "yO" = (
@@ -4925,12 +4778,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/lab)
 "zm" = (
@@ -5078,10 +4928,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Az" = (
 /obj/structure/dispenser/oxygen,
@@ -5090,11 +4939,10 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "AB" = (
 /obj/structure/cable/yellow{
@@ -5112,10 +4960,9 @@
 /obj/machinery/bot/floorbot{
 	on = 0
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "AR" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
@@ -5154,10 +5001,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "AY" = (
 /obj/structure/window/thin/reinforced,
@@ -5176,17 +5022,15 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Bc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Bd" = (
 /turf/simulated/floor/plating/airless{
@@ -5206,10 +5050,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Bk" = (
 /turf/simulated/floor{
@@ -5226,11 +5069,10 @@
 	},
 /area/station/cargo/storage)
 "Bt" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Bu" = (
 /obj/machinery/power/terminal{
@@ -5252,10 +5094,9 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/stack/cable_coil/random,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Bz" = (
 /obj/structure/cable{
@@ -5344,10 +5185,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "BW" = (
 /obj/structure/object_wall/cargo{
@@ -5442,10 +5282,9 @@
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "CP" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -5458,10 +5297,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/fullcharge,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "CV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5499,12 +5337,9 @@
 /obj/item/stack/sheet/refined_scrap{
 	amount = 50
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "CX" = (
@@ -5583,10 +5418,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Db" = (
 /turf/simulated/floor{
@@ -5644,10 +5478,9 @@
 /area/station/engineering/equip)
 "Ds" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Du" = (
 /obj/structure/cable{
@@ -5656,10 +5489,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Dw" = (
 /turf/simulated/floor{
@@ -5669,10 +5502,10 @@
 /area/station/hallway/secondary/exit)
 "DA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "DI" = (
 /obj/machinery/power/apc/largecell{
@@ -5752,19 +5585,13 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/rnd/lab)
 "DN" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "recharge_floor"
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/engineering/equip)
 "DR" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
@@ -5822,11 +5649,8 @@
 	},
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "Ed" = (
@@ -5888,22 +5712,16 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 9;
+	icon_state = "warndark"
 	},
 /area/station/engineering/engine)
 "Ey" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "warndark"
 	},
 /area/station/engineering/engine)
 "EG" = (
@@ -6060,11 +5878,10 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "Fw" = (
 /obj/machinery/door/airlock/external{
@@ -6226,10 +6043,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Gt" = (
 /obj/structure/object_wall/cargo{
@@ -6254,10 +6070,9 @@
 	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "GD" = (
 /turf/simulated/floor{
@@ -6327,12 +6142,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/station/engineering/engine)
 "GS" = (
@@ -6345,12 +6157,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "warndark"
 	},
 /area/station/engineering/engine)
 "GU" = (
@@ -6396,10 +6205,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "Hb" = (
 /obj/item/weapon/flora/random,
@@ -6426,10 +6234,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Hi" = (
 /obj/structure/rack,
@@ -6443,10 +6250,9 @@
 /obj/item/clothing/head/helmet/space/rig/engineering,
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/engineering/equip)
 "Hk" = (
 /obj/machinery/door/firedoor,
@@ -6505,20 +6311,18 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "Hz" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "HI" = (
 /obj/machinery/power/smes/fullcharge,
@@ -6534,10 +6338,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "HK" = (
 /obj/machinery/power/smes/fullcharge,
@@ -6559,10 +6362,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "HO" = (
 /obj/structure/closet/emcloset,
@@ -6582,10 +6384,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "HT" = (
 /obj/structure/object_wall/cargo{
@@ -6601,12 +6402,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "warndark"
 	},
 /area/station/engineering/engine)
 "Ib" = (
@@ -6619,10 +6417,9 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Ij" = (
 /obj/structure/closet/secure_closet/barber{
@@ -6654,10 +6451,9 @@
 	name = "Gas filter (O2 tank)"
 	},
 /obj/effect/landmark/start/atmospheric_technician,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "IF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6687,10 +6483,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "IH" = (
 /obj/machinery/portable_atmospherics/powered/pump,
@@ -6821,12 +6616,9 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "Kb" = (
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 9;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "Kd" = (
@@ -6891,11 +6683,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "KZ" = (
 /obj/machinery/door/poddoor/cargo{
@@ -6930,11 +6721,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Lx" = (
 /turf/simulated/floor{
@@ -6953,20 +6743,18 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "LZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Mb" = (
 /obj/structure/stool/bed/chair/office/light,
@@ -6982,11 +6770,10 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 10
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Mn" = (
 /obj/structure/cable{
@@ -7000,11 +6787,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "Mp" = (
 /turf/simulated/floor,
@@ -7099,12 +6885,9 @@
 /obj/item/stack/sheet/refined_scrap{
 	amount = 50
 	},
-/obj/effect/decal/turf_decal{
-	dir = 6;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "Nf" = (
@@ -7137,10 +6920,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "ND" = (
 /obj/structure/object_wall/cargo{
@@ -7179,11 +6961,10 @@
 /area/station/engineering/atmos)
 "NQ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "NR" = (
 /obj/structure/window/fulltile/reinforced{
@@ -7245,10 +7026,9 @@
 /obj/item/mecha_parts/mecha_equipment/rcd{
 	pixel_y = -4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
 /area/station/rnd/chargebay)
 "OU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -7270,28 +7050,25 @@
 /obj/machinery/atmospherics/components/binary/circulator{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Pr" = (
 /obj/machinery/atmospherics/components/binary/circulator,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Pt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "PA" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
@@ -7473,10 +7250,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "QW" = (
 /obj/machinery/door/firedoor,
@@ -7502,10 +7278,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "Ro" = (
 /turf/simulated/wall,
@@ -7541,12 +7316,9 @@
 /area/station/engineering/atmos)
 "RH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "RP" = (
@@ -7696,10 +7468,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "SK" = (
 /obj/structure/cable{
@@ -7809,10 +7580,9 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "TR" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -7936,12 +7706,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "Uy" = (
@@ -7961,11 +7728,10 @@
 /area/station/engineering/atmos)
 "UC" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "UD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -8014,11 +7780,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warn_corner"
+	icon_state = "warnplatecorner"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "UQ" = (
 /obj/structure/dispenser,
@@ -8029,11 +7794,8 @@
 /area/station/engineering/atmos)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "UZ" = (
@@ -8148,10 +7910,9 @@
 	name = "(OUT) Space Large Air Vent"
 	},
 /obj/structure/window/thin/reinforced,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/engineering/atmos)
 "VK" = (
 /obj/structure/grille,
@@ -8176,31 +7937,26 @@
 	supply_display = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "warndark"
 	},
 /area/station/cargo/storage)
 "VT" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "VX" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/turf/simulated/floor{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "Wc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -8302,10 +8058,9 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "WP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -8489,10 +8244,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/port_gen/pacman,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "YB" = (
 /obj/structure/cable{
@@ -8575,10 +8329,9 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/engineering/atmos)
 "YY" = (
 /obj/machinery/door/firedoor,
@@ -8702,10 +8455,9 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "ZG" = (
 /turf/simulated/floor{

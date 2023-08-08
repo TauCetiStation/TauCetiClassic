@@ -288,17 +288,15 @@
 	},
 /area/centcom)
 "aR" = (
-/obj/effect/decal/turf_decal{
+/turf/unsimulated/floor{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warning"
 	},
-/turf/unsimulated/floor,
 /area/centcom)
 "aT" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/unsimulated/floor{
+	icon_state = "warning"
 	},
-/turf/unsimulated/floor,
 /area/centcom)
 "aW" = (
 /obj/structure/table/reinforced,

@@ -28,12 +28,9 @@
 "af" = (
 /obj/structure/rack,
 /obj/item/device/suit_cooling_unit,
-/obj/effect/decal/turf_decal{
-	dir = 2;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "podhatchfull"
+	dir = 2;
+	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
 "ah" = (
@@ -86,12 +83,9 @@
 	pixel_x = -23;
 	req_one_access = list(150)
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 4;
+	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
 "am" = (
@@ -141,10 +135,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "aq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -161,10 +154,9 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "ar" = (
 /obj/structure/extinguisher_cabinet{
@@ -276,12 +268,9 @@
 /obj/item/weapon/paper{
 	info = "Прости, агент, но для твоего же блага мы забрали кирки. Команда спасения прибудет через два месяца. Слава Синдикату!"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 4;
+	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
 "ay" = (
@@ -332,12 +321,9 @@
 /obj/item/weapon/storage/toolbox/syndicate,
 /obj/item/weapon/storage/belt/military,
 /obj/item/clothing/glasses/welding,
-/obj/effect/decal/turf_decal{
-	dir = 2;
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
-	icon_state = "podhatchfull"
+	dir = 2;
+	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
 "aD" = (
@@ -404,12 +390,9 @@
 	pixel_y = 32
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 4;
+	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
 "aK" = (
@@ -424,10 +407,9 @@
 	name = "Listening Post Large Air Vent"
 	},
 /obj/structure/closet/emcloset,
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "aL" = (
 /obj/structure/table/woodentable,
@@ -474,10 +456,9 @@
 	id_tag = "Listening_Post_pump";
 	name = "Listening Post Large Air Vent"
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "aO" = (
 /obj/structure/sink{
@@ -560,12 +541,9 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 4;
+	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
 "aU" = (
@@ -580,10 +558,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "aV" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
@@ -927,10 +904,9 @@
 	name = "Engineering APC";
 	pixel_y = 25
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "bG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1019,10 +995,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "bO" = (
 /obj/structure/closet/secure_closet/medical1{
@@ -1162,10 +1137,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
@@ -1178,10 +1152,9 @@
 /area/space_structures/listening_post)
 "bZ" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "ca" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -1229,10 +1202,9 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "cf" = (
 /obj/item/stack/sheet/metal{
@@ -1245,10 +1217,9 @@
 	amount = 25
 	},
 /obj/structure/closet/crate/engi,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "cg" = (
 /obj/structure/rack,
@@ -1256,10 +1227,9 @@
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/device/multitool,
 /obj/item/clothing/glasses/meson,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 
 (1,1,1) = {"

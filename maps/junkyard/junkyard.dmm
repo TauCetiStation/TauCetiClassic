@@ -37,25 +37,22 @@
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "k" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 9;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "l" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "m" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 5;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "n" = (
 /obj/machinery/light{
@@ -65,45 +62,40 @@
 /area/awaymission/junkyard)
 "o" = (
 /obj/machinery/vending/robotics,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "p" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "q" = (
 /obj/item/weapon/paper/pamphlet,
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "r" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "s" = (
 /obj/machinery/vending/engineering,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "t" = (
 /obj/machinery/vending/tool,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "u" = (
 /obj/machinery/gateway{
@@ -125,19 +117,17 @@
 /area/awaymission/junkyard)
 "x" = (
 /obj/machinery/vending/assist,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "y" = (
 /obj/machinery/vending/cigarette,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 4;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "z" = (
 /obj/machinery/gateway{
@@ -159,34 +149,30 @@
 /area/awaymission/junkyard)
 "C" = (
 /obj/machinery/vending/engivend,
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 8;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "D" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "E" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "F" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "G" = (
 /obj/machinery/gateway,
@@ -196,25 +182,22 @@
 /obj/machinery/gateway{
 	dir = 6
 	},
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 10;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "I" = (
 /obj/machinery/space_heater,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "J" = (
-/obj/effect/decal/turf_decal{
+/turf/simulated/floor/plating{
 	dir = 6;
-	icon_state = "warn"
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "K" = (
 /obj/machinery/light,
