@@ -34,7 +34,11 @@
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
+				if(target.mind)
+					to_chat(user, "<span class='notice'>This creature has mind. We will become one.</span>")
+				else
+					to_chat(user, "<span class='notice'>This creature is mindless. We'll just satisfy our hunger.</span>")
+				to_chat(user, "<span class='notice'>We must hold still...</span>")
 			if(2)
 				to_chat(user, "<span class='notice'>We extend a proboscis.</span>")
 				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>")
