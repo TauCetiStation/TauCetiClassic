@@ -1771,6 +1771,7 @@
 /area/station/hallway/secondary/exit)
 "adU" = (
 /obj/structure/closet/secure_closet/medical3,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -5193,26 +5194,26 @@
 "aBW" = (
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{
 	pixel_x = -11;
-	pixel_y = -6
+	pixel_y = -1
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
 	pixel_x = -10;
-	pixel_y = 6
+	pixel_y = 11
 	},
 /obj/item/weapon/reagent_containers/syringe/inaprovaline{
 	pixel_x = -2;
-	pixel_y = -2
+	pixel_y = 3
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin{
-	pixel_y = 6
+	pixel_y = 11
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/toxin{
 	pixel_x = 11;
-	pixel_y = 6
+	pixel_y = 11
 	},
 /obj/item/weapon/reagent_containers/syringe/inaprovaline{
 	pixel_x = 5;
-	pixel_y = -2
+	pixel_y = 4
 	},
 /obj/structure/table/glass,
 /obj/structure/extinguisher_cabinet{
@@ -31654,35 +31655,50 @@
 /area/station/security/iaa_office)
 "fWz" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/weapon/storage/box/rxglasses{
+	pixel_y = 19;
+	pixel_x = 9
 	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/weapon/cane{
+	pixel_x = 17
 	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/weapon/cane{
+	pixel_x = 13
 	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_y = 2
+/obj/item/clothing/suit/straight_jacket{
+	pixel_x = -3;
+	pixel_y = 11
 	},
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/clothing/mask/muzzle,
-/obj/item/weapon/cane,
-/obj/item/weapon/cane,
-/obj/item/bodybag/cryobag{
-	pixel_x = 5
+/obj/item/clothing/mask/muzzle{
+	pixel_y = 11;
+	pixel_x = -3
 	},
 /obj/item/bodybag/cryobag{
-	pixel_x = 5
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /obj/item/bodybag/cryobag{
-	pixel_x = 5
+	pixel_x = 10;
+	pixel_y = 3
 	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/storage/box/rxglasses,
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = -4
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = -2;
+	pixel_x = -4
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = -4;
+	pixel_x = -4
+	},
+/obj/item/bodybag/cryobag{
+	pixel_x = 10
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -39198,6 +39214,14 @@
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
+"hAF" = (
+/obj/machinery/atm{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "hAG" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,6"
@@ -52512,14 +52536,6 @@
 	icon_state = "whitecorner"
 	},
 /area/station/hallway/primary/central)
-"krB" = (
-/obj/machinery/atm{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/secondary/exit)
 "krD" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/wood{
@@ -69736,8 +69752,13 @@
 	},
 /area/station/hallway/primary/central)
 "nZZ" = (
+/obj/item/weapon/gun/syringe{
+	pixel_x = 1;
+	pixel_y = 12
+	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_y = 8
+	pixel_y = 10;
+	pixel_x = 10
 	},
 /obj/item/clothing/glasses/hud/health{
 	pixel_x = 4
@@ -99355,6 +99376,7 @@
 "umb" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/light/smart,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -134307,7 +134329,7 @@ qtN
 lSb
 wqE
 wqE
-krB
+hAF
 gBk
 jNW
 vSV
