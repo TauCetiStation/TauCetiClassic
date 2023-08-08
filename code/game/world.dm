@@ -321,12 +321,18 @@ var/global/shutdown_processed = FALSE
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
 /world/proc/load_test_merge()
+	set waitfor = FALSE
 	if(fexists("test_merge.txt"))
-		join_test_merge = "<strong>Test merged PRs:</strong> "
-		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
-		for(var/pr in prs)
-			test_merges += "#[pr] "
-			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+		var/arguments = trim(file2text("test_merge.txt"))
+		if(config.github_token)
+			arguments += " -t '[config.github_token]'"
+		if(config.repository_link)
+			arguments += " -r '[config.github_repository_owner]/[config.github_repository_name]'"
+
+		test_merges = json_decode(world.ext_python("fetch_test_merges.py", arguments))
+		join_test_merge = "<strong>Test merged PRs:</strong><br>"
+		for(var/pr in test_merges)
+			join_test_merge += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)
