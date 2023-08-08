@@ -427,7 +427,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/blueshield
 	name = "Blueshield Officer's Wardrobe"
-	req_access = list(access_blueshield)
 	icon_state = "blueshield"
 	icon_closed = "blueshield"
 	icon_opened = "blueshieldopen"
@@ -445,6 +444,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/blueshield
 	name = "Blueshield Officer's Equipment Locker"
+	req_access = list(access_blueshield)
 	icon_state = "blueshieldsecure1"
 	icon_closed = "blueshieldsecure"
 	icon_locked = "blueshieldsecure1"

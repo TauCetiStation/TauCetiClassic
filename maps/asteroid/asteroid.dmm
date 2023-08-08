@@ -8280,7 +8280,7 @@
 /obj/structure/table,
 /obj/item/stack/cable_coil/red,
 /obj/item/stack/cable_coil/red,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/machinery/recharger/wallcharger{
 	dir = 1;
 	pixel_x = 5;
