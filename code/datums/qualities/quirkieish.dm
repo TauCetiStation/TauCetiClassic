@@ -371,7 +371,7 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/prisoner/add_effect(mob/living/carbon/human/H, latespawn)
-	if(latespawn == TRUE)
+	if(latespawn == TRUE || jobban_isbanned(H, "Syndicate"))
 		to_chat(H, "<span class='notice'>Тебя недавно отпустили по УДО. чтобы ты мог начать жизнь с чистого листа.</span>")
 		return
 
