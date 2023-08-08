@@ -209,3 +209,12 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
 
+/client/verb/show_test_merges()
+	set name = "Show Test Merges"
+	set desc = "Shows a list of all test merges that are currently active"
+	set category = "OOC"
+
+	if(join_test_merge)
+		to_chat(src, "<div class='test_merges'>[join_test_merge]</div>")
+	else
+		to_chat(src, "<div class='test_merges'>No test merges are currently active</div>")
