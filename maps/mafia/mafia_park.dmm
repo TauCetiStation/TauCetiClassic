@@ -118,11 +118,11 @@
 /turf/unsimulated/floor,
 /area/mafia)
 "t" = (
-/turf/simulated/floor/beach/water/waterpool,
+/turf/simulated/floor/water/beach/waterpool,
 /area/mafia)
 "u" = (
 /obj/effect/landmark/mafia/town_center,
-/turf/simulated/floor/beach/water/waterpool,
+/turf/simulated/floor/water/beach/waterpool,
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,

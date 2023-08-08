@@ -201,31 +201,34 @@
 	clawfootstep = FOOTSTEP_WATER_SHALLOW
 	heavyfootstep = FOOTSTEP_WATER_SHALLOW
 
-/turf/simulated/floor/beach/water
+/turf/simulated/floor/water
 	name = "Water"
 	icon_state = "water"
+
 	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
+
+	icon = 'icons/misc/beach.dmi'
+
 	footstep = FOOTSTEP_WATER_DEEP
 	barefootstep = FOOTSTEP_WATER_DEEP
 	clawfootstep = FOOTSTEP_WATER_DEEP
 	heavyfootstep = FOOTSTEP_WATER_DEEP
-	slowdown = 6
+	depth = FLUID_DEEP
 
-
-
-/turf/simulated/floor/beach/water/waterpool
+/turf/simulated/floor/water/beach
+/turf/simulated/floor/water/beach/waterpool
 	icon_state = "seadeep"
 
-/turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
+/turf/simulated/floor/water/beach/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
-	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
+	if(!istype(old_loc, /turf/simulated/floor/water/beach/waterpool))
 		AM.entered_water_turf()
 
-/turf/simulated/floor/beach/water/waterpool/Exited(atom/movable/AM, atom/new_loc)
+/turf/simulated/floor/water/beach/waterpool/Exited(atom/movable/AM, atom/new_loc)
 	..()
-	if(!istype(new_loc, /turf/simulated/floor/beach/water/waterpool))
+	if(!istype(new_loc, /turf/simulated/floor/water/beach/waterpool))
 		AM.exited_water_turf()
 
 /atom/movable/proc/exited_water_turf()
@@ -250,8 +253,6 @@
 /mob/living/carbon/human/entered_water_turf()
 	if(get_species() != SKRELL)
 		Stun(2)
-	else
-		water_act()
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	wear_suit?.make_wet()
 	w_uniform?.make_wet()
@@ -274,14 +275,14 @@
 
 
 
-/turf/simulated/floor/beach/water/atom_init()
+/turf/simulated/floor/water/beach/atom_init()
 	. = ..()
 	add_overlay(image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1))
 
-/turf/simulated/floor/beach/water/break_tile()
+/turf/simulated/floor/water/beach/break_tile()
 	return
 
-/turf/simulated/floor/beach/water/burn_tile()
+/turf/simulated/floor/water/beach/burn_tile()
 	return
 
 /turf/simulated/floor/grass

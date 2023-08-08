@@ -213,8 +213,9 @@ var/global/list/scrap_base_cache = list()
 		return FALSE
 	var/mob/living/carbon/human/victim = user
 	var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
+	var/obj/item/clothing/gloves/G = victim.gloves
 	if(!BP || BP.is_robotic() || victim.species.flags[NO_MINORCUTS]\
-		|| victim.species.flags[IS_SYNTHETIC] || victim.gloves)
+		|| victim.species.flags[IS_SYNTHETIC] || (victim.gloves && G.protect_fingers))
 		return FALSE
 	else if(prob(50))
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")

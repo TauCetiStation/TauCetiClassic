@@ -973,7 +973,7 @@
 /area/space_structures/agrospheregarden)
 "ch" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/simulated/floor/beach/water/waterpool,
+/turf/simulated/floor/water/beach/waterpool,
 /area/space_structures/agrospheregarden)
 "ci" = (
 /obj/structure/window/thin/reinforced{
@@ -985,7 +985,7 @@
 	pixel_y = -28
 	},
 /obj/structure/flora/ausbushes/grassybush,
-/turf/simulated/floor/beach/water/waterpool,
+/turf/simulated/floor/water/beach/waterpool,
 /area/space_structures/agrospheregarden)
 "cj" = (
 /obj/structure/table/glass,
@@ -1109,7 +1109,7 @@
 /area/space_structures/agrospheregarden)
 "cv" = (
 /obj/structure/flora/junglebush/c,
-/turf/simulated/floor/beach/water/waterpool,
+/turf/simulated/floor/water/beach/waterpool,
 /area/space_structures/agrospheregarden)
 "cw" = (
 /obj/machinery/sleeper{

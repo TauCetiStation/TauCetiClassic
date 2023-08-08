@@ -1,3 +1,6 @@
+#define FLUID_SHALLOW 200
+#define FLUID_DEEP 800
+
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
@@ -12,6 +15,9 @@
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/phoron = 0
+
+	//Depth for water turf and liqud`s
+	var/depth = null
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05

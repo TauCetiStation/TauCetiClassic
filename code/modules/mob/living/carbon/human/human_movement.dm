@@ -130,12 +130,8 @@
 					tally += 2
 
 	var/turf/T = get_turf(src)
-	if(T)
-		if(istype(T, /turf/simulated/floor/beach/water) && (get_species() != SKRELL || shoes))
-			tally += T.slowdown
-		var/obj/effect/fluid/F = locate(/obj/effect/fluid) in T
-		if(F && (get_species() != SKRELL || shoes))
-			tally += F.fluid_amount * 0.005
+	if(T && (get_species() != SKRELL || shoes))
+		tally += T.slowdown + (T.get_fluid_depth() * 0.0075) // in basic, waterpool have 800 depth
 
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
