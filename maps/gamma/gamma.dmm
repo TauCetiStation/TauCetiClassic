@@ -52518,9 +52518,13 @@
 	},
 /area/station/hallway/primary/central)
 "krB" = (
-/obj/item/device/radio/electropack,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/obj/machinery/atm{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "krD" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/wood{
@@ -70631,13 +70635,9 @@
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/monitoring)
 "oka" = (
-/obj/machinery/atm{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/secondary/exit)
+/obj/item/device/radio/electropack,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "okd" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -133280,7 +133280,7 @@ wqE
 cfk
 vKL
 vbK
-coY
+afO
 pyM
 kCd
 vbK
@@ -133288,7 +133288,7 @@ coY
 pyM
 xSW
 vbK
-coY
+afO
 pyM
 qJH
 rZh
@@ -134306,7 +134306,7 @@ qtN
 lSb
 wqE
 wqE
-oka
+krB
 gBk
 jNW
 vSV
@@ -135819,7 +135819,7 @@ mRW
 kiW
 beG
 mRW
-krB
+oka
 ruI
 xiP
 rRv
