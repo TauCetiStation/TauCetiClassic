@@ -293,8 +293,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	var/check_with_stump = istype(I, /obj/item/weapon/melee/baton)
-	if(check_with_stump ? (!BP || BP.is_stump) : !BP)
+	if(!BP || BP.is_stump)
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
