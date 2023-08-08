@@ -234,13 +234,13 @@
 /turf/unsimulated/beach/coastline,
 /area/awaymission/beach)
 "R" = (
-/turf/unsimulated/water/beach{
+/turf/unsimulated/beach/water{
 	density = 1;
 	opacity = 1
 	},
 /area/awaymission/beach)
 "S" = (
-/turf/unsimulated/water/beach,
+/turf/unsimulated/beach/water,
 /area/awaymission/beach)
 
 (1,1,1) = {"

@@ -20501,13 +20501,13 @@
 	},
 /area/centcom/tdome)
 "aZy" = (
-/turf/unsimulated/water/beach{
+/turf/unsimulated/beach/water{
 	density = 1;
 	opacity = 1
 	},
 /area/custom/beach)
 "aZz" = (
-/turf/unsimulated/water/beach,
+/turf/unsimulated/beach/water,
 /area/custom/beach)
 "aZB" = (
 /obj/random/vending/snack,

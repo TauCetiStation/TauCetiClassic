@@ -17,7 +17,7 @@
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
 
-#define iswaterturf(A) (istype(A, /turf/simulated/floor/water) || istype(A, /turf/unsimulated/water) || istype(A, /turf/unsimulated/jungle/water))
+#define iswaterturf(A) (istype(A, /turf/simulated/floor/beach/water) || istype(A, /turf/unsimulated/beach/water) || istype(A, /turf/unsimulated/jungle/water))
 
 // HUMAN
 
