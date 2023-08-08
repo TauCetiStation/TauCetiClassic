@@ -100992,13 +100992,13 @@
 	},
 /area/station/civilian/garden)
 "uEm" = (
-/obj/item/stack/tile,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/stack/tile/plasteel,
 /turf/simulated/floor/plating,
 /area/station/civilian/market)
 "uEt" = (
