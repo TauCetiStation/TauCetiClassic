@@ -145,7 +145,7 @@
 		for(var/datum/dna/D in absorbed_dna)
 			if(T.dna.uni_identity == D.uni_identity)
 				if(T.dna.struc_enzymes == D.struc_enzymes)
-					if(T.dna.real_name == D.real_name)
+					if(T.dna.original_character_name == D.original_character_name)
 						to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
 						return FALSE
 	return TRUE
