@@ -23,6 +23,9 @@
 	var/volume = 70
 	var/internal_switch = 0
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
+
+	var/reaction_in_progress = FALSE
+
 /obj/item/weapon/tank/atom_init()
 	. = ..()
 
@@ -229,6 +232,8 @@
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
+		reaction_in_progress = TRUE
+
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast]. [ADMIN_JMP(src)]")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
@@ -239,13 +244,18 @@
 		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		var/effrange = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
 		//world << "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>"
 
-		explosion(epicenter, round(clamp(range*0.25,effrange*0.25,effrange-2)), round(clamp(range*0.5,effrange*0.5,effrange-1)), round(effrange), round(effrange*1.5))
-		qdel(src)
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range))
+
+		reaction_in_progress = FALSE
+		if(istype(loc, /obj/item/device/transfer_valve)) // bomb, valve should handle deletion
+			var/obj/item/device/transfer_valve/TV = loc
+			qdel(TV)
+		else
+			qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		//world << "<span class='notice'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>"
@@ -272,6 +282,13 @@
 
 	else if(integrity < 3)
 		integrity++
+
+// todo, need to add detonation/gas release. currently /obj/item/ex_act explosion just deletes things
+/obj/item/weapon/tank/ex_act(severity)
+	if(reaction_in_progress) // give it time to explode
+		return
+
+	return ..()
 
 #undef TANK_MIN_RELEASE_PRESSURE
 #undef TANK_MAX_RELEASE_PRESSURE

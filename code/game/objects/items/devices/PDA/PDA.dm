@@ -437,10 +437,15 @@
 	popup.set_content(HTML)
 	popup.open()
 
-
 /obj/item/device/pda/silicon/can_use()
-	return 1
-
+	var/mob/living/silicon/ai/ai_user = loc
+	if(istype(ai_user) && ai_user.control_disabled)
+		return FALSE
+	else
+		var/mob/living/silicon/robot/borg_user = loc
+		if(istype(borg_user) && borg_user.incapacitated())
+			return FALSE
+	return TRUE
 
 /obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -515,7 +520,7 @@
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
-	
+
 	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
 	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
 	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
