@@ -249,7 +249,7 @@
 		var/datum/vote_choice/nextmap/vc = new
 		var/map_name = splittext(VM.map_name, " ")[1]
 		if(map_name in voteweights)
-			VM.voteweight *= voteweights[map_name]
+			VM.voteweight = max(0.4, VM.voteweight * voteweights[map_name])
 		vc.text = VM.GetFullMapName()
 		if(VM.voteweight != 1)
 			vc.text += "\[vote weight: [VM.voteweight]\]"
@@ -262,7 +262,7 @@
 	if(!establish_db_connection("erro_round"))
 		return FALSE
 	var/list/voteweights = list()
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round WHERE server_port = [world.port] ORDER BY id DESC LIMIT 10")
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round WHERE (end_state = 'proper completion' OR end_state = 'nuke') AND server_port = [sanitize_sql(world.port)] ORDER BY id DESC LIMIT 3")
 	select_query.Execute()
 	var/map_name = ""
 	while(select_query.NextRow())
@@ -270,8 +270,7 @@
 		map_name = splittext(row["map_name"], " ")[1]
 		if(!(map_name in voteweights))
 			voteweights[map_name] = 1
-		if((voteweights[map_name] - 0.1) > 0)
-			voteweights[map_name] -= 0.1
+		voteweights[map_name] -= 0.2
 
 	return voteweights
 
