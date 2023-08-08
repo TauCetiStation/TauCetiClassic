@@ -271,7 +271,6 @@
 		if(!(map_name in voteweights))
 			voteweights[map_name] = 1
 		voteweights[map_name] -= 0.2
-
 	return voteweights
 
 /datum/vote_choice/nextmap
