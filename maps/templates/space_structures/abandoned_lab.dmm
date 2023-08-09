@@ -322,9 +322,12 @@
 	},
 /area/space_structures/derelict_lab)
 "bb" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "bc" = (
@@ -414,8 +417,11 @@
 /area/space_structures/derelict_lab)
 "bq" = (
 /obj/effect/decal/cleanable/blood,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "br" = (
@@ -707,8 +713,11 @@
 	},
 /area/space_structures/derelict_lab)
 "ci" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "cj" = (
@@ -734,8 +743,11 @@
 /area/space_structures/derelict_lab)
 "cm" = (
 /obj/machinery/suit_storage_unit/science,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "cn" = (
@@ -743,14 +755,20 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "co" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "cp" = (
@@ -829,8 +847,11 @@
 "cB" = (
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/structure/rack,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "cC" = (
@@ -920,8 +941,11 @@
 "HA" = (
 /obj/structure/rack,
 /obj/item/device/radio/off,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "IX" = (
