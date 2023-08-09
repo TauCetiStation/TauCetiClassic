@@ -211,7 +211,7 @@
 	barefootstep = FOOTSTEP_WATER_DEEP
 	clawfootstep = FOOTSTEP_WATER_DEEP
 	heavyfootstep = FOOTSTEP_WATER_DEEP
-	depth = FLUID_DEEP
+	depth = 800
 
 
 

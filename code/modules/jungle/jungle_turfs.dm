@@ -126,7 +126,7 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "water"
 	icon_spawn_state = "water"
-	depth = FLUID_DEEP
+	depth = 800
 
 /turf/unsimulated/jungle/water/atom_init()
 	..()
