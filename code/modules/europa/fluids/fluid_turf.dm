@@ -64,5 +64,5 @@
 	if(is_flooded(absolute = 1))
 		return FLUID_MAX_DEPTH
 	var/obj/effect/fluid/F = return_fluid()
-	return (istype(F) ? F.fluid_amount : 0 )
+	return (depth ? depth : 0) + (F ? (F.fluid_amount ? F.fluid_amount : 0) : 0)
 

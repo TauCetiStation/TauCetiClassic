@@ -1,3 +1,6 @@
+#define FLUID_SHALLOW 200
+#define FLUID_DEEP 800
+
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
@@ -34,6 +37,9 @@
 	var/barefootstep
 	var/clawfootstep
 	var/heavyfootstep
+
+	//Depth for water turf and liqud`s
+	var/depth = null
 
 /**
   * Turf Initialize
