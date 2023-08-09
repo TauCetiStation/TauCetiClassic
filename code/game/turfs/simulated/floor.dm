@@ -152,6 +152,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
+// todo: sort this between floor/type/update_icon, wtf
 /turf/simulated/floor/update_icon()
 	if(is_plasteel_floor())
 		if(!broken && !burnt)
@@ -237,20 +238,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			if(air)
 				update_visuals(air)*/
 	..()
-
-/turf/simulated/floor/return_siding_icon_state()
-	..()
-	if(is_grass_floor())
-		var/dir_sum = 0
-		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
-			if(!(T.is_grass_floor()))
-				dir_sum += direction
-		if(dir_sum)
-			return "wood_siding[dir_sum]"
-		else
-			return 0
-
 
 /turf/simulated/floor/attack_paw(mob/user)
 	return attack_hand(user)
@@ -395,6 +382,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	broken = 0
 	burnt = 0
 
+	clean_turf_decals()
 	update_icon()
 	levelupdate()
 

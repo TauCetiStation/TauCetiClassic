@@ -31,11 +31,12 @@
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 "f" = (
-/turf/simulated/floor/holofloor{
-	icon_state = "grimy"
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "spline_plain"
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "siding1"
+	icon_state = "grimy"
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 "g" = (
