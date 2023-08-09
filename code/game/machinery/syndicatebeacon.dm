@@ -75,7 +75,8 @@
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
 	selfdestructing = 1
-	spawn() explosion(src.loc, 0, rand(1,3), rand(3,8))
+	var/power = rand(1, 3)
+	spawn() explosion(src.loc, 0, power, power*3)
 
 
 
