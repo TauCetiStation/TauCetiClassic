@@ -40,17 +40,17 @@
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
-			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в ПДА!")
+			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в КПК!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "PDA")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
-			to_chat(traitor_mob, "ПДА не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
+			to_chat(traitor_mob, "КПК не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
 		var/list/station_intercom_list = list()
@@ -65,22 +65,22 @@
 			to_chat(traitor_mob, "Не обнаружено подходящего интеркома внутренней связи станции, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
-			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в ПДА!")
+			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в КПК!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "None")
 		to_chat(traitor_mob, "Вы отказались от установки портативного телепортационного реле AntagCorp! Удачи.")
 		R = null
 
 	else
-		to_chat(traitor_mob, "Вы не указали место установки портативного телепортационного реле AntagCorp в настройках антагонистов(перед началом раунда, зайдите в Setup, далее во вкладку Roles и нажмите на PDA, чтобы вам был выдан список где может быть установлен Аплинк)! По умолчанию в ПДА!")
+		to_chat(traitor_mob, "Вы не указали место установки портативного телепортационного реле AntagCorp в настройках антагонистов(перед началом раунда, зайдите в Setup, далее во вкладку Roles и нажмите на \"PDA\", чтобы вам был выдан список где может быть установлен Аплинк)! По умолчанию в КПК!")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if (!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "ПДА не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
-			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в ПДА.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	if (istype(R, /obj/item/device/radio))
 		// generate list of radio freqs
@@ -116,8 +116,8 @@
 		R.hidden_uplink = T
 		var/obj/item/device/pda/P = R
 		P.lock_code = pda_pass
-		to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто введите код выданный вам ранее \"[pda_pass]\", зайдите в настройки вашего ПДА, а именно изменения вашего рингтона, вместо \"beep\" введите тот самый код для получения доступа к скрытому функционалу.")
-		traitor_mob.mind.store_memory("<B>Код Аплинка:</B> [pda_pass] ([R.name] [loc]).")
+		to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто введите код выданный вам ранее \"[pda_pass]\", зайдите в настройки вашего КПК, а именно изменения вашего рингтона, вместо \"beep\" введите тот самый код для получения доступа к скрытому функционалу.")
+		traitor_mob.mind.store_memory("<B>Код для Аплинка:</B> [pda_pass] ([R.name] [loc]).")
 		total_TC += R.hidden_uplink.uses
 		R.hidden_uplink.uplink_type = uplink_type
 
