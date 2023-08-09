@@ -1827,21 +1827,33 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fQ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fR" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fS" = (
@@ -1887,20 +1899,32 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fZ" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
 /turf/simulated/floor{
-	icon_state = "chapel"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "ga" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gb" = (
@@ -1945,23 +1969,35 @@
 	dir = 8
 	},
 /obj/structure/window/thin/reinforced,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gj" = (
 /obj/structure/window/thin/reinforced,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gk" = (
 /obj/structure/window/thin/reinforced,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gl" = (
@@ -2233,27 +2269,39 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gX" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gY" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gZ" = (
@@ -2452,9 +2500,13 @@
 /area/space_structures/derelict/arrival)
 "hw" = (
 /obj/machinery/light/small,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "hx" = (
@@ -2533,8 +2585,12 @@
 	name = "ProComp IIe";
 	pixel_y = 7
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
 /turf/simulated/floor{
-	icon_state = "chapel"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/space_structures/derelict/medical/chapel)
 "hI" = (
@@ -2783,9 +2839,8 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "iy" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "iz" = (
 /turf/simulated/floor/airless{
@@ -2966,50 +3021,58 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jg" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict9"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_9"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jh" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "derelict10"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_10"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "ji" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict11"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_11"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jj" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict12"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_12"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jk" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict13"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_13"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jl" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict14"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_14"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jm" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict15"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_15"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jn" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "derelict16"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_16"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jo" = (
 /obj/structure/cable{
@@ -3036,44 +3099,52 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jr" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict1"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_1"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "js" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict2"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_2"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jt" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict3"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_3"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "ju" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict4"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_4"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jv" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict5"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_5"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jw" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict6"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_6"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jx" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict7"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_7"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jy" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict8"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_8"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jz" = (
 /obj/structure/lattice,
