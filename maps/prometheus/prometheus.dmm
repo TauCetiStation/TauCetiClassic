@@ -2321,7 +2321,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter" = "Supermatter  In", "sm_sensor" = "Supermatter", "out_sm_meter" = "Supermatter  Out")
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2348,7 +2348,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter" = "Supermatter  In", "sm_sensor" = "Supermatter", "out_sm_meter" = "Supermatter  Out")
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -2616,7 +2616,7 @@
 	dir = 8;
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon  Dioxide", "tox_sensor" = "Toxins", "n2o_sensor" = "Nitrous  Oxide", "waste_sensor" = "Gas  Mix  Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -8421,9 +8421,6 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
-/obj/effect/landmark{
-	name = "prisonerstart"
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10325,9 +10322,6 @@
 	},
 /obj/effect/landmark{
 	name = "blobstart"
-	},
-/obj/effect/landmark{
-	name = "prisonerstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -19307,7 +19301,7 @@
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
 	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+	sensors = list("n2o_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -20222,10 +20216,10 @@
 /obj/item/clothing/gloves/security/marinad,
 /obj/structure/closet,
 /obj/item/clothing/suit/marinad{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0)
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"rad"=0)
 	},
 /obj/item/clothing/head/helmet/tactical/marinad{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0)
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"rad"=0)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -26604,7 +26598,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins  Test  Area");
+	network = list("Toxins Test Area");
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom{
@@ -27382,9 +27376,6 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
-	},
-/obj/effect/landmark{
-	name = "prisonerstart"
 	},
 /turf/simulated/floor{
 	icon_state = "brownold"
@@ -30366,7 +30357,7 @@
 	input_tag = "sm_in";
 	name = "Supermatter Supply Control";
 	output_tag = "sm_out";
-	sensors = list("sm_sensor" = "Supermatter")
+	sensors = list("sm_sensor"="Supermatter")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -32339,7 +32330,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+	sensors = list("n2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -64826,7 +64817,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	name = "Research Monitor";
-	network = list("Research","Toxins  Test  Area","Robots","Anomaly  Isolation");
+	network = list("Research","Toxins Test Area","Robots","Anomaly Isolation");
 	pixel_y = 2
 	},
 /obj/structure/table/woodentable,
@@ -66462,7 +66453,7 @@
 	input_tag = "waste_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "waste_out";
-	sensors = list("waste_sensor" = "Tank")
+	sensors = list("waste_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "caution"
@@ -70203,7 +70194,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter" = "Supermatter  In", "sm_sensor" = "Supermatter", "out_sm_meter" = "Supermatter  Out")
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73695,7 +73686,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter" = "Mixed  Air  In", "air_sensor" = "Mixed  Air  Supply  Tank", "mair_out_meter" = "Mixed  Air  Out", "dloop_atm_meter" = "Distribution  Loop", "wloop_atm_meter" = "Waste  Loop")
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
 /obj/structure/sign/map/prometheus{
 	pixel_x = -32
@@ -74349,9 +74340,6 @@
 /area/station/security/interrogation)
 "rOJ" = (
 /obj/structure/stool/bed/chair/metal,
-/obj/effect/landmark{
-	name = "prisonerstart"
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -81822,7 +81810,7 @@
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
 	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	sensors = list("co2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -82565,7 +82553,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -88636,7 +88624,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+	sensors = list("o2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -89530,7 +89518,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins  Test  Area")
+	network = list("Toxins Test Area")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
