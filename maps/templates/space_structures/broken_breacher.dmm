@@ -19,9 +19,12 @@
 /area/space_structures/broken_breacher)
 "aT" = (
 /obj/item/stack/sheet/metal,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "aX" = (
@@ -55,9 +58,12 @@
 /obj/item/weapon/shield/riot{
 	pixel_x = -4
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "bg" = (
@@ -80,9 +86,12 @@
 /area/space_structures/broken_breacher)
 "bA" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "bH" = (
@@ -207,9 +216,12 @@
 /area/space_structures/broken_breacher)
 "if" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "iq" = (
@@ -249,8 +261,11 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "podhatch"
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "kv" = (
@@ -285,9 +300,12 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = -27
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "lV" = (
@@ -300,9 +318,12 @@
 	dir = 4
 	},
 /obj/item/weapon/arrow/rod,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "me" = (
@@ -357,9 +378,12 @@
 	},
 /area/space_structures/broken_breacher)
 "nS" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "nV" = (
@@ -390,9 +414,12 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "op" = (
@@ -417,8 +444,11 @@
 /area/space_structures/broken_breacher)
 "oV" = (
 /obj/item/stack/rods,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "podhatch"
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "po" = (
@@ -439,9 +469,12 @@
 	},
 /area/space_structures/broken_breacher)
 "qw" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "qR" = (
@@ -474,9 +507,12 @@
 /obj/item/stack/cable_coil/red{
 	amount = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "ru" = (
@@ -583,9 +619,12 @@
 /area/space_structures/broken_breacher)
 "vA" = (
 /obj/structure/droppod,
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "vH" = (
@@ -595,9 +634,12 @@
 /obj/item/stack/cable_coil/red{
 	amount = 2
 	},
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "vW" = (
@@ -661,9 +703,12 @@
 	},
 /area/space_structures/broken_breacher)
 "yh" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "yj" = (
@@ -787,9 +832,12 @@
 	},
 /obj/machinery/door/window/brigdoor,
 /obj/structure/rack,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "Ds" = (
@@ -799,9 +847,12 @@
 	},
 /area/space_structures/broken_breacher)
 "DG" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "Ef" = (
@@ -969,9 +1020,12 @@
 	},
 /area/space_structures/broken_breacher)
 "JA" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "JB" = (
@@ -1059,9 +1113,12 @@
 "Ni" = (
 /obj/effect/landmark/corpse/unathisoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "Ns" = (
@@ -1177,9 +1234,12 @@
 /obj/item/weapon/shard,
 /obj/item/stack/cable_coil/red,
 /obj/item/weapon/airlock_electronics,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "Sd" = (
@@ -1206,9 +1266,12 @@
 /obj/effect/decal/droppod_wreckage{
 	anchored = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "TG" = (
@@ -1309,8 +1372,11 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/lasercannon,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "podhatch"
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "XH" = (

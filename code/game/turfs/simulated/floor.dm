@@ -88,15 +88,17 @@ var/global/list/wood_icons = list("wood","wood-broken")
 //	return ..()
 
 /turf/simulated/floor/ex_act(severity)
+	..()
 	//set src in oview(1)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			ChangeTurf(basetype)
 		if(EXPLODE_HEAVY)
-			switch(pick(1,2;75,3))
+			switch(pick(prob(10);1, prob(10);2, 3))
 				if(1)
 					ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 				if(2)
 					ChangeTurf(basetype)
 				if(3)
@@ -104,12 +106,11 @@ var/global/list/wood_icons = list("wood","wood-broken")
 						break_tile_to_plating()
 					else
 						break_tile()
-					hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 		if(EXPLODE_LIGHT)
 			if(prob(50))
 				break_tile()
-				hotspot_expose(1000,CELL_VOLUME)
 
 /turf/simulated/floor/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!burnt && prob(5))
@@ -151,6 +152,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
+// todo: sort this between floor/type/update_icon, wtf
 /turf/simulated/floor/update_icon()
 	if(is_plasteel_floor())
 		if(!broken && !burnt)
@@ -236,20 +238,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			if(air)
 				update_visuals(air)*/
 	..()
-
-/turf/simulated/floor/return_siding_icon_state()
-	..()
-	if(is_grass_floor())
-		var/dir_sum = 0
-		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
-			if(!(T.is_grass_floor()))
-				dir_sum += direction
-		if(dir_sum)
-			return "wood_siding[dir_sum]"
-		else
-			return 0
-
 
 /turf/simulated/floor/attack_paw(mob/user)
 	return attack_hand(user)
@@ -394,6 +382,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	broken = 0
 	burnt = 0
 
+	clean_turf_decals()
 	update_icon()
 	levelupdate()
 

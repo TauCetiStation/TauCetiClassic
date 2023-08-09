@@ -275,7 +275,7 @@ to destroy them and players will be able to make replacements.
 		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(vending_name))
 			return
-		
+
 		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
 
 		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")

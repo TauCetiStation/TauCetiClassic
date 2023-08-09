@@ -217,9 +217,10 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "hu" = (
 /obj/structure/table/woodentable,
@@ -256,10 +257,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "iZ" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -310,9 +312,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "lG" = (
 /obj/structure/table/woodentable,
@@ -396,9 +399,10 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "op" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -416,9 +420,10 @@
 	frequency = 1379;
 	id_tag = "asteroidder_pump"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "oT" = (
 /obj/structure/flora/ausbushes/ywflowers{
@@ -538,9 +543,10 @@
 	},
 /obj/machinery/constructable_frame/machine_frame,
 /obj/item/weapon/circuitboard/smes,
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "ti" = (
 /obj/item/weapon/flora/random,
@@ -582,9 +588,10 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "vh" = (
 /obj/structure/flora/ausbushes/leafybush,
@@ -653,10 +660,11 @@
 /turf/simulated/floor/beach/coastline,
 /area/space_structures/space_villa)
 "xg" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "xt" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -1035,9 +1043,10 @@
 	name = "exterior access button";
 	pixel_x = 28
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplatecorner"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Ln" = (
 /obj/structure/table/woodentable,
@@ -1136,10 +1145,11 @@
 	id_tag = "asteroidder_outer";
 	req_access = list(101)
 	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "OB" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -1252,10 +1262,11 @@
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "SP" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Th" = (
 /obj/structure/flora/ausbushes/genericbush,
@@ -1390,9 +1401,10 @@
 	frequency = 1379;
 	id_tag = "asteroidder_pump"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "XF" = (
 /obj/structure/sign/poster/official/cohiba_robusto_ad{

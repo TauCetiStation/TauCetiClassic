@@ -8,6 +8,7 @@
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
 	var/required_proficiency
+	var/list/blacklist = list()		///type paths of items explicitly not allowed as an ingredient
 
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return
@@ -321,4 +322,19 @@
 	tools = list(/obj/item/toy/crayon/spraycan)
 	result = /obj/item/clothing/accessory/armband/medgreen
 	time = 30
+
+/datum/crafting_recipe/makeshift_shiv
+	name = "Glass shiv"
+	reqs = list(/obj/item/stack/sheet/cloth = 1,
+				/obj/item/weapon/shard = 1)
+	blacklist = list(/obj/item/weapon/shard/phoron)
+	result = /obj/item/weapon/kitchenknife/makeshift_shiv
+	time = 10
+
+/datum/crafting_recipe/makeshift_shiv_phoron
+	name = "Phoron glass shiv"
+	reqs = list(/obj/item/stack/sheet/cloth = 1,
+				/obj/item/weapon/shard/phoron = 1)
+	result = /obj/item/weapon/kitchenknife/makeshift_shiv/phoron
+	time = 10
 
