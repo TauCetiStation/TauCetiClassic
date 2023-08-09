@@ -190,20 +190,8 @@
 			total_TC = uplink_uses
 
 	var/datum/role/R = parent
-	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
-		var/obj/item/device/biocan/B = new (traitor_mob.loc)
-		var/list/slots = list(
-			"backpack" = SLOT_IN_BACKPACK,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-		traitor_mob.update_icons()
-		if (!where)
-			to_chat(traitor_mob, "Синдикат, к несчастью, не может предоставить вам банку с биогелем для хранения необходимой головы.")
-		else
-			to_chat(traitor_mob, "Банка с биогелем была помещена в ваш [where], она поможет вам сохранить голову вашей цели живой и невредимой.")
-
+	for(var/datum/objective/O in R.objectives.GetObjectives())
+		O.give_required_equipment()
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)

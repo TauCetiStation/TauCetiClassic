@@ -28,10 +28,6 @@
 	g_amt = 0
 	created_window = /obj/structure/window/thin
 
-/obj/item/stack/sheet/glass/random/atom_init()
-	amount = rand(5, 10)
-	. = ..()
-
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 

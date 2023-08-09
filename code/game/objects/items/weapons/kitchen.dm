@@ -199,6 +199,22 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "throwing_knife"
 
+/obj/item/weapon/kitchenknife/makeshift_shiv
+	name = "glass shiv"
+	desc = "A shard of sharp glass with a rag tied around"
+	force = 9
+	throwforce = 5
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "glass"
+
+/obj/item/weapon/kitchenknife/makeshift_shiv/phoron
+	name = "phoron glass shiv"
+	desc = "A shard of sharp glass with a rag tied around. Considerably tougher than regular glass shiv."
+	force = 13
+	throwforce = 9
+	icon_state = "pglass"
+
+
 /*
  * Bucher's cleaver
  */

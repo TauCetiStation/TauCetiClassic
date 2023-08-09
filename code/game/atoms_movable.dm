@@ -1,5 +1,3 @@
-#define GEIGER_RANGE 15
-
 /atom/movable
 	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
@@ -167,7 +165,6 @@
 	STOP_THROWING(src, A)
 
 	if(A && non_native_bump)
-		A.last_bumped = world.time
 		A.Bumped(src)
 
 
@@ -547,6 +544,8 @@
 		if(500 to INFINITY)
 			message += "You notice your skin is covered in fresh radiation burns."
 	return message
+
+#define GEIGER_RANGE 15
 
 /proc/irradiate_one_mob(mob/living/victim, rad_dose)
 	victim.apply_effect(rad_dose, IRRADIATE)

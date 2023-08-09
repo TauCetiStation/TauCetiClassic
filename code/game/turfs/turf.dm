@@ -35,6 +35,8 @@
 	var/clawfootstep
 	var/heavyfootstep
 
+	var/list/turf_decals
+
 /**
   * Turf Initialize
   *
@@ -198,8 +200,6 @@
 	return 0
 /turf/proc/is_catwalk()
 	return 0
-/turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
-	return 0
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -234,6 +234,8 @@
 /turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
+
+	clean_turf_decals()
 
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
@@ -514,3 +516,26 @@
 			V.name = "metallic slurry"
 			V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
 			V.icon_state = "vomitnanite_[pick(1,4)]"
+
+/turf/proc/add_turf_decal(mutable_appearance/decal)
+	if(length(turf_decals) > TURF_DECALS_LIMIT)
+		CRASH("Too many turf decals on [src]: [x].[y].[z]")
+
+	if(decal in turf_decals)
+		CRASH("Decal already exists on [src]: [x].[y].[z]")
+
+	LAZYADD(turf_decals, decal)
+	add_overlay(decal)
+
+/turf/proc/remove_turf_decal(mutable_appearance/decal)
+	LAZYREMOVE(turf_decals, decal)
+	cut_overlay(decal)
+
+/turf/proc/clean_turf_decals()
+	if(!length(turf_decals))
+		return
+
+	cut_overlay(turf_decals)
+	turf_decals = null
+/*	for(var/appearance in turf_decals)
+		LAZYREMOVE(turf_decals, decal)*/
