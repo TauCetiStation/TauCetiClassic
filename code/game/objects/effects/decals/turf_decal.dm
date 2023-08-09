@@ -16,7 +16,7 @@
 
 	var/image/I = image(icon, icon_state, dir = (new_dir || dir)) // temp image to work around mutable_appearance dir problem (thx tg for this solution)
 
-	var/mutable_appearance/MA = new(I)
+	var/mutable_appearance/MA = new(I) // todo: it creates new MA for every new decal, need to optimise reuse (i think tg did it with elements)
 	MA.color = new_color || color
 	MA.alpha = new_alpha || alpha
 	T.add_turf_decal(MA)
