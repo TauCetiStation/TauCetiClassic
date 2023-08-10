@@ -1,6 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aac" = (
 /obj/random/vending/snack,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -3413,6 +3416,10 @@
 "aFa" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -31786,7 +31793,8 @@
 "hdN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
 /area/station/medical/hallway)
 "hdP" = (
@@ -35109,7 +35117,9 @@
 /area/station/security/vacantoffice)
 "hPG" = (
 /obj/item/weapon/flora/random,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/station/hallway/primary/starboard)
 "hPH" = (
 /obj/structure/table/reinforced,
@@ -37209,7 +37219,8 @@
 	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 1;
+	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
 "inj" = (
@@ -43017,6 +43028,10 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -50219,7 +50234,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/station/hallway/primary/starboard)
 "leA" = (
 /obj/item/weapon/flora/random,
@@ -63529,6 +63546,10 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -83046,7 +83067,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/station/hallway/primary/starboard)
 "sLV" = (
 /obj/effect/landmark/start/roboticist,
@@ -91465,6 +91488,10 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -95774,7 +95801,7 @@
 /area/station/aisat)
 "vTJ" = (
 /obj/machinery/disposal,
-/obj/effect/decal/turf_decal/alpha/blue{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
@@ -145861,7 +145888,7 @@ oGJ
 sXO
 leI
 sBD
-qQK
+gOn
 xZn
 kpr
 adj
@@ -146375,7 +146402,7 @@ jPQ
 elA
 mQw
 sbr
-pxa
+gOn
 yey
 meR
 mYS
