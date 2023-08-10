@@ -40815,6 +40815,15 @@
 /obj/structure/window/thin,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
+"jbe" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "jbl" = (
 /obj/structure/closet/secure_closet/scientist,
 /obj/item/device/cardpay{
@@ -55758,6 +55767,15 @@
 	icon_state = "vaultfull"
 	},
 /area/station/storage/tech)
+"msg" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "msk" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -66648,8 +66666,7 @@
 	pixel_y = -26
 	},
 /obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line";
-	dir = 6
+	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -78021,10 +78038,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line";
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -86573,6 +86586,15 @@
 	icon_state = "white"
 	},
 /area/station/rnd/hallway)
+"tAZ" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "tBc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -87124,7 +87146,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
-	dir = 5
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -148294,9 +148316,9 @@ xQo
 ukM
 rmY
 kbr
-nGt
-nGt
-nGt
+jbe
+tAZ
+msg
 ryF
 nGt
 djc
