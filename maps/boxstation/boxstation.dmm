@@ -15185,6 +15185,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/turf/simulated/floor,
 /area/station/hallway/primary/port)
 "aKc" = (
 /obj/structure/stool{
