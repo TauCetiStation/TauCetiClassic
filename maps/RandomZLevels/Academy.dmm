@@ -454,8 +454,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bw" = (
@@ -464,8 +463,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bx" = (
@@ -525,8 +523,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bI" = (
@@ -534,8 +531,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bJ" = (
@@ -549,8 +545,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bL" = (
@@ -570,8 +565,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bN" = (
@@ -592,8 +586,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "bP" = (
@@ -676,8 +669,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "cd" = (
@@ -723,8 +715,7 @@
 /area/awaymission/academy/headmaster)
 "ci" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "cj" = (
@@ -740,8 +731,7 @@
 "ck" = (
 /obj/machinery/computer/area_atmos/area,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "cl" = (
@@ -938,8 +928,7 @@
 	},
 /obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "cQ" = (
@@ -954,8 +943,7 @@
 /obj/structure/closet/crate,
 /obj/item/weapon/crowbar/red,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/headmaster)
 "cS" = (
@@ -1621,8 +1609,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "eJ" = (
@@ -1631,8 +1618,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "eK" = (
@@ -1646,8 +1632,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "eL" = (
@@ -1689,8 +1674,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "eR" = (
@@ -1698,8 +1682,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "eS" = (
@@ -1713,8 +1696,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "eT" = (
@@ -2264,8 +2246,7 @@
 /area/awaymission/academy/academyaft)
 "gf" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gg" = (
@@ -2277,23 +2258,20 @@
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gh" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen/red,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gi" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gj" = (
@@ -2341,8 +2319,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gp" = (
@@ -2376,8 +2353,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gv" = (
@@ -2424,8 +2400,7 @@
 	name = "Summoning Midterm Exam"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gB" = (
@@ -2435,15 +2410,13 @@
 	name = "Summoning Midterm Exam"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gC" = (
 /obj/structure/table,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gD" = (
@@ -2473,8 +2446,7 @@
 "gH" = (
 /obj/structure/stool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gI" = (
@@ -2526,8 +2498,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gO" = (
@@ -2537,8 +2508,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gP" = (
@@ -2549,8 +2519,7 @@
 	name = "Summoning Midterm Exam"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/academy/classrooms)
 "gQ" = (
