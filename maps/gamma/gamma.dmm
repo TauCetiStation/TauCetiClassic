@@ -14954,6 +14954,13 @@
 "cuX" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/blueshield)
+"cuY" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 1;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engineering/rust)
 "cvb" = (
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/clipboard,
@@ -37062,13 +37069,14 @@
 	},
 /area/station/maintenance/medbay)
 "gSp" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance{
-	name = "Cargo Bay Maintenance";
-	req_access = list(50)
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/cargo/office)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitecorner"
+	},
+/area/station/hallway/primary/central)
 "gSw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -44096,13 +44104,6 @@
 	icon_state = "white"
 	},
 /area/station/rnd/mixing)
-"itl" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "loadingarea"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engineering/rust)
 "its" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
@@ -47534,14 +47535,14 @@
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "jew" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitecorner"
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/area/station/hallway/primary/central)
+/area/station/maintenance/dormitory)
 "jeB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
@@ -59981,10 +59982,9 @@
 	},
 /area/station/security/lobby)
 "lLc" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -67186,6 +67186,14 @@
 	icon_state = "wood_stairs2"
 	},
 /area/station/hallway/secondary/entry)
+"nmb" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	name = "Cargo Bay Maintenance";
+	req_access = list(50)
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/office)
 "nmc" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -92678,6 +92686,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/outerlabs)
+"sDc" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engineering/rust)
 "sDg" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -102481,12 +102496,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "uCm" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 1;
-	icon_state = "loadingarea"
+/obj/machinery/shower{
+	dir = 4
 	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engineering/rust)
+/obj/structure/drain{
+	drainage = 2
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "uCn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -107891,14 +107911,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
-"vJS" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/dormitory)
 "vJX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -138339,7 +138351,7 @@ keN
 jUW
 fXg
 fXg
-gSp
+nmb
 fXg
 fXg
 fXg
@@ -138851,10 +138863,10 @@ mwL
 fYj
 agH
 tpP
-vJS
+lLc
 aZE
 vKb
-lLc
+jew
 fXg
 fXg
 fXg
@@ -140628,7 +140640,7 @@ tIw
 hDw
 bBs
 emu
-jew
+gSp
 emu
 tmq
 uCt
@@ -141442,7 +141454,7 @@ klI
 ats
 umG
 ats
-umG
+uCm
 ats
 aej
 guA
@@ -156768,7 +156780,7 @@ qvz
 bUl
 mHH
 gRX
-itl
+sDc
 gRX
 fbD
 mGP
@@ -157024,7 +157036,7 @@ thc
 qvz
 nuS
 gRX
-uCm
+cuY
 naH
 wvT
 xIS
