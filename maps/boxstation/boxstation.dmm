@@ -5877,6 +5877,19 @@
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"akc" = (
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering","Engineering Robots");
+	pixel_y = 30
+	},
+/mob/living/simple_animal/parrot/Poly,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "akd" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/processing)
@@ -8473,6 +8486,9 @@
 "aoo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aop" = (
@@ -9307,6 +9323,9 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "apR" = (
@@ -9903,6 +9922,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aqX" = (
@@ -27982,6 +28004,9 @@
 /obj/item/weapon/cigbutt{
 	pixel_x = 13
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/prison/toilet)
 "aYQ" = (
@@ -28069,6 +28094,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -66777,6 +66805,9 @@
 /area/station/medical/hallway)
 "cIb" = (
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "cIc" = (
@@ -71032,19 +71063,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"gmb" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engineering Department.";
-	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
-	pixel_y = 30
-	},
-/mob/living/simple_animal/parrot/Poly,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellow"
-	},
-/area/station/engineering/chiefs_office)
 "gmI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -114842,7 +114860,7 @@ bNi
 bIZ
 crK
 crK
-gmb
+akc
 cXC
 gwb
 fvU

@@ -728,6 +728,7 @@
 #include "code\game\gamemodes\roles\heist.dm"
 #include "code\game\gamemodes\roles\malf_unit.dm"
 #include "code\game\gamemodes\roles\ninja.dm"
+#include "code\game\gamemodes\roles\prisoner.dm"
 #include "code\game\gamemodes\roles\prop.dm"
 #include "code\game\gamemodes\roles\replicator.dm"
 #include "code\game\gamemodes\roles\revolution.dm"
