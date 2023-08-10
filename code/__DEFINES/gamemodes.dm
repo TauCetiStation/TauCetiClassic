@@ -66,6 +66,7 @@
 #define XENOMORPH "Xenomorph"
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
+#define PRISONER "Prisoner"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

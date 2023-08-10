@@ -296,8 +296,7 @@
 "aau" = (
 /obj/structure/bookcase/manuals/xenoarchaeology,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/entry{
 	name = "Research Shuttle Dock"
@@ -433,8 +432,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "aaE" = (
@@ -534,9 +532,11 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
 "aaO" = (
@@ -1064,9 +1064,11 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "abC" = (
@@ -1377,8 +1379,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "abY" = (
@@ -1402,8 +1403,7 @@
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "aca" = (
@@ -1425,8 +1425,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "acc" = (
@@ -1533,9 +1532,11 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "ack" = (
@@ -1929,8 +1930,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "acY" = (
@@ -2315,6 +2315,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"adP" = (
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/monitoring)
 "adQ" = (
 /obj/effect/decal/remains/robot,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -2330,6 +2342,19 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
+"adR" = (
+/obj/machinery/computer/general_air_control{
+	dir = 4;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "adS" = (
 /obj/machinery/door/airlock/vault{
 	name = "Blueshield Storage";
@@ -2586,6 +2611,24 @@
 	},
 /turf/environment/space,
 /area/station/security/blueshield/shuttle)
+"aen" = (
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1441;
+	name = "Tank Monitor";
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/engineering/monitoring)
 "aeo" = (
 /obj/structure/lattice,
 /turf/simulated/wall,
@@ -2615,6 +2658,18 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/cargo)
+"aeq" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "aes" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -2731,9 +2786,11 @@
 	},
 /area/station/maintenance/medbay)
 "afy" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/primary/port)
 "afA" = (
@@ -2778,8 +2835,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "afM" = (
@@ -2812,9 +2868,11 @@
 /obj/machinery/light/small/emergency{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "afX" = (
@@ -2866,16 +2924,14 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "agn" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/entry{
 	name = "Research Shuttle Dock"
@@ -2895,8 +2951,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "agQ" = (
@@ -2944,9 +2999,11 @@
 	c_tag = "Brig HoS Office";
 	network = list("SS13","Security")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "ahv" = (
@@ -3154,9 +3211,11 @@
 /area/station/maintenance/medbay)
 "ajB" = (
 /obj/machinery/cryopod/right,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/primary/port)
 "ajQ" = (
@@ -3356,8 +3415,7 @@
 /area/station/rnd/xenobiology)
 "amW" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "amX" = (
@@ -3388,8 +3446,7 @@
 "anr" = (
 /obj/structure/closet/secure_closet/engineering_welding,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "anu" = (
@@ -3420,8 +3477,7 @@
 "any" = (
 /obj/structure/stool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "anR" = (
@@ -3500,9 +3556,11 @@
 /obj/structure/morgue{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "aoU" = (
@@ -3574,9 +3632,11 @@
 /area/station/solar/auxport)
 "aqg" = (
 /obj/structure/morgue,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "aqs" = (
@@ -3839,8 +3899,7 @@
 	},
 /obj/structure/rack,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "atc" = (
@@ -3950,8 +4009,7 @@
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "aue" = (
@@ -4309,8 +4367,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "axD" = (
@@ -4319,9 +4376,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "axT" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "axY" = (
@@ -4683,8 +4742,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "aBv" = (
@@ -4779,8 +4837,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "aCH" = (
@@ -4827,8 +4884,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/execution)
 "aDD" = (
@@ -4941,8 +4997,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "aEt" = (
@@ -5017,8 +5072,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "aFi" = (
@@ -5178,8 +5232,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "aGP" = (
@@ -5312,8 +5365,7 @@
 "aIv" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
 "aIx" = (
@@ -5721,9 +5773,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "aOg" = (
@@ -5750,8 +5804,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "aPe" = (
@@ -5777,8 +5830,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "aPw" = (
@@ -6076,8 +6128,7 @@
 /obj/item/device/lens/rentgene,
 /obj/item/device/tagger/shop,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/storage)
 "aTw" = (
@@ -6217,8 +6268,7 @@
 	c_tag = "Bar East"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "aVH" = (
@@ -6309,15 +6359,13 @@
 /area/station/civilian/hydroponics)
 "aWy" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/bridge/hop_office)
 "aWJ" = (
 /obj/random/vending/snack,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "aWP" = (
@@ -6444,8 +6492,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "aYj" = (
@@ -6498,8 +6545,7 @@
 "aZa" = (
 /obj/random/vending/snack,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "aZb" = (
@@ -6689,9 +6735,11 @@
 	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/janitor)
 "bdL" = (
@@ -6798,9 +6846,11 @@
 "bex" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/janitor)
 "beE" = (
@@ -7077,9 +7127,11 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/melee/baton,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "biL" = (
@@ -7191,9 +7243,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "bkA" = (
@@ -7282,9 +7336,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "blu" = (
@@ -7568,8 +7624,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -7579,16 +7634,17 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "bpe" = (
 /obj/structure/closet/l3closet/general,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "bph" = (
@@ -7746,8 +7802,7 @@
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "bqB" = (
@@ -7762,8 +7817,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/playroom)
 "bqG" = (
@@ -7896,8 +7950,7 @@
 /obj/item/weapon/screwdriver,
 /obj/random/tools/tool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "bsl" = (
@@ -7916,8 +7969,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "bst" = (
@@ -8377,6 +8429,9 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -8428,9 +8483,11 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "bzj" = (
@@ -8683,8 +8740,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "bBV" = (
@@ -8753,8 +8809,7 @@
 	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "bCQ" = (
@@ -9046,8 +9101,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/barbershop)
 "bHq" = (
@@ -9073,9 +9127,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/brainstorm_center)
 "bHN" = (
@@ -9216,8 +9272,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "bJw" = (
@@ -9339,8 +9394,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "bLk" = (
@@ -9446,8 +9500,7 @@
 /area/station/aisat)
 "bMc" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "bMg" = (
@@ -9502,8 +9555,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "bMA" = (
@@ -9774,17 +9826,18 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "bPR" = (
 /obj/structure/stool/bar,
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "bPS" = (
@@ -9826,9 +9879,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "bQV" = (
@@ -9878,8 +9933,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "bRB" = (
@@ -9982,8 +10036,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "bSG" = (
@@ -10267,20 +10320,29 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "bXu" = (
-/obj/structure/toilet{
-	pixel_y = 8
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
 /obj/effect/landmark{
-	name = "blobstart"
+	name = "prisonerstart"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/turf/simulated/floor{
+	icon_state = "brownold"
+	},
+/area/station/security/prison)
 "bXA" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal{
@@ -10292,8 +10354,7 @@
 /obj/structure/stool/bed/chair/metal/red,
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "bXG" = (
@@ -10332,9 +10393,11 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "bYT" = (
@@ -10411,9 +10474,11 @@
 /area/station/aisat/ai_chamber)
 "bZT" = (
 /obj/machinery/r_n_d/protolathe,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "caj" = (
@@ -10620,8 +10685,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/interrogation)
 "cdZ" = (
@@ -10663,8 +10727,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "ceL" = (
@@ -10788,8 +10851,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "cgw" = (
@@ -10867,8 +10929,7 @@
 "chC" = (
 /obj/random/vending/cola,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "chD" = (
@@ -11082,9 +11143,11 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "clJ" = (
@@ -11288,9 +11351,11 @@
 	dir = 10;
 	network = list("SS13","Engineering")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "cnD" = (
@@ -11309,8 +11374,7 @@
 /obj/structure/stool/bed/chair/metal/black,
 /obj/effect/landmark/start/research_assistant,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "cos" = (
@@ -11337,8 +11401,7 @@
 	c_tag = "Hydroponics"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "coz" = (
@@ -11600,9 +11663,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "crd" = (
@@ -11661,9 +11726,11 @@
 /area/station/rnd/xenobiology)
 "csg" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "csD" = (
@@ -11683,9 +11750,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/execution)
 "csG" = (
@@ -11768,8 +11837,7 @@
 "ctE" = (
 /obj/machinery/vending/donut,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/playroom)
 "ctJ" = (
@@ -11783,8 +11851,7 @@
 	req_access = list(3)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "ctT" = (
@@ -11825,9 +11892,11 @@
 /area/station/engineering/equip)
 "cus" = (
 /obj/machinery/seed_extractor,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
 "cuu" = (
@@ -11997,9 +12066,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "cxe" = (
@@ -12047,9 +12118,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "cxV" = (
@@ -12215,8 +12288,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "cAx" = (
@@ -12326,9 +12398,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "cCa" = (
@@ -12840,15 +12914,16 @@
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "cJs" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "cJw" = (
@@ -13017,8 +13092,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "cMr" = (
@@ -13057,8 +13131,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/prison)
 "cMR" = (
@@ -13263,8 +13336,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "cQe" = (
@@ -13361,8 +13433,7 @@
 	stamp_message = "Research Outpost"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/entry{
 	name = "Research Shuttle Dock"
@@ -13375,9 +13446,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "cRh" = (
@@ -13714,9 +13787,11 @@
 	},
 /area/station/rnd/lab)
 "cVO" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/hop_office)
 "cVP" = (
@@ -13861,9 +13936,11 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "cXY" = (
@@ -14360,8 +14437,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/janitor)
 "ddx" = (
@@ -14384,8 +14460,7 @@
 	pixel_x = -22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "ddZ" = (
@@ -14472,9 +14547,11 @@
 	c_tag = "Engineering Drone Fabrication";
 	network = list("SS13","Engineering")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "deU" = (
@@ -14702,8 +14779,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/execution)
 "dhg" = (
@@ -14813,8 +14889,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "dis" = (
@@ -14911,9 +14986,11 @@
 /obj/item/weapon/book/manual/wiki/possible_threats{
 	pixel_y = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "djg" = (
@@ -15216,8 +15293,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "dnb" = (
@@ -15393,8 +15469,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/storage)
 "dpu" = (
@@ -15403,8 +15478,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "dpv" = (
@@ -15522,8 +15596,7 @@
 /area/station/medical/hallway)
 "dsg" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "dsD" = (
@@ -15580,8 +15653,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "dtk" = (
@@ -15651,8 +15723,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/playroom)
 "duj" = (
@@ -15902,9 +15973,11 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "dww" = (
@@ -16147,9 +16220,11 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/box/r4046/teargas,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "dyZ" = (
@@ -16362,8 +16437,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/miningoffice)
 "dBl" = (
@@ -16410,8 +16484,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "dBJ" = (
@@ -16479,9 +16552,11 @@
 	name = "Evidence Closet"
 	},
 /obj/random/misc/all,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "dCt" = (
@@ -16644,9 +16719,11 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "dEx" = (
@@ -16834,9 +16911,11 @@
 "dHl" = (
 /obj/structure/closet/bombclosetsecurity,
 /obj/machinery/light/small/emergency,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "dHF" = (
@@ -16844,9 +16923,11 @@
 /obj/machinery/camera{
 	c_tag = "Cryogenic Storage"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/primary/port)
 "dHL" = (
@@ -16952,9 +17033,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "dIw" = (
@@ -17012,8 +17095,7 @@
 	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "dJn" = (
@@ -17081,8 +17163,7 @@
 	},
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -17190,8 +17271,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "dKI" = (
@@ -17256,9 +17336,11 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "dLg" = (
@@ -17320,8 +17402,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "dLz" = (
@@ -17381,8 +17462,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "dMo" = (
@@ -17660,9 +17740,11 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "dNW" = (
@@ -17676,9 +17758,11 @@
 	c_tag = "Engineering Atmospherics North";
 	network = list("SS13","Engineering")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "dOk" = (
@@ -17879,8 +17963,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "dRR" = (
@@ -17912,9 +17995,11 @@
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone,
 /obj/item/device/radio/off,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "dSe" = (
@@ -17934,8 +18019,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/misc_lab)
 "dSh" = (
@@ -18001,8 +18085,7 @@
 	pixel_y = -26
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/aft)
 "dTm" = (
@@ -18055,8 +18138,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics)
 "dUh" = (
@@ -18077,9 +18159,11 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/circuitboard/mecha_control,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/storage/tech)
 "dUM" = (
@@ -18270,9 +18354,11 @@
 /area/station/hallway/primary/port)
 "dWB" = (
 /obj/machinery/chem_dispenser,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/chemistry)
 "dWF" = (
@@ -18375,8 +18461,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "dXY" = (
@@ -18398,8 +18483,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "dYr" = (
@@ -18532,17 +18616,21 @@
 /area/station/tcommsat/chamber)
 "dZN" = (
 /obj/machinery/computer/secure_data/detective_computer,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "dZW" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "dZZ" = (
@@ -18808,8 +18896,7 @@
 "efa" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "efb" = (
@@ -18853,8 +18940,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "efU" = (
@@ -18931,9 +19017,11 @@
 /area/station/rnd/xenobiology)
 "ehl" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "ehm" = (
@@ -19039,9 +19127,11 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "ehX" = (
@@ -19069,8 +19159,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "eik" = (
@@ -19190,8 +19279,7 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "ejI" = (
@@ -19234,9 +19322,11 @@
 	dir = 4;
 	network = list("SS13","Medical")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "ejQ" = (
@@ -19359,8 +19449,7 @@
 	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "elt" = (
@@ -19400,8 +19489,7 @@
 /obj/structure/table/glass,
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics)
 "emC" = (
@@ -19462,8 +19550,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "enf" = (
@@ -19709,8 +19796,7 @@
 	req_access = list(10)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "epu" = (
@@ -20156,8 +20242,7 @@
 "euB" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "euL" = (
@@ -20396,8 +20481,7 @@
 "exb" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "exh" = (
@@ -20518,9 +20602,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "eyL" = (
@@ -20603,11 +20689,8 @@
 /area/station/civilian/bar)
 "eAh" = (
 /obj/structure/stool,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -20753,8 +20836,7 @@
 	},
 /obj/item/device/radio/headset/headset_med,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
 "eCc" = (
@@ -21019,8 +21101,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "eEa" = (
@@ -21179,8 +21260,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/storage)
 "eGK" = (
@@ -21404,8 +21484,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "eJs" = (
@@ -21443,8 +21522,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "eKl" = (
@@ -21508,8 +21586,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "eLh" = (
@@ -21533,8 +21610,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
 "eLP" = (
@@ -21603,9 +21679,11 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "eMr" = (
@@ -21646,8 +21724,7 @@
 	},
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/playroom)
 "eMM" = (
@@ -21862,9 +21939,11 @@
 	c_tag = "Bridge Gateway Entrance";
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "ePT" = (
@@ -21991,9 +22070,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "eRs" = (
@@ -22077,9 +22158,11 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "eSn" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/execution)
 "eSo" = (
@@ -22314,8 +22397,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
 "eVC" = (
@@ -22363,8 +22445,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "eVR" = (
@@ -22576,8 +22657,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "eXL" = (
@@ -22636,8 +22716,7 @@
 	req_access = list(30)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/hor)
 "eYp" = (
@@ -22801,8 +22880,7 @@
 	},
 /obj/structure/stool/bed/chair/wheelchair,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/storage)
 "fao" = (
@@ -23175,9 +23253,11 @@
 	pixel_y = -2
 	},
 /obj/structure/table,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "ffr" = (
@@ -23265,9 +23345,11 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/melee/baton,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "fgT" = (
@@ -23435,9 +23517,11 @@
 	dir = 6;
 	network = list("SS13","Security")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "fiu" = (
@@ -23506,9 +23590,11 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main{
 	name = "Security Equipment"
@@ -23524,8 +23610,7 @@
 /area/station/hallway/secondary/exit)
 "fjW" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "fkk" = (
@@ -23566,15 +23651,13 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "fkA" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "fkI" = (
@@ -23605,9 +23688,11 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "fkW" = (
@@ -23794,8 +23879,7 @@
 	pixel_x = -22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "fmz" = (
@@ -24089,8 +24173,7 @@
 "fpq" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "fpx" = (
@@ -24349,15 +24432,16 @@
 	},
 /obj/random/tools/tool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "fst" = (
 /obj/machinery/vending/hydroseeds,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
 "fsE" = (
@@ -24637,9 +24721,11 @@
 	dir = 1;
 	network = list("SS13","Engineering")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/storage/tech)
 "fvf" = (
@@ -24751,8 +24837,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -25542,8 +25627,7 @@
 /area/station/civilian/library)
 "fFu" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "fFD" = (
@@ -25552,8 +25636,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "fFG" = (
@@ -25720,8 +25803,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/aft)
 "fHS" = (
@@ -25842,8 +25924,7 @@
 	c_tag = "Escape Hall North"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "fJu" = (
@@ -26217,8 +26298,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "fOj" = (
@@ -26340,9 +26420,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "fOY" = (
@@ -26369,8 +26451,7 @@
 	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics)
 "fPn" = (
@@ -26480,9 +26561,11 @@
 	pixel_x = 22
 	},
 /obj/structure/cable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "fQR" = (
@@ -26829,8 +26912,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "fUx" = (
@@ -26917,8 +26999,7 @@
 "fVn" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "fVz" = (
@@ -26998,8 +27079,7 @@
 "fWm" = (
 /obj/machinery/vending/eva/engineering,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "fWv" = (
@@ -27245,8 +27325,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/prison)
 "fZt" = (
@@ -27325,17 +27404,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "gbx" = (
-/obj/structure/stool/bed/chair/comfy/beige{
-	dir = 1
+/obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/light/small,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "brownold"
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
+/turf/simulated/floor,
 /area/station/security/prison)
 "gbG" = (
 /turf/simulated/wall,
@@ -27382,8 +27461,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
 "gcE" = (
@@ -27840,8 +27918,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "ghp" = (
@@ -27899,8 +27976,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/storage)
 "ghL" = (
@@ -28030,8 +28106,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "giT" = (
@@ -28383,8 +28458,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "gnj" = (
@@ -28810,8 +28884,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "gsP" = (
@@ -29117,8 +29190,7 @@
 	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "gwq" = (
@@ -29206,9 +29278,11 @@
 "gxo" = (
 /obj/structure/closet/wardrobe/red,
 /obj/item/clothing/suit/battonshirt,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "gxq" = (
@@ -29320,9 +29394,11 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/cryo)
 "gyN" = (
@@ -29390,9 +29466,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "gzL" = (
@@ -29503,8 +29581,7 @@
 "gAH" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/maintenance/science)
 "gAR" = (
@@ -29552,8 +29629,7 @@
 	pixel_y = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "gBT" = (
@@ -29611,9 +29687,11 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "gDs" = (
@@ -29770,15 +29848,16 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "gEB" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "gED" = (
@@ -29831,9 +29910,11 @@
 	pixel_x = -24;
 	req_access = list(24)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "gFp" = (
@@ -30030,8 +30111,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/cmo)
 "gHA" = (
@@ -30118,8 +30198,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "gIS" = (
@@ -30148,8 +30227,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/cmo)
 "gJm" = (
@@ -30211,8 +30289,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "gKf" = (
@@ -31038,8 +31115,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics_cloning)
 "gTE" = (
@@ -31248,8 +31324,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "gVz" = (
@@ -31270,9 +31345,11 @@
 	dir = 8;
 	pixel_x = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "gVM" = (
@@ -31347,8 +31424,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "gWM" = (
@@ -31407,8 +31483,7 @@
 "gXt" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "gXv" = (
@@ -31428,8 +31503,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "gYf" = (
@@ -31904,8 +31978,7 @@
 "hcc" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "hcf" = (
@@ -31930,8 +32003,7 @@
 	},
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "hcw" = (
@@ -32041,8 +32113,7 @@
 	pixel_y = -30
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
 "hdO" = (
@@ -32066,9 +32137,11 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "hdY" = (
@@ -32131,8 +32204,7 @@
 	},
 /obj/structure/rack,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "heA" = (
@@ -32251,9 +32323,11 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "hgJ" = (
@@ -32352,9 +32426,11 @@
 /area/station/aisat/antechamber_interior)
 "hhz" = (
 /obj/machinery/shieldwallgen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/teleporter)
 "hhA" = (
@@ -32363,8 +32439,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "hhO" = (
@@ -32448,8 +32523,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -32470,8 +32544,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "hiA" = (
@@ -32484,9 +32557,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "hiF" = (
@@ -32583,8 +32658,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "hjV" = (
@@ -32743,9 +32817,11 @@
 	},
 /obj/structure/closet/coffin,
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "hlu" = (
@@ -32783,8 +32859,7 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "hlO" = (
@@ -32864,9 +32939,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/primary/port)
 "hmZ" = (
@@ -33247,8 +33324,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "htj" = (
@@ -33308,8 +33384,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "htI" = (
@@ -33438,8 +33513,7 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "hwc" = (
@@ -33585,8 +33659,7 @@
 /obj/item/clothing/head/helmet/space/rig/atmos,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
 "hyH" = (
@@ -33664,8 +33737,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/hydroponics,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "hzU" = (
@@ -33726,9 +33798,11 @@
 /area/station/medical/virology)
 "hAP" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/prison)
 "hAQ" = (
@@ -33945,9 +34019,11 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/aisat/antechamber)
 "hCW" = (
@@ -34134,8 +34210,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "hGk" = (
@@ -34412,8 +34487,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/playroom)
 "hJm" = (
@@ -34439,8 +34513,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "hJu" = (
@@ -34626,9 +34699,11 @@
 	network = list("SS13","Security")
 	},
 /obj/machinery/door_timer/cell_4,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "hMK" = (
@@ -34688,9 +34763,11 @@
 "hNc" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "hNe" = (
@@ -34711,9 +34788,11 @@
 /obj/item/weapon/gun/energy/laser{
 	pixel_y = -3
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "hNj" = (
@@ -34803,8 +34882,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "hOH" = (
@@ -35096,9 +35174,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/hop_office)
 "hSJ" = (
@@ -35168,17 +35248,6 @@
 	icon_state = "darkbluecorners"
 	},
 /area/station/tcommsat/computer)
-"hTr" = (
-/obj/machinery/computer/general_air_control{
-	frequency = 1444;
-	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/engine)
 "hTs" = (
 /turf/simulated/wall,
 /area/station/cargo/office)
@@ -35721,8 +35790,7 @@
 	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "hZZ" = (
@@ -35823,9 +35891,11 @@
 "ibA" = (
 /obj/structure/closet/crate/engi,
 /obj/random/tools/tool,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "ibB" = (
@@ -35895,8 +35965,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "icf" = (
@@ -36047,8 +36116,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "iem" = (
@@ -36115,9 +36183,11 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/ai_upload)
 "ifd" = (
@@ -36244,8 +36314,7 @@
 /area/station/security/iaa_office)
 "igY" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "ihf" = (
@@ -36620,9 +36689,11 @@
 	pixel_x = -26;
 	req_access = list(57)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "ilQ" = (
@@ -36705,22 +36776,6 @@
 /obj/structure/stool/bar,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
-"imp" = (
-/obj/machinery/computer/general_air_control{
-	dir = 4;
-	frequency = 1443;
-	level = 3;
-	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
-	},
-/obj/structure/sign/map/prometheus{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/engineering/monitoring)
 "imv" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -36797,9 +36852,11 @@
 	c_tag = "Bridge Vault";
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "inq" = (
@@ -37381,8 +37438,7 @@
 "iwI" = (
 /obj/random/vending/cola,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "iwM" = (
@@ -37406,9 +37462,11 @@
 /area/station/rnd/hallway)
 "iwP" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "iwR" = (
@@ -37462,8 +37520,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "ixO" = (
@@ -37518,8 +37575,7 @@
 	pixel_y = -22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -37625,9 +37681,11 @@
 	},
 /area/station/cargo/qm)
 "izJ" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "izL" = (
@@ -37717,8 +37775,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "iAo" = (
@@ -37905,8 +37962,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "iCz" = (
@@ -37939,9 +37995,11 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 30
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "iCL" = (
@@ -37955,8 +38013,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "iCM" = (
@@ -38403,9 +38460,11 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "iJl" = (
@@ -38441,8 +38500,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "iJH" = (
@@ -38478,9 +38536,11 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "iKh" = (
@@ -38513,8 +38573,7 @@
 "iKs" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgeryobs)
 "iKF" = (
@@ -38536,8 +38595,7 @@
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "iKO" = (
@@ -38626,8 +38684,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/maintenance/science)
 "iMg" = (
@@ -38689,8 +38746,7 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "iNd" = (
@@ -38749,8 +38805,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "iNT" = (
@@ -38901,9 +38956,11 @@
 	req_access = list(57)
 	},
 /obj/structure/closet/firecloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "iPw" = (
@@ -38950,9 +39007,11 @@
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "iQU" = (
@@ -39108,9 +39167,11 @@
 "iTi" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/server)
 "iTo" = (
@@ -39144,8 +39205,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "iTy" = (
@@ -39215,8 +39275,7 @@
 	name = "Central Access"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "iVj" = (
@@ -39733,8 +39792,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "jaO" = (
@@ -39859,8 +39917,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "jcF" = (
@@ -40152,9 +40209,11 @@
 /obj/item/weapon/screwdriver{
 	pixel_x = 3
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/cryo)
 "jgH" = (
@@ -40934,8 +40993,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "jrW" = (
@@ -41010,9 +41068,11 @@
 /obj/item/clothing/mask/gas/sechailer{
 	pixel_x = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "jsC" = (
@@ -41237,9 +41297,11 @@
 	},
 /area/station/bridge/hop_office)
 "jvw" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "jvx" = (
@@ -41343,8 +41405,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "jws" = (
@@ -41398,8 +41459,7 @@
 "jxb" = (
 /obj/machinery/computer/mine_sci_shuttle,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/qm)
 "jxc" = (
@@ -41526,8 +41586,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "jzr" = (
@@ -41756,8 +41815,7 @@
 "jBG" = (
 /obj/machinery/vending/tool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "jBI" = (
@@ -41788,8 +41846,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "jCK" = (
@@ -41965,8 +42022,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "jFs" = (
@@ -42036,9 +42092,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "jGl" = (
@@ -42289,8 +42347,7 @@
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "jJp" = (
@@ -42347,9 +42404,11 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/smart,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "jKB" = (
@@ -42361,8 +42420,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "jKM" = (
@@ -42407,8 +42465,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/entry{
 	name = "Research Shuttle Dock"
@@ -42564,8 +42621,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "jMM" = (
@@ -42659,9 +42715,11 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "jPg" = (
@@ -42771,8 +42829,7 @@
 "jRc" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "jRp" = (
@@ -42990,8 +43047,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "jTA" = (
@@ -43113,8 +43169,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "jUT" = (
@@ -43274,9 +43329,11 @@
 /area/station/medical/storage)
 "jXE" = (
 /obj/structure/closet/emcloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/secondary/arrival)
 "jXF" = (
@@ -43356,9 +43413,11 @@
 	pixel_x = 3;
 	pixel_y = 9
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/cryo)
 "jYT" = (
@@ -43493,9 +43552,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint)
 "kar" = (
@@ -43737,9 +43798,11 @@
 /area/station/ai_monitored/storage_secure)
 "kcR" = (
 /obj/structure/closet/emcloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "kcX" = (
@@ -43897,8 +43960,7 @@
 /area/station/security/brig)
 "kgK" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "kgO" = (
@@ -44000,9 +44062,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/execution)
 "kip" = (
@@ -44079,9 +44143,11 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "kja" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/storage/tech)
 "kjh" = (
@@ -44193,9 +44259,11 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/circuitboard/aiupload,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/storage/tech)
 "kly" = (
@@ -44433,8 +44501,7 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "kpr" = (
@@ -44515,9 +44582,11 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/server)
 "kqE" = (
@@ -44925,8 +44994,7 @@
 "kvS" = (
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "kwm" = (
@@ -45115,8 +45183,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics_cloning)
 "kyt" = (
@@ -45212,8 +45279,7 @@
 	},
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -45275,8 +45341,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/ai_monitored/eva)
 "kAo" = (
@@ -45293,9 +45358,11 @@
 	density = 0;
 	pixel_x = 32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "kAC" = (
@@ -45307,9 +45374,11 @@
 	dir = 4
 	},
 /obj/machinery/space_heater,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "kAW" = (
@@ -45331,8 +45400,7 @@
 "kAX" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/sleeper)
 "kAY" = (
@@ -45484,9 +45552,11 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "kCc" = (
@@ -45533,8 +45603,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "kCT" = (
@@ -45557,8 +45626,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "kCY" = (
@@ -45826,8 +45894,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "kHz" = (
@@ -45998,8 +46065,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "kJt" = (
@@ -46059,8 +46125,7 @@
 "kKc" = (
 /obj/structure/stool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgeryobs)
 "kKl" = (
@@ -46082,8 +46147,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "kKn" = (
@@ -46091,8 +46155,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/maintenance/science)
 "kKp" = (
@@ -46440,9 +46503,11 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
 "kPq" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/reception)
 "kPB" = (
@@ -46525,8 +46590,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "kRI" = (
@@ -46692,9 +46756,11 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
 "kTp" = (
@@ -46855,9 +46921,11 @@
 /area/station/rnd/xenobiology)
 "kUS" = (
 /obj/machinery/vending/hydronutrients,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
 "kUU" = (
@@ -47205,8 +47273,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "kYB" = (
@@ -47530,8 +47597,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "lbh" = (
@@ -47566,9 +47632,11 @@
 /area/station/maintenance/medbay)
 "lbX" = (
 /obj/structure/closet/secure_closet/personal,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "lcA" = (
@@ -47620,8 +47688,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "lds" = (
@@ -47918,9 +47985,11 @@
 "lgh" = (
 /obj/structure/closet/crate/medical,
 /obj/item/weapon/storage/firstaid/regular,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "lgk" = (
@@ -48009,8 +48078,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/ai_monitored/eva)
 "lhd" = (
@@ -48086,9 +48154,11 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/execution)
 "lhI" = (
@@ -48104,9 +48174,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "lhZ" = (
@@ -48150,8 +48222,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "liy" = (
@@ -48424,8 +48495,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "llZ" = (
@@ -48682,8 +48752,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "lpl" = (
@@ -48911,8 +48980,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/barbershop)
 "lsi" = (
@@ -48931,8 +48999,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/ai_monitored/eva)
 "lsl" = (
@@ -48983,9 +49050,11 @@
 /obj/item/ammo_box/shotgun/beanbag{
 	pixel_y = -2
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "lti" = (
@@ -48998,8 +49067,7 @@
 /obj/item/clothing/head/welding,
 /obj/random/tools/tool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "ltk" = (
@@ -49042,8 +49110,7 @@
 	name = "Primary Tool Storage"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "lts" = (
@@ -49229,8 +49296,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "lwv" = (
@@ -49359,9 +49425,11 @@
 	pixel_y = -28
 	},
 /obj/structure/cable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "lzb" = (
@@ -49429,9 +49497,11 @@
 	pixel_y = -6;
 	req_access = list(3)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "lzK" = (
@@ -49443,8 +49513,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "lzP" = (
@@ -49462,25 +49531,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
-"lAm" = (
-/obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1441;
-	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/engineering/monitoring)
 "lAp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -49557,8 +49607,7 @@
 /obj/item/clothing/head/soft/orange,
 /obj/item/clothing/under/color/orange,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/prison)
 "lBw" = (
@@ -49844,9 +49893,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "lFe" = (
@@ -49880,9 +49931,11 @@
 	pixel_x = 22
 	},
 /obj/machinery/light/small,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/cryo)
 "lFj" = (
@@ -50037,9 +50090,11 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "lGZ" = (
@@ -50176,8 +50231,7 @@
 /obj/item/weapon/cartridge/atmos,
 /obj/item/weapon/airlock_painter,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
 "lHR" = (
@@ -50354,8 +50408,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "lKd" = (
@@ -50473,8 +50526,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "lLy" = (
@@ -51155,8 +51207,7 @@
 	req_access = list(2)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "lVq" = (
@@ -51176,9 +51227,11 @@
 	pixel_x = -4
 	},
 /obj/machinery/light/small/emergency,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "lVr" = (
@@ -51252,8 +51305,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "lXc" = (
@@ -51410,9 +51462,11 @@
 	},
 /area/station/maintenance/medbay)
 "lYx" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/hallway)
 "lYz" = (
@@ -51446,8 +51500,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/prison)
 "lYZ" = (
@@ -51626,8 +51679,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "mbr" = (
@@ -51677,9 +51729,11 @@
 /area/station/medical/virology)
 "mcj" = (
 /obj/machinery/cryopod,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/primary/port)
 "mcr" = (
@@ -51724,8 +51778,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "mcT" = (
@@ -51738,8 +51791,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/ai_monitored/eva)
 "mcZ" = (
@@ -51811,9 +51863,11 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "mds" = (
@@ -52165,9 +52219,11 @@
 /area/space)
 "mhV" = (
 /obj/machinery/deployable/barrier,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "mhZ" = (
@@ -52185,8 +52241,7 @@
 /area/station/maintenance/engineering)
 "mid" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "mio" = (
@@ -52337,8 +52392,7 @@
 /area/station/maintenance/engineering)
 "mjv" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "mjw" = (
@@ -52685,8 +52739,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "moA" = (
@@ -52889,9 +52942,11 @@
 	amount = 50;
 	pixel_x = -4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "mqc" = (
@@ -52963,9 +53018,11 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/tox_launch)
 "mrK" = (
@@ -52992,8 +53049,7 @@
 "msg" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "msn" = (
@@ -53139,8 +53195,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/sleeper)
 "muk" = (
@@ -53176,8 +53231,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "muu" = (
@@ -53429,8 +53483,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/scibreak)
 "mxX" = (
@@ -53507,8 +53560,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgeryobs)
 "myL" = (
@@ -53755,9 +53807,11 @@
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "mBm" = (
@@ -53831,8 +53885,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "mBV" = (
@@ -54031,9 +54084,11 @@
 	c_tag = "Brig Evidence Storage";
 	network = list("SS13","Security")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "mEd" = (
@@ -54205,8 +54260,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "mFN" = (
@@ -54276,8 +54330,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
 "mGv" = (
@@ -54392,8 +54445,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "mHe" = (
@@ -54432,8 +54484,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics)
 "mHS" = (
@@ -54604,8 +54655,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "mKe" = (
@@ -54661,9 +54711,11 @@
 /area/station/cargo/office)
 "mKX" = (
 /obj/structure/closet/secure_closet/security,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "mLw" = (
@@ -54744,8 +54796,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "mMf" = (
@@ -54803,8 +54854,7 @@
 "mMJ" = (
 /mob/living/pbag,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/prison)
 "mMN" = (
@@ -54994,8 +55044,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "mQc" = (
@@ -55128,8 +55177,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "mSU" = (
@@ -55166,9 +55214,11 @@
 /obj/item/clothing/head/helmet/bulletproof{
 	pixel_y = 3
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "mTc" = (
@@ -55404,9 +55454,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "mVf" = (
@@ -55794,8 +55846,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/phone,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "nbL" = (
@@ -55879,9 +55930,11 @@
 	amount = 50;
 	pixel_x = -2
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "ncM" = (
@@ -55930,8 +55983,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "ndZ" = (
@@ -56230,8 +56282,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/sleeper)
 "ngQ" = (
@@ -56366,8 +56417,7 @@
 "nie" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "nig" = (
@@ -56389,8 +56439,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "nis" = (
@@ -56708,8 +56757,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "nlF" = (
@@ -56931,9 +56979,11 @@
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/secondary/arrival)
 "noA" = (
@@ -57135,9 +57185,11 @@
 /area/station/rnd/test_area)
 "nrN" = (
 /obj/machinery/biogenerator,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
 "nrW" = (
@@ -57560,8 +57612,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "nxr" = (
@@ -57575,8 +57626,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "nxB" = (
@@ -57701,8 +57751,7 @@
 "nAb" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "nAc" = (
@@ -57745,9 +57794,11 @@
 	name = "Weapons locker";
 	req_access = list(3)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "nAt" = (
@@ -58030,9 +58081,11 @@
 	dir = 4
 	},
 /obj/machinery/space_heater,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "nDU" = (
@@ -58263,9 +58316,11 @@
 /obj/item/cardboard_cutout{
 	icon_state = "cutout_clown"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/range)
 "nHb" = (
@@ -58479,8 +58534,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "nJM" = (
@@ -58498,8 +58552,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "nJU" = (
@@ -58532,8 +58585,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "nKw" = (
@@ -58606,9 +58658,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "nLK" = (
@@ -58761,8 +58815,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "nOs" = (
@@ -58829,14 +58882,12 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "nPO" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "nPP" = (
@@ -58851,8 +58902,7 @@
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/item/clothing/under/patient_gown,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgeryobs)
 "nPW" = (
@@ -59149,8 +59199,7 @@
 	},
 /obj/effect/landmark/start/scientist,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "nTA" = (
@@ -59444,9 +59493,11 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/ai_upload)
 "nXs" = (
@@ -59941,8 +59992,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "oeG" = (
@@ -60043,9 +60093,11 @@
 /area/station/engineering/atmos)
 "ofD" = (
 /obj/structure/stool/bed/chair/office/dark,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "ofN" = (
@@ -60090,8 +60142,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "ogI" = (
@@ -60209,8 +60260,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "oin" = (
@@ -60604,8 +60654,7 @@
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/sleeper)
 "onn" = (
@@ -60613,8 +60662,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "ono" = (
@@ -60917,9 +60965,11 @@
 /obj/machinery/mecha_part_fabricator{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "ora" = (
@@ -61013,9 +61063,11 @@
 	dir = 1;
 	network = list("RD","MiniSat")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
 "orA" = (
@@ -61039,8 +61091,7 @@
 "orJ" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "orU" = (
@@ -61064,8 +61115,7 @@
 "osg" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/interrogation)
 "osn" = (
@@ -61349,9 +61399,11 @@
 /obj/item/stack/sheet/wood{
 	amount = 20
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "ovm" = (
@@ -61448,9 +61500,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "owu" = (
@@ -61543,8 +61597,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/monitoring)
 "oxJ" = (
@@ -61620,8 +61673,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "ozc" = (
@@ -61714,9 +61766,11 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "oAg" = (
@@ -61726,9 +61780,11 @@
 "oAi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "oAl" = (
@@ -61750,9 +61806,11 @@
 /obj/structure/rack,
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/sheet/cardboard,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "oAw" = (
@@ -61873,8 +61931,7 @@
 "oBY" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/aft)
 "oCh" = (
@@ -61971,18 +62028,22 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/execution)
 "oDv" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/vacantoffice{
 	name = "Tribunal"
@@ -62030,8 +62091,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/monitoring)
 "oEk" = (
@@ -62096,8 +62156,7 @@
 /area/station/hallway/secondary/entry)
 "oFi" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "oFK" = (
@@ -62476,8 +62535,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "oJT" = (
@@ -62489,8 +62547,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
 "oJZ" = (
@@ -62668,8 +62725,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "oMM" = (
@@ -63193,8 +63249,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "oTQ" = (
@@ -63494,8 +63549,7 @@
 /obj/item/clothing/head/helmet/space/rig/medical/cmo,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/cmo)
 "oXI" = (
@@ -63831,8 +63885,7 @@
 	},
 /obj/structure/rack,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "pdk" = (
@@ -63892,9 +63945,11 @@
 /area/station/storage/primary)
 "pdW" = (
 /obj/machinery/computer/rdconsole/robotics,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "peb" = (
@@ -64189,8 +64244,7 @@
 	pixel_y = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "phn" = (
@@ -64393,9 +64447,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/prison)
 "pka" = (
@@ -64415,9 +64471,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
 "pky" = (
@@ -64449,8 +64507,7 @@
 "pln" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "plI" = (
@@ -64481,8 +64538,7 @@
 "pmi" = (
 /obj/random/vending/cola,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "pmD" = (
@@ -64519,8 +64575,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "pmL" = (
@@ -64622,9 +64677,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "poc" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/storage/tech)
 "por" = (
@@ -64759,9 +64816,11 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "prd" = (
@@ -64786,8 +64845,7 @@
 	pixel_x = -22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "prP" = (
@@ -64860,9 +64918,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/vacantoffice{
 	name = "Tribunal"
@@ -64935,9 +64995,11 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "ptk" = (
@@ -64956,9 +65018,11 @@
 	c_tag = "Brig Armory South";
 	network = list("SS13","Security")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "ptp" = (
@@ -65172,9 +65236,11 @@
 /area/shuttle/vox/northeast_solars)
 "pwm" = (
 /obj/structure/stool/bed/chair/metal/red,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "pws" = (
@@ -65675,8 +65741,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/playroom)
 "pCh" = (
@@ -65687,9 +65752,11 @@
 /area/station/hallway/primary/port)
 "pCm" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "pCz" = (
@@ -65730,8 +65797,7 @@
 /area/station/hallway/primary/port)
 "pDq" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "pDs" = (
@@ -65921,8 +65987,7 @@
 "pGR" = (
 /obj/machinery/computer/station_alert,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "pGS" = (
@@ -66043,8 +66108,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "pIf" = (
@@ -66140,15 +66204,16 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/gun/energy/ionrifle,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "pJJ" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/sleeper)
 "pJL" = (
@@ -66192,8 +66257,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "pKv" = (
@@ -66799,9 +66863,11 @@
 	dir = 4;
 	network = list("MiniSat")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/ai_monitored/storage_secure)
 "pSl" = (
@@ -66875,9 +66941,11 @@
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "pSS" = (
@@ -66922,9 +66990,11 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/security/hos,
 /obj/item/clothing/mask/breath,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "pUj" = (
@@ -67137,8 +67207,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "pWf" = (
@@ -67149,8 +67218,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "pWp" = (
@@ -67278,9 +67346,11 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "pYA" = (
@@ -67298,8 +67368,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "pYN" = (
@@ -67316,9 +67385,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "pZf" = (
@@ -67587,9 +67658,11 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "qbB" = (
@@ -67628,9 +67701,11 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "qcf" = (
@@ -67841,9 +67916,11 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "qeX" = (
@@ -67938,8 +68015,7 @@
 	req_access = list(56)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "qgv" = (
@@ -68034,8 +68110,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "qhz" = (
@@ -68192,8 +68267,7 @@
 "qjq" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "qjr" = (
@@ -68653,9 +68727,11 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "qql" = (
@@ -68835,8 +68911,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics)
 "qrz" = (
@@ -68885,8 +68960,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "qsl" = (
@@ -69272,8 +69346,7 @@
 "qya" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "qyd" = (
@@ -69296,9 +69369,11 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/server)
 "qyf" = (
@@ -69396,8 +69471,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "qzb" = (
@@ -69410,8 +69484,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "qzj" = (
@@ -69536,8 +69609,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "qAm" = (
@@ -69555,8 +69627,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "qAH" = (
@@ -69630,8 +69701,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "qCg" = (
@@ -69664,8 +69734,7 @@
 	name = "lightsout"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "qCp" = (
@@ -69793,8 +69862,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "qDX" = (
@@ -69879,8 +69947,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "qEU" = (
@@ -70016,8 +70083,7 @@
 	pixel_y = -22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "qHG" = (
@@ -70134,9 +70200,11 @@
 "qIs" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/projectile/grenade_launcher/m79,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "qIt" = (
@@ -70193,17 +70261,15 @@
 /area/station/civilian/garden)
 "qJU" = (
 /obj/machinery/computer/general_air_control{
-	dir = 4;
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkyellow"
+	icon_state = "dark"
 	},
-/area/station/engineering/chiefs_office)
+/area/station/engineering/engine)
 "qJZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -70444,9 +70510,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "qNF" = (
@@ -70757,8 +70825,7 @@
 "qTe" = (
 /obj/structure/reagent_dispensers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "qTy" = (
@@ -70964,8 +71031,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "qVC" = (
@@ -71027,8 +71093,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "qWK" = (
@@ -71109,8 +71174,7 @@
 "qXD" = (
 /obj/machinery/vending/donut,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "qXE" = (
@@ -71214,9 +71278,11 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "qYL" = (
@@ -71753,8 +71819,7 @@
 	pixel_y = -30
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "rfE" = (
@@ -71801,9 +71866,11 @@
 /area/station/medical/genetics)
 "rgs" = (
 /obj/machinery/flasher/portable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "rgt" = (
@@ -71815,8 +71882,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/genetics)
 "rgu" = (
@@ -72056,9 +72122,11 @@
 	c_tag = "Brig SMES";
 	network = list("SS13","Security")
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "rjB" = (
@@ -72141,8 +72209,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "rkq" = (
@@ -72474,6 +72541,9 @@
 	dir = 4
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "rqE" = (
@@ -72599,8 +72669,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "rrP" = (
@@ -72629,8 +72698,7 @@
 	},
 /obj/random/tools/tool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "rsk" = (
@@ -72919,9 +72987,11 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "rvs" = (
@@ -73077,8 +73147,7 @@
 "rxd" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "rxe" = (
@@ -73609,9 +73678,11 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "rEo" = (
@@ -73686,14 +73757,17 @@
 /area/station/cargo/storage)
 "rFw" = (
 /obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1444;
+	dir = 4;
+	frequency = 1443;
 	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	name = "Distribution and Waste Monitor";
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
+	},
+/obj/structure/sign/map/prometheus{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/monitoring)
 "rFM" = (
@@ -73846,9 +73920,11 @@
 /obj/machinery/keycard_auth{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/hos)
 "rHy" = (
@@ -74231,9 +74307,11 @@
 /area/station/maintenance/brig)
 "rNv" = (
 /obj/machinery/pipedispenser/disposal,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "rNw" = (
@@ -74340,6 +74418,9 @@
 /area/station/security/interrogation)
 "rOJ" = (
 /obj/structure/stool/bed/chair/metal,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -74403,8 +74484,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "rPv" = (
@@ -74869,8 +74949,7 @@
 "rUq" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "rUt" = (
@@ -75084,8 +75163,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "rXA" = (
@@ -75106,8 +75184,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -75135,8 +75212,7 @@
 	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "rXZ" = (
@@ -75247,9 +75323,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/janitor)
 "rYY" = (
@@ -75456,8 +75534,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "sca" = (
@@ -75494,9 +75571,11 @@
 /area/station/cargo/recycler)
 "scB" = (
 /obj/structure/closet/emcloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/engine)
 "scC" = (
@@ -76264,8 +76343,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "snt" = (
@@ -76429,9 +76507,11 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
 "spB" = (
@@ -76543,8 +76623,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/hydroponics)
 "sqS" = (
@@ -76559,8 +76638,7 @@
 /obj/item/stack/cable_coil/random,
 /obj/random/tools/tool,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "srk" = (
@@ -76608,8 +76686,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "srH" = (
@@ -76720,8 +76797,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "stl" = (
@@ -77067,8 +77143,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "swG" = (
@@ -77202,9 +77277,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/janitor)
 "syg" = (
@@ -77452,9 +77529,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "sBI" = (
@@ -77587,8 +77666,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "sCP" = (
@@ -77601,9 +77679,11 @@
 	pixel_y = 6
 	},
 /obj/item/device/robotanalyzer,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "sDb" = (
@@ -77685,8 +77765,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "sDI" = (
@@ -78135,9 +78214,11 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/interrogation)
 "sJp" = (
@@ -78186,9 +78267,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "sKm" = (
@@ -78263,8 +78346,7 @@
 /obj/structure/table,
 /obj/item/weapon/wrench,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
 "sLP" = (
@@ -78433,9 +78515,11 @@
 "sPd" = (
 /obj/structure/rack,
 /obj/item/weapon/module/power_control,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "sPl" = (
@@ -78508,8 +78592,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "sQA" = (
@@ -78664,9 +78747,11 @@
 	c_tag = "Locker Room";
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "sSc" = (
@@ -78933,9 +79018,11 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "sUj" = (
@@ -79101,8 +79188,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "sWy" = (
@@ -79195,9 +79281,11 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "sYl" = (
@@ -79282,9 +79370,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/tox_launch)
 "sZx" = (
@@ -79354,9 +79444,11 @@
 "taf" = (
 /obj/structure/stool,
 /obj/structure/disposalpipe/segment,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/office)
 "tah" = (
@@ -79372,8 +79464,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "tas" = (
@@ -79753,8 +79844,7 @@
 "tgi" = (
 /obj/structure/dresser,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "tgw" = (
@@ -79898,8 +79988,7 @@
 "thA" = (
 /obj/item/weapon/flora/monkey,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "thB" = (
@@ -80093,8 +80182,7 @@
 "tjC" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "tjJ" = (
@@ -80352,9 +80440,11 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/aisat/antechamber_interior)
 "tou" = (
@@ -80801,8 +80891,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/storage)
 "tvr" = (
@@ -80828,9 +80917,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "twd" = (
@@ -81478,9 +81569,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "tEI" = (
@@ -81493,9 +81586,11 @@
 /area/station/maintenance/brig)
 "tEL" = (
 /obj/machinery/chem_master,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/chemistry)
 "tEN" = (
@@ -81562,8 +81657,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "tFt" = (
@@ -81650,8 +81744,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/janitor)
 "tGf" = (
@@ -81887,8 +81980,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "tJh" = (
@@ -82069,8 +82161,7 @@
 	},
 /obj/structure/table,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "tKh" = (
@@ -82216,8 +82307,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "tLN" = (
@@ -82258,9 +82348,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "tMm" = (
@@ -82291,9 +82383,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "tMC" = (
@@ -82442,8 +82536,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "tOL" = (
@@ -82700,9 +82793,11 @@
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "tSs" = (
@@ -82777,9 +82872,11 @@
 /area/station/security/lobby)
 "tSP" = (
 /obj/machinery/porta_turret/station_default,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/aisat/antechamber)
 "tSW" = (
@@ -82952,9 +83049,11 @@
 	},
 /obj/item/clothing/under/color/yellow,
 /obj/item/toy/katana,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "tVa" = (
@@ -83205,8 +83304,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/janitor)
 "tYu" = (
@@ -83328,8 +83426,7 @@
 "uaS" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "ubc" = (
@@ -83405,9 +83502,11 @@
 /obj/machinery/light/small/emergency{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "ucJ" = (
@@ -83566,9 +83665,11 @@
 /obj/machinery/requests_console/atmos{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "ufg" = (
@@ -83701,8 +83802,7 @@
 /obj/item/weapon/haircomb,
 /obj/structure/cable,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/barbershop)
 "ugF" = (
@@ -83771,8 +83871,7 @@
 "uhi" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "uhl" = (
@@ -83831,8 +83930,7 @@
 "uhZ" = (
 /obj/structure/closet/secure_closet/cargotech,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "uif" = (
@@ -83868,8 +83966,7 @@
 	c_tag = "Primary Tool Storage"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/storage/primary)
 "uiF" = (
@@ -84425,8 +84522,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "upZ" = (
@@ -84735,8 +84831,7 @@
 "utx" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "utB" = (
@@ -84836,15 +84931,13 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "uuy" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "uuN" = (
@@ -84969,8 +85062,7 @@
 "uwO" = (
 /obj/machinery/computer/cargo,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/qm)
 "uwS" = (
@@ -85213,9 +85305,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "uAg" = (
@@ -85408,9 +85502,11 @@
 /area/station/security/lawyer_office)
 "uDe" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 "uDl" = (
@@ -85533,8 +85629,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "uFf" = (
@@ -85646,8 +85741,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "uGS" = (
@@ -85857,8 +85951,7 @@
 "uIB" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "uIC" = (
@@ -85973,8 +86066,7 @@
 	stamp_message = "Cargo"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "uKk" = (
@@ -86212,8 +86304,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgeryobs)
 "uMB" = (
@@ -86382,9 +86473,11 @@
 /obj/machinery/light/small/emergency{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "uPb" = (
@@ -86825,8 +86918,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgery{
 	name = "Operating Theatre"
@@ -86859,8 +86951,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "uVM" = (
@@ -87202,8 +87293,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/ai_monitored/eva)
 "uZM" = (
@@ -87666,9 +87756,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/vacantoffice{
 	name = "Tribunal"
@@ -87742,8 +87834,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "vge" = (
@@ -87804,8 +87895,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "vgL" = (
@@ -87964,8 +88054,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "viC" = (
@@ -88022,8 +88111,7 @@
 	pixel_y = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/cmo)
 "vjk" = (
@@ -88048,8 +88136,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "vjO" = (
@@ -88093,8 +88180,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/qm)
 "vkv" = (
@@ -88115,9 +88201,11 @@
 	icon_state = "1-2"
 	},
 /obj/item/station_map/prometheus,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "vkw" = (
@@ -88255,8 +88343,7 @@
 "vlM" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "vlN" = (
@@ -88526,8 +88613,7 @@
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "vpV" = (
@@ -88690,9 +88776,11 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/ai_upload)
 "vsf" = (
@@ -89236,16 +89324,14 @@
 	req_access = list(72)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/cryo)
 "vzY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "vAb" = (
@@ -89390,8 +89476,7 @@
 	req_access = list(2)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/brig)
 "vBB" = (
@@ -89493,9 +89578,11 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "vCY" = (
@@ -89536,8 +89623,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "vDc" = (
@@ -89737,8 +89823,7 @@
 	pixel_x = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "vET" = (
@@ -89920,9 +90005,11 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "vHV" = (
@@ -90071,9 +90158,11 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "vJn" = (
@@ -90543,8 +90632,7 @@
 "vRi" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "vRm" = (
@@ -90610,8 +90698,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "vRD" = (
@@ -90801,9 +90888,11 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "vTK" = (
@@ -91166,9 +91255,11 @@
 /obj/item/clothing/head/welding{
 	pixel_y = -4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "vYn" = (
@@ -91210,8 +91301,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "vYO" = (
@@ -91241,9 +91331,11 @@
 	nuketype = "NT";
 	r_code = "LOLNO"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "vYW" = (
@@ -91388,9 +91480,11 @@
 	pixel_x = -3
 	},
 /obj/item/device/tagger/shop,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "waq" = (
@@ -91607,8 +91701,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "wcQ" = (
@@ -91800,8 +91893,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "weH" = (
@@ -91840,9 +91932,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/nuke_storage)
 "weO" = (
@@ -91895,8 +91989,7 @@
 "weZ" = (
 /obj/machinery/vending/donut,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "wfb" = (
@@ -91974,8 +92067,7 @@
 "wgz" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "wgJ" = (
@@ -92020,8 +92112,7 @@
 "whx" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "whD" = (
@@ -92041,9 +92132,11 @@
 	pixel_x = -4
 	},
 /obj/machinery/light/small/emergency,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "whI" = (
@@ -92231,8 +92324,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/entry)
 "wjG" = (
@@ -92539,9 +92631,11 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/security,
 /obj/item/clothing/mask/breath,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "wox" = (
@@ -92673,8 +92767,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "wqp" = (
@@ -93203,8 +93296,7 @@
 "wwA" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "wwC" = (
@@ -93301,8 +93393,7 @@
 	sortType = "Hydroponics"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "wxH" = (
@@ -93579,8 +93670,7 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "wCk" = (
@@ -93646,8 +93736,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "wDq" = (
@@ -93689,8 +93778,7 @@
 "wDT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/fore)
 "wEk" = (
@@ -94104,8 +94192,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "wJj" = (
@@ -94370,8 +94457,7 @@
 "wMg" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "wMi" = (
@@ -94402,16 +94488,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/aisat/antechamber_interior)
 "wMD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "wMR" = (
@@ -94521,9 +94605,11 @@
 /obj/machinery/flasher{
 	id = "HoP_flasher"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/bridge/hop_office)
 "wNV" = (
@@ -94798,9 +94884,11 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "wQN" = (
@@ -94971,8 +95059,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/misc_lab)
 "wTC" = (
@@ -95068,8 +95155,7 @@
 	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "wVb" = (
@@ -95124,8 +95210,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/hallway)
 "wVN" = (
@@ -95290,8 +95375,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "wYB" = (
@@ -95408,8 +95492,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
 "wZs" = (
@@ -95700,8 +95783,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/office)
 "xdp" = (
@@ -95824,8 +95906,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "xeB" = (
@@ -95896,9 +95977,11 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/cryo)
 "xeW" = (
@@ -96095,8 +96178,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "xhN" = (
@@ -96216,8 +96298,7 @@
 /area/station/security/secconfhall)
 "xiQ" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/break_room)
 "xje" = (
@@ -96262,9 +96343,11 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "xjz" = (
@@ -96433,8 +96516,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "xmH" = (
@@ -96471,8 +96553,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/rnd/brainstorm_center)
 "xmN" = (
@@ -96717,9 +96798,11 @@
 /area/station/aisat/teleport)
 "xqi" = (
 /obj/machinery/porta_turret/station_default,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/ai_monitored/storage_secure)
 "xqk" = (
@@ -96760,8 +96843,7 @@
 	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
 "xqN" = (
@@ -96990,9 +97072,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "xut" = (
@@ -97035,8 +97119,7 @@
 /obj/structure/closet/wardrobe/engineering_yellow,
 /obj/item/clothing/suit/badengishirt,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/equip)
 "xuL" = (
@@ -97307,8 +97390,7 @@
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
 "xxV" = (
@@ -97476,8 +97558,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/monitoring)
 "xAm" = (
@@ -97628,8 +97709,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/fitness)
 "xCT" = (
@@ -97703,8 +97783,7 @@
 /obj/item/clothing/head/helmet/space/rig/engineering,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/engine)
 "xEy" = (
@@ -97892,8 +97971,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
 "xIl" = (
@@ -97930,8 +98008,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "xIS" = (
@@ -97985,9 +98062,11 @@
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "xJh" = (
@@ -97995,8 +98074,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
 "xJp" = (
@@ -98226,8 +98304,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/port)
 "xLQ" = (
@@ -98324,9 +98401,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "xNl" = (
@@ -98695,8 +98774,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/cargo/miningoffice)
 "xSl" = (
@@ -98994,9 +99072,11 @@
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/vacantoffice{
 	name = "Tribunal"
@@ -99210,9 +99290,11 @@
 	dir = 1
 	},
 /obj/machinery/life_assist/cardiopulmonary_bypass,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/medical/cryo)
 "xXT" = (
@@ -99235,9 +99317,11 @@
 "xYM" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/janitor)
 "xYU" = (
@@ -99411,9 +99495,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/janitor)
 "yar" = (
@@ -99542,8 +99628,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/surgeryobs)
 "ycD" = (
@@ -99555,9 +99640,11 @@
 	req_access = list(3)
 	},
 /obj/machinery/light/small/emergency,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "ycQ" = (
@@ -99881,8 +99968,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/security/lobby)
 "yhh" = (
@@ -99959,9 +100045,11 @@
 	pixel_y = -6
 	},
 /obj/structure/closet/emcloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/engine)
 "yiw" = (
@@ -100239,9 +100327,11 @@
 /area/shuttle/syndicate/northeast)
 "ylR" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/storage)
 
@@ -132534,7 +132624,7 @@ eKW
 fmz
 pyu
 pyu
-imp
+rFw
 gNu
 oxd
 pyu
@@ -134078,10 +134168,10 @@ pyu
 pyu
 pyu
 pyu
-lAm
+aen
 fNz
 oEg
-rFw
+adP
 xAj
 oop
 vnU
@@ -134595,7 +134685,7 @@ sWO
 fLZ
 cOA
 qaA
-qJU
+adR
 tsa
 sWO
 sWO
@@ -140222,7 +140312,7 @@ aar
 eDF
 bMw
 ohw
-gbx
+bXu
 vdJ
 sat
 vlJ
@@ -140243,7 +140333,7 @@ vdJ
 kVn
 nZt
 tye
-hTr
+qJU
 hvk
 tcP
 rJO
@@ -141510,7 +141600,7 @@ qTR
 veM
 cKT
 vdJ
-bXu
+aeq
 ndk
 vdJ
 vdJ
@@ -143819,7 +143909,7 @@ foN
 kkO
 eKn
 lrM
-eAh
+gbx
 xcr
 dyg
 vgT
@@ -144332,7 +144422,7 @@ ouF
 qmR
 iJH
 yhz
-kkO
+eAh
 eaH
 xcr
 xAB

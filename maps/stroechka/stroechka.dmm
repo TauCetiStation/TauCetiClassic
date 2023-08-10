@@ -153,9 +153,11 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/belt/utility,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "au" = (
@@ -181,9 +183,11 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Out"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "aw" = (
@@ -232,8 +236,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "aB" = (
@@ -280,9 +283,11 @@
 /obj/item/weapon/stock_parts/cell/high,
 /obj/item/weapon/stock_parts/cell/high,
 /obj/item/weapon/stock_parts/cell/high,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "aF" = (
@@ -431,9 +436,11 @@
 	},
 /obj/item/device/radio/off,
 /obj/item/clothing/gloves/insulated,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "aW" = (
@@ -448,9 +455,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "aX" = (
@@ -460,9 +469,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
 /obj/machinery/door/firedoor,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "aY" = (
@@ -523,8 +534,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "bf" = (
@@ -545,8 +555,7 @@
 "bg" = (
 /obj/machinery/vending/junkfood,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "bh" = (
@@ -557,9 +566,11 @@
 /obj/item/device/gps/engineering,
 /obj/item/device/radio/off,
 /obj/item/clothing/gloves/insulated,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "bi" = (
@@ -777,8 +788,7 @@
 	pixel_x = 22
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "bF" = (
@@ -1018,9 +1028,11 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "ch" = (
@@ -1041,9 +1053,11 @@
 /obj/machinery/iv_drip,
 /obj/machinery/life_assist/cardiopulmonary_bypass,
 /obj/machinery/life_assist/artificial_ventilation,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "cj" = (
@@ -1061,9 +1075,11 @@
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/toxin,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "ck" = (
@@ -1078,9 +1094,11 @@
 	},
 /obj/item/device/radio/off,
 /obj/item/clothing/gloves/insulated,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "cl" = (
@@ -1400,9 +1418,11 @@
 	pixel_y = 4
 	},
 /obj/item/device/radio/off,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "cI" = (
@@ -1414,9 +1434,11 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/briefcase/inflatable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "cJ" = (
@@ -1464,9 +1486,11 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "cL" = (
@@ -1494,9 +1518,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "cM" = (
@@ -1715,8 +1741,7 @@
 	},
 /obj/random/vending/snack,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "dh" = (
@@ -1753,9 +1778,11 @@
 /obj/item/weapon/airlock_painter{
 	pixel_y = -4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "di" = (
@@ -1770,9 +1797,11 @@
 	pixel_y = 6
 	},
 /obj/item/device/lightreplacer,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "dj" = (
@@ -2022,9 +2051,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "dG" = (
@@ -2060,9 +2091,11 @@
 	amount = 50
 	},
 /obj/machinery/light/smart,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "dH" = (
@@ -2399,9 +2432,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "ep" = (
@@ -2602,9 +2637,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "eL" = (
@@ -2751,8 +2788,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "fd" = (
@@ -2879,9 +2915,11 @@
 	pixel_x = -22
 	},
 /obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/engine)
 "gr" = (
@@ -2949,8 +2987,7 @@
 "gC" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "gD" = (
@@ -2986,8 +3023,7 @@
 "gR" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "gS" = (
@@ -3446,9 +3482,11 @@
 	dir = 8;
 	req_access = list(71)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "ko" = (
@@ -3538,9 +3576,11 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "lB" = (
@@ -3765,9 +3805,11 @@
 /obj/item/stack/sheet/wood{
 	amount = 50
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "nC" = (
@@ -3962,8 +4004,7 @@
 "pB" = (
 /obj/machinery/cryopod/right,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "pO" = (
@@ -4318,9 +4359,11 @@
 /obj/structure/noticeboard/bar{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "sF" = (
@@ -4333,9 +4376,11 @@
 /turf/simulated/wall,
 /area/station/hallway/primary/central)
 "sI" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "sJ" = (
@@ -4371,9 +4416,11 @@
 /area/station/engineering/equip)
 "to" = (
 /obj/structure/closet/emcloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/secondary/arrival)
 "tt" = (
@@ -4439,9 +4486,11 @@
 /obj/structure/closet/secure_closet/recycler{
 	req_access = list(71)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "uA" = (
@@ -4801,9 +4850,11 @@
 /obj/item/weapon/tank/oxygen/yellow,
 /obj/item/weapon/tank/oxygen/yellow,
 /obj/item/weapon/tank/oxygen/yellow,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "xx" = (
@@ -4830,8 +4881,7 @@
 "yb" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "yl" = (
@@ -5020,9 +5070,11 @@
 "zV" = (
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/recharge_station,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "Ab" = (
@@ -5220,9 +5272,11 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "Bt" = (
@@ -5559,9 +5613,11 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "CZ" = (
@@ -5843,9 +5899,11 @@
 /area/station/hallway/secondary/arrival)
 "Ek" = (
 /obj/structure/closet/firecloset,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/engine)
 "Ep" = (
@@ -5870,9 +5928,11 @@
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "Ew" = (
@@ -6150,9 +6210,11 @@
 /area/shuttle/supply/station)
 "FO" = (
 /obj/machinery/autolathe,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "FP" = (
@@ -6169,8 +6231,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/light/smart,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "FX" = (
@@ -6243,9 +6304,11 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/engine)
 "Gz" = (
@@ -6267,9 +6330,11 @@
 /area/station/hallway/secondary/arrival)
 "GF" = (
 /obj/machinery/r_n_d/protolathe,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "GH" = (
@@ -6385,9 +6450,11 @@
 /area/station/hallway/primary/central)
 "GX" = (
 /obj/machinery/constructable_frame/machine_frame,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "GZ" = (
@@ -6467,8 +6534,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "Hm" = (
@@ -6567,8 +6633,7 @@
 "HO" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "HS" = (
@@ -6629,8 +6694,7 @@
 	req_access = list()
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "Iv" = (
@@ -6642,9 +6706,11 @@
 /obj/machinery/vending/engivend{
 	req_access = list(71)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "IC" = (
@@ -6756,9 +6822,11 @@
 	amount = 50
 	},
 /obj/structure/closet/crate/engi,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "IY" = (
@@ -6810,8 +6878,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "JV" = (
@@ -6944,9 +7011,11 @@
 /area/station/hallway/secondary/arrival)
 "LI" = (
 /obj/machinery/r_n_d/circuit_imprinter,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/rnd/lab)
 "LW" = (
@@ -7024,9 +7093,11 @@
 /area/station/engineering/engine)
 "My" = (
 /obj/machinery/vending/eva/engineering,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "MC" = (
@@ -7154,9 +7225,11 @@
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/secondary/arrival)
 "NO" = (
@@ -7172,9 +7245,11 @@
 /area/station/engineering/atmos)
 "NP" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "NQ" = (
@@ -7262,8 +7337,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "Po" = (
@@ -7349,9 +7423,11 @@
 /obj/structure/closet/secure_closet/engineering_electrical{
 	req_access = list(71)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "PP" = (
@@ -7426,9 +7502,11 @@
 /area/station/engineering/atmos)
 "QE" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "QG" = (
@@ -7573,9 +7651,11 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "RW" = (
@@ -7682,9 +7762,11 @@
 	pixel_x = -28;
 	req_access = list(71)
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "SJ" = (
@@ -7726,9 +7808,11 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "ST" = (
@@ -7848,9 +7932,11 @@
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "Ui" = (
@@ -7865,9 +7951,11 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Out"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "Uk" = (
@@ -7919,9 +8007,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "Uw" = (
@@ -7987,8 +8077,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/arrival)
 "UF" = (
@@ -8104,15 +8193,16 @@
 /obj/structure/table/glass,
 /obj/item/ashtray/plastic,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
 "Vo" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "Vv" = (
@@ -8129,9 +8219,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
 "VG" = (
@@ -8392,9 +8484,11 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "XL" = (
@@ -8511,9 +8605,11 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Out"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/engineering/equip)
 "YI" = (
@@ -8553,9 +8649,11 @@
 /obj/item/weapon/reagent_containers/glass/paint/violet,
 /obj/item/weapon/reagent_containers/glass/paint/white,
 /obj/item/weapon/reagent_containers/glass/paint/yellow,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "YS" = (
@@ -8610,9 +8708,11 @@
 /obj/item/weapon/airalarm_electronics,
 /obj/item/weapon/airalarm_electronics,
 /obj/item/weapon/airalarm_electronics,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "Zc" = (
@@ -8672,9 +8772,11 @@
 /area/shuttle/supply/station)
 "Zu" = (
 /obj/machinery/pipedispenser/orderable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/cargo/storage)
 "Zw" = (
@@ -8689,8 +8791,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/station/hallway/secondary/exit)
 "ZD" = (

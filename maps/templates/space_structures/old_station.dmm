@@ -3066,9 +3066,11 @@
 /area/space_structures/old_station/satellite)
 "tR" = (
 /obj/machinery/door/airlock/highsecurity,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space_structures/old_station/satellite)
 "tS" = (
@@ -4143,9 +4145,11 @@
 "zZ" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space_structures/old_station/satellite)
 "Ab" = (
@@ -4499,9 +4503,11 @@
 /area/space_structures/old_station/left)
 "Cm" = (
 /obj/structure/alien/weeds,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space_structures/old_station/satellite)
 "Cn" = (
@@ -7967,9 +7973,11 @@
 /area/space_structures/old_station/central/brig)
 "WJ" = (
 /obj/structure/alien/weeds/node,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space_structures/old_station/satellite)
 "WM" = (
