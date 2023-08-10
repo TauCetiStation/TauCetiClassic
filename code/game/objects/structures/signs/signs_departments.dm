@@ -30,11 +30,6 @@
 	desc = "A sign labelling an area where evacuation procedures take place."
 	icon_state = "evac"
 
-/obj/structure/sign/departments/hydrant
-	name = "FIRE STORAGE"
-	desc = "A sign labelling a fire storage room."
-	icon_state = "hydrant"
-
 /obj/structure/sign/departments/custodian
 	name = "CUSTODIAN"
 	desc = "A sign labelling an area where the custodian works."
@@ -70,26 +65,6 @@
 	desc = "A sign labelling a restroom."
 	icon_state = "restroom"
 
-/obj/structure/sign/departments/showers
-	name = "SHOWERS"
-	desc = "A sign labelling a showers room."
-	icon_state = "showers"
-
-/obj/structure/sign/departments/firstaid
-	name = "MEDBAY"
-	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
-	icon_state = "firstaid"
-
-/obj/structure/sign/departments/hospital
-	name = "HOSPITAL"
-	desc = "The Hospital."
-	icon_state = "hospital"
-
-/obj/structure/sign/departments/medical_shower
-	name = "SHOWERS"
-	desc = "Medical showers."
-	icon_state = "medicalshower"
-
 /obj/structure/sign/departments/medbay
 	name = "MEDBAY"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
@@ -105,13 +80,3 @@
 	name = "LIFESTAR"
 	desc = "The Star of Life is a blue, six-pointed star, outlined with a white border which features the rod of Asclepius in the center"
 	icon_state = "lifestar"
-
-/obj/structure/sign/departments/pharmacy
-	name = "PHARMACY"
-	desc = "A sign labelling a pharmacy."
-	icon_state = "pharmacy"
-
-/obj/structure/sign/departments/morgue
-	name = "MORGUE"
-	desc = "A sign labelling a morgue."
-	icon_state = "morgue"
