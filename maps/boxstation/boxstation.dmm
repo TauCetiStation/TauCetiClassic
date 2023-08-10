@@ -49502,7 +49502,7 @@
 "bNa" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/apron,
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "brownold"
