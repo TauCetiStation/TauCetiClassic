@@ -2659,6 +2659,18 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/cargo)
+"aeq" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "aes" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -8421,6 +8433,9 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10317,14 +10332,21 @@
 	},
 /area/station/security/main)
 "bXu" = (
-/obj/structure/toilet{
-	pixel_y = 8
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
 /obj/effect/landmark{
-	name = "blobstart"
+	name = "prisonerstart"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/turf/simulated/floor{
+	icon_state = "brownold"
+	},
+/area/station/security/prison)
 "bXA" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal{
@@ -20647,11 +20669,8 @@
 /area/station/civilian/bar)
 "eAh" = (
 /obj/structure/stool,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -27369,17 +27388,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "gbx" = (
-/obj/structure/stool/bed/chair/comfy/beige{
-	dir = 1
+/obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/light/small,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "brownold"
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
+/turf/simulated/floor,
 /area/station/security/prison)
 "gbG" = (
 /turf/simulated/wall,
@@ -72470,6 +72489,9 @@
 	dir = 4
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "rqE" = (
@@ -74340,6 +74362,9 @@
 /area/station/security/interrogation)
 "rOJ" = (
 /obj/structure/stool/bed/chair/metal,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -140222,7 +140247,7 @@ aar
 eDF
 bMw
 ohw
-gbx
+bXu
 vdJ
 sat
 vlJ
@@ -141510,7 +141535,7 @@ qTR
 veM
 cKT
 vdJ
-bXu
+aeq
 ndk
 vdJ
 vdJ
@@ -143819,7 +143844,7 @@ foN
 kkO
 eKn
 lrM
-eAh
+gbx
 xcr
 dyg
 vgT
@@ -144332,7 +144357,7 @@ ouF
 qmR
 iJH
 yhz
-kkO
+eAh
 eaH
 xcr
 xAB

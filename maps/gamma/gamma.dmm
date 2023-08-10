@@ -9075,6 +9075,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10660,6 +10663,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -11295,6 +11301,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -51611,6 +51620,9 @@
 	},
 /obj/structure/toilet{
 	dir = 8
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison/toilet)
