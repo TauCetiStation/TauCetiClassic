@@ -12816,6 +12816,9 @@
 /area/station/hallway/primary/fore)
 "cIT" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
 "cJd" = (
@@ -13272,15 +13275,6 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge/corp_lounge)
-"cOJ" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 10
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hor)
 "cOS" = (
 /obj/machinery/teleport/hub,
 /turf/simulated/floor{
@@ -29215,15 +29209,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"gBc" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hor)
 "gBg" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
@@ -56509,7 +56494,7 @@
 "mKy" = (
 /obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
-	dir = 6
+	dir = 10
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -75738,6 +75723,15 @@
 "rmY" = (
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
+"rnj" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hor)
 "rnl" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /turf/simulated/floor/engine,
@@ -84575,6 +84569,9 @@
 /obj/structure/drain{
 	drainage = 2
 	},
+/obj/effect/decal/turf_decal/alpha/blue{
+	icon_state = "box_white"
+	},
 /turf/simulated/floor,
 /area/station/rnd/hallway/lobby)
 "tri" = (
@@ -84670,7 +84667,7 @@
 /obj/structure/drain{
 	drainage = 2
 	},
-/obj/effect/decal/turf_decal/alpha/cyan{
+/obj/effect/decal/turf_decal/alpha/blue{
 	icon_state = "box_white"
 	},
 /obj/effect/decal/turf_decal{
@@ -89431,6 +89428,15 @@
 "uBo" = (
 /turf/environment/space,
 /area/shuttle/syndicate/southeast)
+"uBq" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hor)
 "uBu" = (
 /obj/structure/table/glass,
 /obj/item/device/radio/headset/headset_med,
@@ -91035,15 +91041,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
-"uWX" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hor)
 "uWZ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/syringes{
@@ -97796,6 +97793,15 @@
 	icon_state = "neutralfull"
 	},
 /area/station/engineering/engine)
+"wDW" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hor)
 "wDY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -135056,8 +135062,8 @@ mkl
 svQ
 vxf
 kiL
-uWX
-cOJ
+wDW
+mKy
 hzm
 vaP
 wwp
@@ -135570,8 +135576,8 @@ mkl
 svQ
 vxf
 kiL
-gBc
-mKy
+uBq
+rnj
 blq
 syE
 qbC
