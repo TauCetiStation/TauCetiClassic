@@ -95,7 +95,7 @@
 	icon_state = "server"
 
 /obj/structure/sign/warning/lethal_turrets
-	name = "LETHAL_TURRETS"
+	name = "LETHAL TURRETS"
 	icon_state = "turrets"
 	desc = "Enter at own risk!"
 
