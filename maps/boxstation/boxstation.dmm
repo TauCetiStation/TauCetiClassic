@@ -10402,6 +10402,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 1;
+	color = "#7fa968"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aAH" = (
@@ -10793,6 +10798,10 @@
 "aBv" = (
 /obj/structure/rack,
 /obj/random/cloth/gloves_safe,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aBw" = (
@@ -11986,6 +11995,10 @@
 /area/station/rnd/mixing)
 "aDT" = (
 /obj/machinery/processor,
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -13990,6 +14003,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -16334,9 +16351,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "arrows_white";
-	dir = 4;
-	pixel_x = -16
+	icon_state = "arrows_white_2";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -18324,6 +18340,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aPX" = (
@@ -18472,6 +18492,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -21968,8 +21992,7 @@
 	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "arrow";
-	pixel_y = 16
+	icon_state = "arrow_2"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -22682,6 +22705,9 @@
 /mob/living/simple_animal/chicken{
 	name = "Commander Clucky"
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYx" = (
@@ -22716,6 +22742,9 @@
 "aYC" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/effect/landmark/start/botanist,
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYD" = (
@@ -28990,18 +29019,21 @@
 	location = "Research Division"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "arrows_white";
-	dir = 4;
-	pixel_x = -16
+	icon_state = "arrows_white_2";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
 	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn_corner"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn_corner"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
@@ -34123,6 +34155,9 @@
 	pixel_y = 29
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "buZ" = (
@@ -34692,6 +34727,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -35969,6 +36008,10 @@
 /area/station/medical/hallway)
 "bys" = (
 /obj/structure/rack,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "byt" = (
@@ -38548,6 +38591,9 @@
 /area/station/civilian/cold_room)
 "bDq" = (
 /obj/item/weapon/scrap_lump,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "bDr" = (
@@ -38823,6 +38869,9 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/structure/window/thin/reinforced,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bDU" = (
@@ -39076,6 +39125,11 @@
 /area/station/civilian/gym)
 "bEq" = (
 /obj/structure/closet/wardrobe/white,
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -45173,6 +45227,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "bPL" = (
@@ -45550,10 +45608,6 @@
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 4;
 	icon_state = "loadingarea"
@@ -45561,6 +45615,13 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "arrows_white";
 	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn_corner"
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
@@ -47920,6 +47981,10 @@
 "bWv" = (
 /obj/structure/rack,
 /obj/random/science/circuit,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bWw" = (
@@ -50663,6 +50728,9 @@
 "cfS" = (
 /obj/machinery/conveyor_switch{
 	id = "stationscrap"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -53960,8 +54028,15 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "arrows_white";
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrows_white";
 	dir = 4;
-	pixel_x = -8
+	pixel_x = -16
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
@@ -54925,9 +55000,8 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "arrows_white";
-	dir = 4;
-	pixel_x = -16
+	icon_state = "arrows_white_2";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -57398,6 +57472,13 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBQ" = (
@@ -57410,11 +57491,21 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2"
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBR" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -59450,6 +59541,10 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28;
 	pixel_y = -4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -62353,6 +62448,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "ehG" = (
@@ -62499,6 +62599,17 @@
 	icon_state = "redfull"
 	},
 /area/station/security/armoury)
+"eqF" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "arrow_2";
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/science)
 "eqG" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -62603,6 +62714,17 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
+"euB" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2";
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "euX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -63666,6 +63788,10 @@
 /area/station/rnd/mixing)
 "fgl" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -64272,6 +64398,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "fyl" = (
@@ -64634,6 +64764,13 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
+"fIY" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "fJa" = (
 /turf/simulated/floor,
 /area/station/security/range)
@@ -64975,6 +65112,17 @@
 /obj/item/weapon/folder/yellow,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"fWX" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2";
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "fXb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -65006,6 +65154,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	icon_state = "browncorner"
@@ -68049,6 +68201,14 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
+"hKR" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 4;
+	color = "#7fa968"
+	},
+/turf/simulated/floor,
+/area/station/civilian/hydroponics)
 "hLb" = (
 /obj/machinery/gateway/center/station,
 /turf/simulated/floor{
@@ -69814,6 +69974,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"iQz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 1;
+	color = "#7fa968"
+	},
+/turf/simulated/floor{
+	icon_state = "green"
+	},
+/area/station/civilian/hydroponics)
 "iQS" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -70769,6 +70942,11 @@
 /area/station/storage/emergency4)
 "jur" = (
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -72144,6 +72322,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "keW" = (
@@ -72192,6 +72374,10 @@
 "kgz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -73746,6 +73932,14 @@
 	icon_state = "green"
 	},
 /area/station/civilian/garden)
+"laV" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 1;
+	color = "#7fa968"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/hydroponics)
 "lbb" = (
 /obj/structure/sign/departments/custodian{
 	pixel_y = -32
@@ -74444,6 +74638,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 8;
+	color = "#7fa968"
+	},
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "lxb" = (
@@ -74869,6 +75068,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968"
 	},
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
@@ -75744,6 +75947,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2";
+	dir = 8
 	},
 /obj/effect/decal/turf_decal{
 	dir = 6;
@@ -76879,6 +77086,10 @@
 "mNg" = (
 /obj/structure/rack,
 /obj/random/tools/tool,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "mNC" = (
@@ -78563,6 +78774,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"nSD" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2";
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/misc_lab)
 "nSO" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -78927,6 +79145,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"oaa" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "oab" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -79762,6 +79986,11 @@
 /area/station/engineering/singularity)
 "oyg" = (
 /obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "oyk" = (
@@ -81306,6 +81535,11 @@
 /area/station/security/brig)
 "pvI" = (
 /obj/structure/flora/junglebush/large,
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "pvM" = (
@@ -82130,6 +82364,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "qau" = (
@@ -82444,6 +82683,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -83160,6 +83403,19 @@
 /obj/structure/window/fulltile,
 /turf/simulated/floor/plating,
 /area/station/security/range)
+"qEU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_corner";
+	color = "#7fa968";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "green"
+	},
+/area/station/civilian/hydroponics)
 "qFq" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -83175,6 +83431,22 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"qGr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 2;
+	color = "#7fa968"
+	},
+/turf/simulated/floor,
+/area/station/civilian/hydroponics)
 "qGz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -84933,6 +85205,13 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/station/security/secconfhall)
+"rGU" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "rHb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -85538,6 +85817,10 @@
 "sdA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -87115,6 +87398,19 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/teleport)
+"sYx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 2;
+	color = "#7fa968"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "sYK" = (
 /obj/machinery/ai_status_display{
 	pixel_y = 32
@@ -88013,6 +88309,14 @@
 /obj/item/clothing/under/boxing/green,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"tLw" = (
+/obj/structure/rack,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "tLY" = (
 /obj/machinery/flasher{
 	id = "permflash"
@@ -88037,6 +88341,13 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"tMl" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "tMs" = (
 /obj/item/weapon/scrap_lump,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -88182,6 +88493,10 @@
 /obj/structure/rack,
 /obj/random/cloth/random_cloth_safe,
 /obj/random/cloth/random_cloth_safe,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "tRb" = (
@@ -88666,6 +88981,14 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/bar)
+"ukw" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 8;
+	color = "#7fa968"
+	},
+/turf/simulated/floor,
+/area/station/civilian/hydroponics)
 "ukE" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -91941,6 +92264,20 @@
 	icon_state = "darkredfull"
 	},
 /area/station/security/brig)
+"wPe" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "dangerous";
+	dir = 6;
+	color = "#ffff00"
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "fuck_you";
+	color = "#ff0000"
+	},
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/station/maintenance/cargo)
 "wPw" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -92656,6 +92993,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "siding_wideplating_new_line";
+	dir = 4;
+	color = "#7fa968"
+	},
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "xwC" = (
@@ -92920,6 +93262,10 @@
 "xIW" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/fancy/crayons,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "xJo" = (
@@ -93128,6 +93474,16 @@
 	icon_state = "platingdmg1"
 	},
 /area/station/maintenance/brig)
+"xOL" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_white"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrow_2";
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "xQm" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -108790,8 +109146,8 @@ aFg
 bys
 aBv
 mNg
-bFS
-bFS
+fIY
+xOL
 aFg
 rTZ
 kdV
@@ -109302,7 +109658,7 @@ coZ
 tcv
 aFg
 tQr
-bys
+tLw
 bhe
 xIW
 bWv
@@ -113181,9 +113537,9 @@ loL
 ckE
 lcb
 bNk
-bZZ
-bZZ
-bZZ
+tMl
+tMl
+tMl
 sdA
 bZZ
 cbC
@@ -113439,10 +113795,10 @@ bNk
 bNk
 bNk
 opR
-bZZ
+oaa
 cfS
 gib
-bZZ
+rGU
 cbB
 ciP
 cbB
@@ -113696,10 +114052,10 @@ bTx
 auO
 aOs
 cew
-bZZ
-bZZ
+oaa
+oaa
 cbS
-bZZ
+rGU
 ciP
 cbB
 cgx
@@ -113956,7 +114312,7 @@ cbf
 cbS
 bDq
 cgy
-bZZ
+rGU
 cbB
 cbC
 cbB
@@ -114213,7 +114569,7 @@ aSg
 cuZ
 caq
 cbS
-bZZ
+rGU
 cbB
 ciP
 cbB
@@ -114445,9 +114801,9 @@ fmh
 nHV
 lJr
 xwm
-aVg
-aVg
-aVg
+hKR
+hKR
+hKR
 jur
 rFw
 aNi
@@ -114700,12 +115056,12 @@ ipb
 aqD
 wld
 nHV
-eho
+qGr
 ayy
 iyb
 ayy
 ayy
-jur
+iQz
 ctJ
 aNi
 aET
@@ -114957,12 +115313,12 @@ isb
 arh
 aqD
 nHV
-eho
+qGr
 ayy
 ayy
 ayy
 ayy
-jur
+iQz
 aFJ
 aNi
 eQv
@@ -115215,11 +115571,11 @@ aOD
 wFQ
 nHV
 eho
-aVg
-aVg
+ukw
+ukw
 lwE
-aVg
-jur
+ukw
+qEU
 kLo
 aNi
 knb
@@ -115241,7 +115597,7 @@ avs
 cer
 cFt
 aSM
-bEW
+wPe
 aSM
 bsU
 cvT
@@ -115735,7 +116091,7 @@ aEK
 aVg
 aZs
 eMb
-aNv
+laV
 qex
 aMQ
 bEI
@@ -116761,7 +117117,7 @@ bud
 ari
 aAN
 aAN
-aAN
+sYx
 lob
 aAG
 aFl
@@ -124023,7 +124379,7 @@ crH
 crH
 crH
 cCc
-kbw
+euB
 sLS
 aah
 aaa
@@ -124031,7 +124387,7 @@ aaa
 aaa
 aah
 eRo
-kbw
+euB
 qpr
 rCh
 rCh
@@ -128135,7 +128491,7 @@ crH
 crH
 crH
 cDT
-lxr
+fWX
 mTm
 aah
 aaa
@@ -136511,7 +136867,7 @@ aaa
 aaa
 aaa
 aah
-bOC
+eqF
 bzI
 aBz
 bXt
@@ -137291,7 +137647,7 @@ bJC
 aWl
 bOo
 bLm
-bLj
+nSD
 bqC
 bRb
 aDW
