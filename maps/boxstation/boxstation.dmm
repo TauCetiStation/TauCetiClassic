@@ -31362,7 +31362,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
@@ -32536,7 +32536,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
@@ -32702,7 +32702,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 6;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
@@ -35877,7 +35877,7 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_corner";
-	color = "#A99268";
+	color = "#a99268";
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -36192,7 +36192,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
@@ -37089,7 +37089,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -37575,7 +37575,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -38407,7 +38407,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
@@ -39001,7 +39001,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/bridge)
@@ -40706,7 +40706,7 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_corner";
-	color = "#A99268";
+	color = "#a99268";
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -40794,7 +40794,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
@@ -40824,7 +40824,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 10;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
@@ -40921,7 +40921,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 10;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -40998,7 +40998,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
@@ -41149,7 +41149,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
@@ -42776,7 +42776,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 6;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -43734,7 +43734,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/eva)
@@ -44059,7 +44059,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -45340,7 +45340,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 10;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -45917,7 +45917,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -46824,7 +46824,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -46852,7 +46852,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -48421,7 +48421,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 6;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
@@ -49209,7 +49209,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 10;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -49583,7 +49583,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -49627,7 +49627,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
@@ -55263,7 +55263,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 2;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -55861,7 +55861,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 6;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
@@ -56401,7 +56401,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 4;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
@@ -56885,7 +56885,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_line";
 	dir = 10;
-	color = "#A99268"
+	color = "#a99268"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
@@ -58117,7 +58117,7 @@
 /obj/effect/decal/remains/robot,
 /obj/effect/decal/turf_decal{
 	icon_state = "siding_corner";
-	color = "#A99268";
+	color = "#a99268";
 	dir = 4
 	},
 /turf/simulated/floor{
