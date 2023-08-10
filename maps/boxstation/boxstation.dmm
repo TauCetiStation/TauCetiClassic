@@ -4236,20 +4236,9 @@
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "delivery"
 	},
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "box_white"
-	},
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "box_white"
-	},
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "box_white"
-	},
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "box_white"
-	},
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "box_white"
+/obj/effect/decal/turf_decal{
+	icon_state = "box_white";
+	color = "#ff0000"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/solitary_confinement)
