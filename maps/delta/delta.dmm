@@ -478,7 +478,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet10-8"
+	},
 /area/station/bridge/captain_quarters)
 "acM" = (
 /obj/structure/closet/athletic_mixed,
@@ -1527,7 +1529,9 @@
 	c_tag = "Bridge";
 	dir = 1
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet5-1"
+	},
 /area/station/bridge)
 "akg" = (
 /obj/machinery/door/firedoor,
@@ -2077,7 +2081,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "apV" = (
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet5-1"
+	},
 /area/station/bridge/meeting_room)
 "apX" = (
 /turf/simulated/wall,
@@ -2413,7 +2419,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet13-5"
+	},
 /area/station/bridge/meeting_room)
 "atv" = (
 /turf/simulated/floor{
@@ -3310,8 +3318,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
 	},
 /area/station/tcommsat/chamber)
 "aEM" = (
@@ -4084,7 +4092,9 @@
 /obj/machinery/computer/communications{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet5-1"
+	},
 /area/station/bridge/captain_quarters)
 "aNW" = (
 /obj/machinery/smartfridge/chemistry,
@@ -6624,7 +6634,9 @@
 /area/station/storage/primary)
 "bre" = (
 /obj/structure/dresser,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet9-4"
+	},
 /area/station/bridge/captain_quarters)
 "brg" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
@@ -8354,7 +8366,9 @@
 "bIZ" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/woodentable,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet11-12"
+	},
 /area/station/bridge/captain_quarters)
 "bJb" = (
 /obj/machinery/turretid/stun{
@@ -11207,7 +11221,9 @@
 /area/station/civilian/chapel)
 "cqG" = (
 /obj/structure/filingcabinet/security,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet5-1"
+	},
 /area/station/bridge/captain_quarters)
 "cqJ" = (
 /obj/structure/table/woodentable,
@@ -13317,7 +13333,9 @@
 	},
 /area/station/hallway/primary/fore)
 "cPN" = (
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet6-2"
+	},
 /area/station/bridge/captain_quarters)
 "cPY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -14384,7 +14402,9 @@
 	},
 /area/station/engineering/atmos)
 "dfg" = (
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet6-2"
+	},
 /area/station/bridge)
 "dfo" = (
 /obj/machinery/power/apc{
@@ -16559,6 +16579,16 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/qm)
+"dFC" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
+	},
+/area/station/tcommsat/chamber)
 "dFV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -17805,7 +17835,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet14-10"
+	},
 /area/station/bridge/meeting_room)
 "dVF" = (
 /obj/machinery/vending/cigarette,
@@ -20003,7 +20035,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet7-3"
+	},
 /area/station/bridge/meeting_room)
 "ewN" = (
 /obj/machinery/computer/general_air_control{
@@ -29585,7 +29619,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet13-5"
+	},
 /area/station/bridge/meeting_room)
 "gIl" = (
 /obj/machinery/door/window/eastleft{
@@ -38245,7 +38281,9 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet10-8"
+	},
 /area/station/bridge/meeting_room)
 "iGx" = (
 /obj/machinery/door/firedoor,
@@ -40685,7 +40723,9 @@
 /obj/machinery/door/window/brigdoor/northleft{
 	req_access = list(20)
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet14-10"
+	},
 /area/station/bridge/captain_quarters)
 "jjk" = (
 /obj/structure/cable{
@@ -44725,7 +44765,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet14-10"
+	},
 /area/station/bridge/meeting_room)
 "kdA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -44856,7 +44898,10 @@
 	name = "lightsout"
 	},
 /turf/simulated/floor/bluegrid{
-	icon_state = "gcircuit"
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
 /area/station/tcommsat/chamber)
 "keK" = (
@@ -50841,8 +50886,8 @@
 /obj/machinery/telescience_jammer{
 	radius = 5
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
 	},
 /area/station/tcommsat/chamber)
 "lwv" = (
@@ -56003,6 +56048,11 @@
 	icon_state = "neutralfull"
 	},
 /area/station/security/checkpoint/engi)
+"mID" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpet9-4"
+	},
+/area/station/bridge/captain_quarters)
 "mIP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -59065,7 +59115,9 @@
 	icon_state = "4-8"
 	},
 /obj/item/weapon/folder/white,
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet15-15"
+	},
 /area/station/bridge/meeting_room)
 "ntM" = (
 /obj/structure/cable{
@@ -61131,7 +61183,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet9-4"
+	},
 /area/station/bridge)
 "nSC" = (
 /obj/structure/rack,
@@ -66296,7 +66350,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet13-5"
+	},
 /area/station/bridge/captain_quarters)
 "pis" = (
 /obj/structure/cable{
@@ -67403,7 +67459,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet6-2"
+	},
 /area/station/bridge/meeting_room)
 "puz" = (
 /obj/machinery/door/firedoor,
@@ -67741,6 +67799,11 @@
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories/service_bedrooms)
+"pyh" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpet10-8"
+	},
+/area/station/bridge)
 "pyk" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -73715,7 +73778,9 @@
 	icon_state = "4-8"
 	},
 /obj/item/toy/figure/dsquad,
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet15-15"
+	},
 /area/station/bridge/meeting_room)
 "qSZ" = (
 /obj/machinery/door/firedoor,
@@ -74340,8 +74405,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
 	},
 /area/station/tcommsat/chamber)
 "raM" = (
@@ -77755,7 +77820,9 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet9-4"
+	},
 /area/station/bridge/meeting_room)
 "rOC" = (
 /obj/machinery/airlock_sensor{
@@ -77899,7 +77966,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet15-15"
+	},
 /area/station/bridge/captain_quarters)
 "rPS" = (
 /obj/effect/landmark/start/roboticist,
@@ -77955,7 +78024,10 @@
 "rQV" = (
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/simulated/floor/bluegrid{
-	icon_state = "gcircuit"
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
 /area/station/tcommsat/chamber)
 "rQX" = (
@@ -82330,7 +82402,9 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet10-8"
+	},
 /area/station/bridge/captain_quarters)
 "sTZ" = (
 /obj/machinery/photocopier,
@@ -86485,7 +86559,10 @@
 "tWZ" = (
 /obj/machinery/telecomms/receiver/preset_left,
 /turf/simulated/floor/bluegrid{
-	icon_state = "gcircuit"
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
 /area/station/tcommsat/chamber)
 "tXl" = (
@@ -87368,7 +87445,9 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom,
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet11-12"
+	},
 /area/station/bridge/meeting_room)
 "uiQ" = (
 /obj/structure/cable{
@@ -87887,7 +87966,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet15-15"
+	},
 /area/station/bridge/meeting_room)
 "unL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -91961,6 +92042,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"vpL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "vpT" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -92830,7 +92924,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet13-5"
+	},
 /area/station/bridge)
 "vBe" = (
 /obj/effect/decal/turf_decal{
@@ -96300,7 +96396,9 @@
 /obj/machinery/keycard_auth{
 	pixel_x = -28
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet7-3"
+	},
 /area/station/bridge/captain_quarters)
 "wtW" = (
 /obj/machinery/deployable/barrier,
@@ -97221,8 +97319,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
 	},
 /area/station/tcommsat/chamber)
 "wFj" = (
@@ -100958,7 +101056,9 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet6-2"
+	},
 /area/station/bridge/captain_quarters)
 "xze" = (
 /obj/effect/decal/cleanable/dirt,
@@ -102812,7 +102912,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpet14-10"
+	},
 /area/station/bridge)
 "xVm" = (
 /obj/machinery/alarm{
@@ -141806,14 +141908,14 @@ lZx
 lZx
 lZx
 pQD
-geq
-geq
-geq
-kxd
-geq
-geq
+gIC
+gIC
+gIC
+vpL
+gIC
+gIC
 keH
-vyg
+gIC
 xMO
 aMC
 kHU
@@ -142063,7 +142165,7 @@ efE
 mSV
 fSr
 jfu
-vyg
+gIC
 cki
 dXr
 kxd
@@ -142320,7 +142422,7 @@ kQr
 jIL
 cdc
 eXe
-vyg
+gIC
 hbc
 eSi
 kxd
@@ -142582,8 +142684,8 @@ knC
 xMO
 raJ
 cCX
-geq
-xMO
+vyg
+dFC
 lwt
 raJ
 eXe
@@ -142837,7 +142939,7 @@ eXe
 eXe
 eXe
 nqJ
-geq
+vyg
 rHn
 swz
 oKD
@@ -143340,7 +143442,7 @@ gCE
 imK
 lEC
 mrs
-dfg
+pyh
 nSo
 lZx
 oay
@@ -143351,7 +143453,7 @@ eXe
 eXe
 eXe
 nqJ
-geq
+vyg
 gIt
 swz
 xdv
@@ -143610,7 +143712,7 @@ knC
 aty
 wEV
 fAH
-xMO
+dFC
 aEE
 lwt
 wEV
@@ -143862,7 +143964,7 @@ djT
 vKe
 gTC
 eXe
-vyg
+gIC
 jRz
 eZL
 kxd
@@ -144119,7 +144221,7 @@ nQC
 tHI
 uzb
 pQD
-vyg
+gIC
 klE
 flz
 kxd
@@ -144376,14 +144478,14 @@ lZx
 lZx
 lZx
 pQD
-geq
-geq
-geq
-kxd
-geq
-kxd
-geq
-geq
+gIC
+gIC
+gIC
+vpL
+gIC
+vpL
+gIC
+gIC
 aty
 aMC
 kHU
@@ -145661,7 +145763,7 @@ ibm
 adM
 sTY
 bIZ
-cPN
+mID
 iaL
 cHR
 jKD
