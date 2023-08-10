@@ -6605,8 +6605,9 @@
 /area/centcom/specops)
 "apQ" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
-/obj/machinery/door/poddoor/shutters/syndi{
-	id = "ERTBase"
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
@@ -6761,18 +6762,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"aqg" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk";
-	oxygen = 21.8366
-	},
-/area/shuttle/specops/centcom)
 "aqh" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/toxin{
@@ -6948,18 +6937,6 @@
 	name = "plating"
 	},
 /area/velocity)
-"aqE" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Special Operations";
-	req_access = list(103)
-	},
-/obj/machinery/door/poddoor/shutters/syndi{
-	id = "ERTBase"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/specops)
 "aqF" = (
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk";
@@ -12148,6 +12125,10 @@
 	name = "Engineering Special Operations";
 	req_access = list(103)
 	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12191,18 +12172,6 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/specops)
-"aCk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -13186,6 +13155,10 @@
 	name = "Medical Special Operations";
 	req_access = list(103)
 	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13518,6 +13491,10 @@
 	name = "Armory Special Operations";
 	req_access = list(103)
 	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13581,10 +13558,6 @@
 	name = "blue carpet"
 	},
 /area/custom/wizard_station)
-"aFm" = (
-/obj/structure/sign/nanotrasen,
-/turf/unsimulated/wall,
-/area/centcom/specops)
 "aFn" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -14110,9 +14083,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/handcuffs{
 	pixel_y = 2
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -16136,17 +16106,6 @@
 	icon_state = "wood-broken2"
 	},
 /area/custom/syndicate_mothership)
-"aLb" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 1
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/centcom/specops)
 "aLc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -22527,9 +22486,6 @@
 	dir = 1;
 	network = list("ERT")
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -26176,15 +26132,18 @@
 	},
 /area/centcom/evac)
 "hXb" = (
-/obj/structure/stool/bed/chair/schair/wagon,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
+/obj/machinery/door/airlock/centcom{
+	name = "Special Operations";
+	req_access = list(103)
 	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk";
-	oxygen = 21.8366
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
 	},
-/area/shuttle/specops/centcom)
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "hYb" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -57877,7 +57836,7 @@ aBC
 hbb
 bib
 aBb
-aDI
+hXb
 hbb
 aAE
 aCV
@@ -58393,9 +58352,9 @@ aBZ
 aBp
 aBp
 aBp
-aqE
+hXb
 apQ
-aqE
+hXb
 aBp
 aBp
 aBp
@@ -58648,7 +58607,7 @@ aBp
 aBp
 aBp
 aBp
-aCk
+anv
 gtb
 fWb
 aCR
@@ -59409,9 +59368,9 @@ aaM
 aaM
 aeD
 lpG
-hXb
+fDb
 gGb
-aqg
+ayL
 lpG
 aaR
 hkb
@@ -60711,7 +60670,7 @@ aBG
 aBG
 aBG
 aBS
-aLb
+bBb
 aBp
 beQ
 hkb
@@ -61478,7 +61437,7 @@ aBp
 aDK
 aEG
 aEM
-aFm
+aBp
 hkb
 aDY
 aBR
@@ -62763,7 +62722,7 @@ avI
 aDK
 aAD
 aEO
-aFm
+aBp
 aEe
 aEs
 aFo
