@@ -12232,6 +12232,9 @@
 	dir = 1
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -15814,6 +15817,9 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -27851,6 +27857,9 @@
 	dir = 10
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

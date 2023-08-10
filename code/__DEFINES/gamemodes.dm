@@ -63,6 +63,7 @@
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
 #define REPLICATOR "Replicator"
+#define PRISONER "Prisoner"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
