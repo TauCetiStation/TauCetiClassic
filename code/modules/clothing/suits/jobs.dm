@@ -108,16 +108,16 @@
 	if(usr.incapacitated())
 		return
 
-	if(!rolled)
+	if(rolled)
 		icon_state = initial(icon_state)
 		item_state = initial(icon_state)
 		to_chat(usr, "You roll up [src] sleeves")
-		rolled = TRUE
+		rolled = FALSE
 	else
 		icon_state += "_r"
 		item_state += "_r"
 		to_chat(usr, "You roll down [src] sleeves")
-		rolled = FALSE
+		rolled = TRUE
 	update_inv_mob()
 
 //Chef
