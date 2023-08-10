@@ -10273,6 +10273,16 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/starboard)
+"cek" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "ceI" = (
 /obj/machinery/camera{
 	c_tag = "Port Primary Hallway South";
@@ -27457,6 +27467,17 @@
 	icon_state = "redyellowfull"
 	},
 /area/station/rnd/scibreak)
+"gjt" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "gjC" = (
 /turf/simulated/floor/wood,
 /area/station/maintenance/science)
@@ -29415,6 +29436,13 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/mixing)
+"gEW" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "gEX" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -39387,6 +39415,15 @@
 	icon_state = "dark"
 	},
 /area/station/security/brig/storage)
+"iQD" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hor)
 "iQE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -41915,6 +41952,13 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"juT" = (
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "juV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -49661,6 +49705,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "ldE" = (
@@ -56494,7 +56542,7 @@
 "mKy" = (
 /obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
-	dir = 10
+	dir = 6
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73443,6 +73491,15 @@
 	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
+"qJt" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hor)
 "qJx" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -75723,15 +75780,6 @@
 "rmY" = (
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
-"rnj" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hor)
 "rnl" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /turf/simulated/floor/engine,
@@ -78424,6 +78472,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"rQg" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "rQp" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -79197,6 +79252,10 @@
 "saw" = (
 /obj/machinery/light/smart{
 	dir = 1
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
@@ -82117,6 +82176,15 @@
 	icon_state = "vaultfull"
 	},
 /area/station/bridge)
+"sKx" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hor)
 "sKL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -86409,6 +86477,12 @@
 /obj/item/weapon/storage/box,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"tOj" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "tOH" = (
 /obj/structure/sign/directions/evac{
 	pixel_x = -32;
@@ -88272,6 +88346,17 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway/lobby)
+"umg" = (
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "umi" = (
 /obj/machinery/door/airlock{
 	name = "Locker Room"
@@ -89428,15 +89513,6 @@
 "uBo" = (
 /turf/environment/space,
 /area/shuttle/syndicate/southeast)
-"uBq" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hor)
 "uBu" = (
 /obj/structure/table/glass,
 /obj/item/device/radio/headset/headset_med,
@@ -91418,6 +91494,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
+"vaZ" = (
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "vbc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -97793,15 +97879,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/engineering/engine)
-"wDW" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hor)
 "wDY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -103615,6 +103692,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"xWB" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "xWF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -134541,9 +134625,9 @@ ylt
 omz
 vil
 lhp
-bks
+vaZ
 ldt
-bks
+umg
 ekl
 svQ
 nxb
@@ -134800,7 +134884,7 @@ evL
 bOA
 saw
 tVQ
-bks
+tOj
 jwK
 svQ
 vxf
@@ -135055,15 +135139,15 @@ wtC
 ijY
 evL
 lhp
+gjt
 bks
-bks
-bks
+cek
 mkl
 svQ
 vxf
 kiL
-wDW
-mKy
+qJt
+iQD
 hzm
 vaP
 wwp
@@ -135312,9 +135396,9 @@ wtC
 hBT
 npX
 fbt
+gEW
 bks
-bks
-bks
+tOj
 fte
 uly
 vxf
@@ -135569,15 +135653,15 @@ dyG
 bwi
 evL
 lhp
+gEW
 bks
-bks
-bks
+tOj
 mkl
 svQ
 vxf
 kiL
-uBq
-rnj
+sKx
+mKy
 blq
 syE
 qbC
@@ -135828,7 +135912,7 @@ lud
 bOA
 saw
 bks
-bks
+tOj
 bYy
 svQ
 vxf
@@ -136083,9 +136167,9 @@ oZa
 daK
 pPD
 lhp
-bks
-bks
-bks
+juT
+rQg
+xWB
 vmY
 svQ
 jHw
