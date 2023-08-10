@@ -2315,6 +2315,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"adP" = (
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/monitoring)
 "adQ" = (
 /obj/effect/decal/remains/robot,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -2330,6 +2342,19 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
+"adR" = (
+/obj/machinery/computer/general_air_control{
+	dir = 4;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "adS" = (
 /obj/machinery/door/airlock/vault{
 	name = "Blueshield Storage";
@@ -2586,6 +2611,25 @@
 	},
 /turf/environment/space,
 /area/station/security/blueshield/shuttle)
+"aen" = (
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1441;
+	name = "Tank Monitor";
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/engineering/monitoring)
 "aeo" = (
 /obj/structure/lattice,
 /turf/simulated/wall,
@@ -2615,6 +2659,18 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/cargo)
+"aeq" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "aes" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -8377,6 +8433,9 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -10273,14 +10332,21 @@
 	},
 /area/station/security/main)
 "bXu" = (
-/obj/structure/toilet{
-	pixel_y = 8
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
 /obj/effect/landmark{
-	name = "blobstart"
+	name = "prisonerstart"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/turf/simulated/floor{
+	icon_state = "brownold"
+	},
+/area/station/security/prison)
 "bXA" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal{
@@ -20603,11 +20669,8 @@
 /area/station/civilian/bar)
 "eAh" = (
 /obj/structure/stool,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -27325,17 +27388,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "gbx" = (
-/obj/structure/stool/bed/chair/comfy/beige{
-	dir = 1
+/obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/light/small,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "brownold"
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
+/turf/simulated/floor,
 /area/station/security/prison)
 "gbG" = (
 /turf/simulated/wall,
@@ -35168,17 +35231,6 @@
 	icon_state = "darkbluecorners"
 	},
 /area/station/tcommsat/computer)
-"hTr" = (
-/obj/machinery/computer/general_air_control{
-	frequency = 1444;
-	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/engine)
 "hTs" = (
 /turf/simulated/wall,
 /area/station/cargo/office)
@@ -36705,22 +36757,6 @@
 /obj/structure/stool/bar,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
-"imp" = (
-/obj/machinery/computer/general_air_control{
-	dir = 4;
-	frequency = 1443;
-	level = 3;
-	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
-	},
-/obj/structure/sign/map/prometheus{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/engineering/monitoring)
 "imv" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -49462,25 +49498,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
-"lAm" = (
-/obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1441;
-	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/engineering/monitoring)
 "lAp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -70193,17 +70210,15 @@
 /area/station/civilian/garden)
 "qJU" = (
 /obj/machinery/computer/general_air_control{
-	dir = 4;
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkyellow"
+	icon_state = "dark"
 	},
-/area/station/engineering/chiefs_office)
+/area/station/engineering/engine)
 "qJZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -72474,6 +72489,9 @@
 	dir = 4
 	},
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "rqE" = (
@@ -73686,14 +73704,18 @@
 /area/station/cargo/storage)
 "rFw" = (
 /obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1444;
+	dir = 4;
+	frequency = 1443;
 	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	name = "Distribution and Waste Monitor";
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
+	},
+/obj/structure/sign/map/prometheus{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/engineering/monitoring)
 "rFM" = (
@@ -74340,6 +74362,9 @@
 /area/station/security/interrogation)
 "rOJ" = (
 /obj/structure/stool/bed/chair/metal,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -132534,7 +132559,7 @@ eKW
 fmz
 pyu
 pyu
-imp
+rFw
 gNu
 oxd
 pyu
@@ -134078,10 +134103,10 @@ pyu
 pyu
 pyu
 pyu
-lAm
+aen
 fNz
 oEg
-rFw
+adP
 xAj
 oop
 vnU
@@ -134595,7 +134620,7 @@ sWO
 fLZ
 cOA
 qaA
-qJU
+adR
 tsa
 sWO
 sWO
@@ -140222,7 +140247,7 @@ aar
 eDF
 bMw
 ohw
-gbx
+bXu
 vdJ
 sat
 vlJ
@@ -140243,7 +140268,7 @@ vdJ
 kVn
 nZt
 tye
-hTr
+qJU
 hvk
 tcP
 rJO
@@ -141510,7 +141535,7 @@ qTR
 veM
 cKT
 vdJ
-bXu
+aeq
 ndk
 vdJ
 vdJ
@@ -143819,7 +143844,7 @@ foN
 kkO
 eKn
 lrM
-eAh
+gbx
 xcr
 dyg
 vgT
@@ -144332,7 +144357,7 @@ ouF
 qmR
 iJH
 yhz
-kkO
+eAh
 eaH
 xcr
 xAB

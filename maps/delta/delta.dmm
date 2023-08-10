@@ -12836,6 +12836,9 @@
 	dir = 8
 	},
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/prison/toilet)
 "cJY" = (
@@ -43263,6 +43266,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -64532,6 +64538,9 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -82138,6 +82147,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -90753,6 +90765,9 @@
 /area/shuttle/supply/station)
 "uYb" = (
 /obj/structure/stool,
+/obj/effect/landmark{
+	name = "prisonerstart"
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -98672,6 +98687,9 @@
 /obj/structure/stool,
 /obj/structure/window/thin{
 	dir = 1
+	},
+/obj/effect/landmark{
+	name = "prisonerstart"
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
