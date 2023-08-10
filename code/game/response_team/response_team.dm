@@ -93,6 +93,9 @@ var/global/can_call_ert
 	else
 		ERT.AppendObjective(team.fixed_objective)
 
+	var/datum/announcement/centcomm/ert/announcement = new
+	announcement.play()
+
 /client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.
 	//make it a panel, like in character creation
