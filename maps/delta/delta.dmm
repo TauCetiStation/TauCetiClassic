@@ -4032,7 +4032,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 5
 	},
@@ -8653,7 +8653,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 4
 	},
@@ -10697,7 +10697,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 4
 	},
@@ -16241,7 +16241,7 @@
 	name = "Chemistry APC";
 	pixel_y = 28
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/obj/effect/decal/turf_decal/alpha/orange{
 	icon_state = "siding_line";
 	dir = 8
 	},
@@ -25686,7 +25686,7 @@
 	},
 /area/station/medical/storage)
 "fMG" = (
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 8
 	},
@@ -33400,7 +33400,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 9
 	},
@@ -33476,6 +33476,10 @@
 /area/station/storage/emergency2)
 "hzS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/decal/turf_decal/alpha/purple{
+	icon_state = "siding_line";
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
@@ -33815,7 +33819,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
@@ -39420,7 +39424,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 4
 	},
@@ -40880,8 +40884,9 @@
 /obj/machinery/computer/area_atmos{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/alpha{
+	icon_state = "warn_end";
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -42666,9 +42671,6 @@
 /area/station/hallway/secondary/entry)
 "jDw" = (
 /obj/machinery/portable_atmospherics/powered/scrubber/huge,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -44133,7 +44135,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 4
 	},
@@ -45143,9 +45145,6 @@
 "keQ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
-	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -48096,7 +48095,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 4
 	},
@@ -48610,10 +48609,10 @@
 	},
 /area/station/security/execution)
 "kSv" = (
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 1
 	},
@@ -50625,10 +50624,10 @@
 /area/station/ai_monitored/storage_secure)
 "lqU" = (
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 1
 	},
@@ -51507,7 +51506,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
@@ -51997,7 +51996,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 4
 	},
@@ -55224,11 +55223,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "mue" = (
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_corner";
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_corner";
 	dir = 1
 	},
@@ -56496,6 +56495,10 @@
 "mKB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/purple{
+	icon_state = "siding_line";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -60907,6 +60910,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -60969,7 +60976,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/obj/effect/decal/turf_decal/alpha/orange{
 	icon_state = "siding_line";
 	dir = 10
 	},
@@ -62524,7 +62531,7 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/medbay)
 "oen" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
+/obj/effect/decal/turf_decal/alpha/orange{
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
@@ -64373,7 +64380,7 @@
 	},
 /area/station/security/iaa_office)
 "oFl" = (
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
@@ -68292,10 +68299,10 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "pzj" = (
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_corner"
 	},
-/obj/effect/decal/turf_decal/wood{
+/obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_corner";
 	dir = 4
 	},
@@ -72500,7 +72507,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 1
 	},
@@ -74293,6 +74300,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/effect/decal/turf_decal/alpha/purple{
+	icon_state = "siding_line";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -83325,7 +83336,7 @@
 /area/station/civilian/locker)
 "taF" = (
 /obj/effect/landmark/start/geneticist,
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 8
 	},
@@ -87161,7 +87172,7 @@
 /area/station/civilian/dormitories)
 "tZe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/decal/turf_decal/alpha/yellow{
+/obj/effect/decal/turf_decal/alpha/orange{
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
@@ -87376,7 +87387,7 @@
 /obj/item/device/cardpay{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/obj/effect/decal/turf_decal/alpha/orange{
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
@@ -94094,7 +94105,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
@@ -102138,7 +102149,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/alpha{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "siding_line";
 	dir = 8
 	},
@@ -102280,6 +102291,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -103357,9 +103369,6 @@
 	},
 /area/station/security/checkpoint/cargo)
 "xUE" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
