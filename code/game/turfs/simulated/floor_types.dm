@@ -206,9 +206,7 @@
 	barefootstep = FOOTSTEP_WATER_DEEP
 	clawfootstep = FOOTSTEP_WATER_DEEP
 	heavyfootstep = FOOTSTEP_WATER_DEEP
-	depth = 800
-
-
+	static_fluid_depth  = 800
 
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"

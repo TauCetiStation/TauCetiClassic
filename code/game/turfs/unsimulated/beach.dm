@@ -14,7 +14,7 @@
 /turf/unsimulated/beach/water
 	name = "Water"
 	icon_state = "water"
-	depth = 800
+	static_fluid_depth = 800
 
 /turf/unsimulated/beach/water/atom_init()
 	. = ..()
