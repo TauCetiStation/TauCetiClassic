@@ -1700,12 +1700,14 @@
 	},
 /area/custom/ninjaspawn)
 "aet" = (
-/obj/machinery/teleport/station,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 5;
 	icon_state = "vault"
 	},
-/area/custom/ninjaspawn)
+/area/centcom/tdome)
 "aeu" = (
 /obj/machinery/teleport/hub,
 /turf/unsimulated/floor{
@@ -1721,6 +1723,7 @@
 	},
 /area/custom/ninjaspawn)
 "aew" = (
+/obj/machinery/teleport/station,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1732,6 +1735,12 @@
 	},
 /area/custom/ninjaspawn)
 "aey" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aez" = (
 /obj/structure/table/reinforced,
 /obj/item/device/paicard,
 /turf/unsimulated/floor{
@@ -1739,24 +1748,15 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aez" = (
-/obj/effect/landmark{
-	name = "ninja"
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/ninjaspawn)
 "aeA" = (
-/obj/machinery/light/small{
-	force_override_color = "#008000"
+/obj/machinery/door/airlock/command{
+	name = "Thunderdome"
 	},
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 5;
 	icon_state = "vault"
 	},
-/area/custom/ninjaspawn)
+/area/centcom/tdome)
 "aeB" = (
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice,
@@ -6540,6 +6540,24 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"apN" = (
+/obj/effect/landmark{
+	name = "ninja"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"apO" = (
+/obj/machinery/light/small{
+	force_override_color = "#008000"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
 "apR" = (
 /obj/item/weapon/paper{
 	info = "Some stuff is missing...";
@@ -12229,13 +12247,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "bcircuit"
-	},
-/area/centcom/specops)
-"aCE" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aCF" = (
@@ -22151,12 +22162,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"bjb" = (
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "vault"
-	},
-/area/centcom/specops)
 "bkb" = (
 /obj/structure/closet/crate/medical,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
@@ -27041,14 +27046,11 @@
 	},
 /area/centcom/living)
 "ktb" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 9;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "kvb" = (
 /obj/structure/sign/mark{
 	icon_state = "yrt"
@@ -27518,25 +27520,25 @@
 	},
 /area/centcom/holding)
 "lxb" = (
+/obj/machinery/light/small,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"lyb" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/living)
+"lzb" = (
 /obj/structure/rack,
 /obj/item/device/lens/nude,
 /obj/item/device/camera,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/centcom/holding)
-"lyb" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/fancy/crayons,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/centcom/holding)
-"lzb" = (
-/obj/structure/rack,
-/obj/item/toy/gun,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -27878,14 +27880,13 @@
 	},
 /area/centcom/control)
 "mnb" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/structure/rack,
+/obj/item/toy/gun,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/tdome)
+/area/centcom/holding)
 "mob" = (
 /obj/structure/window/thin/reinforced,
 /obj/structure/window/thin/reinforced{
@@ -27911,6 +27912,15 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "mqb" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/tdome)
+"mrb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
 	req_access = list(101)
@@ -27920,25 +27930,16 @@
 	icon_state = "vault"
 	},
 /area/centcom/tdome)
-"mrb" = (
+"msb" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
 /area/centcom/tdome)
-"msb" = (
+"mtb" = (
 /obj/machinery/light/small{
 	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/centcom/tdome)
-"mtb" = (
-/obj/machinery/door/airlock/command{
-	name = "Thunderdome"
 	},
 /turf/unsimulated/floor{
 	dir = 5;
@@ -28421,14 +28422,13 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "nBb" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/structure/rack,
+/obj/item/weapon/storage/fancy/crayons,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/tdome)
+/area/centcom/holding)
 "nCb" = (
 /obj/structure/table{
 	dir = 9;
@@ -54563,9 +54563,9 @@ aBp
 aBp
 aBp
 bib
-bjb
-bjb
-bjb
+ktb
+ktb
+ktb
 bib
 aBp
 aBp
@@ -59233,7 +59233,7 @@ kNb
 kWb
 lcb
 lqb
-lxb
+lzb
 aaU
 aaM
 aTi
@@ -59242,10 +59242,10 @@ aaM
 aSj
 lKb
 lKb
-msb
+mtb
 lKb
 lKb
-msb
+mtb
 lKb
 lKb
 aSj
@@ -59490,7 +59490,7 @@ kMb
 kWb
 ldb
 lqb
-lyb
+nBb
 aaU
 aaM
 lSb
@@ -59747,14 +59747,14 @@ kOb
 kWb
 leb
 lqb
-lyb
+nBb
 aaU
 aaM
 lTb
 aKu
 aaM
 aSj
-mnb
+mqb
 aSj
 aVC
 aVC
@@ -60004,7 +60004,7 @@ kPb
 kWb
 lcb
 lqb
-lzb
+mnb
 aaU
 aaM
 lTb
@@ -60286,7 +60286,7 @@ aXO
 aYX
 aZf
 aSj
-mnb
+mqb
 aSj
 aaM
 aaM
@@ -60526,7 +60526,7 @@ aKu
 aaM
 aSj
 lKb
-mqb
+mrb
 aVD
 aVD
 aVD
@@ -61039,7 +61039,7 @@ aTi
 aKu
 aaM
 aSj
-mnb
+mqb
 aSj
 aVF
 aVF
@@ -61057,7 +61057,7 @@ aXO
 aYX
 aZf
 aSj
-mnb
+mqb
 lKb
 aSj
 aaM
@@ -61496,9 +61496,9 @@ aaM
 aBp
 hdb
 bib
-bjb
+ktb
 bib
-aCE
+lxb
 aBp
 aDK
 aAE
@@ -62068,7 +62068,7 @@ aSj
 aSj
 aSj
 aSj
-mnb
+mqb
 aSj
 mxb
 mEb
@@ -62638,9 +62638,9 @@ aaM
 aer
 aer
 aev
-aew
+aey
 aeE
-aew
+aey
 aeJ
 aer
 aer
@@ -62894,7 +62894,7 @@ aaM
 aaM
 aer
 aes
-aew
+aey
 aex
 aeE
 aeI
@@ -63150,13 +63150,13 @@ aaM
 aaM
 aaM
 aer
-aet
-aex
-aez
-aeE
-aez
 aew
-aet
+aex
+apN
+aeE
+apN
+aey
+aew
 aer
 aaM
 aaM
@@ -63354,7 +63354,7 @@ lKb
 lKb
 lKb
 lKb
-mtb
+aeA
 mzb
 mzb
 mzb
@@ -63409,9 +63409,9 @@ aaM
 aer
 aeu
 aex
-aeA
+apO
 aeE
-aew
+aey
 aeH
 jZp
 aer
@@ -63665,10 +63665,10 @@ aaM
 aaM
 aer
 aer
-aey
+aez
 aex
 aeE
-aew
+aey
 aeK
 aer
 aer
@@ -64381,7 +64381,7 @@ aRH
 aUc
 aUq
 aSj
-mrb
+msb
 aSj
 mzb
 mEb
@@ -65152,7 +65152,7 @@ aaM
 aaM
 aaM
 aSj
-mrb
+msb
 aSj
 mDb
 mGb
@@ -65667,10 +65667,10 @@ aaM
 aaM
 aSj
 lKb
+mtb
+lKb
+lKb
 msb
-lKb
-lKb
-mrb
 aSj
 aWY
 aXt
@@ -65683,7 +65683,7 @@ aXR
 aYX
 aZi
 aSj
-mnb
+mqb
 lKb
 aSj
 aaM
@@ -66441,7 +66441,7 @@ aaM
 aaM
 aaM
 aSj
-mrb
+msb
 aSj
 aWY
 aXt
@@ -66454,7 +66454,7 @@ aXR
 aYX
 aZi
 aSj
-mnb
+mqb
 aSj
 aaM
 aaM
@@ -67214,7 +67214,7 @@ aaM
 aSj
 lKb
 lKb
-nBb
+aet
 aSj
 aXT
 aXT
@@ -71820,7 +71820,7 @@ aaM
 aaM
 jNb
 khb
-ktb
+lyb
 kEb
 kSb
 aMz
