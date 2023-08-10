@@ -960,9 +960,11 @@
 /area/asteroid/mine/abandoned)
 "cp" = (
 /obj/machinery/radiocarbon_spectrometer,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/spectro)
 "cq" = (
@@ -1512,9 +1514,11 @@
 /area/asteroid/research_outpost/anomaly)
 "du" = (
 /obj/machinery/artifact_harvester,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/harvesting)
 "dv" = (
@@ -1854,9 +1858,11 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "ed" = (
@@ -1965,8 +1971,7 @@
 	},
 /obj/item/weapon/xenoarch_utilizer,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/harvesting)
 "er" = (
@@ -2508,8 +2513,7 @@
 /obj/item/weapon/particles_battery,
 /obj/item/weapon/particles_battery,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/harvesting)
 "fj" = (
@@ -2553,9 +2557,11 @@
 	dir = 4
 	},
 /obj/machinery/light/smart,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "fo" = (
@@ -2595,9 +2601,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "fr" = (
@@ -3331,9 +3339,11 @@
 /area/asteroid/research_outpost/power)
 "he" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "hf" = (
@@ -3342,9 +3352,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hg" = (
@@ -3445,8 +3457,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hv" = (
@@ -3535,9 +3546,11 @@
 /obj/machinery/alarm/isolation{
 	pixel_y = 24
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hH" = (
@@ -3827,8 +3840,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "ij" = (
@@ -3842,8 +3854,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "ik" = (
@@ -3867,8 +3878,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "im" = (
@@ -3887,9 +3897,11 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/tempstorage)
 "io" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "ip" = (
@@ -4406,8 +4418,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "je" = (
@@ -4426,9 +4437,11 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jf" = (
@@ -4438,9 +4451,11 @@
 	icon_state = "2-4"
 	},
 /obj/structure/closet/l3closet/scientist,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jg" = (
@@ -4452,9 +4467,11 @@
 	name = "Asteroid Intercom";
 	pixel_y = 25
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jh" = (
@@ -4500,8 +4517,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "jm" = (
@@ -4614,9 +4630,11 @@
 /area/asteroid/research_outpost/hallway)
 "jA" = (
 /obj/machinery/light/small,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "jD" = (
@@ -4721,8 +4739,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jW" = (
@@ -4738,8 +4755,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jX" = (
@@ -4752,8 +4768,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jY" = (
@@ -4768,8 +4783,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jZ" = (
@@ -4972,9 +4986,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "kq" = (
@@ -4985,9 +5001,11 @@
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "kr" = (
@@ -5000,8 +5018,7 @@
 	network = list("Research","SS13")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "kt" = (
@@ -5028,8 +5045,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "kv" = (
@@ -5178,8 +5194,7 @@
 /area/asteroid/research_outpost/maintstore2)
 "kF" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "kG" = (
@@ -5568,9 +5583,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "lv" = (
@@ -5580,8 +5597,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "lw" = (
@@ -5755,8 +5771,7 @@
 	},
 /obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "lT" = (
@@ -6172,9 +6187,11 @@
 	pixel_y = 24
 	},
 /obj/machinery/power/grounding_rod,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "mW" = (
@@ -6269,8 +6286,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/iso1)
 "nk" = (
@@ -6779,9 +6795,11 @@
 	},
 /obj/item/weapon/pen,
 /obj/item/device/camera,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "op" = (
@@ -6910,8 +6928,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/harvesting)
 "oI" = (
@@ -7019,9 +7036,11 @@
 /area/asteroid/research_outpost/gearstore)
 "oS" = (
 /obj/machinery/telecomms/relay/preset/mining,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/maintenance)
 "oT" = (
@@ -7232,8 +7251,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/iso1)
 "pq" = (
@@ -7268,9 +7286,11 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/harvesting)
 "pt" = (
@@ -7416,9 +7436,11 @@
 /area/asteroid/research_outpost/tempstorage)
 "pM" = (
 /obj/structure/closet/l3closet/scientist,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "pN" = (
@@ -9694,8 +9716,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/living_quarters)
 "vz" = (
@@ -10772,8 +10793,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "yd" = (
@@ -10879,8 +10899,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/living_quarters)
 "yv" = (
@@ -11016,8 +11035,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "zj" = (
@@ -11037,8 +11055,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "zk" = (
@@ -11055,8 +11072,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "zl" = (
@@ -11069,8 +11085,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "zm" = (
@@ -11318,8 +11333,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/living_quarters)
 "zU" = (
@@ -11336,8 +11350,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/living_quarters)
 "zW" = (
@@ -11357,8 +11370,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/living_quarters)
 "zX" = (
@@ -11752,8 +11764,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/iso2)
 "Bh" = (
@@ -11909,8 +11920,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "Cg" = (
@@ -12000,8 +12010,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "Dg" = (
@@ -12076,17 +12085,18 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "Eg" = (
 /obj/structure/table,
 /obj/item/weapon/folder/purple,
 /obj/item/device/flashlight/lamp,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/iso1)
 "Fb" = (
@@ -12143,8 +12153,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/iso1)
 "FA" = (
@@ -12401,9 +12410,11 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/secure/miningsec,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Jg" = (
@@ -12516,9 +12527,11 @@
 /area/asteroid/mine/production)
 "Lf" = (
 /obj/structure/closet/crate/secure/miningsec,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Lg" = (
@@ -12611,8 +12624,7 @@
 "MA" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Nb" = (
@@ -12660,9 +12672,11 @@
 	pixel_y = 24
 	},
 /obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Nf" = (
@@ -12729,9 +12743,11 @@
 /area/asteroid/mine/living_quarters)
 "Oe" = (
 /obj/machinery/power/port_gen/pacman/scrap,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Of" = (
@@ -12777,9 +12793,11 @@
 	pixel_y = 32
 	},
 /obj/machinery/power/port_gen/pacman/scrap,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Pf" = (
@@ -12789,9 +12807,11 @@
 /area/asteroid/mine/production)
 "Py" = (
 /obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Qb" = (
@@ -12842,9 +12862,11 @@
 	},
 /area/asteroid/mine/production)
 "Qz" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
 "Rb" = (
@@ -12942,8 +12964,7 @@
 	req_access = list(48)
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "Sf" = (
@@ -12998,8 +13019,7 @@
 /area/asteroid/mine/production)
 "Te" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "Tf" = (
@@ -13057,8 +13077,7 @@
 	network = list("MINE")
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/production)
 "Uf" = (
