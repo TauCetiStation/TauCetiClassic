@@ -606,15 +606,13 @@
 	},
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "ca" = (
 /obj/machinery/dna_scannernew,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cb" = (
@@ -632,8 +630,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cd" = (
@@ -666,15 +663,13 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cg" = (
 /obj/machinery/computer/scan_consolenew,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "ch" = (
@@ -695,8 +690,7 @@
 /area/awaymission/labs/researchdivision)
 "cj" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "ck" = (
@@ -717,8 +711,7 @@
 /obj/item/weapon/reagent_containers/blood/empty,
 /obj/item/weapon/storage/box/bodybags,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cm" = (
@@ -782,15 +775,13 @@
 /obj/structure/table/reinforced,
 /obj/item/device/mass_spectrometer,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cv" = (
 /obj/machinery/door/airlock/research/glass,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cw" = (
@@ -855,8 +846,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cE" = (
@@ -872,8 +862,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/hypospray,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cG" = (
@@ -1569,8 +1558,7 @@
 	pixel_x = 13
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "et" = (
@@ -1579,15 +1567,13 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "eu" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "ev" = (
@@ -1674,15 +1660,13 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "eE" = (
 /obj/machinery/power/smes,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "eF" = (
@@ -1751,8 +1735,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/gibspawner/human,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "eO" = (
@@ -1764,8 +1747,7 @@
 /area/awaymission/labs/gateway)
 "eP" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "eQ" = (
@@ -1861,8 +1843,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "fb" = (
@@ -1951,8 +1932,7 @@
 	name = "Armory Door"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/gateway)
 "fn" = (
@@ -2014,8 +1994,7 @@
 	},
 /obj/item/ammo_box/c45,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "ft" = (
@@ -2037,8 +2016,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "fv" = (
@@ -2079,8 +2057,7 @@
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fA" = (
@@ -2120,8 +2097,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fF" = (
@@ -2130,8 +2106,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fG" = (
@@ -2144,8 +2119,7 @@
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fH" = (
@@ -2267,8 +2241,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fU" = (
@@ -2276,15 +2249,13 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fW" = (
@@ -2349,8 +2320,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "gc" = (
@@ -2454,8 +2424,7 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "gn" = (
@@ -6935,9 +6904,11 @@
 /area/awaymission/labs/command)
 "qn" = (
 /obj/structure/closet/secure_closet/freezer/money,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qo" = (
@@ -6973,9 +6944,11 @@
 	frequency = 1379;
 	id_tag = "medsci_pump"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qs" = (
@@ -7074,9 +7047,11 @@
 	},
 /area/awaymission/labs/command)
 "qF" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qG" = (
@@ -7116,9 +7091,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qK" = (
@@ -7196,18 +7173,22 @@
 	},
 /obj/item/weapon/storage/belt/champion,
 /obj/item/weapon/stock_parts/cell/infinite,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qT" = (
 /obj/machinery/nuclearbomb{
 	r_code = "LOLNO"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qU" = (
@@ -7234,9 +7215,11 @@
 /obj/structure/closet/crate{
 	name = "Silver Crate"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qV" = (
@@ -7277,9 +7260,11 @@
 	pixel_x = 12;
 	pixel_y = 11
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "ra" = (
@@ -7965,9 +7950,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "sS" = (
@@ -8387,24 +8374,30 @@
 	name = "Pistol";
 	silenced = 0
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tR" = (
 /obj/structure/rack,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tS" = (
 /obj/structure/rack,
 /obj/item/ammo_box/c45,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tT" = (
@@ -8413,9 +8406,11 @@
 /obj/item/weapon/melee/baton,
 /obj/item/weapon/shield/riot,
 /obj/item/clothing/head/helmet/riot,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tU" = (
@@ -8437,9 +8432,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tX" = (

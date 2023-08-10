@@ -1832,8 +1832,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fQ" = (
@@ -1842,8 +1841,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fR" = (
@@ -1852,8 +1850,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fS" = (
@@ -1904,8 +1901,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fZ" = (
@@ -1913,8 +1909,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "ga" = (
@@ -1923,8 +1918,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gb" = (
@@ -1974,8 +1968,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gj" = (
@@ -1985,8 +1978,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gk" = (
@@ -1996,8 +1988,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gl" = (
@@ -2274,8 +2265,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gX" = (
@@ -2287,8 +2277,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gY" = (
@@ -2300,8 +2289,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gZ" = (
@@ -2505,8 +2493,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "hx" = (
@@ -2589,8 +2576,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "hI" = (
