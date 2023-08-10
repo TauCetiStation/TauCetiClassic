@@ -36,7 +36,7 @@
 	var/heavyfootstep
 
 	//Depth for water turf and liqud`s
-	var/depth = null
+	var/static_fluid_depth = null
 
 	var/list/turf_decals
 
