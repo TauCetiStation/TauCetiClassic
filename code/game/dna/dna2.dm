@@ -47,6 +47,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	// From old dna.
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
+	var/original_character_name //Stores THE REAL NAME for changeling transform sting
 
 	// New stuff
 	var/species = HUMAN
@@ -120,10 +121,18 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_SKIN_G,    character.g_skin,    255,    1)
 	SetUIValueRange(DNA_UI_SKIN_B,    character.b_skin,    255,    1)
 
+	SetUIValueRange(DNA_UI_BELLY_R,   character.r_belly,   255,    1)
+	SetUIValueRange(DNA_UI_BELLY_G,   character.g_belly,   255,    1)
+	SetUIValueRange(DNA_UI_BELLY_B,   character.b_belly,   255,    1)
+
 
 	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
 
 	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
+
+	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       	1)
+	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,	1)
+	SetUIValueRange(DNA_UI_HEIGHT,    	height,heights_list.len,    		1)
 
 	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       	1)
 	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,	1)

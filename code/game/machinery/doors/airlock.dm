@@ -33,7 +33,7 @@ var/global/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
-	explosion_resistance = 15
+	explosive_resistance = 2
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
@@ -1034,7 +1034,7 @@ var/global/list/airlock_overlays = list()
 	if(autoclose)
 		if(close_timer_id)
 			deltimer(close_timer_id)
-		close_timer_id = addtimer(CALLBACK(src, .proc/do_autoclose), normalspeed ? 150 : 5, TIMER_STOPPABLE)
+		close_timer_id = addtimer(CALLBACK(src, PROC_REF(do_autoclose)), normalspeed ? 150 : 5, TIMER_STOPPABLE)
 
 /obj/machinery/door/airlock/proc/do_autoclose()
 	close_timer_id = null

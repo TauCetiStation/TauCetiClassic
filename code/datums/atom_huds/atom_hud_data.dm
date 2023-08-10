@@ -33,7 +33,7 @@
 	hud_icons = null
 
 /datum/atom_hud/data/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, INSURANCE_HUD)
 
 /datum/atom_hud/data/medical/proc/check_sensors(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -153,6 +153,10 @@
 	if(iszombie(src))
 		holder.icon_state = "hudill"
 
+	holder = hud_list[INSURANCE_HUD]
+	var/insurance_type = get_insurance_type(src)
+	holder.icon_state = "hud_insurance_[insurance_type]"
+
 /***********************************************
  Security HUDs! Basic mode shows only the job.
 ************************************************/
@@ -171,35 +175,34 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(isloyal())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
 
-	if(ismindshielded())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
 		holder.pixel_y = y
 		y += -5
 
-	if(isimplantedobedience())
+	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
 		holder = hud_list[IMPOBED_HUD]
 		holder.icon_state = "hud_imp_obedience"
 		holder.pixel_y = y
 		y += -5
 
-	for(var/obj/item/weapon/implant/I in src)
-		if(istype(I, /obj/item/weapon/implant/chem))
-			holder = hud_list[IMPCHEM_HUD]
-			holder.icon_state = "hud_imp_chem"
-			holder.pixel_y = y
-			y += -5
+	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
+		holder = hud_list[IMPCHEM_HUD]
+		holder.icon_state = "hud_imp_chem"
+		holder.pixel_y = y
+		y += -5
 
-		if(istype(I, /obj/item/weapon/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			holder.icon_state = "hud_imp_tracking"
-			holder.pixel_y = y
-			y += -5
+	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
+		holder = hud_list[IMPTRACK_HUD]
+		holder.icon_state = "hud_imp_tracking"
+		holder.pixel_y = y
+		y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
@@ -212,7 +215,7 @@
 					holder.icon_state = "hudwanted"
 					return
 				if("Incarcerated")
-					holder.icon_state = "hudprisoner"
+					holder.icon_state = "hudincarcerated"
 					return
 				if("Paroled")
 					holder.icon_state = "hudparolled"

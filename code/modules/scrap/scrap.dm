@@ -15,12 +15,12 @@ var/global/list/scrap_base_cache = list()
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
-		/obj/random/materials/rods_scrap,
-		/obj/random/materials/plastic_scrap,
-		/obj/random/materials/metal_scrap,
-		/obj/random/materials/glass_scrap,
-		/obj/random/materials/plasteel_scrap,
-		/obj/random/materials/wood_scrap,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/mineral/plastic,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/sheet/wood,
 		/obj/item/weapon/shard
 	)
 	var/dig_amount = 7
@@ -89,14 +89,12 @@ var/global/list/scrap_base_cache = list()
 
 /obj/structure/scrap/proc/make_big_loot()
 	if(prob(big_item_chance))
-		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
-		big_item = CATCH.get_item(/obj/random/structures/structure_pack)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/structures/structure_pack)
+		big_item = new random_type(src)
 		if(big_item)
 			big_item.forceMove(src)
 			if(prob(66))
 				big_item.make_old()
-		qdel(CATCH)
-
 
 /obj/structure/scrap/proc/try_make_loot()
 	if(loot_generated)
@@ -107,13 +105,32 @@ var/global/list/scrap_base_cache = list()
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
-		new loot_path(src)
+		if (ispath(loot_path, /obj/item/stack))
+			new loot_path(src, amount_in_stack(loot_path))
+		else
+			new loot_path(src)
 	for(var/obj/item/I in contents)
 		if(prob(66))
 			I.make_old()
 	loot = new(src)
 	loot.set_slots(slots = 7, slot_size = SIZE_BIG)
 	shuffle_loot()
+
+/obj/structure/scrap/proc/amount_in_stack(path)
+	var/amount = rand(20, 40)
+	if (ispath(path, /obj/item/stack/rods))
+		amount = rand(3, 8)
+	else if (ispath(path, /obj/item/stack/sheet/mineral/plastic))
+		amount = rand(5, 10)
+	else if (ispath(path, /obj/item/stack/sheet/metal))
+		amount = rand(8, 12)
+	else if (ispath(path, /obj/item/stack/sheet/glass))
+		amount = rand(5, 10)
+	else if (ispath(path, /obj/item/stack/sheet/plasteel))
+		amount = rand(1, 3)
+	else if (ispath(path, /obj/item/stack/sheet/wood))
+		amount = rand(3, 8)
+	return amount
 
 /obj/structure/scrap/Destroy()
 	for (var/obj/item in loot)
@@ -302,7 +319,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
-		/obj/random/materials/rods_scrap,
+		/obj/item/stack/rods,
 		/obj/item/weapon/shard
 	)
 
@@ -317,8 +334,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
-		/obj/random/materials/rods_scrap,
-		/obj/random/materials/metal_scrap,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/metal,
 		/obj/item/weapon/shard
 	)
 
@@ -334,7 +351,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/random/materials/rods_scrap
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/guns
@@ -350,8 +367,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/item/toy/gun,
 		/obj/item/toy/crossbow,
 		/obj/item/weapon/shard,
-		/obj/random/materials/metal_scrap,
-		/obj/random/materials/rods_scrap
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/science
@@ -419,7 +436,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/misc/pack,
 		/obj/random/misc/pack,
 		/obj/item/weapon/shard,
-		/obj/random/materials/rods_scrap
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/poor/large

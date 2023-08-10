@@ -56,5 +56,5 @@
 		if(!F.holy)
 			continue
 		var/image/I = gen_holy_overlay(F)
-		INVOKE_ASYNC(src, .proc/animate_holy_overlay, I)
+		INVOKE_ASYNC(src, PROC_REF(animate_holy_overlay), I)
 		flick_overlay(I, list(user.client), assessment_cooldown)

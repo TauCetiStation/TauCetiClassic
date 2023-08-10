@@ -114,7 +114,7 @@
 			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				var/atom/old_loc = GM.loc
 				GM.forceMove(src)
-				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src, old_loc)
+				INVOKE_ASYNC(GM, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
@@ -197,7 +197,7 @@
 
 	var/atom/old_loc = target.loc
 	target.forceMove(src)
-	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src, old_loc)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 	target.instant_vision_update(1,src)
 
 	user.visible_message(msg, self_message = self_msg)
@@ -240,7 +240,7 @@
 
 		var/atom/old_loc = target.loc
 		target.forceMove(src)
-		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src, old_loc)
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 
 		user.visible_message(msg, self_message = self_msg)
 
@@ -345,6 +345,18 @@
 
 		if(action == "eject")
 			eject()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				if(HAS_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN))
+					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
+					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>Так...</span>"), 1 SECOND)
+					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
+
+					var/weapon_type = PATH_OR_RANDOM_PATH(/obj/random/guns/set_special)
+					var/obj/item/weapon/gun/projectile/P = new weapon_type(loc)
+					P.magazine.make_empty()
+					QDEL_NULL(P.chambered)
+					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
 	return TRUE
 
@@ -399,7 +411,7 @@
 		if( contents.len )
 			if(mode == 2)
 				feedback_inc("disposal_auto_flush",1)
-				INVOKE_ASYNC(src, .proc/flush)
+				INVOKE_ASYNC(src, PROC_REF(flush))
 		flush_count = 0
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
@@ -586,7 +598,7 @@
 	loc = trunk
 	active = 1
 	set_dir(DOWN)
-	addtimer(CALLBACK(src, .proc/move), 1)
+	addtimer(CALLBACK(src, PROC_REF(move)), 1)
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
@@ -1122,6 +1134,19 @@
 	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
 	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
 
+	var/static/list/category2color = list(
+		"Еда" = "#ff9300",
+		"Одежда" = "#a8e61d",
+		"Устройства" = "#da00ff",
+		"Инструменты" = "#da0000",
+		"Ресурсы" = "#00b7ef",
+		"Наборы" = "#fff200",
+		// "Разное" = no colour,
+	)
+
+	if(category2color[lot_category])
+		Item.color = category2color[lot_category]
+
 	global.shop_categories[lot_category]++
 
 	Item.name = "Посылка номер: [global.online_shop_number]"
@@ -1150,11 +1175,11 @@
 /obj/structure/disposalpipe/sortjunction/proc/updatedesc()
 	desc = initial(desc)
 	if(sortType)
-		desc += "\nIt's filtering objects with the '[sortType]' tag."
+		desc += "\nIt's filtering objects with the '[istext(sortType) ? sortType : "multiple"]' tag."
 
 /obj/structure/disposalpipe/sortjunction/proc/updatename()
 	if(sortType)
-		name = "[initial(name)] ([sortType])"
+		name = "[initial(name)] ([istext(sortType) ? sortType : "multiple"])"
 	else
 		name = initial(name)
 
@@ -1171,7 +1196,7 @@
 
 /obj/structure/disposalpipe/sortjunction/atom_init()
 	. = ..()
-	if(sortType)
+	if(sortType && istext(sortType))
 		tagger_locations |= sortType
 
 	updatedir()
@@ -1194,7 +1219,13 @@
 			updatedesc()
 
 /obj/structure/disposalpipe/sortjunction/proc/divert_check(checkTag)
-	return sortType == checkTag
+	if(sortType && istext(sortType))
+		return sortType == checkTag
+	else if(islist(sortType))
+		for(var/sortType_variant in sortType)
+			if(sortType_variant == checkTag)
+				return TRUE
+		return FALSE
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir

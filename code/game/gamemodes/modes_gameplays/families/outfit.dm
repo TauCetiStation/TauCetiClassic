@@ -25,7 +25,7 @@
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/colt/rubber = 3,
 		/obj/item/ammo_box/c45 = 2,
-		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
+		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 	)
 
 	implants = list(
@@ -41,7 +41,7 @@
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
 		/obj/item/ammo_box/magazine/colt/rubber = 3,
-		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
+		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 	)
 
 /datum/outfit/families_police/beatcop/swat
@@ -55,7 +55,7 @@
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
-		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
+		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 		/obj/item/ammo_box/magazine/colt/rubber = 3,
 	)
 

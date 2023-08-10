@@ -1,3 +1,5 @@
+// keep in mind that projectile is mutable object and should not be used to shot multiple objects at the same time
+
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -10,7 +12,8 @@
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
-	var/mob/firer = null//Who shot it
+	var/mob/firer = null // who shot it, can be changed after reflecs/redirects
+	var/redirected = FALSE // if projectile was redirected and firer changed
 	var/silenced = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -61,7 +64,7 @@
 										//  have to be recreated multiple times
 
 	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
-	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_hit() which happens after Bump() or killed by process. v
 	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
@@ -99,7 +102,8 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	impact_effect(effect_transform)		// generate impact effect
 	if(!isliving(target))
 		return 0
 	if(isanimal(target))
@@ -108,13 +112,10 @@
 	if(incendiary && blocked <= 100)
 		L.adjust_fire_stacks(incendiary)
 		L.IgniteMob(target)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
-
-	//called when the projectile stops flying because it collided with something
-/obj/item/projectile/proc/on_impact(atom/A)
-	impact_effect(effect_transform)		// generate impact effect
 	if(proj_impact_sound)
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	return check_trajectory(target, src, pass_flags, flags)
@@ -141,6 +142,7 @@
 	current = starting_loc
 	if(new_firer)
 		firer = new_firer
+		redirected = TRUE
 
 	yo = new_y - starting_loc.y
 	xo = new_x - starting_loc.x
@@ -162,7 +164,6 @@
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/living/M = isliving(A) ? A : null
-	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
 		if(!isliving(A))
@@ -185,11 +186,19 @@
 			forcedodge = PROJECTILE_FORCE_MISS
 
 	if(!forcedodge)
-		if(M && ishuman(M))
-			M = check_living_shield(A)
-			A = M
+		if(istype(A,/turf) && A.density) // if it's a wall - try to pick stuck mob first to prevent abuses (why? it's better to prevent mobs in the walls at all)
+			for(var/mob/living/ML in A)
+				A = ML
+				// todo: exeption?
+				break
 
-		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+		if(ismob(A)) // if it's a mob - pick one random from turf, not the one with biggest layer. Prevents some abuses with crawl.
+			var/list/mobs = list()
+			for(var/mob/living/ML in get_turf(A.loc))
+				mobs += ML
+			A = pick(mobs)
+
+		forcedodge = A.bullet_act(src, def_zone) // finally try to shot something
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
@@ -204,27 +213,6 @@
 		permutated.Add(A)
 
 		return FALSE
-
-	else if(M)
-		if(silenced)
-			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-		else if(!fake)
-			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
-			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-		if(old_firer)
-			M.log_combat(old_firer, "shot with <b>[type]</b>", alert_admins = !fake)
-		else
-			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
-
-
-	if(istype(A,/turf))
-		for(var/mob/Mob in A)
-			Mob.bullet_act(src, def_zone)
-
-	//stop flying
-	on_impact(A)
 
 	density = FALSE
 	invisibility = 101
@@ -249,7 +237,7 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
+			bullet_act(src) //for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))

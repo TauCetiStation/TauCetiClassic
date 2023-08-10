@@ -255,3 +255,11 @@
 	else if(amount > 0)
 		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 	return S
+
+/mob/living/carbon/proc/AdjustClumsyStatus(amount)
+	var/datum/status_effect/clumsy/C = has_status_effect(STATUS_EFFECT_CLUMSY)
+	if(C)
+		C.duration += amount SECONDS
+	else if(amount > 0)
+		C = apply_status_effect(STATUS_EFFECT_CLUMSY, amount SECONDS)
+	return C

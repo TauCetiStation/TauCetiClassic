@@ -42,11 +42,6 @@
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
 
-/turf/simulated/floor/goonplaque
-	name = "Comemmorative Plaque";
-	desc = "\"Это металлический диск в честь наших товарищей на станциях G4407. Недеемся модель TG4407 сможет служить на ваше благо.\" Ниже выцарапано грубое изображение метеора и космонавта. Космонавт смеется. Метеор взрывается.";
-	icon_state = "plaque";
-
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrenching(C))
 		if(user.is_busy(src))
@@ -151,6 +146,8 @@
 	density = TRUE
 	blocks_air = AIR_BLOCKED
 
+	explosive_resistance = 5
+
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
@@ -167,6 +164,8 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+	explosive_resistance = 1
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
@@ -276,6 +275,17 @@
 /turf/simulated/floor/beach/water/burn_tile()
 	return
 
+// indoor wariant of asteroid turfs
+// todo: craft
+// todo: rename?
+// todo: why flood.dmi icons, and not asteroid.dmi
+/turf/simulated/floor/garden
+	icon_state = "asteroid"
+
+/turf/simulated/floor/garden/atom_init()
+	. = ..()
+	icon_regular_floor = icon_state // because some stupid hardcode in parent init, asteroid states are ignored for icon_regular_floor
+
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass1"
@@ -367,8 +377,18 @@
 	clawfootstep = FOOTSTEP_SAND
 	can_deconstruct = FALSE
 
-/turf/simulated/floor/plating/ironsand/ex_act()
-	return 0
+/turf/simulated/floor/plating/ironsand/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 /turf/simulated/floor/plating/ironsand/burn_tile()
 	return 0
@@ -388,7 +408,17 @@
 	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
-	return
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 // CATWALKS
 // Space and plating, all in one buggy fucking turf!
@@ -428,5 +458,3 @@
 
 /turf/simulated/floor/plating/airless/catwalk/is_catwalk()
 	return TRUE
-
-/turf/simulated/floor/exodus

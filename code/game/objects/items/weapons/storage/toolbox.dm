@@ -24,6 +24,29 @@
 		to_chat(world, "BAD: [src] ([type]) spawned at [COORD(src)]")
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/weapon/storage/toolbox/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return
+	//Clumsy used only for dna-handlers
+	if(!iscarbon(M))
+		return
+	if(def_zone != BP_HEAD)
+		return
+	var/mob/living/carbon/C = M
+	var/amount_of_effect = 4
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		var/obj/item/organ/external/head = H.get_bodypart(def_zone)
+		var/armor = H.getarmor(head, MELEE)
+		amount_of_effect = max((100 - armor) / 25, 1)
+	var/datum/status_effect/clumsy/S = C.has_status_effect(STATUS_EFFECT_CLUMSY)
+	if(!S)
+		C.AdjustClumsyStatus(amount_of_effect)
+		return
+	S.applied_times++
+	var/duration_calculate = round(amount_of_effect / S.applied_times) SECONDS
+	S.duration += duration_calculate
+
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"
@@ -68,7 +91,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/stack/cable_coil/random(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	else
 		new /obj/item/stack/cable_coil/random(src)
 

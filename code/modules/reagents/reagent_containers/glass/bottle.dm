@@ -58,7 +58,7 @@
 	desc = "A small bottle of synaptizine. Do not drink, it is very poisonous."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle2"
-	list_reagents = list("synaptizine" = 10)
+	list_reagents = list("synaptizine" = 5)
 
 /obj/item/weapon/reagent_containers/glass/bottle/phoron
 	name = "phoron bottle"

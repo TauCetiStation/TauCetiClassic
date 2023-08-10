@@ -35,6 +35,7 @@
 	var/is_hungry = FALSE
 
 	var/can_starve = FALSE
+	var/breath_phoron = FALSE
 
 	var/next_jamming_alert = 0
 	var/jamming_alert_cooldown = 30 SECONDS
@@ -47,7 +48,7 @@
 	handle_breath()
 	handle_status_updates()
 
-	if(ckey)
+	if(is_controlled())
 		walk(src, 0)
 		return
 
@@ -122,37 +123,39 @@
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
+	can_starve = TRUE
+	breath_phoron = FALSE
+
 	if(!environment)
-		can_starve = TRUE
 		return
 
-	if(environment.get_gas("fractol") < 1.0)
-		can_starve = TRUE
-		return
+	if(environment.get_gas("fractol") >= 1.0)
+		environment.adjust_gas("fractol", -1.0)
+		can_starve = FALSE
+		last_disintegration = world.time
 
-	environment.adjust_gas("fractol", -1.0)
-	can_starve = FALSE
-
-	last_disintegration = world.time
+	if(environment.get_gas("phoron") >= 1.0)
+		environment.adjust_gas("phoron", -1.0)
+		breath_phoron = TRUE
 
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
 	var/color_to_flash = null
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
-	if(ckey && RAI)
+	if(is_controlled() && RAI)
 		if(FR.upgrades_amount > length(RAI.acquired_upgrades))
 			throw_alert("swarm_upgrade", /atom/movable/screen/alert/swarm_upgrade)
 		else
 			clear_alert("swarm_upgrade")
 
-	if(health < maxHealth * 0.2 && next_attacked_alert < world.time && !ckey && state != REPLICATOR_STATE_COMBAT)
+	if(health < maxHealth * 0.2 && next_attacked_alert < world.time && !is_controlled() && state != REPLICATOR_STATE_COMBAT)
 		emote("beep!")
 		var/area/A = get_area(src)
 		FR.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
-	if(last_update_health - health > 1 && next_attacked_alert < world.time && !sacrifice_powering && !ckey && state != REPLICATOR_STATE_COMBAT)
+	if(last_update_health - health > 1 && next_attacked_alert < world.time && !sacrifice_powering && !is_controlled() && state != REPLICATOR_STATE_COMBAT)
 		emote("beep")
 		var/area/A = get_area(src)
 		FR.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
@@ -256,13 +259,13 @@
 	target_coordinates = null
 
 	for(var/mob/living/simple_animal/hostile/replicator/R in loc)
-		if(!R.ckey)
+		if(!R.is_controlled())
 			continue
 		if(R.request_help_until < world.time)
 			continue
 
 		face_atom(R)
-		INVOKE_ASYNC(src, /mob/living.proc/help_other, R)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living, help_other), R)
 		return
 
 /mob/living/simple_animal/hostile/replicator/proc/check_any_auto_disintegratables(turf/T)
@@ -352,7 +355,7 @@
 			continue
 
 		face_atom(to_disintegrate)
-		INVOKE_ASYNC(src, .proc/disintegrate, to_disintegrate)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), to_disintegrate)
 		return
 
 	for(var/t in surrounding_turfs)
@@ -362,18 +365,18 @@
 		if(!can_auto_disintegrate(T))
 			continue
 		face_atom(T)
-		INVOKE_ASYNC(src, .proc/disintegrate, T)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), T)
 		return
 
 	var/to_disintegrate = find_most_clickable(my_turf)
 	if(to_disintegrate)
 		face_atom(to_disintegrate)
-		INVOKE_ASYNC(src, .proc/disintegrate, to_disintegrate)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), to_disintegrate)
 		return
 
 	if(can_auto_disintegrate(my_turf))
 		face_atom(my_turf)
-		INVOKE_ASYNC(src, .proc/disintegrate, my_turf)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), my_turf)
 		return
 
 	set_state(REPLICATOR_STATE_WANDERING)
@@ -386,7 +389,7 @@
 		var/mob/living/simple_animal/hostile/replicator/R = r
 		if(R == src)
 			continue
-		var/sentient_check_failed = sentient && !R.ckey
+		var/sentient_check_failed = sentient && !R.is_controlled()
 		if(sentient_check_failed)
 			continue
 

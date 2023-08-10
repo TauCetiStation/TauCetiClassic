@@ -1182,10 +1182,11 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dF" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "dG" = (
 /obj/effect/decal/cleanable/blood,
@@ -1292,10 +1293,11 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dZ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "ea" = (
 /obj/effect/landmark/corpse/engineer/rig{
@@ -1370,10 +1372,11 @@
 /area/awaymission/spacebattle/cruiser)
 "em" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "eo" = (
 /turf/simulated/floor/engine,
@@ -1453,7 +1456,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/projectile/automatic/deagle,
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2383,10 +2386,11 @@
 /area/awaymission/spacebattle/cruiser)
 "hw" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hA" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -2471,10 +2475,11 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hQ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hT" = (
 /obj/structure/grille,

@@ -12,7 +12,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	// Register signals for mob transformation to prevent premature halo removal
-	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), .proc/set_eyes)
+	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), PROC_REF(set_eyes))
 	set_eyes(target)
 
 /**

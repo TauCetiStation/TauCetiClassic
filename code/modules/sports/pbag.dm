@@ -34,7 +34,7 @@
 /mob/living/pbag/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
 
-	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing, 0.2 SECONDS)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing), 0.2 SECONDS)
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)
@@ -63,7 +63,7 @@
 	return ..(can_reenter_corpse = FALSE, bancheck = FALSE, timeofdeath = src.timeofdeath)
 
 /mob/living/pbag/UnarmedAttack(atom/A)
-	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing))
 
 /mob/living/pbag/crawl()
 	drop_down()
@@ -71,7 +71,7 @@
 
 /mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(ckey && !incapacitated() && !moving_diagonally)
-		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing))
 		return
 	return ..()
 
@@ -82,7 +82,7 @@
 /mob/living/pbag/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
 	if(ckey)
 		visible_message("<span class='notice'>[bicon(src)] [src] swings ominously...</span>")
-		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing))
 
 /mob/living/pbag/helpReaction(mob/living/attacker, show_message = TRUE)
 	if(incapacitated())
@@ -155,7 +155,7 @@
 	if(bruteloss > maxHealth)
 		drop_down()
 	else
-		INVOKE_ASYNC(src, .proc/swing, damage)
+		INVOKE_ASYNC(src, PROC_REF(swing), damage)
 
 /mob/living/pbag/proc/drop_down()
 	if(ckey)

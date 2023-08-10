@@ -354,8 +354,6 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = SIZE_TINY
-	var/blockTracking = 0
-
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
 //Mask
@@ -436,6 +434,8 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/suit/space
 	name = "space suit"
