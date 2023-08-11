@@ -30,7 +30,6 @@
 	uniform = /obj/item/clothing/under/color/blue
 	shoes = /obj/item/clothing/shoes/blue
 	gloves = /obj/item/clothing/gloves/fingerless/blue
-	implants = list(/obj/item/weapon/implant/dexplosive)
 	survival_box = FALSE
 
 /datum/outfit/deathmatch/blue_team/leader
@@ -187,7 +186,6 @@
 	uniform = /obj/item/clothing/under/color/red
 	shoes = /obj/item/clothing/shoes/red
 	gloves = /obj/item/clothing/gloves/fingerless/red
-	implants = list(/obj/item/weapon/implant/dexplosive)
 	survival_box = FALSE
 
 
