@@ -3915,6 +3915,9 @@
 /area/station/storage/tools)
 "aKS" = (
 /obj/machinery/vending/coffee,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -20991,27 +20994,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/engine)
-"eDb" = (
-/obj/structure/stool/bed/chair/metal/white{
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white";
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white";
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "black"
-	},
-/area/station/civilian/gym)
 "eDr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -23885,6 +23867,9 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -27781,6 +27766,26 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
+"ghK" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white"
+	},
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "black"
+	},
+/area/station/civilian/gym)
 "ghN" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/effect/decal/turf_decal{
@@ -30843,14 +30848,6 @@
 	icon_state = "foam_plating"
 	},
 /area/station/maintenance/science)
-"gPl" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/civilian/gym)
 "gPx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -30973,6 +30970,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"gRf" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/civilian/gym)
 "gRg" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -31199,6 +31204,17 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/lobby)
+"gTv" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/civilian/gym)
 "gTw" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/grille,
@@ -47415,26 +47431,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/engineering/minisat_secure_area)
-"ksT" = (
-/obj/structure/stool/bed/chair/metal/white{
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white";
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white"
-	},
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "siding_line";
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "black"
-	},
-/area/station/civilian/gym)
 "ksU" = (
 /obj/structure/closet/radiation,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -47794,6 +47790,9 @@
 /area/station/maintenance/science)
 "kyk" = (
 /obj/random/vending/snack,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -51210,18 +51209,6 @@
 	icon_state = "caution"
 	},
 /area/station/storage/emergency)
-"lkT" = (
-/obj/structure/stool/bed/chair/metal/white,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white";
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white";
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/civilian/gym)
 "lkU" = (
 /turf/simulated/wall,
 /area/station/maintenance/starboardsolar)
@@ -54685,6 +54672,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/vending/cigarette,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -84078,17 +84068,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/security/prison)
-"sOy" = (
-/obj/structure/stool/bed/chair/metal/white,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "box_corners_white";
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/civilian/gym)
 "sOD" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -90385,6 +90364,18 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"upw" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/civilian/gym)
 "upB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -102563,6 +102554,27 @@
 	icon_state = "dark"
 	},
 /area/station/aisat)
+"xoG" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_corners_white";
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/white{
+	icon_state = "siding_line";
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "black"
+	},
+/area/station/civilian/gym)
 "xoM" = (
 /mob/living/simple_animal/chicken{
 	name = "Commander Clucky"
@@ -160653,13 +160665,13 @@ ncp
 ncp
 hbR
 mWz
-lkT
+upw
 kLd
 syX
 tHk
 tHk
 dbf
-eDb
+xoG
 ram
 mWz
 lNQ
@@ -161424,13 +161436,13 @@ ncp
 ncp
 hbR
 mWz
-sOy
+gTv
 sIY
 qls
 uOM
 uOM
 aeG
-ksT
+ghK
 ram
 mWz
 hPr
@@ -162454,7 +162466,7 @@ dJL
 nRG
 oXA
 oXA
-gPl
+gRf
 dJL
 plf
 cdR
@@ -165792,7 +165804,7 @@ kHU
 fMh
 plf
 dJL
-gPl
+gRf
 oXA
 oXA
 nJn
