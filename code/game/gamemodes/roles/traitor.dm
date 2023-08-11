@@ -148,6 +148,7 @@
 /datum/role/traitor/imposter
 	name = IMPOSTER
 	id = IMPOSTER
+	required_pref = ROLE_IMPOSTER
 	//No restricts, everyone can be a imposter
 	restricted_jobs = list()
 	//Challenge

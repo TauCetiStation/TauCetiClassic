@@ -96,6 +96,7 @@
 
 /datum/faction/traitor/auto/imposter
 	name = F_IMPOSTERS
+	required_pref = ROLE_IMPOSTER
 	roletype = /datum/role/traitor/imposter
 	initroletype = /datum/role/traitor/imposter
 	//latespawned human can be imposter
