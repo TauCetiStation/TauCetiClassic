@@ -5972,8 +5972,12 @@
 	dir = 2;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "dark"
 	},
 /area/station/engineering/break_room)
 "bhh" = (
@@ -35449,6 +35453,10 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 2;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -40439,6 +40447,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal{
 	dir = 1;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 2;
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
@@ -66671,6 +66683,10 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 2;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67063,6 +67079,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67090,6 +67110,10 @@
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 2;
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
@@ -67666,8 +67690,12 @@
 	dir = 2;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "dark"
 	},
 /area/station/engineering/break_room)
 "oKR" = (
@@ -95691,6 +95719,10 @@
 	req_access = list(24)
 	},
 /obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
