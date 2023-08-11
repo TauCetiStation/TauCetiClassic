@@ -16,6 +16,9 @@
 
 	var/religion_tile = FALSE // todo: why religion so in love with carpets?
 
+/turf/simulated/floor/carpet/make_plating()
+	ChangeTurf(/turf/simulated/floor/plating)
+
 /turf/unsimulated/floor/carpet // copypaste because we still have unsim as different type :(
 	name = "red classic carpet"
 	icon_state = "center_8"

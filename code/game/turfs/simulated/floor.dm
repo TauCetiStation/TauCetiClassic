@@ -270,10 +270,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		broken = 1
-	else if(is_carpet_floor())
+/*	else if(is_carpet_floor())
 		var/obj/item/stack/tile/carpet/C = floor_type
 		icon_state = "[initial(C.carpet_icon_state)]-broken"
-		broken = 1
+		broken = 1*/
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
@@ -297,10 +297,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		burnt = 1
-	else if(is_carpet_floor())
+/*	else if(is_carpet_floor())
 		var/obj/item/stack/tile/carpet/C = floor_type
 		icon_state = "[initial(C.carpet_icon_state)]-broken"
-		burnt = 1
+		burnt = 1*/
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		burnt = 1
@@ -318,14 +318,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			if(istype(get_step(src,direction),/turf/simulated/floor))
 				var/turf/simulated/floor/FF = get_step(src,direction)
 				FF.update_icon() //so siding get updated properly
-	else if(is_carpet_floor())
-		icon = 'icons/turf/floors.dmi'
-		spawn(5)
-			if(src)
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
 
 	if(!floor_type)
 		return
@@ -530,6 +522,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				var/obj/item/stack/tile/T = C
 				if(!T.use(1))
 					return
+				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+				if(istype(T,/obj/item/stack/tile/carpet))
+					ChangeTurf(T.turf_type) // for smoothing we need to change type
+					return
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)
 				name = initial(T.turf_type.name)
@@ -543,14 +539,8 @@ var/global/list/wood_icons = list("wood","wood-broken")
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly
-				else if(istype(T,/obj/item/stack/tile/carpet))
-					for(var/direction in list(1,2,4,8,5,6,9,10))
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
-							FF.update_icon() //so siding gets updated properly
 				update_icon()
 				levelupdate()
-				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
 				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 

@@ -24,7 +24,7 @@
 /turf/simulated/floor/carpet/atom_religify(datum/religion/R)
 	if(religion_tile && !isnull(R.decal))
 		clean_turf_decals()
-		new /obj/effect/decal/turf_decal/alpha(src, R.decal)
+		new /obj/effect/decal/turf_decal(src, R.decal)
 		return TRUE
 
 	else if(R.carpet_type)
