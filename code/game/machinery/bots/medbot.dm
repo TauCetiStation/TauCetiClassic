@@ -260,7 +260,7 @@
 
 	if(!patient)
 		if(!shut_up && prob(1))
-			var/list/messagevoice = list("Без маски не пущу!" = 'sound/voice/medbot/mask.ogg',"Сомнения порождают страх, но со мной тебе нечего бояться!" = 'sound/voice/medbot/catch.ogg',"Я так и знал! Нужно было учиться на пластического хирурга!" = 'sound/voice/medbot/surgeon.ogg',"Что это за медотсек такой? Все мрут как мухи!" = 'sound/voice/medbot/flies.ogg',"Великолепно!" = 'sound/voice/medbot/delicious.ogg', "Разгерма не в дормах, а в головах." = 'sound/voice/medbot/heads.ogg', "Пустите доброго человека, а не то он выломает дверь!" = 'sound/voice/medbot/door.ogg')
+			var/list/messagevoice = list("Без маски не пущу!" = 'sound/voice/medbot/radar.ogg',"Сомнения порождают страх, но со мной тебе нечего бояться!" = 'sound/voice/medbot/catch.ogg',"Я так и знал! Нужно было учиться на пластического хирурга!" = 'sound/voice/medbot/surgeon.ogg',"Что это за медотсек такой? Все мрут как мухи!" = 'sound/voice/medbot/flies.ogg',"Великолепно!" = 'sound/voice/medbot/delicious.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
@@ -374,7 +374,7 @@
 		return
 
 	if(C.stat == DEAD)
-		var/list/messagevoice = list("Нет! Не бросай нас!" = 'sound/voice/medbot/no.ogg',"Проклятье! Не закрывай глаза!" = 'sound/voice/medbot/live.ogg',"Я... Я ещё никогда не терял пациента... Сегодня, то есть." = 'sound/voice/medbot/lost.ogg', "Глупцы, героя строя, Бросаются вперёд, Нормальные герои — Всегда наоборот." = 'sound/voice/medbot/heroes.ogg')
+		var/list/messagevoice = list("Нет! Не бросай нас!" = 'sound/voice/medbot/no.ogg',"Проклятье! Не закрывай глаза!" = 'sound/voice/medbot/live.ogg',"Я... Я ещё никогда не терял пациента... Сегодня, то есть." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
