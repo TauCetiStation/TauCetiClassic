@@ -43,7 +43,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"a head of security's augmented shades" = /obj/item/clothing/glasses/hud/hos_aug,
 		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
-		"a facehugger Lamarr" = /obj/item/clothing/mask/facehugger/lamarr,
+		"a Research Director's teleport armor" = /obj/item/clothing/suit/armor/vest/reactive,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 		"the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,

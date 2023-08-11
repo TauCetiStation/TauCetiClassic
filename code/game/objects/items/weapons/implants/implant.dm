@@ -155,7 +155,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
-	explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
+	explosion(src, -1, 0, 2, 3)//This might be a bit much, dono will have to see.
 	if(src.imp_in)
 		imp_in.gib()
 

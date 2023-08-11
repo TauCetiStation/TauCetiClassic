@@ -360,3 +360,48 @@
 		var/datum/quality/quality = SSqualities.qualities_by_type[quality_type]
 		if(quality.satisfies_requirements(H, latespawn))
 			quality.add_effect(H, latespawn)
+
+/datum/quality/quirkieish/prisoner
+	name = "Prisoner"
+	desc = "Ты загремел в каталажку за какое-то серьёзное преступление и, конечно, не собираешься исправляться."
+
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/prisoner/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/prisoner/add_effect(mob/living/carbon/human/H, latespawn)
+	if(latespawn == TRUE || jobban_isbanned(H, "Syndicate") || !(ROLE_TRAITOR in H.client.prefs.be_role))
+		to_chat(H, "<span class='notice'>Тебя недавно отпустили по УДО, чтобы ты мог начать жизнь с чистого листа.</span>")
+		return
+
+	var/turf/T = pick(prisonerstart)
+	H.forceMove(T)
+
+	var/number = rand(100, 999)
+
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.assignment = "Prisoner"
+	ID.rank = ID.assignment
+	ID.name = "[ID.registered_name]'s ID Card ([ID.assignment] #[number])"
+
+	var/obj/item/device/pda/PDA = H.belt
+	PDA.ownjob = ID.assignment
+	PDA.ownrank = ID.assignment
+	PDA.name = "PDA-[PDA.owner] ([ID.assignment] #[number])"
+
+	data_core.manifest_modify(ID.registered_name, ID.assignment)
+
+	H.equip_to_slot(new /obj/item/clothing/under/color/orange(H), SLOT_W_UNIFORM)
+	H.equip_to_slot(new /obj/item/clothing/shoes/orange(H), SLOT_SHOES)
+
+	if(H.wear_suit)
+		qdel(H.wear_suit)
+	if(H.gloves)
+		qdel(H.gloves)
+	if(H.back)
+		qdel(H.back)
+
+	create_and_setup_role(/datum/role/prisoner, H)
+	H.sec_hud_set_security_status()
