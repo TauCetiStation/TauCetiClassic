@@ -6588,6 +6588,29 @@
 	icon_state = "dark"
 	},
 /area/custom/ninjaspawn)
+"apP" = (
+/obj/item/weapon/flora/random,
+/obj/machinery/door_control{
+	id = "ERTBase";
+	name = "ERT Shutters";
+	pixel_w = 10;
+	pixel_x = 32;
+	pixel_y = 2;
+	pixel_z = 10
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkbluecorners"
+	},
+/area/centcom/specops)
+"apQ" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
+/turf/unsimulated/floor,
+/area/centcom/specops)
 "apR" = (
 /obj/item/weapon/paper{
 	info = "Some stuff is missing...";
@@ -6731,6 +6754,14 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship)
+"aqf" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Special Operations"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aqh" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/toxin{
@@ -6906,6 +6937,12 @@
 	name = "plating"
 	},
 /area/velocity)
+"aqF" = (
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
+	},
+/area/shuttle/specops/centcom)
 "aqH" = (
 /turf/environment/space,
 /area/shuttle/alien/base)
@@ -10435,7 +10472,8 @@
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "ayM" = (
@@ -12087,6 +12125,10 @@
 	name = "Engineering Special Operations";
 	req_access = list(103)
 	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12130,18 +12172,6 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/specops)
-"aCk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -12964,13 +12994,6 @@
 	icon_state = "black"
 	},
 /area/centcom/specops)
-"aDZ" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "darkbluecorners"
-	},
-/area/centcom/specops)
 "aEa" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -13131,6 +13154,10 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Medical Special Operations";
 	req_access = list(103)
+	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -13295,6 +13322,9 @@
 /area/custom/wizard_station)
 "aEM" = (
 /obj/machinery/light/small,
+/obj/effect/landmark{
+	name = "Commando"
+	},
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "black"
@@ -13309,6 +13339,9 @@
 /area/centcom/specops)
 "aEO" = (
 /obj/machinery/light/small,
+/obj/effect/landmark{
+	name = "Commando"
+	},
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "black"
@@ -13458,6 +13491,10 @@
 	name = "Armory Special Operations";
 	req_access = list(103)
 	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13521,10 +13558,6 @@
 	name = "blue carpet"
 	},
 /area/custom/wizard_station)
-"aFm" = (
-/obj/structure/sign/nanotrasen,
-/turf/unsimulated/wall,
-/area/centcom/specops)
 "aFn" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -14050,9 +14083,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/handcuffs{
 	pixel_y = 2
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -16076,17 +16106,6 @@
 	icon_state = "wood-broken2"
 	},
 /area/custom/syndicate_mothership)
-"aLb" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 1
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/centcom/specops)
 "aLc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -22467,9 +22486,6 @@
 	dir = 1;
 	network = list("ERT")
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -24707,8 +24723,14 @@
 /turf/unsimulated/floor,
 /area/space)
 "fqb" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/door/poddoor{
+	id = "NTrasen";
+	name = "Outer Airlock"
+	},
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	icon_state = "floorplace";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "fqy" = (
@@ -24821,27 +24843,13 @@
 	},
 /area/shuttle/specops/centcom)
 "fCb" = (
+/turf/simulated/shuttle/floor/cargo,
+/area/space)
+"fDb" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
-	},
-/area/shuttle/specops/centcom)
-"fDb" = (
-/obj/machinery/computer/pod{
-	id = "NTrasen";
-	name = "Hull Door Control"
-	},
-/obj/item/device/radio/intercom{
-	frequency = 1443;
-	name = "Spec Ops Intercom";
-	pixel_y = 22
-	},
-/obj/machinery/camera{
-	c_tag = "Spec. Ops. Shuttle";
-	network = list("ERT")
-	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "fEb" = (
@@ -24866,12 +24874,22 @@
 	},
 /area/velocity)
 "fHb" = (
-/obj/machinery/computer/specops_shuttle,
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/computer/pod{
+	id = "NTrasen";
+	name = "Hull Door Control"
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1443;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Shuttle";
+	network = list("ERT")
 	},
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "fIb" = (
@@ -24894,14 +24912,13 @@
 	},
 /area/centcom/evac)
 "fLb" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	name = "Spec. Ops. Monitor";
-	network = list("CREED");
-	pixel_y = 2
+/obj/machinery/computer/specops_shuttle,
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "fMb" = (
@@ -24972,18 +24989,25 @@
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "fUb" = (
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/specops/centcom)
-"fVb" = (
-/obj/machinery/door/airlock/external,
-/obj/machinery/door/poddoor{
-	id = "NTrasen";
-	name = "Outer Airlock"
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen{
+	name = "Spec. Ops. Monitor";
+	network = list("CREED");
+	pixel_y = 2
 	},
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
+"fVb" = (
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/turf/unsimulated/floor{
+	icon_state = "black"
+	},
+/area/centcom/specops)
 "fWb" = (
 /obj/structure/sign/mark{
 	icon_state = "rlf"
@@ -25450,12 +25474,8 @@
 	},
 /area/velocity)
 "gGb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/machinery/light/small,
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "gHb" = (
@@ -26112,23 +26132,26 @@
 	},
 /area/centcom/evac)
 "hXb" = (
-/obj/structure/stool/bed/chair/schair/wagon,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
+/obj/machinery/door/airlock/centcom{
+	name = "Special Operations";
+	req_access = list(103)
 	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
 	},
-/area/shuttle/specops/centcom)
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "hYb" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+	icon_state = "floorcatwalk";
+	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
 "hZb" = (
@@ -57032,7 +57055,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+fCb
 aBp
 aBp
 hAb
@@ -57813,7 +57836,7 @@ aBC
 hbb
 bib
 aBb
-aDI
+hXb
 hbb
 aAE
 aCV
@@ -58058,20 +58081,20 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
 aBp
 aBF
 hcb
 aAP
 aBm
 aBp
-aDZ
+apP
 aAD
 aBG
 aBS
@@ -58315,13 +58338,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 azQ
 ayT
 ayT
 ayT
 ayK
-aaM
+aeD
 aBp
 aBp
 aBO
@@ -58329,9 +58352,9 @@ aBZ
 aBp
 aBp
 aBp
-aDI
-aaR
-aDI
+hXb
+apQ
+hXb
 aBp
 aBp
 aBp
@@ -58572,19 +58595,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
 fBb
 fBb
 fBb
 lpG
+aeD
 aaM
-aaM
 aBp
 aBp
 aBp
 aBp
-aCk
+anv
 gtb
 fWb
 aCR
@@ -58829,13 +58852,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
-fCb
-fUb
+fDb
+gGb
 ayL
 lpG
-aaM
+aeD
 aaM
 aaM
 aaM
@@ -59086,11 +59109,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
-fCb
-fUb
+fDb
 gGb
+hYb
 lpG
 aBp
 aBp
@@ -59343,11 +59366,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
-hXb
-fUb
-hYb
+fDb
+gGb
+ayL
 lpG
 aaR
 hkb
@@ -59600,11 +59623,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
-fDb
-fUb
-fqb
+fHb
+gGb
+aqF
 gab
 azo
 aAE
@@ -59857,11 +59880,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
-fHb
-fUb
-fqb
+fLb
+gGb
+aqF
 gab
 azo
 aAE
@@ -60114,10 +60137,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
-fLb
 fUb
+gGb
 ayL
 lpG
 aaR
@@ -60371,10 +60394,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 lpG
 lpG
-fVb
+fqb
 lpG
 lpG
 aBp
@@ -60628,10 +60651,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 afr
 lpG
-fUb
+gGb
 lpG
 afs
 aBp
@@ -60647,7 +60670,7 @@ aBG
 aBG
 aBG
 aBS
-aLb
+bBb
 aBp
 beQ
 hkb
@@ -60885,11 +60908,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
 aBp
 aBp
 aAL
@@ -61155,7 +61178,7 @@ bib
 aEl
 aBp
 aaR
-aDI
+aqf
 aaR
 aBp
 aaR
@@ -61414,7 +61437,7 @@ aBp
 aDK
 aEG
 aEM
-aFm
+aBp
 hkb
 aDY
 aBR
@@ -61670,7 +61693,7 @@ bmb
 aBp
 aDK
 aAE
-aBQ
+fVb
 aCM
 aAE
 aCV
@@ -61927,7 +61950,7 @@ hib
 aBp
 aFM
 aAE
-aBQ
+fVb
 aCM
 aAE
 aCV
@@ -62184,7 +62207,7 @@ avI
 avI
 aCq
 aAE
-aBQ
+fVb
 aCM
 aAE
 aCV
@@ -62441,7 +62464,7 @@ awt
 avI
 aDK
 aAE
-aBQ
+fVb
 aCM
 aAE
 aCV
@@ -62699,7 +62722,7 @@ avI
 aDK
 aAD
 aEO
-aFm
+aBp
 aEe
 aEs
 aFo
