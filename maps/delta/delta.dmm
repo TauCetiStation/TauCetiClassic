@@ -2721,12 +2721,6 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/reception)
-"awi" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
-/area/station/maintenance/science)
 "awp" = (
 /obj/machinery/computer/security/engineering{
 	dir = 4
@@ -23605,9 +23599,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "fby" = (
 /obj/effect/decal/cleanable/dirt,
@@ -31594,9 +31586,7 @@
 /area/station/engineering/atmos)
 "gPj" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "gPx" = (
 /obj/effect/decal/cleanable/dirt,
@@ -57154,9 +57144,7 @@
 /area/station/rnd/xenobiology)
 "mpi" = (
 /obj/random/foods/food_trash,
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "mpA" = (
 /obj/structure/rack,
@@ -61893,9 +61881,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "nrO" = (
 /obj/structure/cable{
@@ -104679,9 +104665,7 @@
 "xnc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "xnj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -106632,11 +106616,6 @@
 	icon_state = "dark"
 	},
 /area/station/bridge/cmf_room)
-"xFN" = (
-/turf/simulated/floor/plating{
-	icon_state = "foam_plating"
-	},
-/area/station/maintenance/science)
 "xFQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -127425,7 +127404,7 @@ kHU
 kHU
 kHU
 cjx
-xFN
+ilA
 fbu
 cjx
 gMM
@@ -128720,7 +128699,7 @@ spu
 tZY
 gVW
 cjx
-awi
+lEt
 lUT
 xnc
 ilA
@@ -128967,7 +128946,7 @@ tCf
 mIP
 scw
 flv
-awi
+lEt
 cjx
 unh
 bbc
@@ -129238,7 +129217,7 @@ yhZ
 cfJ
 cjx
 xRM
-xFN
+ilA
 lEt
 cjx
 plf
