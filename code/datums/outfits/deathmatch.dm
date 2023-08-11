@@ -13,17 +13,17 @@
 
 /datum/outfit/deathmatch/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	H.species.flags |= list(
-		NO_BLOOD,
-		NO_BREATHE,
-		NO_EMBED
+		NO_BLOOD = TRUE,
+		NO_BREATHE = TRUE,
+		NO_EMBED = TRUE
 	)
-	H.bodyparts_by_name[BP_CHEST].min_broken_damage = 200
-	H.bodyparts_by_name[BP_GROIN].min_broken_damage = 200
-	H.bodyparts_by_name[BP_HEAD].min_broken_damage  = 200
-	H.bodyparts_by_name[BP_L_ARM].min_broken_damage = 200
-	H.bodyparts_by_name[BP_R_ARM].min_broken_damage = 200
-	H.bodyparts_by_name[BP_L_LEG].min_broken_damage = 200
-	H.bodyparts_by_name[BP_R_LEG].min_broken_damage = 200
+
+	if (H.get_species() == TAJARAN)
+		H.species.brute_mod = 1.5
+		H.species.burn_mod = 1.5
+
+	for (var/obj/item/organ/external/BP in H.bodyparts)
+		BP.min_broken_damage = 200
 
 /datum/outfit/deathmatch/blue_team
 	mask = /obj/item/clothing/mask/scarf/blue
@@ -87,11 +87,14 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/charge)
 
 
+/obj/item/clothing/shoes/boots/work/jak/deathmatch
+	canremove = FALSE
+
 /datum/outfit/deathmatch/blue_team/scout
 	name = "Blue Team Scout"
 	suit = /obj/item/clothing/suit/storage/miljacket_army
 	head = /obj/item/clothing/head/ushanka/black_white
-	shoes = /obj/item/clothing/shoes/boots/work/jak
+	shoes = /obj/item/clothing/shoes/boots/work/jak/deathmatch
 	back = PREFERENCE_BACKPACK
 	r_hand = /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	l_hand = /obj/item/weapon/kitchenknife/combat
@@ -245,7 +248,7 @@
 	name = "Red Team Scout"
 	suit = /obj/item/clothing/suit/storage/miljacket_army
 	head = /obj/item/clothing/head/ushanka/black_white
-	shoes = /obj/item/clothing/shoes/boots/work/jak
+	shoes = /obj/item/clothing/shoes/boots/work/jak/deathmatch
 	back = PREFERENCE_BACKPACK
 	r_hand = /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	l_hand = /obj/item/weapon/kitchenknife/combat

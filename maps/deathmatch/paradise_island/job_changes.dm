@@ -51,7 +51,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list()
 	salary = 0
-	restricted_species = list()
+	restricted_species = list(TAJARAN)
 	outfit = /datum/outfit/deathmatch/blue_team/scout
 	skillsets = list("Maximum skillset" = /datum/skillset/max)
 	minimal_player_ingame_minutes = 0
@@ -197,7 +197,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list()
 	salary = 0
-	restricted_species = list()
+	restricted_species = list(TAJARAN)
 	outfit = /datum/outfit/deathmatch/red_team/scout
 	skillsets = list("Maximum skillset" = /datum/skillset/max)
 	minimal_player_ingame_minutes = 0
