@@ -803,12 +803,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /proc/sanitize_emote_panel(value)
 	var/list/emote_panel = SANITIZE_LIST(value)
-	var/list/sanitized_emoted_panel = list()
+	var/list/sanitized_emote_panel = list()
 	for(var/key in emote_panel)
 		if(!(key in global.emotes_for_emote_panel))
 			continue
-		sanitized_emoted_panel |= key
-	return sanitized_emoted_panel
+		sanitized_emote_panel |= key
+	return sanitized_emote_panel
 
 #undef SAVEFILE_TOO_OLD
 #undef SAVEFILE_UP_TO_DATE
