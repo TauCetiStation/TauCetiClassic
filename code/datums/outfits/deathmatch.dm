@@ -115,9 +115,9 @@
 
 /datum/outfit/deathmatch/blue_team/soldier
 	name = "Blue Team Soldier"
-	suit = /obj/item/clothing/suit/storage/postal_dude_coat
-	head = /obj/item/clothing/head/soft/nt_pmc_cap
-	back = PREFERENCE_BACKPACK
+	suit = /obj/item/clothing/suit/marinad
+	head = /obj/item/clothing/head/helmet/tactical/marinad
+	back = /obj/item/weapon/storage/backpack/dufflebag/marinad
 	r_hand = /obj/item/weapon/gun/projectile/automatic/tommygun/deathmatch
 	l_pocket = /obj/item/weapon/grenade/flashbang
 	r_pocket = /obj/item/weapon/grenade/flashbang
@@ -156,6 +156,7 @@
 	r_hand = /obj/item/weapon/gun/tesla
 	backpack_contents = list(
 		/obj/item/weapon/gun/energy/decloner,
+		/obj/item/weapon/gun/energy/laser/selfcharging/alien,
 		/obj/item/weapon/gun/energy/temperature
 	)
 
@@ -298,6 +299,7 @@
 	r_hand = /obj/item/weapon/gun/tesla
 	backpack_contents = list(
 		/obj/item/weapon/gun/energy/decloner,
+		/obj/item/weapon/gun/energy/laser/selfcharging/alien,
 		/obj/item/weapon/gun/energy/temperature
 	)
 
