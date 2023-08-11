@@ -566,7 +566,7 @@
 /obj/machinery/vending/proc/malfunction()
 	if(refill_canister)
 		//Dropping actual items
-		var/max_drop = rand(1, 3)
+		var/max_drop = rand(5, 7)
 		for(var/i = 1, i < max_drop, i++)
 			var/datum/data/vending_product/R = pick(src.product_records)
 			var/dump_path = R.product_path

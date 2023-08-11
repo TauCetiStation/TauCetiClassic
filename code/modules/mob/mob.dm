@@ -1275,9 +1275,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if("run")
 			if(drowsyness > 0)
 				. += 6
-			. += 1 + config.run_speed
+			. += config.run_speed
 		if("walk")
-			. += 2.5 + config.walk_speed
+			. += config.walk_speed
 
 // return TRUE if we failed our interaction
 /mob/proc/interact_prob_brain_damage(atom/object)

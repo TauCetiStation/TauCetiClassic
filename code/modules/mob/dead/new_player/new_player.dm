@@ -95,7 +95,9 @@
 
 	if(href_list["lobby_be_special"])
 		if(client.prefs.selected_quality_name)
+			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			SSqualities.announce_quality(client, quality)
 			return
 		if(!client.prefs.selecting_quality)
 			var/datum/preferences/P = client.prefs
@@ -429,6 +431,7 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
+	new_character.dna.original_character_name = new_character.real_name
 	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
 	var/old_base_metabolism = new_character.get_metabolism_factor()
 	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
