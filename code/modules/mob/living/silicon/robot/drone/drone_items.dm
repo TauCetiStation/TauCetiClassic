@@ -143,7 +143,9 @@
 		/obj/item/weapon/paper_bundle,
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
-		/obj/item/weapon/newspaper
+		/obj/item/weapon/newspaper,
+		/obj/item/device/pda,
+		/obj/item/weapon/stamp
 		)
 
 /obj/item/weapon/gripper/service
@@ -203,6 +205,9 @@
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
 		/obj/item/weapon/tank/anesthetic,
+		/obj/item/organ/external,
+		/obj/item/bodybag,
+		/obj/item/weapon/reagent_containers/syringe
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
