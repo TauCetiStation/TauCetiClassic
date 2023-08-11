@@ -26,7 +26,7 @@
 // It's just for quick access, feel free to varset decals with any color and alpha in map editor
 
 // strips and text decals
-/obj/effect/decal/turf_decal/alpha 
+/obj/effect/decal/turf_decal/alpha
 	name = "Transparent Turf Decals"
 	alpha = 100
 
@@ -50,10 +50,38 @@
 	name = "Transparent Gray Turf Decals"
 	color = "#666666"
 
+/obj/effect/decal/turf_decal/alpha/orange
+	name = "Transparent Orange Turf Decals"
+	color = "#efb341"
+
+/obj/effect/decal/turf_decal/alpha/white
+	name = "Transparent White Turf Decals"
+	color = "#bcbcbc"
+
+/obj/effect/decal/turf_decal/alpha/purple
+	name = "Transparent Purple Turf Decals"
+	color = "#d381c9"
+
+/obj/effect/decal/turf_decal/alpha/blue
+	name = "Transparent Blue Turf Decals"
+	color = "#52b4e9"
+
+/obj/effect/decal/turf_decal/alpha/dark_red
+	name = "Transparent Dark Red Turf Decals"
+	color = "#b11111"
+
+/obj/effect/decal/turf_decal/alpha/green
+	name = "Transparent Green Turf Decals"
+	color = "#9fed58"
+
 // sidings / borders
 /obj/effect/decal/turf_decal/wood
 	name = "Wood Turf Decals"
 	color = "#ffc500"
+
+/obj/effect/decal/turf_decal/wood/dark
+	name = "Dark Wood Turf Decals"
+	color = "#5d341f"
 
 /obj/effect/decal/turf_decal/metal
 	name = "Metal Turf Decals"
