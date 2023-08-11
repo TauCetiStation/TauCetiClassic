@@ -16622,7 +16622,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "dDr" = (
@@ -43539,7 +43539,7 @@
 	pixel_y = -22
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "kak" = (
@@ -60587,7 +60587,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "olO" = (
@@ -63839,7 +63839,7 @@
 /area/station/civilian/library)
 "pcs" = (
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "pct" = (
@@ -74934,7 +74934,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "rUm" = (
@@ -77092,7 +77092,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "swy" = (

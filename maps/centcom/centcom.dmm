@@ -18,10 +18,7 @@
 /area/space)
 "aac" = (
 /obj/structure/stool/bed/chair/schair/wagon,
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "carpetsymbol"
-	},
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aad" = (
 /obj/structure/object_wall/evac{
@@ -308,9 +305,7 @@
 	dir = 4;
 	icon_state = "pipe-y"
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet3-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "aaA" = (
 /obj/structure/sink{
@@ -4111,16 +4106,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"akh" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet6-2";
-	name = "red carpet"
-	},
-/area/custom/syndicate_mothership)
 "aki" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /obj/effect/decal/turf_decal{
@@ -4135,11 +4120,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet10-8";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "akk" = (
 /obj/structure/object_wall/erokez{
@@ -4221,11 +4202,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet7-3";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "akw" = (
 /obj/machinery/computer/security/nuclear,
@@ -4480,16 +4457,6 @@
 "ald" = (
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
-	},
-/area/custom/syndicate_mothership)
-"ale" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet5-1";
-	name = "red carpet"
 	},
 /area/custom/syndicate_mothership)
 "alf" = (
@@ -4764,11 +4731,7 @@
 /obj/item/toy/prize/mauler{
 	pixel_y = -8
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet14-10";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "alM" = (
 /turf/unsimulated/floor{
@@ -4801,11 +4764,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet9-4";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "alQ" = (
 /obj/structure/sign/poster/contraband/borg_fancy_2{
@@ -4865,11 +4824,7 @@
 /obj/item/weapon/folder/red,
 /obj/structure/table/woodentable,
 /obj/item/weapon/pen,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "alX" = (
 /obj/item/weapon/reagent_containers/food/snacks/syndicake{
@@ -4891,16 +4846,6 @@
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"alZ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet11-12";
-	name = "red carpet"
 	},
 /area/custom/syndicate_mothership)
 "ama" = (
@@ -5110,11 +5055,7 @@
 	},
 /area/shuttle/syndicate/start)
 "amv" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet6-2";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "amw" = (
 /obj/structure/object_wall/vox{
@@ -5211,11 +5152,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet13-5";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "amG" = (
 /obj/machinery/bodyscanner,
@@ -5231,16 +5168,6 @@
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"amI" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet9-4";
-	name = "red carpet"
 	},
 /area/custom/syndicate_mothership)
 "amJ" = (
@@ -5650,11 +5577,7 @@
 /obj/machinery/computer/security{
 	dir = 6
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet10-8";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "anE" = (
 /obj/structure/curtain/open/shower/security,
@@ -10477,11 +10400,7 @@
 	},
 /area/shuttle/specops/centcom)
 "ayM" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet6-2";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "ayN" = (
 /obj/structure/object_wall/vox/internal{
@@ -10926,13 +10845,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"azH" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet14-10";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
 "azI" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -11488,14 +11400,6 @@
 	icon_state = "wood-broken2"
 	},
 /area/custom/tophat)
-"aAU" = (
-/obj/structure/stool/bar,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet11-12";
-	name = "black carpet"
-	},
-/area/custom/tophat)
 "aAV" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -11521,13 +11425,6 @@
 	icon_state = "circuit"
 	},
 /area/space)
-"aAX" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet11-12";
-	name = "black carpet"
-	},
-/area/custom/tophat)
 "aAY" = (
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Drop Pod Garage";
@@ -11617,14 +11514,6 @@
 	icon_state = "wood-broken"
 	},
 /area/custom/wizard_station)
-"aBi" = (
-/obj/structure/stool/bar,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet5-1";
-	name = "black carpet"
-	},
-/area/custom/tophat)
 "aBj" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -11684,13 +11573,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"aBo" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet13-5";
-	name = "black carpet"
-	},
-/area/custom/tophat)
 "aBp" = (
 /turf/unsimulated/wall,
 /area/centcom/specops)
@@ -11698,24 +11580,13 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet9-4";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/tophat)
 "aBr" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
 /turf/unsimulated/floor{
 	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"aBs" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
 	},
 /area/custom/wizard_station)
 "aBt" = (
@@ -12441,11 +12312,7 @@
 	pixel_x = -5;
 	pixel_y = 15
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet11-12";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "aCO" = (
 /turf/unsimulated/floor{
@@ -12546,11 +12413,7 @@
 	},
 /area/space)
 "aDa" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet6-2";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aDb" = (
 /obj/structure/table/woodentable,
@@ -12568,18 +12431,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet14-10";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
-"aDd" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet10-8";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aDe" = (
 /obj/item/snowball,
@@ -12640,28 +12492,10 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
-"aDk" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet6-2";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
 "aDl" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /obj/effect/landmark/start/wizard,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet14-10";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
-"aDm" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet10-8";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aDn" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -12738,13 +12572,6 @@
 	temperature = 243
 	},
 /area/space)
-"aDv" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet14-10";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
 "aDw" = (
 /obj/machinery/vending/magivend,
 /obj/effect/decal/cleanable/cobweb2,
@@ -12753,20 +12580,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood-broken2"
-	},
-/area/custom/wizard_station)
-"aDx" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet7-3";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
-"aDy" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet11-12";
-	name = "black carpet"
 	},
 /area/custom/wizard_station)
 "aDz" = (
@@ -12781,22 +12594,14 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/wizard,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet7-3";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aDB" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
 /obj/effect/landmark/start/wizard,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet11-12";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aDC" = (
 /obj/effect/landmark{
@@ -12935,27 +12740,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/specops)
-"aDR" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet5-1";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
-"aDS" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet13-5";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
-"aDT" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet9-4";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
 "aDU" = (
 /obj/structure/torch_holder/magic,
 /obj/structure/bookcase/manuals/medical,
@@ -13051,13 +12835,6 @@
 /obj/structure/device/piano/minimoog,
 /turf/unsimulated/floor{
 	icon_state = "cult"
-	},
-/area/custom/wizard_station)
-"aEh" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet5-1";
-	name = "blue carpet"
 	},
 /area/custom/wizard_station)
 "aEi" = (
@@ -13178,20 +12955,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"aEx" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet13-5";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
-"aEy" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet9-4";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
 "aEz" = (
 /turf/unsimulated/wall,
 /area/centcom)
@@ -13461,11 +13224,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet6-2";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aFb" = (
 /obj/structure/table/woodentable,
@@ -13479,13 +13238,6 @@
 	icon_state = "grimy"
 	},
 /area/custom/syndicate_mothership)
-"aFc" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet14-10";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
 "aFd" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Armory Special Operations";
@@ -13510,11 +13262,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet10-8";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aFf" = (
 /obj/machinery/door/airlock/external{
@@ -13551,13 +13299,6 @@
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor,
 /area/shuttle/administration/centcom)
-"aFl" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet7-3";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
 "aFn" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -13627,13 +13368,6 @@
 	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
-"aFt" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet11-12";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
 "aFu" = (
 /obj/structure/rack,
 /obj/item/weapon/shield/riot{
@@ -14093,11 +13827,7 @@
 /obj/item/toy/plushie/octopus{
 	pixel_y = 4
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "aGr" = (
 /obj/structure/rack,
@@ -14448,13 +14178,6 @@
 "aHb" = (
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
-"aHc" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet10-8";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
 "aHd" = (
 /obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
@@ -14908,13 +14631,6 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
-"aIe" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet5-1";
-	name = "red carpet"
-	},
-/area/custom/syndicate_mothership)
 "aIf" = (
 /obj/structure/rack,
 /obj/item/ammo_box/shotgun{
@@ -14938,11 +14654,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet7-3";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "aIh" = (
 /turf/unsimulated/floor{
@@ -14960,11 +14672,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet11-12";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "aIk" = (
 /turf/unsimulated/floor{
@@ -15162,13 +14870,6 @@
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "red"
-	},
-/area/custom/syndicate_mothership)
-"aIL" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet5-1";
-	name = "black carpet"
 	},
 /area/custom/syndicate_mothership)
 "aIM" = (
@@ -15388,25 +15089,16 @@
 /area/shuttle/syndicate/start)
 "aJo" = (
 /obj/structure/closet/secure_closet,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJp" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJq" = (
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJr" = (
 /obj/machinery/door/airlock/centcom{
@@ -15436,10 +15128,7 @@
 "aJt" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/ce,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJu" = (
 /turf/unsimulated/wall,
@@ -15503,11 +15192,7 @@
 /obj/item/weapon/storage/food/normal/syndi_cakes,
 /obj/item/weapon/storage/food/normal/syndi_cakes,
 /obj/item/weapon/storage/food/normal/syndi_cakes,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet9-4";
-	name = "red carpet"
-	},
+/turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
 "aJD" = (
 /obj/random/vending/snack,
@@ -15541,37 +15226,22 @@
 	icon_state = "floor"
 	},
 /area/centcom/evac)
-"aJH" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet13-5";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
 "aJI" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
 /obj/item/weapon/bedsheet/centcom,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJJ" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/unsimulated/floor{
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJK" = (
 /obj/structure/table,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJL" = (
 /obj/machinery/light{
@@ -15599,16 +15269,7 @@
 /obj/structure/mirror{
 	pixel_x = -32
 	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
-"aJO" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJP" = (
 /turf/unsimulated/floor{
@@ -15709,21 +15370,12 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aKb" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
 "aKc" = (
 /obj/structure/stool/bed/chair/metal,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aKd" = (
 /obj/machinery/light{
@@ -15797,18 +15449,12 @@
 /area/shuttle/escape_pod4/centcom)
 "aKm" = (
 /obj/machinery/computer/card/centcom,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aKn" = (
 /obj/structure/table,
 /obj/item/weapon/card/id/centcom,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aKo" = (
 /turf/unsimulated/floor{
@@ -16095,11 +15741,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -4
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "aLa" = (
 /turf/unsimulated/floor{
@@ -16142,11 +15784,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "aLg" = (
 /obj/machinery/door/airlock/centcom{
@@ -17504,18 +17142,9 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aOd" = (
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
 "aOe" = (
 /obj/structure/stool/bed/chair/comfy/black,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOf" = (
 /obj/random/vending/snack,
@@ -17662,9 +17291,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOr" = (
 /obj/structure/table/woodentable,
@@ -17674,15 +17301,11 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOs" = (
 /obj/machinery/door/window/northleft,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOt" = (
 /obj/structure/urinal{
@@ -17989,36 +17612,26 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOY" = (
 /obj/structure/table/woodentable{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOZ" = (
 /obj/structure/table/woodentable{
 	dir = 10
 	},
 /obj/item/weapon/folder/red,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPa" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPb" = (
 /obj/random/vending/cola,
@@ -18103,17 +17716,13 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPl" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPm" = (
 /obj/item/device/radio/intercom{
@@ -18290,9 +17899,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPE" = (
 /obj/structure/table/woodentable{
@@ -18302,9 +17909,7 @@
 	department = "Central Command";
 	dptdest = "Captain's Office"
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPF" = (
 /obj/machinery/vending/coffee,
@@ -18398,9 +18003,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPN" = (
 /obj/structure/window/thin/reinforced{
@@ -18415,9 +18018,7 @@
 	network = list("thunder");
 	pixel_x = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aPO" = (
 /obj/structure/rack,
@@ -18545,23 +18146,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aQm" = (
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
-"aQn" = (
-/turf/unsimulated/floor{
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
-"aQo" = (
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
 "aQp" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
@@ -18580,20 +18164,11 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aQu" = (
 /obj/structure/table/woodentable,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
-/area/centcom/living)
-"aQv" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aQw" = (
 /obj/structure/stool/bed/chair/metal{
@@ -18602,9 +18177,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aQx" = (
 /obj/structure/toilet{
@@ -18692,9 +18265,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aQV" = (
 /obj/structure/object_wall/evac{
@@ -18846,9 +18417,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aRZ" = (
 /obj/structure/stool/bed/chair/metal{
@@ -18857,17 +18426,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aSa" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Courthouse"
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aSb" = (
 /turf/unsimulated/floor{
@@ -19044,26 +18609,14 @@
 /area/centcom/living)
 "aSQ" = (
 /obj/machinery/computer/secure_data,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "carpetside"
-	},
-/area/centcom/living)
-"aSR" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aSS" = (
 /obj/structure/table/woodentable{
 	dir = 10
 	},
 /obj/item/weapon/storage/lockbox/mind_shields,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aST" = (
 /obj/machinery/door_control{
@@ -19071,10 +18624,7 @@
 	name = "Security Shutters";
 	pixel_x = 24
 	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aSU" = (
 /obj/structure/table,
@@ -19230,16 +18780,11 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aTv" = (
 /obj/structure/stool,
-/turf/unsimulated/floor{
-	icon_state = "carpet"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aTw" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -19248,10 +18793,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "carpetside"
-	},
+/turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aTx" = (
 /obj/structure/closet/secure_closet/medical3,
@@ -20962,11 +20504,7 @@
 /obj/item/weapon/storage/pill_bottle/dice{
 	pixel_y = 5
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "bas" = (
 /obj/structure/table/woodentable,
@@ -20975,11 +20513,7 @@
 	name = "List of Available Spells (READ)";
 	pixel_y = 3
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "bat" = (
 /obj/structure/table/woodentable,
@@ -20995,11 +20529,7 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "bau" = (
 /obj/structure/flora/tree/pine,
@@ -21056,11 +20586,7 @@
 /obj/item/weapon/spacecash{
 	pixel_x = -2
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/wizard_station)
 "bay" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -21211,13 +20737,6 @@
 	temperature = 243
 	},
 /area/space)
-"baR" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
 "baS" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -23095,14 +22614,10 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet6-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cvb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet8-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cvG" = (
 /obj/item/weapon/wirecutters,
@@ -23111,11 +22626,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"cwb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet1-0"
-	},
-/area/velocity)
 "cxb" = (
 /obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
@@ -23141,20 +22651,11 @@
 	req_access = list(101)
 	},
 /obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor{
-	icon_state = "carpet6-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cAb" = (
 /obj/structure/stool/bed/chair/comfy/black,
-/turf/unsimulated/floor{
-	icon_state = "carpet12-0"
-	},
-/area/velocity)
-"cBb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet10-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cCb" = (
 /obj/machinery/door/airlock/centcom,
@@ -23182,9 +22683,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor{
-	icon_state = "carpet3-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cEu" = (
 /obj/item/weapon/razor,
@@ -23192,11 +22691,6 @@
 /obj/structure/table/woodentable/fancy/black,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"cFb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet3-0"
-	},
-/area/velocity)
 "cGb" = (
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -23317,9 +22811,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet3-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cRb" = (
 /obj/machinery/door/poddoor{
@@ -23408,30 +22900,11 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
-"cWb" = (
-/obj/machinery/door_control{
-	id = "velocity_room02";
-	name = "Blast Door Control";
-	pixel_x = -25;
-	req_access = list(101)
-	},
-/obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor{
-	icon_state = "carpet5-0"
-	},
-/area/velocity)
 "cXb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet12-0"
-	},
-/area/velocity)
-"cYb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet9-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/velocity)
 "cYQ" = (
 /obj/structure/table/glass,
@@ -26251,16 +25724,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
-"ikb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet2-0"
-	},
-/area/centcom/living)
-"ilb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet3-0"
-	},
-/area/centcom/living)
 "imb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -26377,11 +25840,6 @@
 	icon_state = "greenfull"
 	},
 /area/centcom/control)
-"iDb" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet1-0"
-	},
-/area/centcom/living)
 "iEb" = (
 /obj/machinery/light{
 	dir = 8
@@ -28715,33 +28173,8 @@
 	icon_state = "wood"
 	},
 /area/custom/tophat)
-"nMb" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/tophat)
 "nNb" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet6-2";
-	name = "black carpet"
-	},
-/area/custom/tophat)
-"nOb" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet14-10";
-	name = "black carpet"
-	},
-/area/custom/tophat)
-"nPb" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet10-8";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/tophat)
 "nRb" = (
 /obj/item/weapon/staff/gentcane,
@@ -28773,13 +28206,6 @@
 	icon_state = "wood-broken5"
 	},
 /area/custom/tophat)
-"nTb" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet7-3";
-	name = "black carpet"
-	},
-/area/custom/tophat)
 "nUb" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/bronze{
@@ -28790,11 +28216,7 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/tophat)
 "nVb" = (
 /turf/unsimulated/floor{
@@ -28804,11 +28226,7 @@
 /area/custom/wizard_station)
 "nWb" = (
 /obj/structure/stool/bar,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/tophat)
 "nXb" = (
 /turf/unsimulated/floor{
@@ -28830,11 +28248,7 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet11-12";
-	name = "black carpet"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/tophat)
 "nZb" = (
 /obj/machinery/conveyor{
@@ -31441,10 +30855,10 @@ aaM
 nIb
 nHb
 nNb
-nTb
-nTb
-nTb
-aBi
+nNb
+nNb
+nNb
+nWb
 abd
 nIb
 aaM
@@ -31697,11 +31111,11 @@ aaM
 aaM
 nIb
 nKb
-nOb
+nNb
 nUb
 nWb
-nMb
-aBo
+nNb
+nNb
 aGS
 nIb
 aaM
@@ -31954,10 +31368,10 @@ aaM
 aaM
 nIb
 aAO
-nPb
+nNb
 nYb
-aAU
-aAX
+nWb
+nNb
 aBq
 abe
 nIb
@@ -33270,8 +32684,8 @@ baQ
 aaY
 aFN
 aDa
-aDx
-aDR
+aDa
+aDa
 aGu
 abg
 afT
@@ -33527,8 +32941,8 @@ baO
 aaY
 baF
 aDc
-baR
-aDS
+aDa
+aDa
 aEB
 abg
 abh
@@ -33783,9 +33197,9 @@ abi
 abh
 aaY
 baE
-aDd
-aDy
-aDT
+aDa
+aDa
+aDa
 bbo
 abg
 abi
@@ -36353,9 +35767,9 @@ bdN
 bdt
 aaY
 bbq
-aDk
+aDa
 aDA
-aEh
+aDa
 baA
 aaY
 bdQ
@@ -36612,7 +36026,7 @@ abg
 aCJ
 aDl
 bar
-aEx
+aDa
 aEC
 abg
 abg
@@ -36869,14 +36283,14 @@ aCA
 baA
 aDl
 bat
-aEx
+aDa
 bby
 bdv
 abg
 aBg
 aFa
-aFl
-aEh
+aDa
+aDa
 aBz
 abg
 baB
@@ -37126,14 +36540,14 @@ baA
 baJ
 aDl
 bas
-aEx
+aDa
 baA
 bbq
 bbX
 bbq
-aFc
-aBs
-aEx
+aDa
+aDa
+aDa
 aGO
 abg
 afT
@@ -37383,14 +36797,14 @@ aFL
 baA
 aDl
 aGq
-aEx
+aDa
 baA
 aid
 abg
 aBh
 aFe
-aFt
-aEy
+aDa
+aDa
 aBN
 abg
 afT
@@ -37640,7 +37054,7 @@ abg
 aCK
 aDl
 bax
-aEx
+aDa
 aED
 abg
 abg
@@ -37895,9 +37309,9 @@ afP
 bbh
 aaY
 baI
-aDm
+aDa
 aDB
-aEy
+aDa
 baA
 aaY
 bdP
@@ -40466,8 +39880,8 @@ abi
 aaY
 bav
 aDa
-aDx
-aDR
+aDa
+aDa
 aGx
 aaY
 abl
@@ -40722,9 +40136,9 @@ abi
 baY
 aaY
 aGs
-aDv
-baR
-aDS
+aDa
+aDa
+aDa
 aEL
 aaY
 afR
@@ -40979,9 +40393,9 @@ aDu
 afT
 aaY
 bbk
-aDd
-aDy
-aDT
+aDa
+aDa
+aDa
 aGJ
 aaY
 abi
@@ -60171,14 +59585,14 @@ iab
 aIh
 aIU
 aJf
-ikb
-ilb
-ilb
-ilb
-ilb
-ilb
-ilb
-iDb
+aJq
+aJq
+aJq
+aJq
+aJq
+aJq
+aJq
+aJq
 aJf
 iNb
 iTb
@@ -60944,7 +60358,7 @@ aAm
 aAm
 aJo
 aJN
-aKb
+aJq
 aKm
 aAm
 gpb
@@ -61200,7 +60614,7 @@ aaM
 aaM
 aAm
 aJt
-aJO
+aJq
 aKc
 aKn
 aAm
@@ -68155,10 +67569,10 @@ aJu
 aaM
 aAm
 aJf
-aOd
+aJq
 aOX
 aOX
-aQm
+aJq
 aQM
 lkb
 aBK
@@ -68415,7 +67829,7 @@ aNB
 aOe
 aOY
 aOY
-aQn
+aJq
 aQN
 lkb
 aBK
@@ -68672,7 +68086,7 @@ aNC
 aOe
 aOZ
 aPD
-aQn
+aJq
 aQN
 lkb
 aBK
@@ -68929,7 +68343,7 @@ aND
 aOe
 aOY
 aPE
-aQn
+aJq
 aQN
 lkb
 aBK
@@ -69186,15 +68600,15 @@ aJf
 aJq
 aPa
 aPa
-aQo
+aJq
 aQM
 lkb
 aBK
 aRW
 aSt
-aSR
-aQv
-aQn
+aJq
+aJq
+aJq
 aUd
 aJf
 aJf
@@ -69449,9 +68863,9 @@ lkb
 aBK
 aRW
 aSv
-aSR
+aJq
 aTv
-aQn
+aJq
 aJr
 aJf
 aUI
@@ -69708,7 +69122,7 @@ aRW
 aSt
 aSS
 aOY
-aQn
+aJq
 aAm
 aJf
 aJf
@@ -69965,7 +69379,7 @@ aRW
 aSt
 aST
 aTw
-aQo
+aJq
 aAm
 aUt
 aUJ
@@ -74328,7 +73742,7 @@ aPh
 aPM
 aQt
 aQS
-aQv
+aJq
 aQS
 aRY
 aAm
@@ -74585,7 +73999,7 @@ aPi
 aPM
 aQu
 aQS
-aQv
+aJq
 aQS
 aQS
 jcb
@@ -74840,9 +74254,9 @@ aAM
 aOp
 aOo
 aPN
-aQv
-aQv
-aQv
+aJq
+aJq
+aJq
 aQS
 aQS
 jcb
@@ -75099,7 +74513,7 @@ aPj
 aPM
 aQu
 aQS
-aQv
+aJq
 aQS
 aQS
 jcb
@@ -75356,7 +74770,7 @@ aPh
 aPM
 aQu
 aQS
-aQv
+aJq
 aQS
 aRZ
 aAm
@@ -75532,7 +74946,7 @@ czb
 cEb
 aaz
 cEb
-cWb
+czb
 asy
 aoo
 aoo
@@ -76299,11 +75713,11 @@ aTk
 aoo
 aqm
 aqM
-cBb
-cFb
+cvb
+cvb
 cQb
-cFb
-cYb
+cvb
+cvb
 aqM
 asP
 aoo
@@ -78611,7 +78025,7 @@ cgb
 aoo
 apY
 cub
-cwb
+cvb
 ark
 cGb
 cLb
@@ -85489,7 +84903,7 @@ aie
 alF
 amv
 akv
-aIe
+amv
 aKr
 aaN
 aaM
@@ -88074,9 +87488,9 @@ aiv
 aii
 ajZ
 akQ
-akh
 akv
-ale
+akv
+akv
 akQ
 amm
 aIb
@@ -88589,8 +88003,8 @@ aAR
 aie
 akc
 akj
-alZ
-amI
+akj
+akj
 akQ
 amm
 aIb
@@ -92194,7 +91608,7 @@ amy
 ayM
 aIg
 aIg
-aIL
+ayM
 aie
 ahF
 ahF
@@ -92448,10 +91862,10 @@ aIb
 amJ
 aix
 anb
-azH
+ayM
 aKZ
 aLf
-aJH
+ayM
 aie
 ahF
 ahF
@@ -92705,7 +92119,7 @@ aIb
 aln
 aix
 amz
-aHc
+ayM
 aIj
 aIj
 alP

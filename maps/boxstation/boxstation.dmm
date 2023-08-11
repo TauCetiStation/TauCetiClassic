@@ -28964,7 +28964,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "bap" = (
@@ -33840,7 +33840,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "bjs" = (
@@ -37174,7 +37174,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "bpx" = (
@@ -48364,7 +48364,7 @@
 "bJF" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "bJG" = (
@@ -49616,7 +49616,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "bMe" = (
@@ -80643,7 +80643,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "rkb" = (

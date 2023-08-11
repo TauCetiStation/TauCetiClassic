@@ -771,7 +771,7 @@
 /area/awaymission/academy/headmaster)
 "cr" = (
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/awaymission/academy/headmaster)
 "cs" = (
@@ -3862,12 +3862,12 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/awaymission/academy/academygate)
 "kk" = (
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/awaymission/academy/academygate)
 "kl" = (

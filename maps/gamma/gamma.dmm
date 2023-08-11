@@ -6107,7 +6107,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "aGL" = (
@@ -7909,7 +7909,7 @@
 	c_tag = "Chapel North"
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "bbv" = (
@@ -25768,8 +25768,8 @@
 	pixel_x = 18
 	},
 /obj/item/weapon/reagent_containers/syringe{
-	pixel_y = 8;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/dropper{
 	pixel_x = 18;
@@ -27239,7 +27239,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "eVI" = (
@@ -33135,7 +33135,7 @@
 /area/station/security/brig)
 "geC" = (
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "geE" = (
@@ -112178,8 +112178,8 @@
 	pixel_x = 28
 	},
 /obj/item/device/flash{
-	pixel_y = 5;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 10;

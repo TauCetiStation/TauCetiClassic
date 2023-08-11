@@ -22175,7 +22175,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "mya" = (
@@ -29648,7 +29648,7 @@
 /obj/machinery/constructable_frame/machine_frame,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
+	religion_tile = 1
 	},
 /area/station/civilian/chapel)
 "tud" = (
