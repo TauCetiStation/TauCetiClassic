@@ -48,3 +48,6 @@ map stroechka
 	votable
 	maxplayers 10
 endmap
+
+map paradise_island
+endmap
