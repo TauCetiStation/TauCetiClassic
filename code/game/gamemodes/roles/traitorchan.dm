@@ -12,4 +12,5 @@
 
 /datum/role/changeling/traitor/OnPostSetup(laterole)
 	. = ..()
-	take_dehead_biogel_equip()
+	for(var/datum/objective/O in objectives.GetObjectives())
+		O.give_required_equipment()

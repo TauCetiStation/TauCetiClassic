@@ -106,8 +106,8 @@
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
 		return
-	for(var/datum/objective/target/dehead/D in objectives.GetObjectives())
-		take_dehead_biogel_equip()
+	for(var/datum/objective/O in objectives.GetObjectives())
+		O.give_required_equipment()
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
 	if(isAI(M.current))

@@ -481,21 +481,3 @@
 
 /datum/role/proc/remove_ui(datum/hud/hud)
 	return
-
-/datum/role/proc/take_dehead_biogel_equip()
-	if(!ishuman(antag.current))
-		new /obj/item/device/biocan(antag.current.loc)
-		return
-	var/mob/living/carbon/human/H = antag.current
-	var/obj/item/device/biocan/B = new(H.loc)
-	var/list/slots = list(
-		"backpack" = SLOT_IN_BACKPACK,
-		"left hand" = SLOT_L_HAND,
-		"right hand" = SLOT_R_HAND,
-	)
-	var/where = H.equip_in_one_of_slots(B, slots)
-	H.update_icons()
-	if(!where)
-		to_chat(H, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
-	else
-		to_chat(H, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
