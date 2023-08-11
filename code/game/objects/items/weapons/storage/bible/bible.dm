@@ -126,7 +126,7 @@
 				changes = TRUE
 				choices -= "Emblem"
 
-			if("Mat symbol") // todo
+			if("Mat symbol")
 				var/new_mat = show_radial_menu(user, src, religion.decal_radial_menu, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
