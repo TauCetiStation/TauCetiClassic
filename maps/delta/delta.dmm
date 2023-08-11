@@ -17386,6 +17386,7 @@
 /area/station/civilian/chapel)
 "dFv" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -29087,7 +29088,6 @@
 	},
 /area/station/hallway/primary/fore)
 "gng" = (
-/obj/machinery/light/smart,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
 	freq = 1400;
@@ -29105,6 +29105,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -34035,12 +34036,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/gateway)
-"hqS" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/civilian/holodeck/alphadeck)
 "hqT" = (
 /obj/machinery/color_mixer,
 /turf/simulated/floor{
@@ -63920,6 +63915,11 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -67217,6 +67217,15 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -82827,10 +82836,6 @@
 /obj/structure/stool/bar,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
-"sdo" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor/engine,
-/area/station/civilian/holodeck/alphadeck)
 "sdy" = (
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal{
@@ -165978,7 +165983,7 @@ pVo
 adB
 kHU
 kVf
-hqS
+jjS
 jjS
 jjS
 jjS
@@ -167015,7 +167020,7 @@ jjS
 jjS
 jjS
 jjS
-sdo
+jjS
 pVE
 kHU
 dJL
