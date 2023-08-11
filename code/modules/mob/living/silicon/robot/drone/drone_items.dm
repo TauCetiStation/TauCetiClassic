@@ -144,8 +144,6 @@
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
 		/obj/item/weapon/newspaper,
-		/obj/item/device/pda,
-		/obj/item/weapon/stamp
 		)
 
 /obj/item/weapon/gripper/service
