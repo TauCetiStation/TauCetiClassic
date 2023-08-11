@@ -1646,7 +1646,10 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "alB" = (
 /turf/simulated/floor{
@@ -5353,7 +5356,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/central)
 "bcE" = (
 /obj/structure/cable{
@@ -13262,7 +13267,10 @@
 	dir = 4;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "cME" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -19193,7 +19201,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/central)
 "eiz" = (
 /obj/random/scrap/safe_even,
@@ -35461,7 +35471,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/central)
 "hQk" = (
 /obj/structure/cable{
@@ -54935,7 +54947,10 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "mgQ" = (
 /obj/structure/disposalpipe/segment,
@@ -65178,6 +65193,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "oBr" = (
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -89781,7 +89797,12 @@
 	id = "vac_offic";
 	name = "Vacant Office"
 	},
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/central)
 "ulW" = (
 /obj/structure/cable{
