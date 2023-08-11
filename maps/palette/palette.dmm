@@ -19,8 +19,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "af" = (
@@ -29,8 +28,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "ag" = (
@@ -39,8 +37,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "ah" = (
@@ -48,8 +45,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "am" = (
@@ -2188,8 +2184,7 @@
 /area/space)
 "xz" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "xC" = (
@@ -3731,9 +3726,11 @@
 	},
 /area/space)
 "Nd" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space)
 "Nk" = (
@@ -4515,9 +4512,11 @@
 	},
 /area/space)
 "UN" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space)
 "UO" = (
@@ -4706,9 +4705,11 @@
 	},
 /area/space)
 "Xo" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space)
 "Xs" = (

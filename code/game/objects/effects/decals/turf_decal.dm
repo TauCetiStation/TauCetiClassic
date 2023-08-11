@@ -46,6 +46,10 @@
 	name = "Transparent Red Turf Decals"
 	color = "#ff0000"
 
+/obj/effect/decal/turf_decal/alpha/gray
+	name = "Transparent Gray Turf Decals"
+	color = "#666666"
+
 // sidings / borders
 /obj/effect/decal/turf_decal/wood
 	name = "Wood Turf Decals"

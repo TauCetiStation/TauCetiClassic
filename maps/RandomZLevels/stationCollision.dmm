@@ -2617,8 +2617,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/stationcollision/midblock)
 "gS" = (
@@ -2627,8 +2626,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/stationcollision/midblock)
 "gU" = (
@@ -2804,8 +2802,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/stationcollision/midblock)
 "hq" = (
@@ -2813,8 +2810,7 @@
 	icon_state = "mosaic_1"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/stationcollision/midblock)
 "ht" = (
