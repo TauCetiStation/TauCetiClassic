@@ -254,11 +254,11 @@
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human // meh initial doesn't work with lists
 	for(var/datum/emote/E as anything in H.default_emotes) // non-humans emotes but humans have them
 		if(initial(E.key) in icon_states(emote_icons))
-			emotes_for_emote_panel |= initial(E.key)
+			global.emotes_for_emote_panel |= initial(E.key)
 	qdel(H)
 	for(var/datum/emote/E as anything in subtypesof(/datum/emote/human)) // humans emotes
 		if(initial(E.key) in icon_states(emote_icons))
-			emotes_for_emote_panel |= initial(E.key)
+			global.emotes_for_emote_panel |= initial(E.key)
 	for(var/datum/species/S as anything in subtypesof(/datum/species)) // IPC emotes and etc.
 		S = new S
 		for(var/datum/emote/E as anything in S.emotes)
