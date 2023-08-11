@@ -5,7 +5,6 @@
 		/datum/emote/shiver,
 		/datum/emote/whimper,
 		/datum/emote/moan,
-		/datum/emote/twitch,
 		/datum/emote/collapse,
 		/datum/emote/faint,
 		/datum/emote/roar,
@@ -39,9 +38,10 @@
 
 	for(var/id in current_emotes)
 		var/datum/emote/E = current_emotes[id]
-		if(E.key in icon_states(emote_icons))
-			emote_choice += E.key
-			emote_choice[E.key] = image(icon = emote_icons, icon_state = E.key)
+		if(!(E.key in usr.client.prefs.custom_emote_panel))
+			continue
+		emote_choice += E.key
+		emote_choice[E.key] = image(icon = emote_icons, icon_state = E.key)
 
-	var/act = show_radial_menu(usr, src, emote_choice, radius = 74, min_angle = 20)
+	var/act = show_radial_menu(usr, src, emote_choice, radius = 54, min_angle = 36)
 	emote(act)

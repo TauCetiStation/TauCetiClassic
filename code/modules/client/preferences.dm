@@ -55,6 +55,8 @@ var/global/list/preferences_datums = list()
 
 	var/show_runechat = TRUE
 
+	var/list/custom_emote_panel = list()
+
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
