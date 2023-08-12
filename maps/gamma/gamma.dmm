@@ -6106,9 +6106,8 @@
 /obj/item/weapon/storage/fancy/candle_box{
 	pixel_y = 4
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "aGL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7908,9 +7907,8 @@
 /obj/machinery/camera{
 	c_tag = "Chapel North"
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bbv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -27238,9 +27236,8 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "eVI" = (
 /obj/machinery/firealarm{
@@ -33134,9 +33131,8 @@
 	},
 /area/station/security/brig)
 "geC" = (
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "geE" = (
 /obj/structure/window/thin/reinforced{

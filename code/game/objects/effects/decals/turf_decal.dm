@@ -99,3 +99,16 @@
 	var/turf/T = get_turf(src)
 	T.name = "Comemmorative Plaque";
 	T.desc = "\"Это металлический диск в честь наших товарищей на станциях G4407. Недеемся, модель TG4407 сможет служить на ваше благо.\" Ниже выцарапано грубое изображение метеора и космонавта. Космонавт смеется. Метеор взрывается.";
+
+/obj/effect/decal/turf_decal/religion_emblem
+	name = "Set as religion emblem place"
+	icon_state = "religion_christianity"
+
+/obj/effect/decal/turf_decal/religion_emblem/atom_init(mapload, new_state, new_dir, new_color, new_alpha)
+	. = ..()
+	// don't place decal, just mark for religion
+	if(istype(loc, /turf/simulated/floor/carpet)) // why carpets? idk
+		var/turf/simulated/floor/carpet/T = loc
+		T.religion_tile = TRUE
+
+	return INITIALIZE_HINT_QDEL

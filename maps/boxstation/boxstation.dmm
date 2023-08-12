@@ -28963,9 +28963,8 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bap" = (
 /obj/structure/cable{
@@ -33839,9 +33838,8 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bjs" = (
 /turf/simulated/floor{
@@ -37173,9 +37171,8 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bpx" = (
 /obj/machinery/door/airlock/maintenance{
@@ -48363,9 +48360,8 @@
 /area/station/civilian/dormitories/dormthree)
 "bJF" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bJG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -49615,9 +49611,8 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bMe" = (
 /turf/simulated/floor/wood,
@@ -80642,9 +80637,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/carpet{
-	religion_tile = 1
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "rkb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,

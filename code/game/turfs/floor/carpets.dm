@@ -37,6 +37,8 @@
 	icon = 'icons/turf/floors/carpets/carpet_classic_red.dmi'
 	smooth = SMOOTH_TRUE
 
+/turf/simulated/floor/plating/airless/carpet/make_plating()
+	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/floor/carpet/green
 	name = "green classic carpet"
