@@ -552,9 +552,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -634,9 +632,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bG" = (
 /obj/structure/table,
@@ -7159,9 +7155,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "pg" = (
 /obj/structure/cable{
@@ -7566,9 +7560,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qd" = (
 /obj/machinery/door/firedoor,
@@ -7902,9 +7894,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qX" = (
 /obj/effect/decal/turf_decal{
