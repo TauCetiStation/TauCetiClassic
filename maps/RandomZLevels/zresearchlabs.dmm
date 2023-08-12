@@ -3166,9 +3166,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ic" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -3177,29 +3175,21 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "id" = (
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ie" = (
 /obj/structure/closet/secure_closet/personal,
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "if" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ig" = (
 /obj/machinery/door/airlock/research{
@@ -3313,9 +3303,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "it" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -3474,9 +3462,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Team Leader's Desk"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iP" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -3487,32 +3473,24 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iQ" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/glass{
 	pixel_y = 2
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iR" = (
 /obj/structure/table/woodentable,
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iS" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iT" = (
 /obj/structure/stool/bed/chair,
@@ -3681,9 +3659,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jn" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -3699,9 +3675,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jo" = (
 /obj/structure/table/woodentable,
@@ -3711,9 +3685,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jp" = (
 /obj/structure/table/woodentable,
@@ -3722,9 +3694,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jq" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -3735,9 +3705,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jr" = (
 /obj/machinery/camera{
@@ -3749,9 +3717,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "js" = (
 /obj/structure/table,
@@ -3918,9 +3884,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jN" = (
 /obj/structure/cable{
@@ -3928,9 +3892,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jO" = (
 /obj/structure/table,
@@ -4019,9 +3981,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ka" = (
 /obj/structure/table,
