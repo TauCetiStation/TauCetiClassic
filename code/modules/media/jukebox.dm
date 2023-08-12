@@ -243,6 +243,7 @@ var/global/loopModeNames=list(
 	if(!playlist) // if request failed or we don't have config
 		stat &= BROKEN
 		update_icon()
+		stop_processing()
 		return
 
 	if(playing)
