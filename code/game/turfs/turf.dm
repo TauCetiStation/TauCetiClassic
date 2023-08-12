@@ -421,7 +421,7 @@
 	return(2)
 
 /turf/update_icon()
-	if(is_flooded(absolute = 1))
+	if(is_flooded(absolute = 1)) // wtf this doing here
 		if(!(locate(/obj/effect/flood) in contents))
 			new /obj/effect/flood(src)
 	else

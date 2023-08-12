@@ -16621,9 +16621,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "dDr" = (
 /obj/machinery/light/smart{
@@ -43538,9 +43537,8 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "kak" = (
 /obj/machinery/flasher{
@@ -60586,9 +60584,8 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "olO" = (
 /obj/structure/closet/emcloset,
@@ -63838,9 +63835,8 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "pcs" = (
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "pct" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -74933,9 +74929,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "rUm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -77091,9 +77086,8 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "swy" = (
 /obj/machinery/alarm{
