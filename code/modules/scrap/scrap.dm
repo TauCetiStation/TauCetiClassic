@@ -148,7 +148,7 @@ var/global/list/scrap_base_cache = list()
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
+			if((!H.shoes && !H.species.flags[NO_MINORCUTS]) && (!H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS)))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.is_robotic())
 					return
@@ -209,31 +209,22 @@ var/global/list/scrap_base_cache = list()
 		underlays |= I
 
 /obj/structure/scrap/proc/hurt_hand(mob/user)
-	if(prob(50))
-		if(!ishuman(user))
-			return 0
-		var/mob/living/carbon/human/victim = user
-		if(victim.species.flags[IS_SYNTHETIC])
-			return 0
-		if(victim.gloves)
-			if(istype(victim.gloves, /obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = victim.gloves
-				if(G.protect_fingers)
-					return
-		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
-		if(!BP)
-			return 0
-		if(BP.is_robotic())
-			return 0
-		if(victim.species.flags[NO_MINORCUTS])
-			return 0
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/victim = user
+	var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
+	var/obj/item/clothing/gloves/G = victim.gloves
+	if(!BP || BP.is_robotic() || victim.species.flags[NO_MINORCUTS]\
+		|| victim.species.flags[IS_SYNTHETIC] || (victim.gloves && G.protect_fingers))
+		return FALSE
+	else if(prob(50))
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		if(victim.species.flags[NO_PAIN]) // So we still take damage, but actually dig through.
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/structure/scrap/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

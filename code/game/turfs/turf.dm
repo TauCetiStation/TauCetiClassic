@@ -35,7 +35,11 @@
 	var/clawfootstep
 	var/heavyfootstep
 
+	//Depth for water turf and liqud`s
+	var/static_fluid_depth = null
+
 	var/list/turf_decals
+
 
 /**
   * Turf Initialize
