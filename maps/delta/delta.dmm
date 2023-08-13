@@ -10433,15 +10433,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
-"cbJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitepurple"
-	},
-/area/station/rnd/hallway/lobby)
 "cbM" = (
 /obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -21489,16 +21480,21 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "eBS" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Service Bedrooms"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
-/area/station/hallway/primary/fore)
+/area/station/civilian/dormitories/service_bedrooms)
 "eBT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -23450,22 +23446,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"eZW" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Service Bedrooms"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
-/area/station/civilian/dormitories/service_bedrooms)
 "fab" = (
 /obj/structure/closet/secure_closet/security,
 /turf/simulated/floor{
@@ -25148,16 +25128,14 @@
 	},
 /area/station/security/brig)
 "fsX" = (
-/obj/effect/decal/turf_decal/alpha/orange{
-	dir = 4;
-	icon_state = "siding_line"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	dir = 1;
+	icon_state = "whitepurple"
 	},
-/area/station/hallway/primary/fore)
+/area/station/rnd/hallway/lobby)
 "ftb" = (
 /obj/structure/sign/nanotrasen,
 /turf/simulated/wall/r_wall,
@@ -57629,8 +57607,8 @@
 	},
 /area/station/civilian/chapel)
 "mtD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -64584,6 +64562,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"nWh" = (
+/obj/effect/decal/turf_decal/alpha/orange{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/hallway/primary/fore)
 "nWi" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/clothing/head/orange_bandana,
@@ -75389,11 +75378,6 @@
 "qsS" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
@@ -81118,11 +81102,6 @@
 /area/station/civilian/library)
 "rIs" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -89591,6 +89570,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"tGc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/hallway/primary/fore)
 "tGH" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
@@ -142700,7 +142690,7 @@ axy
 qLC
 axy
 sZe
-cbJ
+mtD
 bIh
 clj
 cxG
@@ -143214,7 +143204,7 @@ vIl
 vIl
 vNW
 xaa
-cbJ
+mtD
 fuc
 dwb
 tjH
@@ -143728,7 +143718,7 @@ vpT
 ugI
 qou
 xaa
-mtD
+fsX
 bIh
 xVQ
 vRy
@@ -144681,11 +144671,11 @@ qQo
 wts
 wts
 wts
-eBS
+tGc
 rrl
 rrl
 che
-fsX
+nWh
 lQo
 wxM
 wxM
@@ -144938,7 +144928,7 @@ xoc
 fWg
 aPM
 wts
-eZW
+eBS
 iIZ
 lfJ
 xVN
@@ -146768,7 +146758,7 @@ itF
 vAu
 rPX
 plf
-fDA
+lYH
 qsS
 lYH
 qwb
@@ -149852,7 +149842,7 @@ cwX
 mXl
 rPX
 plf
-fDA
+lYH
 rIs
 lYH
 iyu
