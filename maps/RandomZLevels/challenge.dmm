@@ -575,9 +575,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "carpet1-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/awaymission/challenge/end)
 "bL" = (
 /obj/machinery/door_control{
@@ -662,9 +660,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/challenge/end)
 "bV" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet1-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/awaymission/challenge/end)
 "bW" = (
 /obj/machinery/conveyor{
@@ -773,9 +769,7 @@
 "cl" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/blue,
-/turf/unsimulated/floor{
-	icon_state = "carpet12-0"
-	},
+/turf/unsimulated/floor/carpet,
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
 "cm" = (
@@ -788,9 +782,7 @@
 /area/awaymission/challenge/end)
 "cn" = (
 /mob/living/simple_animal/hostile/syndicate/melee,
-/turf/unsimulated/floor{
-	icon_state = "carpet1-0"
-	},
+/turf/unsimulated/floor/carpet,
 /area/awaymission/challenge/end)
 "co" = (
 /turf/simulated/shuttle/floor/wagon{
@@ -804,9 +796,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/challenge/end)
 "cq" = (
-/turf/unsimulated/floor{
-	icon_state = "carpet10-0"
-	},
+/turf/unsimulated/floor/carpet,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

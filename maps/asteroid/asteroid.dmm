@@ -552,9 +552,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -634,9 +632,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bG" = (
 /obj/structure/table,
@@ -7159,9 +7155,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "pg" = (
 /obj/structure/cable{
@@ -7566,9 +7560,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qd" = (
 /obj/machinery/door/firedoor,
@@ -7902,9 +7894,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qX" = (
 /obj/effect/decal/turf_decal{
@@ -8237,9 +8227,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "rN" = (
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
+/turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "rO" = (
 /obj/structure/barricade/wooden,
@@ -13316,6 +13304,9 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"XD" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -51344,7 +51335,7 @@ ac
 ac
 ac
 mY
-rN
+XD
 ar
 aa
 aa
@@ -51601,7 +51592,7 @@ aa
 mY
 aa
 ar
-rN
+XD
 ar
 aa
 kO
@@ -51858,7 +51849,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 kO
 kO
@@ -52115,7 +52106,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 rK
 rK
@@ -52372,7 +52363,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 rK
 rK
 rK
@@ -52629,7 +52620,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 rK
 rK
 aa
@@ -52886,7 +52877,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
@@ -53143,7 +53134,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
@@ -53400,7 +53391,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
