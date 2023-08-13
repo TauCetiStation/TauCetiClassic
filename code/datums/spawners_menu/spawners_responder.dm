@@ -110,3 +110,25 @@
 	fluff_text = "Яррр! Ты - космический пират! Жалкие сухопутные крысы подали сигнал о помощи и должны за это расплатиться своим добром! Слушайся капитана и старайся никого не прикончить!"
 	naming_allowed = FALSE
 	faction = /datum/faction/responders/pirates
+
+/datum/spawner/responders/engineering
+	outfit = /datum/outfit/responders/nanotrasen_ert/engineer/ect
+	leader_outfit = /datum/outfit/responders/nanotrasen_ert/leader/ect
+	leader_text = "Ты - <B>лидер</B> отряда Инженерного Корпуса НТ! Вы засекли сигнал бедствия от одной из станций НТ, и зная, насколько часто на них случаются разные аварии, вы решили добавить ещё одну заслугу в рапорт. Будучи лидером отряда, ты так же отвечаешь за его охрану, как самый тяжеловооруженный боец."
+	fluff_text = "Ты - член отряда Инженерного Корпуса НТ! Вы засекли сигнал бедствия от одной из станций НТ, и зная, насколько часто на них случаются разные аварии, вы решили добавить ещё одну заслугу в рапорт."
+	faction = /datum/faction/responders
+
+/datum/spawner/responders/medical
+	outfit = /datum/outfit/responders/nanotrasen_ert/medic/emt
+	leader_outfit = /datum/outfit/responders/nanotrasen_ert/leader/emt
+	medic_outfit = /datum/outfit/responders/nanotrasen_ert/medic/emt/surgeon
+	leader_text = "Ты - <B>лидер</B> экстренного медицинского отряда НТ! Вы засекли сигнал бедствия от одной из станций НТ, и зная, насколько часто на них случаются разные аварии, вы решили добавить ещё одну заслугу в рапорт. Будучи лидером отряда, ты так же отвечаешь за его охрану, как самый тяжеловооруженный боец."
+	fluff_text = "Ты - член экстренного медицинского отряда НТ! Вы засекли сигнал бедствия от одной из станций НТ, и зная, насколько часто на них случаются разные аварии, вы решили добавить ещё одну заслугу в рапорт."
+	faction = /datum/faction/responders
+
+/datum/spawner/responders/soviet
+	outfit = /datum/outfit/responders/ussp
+	leader_outfit = /datum/outfit/responders/ussp/leader
+	leader_text = "Ты - <B>комиссар</B> разведвзвода СССП! Чертовы капиталисты отправили сигнал бедствия и скоро об этом пожалеют! Буржуев-глав - к стенке, а их работникам нечего терять, кроме цепей!"
+	fluff_text = "Ты - солдат разведвзвода СССП! Чертовы капиталисты отправили сигнал бедствия и скоро об этом пожалеют! Буржуев-глав - к стенке, а их работникам нечего терять, кроме цепей!"
+	faction = /datum/faction/responders/soviet
