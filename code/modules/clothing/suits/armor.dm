@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
@@ -42,7 +42,7 @@
 	icon_state = "armorsec"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
@@ -197,7 +197,7 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 0.2
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/clothing/head/helmet, /obj/item/weapon/tank)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/clothing/head/helmet, /obj/item/weapon/tank)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -232,39 +232,70 @@
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
-/obj/item/clothing/suit/armor/reactive
-	name = "reactive teleport armor"
-	desc = "Someone seperated our Research Director from his own head!"
-	var/active = 0.0
+/obj/item/clothing/suit/armor/vest/reactive
+	name = "experimental teleport armor"
+	desc = "High-tech armor with a huge bunch of sensors and fancy stuff inside. But why was this armor entrusted to a scientist?"
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
-	blood_overlay_type = "armor"
-	slowdown = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/active = FALSE
 
-/obj/item/clothing/suit/armor/reactive/Get_shield_chance()
+/obj/item/clothing/suit/armor/vest/reactive/Get_shield_chance()
 	if(active)
-		return 35
+		return 50
 	return 0
 
-/obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	src.active = !( src.active )
-	if (src.active)
-		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
-		src.icon_state = "reactive"
-		src.item_state = "reactive"
+/obj/item/clothing/suit/armor/vest/reactive/attack_self(mob/user)
+	active = !(active)
+	if(active)
+		to_chat(user, "<span class='notice'>The reactive armor is now active. Solid protective system deactivated.</span>")
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+		icon_state = "reactive"
+		item_state = "reactive"
+		add_fingerprint(user)
 	else
-		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
-		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
+		to_chat(user, "<span class='notice'>The reactive armor is now inactive. Solid protective system activated.</span>")
+		armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
+		icon_state = "reactiveoff"
+		item_state = "reactiveoff"
 		add_fingerprint(user)
 	return
 
-/obj/item/clothing/suit/armor/reactive/emp_act(severity)
-	active = 0
-	src.icon_state = "reactiveoff"
-	src.item_state = "reactiveoff"
+/obj/item/clothing/suit/armor/vest/reactive/emp_act(severity)
+	active = FALSE
+	icon_state = "reactiveoff"
+	item_state = "reactiveoff"
+	armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
 	..()
+
+/obj/item/clothing/suit/armor/vest/reactive/proc/teleport_user(range, mob/user, text)
+	if(!isnull(text))
+		visible_message("<span class='userdanger'>The reactive teleport system flings [user.name] clear of [text]!</span>")
+	var/list/turfs = list()
+	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
+	smoke.set_up(5, 0, user.loc)
+	smoke.attach(user)
+	smoke.start()
+	for(var/turf/T in orange(range))
+		if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+			continue
+		if(isenvironmentturf(T))
+			continue
+		if(T.density)
+			continue
+		if(T.x>world.maxx-6 || T.x<6)
+			continue
+		if(T.y>world.maxy-6 || T.y<6)
+			continue
+		turfs += T
+	if(!turfs.len)
+		turfs += pick(/turf in orange(range))
+	var/turf/picked = pick(turfs)
+	if(!isturf(picked))
+		return
+	user.forceMove(picked)
+	playsound(user, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 
 //All of the armor below is mostly unused

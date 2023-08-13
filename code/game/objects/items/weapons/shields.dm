@@ -13,9 +13,9 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -85,7 +85,7 @@
 	add_filter("wallshield_outline", 2, outline_filter(1, "#c0c0c0"))
 	update_icon()
 	update_inv_mob()
-	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), .proc/user_moved)
+	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), PROC_REF(user_moved))
 	return TRUE
 
 /obj/item/weapon/shield/proc/disable_wallshield(mob/living/user)
@@ -193,12 +193,12 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/energy, can_sweep))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/energy, can_sweep_push))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -228,6 +228,7 @@
 			turn_off()
 
 /obj/item/weapon/shield/energy/on_enter_storage(obj/item/weapon/storage/S)
+	..()
 	if(active)
 		attack_self(usr)
 
@@ -255,12 +256,12 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/riot/tele, can_sweep))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/riot/tele, can_sweep_push))
 
 	AddComponent(/datum/component/swiping, SCB)
 

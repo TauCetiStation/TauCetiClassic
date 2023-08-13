@@ -96,7 +96,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	flick("d_analyzer_process", src)
 	if(linked_console)
 		linked_console.screen = "working"
-	addtimer(CALLBACK(src, .proc/finish_deconstructing), 15)
+	addtimer(CALLBACK(src, PROC_REF(finish_deconstructing)), 15)
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/finish_deconstructing()
 	busy = FALSE

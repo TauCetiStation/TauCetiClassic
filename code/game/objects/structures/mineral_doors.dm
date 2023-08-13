@@ -20,7 +20,7 @@
 
 /obj/structure/mineral_door/atom_init()
 	. = ..()
-	update_nearby_tiles(need_rebuild = TRUE)
+	update_nearby_tiles()
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
@@ -283,7 +283,7 @@
 
 /obj/structure/mineral_door/resin/Open()
 	..()
-	addtimer(CALLBACK(src, .proc/TryToClose), close_delay)
+	addtimer(CALLBACK(src, PROC_REF(TryToClose)), close_delay)
 
 /obj/structure/mineral_door/resin/proc/TryToClose()
 	if(!isSwitchingStates && !close_state)

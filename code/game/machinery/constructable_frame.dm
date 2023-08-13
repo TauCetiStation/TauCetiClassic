@@ -196,7 +196,7 @@
 					if(!co.crit_fail)
 						part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, /proc/cmp_rped_sort)
+				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
@@ -275,7 +275,7 @@ to destroy them and players will be able to make replacements.
 		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(vending_name))
 			return
-		
+
 		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
 
 		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")

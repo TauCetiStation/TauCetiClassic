@@ -800,9 +800,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
 		was_lying = lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)))
-		drop_l_hand()
-		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
@@ -1216,7 +1213,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets["[d]"] = map_to
 		pos_dirs -= map_to
 
-	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(randomise_inputs)), randomise_inputs_cooldown)
 
 /mob/proc/AdjustConfused(amount)
 	confused += amount
@@ -1278,9 +1275,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if("run")
 			if(drowsyness > 0)
 				. += 6
-			. += 1 + config.run_speed
+			. += config.run_speed
 		if("walk")
-			. += 2.5 + config.walk_speed
+			. += config.walk_speed
 
 // return TRUE if we failed our interaction
 /mob/proc/interact_prob_brain_damage(atom/object)

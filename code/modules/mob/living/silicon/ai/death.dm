@@ -47,7 +47,7 @@
 
 	if(explosive)
 		spawn(10)
-			explosion(src.loc, 3, 6, 12, 15)
+			explosion(src.loc, 3, 6, 12, 14)
 
 	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		spawn( 0 )

@@ -218,7 +218,7 @@
 		var/datum/bridge_command/C = new command
 		global.bridge_commands[C.name] = C
 
-	sortTim(bridge_commands, /proc/cmp_bridge_commands)
+	sortTim(bridge_commands, GLOBAL_PROC_REF(cmp_bridge_commands))
 
 	global.metahelps = list()
 	for(var/help in subtypesof(/datum/metahelp))
@@ -259,6 +259,15 @@
 	global.smartlight_presets = list()
 	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
 		smartlight_presets[initial(type.name)] = type
+
+	global.virus_by_pool = list()
+	for(var/e in subtypesof(/datum/disease2/effect))
+		var/datum/disease2/effect/f = new e
+		var/list/L = f.pools
+		if(!L.len)
+			continue
+		for(var/pool in L)
+			LAZYADD(virus_by_pool[pool], f)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

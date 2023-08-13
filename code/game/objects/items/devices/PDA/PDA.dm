@@ -186,7 +186,7 @@
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
+	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
 
 /obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))
@@ -220,8 +220,8 @@
 			remove_user_slip(user)
 
 /obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
-	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
-	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, PROC_REF(make_user_slip))
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, PROC_REF(remove_user_slip))
 
 /obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
 	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
@@ -437,10 +437,15 @@
 	popup.set_content(HTML)
 	popup.open()
 
-
 /obj/item/device/pda/silicon/can_use()
-	return 1
-
+	var/mob/living/silicon/ai/ai_user = loc
+	if(istype(ai_user) && ai_user.control_disabled)
+		return FALSE
+	else
+		var/mob/living/silicon/robot/borg_user = loc
+		if(istype(borg_user) && borg_user.incapacitated())
+			return FALSE
+	return TRUE
 
 /obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -515,7 +520,7 @@
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
-	
+
 	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
 	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
 	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
@@ -1920,6 +1925,8 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
+	else
+		boss_PDA = 0
 
 /obj/item/device/pda/proc/check_pda_server()
 	if(!global.message_servers)

@@ -14,6 +14,7 @@
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
+#define EVIL_SHADE             "Evil Shade"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"
@@ -45,9 +46,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_ALIEN      = list(IGNORE_LARVA),
 	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE, IGNORE_EMINENCE),
 	ROLE_BLOB       = list(IGNORE_EVENT_BLOB),
-	ROLE_NINJA      = null,
 	ROLE_SHADOWLING = null,
-	ROLE_ABDUCTOR   = null,
 	ROLE_FAMILIES   = null,
 	ROLE_REPLICATOR = null,
 	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE),

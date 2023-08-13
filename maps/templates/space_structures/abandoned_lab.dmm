@@ -322,9 +322,12 @@
 	},
 /area/space_structures/derelict_lab)
 "bb" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "bc" = (
@@ -414,8 +417,11 @@
 /area/space_structures/derelict_lab)
 "bq" = (
 /obj/effect/decal/cleanable/blood,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "br" = (
@@ -471,21 +477,6 @@
 	},
 /turf/simulated/floor{
 	icon_state = "white"
-	},
-/area/space_structures/derelict_lab)
-"bz" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
-/area/space_structures/derelict_lab)
-"bA" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
 	},
 /area/space_structures/derelict_lab)
 "bB" = (
@@ -652,9 +643,8 @@
 	},
 /area/space_structures/derelict_lab)
 "ca" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "cb" = (
 /obj/structure/table/glass,
@@ -696,19 +686,20 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "ch" = (
 /obj/machinery/door/airlock/engineering/glass,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "ci" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "cj" = (
@@ -734,8 +725,11 @@
 /area/space_structures/derelict_lab)
 "cm" = (
 /obj/machinery/suit_storage_unit/science,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "cn" = (
@@ -743,14 +737,20 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "co" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "cp" = (
@@ -829,8 +829,11 @@
 "cB" = (
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/structure/rack,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "cC" = (
@@ -920,8 +923,11 @@
 "HA" = (
 /obj/structure/rack,
 /obj/item/device/radio/off,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "IX" = (
@@ -954,9 +960,8 @@
 /area/space_structures/derelict_lab)
 "Zu" = (
 /obj/effect/decal/remains/human,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/derelict_lab)
 
 (1,1,1) = {"
@@ -1385,9 +1390,9 @@ ar
 ac
 aa
 ac
-bA
-bA
-bA
+ca
+ca
+ca
 Zu
 ac
 "}
@@ -1409,7 +1414,7 @@ ae
 cd
 aa
 ac
-bA
+ca
 Yw
 ca
 ca
@@ -1502,10 +1507,10 @@ bi
 bi
 bi
 ca
-bA
+ca
 cg
-bz
-bA
+cg
+ca
 VN
 VN
 VN

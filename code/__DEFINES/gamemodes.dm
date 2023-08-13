@@ -9,6 +9,8 @@
 #define F_CUSTOMSQUAD        "Custom Squad"
 #define F_DEATHSQUAD         "Nanotrasen Deathsquad"
 #define F_EMERSQUAD          "Emergency Response Team"
+#define F_EMERNUKE           "Gorlex Marauders Recon Squad"
+#define F_EMERPIRATES        "Pirate Gang"
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"
@@ -63,6 +65,8 @@
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
 #define REPLICATOR "Replicator"
+#define PIRATE "Pirate"
+#define PRISONER "Prisoner"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
@@ -76,9 +80,11 @@
 ///////////////// FACTION STAGES //////////////////////
 #define FS_DEFEATED    -1
 #define FS_DORMANT      0
-#define FS_ACTIVE       1
-#define FS_ENDGAME      2
-#define FS_VICTORY      3
+#define FS_START        1
+#define FS_ACTIVE       2
+#define FS_MIDGAME      3
+#define FS_ENDGAME      4
+#define FS_VICTORY      5
 
 /////////////////////// OTHERS ////////////////////////
 

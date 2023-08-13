@@ -93,7 +93,7 @@ var/global/bridge_secret = null
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url = "http://example.org"
+	var/media_base_url
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url
@@ -125,8 +125,8 @@ var/global/bridge_secret = null
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+	var/run_speed = 3
+	var/walk_speed = 5
 
 	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 	var/human_delay = 0
@@ -210,6 +210,8 @@ var/global/bridge_secret = null
 	var/record_replays = FALSE
 
 	var/use_persistent_cache = FALSE
+
+	var/reactionary_explosions = TRUE
 
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on

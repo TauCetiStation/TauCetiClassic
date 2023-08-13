@@ -80,6 +80,7 @@
 #define ANTAG_HUD_GANGSTER      "antag_hud_gangster"
 #define ANTAG_HUD_SPACECOP      "antag_hud_cop"
 #define ANTAG_HUD_REPLICATOR    "antag_hud_replicator"
+#define ANTAG_HUD_PIRATES       "antag_hud_pirates"
 
 
 /// cooldown for being shown the images for any particular data hud

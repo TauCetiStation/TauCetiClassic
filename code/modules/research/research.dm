@@ -1593,13 +1593,13 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "binary_encryption_key"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.1
-	y = 0.5
+	x = 0.25
+	y = 0.2
 	icon = "headset"
 
 	required_technologies = list()
 	required_tech_levels = list(RESEARCH_BLUESPACE = 5)
-	cost = 2000
+	cost = 1000
 
 	unlocks_designs = list("binaryencrypt")
 
@@ -1609,13 +1609,13 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "chameleon_kit"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.3
-	y = 0.5
+	x = 0.50
+	y = 0.2
 	icon = "chamelion"
 
 	required_technologies = list("binary_encryption_key")
 	required_tech_levels = list(RESEARCH_ENGINEERING = 10)
-	cost = 3000
+	cost = 2000
 
 	unlocks_designs = list("chameleon")
 
@@ -1625,8 +1625,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "freedom_implant"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.5
-	y = 0.5
+	x = 0.75
+	y = 0.2
 	icon = "freedom"
 
 	required_technologies = list("chameleon_kit")
@@ -1641,7 +1641,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "tyrant_aimodule"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.7
+	x = 0.75
 	y = 0.5
 	icon = "module"
 
@@ -1657,12 +1657,76 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "borg_syndicate_module"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.9
+	x = 0.50
 	y = 0.5
 	icon = "borgmodule"
 
 	required_technologies = list("tyrant_aimodule")
 	required_tech_levels = list(RESEARCH_ROBOTICS = 10)
-	cost = 5000
+	cost = 4000
 
 	unlocks_designs = list("borg_syndicate_module")
+
+/datum/technology/ai_detector
+	name = "Artificial Intelligence Detector"
+	desc = "Artificial Intelligence Detector"
+	id = "ai_detector"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.25
+	y = 0.5
+	icon = "aidetector"
+
+	required_technologies = list("borg_syndicate_module")
+	required_tech_levels = list(RESEARCH_ROBOTICS = 10)
+	cost = 4000
+
+	unlocks_designs = list("ai_detector")
+
+/datum/technology/smuggler_satch
+	name = "Smuggler's Satchel"
+	desc = "Smuggler's Satchel"
+	id = "smuggler_satch"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.25
+	y = 0.8
+	icon = "smuggler"
+
+	required_technologies = list("ai_detector")
+	required_tech_levels = list(RESEARCH_BLUESPACE = 6)
+	cost = 4000
+
+	unlocks_designs = list("smuggler_satch")
+
+/datum/technology/voice_changer
+	name = "Voice Changer"
+	desc = "Voice Changer"
+	id = "voice_changer"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.50
+	y = 0.8
+	icon = "voicechanger"
+
+	required_technologies = list("smuggler_satch")
+	required_tech_levels = list(RESEARCH_BIOTECH = 7)
+	cost = 5000
+
+	unlocks_designs = list("voice_changer")
+
+/datum/technology/camera_bug
+	name = "Camera Bug"
+	desc = "Camera Bug"
+	id = "camera_bug"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.75
+	y = 0.8
+	icon = "camerabug"
+
+	required_technologies = list("voice_changer")
+	required_tech_levels = list(RESEARCH_ENGINEERING = 12)
+	cost = 5000
+
+	unlocks_designs = list("camera_bug")

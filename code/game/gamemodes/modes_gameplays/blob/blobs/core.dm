@@ -19,7 +19,7 @@ var/global/list/blob_nodes = list()
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(!OV)
-		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
+		INVOKE_ASYNC(src, PROC_REF(create_overmind), new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
 	update_integrity(h)
@@ -30,6 +30,11 @@ var/global/list/blob_nodes = list()
 	blob_cores -= src
 	QDEL_NULL(OV)
 	STOP_PROCESSING(SSobj, src)
+
+	var/datum/faction/blob_conglomerate/F = find_faction_by_type(/datum/faction/blob_conglomerate)
+	if(!F.detect_overminds())
+		F.stage(FS_DEFEATED)
+
 	return ..()
 //	return
 
@@ -99,8 +104,6 @@ var/global/list/blob_nodes = list()
 					ded = FALSE
 					break
 		add_faction_member(conglomerate, B, !ded)
-
-	conglomerate.declared = TRUE
 
 	B.b_congl = conglomerate
 	notify_ghosts("[B] in [get_area(B)]!", source=B, action=NOTIFY_ORBIT, header="Blob")

@@ -484,6 +484,9 @@ SUBSYSTEM_DEF(job)
 
 		H.mind.store_memory(remembered_info)
 
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER, department_account.account_number)
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_PIN, department_account.remote_access_pin)
+
 	spawn(0)
 		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
 

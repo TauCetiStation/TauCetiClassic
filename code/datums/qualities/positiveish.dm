@@ -67,7 +67,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/insulated(H), SLOT_L_STORE)
 
 
 /datum/quality/positiveish/disguise
@@ -309,7 +309,7 @@
 		to_chat(seer, "<span class='notice'>Their gaze is somewhere at the level of \the [parse_zone(target_zone)].</span>")
 
 /datum/quality/positiveish/eye_reading/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)
+	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), PROC_REF(see_intent))
 
 
 /datum/quality/positiveish/deathalarm
@@ -331,13 +331,13 @@
 	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
 
 
-/datum/quality/positiveish/selfdefense
-	name = "Self Defense"
+/datum/quality/positiveish/petiteprotector
+	name = "Petite Protector"
 	desc = "На станции всё опаснее и опаснее. Руководство выдало тебе новое средство самозащиты."
 	requirement = "Безоружные главы, АВД."
 	jobs_required = list("Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
 
-/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/positiveish/petiteprotector/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
 
 
@@ -386,7 +386,16 @@
 	if(is_species(H, TAJARAN))
 		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
 	else
-		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/wjpp(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/wjpp(H), SLOT_S_STORE)
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
+
+
+/datum/quality/positiveish/selfdefense
+	name = "Self Defense"
+	desc = "Самооборона - это важно. Ты спрятал пушку в одной из мусорок."
+	requirement = "Нет."
+
+/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)

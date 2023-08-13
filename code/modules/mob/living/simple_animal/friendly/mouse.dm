@@ -1,15 +1,15 @@
 /mob/living/simple_animal/mouse
 	name = "mouse"
 	real_name = "mouse"
-	desc = null
+	desc = "Это маленький, поражённый болезнями грызун."
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	icon_move = "mouse_gray_move"
-	speak = list("Squeek!","SQUEEK!","Squeek?")
-	speak_emote = list("squeeks","squeeks","squiks")
-	emote_hear = list("squeeks","squeaks","squiks")
-	emote_see = list("runs in a circle", "shakes", "scritches at something")
+	speak = list("Пии!","ПИИ!","Пии?")
+	speak_emote = list("пищит")
+	emote_hear = list("пищит")
+	emote_see = list("бегает вокруг","чешется")
 	pass_flags = PASSTABLE | PASSMOB
 	w_class = SIZE_MINUSCULE
 	speak_chance = 1
@@ -82,8 +82,7 @@
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
 	icon_move = "mouse_[body_color]_move"
-	if(!desc)
-		desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
+	desc = "Это маленький, поражённый болезнями грызун."
 
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0
@@ -196,7 +195,7 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
-	desc = "Jerry the cat is not amused."
+	desc = "Он не нравится коту Джерри..."
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
@@ -210,7 +209,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	icon_living = "rat"
 	icon_dead = "rat_dead"
 	icon_move = "rat"
-	desc = "It's a big pest mouse."
+	desc = "Это большая вредная мышь."
 	maxHealth = 50
 	health = 50
 	changes_color = FALSE

@@ -82,7 +82,7 @@
 	if((HULK in user.mutations) && user.hulk_activator == ACTIVATOR_HEAVY_MUSCLE_LOAD)
 		to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
 
-	INVOKE_ASYNC(src, .proc/try_pump, user)
+	INVOKE_ASYNC(src, PROC_REF(try_pump), user)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -185,7 +185,7 @@
 	user.visible_message("<B>[user] is [bragmessage]!</B>")
 	user.pixel_y = 5
 
-	INVOKE_ASYNC(src, .proc/try_pump, user)
+	INVOKE_ASYNC(src, PROC_REF(try_pump), user)
 
 /obj/structure/dumbbells_rack
 	name = "dumbbells rack"
@@ -210,8 +210,8 @@
 	dumbbells.set_slots(slots = 4, slot_size = SIZE_BIG)
 	dumbbells.can_hold = list(/obj/item/weapon/dumbbell)
 
-	RegisterSignal(dumbbells, list(COMSIG_STORAGE_ENTERED), .proc/add_dumbbell)
-	RegisterSignal(dumbbells, list(COMSIG_STORAGE_EXITED), .proc/remove_dumbbell)
+	RegisterSignal(dumbbells, list(COMSIG_STORAGE_ENTERED), PROC_REF(add_dumbbell))
+	RegisterSignal(dumbbells, list(COMSIG_STORAGE_EXITED), PROC_REF(remove_dumbbell))
 
 	var/list/dumbbells_to_add = list()
 
@@ -287,7 +287,6 @@
 	force = 7.0
 	sharp = 0
 	throwforce = 5.0
-	throw_speed = 5
 	throw_range = 3
 	w_class = SIZE_NORMAL
 
@@ -302,7 +301,7 @@
 	force = 10.0
 	sharp = 0
 	throwforce = 8.0
-	throw_speed = 5
+	throw_speed = 1
 	throw_range = 1
 	w_class = SIZE_NORMAL
 
