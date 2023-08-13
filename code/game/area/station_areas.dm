@@ -16,6 +16,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //EXODUS
 
+ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
+
 //Engineering
 
 /area/station/engineering
@@ -125,6 +127,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 	sound_environment = SOUND_AREA_SMALL_METALLIC
+	outdoors = TRUE
 
 /area/station/solar/auxport
 	name = "Fore Port Solar Array"
@@ -248,6 +251,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "nuke_storage"
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/vault_1.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+
+/area/station/bridge/cmf_room
+	name = "CMF altering room"
+	icon_state = "cmf"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/bridge_1.ogg')
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 //Civilian
@@ -535,6 +545,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Brig"
 	icon_state = "brig"
 
+/area/station/security/brig/solitary_confinement
+	name = "Solitary Confinement"
+
 /area/station/security/interrogation
 	name = "Interrogation"
 	icon_state = "interrogation"
@@ -549,6 +562,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Prison Wing"
 	icon_state = "sec_prison"
 	ambience = list('sound/ambience/prison_1.ogg')
+
+/area/station/security/prison/toilet
+	name = "Prison Toilet"
 
 /area/station/security/warden
 	name = "Warden"
@@ -593,6 +609,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/iaa_office
 	name = "Internal Affairs"
 	icon_state = "law"
+
+/area/station/security/blueshield
+	name = "Blueshield Office"
+	icon_state = "law"
+
+/area/station/security/blueshield/shuttle
+	name = "Blueshield Shuttle"
 
 /area/station/security/lawyer_office
 	name = "Lawyer Office"

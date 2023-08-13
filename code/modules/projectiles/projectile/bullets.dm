@@ -4,7 +4,7 @@
 	damage = 60
 	damage_type = BRUTE
 	nodamage = 0
-	flag = "bullet"
+	flag = BULLET
 	embed = 1
 	sharp = 1
 	var/stoping_power = 0
@@ -35,13 +35,14 @@
 
 /obj/item/projectile/bullet/slug
 	name = "shotgun slug"
-	damage = 40
-	stoping_power = 3
+	damage = 30
+	armor_multiplier = 0.4
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
-	dispersion = 4.0
+	damage = 14
+	dispersion = 2.5
+	armor_multiplier = 1.25
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -67,13 +68,14 @@
 	name = "high velocity bullet"
 	damage = 20
 	hitscan = 1
+	armor_multiplier = 0.7
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
 
 /obj/item/projectile/bullet/revbullet //.357
-	damage = 35
-	stoping_power = 8
+	damage = 60
+	armor_multiplier = 1.5
 
 /obj/item/projectile/bullet/rifle1
 	damage = 40
@@ -115,7 +117,7 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	explosion(target, 1, 1, 2)
+	explosion(target, 0, 1, 2)
 	return 1
 
 /obj/item/projectile/bullet/chem
@@ -207,7 +209,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	icon_state = "spark"
-	flag = "energy"
+	flag = ENERGY
 	damage = 5
 	stun = 0
 	weaken = 0

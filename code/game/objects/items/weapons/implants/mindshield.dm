@@ -26,11 +26,16 @@
 		"<span class='userdanger'>Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!</span>")
 		H.adjustBrainLoss(80)
 
+	for(var/obj/item/weapon/implant/skill/S in H)
+		if(S.implanted)
+			S.meltdown()
+
 	return TRUE
 
 /obj/item/weapon/implant/mind_protect/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
+	implant_trait = TRAIT_VISUAL_MINDSHIELD
 
 /obj/item/weapon/implant/mind_protect/mindshield/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -47,6 +52,7 @@
 /obj/item/weapon/implant/mind_protect/loyalty
 	name = "loyalty implant"
 	desc = "Makes you loyal or such."
+	implant_trait = TRAIT_VISUAL_LOYAL
 
 /obj/item/weapon/implant/mind_protect/loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
@@ -83,6 +89,9 @@
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
 				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
 
+		for(var/obj/item/weapon/implant/skill/S in M)
+			if(S.implanted)
+				S.meltdown()
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 

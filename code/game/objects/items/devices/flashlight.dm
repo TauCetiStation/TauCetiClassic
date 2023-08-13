@@ -32,6 +32,14 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
+/obj/item/device/flashlight/turn_light_off()
+	. = ..()
+	on = FALSE
+	icon_state = initial(icon_state)
+	last_button_sound = world.time + 3
+	if(button_sound)
+		playsound(src, button_sound, VOL_EFFECTS_MASTER, 20)
+
 /obj/item/device/flashlight/attack_self(mob/user)
 	if (last_button_sound >= world.time)
 		return 0
@@ -46,7 +54,6 @@
 	on = !on
 	last_button_sound = world.time + 3
 	update_brightness(user)
-	action_button_name = null
 	return 1
 
 /obj/item/device/flashlight/get_current_temperature()
@@ -64,7 +71,7 @@
 	add_fingerprint(user)
 	if(on && def_zone == O_EYES)
 
-		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
@@ -212,6 +219,11 @@
 		update_inv_mob()
 	STOP_PROCESSING(SSobj, src)
 
+/obj/item/device/flashlight/flare/turn_light_off()
+	. = ..()
+	fuel = 0
+	turn_off()
+
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
@@ -228,7 +240,7 @@
 
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
-		src.damtype = "fire"
+		src.damtype = BURN
 		item_state = icon_state
 		update_inv_mob()
 		START_PROCESSING(SSobj, src)
@@ -238,7 +250,7 @@
 	name = "glowing slime extract"
 	desc = "A glowing ball of what appears to be amber."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "floor1" //not a slime extract sprite but... something close enough!
+	icon_state = "floor" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
 	w_class = SIZE_MINUSCULE
 	m_amt = 0
@@ -257,12 +269,17 @@
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
 
+/obj/item/device/flashlight/slime/turn_light_off()
+	. = ..()
+	to_chat(loc, "<span class='notice'>[src] melts!</span>")
+	qdel(src)
+
+
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
-
 
 /obj/item/device/flashlight/emp/atom_init()
 	. = ..()

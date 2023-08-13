@@ -17,6 +17,8 @@
 	density = TRUE
 	anchored = TRUE
 
+	resistance_flags = CAN_BE_HIT
+
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -37,6 +39,10 @@
 
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
+	if(!allowed(usr))
+		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
+		return FALSE
+
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/weapon/paper_bundle))
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		user.drop_from_inventory(P, src)
@@ -45,7 +51,7 @@
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 
-	else if(iswrench(P))
+	else if(iswrenching(P))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
@@ -54,8 +60,19 @@
 	else
 		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
 
+/obj/structure/filingcabinet/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
+	if(!allowed(usr))
+		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
+		return FALSE
+
 	if(contents.len <= 0)
 		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 		return

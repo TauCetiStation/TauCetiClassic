@@ -144,6 +144,9 @@
 	if(!..())
 		return FALSE
 
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
+
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8
@@ -158,6 +161,7 @@
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (sight_mode & BORGNIGHT)
 		sight_modifier = "nvg"
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	else if (sight_mode & BORGTHERM)
 		sight_modifier = "thermal"
 		sight |= SEE_MOBS

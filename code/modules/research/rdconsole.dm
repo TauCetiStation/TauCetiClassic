@@ -55,30 +55,28 @@ cause a ton of data to be lost, an admin can go send it back.
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
-
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
-	var/return_name = null
-	if (copytext(ID, 1, 2) == "$")
-		return_name = copytext(ID, 2)
-		switch(return_name)
-			if("metal")
-				return_name = "Metal"
-			if("glass")
-				return_name = "Glass"
-			if("gold")
-				return_name = "Gold"
-			if("silver")
-				return_name = "Silver"
-			if("phoron")
-				return_name = "Solid Phoron"
-			if("uranium")
-				return_name = "Uranium"
-			if("diamond")
-				return_name = "Diamond"
-			if("bananium")
-				return_name = "Bananium"
-	else
+	var/return_name
+	switch(ID)
+		if("metal")
+			return_name = "Metal"
+		if("glass")
+			return_name = "Glass"
+		if("gold")
+			return_name = "Gold"
+		if("silver")
+			return_name = "Silver"
+		if("phoron")
+			return_name = "Solid Phoron"
+		if("uranium")
+			return_name = "Uranium"
+		if("diamond")
+			return_name = "Diamond"
+		if("bananium")
+			return_name = "Bananium"
+	if(!return_name)
 		for(var/R in subtypesof(/datum/reagent))
 			temp_reagent = null
 			temp_reagent = new R()
@@ -114,12 +112,10 @@ cause a ton of data to be lost, an admin can go send it back.
 
 /obj/machinery/computer/rdconsole/atom_init()
 	. = ..()
-	RDcomputer_list += src
 	files = new /datum/research(src) //Setup the research data holder.
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
-	RDcomputer_list -= src
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null
@@ -138,7 +134,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
-	else if(ismultitool(D))
+	else if(ispulsing(D))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")
@@ -213,7 +209,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		else
 			screen = "working"
 			griefProtection() //Putting this here because I dont trust the sync process
-			addtimer(CALLBACK(src, .proc/sync_tech), 3 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(sync_tech)), 3 SECONDS)
 	if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
 		sync = !sync
 	if(href_list["select_category"])
@@ -280,7 +276,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		linked_imprinter.eject_sheet(href_list["imprinter_ejectsheet"], desired_num_sheets)
 	if(href_list["find_device"])
 		screen = "working"
-		addtimer(CALLBACK(src, .proc/find_devices), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(find_devices)), 2 SECONDS)
 	if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
 		switch(href_list["disconnect"])
 			if("destroy")
@@ -672,7 +668,7 @@ cause a ton of data to be lost, an admin can go send it back.
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
-	id = 2
+	id = DEFAULT_ROBOTICS_CONSOLE_ID
 	req_access = list(29)
 	can_research = FALSE
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
@@ -685,12 +681,12 @@ cause a ton of data to be lost, an admin can go send it back.
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
-	id = 1
+	id = DEFAULT_SCIENCE_CONSOLE_ID
 	can_research = TRUE
 
 /obj/machinery/computer/rdconsole/mining
 	name = "Mining R&D Console"
-	id = 3
+	id = DEFAULT_MINING_CONSOLE_ID
 	req_access = list(48)
 	can_research = FALSE
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)

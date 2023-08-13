@@ -118,14 +118,14 @@
 	// If it's not a cult type, then don't do it.
 	var/turf/T = target
 	if(T.type in global.cult_religion.wall_types)
-		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/wall)
+		INVOKE_ASYNC(src, PROC_REF(convert_effect), T, /turf/simulated/wall)
 	else if(T.type in global.cult_religion.floor_types)
-		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/floor)
+		INVOKE_ASYNC(src, PROC_REF(convert_effect), T, /turf/simulated/floor)
 
 	next_turf_deconvert = world.time + deconvert_turf_cd
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
@@ -134,7 +134,7 @@
 	if(user.mind?.holy_role < HOLY_ROLE_HIGHPRIEST || deconverting)
 		return
 
-	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
+	user.visible_message("<span class='danger'>[user] waves [src] over [M]'s head.</span>")
 
 	deconverting = TRUE
 	if(!do_after(user, 50, target = M))
@@ -151,22 +151,22 @@
 				user.adjustBruteLoss(10)
 				user.Paralyse(20)
 				return
-			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
+			to_chat(M, "<span class='danger'>Сила жезла очищает твой разум от влияния древних богов!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
 			C.Deconvert()
 			M.Paralyse(5)
 			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
 			M.mind.memory = ""
-			M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
+			M.visible_message("<span class='danger'><FONT size = 3>[M]'s head and see their eyes become clear, their mind returning to normal!</span></FONT>")
 
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
-			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
+			M.visible_message("<span class='danger'>[user] spews strength [src] into [M].</span>")
 		else
 			to_chat(user, "<span class='danger'>Жезл наказывает вас за ложное использование.</span>")
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
-			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
+			user.visible_message("<span class='danger'>[src] spews his power [user].</span>")
 			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
@@ -256,7 +256,7 @@
 			light_power = 5
 			searching = TRUE
 			request_player(user)
-			addtimer(CALLBACK(src, .proc/reset_search), 200)
+			addtimer(CALLBACK(src, PROC_REF(reset_search)), 200)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
 	var/list/candidates = pollGhostCandidates("Do you want to serve [user.my_religion.name] in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
@@ -445,10 +445,10 @@
 	down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
 	down_overlay.alpha = 100
 	add_overlay(down_overlay)
-	addtimer(CALLBACK(src, .proc/revert_effect), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(revert_effect)), 5 SECONDS)
 
 	var/shield_type = /obj/item/weapon/shield/riot/roman/religion
-	AddComponent(/datum/component/self_effect, shield_type, "#fffb0064", CALLBACK(src, .proc/only_holy), 3 MINUTE, 30 SECONDS, 1 MINUTE)
+	AddComponent(/datum/component/self_effect, shield_type, "#fffb0064", CALLBACK(src, PROC_REF(only_holy)), 3 MINUTE, 30 SECONDS, 1 MINUTE)
 
 /obj/item/weapon/claymore/religion/proc/only_holy(datum/source, mob/M)
 	if(M?.mind?.holy_role)
@@ -469,4 +469,4 @@
 /obj/item/weapon/claymore/religion/proc/revert_effect()
 	if(down_overlay)
 		cut_overlays(down_overlay)
-		qdel(down_overlay)
+		down_overlay = null

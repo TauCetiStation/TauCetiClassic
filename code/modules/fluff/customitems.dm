@@ -8,6 +8,26 @@
 
 #define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == 1 && "Head Hair" || flag == 2 && "Head & Face Hair" || "None")
 
+// items
+#define FLUFF_TYPE_NORMAL "normal"
+#define FLUFF_TYPE_SMALL "small"
+#define FLUFF_TYPE_LIGHTER "lighter"
+#define FLUFF_TYPE_HAT "hat"
+#define FLUFF_TYPE_UNIFORM "uniform"
+#define FLUFF_TYPE_SUIT "suit"
+#define FLUFF_TYPE_MASK "mask"
+#define FLUFF_TYPE_GLASSES "glasses"
+#define FLUFF_TYPE_GLOVES "gloves"
+#define FLUFF_TYPE_SHOES "shoes"
+#define FLUFF_TYPE_ACCESSORY "accessory"
+#define FLUFF_TYPE_LABCOAT "labcoat"
+// other
+//#define FLUFF_TYPE_ROBOT "robot"
+#define FLUFF_TYPE_GHOST "ghost"
+
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_GHOST)
+
+
 /obj/item/customitem
 	name = "Custom item"
 
@@ -20,7 +40,7 @@
 
 /obj/item/clothing/under/custom
 	name = "Custom uniform"
-	body_parts_covered = 0
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
@@ -51,7 +71,7 @@
 
 
 /datum/custom_item
-	var/item_type // normal, small, lighter
+	var/item_type // FLUFF_TYPES_LIST
 	var/name
 	var/desc
 	var/icon
@@ -169,6 +189,15 @@
 		items = list()
 	return items
 
+/proc/get_accepted_custom_items_by_type(ckey, type)
+	. = list()
+
+	var/list/custom_items = get_custom_items(ckey)
+	for(var/item_name in custom_items)
+		var/datum/custom_item/item = custom_items[item_name]
+		if(item.item_type == type && item.status == "accepted")
+			. += item
+
 /proc/get_custom_item(ckey, itemname)
 	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
@@ -200,6 +229,9 @@
 	if(!item)
 		return
 
+	if(item.item_type == FLUFF_TYPE_GHOST)
+		return
+
 	if(item_name in custom_items)
 		custom_items -= item_name
 	else if(item.status == "accepted")
@@ -217,37 +249,39 @@
 			continue
 		if(custom_item_info.status != "accepted")
 			continue
+		if(custom_item_info.item_type == FLUFF_TYPE_GHOST)
+			continue
 
 		//item spawning
 		var/obj/item/item = null
 
 		switch(custom_item_info.item_type)
-			if("normal", "small")
+			if(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL)
 				item = new /obj/item/customitem()
-			if("lighter")
+			if(FLUFF_TYPE_LIGHTER)
 				var/obj/item/weapon/lighter/zippo/custom/zippo = new /obj/item/weapon/lighter/zippo/custom()
 				zippo.icon_on = "[custom_item_info.icon_state]_on"
 				zippo.icon_off = custom_item_info.icon_state
 				item = zippo
-			if("hat")
+			if(FLUFF_TYPE_HAT)
 				item = new /obj/item/clothing/head/custom()
-			if("uniform")
+			if(FLUFF_TYPE_UNIFORM)
 				item = new /obj/item/clothing/under/custom()
-			if("suit")
+			if(FLUFF_TYPE_SUIT)
 				item = new /obj/item/clothing/suit/custom()
-			if("mask")
+			if(FLUFF_TYPE_MASK)
 				item = new /obj/item/clothing/mask/custom()
-			if("glasses")
+			if(FLUFF_TYPE_GLASSES)
 				item = new /obj/item/clothing/glasses/custom()
-			if("gloves")
+			if(FLUFF_TYPE_GLOVES)
 				item = new /obj/item/clothing/gloves/custom()
-			if("shoes")
+			if(FLUFF_TYPE_SHOES)
 				item = new /obj/item/clothing/shoes/custom()
-			if("accessory")
+			if(FLUFF_TYPE_ACCESSORY)
 				var/obj/item/clothing/accessory/custom/accessory = new /obj/item/clothing/accessory/custom()
 				accessory.inv_overlay = image("icon" = custom_item_info.icon, "icon_state" = "[custom_item_info.icon_state]_inv")
 				item = accessory
-			if("labcoat")
+			if(FLUFF_TYPE_LABCOAT)
 				var/obj/item/clothing/suit/storage/labcoat/custom/labcoat = new /obj/item/clothing/suit/storage/labcoat/custom()
 				if(!("[custom_item_info.icon_state]_open" in icon_states(custom_item_info.icon)))
 					labcoat.can_button_up = FALSE
@@ -271,7 +305,7 @@
 			if(FLUFF_HAIR_HIDE_ALL)
 				item.flags |= BLOCKHAIR
 
-		if(custom_item_info.item_type == "small")
+		if(custom_item_info.item_type == FLUFF_TYPE_SMALL)
 			item.w_class = SIZE_TINY
 
 

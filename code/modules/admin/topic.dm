@@ -295,7 +295,7 @@
 						if(timer_maint_revoke_id)
 							deltimer(timer_maint_revoke_id)
 							timer_maint_revoke_id = 0
-						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
+						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
@@ -747,6 +747,15 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
+		if(jobban_isbanned(M, ROLE_REPLICATOR) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
+
+		jobs += "</tr><tr align='center'>"
 
 		jobs += "</tr></table>"
 
@@ -1558,10 +1567,6 @@
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				return
-			else
-				H.update_inv_r_hand()//To ensure the icon appears in the HUD
-		else
-			H.update_inv_l_hand()
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
@@ -2190,8 +2195,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored '[title]' from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored '[title]' from the recycle bin")
 
 	else if(href_list["deletebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2221,8 +2226,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] removed [title] from the library database")
+		log_admin("[key_name(usr)] removed '[title]' from the library database by player request")
+		message_admins("[key_name_admin(usr)] removed '[title]' from the library database by player request")
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))
@@ -2249,7 +2254,7 @@
 
 	else if(href_list["salary"])
 		if(!check_rights(R_EVENT))	return
-		var/datum/money_account/account = locate(href_list["salary"])
+		var/datum/money_account/account = get_account(text2num(href_list["salary"]))
 		if(!account)
 			to_chat(usr, "<span class='warning'>Account not found!</span>")
 			return
@@ -2270,10 +2275,15 @@
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = new_ratio
+
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			var/datum/money_account/account = person["acc_datum"]
+			var/datum/money_account/account = get_account(person["account"])
+			if(!account)
+				continue
+
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = ratio_rate)
+
 		if(new_ratio == 1)	//if 0 was selected
 			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
 		else
@@ -2281,7 +2291,7 @@
 
 	// player info stuff
 
-	if(href_list["add_player_info"])
+	else if(href_list["add_player_info"])
 		var/key = ckey(href_list["add_player_info"])
 		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
 		if(!add) return
@@ -2297,7 +2307,7 @@
 		notes_del(key, index, usr.client)
 		show_player_notes(key)*/
 
-	if(href_list["notes"])
+	else if(href_list["notes"])
 		var/ckey = ckey(href_list["ckey"])
 		if(!ckey)
 			var/mob/M = locate(href_list["mob"])
@@ -2308,3 +2318,95 @@
 			if("show")
 				show_player_notes(ckey)
 		return
+
+	else if(href_list["change_lag_switch"])
+		if(!check_rights(R_SERVER))
+			return
+
+		switch(href_list["change_lag_switch"])
+			if("ALL_ON")
+				SSlag_switch.set_all_measures(TRUE)
+				log_admin("[key_name(usr)] turned all Lag Switch measures ON.")
+				message_admins("[key_name_admin(usr)] turned all Lag Switch measures ON.")
+			if("ALL_OFF")
+				SSlag_switch.set_all_measures(FALSE)
+				log_admin("[key_name(usr)] turned all Lag Switch measures OFF.")
+				message_admins("[key_name_admin(usr)] turned all Lag Switch measures OFF.")
+			else
+				var/switch_index = text2num(href_list["change_lag_switch"])
+				if(!SSlag_switch.set_measure(switch_index, !LAZYACCESS(SSlag_switch.measures, switch_index)))
+					to_chat(src, "<span class='warning'>Something went wrong when trying to toggle that Lag Switch. Check runtimes for more info.</span>", confidential = TRUE)
+				else
+					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
+					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
+
+		show_lag_switch_panel()
+
+	else if(href_list["change_lag_switch_option"])
+		if(!check_rights(R_SERVER))
+			return
+
+		switch(href_list["change_lag_switch_option"])
+			if("CANCEL")
+				if(SSlag_switch.cancel_auto_enable_in_progress())
+					log_admin("[key_name(usr)] canceled the automatic Lag Switch activation in progress.")
+					message_admins("[key_name_admin(usr)] canceled the automatic Lag Switch activation in progress.")
+				return // return here to avoid (re)rendering the panel for this case
+			if("TOGGLE_AUTO")
+				SSlag_switch.toggle_auto_enable()
+				log_admin("[key_name(usr)] toggled automatic Lag Switch activation [SSlag_switch.auto_switch ? "ON" : "OFF"].")
+				message_admins("[key_name_admin(usr)] toggled automatic Lag Switch activation [SSlag_switch.auto_switch ? "ON" : "OFF"].")
+			if("NUM")
+				var/new_num = input("Enter new threshold value:", "Num") as null|num
+				if(!isnull(new_num))
+					SSlag_switch.trigger_pop = new_num
+					log_admin("[key_name(usr)] set the Lag Switch automatic trigger pop to [new_num].")
+					message_admins("[key_name_admin(usr)] set the Lag Switch automatic trigger pop to [new_num].")
+			if("SLOWCOOL")
+				var/new_num = input("Enter new cooldown in seconds:", "Num") as null|num
+				if(!isnull(new_num))
+					SSlag_switch.change_slowmode_cooldown(new_num)
+					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
+					message_admins("[key_name_admin(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
+
+		show_lag_switch_panel()
+
+	else if(href_list["lag_switch_special"])
+		if(!check_rights(R_SERVER))
+			return
+
+		switch(href_list["lag_switch_special"])
+			if("STOP_DEMO")
+				if(!SSdemo.can_fire)
+					to_chat(usr, "<span class='notice'>Demo subsysem is already disabled or has not yet been initialized.</span>")
+					return
+				if(tgui_alert(usr, "Демо для этого раунда перестанет записываться, это действие не обратимо. Администраторы будут знать, кто виноват. Вы уверены?", "Выключить Демо?", list("Нет", "Да")) != "Да")
+					return
+
+				SSdemo.stop_demo(usr.client.ckey)
+				log_admin("[key_name(usr)] disabled Demo recording for this round.")
+				message_admins("[key_name_admin(usr)] disabled Demo recording for this round.")
+
+			if("STOP_AIRNET")
+				if(!SSair.stop_airnet_processing)
+					to_chat(usr, "<span class='notice'>Airnet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Трубы и прочая атмосферная машинерия перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Атмос?", list("Нет", "Да")) != "Да")
+					return
+
+				SSair.stop_airnet_processing = TRUE
+				log_admin("[key_name(usr)] broke airnet for this round.")
+				message_admins("[key_name_admin(usr)] broke airnet for this round.")
+
+			if("STOP_POWERNET")
+				if(!SSmachines.stop_powernet_processing)
+					to_chat(usr, "<span class='notice'>Powernet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Проводка перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Проводку?", list("Нет", "Да")) != "Да")
+					return
+
+				SSmachines.stop_powernet_processing = TRUE
+				log_admin("[key_name(usr)] broke powernet for this round.")
+				message_admins("[key_name_admin(usr)] broke powernet for this round.")
+
+		show_lag_switch_panel()

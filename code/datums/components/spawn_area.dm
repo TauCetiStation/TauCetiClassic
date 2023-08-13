@@ -27,7 +27,7 @@ var/global/list/datum/area_group/observer_groups
 	var/spawn_timer = addtimer(
 		CALLBACK(
 			src,
-			.proc/TrySpawn,
+			PROC_REF(TrySpawn),
 			L
 		),
 		delay,
@@ -41,7 +41,7 @@ var/global/list/datum/area_group/observer_groups
 
 	if(LAZYACCESS(observers, L))
 		return
-	RegisterSignal(L, list(COMSIG_PARENT_QDELETING), .proc/on_observer_qdel)
+	RegisterSignal(L, list(COMSIG_PARENT_QDELETING), PROC_REF(on_observer_qdel))
 
 /datum/area_group/proc/remove_observer(mob/living/L)
 	deltimer(LAZYACCESS(observers, L))
@@ -133,7 +133,7 @@ var/global/list/datum/area_group/observer_groups
 	src.spawn_frequency = spawn_frequency
 	src.despawn_frequency = despawn_frequency
 
-	RegisterSignal(parent, list(COMSIG_AREA_ENTERED), .proc/on_entry)
+	RegisterSignal(parent, list(COMSIG_AREA_ENTERED), PROC_REF(on_entry))
 
 /datum/component/spawn_area/Destroy()
 	UnregisterSignal(parent, list(COMSIG_AREA_ENTERED))
@@ -210,7 +210,7 @@ var/global/list/datum/area_group/observer_groups
 
 	AG.add_observer(L, spawn_frequency)
 
-	RegisterSignal(L, list(COMSIG_EXIT_AREA), .proc/on_exit)
+	RegisterSignal(L, list(COMSIG_EXIT_AREA), PROC_REF(on_exit))
 
 	L.become_area_sensitive(SPAWN_AREA_TRAIT)
 
@@ -228,7 +228,7 @@ var/global/list/datum/area_group/observer_groups
 		deltimer(timer)
 
 	var/despawn_timer = addtimer(
-		CALLBACK(src, .proc/TryDespawn, instance),
+		CALLBACK(src, PROC_REF(TryDespawn), instance),
 		despawn_frequency,
 		TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE
 	)
@@ -236,8 +236,8 @@ var/global/list/datum/area_group/observer_groups
 	LAZYSET(despawn_timers, instance, despawn_timer)
 
 /datum/component/spawn_area/proc/register_instance(atom/movable/instance)
-	RegisterSignal(instance, list(COMSIG_PARENT_QDELETING), .proc/on_instance_qdel)
-	RegisterSignal(instance, list(COMSIG_EXIT_AREA), .proc/on_instance_exit)
+	RegisterSignal(instance, list(COMSIG_PARENT_QDELETING), PROC_REF(on_instance_qdel))
+	RegisterSignal(instance, list(COMSIG_EXIT_AREA), PROC_REF(on_instance_exit))
 
 /datum/component/spawn_area/proc/transfer_instance(datum/component/spawn_area/new_spawn_area, atom/movable/instance)
 	new_spawn_area.register_instance(instance)
@@ -274,7 +274,7 @@ var/global/list/datum/area_group/observer_groups
 	if(!pos_turfs.len)
 		return
 
-	INVOKE_ASYNC(src, .proc/Spawn, pick(pos_turfs))
+	INVOKE_ASYNC(src, PROC_REF(Spawn), pick(pos_turfs))
 
 /datum/component/spawn_area/proc/TryDespawn(atom/movable/instance)
 	var/despawning = TRUE
@@ -288,7 +288,7 @@ var/global/list/datum/area_group/observer_groups
 		UnregisterSignal(instance, list(COMSIG_PARENT_QDELETING, COMSIG_EXIT_AREA))
 		deltimer(LAZYACCESS(despawn_timers, instance))
 		LAZYREMOVE(despawn_timers, instance)
-		INVOKE_ASYNC(src, .proc/Despawn, instance)
+		INVOKE_ASYNC(src, PROC_REF(Despawn), instance)
 		return
 
 	refresh_instance(instance)

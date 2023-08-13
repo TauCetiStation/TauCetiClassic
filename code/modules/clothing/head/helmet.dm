@@ -17,6 +17,54 @@
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	flashbang_protection = TRUE
 
+	var/obj/item/holochip/holochip
+
+/obj/item/clothing/head/helmet/Destroy()
+	QDEL_NULL(holochip)
+	return ..()
+
+/obj/item/clothing/head/helmet/equipped(mob/user, slot)
+	if(holochip && slot == SLOT_HEAD)
+		if(user.hud_used) //NPCs don't need a map
+			user.hud_used.init_screen(/atom/movable/screen/holomap)
+		holochip.add_action(user)
+		holochip.update_freq(holochip.frequency)
+	..()
+
+/obj/item/clothing/head/helmet/dropped(mob/user)
+	if(holochip)
+		holochip.remove_action(user)
+		holochip.deactivate_holomap()
+	..()
+
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/holochip))
+		if(flags & ABSTRACT)
+			return    //You can't insert holochip in abstract item.
+		if(holochip)
+			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
+			return
+		user.drop_from_inventory(I, src)
+		holochip = I
+		holochip.holder = src
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && H.head == src)
+			holochip.add_action(user)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
+	else if(isscrewing(I))
+		if(!holochip)
+			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
+			return
+		holochip.deactivate_holomap()
+		holochip.remove_action(user)
+		holochip.holder = null
+		if(!user.put_in_hands(holochip))
+			holochip.forceMove(get_turf(src))
+		holochip = null
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
+
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
@@ -73,7 +121,7 @@
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
-		usr.update_inv_head()	//so our mob-overlays update
+		update_inv_mob() //so our mob-overlays update
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -99,13 +147,15 @@
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = HEADCOVERSEYES
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags_inv = HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "thunderdome helmet"
@@ -155,7 +205,7 @@
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
-	user.update_inv_head()
+	update_inv_mob()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
@@ -212,6 +262,13 @@
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
+
+/obj/item/clothing/head/helmet/syndiassault/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"
@@ -251,3 +308,25 @@
 	desc = "This is a heavily armored police helmet. The most blockiest of them all."
 	icon_state = "police_helmet_elite"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/surplus
+	name = "surplus helmet"
+	desc = "A simple steel helmet - a steelpot, if you will."
+	icon_state = "surplus_helmet"
+	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/blueshield
+	name = "blueshield helmet"
+	desc = "An advanced helmet issued to blueshield officers."
+	icon_state = "blueshield_helmet"
+	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/durathread
+	name = "durathread helmet"
+	desc = "A helmet crafted from a bunch of metal, durathread, and God's help."
+	icon_state = "Durahelmet"
+	item_state = "Durahelmet"
+	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
+
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE

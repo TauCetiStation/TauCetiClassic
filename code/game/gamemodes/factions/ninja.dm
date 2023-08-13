@@ -14,15 +14,10 @@
 /datum/faction/ninja/can_setup(num_players)
 	if (!..())
 		return FALSE
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "ninja")
-			return TRUE
-	return FALSE
+	return length(landmarks_list["ninja"]) > 0
 
 /datum/faction/ninja/OnPostSetup()
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "ninja")
-			ninjastart.Add(L)
+	ninjastart = landmarks_list["ninja"].Copy()
 	for(var/datum/role/role in members)
 		var/obj/effect/landmark/start_point = pick(ninjastart)
 		ninjastart -= start_point
@@ -36,7 +31,7 @@
 	for(var/datum/role/ninja_role in members)
 		if(!ishuman(ninja_role.antag.current))
 			continue
-		if(ninja_role.antag.current.stat==2)
+		if(ninja_role.antag.current.stat==DEAD)
 			continue
 		ninjas_alive++
 	if(ninjas_alive)

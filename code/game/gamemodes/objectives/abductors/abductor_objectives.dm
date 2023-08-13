@@ -12,8 +12,19 @@
 	var/ab_team = team
 	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		if(E.team == ab_team)
-			if(E.points >= target_amount)
+			if(E.all_points >= target_amount)
 				return OBJECTIVE_WIN
+
+/datum/objective/experiment/long
+	target_amount = 20
+
+/datum/objective/experiment/long/check_completion()
+	. = OBJECTIVE_LOSS
+	var/total_points = 0
+	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
+		total_points += E.all_points
+	if(total_points >= target_amount)
+		return OBJECTIVE_WIN
 
 /datum/objective/abductee
 	completed = OBJECTIVE_WIN

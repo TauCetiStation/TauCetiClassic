@@ -92,6 +92,8 @@
 	var/list/accounts[0]
 	for(var/i=1, i<=all_money_accounts.len, i++)
 		var/datum/money_account/D = all_money_accounts[i]
+		if(D.hidden)
+			continue
 		accounts.Add(list(list(\
 			"account_number"=D.account_number,\
 			"owner_name"=D.owner_name,\
@@ -150,9 +152,7 @@
 					var/trx = create_transation(account_name, "New account activation", "([starting_funds])")
 					station_account.transaction_log.Add(trx)
 
-					creating_new_account = 0
-					ui.close()
-
+				ui.close()
 				creating_new_account = 0
 			if("insert_card")
 				if(held_card)
@@ -172,7 +172,9 @@
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
 				if(index && index <= all_money_accounts.len)
-					detailed_account_view = all_money_accounts[index]
+					var/datum/money_account/MA = all_money_accounts[index]
+					if(!MA.hidden)
+						detailed_account_view = all_money_accounts[index]
 
 			if("view_accounts_list")
 				detailed_account_view = null

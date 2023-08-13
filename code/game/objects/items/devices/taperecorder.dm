@@ -15,7 +15,7 @@
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
 	var/canprint = TRUE
-	flags = CONDUCT
+	flags = CONDUCT | HEAR_TALK
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 20
@@ -23,7 +23,7 @@
 	var/timer_to_destruct
 
 	var/list/icons_available
-	var/icon_directory = 'icons/mob/radial.dmi'
+	var/icon_directory = 'icons/hud/radial.dmi'
 
 	action_button_name = "Toggle Recorder"
 
@@ -110,7 +110,7 @@
 		if(0)
 			explode()
 
-	timer_to_destruct = addtimer(CALLBACK(src, .proc/start_exp, sec - 1), 1 SECOND, TIMER_STOPPABLE)
+	timer_to_destruct = addtimer(CALLBACK(src, PROC_REF(start_exp), sec - 1), 1 SECOND, TIMER_STOPPABLE)
 
 /obj/item/device/taperecorder/proc/record()
 	if(usr.incapacitated())

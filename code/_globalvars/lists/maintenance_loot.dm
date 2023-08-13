@@ -28,7 +28,7 @@ var/global/list/trash_loot = list(
 		/obj/item/weapon/poster/contraband = 1,
 		/obj/item/weapon/poster/legit = 1,
 		/obj/item/weapon/folder/yellow = 1,
-		/obj/item/weapon/hand_labeler = 1,
+		/obj/item/device/tagger = 1,
 		/obj/item/weapon/pen = 1,
 		/obj/item/weapon/paper = 1,
 		/obj/item/weapon/paper/crumpled = 1,
@@ -83,7 +83,7 @@ var/global/list/common_loot = list(
 		/obj/item/clothing/suit/storage/hazardvest = 1,
 		/obj/item/clothing/suit/storage/labcoat = 1,
 		/obj/item/clothing/under/color/grey = 1,
-		/obj/item/clothing/gloves/fyellow = 1,
+		/obj/item/clothing/gloves/budget_insulated = 1,
 		/obj/effect/spawner/lootdrop/gloves = 1,
 		/obj/item/weapon/storage/wallet = 1,
 		/obj/item/clothing/glasses/science = 1,
@@ -112,6 +112,7 @@ var/global/list/common_loot = list(
 		/obj/item/weapon/reagent_containers/syringe = 1,
 		/obj/item/weapon/reagent_containers/glass/beaker = 1,
 		/obj/item/weapon/reagent_containers/glass/rag = 1,
+		/obj/item/weapon/reagent_containers/food/condiment/sugar = 1
 		) = 1,
 
 	list(
@@ -202,11 +203,11 @@ var/global/list/uncommon_loot = list(
 
 //oddity: strange or crazy items
 var/global/list/oddity_loot = list(
-		/obj/item/clothing/gloves/yellow = 1,
+		/obj/item/clothing/gloves/insulated = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/head/helmet/helmet_of_justice = 1,
 		/obj/item/clothing/suit/space/clown = 1,
-		/obj/item/clothing/suit/armor/reactive = 1,
+		/obj/item/clothing/suit/armor/vest/reactive = 1,
 		/obj/item/weapon/storage/pouch/medium_generic = 1,
 		/obj/item/weapon/storage/pouch/small_generic = 1,
 	)

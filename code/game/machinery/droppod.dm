@@ -18,8 +18,7 @@
 	icon_state = "dropod_opened"
 	var/item_state = null
 
-	var/max_integrity = 100
-	var/obj_integrity = 100
+	max_integrity = 100
 
 	var/mob/living/carbon/intruder
 	var/mob/living/second_intruder
@@ -39,7 +38,7 @@
 /obj/structure/droppod/atom_init()
 	. = ..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
+		initial_eyeobj_location = locate("landmark*Droppod")
 	if(!allowed_areas)
 		allowed_areas = new
 
@@ -145,6 +144,7 @@
 			obscured_turfs += i
 
 /obj/effect/landmark/droppod
+	name = "Droppod"
 
 /********Move in and out********/
 
@@ -280,8 +280,9 @@
 
 /obj/structure/droppod/proc/SimpleAiming()
 	flags |= STATE_AIMING
-	var/A
-	A = input("Select Area for Droping Pod", "Select", A) in allowed_areas.areas
+	var/A = input("Select Area for Droping Pod", "Select") in allowed_areas.areas
+	if(intruder != usr)
+		return
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
@@ -337,7 +338,7 @@
 /obj/structure/droppod/verb/Start_Verb()
 	set category = "Drop Pod"
 	set name = "Start Drop"
-	set src = orange(1)
+	set src = usr.loc
 	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
@@ -382,7 +383,7 @@
 	loc = AimTarget
 	sleep(10)
 	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20, easing = CUBIC_EASING)
-	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+	addtimer(CALLBACK(src, PROC_REF(perform_drop)), 20)
 
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
@@ -416,7 +417,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewdriver(O))
+	if(isscrewing(O))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -427,20 +428,16 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelder(O))
+	else if(iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity && WT.use(0, user))
+		if(get_integrity() < max_integrity && WT.use(0, user))
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-			obj_integrity = min(obj_integrity + 10, max_integrity)
+			repair_damage(10)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
-		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
-		user.SetNextMove(CLICK_CD_MELEE)
-		take_damage(O.force)
+	else if(O.flags & ABSTRACT)
 		return ..()
-
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))
 			if(!(flags & POOR_AIMING))
@@ -509,26 +506,23 @@
 
 /obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
-		take_damage(Proj.damage)
-		if(!(flags & IS_LOCKED))
-			if(intruder && prob(60))
-				intruder.bullet_act(Proj)
-			if(second_intruder && prob(40))
-				second_intruder.bullet_act(Proj)
+	if(flags & IS_LOCKED)
+		return
+	if(intruder && prob(60))
+		intruder.bullet_act(Proj)
+	if(second_intruder && prob(40))
+		second_intruder.bullet_act(Proj)
 
-/obj/structure/droppod/proc/take_damage(amount)
-	obj_integrity -= amount / 2
-	if(obj_integrity <= 0)
-		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
-		qdel(src)
+/obj/structure/droppod/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_amount)
+		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(attacker.melee_damage)
+/obj/structure/droppod/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
+	..(damage_amount * 0.5, damage_type, damage_flag, sound_effect, attack_dir)
+
+/obj/structure/droppod/deconstruct()
+	visible_message("<span class='warning'>The [src] has been destroyed!</span>")
+	. = ..()
 
 /********Stats********/
 
@@ -629,7 +623,7 @@
 		state = "Aiming"
 	if(flags & STATE_DROPING)
 		state = "Droping"
-	var/output = {"<b>Integrity: </b> [obj_integrity/max_integrity * 100]%<br>
+	var/output = {"<b>Integrity: </b> [get_integrity()/max_integrity * 100]%<br>
 					<b>Advanced Aiming System: </b> [(flags & ADVANCED_AIMING_INSTALLED) ? "" : "Un"]installed<br>
 					<b>Second Passenger: </b>[second_intruder ? "[second_intruder.name]" : "None"]<br>
 					<b>Nuclear bomb: </b> [Stored_Nuclear ? "" : "Un"]installed<br>
@@ -734,6 +728,13 @@
 		return
 	..()
 
+/obj/structure/droppod/Syndi/StartDrop()
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
+	return ..()
+
 /obj/structure/droppod/Syndi/perform_drop()
 	..()
 	droped = TRUE
@@ -775,7 +776,7 @@
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -802,7 +803,7 @@
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn

@@ -11,6 +11,10 @@
 	logo_state = "wizard-logo"
 	skillset_type = /datum/skillset/wizard
 
+	stat_type = /datum/stat/role/wizard
+
+	var/list/list_of_purchases = list()
+
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
@@ -70,7 +74,7 @@
 /datum/role/wizard/OnPostSetup(laterole)
 	. = ..()
 	equip_wizard(antag.current)
-	INVOKE_ASYNC(src, .proc/name_wizard, antag.current)
+	INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
 
 /datum/role/wizard/forgeObjectives()
 	if(!..())
@@ -115,7 +119,7 @@
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
-			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
+			var/icon/spellicon = icon('icons/hud/actions.dmi', S.action_icon_state)
 			end_icons += spellicon
 			var/tempstate = end_icons.len
 			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}
@@ -135,7 +139,7 @@
 		M.current.forceMove(pick(wizardstart))
 
 	else if(href_list["wiz_name"])
-		INVOKE_ASYNC(src, .proc/name_wizard, M.current)
+		INVOKE_ASYNC(src, PROC_REF(name_wizard), M.current)
 
 	else if(href_list["wiz_equip"])
 		equip_wizard(M.current)
@@ -157,7 +161,7 @@
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
-			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
+			var/icon/spellicon = icon('icons/hud/actions.dmi', S.action_icon_state)
 			end_icons += spellicon
 			var/tempstate = end_icons.len
 			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}

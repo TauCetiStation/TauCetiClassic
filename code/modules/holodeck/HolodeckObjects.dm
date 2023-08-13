@@ -82,104 +82,14 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
-/obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(!istype(W)) return//I really wish I did not need this
-	user.SetNextMove(CLICK_CD_MELEE)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
-		if(isliving(G.affecting))
-			var/mob/living/M = G.affecting
-			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
-			switch (state)
-				if(1)
-					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
-					M.apply_damage(7)
-					take_damage(10)
-				if(2)
-					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-					if (prob(50))
-						M.Stun(1)
-						M.Weaken(1)
-					M.apply_damage(10)
-					take_damage(25)
-				if(3)
-					M.visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
-					M.Stun(5)
-					M.Weaken(5)
-					M.apply_damage(20)
-					take_damage(50)
-			return
-
-	if(W.flags & NOBLUDGEON) return
-
-	if(isscrewdriver(W))
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(iscrowbar(W) && reinf && state <= 1)
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
-	else if(iswrench(W) && !anchored && (!state || !reinf))
-		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
-	else if(user.a_intent == INTENT_HARM)
-		if(W.damtype == BRUTE || W.damtype == BURN)
-			take_damage(W.force)
-			if(health <= 7)
-				anchored = FALSE
-				update_nearby_icons()
-				step(src, get_dir(user, src))
-		else
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		return ..()
-
-/obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] fades away as it shatters!")
-	qdel(src)
-	return
-
-/obj/structure/window/reinforced/holowindow/disappearing
-
-/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
-
-	if (src.operating == 1)
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
-		var/aforce = I.force
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-
-		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce)
-		return
-
-	add_fingerprint(user)
-	if (!requiresID())
-		user = null
-
-	if (allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
-
-	return
-
-/obj/machinery/door/window/holowindoor/shatter(display_message = 1)
-	src.density = FALSE
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] fades away as it shatters!")
-	qdel(src)
+/obj/machinery/door/window/holowindoor
+	flags = NODECONSTRUCT | ON_BORDER
 
 /obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_gray"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -255,8 +165,9 @@
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, Shakalaka!"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/basketball_hoop.dmi'
 	icon_state = "hoop"
+	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE
 	throwpass = 1
@@ -279,7 +190,7 @@
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -291,7 +202,7 @@
 			visible_message("<span class='warning'>\The [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..()
 
 
 /obj/machinery/readybutton
@@ -358,7 +269,7 @@
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
+	for(var/obj/structure/window/thin/reinforced/holowindow/disappearing/W in currentarea)
 		qdel(W)
 
 	for(var/mob/M in currentarea)
@@ -370,12 +281,13 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
+	flags = NODECONSTRUCT
 
 /obj/structure/rack/holorack/attack_hand(mob/user)
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 

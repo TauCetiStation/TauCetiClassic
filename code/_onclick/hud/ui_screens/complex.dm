@@ -116,7 +116,7 @@
 
 /atom/movable/screen/complex/ordered/robot_pda
 	name = "Show Pda Screens"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "pda"
 	screen_loc = ui_borg_show_pda
 	plane = ABOVE_HUD_PLANE
@@ -131,7 +131,7 @@
 
 /atom/movable/screen/complex/ordered/robot_image
 	name = "Show Foto Screens"
-	icon = 'icons/mob/screen1_robot.dmi'
+	icon = 'icons/hud/screen1_robot.dmi'
 	icon_state = "photo"
 	screen_loc = ui_borg_show_foto
 	plane = ABOVE_HUD_PLANE

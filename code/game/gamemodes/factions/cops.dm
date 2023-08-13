@@ -27,8 +27,8 @@
 	start_time = world.time
 	end_time = start_time + 80 MINUTES
 
-	dealer_timer = addtimer(CALLBACK(src, .proc/send_syndicate), rand(25 MINUTES, 35 MINUTES), TIMER_STOPPABLE) // called here because cops are only faction
-	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
+	dealer_timer = addtimer(CALLBACK(src, PROC_REF(send_syndicate)), rand(25 MINUTES, 35 MINUTES), TIMER_STOPPABLE) // called here because cops are only faction
+	addtimer(CALLBACK(src, PROC_REF(announce_gang_locations)), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
 /datum/faction/cops/forgeObjectives()
@@ -98,7 +98,7 @@
 			if(!ishuman(gangbanger.antag.current))
 				continue
 			var/mob/living/carbon/human/H = gangbanger.antag.current
-			if(H.stat || H.handcuffed)
+			if(H.stat != CONSCIOUS || H.handcuffed)
 				continue
 			alive_gangsters++
 	for(var/M in members)
@@ -107,7 +107,7 @@
 			if(!ishuman(bacon.antag.current)) // always returns false
 				continue
 			var/mob/living/carbon/human/H = bacon.antag.current
-			if(H.stat)
+			if(H.stat != CONSCIOUS)
 				continue
 			alive_cops++
 

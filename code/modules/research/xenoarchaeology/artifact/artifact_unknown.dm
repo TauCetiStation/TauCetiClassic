@@ -25,7 +25,7 @@
 	///last time mob touched us
 	var/last_time_touched = 0
 	///our health
-	var/health = 1000
+	max_integrity = 1000
 
 /obj/machinery/artifact/Destroy()
 	clear_turfs_around()
@@ -59,8 +59,8 @@
  */
 /obj/machinery/artifact/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), PROC_REF(turf_around_enter))
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), PROC_REF(turf_around_exit))
 		turfs_around += T
 
 /**
@@ -210,7 +210,7 @@
 
 /obj/machinery/artifact/examine(mob/user)
 	..()
-	switch(round(100 * (health / initial(health))))
+	switch(round(100 * (get_integrity() / max_integrity)))
 		if(85 to 100)
 			to_chat(user, "Appears to have no structural damage.")
 		if(65 to 85)
@@ -258,34 +258,28 @@
 		else if(istype(W, /obj/item/weapon/melee/energy) ||\
 			istype(W, /obj/item/weapon/melee/cultblade) ||\
 			istype(W, /obj/item/weapon/card/emag) ||\
-			ismultitool(W))
+			ispulsing(W))
 			try_toggle_effects(TRIGGER_ENERGY)
 	if(first_effect?.trigger == TRIGGER_HEAT || secondary_effect?.trigger == TRIGGER_HEAT)
-		if(istype(W, /obj/item/weapon/match))
-			var/obj/item/weapon/match/M = W
-			if(M.lit)
-				try_toggle_effects(TRIGGER_HEAT)
-		else if(iswelder(W))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn())
-				try_toggle_effects(TRIGGER_HEAT)
-		else if(istype(W, /obj/item/weapon/lighter))
-			var/obj/item/weapon/lighter/L = W
-			if(L.lit)
-				try_toggle_effects(TRIGGER_HEAT)
+		if(W.get_current_temperature() > 700)
+			try_toggle_effects(TRIGGER_HEAT)
+			return
 	..()
-	health -= W.force
-	try_toggle_effects(TRIGGER_FORCE)
 
-/obj/machinery/artifact/proc/adjusthealth(to_adjust)
-	health += to_adjust
-	updatehealth()
-
-/obj/machinery/artifact/proc/updatehealth()
-	if(health > 0)
+/obj/machinery/artifact/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(QDELING(src))
 		return
-	if(!QDELING(src))
-		qdel(src)
+	switch(damage_flag)
+		if(FIRE)
+			try_toggle_effects(TRIGGER_HEAT)
+		if(ENERGY, LASER)
+			try_toggle_effects(TRIGGER_ENERGY)
+		if(BOMB)
+			try_toggle_effects(TRIGGER_FORCE)
+			try_toggle_effects(TRIGGER_HEAT)
+		else
+			try_toggle_effects(TRIGGER_FORCE)
 
 /obj/machinery/artifact/Bumped(atom/AM)
 	..()
@@ -304,33 +298,6 @@
 			to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
-/obj/machinery/artifact/bullet_act(obj/item/projectile/P, def_zone)
-	. = ..()
-	if(istype(P,/obj/item/projectile/bullet) ||\
-		istype(P,/obj/item/projectile/hivebotbullet))
-		try_toggle_effects(TRIGGER_FORCE)
-		health -= P.damage
-
-	else if(istype(P,/obj/item/projectile/beam) ||\
-		istype(P,/obj/item/projectile/ion) ||\
-		istype(P,/obj/item/projectile/energy))
-		try_toggle_effects(TRIGGER_ENERGY)
-		health -= P.damage
-
-/obj/machinery/artifact/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				try_toggle_effects(TRIGGER_FORCE)
-				try_toggle_effects(TRIGGER_HEAT)
-				return
-		if(EXPLODE_LIGHT)
-			try_toggle_effects(TRIGGER_FORCE)
-			try_toggle_effects(TRIGGER_HEAT)
-			return
-	qdel(src)
 
 /obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
@@ -346,7 +313,7 @@
 	if(first_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
 		if(turfs_around.len != 0)
 			clear_turfs_around()
-		addtimer(CALLBACK(src, .proc/init_turfs_around), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(init_turfs_around)), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null

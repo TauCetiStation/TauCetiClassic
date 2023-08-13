@@ -104,7 +104,7 @@
 
 /mob/living/carbon/human/pray_act(message, speaking, alt_name, verb_)
 	if(whisper_say(message, speaking, alt_name, "prays quietly"))
-		INVOKE_ASYNC(src, /mob.proc/pray_animation)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, pray_animation))
 	else
 		// Mimes, and other mute beings.
 		emote("pray")
@@ -120,7 +120,7 @@
 	next_pray_anim = world.time + 1 SECOND
 
 	// So restrained people can also pray.
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.

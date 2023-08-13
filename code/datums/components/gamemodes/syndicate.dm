@@ -4,14 +4,17 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 	var/uplink_uses
+	var/uplink_type = "traitor"
 
 	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
 	var/list/datum/stat/uplink_purchase/uplink_purchases = list()
 
-/datum/component/gamemode/syndicate/Initialize(crystals)
+/datum/component/gamemode/syndicate/Initialize(crystals, type)
 	..()
 	uplink_uses = crystals
+	uplink_type = type
+
 
 /datum/component/gamemode/syndicate/Destroy()
 	return ..()
@@ -103,6 +106,7 @@
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		total_TC += target_radio.hidden_uplink.uses
+		target_radio.hidden_uplink.uplink_type = uplink_type
 
 	else if (istype(R, /obj/item/device/pda))
 		// generate a passcode if the uplink is hidden in a PDA
@@ -115,6 +119,9 @@
 		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 		traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 		total_TC += R.hidden_uplink.uses
+		R.hidden_uplink.uplink_type = uplink_type
+
+	R.hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(R.hidden_uplink))
 
 /datum/component/gamemode/syndicate/proc/give_codewords()
 	var/mob/traitor_mob = get_current()
@@ -172,7 +179,7 @@
 
 	if (traitor_mob.mind?.assigned_role == "Clown")
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		traitor_mob.mutations.Remove(CLUMSY)
+		REMOVE_TRAIT(traitor_mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	if(uplink_uses > 0)
 		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
@@ -183,20 +190,8 @@
 			total_TC = uplink_uses
 
 	var/datum/role/R = parent
-	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
-		var/obj/item/device/biocan/B = new (traitor_mob.loc)
-		var/list/slots = list(
-			"backpack" = SLOT_IN_BACKPACK,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-		traitor_mob.update_icons()
-		if (!where)
-			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
-		else
-			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
-
+	for(var/datum/objective/O in R.objectives.GetObjectives())
+		O.give_required_equipment()
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)

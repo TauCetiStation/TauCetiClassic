@@ -363,6 +363,24 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	category = list("Computer")
 
+/datum/design/cmf_console
+	name = "Circuit Design (CMF Console)"
+	desc = "Allows for the construction of circuit boards used to build a CMF modifier console."
+	id = "cmf_console"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/skills_console
+	category = list("Computer")
+
+/datum/design/cmf_scanner
+	name = "Circuit Design (CMF table)"
+	desc = "Allows for the construction of circuit boards used to build a CMF manipulation table."
+	id = "cmf_scanner"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/skill_scanner
+	category = list("Machine")
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -793,7 +811,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/storage/part_replacer/bluespace
 	category = list("Stock Parts")
 
-	//Tier1
+//Tier1
 /datum/design/basic_capacitor
 	name = "Basic Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -839,13 +857,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/stock_parts/matter_bin
 	category = list("Stock Parts")
 
-	//Tier 2
+//Tier 2
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_capacitor"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_SILVER = 250)
+	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
+	materials = list(MAT_METAL = 650, MAT_GLASS = 400)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
 	category = list("Stock Parts")
 
@@ -853,8 +871,8 @@ other types of metals and chemistry for reagents).
 	name = "Advanced Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 250)
+	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
+	materials = list(MAT_METAL = 400, MAT_GLASS = 310)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
 	category = list("Stock Parts")
 
@@ -862,8 +880,8 @@ other types of metals and chemistry for reagents).
 	name = "Nano Manipulator"
 	desc = "A stock part used in the construction of various devices."
 	id = "nano_mani"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 240, MAT_SILVER = 250)
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(MAT_METAL = 240, MAT_GLASS = 250)
 	build_path = /obj/item/weapon/stock_parts/manipulator/nano
 	category = list("Stock Parts")
 
@@ -871,8 +889,8 @@ other types of metals and chemistry for reagents).
 	name = "High-Power Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
 	id = "high_micro_laser"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 80, MAT_GLASS = 160, MAT_SILVER = 250)
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(MAT_METAL = 330, MAT_GLASS = 160)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/high
 	category = list("Stock Parts")
 
@@ -880,19 +898,19 @@ other types of metals and chemistry for reagents).
 	name = "Advanced Matter Bin"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_matter_bin"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 640, MAT_SILVER = 300)
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(MAT_METAL = 640, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/adv
 	category = list("Stock Parts")
 
-	//Tier 3
+//Tier 3
 /datum/design/super_capacitor
 	name = "Super Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "super_capacitor"
-	build_type = PROTOLATHE  |MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_GOLD = 250)
-	build_path = /obj/item/weapon/stock_parts/capacitor/super
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 700, MAT_GLASS = 450)
+	build_path = /obj/item/weapon/stock_parts/capacitor/adv/super
 	category = list("Stock Parts")
 
 /datum/design/phasic_sensor
@@ -900,8 +918,8 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 80, MAT_GOLD = 250)
-	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+	materials = list(MAT_METAL = 600, MAT_GLASS = 390)
+	build_path = /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	category = list("Stock Parts")
 
 /datum/design/pico_mani
@@ -909,8 +927,8 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "pico_mani"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 240, MAT_GOLD = 250)
-	build_path = /obj/item/weapon/stock_parts/manipulator/pico
+	materials = list(MAT_METAL = 340, MAT_GLASS = 250)
+	build_path = /obj/item/weapon/stock_parts/manipulator/nano/pico
 	category = list("Stock Parts")
 
 /datum/design/ultra_micro_laser
@@ -918,8 +936,8 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "ultra_micro_laser"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 80, MAT_GLASS = 160, MAT_GOLD = 250, MAT_URANIUM = 80)
-	build_path = /obj/item/weapon/stock_parts/micro_laser/ultra
+	materials = list(MAT_METAL = 380, MAT_GLASS = 310)
+	build_path = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 	category = list("Stock Parts")
 
 /datum/design/super_matter_bin
@@ -927,18 +945,18 @@ other types of metals and chemistry for reagents).
 	desc = "A stock part used in the construction of various devices."
 	id = "super_matter_bin"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 640, MAT_GOLD = 300)
-	build_path = /obj/item/weapon/stock_parts/matter_bin/super
+	materials = list(MAT_METAL = 840, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/stock_parts/matter_bin/adv/super
 	category = list("Stock Parts")
 
-	//Tier 4
+//Tier 4
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "quadratic_capacitor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
-	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
+	build_path = /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic
 	category = list("Stock Parts")
 
 /datum/design/triphasic_scanning
@@ -947,7 +965,7 @@ other types of metals and chemistry for reagents).
 	id = "triphasic_scanning"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
-	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
+	build_path = /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic
 	category = list("Stock Parts")
 
 /datum/design/femto_mani
@@ -956,7 +974,7 @@ other types of metals and chemistry for reagents).
 	id = "femto_mani"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 480, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
-	build_path = /obj/item/weapon/stock_parts/manipulator/femto
+	build_path = /obj/item/weapon/stock_parts/manipulator/nano/pico/femto
 	category = list("Stock Parts")
 
 /datum/design/quadultra_micro_laser
@@ -965,7 +983,7 @@ other types of metals and chemistry for reagents).
 	id = "quadultra_micro_laser"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 160, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250, MAT_URANIUM = 160)
-	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	build_path = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 	category = list("Stock Parts")
 
 /datum/design/bluespace_matter_bin
@@ -974,7 +992,7 @@ other types of metals and chemistry for reagents).
 	id = "bluespace_matter_bin"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1280, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 400)
-	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
+	build_path = /obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace
 	category = list("Stock Parts")
 
 
@@ -1107,7 +1125,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/light_replacer
 	name = "Light Replacer"
-	desc = "A device to automatically replace lights. Refill with working lightbulbs."
+	desc = "A device to automatically replace lights. Refill with reinforced glass."
 	id = "light_replacer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 3000, MAT_SILVER = 150)
@@ -1181,6 +1199,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 	category = list("Machine")
 
+/datum/design/board/reagentgrinder
+	name = "All-In-One Grinder Board"
+	desc = "The circuit board for an All-In-One Grinder."
+	id = "reagentgrinder"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/reagentgrinder
+	category = list("Machine")
+
 /datum/design/gas_heater
 	name = "gas heating system"
 	desc = "The circuit board for a heater."
@@ -1233,6 +1260,15 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/smartfridge
+	category = list("Machine")
+
+/datum/design/bluespace_storage
+	name = "Machine Design (Bluespace Storage)"
+	desc = "The circuit board for a Bluespace Storage."
+	id = "bluespace_storage"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1500, MAT_DIAMOND = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge/secure/bluespace
 	category = list("Machine")
 
 /datum/design/monkey_recycler
@@ -1343,6 +1379,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_master
 	category = list("Machine")
 
+/datum/design/operating_table
+	name = "Machine Design (Operating Table)"
+	desc = "The circuit board for a Operating Table."
+	id = "operating_table"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 3000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/operating_table
+	category = list("Machine")
+
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
 	desc = "The circuit board for a destructive analyzer."
@@ -1396,7 +1441,14 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
 	build_path = /obj/item/weapon/circuitboard/recharger
 	category = list("Machine")
-
+/datum/design/cell_recharger
+	name = "Cell Recharger Board"
+	desc = "The circuit board for a Cell Recharger."
+	id = "cellcharger"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 500, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cell_recharger
+	category = list("Machine")
 /datum/design/vendor
 	name = "Machine Design (Vendor Board)"
 	desc = "The circuit board for a Vendor."
@@ -1536,6 +1588,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
 	category = list("Power")
 
+/datum/design/circulator
+	name = "Circulator Board"
+	desc = "The circuit board for a TEG circulator."
+	id = "circ"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/circulator
+	category = list("Power")
+
+/datum/design/teg
+	name = "TEG Board"
+	desc = "The circuit board for a TEG generator."
+	id = "teg"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teg
+	category = list("Power")
 
 /////////////////////////////////////////
 ////////////Medical Tools////////////////
@@ -1687,13 +1756,48 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chameleon
 	name = "Chameleon Kit"
-	desc = "It's a set of clothes with dials on them."
+	desc = "A set of clothes with dials on them."
 	id = "chameleon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
 	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	category = list("Illegal")
 
+/datum/design/ai_detector
+	name = "Artificial Intelligence Detector"
+	desc = "A device disguised as a multitool. Detects the activity of artificial intelligence."
+	id = "ai_detector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 500, MAT_GOLD = 500)
+	build_path = /obj/item/device/multitool/ai_detect
+	category = list("Illegal")
+
+/datum/design/smuggler_satch
+	name = "Smuggler's Satchel"
+	desc = "An unusual satchel that fits under the floor tiles."
+	id = "smuggler_satch"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/weapon/storage/backpack/satchel/flat
+	category = list("Illegal")
+
+/datum/design/voice_changer
+	name = "Voice Changer"
+	desc = "A gas mask with additional filters that affect the timbre of your voice."
+	id = "voice_changer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 500)
+	build_path = /obj/item/clothing/mask/gas/voice
+	category = list("Illegal")
+
+/datum/design/camera_bug
+	name = "Camera Bug"
+	desc = "An illegal device for illicit snooping through the camera network."
+	id = "camera_bug"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 3000, MAT_DIAMOND = 2000, MAT_SILVER = 1000, MAT_GOLD = 500)
+	build_path = /obj/item/device/camera_bug
+	category = list("Illegal")
 
 /datum/design/bluespacebeaker
 	name = "bluespace beaker"
@@ -1970,13 +2074,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	category = list("Weapons")
 
-/datum/design/ammo_9mm
-	name = "Ammunition Box (9mm)"
-	desc = "A box of prototype 9mm ammunition."
-	id = "ammo_9mm"
+/datum/design/msmg9mm
+	name = "SMG magazine (9mm)"
+	desc = "Magazine, full of 9mm submachine gun ammo."
+	id = "smg_ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
-	build_path = /obj/item/ammo_box/magazine/msmg9mm
+	build_path = /obj/item/ammo_box/magazine/smg
 	category = list("Weapons")
 
 /datum/design/stunshot
@@ -2048,7 +2152,7 @@ other types of metals and chemistry for reagents).
 	id = "plasmacutter"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
-	build_path = /obj/item/weapon/pickaxe/plasmacutter
+	build_path = /obj/item/weapon/gun/energy/laser/cutter
 	construction_time=300
 	category = list("Tools")
 
@@ -2180,6 +2284,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
+	category = list("Support")
+
+/datum/design/holochip
+	name = "Holographic chip"
+	desc = "A holographic chip for space helmet's HUD."
+	id = "holochip"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	build_path = /obj/item/holochip
 	category = list("Support")
 
 /datum/design/hud_calibrator
@@ -2484,7 +2597,7 @@ other types of metals and chemistry for reagents).
 	name = "Jaws of Life"
 	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
 	id = "jawsoflife"
-	build_path = /obj/item/weapon/crowbar/power
+	build_path = /obj/item/weapon/multi/jaws_of_life
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
 	category = list("Tools")
@@ -2495,7 +2608,7 @@ other types of metals and chemistry for reagents).
 	id = "handdrill"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
-	build_path = /obj/item/weapon/screwdriver/power
+	build_path = /obj/item/weapon/multi/hand_drill
 	category = list("Tools")
 
 /datum/design/magboots
@@ -2765,4 +2878,13 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
 	build_path = /obj/item/rig_module/teleporter_stabilizer
+	category = list("Rig Modules")
+
+/datum/design/hardsuit_emp_shield
+	name = "Hardsuit EMP shield"
+	desc = "Device for protecting hardsuit against EMPs."
+	id = "rigempshield"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/emp_shield
 	category = list("Rig Modules")

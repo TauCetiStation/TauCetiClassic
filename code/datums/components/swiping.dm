@@ -10,7 +10,7 @@
 	var/list/dirs_to_move
 	var/next_dir = 1
 
-/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item, list/dirs_to_move, sweep_delay)
+/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/sweep_item, list/dirs_to_move, sweep_delay)
 	. = ..()
 	name = "sweeping [sweep_item]"
 	glide_size = DELAY2GLIDESIZE(sweep_delay)
@@ -154,7 +154,7 @@
 	var/datum/callback/on_sweep_pull_success
 
 /datum/component/swiping/Initialize(datum/swipe_component_builder/SCB)
-	if(!istype(parent, /obj/item/weapon))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	interupt_on_sweep_hit_types = SCB.interupt_on_sweep_hit_types
@@ -166,8 +166,8 @@
 		on_sweep_push = SCB.on_sweep_push
 		on_sweep_push_success = SCB.on_sweep_push_success
 
-		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), .proc/try_sweep_push)
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), .proc/try_push_attack)
+		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), PROC_REF(try_sweep_push))
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), PROC_REF(try_push_attack))
 
 	if(SCB.can_pull)
 		can_pull = TRUE
@@ -176,7 +176,7 @@
 		on_sweep_pull = SCB.on_sweep_pull
 		on_sweep_pull_success = SCB.on_sweep_pull_success
 
-		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), .proc/try_sweep_pull)
+		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), PROC_REF(try_sweep_pull))
 
 	on_sweep_move = SCB.on_sweep_move
 	on_can_sweep_hit = SCB.on_can_sweep_hit
@@ -190,15 +190,15 @@
 	if(SCB.can_sweep)
 		can_sweep = TRUE
 		can_sweep_call = SCB.can_sweep_call
-		RegisterSignal(parent, list(COMSIG_ITEM_ALTCLICKWITH), .proc/sweep_facing)
+		RegisterSignal(parent, list(COMSIG_ITEM_ALTCLICKWITH), PROC_REF(sweep_facing))
 
 	if(SCB.can_spin)
 		can_spin = TRUE
 		can_spin_call = SCB.can_spin_call
 		on_spin = SCB.on_spin
-		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
+		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), PROC_REF(sweep_spin_click))
 
-	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
+	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), PROC_REF(sweep_mousedrop))
 
 	var/datum/mechanic_tip/swiping/swipe_tip = new(src)
 	parent.AddComponent(/datum/component/mechanic_desc, list(swipe_tip))
@@ -272,10 +272,8 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
 	if(!has_gravity(parent) && !isspaceturf(target))
 		step_away(user, T_target)
@@ -295,7 +293,7 @@
 		if(!can_push_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/s_time = W.sweep_step * 2
 	user.SetNextMove(s_time)
@@ -320,7 +318,7 @@
 		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
 		if(!buckled_to.flipped)
 			var/direction = get_dir(T_target, W_turf)
-			INVOKE_ASYNC(src, .proc/push_on_chair, user.buckled, user, direction)
+			INVOKE_ASYNC(src, PROC_REF(push_on_chair), user.buckled, user, direction)
 			qdel(WS)
 			return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -367,10 +365,8 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
 	if(!has_gravity(parent) && !isspaceturf(target))
 		step_to(user, T_target)
@@ -390,7 +386,7 @@
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/s_time = W.sweep_step * 2
 	user.SetNextMove(s_time)
@@ -464,23 +460,13 @@
 	if(on_sweep_hit)
 		return on_sweep_hit.Invoke(current_turf, sweep_image, target, user)
 
-	if(user.a_intent == INTENT_HARM && is_type_in_list(target, list(/obj/machinery/disposal, /obj/structure/table, /obj/structure/rack)))
-		/*
-		A very weird snowflakey thing but very crucial to keeping this fun.
-		If we're on I_HURT and we hit anything that should drop our item from the hands,
-		we just ignore the click to it.
-		*/
-		return FALSE
-
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/is_stunned = is_type_in_list(target, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [W] has hit [target]! There's not enough space for broad sweeps here!</span>")
 
-	var/resolved = target.attackby(W, user, list())
-	if(!resolved && W)
-		W.afterattack(target, user, TRUE, list()) // TRUE indicates adjacency
+	W.melee_attack_chain(target, user)
 
 	return is_stunned
 
@@ -550,7 +536,7 @@
 
 // The handler for all the possible sweeping images, directions, and etc. Please use the wrapper - sweep.
 /datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay)
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 	W.swiping = TRUE
 
 	var/turf/start = get_step(W, directions[1])
@@ -566,7 +552,7 @@
 
 			user.SetNextMove(sweep_image.sweep_delay * directions.len + 1)
 
-			INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
+			INVOKE_ASYNC(src, PROC_REF(move_sweep_image), current_turf, sweep_image)
 
 		var/continue_sweep = sweep_continue_check(user, sweep_delay)
 		if(!continue_sweep)
@@ -610,7 +596,7 @@
 	if(I.swiping)
 		return
 
-	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay)
+	INVOKE_ASYNC(src, PROC_REF(async_sweep), directions, user, sweep_delay)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -626,7 +612,7 @@
 		if(!can_sweep_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/turf/T = get_turf(target)
 	var/direction = get_dir(get_turf(W), T)
@@ -656,9 +642,9 @@
 
 	var/list/directions = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
-	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step * 0.5)
+	INVOKE_ASYNC(src, PROC_REF(sweep), directions, user, W.sweep_step * 0.5)
 	return COMPONENT_NO_INTERACT
 
 // A little bootleg for MiddleClick.
@@ -707,7 +693,7 @@
 					return COMPONENT_NO_MOUSEDROP
 		directions += get_dir(user, T)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	if(directions.len == 3 && can_sweep && sweep(directions, user, W.sweep_step) != NONE)
 		return COMPONENT_NO_MOUSEDROP

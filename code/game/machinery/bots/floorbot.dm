@@ -45,8 +45,7 @@
 	icon_state = "floorbot0"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxhealth = 25
+	max_integrity = 25
 	//weight = 1.0E7
 	var/amount = 10
 	var/eattiles = FALSE
@@ -219,28 +218,28 @@
 		anchored = TRUE
 		icon_state = "floorbot-c"
 
-		addtimer(CALLBACK(src, .proc/finish_task), 50)
+		addtimer(CALLBACK(src, PROC_REF(finish_task)), 50)
 	else if(task == FLOORBOT_TASK_PLACETILE && placetiles && is_plating(t))
 		state = FLOORBOT_BUSY
 		visible_message("<span class='warning'>[src] begins to place the floor tiles.</span>")
 		anchored = TRUE
 		icon_state = "floorbot-c"
 
-		addtimer(CALLBACK(src, .proc/finish_task), 20)
+		addtimer(CALLBACK(src, PROC_REF(finish_task)), 20)
 	else if(task == FLOORBOT_TASK_FIXTILE && fixtiles && is_broken(t))
 		state = FLOORBOT_BUSY
 		visible_message("<span class='warning'>[src] begins repairing the floor.</span>")
 		anchored = TRUE
 		icon_state = "floorbot-c"
 
-		addtimer(CALLBACK(src, .proc/finish_task), 50)
+		addtimer(CALLBACK(src, PROC_REF(finish_task)), 50)
 	else if(task == FLOORBOT_TASK_BREAKTILE && isfloorturf(t))
 		state = FLOORBOT_BUSY
 		visible_message("<span class='warning'>[src] begins repairing the floor.</span>") // troll message
 		anchored = TRUE
 		icon_state = "floorbot-c"
 
-		addtimer(CALLBACK(src, .proc/finish_task), 50)
+		addtimer(CALLBACK(src, PROC_REF(finish_task)), 50)
 	else
 		state = FLOORBOT_IDLE
 
@@ -399,7 +398,7 @@
 				var/obj/item/stack/sheet/metal/M = target
 				visible_message("<span class='warning'>[src] begins to create tiles from a metal sheet.</span>")
 				state = FLOORBOT_BUSY
-				addtimer(CALLBACK(src, .proc/create_tiles, M), 20)
+				addtimer(CALLBACK(src, PROC_REF(create_tiles), M), 20)
 				return
 			else
 				state = FLOORBOT_IDLE

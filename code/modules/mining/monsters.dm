@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
 	. = ..()
-	if(!stat)
+	if(stat == CONSCIOUS)
 		Aggro()
 	if(P.damage < 30)
 		P.damage /= 3
@@ -41,7 +41,7 @@
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(isitem(AM))
 		var/obj/item/T = AM
-		if(!stat)
+		if(stat == CONSCIOUS)
 			Aggro()
 		if(T.throwforce <= 20)
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
@@ -88,7 +88,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -175,9 +175,9 @@
 			Burrow()
 
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore))
-		EatOre(target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/UnarmedAttack(atom/A)
+	if(istype(A, /obj/item/weapon/ore))
+		EatOre(A)
 		return
 	..()
 
@@ -194,7 +194,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = TRUE
-		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
+		addtimer(CALLBACK(src, PROC_REF(burrow_check)), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
 	if(alerted)
@@ -256,14 +256,20 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_LARGE
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/RangedAttack(atom/A, params)
+	if(ranged_cooldown < 0)
+		OpenFire(A)
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
+	A.GiveTarget(the_target)
 	A.friends = friends
 	A.faction = faction
+	ranged_cooldown = ranged_cooldown_cap
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
-	OpenFire()
+/mob/living/simple_animal/hostile/asteroid/hivelord/UnarmedAttack(atom/A)
+	if(ranged_cooldown < 0)
+		OpenFire(A)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -302,7 +308,7 @@
 
 /obj/item/asteroid/hivelord_core/atom_init()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/make_inert), 1200)
+	addtimer(CALLBACK(src, PROC_REF(make_inert)), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = TRUE
@@ -448,7 +454,7 @@
 	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
 		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
 		A.gets_dug()
-	addtimer(CALLBACK(src, .proc/Trip), 20)
+	addtimer(CALLBACK(src, PROC_REF(Trip)), 20)
 
 /obj/effect/goliath_tentacle/original
 
@@ -489,8 +495,8 @@
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor["melee"] < 80)
-				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
+			if(current_armor[MELEE] < 80)
+				current_armor[MELEE] = min(current_armor[MELEE] + 10, 80)
 				if(istype(C, /obj/item/clothing/suit/space))
 					var/obj/item/clothing/suit/space/S = C
 					S.breach_threshold = min(S.breach_threshold + 2, 24)
@@ -504,10 +510,10 @@
 			var/list/damage_absorption = D.damage_absorption
 			if(D.hides < 3)
 				D.hides++
-				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				damage_absorption[BRUTE] = max(damage_absorption[BRUTE] - 0.1, 0.3)
+				damage_absorption[BULLET] = damage_absorption[BULLET] - 0.05
+				damage_absorption[BURN] = damage_absorption[BURN] - 0.05
+				damage_absorption[LASER] = damage_absorption[LASER] - 0.025
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)

@@ -124,9 +124,13 @@
 	var/overload = 1 // used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/longtermpower = 10
+
+	var/datum/smartlight_preset/smartlight_preset
+	var/custom_smartlight_preset // optional /datum/smartlight_preset preset name to expand default SSsmartlight preset. For bar area, rnd/med, etc.
+	var/datum/light_mode/light_mode
 	var/nightshift_lights = FALSE
-	var/nightshift_preset = "soft"
-	var/last_nightshift_switch = 0
+	COOLDOWN_DECLARE(smartlight_switch)
+
 	var/update_state = -1
 	var/update_overlay = -1
 	var/static/status_overlays = 0
@@ -164,7 +168,9 @@
 		name = "[area.name] APC"
 		stat |= MAINT
 		update_icon()
-		addtimer(CALLBACK(src, .proc/update), 5)
+		addtimer(CALLBACK(src, PROC_REF(update)), 5)
+
+	init_smartlight()
 
 /obj/machinery/power/apc/Destroy()
 	apc_list -= src
@@ -218,7 +224,7 @@
 
 	make_terminal()
 
-	addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -408,7 +414,7 @@
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 	add_fingerprint(user)
-	if(iscrowbar(W) && opened != APC_COVER_CLOSED)
+	if(isprying(W) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
 				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
@@ -434,7 +440,7 @@
 			opened = APC_COVER_CLOSED
 			update_icon()
 
-	else if(iscrowbar(W) && opened == APC_COVER_CLOSED)
+	else if(isprying(W) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
@@ -454,7 +460,7 @@
 				opened = APC_COVER_OPENED
 				update_icon()
 
-	else if(iswrench(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
+	else if(iswrenching(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
@@ -479,7 +485,7 @@
 			chargecount = 0
 			update_icon()
 
-	else if	(isscrewdriver(W)) // haxing
+	else if	(isscrewing(W)) // haxing
 		if(opened != APC_COVER_CLOSED)
 			if(cell)
 				to_chat(user, "<span class='warning'>Close the APC first.</span>") // Less hints more mystery!
@@ -572,7 +578,7 @@
 			make_terminal()
 			terminal.connect_to_network()
 
-	else if(iswirecutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
+	else if(iscutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
 		terminal.dismantle(user)
 
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
@@ -587,7 +593,7 @@
 		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
 
-	else if(iswelder(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
+	else if(iswelding(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)
@@ -595,19 +601,7 @@
 			return
 		to_chat(user, "You start welding the APC frame...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
-			if(emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
-				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
-					"You disassembled the broken APC frame.",\
-					"<span class='warning'>You hear welding.</span>")
-			else
-				new /obj/item/apc_frame(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
-					"You cut the APC frame from the wall.",\
-					"<span class='warning'>You hear welding.</span>")
-			qdel(src)
+			deconstruct(TRUE, user)
 			return
 
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
@@ -646,7 +640,27 @@
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 			"You hear bang")
 		return wires.interact(user)
+	else
+		..()
 
+
+/obj/machinery/power/apc/deconstruct(disassembled, mob/user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled || emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
+		new /obj/item/stack/sheet/metal(loc)
+		user?.visible_message(\
+			"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
+			"You disassembled the broken APC frame.",\
+			"<span class='warning'>You hear welding.</span>")
+	else
+		new /obj/item/apc_frame(loc)
+		user?.visible_message(\
+				"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
+				"You cut the APC frame from the wall.",\
+				"<span class='warning'>You hear welding.</span>")
+
+	..()
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -791,7 +805,7 @@
 		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfCanHack" = get_malf_status(user),
 		"nightshiftLights" = nightshift_lights,
-		"nightshiftPreset" = nightshift_preset,
+		"smartlightMode" = SSsmartlight.forced_admin_mode ? "unknown" : light_mode.name,
 
 		"powerChannels" = list(
 			list(
@@ -855,7 +869,7 @@
 			return FALSE
 
 	else // Human
-		if(locked && act != "toggle_nightshift" && act != "change_nightshift")
+		if(locked && act != "toggle_nightshift" && act != "change_smartlight")
 			return FALSE
 
 	return TRUE
@@ -880,12 +894,32 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights()
+			if(SSsmartlight.forced_admin_mode)
+				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
+				return
+
+			if(!COOLDOWN_FINISHED(src, smartlight_switch))
+				to_chat(usr, "<span class='warning'>[src]'s smart lighting circuit breaker is still cycling!</span>")
+				return
+
+			COOLDOWN_START(src, smartlight_switch, 4 SECONDS)
+			toggle_nightshift(!nightshift_lights)
 			. = TRUE
-		if("change_nightshift")
-			var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
-			if(new_preset && lighting_presets[new_preset])
-				set_nightshift_preset(new_preset)
+		if("change_smartlight")
+			if(SSsmartlight.forced_admin_mode)
+				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
+				return
+
+			var/list/datum/light_mode/available_modes = smartlight_preset.get_user_available_modes()
+			var/mode_name = input(usr, "Please choose lighting mode.") as null|anything in available_modes
+
+			if(!COOLDOWN_FINISHED(src, smartlight_switch))
+				to_chat(usr, "<span class='warning'>[src]'s smart lighting circuit breaker is still cycling!</span>")
+				return
+
+			if(mode_name)
+				COOLDOWN_START(src, smartlight_switch, 4 SECONDS)
+				set_light_mode(available_modes[mode_name])
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -933,7 +967,7 @@
 	to_chat(ai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	ai.malfhack = src
 	ai.malfhacking = TRUE
-	addtimer(CALLBACK(src, .proc/malf_hack_done, ai), 600)
+	addtimer(CALLBACK(src, PROC_REF(malf_hack_done), ai), 600)
 
 /obj/machinery/power/apc/proc/malf_hack_done(mob/living/silicon/ai/ai)
 	if(!aidisabled)
@@ -1186,7 +1220,7 @@
 	environ = APC_CHANNEL_OFF
 	stat |= EMPED
 	update()
-	addtimer(CALLBACK(src, .proc/after_emp), 600 / severity)
+	addtimer(CALLBACK(src, PROC_REF(after_emp)), 600 / severity)
 	..()
 
 /obj/machinery/power/apc/proc/after_emp()
@@ -1201,25 +1235,32 @@
 		if(EXPLODE_DEVASTATE)
 			//set_broken() //now Destroy() do what we need
 			if(cell)
-				cell.ex_act(EXPLODE_DEVASTATE) // more lags woohoo
+				SSexplosions.high_mov_atom += cell
 			qdel(src)
 			return
 		if(EXPLODE_HEAVY)
 			if(prob(50))
 				set_broken()
 				if(cell && prob(50))
-					cell.ex_act(EXPLODE_HEAVY)
+					SSexplosions.med_mov_atom += cell
 		if(EXPLODE_LIGHT)
 			if(prob(25))
 				set_broken()
 				if(cell && prob(25))
-					cell.ex_act(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += cell
 
-/obj/machinery/power/apc/blob_act()
-	if(prob(75))
+/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/power/apc/atom_break(damage_flag)
+	. = ..()
+	if(.)
 		set_broken()
-		if(cell && prob(5))
-			cell.blob_act()
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
@@ -1267,37 +1308,55 @@
 		return APC_CHANNEL_AUTO_OFF
 	return APC_CHANNEL_OFF
 
-/obj/machinery/power/apc/proc/set_nightshift(on, preset = null)
-	set waitfor = FALSE
-	nightshift_lights = on
+/obj/machinery/power/apc/proc/init_smartlight()
+	if(custom_smartlight_preset)
+		var/type = smartlight_presets[custom_smartlight_preset]
+		smartlight_preset = new type
+	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist))
+		smartlight_preset = new /datum/smartlight_preset/hardlight_nightshift
+	else
+		smartlight_preset = new
 
-	if(on && preset && preset != nightshift_preset && lighting_presets[preset])
-		nightshift_preset = preset
-		for(var/obj/machinery/light/L in area)
-			var/list/preset_data = lighting_presets[nightshift_preset]
-			L.nightshift_light_range = preset_data["range"]
-			L.nightshift_light_power = preset_data["power"]
-			L.nightshift_light_color = preset_data["color"]
+	smartlight_preset.expand_onto(SSsmartlight.smartlight_preset)
+
+	if(SSsmartlight.nightshift_active && smartlight_preset.nightshift_mode)
+		nightshift_lights = TRUE
+		set_light_mode(global.light_modes_by_type[smartlight_preset.nightshift_mode])
+	else
+		nightshift_lights = FALSE
+		set_light_mode(global.light_modes_by_type[smartlight_preset.default_mode])
+
+/obj/machinery/power/apc/proc/sync_smartlight()
+	set waitfor = FALSE
+	// todo: need to preserve local user settings (idk how)
+	init_smartlight()
+
+/obj/machinery/power/apc/proc/set_light_mode(datum/light_mode/new_mode, forced = FALSE)
+	set waitfor = FALSE
+
+	if(light_mode == new_mode)
+		return
+
+	if(SSsmartlight.forced_admin_mode && !forced)
+		return
+
+	light_mode = new_mode
 
 	for(var/obj/machinery/light/L in area)
-		if(L.nightshift_allowed)
-			L.nightshift_enabled = nightshift_lights
-			L.update(FALSE)
-		CHECK_TICK
+		L.set_light_mode(light_mode)
 
-/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
-	if(last_nightshift_switch > world.time - 20) // ~2 seconds between each toggle to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-		return
-	last_nightshift_switch = world.time
-	set_nightshift(!nightshift_lights)
+/obj/machinery/power/apc/proc/toggle_nightshift(active)
+	nightshift_lights = active
+	reset_smartlight()
 
-/obj/machinery/power/apc/proc/set_nightshift_preset(preset)
-	if(last_nightshift_switch > world.time - 20) // ~2 seconds between each change to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-		return
-	last_nightshift_switch = world.time
-	set_nightshift(nightshift_lights, preset)
+/obj/machinery/power/apc/proc/reset_smartlight()
+	if(nightshift_lights && smartlight_preset.nightshift_mode)
+		set_light_mode(global.light_modes_by_type[smartlight_preset.nightshift_mode])
+	else
+		set_light_mode(global.light_modes_by_type[smartlight_preset.default_mode])
+
+/obj/machinery/power/apc/proc/get_light_mode()
+	return light_mode
 
 /obj/machinery/power/apc/smallcell
 	cell_type = 2500

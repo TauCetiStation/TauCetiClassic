@@ -10,9 +10,9 @@
 	//var/invisa_view = 0
 	var/prescription = 0
 	body_parts_covered = EYES
-	var/toggleable = 0
+	var/toggleable = FALSE
 	var/off_state = "degoggles"
-	var/active = 1
+	var/active = TRUE
 	var/sightglassesmod = null
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
@@ -23,20 +23,32 @@
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if(active)
-				active = 0
+				active = FALSE
 				icon_state = off_state
 				vision_flags = 0
 				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
-				active = 1
+				active = TRUE
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				lighting_alpha = initial(lighting_alpha)
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-			H.update_inv_glasses()
+			update_inv_mob()
 			H.update_sight()
+
+/obj/item/clothing/glasses/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		if(prescription)
+			user.clear_fullscreen("nearsighted")
+
+/obj/item/clothing/glasses/dropped(mob/user)
+	. = ..()
+	if(prescription)
+		if(HAS_TRAIT(user, TRAIT_NEARSIGHT))
+			user.overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
@@ -45,9 +57,10 @@
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
@@ -60,7 +73,7 @@
 	icon_state = "purple"
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "sci"
 
 /obj/item/clothing/glasses/night
@@ -70,21 +83,13 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 	darkness_view = 7
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
-	active = 1
+	active = TRUE
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-
-/obj/item/clothing/glasses/night/hos_nights
-	name = "augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
-	item_state = "hos_shades"
-	toggleable = FALSE
-	action_button_name = null
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -106,7 +111,7 @@
 	icon_state = "material"
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
-	toggleable = 1
+	toggleable = TRUE
 	action_button_name = "Toggle Goggles"
 	vision_flags = SEE_OBJS
 
@@ -169,6 +174,8 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+	flash_protection = FLASHES_PARTIAL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -176,6 +183,8 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -193,15 +202,17 @@
 			flags |= GLASSESCOVERSEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
+			flash_protection = FLASHES_FULL_PROTECTION
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
 			up = !up
 			flags &= ~GLASSESCOVERSEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
+			flash_protection = NONE
 			to_chat(usr, "You push \the [src] up out of your face.")
 
-		usr.update_inv_glasses()
+		update_inv_mob()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
@@ -248,6 +259,30 @@
 	icon_state = "sunhud"
 	hud_types = list(DATA_HUD_SECURITY)
 
+/obj/item/clothing/glasses/hud/hos_aug
+	name = "augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "hos_shades_ngv"
+	item_state = "hos_shades"
+	off_state = "hos_shades"
+	hud_types = list(DATA_HUD_SECURITY)
+	toggleable = TRUE
+	active = TRUE
+	action_button_name = "Switch Shades Mode"
+	activation_sound = 'sound/effects/glasses_switch.ogg'
+	sightglassesmod  = "sepia"
+	darkness_view = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
+
+/obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
+	. = ..()
+	if(active)
+		flash_protection = FLASHES_AMPLIFIER
+	else
+		flash_protection = FLASHES_PARTIAL_PROTECTION
+
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
 	desc = "Flash-resistant goggles with inbuilt combat and security information."
@@ -261,10 +296,19 @@
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
+
+/obj/item/clothing/glasses/thermal/attack_self(mob/user)
+	. = ..()
+	if(active)
+		flash_protection = FLASHES_AMPLIFIER
+	else
+		flash_protection = NONE
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(ishuman(src.loc))
@@ -273,9 +317,8 @@
 		if(M.glasses == src)
 			M.eye_blind = 3
 			M.blurEyes(15)
-			M.disabilities |= NEARSIGHTED
-			spawn(100)
-				M.disabilities &= ~NEARSIGHTED
+			M.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+			addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
@@ -290,7 +333,7 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
-	toggleable = 1
+	toggleable = TRUE
 	off_state = "thermoncle_off"
 	action_button_name = "Toggle Monocle"
 
@@ -300,7 +343,7 @@
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 	body_parts_covered = 0
-	toggleable = 0
+	toggleable = FALSE
 	action_button_name = null
 
 /obj/item/clothing/glasses/thermal/jensen
@@ -321,7 +364,7 @@
 	toggleable = TRUE
 	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
-	active = 1
+	active = TRUE
 	off_state = "healthhudnight"
 	hud_types = list(DATA_HUD_MEDICAL_ADV)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -340,7 +383,7 @@
 	name = "gar meson scanner"
 	icon_state = "garm"
 	item_state = "garm"
-	toggleable = 0
+	toggleable = FALSE
 	action_button_name = null
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
@@ -362,7 +405,7 @@
 	name = "supergar glasses"
 	icon_state = "supergar"
 	item_state = "supergar"
-	toggleable = 0
+	toggleable = FALSE
 
 /obj/item/clothing/glasses/sunglasses/noir
 	name = "noir sunglasses"

@@ -58,7 +58,7 @@
 /datum/religion_rites/standing/legacy/charge
 	name = "Беспроводная Зарядка"
 	desc = "Заряжает оборудование, батарейки и другие штуки вокруг тебя."
-	ritual_length = (20 SECONDS)
+	ritual_length = (10 SECONDS)
 	ritual_invocations = list("By the power of our gods...",
 						"...We call upon you, who make the energy flow...",
 						"...to give us a piece of what we will be...")

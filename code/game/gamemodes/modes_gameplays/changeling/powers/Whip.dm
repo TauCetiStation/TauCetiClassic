@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 2
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -18,7 +18,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
-	var/next_click
 
 /obj/item/weapon/changeling_whip/atom_init()
 	. = ..()
@@ -32,23 +31,17 @@
 /obj/item/weapon/changeling_whip/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated())
 		return
-	if(next_click > world.time)
-		return
-	if(!use_charge(user, 2))
-		return
-	next_click = world.time + 10
+	user.SetNextMove(CLICK_CD_MELEE)
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	switch(user.a_intent)
 		if(INTENT_GRAB)
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
-			if(prob(65))
-				LE.weaken = 3
-				LE.stun = 2
+			LE.weaken = 1
 		if(INTENT_HARM)
-			LE.damage = 30
+			LE.damage = 15
 		else
 			LE.agony = 15
 	LE.host = user
@@ -61,7 +54,7 @@
 	damage = 0
 	kill_count = 7
 	damage_type = BRUTE
-	flag = "bullet"
+	flag = BULLET
 	var/grabber = FALSE
 	var/mob/living/carbon/human/host
 	tracer_list = list()
@@ -74,18 +67,18 @@
 		return
 	var/atom/movable/T = target
 	if(grabber)
-		var/grab_chance
+		var/grab_chance = 100
 		if(iscarbon(T))
 			var/mob/living/carbon/C = T
-			grab_chance = 60 - (C.getarmor(BP_CHEST, "melee") * 0.4)
-		else
-			grab_chance = 90
+			grab_chance -= C.run_armor_check(def_zone, absorb_text = TRUE)
+			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
+				grab_chance -= 20
 		if(!T.anchored && prob(grab_chance))
-			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(end_whipping), T))
 	return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
-	if(T.Adjacent(host) && !host.get_inactive_hand() && !host.lying)
+	if(T.Adjacent(host) && !host.get_inactive_hand())
 		if(iscarbon(T))
 			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
 		else if(isitem(T))

@@ -81,7 +81,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
 	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
-	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED))
+	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)),
+	new/datum/stack_recipe("windowsill", /obj/structure/windowsill, 2, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED), time = 20)
 )
 
 /obj/item/stack/sheet/metal
@@ -107,7 +108,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 /obj/item/stack/sheet/metal/atom_init()
 	recipes = metal_recipes
 	. = ..()
-
 
 /*
  * Plasteel
@@ -150,6 +150,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe("wooden picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15),
 	new/datum/stack_recipe("painting frame", /obj/item/painting_frame, 2, time = 15),
+	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, time = 2 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("painting easel", /obj/structure/easel, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = FALSE, on_floor = FALSE)
 	)

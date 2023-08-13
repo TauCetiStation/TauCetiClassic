@@ -28,13 +28,17 @@
 	user.nutrition -= 6
 	user.overeatduration -= 8
 
-
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
 	var/obj/item/organ/external/groin/G = user.get_bodypart(BP_GROIN)
+
 	if(C)
-		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 7 * C.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	if(G)
-		user.apply_effect(7 * C.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 7 * G.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
 	user.update_body()
 
@@ -78,7 +82,7 @@
 	if((HULK in user.mutations) && user.hulk_activator == ACTIVATOR_HEAVY_MUSCLE_LOAD)
 		to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
 
-	INVOKE_ASYNC(src, .proc/try_pump, user)
+	INVOKE_ASYNC(src, PROC_REF(try_pump), user)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -136,9 +140,13 @@
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
 	var/obj/item/organ/external/r_arm/RA = user.get_bodypart(BP_R_ARM)
 	if(LA)
-		user.apply_effect(12 * LA.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 12 * LA.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	if(RA)
-		user.apply_effect(12 * RA.adjust_pumped(1), AGONY, 0)
+		var/pain_amount = 12 * RA.adjust_pumped(1)
+		user.apply_effect(pain_amount, AGONY, 0)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
 	user.update_body()
 
@@ -177,7 +185,7 @@
 	user.visible_message("<B>[user] is [bragmessage]!</B>")
 	user.pixel_y = 5
 
-	INVOKE_ASYNC(src, .proc/try_pump, user)
+	INVOKE_ASYNC(src, PROC_REF(try_pump), user)
 
 /obj/structure/dumbbells_rack
 	name = "dumbbells rack"
@@ -202,8 +210,8 @@
 	dumbbells.set_slots(slots = 4, slot_size = SIZE_BIG)
 	dumbbells.can_hold = list(/obj/item/weapon/dumbbell)
 
-	RegisterSignal(dumbbells, list(COMSIG_STORAGE_ENTERED), .proc/add_dumbbell)
-	RegisterSignal(dumbbells, list(COMSIG_STORAGE_EXITED), .proc/remove_dumbbell)
+	RegisterSignal(dumbbells, list(COMSIG_STORAGE_ENTERED), PROC_REF(add_dumbbell))
+	RegisterSignal(dumbbells, list(COMSIG_STORAGE_EXITED), PROC_REF(remove_dumbbell))
 
 	var/list/dumbbells_to_add = list()
 
@@ -279,7 +287,6 @@
 	force = 7.0
 	sharp = 0
 	throwforce = 5.0
-	throw_speed = 5
 	throw_range = 3
 	w_class = SIZE_NORMAL
 
@@ -294,7 +301,7 @@
 	force = 10.0
 	sharp = 0
 	throwforce = 8.0
-	throw_speed = 5
+	throw_speed = 1
 	throw_range = 1
 	w_class = SIZE_NORMAL
 
@@ -317,7 +324,9 @@
 	if(!BP)
 		return
 
-	H.apply_effect(3 * BP.adjust_pumped(mass, max_pumped), AGONY, 0)
+	var/pain_amount = 3 * BP.adjust_pumped(mass, max_pumped)
+	H.apply_effect(pain_amount, AGONY, 0)
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	H.update_body()
 
 	H.nutrition -= 2 * mass

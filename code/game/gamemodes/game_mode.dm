@@ -177,8 +177,8 @@
 		add_faction_member(F, mob, TRUE)
 
 /datum/game_mode/proc/PostSetup()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
-	addtimer(CALLBACK(src, .proc/send_intercept), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
+	addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
 	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
 	if(!(type in exclude_autotraitor_for))
@@ -213,12 +213,13 @@
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
 		SSStatistics.add_faction(F)
-		if (F.members.len > 0)
+		if(F.members.len > 0 || F.always_print)
 			exist = TRUE
 			completition_text += "<div class='Section'>"
 			completition_text += F.GetFactionHeader()
 			completition_text += F.GetScoreboard()
 			completition_text += "</div>"
+
 	if (orphaned_roles.len > 0)
 		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)

@@ -32,7 +32,7 @@
 
 /atom/movable/screen/corgi/ability/action()
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
-	if(IAN.stat)
+	if(IAN.stat != CONSCIOUS)
 		return
 
 	switch(tgui_alert(usr, "Do you want to lick or sniff something?",, list("Nothing","Tongue","Nose")))
@@ -77,7 +77,7 @@
 
 /atom/movable/screen/corgi/sit_lie/action(location, control,params)
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
-	if(IAN.stat)
+	if(IAN.stat != CONSCIOUS)
 		return
 
 	var/list/PL = params2list(params)

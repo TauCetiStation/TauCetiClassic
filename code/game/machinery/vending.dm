@@ -10,6 +10,9 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
+
+	var/subname = null // subname for vendor's circuit name
+
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
@@ -51,9 +54,11 @@
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
-	var/obj/item/weapon/spacecash/ewallet/ewallet
+	var/obj/item/weapon/ewallet/ewallet
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
+
+	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
 
 /obj/machinery/vending/atom_init()
@@ -72,9 +77,9 @@
 
 	build_inventory(products)
 	 //Add hidden inventory
-	build_inventory(contraband, 1)
-	build_inventory(premium, 0, 1)
-	build_inventory(syndie, 0, 0, 1)
+	build_inventory(contraband, hidden = 1)
+	build_inventory(premium, req_coin = 1)
+	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
 
@@ -83,30 +88,30 @@
 	QDEL_NULL(coin)
 	return ..()
 
-/obj/machinery/vending/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(25))
-				spawn(0)
-					malfunction()
-			return
+/obj/machinery/vending/RefreshParts()
+	..()
+	// eat refills
+	for(var/obj/item/weapon/vending_refill/refill in component_parts)
+		component_parts -= refill
+		qdel(refill)
+
+/obj/machinery/vending/deconstruct(disassembled = TRUE)
+	if(refill_canister)
+		return ..()
+	//the non constructable vendors drop metal instead of a machine frame.
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 3)
 	qdel(src)
 
-/obj/machinery/vending/blob_act()
-	if (prob(50))
-		spawn(0)
-			malfunction()
-			qdel(src)
-		return
+/obj/machinery/vending/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		malfunction()
 
-	return
-
-/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
+
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
@@ -164,10 +169,10 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(iscrowbar(W))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 
-	if(isscrewdriver(W) && anchored)
+	if(isscrewing(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()
@@ -185,7 +190,7 @@
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
 
-	else if(iswrench(W))	//unwrenching vendomats
+	else if(iswrenching(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src))
 			return
@@ -232,7 +237,7 @@
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
-	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
+	else if (istype(W, /obj/item/weapon/ewallet))
 		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
@@ -282,44 +287,22 @@
 		if(check_accounts)
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				var/attempt_pin = 0
 				if(D)
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-						if(isnull(attempt_pin))
-							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
-							return
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
-
+					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							D.adjust_money(-transaction_amount)
-							vendor_account.adjust_money(transaction_amount)
+							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
 							//create entries in the two account transaction logs
-							var/datum/transaction/T = new()
-							T.target_name = "[vendor_account.owner_name] (via [src.name])"
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							if(transaction_amount > 0)
-								T.amount = "([transaction_amount])"
-							else
-								T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							D.transaction_log.Add(T)
+							charge_to_account(D.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
 							//
-							T = new()
-							T.target_name = D.owner_name
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							vendor_account.transaction_log.Add(T)
+							charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
 
 							// Vend the item
 							vend(src.currently_vending, usr)
@@ -384,7 +367,7 @@
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
 
 	if (ewallet)
-		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
+		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.get_money() : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
@@ -455,8 +438,8 @@
 			vend(R, usr)
 		else
 			if (ewallet)
-				if (R.price <= ewallet.worth)
-					ewallet.worth -= R.price
+				if (R.price <= ewallet.get_money())
+					ewallet.remove_money(R.price)
 					vend(R, usr)
 				else
 					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
@@ -527,7 +510,7 @@
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 
-		addtimer(CALLBACK(src, .proc/say_slogan), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/shoot_inventory_timer()
 	if(stat & (BROKEN|NOPOWER))
@@ -536,16 +519,16 @@
 	if(shoot_inventory)
 		throw_item()
 
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/update_wires_check()
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	if(slogan_list.len > 0 && !shut_up)
-		addtimer(CALLBACK(src, .proc/say_slogan), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 	if(shoot_inventory)
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 
 /obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
@@ -573,22 +556,44 @@
 				update_power_use()
 	update_power_use()
 
+/obj/machinery/vending/turn_light_off()
+	. = ..()
+	stat |= NOPOWER
+	icon_state = "[initial(icon_state)]-off"
+	update_power_use()
+
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-
-		while(R.amount>0)
+	if(refill_canister)
+		//Dropping actual items
+		var/max_drop = rand(5, 7)
+		for(var/i = 1, i < max_drop, i++)
+			var/datum/data/vending_product/R = pick(src.product_records)
+			var/dump_path = R.product_path
+			if(!R.amount)
+				continue
 			new dump_path(src.loc)
 			R.amount--
-		continue
+
+		//Dropping remaining items in a pack
+		var/refilling = 0
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				refilling++
+				R.amount--
+
+		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+		Refill.charges = refilling
+	else //If no canister - drop everything
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				var/dump_path = R.product_path
+				new dump_path(src.loc)
+				R.amount--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
+
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."

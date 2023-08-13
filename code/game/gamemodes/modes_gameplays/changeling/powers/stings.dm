@@ -43,7 +43,7 @@
 		return FALSE
 	if(!isturf(user.loc))
 		return FALSE
-	if(!AStar(user, target.loc, /turf/proc/Distance, C.sting_range, simulated_only = FALSE))
+	if(!AStar(user, target.loc, TYPE_PROC_REF(/turf, Distance), C.sting_range, simulated_only = FALSE))
 		return FALSE //hope this ancient magic still works
 	if(ischangeling(target))
 		sting_feedback(user,target)
@@ -140,12 +140,11 @@
 	genomecost = 2
 	var/datum/dna/selected_dna = null
 
-/obj/effect/proc_holder/changeling/sting/transformation/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/sting/transformation/set_sting(mob/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		names += "[DNA.real_name]"
+		names += "[DNA.original_character_name]"
 
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
@@ -169,8 +168,12 @@
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	target.visible_message("<span class='warning'>[target] transforms!</span>")
+	//save original
+	var/essence_name = target.dna.original_character_name
 	target.dna = selected_dna.Clone()
 	target.real_name = selected_dna.real_name
+	//unchange this
+	target.dna.original_character_name = essence_name
 	domutcheck(target, null)
 	target.UpdateAppearance()
 
@@ -245,8 +248,8 @@
 	if(sting_fail(user,target))
 		return FALSE
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
-	target.disabilities |= NEARSIGHTED
-	spawn(300)	target.disabilities &= ~NEARSIGHTED
+	target.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
 	target.eye_blind = 20
 	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")

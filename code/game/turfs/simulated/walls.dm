@@ -11,6 +11,8 @@
 	var/damage = 0
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 
+	explosive_resistance = 3
+
 	var/damage_overlay
 	var/static/damage_overlays[8]
 
@@ -22,48 +24,15 @@
 
 	opacity = TRUE
 	density = TRUE
-	blocks_air = TRUE
+	blocks_air = AIR_BLOCKED
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-	canSmoothWith = list(
-		/turf/simulated/wall,
-		/turf/simulated/wall/r_wall,
-		/obj/structure/falsewall,
-		/obj/structure/falsewall/reinforced,
-		/obj/structure/girder,
-		/obj/structure/girder/reinforced,
-		/obj/machinery/door/airlock,
-		/obj/machinery/door/airlock/command,
-		/obj/machinery/door/airlock/security,
-		/obj/machinery/door/airlock/engineering,
-		/obj/machinery/door/airlock/medical,
-		/obj/machinery/door/airlock/virology,
-		/obj/machinery/door/airlock/maintenance,
-		/obj/machinery/door/airlock/freezer,
-		/obj/machinery/door/airlock/mining,
-		/obj/machinery/door/airlock/atmos,
-		/obj/machinery/door/airlock/research,
-		/obj/machinery/door/airlock/science,
-		/obj/machinery/door/airlock/neutral,
-		/obj/machinery/door/airlock/highsecurity,
-		/obj/machinery/door/airlock/vault,
-		/obj/machinery/door/airlock/external,
-		/obj/machinery/door/airlock/glass,
-		/obj/machinery/door/airlock/command/glass,
-		/obj/machinery/door/airlock/engineering/glass,
-		/obj/machinery/door/airlock/security/glass,
-		/obj/machinery/door/airlock/medical/glass,
-		/obj/machinery/door/airlock/virology/glass,
-		/obj/machinery/door/airlock/research/glass,
-		/obj/machinery/door/airlock/mining/glass,
-		/obj/machinery/door/airlock/atmos/glass,
-		/obj/machinery/door/airlock/science/glass,
-		/obj/machinery/door/airlock/science/neutral,
-		)
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/Destroy()
@@ -130,11 +99,10 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam, devastated)
+/turf/simulated/wall/take_damage(dam, devastated) // doesnt use atom integrity system
 	if(dam)
 		damage = max(0, damage + dam)
 		update_damage(devastated)
-	return
 
 /turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
@@ -189,6 +157,18 @@
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
+
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			ChangeTurf(basetype)
@@ -261,13 +241,16 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
+/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
+	if(istype(M))
+		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		M.health -= rand(4, 10)
+		attack_animal(M)
+		return TRUE
+
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
@@ -312,7 +295,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
@@ -328,15 +311,11 @@
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
 				return
-
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
@@ -352,7 +331,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
@@ -372,22 +351,6 @@
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
-			if(mineral == "diamond")//Oh look, it's tougher
-				sleep(60)
-			if(!iswallturf(src) || !user || !W || !T)
-				return
-
-			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
-				dismantle_wall()
-				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, как металл разрезается на части.</span>", viewing_distance = 5)
-		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
@@ -426,13 +389,17 @@
 				dismantle_wall(1)
 				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
-	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
+	//fulldestruct to walls when
+	else if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+		//slowdown, user. No need destruct all walls without debuff
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.shock_stage += 5
+		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
-		if(C.use_charge(user))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		take_damage(hammer.get_object_damage())
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -485,6 +452,13 @@
 		place_poster(W,user)
 		return
 
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+		return
 	else
 		return attack_hand(user)
 
@@ -499,7 +473,7 @@
 
 /turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75) && iswallturf(src))
 		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
 
 /turf/simulated/wall/proc/add_dent(denttype, x, y)
@@ -526,3 +500,9 @@
 
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
+
+/turf/simulated/wall/proc/tied_object_reset_pixel_offset(obj/O)
+	O.pixel_y = rand(-8, 8)
+	O.pixel_x = rand(-9, 9)
+	UnregisterSignal(O, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(O, COMSIG_PARENT_QDELETING)

@@ -67,7 +67,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/insulated(H), SLOT_L_STORE)
 
 
 /datum/quality/positiveish/disguise
@@ -93,8 +93,7 @@
 /datum/quality/positiveish/heavy_equipment/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest/fullbody(H), SLOT_WEAR_SUIT)
 	H.equip_or_collect(new /obj/item/clothing/gloves/combat(H), SLOT_GLOVES)
-	H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/l13(H), SLOT_S_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/magazine/l13_38(H), SLOT_R_HAND)
+	H.equip_or_collect(new /obj/item/weapon/melee/baton/double(H), SLOT_S_STORE)
 
 
 /datum/quality/positiveish/big_iron
@@ -113,8 +112,8 @@
 	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
-	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_L_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/all_affairs
@@ -310,7 +309,7 @@
 		to_chat(seer, "<span class='notice'>Their gaze is somewhere at the level of \the [parse_zone(target_zone)].</span>")
 
 /datum/quality/positiveish/eye_reading/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)
+	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), PROC_REF(see_intent))
 
 
 /datum/quality/positiveish/deathalarm
@@ -322,6 +321,7 @@
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
 	DA.stealth_inject(H)
 
+
 /datum/quality/positiveish/anatomist
 	name = "Anatomist"
 	desc = "Ты с первого взгляда можешь по походке и телосложению узнать расу гуманоида перед тобой."
@@ -330,11 +330,72 @@
 /datum/quality/positiveish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
 
-/datum/quality/positiveish/selfdefense
-	name = "Self Defense"
+
+/datum/quality/positiveish/petiteprotector
+	name = "Petite Protector"
 	desc = "На станции всё опаснее и опаснее. Руководство выдало тебе новое средство самозащиты."
 	requirement = "Безоружные главы, АВД."
-	jobs_required = list("Research Director", "Chief Engineer", "Cheif Medical Officer", "Internal Affairs Agent")
+	jobs_required = list("Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
 
-/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/positiveish/petiteprotector/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
+
+
+/datum/quality/positiveish/cqc
+	name = "CQC"
+	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
+	requirement = "Нет."
+
+/datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
+	H.add_moveset(new /datum/combat_moveset/cqc, MOVESET_QUALITY)
+
+
+/datum/quality/positiveish/investory
+	name = "Investor"
+	desc = "Вдоволь находившись на околофинансовые семинары, ты решил прикупить парочку пакетов акций."
+	requirement = "Нет."
+
+/datum/quality/positiveish/investory/add_effect(mob/living/carbon/human/H, latespawn)
+	if(!H.mind)
+		return
+	var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+	if(!MA)
+		return
+	SSeconomy.issue_founding_stock(MA.account_number, "Cargo", rand(10, 20))
+	SSeconomy.issue_founding_stock(MA.account_number, "Medical", rand(10, 20))
+
+
+/datum/quality/positiveish/healthy_body
+	name = "Healthy Body"
+	desc = "У тебя здоровое тело, которому позавидует среднестатистический космонавт."
+	requirement = "Нет."
+
+/datum/quality/positiveish/healthy_body/add_effect(mob/living/carbon/human/H)
+	H.health = 125
+	H.maxHealth = 125 //150 would be too much methinks
+
+
+/datum/quality/positiveish/psc
+	name = "Private Security Company"
+	desc = "Акции Карго растут в цене, и завхозу пришлось прибегнуть к услугам ЧОП."
+	requirement = "Карготех."
+	jobs_required = list("Cargo Technician")
+
+/datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
+	if(is_species(H, TAJARAN))
+		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
+	else
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/wjpp(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
+
+
+/datum/quality/positiveish/selfdefense
+	name = "Self Defense"
+	desc = "Самооборона - это важно. Ты спрятал пушку в одной из мусорок."
+	requirement = "Нет."
+
+/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)

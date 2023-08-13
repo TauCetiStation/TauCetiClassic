@@ -88,10 +88,14 @@
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
+/// from base of client/Move(): (atom/NewLoc, direction), can not be blocked like the above one can.
+#define COMSIG_CLIENTMOB_MOVING "client_moving"
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 /// from base of mob/set_a_intent(): (new_intent)
 #define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
+/// from base of mob/living/set_m_intent(): (new_intent)
+#define COMSIG_MOB_SET_M_INTENT "mob_set_m_intent"
 
 // /area signals
 ///from base of area/Entered(): (area/entered, atom/OldLoc)
@@ -111,7 +115,7 @@
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/NewLoc)
 #define COMSIG_ATOM_EXITED "atom_exited"
-/// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
+/// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
 	#define COMPONENT_CANPASS  1
 	#define COMPONENT_CANTPASS 2
@@ -144,6 +148,9 @@
 #define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
 /// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
 #define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
+///from /mob/living/say() when atom catches message: (proc args list(message, atom/movable/speaker))
+// currently works for talking_atom only
+#define COMSIG_MOVABLE_HEAR "movable_hear"
 
 ///called when teleporting into a protected turf: (channel, turf/origin)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
@@ -183,7 +190,14 @@
 #define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
 /// from datum/orbit/New(): (/atom/orbiting)
 #define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
-
+///when an atom starts playing a song, used in song_tuner rites: (datum/music_player)
+#define COMSIG_ATOM_STARTING_INSTRUMENT "atom_starting_instrument"
+///sent to the instrument when a song stops playing: (datum/music_player)
+#define COMSIG_INSTRUMENT_END "instrument_end"
+///sent to the instrument (and player if available) when a song repeats: (datum/music_player)
+#define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
+///sent to the instrument when tempo changes, skipped on new: (datum/music_player)
+#define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
 #define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
@@ -197,6 +211,8 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/attack_atom(): (atom/attacked_atom, mob/living/user, params)
+#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pickup(): (/mob/user)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 	#define COMPONENT_ITEM_NO_PICKUP 1
@@ -217,6 +233,8 @@
 /// from base of mob/MiddleClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
 	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+/// from base of obj/item/CtrlShiftClick()
+#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
@@ -227,6 +245,8 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
+/// from /obj/item/weapon/stock_parts/cell
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -254,6 +274,8 @@
 
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
+// from base of mob/RegularClickOn(): (atom/target, params)
+#define COMSIG_MOB_REGULAR_CLICK "regular_click"
 	#define COMPONENT_CANCEL_CLICK 1
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
@@ -263,6 +285,9 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
 #define COMSIG_MOB_EQUIPPED "mob_equipped"
+///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
+#define COMSIG_MOB_TRIED_ACCESS "tried_access"
+	#define COMSIG_ACCESS_ALLOWED 1
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -306,9 +331,21 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
+///from mob/living/vomit(): (/mob)
+#define COMSIG_LIVING_VOMITED "living_vomited"
+///from ai_actual_track(): (mob/living)
+#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
+	#define COMPONENT_CANT_TRACK (1<<0)
+
+/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
+/// from /mob/living/carbon/proc/finish_monkeyize()
+#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
+/// from /mob/living/carbon/proc/finish_humanize(): (species)
+#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
-/// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
+/// from simple_animal/hostile/proc/UnarmedAttack(): (atom/target)
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
 /// from simple_animal/hostile/proc/Shoot(): (atom/target)
 #define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"
@@ -342,3 +379,6 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"

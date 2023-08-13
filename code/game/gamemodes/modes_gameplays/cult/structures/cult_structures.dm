@@ -3,16 +3,12 @@
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/can_unwrench = TRUE
-	var/health = 3000
+	max_integrity = 3000
 
-/obj/structure/cult/bullet_act(obj/item/projectile/Proj, def_zone)
-	health -= Proj.damage
-	. = ..()
-	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W) && can_unwrench)
+	if(iswrenching(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -20,16 +16,16 @@
 		return FALSE
 
 	. = ..()
-	if(!.)
-		return FALSE
 
-	if(length(W.hitsound))
-		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
-	else
-		playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-
-	health -= W.force
-	healthcheck()
+/obj/structure/cult/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/cult/attack_hand(mob/living/carbon/human/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -38,21 +34,11 @@
 	BP.take_damage(3, 0, 0, "stone")
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/cult/attack_animal(mob/living/simple_animal/user)
-	. = ..()
-	health -= user.melee_damage
-	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
-
 /obj/structure/cult/attack_paw(mob/living/user)
 	if(ishuman(user))
 		return attack_hand(user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-
-/obj/structure/cult/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
 
 /obj/structure/cult/tome
 	name = "desk"
@@ -62,6 +48,7 @@
 	light_power = 2
 	light_range = 3
 
+ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon
 	name = "pylon"
 	desc = "A floating crystal that hums with an unearthly energy."
@@ -70,31 +57,73 @@
 	light_power = 2
 	light_range = 6
 	pass_flags = PASSTABLE
-	health = 200
+	max_integrity = 200
+	var/list/validturfs = list()
+	var/datum/religion/cult/C
 
-/obj/structure/cult/pylon/Destroy()
+	var/corruption_delay = 50 //Increases currupting delay by 5 each time it procs
+	COOLDOWN_DECLARE(corruption)
+
+/obj/structure/cult/pylon/atom_init()
+	. = ..()
+	if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
+		init_healing()
+
+/obj/structure/cult/pylon/proc/init_healing()
+	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, \
+	TRAIT_HEALS_FROM_PYLONS,"#960000")
+	if(!is_centcom_level(z))
+		START_PROCESSING(SSobj, src)
+	C = cult_religion
+
+/obj/structure/cult/pylon/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
 	new /obj/structure/cult/pylon_platform(loc)
 	new /obj/item/stack/sheet/metal(loc)
+	STOP_PROCESSING(SSobj, src)
+	validturfs = null
 	return ..()
+
+/obj/structure/cult/pylon/process()
+	if(!anchored)
+		if(length(validturfs))
+			validturfs = list()
+		return
+
+	if(COOLDOWN_FINISHED(src, corruption))
+		corrupt()
+
+/obj/structure/cult/pylon/proc/corrupt()
+	if(!length(validturfs))
+		for(var/T as anything in circleviewturfs(src, 5))
+			validturfs += T
+	else
+		var/turf/simulated/T = pick(validturfs)
+		T.atom_religify(C)
+		validturfs -= T
+		corruption_delay += 5
+
+	COOLDOWN_START(src, corruption, corruption_delay)
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
-	charged.maxHealth = health
-	charged.health = health
+	charged.maxHealth = max_integrity
+	charged.health = get_integrity()
 	forceMove(charged)
 
 	if(time_to_stop)
-		charged.timer = addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate), time_to_stop, TIMER_STOPPABLE)
+		charged.timer = addtimer(CALLBACK(charged, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, deactivate)), time_to_stop, TIMER_STOPPABLE)
 
 	if(R)
-		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER,  /mob/living/simple_animal/hostile/pylon.proc/add_friend)
+		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, add_friend))
 	return charged
 
 /obj/structure/cult/pylon_platform
 	name = "pylon platform"
 	desc = "Useless."
 	icon_state = "pylon_platform"
-	health = 50
+	max_integrity = 50
 	density = FALSE
 
 // For operations
@@ -102,9 +131,10 @@
 	name = "torture table"
 	desc = "For tortures"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "table2-idle"
+	icon_state = "table_surgey_idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
+	flags = NODECONSTRUCT
 
 	var/datum/religion/cult/religion
 	var/charged = FALSE
@@ -134,7 +164,7 @@
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -150,19 +180,19 @@
 	else
 		return ..()
 
-/obj/machinery/optable/torture_table/buckle_mob(mob/living/M, mob/user)
-	..()
-	if(M.pixel_x != 0)
-		M.pixel_x = 0
-	if(M.pixel_y != -1)
-		M.pixel_y = -1
-	if(M.dir & (EAST|WEST|NORTH))
-		M.dir = SOUTH
-	add_overlay(belt)
-
-/obj/machinery/optable/torture_table/unbuckle_mob(mob/user)
-	..()
-	cut_overlay(belt)
+/obj/machinery/optable/torture_table/post_buckle_mob(mob/living/M)
+	if(buckled_mob == M)
+		if(M.pixel_x != 0)
+			M.pixel_x = 0
+		if(M.pixel_y != -1)
+			M.pixel_y = -1
+		if(M.dir & (EAST|WEST|NORTH))
+			M.dir = SOUTH
+		add_overlay(belt)
+	else
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
+		cut_overlay(belt)
 
 /obj/machinery/optable/torture_table/attack_hand(mob/living/user)
 	if(user == buckled_mob)
@@ -174,7 +204,7 @@
 /obj/structure/mineral_door/cult
 	name = "door"
 	icon_state = "cult"
-	health = 300
+	max_integrity = 300
 	sheetAmount = 2
 	sheetType = /obj/item/stack/sheet/metal
 	light_color = "#990000"
@@ -189,6 +219,13 @@
 		return FALSE
 
 	return TRUE
+
+/obj/structure/mineral_door/cult/attack_animal(mob/user)
+	if(user.my_religion && user.a_intent != INTENT_HARM && !isSwitchingStates)
+		add_fingerprint(user)
+		SwitchState()
+		return
+	return ..()
 
 /obj/structure/mineral_door/cult/MechChecks(obj/mecha/user)
 	if(!..())
@@ -256,7 +293,7 @@
 	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
-	INVOKE_ASYNC(src, .proc/async_destroying, C)
+	INVOKE_ASYNC(src, PROC_REF(async_destroying), C)
 
 /obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"

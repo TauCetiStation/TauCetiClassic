@@ -5,7 +5,7 @@
 /datum/religion_rites/standing/food
 	name = "Создание Еды"
 	desc = "Нужно больше и больше еды!"
-	ritual_length = (2.1 MINUTES)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
@@ -28,17 +28,15 @@
 	for(var/i in 1 to amount)
 		var/chosen = pick(borks)
 		var/obj/B = new chosen(location)
-		var/obj/randomcatcher/CATCH
 		if(!B.icon_state || !B.reagents || !B.reagents.reagent_list.len)
 			QDEL_NULL(B)
-			CATCH = new /obj/randomcatcher(location)
-			B = CATCH.get_item(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
-			QDEL_NULL(CATCH)
+			var/random_type = PATH_OR_RANDOM_PATH(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
+			B = new random_type
 		if(B && prob(80))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
-/datum/religion_rites/standing/food/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/food/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -54,7 +52,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/food/rite_step(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/food/rite_step(mob/user, obj/AOG)
 	..()
 	if(prob(50))
 		spawn_food(get_turf(AOG), 1)
@@ -66,7 +64,7 @@
 /datum/religion_rites/standing/pray
 	name = "Молитва"
 	desc = "За добрые слова вы получаете немного favor'а."
-	ritual_length = (4 MINUTES)
+	ritual_length = (2 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
 							  "...have mercy on us...",
@@ -85,7 +83,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/pray/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -99,7 +97,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/AOG, stage)
+/datum/religion_rites/standing/pray/rite_step(mob/user, obj/AOG, stage)
 	..()
 	religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
@@ -111,7 +109,7 @@
 /datum/religion_rites/standing/honk
 	name = "Клоунский Крик"
 	desc = "Разносит хонк по всей станции."
-	ritual_length = (1.9 MINUTES)
+	ritual_length = (1 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
 							  "...may all of you be healthy and smart...",
@@ -125,7 +123,7 @@
 		ASPECT_WACKY = 1,
 	)
 
-/datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/honk/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -136,7 +134,7 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/AOG, stage)
+/datum/religion_rites/standing/honk/rite_step(mob/user, obj/AOG, stage)
 	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
@@ -161,7 +159,7 @@
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/animation/on_chosen(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 	var/anim_items = 0
@@ -174,7 +172,7 @@
 	religion.update_rites()
 	return TRUE
 
-/datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/animation/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -223,7 +221,7 @@
 /datum/religion_rites/standing/spook/proc/remove_spook_effect(mob/living/carbon/M)
 	M.remove_alt_appearance("spookyscary")
 
-/datum/religion_rites/standing/spook/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/spook/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -242,7 +240,7 @@
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 		I.override = TRUE
 		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS * divine_power)
+		addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), M), 10 SECONDS * divine_power)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))
@@ -258,7 +256,7 @@
 /datum/religion_rites/standing/illuminate
 	name = "Озарение"
 	desc = "Создаёт пучок света над вами."
-	ritual_length = (50 SECONDS)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
 							  "...to whom they turn for help!..",
@@ -275,7 +273,7 @@
 		ASPECT_LIGHT = 1,
 	)
 
-/datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/illuminate/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -317,7 +315,7 @@
 /datum/religion_rites/standing/revive_animal
 	name = "Возрождение Животного"
 	desc = "Возвращает душу животного из лучшего мира."
-	ritual_length = (50 SECONDS)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("I will say, whisper, quietly say such words...",
 							  "...May every disease leave you...",
 							  "...You will not know that you are in torment, pain and suffering...",
@@ -334,7 +332,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/revive_animal/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 	if(!AOG)
@@ -360,7 +358,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/revive_animal/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/revive_animal/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE

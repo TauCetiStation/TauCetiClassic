@@ -173,7 +173,7 @@
 	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
-			if(istype(G,/obj/item/clothing/gloves/yellow))
+			if(istype(G,/obj/item/clothing/gloves/insulated))
 				protected = 1
 
 	if(!protected)
@@ -199,7 +199,7 @@
 	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
-			if(istype(G,/obj/item/clothing/gloves/yellow) )
+			if(istype(G,/obj/item/clothing/gloves/insulated) )
 				protected = 1
 
 	if(!protected)
@@ -451,7 +451,7 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(!src.ispowered)
 		return
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		src.panelopen = !src.panelopen
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") ))
@@ -534,6 +534,23 @@
 	updateUsrDialog()
 	return
 
+/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(HELMET)
+		HELMET.forceMove(loc)
+		HELMET = null
+	if(SUIT)
+		SUIT.forceMove(loc)
+		SUIT = null
+	if(MASK)
+		MASK.forceMove(loc)
+		MASK = null
+	eject_occupant(OCCUPANT)
+
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")

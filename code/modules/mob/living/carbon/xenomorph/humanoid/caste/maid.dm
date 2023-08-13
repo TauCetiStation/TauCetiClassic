@@ -5,6 +5,7 @@
 	health = 160
 	icon_state = "alienm_s"
 	plasma_rate = 15
+	speed = 1
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
 						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma,
@@ -33,9 +34,6 @@
 /mob/living/carbon/xenomorph/humanoid/maid/Destroy()
 	alien_list[ALIEN_MAID] -= src
 	return ..()
-
-/mob/living/carbon/xenomorph/humanoid/maid/movement_delay()
-	return (1 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/maid/can_pickup(obj/O)
 	if(is_type_in_list(O, whitelist_items))

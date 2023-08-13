@@ -1,3 +1,6 @@
+// todo: this is not a nano-ui only thing anymore, we need to move methods for better place and rename *_nano_interaction
+// do not mistake with tgui methods like /datum/tgui_state/default/can_use_topic
+
 /datum/proc/nano_host()
 	return src
 
@@ -21,7 +24,7 @@
 	return STATUS_UPDATE						// Ghosts can view updates
 
 /mob/living/silicon/pai/can_use_topic(src_object)
-	if(src_object == src && !stat)
+	if(src_object == src && stat == CONSCIOUS)
 		return STATUS_INTERACTIVE
 	else
 		return ..()

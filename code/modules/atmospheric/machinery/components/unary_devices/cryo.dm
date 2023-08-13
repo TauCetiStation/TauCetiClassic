@@ -42,7 +42,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
-		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		B.loc = get_step(loc, dir) //Beaker is carefully ejected from the wreckage of the cryotube
 
 	return ..()
 
@@ -197,7 +197,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
+	if(user == occupant || (user.stat != CONSCIOUS && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui
@@ -309,7 +309,7 @@
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
-			beaker.loc = get_step(loc, SOUTH)
+			beaker.loc = get_step(loc, dir)
 			beaker = null
 
 	update_icon()

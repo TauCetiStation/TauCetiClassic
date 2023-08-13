@@ -15,6 +15,7 @@
 		/obj/item/weapon/cartridge/captain = 3,
 		/obj/item/weapon/cartridge/quartermaster = 10,
 	)
+	private = TRUE
 
 /obj/machinery/vending/cigarette
 	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
@@ -33,9 +34,13 @@
 	)
 	contraband = list(
 		/obj/item/weapon/lighter/zippo = 4,
+		/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 	)
 	premium = list(
-		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
+		/obj/item/clothing/mask/cigarette/cigar = 2,
+		/obj/item/clothing/mask/cigarette/cigar/havana = 1,
+		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+		/obj/item/clothing/mask/cigarette/pipe = 1,
 	)
 	syndie = list(
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
@@ -48,6 +53,7 @@
 		/obj/item/clothing/mask/ecig = 40,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
+	private = FALSE
 
 /obj/machinery/vending/security
 	name = "SecTech"
@@ -62,15 +68,22 @@
 		/obj/item/weapon/grenade/flashbang = 4,
 		/obj/item/device/flash = 5,
 		/obj/item/weapon/storage/box/evidence = 6,
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 5,
+		/obj/item/ammo_box/magazine/glock/rubber = 10,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/device/flashlight/seclite = 4,
 	)
 	syndie = list(
-		/obj/item/ammo_box/a357 = 1,
-		/obj/item/ammo_box/magazine/m9mm = 1,
+		/obj/item/ammo_box/speedloader/a357 = 1,
+		/obj/item/ammo_box/magazine/stechkin = 1,
 	)
+	prices = list(
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 200,
+		/obj/item/ammo_box/magazine/glock/rubber = 50,
+	)
+	private = TRUE
 
 /obj/machinery/vending/weirdomat
 	name = "Weird-O-Mat"
@@ -112,6 +125,7 @@
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
+	private = TRUE
 
 /obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/occult_scanner))
@@ -139,7 +153,7 @@
 		if("Contract From Below")
 			new /obj/item/weapon/pen/ghost(loc)
 		if("Cryptorecorder")
-			new /obj/item/device/camera/spooky(loc)
+			new /obj/item/device/camera/polar/spooky(loc)
 		if("Black Candle Box")
 			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
 		if("Cancel")
@@ -173,6 +187,7 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator = 3,
 		/obj/item/weapon/storage/box/lipstick = 3,
 	)
+	private = TRUE
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
@@ -203,6 +218,7 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
+	private = TRUE
 
 /obj/machinery/vending/blood
 	name = "Blood'O'Matic"
@@ -225,6 +241,7 @@
 		/obj/item/weapon/reagent_containers/blood/empty = 10,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/blood
+	private = TRUE
 
 /obj/machinery/vending/syndi
 	name = "KillNTVend"
@@ -248,7 +265,7 @@
 	syndie = list(
 		/obj/item/toy/syndicateballoon = 6,
 	)
-	var/list/assortment = list(
+	var/list/kits = list(
 		"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
 		"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
 		"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
@@ -257,18 +274,30 @@
 		"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
 		"Field Medic kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/medic,
+		"Chemical Fighter Kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
-	var/static/list/selection_items
+	var/static/list/selections_kits
+
+	var/list/armor_kits = list(
+		"Hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/rig,
+		"Heavy hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/heavy_rig,
+		"Assault Armor" = /obj/item/weapon/storage/box/syndie_kit/armor,
+	)
+
+	var/static/list/selections_armor
+	private = TRUE
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
+	if(istype(I, /obj/item/weapon/mining_voucher/kit))
 		givekit(I, user)
 		return
+	if(istype(I, /obj/item/weapon/mining_voucher/armour))
+		givearmor(I, user)
 	return ..()
 
-/obj/machinery/vending/syndi/proc/populate_selection()
-	selection_items = list(
+/obj/machinery/vending/syndi/proc/kitpopulate_selection()
+	selections_kits = list(
 	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
 	"Sniper kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "heavyrifle"),
 	"Assaultman kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "a74"),
@@ -277,19 +306,58 @@
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Field Medic kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "medigun_syndi"),
+	"Chemical Fighter Kit" = image(icon = 'icons/obj/hydroponics/equipment.dmi', icon_state = "misternuke"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
+/obj/machinery/vending/syndi/proc/armourpopulate_selection()
+	selections_armor = list(
+		"Hybrid suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-syndie-combat"),
+		"Heavy hybrid suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-heavy-combat"),
+		"Assault Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "assaultarmor"),
+	)
+
 /obj/machinery/vending/syndi/proc/givekit(obj/voucher, mob/user)
-	var/selection = show_radial_menu(user, src, selection_items, require_near = TRUE, tooltips = TRUE)
+	var/selection = show_radial_menu(user, src, selections_kits, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
 		return
-	if(!selection_items)
-		populate_selection()
+	if(!selections_kits)
+		kitpopulate_selection()
 	if(!selection || !Adjacent(user))
 		return
 	voucher.in_use = TRUE
-	var/bought_type = assortment[selection]
+	var/bought_type = kits[selection]
+	var/obj/item/bought = new bought_type(loc)
+	if(ishuman(user))
+		var/mob/living/carbon/human/A = user
+		A.put_in_any_hand_if_possible(bought)
+	qdel(voucher)
+
+	for(var/role in user.mind.antag_roles)
+		var/datum/role/R = user.mind.antag_roles[role]
+		var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+		if(!S)
+			continue
+		if(istype(R, /datum/role/operative))
+			R.faction.faction_scoreboard_data += {"[bought.name] for 1 voucher."}
+		else
+			S.uplink_items_bought += {"[bought.name] for 1 voucher."}
+
+		var/datum/stat/uplink_purchase/stat = new
+		stat.bundlename = bought.name
+		stat.cost = 1
+		S.uplink_purchases += stat
+
+/obj/machinery/vending/syndi/proc/givearmor(obj/voucher, mob/user)
+	var/selection = show_radial_menu(user, src, selections_armor, require_near = TRUE, tooltips = TRUE)
+	if(voucher.in_use)
+		return
+	if(!selections_armor)
+		armourpopulate_selection()
+	if(!selection || !Adjacent(user))
+		return
+	voucher.in_use = TRUE
+	var/bought_type = armor_kits[selection]
 	var/obj/item/bought = new bought_type(loc)
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user
@@ -346,3 +414,4 @@
 		/obj/item/clothing/mask/tie/golden_cross = 1000,
 		/obj/item/clothing/shoes/jolly_gravedigger = 200,
 	)
+	private = TRUE

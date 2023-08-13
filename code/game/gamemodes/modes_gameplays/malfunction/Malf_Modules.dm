@@ -73,7 +73,7 @@ robot_fabricator
 /datum/AI_Module/module_picker/Topic(href, href_list)
 	..()
 	var/mob/living/silicon/ai/cur_AI = usr
-	if(cur_AI.stat || !cur_AI.client)
+	if(cur_AI.stat != CONSCIOUS || !cur_AI.client)
 		return
 	if(href_list["clear"])
 		temp = null
@@ -174,8 +174,8 @@ robot_fabricator
 
 /datum/AI_Module/large/upgrade_turrets/BuyedNewHandle()
 	for(var/obj/machinery/porta_turret/turret in machines)
-		turret.health += 30
-		turret.maxhealth += 30
+		turret.max_integrity += 30
+		turret.repair_damage(30)
 		turret.auto_repair = 1
 		turret.shot_delay = 15
 	to_chat(owner, "<span class='notice'>Turrets upgraded.</span>")
@@ -261,7 +261,7 @@ robot_fabricator
 	to_chat(owner, "<span class='notice'>Machine overloaded. Uses left: [uses]</span>")
 	if(uses <= 0)
 		owner.active_module = null
-	addtimer(CALLBACK(src, .proc/overload_post_action, M), 50)
+	addtimer(CALLBACK(src, PROC_REF(overload_post_action), M), 50)
 	return FALSE
 
 /mob/living/silicon/ai/proc/overload_machine()

@@ -33,6 +33,14 @@
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
 
+/atom/movable/atom_init(mapload, ...)
+	. = ..()
+
+	if (can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
+
 /atom/movable/Destroy()
 
 	var/turf/T = loc
@@ -86,19 +94,20 @@
 
 			moving_diagonally = FIRST_DIAG_STEP
 			. = step(src, v)
-			if(.)
-				moving_diagonally = SECOND_DIAG_STEP
-				if(!step(src, h))
-					set_dir(v)
-			else
-				dir = old_dir // blood trails uses dir
-				. = step(src, h)
+			if(moving_diagonally) // forcemove, bump, etc. can interrupt diagonal movement
 				if(.)
 					moving_diagonally = SECOND_DIAG_STEP
-					if(!step(src, v))
-						set_dir(h)
+					if(!step(src, h))
+						set_dir(v)
+				else
+					dir = old_dir // blood trails uses dir
+					. = step(src, h)
+					if(.)
+						moving_diagonally = SECOND_DIAG_STEP
+						if(!step(src, v))
+							set_dir(h)
 
-			moving_diagonally = 0
+				moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
@@ -156,11 +165,10 @@
 	STOP_THROWING(src, A)
 
 	if(A && non_native_bump)
-		A.last_bumped = world.time
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
 	if(destination)
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
@@ -170,6 +178,9 @@
 		var/area/destarea = get_area(destination)
 
 		loc = destination
+
+		if(!keep_moving_diagonally)
+			moving_diagonally = FALSE
 
 		if(!same_loc)
 			if(oldloc)
@@ -212,8 +223,6 @@
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	hit_atom.hitby(src, throwingdatum)
-
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
@@ -221,6 +230,8 @@
 
 	if(isturf(hit_atom) && hit_atom.density)
 		Move(get_step(src, turn(dir, 180)))
+
+	return hit_atom.hitby(src, throwingdatum)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
@@ -391,7 +402,7 @@
 /// See traits.dm. Use this in place of ADD_TRAIT.
 /atom/movable/proc/become_area_sensitive(trait_source = GENERIC_TRAIT)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
-		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), PROC_REF(on_area_sensitive_trait_loss))
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADD(location.area_sensitive_contents, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
@@ -402,6 +413,12 @@
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
+
+/atom/movable/Destroy()
+	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		on_area_sensitive_trait_loss()
+	return ..()
+
 /* Sizes stuff */
 
 /atom/movable/proc/get_size_flavor()
@@ -516,3 +533,46 @@
 /obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
 	AM.forceMove(loc)
 	return TRUE
+
+/mob/living/proc/get_radiation_message(rad_dose)
+	var/message = ""
+	switch(rad_dose)
+		if(0 to 299)
+			message += "You feel warm."
+		if(300 to 499)
+			message += "You feel a wave of heat wash over you."
+		if(500 to INFINITY)
+			message += "You notice your skin is covered in fresh radiation burns."
+	return message
+
+#define GEIGER_RANGE 15
+
+/proc/irradiate_one_mob(mob/living/victim, rad_dose)
+	victim.apply_effect(rad_dose, IRRADIATE)
+	to_chat(victim, "<span class='warning'>[victim.get_radiation_message(rad_dose)]</span>")
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, victim)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+/proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
+	for(var/mob/living/L in range(source_turf, effect_distance))
+		var/neighbours_in_turf = 0
+		for(var/mob/living/neighbour in L.loc)
+			if(neighbour == L)
+				continue
+			neighbours_in_turf++
+		var/rads = rad_dose / (neighbours_in_turf > 0 ? neighbours_in_turf : 1)
+		rads *= sqrt(1 / (get_dist(L, source_turf) + 1))
+		L.apply_effect(rads, IRRADIATE)
+		to_chat(L, "<span class='warning'>[L.get_radiation_message(rad_dose)]</span>")
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, source_turf)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+#undef GEIGER_RANGE

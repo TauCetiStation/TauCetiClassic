@@ -7,8 +7,7 @@
 "b" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "c" = (
@@ -25,7 +24,7 @@
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "e" = (
-/obj/structure/window/reinforced/holowindow/disappearing{
+/obj/structure/window/thin/reinforced/holowindow/disappearing{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor{
@@ -34,7 +33,7 @@
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "f" = (
-/obj/structure/window/reinforced/holowindow/disappearing{
+/obj/structure/window/thin/reinforced/holowindow/disappearing{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
@@ -71,13 +70,13 @@
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "k" = (
-/obj/structure/window/reinforced/holowindow/disappearing{
+/obj/structure/window/thin/reinforced/holowindow/disappearing{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor,
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "l" = (
-/obj/structure/window/reinforced/holowindow/disappearing{
+/obj/structure/window/thin/reinforced/holowindow/disappearing{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor,
@@ -107,7 +106,7 @@
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "p" = (
-/obj/structure/window/reinforced/holowindow/disappearing{
+/obj/structure/window/thin/reinforced/holowindow/disappearing{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor{
@@ -115,7 +114,7 @@
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "q" = (
-/obj/structure/window/reinforced/holowindow/disappearing{
+/obj/structure/window/thin/reinforced/holowindow/disappearing{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
@@ -136,12 +135,11 @@
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "t" = (
 /obj/structure/holostool,
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/holodeck/source_thunderdomecourt)
 "u" = (

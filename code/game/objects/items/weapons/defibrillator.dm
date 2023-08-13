@@ -97,7 +97,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(bcell)
 			bcell.update_icon()
 			bcell.forceMove(get_turf(src.loc))
@@ -235,7 +235,7 @@
 /obj/item/weapon/shockpaddles/proc/set_cooldown(delay)
 	cooldown = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reset_cooldown), delay, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), delay, TIMER_UNIQUE)
 
 /obj/item/weapon/shockpaddles/proc/reset_cooldown()
 	if(cooldown)
@@ -499,6 +499,7 @@
 	Shockpaddles that are linked to a base unit
 */
 /obj/item/weapon/shockpaddles/linked
+	icon_state = "defibpaddleslinked0"
 	var/obj/item/weapon/defibrillator/base_unit
 
 /obj/item/weapon/shockpaddles/linked/atom_init(mapload, obj/item/weapon/defibrillator/defib)
@@ -528,6 +529,11 @@
 
 /obj/item/weapon/shockpaddles/linked/make_announcement(message)
 	base_unit.audible_message("<b>\The [base_unit]</b> [message]", "\The [base_unit] vibrates slightly.")
+
+/obj/item/weapon/shockpaddles/linked/update_icon()
+	icon_state = "defibpaddleslinked[is_wielded()]"
+	if(cooldown)
+		icon_state = "defibpaddleslinked[is_wielded()]_cooldown"
 
 /*
 	Standalone Shockpaddles

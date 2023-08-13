@@ -58,6 +58,10 @@ jobs:
             map_name: Gamma Station
           - map_meta: falcon
             map_name: Falcon Station
+          - map_meta: prometheus
+            map_name: Prometheus Station
+          - map_meta: stroechka
+            map_name: Stroecka Station
     steps:
       - uses: actions/checkout@v2
       - name: Setup Cache

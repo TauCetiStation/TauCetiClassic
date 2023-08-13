@@ -58,8 +58,6 @@
 	// the world.time since the mob has been brigged, or -1 if not at all
 	var/brigged_since = -1
 
-	//put this here for easier tracking ingame
-	var/datum/money_account/initial_account
 	//skills
 	var/datum/skills/skills = new
 
@@ -207,14 +205,14 @@
 	var/sorted_max = list()
 	for(var/skill_type in all_skills)
 		sorted_max[skill_type] = skills.get_max(skill_type)
-	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
+	sorted_max = sortTim(sorted_max, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	var/row = 0
 	for(var/skill_type in sorted_max)
 		var/datum/skill/skill = all_skills[skill_type]
 		if(row % 3 == 0)
 			out += "</tr><tr>"
-		var/rank_name = skill.custom_ranks[skills.get_max(skill)]
-		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill)])</td>"
+		var/rank_name = skill.custom_ranks[skills.get_max(skill.type) + 1]
+		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill.type)])</td>"
 		row++
 	out +="</table>"
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
@@ -226,6 +224,10 @@
 	popup.open()
 
 /datum/mind/Topic(href, href_list)
+	if(href_list["add_key_memory"])
+		current?.add_key_memory()
+		return
+
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -500,6 +502,7 @@
 		skills.maximize_active_skills()
 		message_admins("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
 		log_admin("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
+		edit_skills()
 		return
 	else if (href_list["delete_skillset"])
 		var/to_delete = global.skillset_names_aliases[href_list["delete_skillset"]]
@@ -556,7 +559,7 @@
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER

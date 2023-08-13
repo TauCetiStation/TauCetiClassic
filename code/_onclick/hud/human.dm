@@ -28,6 +28,7 @@
 		/atom/movable/screen/nutrition,
 	))
 
+
 	leap_icon?.add_to_hud(hud)
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()

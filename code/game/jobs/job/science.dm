@@ -9,11 +9,13 @@
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/sciGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_rd, access_heads, access_tox, access_genetics, access_morgue,
 		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
 		access_research, access_robotics, access_xenobiology, access_ai_upload,
-		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
+		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway,
+		access_xenoarch, access_maint_tunnels, access_eva
 	)
 	salary = 250
 	minimal_player_age = 7

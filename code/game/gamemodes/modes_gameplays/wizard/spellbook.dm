@@ -16,6 +16,22 @@
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return TRUE
 
+/datum/spellbook_entry/proc/RecordPurchase(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/stat/book_purchase/stat = new
+	stat.power_type = spell_type
+	stat.power_name = name
+	stat.cost = cost
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
+	if(wiz_role)
+		wiz_role.list_of_purchases += stat
+
+/datum/spellbook_entry/proc/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
+	if(wiz_role)
+		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
+			if(stat.power_type == spell_type)
+				wiz_role.list_of_purchases -= stat
+
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses < cost)
 		return FALSE
@@ -28,6 +44,7 @@
 	if(!S || QDELETED(S))
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
+	RecordPurchase(user, book)
 	user.AddSpell(S)
 	to_chat(user, "<span class='notice'>Вы выучили [S.name].</span>")
 	return TRUE
@@ -51,6 +68,7 @@
 	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			user.RemoveSpell(aspell)
+			EraseEntry(user, book)
 			qdel(S)
 			return cost
 	return -1
@@ -71,6 +89,24 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/icebolt
+	name = "Ледяная стрела"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/icebolt
+	log_name = "IB"
+	cost = 1 // because this spell does not deal much damage and only slows down
+
+/datum/spellbook_entry/acid
+	name = "Кислотный чих"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/acid
+	log_name = "ACI"
+	cost = 1
+
+/datum/spellbook_entry/item/fireballstaff
+	name = "Посох Огненных Шаров"
+	item_path = /obj/item/weapon/gun/magic/fireball
+	desc = "Старый посох, позволяет создавать огненные шары"
+	cost = 5
+
 /datum/spellbook_entry/res_touch
 	name = "Воскрешение"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch
@@ -83,6 +119,13 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/heal
 	log_name = "HT"
 	category = "Оборона"
+
+/datum/spellbook_entry/carp
+	name = "Призыв Карпа"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
+	log_name = "SC"
+	category = "Оборона"
+	cost = 2
 
 /datum/spellbook_entry/magicm
 	name = "Магическая ракета"
@@ -144,6 +187,12 @@
 	name = "Телепорт"
 	spell_type = /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	log_name = "TP"
+	category = "Мобильность"
+
+/datum/spellbook_entry/shapeshift
+	name = "Перевёртыш"
+	spell_type = /obj/effect/proc_holder/spell/no_target/shapeshift
+	log_name = "FH"
 	category = "Мобильность"
 
 /datum/spellbook_entry/mutate
@@ -233,6 +282,22 @@
 	buy_word = "Призвать"
 	var/item_path= null
 
+/datum/spellbook_entry/item/RecordPurchase(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/stat/book_purchase/stat = new
+	stat.power_type = item_path
+	stat.power_name = name
+	stat.cost = cost
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
+	if(wiz_role)
+		wiz_role.list_of_purchases += stat
+
+/datum/spellbook_entry/item/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
+	if(wiz_role)
+		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
+			if(stat.power_type == item_path)
+				wiz_role.list_of_purchases -= stat
+
 /datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	. = ..()
 	if(.)
@@ -243,6 +308,7 @@
 		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
+	RecordPurchase(user, book)
 	return TRUE
 
 /datum/spellbook_entry/item/GetInfo()
@@ -287,6 +353,14 @@
 	category = "Оборона"
 	cost = 4
 
+/datum/spellbook_entry/item/jakboots
+	name = "Сапоги Быстроногого Джека"
+	desc = "Ботинки, способные ускорять того, кто их носит."
+	item_path = /obj/item/clothing/shoes/boots/work/jak
+	log_name = "JB"
+	category = "Мобильность"
+	cost = 3
+
 /datum/spellbook_entry/item/soulstones
 	name = "Шесть осколков камня душ и заклинание ремесленника"
 	desc = "Осколки камня душ это древний инструмент, способный захватить и содержать в себе душу. Заклинание ремесленника позволяет создать тело для захваченной души."
@@ -320,6 +394,14 @@
 	if(.)
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
+		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit COMPLETELY
+
+/datum/spellbook_entry/item/tiara
+	name = "Тиара защиты"
+	desc = "Дорогостоящая корона из драгоценного металла, инкрустированная магическими кристаллами. Излучает защитную ауру, используя силу РаЗуМа!"
+	item_path = /obj/item/clothing/head/wizard/amp/shielded
+	log_name = "TZ"
+	category = "Оборона"
 
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"
@@ -420,8 +502,6 @@
 		else
 			qdel(E)
 	tab = categories[1]
-
-
 
 /obj/item/weapon/spellbook/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/contract))

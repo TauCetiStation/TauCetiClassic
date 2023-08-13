@@ -13,10 +13,10 @@
 	var/leap_on_click = 0
 	heal_rate = 3
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 15 SECONDS
+	var/pounce_cooldown_time = 10 SECONDS
 
 	var/neurotoxin_on_click = 0
-	var/neurotoxin_delay = 15
+	var/neurotoxin_delay = 60
 	var/neurotoxin_next_shot = 0
 	var/last_neurotoxin = 0
 
@@ -38,9 +38,6 @@
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
 	. = ..()
-
-/mob/living/carbon/xenomorph/humanoid/movement_delay()
-	return (move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
 	return FALSE

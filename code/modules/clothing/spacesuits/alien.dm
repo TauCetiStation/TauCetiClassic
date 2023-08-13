@@ -19,14 +19,10 @@
 		return
 	on = !on
 	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
-	usr.update_inv_head()
+	update_inv_mob()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
@@ -79,14 +75,10 @@
 		return
 	on = !on
 	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
-	usr.update_inv_head()
+	update_inv_mob()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
 
 /obj/item/clothing/suit/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
@@ -130,6 +122,11 @@
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
+
+/obj/item/clothing/head/helmet/space/vox/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/vox(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
@@ -383,7 +380,7 @@
 	icon_state = "vox-casual-2"
 	item_state = "vox-casual-2"
 
-/obj/item/clothing/gloves/yellow/vox
+/obj/item/clothing/gloves/insulated/vox
 	desc = "These bizarre gauntlets seem to be fitted for... bird claws?"
 	name = "insulated gauntlets"
 	icon_state = "gloves-vox"
@@ -403,7 +400,7 @@
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
 	if(src.magpulse)
-		flags &= ~NOSLIP
+		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		magpulse = 0
 		canremove = 1
 		to_chat(user, "You relax your deathgrip on the flooring.")
@@ -417,7 +414,7 @@
 			return
 
 
-		flags |= NOSLIP
+		flags |= NOSLIP | AIR_FLOW_PROTECT
 		magpulse = 1
 		canremove = 0	//kinda hard to take off magclaws when you are gripping them tightly.
 		to_chat(user, "You dig your claws deeply into the flooring, bracing yourself.")
@@ -428,7 +425,7 @@
 	..()
 	if(src.magpulse)
 		user.visible_message("The [src] go limp as they are removed from [usr]'s feet.", "The [src] go limp as they are removed from your feet.")
-		flags &= ~NOSLIP
+		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		magpulse = 0
 		canremove = 1
 

@@ -30,8 +30,7 @@
 	icon_state = "farmbot0"
 	density = TRUE
 	anchored = FALSE
-	health = 50
-	maxhealth = 50
+	max_integrity = 50
 	req_access =list(access_hydroponics)
 
 	var/Max_Fertilizers = 10
@@ -345,14 +344,14 @@
 		spawn(0)
 			var/turf/dest = get_step_towards(target,src)  //Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
 
-			src.path = get_path_to(src, dest, /turf/proc/Distance, 0, 30,id=botcard)
+			src.path = get_path_to(src, dest, TYPE_PROC_REF(/turf, Distance), 0, 30,id=botcard)
 			if(src.path.len == 0)
 				for ( var/turf/spot in orange(1,target) ) //The closest one is unpathable, try  the other spots
 					if ( spot == dest ) //We already tried this spot
 						continue
 					if ( spot.density )
 						continue
-					src.path = get_path_to(src, spot, /turf/proc/Distance, 0, 30,id=botcard)
+					src.path = get_path_to(src, spot, TYPE_PROC_REF(/turf, Distance), 0, 30,id=botcard)
 					if ( src.path.len > 0 )
 						break
 
@@ -428,7 +427,7 @@
 			var/damage = 5
 			var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 			var/obj/item/organ/external/BP = human.bodyparts_by_name[ran_zone(dam_zone)]
-			var/armor = human.run_armor_check(BP, "melee")
+			var/armor = human.run_armor_check(BP, MELEE)
 			human.apply_damage(damage, BRUTE, BP, armor, DAM_SHARP | DAM_EDGE)
 
 	else // warning, plants infested with weeds!

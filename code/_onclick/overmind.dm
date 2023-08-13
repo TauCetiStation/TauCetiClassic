@@ -22,14 +22,14 @@
 
 /mob/camera/blob/ShiftClickOn(atom/A)
 	var/turf/T = get_turf(A)
-	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
+	var/obj/structure/blob/B = locate() in T
 	if(!B)
 		return
 	if(isblobnormal(B))
 		prompt_upgrade(B)
 		return
 	if(isblobnode(B))
-		var/obj/effect/blob/node/N = B
+		var/obj/structure/blob/node/N = B
 		rename_node(N)
 		return
 	..()

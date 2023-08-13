@@ -30,6 +30,7 @@
 
 
 	var/area_type = /area/space //Types of area to affect
+	var/protect_indoors = FALSE //TRUE value protects areas with outdoors marked as false, regardless of area type
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
 	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
 	var/target_ztrait = ZTRAIT_STATION //The z-trait to affect
@@ -54,13 +55,13 @@
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
-	var/list/affectareas = list()
-	for(var/V in get_areas(area_type))
-		affectareas += V
+	var/list/affectareas = get_areas(area_type)
 	for(var/V in protected_areas)
 		affectareas -= get_areas(V)
 	for(var/V in affectareas)
 		var/area/A = V
+		if(protect_indoors && !A.outdoors)
+			continue
 		if(SSmapping.level_trait(A.z, target_ztrait))
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
@@ -72,7 +73,7 @@
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
 				M.playsound_local(null, telegraph_sound, VOL_EFFECTS_MASTER, null, FALSE)
-	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
+	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
@@ -87,7 +88,7 @@
 			if(weather_sound)
 				M.playsound_local(null, weather_sound, VOL_EFFECTS_MASTER, null, FALSE)
 	START_PROCESSING(SSweather, src)
-	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
+	addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
@@ -102,7 +103,7 @@
 			if(end_sound)
 				M.playsound_local(null, end_sound, VOL_EFFECTS_MASTER, null, FALSE)
 	STOP_PROCESSING(SSweather, src)
-	addtimer(CALLBACK(src, .proc/end), end_duration)
+	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)

@@ -31,14 +31,15 @@
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
-	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), .proc/start_rite)
-	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
+	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), PROC_REF(start_rite))
+	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), PROC_REF(reset_rite))
 	init_turfs_around()
 
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
-	religion.altars -= src
+	if(religion)
+		religion.altars -= src
 	qdel(experiments)
 	return ..()
 
@@ -51,10 +52,8 @@
 	var/msg = ""
 	if(isobserver(user))
 		can_i_see = TRUE
-	else if(isliving(user))
-		var/mob/living/L = user
-		if(L.mind && L.mind.holy_role)
-			can_i_see = TRUE
+	else if(user.my_religion == religion)
+		can_i_see = TRUE
 
 	if(!can_i_see)
 		return
@@ -127,7 +126,7 @@
 
 		if(max_points > MIN_FAVOUR_GAIN)
 			religion.adjust_favor(max_points, user)
-			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
+			INVOKE_ASYNC(src, PROC_REF(sacrifice_item), I)
 			sacrificed = TRUE
 
 		else if(max_points > 0)
@@ -138,7 +137,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/altar_of_gods/attack_hand(mob/living/carbon/human/user)
+/obj/structure/altar_of_gods/attack_hand(mob/user)
 	if(can_buckle && buckled_mob && istype(user))
 		user_unbuckle_mob(user)
 		return
@@ -221,7 +220,7 @@
 
 	// Assume, that if we've gotten this far, it's a succesful tool use.
 	. = TRUE
-	if(!religion && user?.my_religion.religious_tool_type && istype(I, user.my_religion.religious_tool_type))
+	if(!religion && user?.my_religion?.religious_tool_type && istype(I, user.my_religion.religious_tool_type))
 		religion = user.my_religion
 		religion.altars |= src
 		interact_religious_tool(I, user)
@@ -280,6 +279,7 @@
 	T.rite.religion = religion
 	T.rite.favor_cost = 0
 	T.rite.piety_cost = 0
+	T.rite.divine_power = round(sqrt(R.divine_power))
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
 
@@ -289,7 +289,7 @@
 
 	tgui_interact(user)
 
-/obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
+/obj/structure/altar_of_gods/proc/sect_select(mob/living/user, sect_type)
 	if(!istype(user.get_active_hand(), religion.religious_tool_type))
 		return
 
@@ -393,7 +393,7 @@
 	return reactions
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(iswrench(C))
+	if(iswrenching(C))
 		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
@@ -409,20 +409,15 @@
 
 	return ..()
 
-/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
-/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 
 /obj/structure/altar_of_gods/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), PROC_REF(turf_around_enter))
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), PROC_REF(turf_around_exit))
 		turfs_around += T
 
 /obj/structure/altar_of_gods/proc/clear_turfs_around()

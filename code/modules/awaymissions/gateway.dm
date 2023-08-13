@@ -5,6 +5,7 @@
 	icon_state = "off"
 	density = TRUE
 	anchored = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE
@@ -19,7 +20,7 @@
 	if(dir & SOUTH)
 		density = FALSE
 	if(!transit_loc)
-		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
+		transit_loc = locate("landmark*Gateway transit")
 
 /obj/machinery/gateway/update_icon()
 	icon_state = active ? "on" : "off"
@@ -182,7 +183,7 @@
 	use_power(1000)
 
 /obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		calibrate(user)
 	else
 		..()
@@ -200,9 +201,9 @@
 		if(M.client)
 			M.client.screen += cinematic
 			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target, cinematic), 100)
+		addtimer(CALLBACK(src, PROC_REF(exit_from_transit), entered, target, cinematic), 100)
 	else
-		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
+		addtimer(CALLBACK(src, PROC_REF(exit_from_transit), entered, target), 100)
 
 /obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, atom/movable/screen/cinematic)
 	if(isliving(entered))
@@ -221,6 +222,7 @@
 	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/gateway_transit
+	name = "Gateway transit"
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
 	. = ..()

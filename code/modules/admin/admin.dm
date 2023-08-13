@@ -266,7 +266,7 @@ var/global/BSACooldown = 0
 		merged += file_notes
 	if(length(db_notes))
 		merged += db_notes
-	merged = sortMerge(merged, /proc/cmp_days_timestamp, FALSE)
+	merged = sortMerge(merged, GLOBAL_PROC_REF(cmp_days_timestamp), FALSE)
 	return merged
 
 /proc/cmp_days_timestamp(datum/player_info/a, datum/player_info/b)
@@ -703,15 +703,18 @@ var/global/BSACooldown = 0
 		dat += "<table>"
 		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"
 		for(var/person in crew)
+			var/datum/money_account/acc = get_account(person["account"])
+			if(!acc)
+				continue
+
 			var/color = "silver"
-			var/datum/money_account/acc = person["acc_datum"]
 			if(acc.owner_salary > acc.base_salary)
 				color = "green"
 			else if(acc.owner_salary < acc.base_salary)
 				color = "red"
 			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
 			dat += "<td><font color='[color]'><b>[person["salary"]]$</b></font></td>"
-			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
+			dat += "<td><A href='byond://?src=\ref[src];salary=[person["account"]]'>Change</A></td></tr>"
 		dat += "</table>"
 	else
 		dat += "<span class='bad'>Crew not found!</span>"
@@ -864,13 +867,12 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
-	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
-		to_chat(world, "<B>New players may no longer enter the game.</B>")
-	else
-		to_chat(world, "<B>New players may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("<span class='notice'>[key_name_admin(usr)] toggled new player game entering.</span>")
+	if(!SSlag_switch.initialized)
+		return
+	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+	log_admin("[key_name(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+	message_admins("[key_name_admin(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -1103,29 +1105,22 @@ var/global/BSACooldown = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(object as text)
+/datum/admins/proc/spawn_atom()
 	set category = "Debug"
-	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
-
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
-
-	if(matches.len==0)
+	if(!check_rights(R_SPAWN))
 		return
 
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+	var/target_path = input("Enter typepath:", "Typepath", "mob/living/carbon/human?")
+	var/chosen = text2path(target_path)
+	if(!ispath(chosen))
+		chosen = pick_closest_path(target_path)
 		if(!chosen)
+			tgui_alert(usr, "No path was selected")
+			return
+		else if(ispath(chosen, /area))
+			tgui_alert(usr, "That path is not allowed.")
 			return
 
 	if(ispath(chosen,/turf))
@@ -1163,7 +1158,7 @@ var/global/BSACooldown = 0
 		return
 
 	M.mind.edit_skills()
-	feedback_add_details("admin_verb","SKP") 
+	feedback_add_details("admin_verb","SKP")
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -1226,6 +1221,48 @@ var/global/BSACooldown = 0
 	if(istype(H))
 		H.regenerate_icons()
 
+/datum/admins/proc/show_lag_switch_panel()
+	set category = "Server"
+	set name = "Show Lag Switches"
+	set desc="Display the controls for drastic lag mitigation measures."
+
+	if(!SSlag_switch.initialized)
+		to_chat(usr, "<span class='notice'>The Lag Switch subsystem has not yet been initialized.</span>")
+		return
+	if(!check_rights(R_SERVER))
+		return
+
+	var/html = ""
+
+	html += "<div class='Section__title'>Settings</div><div class='Section'>"
+	html += "Automatic Trigger: <a href='?_src_=holder;change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br>"
+	html += "Population Threshold: <a href='?_src_=holder;change_lag_switch_option=NUM'><b>[SSlag_switch.trigger_pop]</b></a><br>"
+	html += "Slowmode Cooldown (toggle On/Off below): <a href='?_src_=holder;change_lag_switch_option=SLOWCOOL'><b>[SSlag_switch.slowmode_cooldown/10] seconds</b></a><br>"
+	html += "<br><b>SET ALL MEASURES: <a href='?_src_=holder;change_lag_switch=ALL_ON'>ON</a> | <a href='?_src_=holder;change_lag_switch=ALL_OFF'>OFF</a></b><br>"
+	html += "Disable late joining: <a href='?_src_=holder;change_lag_switch=[DISABLE_NON_OBSJOBS]'><b>[SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "On" : "Off"]</b></a>"
+	html += "</div>"
+
+	html += "<div class='Section__title'>Lag Switches</div><div class='Section'>"
+	html += "Disable deadmob <u title='Movement with keyboard'>keyLoop</u> (except staff): <a href='?_src_=holder;change_lag_switch=[DISABLE_DEAD_KEYLOOP]'><b>[SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] ? "On" : "Off"]</b></a><br><br>"
+	html += "Measures below can be bypassed with a <u title='TRAIT_BYPASS_MEASURES'>special trait</u><br>"
+	html += "Slowmode say/me verbs: <a href='?_src_=holder;change_lag_switch=[SLOWMODE_IC_CHAT]'><b>[SSlag_switch.measures[SLOWMODE_IC_CHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br>"
+	html += "Disable runechat: <a href='?_src_=holder;change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br>"
+	html += "Disable examine icons: <a href='?_src_=holder;change_lag_switch=[DISABLE_BICON]'><b>[SSlag_switch.measures[DISABLE_BICON] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br>"
+	html += "Disable parallax: <a href='?_src_=holder;change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br>"
+	html += "Disable footsteps sounds: <a href='?_src_=holder;change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span>"
+	html += "</div>"
+
+	html += "<div class='Section__title bgbad'>Dangerous Zone</div><div class='Section'>"
+	html += "<a class='[SSdemo.can_fire ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_DEMO'>DISABLE DEMO</a>"
+	
+	// not sure if we need it here, without own subsystem it will be awfully bad
+	html += "<a class='[SSair.stop_airnet_processing ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_AIRNET'>DISABLE AIRNET</a>"
+	html += "<a class='[SSmachines.stop_powernet_processing ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_POWERNET'>DISABLE POWERNET</a>"
+	html += "</div>"
+
+	var/datum/browser/popup = new(usr, "lag_switch_panel", "Lag Switch Panel", 440, 540)
+	popup.set_content(html)
+	popup.open()
 
 /proc/get_options_bar(whom, detail = 2, name = 0, link = 1, reply = null, mentor_pm = FALSE)
 	if(!whom)

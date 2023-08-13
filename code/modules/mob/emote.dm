@@ -33,14 +33,15 @@
 	log_emote("Ghost/[key_name(src)] : [message]")
 
 	for(var/mob/M in player_list)
+		var/tracker = "[FOLLOW_LINK(M, src)] "
 		if(isnewplayer(M))
 			continue
 
 		if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN) && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to admins
-			to_chat(M, message)
+			to_chat(M, tracker + message)
 
 		else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
-			to_chat(M, message)
+			to_chat(M, tracker + message)
 
 /mob/atom_init()
 	. = ..()
@@ -77,13 +78,16 @@
 
 	var/msg = "<b>[src]</b> <i>[message]</i>"
 	if(message_type & SHOWMSG_VISUAL)
-		visible_message(msg, ignored_mobs = observer_list)
+		visible_message(msg, ignored_mobs = observer_list, runechat_msg = message)
 	else
-		audible_message(msg, ignored_mobs = observer_list)
+		audible_message(msg, ignored_mobs = observer_list, runechat_msg = message)
 
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
+
+		if(M in viewers(get_turf(src), world.view))
+			M.show_runechat_message(src, null, message, null, SHOWMSG_VISUAL)
 
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)

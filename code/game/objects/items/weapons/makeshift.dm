@@ -4,8 +4,9 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BACK
+	flags_2 = CANT_BE_INSERTED
 	throwforce = 15
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
@@ -18,8 +19,8 @@
 	SCB.can_push = TRUE
 	SCB.can_pull = TRUE
 
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/spear, can_sweep_push))
+	SCB.can_pull_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/spear, can_sweep_pull))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -66,7 +67,27 @@
 	force = 3
 	throwforce = 5
 	var/status = 0
-	slot_flags = null
+	slot_flags = SLOT_FLAGS_BACK
+	flags_2 = CANT_BE_INSERTED
+	var/mob/foundmob = "" //Used in throwing proc.
+
+/obj/item/weapon/melee/cattleprod/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
+	if (!prob(50))
+		return
+	if(!ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/H = hit_atom
+	if(status)
+		H.apply_effect(60,AGONY,0)
+		deductcharge(hitcost)
+		var/mob/living/carbon/human/T = ishuman(throwingdatum.thrower) ? throwingdatum.thrower : null
+		if(!T)
+			return
+		H.visible_message("<span class='danger'>[src], thrown by [T.name], strikes [H]!</span>")
+		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+		msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
@@ -92,10 +113,6 @@
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	if(bcell && bcell.rigged)
 		bcell.explode()
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
 		qdel(src)
 		return
 	update_icon()
@@ -135,7 +152,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(bcell)
 			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
 			bcell.updateicon()
@@ -149,7 +166,7 @@
 		return ..()
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/living/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
 		user.apply_effect(120, AGONY, 0)
 		deductcharge(hitcost)
@@ -159,6 +176,7 @@
 	if(isrobot(M))
 		..()
 		return
+
 
 	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
@@ -241,7 +259,7 @@
 	qdel(src)
 
 /obj/item/weapon/noose/attackby(obj/item/W, mob/user)
-	if(!iswirecutter(W))
+	if(!iscutter(W))
 		return ..()
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	var/obj/item/stack/cable_coil/C = new(get_turf(src))
@@ -326,17 +344,13 @@
 		icon_state = not_bloody_state
 		item_state = not_bloody_item_state
 	..()
-	if(isliving(src.loc))
-		var/mob/living/user = src.loc
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
 
 /obj/item/weapon/transparant/clean_blood()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/transparant/add_blood()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/transparant/no_nt

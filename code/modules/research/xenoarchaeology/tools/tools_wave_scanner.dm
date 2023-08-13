@@ -25,7 +25,7 @@
 /obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
-		INVOKE_ASYNC(src, .proc/scan)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else
@@ -153,6 +153,7 @@
 	throwforce = 0 // we shall not abuse
 	throw_range = 0
 	slot_flags = null
+	dropped_sound = 'sound/items/buttonswitch.ogg'
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
 	var/last_scan_time = 0
@@ -174,9 +175,7 @@
 	..()
 	if(wavescanner)
 		wavescanner.remove_processor()
-		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 	else
-		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
 /obj/item/device/searcher/afterattack(atom/target, mob/user, proximity, params)
@@ -201,7 +200,7 @@
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', VOL_EFFECTS_MASTER, 10)
-		INVOKE_ASYNC(src, .proc/scan)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else

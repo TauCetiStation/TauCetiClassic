@@ -1,10 +1,10 @@
 /mob/living/simple_animal/construct
 	name = "Construct"
 	real_name = "Construct"
-	desc = ""
+	desc = "Оно двигается..?"
 	icon = 'icons/mob/construct.dmi'
-	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	speak_emote = list("шипит")
+	emote_hear = list("стонет", "визжит")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm = "punches"
@@ -29,6 +29,7 @@
 	animalistic = FALSE
 	has_head = TRUE
 	has_arm = TRUE
+	can_point = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
 	attack_sound = SOUNDIN_PUNCH_MEDIUM
@@ -45,6 +46,8 @@
 	var/image/glow = image(icon, src, "glow_[icon_state]", ABOVE_LIGHTING_LAYER)
 	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
+
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 
 /mob/living/simple_animal/construct/death()
 	..()
@@ -86,7 +89,7 @@
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	desc = "A possessed suit of armour driven by the will of the restless dead."
+	desc = "Одержимый доспех, управляемый волей беспокойных мертвецов."
 	icon_state = "juggernaut"
 	icon_living = "juggernaut"
 	maxHealth = 200
@@ -136,7 +139,7 @@
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
-	desc = "A wicked bladed shell contraption piloted by a bound spirit."
+	desc = "Зловещий доспех с клинками, управляемый связанным духом."
 	icon_state = "wraith"
 	icon_living = "wraith"
 	maxHealth = 75
@@ -157,7 +160,7 @@
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies."
+	desc = "Выпуклая структура, предназначенная для создания и поддержания армий Культа Нар-Си."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -166,10 +169,11 @@
 	harm_intent_damage = 5
 	melee_damage = 10
 	attacktext = "ramm"
-	speed = 0
+	speed = -0.2
 	environment_smash = 2
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/door,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
@@ -185,7 +189,7 @@
 /mob/living/simple_animal/construct/behemoth
 	name = "Behemoth"
 	real_name = "Behemoth"
-	desc = "The pinnacle of occult technology, Behemoths are the ultimate weapon in the Cult of Nar-Sie's arsenal."
+	desc = "Вершина оккультных технологий. Бегемоты — лучшее оружие в арсенале Культа Нар-Си."
 	icon_state = "juggernaut"
 	icon_living = "juggernaut"
 	maxHealth = 10
@@ -212,23 +216,31 @@
 /mob/living/simple_animal/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
-	desc = "A harbinger of Nar-Sie's enlightenment. It'll be all over soon."
+	desc = "Предвестник просветления Нар-Си. Скоро все будет кончено."
 	icon_state = "harvester"
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage = 15
+	melee_damage = 8
 	attacktext = "prodd"
 	speed = 0
 	environment_smash = 1
 	see_in_dark = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
+	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
 		)
+/mob/living/simple_animal/construct/harvester/atom_init()
+	. = ..()
+	if(SSticker.nar_sie_has_risen)
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion(src))
+	else
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion/lesser(src))
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
 	. = ..()
@@ -238,7 +250,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
@@ -255,11 +267,22 @@
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return TRUE
 
+/mob/living/simple_animal/construct/harvester/UnarmedAttack(atom/A)
+	if(ishuman(A) && prob(20))
+		if(get_targetzone() == BP_HEAD) // No
+			return ..()
+		var/mob/living/carbon/human/C = A
+		var/obj/item/organ/external/BP = C.get_bodypart(get_targetzone())
+		if(BP && !BP.droplimb(FALSE, FALSE, DROPLIMB_EDGE))
+			return ..() //Attack
+		return
+	return ..()
+
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon
 	name = "Proteon"
 	real_name = "Proteon"
-	desc = "A weaker construct meant to scour ruins for objects of Nar'Sie's affection. Those barbed claws are no joke."
+	desc = "Слабая конструкция, предназначенная для обыска руин в поисках предметов привязанности Нар'Си. Эти зазубренные когти — не шутка."
 	icon_state = "proteon"
 	icon_living = "proteon"
 	maxHealth = 30
@@ -279,7 +302,7 @@
 /mob/living/simple_animal/hostile/pylon
 	name = "charged pylon"
 	real_name = "charged pylon"
-	desc = "A floating crystal that hums with an unearthly energy."
+	desc = "Летающий кристалл, излучающий таинственную энергию."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "pylon_glow"
 	icon_living = "pylon"
@@ -289,8 +312,8 @@
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	ranged_cooldown = 5
 	ranged_cooldown_cap = 0
-	maxHealth = 200
-	health = 200
+	maxHealth = 120
+	health = 120
 	melee_damage = 0
 	speed = 0
 	anchored = TRUE
@@ -311,7 +334,7 @@
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
-		P.health = health
+		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 
@@ -328,3 +351,7 @@
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
 	return
+
+/mob/living/simple_animal/hostile/pylon/UnarmedAttack(atom/A)
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
+	OpenFire(A)

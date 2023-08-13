@@ -34,7 +34,11 @@
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
+				if(target.mind)
+					to_chat(user, "<span class='notice'>This creature has mind. We will become one.</span>")
+				else
+					to_chat(user, "<span class='notice'>This creature is mindless. We'll just satisfy our hunger.</span>")
+				to_chat(user, "<span class='notice'>We must hold still...</span>")
 			if(2)
 				to_chat(user, "<span class='notice'>We extend a proboscis.</span>")
 				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>")
@@ -58,7 +62,7 @@
 
 	changeling.absorb_dna(target)
 
-	var/nutr = user.get_nutrition()
+	var/nutr = user.get_satiation()
 	if(nutr < NUTRITION_LEVEL_NORMAL)
 		user.nutrition += min(target.nutrition, NUTRITION_LEVEL_NORMAL - nutr)
 
@@ -145,7 +149,7 @@
 		for(var/datum/dna/D in absorbed_dna)
 			if(T.dna.uni_identity == D.uni_identity)
 				if(T.dna.struc_enzymes == D.struc_enzymes)
-					if(T.dna.real_name == D.real_name)
+					if(T.dna.original_character_name == D.original_character_name)
 						to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
 						return FALSE
 	return TRUE

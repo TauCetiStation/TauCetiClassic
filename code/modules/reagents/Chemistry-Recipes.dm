@@ -35,7 +35,7 @@
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/10, 1), location, 0, 0)
 	e.start()
-	holder.clear_reagents()
+	holder.del_reagent(id)
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
@@ -49,7 +49,6 @@
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
 	empulse(location, round(created_volume / 24), round(created_volume / 14), 1)
-	holder.clear_reagents()
 	return
 
 /datum/chemical_reaction/stoxin
@@ -155,7 +154,14 @@
 	name = "Space Drugs"
 	id = "space_drugs"
 	result = "space_drugs"
-	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
+	required_reagents = list("anti_toxin" = 1, "ambrosium" = 1, "sugar" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/jenkem
+	name = "Space Jenkem"
+	id = "jenkem"
+	result = "jenkem"
+	required_reagents = list("water" = 1, "fuel" = 1, "sugar" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/lube
@@ -386,7 +392,7 @@
 			e.amount *= 0.5
 	e.start()
 
-	holder.clear_reagents()
+	holder.del_reagent(result)
 	return
 
 /datum/chemical_reaction/sodiumchloride
@@ -438,7 +444,7 @@
 	for(var/turf/simulated/target_tile in range(1, T))
 		if(!target_tile.blocks_air && !target_tile.density)
 			target_tile.assume_gas("phoron", created_volume * 0.2)
-			INVOKE_ASYNC(target_tile, /turf/simulated.proc/hotspot_expose, 700, 400, holder.my_atom)
+			INVOKE_ASYNC(target_tile, TYPE_PROC_REF(/turf/simulated, hotspot_expose), 700, 400, holder.my_atom)
 	holder.del_reagent("napalm")
 
 /datum/chemical_reaction/chemsmoke
@@ -659,6 +665,51 @@
 	required_reagents = list("toxin" = 1, "water" = 4)
 	result_amount = 5
 
+/datum/chemical_reaction/gourd_thermopsis
+	name = "Thermopsis"
+	id = "gourdthermopsis"
+	result = "thermopsis"
+	required_reagents = list("toxin" = 3, "sugar" = 3)
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	result_amount = 1
+
+/datum/chemical_reaction/gourd_lipozine
+	name = "Lipozine"
+	id = "gourdlipozine"
+	result = "lipozine"
+	required_reagents = list("vodka" = 3, "sodiumchloride" = 3)
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	result_amount = 1
+
+/datum/chemical_reaction/holy_gourd
+	name = "Gourd Blessification"
+	id = "holygourd"
+	result = null
+	required_reagents = list("holywater"= 10)
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	result_amount = 1
+
+/datum/chemical_reaction/holy_gourd/on_reaction(datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/G = holder.my_atom
+	if(G.blessed)
+		return
+
+	G.name = "holy healing [G.name]"
+	G.force += 1
+	G.add_filter("holy_spell_outline", 2, outline_filter(1, "#fffb00a1"))
+
+	G.blessed = 1
+
+	var/gourd_am = holder.get_reagent_amount("gourd")
+	holder.remove_reagent("gourd", gourd_am)
+	holder.add_reagent("tricordrazine", gourd_am)
+
+	var/gourd_beer_am = holder.get_reagent_amount("gourdbeer")
+	holder.remove_reagent("gourdbeer", gourd_beer_am)
+	holder.add_reagent("doctorsdelight", gourd_beer_am)
+
+	G.restore_reagent = "tricordrazine"
+
 /////////////////////////////////////////////NEW SLIME CORE REACTIONS/////////////////////////////////////////////
 
 //Grey
@@ -783,7 +834,7 @@
 
 /datum/chemical_reaction/slimefreeze/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	addtimer(CALLBACK(src, .proc/do_freeze, holder), 50)
+	addtimer(CALLBACK(src, PROC_REF(do_freeze), holder), 50)
 
 /datum/chemical_reaction/slimefreeze/proc/do_freeze(datum/reagents/holder)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
@@ -812,7 +863,7 @@
 
 /datum/chemical_reaction/slimefire/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	addtimer(CALLBACK(src, .proc/do_fire, holder), 50)
+	addtimer(CALLBACK(src, PROC_REF(do_fire), holder), 50)
 
 /datum/chemical_reaction/slimefire/proc/do_fire(datum/reagents/holder)
 	if(!(holder.my_atom && holder.my_atom.loc))
@@ -970,7 +1021,7 @@
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	addtimer(CALLBACK(src, .proc/do_explosion, holder), 50)
+	addtimer(CALLBACK(src, PROC_REF(do_explosion), holder), 50)
 
 /datum/chemical_reaction/slimeexplosion/proc/do_explosion(datum/reagents/holder)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
@@ -1285,6 +1336,14 @@
 	id = "spacebeer"
 	result = "beer"
 	required_reagents = list("cornoil" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/gourdbeer
+	name = "Gourd Beer"
+	id = "gourdbeer"
+	result = "gourdbeer"
+	required_reagents = list("gourd" = 10)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 10
 

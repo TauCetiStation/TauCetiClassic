@@ -41,13 +41,13 @@
 				var/obj/item/clothing/worn_suit = M.wear_suit
 				var/obj/item/clothing/worn_helmet = M.head
 				if(worn_suit) // Are you wearing clothes?
-					sting_prob -= min(worn_suit.armor["bio"],70) // Is it sealed? I can't get to 70% of your body.
+					sting_prob -= min(worn_suit.armor[BIO],70) // Is it sealed? I can't get to 70% of your body.
 				if(istype(worn_helmet) && worn_helmet)
-					sting_prob -= min(worn_helmet.armor["bio"],30) // Is your helmet sealed? I can't get to 30% of your body.
+					sting_prob -= min(worn_helmet.armor[BIO],30) // Is your helmet sealed? I can't get to 30% of your body.
 				if( prob(sting_prob) && (M.stat == CONSCIOUS || (M.stat == UNCONSCIOUS && prob(25))) ) // Try to sting! If you're not moving, think about stinging.
 					M.apply_damage(min(strength, 2) + mut, BRUTE, null, null, DAM_SHARP) // Stinging. The more mutated I am, the harder I sting.
 					M.apply_damage((round(feral/10,1)*(max((round(strength/20,1)),1)))+toxic, TOX) // Bee venom based on how angry I am and how many there are of me!
-					to_chat(M, "<span class='warning'>You have been stung!</span>")
+					to_chat(M, "<span class='warning'>Ай! Они жалятся!</span>")
 
 		//if we're chasing someone, get a little bit angry
 		if(target_mob && prob(5))
@@ -79,7 +79,7 @@
 
 		//make some noise
 		if(prob(0.5))
-			visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
+			visible_message("<span class='notice'>[pick("Жжжжжжжжжж.")]</span>")
 
 		//smoke, water and steam calms us down
 		var/calming = 0
@@ -98,7 +98,7 @@
 
 		if(calming)
 			if(feral > 0)
-				visible_message("<span class='notice'>The bees calm down!</span>")
+				visible_message("<span class='notice'>Пчелы успокаиваются.</span>")
 			feral = -10
 			target_mob = null
 			target_turf = null
@@ -144,7 +144,7 @@
 					break
 
 		if(target_turf)
-			if(AStar(src, target_turf, /turf/proc/Distance, 1))
+			if(AStar(src, target_turf, TYPE_PROC_REF(/turf, Distance), 1))
 				Move(get_step(src, get_dir(src,target_turf)))
 				if (prob(0.1))
 					visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")

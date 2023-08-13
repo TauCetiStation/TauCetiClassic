@@ -8,7 +8,7 @@
 */
 /atom/movable/screen
 	name = ""
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	plane = HUD_PLANE
 	flags = ABSTRACT
 	vis_flags = VIS_INHERIT_PLANE
@@ -154,7 +154,7 @@
 	cooldown_time = delay
 	set_maptext(cooldown_time)
 	if(need_timer)
-		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(tick)), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/tick()
 	if(cooldown_time == 1)
@@ -163,9 +163,11 @@
 	cooldown_time--
 	set_maptext(cooldown_time)
 	if(timer)
-		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(tick)), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/stop_cooldown()
+	if(cooldown_time == 0)
+		return
 	cooldown_time = 0
 	parent_button.color = "#ffffffff"
 	parent_button.vis_contents -= src

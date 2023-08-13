@@ -5,8 +5,9 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
-	var/health = 100
 	layer = 2.55
+	flags = NODECONSTRUCT
+	material = null
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(!buckled_mob || user.is_busy())
@@ -18,13 +19,13 @@
 			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",
 			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",
 			"<span class='notice'>You hear squelching...</span>")
-		
+
 	else
 		L.visible_message(
 			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",
 			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
-		
+
 		if(!(do_after(L, 5 MINUTES, target = L) && buckled_mob == L))
 			return
 
@@ -51,16 +52,13 @@
 	M.pixel_y = 2
 	return TRUE
 
-/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)
-	var/aforce = W.force
-	health = max(0, health - aforce)
-	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[user] hits [src] with [W]!</span>")
-	healthcheck()
+/obj/structure/stool/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/stool/bed/nest/proc/healthcheck()
-	if(health <=0)
-		density = FALSE
-		qdel(src)
-	return
+/obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
+	. = ..()
+	buckling_mob.reagents.add_reagent("xenojelly_n", 30)

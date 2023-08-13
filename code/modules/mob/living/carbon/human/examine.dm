@@ -24,6 +24,9 @@
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
+	if(get_species() == SKRELL && h_style != "Bald")
+		skipears = TRUE
+
 	var/obj/item/organ/external/head/MyHead = bodyparts_by_name[BP_HEAD]
 	if(!istype(MyHead) || MyHead.is_stump)
 		skipface = TRUE
@@ -119,7 +122,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
-	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/changeling_hammer)
+	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/melee/changeling_hammer)
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.dirt_overlay)
@@ -141,7 +144,11 @@
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
 	else if(r_hand && (r_hand.type in changeling_weapons))
 		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
-
+	//Throw Swing
+	if(in_throw_mode)
+		var/obj/item/I = get_active_hand()
+		if(I)
+			msg += "<span class='warning'>[t_He] swings to throw, holding [I] in [t_his] hand!</span>\n"
 	//gloves
 	if(gloves && !skipgloves)
 		if(gloves.dirt_overlay)
@@ -194,13 +201,16 @@
 			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if(glasses && !skipeyes)
-		if(glasses.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
-		else if(glasses.wet)
-			msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
-		else
-			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+	if(!skipeyes)
+		if(glasses)
+			if(glasses.dirt_overlay)
+				msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
+			else if(glasses.wet)
+				msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
+			else
+				msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+		else if(HAS_TRAIT(src, TRAIT_CULT_EYES))
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//left ear
 	if(l_ear && !skipears)
@@ -245,11 +255,11 @@
 	var/distance = get_dist(user,src)
 	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
-	if (src.stat || (iszombie(src) && (crawling || lying)))
+	if (stat != CONSCIOUS || (iszombie(src) && (crawling || lying)))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
-		if(ishuman(user) && !user.stat && distance <= 1)
+		if(ishuman(user) && user.stat == CONSCIOUS && distance <= 1)
 			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
@@ -449,8 +459,7 @@
 	for(var/implant in implants)
 		var/obj/item/organ/external/BP = implants[implant]
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
-	if(digitalcamo)
-		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
+
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.isabsorbing)
@@ -503,6 +512,7 @@
 			msg += "---------\n"
 		var/perpname = "wot"
 		var/medical = "None"
+		var/insurance_type
 
 		if(wear_id)
 			if(istype(wear_id,/obj/item/weapon/card/id))
@@ -518,10 +528,12 @@
 				for (var/datum/data/record/R in data_core.general)
 					if (R.fields["id"] == E.fields["id"])
 						medical = R.fields["p_stat"]
+						insurance_type = R.fields["insurance_type"]
 
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
-
+		if(insurance_type)
+			msg += "<span class = 'deptradio'>Страховка: [insurance_type]</span>\n"
 		var/obj/item/clothing/under/C = w_uniform
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
@@ -562,11 +574,10 @@
 	//someone here, but who?
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != ABDUCTOR)
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
-				if(V.stealth_active)
-					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
-					return
+		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
+			for(var/obj/item/weapon/implant/blueshield/B in H)
+				B.last_examined = world.time
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
 
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)
@@ -580,6 +591,8 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)
+
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 // Only used for humans and other personal of station.

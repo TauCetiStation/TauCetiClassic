@@ -15,7 +15,7 @@
 	prob(6);/obj/item/weapon/shield/energy,\
 	prob(6);/obj/item/weapon/gun/projectile/automatic/bulldog,\
 	prob(7);/obj/item/device/radio/beacon/syndicate,\
-	prob(7);/obj/item/ammo_box/magazine/m762,\
+	prob(7);/obj/item/ammo_box/magazine/saw,\
 	prob(8);/obj/item/weapon/aiModule/freeform/syndicate,\
 	prob(8);/obj/item/device/powersink,\
 	prob(8);/obj/item/device/radio/beacon/syndicate_bomb,\
@@ -28,16 +28,16 @@
 	prob(14);/obj/item/weapon/implanter/storage,\
 	prob(14);/obj/item/weapon/gun/energy/crossbow,\
 	prob(14);/obj/item/weapon/melee/energy/sword,\
-	prob(14);/obj/item/ammo_box/magazine/a74mm,\
+	prob(14);/obj/item/ammo_box/magazine/a74,\
 	prob(14);/obj/item/weapon/grenade/spawnergrenade/manhacks,\
 	prob(14);/obj/item/device/healthanalyzer/rad_laser,\
-	prob(16);/obj/item/weapon/gun/projectile/automatic/pistol,\
+	prob(16);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 	prob(16);/obj/item/weapon/grenade/syndieminibomb,\
 	prob(16);/obj/item/weapon/storage/box/syndie_kit/throwing_weapon,\
 	prob(16);/obj/item/weapon/card/emag,\
 	prob(20);/obj/item/weapon/storage/box/emps,\
 	prob(20);/obj/item/weapon/storage/box/syndie_kit/imp_freedom,\
-	prob(20);/obj/item/ammo_box/magazine/m12g/incendiary,\
+	prob(20);/obj/item/ammo_box/magazine/bulldog/incendiary,\
 	prob(20);/obj/item/device/chameleon,\
 	prob(20);/obj/item/weapon/storage/box/syndie_kit/space,\
 	prob(20);/obj/item/clothing/glasses/thermal/syndi,\
@@ -48,13 +48,13 @@
 	prob(25);/obj/item/weapon/storage/backpack/dufflebag/c4,\
 	prob(25);/obj/item/weapon/reagent_containers/syringe/mulligan,\
 	prob(25);/obj/item/device/flashlight/emp,\
-	prob(25);/obj/item/ammo_box/magazine/m12g,\
-	prob(25);/obj/item/ammo_box/magazine/m12g/stun,\
+	prob(25);/obj/item/ammo_box/magazine/bulldog,\
+	prob(25);/obj/item/ammo_box/magazine/bulldog/stun,\
 	prob(25);/obj/item/weapon/pen/paralysis,\
 	prob(25);/obj/item/weapon/card/id/syndicate,\
 	prob(33);/obj/item/weapon/grenade/clusterbuster/soap,\
 	prob(33);/obj/item/ammo_box/magazine/borg45,\
-	prob(33);/obj/item/ammo_box/a357,\
+	prob(33);/obj/item/ammo_box/speedloader/a357,\
 	prob(33);/obj/item/device/encryptionkey/binary,\
 	prob(33);/obj/item/clothing/mask/gas/voice,\
 	prob(33);/obj/item/clothing/gloves/black/silence,\
@@ -62,8 +62,8 @@
 	prob(50);/obj/item/device/encryptionkey/syndicate,\
 	prob(50);/obj/item/device/multitool/ai_detect,\
 	prob(50);/obj/item/device/syndicatedetonator,\
-	prob(50);/obj/item/ammo_box/magazine/m12mm,\
-	prob(50);/obj/item/ammo_box/magazine/m9mm,\
+	prob(50);/obj/item/ammo_box/magazine/c20r,\
+	prob(50);/obj/item/ammo_box/magazine/stechkin,\
 	prob(50);/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate,\
 	prob(50);/obj/item/weapon/cartridge/syndicate,\
 	prob(50);/obj/item/toy/carpplushie/dehy_carp,\

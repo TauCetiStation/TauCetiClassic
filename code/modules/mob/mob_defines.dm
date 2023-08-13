@@ -7,7 +7,7 @@
 	var/datum/mind/mind
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
-	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
+	var/stat = CONSCIOUS //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
 	var/old_x = 0
 	var/old_y = 0
@@ -43,11 +43,14 @@
 	var/atom/movable/screen/pwr_display = null
 	var/atom/movable/screen/nightvisionicon = null
 
+	var/atom/movable/screen/holomap/holomap_obj
+
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
+	var/last_examined = ""
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -133,8 +136,6 @@
 
 	var/coughedtime = null
 
-	var/next_point_to = 0
-
 	var/job = null//Living
 
 	var/datum/dna/dna = null//Carbon
@@ -172,9 +173,6 @@
 	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
-
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
@@ -229,3 +227,12 @@
 
 	// Reason of logout
 	var/logout_reason
+
+	/// List of action hud items the user has
+	var/list/datum/action/actions = list()
+
+	// Used for statistics of death
+	var/last_phrase
+
+	var/can_point = TRUE
+	var/show_examine_log = TRUE

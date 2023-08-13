@@ -31,7 +31,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 90))
@@ -117,7 +117,7 @@
 
 /obj/machinery/zero_point_emitter/attackby(obj/item/W, mob/user)
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -140,7 +140,7 @@
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn off the [src] first.")

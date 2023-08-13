@@ -40,9 +40,13 @@
 		alpha = 255
 
 /obj/item/mine/Crossed(atom/movable/AM)
+	if(HAS_TRAIT(AM, TRAIT_ARIBORN)) // oh no, he is flying, not stepping. Cheater!
+		return
 	try_trigger(AM)
 
 /obj/item/mine/Bumped(atom/movable/AM)
+	if(HAS_TRAIT(AM, TRAIT_ARIBORN))
+		return
 	try_trigger(AM)
 
 /obj/item/mine/bullet_act(obj/item/projectile/Proj, def_zone)
@@ -51,27 +55,33 @@
 	qdel(src)
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
-	if(iscarbon(AM) || issilicon(AM) || istype(AM, /obj/mecha))
+	if(isliving(AM) || istype(AM, /obj/mecha))
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
 			trigger_act(AM)
 			qdel(src)
 
 /obj/item/mine/proc/trigger_act(obj)
-	explosion(loc, 1, 1, 3, 3)
+	explosion(loc, 0, 1, 3)
 
-/obj/item/mine/attackby(obj/item/I, mob/user, params)
-	. = ..()
-
-	if(!ismultitool(I) || !anchored)
+/obj/item/mine/proc/try_disarm(obj/item/I, mob/user)
+	if((I && !ispulsing(I)) || !anchored)
 		return
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
 	if(I.use_tool(src, user, 40, volume = 50))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
-		anchored = FALSE
-		update_icon()
+		disarm()
+
+/obj/item/mine/attackby(obj/item/I, mob/user, params)
+	. = ..()
+
+	try_disarm(I, user)
+
+/obj/item/mine/proc/disarm()
+	anchored = FALSE
+	update_icon()
 
 /obj/item/mine/anchored
 	anchored = TRUE
@@ -103,7 +113,7 @@
 	icon_state = "incendiarymine"
 
 /obj/item/mine/incendiary/trigger_act(obj)
-	explosion(loc, 0.5, 1, 1)
+	explosion(loc, 0, 0, 2)
 	if(isliving(obj))
 		var/mob/living/M = obj
 		M.adjust_fire_stacks(10)

@@ -87,7 +87,7 @@
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
 	color = "#c8a5dc"
-	overdose = 60
+	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
@@ -102,7 +102,7 @@
 	description = "A simple, yet effective painkiller."
 	reagent_state = LIQUID
 	color = "#cb68fc"
-	overdose = 30
+	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.025
 	restrict_species = list(IPC, DIONA)
 
@@ -143,6 +143,12 @@
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
 	O.germ_level -= min(volume*20, O.germ_level)
+	REMOVE_TRAIT(O, TRAIT_XENO_FUR, GENERIC_TRAIT)
+	if(istype(O, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		//constituent components precipitate into food as unwanted sediment. No need use sterilizine into food
+		F.reagents.add_reagent("chlorine", 1)
+		F.reagents.add_reagent("ethanol", 1)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
 	. = ..()
@@ -224,7 +230,7 @@
 	description = "Analgesic chemical that heals lung damage and coughing."
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
-	overdose = 10
+	overdose = REAGENTS_OVERDOSE / 3
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
@@ -308,6 +314,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
+	toxin_absorption = 3.0
+
 /datum/reagent/anti_toxin/on_general_digest(mob/living/M)
 	..()
 	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
@@ -325,6 +333,8 @@
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
+
+	toxin_absorption = 5.0
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
@@ -381,13 +391,13 @@
 /datum/reagent/synaptizine/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(M.drowsyness - 5, 0)
-	M.AdjustParalysis(-1)
-	M.AdjustStunned(-1)
-	M.AdjustWeakened(-1)
+	M.AdjustParalysis(-1.5)
+	M.AdjustStunned(-1.5)
+	M.AdjustWeakened(-1.5)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(60))
+	if(prob(40))
 		M.adjustToxLoss(1)
 
 /datum/reagent/hyronalin
@@ -469,6 +479,8 @@
 	..()
 	M.ear_damage = max(M.ear_damage - 1, 0)
 	M.ear_deaf = max(M.ear_deaf - 3, 0)
+	if(M.ear_damage <= 0 && M.ear_deaf <= 0)
+		M.sdisabilities &= ~DEAF
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -476,7 +488,7 @@
 	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 	reagent_state = LIQUID
 	color = "#561ec3" // rgb: 200, 165, 220
-	overdose = 10
+	overdose = REAGENTS_OVERDOSE / 3
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -499,34 +511,36 @@
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
 	id = "kyphotorin"
-	description = "Used nanites to encourage recovery of body parts and bones. Medicate cautiously."
+	description = "Prototype military nanites, can heal a person of almost any damage in the blink of an eye, however, they only start working at very high temperatures."
 	reagent_state = LIQUID
 	color = "#551a8b" // rgb: 85, 26, 139
 	overdose = 5.1
-	custom_metabolism = 0.07
+	custom_metabolism = 0.01
 	taste_message = "machines"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin/on_general_digest(mob/living/M)
 	..()
-	if(!ishuman(M) || volume > overdose)
-		return
-	var/mob/living/carbon/human/H = M
-	if(H.nutrition < 200) // if nanites don't have enough resources, they stop working and still spend
-		H.make_jittery(100)
-		volume += 0.07
-		return
-	H.jitteriness = max(0,H.jitteriness - 100)
-	if(!H.regenerating_bodypart)
-		H.regenerating_bodypart = H.find_damaged_bodypart()
-	if(H.regenerating_bodypart)
-		H.nutrition -= 3
-		H.Stun(3)
-		H.apply_effect(3, WEAKEN)
-		H.apply_damages(0,0,1,4,0,5)
-		H.regen_bodyparts(4, FALSE)
-	else
-		volume += 0.07
+	if(M.bodytemperature > 400)
+		M.adjustCloneLoss(-1)
+		M.adjustOxyLoss(-15)
+		M.adjustBruteLoss(-5)
+		M.adjustFireLoss(-20)
+		M.adjustToxLoss(-3)
+		M.AdjustParalysis(-3)
+		M.AdjustStunned(-3)
+		M.AdjustWeakened(-3)
+		var/mob/living/carbon/human/H = M
+		H.adjustHalLoss(-30)
+		H.shock_stage -= 20
+
+	if(M.bodytemperature < 310) //standard body temperature
+		M.adjustHalLoss(15)
+		M.adjustOxyLoss(5)
+		M.adjustBruteLoss(5)
+		M.adjustToxLoss(3)
+		if(prob(25))
+			to_chat(M, "You feel just terrible, as if something is tearing you apart inside, it’s very hard for you to breathe!")
 
 /datum/reagent/bicaridine
 	name = "Bicaridine"
@@ -541,6 +555,41 @@
 /datum/reagent/bicaridine/on_general_digest(mob/living/M, alien)
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
+
+/datum/reagent/xenojelly_n // only for alien nest
+	name = "Natural xenojelly"
+	id = "xenojelly_n"
+	description = "Natural xenomorph jelly is released only if the victim hits the nest"
+	reagent_state = LIQUID
+	color = "#3f6d3f"
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(35, 10)
+	M.adjustToxLoss(-10)
+	M.adjustOxyLoss(-20)
+	M.adjustHalLoss(-25)
+	M.adjustFireLoss(-20)
+
+/datum/reagent/xenojelly_un
+	name = "Unnatural xenojelly"
+	id = "xenojelly_un"
+	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
+	reagent_state = LIQUID
+	color = "#5ea95d2b"
+	custom_metabolism = 2
+	overdose = REAGENTS_OVERDOSE / 2
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_un/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(2,3)
+	M.adjustOxyLoss(-5)
+	M.adjustHalLoss(-5)
+	M.adjustFireLoss(-5)
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"
@@ -645,11 +694,20 @@
 
 /datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M)
 	..()
-	M.dizziness = 0
-	M.drowsyness = 0
-	M.setStuttering(0)
-	M.SetConfused(0)
+	M.dizziness = max(0, M.dizziness - 10)
+	M.drowsyness = max(0, M.drowsyness - 10)
+	M.AdjustStuttering(-10)
+	M.AdjustConfused(-10)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
+	if(prob(volume))
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/head/BP = H.get_bodypart(BP_HEAD)
+		if(!BP || !BP.disfigured)
+			return
+		BP.disfigured = FALSE
+		to_chat(H, "Your face is shaped normally again.")
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
 	name = "Vitamin"
@@ -713,7 +771,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.1
+	custom_metabolism = 0.0001
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
@@ -727,24 +785,21 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
-		if(1 to 10)
+		if(1 to 5)
 			M.make_dizzy(1)
 			if(prob(10))
 				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
-		if(10 to 20)
-			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
-				M.adjustToxLoss(5)
-			else
-				M.AdjustConfused(2)
-		if(20 to 60)
+		if(5 to 10)
+			M.apply_effect(10, AGONY)
+			M.AdjustConfused(2)
+		if(10 to INFINITY)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(50))
-						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-						E.brute_dam = 0
-						E.status &= ~ORGAN_BROKEN
-						E.perma_injury = 0
-						holder.remove_reagent("nanocalcium", 10)
+					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
+					E.heal_damage(30)
+					E.status &= ~ORGAN_BROKEN
+					E.perma_injury = 0
+					holder.remove_reagent("nanocalcium", 10)
 
 /datum/reagent/metatrombine
 	name = "Metatrombine"
@@ -753,4 +808,33 @@
 	reagent_state = LIQUID
 	color = "#990000"
 	restrict_species = list(IPC, DIONA)
-	overdose = 5
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE / 6
+	data = list()
+
+/datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
+	..()
+	if(!ishuman(M))
+		return
+	if((volume <= overdose) && !data["ticks"])
+		return
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
+	switch(data["ticks"])
+		if(1 to 150)
+			if(prob(25))
+				to_chat(M, "<span class='notice'>You feel dizzy...</span>")
+			M.make_dizzy(5)
+			M.make_jittery(5)
+		if(150 to 200)
+			for(var/obj/item/organ/external/E in M.bodyparts)
+				if(E.is_artery_cut())
+					E.status &= ~ORGAN_ARTERY_CUT
+			if(IO.robotic == 1)
+				if(prob(75))
+					data["ticks"]--
+		if(200 to INFINITY)
+			if(IO.robotic != 2)
+				IO.heart_stop()

@@ -263,7 +263,7 @@ var/global/list/ghostteleportlocs = list()
 				if(E.operating)
 					E.nextstate = CLOSED
 				else if(!E.density)
-					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/close)
+					INVOKE_ASYNC(E, TYPE_PROC_REF(/obj/machinery/door/firedoor, close))
 
 /area/proc/air_doors_open()
 	if(air_doors_activated)
@@ -273,8 +273,11 @@ var/global/list/ghostteleportlocs = list()
 				if(E.operating)
 					E.nextstate = OPEN
 				else if(E.density)
-					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/open)
+					INVOKE_ASYNC(E, TYPE_PROC_REF(/obj/machinery/door/firedoor, open))
 
+/area/proc/airlocks_close(bolt_after = FALSE)
+	for(var/obj/machinery/door/airlock/A in src)
+		A.close_unsafe(bolt_after)
 
 /area/proc/firealert()
 	if(name == "Space") //no fire alarms in space
@@ -287,7 +290,7 @@ var/global/list/ghostteleportlocs = list()
 				if(D.operating)
 					D.nextstate = CLOSED
 				else if(!D.density)
-					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/firedoor, close))
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras.Add(C)
@@ -308,7 +311,7 @@ var/global/list/ghostteleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/firedoor, open))
 		for (var/obj/machinery/camera/C in src)
 			C.remove_network("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
@@ -337,7 +340,7 @@ var/global/list/ghostteleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/firedoor, open))
 	return
 
 /area/proc/updateicon()

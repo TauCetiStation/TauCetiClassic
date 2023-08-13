@@ -2,11 +2,11 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 39
+#define SAVEFILE_VERSION_MAX 42
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
-#define SAVEFILE_VERSION_SPECIES_JOBS 30 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_SPECIES_JOBS 41 // job preferences after breaking changes to any /datum/job/
 #define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too
@@ -228,23 +228,37 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
 
-	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 38)
-		if(ignore_question && ignore_question.len)
-			var/list/diff = ignore_question - global.full_ignore_question
-			if(diff.len)
-				S["ignore_question"] << ignore_question - diff
-
 	if(current_version < 38)
 		if("Raider" in be_role)
 			be_role -= "Raider"
 
 		S["be_role"] << be_role
-	
+
 	if(current_version < 39)
 		S["ghost_orbit"] << null
 
-// 
+	if(current_version < 40)
+		if(ignore_question && ignore_question.len)
+			if("Lavra" in ignore_question)
+				ignore_question -= "Lavra"
+				ignore_question |= IGNORE_LARVA
+				S["ignore_question"] << ignore_question
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 42)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 42)
+		if(ROLE_NINJA in be_role)
+			be_role -= ROLE_NINJA
+		if(ROLE_ABDUCTOR in be_role)
+			be_role -= ROLE_ABDUCTOR
+		S["be_role"] << be_role
+
+//
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
@@ -291,7 +305,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!addedbind)
 			notadded += kb
 	if(length(notadded))
-		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
@@ -343,6 +357,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["auto_fit_viewport"] >> auto_fit_viewport
+	S["lobbyanimation"]    >> lobbyanimation
 	S["tooltip"]           >> tooltip
 	S["tooltip_size"]      >> tooltip_size
 	S["tooltip_font"]      >> tooltip_font
@@ -382,7 +397,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
@@ -395,6 +410,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
@@ -461,7 +477,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["randomslot"]        << randomslot
 	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
-	S["ambientocclusion"]	 << ambientocclusion
+	S["ambientocclusion"]  << ambientocclusion
+	S["lobbyanimation"]    << lobbyanimation
 	S["auto_fit_viewport"] << auto_fit_viewport
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size
@@ -516,6 +533,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]          >> r_hair
 	S["hair_green"]        >> g_hair
 	S["hair_blue"]         >> b_hair
+	S["belly_red"]         >> r_belly
+	S["belly_green"]       >> g_belly
+	S["belly_blue"]        >> b_belly
 	S["grad_red"]          >> r_grad
 	S["grad_green"]        >> g_grad
 	S["grad_blue"]         >> b_grad
@@ -540,7 +560,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	S["alternate_option"] >> alternate_option
+	S["job_preferences"]  >> job_preferences
 
 	//Traits
 	S["all_quirks"]       >> all_quirks
@@ -564,6 +585,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"]         >> home_system
 	S["citizenship"]         >> citizenship
+	S["insurance"]           >> insurance
 	S["faction"]             >> faction
 	S["religion"]            >> religion
 	S["vox_rank"]            >> vox_rank
@@ -634,6 +656,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
+	if(!insurance)   insurance = INSURANCE_STANDARD
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
 	if(!vox_rank)    vox_rank =    "Larva"
@@ -648,7 +671,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	var/list/saves = list()
 	var/name
-	for(var/i = 1 to MAX_SAVE_SLOTS)
+	for(var/i = 1 to GET_MAX_SAVE_SLOTS(parent))
 		S.cd = "/character[i]"
 		S["real_name"] >> name
 		if(!name)
@@ -673,7 +696,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
-	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	slot = sanitize_integer(slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot
@@ -704,6 +727,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]              << r_hair
 	S["hair_green"]            << g_hair
 	S["hair_blue"]             << b_hair
+	S["belly_red"]             << r_belly
+	S["belly_green"]           << g_belly
+	S["belly_blue"]            << b_belly
 	S["grad_red"]              << r_grad
 	S["grad_green"]            << g_grad
 	S["grad_blue"]             << b_grad
@@ -752,6 +778,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"]         << home_system
 	S["citizenship"]         << citizenship
+	S["insurance"]           << insurance
 	S["faction"]             << faction
 	S["religion"]            << religion
 	S["vox_rank"]            << vox_rank

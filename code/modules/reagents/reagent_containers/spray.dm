@@ -24,6 +24,7 @@
 
 	var/spray_sound = 'sound/effects/spray2.ogg'
 	var/volume_modifier = -6
+	var/space_cleaner = "cleaner"
 
 	var/spray_cloud_move_delay = 3
 	var/spray_cloud_react_delay = 2
@@ -35,36 +36,36 @@
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target, /obj/structure/closet) \
 	|| istype(target, /obj/item/weapon/reagent_containers) || istype(target, /obj/structure/sink) || istype(target, /obj/structure/stool/bed/chair/janitorialcart))
-		return
+		return FALSE
 
 	if(istype(target, /obj/effect/proc_holder/spell))
-		return
+		return FALSE
 
 	if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		var/obj/structure/reagent_dispensers/RD = target
 		if(!is_open_container())
 			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
-			return
+			return FALSE
 
 		if(!RD.reagents.total_volume && RD.reagents)
 			to_chat(user, "<span class='notice'>[RD] does not have enough liquids.</span>")
-			return
+			return FALSE
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
-			return
+			return FALSE
 
 		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [RD].</span>")
-		return
+		return FALSE
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
-		return
+		return FALSE
 
 	if(safety)
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
-		return
+		return FALSE
 
 	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
 
@@ -92,13 +93,14 @@
 		var/turf/T1 = get_step(T, turn(direction, 90))
 		var/turf/T2 = get_step(T, turn(direction, -90))
 
-		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
-		INVOKE_ASYNC(src, .proc/Spray_at, T1_start, T1)
-		INVOKE_ASYNC(src, .proc/Spray_at, T2_start, T2)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T1_start, T1)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T2_start, T2)
 	else
-		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
 
-	INVOKE_ASYNC(src, .proc/on_spray, T, user) // A proc where we do all the dirty chair riding stuff.
+	INVOKE_ASYNC(src, PROC_REF(on_spray), T, user) // A proc where we do all the dirty chair riding stuff.
+	return TRUE
 
 /obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
 	if(!triple_shot) // Currently only the big baddies have this mechanic.
@@ -223,10 +225,7 @@
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_mob()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible
@@ -333,7 +332,7 @@
 
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/I, mob/user, params)
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(iswelder(I))
+		if(iswelding(I))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.isOn())
 				light(user, "casually lights")
@@ -389,9 +388,39 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	volume = 50
 
+
 /obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
 	. = ..()
-	reagents.add_reagent("cleaner", volume)
+	reagents.add_reagent(space_cleaner, volume)
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg //Credit @Deahaka for rechargable extinguisher
+	name = "Cyborg cleaner"
+	desc = "Self-recharging cleaner spray."
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone
+	name = "Drone cleaner"
+	desc = "Self-recharging cleaner spray."
+	volume = 50
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/attackby(obj/item/I, mob/user, params)
+	to_chat(user, "<span class='notice'>[src] reagents are under pressure, don't open.</span>")
+	return TRUE
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/afterattack(atom/target, mob/user, proximity, params)
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			R.cell.use(amount_per_transfer_from_this)
+	if(reagents.total_volume < reagents.maximum_volume)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/process()
+	if(reagents.total_volume == reagents.maximum_volume)
+		STOP_PROCESSING(SSobj, src)
+		return
+	// 5/250 cleaner per 2 seconds
+	reagents.add_reagent(space_cleaner, reagents.maximum_volume / 50)
+
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
@@ -403,6 +432,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	possible_transfer_amounts = null
 	volume = 40
 	safety = 1
+	spray_cloud_move_delay = 1
+	spray_cloud_react_delay = 0.5
 
 
 /obj/item/weapon/reagent_containers/spray/pepper/atom_init()

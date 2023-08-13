@@ -149,7 +149,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		s["version"] = game_version
 		s["mode"] = custom_event_msg ? "event" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
@@ -208,7 +208,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 	var/list/dellog = list()
 
 	//sort by how long it's wasted hard deleting
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	sortTim(SSgarbage.items, cmp=GLOBAL_PROC_REF(cmp_qdel_item_time), associative = TRUE)
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "Path: [path]"
@@ -269,7 +269,7 @@ var/global/shutdown_processed = FALSE
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/KickInactiveClients), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(KickInactiveClients)), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")
@@ -348,12 +348,41 @@ var/global/shutdown_processed = FALSE
 /world/proc/load_supporters()
 	if(config.allow_donators && fexists("config/donators.txt"))
 		var/L = file2list("config/donators.txt")
+
+		var/current_DD = text2num(time2text(world.timeofday, "DD"))
+		var/current_MM = text2num(time2text(world.timeofday, "MM"))
+		var/current_YY = text2num(time2text(world.timeofday, "YY"))
+
 		for(var/line in L)
+
+			line = trim(line)
+
 			if(!length(line))
 				continue
+
 			if(line[1] == "#")
 				continue
-			donators.Add(ckey(line))
+
+			var/list/params = splittext(line, " ")
+			var/ckey = ckey(params[1])
+			var/list/until_date = length(params) > 1 ? splittext(params[2], ".") : 0  // DD.MM.YY
+
+			if(until_date)
+
+				var/DD = text2num(until_date[1])
+				var/MM = text2num(until_date[2])
+				var/YY = text2num(until_date[3])
+
+				if(YY < current_YY)
+					continue
+				else if (YY == current_YY)
+					if(MM < current_MM)
+						continue
+					else if (MM == current_MM)
+						if(DD < current_DD)
+							continue
+
+			donators.Add(ckey)
 
 	// just some tau ceti specific stuff
 	if(config.allow_tauceti_patrons)
@@ -408,7 +437,7 @@ var/global/shutdown_processed = FALSE
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"

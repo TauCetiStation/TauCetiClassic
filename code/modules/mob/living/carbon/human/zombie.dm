@@ -114,11 +114,6 @@
 
 			H.infect_zombie_virus(target_zone)
 
-/proc/iszombie(mob/living/carbon/human/H)
-	if(istype(H.species, /datum/species/zombie))
-		return TRUE
-	return FALSE
-
 /datum/species/zombie/on_life(mob/living/carbon/human/H)
 	if(!H.life_tick % 3)
 		return
@@ -144,12 +139,13 @@
 	if(H.stat != DEAD && prob(10))
 		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
 
-/datum/species/zombie/handle_death(mob/living/carbon/human/H)
-	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
+/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
+	if(!gibbed)
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
-		addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
 
 /proc/prerevive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -162,21 +158,30 @@
 						ghost.reenter_corpse()
 
 		H.visible_message("<span class='danger'>[H]'s body starts to move!</span>")
-		addtimer(CALLBACK(null, .proc/revive_zombie, H), 40)
+		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 40)
 
 /proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 	if(!H.organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
+	//zombie have NO_PAIN and can't adjust/sets halloss
+	H.setHalLoss(0)
+	//remove all blind-blur effects
+	H.cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
+	H.sdisabilities &= ~BLIND
+	H.blinded = FALSE
+	H.setBlurriness(0)
+	H.handle_vision(TRUE)
+
 	if(!iszombie(H))
 		H.zombify()
 
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
-		IO.rejuvenate()
+	//del wounds and embedded implants in limbs, heal
+	for(var/obj/item/organ/external/limb in H.bad_bodyparts)
+		limb.rejuvenate()
 
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
-	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
@@ -196,6 +201,7 @@
 	H.update_canmove()
 	H.regenerate_icons()
 	H.med_hud_set_health()
+	H.clear_alert("embeddedobject")
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
@@ -208,6 +214,21 @@
 			if(istype(e.effect, /datum/disease2/effect/zombie))
 				return TRUE
 	return FALSE
+
+/mob/living/carbon/human/handle_vision()
+	if(iszombie(src))
+		return
+	return ..()
+
+/mob/living/carbon/human/update_eye_blur()
+	if(iszombie(src))
+		return
+	return ..()
+
+/mob/living/carbon/human/embed(obj/item/I)
+	if(species.flags[NO_EMBED])
+		return
+	return ..()
 
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
 	if(!forced && !prob(get_bite_infection_chance(src, target_zone)))
@@ -251,47 +272,6 @@
 			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
-
-/mob/living/carbon/human/proc/zombie_movement_delay()
-	if(!has_gravity(src))
-		return -1
-
-	var/tally = species.speed_mod
-	if(crawling)
-		tally += 7
-	else
-		var/has_leg = FALSE
-		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(BP && !(BP.is_stump))
-				has_leg = TRUE
-		if(!has_leg)
-			tally += 10
-
-	if(embedded_flag)
-		handle_embedded_objects()
-
-	if(buckled)
-		tally += 5.5
-
-	if(pull_debuff)
-		tally += pull_debuff
-
-	if(wear_suit)
-		tally += wear_suit.slowdown
-
-	if(back)
-		tally += back.slowdown
-
-	if(shoes)
-		tally += shoes.slowdown
-
-	if(health <= 0)
-		tally += 0.5
-	if(health <= -50)
-		tally += 0.5
-
-	return (tally + config.human_delay)
 
 var/global/list/zombie_list = list()
 

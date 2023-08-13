@@ -2,14 +2,14 @@
 /mob/living/simple_animal/corgi
 	name = "corgi"
 	real_name = "corgi"
-	desc = "It's a corgi."
+	desc = "Это корги."
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
-	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "yaps","pants")
-	emote_see = list("shakes its head", "shivers")
+	speak = list("Гав!", "Вуф!", "АУУУУ!")
+	speak_emote = list("лает", "воет")
+	emote_hear = list("лает", "воет")
+	emote_see = list("виляет хвостом", "облизывается")
 	speak_chance = 1
 	turns_per_move = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 3)
@@ -26,7 +26,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
-	desc = "Tastes like... well you know..."
+	desc = "На вкус как... ну ты знаешь..."
 
 /mob/living/simple_animal/corgi/regenerate_icons()
 	cut_overlays()
@@ -39,7 +39,7 @@
 /mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(!stat)
+		if(stat == CONSCIOUS)
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
@@ -51,7 +51,7 @@
 /mob/living/simple_animal/corgi/puppy
 	name = "corgi puppy"
 	real_name = "corgi"
-	desc = "It's a corgi puppy."
+	desc = "Это щенок корги."
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
@@ -62,7 +62,7 @@
 	name = "Lisa"
 	real_name = "Lisa"
 	gender = FEMALE
-	desc = "It's a corgi with a cute pink bow."
+	desc = "Это корги с милым розовым бантиком."
 	icon_state = "lisa"
 	icon_living = "lisa"
 	icon_dead = "lisa_dead"
@@ -80,7 +80,7 @@
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
-	if(!stat && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 15)
 			turns_since_scan = 0
@@ -111,7 +111,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/corgi/borgi, chief_animal_list)
 /mob/living/simple_animal/corgi/borgi
 	name = "E-N"
 	real_name = "E-N"	//Intended to hold the name without altering it.
-	desc = "It's a borgi."
+	desc = "Это борги."
 	icon_state = "borgi"
 	icon_living = "borgi"
 	icon_dead = "borgi_dead"

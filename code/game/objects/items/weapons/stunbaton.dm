@@ -36,7 +36,8 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/melee/baton/attack_self(mob/living/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	. = ..()
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
@@ -54,7 +55,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/living/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
@@ -119,7 +120,8 @@
 	discharge(2 * discharge_rate_per_minute / 60)
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(..())
+		return
 	if (prob(50))
 		if(isliving(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
@@ -140,3 +142,52 @@
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	discharge(severity * 5)
+
+/obj/item/weapon/melee/baton/double
+	name = "dualbaton"
+	desc = "Some shadow genius in Nanotrasen Combat Research Division decided this was a good idea."
+	icon_state = "doublebaton"
+	item_state = "doublebaton"
+	slot_flags = SLOT_FLAGS_BACK
+	throwforce = 10
+	w_class = SIZE_NORMAL
+	charges = 20
+	sweep_step = 2
+
+	origin_tech = "combat=3"
+
+/obj/item/weapon/melee/baton/double/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/baton/double, can_swipe))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/baton/double, can_swipe))
+	SCB.on_get_sweep_objects = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/baton/double, get_sweep_objs))
+	AddComponent(/datum/component/swiping, SCB)
+
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 15
+	TCB.force_unwielded = 10
+	AddComponent(/datum/component/twohanded, TCB)
+
+/obj/item/weapon/melee/baton/double/proc/can_swipe(mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/melee/baton/double/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
+	var/list/directions_opposite = list()
+	for(var/dir_ in directions)
+		directions_opposite += turn(dir_, 180)
+
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
+	return sweep_objects
+
+/obj/item/weapon/melee/baton/double/dropped(mob/user)
+	..()
+	status = FALSE
+	update_icon()

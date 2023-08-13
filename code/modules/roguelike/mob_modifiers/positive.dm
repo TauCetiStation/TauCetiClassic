@@ -87,10 +87,7 @@
 
 /datum/component/mob_modifier/ghostly/apply(update = FALSE)
 	if(!update)
-		var/obj/randomcatcher/CATCH = new
-		possessed = CATCH.get_item(/obj/random/misc/toy)
-		if(!possessed)
-			return FALSE
+		possessed = new PATH_OR_RANDOM_PATH(/obj/random/misc/toy)
 
 	. = ..()
 	if(!.)
@@ -117,7 +114,7 @@
 
 	// ghostly_filter = filter(type="color", color=ghostly_matrix)
 
-	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETING), .proc/on_phylactery_destroyed)
+	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETING), PROC_REF(on_phylactery_destroyed))
 	possessed.forceMove(H.loc)
 
 	if(QDELING(possessed) || !get_turf(possessed))
@@ -132,7 +129,7 @@
 	H.AddComponent(/datum/component/bounded, possessed, 0, 3)
 
 	// THE RECIPY OF IMMORTALITY BUAHAHAHA
-	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/retreat)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), PROC_REF(retreat))
 
 	// H.filters += ghostly_filter
 
@@ -176,7 +173,7 @@
 	qdel(H.GetComponent(/datum/component/bounded))
 	H.forceMove(possessed)
 
-	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_STOPPABLE)
+	rejuve_timer = addtimer(CALLBACK(src, PROC_REF(come_back)), rand(6, 10) MINUTES, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/ghostly/proc/come_back()
 	if(!possessed)
@@ -293,7 +290,7 @@
 	if(update)
 		return
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), PROC_REF(shake_ground))
 
 /datum/component/mob_modifier/strong/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -311,7 +308,28 @@
 
 	H.loc.shake_act(2 + strength)
 
+/atom/movable/antiwarp_effect
+	plane = ANOMALY_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/288x288.dmi'
+	icon_state = "gravitational_anti_lens"
+	pixel_x = -128
+	pixel_y = -128
 
+/atom/movable/antiwarp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("ripple", 1, ripple_filter(radius = 0, size = 250, falloff = 0.5, repeat = 100))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/antiwarp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/antiwarp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix(), flags = ANIMATION_PARALLEL)
+	animate(get_filter("ripple"), radius = 0, size = 150, time = 14, flags = ANIMATION_PARALLEL)
+	animate(radius = 250, size = 0, time = 0)
 
 /datum/component/mob_modifier/singular
 	modifier_name = RL_MM_SINGULAR
@@ -324,11 +342,11 @@
 	var/grav_pull = 4
 	var/pull_stage = STAGE_ONE
 
-	var/image/singularity_overlay
+	var/atom/movable/antiwarp_effect/warp
 
 /datum/component/mob_modifier/singular/Destroy()
 	STOP_PROCESSING(SSmob_modifier, src)
-	QDEL_NULL(singularity_overlay)
+	QDEL_NULL(warp)
 	return ..()
 
 /datum/component/mob_modifier/singular/apply(update = FALSE)
@@ -358,24 +376,23 @@
 
 	var/mob/living/simple_animal/hostile/H = parent
 
-	singularity_overlay = image('icons/obj/singularity.dmi', "singularity_s1")
-	singularity_overlay.alpha = 200
-	singularity_overlay.loc = H
-	// AFTER BYOND 513 USE THESE
-	// singularity_filter = filter(type = "layer", render_source = I)
+	warp = new(src)
+	warp.transform = matrix().Scale(0.01)
+	warp.pixel_x = -128
+	warp.pixel_y = -128
 
-	// H.filters += singularity_filter
-	H.add_overlay(singularity_overlay)
+	H.vis_contents += warp
+	H.plane = ABOVE_GAME_PLANE
 
 	START_PROCESSING(SSmob_modifier, src)
-	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
-	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_pulling)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), PROC_REF(stop_pulling))
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), PROC_REF(start_pulling))
 
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
 		var/mob/living/simple_animal/hostile/H = parent
-		H.cut_overlay(singularity_overlay)
-		// H.filters -= singularity_filter
+		H.vis_contents -= warp
+		H.plane = initial(H.plane)
 
 		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
@@ -453,10 +470,10 @@
 	if(update)
 		return
 
-	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT, COMSIG_MOB_DIED), .proc/reveal)
-	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_hiding)
+	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT, COMSIG_MOB_DIED), PROC_REF(reveal))
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), PROC_REF(start_hiding))
 
-	INVOKE_ASYNC(src, .proc/start_hiding)
+	INVOKE_ASYNC(src, PROC_REF(start_hiding))
 
 /datum/component/mob_modifier/invisible/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -488,10 +505,10 @@
 		add_invis_timer()
 
 /datum/component/mob_modifier/invisible/proc/add_vis_timer()
-	invis_timer = addtimer(CALLBACK(src, .proc/become_visible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
+	invis_timer = addtimer(CALLBACK(src, PROC_REF(become_visible)), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/invisible/proc/add_invis_timer()
-	invis_timer = addtimer(CALLBACK(src, .proc/become_invisible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
+	invis_timer = addtimer(CALLBACK(src, PROC_REF(become_invisible)), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/invisible/proc/become_visible()
 	var/mob/living/simple_animal/hostile/H = parent
@@ -501,7 +518,7 @@
 	H.alpha = 0
 	animate(H, alpha=saved_alpha, time=1 SECOND)
 
-	if(H.stat)
+	if(H.stat != CONSCIOUS)
 		return
 
 	add_invis_timer()
@@ -509,7 +526,7 @@
 /datum/component/mob_modifier/invisible/proc/become_invisible()
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(H.stat)
+	if(H.stat != CONSCIOUS)
 		return
 
 	invisible = TRUE

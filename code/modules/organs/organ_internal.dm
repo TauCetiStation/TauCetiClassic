@@ -13,11 +13,14 @@
 
 	// Will be moved, removed or refactored.
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
+	// 0 - normal
+	// 1 - assisted
+	// 2 - mechanical
 	var/robotic = 0             // For being a robot
 
 /obj/item/organ/internal/Destroy()
 	if(parent)
-		parent.children -= src
+		parent.bodypart_organs -= src
 		parent = null
 	if(owner)
 		owner.organs -= src
@@ -76,7 +79,9 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/obj/item/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/internal/take_damage(amount, silent=0)
+	if(!isnum(silent))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
@@ -144,13 +149,13 @@
 		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
 	else
 		take_damage(1, 0)
-		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+		fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
-	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
 	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
@@ -277,7 +282,7 @@
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	new/obj/item/weapon/stock_parts/cell/crap(src)
-	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(ipc_cell_explode))
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -286,7 +291,7 @@
 			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
-			INVOKE_ASYNC(owner, /mob/living/carbon/human.proc/vomit)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/carbon/human, vomit))
 
 	if(owner.life_tick % process_accuracy == 0)
 		if(src.damage < 0)
@@ -343,7 +348,7 @@
 		return
 	var/turf/T = get_turf(owner.loc)
 	if(owner.nutrition > (C.maxcharge * 1.2))
-		explosion(T, 1, 0, 1, 1)
+		explosion(T, 0, 1, 2)
 		C.ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/organ/internal/kidneys

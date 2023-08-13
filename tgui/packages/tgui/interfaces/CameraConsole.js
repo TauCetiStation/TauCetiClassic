@@ -141,22 +141,22 @@ export const CameraMinimapContent = (props, context) => {
         <NanoMap onZoom={v => setZoom(v)}>
           {cameras.filter(cam => cam.z === 1).map(cm => (
             <div
-            key={camera.name}
-            title={camera.name}
-            className={classes([
-              'Button',
-              'Button--fluid',
-              'Button--color--transparent',
-              'Button--ellipsis',
-              activeCamera
+              key={camera.name}
+              title={camera.name}
+              className={classes([
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
+                activeCamera
               && camera.name === activeCamera.name
               && 'Button--selected',
-            ])}
-            onClick={() => act('switch_camera', {
-              name: camera.name,
-            })}>
-            {camera.name}
-          </div>
+              ])}
+              onClick={() => act('switch_camera', {
+                name: camera.name,
+              })}>
+              {camera.name}
+            </div>
             // <NanoMap.NanoButton
             //   activeCamera={activeCamera}
             //   key={cm.ref}

@@ -1,5 +1,5 @@
 /mob/living/carbon/xenomorph/add_to_hud(datum/hud/hud)
-	hud.ui_style = 'icons/mob/screen1_xeno.dmi'
+	hud.ui_style = 'icons/hud/screen1_xeno.dmi'
 
 	..(hud, FALSE)
 

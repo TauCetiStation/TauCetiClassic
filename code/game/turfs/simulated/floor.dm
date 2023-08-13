@@ -81,22 +81,24 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	QDEL_NULL(holy)
 	return ..()
 
-//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
 //	return ..()
 
 /turf/simulated/floor/ex_act(severity)
+	..()
 	//set src in oview(1)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			ChangeTurf(basetype)
 		if(EXPLODE_HEAVY)
-			switch(pick(1,2;75,3))
+			switch(pick(prob(10);1, prob(10);2, 3))
 				if(1)
 					ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 				if(2)
 					ChangeTurf(basetype)
 				if(3)
@@ -104,12 +106,11 @@ var/global/list/wood_icons = list("wood","wood-broken")
 						break_tile_to_plating()
 					else
 						break_tile()
-					hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 		if(EXPLODE_LIGHT)
 			if(prob(50))
 				break_tile()
-				hotspot_expose(1000,CELL_VOLUME)
 
 /turf/simulated/floor/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!burnt && prob(5))
@@ -122,9 +123,12 @@ var/global/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
 	var/dir_to = get_dir(src, adj_turf)
 
-	for(var/obj/structure/window/W in src)
-		if(W.dir == dir_to || W.is_fulltile()) //Same direction or diagonal (full tile)
+	for(var/obj/structure/window/thin/W in src)
+		if(W.dir == dir_to) //Same direction
 			W.fire_act(adj_air, adj_temp, adj_volume)
+
+	for(var/obj/structure/window/fulltile/W in src)
+		W.fire_act(adj_air, adj_temp, adj_volume)
 
 /turf/simulated/floor/blob_act()
 	return
@@ -148,6 +152,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
+// todo: sort this between floor/type/update_icon, wtf
 /turf/simulated/floor/update_icon()
 	if(is_plasteel_floor())
 		if(!broken && !burnt)
@@ -178,51 +183,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		if(!broken && !burnt)
 			if(!(icon_state in list("grass1","grass2","grass3","grass4")))
 				icon_state = "grass[pick("1","2","3","4")]"
-	else if(is_carpet_floor())
-		if(!broken && !burnt)
-			if(!(icon_state in list("carpetsymbol", "blackcarpetsymbol", "purplecarpetsymbol", "orangecarpetsymbol", "greencarpetsymbol", "bluecarpetsymbol", "blue2carpetsymbol", "redcarpetsymbol", "cyancarpetsymbol")))
-				var/connectdir = 0
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
-							connectdir |= direction
-
-				//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
-				var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
-
-				//Northeast
-				if(connectdir & NORTH && connectdir & EAST)
-					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
-						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
-							diagonalconnect |= 1
-
-				//Southeast
-				if(connectdir & SOUTH && connectdir & EAST)
-					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
-						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
-							diagonalconnect |= 2
-
-				//Northwest
-				if(connectdir & NORTH && connectdir & WEST)
-					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
-						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
-							diagonalconnect |= 4
-
-				//Southwest
-				if(connectdir & SOUTH && connectdir & WEST)
-					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
-						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
-							diagonalconnect |= 8
-
-				var/obj/item/stack/tile/carpet/C = floor_type
-				var/base_icon_state = initial(C.carpet_icon_state)
-				icon_state = "[base_icon_state][connectdir]-[diagonalconnect]"
-
 	else if(is_wood_floor())
 		if(!broken && !burnt)
 			if(!(icon_state in wood_icons))
@@ -233,20 +193,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			if(air)
 				update_visuals(air)*/
 	..()
-
-/turf/simulated/floor/return_siding_icon_state()
-	..()
-	if(is_grass_floor())
-		var/dir_sum = 0
-		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
-			if(!(T.is_grass_floor()))
-				dir_sum += direction
-		if(dir_sum)
-			return "wood_siding[dir_sum]"
-		else
-			return 0
-
 
 /turf/simulated/floor/attack_paw(mob/user)
 	return attack_hand(user)
@@ -324,10 +270,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		broken = 1
-	else if(is_carpet_floor())
+/*	else if(is_carpet_floor())
 		var/obj/item/stack/tile/carpet/C = floor_type
 		icon_state = "[initial(C.carpet_icon_state)]-broken"
-		broken = 1
+		broken = 1*/
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
@@ -351,10 +297,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		burnt = 1
-	else if(is_carpet_floor())
+/*	else if(is_carpet_floor())
 		var/obj/item/stack/tile/carpet/C = floor_type
 		icon_state = "[initial(C.carpet_icon_state)]-broken"
-		burnt = 1
+		burnt = 1*/
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		burnt = 1
@@ -372,14 +318,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			if(istype(get_step(src,direction),/turf/simulated/floor))
 				var/turf/simulated/floor/FF = get_step(src,direction)
 				FF.update_icon() //so siding get updated properly
-	else if(is_carpet_floor())
-		icon = 'icons/turf/floors.dmi'
-		spawn(5)
-			if(src)
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
 
 	if(!floor_type)
 		return
@@ -391,6 +329,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	broken = 0
 	burnt = 0
 
+	clean_turf_decals()
 	update_icon()
 	levelupdate()
 
@@ -518,7 +457,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
-	if(iscrowbar(C) && (!(is_plating())))
+	if(isprying(C) && !is_plating() && !is_catwalk())
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else
@@ -538,7 +477,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 
 		return
 
-	if(isscrewdriver(C))
+	if(isscrewing(C))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -583,6 +522,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				var/obj/item/stack/tile/T = C
 				if(!T.use(1))
 					return
+				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+				if(istype(T,/obj/item/stack/tile/carpet))
+					ChangeTurf(T.turf_type) // for smoothing we need to change type
+					return
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)
 				name = initial(T.turf_type.name)
@@ -596,14 +539,8 @@ var/global/list/wood_icons = list("wood","wood-broken")
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly
-				else if(istype(T,/obj/item/stack/tile/carpet))
-					for(var/direction in list(1,2,4,8,5,6,9,10))
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
-							FF.update_icon() //so siding gets updated properly
 				update_icon()
 				levelupdate()
-				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
 				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 
@@ -628,7 +565,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else
 			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
-	if(iswelder(C))
+	if(iswelding(C))
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return

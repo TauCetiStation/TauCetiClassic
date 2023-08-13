@@ -12,7 +12,7 @@
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			charge_counter = charge_max
 			return
 		if(isshadowling(target) || isshadowthrall(target))
@@ -45,37 +45,15 @@
 	light_off_range(targets, usr)
 
 /proc/light_off_range(list/targets, atom/center)
-	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/turf/T in targets)
-		for(var/obj/item/F in T.contents)
-			if(is_type_in_list(F, blacklisted_lights))
-				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
-				return
-			F.set_light(0)
+		for(var/atom/A in T.contents)
+			A.turn_light_off()
 
-		for(var/obj/machinery/light/L in T.contents)
-			L.on = 0
-			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
-			L.update(0)
-
-		for(var/mob/living/carbon/human/H in T.contents)
-			for(var/obj/item/F in H)
-				if(is_type_in_list(F, blacklisted_lights))
-					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
-					return
-				F.set_light(0)
-			H.set_light(0) //This is required with the object-based lighting
-
-		for(var/obj/machinery/door/airlock/A in T.contents)
-			if(get_dist(center, A) <= 4)
-				if(A.lights && A.hasPower())
-					A.lights = 0
-					A.update_icon()
-
-		for(var/obj/effect/glowshroom/G in T.contents)
-			if(get_dist(center, G) <= 2) //Very small radius
-				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-				qdel(G)
+		if(T.is_light_floor())
+			var/turf/simulated/floor/F = T
+			F.set_lightfloor_on(FALSE)
+			F.visible_message("<span class='danger'>\The [T] suddenly turns off!</span>")
+			F.update_icon()
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
@@ -137,7 +115,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
@@ -213,9 +191,14 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
+		var/text2speak = "<span class='shadowling [isshadowling(usr) ? "large" : ""]'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
 		for(var/mob/M as anything in mob_list)
-			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
-				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
+			if(isobserver(M))
+				to_chat(M, "[FOLLOW_LINK(M, user)] [text2speak]")
+			else
+				if(isshadowling(M) || isshadowthrall(M))
+					to_chat(M, text2speak)
+
 
 
 
@@ -267,7 +250,9 @@
 /obj/effect/proc_holder/spell/targeted/collective_mind/cast(list/targets)
 	for(var/mob/living/user in targets)
 		var/thralls = 0
-		var/victory_threshold = 15
+		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
+		var/crew = faction.check_crew()
+		var/victory_threshold = max(15, round(crew/2))
 		var/mob/M
 
 		to_chat(user, "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")
@@ -403,7 +388,7 @@
 				sp.start()
 				S.Stun(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.take_damage(rand(80, 100))
+			W.take_damage(rand(80, 100), BRUTE, BOMB)
 
 
 
@@ -550,7 +535,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return

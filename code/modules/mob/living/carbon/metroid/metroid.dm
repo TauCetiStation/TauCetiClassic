@@ -92,6 +92,11 @@
 
 	. = ..()
 
+	var/datum/action/innate/slime/E
+	for(var/V in subtypesof(/datum/action/innate/slime))
+		E = new V (src)
+		E.Grant(src)
+
 	regenerate_icons()
 
 /mob/living/carbon/slime/Destroy()
@@ -118,13 +123,16 @@
 	..()
 
 /mob/living/carbon/slime/movement_delay()
-	var/tally = 0
+	var/tally = speed
+
+	if (bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
+	else if (bodytemperature >= BODYTEMP_NORMAL + 20)
+		return -1	// slimes become supercharged at high temperatures
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
-
-	if (bodytemperature < 183.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	if(health_deficiency >= 45)
+		tally += (health_deficiency / 25)
 
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
@@ -133,16 +141,9 @@
 		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
-	if(health <= 0) // if damaged, the slime moves twice as slow
-		tally *= 2
-
-	if (bodytemperature >= 330.23) // 135 F
-		return -1	// slimes become supercharged at high temperatures
-
-	return tally+config.slime_delay
+	return tally + config.slime_delay
 
 /mob/living/carbon/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -338,6 +339,9 @@
 /mob/living/carbon/slime/is_usable_leg(targetzone = null)
 	return FALSE
 
+/mob/living/carbon/slime/can_pickup(obj/O)
+	return FALSE
+
 /mob/living/carbon/slime/get_species()
 	return SLIME
 
@@ -502,7 +506,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
@@ -530,7 +534,7 @@
 	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
@@ -562,7 +566,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	if(M.cores == 3)
@@ -598,7 +602,7 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = ABSTRACT | DROPDEL | NOSLIP
+	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
 	unacidable = 1
 
 
@@ -747,7 +751,7 @@
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.client)
 			var/area/A = get_area(src)
 			if(A)
@@ -821,7 +825,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("slimejelly", 1)
-	addtimer(CALLBACK(src, .proc/Grow), rand(1200,1500)) // the egg takes a while to "ripen"
+	addtimer(CALLBACK(src, PROC_REF(Grow)), rand(1200,1500)) // the egg takes a while to "ripen"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1

@@ -6,7 +6,7 @@
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = SS_INIT_ATOMS
-	flags = SS_NO_FIRE
+	flags = SS_NO_FIRE | SS_SHOW_IN_MC_TAB
 	msg_lobby = "Заполняем отсеки..."
 
 	initialized = INITIALIZATION_INSSATOMS
@@ -22,7 +22,6 @@ SUBSYSTEM_DEF(atoms)
 	setupGenetics() // to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
-	color_windows_init()
 
 	var/time = (world.timeofday - timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"

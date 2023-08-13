@@ -101,8 +101,6 @@
 		return
 	if(SSshuttle.online || SSshuttle.location != 0)
 		return "Шаттл используется"
-	if(security_level >= SEC_LEVEL_RED)
-		return "Код безопасности КРАСНЫЙ или выше"
 
 /datum/poll/crew_transfer/get_vote_power(client/C, datum/vote_choice/choice)
 	return get_vote_power_by_role(C) * choice.vote_weight
@@ -233,9 +231,12 @@
 		return "Отсутствует конфиг карт"
 
 /datum/poll/nextmap/init_choices()
+	var/list/voteweights = get_voteweights()
+	if(!voteweights)
+		voteweights = list()
 	for (var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
-		
+
 		if (!VM.votable)
 			continue
 
@@ -246,12 +247,31 @@
 			continue
 
 		var/datum/vote_choice/nextmap/vc = new
+		var/map_name = splittext(VM.map_name, " ")[1]
+		if(map_name in voteweights)
+			VM.voteweight = max(0.4, VM.voteweight * voteweights[map_name])
 		vc.text = VM.GetFullMapName()
 		if(VM.voteweight != 1)
 			vc.text += "\[vote weight: [VM.voteweight]\]"
 		vc.mapname = VM.map_name
 		vc.vote_weight = VM.voteweight
 		choices.Add(vc)
+
+
+/datum/poll/nextmap/proc/get_voteweights()
+	if(!establish_db_connection("erro_round"))
+		return FALSE
+	var/list/voteweights = list()
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round WHERE (end_state = 'proper completion' OR end_state = 'nuke') AND server_port = [sanitize_sql(world.port)] ORDER BY id DESC LIMIT 3")
+	select_query.Execute()
+	var/map_name = ""
+	while(select_query.NextRow())
+		var/list/row = select_query.GetRowData()
+		map_name = splittext(row["map_name"], " ")[1]
+		if(!(map_name in voteweights))
+			voteweights[map_name] = 1
+		voteweights[map_name] -= 0.2
+	return voteweights
 
 /datum/vote_choice/nextmap
 	text = "Box Station"

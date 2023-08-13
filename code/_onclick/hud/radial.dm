@@ -4,7 +4,7 @@
 var/global/list/radial_menus = list()
 
 /atom/movable/screen/radial
-	icon = 'icons/mob/radial.dmi'
+	icon = 'icons/hud/radial.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
@@ -104,7 +104,7 @@ var/global/list/radial_menus = list()
 		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	parent = new_value
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
 
 /atom/movable/screen/radial/proc/handle_parent_del()
 	SIGNAL_HANDLER

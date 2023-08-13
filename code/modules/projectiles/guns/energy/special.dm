@@ -2,25 +2,13 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
 	icon_state = "ionrifle"
-	item_state = "ionrifle"
+	item_state = null
 	origin_tech = "combat=2;magnets=4"
 	w_class = SIZE_NORMAL
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
-/obj/item/weapon/gun/energy/ionrifle/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = CEIL(ratio * 4) * 25
-	switch(modifystate)
-		if (0)
-			if(ratio > 100)
-				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
-			else
-				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
-	return
+	modifystate = 0
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
@@ -244,12 +232,6 @@
 		charge = 0
 
 	update_icon()
-
-	/*if(user.hand) with custom inhand sprites - yes, without - no.
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()*/
-
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
@@ -339,13 +321,13 @@
 		..()
 
 /obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
 
 	else if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			if(ML)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				user.put_in_hands(ML)
@@ -411,7 +393,7 @@
 		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
 	)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 
 /obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
 	. = ..()
@@ -458,7 +440,7 @@
 
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"
@@ -506,7 +488,7 @@
 		update_icon()
 		update_inv_mob()
 
-	if(isscrewdriver(C))
+	if(isscrewing(C))
 		if(!firing_core)
 			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
 			return
@@ -552,7 +534,7 @@
 
 /obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
-	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -608,6 +590,12 @@
 	..()
 	LoseTarget()
 
+/obj/item/weapon/gun/medbeam/attack(atom/target, mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+		Fire(target, user)
+		return
+	return ..()
+
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
 	if(active)
 		QDEL_NULL(current_beam)
@@ -622,14 +610,14 @@
 
 	if(current_target)
 		LoseTarget()
-	if(!isliving(target))
+	if(!isliving(target) || user == target)
 		return
 
 	current_target = target
-	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, .proc/LoseTarget)
+	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, PROC_REF(LoseTarget))
 	active = TRUE
 	current_beam = new(user, current_target, time = 6000, beam_icon_state = beam_state, btype = /obj/effect/ebeam/medical)
-	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+	INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
 	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
 

@@ -7,7 +7,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = SIZE_TINY
-	throw_speed = 5
+	throw_speed = 4
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
@@ -104,7 +104,7 @@
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
-				M.apply_effect(intensity * 10,IRRADIATE, 0)
+				irradiate_one_mob(M, intensity * 10)
 	else
 		to_chat(user,"<span class='warning'>The radioactive microlaser is still recharging.</span>")
 

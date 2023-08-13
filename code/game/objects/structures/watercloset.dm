@@ -8,14 +8,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "toilet00"
 	density = FALSE
 	anchored = TRUE
-	var/open = 0			//if the lid is up
-	var/cistern = 0			//if the cistern bit is open
-	var/w_items = 0			//the combined w_class of all the items in the cistern
+	var/lid_open = FALSE      //if the lid is up
+	var/cistern_open = FALSE  //if the cistern bit is open
+	var/w_items = 0           //the combined w_class of all the items in the cistern
+	var/broken = FALSE
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 /obj/structure/toilet/atom_init()
 	. = ..()
-	open = round(rand(0, 1))
+	lid_open = round(rand(0, 1))
 	update_icon()
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -25,7 +26,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		swirlie.adjustBruteLoss(8)
 		return
 
-	if(cistern && !open)
+	if(cistern_open && !lid_open)
 		if(!contents.len)
 			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 			return
@@ -39,20 +40,72 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			w_items -= I.w_class
 			return
 
-	open = !open
+	if(lid_open && user.loc == loc)
+		if(!COOLDOWN_FINISHED(user, wc_use_cooldown))
+			to_chat(user, "<span class='notice'>You don't feel like you want to use it yet.</span>")
+			return
+
+		user.set_dir(dir)
+		to_chat(user, "<span class='notice'>You start doing your business...</span>")
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
+		
+		if(do_after(user, rand(5, 20) SECONDS, needhand = FALSE, target = src))
+			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
+			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
+
+			var/problem_chance = 0.5
+
+			if(HAS_TRAIT(user, TRAIT_FAT))
+				problem_chance += 5
+			if(HAS_TRAIT(user, TRAIT_CLUMSY)) // clowns are known space assholes
+				problem_chance += 10
+
+				if(SSholiday.holidays[APRIL_FOOLS])
+					problem_chance += 25
+
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
+
+			if(prob(problem_chance))
+				broken = TRUE
+				START_PROCESSING(SSobj, src)
+				user.playsound_local_timed(2 SECOND, turf_source = null, soundin = 'sound/misc/s_asshole_short.ogg', volume_channel = VOL_EFFECTS_MASTER, vol = 100, vary = FALSE, ignore_environment = TRUE)
+
+				if(HAS_TRAIT(user, TRAIT_CLUMSY))
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clown_evil", /datum/mood_event/clown_evil)
+					to_chat(user, "<span class='notice bold'>Oh yes!</span>")
+				else
+					to_chat(user, "<span class='notice bold'>Oh no!</span>")
+		return
+
+	// default action
+	lid_open = !lid_open
+	playsound(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 
+/obj/structure/toilet/process()
+	if(!broken)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	spawn_fluid(loc, 20)
+
 /obj/structure/toilet/update_icon()
-	icon_state = "toilet[open][cistern]"
+	icon_state = "toilet[lid_open][cistern_open]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(iscrowbar(I))
+	if(iswrenching(I) && broken) // we don't have any plunger around, so wrench is good
+		to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
+		if(I.use_tool(src, user, 60, volume = 100))
+			broken = FALSE
+			to_chat(user, "<span class='notice'>You fixed \the [src].</span>")
+		return
+	else if(isprying(I))
 		if(user.is_busy()) return
-		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
+		to_chat(user, "<span class='notice'>You start to [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
 		if(I.use_tool(src, user, 30, volume = 0))
-			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
-			cistern = !cistern
+			user.visible_message("<span class='notice'>[user] [cistern_open ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
+			cistern_open = !cistern_open
 			update_icon()
 			return
 
@@ -67,12 +120,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the toilet.</span>")
 					return
-				if(open && !swirlie)
+				if(lid_open && !swirlie)
 					if(user.is_busy()) return
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
 					swirlie = GM
 					if(do_after(user, 30, 5, 0, target = src))
 						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
+						playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
 						if(!GM.internal)
 							GM.adjustOxyLoss(5)
 					swirlie = null
@@ -82,7 +136,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
-	if(cistern)
+	if(cistern_open)
 		if(I.w_class > SIZE_SMALL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
@@ -96,7 +150,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
-
+/obj/structure/toilet/deconstruct()
+	for(var/obj/toilet_item as anything in contents)
+		toilet_item.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/urinal
 	name = "urinal"
@@ -105,6 +165,21 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
+
+/obj/structure/urinal/attack_hand(mob/living/user)
+	if(user.loc == loc) // no gender discrimination here!
+		if(!COOLDOWN_FINISHED(user, wc_use_cooldown))
+			to_chat(user, "<span class='notice'>You don't feel like you want to use it yet.</span>")
+			return
+
+		user.set_dir(turn(dir, 180))
+		to_chat(user, "<span class='notice'>You start doing your business...</span>")
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
+		
+		if(do_after(user, rand(5, 10) SECONDS, needhand = TRUE, target = src))
+			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
+			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER, vol = 50)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
@@ -292,12 +367,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	anchored = TRUE
 	use_power = NO_POWER_USE
 	layer = MOB_LAYER + 1.1
-	var/on = 0
+	var/on = FALSE
 	var/obj/effect/mist/mymist = null
-	var/ismist = 0				//needs a var so we can make it linger~
+	var/ismist = FALSE				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
-	var/is_payed = 0
+	var/payed_time = 0
 	var/cost_per_activation = 10
 
 //add heat controls? when emagged, you can freeze to death in it?
@@ -315,24 +390,29 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(is_payed)
+	if(is_paid())
 		on = !on
 		update_icon()
 		if(on)
-			if (user.loc == loc)
+			if(user.loc == loc)
 				wash(user)
 				check_heat(user)
-			for (var/atom/movable/G in src.loc)
+			for(var/atom/movable/G in loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // If the player closes ahead of time - force cancel the fee
+			payed_time = 0 // If the player closes ahead of time - force cancel the fee
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
+
+/obj/machinery/shower/proc/is_paid()
+	if(payed_time)
+		return TRUE
+	return FALSE
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(iswrench(I))
+	else if(iswrenching(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
 		if(I.use_tool(src, user, 50, volume = 100))
@@ -347,17 +427,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!is_payed && cost_per_activation)
+		if(!payed_time && cost_per_activation)
 			if(!on)
 				var/obj/item/weapon/card/C = I
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 				if(station_account)
-					var/datum/money_account/D = get_account(C.associated_account_number)
-					var/attempt_pin = 0
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Transaction") as num
-					if(attempt_pin)
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					var/datum/money_account/D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+					if(user.incapacitated() || !Adjacent(user))
+						return
 					if(D)
 						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
@@ -387,37 +464,44 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 							T.time = worldtime2text()
 							station_account.transaction_log.Add(T)
 
-							is_payed = 60
+							payed_time = 60
 							to_chat(usr, "[bicon(src)]<span class='notice'>Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		else
 			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
+/obj/machinery/shower/deconstruct(disassembled)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
+
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
-
 	if(on)
 		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
-			spawn(50)
-				if(src && on)
-					ismist = 1
-					mymist = new /obj/effect/mist(loc)
+			if(on)
+				addtimer(CALLBACK(src, PROC_REF(create_mist)), 50)
 		else
-			ismist = 1
-			mymist = new /obj/effect/mist(loc)
+			create_mist()
 	else if(ismist)
-		ismist = 1
-		mymist = new /obj/effect/mist(loc)
-		spawn(250)
-			if(src && !on)
-				qdel(mymist)
-				ismist = 0
+		create_mist()
+		addtimer(CALLBACK(src, PROC_REF(del_mist)), 250)
+		if(!on)
+			del_mist()
+
+/obj/machinery/shower/proc/create_mist()
+	ismist = TRUE
+	mymist = new /obj/effect/mist(loc)
+
+/obj/machinery/shower/proc/del_mist()
+	ismist = FALSE
+	if(mymist)
+		qdel(mymist)
 
 /obj/machinery/shower/Crossed(atom/movable/AM)
 	. = ..()
@@ -450,8 +534,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			M.l_hand.clean_blood()
 		if(M.back)
 			M.back.make_wet(1) //<= wet
-			if(M.back.clean_blood())
-				M.update_inv_back()
+			M.back.clean_blood()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/washgloves = 1
@@ -480,24 +563,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 			if(H.head)
 				H.head.make_wet(1) //<= wet
-				if(H.head.clean_blood())
-					H.update_inv_head()
+				H.head.clean_blood()
 			if(H.wear_suit)
 				H.wear_suit.make_wet(1) //<= wet
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
+				H.wear_suit.clean_blood()
 			else if(H.w_uniform)
 				H.w_uniform.make_wet(1) //<= wet
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
+				H.w_uniform.clean_blood()
 			if(H.gloves && washgloves)
 				H.gloves.make_wet(1) //<= wet
-				if(H.gloves.clean_blood())
-					H.update_inv_gloves()
+				H.gloves.clean_blood()
 			if(H.shoes && washshoes)
 				H.shoes.make_wet(1) //<= wet
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
+				H.shoes.clean_blood()
 			else
 				var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 				var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
@@ -507,30 +585,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				if(!no_legs)
 					H.feet_blood_DNA = null
 					H.feet_dirt_color = null
-					H.update_inv_shoes()
+					H.update_inv_slot(SLOT_SHOES)
 			if(H.wear_mask && washmask)
 				H.wear_mask.make_wet(1) //<= wet
-				if(H.wear_mask.clean_blood())
-					H.update_inv_wear_mask()
+				H.wear_mask.clean_blood()
 			if(H.glasses && washglasses)
 				H.glasses.make_wet(1) //<= wet
-				if(H.glasses.clean_blood())
-					H.update_inv_glasses()
+				H.glasses.clean_blood()
 			if(H.l_ear && washears)
-				if(H.l_ear.clean_blood())
-					H.update_inv_ears()
+				H.l_ear.clean_blood()
 			if(H.r_ear && washears)
-				if(H.r_ear.clean_blood())
-					H.update_inv_ears()
+				H.r_ear.clean_blood()
 			if(H.belt)
 				H.belt.make_wet(1) //<= wet
-				if(H.belt.clean_blood())
-					H.update_inv_belt()
+				H.belt.clean_blood()
 			H.clean_blood()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
-				if(M.wear_mask.clean_blood())
-					M.update_inv_wear_mask()
+				M.wear_mask.clean_blood()
 			M.clean_blood()
 	else
 		O.clean_blood()
@@ -544,12 +616,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/machinery/shower/process()
 	if(!on) return
-	if(is_payed < 1)
+	if(payed_time < 1)
 		on = 0
 		update_icon()
 		return
 	else
-		is_payed--
+		payed_time--
 
 	spawn_fluid(loc, 15)
 
@@ -584,6 +656,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				C.AdjustWeakened(1)
 				to_chat(C, "<span class='danger'>The water is searing!</span>")
 				return
+
+/obj/machinery/shower/free/is_paid()
+	if(!payed_time)
+		payed_time = 60
+	return TRUE
 
 /obj/item/weapon/bikehorn/rubberducky
 	name = "rubber ducky"
@@ -621,8 +698,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(do_after(user, 30, target = src))
 		busy = FALSE
 		user.clean_blood()
-		if(ishuman(user))
-			user:update_inv_gloves()
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
 			var/mob/living/carbon/human/H = user
@@ -691,6 +766,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			"<span class='notice'>You wash \a [I] using \the [src].</span>")
 	else
 		busy = FALSE
+
+/obj/structure/sink/deconstruct()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

@@ -10,7 +10,6 @@
 	brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	var/ping_cd = 0//attack_ghost cooldown
 
@@ -22,7 +21,7 @@
 		icon_state = "posibrain-searching"
 		searching = TRUE
 		request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 300)
+		addtimer(CALLBACK(src, PROC_REF(reset_search)), 300)
 
 /obj/item/device/mmi/posibrain/proc/request_player()
 	var/list/candidates = pollGhostCandidates("Someone is requesting a personality for a positronic brain. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_POSBRAIN, 200, TRUE)
@@ -81,7 +80,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
 	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
+		switch(brainmob.stat != CONSCIOUS)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
 					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk
@@ -108,12 +107,15 @@
 	..()
 
 /obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
-	if(!ping_cd)
-		ping_cd = 1
-		spawn(50)
-			ping_cd = 0
-		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
-		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
+	if(ping_cd)
+		return
+	ping_cd = 1
+	VARSET_IN(src, ping_cd, 0, 5 SECONDS)
+	audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+	if(can_waddle())
+		var/static/list/waddle_angles = list(-32, -22, 22, 32)
+		waddle(pick(waddle_angles), 0)
 
 /obj/item/device/mmi/posibrain/atom_init()
 

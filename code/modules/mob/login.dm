@@ -35,13 +35,17 @@
 
 /mob/Login()
 	player_list |= src
+	
+	if(client.holder)
+		global.keyloop_list |= src
+	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
+		global.keyloop_list |= src
+
 	update_Login_details()
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
-
-	QDEL_NULL(hud_used)		//remove the hud objects
 
 	create_mob_hud()
 

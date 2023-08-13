@@ -10,6 +10,11 @@
 	QDEL_NULL(knife)
 	return ..()
 
+/obj/item/clothing/shoes/boots/update_icon()
+	if(icon_state == "wjboots" || icon_state == "wjbootsknifed")
+		icon_state = "wjboots[knife ? "knifed" : ""]"
+		update_inv_mob()
+
 /obj/item/clothing/shoes/boots/attack_hand(mob/living/user)
 	if(knife && loc == user && !user.incapacitated())
 		if(user.put_in_active_hand(knife))
@@ -24,18 +29,19 @@
 	if(knife)
 		return ..()
 
-	if(I.get_quality(QUALITY_CUTTING) > 0)
+	if((iscutter(I) > 0) && I.w_class <= SIZE_TINY)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 		add_knife(I)
+		update_icon()
 		return
 
 	return ..()
 
 /obj/item/clothing/shoes/boots/proc/add_knife(obj/item/K)
 	knife = K
-	RegisterSignal(knife, list(COMSIG_PARENT_QDELETING), .proc/remove_knife)
+	RegisterSignal(knife, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_knife))
 
 /obj/item/clothing/shoes/boots/proc/remove_knife()
 	UnregisterSignal(knife, list(COMSIG_PARENT_QDELETING))
@@ -53,6 +59,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
+	can_get_wet = FALSE
 	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
 
@@ -98,3 +105,12 @@
 	icon_state = "police_boots"
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/shoes/boots/work/jak
+	name = "Boots of Springheel Jak"
+	desc = "A pair of some old boots."
+	slowdown = -2.0 //because we don't have acrobatics skill
+
+/obj/item/clothing/shoes/boots/work/jak/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)

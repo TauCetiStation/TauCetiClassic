@@ -239,14 +239,15 @@
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	var/obj/effect/decal/cleanable/new_smudge
 	new_smudge = new /obj/effect/decal/cleanable/egg_smudge(loc)
 	new_smudge.icon_state = "smashed_blackberry"
 	reagents.standard_splash(hit_atom, user=throwingdatum.thrower)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	new /obj/effect/spider/spiderling(src.loc)
+	new /obj/structure/spider/spiderling(src.loc)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/On_Consume(usr)

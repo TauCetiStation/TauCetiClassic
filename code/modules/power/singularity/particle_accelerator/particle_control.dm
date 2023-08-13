@@ -112,7 +112,7 @@
 	if(stat & NOPOWER)
 		active = 0
 		set_power_use(NO_POWER_USE)
-	else if(!stat && construction_state == 3)
+	else if(stat == CONSCIOUS && construction_state == 3)
 		set_power_use(IDLE_POWER_USE)
 	return
 

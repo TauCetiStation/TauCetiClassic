@@ -68,7 +68,7 @@
 		crit_fail = 1
 		icon_state = "brokenpack"
 
-/obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
+/obj/item/weapon/storage/backpack/holding/singularity_act(obj/singularity/S, current_size)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	return
@@ -133,7 +133,7 @@
 
 /obj/item/weapon/storage/backpack/satchel/withwallet/atom_init()
 	. = ..()
-	new /obj/item/weapon/storage/wallet/random(src)
+	new /obj/item/weapon/storage/wallet(src)
 
 /obj/item/weapon/storage/backpack/satchel/norm
 	name = "satchel"
@@ -384,6 +384,13 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
+	new /obj/item/weapon/reagent_containers/syringe/antiviral(src)
+	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/clothing/accessory/stethoscope(src)
+	new /obj/item/device/mmi(src)
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"

@@ -93,7 +93,7 @@ var/global/bridge_secret = null
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url = "http://example.org"
+	var/media_base_url
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url
@@ -103,6 +103,9 @@ var/global/bridge_secret = null
 	var/changelog_hash_link = ""
 
 	var/repository_link = ""
+
+	var/github_repository_owner = ""
+	var/github_repository_name = ""
 
 	var/forbid_singulo_possession = 0
 
@@ -122,8 +125,8 @@ var/global/bridge_secret = null
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+	var/run_speed = 3
+	var/walk_speed = 5
 
 	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 	var/human_delay = 0
@@ -168,8 +171,6 @@ var/global/bridge_secret = null
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/enter_allowed = 1
-
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_overmap = 0
 
@@ -204,8 +205,13 @@ var/global/bridge_secret = null
 	var/load_mine = TRUE
 	var/load_space_levels = TRUE
 
+	var/auto_lag_switch_pop = FALSE
+
 	var/record_replays = FALSE
 
+	var/use_persistent_cache = FALSE
+
+	var/reactionary_explosions = TRUE
 
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
@@ -621,6 +627,11 @@ var/global/bridge_secret = null
 
 				if("repository_link")
 					config.repository_link = value
+					var/repo_path = replacetext(config.repository_link, "https://github.com/", "")
+					if(repo_path != config.repository_link)
+						var/split = splittext(repo_path, "/")
+						github_repository_owner = split[1]
+						github_repository_name = split[2]
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
@@ -655,11 +666,17 @@ var/global/bridge_secret = null
 				if("no_space_levels")
 					config.load_space_levels = FALSE
 
+				if("auto_lag_switch_pop")
+					config.auto_lag_switch_pop = text2num(value)
+
 				if("record_replays")
 					config.record_replays = TRUE
 
 				if("sandbox")
 					config.sandbox = TRUE
+
+				if("use_persistent_cache")
+					config.use_persistent_cache = TRUE
 
 				if("ooc_round_only")
 					config.ooc_round_only = TRUE

@@ -14,6 +14,7 @@
 	anchored = TRUE
 	density = FALSE
 	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/enabled = 0
 	var/lethal = 0
@@ -251,7 +252,7 @@
 
 		enabled=0
 		updateTurrets()
-		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
+		addtimer(CALLBACK(src, PROC_REF(emp_act_post)), rand(60,600))
 
 	..()
 

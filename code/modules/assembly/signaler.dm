@@ -18,9 +18,15 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
-/obj/item/device/assembly/signaler/atom_init()
+	qualities = list(
+		QUALITY_SIGNALLING = 1
+	)
+
+/obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
+	if(my_new_frequency)
+		frequency = my_new_frequency
+	addtimer(CALLBACK(src, PROC_REF(set_frequency), frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
@@ -33,7 +39,7 @@
 	if(cooldown > 0)
 		return FALSE
 	cooldown = 2
-	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
+	addtimer(CALLBACK(src, PROC_REF(process_cooldown)), 10)
 	signal()
 	return TRUE
 
@@ -209,7 +215,11 @@ Code:
 		return 0
 	if(signal.encryption != code)
 		return 0
-	for(var/obj/effect/anomaly/A in orange(0, src))
+	if(istype(loc, /obj/machinery/swarm_powered/bluespace_transponder))
+		var/obj/machinery/swarm_powered/bluespace_transponder/BT = loc
+		BT.neutralize()
+	else if(istype(loc, /obj/effect/anomaly))
+		var/obj/effect/anomaly/A = loc
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()

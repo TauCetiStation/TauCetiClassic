@@ -10,7 +10,7 @@
 	minbodytemp = 0
 	speed = 4
 	typing_indicator_type = "machine"
-	speak_emote = list("beeps", "pings")
+	speak_emote = list("пищит")
 
 	animalistic = FALSE
 	has_arm = TRUE
@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/hostile/bot/secbot
 	name = "Securitron"
-	desc = "A little security robot. He looks less than thrilled."
+	desc = "Маленький робот-охранник. Похоже, он не в восторге увидев вас."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot1"
 	health = 40
@@ -38,7 +38,7 @@
 	attacktext = "harmbaton"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 
-/mob/living/simple_animal/hostile/bot/secbot/AttackingTarget()
-	..()
+/mob/living/simple_animal/hostile/bot/secbot/UnarmedAttack(atom/target)
+	. = ..()
 	if(prob(20))
 		playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)

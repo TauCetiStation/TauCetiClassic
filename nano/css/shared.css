@@ -189,6 +189,10 @@ h4 {
     color: #272727;
 }
 
+.cargo {
+    color: #90642c;
+}
+
 .caption {
     font-size: 10px;
     font-weight: bold;
@@ -408,6 +412,16 @@ div.notice {
     border-color: #666666;
 }
 
+.arrow {
+	float: left;
+	width: 32.5%;
+	text-align: center;
+}
+
+.fxdLft {
+    float: left;
+}
+
 .fixedLeft {
     width: 110px;
     float: left;
@@ -435,6 +449,11 @@ div.notice {
 }
 
 .floatRight {
+    float: right;
+}
+
+.fxdRght {
+	width: 25px;
     float: right;
 }
 
@@ -515,6 +534,15 @@ table.pmon td, table.pmon th {
     padding: 0px 5px 0px 5px;
 }
 
+table.shop {
+    border: 2px solid #90642c;
+}
+
+table.shop td{
+    border-bottom: 1px dotted #90642c;
+    padding: 0px 5px 0px 5px;
+}
+
 /* Table Stuffs for manifest*/
 
 th.command {
@@ -557,6 +585,12 @@ th.misc {
     background: #666666;
     font-weight: bold;
     color: #ffffff;
+}
+
+th.cargo {
+	background: #90642c;
+	font-weight: bold;
+	color: #ffffff;
 }
 
 /* Damage colors and fonts for crew monitoring computer */
@@ -724,6 +758,11 @@ th.misc {
 .sciTechTreeIcon.icon-freedom { background-position: -160px -288px; }
 .sciTechTreeIcon.icon-module { background-position: -192px -288px; }
 .sciTechTreeIcon.icon-borgmodule { background-position: -224px -288px; }
+
+.sciTechTreeIcon.icon-aidetector { background-position: 0px -320px; }
+.sciTechTreeIcon.icon-voicechanger { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-camerabug { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-smuggler { background-position: -96px -320px; }
 
 .sciMenuButton {
     width: 300px;

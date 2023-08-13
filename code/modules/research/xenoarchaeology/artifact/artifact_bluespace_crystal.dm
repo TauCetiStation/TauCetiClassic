@@ -8,14 +8,14 @@
 	need_init = FALSE
 	anchored = TRUE
 	light_color = "#24c1ff"
-	health = 200
+	max_integrity = 200
 	var/anomaly_spawn_list = list ("gravitational anomaly" = 1, "flux wave anomaly" = 1, "bluespace anomaly" = 6, "pyroclastic anomaly" = 1, "vortex anomaly" = 1,)
 
 
 /obj/machinery/artifact/bluespace_crystal/atom_init()
+	max_integrity = rand(150, 300)
 	. = ..()
 	init_turfs_around()
-	health = rand(150, 300)
 	first_effect = new /datum/artifact_effect/tesla(src)
 	first_effect.trigger = TRIGGER_PROXY
 	desc = "A blue strange crystal"
@@ -49,24 +49,12 @@
 		teleport()
 	return ..()
 
-/obj/machinery/artifact/bluespace_crystal/proc/get_damage(damage)
-	if(damage < 0)
-		damage =0
-	health = health - damage
-	tesla_zap(src,round(damage/10),round(damage/5)*25000)
-	empulse(src, round(damage/10),round(damage/5))
-	if(health < 0)
-		qdel(src)
-
-/obj/machinery/artifact/bluespace_crystal/bullet_act(obj/item/projectile/Proj, def_zone)
+/obj/machinery/artifact/bluespace_crystal/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
-	if(prob(Proj.damage))
-		get_damage(Proj.damage)
-
-/obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	get_damage(W.force)
-	..()
+	if(.)
+		var/power = round(. / 10)
+		tesla_zap(src, power, 50000 * power)
+		empulse(src, power, 2 * power)
 
 /obj/machinery/artifact/bluespace_crystal/proc/teleport()
 	var/turf/T = get_turf(src)
@@ -100,5 +88,4 @@
 		sparks.start()
 
 /obj/machinery/artifact/bluespace_crystal/ex_act(severity)
-	get_damage(50*severity)
-	return
+	take_damage(50*severity, BURN, ENERGY, FALSE)

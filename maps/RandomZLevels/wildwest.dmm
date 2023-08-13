@@ -12,11 +12,6 @@
 /obj/structure/cult/pylon,
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wildwest/vault)
-"ae" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage5"
-	},
-/area/awaymission/wildwest/vault)
 "af" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/simulated/floor/engine/cult,
@@ -36,16 +31,6 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/cult,
-/area/awaymission/wildwest/vault)
-"aj" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage3"
-	},
-/area/awaymission/wildwest/vault)
-"ak" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage6"
-	},
 /area/awaymission/wildwest/vault)
 "al" = (
 /obj/structure/cult/anomaly/timewhole,
@@ -160,11 +145,6 @@
 /obj/structure/cult/pylon,
 /turf/simulated/shuttle/plating{
 	icon_state = "bcircuitoff"
-	},
-/area/awaymission/wildwest/vault)
-"aC" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage2"
 	},
 /area/awaymission/wildwest/vault)
 "aD" = (
@@ -375,14 +355,14 @@
 /turf/simulated/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "bv" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/environment/space,
 /area)
 "bw" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/environment/space,
@@ -495,7 +475,7 @@
 /area/awaymission/wildwest/mines)
 "bO" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4;
 	icon_state = "fwindow"
 	},
@@ -503,49 +483,35 @@
 /area)
 "bP" = (
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mansion)
-"bQ" = (
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 1;
 	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+	})
+"bQ" = (
+/obj/structure/window/fulltile/reinforced{
+	dir = 1;
+	grilled = 1;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
 "bR" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/fulltile/reinforced{
+	dir = 4;
+	grilled = 1;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
 "bS" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
 "bT" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -570,28 +536,15 @@
 	},
 /area/awaymission/wildwest/mines)
 "bW" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4;
 	icon_state = "fwindow"
 	},
 /turf/environment/space,
-/area)
-"bX" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/area{
 	dir = 1;
 	icon_state = "fwindow"
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "bY" = (
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
@@ -599,29 +552,17 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand2"
 	},
-/area/awaymission/wildwest/mansion)
-"ca" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 8;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "cb" = (
 /obj/machinery/door/window,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "cc" = (
 /obj/structure/table/woodentable,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "cd" = (
@@ -632,29 +573,16 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wildwest/mines{
+	dir = 4;
+	icon_state = "fwindow"
+	})
 "ce" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/fulltile/reinforced{
 	dir = 8;
+	grilled = 1;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
-"cf" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
 "cg" = (
@@ -734,7 +662,7 @@
 /area/awaymission/wildwest/mansion)
 "ct" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -781,7 +709,7 @@
 /area/awaymission/wildwest/mansion)
 "cD" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
@@ -847,43 +775,19 @@
 "cP" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mansion)
-"cQ" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 4;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "cR" = (
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
-"cS" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 8;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "cT" = (
 /obj/effect/decal/remains/human,
 /mob/living/simple_animal/hostile/syndicate/ranged/space{
@@ -942,22 +846,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
-"dc" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mines{
 	dir = 4;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "dd" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/cheese,
@@ -978,23 +870,10 @@
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
-"dg" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 1;
 	icon_state = "fwindow"
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "dh" = (
 /obj/effect/landmark/corpse/syndicatecommando{
 	mobname = "Syndicate Commando"
@@ -1006,10 +885,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/wildwest/refinery)
 "dj" = (
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
-	},
+/obj/structure/window/fulltile/reinforced/indestructible,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "dk" = (
@@ -1030,7 +906,7 @@
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
 "do" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
@@ -1185,48 +1061,10 @@
 "dQ" = (
 /obj/machinery/computer/security/telescreen/entertainment,
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
-"dR" = (
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mines{
 	dir = 8;
 	icon_state = "fwindow"
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
-"dS" = (
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
-"dT" = (
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+	})
 "dU" = (
 /obj/machinery/door/airlock/sandstone,
 /turf/simulated/floor/plating/ironsand,
@@ -1282,7 +1120,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ed" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
@@ -1290,41 +1128,41 @@
 /area)
 "ee" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
 /turf/environment/space,
 /area)
 "ef" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area)
 "eg" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
 "eh" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mansion)
 "ei" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -1352,7 +1190,7 @@
 "em" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "en" = (
@@ -1378,7 +1216,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "er" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -1387,7 +1225,7 @@
 	},
 /area/awaymission/wildwest/mansion)
 "es" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand{
@@ -1412,7 +1250,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ex" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -1421,7 +1259,7 @@
 	},
 /area/awaymission/wildwest/mansion)
 "ey" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand{
@@ -1445,7 +1283,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "eD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand{
@@ -1480,7 +1318,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eI" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand{
@@ -1507,60 +1345,30 @@
 /turf/simulated/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "eN" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand14"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wildwest/mansion{
+	dir = 1;
+	icon_state = "fwindow"
+	})
 "eO" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/obj/structure/window/fulltile/reinforced{
 	dir = 1;
+	grilled = 1;
 	icon_state = "fwindow"
 	},
-/obj/structure/grille,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
-"eP" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
-"eQ" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
 /turf/simulated/floor,
 /area/awaymission/wildwest/refinery)
 "eR" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
 /turf/simulated/floor,
 /area/awaymission/wildwest/refinery)
 "eS" = (
@@ -1627,7 +1435,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "fc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand{
@@ -1672,19 +1480,10 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
-"fj" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mines{
 	dir = 1;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+	})
 "fk" = (
 /obj/effect/decal/mecha_wreckage/seraph{
 	anchored = 1
@@ -1709,19 +1508,10 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
-"fo" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mines{
 	dir = 4;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+	})
 "fp" = (
 /obj/structure/toilet{
 	dir = 1
@@ -1732,7 +1522,7 @@
 /obj/structure/toilet{
 	dir = 1
 	},
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "fr" = (
@@ -1783,37 +1573,27 @@
 	},
 /area/awaymission/wildwest/mines)
 "fy" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/environment/space,
 /area)
 "fz" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/environment/space,
-/area)
-"fA" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area{
 	dir = 4;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+	})
 "fB" = (
 /obj/item/mine/incendiary,
 /turf/simulated/floor/plating/ironsand,
@@ -1864,18 +1644,18 @@
 	},
 /area/awaymission/wildwest/mines)
 "fJ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "fK" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
@@ -1885,17 +1665,17 @@
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "fM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "fN" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -1935,7 +1715,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "fU" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -1946,27 +1726,14 @@
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "fW" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
-"fX" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 1;
 	icon_state = "fwindow"
-	},
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+	})
 "fY" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood,
@@ -1980,22 +1747,22 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "ga" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "gb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "gc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
@@ -2051,10 +1818,10 @@
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "go" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/grass,
@@ -2116,90 +1883,40 @@
 	mobname = "Syndicate Commando"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
-"gz" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 8;
 	icon_state = "fwindow"
-	},
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+	})
 "gA" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
-"gB" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/fulltile/reinforced{
 	dir = 4;
+	grilled = 1;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
-"gC" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/grille,
 /turf/simulated/floor,
 /area/awaymission/wildwest/refinery)
 "gD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "gE" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/awaymission/wildwest/mansion)
 "gF" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
-"gG" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4;
-	icon_state = "fwindow"
-	},
-/obj/structure/window/reinforced{
+/area/awaymission/wildwest/mansion{
 	dir = 8;
 	icon_state = "fwindow"
-	},
-/obj/structure/grille,
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+	})
 "gH" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/forcefield{
@@ -2293,18 +2010,9 @@
 	},
 /area/awaymission/wildwest/refinery)
 "gX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	icon_state = "fwindow"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle{
 	icon_state = "floor2"
@@ -6375,15 +6083,15 @@ br
 br
 bv
 bP
-bX
+bS
 ce
 ce
 ce
 ce
 ce
-cQ
+bS
 bP
-dc
+bS
 ce
 ce
 ce
@@ -6392,7 +6100,7 @@ ce
 ce
 ce
 ce
-cQ
+bS
 bP
 ed
 aa
@@ -6650,7 +6358,7 @@ bY
 bY
 dA
 bY
-dR
+bQ
 ed
 aa
 aa
@@ -6907,7 +6615,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -7164,7 +6872,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -7421,7 +7129,7 @@ bP
 bP
 bP
 bY
-dS
+bR
 ed
 aa
 aa
@@ -7678,7 +7386,7 @@ bP
 dB
 dD
 bY
-dS
+bR
 ed
 aa
 aa
@@ -7935,7 +7643,7 @@ bP
 bP
 bP
 bY
-dS
+bR
 ed
 aa
 aa
@@ -8192,7 +7900,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 br
@@ -8449,7 +8157,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 br
 br
@@ -8706,7 +8414,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 br
 aa
@@ -8963,7 +8671,7 @@ bY
 dA
 bY
 bY
-dS
+bR
 ed
 br
 aa
@@ -9220,7 +8928,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ee
 br
 aa
@@ -9477,7 +9185,7 @@ bY
 bY
 bY
 bY
-dT
+bS
 ef
 do
 do
@@ -10248,7 +9956,7 @@ bY
 bY
 bY
 bY
-dR
+bQ
 ei
 bT
 bT
@@ -10505,7 +10213,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -10762,7 +10470,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -11019,7 +10727,7 @@ bY
 bY
 bY
 dF
-dS
+bR
 ed
 aa
 aa
@@ -11276,7 +10984,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -11533,7 +11241,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -11790,7 +11498,7 @@ dz
 bY
 bY
 bY
-dS
+bR
 ed
 aa
 aa
@@ -12047,7 +11755,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ee
 br
 aa
@@ -12304,7 +12012,7 @@ dA
 bY
 dx
 bY
-dS
+bR
 ed
 br
 aa
@@ -12561,7 +12269,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 br
 aa
@@ -12818,7 +12526,7 @@ bY
 bY
 bY
 bY
-dS
+bR
 ed
 br
 aa
@@ -13075,7 +12783,7 @@ bY
 bY
 dA
 bY
-dS
+bR
 ed
 br
 aa
@@ -13332,7 +13040,7 @@ bY
 dC
 bY
 bY
-dS
+bR
 ed
 br
 aa
@@ -13589,7 +13297,7 @@ bZ
 bY
 bY
 bY
-dS
+bR
 ed
 br
 aa
@@ -13846,7 +13554,7 @@ bY
 bY
 bZ
 bY
-dS
+bR
 ee
 br
 aa
@@ -14103,7 +13811,7 @@ bY
 bY
 bY
 bY
-dT
+bS
 ed
 br
 aa
@@ -14342,24 +14050,24 @@ aa
 br
 bv
 bP
-ca
-cf
-cf
-cf
-cf
-cf
-cS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
 bP
-dg
-cf
-cf
-cf
-cf
-cf
-cf
-cf
-cf
-cS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
 bP
 ed
 br
@@ -15908,9 +15616,9 @@ aa
 br
 aa
 aa
-eP
+eO
 eu
-eP
+eO
 aa
 aa
 aa
@@ -16165,9 +15873,9 @@ cu
 br
 aa
 aa
-eQ
+eO
 eu
-eP
+eO
 aa
 aa
 aa
@@ -16424,17 +16132,17 @@ et
 eJ
 eR
 fd
-fj
-fo
-fA
+eR
+eR
+eR
 et
-fX
-fo
-fA
+eR
+eR
+eR
 et
-fX
-fo
-fA
+eR
+eR
+eR
 et
 aa
 aa
@@ -16692,7 +16400,7 @@ eu
 eu
 eu
 eu
-gz
+eO
 aa
 aa
 aa
@@ -16949,7 +16657,7 @@ eu
 eu
 eu
 eu
-eP
+eO
 aa
 aa
 aa
@@ -17206,10 +16914,10 @@ eu
 eu
 eu
 eu
-fj
-fo
-fo
-gG
+eR
+eR
+eR
+eR
 gK
 gP
 gP
@@ -17721,9 +17429,9 @@ eu
 eu
 eu
 gA
-fo
-fo
-gG
+eR
+eR
+eR
 gM
 gP
 gP
@@ -17977,7 +17685,7 @@ eu
 eu
 eu
 eu
-gB
+gA
 aa
 aa
 aa
@@ -18491,7 +18199,7 @@ eu
 eu
 eu
 eu
-gz
+eO
 aa
 aa
 aa
@@ -18748,7 +18456,7 @@ eu
 eu
 eu
 eu
-eP
+eO
 aa
 aa
 aa
@@ -19005,7 +18713,7 @@ eu
 eu
 eu
 eu
-gC
+eR
 aa
 aG
 aG
@@ -21729,7 +21437,7 @@ ac
 ac
 ah
 ac
-aj
+ac
 ac
 ac
 ah
@@ -22759,7 +22467,7 @@ ac
 ah
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -23276,7 +22984,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 af
@@ -23537,10 +23245,10 @@ ac
 ac
 ac
 ac
-aj
 ac
 ac
-ak
+ac
+ac
 ac
 ac
 ah
@@ -24041,7 +23749,7 @@ ac
 ah
 ac
 ac
-ae
+ac
 ac
 ac
 ac
@@ -24308,13 +24016,13 @@ ac
 ac
 ah
 ac
-ak
+ac
 ac
 ac
 ah
 ac
 ac
-aj
+ac
 ac
 ac
 ac
@@ -25089,7 +24797,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 af
 ac
@@ -25328,7 +25036,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 ac
@@ -25589,7 +25297,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 af
@@ -25598,12 +25306,12 @@ ac
 ac
 ac
 ac
-ae
+ac
 ah
 ah
 ac
 ac
-aj
+ac
 ah
 ac
 ac
@@ -25851,7 +25559,7 @@ ah
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -26887,7 +26595,7 @@ ac
 ac
 ac
 ac
-aj
+ac
 ac
 ac
 ac
@@ -26902,7 +26610,7 @@ aD
 ah
 aD
 ac
-aj
+ac
 ac
 ac
 ah
@@ -27126,7 +26834,6 @@ ab
 ac
 ac
 ac
-aj
 ac
 ac
 ac
@@ -27135,12 +26842,13 @@ ac
 ac
 ac
 ac
-ae
 ac
 ac
 ac
 ac
-aj
+ac
+ac
+ac
 ac
 ac
 ac
@@ -27402,7 +27110,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -27919,7 +27627,7 @@ ac
 af
 ac
 ah
-aj
+ac
 ac
 ac
 ac
@@ -28163,7 +27871,7 @@ ac
 ag
 ac
 ac
-aj
+ac
 ac
 ag
 ac
@@ -29197,7 +28905,7 @@ ac
 ac
 ac
 ac
-aC
+ac
 ac
 ac
 ac
@@ -29713,7 +29421,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -30750,7 +30458,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -31501,7 +31209,7 @@ ac
 ac
 ag
 ag
-aj
+ac
 ac
 ag
 af
@@ -32011,7 +31719,7 @@ aa
 ab
 ac
 ac
-aj
+ac
 ac
 ag
 ag
@@ -32036,7 +31744,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -33322,7 +33030,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 ac
@@ -33584,7 +33292,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -34070,7 +33778,7 @@ ac
 ac
 ag
 ag
-aj
+ac
 an
 an
 ag
@@ -34102,7 +33810,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -34355,7 +34063,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -35380,7 +35088,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -35900,7 +35608,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -36411,7 +36119,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 ac

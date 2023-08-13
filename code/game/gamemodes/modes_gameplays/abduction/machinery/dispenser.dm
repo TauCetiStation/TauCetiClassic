@@ -17,7 +17,7 @@
 
 /obj/machinery/abductor/gland_dispenser/atom_init()
 	. = ..()
-	gland_types = subtypesof(/obj/item/gland)
+	gland_types = subtypesof(/obj/item/gland) - /obj/item/gland/abductor
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -26,7 +26,7 @@
 		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/interact(mob/user)
-	if(!IsAbductor(user) && !isobserver(user))
+	if(!isabductor(user) && !isobserver(user))
 		return
 	return ..()
 

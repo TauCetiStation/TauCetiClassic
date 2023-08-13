@@ -6,13 +6,13 @@
 	w_class = SIZE_SMALL
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60
 
 /obj/item/stack/light_w/attackby(obj/item/I, mob/user, params)
-	if(iswirecutter(I))
+	if(iscutter(I))
 		if(!use(1))
 			return
 		new/obj/item/stack/cable_coil/random(user.loc, 5)

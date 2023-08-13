@@ -87,7 +87,7 @@
 		icon_state = "nun"
 		to_chat(usr, "You let off your sleeves.")
 		sleeves = TRUE
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -137,7 +137,7 @@
 		icon_state += "_open"
 		to_chat(usr, "You have unfastened [src]")
 		is_fasten = FALSE
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/storage/det_suit/gray
 	name = "detective's gray trenchcoat"
@@ -156,12 +156,14 @@
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
 	desc = "A red forensics technician jacket."
-	icon_state = "forensics_red"
+	icon_state = "forensicsredsuit"
+	item_state = "forensicsredsuit"
 
 /obj/item/clothing/suit/storage/forensics/blue
 	name = "blue jacket"
 	desc = "A blue forensics technician jacket."
-	icon_state = "forensics_blue"
+	icon_state = "forensicsblusuit"
+	item_state = "forensicsblusuit"
 
 //Engineering
 /obj/item/clothing/suit/storage/hazardvest
@@ -226,7 +228,7 @@
 		else
 			to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 			return
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 //Medical
 /obj/item/clothing/suit/storage/fr_jacket
@@ -254,7 +256,7 @@
 		if("fr_jacket")
 			src.icon_state = "fr_jacket_open"
 			to_chat(usr, "You unbutton the jacket.")
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -290,7 +292,7 @@
         else
             to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
             return
-    usr.update_inv_wear_suit()    //so our overlays update
+    update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"

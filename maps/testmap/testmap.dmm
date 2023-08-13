@@ -30,8 +30,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ah" = (
@@ -39,8 +38,7 @@
 	dir = 9
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ai" = (
@@ -48,8 +46,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "aj" = (
@@ -57,8 +54,7 @@
 	dir = 5
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ak" = (
@@ -66,14 +62,12 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "al" = (
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "am" = (
@@ -81,15 +75,13 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "an" = (
 /obj/machinery/gateway/center/station,
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ao" = (
@@ -97,8 +89,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ap" = (
@@ -106,15 +97,13 @@
 	dir = 10
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "aq" = (
 /obj/machinery/gateway,
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ar" = (
@@ -122,8 +111,7 @@
 	dir = 6
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "as" = (
@@ -245,33 +233,10 @@
 /turf/unsimulated/floor,
 /area/start)
 "aI" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/unsimulated/floor,
-/area/centcom)
-"aJ" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/unsimulated/floor,
-/area/centcom)
-"aK" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
 /turf/unsimulated/floor,
 /area/centcom)
 "aL" = (
@@ -310,22 +275,18 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"aQ" = (
-/mob/living/carbon/monkey/skrell,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
 "aR" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aT" = (
-/turf/unsimulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aW" = (
 /obj/structure/table/reinforced,
@@ -350,14 +311,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"bf" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
 "bg" = (
 /obj/machinery/light{
 	dir = 4
@@ -374,6 +327,20 @@
 "bn" = (
 /turf/unsimulated/wall{
 	icon_state = "iron4"
+	},
+/area/centcom)
+"br" = (
+/mob/living/carbon/monkey/skrell,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bI" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom)
 
@@ -3776,7 +3743,7 @@ ac
 aw
 ay
 aF
-aJ
+aI
 ay
 ay
 ay
@@ -3928,7 +3895,7 @@ ac
 ax
 ay
 ay
-aK
+aI
 ay
 ay
 ay
@@ -4845,7 +4812,7 @@ ay
 ay
 ay
 aR
-bf
+bI
 ay
 aT
 bl
@@ -6362,7 +6329,7 @@ aD
 ay
 ay
 ay
-aQ
+br
 ay
 ac
 aa

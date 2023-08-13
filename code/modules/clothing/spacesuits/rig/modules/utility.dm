@@ -143,14 +143,12 @@
 		return TRUE
 
 	var/turf/T = get_turf(target)
-	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
-		return FALSE
-
-	var/resolved
 	if(need_adjacent) // so we don't telepathically bash the target
-		resolved = target.attackby(device,holder.wearer)
-	if(!resolved && device && target)
-		device.afterattack(target,holder.wearer,1)
+		if(istype(T) && !T.Adjacent(get_turf(src)))
+			return FALSE
+		device.melee_attack_chain(target, holder.wearer)
+	else
+		device.afterattack(target, holder.wearer, FALSE)
 	return TRUE
 
 /obj/item/rig_module/chem_dispenser
@@ -361,6 +359,20 @@
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
+/obj/item/rig_module/emp_shield
+	name = "hardsuit EMP shield"
+	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
+	origin_tech = "engineering=2;magnets=2"
+	interface_name = "EMP shield"
+	var/uses = 5
+
+/obj/item/rig_module/emp_shield/adv
+	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
+	origin_tech = "engineering=2;magnets=2;bluespace=3;"
+	uses = 20
+
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
 	icon_state = "scanner"
@@ -553,7 +565,7 @@
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
-			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+			irradiate_one_mob(holder.wearer, rand(5, 25))
 
 	if(damage >= MODULE_DESTROYED)
 		if(!unstable)
@@ -565,7 +577,7 @@
 			else
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE
-			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(boom)), rand(60 SECONDS, 120 SECONDS))
 			light_color = LIGHT_COLOR_FLARE
 			set_light(5)
 
@@ -652,7 +664,7 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, PROC_REF(update_foam_amount)), 5) // because extinguisher uses spawns
 
 /obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
@@ -703,7 +715,7 @@
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
 	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-	INVOKE_ASYNC(src, .proc/spray_at, T)
+	INVOKE_ASYNC(src, PROC_REF(spray_at), T)
 
 	return TRUE
 

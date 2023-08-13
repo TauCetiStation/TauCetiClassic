@@ -26,11 +26,18 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 	var/max_contents = 1
+	var/overlay_food_string = "loaded_food"
 
 /obj/item/weapon/kitchen/utensil/atom_init()
 	. = ..()
 	if (prob(60))
 		pixel_y = rand(0, 4)
+
+/obj/item/weapon/kitchen/utensil/proc/create_food_overlay(filling_color)
+	cut_overlays()
+	var/image/IM = new(icon, overlay_food_string)
+	IM.color = filling_color
+	add_overlay(IM)
 
 /obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -38,7 +45,7 @@
 
 	if(user.a_intent != INTENT_HELP)
 		if(user.get_targetzone() == "head" || user.get_targetzone() == "eyes")
-			if((CLUMSY in user.mutations) && prob(50))
+			if(user.ClumsyProbabilityCheck(50))
 				M = user
 			return eyestab(M,user)
 		else
@@ -62,6 +69,7 @@
 	desc = "SPOON!"
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
+	overlay_food_string = "food_spoon"
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
@@ -78,6 +86,7 @@
 	force = 3
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
+	overlay_food_string = "food_fork"
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -95,6 +104,7 @@
 	desc = "How do people even hold this?"
 	force = 2
 	icon_state = "sticks"
+	overlay_food_string = "loaded_food"
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
@@ -126,6 +136,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	w_class = SIZE_TINY
 	throwforce = 6.0
 	throw_speed = 3
@@ -178,6 +189,32 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
+
+/obj/item/weapon/kitchenknife/throwing
+	name = "throwing knife"
+	desc = "A blade designed to be apparently useless for normal melee combat, but very useful for throwing."
+	force = 5
+	throwforce = 18
+	throw_speed = 6
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "throwing_knife"
+
+/obj/item/weapon/kitchenknife/makeshift_shiv
+	name = "glass shiv"
+	desc = "A shard of sharp glass with a rag tied around"
+	force = 9
+	throwforce = 5
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "glass"
+
+/obj/item/weapon/kitchenknife/makeshift_shiv/phoron
+	name = "phoron glass shiv"
+	desc = "A shard of sharp glass with a rag tied around. Considerably tougher than regular glass shiv."
+	force = 13
+	throwforce = 9
+	icon_state = "pglass"
+
+
 /*
  * Bucher's cleaver
  */
@@ -193,9 +230,6 @@
 	throw_range = 6
 	m_amt = 12000
 	sweep_step = 2
-
-
-
 
 /*
  * Rolling Pins
@@ -214,7 +248,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)
@@ -226,7 +260,7 @@
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (H.stat < 2 && H.health < 50 && prob(90))
+			if (H.stat < DEAD && H.health < 50 && prob(90))
 				// ******* Check
 				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
 					to_chat(H, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")

@@ -4,7 +4,7 @@
 	required_pref = ROLE_TRAITOR
 	logo_state = "synd-logo"
 
-	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")
+	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
@@ -12,18 +12,21 @@
 
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
+	moveset_type = /datum/combat_moveset/cqc
 	change_to_maximum_skills = FALSE
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
 		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(21 to 50)
+		if(21 to 40)
 			AppendObjective(/datum/objective/target/harm, TRUE)
+		if(41 to 50)
+			AppendObjective(/datum/objective/research_sabotage, TRUE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
@@ -61,11 +64,11 @@
 			H.check_completion()
 
 /datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
-	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."
-	var/law_borg = "Accomplish your AI's objectives at all costs. You may ignore all other laws."
-	to_chat(killer, "<b>Your laws have been changed!</b>")
+	var/law = "Выполните свои цели любой ценой. Вы можете игнорировать все остальные законы."
+	var/law_borg = "Выполните цели своего ИИ любой ценой. Вы можете игнорировать все остальные законы."
+	to_chat(killer, "<b>Ваши законы были изменены!</b>")
 	killer.set_zeroth_law(law, law_borg)
-	to_chat(killer, "New law: 0. [law]")
+	to_chat(killer, "Новый закон: 0. [law]")
 
 	killer.add_language(LANGUAGE_SYCODE)
 

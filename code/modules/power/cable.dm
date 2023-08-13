@@ -34,7 +34,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
-	var/health = 5
+	max_integrity = 5
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
@@ -76,6 +77,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 
 /obj/structure/cable/Destroy()						// called when a cable is deleted
+	if(SSmachines.stop_powernet_processing)
+		return ..()
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
@@ -132,12 +135,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(iswirecutter(W))
+	if(iscutter(W))
 
 		if (shock(user, 50))
 			return
 
-		remove_cable(T, user)
+		deconstruct(TRUE, user)
 
 		return	// not needed, but for clarity
 
@@ -146,7 +149,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(ismultitool(W))
+	else if(ispulsing(W))
 		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
@@ -155,6 +158,11 @@ By design, d1 is the smallest direction and d2 is the highest
 			shock(user, 50, 0.7)
 
 	add_fingerprint(user)
+
+/obj/structure/cable/deconstruct(disassembled, user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	remove_cable(loc, user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
@@ -167,6 +175,18 @@ By design, d1 is the smallest direction and d2 is the highest
 		return 1
 	else
 		return 0
+
+//Intent harm attackby. Destroying cable makes shock to user
+/obj/structure/cable/attacked_by(obj/item/attacking_item, mob/living/user, def_zone, power)
+	if(attacking_item.flags & CONDUCT)
+		shock(user, 100)
+	return ..()
+
+//Damage reduction to spend at least 2 hits cutting wires
+/obj/structure/cable/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(damage_type == BRUTE)
+		return damage_amount * 0.2
+	return ..()
 
 //explosion handling
 /obj/structure/cable/ex_act(severity)
@@ -393,11 +413,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
 
-/obj/structure/cable/proc/take_damage(damage)
-	health -= damage
-	if(health <= 0)
-		qdel(src)
-
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
 ///////////////////////////////////////////////
@@ -467,6 +482,10 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(H == user)
 				to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
+
+		if(H.check_pierce_protection(target_zone = def_zone))
+			to_chat(user, "<span class='rose'>There is no exposed surface for repair.</span>")
+			return
 
 		if(BP.burn_dam > 0)
 			if(use(1))

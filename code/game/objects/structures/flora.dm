@@ -213,24 +213,35 @@
 	name = "bush"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-10"
-	var/can_be_cut = FALSE
-	var/health_flora = 40
-	var/damage_threshhold = 5
+	max_integrity = 40
+	damage_deflection = 5
+	flags = NODECONSTRUCT // prevent getting drop without harvesting
+	resistance_flags = FULL_INDESTRUCTIBLE
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 	var/list/drop_on_destroy = list()
 
-/obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
-	if(can_be_cut && W.is_sharp() && W.force >= damage_threshhold)
-		playsound(src, cutting_sound, VOL_EFFECTS_MASTER)
-		health_flora -= W.force
-		if(health_flora <= 0)
-			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
-			if(drop_on_destroy.len)
-				for(var/type_drop in drop_on_destroy)
-					new type_drop(get_turf(src))
-			qdel(src)
+/obj/structure/flora/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.is_sharp())
 		return
+	flags &= ~NODECONSTRUCT
+	. = ..()
+	flags |= NODECONSTRUCT
+
+/obj/structure/flora/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(damage_amount)
+		playsound(loc, cutting_sound, VOL_EFFECTS_MASTER)
+
+/obj/structure/flora/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+	if(drop_on_destroy.len)
+		for(var/type_drop in drop_on_destroy)
+			new type_drop(loc)
+	..()
 
 // trees
 /obj/structure/flora/tree
@@ -239,9 +250,9 @@
 	density = TRUE
 	pixel_x = -16
 	layer = 9
-	health_flora = 150
-	damage_threshhold = 15
-	can_be_cut = TRUE
+	max_integrity = 150
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
@@ -252,7 +263,7 @@
 	icon_state = "pine_1"
 
 /obj/structure/flora/tree/pine/unbreakable
-	can_be_cut = FALSE
+	resistance_flags = FULL_INDESTRUCTIBLE
 	desc = "A massive pine. Looks a lot thicker than a normal one.\n<i>You don't think you can break it without a chainsaw</i>"
 
 /obj/structure/flora/tree/pine/atom_init()
@@ -304,8 +315,8 @@
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	anchored = TRUE
-	can_be_cut = TRUE
-	health_flora = 60
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 60
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -336,8 +347,8 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
-	can_be_cut = TRUE
-	health_flora = 50
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 50
 
 /obj/structure/flora/bush/atom_init()
 	. = ..()
@@ -350,8 +361,8 @@
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 	anchored = TRUE
-	can_be_cut = TRUE
-	health_flora = 50
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 50
 
 /obj/structure/flora/ausbushes/atom_init()
 	. = ..()
@@ -470,8 +481,8 @@
 	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
-	can_be_cut = TRUE
-	health_flora = 50
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 50
 
 /obj/structure/flora/rock/jungle/atom_init()
 	. = ..()
@@ -485,8 +496,8 @@
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 	anchored = TRUE
-	can_be_cut = TRUE
-	health_flora = 40
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 40
 
 /obj/structure/flora/junglebush/atom_init()
 	. = ..()

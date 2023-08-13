@@ -8,7 +8,7 @@
 
 /mob/living/carbon/xenomorph/facehugger
 	name = "alien facehugger"
-	desc = "It has some sort of a tube at the end of its tail."
+	desc = "Из кончика хвоста выступает отросток, похожий на трубочку."
 	real_name = "alien facehugger"
 
 	icon_state = "facehugger"
@@ -18,6 +18,8 @@
 	health = 25
 	storedPlasma = 50
 	max_plasma = 50
+
+	speed = -1
 
 	density = FALSE
 	w_class = SIZE_SMALL
@@ -52,16 +54,10 @@
 /mob/living/carbon/xenomorph/facehugger/swap_hand()
 	return
 
-/mob/living/carbon/xenomorph/facehugger/movement_delay()
-	var/tally = 0
-	if (isfacehugger(src)) //just in case
-		tally = -1
-	return (tally + move_delay_add + config.alien_delay)
-
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
 		r_hand = null
-		update_inv_r_hand(0)
+		W.update_inv_mob()
 
 /mob/living/carbon/xenomorph/facehugger/attack_ui(slot_id)
 	return
@@ -115,9 +111,7 @@
  */
 /mob/living/carbon/xenomorph/facehugger/proc/leap_at_face(mob/living/carbon/C)
 	if(ishuman(C) || ismonkey(C)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
+		var/obj/item/clothing/mask/facehugger/FH = new(loc, src)
 		FH.Attach(C)
 
 /mob/living/carbon/xenomorph/facehugger/regenerate_icons()
@@ -195,7 +189,7 @@ This is chestburster mechanic for damaging
 	affecting = victim
 
 	hud = new /atom/movable/screen/larva_bite(src)
-	hud.icon = 'icons/mob/screen1_xeno.dmi'
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "chest_burst"
 	hud.name = "Burst thru chest"
 	hud.master = src
@@ -352,11 +346,11 @@ When we finish, facehugger's player will be transfered inside embryo.
 	affecting = victim
 
 	hud = new /atom/movable/screen/fh_grab(src)
-	hud.icon = 'icons/mob/screen1_xeno.dmi'
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
-	start_cooldown(hud, 4, CALLBACK(src, .proc/reset_cooldown))
+	start_cooldown(hud, 4, CALLBACK(src, PROC_REF(reset_cooldown)))
 	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
@@ -454,7 +448,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			start_cooldown(hud, 6, CALLBACK(src, .proc/reset_cooldown))
+			start_cooldown(hud, 6, CALLBACK(src, PROC_REF(reset_cooldown)))
 			on_cooldown = TRUE
 			state = GRAB_UPGRADING
 			hud.icon_state = "grab/impreg"
@@ -465,7 +459,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 			hud.icon_state = "impreg"
 			hud.name = "impregnating"
 			state = GRAB_IMPREGNATE
-			addtimer(CALLBACK(src, .proc/Impregnate_by_playable_fh, affecting, assailant), MIN_IMPREGNATION_TIME)
+			addtimer(CALLBACK(src, PROC_REF(Impregnate_by_playable_fh), affecting, assailant), MIN_IMPREGNATION_TIME)
 
 /obj/item/weapon/fh_grab/proc/Impregnate_by_playable_fh()
 	if(!affecting || !assailant)
@@ -487,8 +481,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
 		if(istype(hugger, /obj/item/clothing/mask/facehugger))
 			hugger.get_off()
-		if(iscarbon(affecting))
-			affecting.update_inv_wear_mask(1)
 		qdel(src)
 		return FALSE
 

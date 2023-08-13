@@ -18,7 +18,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_EARS
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
-	throw_speed = 7
+	throw_speed = 4
 	throw_range = 15
 	m_amt = 10
 	var/colour = "black"	// can we make it HEX?
@@ -191,6 +191,7 @@
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
+		throw_speed = initial(throw_speed)
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 		qualities = null
@@ -204,6 +205,7 @@
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35
+		throw_speed = 5
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 		qualities = list(
@@ -213,7 +215,7 @@
 
 /obj/item/weapon/pen/edagger/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(ismultitool(I))
+	if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")

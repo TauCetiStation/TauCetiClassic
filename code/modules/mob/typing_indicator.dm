@@ -6,7 +6,7 @@
 		typing_indicator.icon_state = "[typing_indicator_type]0"
 
 	if(state)
-		if(client && !stat)
+		if(client && stat == CONSCIOUS)
 			vis_contents += typing_indicator
 			typing = TRUE
 	else
@@ -21,4 +21,14 @@
 	var/message = input("","say (text)") as text|null
 	if(message)
 		say_verb(message)
+	set_typing_indicator(FALSE)
+
+/mob/verb/emote_wrapper()
+	set name = ".Me"
+	set hidden = TRUE
+
+	set_typing_indicator(TRUE)
+	var/message = input("","me (text)") as text|null
+	if(message)
+		me_verb(message)
 	set_typing_indicator(FALSE)

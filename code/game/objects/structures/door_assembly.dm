@@ -19,6 +19,8 @@
 	var/glass_only       = FALSE   // For something like multitile airlock, where there is only one type.
 	var/created_name     = null
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/door_assembly/atom_init()
 	. = ..()
 	update_state()
@@ -39,7 +41,7 @@
 		created_name = t
 		return
 
-	if(iswelder(W) && ((glass_material && !glass_only) || mineral || !anchored))
+	if(iswelding(W) && ((glass_material && !glass_only) || mineral || !anchored))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.tool_start_check(user, amount=0))
 			return
@@ -62,10 +64,9 @@
 			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
 			if(WT.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
-				new /obj/item/stack/sheet/metal(loc, 4)
-				qdel (src)
+				deconstruct(TRUE)
 
-	else if(iswrench(W) && state == ASSEMBLY_SECURED)
+	else if(iswrenching(W) && state == ASSEMBLY_SECURED)
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
@@ -85,7 +86,7 @@
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
-	else if(iswirecutter(W) && state == ASSEMBLY_WIRED)
+	else if(iscutter(W) && state == ASSEMBLY_WIRED)
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
@@ -107,7 +108,7 @@
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE
 
-	else if(iscrowbar(W) && state == ASSEMBLY_NEAR_FINISHED)
+	else if(isprying(W) && state == ASSEMBLY_NEAR_FINISHED)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
 		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
@@ -152,7 +153,7 @@
 				else
 					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
-	else if(isscrewdriver(W) && state == ASSEMBLY_NEAR_FINISHED )
+	else if(isscrewing(W) && state == ASSEMBLY_NEAR_FINISHED )
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")
@@ -179,6 +180,21 @@
 	else
 		..()
 	update_state()
+
+/obj/structure/door_assembly/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/material_amt = disassembled ? 4 : rand(2, 4)
+	new /obj/item/stack/sheet/metal(loc, material_amt)
+	if(glass_material)
+		if(disassembled)
+			new /obj/item/stack/sheet/rglass(loc)
+		else
+			new /obj/item/weapon/shard(loc)
+	if(mineral)
+		var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+		new mineral_path(loc, 2)
+	..()
 
 /obj/structure/door_assembly/proc/set_glass(has_glass, glass_material = "glass")
 	if(has_glass)

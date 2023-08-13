@@ -26,10 +26,9 @@
 	for(var/mob/living/carbon/M in hear(flashbang_range, flashbang_turf))
 		bang(flashbang_turf, M)
 
-	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
+	for(var/obj/structure/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
 		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
-		B.health -= damage
-		B.update_icon()
+		B.take_damage(damage * B.brute_resist, BRUTE, ENERGY) // workaround to deal full damage
 
 	qdel(src)
 
@@ -162,14 +161,14 @@
 	payload = payload_type
 	active = TRUE
 	walk_away(src,loc,rand(1,4))
-	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
+	addtimer(CALLBACK(src, PROC_REF(prime)), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
 	for(var/i in 1 to numspawned)
 		var/obj/item/weapon/grenade/P = new payload(src.loc)
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
-		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
+		addtimer(CALLBACK(P, TYPE_PROC_REF(/obj/item/weapon/grenade, prime)), rand(15,60))
 	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 

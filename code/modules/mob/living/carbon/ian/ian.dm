@@ -10,16 +10,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	icon = 'icons/mob/corgi.dmi'
 	icon_state = "corgi"
 	gender = MALE
-	desc = "It's a corgi."
+	desc = "Это корги."
 
 	var/response_help  = "pets"
 	var/response_disarm = "bops"
 	var/response_harm   = "kicks"
 
-	var/list/speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
-	speak_emote = list("barks", "woofs")
-	var/list/emote_hear = list("barks", "woofs", "yaps","pants")
-	var/list/emote_see = list("shakes its head", "shivers")
+	var/list/speak = list("Гав!", "Вуф!", "АУУУУ!")
+	speak_emote = list("лает", "воет")
+	var/list/emote_hear = list("лает", "воет")
+	var/list/emote_see = list("виляет хвостом", "облизывается")
 	var/speak_chance = 1
 
 	var/turns_per_move = 10
@@ -28,7 +28,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	var/stop_automated_movement_when_pulled = TRUE
 	var/turns_since_scan = 0
 	var/wander = TRUE
-	var/obj/movement_target
+	var/obj/item/weapon/reagent_containers/food/snacks/movement_target
 
 	attack_push_vis_effect = ATTACK_EFFECT_BITE
 	attack_disarm_vis_effect = ATTACK_EFFECT_BITE
@@ -106,7 +106,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 							message = "<span class='notice'>[src] licks [A], then ate \him. In last moments of life, [A] was [expression]!</span>"
 							M.health = 0
 							M.loc = src
-							addtimer(CALLBACK(src, .proc/ate_mouse), rand(250, 1200))
+							addtimer(CALLBACK(src, PROC_REF(ate_mouse)), rand(250, 1200))
 					else if(iscorgi(A))
 						adjustBruteLoss(-1)
 						adjustFireLoss(-1)
@@ -239,7 +239,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 	var/end_in = rand(26,43)
 	animate(src, pixel_y = rand(28,66) , time = end_in, easing = SINE_EASING)
-	addtimer(CALLBACK(src, .proc/pop), end_in + 3)
+	addtimer(CALLBACK(src, PROC_REF(pop)), end_in + 3)
 
 /obj/effect/bubble_ian/proc/pop()
 	if(prob(3)) // There is too many of them!
@@ -264,18 +264,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 				if(istype(H.dna, /datum/dna))
 					var/their_smell = md5(H.dna.uni_identity)
 					if(nose_memory == their_smell)
-						I = image('icons/mob/screen_corgi.dmi', A, "smell")
+						I = image('icons/hud/screen_corgi.dmi', A, "smell")
 			else
 				if(A.fingerprints && (nose_memory in A.fingerprints))
-					I = image('icons/mob/screen_corgi.dmi', A, "smell")
+					I = image('icons/hud/screen_corgi.dmi', A, "smell")
 				else if(A.blood_DNA && islist(A.blood_DNA) && (nose_memory in A.blood_DNA))
-					I = image('icons/mob/screen_corgi.dmi', A, "smell")
+					I = image('icons/hud/screen_corgi.dmi', A, "smell")
 
 			if(I)
 				if((nose_memory in nose_database) && nose_database[nose_memory] == "Unknown")
 					I.color = list(1.438,-0.062,-0.062,0.122,1.378,-0.122,0.016,-0.016,1.483,-0.03,0.05,-0.02)
 				client.images += I
-				addtimer(CALLBACK(src, .proc/unvisualize_smell, I), rand(30, 60))
+				addtimer(CALLBACK(src, PROC_REF(unvisualize_smell), I), rand(30, 60))
 
 /mob/living/carbon/ian/proc/unvisualize_smell(image/I)
 	if(!client)
@@ -287,12 +287,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
-/mob/living/carbon/ian/movement_delay(tally = 0)
-	if(crawling)
+/mob/living/carbon/ian/movement_delay()
+	var/tally = speed
+
+	if(lying)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
+	else if(m_intent == MOVE_INTENT_RUN && a_intent == INTENT_HARM && stamina >= 10)
 		stamina = max(0, stamina - 10)
 		tally -= 1
 
@@ -300,11 +302,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(health_deficiency >= 45)
 		tally += (health_deficiency / 25)
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
-	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	if(bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
 	return tally
 
 /mob/living/carbon/ian/SelfMove(turf/n, direct)
@@ -339,7 +340,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(health >= config.health_threshold_crit)
 		help_shake_act(attacker)
 		return
-	INVOKE_ASYNC(src, .proc/perform_av, attacker)
+	INVOKE_ASYNC(src, PROC_REF(perform_av), attacker)
 
 /mob/living/carbon/ian/emp_act(severity)
 	if(neck)
@@ -367,10 +368,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 /mob/living/carbon/ian/blob_act()
 	if (stat != DEAD)
-		adjustFireLoss(60)
+		adjustFireLoss(20)
 		updatehealth()
-		if (prob(50))
-			Paralyse(10)
 	else
 		gib()
 
@@ -406,7 +405,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 	if(chance && prob(chance) && dodged < world.time)
 		dodged = world.time + 50
-		if(Proj.flag == "bullet")
+		if(Proj.flag == BULLET)
 			visible_message("<span class='notice'>[src] catches [Proj] with his jaws.</span>")
 		else
 			visible_message("<span class='notice'>[src] dodges [Proj].</span>")
@@ -429,7 +428,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += luck
 
-	if(chance && prob(chance) && !stat)
+	if(chance && prob(chance) && stat == CONSCIOUS)
 		switch(msg)
 			if("dodges")
 				msg = "<span class='notice'>[src] dodges [AM]'s attack!</span>"
@@ -459,7 +458,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	..()
 
 /mob/living/carbon/ian/say(message)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)

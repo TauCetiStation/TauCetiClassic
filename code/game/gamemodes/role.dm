@@ -41,6 +41,8 @@
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
 
+	var/moveset_type
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -84,6 +86,8 @@
 	if (!OnPreSetup())
 		return FALSE
 
+	OnPostSetup()
+
 	return TRUE
 
 /datum/role/proc/Deconvert()
@@ -98,8 +102,11 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	var/mob/living/A = antag.current
 	if(!isnull(skillset_type))
 		M.skills.remove_available_skillset(skillset_type)
+	if(!isnull(moveset_type))
+		A.remove_moveset_source(MOVESET_ROLES)
 
 	remove_antag_hud()
 	if(M.current?.hud_used)
@@ -188,6 +195,9 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	var/mob/living/A = antag.current
+	if(!isnull(moveset_type))
+		A.add_moveset(new moveset_type(), MOVESET_ROLES)
 	if(antag.current?.hud_used)
 		add_ui(antag.current.hud_used)
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)

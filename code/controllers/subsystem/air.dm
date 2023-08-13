@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(air)
 	priority      = SS_PRIORITY_AIR
 	wait          = SS_WAIT_AIR
 
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_SHOW_IN_MC_TAB
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	msg_lobby = "Фильтруем кислород..."
@@ -51,8 +51,10 @@ SUBSYSTEM_DEF(air)
 	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
-	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
+	var/map_init_levels = -1 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
+
+	var/stop_airnet_processing = FALSE // todo: we really need to move pipes and machinery to own SS
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
@@ -89,20 +91,22 @@ SUBSYSTEM_DEF(air)
 	var/timer = TICK_USAGE_REAL
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
-		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		if(!stop_airnet_processing)
+			process_pipenets(resumed)
+			cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			if(state != SS_RUNNING)
+				return
+			resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = TICK_USAGE_REAL
-		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		if(!stop_airnet_processing)
+			timer = TICK_USAGE_REAL
+			process_atmos_machinery(resumed)
+			cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			if(state != SS_RUNNING)
+				return
+			resumed = 0
 		currentpart = SSAIR_TILES_CUR
 
 	// defer updating of self-zone-blocked turfs until after all other turfs have been updated.
@@ -206,7 +210,7 @@ SUBSYSTEM_DEF(air)
 		tiles_to_update.len--
 
 		// Check if the turf is self-zone-blocked
-		if(T.c_airblock(T) & ZONE_BLOCKED)
+		if(FAST_C_AIRBLOCK(T, T) == ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
@@ -336,10 +340,10 @@ SUBSYSTEM_DEF(air)
 	ASSERT(isturf(B))
 	#endif
 
-	var/ablock = A.c_airblock(B)
+	var/ablock = FAST_C_AIRBLOCK(A, B)
 	if(ablock == BLOCKED)
 		return BLOCKED
-	return ablock | B.c_airblock(A)
+	return ablock | FAST_C_AIRBLOCK(B, A)
 
 /datum/controller/subsystem/air/proc/has_valid_zone(turf/simulated/T)
 	#ifdef ZASDBG
@@ -432,10 +436,14 @@ SUBSYSTEM_DEF(air)
 		T.needs_air_update = TRUE
 
 /datum/controller/subsystem/air/StartLoadingMap()
+	if(map_init_levels == -1) // SSair will init turfs itself
+		return
 	LAZYINITLIST(queued_for_update)
 	map_loading = TRUE
 
 /datum/controller/subsystem/air/StopLoadingMap()
+	if(map_init_levels == -1)
+		return
 	map_loading = FALSE
 	map_init_levels = world.maxz // update z level counting, so air start to work on added levels.
 

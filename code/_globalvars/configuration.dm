@@ -25,7 +25,6 @@ var/global/traitor_scaling = 1
 //var/goonsay_allowed = 0
 var/global/dna_ident = 1
 var/global/abandon_allowed = 1
-var/global/enter_allowed = 1
 var/global/guests_allowed = 1
 var/global/shuttle_frozen = 0
 var/global/shuttle_left = 0
@@ -36,9 +35,6 @@ var/global/mouse_respawn_time = 5 //Amount of time that must pass between a play
 // Debug2 is used in conjunction with a lot of admin verbs and therefore is actually legit.
 var/global/Debug = 0	// global debug switch
 var/global/Debug2 = 1   // enables detailed job debug file in secrets
-
-//This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
-var/global/MAX_EXPLOSION_RANGE = 14
 
 var/global/eventchance = 10 //% per 5 mins
 var/global/event = 0

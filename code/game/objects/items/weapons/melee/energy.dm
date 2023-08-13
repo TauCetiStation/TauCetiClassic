@@ -13,8 +13,8 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/energy, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/energy, can_spin))
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/energy/proc/can_sweep(mob/user)
@@ -89,7 +89,7 @@
 		qdel(src)
 		user.put_in_hands(newSaber)
 
-	else if(ismultitool(I))
+	else if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
@@ -123,7 +123,8 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
-	w_class = SIZE_NORMAL//So you can't hide it in your pocket or some such.
+	w_class = SIZE_SMALL
 	flags = NOBLOODY | DROPDEL
+	flags_2 = CANT_BE_INSERTED
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

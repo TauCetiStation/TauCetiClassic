@@ -7,7 +7,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/ion/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	empulse(target, 1, 1)
@@ -21,7 +21,7 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	flag = "bullet"
+	flag = BULLET
 	sharp = 1
 	edge = 1
 
@@ -38,7 +38,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	var/temperature = 100
 
 
@@ -62,7 +62,7 @@
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
@@ -78,7 +78,7 @@
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
-				if(!M.stat && !isAI(M))\
+				if(M.stat == CONSCIOUS && !isAI(M))\
 					shake_camera(M, 3, 1)
 			qdel(src)
 			return 1
@@ -91,7 +91,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/living/M = target
@@ -99,7 +99,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
-				M.apply_effect((rand(30,80)),IRRADIATE)
+				irradiate_one_mob(M, rand(30, 80))
 				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
@@ -130,7 +130,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/M = target
@@ -163,7 +163,7 @@
 	light_power = 2
 	light_range = 2
 	damage = 20
-	flag = "bullet"
+	flag = BULLET
 	sharp = 0
 	edge = 0
 
@@ -190,26 +190,13 @@
 	edge = 0
 
 /obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /obj/singularity))
+	if(istype(target, /obj/singularity/narsie))
+		return
 
-		switch(target.type)
-			if(/obj/singularity)
-				var/obj/singularity/S = target
-				empulse(S, 4, 10)
-				for(var/mob/living/carbon/H in viewers(S))
-					H.apply_effect(20, IRRADIATE, 0)
-				S.deduce_energy(600)
-				return
-			if(/obj/singularity/narsie)
-				for(var/mob/M in player_list)
-					if(!isnewplayer(M))
-						to_chat(M, "<font size='15' color='red'><b>FOOLISH MORTALS! I AM A GOD. HOW CAN YOU KILL A GOD?</b></font>")
-						M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
-						for(M in range(20))
-							M.gib()
-							return
-			else
-				return
+	if(istype(target, /obj/singularity))
+		empulse(target, 4, 10)
+		qdel(target)
+		return
 
 	return ..()
 
@@ -220,14 +207,14 @@
 	weaken = 10
 	stun = 10
 	damage_type = TOX
-	flag = "bio"
+	flag = BIO
 
 /obj/item/projectile/acid_special
 	name = "acid"
 	icon_state = "neurotoxin"
 	damage = 25
 	damage_type = TOX
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/acid_special/atom_init()
 	. = ..()
@@ -241,7 +228,7 @@
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
-		M.take_damage(damage)
+		M.take_damage(50)
 		M.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 
 	if(ishuman(target))
@@ -254,18 +241,6 @@
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(prob(60))
 						C.make_old()
-						if(bp == H.head)
-							H.update_inv_head()
-						if(bp == H.wear_mask)
-							H.update_inv_wear_mask()
-						if(bp == H.wear_suit)
-							H.update_inv_wear_suit()
-						if(bp == H.w_uniform)
-							H.update_inv_w_uniform()
-						if(bp == H.gloves)
-							H.update_inv_gloves()
-						if(bp == H.shoes)
-							H.update_inv_shoes()
 					visible_message("<span class='warning'>The [target.name] gets absorbed by [H]'s [C.name]!</span>")
 					return
 			else
@@ -287,7 +262,7 @@
 	light_range = 2
 	damage = 18
 	damage_type = BURN
-	flag = "energy"
+	flag = ENERGY
 	eyeblur = 4
 	sharp = 0
 	edge = 0
@@ -327,7 +302,7 @@
 
 	kill_count = 13
 
-	flag = "laser"
+	flag = LASER
 	hitscan = TRUE
 	// eyeblur = 3
 
@@ -340,9 +315,6 @@
 	var/display_celsium = TRUE
 	var/display_fahrenheit = TRUE
 	var/display_kelvin = FALSE
-
-/obj/item/projectile/pyrometer/on_impact(atom/A)
-	return
 
 /obj/item/projectile/pyrometer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
@@ -431,7 +403,7 @@
 	damage = 10
 	damage_type = BURN
 	sharp = TRUE // concentrated burns
-	flag = "laser"
+	flag = LASER
 
 /obj/item/projectile/pyrometer/emagged
 

@@ -78,11 +78,11 @@ At the time of this writing, every object that is slippery overrides atom/Crosse
 1. `/datum/proc/_SendSignal(signal, list/arguments)` (private, final)
     * Handles most of the actual signaling procedure
     * Will runtime if used on datums with an empty component list
-1. `/datum/proc/RegisterSignal(datum/target, signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final)
+1. `/datum/proc/RegisterSignal(datum/target, signal(string/list of strings), PROC_REF(type), override(boolean))` (protected, final)
     * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes the datum listen for the specified `signal` on it's `parent` datum.
-    * When that signal is received `proc_ref` will be called on the component, along with associated arguments
-    * Example proc ref: `.proc/OnEvent`
+    * When that signal is received `PROC_REF` will be called on the component, along with associated arguments
+    * Example proc ref: `PROC_REF(OnEvent)`
     * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
     * These callbacks run asyncronously
     * Returning `TRUE` from these callbacks will trigger a `TRUE` return from the `SendSignal()` that initiated it

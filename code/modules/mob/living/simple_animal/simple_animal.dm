@@ -1,6 +1,6 @@
 /mob/living/simple_animal
 	name = "animal"
-	desc = "Just simple animal"
+	desc = "Просто существует."
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
@@ -55,12 +55,12 @@
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
-	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
-
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 	var/has_head = FALSE
 	var/has_arm = FALSE
 	var/has_leg = FALSE
+
+	can_point = FALSE
 
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
@@ -80,6 +80,14 @@
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+
+/mob/living/simple_animal/Login()
+	. = ..()
+	stop_automated_movement = TRUE
+
+/mob/living/simple_animal/Logout()
+	. = ..()
+	stop_automated_movement = initial(stop_automated_movement)
 
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
@@ -256,11 +264,7 @@
 	return ..()
 
 /mob/living/simple_animal/movement_delay()
-	var/tally = 0 // Incase I need to add stuff other than "speed" later
-
-	tally = speed
-
-	return tally+config.animal_delay
+	return speed + config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -290,6 +294,9 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
+/mob/living/simple_animal/blob_act()
+	adjustBruteLoss(20)
+
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
 	damage *= perc_block
@@ -306,7 +313,7 @@
 /mob/living/simple_animal/proc/SA_attackable(target_mob)
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
-		if(!L.stat && L.health >= 0)
+		if(L.stat == CONSCIOUS && L.health >= 0)
 			return FALSE
 	if (istype(target_mob, /obj/mecha))
 		var/obj/mecha/M = target_mob
@@ -314,7 +321,7 @@
 			return FALSE
 	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
-		if(B.health > 0)
+		if(B.get_integrity() > 0)
 			return FALSE
 	return TRUE
 
@@ -344,7 +351,7 @@
 	return FALSE
 
 /mob/living/simple_animal/say(message)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)
@@ -373,7 +380,7 @@
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
+	if(icon_move && stat == CONSCIOUS && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()
@@ -382,6 +389,9 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	else
+		stat = CONSCIOUS
+		blinded = FALSE
 	med_hud_set_status()
 
 /mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
@@ -409,4 +419,7 @@
 	..()
 
 /mob/living/simple_animal/crawl()
+	return FALSE
+
+/mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE
