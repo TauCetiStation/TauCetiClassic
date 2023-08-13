@@ -53,9 +53,8 @@
 /obj/structure/sign/poster/contraband/syndicate_recruitment{
 	pixel_y = -32
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
 "ai" = (
 /obj/machinery/power/apc{
@@ -615,9 +614,8 @@
 "bD" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
 "bE" = (
 /obj/machinery/door/airlock/external{
