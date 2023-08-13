@@ -93,9 +93,8 @@
 	id = "ntcruiser1";
 	name = "Front Hull Door"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/nt_troopship)
 "gO" = (
 /obj/structure/sign/nanotrasen,
