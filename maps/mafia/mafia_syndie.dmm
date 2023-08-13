@@ -27,9 +27,8 @@
 /area/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "j" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -99,9 +98,8 @@
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/mafia)
 "w" = (
 /turf/simulated/mineral,

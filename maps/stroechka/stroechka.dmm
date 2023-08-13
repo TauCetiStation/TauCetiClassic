@@ -122,9 +122,8 @@
 /area/space)
 "aq" = (
 /obj/item/stack/cable_coil/random,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "ar" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -343,15 +342,13 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aK" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aL" = (
 /obj/item/weapon/cigbutt,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aM" = (
 /obj/machinery/space_heater,
@@ -390,9 +387,8 @@
 /area/station/engineering/engine)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "aR" = (
 /obj/machinery/vending/coffee,
@@ -501,9 +497,8 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
 	dir = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bc" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
@@ -524,9 +519,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "be" = (
 /obj/random/vending/cola,
@@ -2809,9 +2803,8 @@
 /area/station/cargo/recycler)
 "ff" = (
 /obj/random/foods/food_trash,
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "fh" = (
 /obj/machinery/door/firedoor,
@@ -3473,9 +3466,8 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "kj" = (
 /obj/machinery/computer/rdconsole/core{
@@ -4552,9 +4544,8 @@
 /area/shuttle/supply/station)
 "uU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "uZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
@@ -5004,9 +4995,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "zr" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -5241,9 +5231,8 @@
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "Bd" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "Bg" = (
 /obj/random/vending/snack,
@@ -6261,9 +6250,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Gl" = (
 /turf/simulated/wall,
@@ -6934,9 +6922,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "KL" = (
 /obj/structure/object_wall/cargo{
@@ -7371,9 +7358,8 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "PD" = (
 /obj/structure/object_wall/cargo{
