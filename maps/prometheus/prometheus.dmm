@@ -4716,6 +4716,13 @@
 /area/station/civilian/chapel/altar)
 "aBf" = (
 /obj/structure/closet,
+/obj/item/clothing/under/mechanic,
+/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/pullover,
+/obj/item/clothing/under/vintage,
+/obj/item/clothing/under/miamivice,
+/obj/item/clothing/under/browncev,
+/obj/item/clothing/under/adjutant,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"

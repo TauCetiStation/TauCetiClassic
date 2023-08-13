@@ -11537,6 +11537,12 @@
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/device/paicard{
+	pixel_x = 4
+	},
+/obj/item/weapon/storage/box/cups{
+	pixel_x = -8
+	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -59081,7 +59087,13 @@
 /area/station/medical/storage)
 "lBF" = (
 /obj/structure/closet,
-/obj/item/device/paicard,
+/obj/item/clothing/under/mechanic,
+/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/pullover,
+/obj/item/clothing/under/vintage,
+/obj/item/clothing/under/miamivice,
+/obj/item/clothing/under/browncev,
+/obj/item/clothing/under/adjutant,
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 8;

@@ -977,6 +977,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/random/tools/tool,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "abK" = (
@@ -26039,13 +26040,19 @@
 	},
 /area/station/bridge/teleporter)
 "pSh" = (
-/obj/random/tools/tool,
+/obj/item/clothing/under/mechanic,
+/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/pullover,
+/obj/item/clothing/under/vintage,
+/obj/item/clothing/under/miamivice,
+/obj/item/clothing/under/browncev,
+/obj/item/clothing/under/adjutant,
+/obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Cargo Recieving Dock";
 	dir = 4
 	},
-/obj/structure/closet/crate,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "pTN" = (

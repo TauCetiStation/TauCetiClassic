@@ -5730,6 +5730,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/clothing/under/adjutant,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "beQ" = (
@@ -37642,7 +37643,8 @@
 /area/station/rnd/xenobiology)
 "idI" = (
 /obj/structure/closet,
-/obj/item/clothing/under/tourist,
+/obj/item/clothing/under/vintage,
+/obj/item/clothing/under/miamivice,
 /obj/item/device/cardpay{
 	dir = 1
 	},
@@ -57165,6 +57167,15 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
+"mpB" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/item/clothing/under/jersey,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "mpG" = (
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
@@ -66002,6 +66013,15 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/station/rnd/xenobiology)
+"ooT" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/item/clothing/under/tourist,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "opq" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/latex,
@@ -82146,6 +82166,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/clothing/under/browncev,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rUL" = (
@@ -83093,6 +83114,15 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"sfU" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/item/clothing/under/mechanic,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "sfV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -104166,6 +104196,17 @@
 	icon_state = "vaultfull"
 	},
 /area/station/security/execution)
+"xfv" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/item/clothing/under/pullover,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "xfH" = (
 /obj/machinery/computer/cargo/request{
 	dir = 8
@@ -151527,7 +151568,7 @@ qbm
 miA
 kNa
 miA
-dPT
+ooT
 aFX
 bas
 bas
@@ -153324,13 +153365,13 @@ aGL
 xAT
 ojm
 ojt
-beO
+xfv
 xuQ
 miA
 ojt
-dPT
+mpB
 ojt
-dPT
+sfU
 seU
 miA
 fnT
