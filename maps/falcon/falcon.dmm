@@ -22174,9 +22174,8 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "mya" = (
 /obj/effect/decal/cleanable/dirt,
@@ -29647,9 +29646,8 @@
 	},
 /obj/machinery/constructable_frame/machine_frame,
 /obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "tud" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
