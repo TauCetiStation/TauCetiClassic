@@ -436,6 +436,9 @@
 	set desc = "Rotate the manipulator."
 	set src in oview(1)
 
+	if(usr.incapacitated())
+		return
+
 	if(state != MANIPULATOR_STATE_IDLE)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src] while it's working.</span>")
 		return
@@ -453,6 +456,9 @@
 	set name = "Mirror"
 	set desc = "Mirror the manipulator."
 	set src in oview(1)
+
+	if(usr.incapacitated())
+		return
 
 	if(state != MANIPULATOR_STATE_IDLE)
 		to_chat(usr, "<span class='warning'>You cannot mirror [src] while it's working.</span>")
