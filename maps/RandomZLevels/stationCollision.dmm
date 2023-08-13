@@ -520,13 +520,6 @@
 	icon_state = "floor4"
 	},
 /area/awaymission/stationcollision/syndishuttle)
-"bF" = (
-/turf/environment/space,
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/awaymission/stationcollision/syndishuttle)
 "bG" = (
 /turf/simulated/floor{
 	icon_state = "damaged2"
@@ -3679,8 +3672,7 @@
 /area/awaymission/stationcollision/gateroom)
 "kq" = (
 /obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4;
-	icon_state = "comfychair_brown"
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/stationcollision/southblock)
@@ -3902,8 +3894,7 @@
 /area/awaymission/stationcollision/gateroom)
 "kW" = (
 /obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8;
-	icon_state = "comfychair_brown"
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/stationcollision/southblock)
@@ -5378,8 +5369,8 @@ aC
 bm
 bn
 bn
-bF
-bF
+bn
+bn
 aC
 af
 af
@@ -7389,7 +7380,7 @@ jc
 jV
 jV
 jV
-kq
+jV
 jV
 jY
 jz
@@ -7456,8 +7447,8 @@ jW
 jV
 kC
 kD
-jX
 jV
+kW
 jz
 lO
 me
@@ -7521,7 +7512,7 @@ jc
 jW
 jV
 jV
-kW
+jV
 jV
 ln
 jz
@@ -7584,12 +7575,12 @@ aa
 aa
 aa
 jA
-jX
+kq
 jV
+kq
+kq
 jV
-jV
-jV
-kC
+kq
 jA
 aa
 aa
@@ -7651,10 +7642,10 @@ aa
 aa
 jA
 jY
-kq
+jX
 kD
 jY
-kq
+kC
 jY
 jA
 aa

@@ -56549,7 +56549,8 @@
 	},
 /area/station/rnd/scibreak)
 "miU" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/media/jukebox/bar,
+/obj/item/weapon/book/manual/wiki/jukebox,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"

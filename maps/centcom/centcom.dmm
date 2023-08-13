@@ -5438,7 +5438,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "anq" = (
@@ -5446,7 +5446,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "anr" = (
@@ -5454,7 +5454,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "ans" = (
@@ -5472,7 +5472,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "ant" = (
 /obj/machinery/conveyor{
@@ -5487,14 +5489,16 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "anu" = (
 /obj/machinery/atmospherics/components/unary/tank/oxygen{
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "anv" = (
@@ -5511,7 +5515,7 @@
 	dir = 9
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "anx" = (
@@ -5886,7 +5890,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aov" = (
@@ -5895,7 +5899,7 @@
 	id = "incerator_velocity"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aow" = (
@@ -5907,7 +5911,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aox" = (
@@ -5916,7 +5920,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoy" = (
@@ -5936,7 +5940,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoB" = (
@@ -5947,7 +5951,7 @@
 	id = "incerator_velocity"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoC" = (
@@ -5957,7 +5961,7 @@
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoD" = (
@@ -5967,7 +5971,7 @@
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoE" = (
@@ -5978,7 +5982,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoF" = (
@@ -5987,7 +5991,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoG" = (
@@ -6010,12 +6014,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/velocity)
-"aoJ" = (
-/turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoK" = (
@@ -6031,7 +6030,7 @@
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoL" = (
@@ -6080,7 +6079,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "aoS" = (
@@ -6108,7 +6107,9 @@
 	dir = 5;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "aoV" = (
 /obj/machinery/door/poddoor{
@@ -6120,7 +6121,9 @@
 	id = "incerator_velocity2";
 	layer = 2
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "aoW" = (
 /obj/structure/object_wall/vox/internal{
@@ -6154,7 +6157,7 @@
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apa" = (
@@ -6169,7 +6172,7 @@
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apb" = (
@@ -6184,7 +6187,9 @@
 	name = "Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "apc" = (
 /obj/machinery/igniter{
@@ -6199,7 +6204,9 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "apd" = (
 /obj/machinery/conveyor{
@@ -6211,7 +6218,9 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/velocity)
 "ape" = (
 /obj/structure/sink{
@@ -6257,7 +6266,7 @@
 	},
 /obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apj" = (
@@ -6284,7 +6293,7 @@
 "apm" = (
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apn" = (
@@ -6298,7 +6307,7 @@
 	},
 /obj/structure/closet/toolcloset,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apo" = (
@@ -6311,27 +6320,20 @@
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "app" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma6"
+/obj/structure/sign/mark/symbol_b{
+	icon_state = "O"
 	},
-/area/custom/alien)
-"apq" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma12"
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
-/area/custom/alien)
-"apr" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma14"
-	},
-/area/custom/alien)
+/area/space)
 "aps" = (
 /turf/unsimulated/wall{
-	icon_state = "plasma10"
+	density = 0
 	},
 /area/custom/alien)
 "apt" = (
@@ -6350,10 +6352,8 @@
 	},
 /area/velocity)
 "apv" = (
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
-	},
-/area/velocity)
+/turf/unsimulated/floor,
+/area/custom/alien)
 "apw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6361,7 +6361,7 @@
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apx" = (
@@ -6373,20 +6373,24 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "apy" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma3"
+/obj/structure/sign/mark/symbol_b{
+	icon_state = "T"
 	},
-/area/custom/alien)
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/space)
 "apz" = (
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
 /area/custom/alien)
 "apA" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma1"
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
 	},
-/area/custom/alien)
+/turf/simulated/shuttle/plating,
+/area/velocity)
 "apB" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -6405,7 +6409,7 @@
 "apD" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apE" = (
@@ -6415,13 +6419,13 @@
 	},
 /obj/structure/cable,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apF" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "apG" = (
@@ -6539,9 +6543,7 @@
 	info = "Some stuff is missing...";
 	name = "Insert alien artifacts here."
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
+/turf/unsimulated/floor,
 /area/custom/alien)
 "apS" = (
 /obj/machinery/door/airlock/hatch,
@@ -6695,14 +6697,7 @@
 /area/shuttle/vox/arkship)
 "aqi" = (
 /obj/structure/closet/acloset,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/custom/alien)
-"aqj" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma2"
-	},
+/turf/unsimulated/floor,
 /area/custom/alien)
 "aqk" = (
 /obj/structure/closet/crate/seized_inventory,
@@ -6869,21 +6864,22 @@
 "aqH" = (
 /turf/environment/space,
 /area/shuttle/alien/base)
-"aqI" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma4"
-	},
-/area/custom/alien)
 "aqJ" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma13"
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access = list(101)
 	},
-/area/custom/alien)
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/velocity)
 "aqK" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma9"
+/obj/structure/sign/mark/symbol_b{
+	icon_state = "N"
 	},
-/area/custom/alien)
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/space)
 "aqL" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -7188,9 +7184,7 @@
 /area/shuttle/vox/arkship)
 "aru" = (
 /obj/structure/stool/bed/alien,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
+/turf/unsimulated/floor,
 /area/custom/alien)
 "arv" = (
 /obj/structure/object_wall/vox{
@@ -7524,11 +7518,6 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
-"asl" = (
-/turf/unsimulated/wall{
-	icon_state = "plasma5"
-	},
-/area/custom/alien)
 "asm" = (
 /obj/structure/object_wall/vox{
 	icon_state = "13,2";
@@ -10412,9 +10401,7 @@
 /area/shuttle/vox/arkship_hold)
 "ayO" = (
 /obj/machinery/door/poddoor,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "ayP" = (
 /obj/structure/object_wall/vox/internal{
@@ -10594,10 +10581,9 @@
 	},
 /area/velocity)
 "azi" = (
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/area/space)
+/obj/machinery/door/airlock/hatch,
+/turf/unsimulated/floor,
+/area/custom/alien)
 "azj" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "6,0"
@@ -10916,9 +10902,7 @@
 	id = "velocity_main";
 	name = "Security Doors"
 	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/velocity)
 "azQ" = (
 /obj/structure/object_wall/standart{
@@ -11057,18 +11041,14 @@
 /area/centcom)
 "aAe" = (
 /obj/structure/closet/emcloset,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "aAf" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "aAg" = (
 /obj/machinery/door_control{
@@ -11078,9 +11058,7 @@
 	pixel_y = 24;
 	req_access = list(101)
 	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "aAh" = (
 /obj/structure/object_wall/vox{
@@ -11225,9 +11203,7 @@
 /area/velocity)
 "aAz" = (
 /obj/structure/table,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "aAA" = (
 /obj/machinery/door/poddoor{
@@ -11237,9 +11213,7 @@
 	name = "Doors";
 	opacity = 0
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor4"
-	},
+/turf/simulated/shuttle/plating,
 /area/velocity)
 "aAB" = (
 /turf/unsimulated/floor{
@@ -11421,9 +11395,7 @@
 /area/custom/tophat)
 "aAW" = (
 /obj/structure/rack,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "aAY" = (
 /obj/machinery/camera{
@@ -13283,12 +13255,7 @@
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
 	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/velocity)
 "aFj" = (
 /turf/simulated/shuttle/wall{
@@ -18637,7 +18604,8 @@
 "aSV" = (
 /obj/machinery/seed_extractor,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aSW" = (
@@ -18646,7 +18614,8 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aSX" = (
@@ -18654,13 +18623,15 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aSY" = (
 /obj/machinery/vending/hydronutrients,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aSZ" = (
@@ -18691,8 +18662,11 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "aTi" = (
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
+/obj/structure/sign/mark/symbol_b{
+	icon_state = "M"
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
 /area/space)
 "aTk" = (
@@ -18817,18 +18791,14 @@
 	icon_state = "grimy"
 	},
 /area/centcom/living)
-"aTz" = (
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
 "aTA" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aTB" = (
@@ -18839,7 +18809,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aTC" = (
@@ -18919,22 +18890,24 @@
 	},
 /area/centcom/living)
 "aTS" = (
-/obj/structure/table,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
+/obj/structure/object_wall/standart{
+	icon_state = "swall12"
 	},
-/area/centcom/living)
+/turf/simulated/shuttle/plating,
+/area/velocity)
 "aTT" = (
 /obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aTU" = (
 /obj/structure/window/thin/reinforced,
 /obj/machinery/biogenerator,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aTV" = (
@@ -18994,7 +18967,8 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aUf" = (
@@ -19002,7 +18976,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aUg" = (
@@ -19074,7 +19049,8 @@
 	},
 /obj/machinery/hydroponics/constructable,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aUz" = (
@@ -19149,13 +19125,11 @@
 	},
 /area/centcom/living)
 "aUM" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/door/airlock/hatch{
+	locked = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
+/turf/simulated/shuttle/plating,
+/area/velocity)
 "aUO" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -19288,7 +19262,8 @@
 "aVo" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aVp" = (
@@ -19298,13 +19273,15 @@
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aVq" = (
 /obj/machinery/hydroponics/constructable,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "aVr" = (
@@ -20239,11 +20216,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/tdome)
-"aYY" = (
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
-	},
-/area/custom/beach)
 "aZa" = (
 /obj/structure/object_wall/vox{
 	icon_state = "13,17";
@@ -22577,7 +22549,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "vaultfull"
 	},
 /area/velocity)
 "csb" = (
@@ -23950,9 +23922,7 @@
 	icon_state = "rail_03"
 	},
 /obj/machinery/door/poddoor,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/space)
 "eRb" = (
 /obj/structure/rail_centcomm{
@@ -24011,20 +23981,9 @@
 	},
 /turf/environment/space,
 /area/shuttle/officer/velocity)
-"eXb" = (
-/obj/structure/rail_centcomm{
-	icon_state = "rail_03"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/area/space)
 "eYb" = (
-/obj/structure/rail_centcomm{
-	icon_state = "rail_01"
-	},
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "engine"
 	},
 /area/space)
 "eZb" = (
@@ -25345,12 +25304,7 @@
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f5"
 	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/velocity)
 "hsb" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -25581,23 +25535,13 @@
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f6"
 	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/velocity)
 "hVb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f10"
 	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/velocity)
 "hWb" = (
 /turf/unsimulated/floor{
@@ -27350,19 +27294,17 @@
 	},
 /area/centcom/control)
 "lSb" = (
-/obj/structure/sign/mark{
-	icon_state = "b3"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
+/obj/structure/sign/mark/symbol_b,
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
 /area/space)
 "lTb" = (
-/obj/structure/sign/mark{
-	icon_state = "b2"
+/obj/structure/sign/mark/symbol_b{
+	icon_state = "E"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
 /area/space)
 "lWr" = (
@@ -55666,9 +55608,9 @@ aaM
 aaM
 aaM
 aaM
-aqI
+aps
 apS
-aqI
+aps
 aaM
 aaM
 aaM
@@ -55919,13 +55861,13 @@ aaM
 aaM
 aaM
 aaM
-app
-apy
-apy
-apy
-aqJ
+aps
+aps
+aps
+aps
+aps
 apz
-apq
+aps
 aaM
 aaM
 aaM
@@ -56176,13 +56118,13 @@ aaM
 aaM
 aaM
 aaM
-apq
-apz
-apz
+aps
+apv
+apv
 aqi
-apq
-apS
-apq
+aps
+azi
+aps
 aaM
 aaM
 aaM
@@ -56433,16 +56375,16 @@ aaM
 aaM
 aaM
 aaM
-apq
-apz
+aps
+apv
 apR
 aqi
-apq
-apz
 aps
-apy
-apy
-asl
+apv
+aps
+aps
+aps
+aps
 aaM
 aaM
 aaM
@@ -56690,16 +56632,16 @@ aaM
 aaM
 aaM
 aaM
-apq
-apz
-apz
+aps
+apv
+apv
 aqi
-apq
-apz
-apz
+aps
+apv
+apv
 aqi
 aqi
-apq
+aps
 aaM
 aaM
 aaM
@@ -56947,16 +56889,16 @@ aaM
 aaM
 aaM
 aaM
-apr
-apA
-apS
-aqj
-aqK
-apz
-apz
-apz
-apz
-apq
+aps
+aps
+azi
+aps
+aps
+apv
+apv
+apv
+apv
+aps
 aaM
 aaM
 aaM
@@ -57204,16 +57146,16 @@ aaM
 aaM
 aaM
 aaM
-apq
-apz
-apz
-apz
-apz
-apz
-apz
-apz
-apz
-apq
+aps
+apv
+apv
+apv
+apv
+apv
+apv
+apv
+apv
+aps
 aaM
 aaM
 aaM
@@ -57461,16 +57403,16 @@ aaM
 aaM
 aaM
 aaM
-apq
-apz
-apz
-apz
-apz
-apz
+aps
+apv
+apv
+apv
+apv
+apv
 aru
 aru
 aru
-apq
+aps
 aaM
 aaM
 aaM
@@ -57719,15 +57661,15 @@ aaM
 aaM
 aaM
 aps
-apy
-apy
-apy
-apy
-apy
-apy
-apy
-apy
-aqK
+aps
+aps
+aps
+aps
+aps
+aps
+aps
+aps
+aps
 aaM
 aaM
 aaM
@@ -58841,7 +58783,7 @@ lqb
 lzb
 aaU
 aaM
-aTi
+eYb
 aKu
 aaM
 aSj
@@ -59612,7 +59554,7 @@ lqb
 mnb
 aaU
 aaM
-lTb
+aqK
 aKu
 aaM
 aSj
@@ -59869,7 +59811,7 @@ lrb
 lAb
 aNs
 aaM
-aTi
+apy
 aKu
 aaM
 aSj
@@ -60126,7 +60068,7 @@ aOF
 lBb
 aNs
 aaM
-aTi
+lSb
 aKu
 aaM
 aSj
@@ -60383,7 +60325,7 @@ aOF
 lqb
 aNs
 aaM
-aTi
+app
 aKu
 aaM
 aSj
@@ -60897,7 +60839,7 @@ aON
 lqb
 aaU
 aaM
-aTi
+eYb
 aKu
 aaM
 aSj
@@ -61154,7 +61096,7 @@ aOO
 lCb
 aaU
 aaM
-aTi
+eYb
 aKu
 aaM
 aSj
@@ -61411,7 +61353,7 @@ aOP
 lqb
 aNs
 aaM
-aTi
+eYb
 aKu
 aaM
 aSj
@@ -71434,11 +71376,11 @@ aBK
 aRW
 aSp
 aSV
-aTz
-aTS
+aJf
+aOW
 aUe
-aTS
-aTz
+aOW
+aJf
 aVo
 aAm
 aaM
@@ -71692,10 +71634,10 @@ aRW
 aSp
 aSW
 aTA
-aTz
+aJf
 aUf
-aTz
-aTz
+aJf
+aJf
 aVp
 aAm
 aaM
@@ -71952,7 +71894,7 @@ aBK
 aBK
 aBK
 aUw
-aTz
+aJf
 aVq
 aAm
 aaM
@@ -72209,7 +72151,7 @@ aSX
 aTT
 aBK
 aUw
-aTz
+aJf
 aVq
 aAm
 aaM
@@ -72466,7 +72408,7 @@ aTB
 aTU
 aBK
 aUw
-aUM
+aUJ
 aVq
 aAm
 aaM
@@ -78835,9 +78777,9 @@ azh
 axV
 aoo
 aAf
-azi
-azi
-azi
+atP
+atP
+atP
 aoo
 fRb
 arZ
@@ -79043,7 +78985,7 @@ aaM
 aoo
 aov
 aoB
-aoJ
+cnb
 anr
 anw
 api
@@ -79091,10 +79033,10 @@ apu
 eCb
 ffb
 azP
-azi
-azi
-azi
-azi
+atP
+atP
+atP
+atP
 aoo
 aBA
 aBV
@@ -79300,7 +79242,7 @@ aaM
 aoo
 aov
 aoC
-aoJ
+cnb
 anq
 aoZ
 aoo
@@ -79349,9 +79291,9 @@ arZ
 azD
 aoo
 aAg
-azi
-azi
-azi
+atP
+atP
+atP
 aoo
 aoo
 dCb
@@ -79563,7 +79505,7 @@ apa
 aoo
 aoo
 aoo
-apu
+aqJ
 aoo
 aoo
 aoo
@@ -79611,7 +79553,7 @@ fob
 fob
 fob
 fSb
-azi
+atP
 aeD
 aeD
 aaM
@@ -79820,7 +79762,7 @@ apb
 aoo
 aoo
 apm
-apv
+cnb
 apD
 aoo
 aqu
@@ -79859,17 +79801,17 @@ atP
 atP
 atP
 ayO
-azi
-azi
-azi
+atP
+atP
+atP
 hUb
 aAA
 aAA
 aAA
 hrb
-azi
-azi
-azi
+atP
+atP
+atP
 atB
 aaM
 aaM
@@ -80116,17 +80058,17 @@ dvb
 dvb
 dvb
 eQb
-eXb
-eXb
-eXb
+dvb
+dvb
+dvb
 aAj
 aAB
 aAB
 aAB
-aAj
-eXb
-eXb
-eXb
+aUM
+dvb
+dvb
+dvb
 atB
 aaM
 aaM
@@ -80373,17 +80315,17 @@ dwb
 dwb
 dwb
 eRb
-eYb
-eYb
-eYb
+dwb
+dwb
+dwb
 dKb
 fyb
 fAb
 fGb
-dKb
-eYb
-eYb
-eYb
+aTS
+dwb
+dwb
+dwb
 atB
 aaM
 aaM
@@ -80630,17 +80572,17 @@ atP
 atP
 atP
 ayO
-azi
-azi
-azi
+atP
+atP
+atP
 hVb
-dNb
-dNb
-dNb
+apA
+apA
+apA
 aFi
-azi
-azi
-azi
+atP
+atP
+atP
 atB
 aaM
 aaM
@@ -89957,7 +89899,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -90214,7 +90156,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -90471,7 +90413,7 @@ aWp
 aWE
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -90728,7 +90670,7 @@ aVH
 aWp
 aVH
 aYS
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -90985,7 +90927,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -91242,7 +91184,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -91499,7 +91441,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -91756,7 +91698,7 @@ aVH
 aVH
 aYL
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -92013,7 +91955,7 @@ aVH
 nJb
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -92270,7 +92212,7 @@ aVH
 aVH
 aYL
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -92527,7 +92469,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -92784,7 +92726,7 @@ aVH
 aVH
 aYL
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -93041,7 +92983,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -93298,7 +93240,7 @@ aVH
 aVH
 aYM
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -93555,7 +93497,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -93812,7 +93754,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -94069,7 +94011,7 @@ aVZ
 aWp
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -94326,7 +94268,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -94583,7 +94525,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
