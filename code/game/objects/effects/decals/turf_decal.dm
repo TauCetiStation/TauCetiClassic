@@ -131,7 +131,7 @@
 /obj/effect/decal/turf_decal/set_damaged/atom_init()
 	. = ..()
 
-	if(istype(loc, /turf/simulated/floor)) // todo: unsim
+	if(isfloorturf(loc)) // todo: unsim
 		var/turf/simulated/floor/T = loc
 		T.break_tile()
 	else if(istype(loc, /turf/unsimulated/floor)) // fallback behaviour before we remove unsim
@@ -151,7 +151,7 @@
 /obj/effect/decal/turf_decal/set_burned/atom_init()
 	. = ..()
 
-	if(istype(loc, /turf/simulated/floor)) // todo: unsim
+	if(isfloorturf(loc)) // todo: unsim
 		var/turf/simulated/floor/T = loc
 		T.burn_tile()
 	else if(istype(loc, /turf/unsimulated/floor)) // fallback behaviour before we remove unsim
