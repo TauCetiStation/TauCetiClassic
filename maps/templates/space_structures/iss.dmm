@@ -83,19 +83,12 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ao" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space)
 "ap" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/space)
-"aq" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space)
 "ar" = (
 /obj/structure/filingcabinet/filingcabinet,
@@ -447,7 +440,7 @@ ac
 ac
 ac
 an
-aq
+ao
 aa
 aa
 aa

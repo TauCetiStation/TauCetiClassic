@@ -10,11 +10,6 @@
 /obj/machinery/body_scanconsole,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
-"aI" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/space_structures/broken_breacher)
 "aT" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/turf_decal{
@@ -291,9 +286,8 @@
 	},
 /area/space_structures/broken_breacher)
 "lV" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/broken_breacher)
 "mc" = (
 /obj/machinery/light{
@@ -500,9 +494,8 @@
 /turf/environment/space,
 /area/space_structures/broken_breacher)
 "rA" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "rB" = (
 /obj/machinery/porta_turret/stationary{
@@ -918,11 +911,6 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/broken_breacher)
-"HP" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/space_structures/broken_breacher)
 "HT" = (
 /obj/structure/rack,
 /obj/structure/window/thin/reinforced{
@@ -1229,9 +1217,8 @@
 "Vk" = (
 /obj/item/weapon/crossbow/vox,
 /obj/item/weapon/arrow/rod,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "VR" = (
 /obj/effect/landmark/corpse/unathisoldier,
@@ -2101,7 +2088,7 @@ mU
 Zm
 Zm
 bg
-aI
+lV
 pT
 aX
 sO
@@ -2129,7 +2116,7 @@ Ns
 pT
 JB
 FV
-aI
+lV
 UU
 pT
 BO
@@ -2431,7 +2418,7 @@ sO
 rB
 sO
 sh
-HP
+rA
 It
 sO
 sO
