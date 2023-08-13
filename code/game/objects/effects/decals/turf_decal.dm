@@ -4,8 +4,13 @@
 	name = "Turf Decals"
 	icon = 'icons/turf/turf_decals.dmi'
 
+	var/skip_decal = FALSE
+
 /obj/effect/decal/turf_decal/atom_init(mapload, new_state, new_dir, new_color, new_alpha)
 	. = ..()
+
+	if(skip_decal)
+		return INITIALIZE_HINT_QDEL
 
 	icon_state = new_state || icon_state
 
@@ -100,9 +105,11 @@
 	T.name = "Comemmorative Plaque";
 	T.desc = "\"Это металлический диск в честь наших товарищей на станциях G4407. Недеемся, модель TG4407 сможет служить на ваше благо.\" Ниже выцарапано грубое изображение метеора и космонавта. Космонавт смеется. Метеор взрывается.";
 
+// modifiers
 /obj/effect/decal/turf_decal/religion_emblem
 	name = "Set as religion emblem place"
 	icon_state = "religion_christianity"
+	skip_decal = TRUE
 
 /obj/effect/decal/turf_decal/religion_emblem/atom_init(mapload, new_state, new_dir, new_color, new_alpha)
 	. = ..()
@@ -110,5 +117,45 @@
 	if(istype(loc, /turf/simulated/floor/carpet)) // why carpets? idk
 		var/turf/simulated/floor/carpet/T = loc
 		T.religion_tile = TRUE
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/decal/turf_decal/set_damaged
+	name = "Set floor as damaged"
+
+	icon = 'icons/turf/floors/damaged_overlays.dmi'
+	icon_state = "damaged_1"
+
+	skip_decal = TRUE
+
+/obj/effect/decal/turf_decal/set_damaged/atom_init()
+	. = ..()
+
+	if(istype(loc, /turf/simulated/floor)) // todo: unsim
+		var/turf/simulated/floor/T = loc
+		T.break_tile()
+	else if(istype(loc, /turf/unsimulated/floor)) // fallback behaviour before we remove unsim
+		var/turf/unsimulated/T = loc
+		T.add_overlay(mutable_appearance(icon, icon_state))
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/decal/turf_decal/set_burned
+	name = "Set floor as burned"
+
+	icon = 'icons/turf/floors/damaged_overlays.dmi'
+	icon_state = "scorched_1"
+
+	skip_decal = TRUE
+
+/obj/effect/decal/turf_decal/set_burned/atom_init()
+	. = ..()
+
+	if(istype(loc, /turf/simulated/floor)) // todo: unsim
+		var/turf/simulated/floor/T = loc
+		T.burn_tile()
+	else if(istype(loc, /turf/unsimulated/floor)) // fallback behaviour before we remove unsim
+		var/turf/unsimulated/T = loc
+		T.add_overlay(mutable_appearance(icon, icon_state))
 
 	return INITIALIZE_HINT_QDEL
