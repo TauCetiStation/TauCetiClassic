@@ -583,9 +583,6 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -19503,6 +19500,9 @@
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/stool/bed/chair{
 	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -42006,7 +42006,7 @@
 	icon_state = "bot"
 	},
 /obj/effect/decal/turf_decal{
-	dir = 5;
+	dir = 4;
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
@@ -79345,18 +79345,6 @@
 "rrj" = (
 /turf/environment/space,
 /area/shuttle/syndicate/southwest)
-"rrl" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "bluecorner"
-	},
-/area/station/hallway/primary/central)
 "rrn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -88162,6 +88150,9 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
 	dir = 1
+	},
+/obj/machinery/firealarm{
+	pixel_y = 22
 	},
 /turf/simulated/floor,
 /area/station/medical/reception)
@@ -149325,7 +149316,7 @@ vSs
 pfv
 bgO
 lNz
-rrl
+vof
 nPb
 tpH
 krJ
