@@ -12685,6 +12685,16 @@
 /obj/structure/sign/nanotrasen,
 /turf/simulated/wall/r_wall,
 /area/station/bridge/ai_upload)
+"cBN" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/machinery/power/emitter{
+	dir = 8;
+	state = 2
+	},
+/turf/simulated/floor,
+/area/station/engineering/atmos/supermatter)
 "cBU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/structure/window/fulltile/reinforced/phoron{
@@ -19480,7 +19490,6 @@
 /area/station/medical/surgeryobs)
 "eeX" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
 	dir = 8;
 	state = 2
 	},
@@ -137133,7 +137142,7 @@ kbD
 lzv
 dyt
 jFX
-eeX
+cBN
 pAq
 eeX
 jFX
