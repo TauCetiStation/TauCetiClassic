@@ -135,7 +135,7 @@
 		var/turf/simulated/floor/T = loc
 		T.break_tile()
 	else if(istype(loc, /turf/unsimulated/floor)) // fallback behaviour before we remove unsim
-		var/turf/unsimulated/T = loc
+		var/turf/unsimulated/floor/T = loc
 		T.add_overlay(mutable_appearance(icon, icon_state))
 
 	return INITIALIZE_HINT_QDEL
@@ -155,7 +155,7 @@
 		var/turf/simulated/floor/T = loc
 		T.burn_tile()
 	else if(istype(loc, /turf/unsimulated/floor)) // fallback behaviour before we remove unsim
-		var/turf/unsimulated/T = loc
+		var/turf/unsimulated/floor/T = loc
 		T.add_overlay(mutable_appearance(icon, icon_state))
 
 	return INITIALIZE_HINT_QDEL
