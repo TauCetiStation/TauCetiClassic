@@ -163,11 +163,7 @@
 	add_overlay(distort)
 
 /obj/machinery/power/supermatter/proc/explode()
-	var/turf/epicenter = get_turf(src)
-	explosion(epicenter, explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, ignorecap = TRUE)
-	var/datum/effect/system/explosion/delamination/E = new(epicenter)
-	E.set_up(epicenter, 1)
-	E.start()
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, ignorecap = TRUE)
 	qdel(src)
 	return
 
@@ -363,35 +359,6 @@
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
 	irradiate_in_dist(get_turf(src), 500, 10)
-
-/obj/effect/delamination
-	name = "delamination"
-	icon_state = "sm_shatter"
-	plane = ABOVE_LIGHTING_PLANE
-	opacity = TRUE
-	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | NO_CLIENT_COLOR
-
-/obj/effect/delamination/New()
-	. = ..()
-	QDEL_IN(src, 18)
-
-/obj/effect/delamination/inner
-	icon = 'icons/effects/512x512.dmi'
-	pixel_x = -240
-	pixel_y = -240
-
-/obj/effect/delamination/outer
-	icon = 'icons/effects/1024x1024.dmi'
-	pixel_x = -496
-	pixel_y = -496
-
-/datum/effect/system/explosion/delamination
-
-/datum/effect/system/explosion/delamination/start()
-	new /obj/effect/delamination/inner(location)
-	new /obj/effect/delamination/outer(location)
 
 /atom/movable/distortion_effect
 	name = ""
