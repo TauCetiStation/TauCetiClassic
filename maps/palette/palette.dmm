@@ -88,9 +88,8 @@
 /turf/environment/space,
 /area/space)
 "aN" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space)
 "aO" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -182,9 +181,8 @@
 	},
 /area/space)
 "bX" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space)
 "bY" = (
 /turf/simulated/floor{
@@ -270,9 +268,8 @@
 	},
 /area/space)
 "cZ" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "dd" = (
 /turf/simulated/floor{
@@ -281,9 +278,8 @@
 	},
 /area/space)
 "di" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "dk" = (
 /turf/simulated/floor{
@@ -825,11 +821,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"jy" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/space)
 "jz" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -953,11 +944,6 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"kn" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
 /area/space)
 "kq" = (
 /turf/simulated/floor{
@@ -1211,9 +1197,8 @@
 	},
 /area/space)
 "mj" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space)
 "mk" = (
 /obj/effect/decal/turf_decal{
@@ -1415,11 +1400,6 @@
 	icon_state = "purplecorner"
 	},
 /area/space)
-"oy" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/space)
 "oA" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -1567,11 +1547,6 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
-	},
-/area/space)
-"qK" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken5"
 	},
 /area/space)
 "qQ" = (
@@ -2081,11 +2056,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"wA" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken3"
-	},
-/area/space)
 "wB" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2210,19 +2180,13 @@
 	},
 /area/space)
 "xT" = (
-/turf/simulated/floor{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor,
 /area/space)
 "xV" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "redblue"
-	},
-/area/space)
-"xW" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
 	},
 /area/space)
 "xZ" = (
@@ -2611,11 +2575,6 @@
 	icon_state = "whitegreen"
 	},
 /area/space)
-"CK" = (
-/turf/simulated/floor{
-	icon_state = "floorscorched2"
-	},
-/area/space)
 "CR" = (
 /turf/simulated/floor{
 	icon_state = "purplecorner"
@@ -2917,12 +2876,6 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "wood_stairs2"
-	},
-/area/space)
-"FQ" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "floorscorched2"
 	},
 /area/space)
 "FU" = (
@@ -3870,11 +3823,6 @@
 	icon_state = "blueyellowfull"
 	},
 /area/space)
-"OI" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken6"
-	},
-/area/space)
 "ON" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -4014,11 +3962,6 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"PU" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken7"
-	},
 /area/space)
 "PZ" = (
 /obj/effect/decal/turf_decal{
@@ -4581,11 +4524,6 @@
 	icon_state = "whitegreenfull"
 	},
 /area/space)
-"Vz" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/space)
 "VC" = (
 /turf/simulated/floor/carpet/red,
 /area/space)
@@ -4683,11 +4621,6 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
-	},
-/area/space)
-"WT" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken2"
 	},
 /area/space)
 "WU" = (
@@ -5167,7 +5100,7 @@ Hy
 Hy
 nL
 aN
-jy
+mj
 Fe
 mZ
 RA
@@ -5218,7 +5151,7 @@ Hy
 Hy
 nL
 aN
-Vz
+mj
 ay
 ww
 QC
@@ -5473,7 +5406,7 @@ Hy
 Hy
 aM
 cZ
-kn
+di
 so
 Fn
 rR
@@ -5524,7 +5457,7 @@ Hy
 Hy
 uA
 cZ
-xW
+di
 mU
 WU
 ZD
@@ -6200,8 +6133,8 @@ wI
 wI
 VC
 VC
-WT
-WT
+bX
+bX
 bu
 Xo
 xz
@@ -6251,8 +6184,8 @@ wI
 wI
 VC
 VC
-wA
-wA
+bX
+bX
 yc
 sH
 yc
@@ -6302,8 +6235,8 @@ Wf
 Wf
 pM
 pM
-oy
-oy
+bX
+bX
 ok
 yc
 Rh
@@ -6353,8 +6286,8 @@ Wf
 Wf
 pM
 pM
-qK
-qK
+bX
+bX
 yc
 WH
 yc
@@ -6404,8 +6337,8 @@ LP
 LP
 ig
 ig
-OI
-OI
+bX
+bX
 Hy
 hD
 gY
@@ -6455,8 +6388,8 @@ LP
 LP
 ig
 ig
-PU
-PU
+bX
+bX
 Tg
 Lr
 Lr
@@ -6820,10 +6753,10 @@ ZP
 ZP
 Fd
 Fd
-FQ
-FQ
-CK
-CK
+xT
+xT
+xT
+xT
 zb
 zb
 mp
@@ -6871,10 +6804,10 @@ ZP
 ZP
 Fd
 Fd
-FQ
-FQ
-CK
-CK
+xT
+xT
+xT
+xT
 zb
 zb
 mp
