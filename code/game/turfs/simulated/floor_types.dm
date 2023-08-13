@@ -42,6 +42,12 @@
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
 
+/turf/simulated/floor/engine/break_tile()
+	return
+
+/turf/simulated/floor/engine/burn_tile()
+	return
+
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrenching(C))
 		if(user.is_busy(src))

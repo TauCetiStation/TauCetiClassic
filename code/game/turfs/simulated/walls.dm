@@ -208,8 +208,9 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
-	F.burn_tile()
-	F.icon_state = "wall_thermite"
+	F.burnt = TRUE
+	F.add_scorched_overlay("thermite")
+
 	to_chat(user, "<span class='warning'>Термит начинает плавить стену.</span>")
 
 	spawn(seconds_to_melt * 10)
