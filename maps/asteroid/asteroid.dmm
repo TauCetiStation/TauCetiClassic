@@ -8227,9 +8227,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "rN" = (
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
+/turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "rO" = (
 /obj/structure/barricade/wooden,
@@ -13306,6 +13304,9 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"XD" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -51334,7 +51335,7 @@ ac
 ac
 ac
 mY
-rN
+XD
 ar
 aa
 aa
@@ -51591,7 +51592,7 @@ aa
 mY
 aa
 ar
-rN
+XD
 ar
 aa
 kO
@@ -51848,7 +51849,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 kO
 kO
@@ -52105,7 +52106,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 rK
 rK
@@ -52362,7 +52363,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 rK
 rK
 rK
@@ -52619,7 +52620,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 rK
 rK
 aa
@@ -52876,7 +52877,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
@@ -53133,7 +53134,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
@@ -53390,7 +53391,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
