@@ -17386,7 +17386,6 @@
 /area/station/civilian/chapel)
 "dFv" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -63935,8 +63934,8 @@
 /area/station/hallway/secondary/entry)
 "nQr" = (
 /obj/machinery/light/smart,
-/obj/machinery/atm{
-	pixel_y = -28
+/obj/machinery/alarm{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -85079,12 +85078,12 @@
 	},
 /area/station/security/hos)
 "sDB" = (
-/obj/machinery/alarm{
-	pixel_y = -32
-	},
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
 	dir = 10
+	},
+/obj/machinery/atm{
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
