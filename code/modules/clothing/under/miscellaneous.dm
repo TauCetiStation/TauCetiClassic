@@ -770,3 +770,38 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/adjutant
+	name = "adjutant's suit"
+	desc = "Filled with hatred and envy"
+	icon_state = "adjutant"
+
+/obj/item/clothing/under/browncev
+	name = "brown suit"
+	desc = "A tan shirt and gray pants that are rather basic"
+	icon_state = "browncev"
+
+/obj/item/clothing/under/mechanic
+	name = "workman outfit"
+	desc = "The very image of a working man. Not that you're probably doing work"
+	icon_state = "mechanic"
+
+/obj/item/clothing/under/pullover
+	name = "patterned pullover"
+	desc = "Brown pullover with indeterminable pattern"
+	icon_state = "pullover"
+
+/obj/item/clothing/under/jersey
+	name = "revealing jersey"
+	desc = "For showing your devotion to god, or the opposite for that matter"
+	icon_state = "jersey"
+
+/obj/item/clothing/under/vintage
+	name = "pink tropical shirt"
+	desc = "An Free Trade Union branded neosilk tropical shirt. This one makes you feel nostalgic"
+	icon_state = "3005vintage"
+
+/obj/item/clothing/under/miamivice
+	name = "blue tropical shirt"
+	desc = "An Free Trade Union branded neosilk tropical shirt. This one makes you feel out of touch"
+	icon_state = "miamivice"
