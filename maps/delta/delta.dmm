@@ -13860,7 +13860,10 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "cOS" = (
 /obj/machinery/teleport/hub,
@@ -17564,7 +17567,9 @@
 	codes_txt = "patrol;next_patrol=SW-FC";
 	location = "SSW-FC"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/starboard)
 "dHU" = (
 /obj/structure/cable{
@@ -23990,7 +23995,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/starboard)
 "ffG" = (
 /obj/machinery/light/smart{
@@ -28089,18 +28096,6 @@
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
-"gde" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "gdx" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -34922,7 +34917,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
 /area/station/cargo/lobby)
 "hzz" = (
 /obj/structure/table/reinforced,
@@ -36285,9 +36282,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "hOf" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/hallway/primary/starboard)
 "hOl" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -47941,7 +47940,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
 /area/station/cargo/lobby)
 "kmD" = (
 /obj/machinery/door/firedoor,
@@ -63563,7 +63564,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/starboard)
 "nLd" = (
 /obj/structure/table/reinforced,
@@ -75941,7 +75944,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/hallway/primary/starboard)
 "qBB" = (
 /obj/structure/closet/emcloset,
@@ -77511,10 +77516,6 @@
 "qTx" = (
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/port)
-"qTB" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor,
-/area/station/hallway/primary/starboard)
 "qTE" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -79972,11 +79973,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -143633,7 +143629,7 @@ jZs
 gwa
 laN
 ogP
-hOf
+aBP
 ogP
 ogP
 ogP
@@ -145390,8 +145386,8 @@ hne
 yaE
 plf
 kHU
-plf
-plf
+kHU
+kHU
 kHU
 plf
 yaE
@@ -145647,8 +145643,8 @@ dat
 yaE
 plf
 kHU
-plf
-plf
+kHU
+kHU
 kHU
 plf
 yaE
@@ -152702,9 +152698,9 @@ vac
 vac
 nZA
 hcD
-sxC
-sxC
-sxC
+hOf
+hOf
+hOf
 pyk
 seu
 boO
@@ -152885,7 +152881,7 @@ cpR
 cEU
 bGA
 bbQ
-gde
+dmP
 bbQ
 bbQ
 lWH
@@ -152959,19 +152955,19 @@ kFX
 kFX
 rSL
 vzR
-xQo
+kFX
 ffw
-xQo
+kFX
 eXV
 rSL
 lDB
-xQo
-qTB
+kFX
+xUM
 qBt
-xQo
-xQo
-xQo
-xQo
+kFX
+kFX
+kFX
+kFX
 nKU
 dHT
 xQo
@@ -153216,9 +153212,9 @@ xTn
 xTn
 rSL
 vzR
-xQo
-xQo
-xQo
+kFX
+kFX
+kFX
 eXV
 rSL
 lDB
