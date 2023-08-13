@@ -2667,6 +2667,16 @@
 	icon_state = "gcircuit"
 	},
 /area/station/rnd/server)
+"avL" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/machinery/power/emitter{
+	dir = 8;
+	state = 2
+	},
+/turf/simulated/floor,
+/area/station/engineering/atmos/supermatter)
 "avU" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -5785,7 +5795,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/engineering/atmos)
 "bfh" = (
 /obj/structure/cable{
@@ -12685,16 +12697,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/simulated/wall/r_wall,
 /area/station/bridge/ai_upload)
-"cBN" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/machinery/power/emitter{
-	dir = 8;
-	state = 2
-	},
-/turf/simulated/floor,
-/area/station/engineering/atmos/supermatter)
 "cBU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/structure/window/fulltile/reinforced/phoron{
@@ -77266,7 +77268,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/engineering/atmos)
 "qRf" = (
 /obj/machinery/door/airlock/research{
@@ -92732,7 +92736,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/engineering/atmos)
 "uty" = (
 /obj/machinery/ai_slipper{
@@ -137142,7 +137148,7 @@ kbD
 lzv
 dyt
 jFX
-cBN
+avL
 pAq
 eeX
 jFX
