@@ -19373,7 +19373,7 @@
 /area/station/security/secconfhall)
 "emL" = (
 /obj/structure/table,
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -57299,7 +57299,7 @@
 /area/station/ai_monitored/eva)
 "nBy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /obj/item/clothing/head/chefhat,
 /obj/structure/closet,
 /turf/simulated/floor/plating,
