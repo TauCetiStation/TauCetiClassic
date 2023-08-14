@@ -26189,6 +26189,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"fEN" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
+	},
+/turf/simulated/floor,
+/area/station/civilian/chapel/mass_driver)
 "fEV" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -36142,6 +36149,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 15;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "hLk" = (
@@ -158343,7 +158354,7 @@ pYK
 pne
 nOh
 jzW
-btA
+fEN
 bYM
 tkH
 bYM
