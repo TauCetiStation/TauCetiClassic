@@ -42,6 +42,12 @@
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
 
+/turf/simulated/floor/engine/break_tile()
+	return
+
+/turf/simulated/floor/engine/burn_tile()
+	return
+
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrenching(C))
 		if(user.is_busy(src))
@@ -206,9 +212,7 @@
 	barefootstep = FOOTSTEP_WATER_DEEP
 	clawfootstep = FOOTSTEP_WATER_DEEP
 	heavyfootstep = FOOTSTEP_WATER_DEEP
-	slowdown = 6
-
-
+	static_fluid_depth  = 800
 
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
@@ -227,7 +231,8 @@
 	return
 
 /mob/living/carbon/human/exited_water_turf()
-	Stun(2)
+	if(get_species() != SKRELL)
+		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/silicon/robot/exited_water_turf()
@@ -242,7 +247,8 @@
 		playsound(src, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/entered_water_turf()
-	Stun(2)
+	if(get_species() != SKRELL)
+		Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	wear_suit?.make_wet()
 	w_uniform?.make_wet()
@@ -302,68 +308,6 @@
 /turf/simulated/floor/grass/atom_init_late()
 	update_icon()
 	for(var/direction in cardinal)
-		if(istype(get_step(src,direction),/turf/simulated/floor))
-			var/turf/simulated/floor/FF = get_step(src,direction)
-			FF.update_icon() //so siding get updated properly
-
-/turf/simulated/floor/carpet
-	name = "carpet"
-	icon_state = "carpet"
-	floor_type = /obj/item/stack/tile/carpet
-	icon = 'icons/turf/carpets.dmi'
-	footstep = FOOTSTEP_CARPET
-	barefootstep = FOOTSTEP_CARPET_BAREFOOT
-	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
-
-/turf/simulated/floor/carpet/black
-	name = "black carpet"
-	icon_state = "blackcarpet"
-	floor_type = /obj/item/stack/tile/carpet/black
-
-/turf/simulated/floor/carpet/purple
-	name = "purple carpet"
-	icon_state = "purplecarpet"
-	floor_type = /obj/item/stack/tile/carpet/purple
-
-/turf/simulated/floor/carpet/orange
-	name = "orange carpet"
-	icon_state = "orangecarpet"
-	floor_type = /obj/item/stack/tile/carpet/orange
-
-/turf/simulated/floor/carpet/green
-	name = "green carpet"
-	icon_state = "greencarpet"
-	floor_type = /obj/item/stack/tile/carpet/green
-
-/turf/simulated/floor/carpet/blue
-	name = "blue carpet"
-	icon_state = "bluecarpet"
-	floor_type = /obj/item/stack/tile/carpet/blue
-
-/turf/simulated/floor/carpet/blue2
-	name = "blue carpet"
-	icon_state = "blue2carpet"
-	floor_type = /obj/item/stack/tile/carpet/blue2
-
-/turf/simulated/floor/carpet/red
-	name = "red carpet"
-	icon_state = "redcarpet"
-	floor_type = /obj/item/stack/tile/carpet/red
-
-/turf/simulated/floor/carpet/cyan
-	name = "cyan carpet"
-	icon_state = "cyancarpet"
-	floor_type = /obj/item/stack/tile/carpet/cyan
-
-/turf/simulated/floor/carpet/atom_init()
-	if(!icon_state)
-		icon_state = "carpet"
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/simulated/floor/carpet/atom_init_late()
-	update_icon()
-	for(var/direction in list(1,2,4,8,5,6,9,10))
 		if(istype(get_step(src,direction),/turf/simulated/floor))
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
