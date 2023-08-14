@@ -120,9 +120,8 @@
 /obj/machinery/door/airlock/silver{
 	locked = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
 "aB" = (
 /turf/simulated/shuttle/wall{
@@ -262,14 +261,8 @@
 	},
 /area/awaymission/BMPship1)
 "aW" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/awaymission/BMPship1)
-"aX" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship1)
 "aY" = (
 /obj/effect/gibspawner/generic,
@@ -383,15 +376,9 @@
 	icon_state = "swall1"
 	},
 /area/awaymission/BMPship3)
-"bs" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
-/area/awaymission/BMPship1)
 "bt" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship1)
 "bu" = (
 /obj/structure/cable{
@@ -537,9 +524,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
 "bO" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/awaymission/BMPship3)
 "bP" = (
 /obj/effect/decal/turf_decal{
@@ -2106,9 +2092,8 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/awaymission/BMPship2)
 "gk" = (
 /obj/structure/kitchenspike,
@@ -2186,18 +2171,12 @@
 	},
 /area)
 "gw" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gx" = (
 /obj/structure/lattice,
 /turf/environment/space,
-/area/awaymission/BMPship3)
-"gy" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
 /area/awaymission/BMPship3)
 "gz" = (
 /obj/item/stack/cable_coil{
@@ -2227,9 +2206,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gC" = (
 /obj/structure/cable{
@@ -2237,9 +2215,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gD" = (
 /obj/structure/cable{
@@ -2286,22 +2263,15 @@
 	icon_state = "showroomfloor"
 	},
 /area/awaymission/BMPship1)
-"gK" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/awaymission/BMPship3)
 "gL" = (
 /obj/item/weapon/shard,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gM" = (
 /obj/structure/stool,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gN" = (
 /turf/simulated/floor/plating/airless,
@@ -2362,9 +2332,8 @@
 	},
 /area/awaymission/BMPship1)
 "gW" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /turf/simulated/shuttle/wall{
 	dir = 3;
 	icon_state = "swall_f10"
@@ -2374,17 +2343,15 @@
 /obj/structure/computerframe{
 	anchored = 1
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gY" = (
 /obj/structure/computerframe{
 	anchored = 1
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "gZ" = (
 /obj/machinery/light/small,
@@ -2393,14 +2360,8 @@
 	},
 /area/awaymission/BMPship2)
 "ha" = (
-/turf/simulated/floor{
-	icon_state = "platingdmg3"
-	},
-/area/awaymission/BMPship2)
-"hb" = (
-/turf/simulated/floor{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/awaymission/BMPship2)
 "hc" = (
 /obj/machinery/door/airlock/silver{
@@ -2433,9 +2394,8 @@
 /area/awaymission)
 "hg" = (
 /obj/item/device/multitool,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission)
 "hh" = (
 /turf/simulated/shuttle/wall{
@@ -2513,9 +2473,8 @@
 /area/awaymission/BMPship3)
 "hw" = (
 /obj/structure/cable,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission/BMPship3)
 "hx" = (
 /obj/machinery/light/small{
@@ -2548,9 +2507,8 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission)
 "hE" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission)
 "hF" = (
 /obj/machinery/light/small{
@@ -2559,9 +2517,8 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission)
 "hG" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/awaymission)
 "hH" = (
 /obj/item/apc_frame,
@@ -2654,11 +2611,6 @@
 /obj/effect/gibspawner/robot,
 /turf/simulated,
 /area/awaymission/BMPship3)
-"hU" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/awaymission)
 "hV" = (
 /obj/effect/decal/mecha_wreckage/ripley,
 /turf/simulated/floor/plating/airless,
@@ -2673,9 +2625,8 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/awaymission)
 "hY" = (
 /obj/effect/landmark{
@@ -2710,9 +2661,8 @@
 /area/awaymission)
 "ie" = (
 /obj/effect/gibspawner/robot,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/awaymission)
 "if" = (
 /obj/structure/cable{
@@ -2761,9 +2711,8 @@
 /turf/simulated/shuttle/wall,
 /area/awaymission/BMPship3)
 "in" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/awaymission)
 "io" = (
 /obj/effect/decal/remains/human,
@@ -9312,7 +9261,7 @@ cz
 cz
 af
 gx
-gK
+gw
 aa
 aa
 aa
@@ -9441,7 +9390,7 @@ cz
 cz
 cz
 cf
-gy
+gw
 gL
 gW
 hh
@@ -9833,7 +9782,7 @@ fW
 af
 gB
 gN
-gy
+gw
 hi
 cg
 hS
@@ -9967,7 +9916,7 @@ gO
 hj
 hw
 gN
-gy
+gw
 af
 hf
 hf
@@ -10096,8 +10045,8 @@ cK
 cK
 hk
 hx
-gK
-gy
+gw
+gw
 im
 hf
 hf
@@ -10617,7 +10566,7 @@ cJ
 cj
 hA
 gN
-gy
+gw
 hf
 hf
 hf
@@ -10745,7 +10694,7 @@ eo
 cJ
 cJ
 cj
-gy
+gw
 hy
 hy
 hf
@@ -11263,7 +11212,7 @@ em
 em
 gD
 gP
-hb
+ha
 hm
 hf
 hf
@@ -11638,7 +11587,7 @@ ar
 aa
 ar
 aE
-bs
+aW
 aw
 cL
 db
@@ -11766,7 +11715,7 @@ ar
 aa
 aa
 ar
-bs
+aW
 aG
 bt
 aw
@@ -11896,7 +11845,7 @@ aa
 ar
 ar
 aW
-aX
+aW
 bt
 aG
 aw
@@ -11916,7 +11865,7 @@ dS
 cJ
 cj
 hD
-hU
+hE
 ac
 hf
 hf
@@ -12025,9 +11974,9 @@ aa
 aa
 av
 aE
-aX
+aW
 aG
-aX
+aW
 bU
 aw
 cO
@@ -12178,7 +12127,7 @@ cj
 ac
 hD
 ac
-hU
+hE
 ac
 hB
 hf
@@ -12309,7 +12258,7 @@ hF
 hW
 hY
 hY
-hU
+hE
 iA
 hf
 hf

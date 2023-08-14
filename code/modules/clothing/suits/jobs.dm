@@ -98,16 +98,39 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife)
+	var/rolled = FALSE
+
+/obj/item/clothing/suit/chef/verb/roll_down()
+	set name = "Rolled Down Apron"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(rolled)
+		icon_state = initial(icon_state)
+		item_state = initial(icon_state)
+		to_chat(usr, "You roll up [src] sleeves")
+		rolled = FALSE
+	else
+		icon_state += "_r"
+		item_state += "_r"
+		to_chat(usr, "You roll down [src] sleeves")
+		rolled = TRUE
+	update_inv_mob()
 
 //Chef
-/obj/item/clothing/suit/chef/classic
-	name = "A classic chef's apron."
+/obj/item/clothing/suit/chef_classic
+	name = "A classic chef's apron"
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
-	body_parts_covered = 0
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.50
+	allowed = list (/obj/item/weapon/kitchenknife, /obj/item/weapon/kitchen/rollingpin)
+
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit

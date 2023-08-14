@@ -556,8 +556,11 @@
 /obj/structure/torch_holder{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "abg" = (
@@ -5070,8 +5073,11 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amy" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_5"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
 "amz" = (
@@ -11370,8 +11376,11 @@
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_2"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "aAV" = (
@@ -11482,8 +11491,11 @@
 /area/custom/wizard_station)
 "aBh" = (
 /obj/item/weapon/flora/pottedplant/subterranean,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aBj" = (
@@ -11588,15 +11600,21 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aBx" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aBy" = (
@@ -11615,8 +11633,11 @@
 "aBz" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_5"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aBA" = (
@@ -11771,8 +11792,11 @@
 "aBN" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aBO" = (
@@ -12550,8 +12574,11 @@
 /obj/structure/torch_holder/magic{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_2"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aDz" = (
@@ -12962,8 +12989,11 @@
 /obj/structure/mirror/magic{
 	pixel_y = -30
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_2"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aEE" = (
@@ -13504,8 +13534,11 @@
 /obj/item/weapon/reagent_containers/glass/rag{
 	pixel_x = -6
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aFM" = (
@@ -13531,8 +13564,11 @@
 /obj/item/candle/infinite{
 	pixel_y = 8
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_5"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aFO" = (
@@ -13764,8 +13800,11 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aGm" = (
@@ -13889,8 +13928,11 @@
 	name = "Psych"
 	},
 /obj/item/weapon/scythe,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aGy" = (
@@ -14003,8 +14045,11 @@
 /obj/item/clothing/suit/wizrobe/holidaypriest,
 /obj/item/clothing/glasses/sunglasses/hud/chaplain,
 /obj/item/clothing/head/wizard/nimb,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aGK" = (
@@ -14086,8 +14131,11 @@
 /obj/effect/overlay/tophat_portal{
 	pixel_y = -32
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "aGT" = (
@@ -14642,8 +14690,11 @@
 /turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "aIk" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
 "aIl" = (
@@ -15711,8 +15762,11 @@
 /turf/unsimulated/floor/carpet/black,
 /area/custom/syndicate_mothership)
 "aLa" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_2"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
 "aLc" = (
@@ -20095,8 +20149,11 @@
 	name = "Ded Moroz hat"
 	},
 /obj/item/clothing/shoes/winterboots/wizard,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aYz" = (
@@ -20526,8 +20583,11 @@
 /obj/item/clothing/suit/wizrobe/necromancer_hoodie,
 /obj/item/clothing/head/wizard/black_hood,
 /obj/item/clothing/shoes/boots/German/wizard,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "baw" = (
@@ -20615,8 +20675,11 @@
 /obj/structure/table/woodentable,
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "baF" = (
@@ -20645,8 +20708,11 @@
 	},
 /area/custom/wizard_station)
 "baJ" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_5"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "baK" = (
@@ -20730,8 +20796,11 @@
 	},
 /area/space)
 "baU" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "baW" = (
@@ -20767,8 +20836,11 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bba" = (
@@ -20786,8 +20858,11 @@
 /area/custom/syndicate_mothership/droppod_garage)
 "bbc" = (
 /obj/structure/bookcase/manuals/research_and_development,
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbd" = (
@@ -20903,8 +20978,11 @@
 	},
 /area/custom/wizard_station)
 "bbq" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbr" = (
@@ -20930,8 +21008,11 @@
 	},
 /area/space)
 "bby" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbz" = (
@@ -21953,8 +22034,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
 "bsi" = (
@@ -22285,7 +22369,7 @@
 /area/velocity)
 "bSj" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/suit/chef/classic{
+/obj/item/clothing/suit/chef_classic{
 	name = "blacksmith apron"
 	},
 /obj/item/clothing/gloves/black{
@@ -28097,8 +28181,11 @@
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_4"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "nLb" = (
@@ -28144,8 +28231,11 @@
 /obj/structure/sign/poster/contraband/starkist{
 	pixel_x = -32
 	},
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_5"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "nUb" = (

@@ -1365,9 +1365,8 @@
 "dP" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "dQ" = (
 /obj/structure/stool/bed/chair/office/light,
@@ -1578,16 +1577,14 @@
 /area/awaymission/labs/militarydivision)
 "ev" = (
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "ew" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "ex" = (
 /obj/structure/cable{
@@ -1741,9 +1738,8 @@
 "eO" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/remains/robot,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "eP" = (
 /turf/simulated/floor{
@@ -1762,9 +1758,8 @@
 /area/awaymission/labs/gateway)
 "eR" = (
 /obj/effect/decal/mecha_wreckage/durand,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "eS" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1949,9 +1944,8 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fo" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "fp" = (
 /obj/machinery/gateway{
@@ -5185,9 +5179,8 @@
 "mr" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/xenomorph/sentinel,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "ms" = (
 /obj/structure/rack,
@@ -5277,9 +5270,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "mF" = (
 /obj/effect/decal/mecha_wreckage/ripley,
@@ -5290,9 +5282,8 @@
 /area/awaymission/labs/cargo)
 "mG" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "mH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -5477,9 +5468,8 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "nc" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "nd" = (
 /obj/structure/table/reinforced,
@@ -7236,9 +7226,8 @@
 /area/awaymission/labs/cave)
 "rb" = (
 /obj/effect/gibspawner/robot,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/command)
 "rc" = (
 /obj/structure/stool/bed/chair{
@@ -7287,12 +7276,6 @@
 	},
 /turf/simulated/floor{
 	icon_state = "vault"
-	},
-/area/awaymission/labs/command)
-"rj" = (
-/obj/effect/gibspawner/robot,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
 	},
 /area/awaymission/labs/command)
 "rk" = (
@@ -7375,20 +7358,13 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "rs" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/command)
 "rt" = (
 /obj/effect/decal/mecha_wreckage/gygax,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/awaymission/labs/command)
-"ru" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/command)
 "rv" = (
 /obj/structure/alien/weeds{
@@ -28440,7 +28416,7 @@ ii
 iy
 iy
 rs
-rj
+rb
 iy
 iy
 lF
@@ -28697,7 +28673,7 @@ ii
 iy
 iy
 rt
-ru
+rs
 iy
 iy
 mc
@@ -28953,7 +28929,7 @@ qP
 ii
 iy
 iy
-ru
+rs
 rp
 iy
 iy
