@@ -216,3 +216,5 @@ var/global/normal_next
 
 //A parabola y = multiplier*x^2 + pike
 #define PARABOLIC_SCALING(x, pike, multiplier) (pike + multiplier * (x ** 2))
+
+#define HYPOTENUSE(Ax, Ay, Bx, By) (sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2)) //A squared + B squared = C squared

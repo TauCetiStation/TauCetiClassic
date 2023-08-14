@@ -44,6 +44,8 @@ var/global/list/all_emotes
 
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
+	// How long emote cloud will float above character.
+	var/cloud_duration = 3 SECONDS
 
 	var/list/state_checks
 
@@ -185,5 +187,5 @@ var/global/list/all_emotes
 /datum/emote/proc/add_cloud(mob/user)
 	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
 	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flick_overlay(emote_bubble, clients, 30)
-	QDEL_IN(emote_bubble, 3 SECONDS)
+	flick_overlay(emote_bubble, clients, cloud_duration)
+	QDEL_IN(emote_bubble, cloud_duration)

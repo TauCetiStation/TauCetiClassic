@@ -136,7 +136,7 @@ var/global/initial_station_money = 7500
 	global.centcomm_account = new
 	global.centcomm_account.owner_name = "CentComm Station Account"
 	global.centcomm_account.account_number = rand(111111, 999999)
-	global.centcomm_account.remote_access_pin = rand(1111, 111111)
+	global.centcomm_account.remote_access_pin = rand(1111, 9999)
 	global.centcomm_account.security_level = 2
 	global.centcomm_account.money = 10000000
 	global.centcomm_account.hidden = TRUE
@@ -163,7 +163,7 @@ var/global/initial_station_money = 7500
 	station_account = new()
 	station_account.owner_name = "[station_name()] Station Account"
 	station_account.account_number = rand(111111, 999999)
-	station_account.remote_access_pin = rand(1111, 111111)
+	station_account.remote_access_pin = rand(1111, 9999)
 	station_account.security_level = 1
 	station_account.money = global.initial_station_money
 	// Station gets a slight rebound on all cargo activity from stock ownership. In theory HoP or Captain can also sell this.
@@ -187,7 +187,7 @@ var/global/initial_station_money = 7500
 	var/datum/money_account/department_account = new()
 	department_account.owner_name = "[department] Account"
 	department_account.account_number = rand(111111, 999999)
-	department_account.remote_access_pin = rand(1111, 111111)
+	department_account.remote_access_pin = rand(1111, 9999)
 	department_account.security_level = 1
 	department_account.money = 500
 

@@ -42,6 +42,7 @@
 #define SS_INIT_ORDER_OVERLAY -6
 #define SS_INIT_STICKY_BAN    -7
 #define SS_INIT_HOLOMAPS      -8
+#define SS_INIT_EXPLOSIONS    -69
 #define SS_INIT_QUALITIES     -93
 #define SS_INIT_DEMO          -94 // To avoid a bunch of changes related to initialization being written, do this last
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.
@@ -50,6 +51,7 @@
 
 #define SS_PRIORITY_INPUT       1000  // This must always always be the max highest priority. Player input must never be lost.
 #define SS_PRIORITY_TIMER        700
+#define SS_PRIORITY_EXPLOSIONS   666
 #define SS_PRIORITY_OVERLAYS     500
 #define SS_PRIORITY_RUNECHAT     410
 #define SS_PRIORITY_CHAT         400
@@ -77,6 +79,7 @@
 #define SS_PRIORITY_LOW            1
 
 
+#define SS_WAIT_EXPLOSION     1
 #define SS_WAIT_INPUT         1
 #define SS_WAIT_DEMO          1
 #define SS_WAIT_OVERLAYS      1

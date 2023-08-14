@@ -319,6 +319,8 @@
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
 
+#define TURF_DECALS_LIMIT 4 // max of /obj/effect/decal/turf_decal in one turf
+
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
 		/turf/simulated/wall, \

@@ -67,7 +67,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/insulated(H), SLOT_L_STORE)
 
 
 /datum/quality/positiveish/disguise
