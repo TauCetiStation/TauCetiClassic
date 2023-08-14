@@ -8147,16 +8147,6 @@
 	icon_state = "dark"
 	},
 /area/station/security/brig)
-"bDx" = (
-/obj/structure/morgue,
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 1;
-	icon_state = "box_corners_white"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel/mass_driver)
 "bDE" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
@@ -14748,6 +14738,13 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
+"cYk" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
+	},
+/turf/simulated/floor,
+/area/station/civilian/chapel/mass_driver)
 "cYl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable,
@@ -26702,6 +26699,7 @@
 "fKo" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/weapon/wrench,
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "fKs" = (
@@ -65116,18 +65114,6 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hor)
-"nZQ" = (
-/obj/structure/morgue{
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 4;
-	icon_state = "box_corners_white"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel/mass_driver)
 "nZW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -88795,7 +88781,7 @@
 "tvu" = (
 /obj/structure/morgue,
 /obj/effect/decal/turf_decal/alpha/gray{
-	dir = 8;
+	dir = 1;
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
@@ -96912,6 +96898,18 @@
 /obj/item/weapon/storage/box/bodybags,
 /turf/simulated/floor,
 /area/station/security/prison)
+"vra" = (
+/obj/structure/morgue{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 4;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/mass_driver)
 "vre" = (
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = -32
@@ -101652,13 +101650,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/incinerator)
-"wyF" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/weapon/storage/bible{
-	pixel_y = 6
-	},
-/turf/simulated/floor,
-/area/station/civilian/chapel/mass_driver)
 "wyL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -107166,6 +107157,16 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"xJL" = (
+/obj/structure/morgue,
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/mass_driver)
 "xJP" = (
 /obj/structure/stool/bed/chair,
 /turf/simulated/floor,
@@ -158384,9 +158385,9 @@ lUU
 nau
 pIG
 pne
-bDx
-aUA
 tvu
+aUA
+xJL
 eIC
 cuB
 xAZ
@@ -158394,7 +158395,7 @@ pYK
 pne
 nOh
 jzW
-wyF
+cYk
 bYM
 tkH
 bYM
@@ -159412,7 +159413,7 @@ ioj
 dLG
 pIG
 pne
-nZQ
+vra
 hAn
 ocl
 oMJ
