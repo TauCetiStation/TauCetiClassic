@@ -46996,7 +46996,7 @@
 /area/station/engineering/atmos)
 "kdf" = (
 /obj/structure/table,
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor{
 	icon_state = "grimy"
