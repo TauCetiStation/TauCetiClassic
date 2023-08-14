@@ -1093,6 +1093,9 @@
 	dietflags = DIET_ALL
 	flesh_color = "#c0c0c0"
 
+	hazard_high_pressure = 0
+	warning_high_pressure = 0
+
 	brute_mod = 2
 	oxy_mod = 0
 	tox_mod = 0
