@@ -770,9 +770,8 @@
 /turf/simulated/floor,
 /area/awaymission/academy/headmaster)
 "cr" = (
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
 "cs" = (
 /obj/machinery/door/window{
@@ -3861,14 +3860,12 @@
 	id = "AcademyGate";
 	pixel_y = -24
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/awaymission/academy/academygate)
 "kk" = (
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/obj/effect/decal/turf_decal/religion_emblem,
+/turf/simulated/floor/carpet,
 /area/awaymission/academy/academygate)
 "kl" = (
 /obj/machinery/door/poddoor/shutters{
