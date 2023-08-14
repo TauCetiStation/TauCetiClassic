@@ -246,9 +246,12 @@
 	if (!view)
 		view = world.view
 	var/list/new_overlays = list()
-	var/count = CEIL(view/(480/world.icon_size))+1
-	for(var/x in -count to count)
-		for(var/y in -count to count)
+	var/static/parallax_scaler = world.icon_size / 480
+	var/list/viewscales = getviewsize(view)
+	var/countx = CEIL((viewscales[1] / 2) * parallax_scaler) + 1
+	var/county = CEIL((viewscales[2] / 2) * parallax_scaler) + 1
+	for(var/x in -countx to countx)
+		for(var/y in -county to county)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
