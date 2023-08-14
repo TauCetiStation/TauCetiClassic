@@ -86621,7 +86621,7 @@
 /area/station/security/iaa_office)
 "rsU" = (
 /obj/structure/table,
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 30

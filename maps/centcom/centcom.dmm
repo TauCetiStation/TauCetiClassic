@@ -22369,7 +22369,7 @@
 /area/velocity)
 "bSj" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/suit/chef/classic{
+/obj/item/clothing/suit/chef_classic{
 	name = "blacksmith apron"
 	},
 /obj/item/clothing/gloves/black{
