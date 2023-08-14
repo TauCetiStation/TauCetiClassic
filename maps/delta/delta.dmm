@@ -4202,6 +4202,17 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/prison)
+"aNx" = (
+/obj/machinery/camera{
+	c_tag = "Security Hallway South";
+	dir = 5;
+	network = list("SS13","Security")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/security/brig)
 "aNE" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9787,6 +9798,16 @@
 	icon_state = "purplechecker"
 	},
 /area/station/rnd/lab)
+"bUY" = (
+/obj/machinery/camera{
+	c_tag = "Gravity Generator";
+	dir = 4;
+	network = list("SS13","Engineering")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/minisat_secure_area)
 "bVg" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -10211,6 +10232,15 @@
 	icon_state = "grimy"
 	},
 /area/station/maintenance/chapel)
+"bZi" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "bZk" = (
 /turf/simulated/wall/r_wall,
 /area/station/medical/genetics)
@@ -11550,6 +11580,15 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"cni" = (
+/obj/machinery/camera{
+	c_tag = "Brig Hallway West"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
+/area/station/security/lobby)
 "cnk" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -19452,19 +19491,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
-"eew" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Dormitories South-East";
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
-	},
-/area/station/civilian/dormitories)
 "eeB" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/engineering{
@@ -21181,7 +21207,6 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/mob/living/carbon/monkey/punpun,
 /turf/simulated/floor/carpet/green,
 /area/station/hallway/primary/fore)
 "eyp" = (
@@ -22364,18 +22389,6 @@
 /obj/machinery/light/smart,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"eNr" = (
-/obj/structure/closet{
-	name = "evidence closet"
-	},
-/obj/machinery/camera{
-	c_tag = "Brig Evidence Storage";
-	network = list("SS13","Security")
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/brig/storage)
 "eNw" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -23100,26 +23113,6 @@
 	icon_state = "wooden"
 	},
 /area/station/medical/psych)
-"eUE" = (
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "Courtroom South-West";
-	dir = 10
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/civilian/dormitories/courtroom)
 "eUF" = (
 /obj/machinery/alarm{
 	pixel_y = -32
@@ -24525,18 +24518,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"fkV" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/machinery/camera{
-	c_tag = "Holodeck Entry";
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/civilian/gym)
 "fkW" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -24573,7 +24554,7 @@
 "flj" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/camera{
-	c_tag = "Gravity Generator Room";
+	c_tag = "Gravity Generator Entry";
 	dir = 7;
 	network = list("SS13","Engineering")
 	},
@@ -29927,15 +29908,6 @@
 	},
 /turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
-"gva" = (
-/obj/machinery/camera{
-	c_tag = "Brig Hallway West"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "bluecorner"
-	},
-/area/station/security/lobby)
 "gvb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -31218,7 +31190,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/camera{
-	c_tag = "Brig Cell 2";
+	c_tag = "Brig Cell 1";
 	dir = 1;
 	network = list("SS13","Security")
 	},
@@ -34728,15 +34700,6 @@
 	icon_state = "red"
 	},
 /area/station/security/checkpoint/medbay)
-"hwO" = (
-/obj/machinery/camera{
-	c_tag = "Library Mid";
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/civilian/library)
 "hxb" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -37004,6 +36967,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"hVC" = (
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "hVD" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Access";
@@ -37319,22 +37294,15 @@
 	},
 /area/station/medical/hallway)
 "hYI" = (
-/obj/structure/stool/bed,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/machinery/camera{
-	c_tag = "Brig Cell 1";
-	dir = 1;
-	network = list("SS13","Security")
+	c_tag = "Central Primary Hallway North-West";
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "darkred"
+	dir = 1;
+	icon_state = "neutralcorner"
 	},
-/area/station/security/brig)
+/area/station/hallway/primary/central)
 "hYK" = (
 /obj/item/weapon/reagent_containers/glass/bucket/full,
 /turf/simulated/floor/plating,
@@ -37706,6 +37674,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"ict" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "icJ" = (
 /obj/structure/sign/departments/medbay,
 /turf/simulated/wall,
@@ -39498,16 +39475,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/rnd/misc_lab)
-"ixD" = (
-/obj/machinery/camera{
-	c_tag = "Central Primary Hallway North";
-	dir = 6
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "ixG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -42330,6 +42297,16 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/hallway)
+"jcN" = (
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway North";
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "jcO" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/rdconsole,
@@ -42738,6 +42715,16 @@
 	icon_state = "red"
 	},
 /area/station/security/checkpoint)
+"jhy" = (
+/obj/machinery/camera{
+	c_tag = "Bar Mid";
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/station/hallway/primary/fore)
 "jhB" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -53283,6 +53270,23 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
+"lum" = (
+/obj/structure/stool/bed,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/camera{
+	c_tag = "Brig Cell 2";
+	dir = 1;
+	network = list("SS13","Security")
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/station/security/brig)
 "luA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -55775,6 +55779,7 @@
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_thinplating_line"
 	},
+/mob/living/carbon/monkey/punpun,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -62115,6 +62120,26 @@
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/wood,
 /area/station/storage/tools)
+"nsv" = (
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Courtroom South-West";
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/civilian/dormitories/courtroom)
 "nsz" = (
 /turf/environment/space,
 /area/station/cargo/miningoffice)
@@ -68000,6 +68025,18 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/storage)
+"oLE" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/machinery/camera{
+	c_tag = "Holodeck Exit";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/civilian/gym)
 "oLJ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -70241,6 +70278,18 @@
 /obj/structure/closet/secure_closet/hop2,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"pmc" = (
+/obj/structure/closet{
+	name = "evidence closet"
+	},
+/obj/machinery/camera{
+	c_tag = "Brig Evidence Storage";
+	network = list("SS13","Security")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/brig/storage)
 "pmn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77035,18 +77084,6 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway/lobby)
-"qLD" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "qLM" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
@@ -84320,14 +84357,16 @@
 	},
 /area/station/rnd/hallway/lobby)
 "srq" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
+/obj/machinery/camera{
+	c_tag = "Security Hallway North";
+	dir = 4;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "redcorner"
 	},
-/area/station/hallway/primary/central)
+/area/station/security/brig)
 "srs" = (
 /turf/simulated/wall,
 /area/station/maintenance/cargo)
@@ -84678,6 +84717,15 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/xenobiology)
+"svN" = (
+/obj/machinery/camera{
+	c_tag = "Library Mid";
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/library)
 "svQ" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -84907,16 +84955,6 @@
 	icon_state = "yellowfull"
 	},
 /area/station/engineering/atmos)
-"sze" = (
-/obj/machinery/camera{
-	c_tag = "Central Primary Hallway North-West";
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "szf" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -85023,16 +85061,15 @@
 /area/station/storage/tools)
 "sAP" = (
 /obj/structure/table/glass,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
 /obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/item/weapon/flora/deskleaf{
 	pixel_y = 7
+	},
+/obj/machinery/camera{
+	c_tag = "Escape Shuttle Hallway East";
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -87779,7 +87816,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Escape Shuttle Hallway East";
+	c_tag = "Escape Shuttle Hallway Mid";
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -91555,16 +91592,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
-"ued" = (
-/obj/machinery/camera{
-	c_tag = "Bar Mid";
-	dir = 9
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
-	},
-/area/station/hallway/primary/fore)
 "uef" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -99735,16 +99762,23 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "waz" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/camera{
-	c_tag = "Security Hallway";
-	dir = 9;
-	network = list("SS13","Security")
+	c_tag = "Starboard Escape Entry";
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "red"
+	dir = 8;
+	icon_state = "black"
 	},
-/area/station/security/brig)
+/area/station/hallway/primary/starboard)
 "waB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -104726,32 +104760,15 @@
 	},
 /area/station/security/checkpoint/engi)
 "xjH" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/camera{
-	c_tag = "Starboard Escape Entry";
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "black"
-	},
-/area/station/hallway/primary/starboard)
-"xjI" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "black"
 	},
-/area/station/hallway/primary/central)
+/area/station/hallway/secondary/exit)
 "xjW" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -106336,8 +106353,8 @@
 	icon_state = "bot"
 	},
 /obj/machinery/camera{
-	c_tag = "Holodeck Exit";
-	dir = 1
+	c_tag = "Holodeck Entry";
+	dir = 6
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -107237,6 +107254,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/gateway)
 "xKO" = (
@@ -108083,6 +108103,19 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/storage)
+"xUF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Dormitories South-East";
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/civilian/dormitories)
 "xUM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -129720,7 +129753,7 @@ txU
 lMI
 roV
 jIF
-vKa
+bUY
 vKa
 tvt
 gRp
@@ -143583,8 +143616,8 @@ vAu
 ogP
 mDQ
 bAS
-srq
-sze
+bZi
+hYI
 rnH
 dRR
 nvi
@@ -146907,7 +146940,7 @@ eEt
 eEt
 ieG
 eao
-ued
+jhy
 uUD
 tJq
 ohV
@@ -147177,7 +147210,7 @@ sEY
 bRX
 pnq
 srs
-xjI
+ict
 itF
 vAu
 rPX
@@ -148205,7 +148238,7 @@ srs
 auM
 pnq
 srs
-ixD
+jcN
 itF
 vAu
 rPX
@@ -152668,7 +152701,7 @@ xfr
 xfr
 xfr
 rmY
-djc
+xjH
 bAQ
 ier
 hhW
@@ -152858,7 +152891,7 @@ mXl
 tiL
 drz
 mXl
-qLD
+hVC
 mXl
 ruI
 mXl
@@ -152918,7 +152951,7 @@ sxC
 tjB
 bjM
 dHc
-xjH
+waz
 pnR
 pnR
 nTe
@@ -154905,7 +154938,7 @@ vQC
 oEP
 mEo
 cmN
-gva
+cni
 ttN
 xTR
 jTW
@@ -156204,7 +156237,7 @@ lMq
 aiy
 lMq
 xpq
-eUE
+nsv
 jTW
 uCB
 yjY
@@ -156225,7 +156258,7 @@ ttx
 nby
 bmM
 kbS
-hwO
+svN
 nby
 akS
 exA
@@ -159051,7 +159084,7 @@ jKC
 dft
 dsz
 pVj
-eew
+xUF
 lbe
 jrz
 kbS
@@ -160040,11 +160073,11 @@ bVN
 cHH
 mmf
 nRZ
-gIP
+lum
 adp
 mZr
 nRZ
-hYI
+gIP
 adp
 oCT
 jAB
@@ -160542,12 +160575,12 @@ aQh
 rgQ
 iJj
 ebi
-dkh
+srq
 vbI
 wUb
 chB
 gDm
-chB
+aNx
 dkh
 vSz
 adp
@@ -161059,7 +161092,7 @@ bFt
 xMf
 uTh
 mxD
-waz
+fqK
 lyE
 ntf
 vSz
@@ -161836,7 +161869,7 @@ fbg
 lLb
 jfF
 iTl
-eNr
+pmc
 rRv
 mtI
 evI
@@ -165213,7 +165246,7 @@ dJL
 nRG
 oXA
 oXA
-xAq
+oLE
 dJL
 plf
 cdR
@@ -168551,7 +168584,7 @@ kHU
 fMh
 plf
 dJL
-fkV
+xAq
 oXA
 oXA
 nJn
