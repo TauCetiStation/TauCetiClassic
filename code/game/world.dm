@@ -341,6 +341,9 @@ var/global/shutdown_processed = FALSE
 
 	if(isnull(prs_to_fetch))
 		prs_to_fetch = splittext(trim(file2text("test_merge.txt")), " ")
+	
+	if(!prs_to_fetch)
+		return
 
 	var/arguments = prs_to_fetch.Join(" ")
 	if(config.github_token)
