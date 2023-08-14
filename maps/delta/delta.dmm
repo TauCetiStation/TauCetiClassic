@@ -2231,9 +2231,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "aqC" = (
-/obj/effect/decal/turf_decal{
-	dir = 6;
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8148,6 +8147,16 @@
 	icon_state = "dark"
 	},
 /area/station/security/brig)
+"bDx" = (
+/obj/structure/morgue,
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 1;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/mass_driver)
 "bDE" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
@@ -14646,9 +14655,9 @@
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "cWM" = (
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 4;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -16554,9 +16563,9 @@
 /area/station/maintenance/chapel)
 "dtQ" = (
 /obj/structure/morgue,
-/obj/effect/decal/turf_decal{
-	dir = 3;
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -26189,13 +26198,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"fEN" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/weapon/storage/bible{
-	pixel_y = 6
-	},
-/turf/simulated/floor,
-/area/station/civilian/chapel/mass_driver)
 "fEV" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -29087,9 +29089,9 @@
 	pixel_x = -32
 	},
 /obj/structure/morgue,
-/obj/effect/decal/turf_decal{
+/obj/effect/decal/turf_decal/alpha/gray{
 	dir = 1;
-	icon_state = "warn"
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -48435,6 +48437,14 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 1;
+	icon_state = "box_corners_white"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -65106,6 +65116,18 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hor)
+"nZQ" = (
+/obj/structure/morgue{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 4;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/mass_driver)
 "nZW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -65330,6 +65352,9 @@
 "ocl" = (
 /obj/structure/morgue{
 	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -67408,6 +67433,10 @@
 	c_tag = "Robotics Workspace";
 	dir = 9;
 	network = list("SS13","Research")
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 1;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -88765,6 +88794,10 @@
 /area/station/engineering/minisat_secure_area)
 "tvu" = (
 /obj/structure/morgue,
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -101619,6 +101652,13 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/incinerator)
+"wyF" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
+	},
+/turf/simulated/floor,
+/area/station/civilian/chapel/mass_driver)
 "wyL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -158344,7 +158384,7 @@ lUU
 nau
 pIG
 pne
-tvu
+bDx
 aUA
 tvu
 eIC
@@ -158354,7 +158394,7 @@ pYK
 pne
 nOh
 jzW
-fEN
+wyF
 bYM
 tkH
 bYM
@@ -159372,7 +159412,7 @@ ioj
 dLG
 pIG
 pne
-ocl
+nZQ
 hAn
 ocl
 oMJ
