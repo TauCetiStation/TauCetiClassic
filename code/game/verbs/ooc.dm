@@ -214,7 +214,20 @@ var/global/bridge_ooc_colour = "#7b804f"
 	set desc = "Shows a list of all test merges that are currently active"
 	set category = "OOC"
 
-	if(join_test_merge)
-		to_chat(src, "<div class='test_merges'>[join_test_merge]</div>")
-	else
+	if(!test_merges)
 		to_chat(src, "<div class='test_merges'>No test merges are currently active</div>")
+		return
+
+	to_chat(src, json_encode(test_merges))
+
+	var/joined_text = "<strong>Test merged PRs:</strong><br>"
+	var/is_loading = FALSE
+	for(var/pr in test_merges)
+		if(test_merges[pr] == "LOADING...")
+			is_loading = TRUE
+		joined_text += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
+
+	if(is_loading)
+		joined_text += "<br>Note: You can use OOC - Show Test Merges a bit later for more information about current test merges."
+
+	to_chat(src, "<div class='test_merges'>[joined_text]</div>")

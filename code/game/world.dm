@@ -322,16 +322,28 @@ var/global/shutdown_processed = FALSE
 
 /world/proc/load_test_merge_fast()
 	if(fexists("test_merge.txt"))
-		join_test_merge = "<strong>Test merged PRs:</strong> "
 		test_merges = splittext(trim(file2text("test_merge.txt")), " ")
+		var/list/cached_tms = flist("cache/github/pr/")
+		var/list/to_fetch = list()
 		for(var/pr in test_merges)
-			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
-		join_test_merge += "<br>You can press OOC - Show Test Merges a bit later for more information about current test merges."
-		fetch_test_merge()
+			var/title = file2text("cache/github/pr/[pr]")
+			if(title)
+				test_merges[pr] = title
+				cached_tms.Remove(pr)
+			else
+				test_merges[pr] = "LOADING..."
+				to_fetch.Add(pr)
+		for(var/old_pr in cached_tms)
+			fdel("cache/github/pr/[old_pr]")
+		fetch_test_merge(to_fetch)
 
-/world/proc/fetch_test_merge()
+/world/proc/fetch_test_merge(list/prs_to_fetch)
 	set waitfor = FALSE
-	var/arguments = trim(file2text("test_merge.txt"))
+
+	if(isnull(prs_to_fetch))
+		prs_to_fetch = splittext(trim(file2text("test_merge.txt")), " ")
+
+	var/arguments = prs_to_fetch.Join(" ")
 	if(config.github_token)
 		arguments += " -t '[config.github_token]'"
 	if(config.repository_link)
@@ -340,10 +352,8 @@ var/global/shutdown_processed = FALSE
 	var/json_content = world.ext_python("fetch_test_merges.py", arguments)
 	if(!json_content)
 		return
-	test_merges = json_decode(json_content)
-	join_test_merge = "<strong>Test merged PRs:</strong><br>"
-	for(var/pr in test_merges)
-		join_test_merge += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
+
+	test_merges = json_decode(json_content) | test_merges
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)

@@ -45,35 +45,31 @@ def fetch_merge(args: FetchArgs):
         )
         if resp.status_code == 429:
             # you look at your anonymous access and sigh
-            return args.pr_id, "GITHUB API ERROR: RATE LIMITED"
+            return args.pr_id, ("GITHUB API ERROR: RATE LIMITED", False)
         if resp.status_code == 404:
             # you look at your shithub and sigh
-            return args.pr_id, "GITHUB API ERROR: PR NOT FOUND"
+            return args.pr_id, ("GITHUB API ERROR: PR NOT FOUND", False)
         if resp.status_code == 401:
             # you look at your token and sigh
-            return args.pr_id, "GITHUB API ERROR: BAD CREDENTIALS"
+            return args.pr_id, ("GITHUB API ERROR: BAD CREDENTIALS", False)
         if resp.status_code != 200:
             error_msg = json.loads(resp.text)["message"]
             print(error_msg, file=sys.stderr)
-            return args.pr_id, "GITHUB API ERROR"
+            return args.pr_id, ("GITHUB API ERROR", False)
         json_object = json.loads(resp.text)
-        return args.pr_id, f'{json_object["title"]} by {json_object["user"]["login"]}'
+        return args.pr_id, (f'{json_object["title"]} by {json_object["user"]["login"]}', True)
     except (requests.exceptions.RequestException, json.JSONDecodeError) as exc:
         print(exc, file=sys.stderr)
-        return args.pr_id, "FAILED TO GET PR TITLE"
+        return args.pr_id, ("FAILED TO GET PR TITLE", False)
 
 
 def main(options):
-    cache_path = Path("cache/testMergeCache.txt")
+    base_cache_path = Path("cache/github/pr")
+    base_cache_path.mkdir(parents=True, exist_ok=True)
 
-    test_merges = {}    
-    if cache_path.exists():
-        with open(cache_path, "r", encoding="utf-8") as file:
-            for line in file:
-                merge_id, title = line.strip().split(" ", 1)
-                test_merges[merge_id] = title
+    test_merges = {}
 
-    to_fetch = set(options.prs) - set(test_merges.keys())
+    to_fetch = set(options.prs)
     headers = {
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
@@ -82,18 +78,16 @@ def main(options):
         headers["Authorization"] = f"Bearer {options.token}"
 
     with ThreadPoolExecutor(max_workers=10) as pool:
-        for merge_id, title in pool.map(
+        for merge_id, (title, success) in pool.map(
             fetch_merge,
             (FetchArgs(merge_id, options.repo, headers) for merge_id in to_fetch),
         ):
-            test_merges[merge_id] = title.strip()
+            test_merges[merge_id] = title # return the title anyway
+            if success: # but save it to cache only if this is an actual title
+                with open(base_cache_path / merge_id, "w", encoding="utf-8") as file:
+                    file.write(title)
 
     sys.stdout.buffer.write(json.dumps(test_merges).encode("utf-8"))
-
-    cache_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(cache_path, "w", encoding="utf-8") as file:
-        for merge_id, title in test_merges.items():
-            file.write(f"{merge_id} {title}\n")
 
     return 0
 
