@@ -495,6 +495,12 @@
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	can_deconstruct = FALSE
 
+/turf/simulated/floor/plating/airless/asteroid/break_tile()
+	return
+
+/turf/simulated/floor/plating/airless/asteroid/burn_tile()
+	return
+
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
 	var/sanity = TRUE

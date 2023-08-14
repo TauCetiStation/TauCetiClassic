@@ -94,6 +94,7 @@ var/global/list/datum/spawners_cooldown = list()
 			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
 			to_chat(ghost, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
+
 	return TRUE
 
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
@@ -236,54 +237,6 @@ var/global/list/datum/spawners_cooldown = list()
 	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
 	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
-
-
-/*
- * ERT
-*/
-/datum/spawner/ert
-	name = "ЕРТ"
-	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
-	wiki_ref = "Emergency_Response_Team"
-	important_info = "Ваша цель: "
-
-	ranks = list(ROLE_ERT, "Security Officer")
-	time_to_del = 5 MINUTES
-
-/datum/spawner/ert/New(mission)
-	..()
-	id = mission
-	important_info += mission
-
-/datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(landmarks_list["Commando"])
-	ghost.forceMove(get_turf(jump_to))
-
-/datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/obj/spawnloc = pick(landmarks_list["Commando"])
-	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
-
-	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
-
-	var/is_leader = FALSE
-	if(!ERT_team.leader_selected)
-		is_leader = TRUE
-		ERT_team.leader_selected = TRUE
-
-	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, is_leader, new_name)
-	new_commando.mind.key = ghost.key
-	new_commando.key = ghost.key
-	create_random_account_and_store_in_mind(new_commando)
-
-	to_chat(new_commando, "<span class='notice'>You are [!is_leader ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
-	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
-	if(!is_leader)
-		to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
-	else
-		to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
-
-	if(ERT_team)
-		add_faction_member(ERT_team, new_commando, FALSE)
 
 /*
  * Blob

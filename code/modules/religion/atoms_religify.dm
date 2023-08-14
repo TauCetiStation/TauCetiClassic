@@ -22,10 +22,9 @@
 	return TRUE
 
 /turf/simulated/floor/carpet/atom_religify(datum/religion/R)
-	if(icon_state == "carpetsymbol" && !isnull(R.carpet_dir))
-		if(R.carpet_dir == dir)
-			return FALSE
-		set_dir(R.carpet_dir)
+	if(religion_tile && !isnull(R.decal))
+		clean_turf_decals()
+		new /obj/effect/decal/turf_decal(src, R.decal)
 		return TRUE
 
 	else if(R.carpet_type)
