@@ -68,6 +68,13 @@
 	icon_state = "chef"
 	flags = ONESIZEFITSALL
 
+//Chef
+/obj/item/clothing/under/rank/chef/sushi
+	name = "sushi master robe"
+	desc = "The one who wears this clearly knows a lot about fish, rice and perfectly understands the moonspeak."
+	icon_state = "sushirobe"
+	item_state = "sushirobe"
+
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
