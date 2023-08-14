@@ -24431,6 +24431,9 @@
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "fkt" = (
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -25671,6 +25674,10 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
 	},
@@ -38092,6 +38099,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -38369,6 +38380,9 @@
 	},
 /obj/item/clothing/mask/gas/sechailer{
 	pixel_y = -2
+	},
+/obj/machinery/firealarm{
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -43346,6 +43360,9 @@
 /obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 10;
 	icon_state = "siding_line"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 22
 	},
 /turf/simulated/floor,
 /area/station/security/hos)
@@ -58155,6 +58172,10 @@
 "mAH" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
