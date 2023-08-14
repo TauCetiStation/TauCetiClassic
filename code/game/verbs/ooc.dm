@@ -223,9 +223,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 	var/joined_text = "<strong>Test merged PRs:</strong><br>"
 	var/is_loading = FALSE
 	for(var/pr in test_merges)
-		if(test_merges[pr] == "LOADING...")
-			is_loading = TRUE
-		joined_text += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
+		if(test_merges[pr])
+			joined_text += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
+		else
+			joined_text += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - LOADING... </a><br>"
 
 	if(is_loading)
 		joined_text += "<br>Note: You can use OOC - Show Test Merges a bit later for more information about current test merges."

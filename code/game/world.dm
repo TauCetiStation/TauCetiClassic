@@ -331,7 +331,6 @@ var/global/shutdown_processed = FALSE
 				test_merges[pr] = title
 				cached_tms.Remove(pr)
 			else
-				test_merges[pr] = "LOADING..."
 				to_fetch.Add(pr)
 		for(var/old_pr in cached_tms)
 			fdel("cache/github/pr/[old_pr]")
