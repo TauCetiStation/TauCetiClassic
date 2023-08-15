@@ -334,10 +334,7 @@
 	if(armor >= 100)
 		return FALSE
 	if(!I.force)
-		//return success for apply agony effect
-		if(istype(I, /obj/item/weapon/melee/baton))
-			return TRUE
-		return FALSE
+		return TRUE
 
 	//Apply weapon damage
 	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
