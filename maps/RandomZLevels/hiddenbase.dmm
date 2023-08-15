@@ -432,7 +432,6 @@
 /area/awaymission)
 "ep" = (
 /obj/structure/table/woodentable,
-/obj/structure/table/woodentable,
 /obj/random/misc/toy,
 /turf/simulated/floor/carpet/red,
 /area/awaymission)
@@ -515,6 +514,22 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/awaymission)
+"fr" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
 	},
 /area/awaymission)
 "ft" = (
@@ -1051,6 +1066,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 2;
+	icon_state = "spline_plain"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -1189,6 +1208,14 @@
 	icon_state = "whitehall"
 	},
 /area/awaymission)
+"ma" = (
+/obj/structure/lattice,
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "spline_plain"
+	},
+/turf/environment/space,
+/area/awaymission)
 "mc" = (
 /obj/structure/artilleryplaceholder{
 	icon_state = "1"
@@ -1249,8 +1276,12 @@
 	},
 /area/awaymission)
 "mz" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /obj/effect/decal/turf_decal/metal{
-	dir = 2;
+	dir = 1;
 	icon_state = "spline_plain"
 	},
 /turf/simulated/wall/r_wall,
@@ -1323,7 +1354,6 @@
 /turf/simulated/floor/greengrid,
 /area/awaymission)
 "nq" = (
-/obj/structure/table/woodentable,
 /obj/structure/table/woodentable,
 /obj/random/guns/set_special,
 /turf/simulated/floor/wood,
@@ -2092,6 +2122,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 2;
+	icon_state = "spline_plain"
+	},
 /turf/simulated/wall/r_wall,
 /area/awaymission)
 "vZ" = (
@@ -2119,7 +2153,8 @@
 	},
 /area/awaymission)
 "wt" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -2849,7 +2884,6 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
 /obj/structure/table/woodentable,
-/obj/structure/table/woodentable,
 /obj/random/guns/energy_weapon,
 /turf/simulated/floor/wood,
 /area/awaymission)
@@ -2990,11 +3024,17 @@
 /turf/simulated/floor/wood,
 /area/awaymission)
 "DP" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /obj/effect/decal/turf_decal/metal{
 	dir = 1;
 	icon_state = "spline_plain"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
 /area/awaymission)
 "DT" = (
 /obj/structure/flora/ausbushes/grassybush,
@@ -3655,11 +3695,6 @@
 	icon_state = "floor4"
 	},
 /area/awaymission)
-"LV" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
 "LW" = (
 /obj/structure/alien/weeds,
 /obj/structure/mirror{
@@ -3696,6 +3731,10 @@
 "Me" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 2;
+	icon_state = "spline_plain"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -3992,7 +4031,6 @@
 	},
 /area/awaymission)
 "OI" = (
-/obj/structure/table/woodentable,
 /obj/structure/table/woodentable,
 /obj/random/foods/ramens,
 /turf/simulated/floor/wood,
@@ -4770,6 +4808,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
+/area/awaymission)
+"Wm" = (
+/obj/structure/lattice,
+/obj/effect/decal/turf_decal/metal{
+	dir = 2;
+	icon_state = "spline_plain"
+	},
+/turf/environment/space,
 /area/awaymission)
 "WE" = (
 /obj/structure/flora/tree/jungle,
@@ -11594,13 +11640,13 @@ Sz
 Oy
 Oy
 Oy
-LV
 Oy
 Oy
-LV
 Oy
 Oy
-LV
+Oy
+Oy
+Oy
 Oy
 Oy
 Ov
@@ -13217,9 +13263,9 @@ Ov
 Ov
 Ov
 Ov
-DP
+Ov
 vZ
-mz
+Ov
 Ov
 Ov
 Ov
@@ -14973,7 +15019,7 @@ Sz
 Sz
 Oy
 Sz
-LV
+Oy
 Sz
 Sz
 ww
@@ -15489,7 +15535,7 @@ Sz
 Sz
 Sz
 Sz
-LV
+Oy
 Oy
 Sz
 Sz
@@ -15549,7 +15595,7 @@ Sz
 Sz
 Ov
 Ov
-rl
+DP
 Me
 Ov
 Ov
@@ -15679,7 +15725,7 @@ Oy
 mk
 mk
 Ov
-rl
+DP
 Me
 Ov
 mk
@@ -15781,7 +15827,7 @@ VB
 ww
 Oy
 Oy
-LV
+Oy
 Oy
 Sz
 Sz
@@ -15809,7 +15855,7 @@ Sz
 Sz
 mk
 Ov
-Wd
+fr
 ku
 Ov
 mk
@@ -15939,7 +15985,7 @@ Oy
 mk
 mk
 Ov
-rl
+DP
 Me
 Ov
 mk
@@ -16069,7 +16115,7 @@ Sz
 Sz
 mk
 Ov
-rl
+DP
 Me
 Ov
 mk
@@ -16199,7 +16245,7 @@ Oy
 mk
 mk
 Ov
-Jw
+mz
 vY
 Ov
 mk
@@ -16329,7 +16375,7 @@ Sz
 Sz
 mk
 Ov
-rl
+DP
 Me
 Ov
 mk
@@ -16459,7 +16505,7 @@ Oy
 mk
 mk
 Ov
-Wd
+fr
 ku
 Ov
 mk
@@ -16589,7 +16635,7 @@ Sz
 Sz
 mk
 Ov
-rl
+DP
 Me
 Ov
 mk
@@ -16719,8 +16765,8 @@ Oy
 mk
 mk
 Ov
-bG
-bG
+ma
+Wm
 Ov
 mk
 mk
@@ -16789,7 +16835,7 @@ Sz
 Sz
 Sz
 Sz
-LV
+Oy
 Sz
 Sz
 Sz
