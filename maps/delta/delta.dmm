@@ -5252,12 +5252,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/engine)
-"baj" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "recharge_floor"
-	},
-/turf/simulated/floor/engine,
-/area/station/rnd/mixing)
 "bal" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -11100,10 +11094,10 @@
 	},
 /area/station/hallway/primary/fore)
 "cit" = (
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/vending/phoronresearch,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23789,10 +23783,10 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/dispenser,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -25559,10 +25553,6 @@
 "fwl" = (
 /obj/machinery/light/smart{
 	dir = 1
-	},
-/obj/machinery/vending/phoronresearch,
-/obj/effect/decal/turf_decal/alpha/dark_red{
-	icon_state = "bot"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86855,10 +86845,10 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/ai_chamber)
 "sVd" = (
-/obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -92216,11 +92206,19 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/weapon/grenade/chem_grenade{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/weapon/grenade/chem_grenade{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve{
 	pixel_x = -8;
 	pixel_y = -2
 	},
-/obj/item/device/transfer_valve,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -103356,9 +103354,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/distribution)
 "wRs" = (
-/obj/structure/dispenser,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/obj/machinery/portable_atmospherics/canister,
+/obj/effect/decal/turf_decal/alpha/dark_red{
+	icon_state = "box_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -141246,7 +141244,7 @@ xom
 xom
 cOy
 esc
-baj
+esc
 esc
 mYj
 eFM
