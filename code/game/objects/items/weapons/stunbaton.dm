@@ -54,13 +54,13 @@
 		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/proc/set_force_by_intent(mob/living/user)
+/obj/item/weapon/melee/baton/proc/get_force_by_intent(mob/living/user)
 	if(user.a_intent == INTENT_HARM)
 		return initial(force)
 	return 0
 
 /obj/item/weapon/melee/baton/attack(mob/living/M, mob/living/user, def_zone)
-	force = set_force_by_intent(user)
+	force = get_force_by_intent(user)
 	if(!status && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
