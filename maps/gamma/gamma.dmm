@@ -76,21 +76,12 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "aaf" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
 	},
-/obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office";
-	req_access = list(57)
-	},
-/turf/simulated/floor{
-	icon_state = "bluefull"
-	},
-/area/station/bridge/hop_office)
+/turf/simulated/floor,
+/area/station/civilian/hydroponics)
 "aag" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -4994,6 +4985,16 @@
 	icon_state = "dark"
 	},
 /area/station/medical/hallway/outbranch)
+"awj" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "awk" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -11797,8 +11798,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 2;
+	sortType = list("Карго Офис", "Кабинет Завхоза","OnlineShop")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12165,16 +12167,6 @@
 	icon_state = "dark"
 	},
 /area/station/aisat)
-"bRt" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	icon_state = "wooden"
-	},
-/area/station/bridge/captain_quarters)
 "bRD" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
@@ -14895,13 +14887,6 @@
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"csS" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor,
-/area/station/civilian/hydroponics)
 "ctk" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -16247,12 +16232,6 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "cFx" = (
-/obj/structure/morgue{
-	dir = 8
-	},
-/obj/structure/closet/walllocker{
-	pixel_x = 30
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	dir = 4;
 	icon_state = "box_corners_white"
@@ -17963,15 +17942,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/prison)
-"cUm" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "cUx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -19734,6 +19704,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"doQ" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/hallway/primary/central)
 "doR" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
@@ -22351,15 +22330,23 @@
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
 "dSN" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
+/obj/structure/morgue{
+	dir = 8
+	},
+/obj/structure/closet/walllocker{
+	pixel_x = 30
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 4;
+	icon_state = "box_corners_white"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/tech)
+/area/station/medical/morgue)
 "dSU" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
@@ -26207,18 +26194,6 @@
 	icon_state = "wooden"
 	},
 /area/station/hallway/secondary/entry)
-"eHx" = (
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 4;
-	icon_state = "box_corners_white"
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "box_corners_white"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/medical/morgue)
 "eHU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -27092,6 +27067,17 @@
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor,
 /area/station/maintenance/brig)
+"eRD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c";
+	layer = 1.9
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "eRT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -28975,6 +28961,15 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/bridgehall)
+"flS" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "flW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
@@ -31621,15 +31616,6 @@
 	icon_state = "greenfull"
 	},
 /area/station/civilian/hydroponics)
-"fOf" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/hallway/primary/central)
 "fOg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -33062,20 +33048,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"gak" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 1;
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","OnlineShop")
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "gal" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -34575,6 +34547,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"gqC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/bridgehall)
 "gqD" = (
 /obj/structure/mirror{
 	pixel_y = 30
@@ -35905,6 +35885,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"gEx" = (
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 8;
+	sortType = "OnlineShop"
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "gEC" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -37373,6 +37360,22 @@
 	icon_state = "brown"
 	},
 /area/station/security/prison)
+"gRe" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "HoP_private";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel's Office";
+	req_access = list(57)
+	},
+/turf/simulated/floor{
+	icon_state = "bluefull"
+	},
+/area/station/bridge/hop_office)
 "gRg" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
@@ -37807,17 +37810,6 @@
 	icon_state = "escapecorner"
 	},
 /area/station/hallway/secondary/exit)
-"gWt" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	layer = 1.9
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "gWB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
@@ -38812,6 +38804,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"him" = (
+/obj/structure/morgue,
+/obj/structure/closet/walllocker{
+	pixel_x = -30
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 1;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "hio" = (
 /obj/machinery/alarm{
 	pixel_x = -28;
@@ -47283,6 +47295,14 @@
 	icon_state = "brown"
 	},
 /area/station/hallway/secondary/entry)
+"iUp" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor/bluegrid,
+/area/station/rnd/chargebay)
 "iUy" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -49261,12 +49281,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
-"jse" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "blue"
-	},
-/area/station/bridge/hop_office)
 "jsj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51969,6 +51983,14 @@
 	},
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/chiefs_office)
+"jTx" = (
+/mob/living/pbag,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor/carpet/red,
+/area/station/civilian/gym)
 "jTC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -52729,6 +52751,15 @@
 	icon_state = "darkyellow"
 	},
 /area/station/engineering/chiefs_office)
+"kcN" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/engineering/rust)
 "kcP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
@@ -55748,7 +55779,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("Мусоросброс","OnlineShop")
+	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","OnlineShop")
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -60204,23 +60235,6 @@
 	oxygen = 0.01
 	},
 /area/station/engineering/atmos)
-"lHk" = (
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
-	},
-/area/station/civilian/dormitories)
 "lHo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -60613,6 +60627,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -62669,19 +62686,6 @@
 	icon_state = "dark"
 	},
 /area/station/security/execution)
-"mgC" = (
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 1;
-	icon_state = "box_corners_white"
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 8;
-	icon_state = "box_corners_white"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/medical/morgue)
 "mgD" = (
 /obj/item/clothing/under/cowboy/brown,
 /obj/item/clothing/head/western/cowboy{
@@ -66606,9 +66610,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/structure/disposalpipe/junction{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -66894,14 +66897,6 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
-"nbO" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor/bluegrid,
-/area/station/rnd/chargebay)
 "ncb" = (
 /turf/simulated/floor/carpet,
 /area/station/civilian/dormitories/theater)
@@ -68290,14 +68285,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"nqJ" = (
-/mob/living/pbag,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor/carpet/red,
-/area/station/civilian/gym)
 "nqO" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -69066,6 +69053,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"nzZ" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 1;
+	icon_state = "box_corners_white"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "nAc" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
@@ -70697,13 +70697,6 @@
 	icon_state = "dark"
 	},
 /area/station/storage/tech)
-"nRk" = (
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 8;
-	sortType = "OnlineShop"
-	},
-/turf/simulated/floor,
-/area/station/cargo/office)
 "nRm" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/cardboard{
@@ -71070,20 +71063,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
-"nUC" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line";
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/locker)
 "nUF" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/door_control{
@@ -72998,6 +72977,21 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"opo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/station/security/brig)
 "opq" = (
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet/crate/freezer,
@@ -73978,6 +73972,15 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/hallway)
+"oBq" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/brainstorm_center)
 "oBt" = (
 /obj/effect/decal/cleanable/spiderling_remains,
 /turf/simulated/floor/airless/ceiling,
@@ -74659,6 +74662,17 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"oHR" = (
+/obj/machinery/light/smart,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "oHV" = (
 /obj/machinery/door/airlock/security{
 	name = "Brig Entry";
@@ -77635,12 +77649,6 @@
 	icon_state = "brown"
 	},
 /area/station/security/prison)
-"pmE" = (
-/obj/structure/stool/bed/chair/metal/blue{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue2,
-/area/station/bridge/hop_office)
 "pmL" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 1
@@ -79172,21 +79180,6 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/station/aisat)
-"pFU" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkredcorners"
-	},
-/area/station/security/brig)
 "pGa" = (
 /turf/simulated/wall,
 /area/station/cargo/recycler)
@@ -79209,26 +79202,6 @@
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
-"pGD" = (
-/obj/structure/morgue,
-/obj/structure/closet/walllocker{
-	pixel_x = -30
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 8;
-	icon_state = "box_corners_white"
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 1;
-	icon_state = "box_corners_white"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/medical/morgue)
 "pGE" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -84382,15 +84355,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/interrogation)
-"qHJ" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/brainstorm_center)
 "qHL" = (
 /obj/structure/bookcase/manuals/medical,
 /obj/machinery/alarm{
@@ -85424,6 +85388,16 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"qRd" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/storage/tech)
 "qRf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -87070,16 +87044,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"rkH" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "rkI" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -87224,6 +87188,21 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/aisat)
+"rnd" = (
+/obj/structure/stool,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/engine)
 "rnh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -92265,15 +92244,6 @@
 	icon_state = "redyellow"
 	},
 /area/station/engineering/break_room)
-"sqX" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/engineering/rust)
 "sqZ" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the test chamber.";
@@ -93436,6 +93406,16 @@
 	icon_state = "browncorner"
 	},
 /area/station/cargo/storage)
+"sCh" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "wooden"
+	},
+/area/station/bridge/captain_quarters)
 "sCj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -95482,21 +95462,6 @@
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/tribunal)
-"sYs" = (
-/obj/structure/stool,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkyellow"
-	},
-/area/station/engineering/engine)
 "sYv" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
@@ -95622,6 +95587,13 @@
 	icon_state = "2-4,5,6"
 	},
 /area/shuttle/mining/station)
+"sZH" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/station/civilian/gym)
 "sZN" = (
 /obj/item/weapon/poster/contraband,
 /obj/effect/decal/cleanable/dirt,
@@ -97898,13 +97870,6 @@
 	temperature = 80
 	},
 /area/station/rnd/server)
-"tvp" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
-	},
-/turf/simulated/floor/carpet/blue2,
-/area/station/civilian/gym)
 "tvt" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -100953,6 +100918,15 @@
 	icon_state = "cafeteria"
 	},
 /area/station/security/prison)
+"ubW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/bridgehall)
 "ucb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -104588,6 +104562,12 @@
 	icon_state = "white"
 	},
 /area/station/rnd/mixing)
+"uNI" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/station/bridge/hop_office)
 "uNN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile{
@@ -104997,6 +104977,15 @@
 	icon_state = "bluefull"
 	},
 /area/station/medical/surgeryobs)
+"uRG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/bridgehall)
 "uRL" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -106440,6 +106429,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"vih" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/locker)
 "vii" = (
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -108248,6 +108251,20 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/engineering/monitoring)
+"vDK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 1;
+	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","OnlineShop")
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "vDU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -112887,6 +112904,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/brigright)
+"wxd" = (
+/obj/structure/stool/bed/chair/metal/blue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/station/bridge/hop_office)
 "wxs" = (
 /obj/machinery/camera{
 	c_tag = "Docks East";
@@ -114091,6 +114114,23 @@
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"wMo" = (
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/civilian/dormitories)
 "wMz" = (
 /obj/item/weapon/flora/random,
 /obj/effect/decal/turf_decal/wood{
@@ -118438,17 +118478,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/checkpoint)
-"xLr" = (
-/obj/machinery/light/smart,
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "xLs" = (
 /obj/machinery/door/airlock{
 	id_tag = "RNDunit2";
@@ -139501,7 +139530,7 @@ fXg
 fXg
 xMk
 fXg
-nRk
+gEx
 aVX
 mhE
 fXg
@@ -140745,7 +140774,7 @@ vEL
 vJg
 aBP
 cNr
-fOf
+doQ
 cXL
 bhr
 dEZ
@@ -141278,7 +141307,7 @@ vpz
 mLs
 uWp
 obY
-gWt
+eRD
 qNQ
 qNQ
 rwV
@@ -141539,7 +141568,7 @@ dPc
 vTb
 scL
 clx
-gak
+vDK
 rHA
 qTW
 qTW
@@ -142563,7 +142592,7 @@ bBP
 bBP
 fuv
 mOQ
-csS
+aaf
 acZ
 kqh
 kqh
@@ -142610,7 +142639,7 @@ boN
 boN
 clm
 boN
-tvp
+sZH
 rBj
 roO
 fjj
@@ -144913,7 +144942,7 @@ bOD
 jyZ
 eaq
 ats
-nqJ
+jTx
 vvN
 gGf
 fiK
@@ -145914,7 +145943,7 @@ xtC
 wHL
 bOp
 mLs
-xLr
+oHR
 qlD
 oxH
 vOU
@@ -146180,7 +146209,7 @@ sph
 jUp
 jUp
 jUp
-lHk
+wMo
 jUp
 thX
 rAQ
@@ -146942,7 +146971,7 @@ xtC
 pdP
 gYo
 qHr
-cUm
+flS
 qlD
 nLm
 vZA
@@ -147496,7 +147525,7 @@ jvb
 jid
 dsx
 aXK
-nUC
+vih
 huw
 eht
 plf
@@ -149966,7 +149995,7 @@ uXi
 tHR
 wpn
 iVK
-pFU
+opo
 uSD
 uSD
 fZa
@@ -150283,7 +150312,7 @@ tzz
 tzz
 iMa
 mLs
-rkH
+awj
 akg
 akg
 gBc
@@ -151836,7 +151865,7 @@ kEU
 xdd
 xdd
 uEt
-pGD
+him
 cGG
 vVm
 aFF
@@ -152096,8 +152125,8 @@ bti
 vDU
 xoO
 wNf
-eHx
-eHx
+cFx
+cFx
 xdd
 qGx
 ydN
@@ -152605,9 +152634,9 @@ pHP
 pYX
 nXs
 xdd
-mgC
+nzZ
 iry
-mgC
+nzZ
 wGD
 aeo
 ovh
@@ -152862,8 +152891,8 @@ roW
 pYX
 fqS
 xdd
-cFx
-cFx
+dSN
+dSN
 yeu
 wqx
 hWg
@@ -155916,10 +155945,10 @@ dil
 sVo
 keW
 htY
-qQe
-qQe
-qQe
-qQe
+ubW
+gqC
+gqC
+uRG
 lgg
 qQe
 keg
@@ -156683,7 +156712,7 @@ soZ
 rTt
 nMD
 jjH
-aaf
+gRe
 jjH
 uPO
 vkp
@@ -156890,7 +156919,7 @@ plf
 plf
 plf
 bFi
-sqX
+kcN
 oQF
 lwy
 gvF
@@ -156940,7 +156969,7 @@ jia
 ogw
 fnU
 wbY
-jse
+uNI
 jjH
 oQO
 vlV
@@ -157452,7 +157481,7 @@ dxY
 tFH
 fwX
 gkH
-pmE
+wxd
 cvR
 aCo
 jjH
@@ -158464,7 +158493,7 @@ xHY
 aDd
 tUO
 qvI
-dSN
+qRd
 fOn
 xdk
 mgS
@@ -159785,7 +159814,7 @@ hIB
 plf
 xoQ
 kFC
-bRt
+sCh
 bjG
 iEh
 pbW
@@ -160501,7 +160530,7 @@ lub
 hDL
 pWM
 eyj
-sYs
+rnd
 eyj
 pWM
 nFK
@@ -163663,7 +163692,7 @@ kDj
 lJT
 vYE
 juu
-qHJ
+oBq
 tmo
 tzC
 eMN
@@ -164935,7 +164964,7 @@ wpd
 nrs
 qbl
 eJc
-nbO
+iUp
 wpd
 bOw
 lon
