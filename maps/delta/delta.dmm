@@ -18495,8 +18495,7 @@
 	},
 /obj/structure/cable{
 	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -84849,8 +84848,7 @@
 "svc" = (
 /obj/structure/cable{
 	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 8;
@@ -103819,19 +103817,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/security/prison)
-"wVh" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/medbay)
 "wVj" = (
 /obj/machinery/computer/monitor{
 	dir = 4
@@ -148318,7 +148303,7 @@ map
 qGQ
 kEm
 rSa
-wVh
+msA
 bWo
 cEh
 rSa
