@@ -192,6 +192,9 @@
 			if(I.type in can_be_placed)
 				if(contents.len < max_items_inside)
 					I.loc = src
+
+	dir = reverse_dir[ndir]
+
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? 32 : -32)
 		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0
@@ -256,7 +259,8 @@
 	for(var/obj/item/F in contents)
 		if(F.type in can_be_placed)
 			var/mutable_appearance/condiment = mutable_appearance(icon, "[initial(F.icon_state)]")
-			condiment.pixel_x += cond_number
+			condiment.pixel_x += (dir & 3)? (dir == NORTH ? -cond_number : cond_number) : 0
+			condiment.pixel_y += (dir & 3)? 0 : (dir == EAST ? cond_number : -cond_number)
 			add_overlay(condiment)
 			cond_number += 4
 

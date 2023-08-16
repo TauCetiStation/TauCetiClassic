@@ -766,7 +766,7 @@
 "abp" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("OnlineShop", "Карго шаттл")
+	sortType = list("OnlineShop","Карго шаттл")
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -54034,7 +54034,8 @@
 /obj/item/weapon/reagent_containers/food/condiment/ketchup,
 /obj/item/weapon/reagent_containers/food/condiment/rice,
 /obj/structure/condiment_shelf{
-	pixel_x = 30
+	pixel_x = 32;
+	dir = 8
 	},
 /obj/machinery/kitchen_machine/microwave{
 	pixel_x = -3;
@@ -62194,7 +62195,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза")
+	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -63805,7 +63806,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 2;
-	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория", "Вирусология","Прочие �?сследования")
+	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория","Вирусология","Прочие �?сследования")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -64111,7 +64112,8 @@
 /obj/item/weapon/reagent_containers/food/condiment/ketchup,
 /obj/item/weapon/reagent_containers/food/condiment/rice,
 /obj/structure/condiment_shelf{
-	pixel_x = 30
+	pixel_x = 32;
+	dir = 8
 	},
 /obj/machinery/kitchen_machine/microwave{
 	pixel_x = -3;
@@ -85306,7 +85308,7 @@
 "rcv" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("Карго Офис", "Кабинет Завхоза")
+	sortType = list("Карго Офис","Кабинет Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -86505,7 +86507,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	sortType = list("Переработка", "Карго шаттл")
+	sortType = list("Переработка","Карго шаттл")
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
@@ -89731,7 +89733,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Карго Офис", "Кабинет Завхоза")
+	sortType = list("Карго Офис","Кабинет Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -92959,7 +92961,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/sortjunction{
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","Парк","Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Тренажерный Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка Уборщика")
+	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","Парк","Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Тренажерный Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка Уборщика")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
