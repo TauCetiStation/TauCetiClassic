@@ -16,17 +16,17 @@
 
 /datum/role/shadowling/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
-	to_chat(antag.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
-	to_chat(antag.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
-	to_chat(antag.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://wiki.taucetistation.org/Shadowling</b><br>")
+	to_chat(antag.current, "<b>На данный момент, вы скрыты в оболочке одного из сотрудников станции [station_name()].</b>")
+	to_chat(antag.current, "<b>В этой слабой оболочке, вы способны лишь: Enthrall - поработить не просвещённого, Hatch - облачиться в свою истинную форму(находится во вкладке Shadowling Evolution в верхней-правой части экрана), и Hivemind Commune - общаться с себе подобными братьями и рабами.</b>")
+	to_chat(antag.current, "<b>Другие Шедоулинги являются вашими братьями и союзниками. Вы должны помогать им, как и они вам, для достижения общей цели.</b>")
+	to_chat(antag.current, "<b>Если вы впервые играете за Шедоулинга, или хотите ознакомится с вашими способностями, перейдите на эту страницу нашей вики - https://wiki.taucetistation.org/Shadowling</b><br>")
 
 /datum/role/shadowling/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/carbon/human/S = antag.current
 
 	if(antag.assigned_role == "Clown")
-		to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
+		to_chat(S, "<span class='notice'>Ваша нечеловеческая природа позволила преодолеть вашу клоунаду.</span>")
 		REMOVE_TRAIT(S, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	S.verbs += /mob/living/carbon/human/proc/shadowling_hatch
@@ -49,6 +49,7 @@
 	. = ..()
 	antag.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "thralled", /datum/mood_event/thrall)
+	to_chat(antag.current, "<b>Ты был прорабощен Шедоулингом и стал его рабом. Ты обязан выполнять любой приказ своего мастера и помогать ему в достижении его целей.</b>")
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
