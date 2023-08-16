@@ -1,4 +1,22 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aab" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "aac" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -8,6 +26,52 @@
 	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/starboard)
+"aad" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/station/solar/auxport)
+"aae" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
+"aaf" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aag" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	name = "mime's closet"
@@ -19,6 +83,34 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
+"aah" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/station/solar/starboard)
+"aai" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "aaj" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -29,6 +121,34 @@
 	icon_state = "green"
 	},
 /area/station/engineering/atmos)
+"aak" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
+"aal" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/station/solar/port)
 "aam" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -42657,14 +42777,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "jge" = (
-/obj/machinery/power/solar{
-	id = "auxsolareast";
-	name = "Port Auxiliary Solar Array"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/area/station/solar/starboard)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "jgj" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -61344,13 +61473,22 @@
 	},
 /area/station/civilian/cold_room)
 "njm" = (
-/obj/machinery/power/solar{
-	id = "auxsolareast";
-	name = "Port Auxiliary Solar Array"
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "njw" = (
 /obj/machinery/light/smart,
@@ -79373,6 +79511,7 @@
 	id = "auxsolareast";
 	name = "Port Auxiliary Solar Array"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
@@ -94439,14 +94578,23 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "uMg" = (
-/obj/machinery/power/solar{
-	id = "auxsolareast";
-	name = "Port Auxiliary Solar Array"
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/area/station/solar/port)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "uMS" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -128787,7 +128935,7 @@ kHU
 plf
 cTq
 uXR
-njm
+aad
 plf
 kHU
 plf
@@ -129040,15 +129188,15 @@ pka
 plf
 cTq
 uXR
+aad
+plf
+cTq
 njm
+aad
 plf
 cTq
 uXR
-njm
-plf
-cTq
-uXR
-njm
+aad
 plf
 kHU
 plf
@@ -129296,16 +129444,16 @@ plf
 kHU
 plf
 cTq
-uXR
 njm
+aad
 plf
 cTq
-uXR
 njm
+aad
 plf
 cTq
-uXR
 njm
+aad
 plf
 pka
 plf
@@ -129553,16 +129701,16 @@ plf
 pka
 kHU
 cTq
-uXR
 njm
+aad
 kHU
 cTq
-uXR
 njm
+aad
 kHU
 cTq
-uXR
 njm
+aad
 kHU
 pka
 kHU
@@ -129810,16 +129958,16 @@ plf
 pka
 plf
 cTq
-uXR
 njm
+aad
 plf
 cTq
-uXR
 njm
+aad
 plf
 cTq
-uXR
 njm
+aad
 plf
 kHU
 plf
@@ -130067,16 +130215,16 @@ pka
 pka
 plf
 cTq
-uXR
 njm
+aad
 plf
 kHU
 sqE
 kHU
 plf
 cTq
-uXR
 njm
+aad
 plf
 kHU
 plf
@@ -131095,16 +131243,16 @@ plf
 kHU
 plf
 cTq
-fiZ
-njm
+aab
+aad
 plf
 kHU
 oyu
 kHU
 plf
 cTq
-fiZ
-njm
+aab
+aad
 plf
 hSk
 plf
@@ -131352,16 +131500,16 @@ plf
 pka
 plf
 cTq
-fiZ
-njm
+aab
+aad
 plf
 cTq
-fiZ
-njm
+aab
+aad
 plf
 cTq
-fiZ
-njm
+aab
+aad
 plf
 hSk
 kHU
@@ -131609,16 +131757,16 @@ plf
 pka
 kHU
 cTq
-fiZ
-njm
+aab
+aad
 plf
 cTq
-fiZ
-njm
+aab
+aad
 kHU
 cTq
-fiZ
-njm
+aab
+aad
 kHU
 hSk
 plf
@@ -131866,16 +132014,16 @@ plf
 pka
 plf
 cTq
-fiZ
-njm
+aab
+aad
 kHU
 cTq
-fiZ
-njm
+aab
+aad
 plf
 cTq
-fiZ
-njm
+aab
+aad
 plf
 oyu
 uja
@@ -132124,15 +132272,15 @@ kHU
 plf
 cTq
 fiZ
-njm
+aad
+plf
+cTq
+aab
+aad
 plf
 cTq
 fiZ
-njm
-plf
-cTq
-fiZ
-njm
+aad
 plf
 hyD
 kou
@@ -132385,7 +132533,7 @@ kHU
 plf
 cTq
 fiZ
-njm
+aad
 plf
 kHU
 plf
@@ -133829,7 +133977,7 @@ plf
 plf
 pyI
 dUT
-uMg
+aal
 plf
 plf
 kHU
@@ -134082,15 +134230,15 @@ pka
 plf
 pyI
 dUT
-uMg
+aal
+plf
+pyI
+aai
+aal
 plf
 pyI
 dUT
-uMg
-plf
-pyI
-dUT
-uMg
+aal
 plf
 kHU
 plf
@@ -134338,16 +134486,16 @@ plf
 kHU
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 pka
 plf
@@ -134595,16 +134743,16 @@ plf
 kHU
 kHU
 pyI
-dUT
-uMg
+aai
+aal
 kHU
 pyI
-dUT
-uMg
+aai
+aal
 kHU
 pyI
-dUT
-uMg
+aai
+aal
 kHU
 pka
 plf
@@ -134852,16 +135000,16 @@ plf
 pka
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 kHU
 plf
@@ -135109,16 +135257,16 @@ plf
 pka
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 kHU
 gZz
 kHU
 plf
 pyI
-dUT
-uMg
+aai
+aal
 plf
 kHU
 pka
@@ -136137,16 +136285,16 @@ plf
 pka
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 kHU
 erZ
 kHU
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 kHU
 pka
@@ -136394,16 +136542,16 @@ plf
 pka
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 kHU
 plf
@@ -136651,16 +136799,16 @@ plf
 pka
 kHU
 pyI
-qqm
-uMg
+aak
+aal
 kHU
 pyI
-qqm
-uMg
+aak
+aal
 kHU
 pyI
-qqm
-uMg
+aak
+aal
 kHU
 pka
 plf
@@ -136908,16 +137056,16 @@ plf
 pka
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 pyI
-qqm
-uMg
+aak
+aal
 plf
 pka
 plf
@@ -137166,15 +137314,15 @@ kHU
 plf
 pyI
 qqm
-uMg
+aal
+plf
+pyI
+aak
+aal
 plf
 pyI
 qqm
-uMg
-plf
-pyI
-qqm
-uMg
+aal
 plf
 kHU
 plf
@@ -137427,7 +137575,7 @@ plf
 plf
 pyI
 qqm
-uMg
+aal
 plf
 plf
 kHU
@@ -154464,7 +154612,7 @@ hyF
 rnq
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 aGi
@@ -154717,15 +154865,15 @@ plf
 pka
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 kHU
@@ -154974,15 +155122,15 @@ plf
 pka
 kHU
 aGi
-hyF
+uMg
 rnq
 kHU
 aGi
-hyF
+uMg
 rnq
 kHU
 aGi
-hyF
+uMg
 rnq
 kHU
 kHU
@@ -155231,15 +155379,15 @@ plf
 kHU
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 kHU
@@ -155488,7 +155636,7 @@ pka
 pka
 kHU
 aGi
-hyF
+uMg
 rnq
 plf
 kHU
@@ -155496,7 +155644,7 @@ anP
 kHU
 plf
 aGi
-hyF
+uMg
 rnq
 plf
 kHU
@@ -156516,7 +156664,7 @@ pka
 pka
 kHU
 aGi
-mRj
+jge
 rnq
 plf
 kHU
@@ -156524,7 +156672,7 @@ hAs
 kHU
 plf
 aGi
-mRj
+jge
 rnq
 kHU
 pka
@@ -156773,15 +156921,15 @@ plf
 pka
 plf
 aGi
-mRj
+jge
 rnq
 plf
 aGi
-mRj
+jge
 rnq
 plf
 aGi
-mRj
+jge
 rnq
 plf
 pka
@@ -157030,15 +157178,15 @@ plf
 kHU
 kHU
 aGi
-mRj
+jge
 rnq
 kHU
 aGi
-mRj
+jge
 rnq
 kHU
 aGi
-mRj
+jge
 rnq
 kHU
 pka
@@ -157287,15 +157435,15 @@ plf
 pka
 plf
 aGi
-mRj
+jge
 rnq
 plf
 aGi
-mRj
+jge
 rnq
 plf
 aGi
-mRj
+jge
 rnq
 plf
 pka
@@ -157548,7 +157696,7 @@ mRj
 rnq
 plf
 aGi
-mRj
+jge
 rnq
 plf
 aGi
@@ -164381,7 +164529,7 @@ plf
 plf
 rbh
 cay
-jge
+aah
 plf
 plf
 kHU
@@ -164634,15 +164782,15 @@ kHU
 plf
 rbh
 cay
-jge
+aah
+plf
+rbh
+aae
+aah
 plf
 rbh
 cay
-jge
-plf
-rbh
-cay
-jge
+aah
 plf
 kHU
 plf
@@ -164890,16 +165038,16 @@ gtW
 kHU
 kHU
 rbh
-cay
-jge
+aae
+aah
 plf
 rbh
-cay
-jge
+aae
+aah
 plf
 rbh
-cay
-jge
+aae
+aah
 plf
 lgc
 plf
@@ -165147,16 +165295,16 @@ gtW
 kHU
 plf
 rbh
-cay
-jge
+aae
+aah
 kHU
 rbh
-cay
-jge
+aae
+aah
 kHU
 rbh
-cay
-jge
+aae
+aah
 kHU
 kHU
 plf
@@ -165404,16 +165552,16 @@ gtW
 kHU
 kHU
 rbh
-cay
-jge
+aae
+aah
 plf
 rbh
-cay
-jge
+aae
+aah
 plf
 rbh
-cay
-jge
+aae
+aah
 plf
 lgc
 plf
@@ -165661,16 +165809,16 @@ gtW
 kHU
 plf
 rbh
-cay
-jge
+aae
+aah
 plf
 kHU
 qsF
 kHU
 plf
 rbh
-cay
-jge
+aae
+aah
 plf
 lgc
 kHU
@@ -166689,16 +166837,16 @@ kHU
 kHU
 plf
 rbh
-xwr
-jge
+aaf
+aah
 plf
 kHU
 fFC
 kHU
 plf
 rbh
-xwr
-jge
+aaf
+aah
 plf
 lgc
 lgc
@@ -166946,16 +167094,16 @@ plf
 kHU
 kHU
 rbh
-xwr
-jge
+aaf
+aah
 plf
 rbh
-xwr
-jge
+aaf
+aah
 plf
 rbh
-xwr
-jge
+aaf
+aah
 plf
 lgc
 plf
@@ -167203,16 +167351,16 @@ plf
 lgc
 plf
 rbh
-xwr
-jge
+aaf
+aah
 kHU
 rbh
-xwr
-jge
+aaf
+aah
 kHU
 rbh
-xwr
-jge
+aaf
+aah
 kHU
 lgc
 plf
@@ -167460,16 +167608,16 @@ plf
 lgc
 kHU
 rbh
-xwr
-jge
+aaf
+aah
 plf
 rbh
-xwr
-jge
+aaf
+aah
 plf
 rbh
-xwr
-jge
+aaf
+aah
 plf
 kHU
 plf
@@ -167718,15 +167866,15 @@ lgc
 plf
 rbh
 xwr
-jge
+aah
+plf
+rbh
+aaf
+aah
 plf
 rbh
 xwr
-jge
-plf
-rbh
-xwr
-jge
+aah
 plf
 lgc
 plf
@@ -167979,7 +168127,7 @@ plf
 plf
 rbh
 xwr
-jge
+aah
 plf
 plf
 plf
