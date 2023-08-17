@@ -2867,6 +2867,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
+"fi" = (
+/obj/machinery/light/smart,
+/obj/machinery/space_heater,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/hallway/secondary/exit)
 "fm" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,4"
@@ -3067,10 +3074,10 @@
 	},
 /area/station/hallway/primary/central)
 "gS" = (
-/obj/structure/closet/emcloset,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "black"
@@ -4462,10 +4469,10 @@
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "to" = (
-/obj/structure/closet/emcloset,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6281,10 +6288,9 @@
 	},
 /area/station/cargo/storage)
 "FR" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/light/smart,
+/obj/machinery/space_heater,
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "dark"
 	},
 /area/station/hallway/secondary/exit)
 "FX" = (
@@ -31898,7 +31904,7 @@ MK
 MK
 MK
 TX
-FR
+fi
 FD
 HK
 LW
@@ -32147,7 +32153,7 @@ dR
 Bx
 eF
 BH
-ct
+FR
 Dw
 Qo
 Cv
