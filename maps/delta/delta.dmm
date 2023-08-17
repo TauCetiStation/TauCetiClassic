@@ -17270,11 +17270,12 @@
 	pixel_x = 5;
 	pixel_y = 27
 	},
+/obj/machinery/computer/card,
 /obj/machinery/flasher_button{
 	id = "HoP_flasher";
-	pixel_x = -26
+	pixel_x = -6;
+	pixel_y = 36
 	},
-/obj/machinery/computer/card,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -22234,6 +22235,18 @@
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
+	},
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/obj/machinery/door/window/northleft{
+	dir = 8;
+	name = "Reception Window"
+	},
+/obj/structure/noticeboard{
+	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
