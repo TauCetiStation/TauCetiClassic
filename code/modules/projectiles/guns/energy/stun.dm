@@ -96,7 +96,7 @@
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
-	desc = "Оружие, предпочитаемое ударными группами синдиката."
+	desc = "Оружие, предпочитаемое ударными силами синдиката."
 	w_class = SIZE_NORMAL
 	can_be_holstered = FALSE
 	force = 10
