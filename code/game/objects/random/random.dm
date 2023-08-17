@@ -31,10 +31,14 @@
 		var/new_path = item_to_spawn()
 		if(!new_path)
 			CRASH("Random item [type] was unable to spawn new item via item_to_spawn(), should be impossible")
-		new new_path(loc)
+		var/spawned_item = new new_path(loc)
+		afterspawn(spawned_item)
 
 	return INITIALIZE_HINT_QDEL
 
 // this function should return a specific item to spawn
 /obj/random/proc/item_to_spawn()
+	return 0
+
+/obj/random/proc/afterspawn(obj/O)
 	return 0

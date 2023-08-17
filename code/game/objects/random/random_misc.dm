@@ -1,3 +1,4 @@
+#define MINES_IN_BAG 2
 /obj/random/misc/pack
 	name = "Random Misc"
 	desc = "This is a random misc pack."
@@ -162,71 +163,63 @@
 		prob(100);pick(typesof(/obj/item/weapon/disk/smartlight_programm))
 	)
 
-/obj/random/misc/mine/wallet
+/obj/random/misc/minebag/wallet
 	name = "Random Wallet"
 	desc = "Кошелёк с миной или обычными деньгами."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "wallet"
 
-/obj/random/misc/mine/wallet/item_to_spawn()
+/obj/random/misc/minebag/wallet/item_to_spawn()
 	return /obj/item/weapon/storage/wallet
 
-/obj/random/misc/mine/wallet/spawn_item()
-	var/obj/item/weapon/storage/Bag = ..()
-
+/obj/random/misc/minebag/wallet/afterspawn(obj/item/weapon/storage/Bag)
 	if(prob(30))
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	else
-		spawn_money(300, Bag)
+		for(var/i=0, i<MINES_IN_BAG, i++)
+			new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		return
 
-/obj/random/misc/mine/box_pouch
+	spawn_money(300, Bag)
+
+/obj/random/misc/minebag/box_pouch
 	name = "Random Box"
 	desc = "Случайная коробка с миной или обычными предметами."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "box"
 
-/obj/random/misc/mine/box_pouch/item_to_spawn()
+/obj/random/misc/minebag/box_pouch/item_to_spawn()
 	return pick(\
 		prob(20);/obj/item/weapon/storage/pouch/medium_generic,\
 		prob(100);/obj/item/weapon/storage/box,
 	)
 
-/obj/random/misc/mine/box_pouch/spawn_item()
-	var/obj/item/weapon/storage/Bag = ..()
-
+/obj/random/misc/minebag/box_pouch/afterspawn(obj/item/weapon/storage/Bag)
 	if(prob(30))
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	else
-		for(var/i = 0, i < 4, i++)
-			var/itemtype = pick(\
-				prob(25);/obj/random/foods/food_snack,\
-				prob(25);/obj/random/foods/drink_can,\
-				prob(25);/obj/random/misc/cigarettes,\
-				prob(25);/obj/random/misc/lightsource,\
-				prob(25);/obj/random/misc/lighters,\
-				prob(25);/obj/random/meds/pills,\
-				prob(25);pick(typesof(/obj/item/device/camera) - /obj/item/device/camera/siliconcam),\
-				prob(20);/obj/item/weapon/storage/wallet/random,\
-				prob(15);/obj/item/weapon/reagent_containers/spray/pepper,\
-				prob(10);/obj/item/device/flash,
-			)
-			new itemtype(Bag)
+		for(var/i=0, i<MINES_IN_BAG, i++)
+			new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		return
 
-/obj/random/misc/mine/backpack_satchel
+	for(var/i = 0, i < 4, i++)
+		var/itemtype = pick(\
+			prob(25);/obj/random/foods/food_snack,\
+			prob(25);/obj/random/foods/drink_can,\
+			prob(25);/obj/random/misc/cigarettes,\
+			prob(25);/obj/random/misc/lightsource,\
+			prob(25);/obj/random/misc/lighters,\
+			prob(25);/obj/random/meds/pills,\
+			prob(25);pick(typesof(/obj/item/device/camera) - /obj/item/device/camera/siliconcam),\
+			prob(20);/obj/item/weapon/storage/wallet/random,\
+			prob(15);/obj/item/weapon/reagent_containers/spray/pepper,\
+			prob(10);/obj/item/device/flash,
+		)
+		new itemtype(Bag)
+
+/obj/random/misc/minebag/backpack_satchel
 	name = "Random Bag/Case"
 	desc = "Случайная сумка с миной или обычными предметами."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "briefcase"
 
-/obj/random/misc/mine/backpack_satchel/item_to_spawn()
+/obj/random/misc/minebag/backpack_satchel/item_to_spawn()
 	return pick(\
 		prob(30);/obj/item/weapon/storage/briefcase,\
 		prob(30);/obj/item/weapon/storage/backpack/alt,\
@@ -235,42 +228,38 @@
 		prob(100);/obj/item/weapon/storage/backpack/satchel/norm,
 	)
 
-/obj/random/misc/mine/backpack_satchel/spawn_item()
-	var/obj/item/weapon/storage/Bag = ..()
-
+/obj/random/misc/minebag/backpack_satchel/afterspawn(obj/item/weapon/storage/Bag)
 	if(prob(30))
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	else
-		for(var/i = 0, i < 4, i++)
-			var/itemtype = pick(\
-					prob(25);/obj/random/foods/food_snack,\
-					prob(25);/obj/random/foods/drink_can,\
-					prob(25);/obj/random/misc/cigarettes,\
-					prob(25);/obj/random/misc/lightsource,\
-					prob(25);/obj/random/misc/book,\
-					prob(25);/obj/random/misc/lighters,\
-					prob(25);/obj/random/meds/pills,\
-					prob(25);/obj/item/weapon/storage/box/survival,\
-					prob(25);/obj/item/weapon/storage/box/donkpockets,\
-					prob(25);pick(typesof(/obj/item/device/camera) - /obj/item/device/camera/siliconcam),\
-					prob(20);/obj/item/weapon/storage/wallet/random,\
-					prob(15);/obj/item/weapon/reagent_containers/spray/pepper,\
-					prob(10);/obj/item/device/flash,\
-					prob(5);/obj/item/weapon/gun/projectile/automatic/glock
-				)
-			new itemtype(Bag)
+		for(var/i=0, i<MINES_IN_BAG, i++)
+			new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+		return
 
-/obj/random/misc/mine
+	for(var/i = 0, i < 4, i++)
+		var/itemtype = pick(\
+				prob(25);/obj/random/foods/food_snack,\
+				prob(25);/obj/random/foods/drink_can,\
+				prob(25);/obj/random/misc/cigarettes,\
+				prob(25);/obj/random/misc/lightsource,\
+				prob(25);/obj/random/misc/book,\
+				prob(25);/obj/random/misc/lighters,\
+				prob(25);/obj/random/meds/pills,\
+				prob(25);/obj/item/weapon/storage/box/survival,\
+				prob(25);/obj/item/weapon/storage/box/donkpockets,\
+				prob(25);pick(typesof(/obj/item/device/camera) - /obj/item/device/camera/siliconcam),\
+				prob(20);/obj/item/weapon/storage/wallet/random,\
+				prob(15);/obj/item/weapon/reagent_containers/spray/pepper,\
+				prob(10);/obj/item/device/flash,\
+				prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/glock
+			)
+		new itemtype(Bag)
+
+/obj/random/misc/minebag
 	name = "Random Bag/Box/Case with mine"
 	desc = "Случайная сумка с миной."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
 
-/obj/random/misc/storage/mine/item_to_spawn()
+/obj/random/misc/minebag/item_to_spawn()
 	return pick(\
 		prob(30);/obj/item/weapon/storage/briefcase,\
 		prob(30);/obj/item/weapon/storage/backpack/alt,\
@@ -282,11 +271,8 @@
 		prob(5);/obj/item/weapon/storage/wallet,
 	)
 
-/obj/random/misc/storage/mine/spawn_item()
-	var/obj/item/weapon/storage/Bag = ..()
+/obj/random/misc/minebag/afterspawn(obj/item/weapon/storage/Bag)
+	for(var/i=0, i<MINES_IN_BAG, i++)
+		new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
 
-	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
-	new /obj/item/weapon/grenade/chem_grenade/mine(Bag)
+#undef MINES_IN_BAG

@@ -9,7 +9,7 @@
 		var/list/tables = list()
 		for(var/obj/structure/table/Table in target_area)
 			tables += Table
-		var/Mine = pick(/obj/random/misc/mine/wallet, /obj/random/misc/mine/box_pouch, /obj/random/misc/mine/backpack_satchel)
+		var/Mine = pick(/obj/random/misc/minebag/wallet, /obj/random/misc/minebag/box_pouch, /obj/random/misc/minebag/backpack_satchel)
 		if(tables.len)
 			var/obj/structure/table/Table = pick(tables)
 			var/turf/T = get_turf(Table)
