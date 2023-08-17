@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
-	desc = "Оружие, в котором большое количество контролируемого излучения медленно разрушает цель на молекулы."
+	desc = "Оружие, которое за счет большого количества контролируемого излучения постепенно разрушает цель на составные элементы."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	can_be_holstered = TRUE
