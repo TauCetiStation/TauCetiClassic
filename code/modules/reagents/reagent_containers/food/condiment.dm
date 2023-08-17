@@ -271,7 +271,7 @@
 	desc = "A small bag filled with some flour."
 	icon_state = "flour"
 	item_state = "flour"
-	empty_icon = "flour_empty"
+	empty_icon = "flour"
 	list_reagents = list("flour" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
@@ -279,7 +279,7 @@
 	desc = "Tastey space sugar!"
 	icon_state = "sugar"
 	item_state = "sugar"
-	empty_icon = "sugar_empty"
+	empty_icon = "sugar"
 	list_reagents = list("sugar" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/rice
@@ -287,7 +287,7 @@
 	desc = "Salt. From space oceans, presumably. Good for cooking!"
 	icon_state = "rice"
 	item_state = "rice"
-	empty_icon = "rice_empty"
+	empty_icon = "rice"
 	list_reagents = list("rice" = 30)
 
 // SAUCES
@@ -296,34 +296,35 @@
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
-	empty_icon = "soysauce_empty"
+	empty_icon = "soysauce"
 	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
 	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
-	empty_icon = "hotsauce_empty"
+	empty_icon = "hotsauce"
 	list_reagents = list("capsaicin" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/ketchup
 	name = "ketchup"
 	desc = "You feel more American already."
 	icon_state = "ketchup"
-	empty_icon = "ketchup_empty"
+	empty_icon = "ketchup"
 	list_reagents = list("ketchup" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/coldsauce
 	name = "cold sauce"
 	desc = "Leaves the tongue numb in its passage."
 	icon_state = "coldsauce"
+	empty_icon = "coldsauce"
 	list_reagents = list("frostoil" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/cornoil
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
-	empty_icon = "cornoil_empty"
+	empty_icon = "cornoil"
 	list_reagents = list("cornoil" = 40)
 
 // SUPPLEMENTS
@@ -333,14 +334,14 @@
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 	item_state = "enzyme"
-	empty_icon = "enzyme_empty"
+	empty_icon = "enzyme"
 	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
 	name = "salt shaker"
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
-	empty_icon = "saltshakersmall_empty"
+	empty_icon = "emptyshaker"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -350,6 +351,7 @@
 	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
+	empty_icon = "peppermillsmall"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -359,4 +361,5 @@
 	name = "honey pot"
 	desc = "Sweet and healthy!"
 	icon_state = "honey"
+	empty_icon = "honey"
 	list_reagents = list("honey" = 40)

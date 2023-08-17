@@ -2,10 +2,10 @@
 /datum/component/gamemode
 
 /datum/component/gamemode/Initialize(...)
-	RegisterSignal(parent, list(COMSIG_ROLE_GETSCOREBOARD), .proc/GetScoreboard)
-	RegisterSignal(parent, list(COMSIG_ROLE_PANELBUTTONS), .proc/extraPanelButtons)
-	RegisterSignal(parent, list(COMSIG_ROLE_ROLETOPIC), .proc/RoleTopic)
-	RegisterSignal(parent, list(COMSIG_ROLE_POSTSETUP), .proc/OnPostSetup)
+	RegisterSignal(parent, list(COMSIG_ROLE_GETSCOREBOARD), PROC_REF(GetScoreboard))
+	RegisterSignal(parent, list(COMSIG_ROLE_PANELBUTTONS), PROC_REF(extraPanelButtons))
+	RegisterSignal(parent, list(COMSIG_ROLE_ROLETOPIC), PROC_REF(RoleTopic))
+	RegisterSignal(parent, list(COMSIG_ROLE_POSTSETUP), PROC_REF(OnPostSetup))
 
 /datum/component/gamemode/proc/GetScoreboard(datum/source)
 	return

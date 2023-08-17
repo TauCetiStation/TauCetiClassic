@@ -24,6 +24,7 @@
 	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1
 	var/plasma_rate = 5
+	var/acid_type = /obj/effect/alien/acid
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -33,6 +34,8 @@
 	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 
 	var/list/alien_spells = list()
+
+	show_examine_log = FALSE
 
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()

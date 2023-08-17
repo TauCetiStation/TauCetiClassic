@@ -11,6 +11,8 @@ SUBSYSTEM_DEF(machines)
 	var/list/currentrun = list()
 	var/list/powernets  = list()
 
+	var/stop_powernet_processing = FALSE
+
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()
 	fire()

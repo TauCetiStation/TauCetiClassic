@@ -24,7 +24,7 @@ var/global/power_fail_event = FALSE
 	var/datum/announcement/centcomm/grid_off/announcement = new
 	announcement.play()
 	if(prob(25))
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/play_ambience), 600)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_ambience)), 600)
 
 	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
 

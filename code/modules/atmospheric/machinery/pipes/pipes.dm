@@ -18,6 +18,9 @@
 	. = ..()
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	if(SSair.stop_airnet_processing)
+		return ..()
+
 	releaseAirToTurf()
 	qdel(air_temporary)
 	air_temporary = null

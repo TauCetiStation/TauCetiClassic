@@ -24,50 +24,68 @@
 /obj/machinery/replicator/atom_init()
 	. = ..()
 
-	var/list/viables = list(\
-	/obj/item/roller,\
-	/obj/structure/closet/crate,\
-	/obj/structure/closet/acloset,\
-	/mob/living/simple_animal/hostile/mimic/crate,\
-	/mob/living/simple_animal/hostile/viscerator,\
-	/mob/living/simple_animal/hostile/hivebot,\
-	/obj/item/device/analyzer,\
-	/obj/item/device/camera,\
-	/obj/item/device/flash,\
-	/obj/item/device/flashlight,\
-	/obj/item/device/healthanalyzer,\
-	/obj/item/device/multitool,\
-	/obj/item/device/paicard,\
-	/obj/item/device/radio,\
-	/obj/item/device/radio/headset,\
-	/obj/item/device/radio/beacon,\
-	/obj/item/weapon/autopsy_scanner,\
-	/obj/item/weapon/bikehorn,\
-	/obj/item/weapon/bonesetter,\
-	/obj/item/weapon/kitchenknife/butch,\
-	/obj/item/weapon/caution,\
-	/obj/item/weapon/caution/cone,\
-	/obj/item/weapon/crowbar,\
-	/obj/item/weapon/clipboard,\
-	/obj/item/weapon/stock_parts/cell,\
-	/obj/item/weapon/circular_saw,\
-	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/handcuffs,\
-	/obj/item/weapon/hemostat,\
-	/obj/item/weapon/kitchenknife,\
-	/obj/item/weapon/lighter,\
-	/obj/item/weapon/lighter,\
-	/obj/item/weapon/light/bulb,\
-	/obj/item/weapon/light/tube,\
-	/obj/item/weapon/pickaxe,\
-	/obj/item/weapon/shovel,\
-	/obj/item/weapon/table_parts,\
-	/obj/item/weapon/weldingtool,\
-	/obj/item/weapon/wirecutters,\
-	/obj/item/weapon/wrench,\
-	/obj/item/weapon/screwdriver,\
-	/obj/item/weapon/grenade/chem_grenade/cleaner,\
-	/obj/item/weapon/grenade/chem_grenade/metalfoam\
+	var/list/viables = list(
+	/obj/random/plushie,
+	/obj/random/vending/snack,
+	/obj/random/vending/cola,
+	/obj/random/randomfigure,
+	/obj/random/randomtoy,
+	/obj/random/pouch,
+	/obj/random/cloth/head,
+	/obj/random/cloth/hazmatsuit,
+	/obj/random/cloth/shittysuit,
+	/obj/random/cloth/storagesuit,
+	/obj/random/cloth/spacesuit,
+	/obj/random/cloth/armor,
+	/obj/random/cloth/under,
+	/obj/random/cloth/tie,
+	/obj/random/cloth/shoes_safe,
+	/obj/random/cloth/glasses_safe,
+	/obj/random/cloth/gloves_safe,
+	/obj/random/cloth/masks,
+	/obj/random/cloth/backpack,
+	/obj/random/cloth/belt,
+	/obj/random/cloth/under,
+	/obj/random/cloth/tie,
+	/obj/random/cloth/ny_random_cloth,
+	/obj/random/foods/drink_can,
+	/obj/random/foods/food_snack,
+	/obj/random/foods/ramens,
+	/obj/random/foods/drink_bottle,
+	/obj/random/foods/donuts,
+	/obj/random/guns/set_9mm,
+	/obj/random/meds/medical_single_item,
+	/obj/random/meds/syringe,
+	/obj/random/meds/chemical_bottle,
+	/obj/random/meds/medkit,
+	/obj/random/meds/medical_tool,
+	/obj/random/meds/pills,
+	/obj/random/meds/dna_injector,
+	/obj/random/mobs/peacefull,
+	/obj/random/mobs/moderate,
+	/obj/random/mobs/dangerous,
+	/obj/random/structures/common_crates,
+	/obj/random/structures/vendings,
+	/obj/random/structures/misc,
+	/obj/random/tools/powercell,
+	/obj/random/tools/technology_scanner,
+	/obj/random/tools/bomb_supply,
+	/obj/random/tools/toolbox,
+	/obj/random/tools/tool,
+	/obj/random/misc/toy,
+	/obj/random/misc/lighters,
+	/obj/random/misc/smokes,
+	/obj/random/misc/storage,
+	/obj/random/misc/book,
+	/obj/random/misc/musical,
+	/obj/random/misc/disk,
+	/obj/random/tools/tech_supply/guaranteed,
+	/obj/random/foods/food_without_garbage,
+	/obj/random/science/bomb_supply,
+	/obj/random/science/slimecore,
+	/obj/random/science/circuit,
+	/obj/random/science/stock_part,
+	/obj/random/science/common_circuit
 	)
 
 	var/quantity = rand(5,15)
@@ -75,9 +93,7 @@
 		var/button_desc = "a [pick("yellow", "purple", "green", "blue", "red", "orange", "white")], "
 		button_desc += "[pick("round", "square", "diamond", "heart", "dog", "human")] shaped "
 		button_desc += "[pick("toggle", "switch", "lever", "button", "pad", "hole")]"
-		var/type = pick(viables)
-		viables.Remove(type)
-		construction[button_desc] = type
+		construction[button_desc] = PATH_OR_RANDOM_PATH(pick_n_take(viables))
 
 	fail_message = "<span class='notice'>[bicon(src)] a [pick("loud", "soft", "sinister", "eery", "triumphant", "depressing", "cheerful", "angry")] \
 		[pick("horn", "beep", "bing", "bleep", "blat", "honk", "hrumph", "ding")] sounds and a \
@@ -107,7 +123,7 @@
 				source_material.loc = null
 
 			spawn_progress_time = 0
-			max_spawn_time = rand(30,100)
+			max_spawn_time = rand(30,50)
 
 			if(!spawning_types.len || !stored_materials.len)
 				set_power_use(IDLE_POWER_USE)
@@ -129,6 +145,9 @@
 	popup.open()
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
+	if(W.flags & (NODROP | ABSTRACT | DROPDEL))
+		to_chat(user, "<span class='notice'>[W] doesn't fit into [src].</span>")
+		return
 	user.drop_from_inventory(W, src)
 	stored_materials.Add(W)
 	visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")

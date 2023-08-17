@@ -333,6 +333,9 @@
 	#define COMPONENT_BLOCK_SWAP 1
 ///from mob/living/vomit(): (/mob)
 #define COMSIG_LIVING_VOMITED "living_vomited"
+///from ai_actual_track(): (mob/living)
+#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
+	#define COMPONENT_CANT_TRACK (1<<0)
 
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
@@ -342,7 +345,7 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
-/// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
+/// from simple_animal/hostile/proc/UnarmedAttack(): (atom/target)
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
 /// from simple_animal/hostile/proc/Shoot(): (atom/target)
 #define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"

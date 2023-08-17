@@ -175,9 +175,9 @@
 			Burrow()
 
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore))
-		EatOre(target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/UnarmedAttack(atom/A)
+	if(istype(A, /obj/item/weapon/ore))
+		EatOre(A)
 		return
 	..()
 
@@ -194,7 +194,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = TRUE
-		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
+		addtimer(CALLBACK(src, PROC_REF(burrow_check)), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
 	if(alerted)
@@ -256,14 +256,20 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_LARGE
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/RangedAttack(atom/A, params)
+	if(ranged_cooldown < 0)
+		OpenFire(A)
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
+	A.GiveTarget(the_target)
 	A.friends = friends
 	A.faction = faction
+	ranged_cooldown = ranged_cooldown_cap
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
-	OpenFire()
+/mob/living/simple_animal/hostile/asteroid/hivelord/UnarmedAttack(atom/A)
+	if(ranged_cooldown < 0)
+		OpenFire(A)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -302,7 +308,7 @@
 
 /obj/item/asteroid/hivelord_core/atom_init()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/make_inert), 1200)
+	addtimer(CALLBACK(src, PROC_REF(make_inert)), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = TRUE
@@ -448,7 +454,7 @@
 	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
 		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
 		A.gets_dug()
-	addtimer(CALLBACK(src, .proc/Trip), 20)
+	addtimer(CALLBACK(src, PROC_REF(Trip)), 20)
 
 /obj/effect/goliath_tentacle/original
 

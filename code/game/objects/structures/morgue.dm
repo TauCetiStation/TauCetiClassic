@@ -73,7 +73,13 @@
 
 	for(var/atom/movable/A in src)
 		A.forceMove(loc)
-		A.ex_act(severity)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	qdel(src)
 
 /obj/structure/morgue/alter_health()
@@ -111,19 +117,23 @@
 		update()
 
 /obj/structure/morgue/proc/close()
-	if (connected)
-		for(var/atom/movable/A in connected.loc)
-			if(!A.anchored)
-				A.loc = src
-				if(ismob(A))
-					var/mob/M = A
-					M.instant_vision_update(1,src)
-		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
-		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
-		qdel(connected)
-		connected = null
-		update_icon()
-		update()
+	if(!connected)
+		return
+	for(var/atom/movable/A in connected.loc)
+		if(A.anchored)
+			continue
+		if(ismob(A))
+			if(!isliving(A))
+				continue
+			var/mob/M = A
+			M.instant_vision_update(1,src)
+		A.loc = src
+	playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
+	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
+	qdel(connected)
+	connected = null
+	update_icon()
+	update()
 
 /obj/structure/morgue/proc/move_contents(new_loc)
 	for(var/atom/movable/A in src)
@@ -305,9 +315,15 @@
 			if(prob(95))
 				return
 
-	for(var/atom/movable/A as mob|obj in src)
+	for(var/atom/movable/A in src)
 		A.forceMove(loc)
-		A.ex_act(severity)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	qdel(src)
 
 /obj/structure/crematorium/alter_health()

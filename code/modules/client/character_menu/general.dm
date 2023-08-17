@@ -42,6 +42,7 @@
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
+			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(!specie_obj.flags[NO_BLOOD])
 				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
@@ -117,7 +118,10 @@
 
 			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
-				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]"
+				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
+			if(species == UNATHI)
+				. += "<b>Belly & Jaw Color</b>"
+				. += "<br><a href='?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
 
 		//Gear
 		if("gear")
@@ -310,6 +314,11 @@
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages
 
+				
+				if("insurance")
+					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
+					
+
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])
 						return
@@ -435,6 +444,13 @@
 						r_skin = hex2num(copytext(new_skin, 2, 4))
 						g_skin = hex2num(copytext(new_skin, 4, 6))
 						b_skin = hex2num(copytext(new_skin, 6, 8))
+
+				if("belly")
+					var/new_belly = input(user, "Choose your character's belly colour: ", "Character Preference", rgb(r_belly, g_belly, b_belly)) as color|null
+					if(new_belly)
+						r_belly = hex2num(copytext(new_belly, 2, 4))
+						g_belly = hex2num(copytext(new_belly, 4, 6))
+						b_belly = hex2num(copytext(new_belly, 6, 8))
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist

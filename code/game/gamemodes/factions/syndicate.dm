@@ -17,6 +17,8 @@
 
 	var/nuke_code
 
+	var/list/team_discounts = list()
+
 /datum/faction/nuclear/AdminPanelEntry()
 	var/dat = ..()
 	var/obj/item/weapon/disk/nuclear/nukedisk

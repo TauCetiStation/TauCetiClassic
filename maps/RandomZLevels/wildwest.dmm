@@ -12,11 +12,6 @@
 /obj/structure/cult/pylon,
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wildwest/vault)
-"ae" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage5"
-	},
-/area/awaymission/wildwest/vault)
 "af" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/simulated/floor/engine/cult,
@@ -36,16 +31,6 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/cult,
-/area/awaymission/wildwest/vault)
-"aj" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage3"
-	},
-/area/awaymission/wildwest/vault)
-"ak" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage6"
-	},
 /area/awaymission/wildwest/vault)
 "al" = (
 /obj/structure/cult/anomaly/timewhole,
@@ -160,11 +145,6 @@
 /obj/structure/cult/pylon,
 /turf/simulated/shuttle/plating{
 	icon_state = "bcircuitoff"
-	},
-/area/awaymission/wildwest/vault)
-"aC" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "cultdamage2"
 	},
 /area/awaymission/wildwest/vault)
 "aD" = (
@@ -729,7 +709,7 @@
 /area/awaymission/wildwest/mansion)
 "cD" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
@@ -21457,7 +21437,7 @@ ac
 ac
 ah
 ac
-aj
+ac
 ac
 ac
 ah
@@ -22487,7 +22467,7 @@ ac
 ah
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -23004,7 +22984,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 af
@@ -23265,10 +23245,10 @@ ac
 ac
 ac
 ac
-aj
 ac
 ac
-ak
+ac
+ac
 ac
 ac
 ah
@@ -23769,7 +23749,7 @@ ac
 ah
 ac
 ac
-ae
+ac
 ac
 ac
 ac
@@ -24036,13 +24016,13 @@ ac
 ac
 ah
 ac
-ak
+ac
 ac
 ac
 ah
 ac
 ac
-aj
+ac
 ac
 ac
 ac
@@ -24817,7 +24797,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 af
 ac
@@ -25056,7 +25036,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 ac
@@ -25317,7 +25297,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 af
@@ -25326,12 +25306,12 @@ ac
 ac
 ac
 ac
-ae
+ac
 ah
 ah
 ac
 ac
-aj
+ac
 ah
 ac
 ac
@@ -25579,7 +25559,7 @@ ah
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -26615,7 +26595,7 @@ ac
 ac
 ac
 ac
-aj
+ac
 ac
 ac
 ac
@@ -26630,7 +26610,7 @@ aD
 ah
 aD
 ac
-aj
+ac
 ac
 ac
 ah
@@ -26854,7 +26834,6 @@ ab
 ac
 ac
 ac
-aj
 ac
 ac
 ac
@@ -26863,12 +26842,13 @@ ac
 ac
 ac
 ac
-ae
 ac
 ac
 ac
 ac
-aj
+ac
+ac
+ac
 ac
 ac
 ac
@@ -27130,7 +27110,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -27647,7 +27627,7 @@ ac
 af
 ac
 ah
-aj
+ac
 ac
 ac
 ac
@@ -27891,7 +27871,7 @@ ac
 ag
 ac
 ac
-aj
+ac
 ac
 ag
 ac
@@ -28925,7 +28905,7 @@ ac
 ac
 ac
 ac
-aC
+ac
 ac
 ac
 ac
@@ -29441,7 +29421,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -30478,7 +30458,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -31229,7 +31209,7 @@ ac
 ac
 ag
 ag
-aj
+ac
 ac
 ag
 af
@@ -31739,7 +31719,7 @@ aa
 ab
 ac
 ac
-aj
+ac
 ac
 ag
 ag
@@ -31764,7 +31744,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -33050,7 +33030,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 ac
@@ -33312,7 +33292,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -33798,7 +33778,7 @@ ac
 ac
 ag
 ag
-aj
+ac
 an
 an
 ag
@@ -33830,7 +33810,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -34083,7 +34063,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -35108,7 +35088,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -35628,7 +35608,7 @@ ac
 ac
 ac
 ac
-ak
+ac
 ac
 ac
 ac
@@ -36139,7 +36119,7 @@ ac
 ac
 ac
 ac
-ae
+ac
 ac
 ac
 ac
