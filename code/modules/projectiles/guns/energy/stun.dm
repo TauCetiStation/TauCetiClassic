@@ -59,7 +59,7 @@
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "foam dart crossbow"
-	desc = "Оружие, любимое многими гиперактивными детьми. В Возрасте от 8 лет и старше."
+	desc = "Оружие, любимое многими гиперактивными детьми. Возрастной рейтинг 8+."
 	icon_state = "crossbow"
 	w_class = SIZE_TINY
 	item_state = "crossbow"
