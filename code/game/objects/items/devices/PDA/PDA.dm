@@ -1187,6 +1187,7 @@
 			var/id = href_list["order_item"]
 			var/datum/shop_lot/Lot = global.online_shop_lots[id]
 			if(Lot && owner_account)
+				var/datum/money_account/MA = get_account(owner_account)
 				var/T = sanitize(input(U, "Введите адрес доставки", "Адрес доставки", null) as text)
 				if(T && istext(T))
 					if(Lot.sold)
@@ -1194,7 +1195,7 @@
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
 									if(order_onlineshop_item(owner, owner_account, NewLot, T))
-										get_account(owner_account).shopping_cart["[NewLot.number]"] = Lot.to_list()
+										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
 									else
 										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
@@ -1202,7 +1203,7 @@
 						return
 
 					else if(order_onlineshop_item(owner, owner_account, Lot, T))
-						get_account(owner_account).shopping_cart["[Lot.number]"] = Lot.to_list()
+						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
 						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
@@ -1217,11 +1218,12 @@
 				mode = 0
 				return
 			var/lot_id = href_list["delivered_item"]
-			if(!get_account(owner_account).shopping_cart["[lot_id]"])
+			var/datum/money_account/MA = get_account(owner_account)
+			if(!MA.shopping_cart["[lot_id]"])
 				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[lot_id].</span>")
 				return
-			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, get_account(owner_account).shopping_cart["[lot_id]"]["postpayment"]))
-				get_account(owner_account).shopping_cart -= "[lot_id]"
+			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, MA.shopping_cart["[lot_id]"]["postpayment"]))
+				MA.shopping_cart -= "[lot_id]"
 				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
@@ -1742,20 +1744,23 @@
 		return
 
 	if(istype(target, /obj/structure/bigDelivery))
+		var/datum/money_account/MA = get_account(owner_account)
 		var/obj/structure/bigDelivery/package = target
-		if(!get_account(owner_account).shopping_cart["[package.lot_number]"])
+		if(!MA.shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, get_account(owner_account).shopping_cart["[package.lot_number]"]["postpayment"]))
-			get_account(owner_account).shopping_cart -= "[package.lot_number]"
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, MA.shopping_cart["[package.lot_number]"]["postpayment"]))
+			MA.shopping_cart -= "[package.lot_number]"
 			return
 
 	if(istype(target, /obj/item/smallDelivery))
+		var/datum/money_account/MA = get_account(owner_account)
 		var/obj/item/smallDelivery/package = target
-		if(!get_account(owner_account).shopping_cart["[package.lot_number]"])
+		if(!MA.shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, get_account(owner_account).shopping_cart["[package.lot_number]"]["postpayment"]))
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, MA.shopping_cart["[package.lot_number]"]["postpayment"]))
+			MA.shopping_cart -= "[package.lot_number]"
 			return
 
 	switch(scanmode)
