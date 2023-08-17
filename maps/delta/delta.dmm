@@ -272,6 +272,20 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
+"aax" = (
+/obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/civilian/toilet)
+"aay" = (
+/obj/structure/dryer{
+	dir = 4;
+	pixel_x = -6
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/toilet)
 "aaz" = (
 /obj/structure/sign/directions/engineering{
 	pixel_y = -6
@@ -281,6 +295,44 @@
 	},
 /turf/simulated/wall,
 /area/station/security/vacantoffice)
+"aaA" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/simulated/floor,
+/area/station/civilian/toilet)
+"aaB" = (
+/obj/structure/table,
+/obj/item/weapon/poster/legit,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/central)
+"aaC" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 12
+	},
+/obj/item/stack/cable_coil/red{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
+/turf/simulated/floor{
+	icon_state = "yellowpatch_inv"
+	},
+/area/station/hallway/primary/central)
 "aaD" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -419,6 +471,13 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/structure/mirror{
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -5459,6 +5518,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/structure/dryer{
+	dir = 4;
+	pixel_x = -6
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -27668,9 +27731,13 @@
 	},
 /area/station/security/range)
 "fTi" = (
-/obj/item/weapon/flora/random,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/lipstick/random,
 /turf/simulated/floor,
-/area/station/civilian/toilet)
+/area/station/maintenance/atmos)
 "fTm" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -58325,6 +58392,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
+	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "mvj" = (
@@ -61979,15 +62050,28 @@
 	},
 /area/station/rnd/misc_lab)
 "nmu" = (
-/obj/structure/sink{
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/departments/restroom{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
 	dir = 8;
-	pixel_x = -12
+	icon_state = "neutralcorner"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor,
-/area/station/civilian/toilet)
+/area/station/civilian/locker)
 "nmC" = (
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -99615,18 +99699,19 @@
 	},
 /area/station/hallway/primary/central)
 "vSv" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 12
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/item/stack/cable_coil/red{
-	pixel_x = 3;
-	pixel_y = -7
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/sign/departments/restroom{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "yellowpatch_inv"
+	icon_state = "neutralcorner"
 	},
-/area/station/hallway/primary/central)
+/area/station/hallway/secondary/entry)
 "vSz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -104726,17 +104811,19 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "xbZ" = (
-/obj/structure/table,
-/obj/item/weapon/poster/legit,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellowcorner"
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
-/area/station/hallway/primary/central)
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/simulated/floor,
+/area/station/maintenance/atmos)
 "xcD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -142149,10 +142236,10 @@ gHT
 rsE
 ldJ
 wwi
-kAU
+fTi
 buR
 ban
-ban
+xbZ
 abs
 mVU
 qdU
@@ -142661,7 +142748,7 @@ ffS
 fAi
 lNi
 fYS
-uDS
+vSv
 wwi
 kAU
 auA
@@ -155081,8 +155168,8 @@ hBZ
 uwA
 nxQ
 oBr
-xbZ
-vSv
+aaB
+aaC
 dEq
 vuL
 kbS
@@ -155592,10 +155679,10 @@ pIp
 hqB
 pRj
 bYH
-fTi
-vJf
-nmu
-nmu
+aax
+aay
+aaA
+aaA
 vJf
 tyn
 kbS
@@ -156104,7 +156191,7 @@ mKd
 jTW
 xAJ
 hqB
-orJ
+nmu
 bYH
 dBW
 pEx
