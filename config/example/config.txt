@@ -159,6 +159,9 @@ ALIEN_AVAILABLE_BY_TIME DIONA 40000
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
+## Ghost maximum view range. Default is 12 (25x25)
+#GHOST_MAX_VIEW 12
+
 ## Required time to respawn after death
 #DEATHTIME_REQUIRED 18000
 

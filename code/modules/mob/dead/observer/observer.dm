@@ -713,3 +713,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
+
+/mob/dead/observer/verb/change_view_range()
+	set name = "Change View Range"
+	set desc = "Change your view range"
+	set category = "Ghost"
+
+	if(!client)
+		return
+
+	var/viewx = clamp(input("Enter view width ([world.view]-[config.ghost_max_view])") as num|null, world.view, config.ghost_max_view)
+	var/viewy = clamp(input("Enter view height ([world.view]-[config.ghost_max_view])") as num|null, world.view, config.ghost_max_view)
+
+	client.change_view("[viewx * 2 + 1]x[viewy * 2 + 1]")
+	if(client.prefs.auto_fit_viewport)
+		client.fit_viewport()
