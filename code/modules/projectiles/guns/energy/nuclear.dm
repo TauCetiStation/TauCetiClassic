@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "Основной энергетический пистолет с двумя настройками: оглушить или убить."
+	desc = "Стандартный энергетический пистолет с двумя настройками: оглушить или убить."
 	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
