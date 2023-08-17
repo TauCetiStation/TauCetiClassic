@@ -344,6 +344,82 @@
 	icon_state = "neutral"
 	},
 /area/station/hallway/secondary/entry)
+"aaE" = (
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance{
+	name = "Morgue";
+	req_access = list(6)
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
+"aaF" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Check Crossing Point";
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
+"aaG" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Escape Bar Backroom";
+	req_access = list(25)
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
+"aaH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Emergency Storage";
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
+"aaI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance";
+	req_access = list(12)
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
+"aaJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/maintenance{
+	name = "Red Room";
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "aaP" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor{
@@ -2465,6 +2541,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Chapel Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -3400,6 +3477,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Bar";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -6822,6 +6900,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Coworking";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -7007,6 +7086,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Arrival Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -7599,6 +7679,7 @@
 /area/station/hallway/primary/port)
 "bvx" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Toxin Lab";
 	req_access = list(8)
 	},
 /obj/machinery/door/firedoor,
@@ -11822,12 +11903,14 @@
 /turf/simulated/wall,
 /area/station/security/iaa_office)
 "cmQ" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	req_access = list(28)
+	name = "Mime's Bedroom"
 	},
-/turf/simulated/floor,
-/area/station/civilian/kitchen)
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories/service_bedrooms)
 "cmX" = (
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/stool/bed/chair/metal/black{
@@ -11924,19 +12007,19 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cob" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance";
 	req_access = list(12)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/area/station/maintenance/atmos)
 "coi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/monkeycubes{
@@ -13012,6 +13095,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Mining Maintenance";
 	req_one_access = list(12,48)
 	},
 /obj/machinery/door/firedoor,
@@ -13636,6 +13720,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Science Transition Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -14163,6 +14248,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Surgery";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -14573,6 +14659,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Cargo Maintenance";
 	req_one_access = list(12,31,48)
 	},
 /obj/machinery/door/firedoor,
@@ -15114,6 +15201,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Hydroponics";
 	req_access = list(35)
 	},
 /obj/machinery/door/firedoor,
@@ -16693,20 +16781,15 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "drL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(47)
+	name = "Engine Room";
+	req_access = list(10)
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/rnd/scibreak)
+/turf/simulated/floor,
+/area/station/engineering/engine)
 "drY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -17310,6 +17393,7 @@
 /area/station/medical/reception)
 "dyG" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Pantry";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -17906,17 +17990,22 @@
 /turf/simulated/floor,
 /area/station/security/armoury)
 "dHA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(12,31,48)
+	name = "Kitchen";
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dHJ" = (
@@ -17992,13 +18081,10 @@
 	},
 /area/station/storage/tech)
 "dIg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Restroom";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -19019,6 +19105,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Botany";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -19656,12 +19743,21 @@
 	},
 /area/station/hallway/primary/central)
 "ecm" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Engine Maintenance";
 	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
+/area/station/maintenance/engineering)
 "ecA" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/thin/reinforced{
@@ -19747,6 +19843,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Cargo Office";
 	req_one_access = list(31,48)
 	},
 /turf/simulated/floor/plating,
@@ -21116,15 +21213,14 @@
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "etX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Xenobiology";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/maintenance/science)
 "eui" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -21738,19 +21834,19 @@
 /area/station/maintenance/chapel)
 "eAC" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance";
 	req_access = list(12)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/maintenance/atmos)
 "eAD" = (
 /obj/machinery/computer/security{
 	dir = 1
@@ -22720,12 +22816,20 @@
 	},
 /area/station/medical/storage)
 "eMm" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
+	name = "Brig Maintenance";
 	req_access = list(12)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/science)
+/area/station/maintenance/brig)
 "eMn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -24041,6 +24145,7 @@
 /area/station/security/hos)
 "fbt" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Telescience";
 	req_access = list(7)
 	},
 /obj/machinery/door/poddoor{
@@ -24586,6 +24691,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -25305,7 +25411,7 @@
 /area/station/security/brig)
 "fqC" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
+	name = "Second Emergency Storage";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -25473,12 +25579,23 @@
 	},
 /area/station/engineering/atmos)
 "fsp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(47)
+	name = "Tool Storage";
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
+	},
 /turf/simulated/floor/plating,
-/area/station/rnd/misc_lab)
+/area/station/maintenance/chapel)
 "fsq" = (
 /obj/machinery/door/airlock/security{
 	name = "Isolation Cell";
@@ -26826,18 +26943,16 @@
 	},
 /area/station/maintenance/engineering)
 "fHD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(39)
+	name = "Chemistry Reception";
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/medical/virology)
+/area/station/maintenance/chapel)
 "fHN" = (
 /obj/structure/disposaloutlet{
 	dir = 8
@@ -28012,6 +28127,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
+	name = "Science Transition Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -28357,6 +28473,7 @@
 "gat" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Janitor Custodial";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -28595,27 +28712,27 @@
 	},
 /area/station/rnd/xenobiology)
 "gdT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Auxiliary Tool Storage";
+	req_access = list(12)
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(5)
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "medbay_biohazard";
-	name = "Medbay Biohazard Blast Doors";
-	opacity = 0
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/hallway)
+/area/station/storage/tools)
 "gdV" = (
 /obj/machinery/computer/prisoner,
 /obj/structure/cable{
@@ -29385,6 +29502,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Chemistry";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -29417,18 +29535,16 @@
 /area/station/hallway/primary/starboard)
 "glH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Owl House";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/barricade/wooden{
-	layer = 2.8;
-	name = "doorway barricade"
-	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/maintenance/chapel)
 "glO" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
@@ -30882,6 +30998,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Hydroponics Pasture";
 	req_one_access = list(28,35)
 	},
 /turf/simulated/floor/plating,
@@ -30967,11 +31084,8 @@
 /turf/simulated/floor,
 /area/station/rnd/lab)
 "gAV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Chemistry";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -31025,6 +31139,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Emergency Storage";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -32248,26 +32363,13 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "gRy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Kitchen Storage";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
-/area/station/storage/tools)
+/area/station/maintenance/science)
 "gRz" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "loadingarea"
@@ -34569,6 +34671,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Air Storage";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -35830,6 +35933,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Engineering Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -36042,6 +36146,7 @@
 /area/station/medical/reception)
 "hFe" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Freezer";
 	req_access = list(12)
 	},
 /obj/structure/barricade/wooden{
@@ -40821,6 +40926,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Engineering Transition Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -42694,6 +42800,7 @@
 /area/station/security/main)
 "jcs" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Upper Atmospherics";
 	req_access = list(24)
 	},
 /obj/machinery/door/firedoor,
@@ -44109,6 +44216,7 @@
 "jsw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Chemistry";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -46083,6 +46191,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Service Bedrooms";
 	req_access = list(12)
 	},
 /turf/simulated/floor/plating,
@@ -46648,6 +46757,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Firing Range";
 	req_access = list(47)
 	},
 /turf/simulated/floor/plating,
@@ -49958,6 +50068,7 @@
 /area/station/hallway/primary/central)
 "kCL" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Recycler Office";
 	req_access = list(67)
 	},
 /obj/machinery/door/firedoor,
@@ -51128,20 +51239,12 @@
 /area/station/civilian/dormitories)
 "kOx" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(25)
+	name = "Circuits Lab";
+	req_access = list(47)
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/rnd/misc_lab)
 "kOM" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -51279,6 +51382,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance";
 	req_access = list(12)
 	},
 /turf/simulated/floor/plating,
@@ -51434,6 +51538,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Bar Backroom";
 	req_access = list(25)
 	},
 /obj/machinery/door/firedoor,
@@ -51950,6 +52055,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Library Lounge";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -52260,6 +52366,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Bar";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -53690,6 +53797,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Mech Bay";
 	req_access = list(29)
 	},
 /obj/machinery/door/firedoor,
@@ -53707,6 +53815,7 @@
 "lsX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	name = "Hydroponics";
 	req_access = list(35)
 	},
 /turf/simulated/floor,
@@ -54723,6 +54832,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Primary Tool Storage";
 	req_access = list(12)
 	},
 /turf/simulated/floor/plating,
@@ -54964,12 +55074,19 @@
 /turf/simulated/floor/plating,
 /area/station/medical/genetics)
 "lIf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	name = "Virology";
+	req_access = list(39)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/medical/virology)
 "lIj" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/emergency,
@@ -56260,6 +56377,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Cargo Warehouse";
 	req_access = list(31)
 	},
 /turf/simulated/floor/plating,
@@ -56360,13 +56478,20 @@
 	},
 /area/station/engineering/atmos)
 "lXD" = (
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(6)
+	name = "Library";
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/morgue)
+/area/station/maintenance/medbay)
 "lXL" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57467,6 +57592,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Robotics";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -57666,6 +57792,7 @@
 /area/station/medical/sleeper)
 "mnm" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Botany";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -57966,7 +58093,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "mqK" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	name = "Clown's Bedroom"
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -62001,6 +62130,7 @@
 /area/station/rnd/xenobiology)
 "nlx" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Bar";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -65629,6 +65759,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Departures Customs Desk";
 	req_access = list(19)
 	},
 /obj/machinery/door/firedoor,
@@ -69891,6 +70022,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Chapel Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -70105,6 +70237,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance{
+	name = "Library";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -70365,6 +70498,7 @@
 /area/station/cargo/storage)
 "pfB" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Brig Maintenance";
 	req_access = list(12)
 	},
 /turf/simulated/floor,
@@ -70812,6 +70946,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -71671,6 +71806,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Coldroom";
 	req_access = list(28)
 	},
 /obj/machinery/door/firedoor,
@@ -73213,6 +73349,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Medbay Transition Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -73685,13 +73822,24 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "pPW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance";
 	req_access = list(12)
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/maintenance/escape)
 "pPY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -74011,6 +74159,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Security Checkpoint";
 	req_access = list(1)
 	},
 /obj/machinery/door/firedoor,
@@ -74023,6 +74172,7 @@
 /area/station/security/warden)
 "pTu" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Chemistry";
 	req_access = list(12)
 	},
 /obj/structure/barricade/wooden{
@@ -74681,6 +74831,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Arboretum";
 	req_access = list(12)
 	},
 /obj/structure/barricade/wooden{
@@ -74868,6 +75019,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Auxiliary Storage Closet";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -76938,6 +77090,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Food Warehouse";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -77721,6 +77874,7 @@
 /area/station/maintenance/escape)
 "qLr" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Drawing Room";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -79824,6 +79978,7 @@
 "rlG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
+	name = "Stock Storage";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -81252,6 +81407,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Theater";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -82052,6 +82208,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	name = "Hydroponics Pasture";
 	req_one_access = list(28,35)
 	},
 /turf/simulated/floor,
@@ -82167,6 +82324,7 @@
 /area/station/medical/surgeryobs)
 "rJZ" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Engineering Maintenance";
 	req_access = list(12)
 	},
 /obj/structure/barricade/wooden{
@@ -82190,25 +82348,27 @@
 /area/station/cargo/storage)
 "rKv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay";
+	req_access = list(5)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "medbay_biohazard";
+	name = "Medbay Biohazard Blast Doors";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/medical/hallway)
 "rKw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -83011,6 +83171,7 @@
 /area/station/security/brig/equipment)
 "rUi" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Brig Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -84721,7 +84882,9 @@
 	},
 /area/station/rnd/xenobiology)
 "snH" = (
-/obj/structure/door_assembly/door_assembly_fre,
+/obj/structure/door_assembly/door_assembly_fre{
+	name = "Freezer"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "snQ" = (
@@ -85083,6 +85246,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Robotics Lab";
 	req_access = list(29)
 	},
 /obj/machinery/door/firedoor,
@@ -88497,15 +88661,20 @@
 	},
 /area/station/hallway/secondary/entry)
 "tjw" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	name = "Arrival Maintenance";
+	req_one_access = list(12,31,48)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
+/area/station/maintenance/cargo)
 "tjx" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -88918,14 +89087,13 @@
 	},
 /area/station/engineering/engine)
 "toJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(10)
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Hydroponics Pasture";
+	req_access = list(28)
 	},
 /turf/simulated/floor,
-/area/station/engineering/engine)
+/area/station/civilian/kitchen)
 "toN" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -89527,12 +89695,20 @@
 /turf/simulated/wall,
 /area/station/cargo/qm)
 "twH" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	name = "Cargo Maintenance";
+	req_one_access = list(12,31,48)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/security/vacantoffice)
+/area/station/maintenance/cargo)
 "twU" = (
 /obj/effect/decal/turf_decal{
 	dir = 6;
@@ -89985,6 +90161,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Chapel Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -91990,13 +92167,13 @@
 /turf/simulated/wall/r_wall,
 /area/station/rnd/xenobiology)
 "uac" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Coworking";
 	req_access = list(12)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/science)
+/area/station/security/vacantoffice)
 "ual" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -92954,6 +93131,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Brig Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -93034,6 +93212,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Engineering Maintenance";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -93501,6 +93680,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Maintenance";
 	req_access = list(12)
 	},
 /turf/simulated/floor/plating,
@@ -95968,6 +96148,7 @@
 "uYh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance{
+	name = "Dining Room";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -99257,6 +99438,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Meeting Room";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -102742,7 +102924,7 @@
 /area/station/cargo/office)
 "wBQ" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
+	name = "Emergency Storage";
 	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -103704,6 +103886,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	name = "Drawing Room";
 	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
@@ -106883,7 +107066,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/mining{
-	name = "Recycler office";
+	name = "Recycler Office";
 	req_access = list(67)
 	},
 /obj/machinery/door/firedoor,
@@ -109219,23 +109402,21 @@
 	},
 /area/station/rnd/robotics)
 "xYa" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/airlock/maintenance{
+	name = "Science Break Room";
+	req_access = list(47)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/rnd/scibreak)
 "xYf" = (
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
@@ -131279,7 +131460,7 @@ plf
 tiI
 xwj
 jwI
-eAC
+ecm
 jwI
 jwI
 gVW
@@ -135647,7 +135828,7 @@ ldE
 uFw
 wHv
 lYB
-toJ
+drL
 mOd
 oMN
 jwI
@@ -136435,7 +136616,7 @@ qGO
 xtN
 uVP
 uVP
-uac
+etX
 xzL
 fVu
 fUZ
@@ -137210,7 +137391,7 @@ fVu
 iIB
 jBD
 gXb
-eMm
+gRy
 bwC
 bwC
 fUZ
@@ -138688,7 +138869,7 @@ wOk
 wwi
 wwi
 lNT
-qDc
+eAC
 osP
 aAP
 fVs
@@ -140056,7 +140237,7 @@ ukc
 oIK
 iZs
 hBi
-glH
+lXD
 kjQ
 aBd
 kjQ
@@ -140556,7 +140737,7 @@ jVk
 jVk
 jVk
 jVk
-fsp
+kOx
 juy
 fVu
 vsB
@@ -141757,7 +141938,7 @@ wKd
 hjY
 jOY
 yhA
-cmQ
+toJ
 aSY
 slU
 xTk
@@ -142251,7 +142432,7 @@ ban
 xbZ
 abs
 mVU
-qdU
+dIg
 miE
 fob
 wwi
@@ -142641,7 +142822,7 @@ vtb
 uIx
 vtb
 kpP
-pPW
+aaJ
 qEl
 kbi
 ust
@@ -142892,7 +143073,7 @@ hqd
 hqd
 hqd
 tIo
-etX
+aaH
 tIo
 tIo
 tIo
@@ -143063,7 +143244,7 @@ hGU
 aTh
 jwp
 dIV
-twH
+uac
 oBd
 aVs
 aEc
@@ -143826,7 +144007,7 @@ gHU
 gNR
 npk
 wwi
-dIg
+cob
 wwi
 eza
 eza
@@ -144170,9 +144351,9 @@ caz
 kfk
 mYj
 hqd
-xYa
+pPW
 hqd
-lIf
+aaF
 hqd
 hqd
 hqd
@@ -144924,7 +145105,7 @@ cUL
 cMW
 miK
 sJP
-drL
+xYa
 sXD
 wbp
 xpg
@@ -145189,7 +145370,7 @@ hXu
 wDZ
 wDZ
 wDZ
-fHD
+lIf
 wDZ
 wDZ
 dxH
@@ -148431,7 +148612,7 @@ egT
 pBC
 nSb
 iBf
-mqK
+cmQ
 xut
 bDE
 srs
@@ -148540,7 +148721,7 @@ dTO
 lnl
 dTO
 dTO
-gdT
+rKv
 plL
 qLm
 kcG
@@ -149481,7 +149662,7 @@ fXk
 srs
 eKj
 pEQ
-dHA
+twH
 tEJ
 tZI
 rEP
@@ -149825,7 +150006,7 @@ kqc
 nRM
 qJI
 qJI
-lXD
+aaE
 ouz
 dfV
 plL
@@ -150343,11 +150524,11 @@ beJ
 rmY
 rmY
 rmY
-kOx
+aaG
 rmY
 rmY
 rmY
-rKv
+aaI
 rmY
 rxC
 gJZ
@@ -150993,7 +151174,7 @@ mcL
 nyv
 gpo
 cRg
-dHA
+tjw
 fGm
 cRg
 dXF
@@ -153552,7 +153733,7 @@ uYh
 eGn
 srs
 eGn
-cjg
+dHA
 eGn
 srs
 dxo
@@ -155975,7 +156156,7 @@ eAx
 drY
 sfm
 wOB
-gRy
+gdT
 wOB
 wOB
 wOB
@@ -158252,7 +158433,7 @@ wcQ
 pmU
 sMu
 sit
-cob
+eMm
 aLn
 bsh
 cWT
@@ -160588,12 +160769,12 @@ iBz
 xUx
 bwO
 pKu
-tjw
+fHD
 jXb
 lOw
 pCr
 jAu
-tjw
+fHD
 jXb
 iUi
 ycg
@@ -160855,7 +161036,7 @@ sfm
 sfm
 sfm
 sfm
-gls
+fsp
 qHD
 qHD
 sfm
@@ -161624,7 +161805,7 @@ qsh
 nKx
 gzt
 tnq
-ecm
+gAV
 cQO
 hPU
 lAe
@@ -163171,7 +163352,7 @@ mIw
 fiq
 sfm
 sfm
-gAV
+glH
 geE
 uAM
 lXA
