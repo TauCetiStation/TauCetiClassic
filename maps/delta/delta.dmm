@@ -30829,20 +30829,6 @@
 /obj/item/weapon/table_parts,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"gER" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
-	},
-/obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office";
-	req_access = list(57)
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge/hop_office)
 "gEU" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -39458,12 +39444,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"ixe" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/bridge/hop_office)
 "ixj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -90079,25 +90059,21 @@
 /area/station/security/warden)
 "tKR" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "HoP_private";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel's Office";
+	req_access = list(57)
 	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
 	pixel_y = -32
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
@@ -94678,6 +94654,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -144891,9 +144868,9 @@ mmd
 eKQ
 vAK
 mmd
+vAK
 tKR
 mmd
-gER
 mmd
 nvi
 qdX
@@ -145149,7 +145126,7 @@ lGn
 cXg
 ovE
 ebM
-ixe
+xqN
 uQo
 mmd
 nvi
