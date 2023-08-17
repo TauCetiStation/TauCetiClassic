@@ -563,7 +563,7 @@
 
 /obj/item/weapon/gun/medbeam
 	name = "prototype medical retrosynchronizer"
-	desc = "Прототип лечебной пушки, которая медленно возвращает органические вещества в прежнее состояние, исцеляя их. Не проходите через луч!"
+	desc = "Прототип лечебной пушки, которая медленно возвращает органические вещества в прежнее состояние, исцеляя их."
 	icon_state = "medigun"
 	item_state = "medigun"
 	var/mob/living/current_target
@@ -656,7 +656,7 @@
 
 /obj/item/weapon/gun/medbeam/syndi
 	name = "ominous medical retrosynchronizer"
-	desc = "Кроме цветовой гаммы, этот медиган Нанойтрейзен ничем не отличается от своего аналога. Звучит знакомо."
+	desc = "Кроме цветовой гаммы, эта лечебная пушка НаноТрейзен ничем не отличается от своего аналога. Звучит знакомо."
 	icon_state = "medigun_syndi"
 	item_state = "medigun_syndi"
 	beam_state = "medbeam_syndi"
