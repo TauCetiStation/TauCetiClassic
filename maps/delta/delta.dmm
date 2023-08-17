@@ -7864,9 +7864,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "bluecorner"
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bAQ" = (
 /obj/structure/cable{
@@ -17886,7 +17884,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "dKO" = (
@@ -30829,6 +30827,14 @@
 /obj/item/weapon/table_parts,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"gER" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "gEU" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -39444,6 +39450,14 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"ixe" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "ixj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44187,7 +44201,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "jxs" = (
@@ -58170,6 +58184,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"myX" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "myY" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -62680,6 +62701,12 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway)
+"nyW" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "nza" = (
 /obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor,
@@ -68328,7 +68355,8 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	icon_state = "neutralcorner"
+	dir = 4;
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "oOj" = (
@@ -73422,6 +73450,12 @@
 	icon_state = "vaultfull"
 	},
 /area/station/engineering/atmos)
+"pUo" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "pUp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -84348,6 +84382,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
@@ -98926,7 +98961,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "vSe" = (
@@ -101586,7 +101621,7 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "blue"
 	},
 /area/station/hallway/primary/central)
 "wyP" = (
@@ -101821,8 +101856,8 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	dir = 4;
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "wAK" = (
@@ -106170,8 +106205,8 @@
 	name = "Central Access"
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	dir = 4;
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "xzC" = (
@@ -107654,7 +107689,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	icon_state = "neutralcorner"
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
 "xQo" = (
@@ -144087,21 +144122,21 @@ vAu
 vAu
 vAu
 kRo
-aNa
+ixe
 bGL
 rEr
 uzw
-vAu
-vAu
+uzw
+uzw
 uzw
 bAP
 srq
 oOa
-qDF
+gER
 xQn
-vAu
-kRo
-fZz
+vSe
+myX
+pUo
 cLd
 cwM
 cwM
@@ -144615,7 +144650,7 @@ giW
 mCL
 mby
 oXw
-nvi
+pUo
 cdQ
 aVg
 jWO
@@ -144872,7 +144907,7 @@ vAK
 tKR
 mmd
 mmd
-nvi
+pUo
 qdX
 aVg
 ssF
@@ -145129,7 +145164,7 @@ ebM
 xqN
 uQo
 mmd
-nvi
+pUo
 bXp
 hvB
 bCO
@@ -146157,7 +146192,7 @@ aFt
 rlM
 xqN
 oQQ
-nvi
+nyW
 pym
 xZC
 iWg
@@ -146414,7 +146449,7 @@ gGp
 plZ
 mUn
 mmd
-nvi
+nyW
 mKJ
 aVg
 vkR
