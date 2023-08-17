@@ -52812,15 +52812,19 @@
 /area/station/maintenance/science)
 "lkg" = (
 /obj/structure/table,
-/obj/item/weapon/pen/red,
-/obj/item/weapon/pen{
-	pixel_x = -5
-	},
-/obj/item/device/multitool,
 /obj/machinery/computer/guestpass{
 	dir = 1;
 	pixel_y = 28
 	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -69884,6 +69888,10 @@
 /obj/item/weapon/paper_bin,
 /obj/machinery/firealarm{
 	pixel_y = 22
+	},
+/obj/item/weapon/pen/red,
+/obj/item/weapon/pen{
+	pixel_x = -5
 	},
 /turf/simulated/floor{
 	dir = 1;
