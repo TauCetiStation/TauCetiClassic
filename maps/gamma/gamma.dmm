@@ -1248,7 +1248,10 @@
 	name = "Kitchen Freezer";
 	req_access = list(28)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitehall"
+	},
 /area/station/civilian/kitchen)
 "acd" = (
 /obj/machinery/atm{
@@ -6885,7 +6888,7 @@
 /obj/item/device/tagger/shop,
 /obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warn_corner"
+	icon_state = "warn"
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -33739,7 +33742,9 @@
 	},
 /area/station/maintenance/science)
 "ghc" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "ghd" = (
 /obj/structure/noticeboard{
@@ -34990,7 +34995,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "gvF" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
@@ -35020,10 +35027,12 @@
 	name = "Kitchen Delivery";
 	req_access = list(28)
 	},
-/obj/structure/window/thin/reinforced,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -39635,7 +39644,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "hrT" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -39975,7 +39986,9 @@
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "hvx" = (
 /obj/machinery/telecomms/processor/preset_four,
@@ -47311,7 +47324,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "iUF" = (
 /obj/structure/closet,
@@ -51494,7 +51509,9 @@
 /area/station/rnd/hor)
 "jNf" = (
 /obj/structure/closet/crate/freezer,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "jNz" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/green{
@@ -53417,20 +53434,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/dormitories/dormthree)
-"kkJ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "kkN" = (
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white,
@@ -60726,7 +60729,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "lLW" = (
 /obj/structure/cable{
@@ -60849,7 +60854,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "lNV" = (
 /obj/machinery/door/firedoor,
@@ -68042,6 +68049,15 @@
 	icon_state = "dark"
 	},
 /area/station/security/lobby)
+"nog" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "noi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -70947,7 +70963,9 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "nTa" = (
 /obj/structure/disposalpipe/segment{
@@ -73839,15 +73857,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics)
-"ozm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "ozn" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -85452,6 +85461,20 @@
 /obj/structure/flora/junglebush/b,
 /turf/simulated/floor/grass,
 /area/station/maintenance/brig)
+"qQT" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "qQV" = (
 /obj/structure/stool/bed/chair/pew/right,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -85709,6 +85732,13 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormtwo)
+"qUK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "qUL" = (
 /obj/structure/stool/bed/chair/office/dark,
 /obj/effect/landmark/start/shaft_miner,
@@ -94902,7 +94932,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "sQt" = (
 /obj/structure/disposalpipe/segment{
@@ -104985,6 +105017,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
 "uRv" = (
@@ -113522,7 +113557,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "wEv" = (
 /obj/item/weapon/table_parts,
@@ -118641,6 +118678,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/medical/reception)
 "xMW" = (
@@ -118761,7 +118803,9 @@
 /area/station/engineering/drone_fabrication)
 "xOz" = (
 /obj/machinery/icecream_vat,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/civilian/kitchen)
 "xOU" = (
 /obj/structure/table/woodentable,
@@ -135942,8 +135986,8 @@ lAY
 vIp
 srk
 mcz
-kkJ
-ozm
+qQT
+nog
 vzr
 doH
 fXg
@@ -159544,7 +159588,7 @@ yfj
 obN
 jIl
 jIl
-uZA
+qUK
 dSo
 vyZ
 jIl
