@@ -102943,7 +102943,9 @@
 	},
 /area/station/hallway/primary/central)
 "wFq" = (
-/obj/machinery/mecha_part_fabricator/mining_fabricator,
+/obj/machinery/mecha_part_fabricator/mining_fabricator{
+	req_access = list()
+	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
