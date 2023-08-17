@@ -23,6 +23,8 @@
 	var/list/stocks
 	var/total_dividend_payouts = 0.0
 
+	var/list/shopping_cart = list()
+
 /datum/money_account/New()
 	all_money_accounts += src
 	return ..()

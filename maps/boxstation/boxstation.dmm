@@ -1846,6 +1846,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "adj" = (
@@ -2711,6 +2715,10 @@
 /obj/structure/table,
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/razor,
+/obj/machinery/computer/shop{
+	pixel_x = 32;
+	department = "Security"
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -3576,6 +3584,10 @@
 	c_tag = "Head of Security";
 	dir = 8;
 	network = list("SS13","Security")
+	},
+/obj/machinery/computer/shop{
+	pixel_x = 32;
+	department = "Security"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5261,6 +5273,10 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5423,12 +5439,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "ajl" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/computer/security{
 	dir = 4
+	},
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Security"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5817,10 +5833,6 @@
 	},
 /area/station/security/main)
 "ajT" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
@@ -7758,10 +7770,6 @@
 /area/station/security/detectives_office)
 "ana" = (
 /obj/structure/table/woodentable,
-/obj/machinery/windowtint{
-	id = "Detective";
-	pixel_x = -26
-	},
 /obj/item/device/flashlight/seclite,
 /obj/item/weapon/storage/briefcase,
 /turf/simulated/floor/carpet/red,
@@ -8673,6 +8681,10 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/computer/shop{
+	pixel_x = 32;
+	department = "Security"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8800,6 +8812,10 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/machinery/windowtint{
+	id = "Detective";
+	pixel_x = -21
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
@@ -9547,6 +9563,10 @@
 /obj/item/weapon/storage/fancy/vials,
 /obj/item/weapon/reagent_containers/syringe,
 /obj/item/weapon/reagent_containers/dropper,
+/obj/machinery/computer/shop{
+	department = "Security";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "whitered"
 	},
@@ -11830,6 +11850,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aus" = (
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -13557,10 +13581,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "axI" = (
-/obj/machinery/firealarm{
+/obj/structure/table,
+/obj/machinery/computer/shop{
+	department = "Cargo";
 	pixel_y = 24
 	},
-/obj/structure/table,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -15259,13 +15284,13 @@
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = -6
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 20
+	},
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Engineering"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -15841,6 +15866,9 @@
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Cargo"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17730,6 +17758,10 @@
 /area/station/civilian/bar)
 "aFT" = (
 /obj/machinery/computer/secure_data,
+/obj/machinery/computer/shop{
+	department = "Security";
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -20166,6 +20198,10 @@
 /area/station/hallway/primary/central)
 "aKA" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -23297,6 +23333,10 @@
 	},
 /obj/item/weapon/storage/secure/briefcase,
 /obj/item/weapon/changeling_test,
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -26172,6 +26212,10 @@
 	},
 /obj/machinery/newscaster{
 	pixel_y = -30
+	},
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = -6
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -33382,10 +33426,6 @@
 	},
 /area/station/medical/surgery)
 "biy" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/structure/closet/secure_closet/chemical,
 /turf/simulated/floor{
 	dir = 4;
@@ -33572,14 +33612,14 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "biV" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/computer/shop{
+	department = "Engineering";
+	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "browncorner"
+	icon_state = "yellow"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/engineering/break_room)
 "biW" = (
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
@@ -33590,6 +33630,10 @@
 	pixel_y = 3
 	},
 /obj/structure/table,
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Cargo"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -34168,6 +34212,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -34895,6 +34943,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -36193,6 +36245,10 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Medical"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -36915,6 +36971,10 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -37102,6 +37162,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/station/medical/chemistry)
@@ -37626,6 +37690,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
+	},
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
 	},
 /turf/simulated/floor,
 /area/station/rnd/lab)
@@ -47155,10 +47223,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bHG" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -47169,6 +47233,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Medical"
 	},
 /turf/simulated/floor,
 /area/station/medical/chemistry)
@@ -49810,6 +49878,10 @@
 	c_tag = "Medbay Storage";
 	dir = 4;
 	network = list("SS13","Medical")
+	},
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Medical"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -56777,6 +56849,10 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/computer/shop{
+	pixel_x = 32;
+	department = "Engineering"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -64264,6 +64340,10 @@
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/clothing/glasses/meson,
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Engineering"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -68579,6 +68659,10 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/simulated/floor,
 /area/station/medical/chemistry)
 "dul" = (
@@ -69281,6 +69365,10 @@
 /area/station/civilian/chapel)
 "epb" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/computer/shop{
+	pixel_x = 32;
+	department = "Command"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "epm" = (
@@ -76130,6 +76218,10 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
+/obj/machinery/computer/shop{
+	department = "Medical";
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -80838,9 +80930,9 @@
 /area/station/civilian/chapel/altar)
 "rEb" = (
 /obj/machinery/smartfridge/secure/virology,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -25
+/obj/machinery/computer/shop{
+	pixel_x = -32;
+	department = "Medical"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -81212,6 +81304,10 @@
 /area/station/engineering/singularity)
 "sdb" = (
 /obj/machinery/disease2/diseaseanalyser,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -84503,6 +84599,18 @@
 	icon_state = "1,1"
 	},
 /area/shuttle/supply/station)
+"xVq" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box,
+/obj/machinery/computer/shop{
+	department = "Cargo";
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/recycleroffice)
 "xWb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -96056,7 +96164,7 @@ aNw
 bis
 baq
 bis
-biV
+bis
 bkB
 bis
 iDb
@@ -104552,7 +104660,7 @@ moP
 wuI
 bDk
 bNk
-buA
+xVq
 mtS
 kFb
 bNk
@@ -117184,7 +117292,7 @@ bUd
 fpv
 cih
 cca
-rBn
+biV
 crH
 bRE
 tif
