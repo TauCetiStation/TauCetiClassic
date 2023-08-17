@@ -722,7 +722,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/viewx = clamp(input("Enter view width ([world.view]-[config.ghost_max_view])") as num|null, world.view, config.ghost_max_view) * 2 + 1
 	var/viewy = clamp(input("Enter view height ([world.view]-[config.ghost_max_view])") as num|null, world.view, config.ghost_max_view) * 2 + 1
 
-	if(!client || !isobserver(client.mob))
+	if(!client)
 		return
 
 	client.change_view("[viewx]x[viewy]")
