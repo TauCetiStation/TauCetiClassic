@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/ionrifle
 	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	desc = "Портативная винтовка, созданная для уничтожения механизированных и механических противников."
 	icon_state = "ionrifle"
 	item_state = null
 	origin_tech = "combat=2;magnets=4"
@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	desc = "Оружие, в котором большое количество контролируемого излучения медленно разрушает цель на молекулы."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	can_be_holstered = TRUE
@@ -27,7 +27,7 @@
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
-	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
+	desc = "Инструмент с управляемым излучением, вызывающим мутации в клетках растений."
 	icon_state = "flora"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
@@ -63,7 +63,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
-	desc = "For the love of god, make sure you're aiming this the right way!"
+	desc = "Ради бога, убедитесь, что вы нацелены правильно!"
 	icon_state = "riotgun"
 	item_state = "c20r"
 	w_class = SIZE_NORMAL
@@ -96,7 +96,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
-	desc = "The pen is mightier than the sword."
+	desc = "Эта ручка могущественнее, чем меч."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
@@ -107,13 +107,13 @@
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "mind flayer"
-	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
+	desc = "Прототип винтовки, найденный на развалинах исследовательской станции Эпсилон"
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"
-	desc = "A specialized firearm designed to fire lethal bolts of phoron."
+	desc = "Специализированное огнестрельное оружие, предназначенное для стрельбы смертоносными зарядами форона."
 	icon_state = "toxgun"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;phorontech=4"
@@ -122,7 +122,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle
 	name = "sniper rifle"
-	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	desc = "Снайперская винтовка W2500-E, разработанная компанией W&J, изготовлена из легких материалов и оснащена прицелом системы SMART."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "w2500e"
 	item_state = "w2500e"
@@ -156,7 +156,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
-	desc = "With this weapon you'll be the boss at any Arena."
+	desc = "С этой пушкой вы станете боссом любой Арены."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
 	item_state = "relsotron"
@@ -168,7 +168,7 @@
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
 	name = "Tesla Cannon"
-	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	desc = "Оружие, использующие электрический заряд для поражения нескольких целей. Вращайте рукоятку генератора, чтобы зарядить её."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	item_state = "tesla"
@@ -270,7 +270,7 @@
 
 /obj/item/weapon/gun/tesla/rifle
 	name = "Tesla rifle"
-	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	desc = "Винтовка, использующие электрический заряд для поражения нескольких целей. Вращайте рукоятку генератора, чтобы зарядить её."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"
@@ -283,7 +283,7 @@
 */
 /obj/item/weapon/gun/energy/pyrometer
 	name = "pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда в результате прямого физического контакта с пользователем."
 
 	w_class = SIZE_TINY
 	icon = 'icons/obj/gun.dmi'
@@ -365,7 +365,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/universal
 	name = "universal pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct use physical contact. Comes with built-in multi-color laser pointer. And all possible pyrometer modes!"
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинить вред при непосредственном физическом контакте. Поставляется со встроенным многоцветным лазерным указателем. И все возможные режимы работы пирометра!"
 	icon_state = "pyrometer_robotics"
 	item_state = "pyrometer_robotics"
 
@@ -383,7 +383,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/ce
 	name = "chief engineer's tactical pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Comes with a neat sniper-scope!"
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Поставляется с удобным снайперским прицелом!"
 	icon_state = "pyrometer_ce"
 	item_state = "pyrometer_ce"
 
@@ -401,7 +401,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe is about to burst."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Настроен для определения момента прорыва трубы."
 	icon_state = "pyrometer_science_phoron"
 	item_state = "pyrometer_science_phoron"
 
@@ -411,7 +411,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/engineering
 	name = "machinery pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Detects overheated machinery."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Обнаруживает перегрев оборудования."
 	icon_state = "pyrometer_engineering"
 	item_state = "pyrometer_engineering"
 
@@ -424,7 +424,7 @@
 
 
 /obj/item/weapon/gun/energy/pyrometer/atmospherics
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine how much a living human would be screwed if he was to breath the air in the room you \"scan\"."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения того, насколько сильно пострадает живой человек, если он будет дышать воздухом, находящимся в комнате \"scan\"."
 	icon_state = "pyrometer_atmospherics"
 	item_state = "pyrometer_atmospherics"
 
@@ -434,7 +434,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/medical
 	name = "NC thermometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine the temperature of your skeleton in the closet."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения температуры скелета в шкафу."
 	icon_state = "pyrometer_medical"
 	item_state = "pyrometer_medical"
 
@@ -444,7 +444,7 @@
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires an anomaly core to function. Fits in a bag."
+	desc = "Проектор, излучающий квантово-связанные голубые лучи высокой плотности. Для работы требуется ядро аномалии. Помещается в сумку."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	icon_state = "portal"
 	modifystate = 0
@@ -551,7 +551,7 @@
 	name ="retro phaser"
 	icon_state = "retro"
 	item_state = null
-	desc = "An older model of the basic energy weapon, no longer used by Nanotrasen's security or military forces due to it's low projectile velocity. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	desc = "Устаревшая модель стандартного лазерного оружия, больше не используемая ни службами безопасности, ни военными силами Нанотрейзен. Тем не менее, он все еще достаточно смертоносен и прост в обслуживании, что делает его любимым среди пиратов и других преступников."
 	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/phaser)
 
@@ -563,7 +563,7 @@
 
 /obj/item/weapon/gun/medbeam
 	name = "prototype medical retrosynchronizer"
-	desc = "A prototype healgun, which slowly reverts organic matter to it's previous state, 'healing' it. Don't cross the streams!"
+	desc = "Прототип лечебной пушки, которая медленно возвращает органические вещества в прежнее состояние, исцеляя их. Не проходите через луч!"
 	icon_state = "medigun"
 	item_state = "medigun"
 	var/mob/living/current_target
@@ -656,7 +656,7 @@
 
 /obj/item/weapon/gun/medbeam/syndi
 	name = "ominous medical retrosynchronizer"
-	desc = "This medigun has no difference from it's Nanotrasen counterpart apart from color scheme. Sounds familiar."
+	desc = "Кроме цветовой гаммы, этот медиган Нанойтрейзен ничем не отличается от своего аналога. Звучит знакомо."
 	icon_state = "medigun_syndi"
 	item_state = "medigun_syndi"
 	beam_state = "medbeam_syndi"
