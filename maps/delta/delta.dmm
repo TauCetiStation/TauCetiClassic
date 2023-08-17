@@ -8503,6 +8503,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock{
+	name = "Crematorium";
 	req_access = list(27)
 	},
 /turf/simulated/floor{
@@ -57142,6 +57143,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
+	name = "Chapel";
 	req_one_access = list(12,22)
 	},
 /obj/machinery/door/firedoor,
@@ -70030,7 +70032,9 @@
 /area/station/civilian/barbershop)
 "pbQ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	name = "Chapel Mass Driver"
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -100694,6 +100698,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
+	name = "Chapel Office";
 	req_access = list(22)
 	},
 /obj/machinery/door/firedoor,
@@ -108469,7 +108474,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	name = "Chapel Mass Driver"
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
