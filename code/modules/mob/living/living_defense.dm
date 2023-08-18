@@ -12,12 +12,12 @@
 		if(absorb_text)
 			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
 		else
-			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
+			to_chat(src, "<span class='userdanger'>Ваша броня нейтрализовала удар!</span>")
 	else if(armor > 0)
 		if(soften_text)
 			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
 		else
-			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
+			to_chat(src, "<span class='userdanger'>Ваша броня смягчила удар!</span>")
 	return armor
 
 //if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
@@ -60,9 +60,9 @@
 
 	if(. == PROJECTILE_ACTED || . == PROJECTILE_ALL_OK) // logs
 		if(P.silenced)
-			to_chat(src, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [P.name]!</span>")
+			to_chat(src, "<span class='userdanger'>В ваш [parse_zone(def_zone)] выстрелил [P.name]!</span>")
 		else if(!P.fake)
-			visible_message("<span class='userdanger'>[name] is hit by the [P.name] in the [parse_zone(def_zone)]!</span>")
+			visible_message("<span class='userdanger'>[name] получил выстрел от [P.name] в [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(P.firer)
 			log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
@@ -75,6 +75,7 @@
 		return
 
 	//Being hit while using a deadman switch
+	//нужен перевод от более умного человека
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
@@ -131,7 +132,7 @@
 			zone = get_zone_with_miss_chance(zone, src, 15)
 
 		if(!zone)
-			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
+			visible_message("<span class='notice'>[O] промахивается по [src] вскользь!</span>")
 			return
 
 		if(throwingdatum.thrower != src && check_shields(AM, throw_damage, "[O]", get_dir(O,src)))
@@ -147,7 +148,7 @@
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
 			var/obj/item/weapon/W = O
-
+		//Нужен совет переводчиков о переводе слова stagger
 			visible_message("<span class='warning'>[src] staggers under the impact!</span>",
 				"<span class='danger'>You stagger under the impact!</span>")
 
@@ -159,7 +160,7 @@
 
 	if(isnull(armor)) // Armor arg passed by human
 		armor = run_armor_check(null, MELEE)
-		visible_message("<span class='warning'>[src] has been hit by [O].</span>")
+		visible_message("<span class='warning'>[src] попал под удар [O].</span>")
 
 	var/damage_flags = O.damage_flags()
 
@@ -213,8 +214,8 @@
 		if(loc != T)
 			return
 
-		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
-			"<span class='danger'>You are pinned to the wall by [I]!</span>")
+		visible_message("<span class='warning'>[I] прижал к [T] [src]!</span>",
+			"<span class='danger'>Вас прижал к стене [I]!</span>")
 		ADD_TRAIT(src, TRAIT_ANCHORED, I)
 		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(unpin_signal), I))
 		update_canmove() // instant update, no need to wait Life() tick
@@ -223,7 +224,7 @@
 	. = ..()
 
 	if(hit_atom.density)
-		visible_message("<span class='warning'>[src] crashed into \the [hit_atom]!</span>","<span class='danger'>You are crashed into \the [hit_atom]!</span>")
+		visible_message("<span class='warning'>[src] врезался в [hit_atom]!</span>","<span class='danger'>Вы врезались в [hit_atom]!</span>")
 		take_bodypart_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction, distance = 1, check_dense_objs = FALSE)
@@ -245,7 +246,7 @@
 	return FALSE
 
 // End BS12 momentum-transfer code.
-
+// не очень понятный случай
 /mob/living/proc/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
 	return SEND_SIGNAL(src, COMSIG_LIVING_CHECK_SHIELDS, attacker, damage, attack_text, hit_dir) & COMPONENT_ATTACK_SHIELDED
 
@@ -254,8 +255,8 @@
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'>[src] catches fire!</span>",
-						"<span class='userdanger'>You're set on fire!</span>")
+		visible_message("<span class='warning'>[src] Загорелся!</span>",
+						"<span class='userdanger'>Вы загорелись!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
@@ -288,7 +289,7 @@
 			fire_stacks /= 2
 			L.fire_stacks += fire_stacks
 			if(L.IgniteMob()) // Ignite them
-				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
+				log_game("[key_name(src)] врезался [key_name(L)] подожгя его")
 
 	else if(L.on_fire) // If they were on fire and we were not
 		L.fire_stacks /= 2

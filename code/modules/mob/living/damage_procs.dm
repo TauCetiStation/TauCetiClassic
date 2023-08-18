@@ -57,7 +57,7 @@
 		if(AGONY)
 			adjustHalLoss(effect) // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "радиация", "Ваша одежда кажется теплее.", "Ваша одежда кажется теплее."))/100),0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				Stuttering(effect * blocked)

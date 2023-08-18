@@ -10,6 +10,7 @@
 	start_pulling(target)
 
 // When all mobs have a "hand", make this a living proc.
+// тут тоже нужна помощь от собрания переводчиков, почему кукла может пристегнуться к стулу ? Если он держиться неужто нельзя его вытащить с него.
 /mob/living/carbon/human/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	if(ismob(target))
 		var/mob/M = target
@@ -17,7 +18,7 @@
 			return
 		if(M.buckled)
 			if(show_warnings)
-				to_chat(src, "<span class='notice'>You cannot grab [M], \he is buckled in!</span>")
+				to_chat(src, "<span class='notice'>Вы не можете схватить [M], он пристегнут!</span>")
 			return
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -25,7 +26,7 @@
 				H.w_uniform.add_fingerprint(src)
 			if(H.pull_damage())
 				if(show_warnings)
-					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
+					to_chat(src, "<span class='danger'>Тащить [H] в его теукщем состоянии, будет плохая идея.</span>")
 		M.inertia_dir = 0
 
 	return new /obj/item/weapon/grab(src, target, force_state)
@@ -37,13 +38,13 @@
 			return
 		if(M.buckled)
 			if(show_warnings)
-				to_chat(src, "<span class='notice'>You cannot grab [M], \he is buckled in!</span>")
+				to_chat(src, "<span class='notice'>Вы не можете схватить [M], он пристегнут!</span>")
 			return
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.pull_damage())
 				if(show_warnings)
-					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
+					to_chat(src, "<span class='danger'>Тащить [H] в его теукщем состоянии, будет плохая идея.</span>")
 		M.inertia_dir = 0
 
 	return new /obj/item/weapon/grab(src, target, force_state)

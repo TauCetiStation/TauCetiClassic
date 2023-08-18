@@ -7,7 +7,7 @@
 
 	//Vents
 	if(ventcrawler)
-		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
+		to_chat(src, "<span class='notice'>Вы можете ползать по вентиляции! Нажмите alt+ЛКМ на вентиляции, чтобы быстро передвигаться по станции.</span>")
 
 	noob_notify(src)
 

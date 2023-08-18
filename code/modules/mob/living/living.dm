@@ -59,7 +59,7 @@
 	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
-			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
+			visible_message("<span class='warning'>[src] [pick("врезался", "влетел")] в [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
 			Stun(1)
 			Weaken(2)
@@ -100,17 +100,17 @@
 	if(ishuman(M))
 		if(M.anchored)
 			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[M] is anchored, you cannot push past.</span>")
+				to_chat(src, "<span class='warning'>[M] Закреплен, вы не можете протолкнуться мимо него.</span>")
 			return 1
 		if((M.pulledby && M.pulledby.stat == CONSCIOUS && !M.pulledby.restrained() && M.restrained()) || locate(/obj/item/weapon/grab, M.grabbed_by))
 			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
+				to_chat(src, "<span class='warning'>[M] Связан,  вы не можете протолкнуться мимо него.</span>")
 			return 1
 		if(ismob(M.pulling))
 			var/mob/pulling_mob = M.pulling
 			if(pulling_mob.restrained() && !M.restrained() && M.stat == CONSCIOUS)
 				if(!(world.time % 5))
-					to_chat(src, "<span class='warning'>[M] is restraining [pulling_mob], you cannot push past.</span>")
+					to_chat(src, "<span class='warning'>[M] связывает [pulling_mob], вы не можете протолкнуться.</span>")
 				return 1
 
 	//switch our position with M
@@ -140,7 +140,7 @@
 
 	//Fat
 	if(HAS_TRAIT(M, TRAIT_FAT))
-		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
+		to_chat(src, "<span class='danger'>Вы не можете оттолкнуть жирную жопу [M] с пути.</span>")
 		return 1
 
 	//okay, so we didn't switch. but should we push?
@@ -220,7 +220,7 @@
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
 		adjustOxyLoss(health - config.health_threshold_dead)
-		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+		to_chat(src, "<span class='notice'>Вы устали от жизни и приняли смерть.</span>")
 		death()
 
 /mob/living/proc/updatehealth()
@@ -454,8 +454,8 @@
 	AdjustStunned(5)
 	AdjustWeakened(5)
 	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
-	visible_message("<span class='red'>[src] was crushed by the door.</span>",
-					"<span class='danger'>The door crushed you.</span>")
+	visible_message("<span class='red'>[src] был раздавлен дверью.</span>",
+					"<span class='danger'>Вас раздавила дверь.</span>")
 
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
@@ -653,10 +653,10 @@
 
 /mob/living/drop_item(atom/Target)
 	if(!get_active_hand() && !drop_combo_element())
-		to_chat(src, "<span class='warning'>You have nothing to drop in your hand!</span>")
+		to_chat(src, "<span class='warning'>Вам нечего выкидывать!</span>")
 		return
 	return ..()
-
+// странный и не нужный перевод
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
@@ -675,7 +675,7 @@
 
 	. = ..()
 	if(.)
-		usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+		usr.visible_message("<span class='notice'><b>[usr]</b> показывает на [A].</span>")
 
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (buckled && buckled.loc != NewLoc)
@@ -718,7 +718,7 @@
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
-								M.visible_message("<span class='warning'>[G.affecting] has been pulled from [G.assailant]'s grip by [src].</span>")
+								M.visible_message("<span class='warning'>[src] вырвал [G.affecting] из хватки [G.assailant].</span>")
 								qdel(G)
 
 					if(!M.grabbed_by.len)
@@ -754,7 +754,7 @@
 		makeTrail(new_loc, old_loc, old_dir)
 	if(pull_damage() && prob(25))
 		adjustBruteLoss(2)
-		visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
+		visible_message("<span class='warning'>Раны [src] открылись от волочения по полу!</span>")
 		return TRUE
 	return FALSE
 
@@ -843,10 +843,10 @@
 
 		if(istype(M))
 			M.drop_from_inventory(H)
-			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
-			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
+			to_chat(M, "<span class='notice'>[H] освобождается от вашей хватки!</span>")
+			to_chat(src, "<span class='notice'>Вы выскочили из хватки [M]!</span>")
 		else if(isitem(H.loc))
-			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
+			to_chat(src, "<span class='notice'>Вы освободились от [H.loc].</span>")
 			H.forceMove(get_turf(H))
 		return
 
@@ -855,8 +855,8 @@
 		var/mob/living/simple_animal/borer/B = src.loc
 		var/mob/living/captive_brain/H = src
 
-		to_chat(H, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>")
-		to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
+		to_chat(H, "<span class='danger'>Вы боретесь с контролем паразита (Это займет в примерно 60 секунд).</span>")
+		to_chat(B.host, "<span class='danger'>Вы чувствуете что разум [src] сопротивляется контролю.</span>")
 
 		spawn(rand(350,450)+B.host.brainloss)
 
@@ -864,8 +864,8 @@
 				return
 
 			B.host.adjustBrainLoss(rand(5,10))
-			to_chat(H, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
-			to_chat(B.host, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
+			to_chat(H, "<span class='danger'>Показав невероятную волю, вы освобождаете свой разум!</span>")
+			to_chat(B.host, "<span class='danger'>Вы чувствуете то теряете контроль, вы втягиваете свой хоботок до того, как вас смогут повредить нервные импульсы.</span>")
 			B.controlling = 0
 
 			B.ckey = B.host.ckey
@@ -896,14 +896,14 @@
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
+						L.visible_message("<span class='danger'>[L] освободился от хватки [G.assailant]!</span>")
 						qdel(G)
 				if(GRAB_NECK)
 					if(prob(5))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
+						L.visible_message("<span class='danger'>[L] высвободился из захвата [G.assailant]!</span>")
 						qdel(G)
 		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+			L.visible_message("<span class='danger'>[L] сопротивляется!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
@@ -918,12 +918,12 @@
 			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
-				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
+				C.visible_message("<span class='danger'>[usr] пытаеться отстегнуться!</span>", self_message = "<span class='rose'>Вы пытаетесь отстегнуться. (This will take around 2 minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(usr, 1200, target = usr))
 						if(!C.buckled)
 							return
-						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", self_message = "<span class='notice'>You successfully unbuckle yourself.</span>")
+						C.visible_message("<span class='danger'>[usr] отстегивается!</span>", self_message = "<span class='notice'>Вы успешно отстегнулись.</span>")
 						C.buckled.user_unbuckle_mob(C)
 		else
 			L.buckled.user_unbuckle_mob(L)
@@ -942,23 +942,23 @@
 			CM.fire_stacks -= 5
 			CM.Stun(5)
 			CM.Weaken(5)
-			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
+			CM.visible_message("<span class='danger'>[CM] катается по полу, пытаясь потушить огонь!</span>", \
 				"<span class='rose'>You stop, drop, and roll!</span>")
 			if(fire_stacks <= 0)
-				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
-					"<span class='notice'>You extinguish yourself.</span>")
+				CM.visible_message("<span class='danger'>[CM] успешно потушил себя!</span>", \
+					"<span class='notice'>Вы потушили себя.</span>")
 				ExtinguishMob()
 			return
 		if(CM.handcuffed && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>", self_message = "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+				CM.visible_message("<span class='danger'>[CM] Пытаеться сломать наручники!</span>", self_message = "<span class='rose'>Вы пытаетесь сломать наручники. (Это займет примерно 5 секунд, вам нужно оставаться на месте)</span>")
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return
-						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>", self_message = "<span class='notice'>You successfully break your handcuffs.</span>")
+						CM.visible_message("<span class='danger'>[CM] ломает наручники!</span>", self_message = "<span class='notice'>Вы успешно сломали наручники.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.handcuffed)
 			else
@@ -968,11 +968,11 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
+				CM.visible_message("<span class='danger'>[usr] пытаеться снять [HC]!</span>", self_message = "<span class='notice'>Вы пытаетесь снять [HC]. (Это займет [displaytime] минут, вам нужно оставаться на месте)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink //Не понятно
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
 							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
 							"<span class='notice'>You successfully break in a discharge of energy!</span>")
@@ -980,8 +980,8 @@
 							S.set_up(4,0,CM.loc)
 							S.start()
 						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
+							CM.visible_message("<span class='danger'>[CM] Снимает наручники!</span>", \
+								"<span class='notice'>Вы успешно сняли[CM.handcuffed].</span>")
 						CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
@@ -989,12 +989,12 @@
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				to_chat(usr, )
-				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>", self_message = "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+				CM.visible_message("<span class='danger'>[CM] Пытаеться сломать кандалы!</span>", self_message = "<span class='notice'>Вы пытаетесь сломать кандалы. (Это займет примерно 5 секунд, вам нужно оставаться на месте)</span>")
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return
-						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>", self_message = "<span class='notice'>You successfully break your legcuffs.</span>")
+						CM.visible_message("<span class='danger'>[CM] ломает кандалы!</span>", self_message = "<span class='notice'>Вы успешно сломали кандалы.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 			else
@@ -1016,8 +1016,8 @@
 							S.set_up(4,0,CM.loc)
 							S.start()
 						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
+							CM.visible_message("<span class='danger'>[CM] снимает кандалы!</span>", \
+								"<span class='notice'>Вы успешно снимаете [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
 /// What should the mob do when laying down. Return TRUE to prevent default behavior.
@@ -1050,9 +1050,9 @@
 
 	if(incapacitated(NONE))
 		if(crawling)
-			to_chat(src, "<span class='rose'>You can't wake up.</span>")
+			to_chat(src, "<span class='rose'>Вы не можете проснуться.</span>")
 		else
-			to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+			to_chat(src, "<span class='rose'>Вы не контролируете себя.</span>")
 		return
 
 	if(crawling)
@@ -1076,11 +1076,11 @@
 			return
 	else
 		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+			to_chat(src, "<span class='notice'>Вы не можете залезть в вентиляцию!</span>")
 			return
 	SetCrawling(!crawling)
 	update_canmove()
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
+	to_chat(src, "<span class='notice'>Вы [crawling ? "ползете" : "встаете"].</span>")
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
@@ -1228,7 +1228,7 @@
 	if(stat == DEAD && butcher_results && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
 		if(user.is_busy())
 			return
-		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете разделывать [src]...</span>")
 		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 		if(do_mob(user, src, 80))
 			harvest(user)
@@ -1244,7 +1244,7 @@
 			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 			butcher_results.Remove(path)
 		if(user)
-			visible_message("<span class='notice'>[user] butchers [src].</span>")
+			visible_message("<span class='notice'>[user] разделывает [src].</span>")
 		gib()
 
 /mob/living/proc/get_taste_sensitivity()
@@ -1282,11 +1282,11 @@
 
 	if(world.time-lasttaste >= 18)//prevent tastes spam
 		if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
-			to_chat(src, "<span class='notice'>You can't really make out what you're tasting...</span>")
+			to_chat(src, "<span class='notice'>Вы не можете разобрать вкус... </span>")
 			lasttaste = world.time
 			return
 
-		to_chat(src, "<span class='notice'>You can taste [get_english_list(final_taste_list)].</span>")
+		to_chat(src, "<span class='notice'>Вы чувствуете вкус [get_english_list(final_taste_list)].</span>")
 		lasttaste = world.time
 
 // This proc returns TRUE if less than given percentage is not covered.
@@ -1318,8 +1318,8 @@
 	if(stun)
 		Stun(3)
 	if(nutrition < 50 && (vomit_type != VOMIT_BLOOD))
-		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>",
-						"<span class='warning'>You try to throw up, but there is nothing!</span>")
+		visible_message("<span class='warning'>[src] трясется, давясь!</span>",
+						"<span class='warning'>Вы хотите вырвать, но в желудке пусто!</span>")
 		adjustOxyLoss(3)
 		adjustHalLoss(5)
 		return FALSE
@@ -1336,8 +1336,8 @@
 
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
-							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'> давиться на собственной рвоте!</span>",
+							"<span class='warning'>Вы давитесь на собственной рвоте, что может быть хуже!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FRIGVOMIT
 			else
@@ -1345,8 +1345,8 @@
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
-							"<span class='warning'>You throw up!</span>")
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>рвет!</span>",
+							"<span class='warning'>Вас рвет!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FEMALEVOMIT
 			else
@@ -1354,8 +1354,8 @@
 		make_jittery(max(35 - jitteriness, 0))
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
-						"<span class='warning'>You throw up!</span>")
+		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>рвет!</span>",
+						"<span class='warning'>Вас рвет!</span>")
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/turf/simulated/T = loc
@@ -1405,7 +1405,7 @@
 		return FALSE
 
 	if(intent == MOVE_INTENT_RUN && HAS_TRAIT(src, TRAIT_NO_RUN))
-		to_chat(src, "<span class='notice'>Something prevents you from running!</span>")
+		to_chat(src, "<span class='notice'>Что-то не дает вам бежать!</span>")
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_MOB_SET_M_INTENT, intent)
@@ -1514,25 +1514,25 @@
 // return TRUE if we failed our interaction
 /mob/living/interact_prob_brain_damage(atom/object)
 	if(getBrainLoss() >= 60)
-		visible_message("<span class='warning'>[src] stares cluelessly at [isturf(object.loc) ? object : ismob(object.loc) ? object : "something"] and drools.</span>")
+		visible_message("<span class='warning'>[src] бездумно смотрит на [isturf(object.loc) ? object : ismob(object.loc) ? object : "что-то"] пуская слюни.</span>")
 		return TRUE
 	else if(prob(getBrainLoss()))
-		to_chat(src, "<span class='warning'>You momentarily forget how to use [object].</span>")
+		to_chat(src, "<span class='warning'>Не на долго вы забываете как использовать [object].</span>")
 		return TRUE
 
 //Quality proc
 /mob/living/proc/trigger_syringe_fear()
-	to_chat(src, "<span class='userdanger'>IT'S A SYRINGE!!!</span>")
+	to_chat(src, "<span class='userdanger'>ТОЛЬКО НЕ УКОЛ!!!</span>")
 	if(prob(5))
 		eye_blind = 20
 		blurEyes(40)
-		to_chat(src, "<span class='warning'>Darkness closes in...</span>")
+		to_chat(src, "<span class='warning'>Тьма надвигается...</span>")
 	if(prob(5))
 		hallucination = max(hallucination, 200)
-		to_chat(src, "<span class='warning'>Ringing in your ears...</span>")
+		to_chat(src, "<span class='warning'>Звон в ушах...</span>")
 	if(prob(10))
 		SetSleeping(40 SECONDS)
-		to_chat(src, "<span class='warning'>Your will to fight wavers.</span>")
+		to_chat(src, "<span class='warning'>Ваша воля к битве утихает.</span>")
 	if(prob(30))
 		Paralyse(20)
 	if(prob(40))
@@ -1546,4 +1546,4 @@
 		var/obj/item/organ/external/BP = get_bodypart(bodypart_name)
 		if(BP)
 			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
-			to_chat(src, "<span class='warning'>You got a cut with a syringe.</span>")
+			to_chat(src, "<span class='warning'>Вас порезали шприцом.</span>")
