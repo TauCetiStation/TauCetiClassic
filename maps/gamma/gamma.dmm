@@ -16516,15 +16516,6 @@
 "cHO" = (
 /turf/simulated/wall/r_wall,
 /area/station/medical/genetics_cloning)
-"cHR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "cHW" = (
 /obj/item/weapon/storage/firstaid/adv{
 	pixel_x = 4;
@@ -16829,7 +16820,8 @@
 "cKX" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/soda{
-	pixel_y = 8
+	dir = 8;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -19636,6 +19628,20 @@
 /area/station/security/main{
 	name = "Security Equipment"
 	})
+"doa" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "dob" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -39608,13 +39614,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
-"hrf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "religion_cult_of_blood"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/bridge)
 "hrg" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -48334,6 +48333,15 @@
 	icon_state = "escape"
 	},
 /area/station/hallway/secondary/exit)
+"jhn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "jhs" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/glowstick{
@@ -98979,7 +98987,8 @@
 	pixel_x = 32
 	},
 /obj/machinery/chem_dispenser/beer{
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -107081,20 +107090,6 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
-"voS" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "voV" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck North"
@@ -119263,6 +119258,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"xUu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "xUx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -135989,8 +135991,8 @@ lAY
 vIp
 srk
 mcz
-voS
-cHR
+doa
+jhn
 vzr
 doH
 fXg
@@ -159591,7 +159593,7 @@ yfj
 obN
 jIl
 jIl
-hrf
+xUu
 dSo
 vyZ
 jIl
