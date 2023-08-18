@@ -2716,8 +2716,9 @@
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/razor,
 /obj/machinery/computer/shop{
-	pixel_x = 32;
-	department = "Security"
+	pixel_x = 24;
+	department = "Security";
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -3584,10 +3585,6 @@
 	c_tag = "Head of Security";
 	dir = 8;
 	network = list("SS13","Security")
-	},
-/obj/machinery/computer/shop{
-	pixel_x = 32;
-	department = "Security"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4661,6 +4658,11 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
+/obj/machinery/computer/shop{
+	pixel_x = 24;
+	department = "Security";
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5443,8 +5445,9 @@
 	dir = 4
 	},
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Security"
+	pixel_x = -24;
+	department = "Security";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7280,6 +7283,9 @@
 	dir = 8;
 	network = list("SS13","Security")
 	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7772,6 +7778,11 @@
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/seclite,
 /obj/item/weapon/storage/briefcase,
+/obj/machinery/computer/shop{
+	pixel_x = -24;
+	department = "Security";
+	dir = 4
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anb" = (
@@ -8678,12 +8689,10 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /obj/machinery/computer/shop{
-	pixel_x = 32;
-	department = "Security"
+	pixel_x = 24;
+	department = "Security";
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -15289,8 +15298,9 @@
 	pixel_y = 20
 	},
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Engineering"
+	pixel_x = -24;
+	department = "Engineering";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -33631,8 +33641,9 @@
 	},
 /obj/structure/table,
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Cargo"
+	pixel_x = -24;
+	department = "Cargo";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -36246,8 +36257,9 @@
 	dir = 8
 	},
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Medical"
+	pixel_x = -24;
+	department = "Medical";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -37292,6 +37304,11 @@
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
 	pixel_y = -25
+	},
+/obj/machinery/computer/shop{
+	pixel_x = -24;
+	department = "Medical";
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
@@ -39280,6 +39297,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
 	pixel_y = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Storage";
+	dir = 4;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -47235,8 +47257,9 @@
 	icon_state = "warn"
 	},
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Medical"
+	pixel_x = -24;
+	department = "Medical";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/medical/chemistry)
@@ -49874,14 +49897,10 @@
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/structure/table/glass,
-/obj/machinery/camera{
-	c_tag = "Medbay Storage";
-	dir = 4;
-	network = list("SS13","Medical")
-	},
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Medical"
+	pixel_x = -24;
+	department = "Medical";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -56851,8 +56870,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer/shop{
-	pixel_x = 32;
-	department = "Engineering"
+	pixel_x = 24;
+	department = "Engineering";
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -62714,7 +62734,8 @@
 /area/station/civilian/garden)
 "cvx" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/alarm{
+/obj/machinery/computer/shop{
+	department = "Science";
 	dir = 4;
 	pixel_x = -24
 	},
@@ -64341,8 +64362,9 @@
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Engineering"
+	pixel_x = -24;
+	department = "Engineering";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -69098,6 +69120,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/alarm{
+	pixel_y = 26
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -69366,8 +69391,9 @@
 "epb" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/computer/shop{
-	pixel_x = 32;
-	department = "Command"
+	pixel_x = 24;
+	department = "Command";
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
@@ -80931,8 +80957,9 @@
 "rEb" = (
 /obj/machinery/smartfridge/secure/virology,
 /obj/machinery/computer/shop{
-	pixel_x = -32;
-	department = "Medical"
+	pixel_x = -24;
+	department = "Medical";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
