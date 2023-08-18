@@ -197,7 +197,8 @@
 				return
 			var/T = sanitize(input(user, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner && owner_account)
-				add_order_and_offer(T)
+				global.add_order_and_offer(MA.owner_name, T)
+				mode = 1
 			else
 				to_chat(user, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
@@ -261,9 +262,3 @@
 		if(!Console.requestonly)
 			var/turf/pos = get_turf(object)
 			return is_station_level(pos.z)
-
-/obj/machinery/computer/shop/proc/add_order_and_offer(Text)
-	var/datum/money_account/MA = global.department_accounts[department]
-	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = MA.owner_name, "description" = Text, "time" = worldtime2text())
-	global.orders_and_offers_number++
-	mode = 1

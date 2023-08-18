@@ -1174,7 +1174,8 @@
 				return
 			var/T = sanitize(input(user, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner && owner_account)
-				add_order_and_offer(T)
+				global.add_order_and_offer(owner, T)
+				mode = 8
 			else
 				to_chat(user, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
@@ -1951,11 +1952,4 @@
 		return FALSE
 	return TRUE
 
-/obj/item/device/pda/proc/add_order_and_offer(Text)
-	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = Text, "time" = worldtime2text())
-	global.orders_and_offers_number++
-	mode = 8
-
-
 #undef TRANSCATION_COOLDOWN
-
