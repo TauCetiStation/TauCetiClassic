@@ -7,7 +7,7 @@
 
 /client/verb/forum()
 	set name = "forum"
-	set desc = "Посетить Форум."
+	set desc = "Посетить форум."
 	set hidden = TRUE
 	link_with_alert(src, config.forumurl)
 
@@ -19,12 +19,12 @@
 
 /client/verb/reportissue()
 	set name = "report-issue"
-	set desc = "Сообщить о проблеме"
+	set desc = "Сообщить о баге или проблеме."
 	set hidden = 1
 
 	var/githuburl = config.repository_link
 	if(!githuburl)
-		to_chat(src, "<span class='danger'>Данная ссылка не встроена в конфигурацию сервера. Пожалуйста оповестите об этом хоста.</span>")
+		to_chat(src, "<span class='danger'>Данная ссылка не встроена в конфигурацию сервера. Пожалуйста, оповестите об этом хоста.</span>")
 		return
 
 	var/message = "Вы откроете GitHub в вашем браузере. Вы уверены?"
@@ -64,4 +64,4 @@
 		if(tgui_alert(usr, "Будет открыт ваш браузер. Вы уверены?",, list("Да", "Нет")) == "Да")
 			user << link(link_url)
 	else
-		to_chat(user, "<span class='danger'>Данная ссылка не встроена в конфигурацию сервера. Пожалуйста оповестите об этом хоста.</span>")
+		to_chat(user, "<span class='danger'>Данная ссылка не встроена в конфигурацию сервера. Пожалуйста, оповестите об этом хоста.</span>")
