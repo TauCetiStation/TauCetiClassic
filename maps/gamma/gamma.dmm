@@ -16516,6 +16516,15 @@
 "cHO" = (
 /turf/simulated/wall/r_wall,
 /area/station/medical/genetics_cloning)
+"cHR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "cHW" = (
 /obj/item/weapon/storage/firstaid/adv{
 	pixel_x = 4;
@@ -39599,6 +39608,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"hrf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "hrg" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -39938,18 +39954,15 @@
 	},
 /area/station/civilian/bar)
 "huR" = (
-/obj/structure/table,
-/obj/item/weapon/wrapping_paper,
-/obj/item/weapon/packageWrap,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/item/device/multitool,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/structure/filingcabinet/filingcabinet,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -61634,12 +61647,18 @@
 /area/station/engineering/atmos)
 "lVY" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/folder/yellow{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = 30
 	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/item/device/multitool{
+	pixel_x = -8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -68049,15 +68068,6 @@
 	icon_state = "dark"
 	},
 /area/station/security/lobby)
-"nog" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "noi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -85461,20 +85471,6 @@
 /obj/structure/flora/junglebush/b,
 /turf/simulated/floor/grass,
 /area/station/maintenance/brig)
-"qQT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "qQV" = (
 /obj/structure/stool/bed/chair/pew/right,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -85732,13 +85728,6 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormtwo)
-"qUK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "religion_cult_of_blood"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/bridge)
 "qUL" = (
 /obj/structure/stool/bed/chair/office/dark,
 /obj/effect/landmark/start/shaft_miner,
@@ -107092,6 +107081,20 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"voS" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "voV" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck North"
@@ -135986,8 +135989,8 @@ lAY
 vIp
 srk
 mcz
-qQT
-nog
+voS
+cHR
 vzr
 doH
 fXg
@@ -159588,7 +159591,7 @@ yfj
 obN
 jIl
 jIl
-qUK
+hrf
 dSo
 vyZ
 jIl
