@@ -16101,6 +16101,20 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"cDL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "cDM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19628,20 +19642,6 @@
 /area/station/security/main{
 	name = "Security Equipment"
 	})
-"doa" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "dob" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -39385,6 +39385,15 @@
 	icon_state = "vaultfull"
 	},
 /area/station/medical/sleeper)
+"hon" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "hos" = (
 /obj/item/weapon/table_parts,
 /turf/simulated/floor/plating,
@@ -39997,6 +40006,9 @@
 "hvu" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
+	},
+/obj/machinery/requests_console/kitchen{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -48333,15 +48345,6 @@
 	icon_state = "escape"
 	},
 /area/station/hallway/secondary/exit)
-"jhn" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "jhs" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/glowstick{
@@ -68944,6 +68947,13 @@
 	icon_state = "dark"
 	},
 /area/station/security/hos)
+"nxL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "nxZ" = (
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "3-4,5,6"
@@ -119258,13 +119268,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"xUu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "religion_cult_of_blood"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/bridge)
 "xUx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -135991,8 +135994,8 @@ lAY
 vIp
 srk
 mcz
-doa
-jhn
+cDL
+hon
 vzr
 doH
 fXg
@@ -159593,7 +159596,7 @@ yfj
 obN
 jIl
 jIl
-xUu
+nxL
 dSo
 vyZ
 jIl
