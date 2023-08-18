@@ -154,7 +154,7 @@
 					if(HAS_TRAIT_FROM(M, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
 						M.trigger_syringe_fear()
 				else
-					if(!L.try_inject(user, TRUE, TRUE))
+					if(!L.try_inject(user, TRUE, FALSE))
 						return
 					SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject self ([user.ckey]). Reagents: [contained]</font>")

@@ -1,10 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "aM" = (
 /obj/item/clothing/head/collectable/petehat,
@@ -58,20 +59,14 @@
 /obj/structure/kitchenspike,
 /obj/item/mecha_parts/chassis/honker,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "cw" = (
 /obj/item/weapon/flora/pottedplant/crystal,
 /turf/simulated/floor/greengrid,
-/area/space_structures/robostation2)
-"cK" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/clown,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken4"
-	},
 /area/space_structures/robostation2)
 "cL" = (
 /obj/structure/window/thin/reinforced{
@@ -126,9 +121,8 @@
 "ei" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/glowshroom,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "ej" = (
 /obj/structure/table,
@@ -155,9 +149,8 @@
 /obj/item/weapon/cigbutt/cigarbutt,
 /obj/structure/table/woodentable,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "fc" = (
 /obj/effect/decal/remains/human,
@@ -223,9 +216,8 @@
 "gQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/cartridge/clown,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "hg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -330,9 +322,10 @@
 /obj/structure/sign/warning/airlock{
 	pixel_x = -32
 	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "nj" = (
 /obj/item/clothing/mask/gas/sexyclown,
@@ -343,9 +336,8 @@
 "ot" = (
 /obj/item/weapon/bikehorn,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "oG" = (
 /obj/structure/dresser,
@@ -355,9 +347,8 @@
 "oI" = (
 /obj/item/weapon/circuitboard/mecha/honker/targeting,
 /obj/structure/closet/crate,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "oR" = (
 /obj/structure/table/reinforced,
@@ -383,9 +374,8 @@
 	},
 /area/space_structures/robostation2)
 "pX" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "qe" = (
 /obj/structure/closet/acloset,
@@ -441,9 +431,8 @@
 /obj/structure/sign/warning/lethal_turrets{
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "tC" = (
 /obj/structure/window/fulltile/reinforced{
@@ -478,9 +467,8 @@
 /obj/structure/closet/crate,
 /obj/item/weapon/circuitboard/mecha/honker/peripherals,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "uA" = (
 /obj/machinery/door/airlock/hatch,
@@ -509,22 +497,19 @@
 "xF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hatch,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "yo" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "yu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/mecha_parts/mecha_equipment/weapon/honker,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "zd" = (
 /obj/structure/table/reinforced,
@@ -532,9 +517,8 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "zu" = (
 /obj/structure/table,
@@ -546,9 +530,8 @@
 /area/space_structures/robostation2)
 "Af" = (
 /obj/item/weapon/ore/clown,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Ag" = (
 /obj/machinery/light/small{
@@ -560,9 +543,8 @@
 "Ak" = (
 /obj/effect/landmark/corpse/clown,
 /obj/item/toy/waterflower,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Al" = (
 /turf/simulated/floor{
@@ -572,9 +554,10 @@
 /area/space_structures/robostation2)
 "Aw" = (
 /obj/machinery/door/airlock/clown,
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "AP" = (
 /obj/item/weapon/flora/pottedplant/unusual,
@@ -661,17 +644,15 @@
 /obj/item/weapon/stock_parts/console_screen{
 	pixel_y = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Gf" = (
 /obj/structure/computerframe{
 	dir = 4
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "Gj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -695,9 +676,10 @@
 /area/space_structures/robostation2)
 "Hg" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "HE" = (
 /obj/item/weapon/flora/pottedplant/sticky,
@@ -712,9 +694,8 @@
 "HK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/inflatable,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "HL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -735,10 +716,11 @@
 /obj/structure/sign/warning/airlock{
 	pixel_x = -32
 	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "IJ" = (
 /obj/machinery/porta_turret/stationary{
@@ -830,10 +812,11 @@
 /area/space_structures/robostation2)
 "Lc" = (
 /obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Ld" = (
 /obj/machinery/kitchen_machine/microwave,
@@ -862,16 +845,16 @@
 "Mn" = (
 /obj/machinery/door/airlock/hatch,
 /obj/item/weapon/bananapeel,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Nf" = (
 /obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Nj" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -887,13 +870,6 @@
 "NY" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall4"
-	},
-/area/space_structures/robostation2)
-"Ob" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/clown,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
 	},
 /area/space_structures/robostation2)
 "Ok" = (
@@ -921,9 +897,8 @@
 /obj/item/weapon/storage/box/lipstick{
 	pixel_y = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Pa" = (
 /mob/living/simple_animal/hostile/hivebot/strong,
@@ -932,9 +907,8 @@
 "Pg" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/clown,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "Pu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -952,22 +926,19 @@
 /area/space_structures/robostation2)
 "Rj" = (
 /obj/effect/decal/remains/human,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "RC" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/hivebot/strong,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Se" = (
 /obj/structure/glowshroom,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Sz" = (
 /obj/structure/closet/crate,
@@ -983,9 +954,8 @@
 "Tl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Tn" = (
 /obj/structure/table/reinforced,
@@ -1035,18 +1005,20 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "VV" = (
 /obj/machinery/porta_turret/stationary{
 	check_n_synth = 1;
 	shot_synth = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "VW" = (
 /obj/machinery/door/airlock/clown,
@@ -1094,9 +1066,10 @@
 "YO" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "YY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2303,8 +2276,8 @@ gj
 fk
 dy
 pr
-cK
-Ob
+Pg
+Pg
 NY
 gj
 gj
