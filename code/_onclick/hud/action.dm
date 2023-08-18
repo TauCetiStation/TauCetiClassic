@@ -87,9 +87,6 @@
 /datum/action/proc/Deactivate()
 	return
 
-/datum/action/proc/Process()
-	return
-
 /datum/action/proc/CheckRemoval(mob/user) // TRUE if action is no longer valid for this mob and should be removed
 	return FALSE
 
@@ -109,7 +106,8 @@
 /atom/movable/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
-/datum/action/proc/Checks()// returns 1 if all checks pass
+/// returns 1 if all checks pass
+/datum/action/proc/Checks()
 	if(!owner)
 		return FALSE
 	if(check_flags & AB_CHECK_INCAPACITATED)
@@ -300,7 +298,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_INSIDE
 
 /datum/action/item_action/Activate()
 	var/obj/item/I = target
@@ -322,6 +320,16 @@
 	check_flags = 0
 	background_icon_state = "bg_spell"
 
+/datum/action/spell_action/Grant(mob/T)
+	. = ..()
+	if(istype(target, /obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = target
+		if(S.charge_max < 1)
+			START_PROCESSING(SSprocessing, src)
+
+/datum/action/spell_action/process()
+	UpdateButtonIcon()
+
 /datum/action/spell_action/UpdateName()
 	var/obj/effect/proc_holder/spell/spell = target
 	return spell.name
@@ -333,9 +341,8 @@
 
 	if(usr)
 		return spell.can_cast(usr)
-	else
-		if(owner)
-			return spell.can_cast(owner)
+	else if(owner)
+		return spell.can_cast(owner)
 	return TRUE
 
 /datum/action/spell_action/CheckRemoval()
