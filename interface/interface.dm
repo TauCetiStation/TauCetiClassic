@@ -43,7 +43,7 @@
 
 /client/verb/changes()
 	set name = "Changelog"
-	set desc = "Ознакомиться с чэйнджлогом."
+	set desc = "Ознакомиться со списком недавних изменений."
 	set hidden = 1
 
 	link_with_alert(src, config.changelog_link)
