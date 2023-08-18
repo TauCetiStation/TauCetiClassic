@@ -210,19 +210,20 @@
 				return
 			var/id = href_list["order_item"]
 			var/datum/shop_lot/Lot = global.online_shop_lots[id]
+			var/orderer = " (Неизвестный)"
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/obj/item/weapon/card/id/ID = H.get_idcard()
+				if(ID)
+					orderer = " ([ID.registered_name])"
 			if(Lot && owner_account)
 				var/T = sanitize(input(user, "Введите адрес доставки", "Адрес доставки", null) as text)
 				if(T && istext(T))
-					if(ishuman(user))
-						var/mob/living/carbon/human/H = user
-						var/obj/item/weapon/card/id/ID = H.get_idcard()
-						if(ID)
-							T = ID.registered_name +": "+ T
 					if(Lot.sold)
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(order_onlineshop_item(owner, owner_account, NewLot, T))
+									if(order_onlineshop_item(owner + orderer, owner_account, NewLot, T))
 										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
 									else
 										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
@@ -230,7 +231,7 @@
 						to_chat(user, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 
-					else if(order_onlineshop_item(owner, owner_account, Lot, T))
+					else if(order_onlineshop_item(owner + orderer, owner_account, Lot, T))
 						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
 						to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
