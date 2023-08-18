@@ -1168,27 +1168,27 @@
 
 		//Maintain Orders and Offers
 		if("Shop_Add_Order_or_Offer")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_link(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
-			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
+			var/T = sanitize(input(user, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner && owner_account)
 				add_order_and_offer(T)
 			else
-				to_chat(U, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
+				to_chat(user, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
 		//Buy Item
 		if("Shop_Order")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_link(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
 			var/id = href_list["order_item"]
 			var/datum/shop_lot/Lot = global.online_shop_lots[id]
 			if(Lot && owner_account)
 				var/datum/money_account/MA = get_account(owner_account)
-				var/T = sanitize(input(U, "Введите адрес доставки", "Адрес доставки", null) as text)
+				var/T = sanitize(input(user, "Введите адрес доставки", "Адрес доставки", null) as text)
 				if(T && istext(T))
 					if(Lot.sold)
 						if(online_shop_lots_hashed.Find(Lot.hash))
@@ -1197,24 +1197,24 @@
 									if(order_onlineshop_item(owner, owner_account, NewLot, T))
 										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
 									else
-										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
-						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
+						to_chat(user, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 
 					else if(order_onlineshop_item(owner, owner_account, Lot, T))
 						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
-						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+						to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
-					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
+					to_chat(user, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
 
 		//Shopping Cart
 		if("Shop_Shopping_Cart")
 			mode = 82
 		if("Shop_Mark_As_Delivered")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_link(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
 			var/lot_id = href_list["delivered_item"]

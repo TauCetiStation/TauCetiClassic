@@ -165,7 +165,6 @@
 	var/owner_account = MA.account_number
 
 	var/mob/user = usr
-	var/mob/living/U = usr
 
 	switch(href_list["choice"])
 		if("Return")//Return
@@ -192,27 +191,32 @@
 
 		//Maintain Orders and Offers
 		if("Shop_Add_Order_or_Offer")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_link(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 1
 				return
-			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
+			var/T = sanitize(input(user, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner && owner_account)
 				add_order_and_offer(T)
 			else
-				to_chat(U, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
+				to_chat(user, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
 		//Buy Item
 		if("Shop_Order")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_link(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 1
 				return
 			var/id = href_list["order_item"]
 			var/datum/shop_lot/Lot = global.online_shop_lots[id]
 			if(Lot && owner_account)
-				var/T = sanitize(input(U, "Введите адрес доставки", "Адрес доставки", null) as text)
+				var/T = sanitize(input(user, "Введите адрес доставки", "Адрес доставки", null) as text)
 				if(T && istext(T))
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						var/obj/item/weapon/card/id/ID = H.get_idcard()
+						if(ID)
+							T = ID.registered_name +": "+ T
 					if(Lot.sold)
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
@@ -220,42 +224,42 @@
 									if(order_onlineshop_item(owner, owner_account, NewLot, T))
 										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
 									else
-										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
-						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
+						to_chat(user, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 
 					else if(order_onlineshop_item(owner, owner_account, Lot, T))
 						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
-						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+						to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
-					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
+					to_chat(user, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
 
 		//Shopping Cart
 		if("Shop_Shopping_Cart")
 			mode = 12
 		if("Shop_Mark_As_Delivered")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_link(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 1
 				return
 			var/lot_id = href_list["delivered_item"]
 			if(!MA.shopping_cart["[lot_id]"])
 				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[lot_id].</span>")
 				return
-			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, MA.shopping_cart["[lot_id]"]["postpayment"]))
+			if(onlineshop_mark_as_delivered(user, lot_id, owner_account, MA.shopping_cart["[lot_id]"]["postpayment"]))
 				MA.shopping_cart -= "[lot_id]"
 				mode = 12
 
 	updateUsrDialog()
 
-/obj/machinery/computer/shop/proc/check_pda_server()
-	if(!global.message_servers)
+/proc/check_cargo_consoles_link(object)
+	if(!global.cargo_consoles)
 		return
-	for (var/obj/machinery/message_server/MS in global.message_servers)
-		if(MS.active)
-			var/turf/pos = get_turf(src)
+	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
+		if(!Console.requestonly)
+			var/turf/pos = get_turf(object)
 			return is_station_level(pos.z)
 
 /obj/machinery/computer/shop/proc/add_order_and_offer(Text)
