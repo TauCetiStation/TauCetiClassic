@@ -1,24 +1,24 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
-	set name = "wiki"
+	set name = "Wiki"
 	set desc = "Посетить Википедию."
 	set hidden = TRUE
 	link_with_alert(src, config.wikiurl)
 
 /client/verb/forum()
-	set name = "forum"
+	set name = "Форум"
 	set desc = "Посетить форум."
 	set hidden = TRUE
 	link_with_alert(src, config.forumurl)
 
 /client/verb/rules()
-	set name = "Rules"
+	set name = "Правила"
 	set desc = "Ознакомиться с правилами сервера."
 	set hidden = TRUE
 	link_with_alert(src, config.server_rules_url)
 
 /client/verb/reportissue()
-	set name = "report-issue"
+	set name = "Сообщить-о-баге"
 	set desc = "Сообщить о баге или проблеме."
 	set hidden = 1
 
