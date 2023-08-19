@@ -186,7 +186,7 @@
 /datum/religion_sect/preset/cult/songs
 	name = "The Cult of Sound"
 	desc = "Sound can lead the masses, and you will become its source"
-	convert_opener = "И пусть твой путь  будет освещен звуком"
+	convert_opener = "И пусть твой путь будет освещен звуком"
 	aspect_preset = list(
 		/datum/aspect/rescue = 1,
 		/datum/aspect/lightbending/light = 1,
