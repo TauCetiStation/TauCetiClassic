@@ -7746,20 +7746,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/warden)
-"aYx" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "aYA" = (
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor/plating,
@@ -19593,15 +19579,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"dnE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "dnK" = (
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
@@ -19836,6 +19813,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"dqq" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "dqt" = (
 /obj/structure/object_wall/pod{
 	dir = 8;
@@ -37503,6 +37494,15 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/sppodconstr)
+"gTa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "gTi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -55335,13 +55335,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"kFo" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "religion_cult_of_blood"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/bridge)
 "kFp" = (
 /obj/structure/table,
 /obj/item/weapon/storage/belt/utility,
@@ -84375,9 +84368,11 @@
 	},
 /area/station/cargo/storage)
 "qGI" = (
-/obj/item/weapon/flora/random,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
+	},
+/obj/machinery/computer/crew{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -90287,6 +90282,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"rUc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "rUe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -136004,8 +136006,8 @@ lAY
 vIp
 srk
 mcz
-aYx
-dnE
+dqq
+gTa
 vzr
 doH
 fXg
@@ -159606,7 +159608,7 @@ yfj
 obN
 jIl
 jIl
-kFo
+rUc
 dSo
 vyZ
 jIl
