@@ -57,7 +57,7 @@
 /datum/religion_sect/preset/chaplain/bloodgods
 	name = "The Slaves of "
 	desc = "Anything you need, little demon."
-	convert_opener = "Да начнется Великая Жатва! Принесите больше крови!"
+	convert_opener = "Да начнется Великая Жатва! Добудьте больше крови!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
@@ -87,7 +87,7 @@
 /datum/religion_sect/preset/chaplain/sounds
 	name = "The Artists of "
 	desc = "Bring a Colors to this world!"
-	convert_opener = "Искусство уже в пути!"
+	convert_opener = "Искусство уже близко!"
 	aspect_preset = list(
 		/datum/aspect/rescue = 1,
 		/datum/aspect/lightbending/light = 1,
@@ -101,7 +101,7 @@
 /datum/religion_sect/custom
 	name = "Custom "
 	desc = "Follow the orders of your god."
-	convert_opener = "Я первый, кто вошел на этот путь..."
+	convert_opener = "Я первый, кто встал на этот путь..."
 
 	// How many aspects can a user select.
 	var/aspects_count = 3
@@ -152,7 +152,7 @@
 /datum/religion_sect/preset/cult/blood
 	name = "The Cult of Blood"
 	desc = "Anything you need, little demon."
-	convert_opener = "Да начнется Великая Жатва! Принесите больше крови!"
+	convert_opener = "Да начнется Великая Жатва! Добудьте больше крови!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
 		/datum/aspect/rescue = 1,
