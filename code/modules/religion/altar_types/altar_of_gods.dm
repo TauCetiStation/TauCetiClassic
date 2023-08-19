@@ -1,6 +1,6 @@
 /obj/structure/altar_of_gods
 	name = "Altar of the Gods"
-	desc = "Алтарь - позволяющий главе церкви выбирать религиозное учение и приносить жертвы для того, чтобы заработать милость богов."
+	desc = "Алтарь,позволяющий главе церкви выбирать религиозное учение и приносить жертвы для того, чтобы заработать милость богов."
 	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "altar"
 	density = TRUE
@@ -146,7 +146,7 @@
 	if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
 		sacrifice(user)
 	else
-		to_chat(user, "<span class='warning'>Вы не знаете как это использовать.</span>")
+		to_chat(user, "<span class='warning'>Вы не знаете, как это использовать.</span>")
 
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
 	if(religion && user.my_religion != religion)

@@ -67,7 +67,7 @@
 /datum/religion_sect/preset/chaplain/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
-	convert_opener = "Обрети покой в металлической оболочке, клирик."
+	convert_opener = "Обрети покой в металлической оболочке, аколит."
 	aspect_preset = list(
 		/datum/aspect/technology = 1,
 		/datum/aspect/science = 1,
@@ -77,7 +77,7 @@
 /datum/religion_sect/preset/chaplain/clown
 	name = "The Jesters of "
 	desc = "Anything a real clown needs!"
-	convert_opener = "Веселись для Хонкоматери, смейся от души!"
+	convert_opener = "Веселись во имя Хонкоматери, смейся от души!"
 	aspect_preset = list(
 		/datum/aspect/wacky = 1,
 		/datum/aspect/chaos = 1,
@@ -101,7 +101,7 @@
 /datum/religion_sect/custom
 	name = "Custom "
 	desc = "Follow the orders of your god."
-	convert_opener = "Я первый кто вошел на этот путь..."
+	convert_opener = "Я первый, кто вошел на этот путь..."
 
 	// How many aspects can a user select.
 	var/aspects_count = 3
@@ -152,7 +152,7 @@
 /datum/religion_sect/preset/cult/blood
 	name = "The Cult of Blood"
 	desc = "Anything you need, little demon."
-	convert_opener = "Да начнется жатва! Принесите больше крови!"
+	convert_opener = "Да начнется Великая Жатва! Принесите больше крови!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
 		/datum/aspect/rescue = 1,
@@ -198,7 +198,7 @@
 
 /datum/religion_sect/custom/cult
 	name = "Custom Cult"
-	convert_opener = "Хаос это сила."
+	convert_opener = "Хаос - это сила."
 
 	aspects_count = 6
 
