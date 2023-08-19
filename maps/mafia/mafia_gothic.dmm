@@ -7,32 +7,24 @@
 /area/mafia)
 "c" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/mafia)
 "d" = (
 /turf/simulated/floor/plating,
 /area/mafia)
-"e" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "h" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/mafia)
 "i" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "j" = (
 /obj/machinery/door/airlock/vault{
@@ -81,9 +73,8 @@
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/mafia)
 "D" = (
 /obj/effect/landmark/mafia,
@@ -206,7 +197,7 @@ d
 d
 d
 d
-e
+i
 d
 d
 d
@@ -227,7 +218,7 @@ c
 h
 d
 d
-e
+i
 b
 b
 j
@@ -389,7 +380,7 @@ r
 r
 n
 j
-e
+i
 c
 b
 a
@@ -586,7 +577,7 @@ j
 b
 b
 d
-e
+i
 d
 h
 c
@@ -603,7 +594,7 @@ k
 h
 d
 d
-e
+i
 d
 d
 d

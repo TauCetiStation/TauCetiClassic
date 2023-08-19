@@ -215,7 +215,7 @@
 					holder.icon_state = "hudwanted"
 					return
 				if("Incarcerated")
-					holder.icon_state = "hudprisoner"
+					holder.icon_state = "hudincarcerated"
 					return
 				if("Paroled")
 					holder.icon_state = "hudparolled"

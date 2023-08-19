@@ -93,7 +93,7 @@ var/global/bridge_secret = null
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url = "http://example.org"
+	var/media_base_url
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url

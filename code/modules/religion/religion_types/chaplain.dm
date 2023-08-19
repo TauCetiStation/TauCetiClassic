@@ -66,12 +66,11 @@
 		"Science" = /turf/simulated/floor/carpet/purple,
 	)
 
-	carpet_dir_by_name = list(
-		"Default" = 0,
-		"Scientology" = 8,
-		"Christianity" = 2,
-		"Atheism" = 10,
-		"Islam" = 4,
+	decal_by_name = list(
+		"Scientology",
+		"Christianity",
+		"Islam",
+		"Judaism",
 	)
 
 	area_type = /area/station/civilian/chapel
