@@ -68,3 +68,11 @@
 	antag_hud_type = ANTAG_HUD_PIRATES
 	antag_hud_name = "hudpiratez"
 	skillset_type = /datum/skillset/max
+
+/datum/role/soviet
+	name = "USSP Soldier"
+	id = "USSP Soldier"
+	disallow_job = TRUE
+
+	logo_state = "soviet"
+	skillset_type = /datum/skillset/soviet

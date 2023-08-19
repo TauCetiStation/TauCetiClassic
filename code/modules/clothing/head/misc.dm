@@ -417,3 +417,9 @@
 	desc = "Stripe of red cloth.You can wear it on your head."
 	icon_state = "kung_headband"
 	item_state = "kung_headband"
+
+/obj/item/clothing/head/soviet_peaked_cap
+	name = "comissar's peaked cap"
+	desc = "Not a step back."
+	icon_state = "soviet_peakedcap"
+	item_state = "soviet_peakedcap"
