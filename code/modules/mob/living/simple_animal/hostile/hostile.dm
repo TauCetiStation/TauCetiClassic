@@ -39,13 +39,13 @@
 /mob/living/simple_animal/hostile/examine(mob/user)
 	..()
 	if(stat == DEAD)
-		to_chat(user, "<span class='danger'>Appears to be dead.</span>")
+		to_chat(user, "<span class='danger'>Кажется, мертв.</span>")
 	else if(health <= maxHealth * 0.2)
-		to_chat(user, "<span class='danger'>Appears to be heavily wounded.</span>")
+		to_chat(user, "<span class='danger'>Кажется, он сильно ранен.</span>")
 	else if(health <= maxHealth * 0.6)
-		to_chat(user, "<span class='warning'>Appears to be wounded.</span>")
+		to_chat(user, "<span class='warning'>Похоже, ранен.</span>")
 	else if(health <= maxHealth * 0.9)
-		to_chat(user, "<span class='notice'>Appears to be slightly wounded.</span>")
+		to_chat(user, "<span class='notice'>Виднеется пара царапин.</span>")
 
 /mob/living/simple_animal/hostile/proc/handle_combat_ai()
 	switch(stance)
@@ -74,6 +74,8 @@
 	if(client)
 		if(target)
 			LoseTarget()
+		if(ranged)
+			ranged_cooldown--
 		return
 
 	if(stat == CONSCIOUS)
@@ -175,7 +177,7 @@
 		else if(canmove)
 			Goto(target, move_to_delay, minimum_distance)
 		if(isturf(loc) && IsMeleeAttackReachable(target))	//If they're next to us, attack
-			AttackingTarget()
+			UnarmedAttack(target)
 		return
 	if(canmove && target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
@@ -219,12 +221,12 @@
 		LostTarget()
 		return 0
 	if(isturf(loc) && IsMeleeAttackReachable(target))
-		AttackingTarget()
+		UnarmedAttack(target)
 		return 1
 
-/mob/living/simple_animal/hostile/proc/AttackingTarget()
-	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
-	target.attack_animal(src)
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -252,11 +254,15 @@
 	..()
 	walk(src, 0)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(the_target)
-	var/target = the_target
+/mob/living/simple_animal/hostile/RangedAttack(atom/A, params)
+	. = ..()
+	if(ranged && ranged_cooldown <= 0)
+		OpenFire(A)
+
+/mob/living/simple_animal/hostile/proc/OpenFire(target)
 	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
-	INVOKE_ASYNC(src, .proc/start_shoot, target)
+	INVOKE_ASYNC(src, PROC_REF(start_shoot), target)
 
 	ranged_cooldown = ranged_cooldown_cap
 
@@ -267,13 +273,13 @@
 			new casingtype(get_turf(src))
 		sleep(4)
 
-/mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
+/mob/living/simple_animal/hostile/proc/Shoot(atom/target, atom/start, mob/user, bullet = 0)
 	if(target == start)
 		return
 
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_SHOOT, target)
 
-	var/obj/item/projectile/A = new projectiletype(user:loc)
+	var/obj/item/projectile/A = new projectiletype(user.loc)
 	playsound(user, projectilesound, VOL_EFFECTS_MASTER)
 	if(!A)
 		return
@@ -281,8 +287,8 @@
 	A.current = target
 	A.starting = get_turf(src)
 	A.original = target
-	A.yo = target:y - start:y
-	A.xo = target:x - start:x
+	A.yo = target.y - start.y
+	A.xo = target.x - start.x
 	spawn(0)
 		A.process()
 

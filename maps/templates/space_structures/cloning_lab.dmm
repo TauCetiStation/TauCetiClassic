@@ -130,9 +130,12 @@
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
 "w" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space_structures/cloning_lab)
 "x" = (

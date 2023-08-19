@@ -36,7 +36,8 @@
 	if(grill)
 		grilled = TRUE
 
-	var/new_color = SSstation_coloring.get_default_color()
+	var/new_color = color || SSstation_coloring.get_default_color()
+	color = null
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
@@ -208,6 +209,7 @@
 	max_integrity = 100
 	damage_deflection = 5
 	armor = list(melee = 80, fire = 70, bomb = 25)
+	explosive_resistance = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
@@ -223,6 +225,7 @@
 
 	max_integrity = 200
 	armor = list(melee = 80, fire = 100, bomb = 50)
+	explosive_resistance = 1
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5

@@ -40,11 +40,11 @@
 
 	resolve_callback = _resolve_callback
 
-	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/check_bounds)
-	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETING), .proc/on_bound_destroyed)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/on_bound_destroyed)
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
-	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
+	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), PROC_REF(check_bounds))
+	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETING), PROC_REF(on_bound_destroyed))
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(on_bound_destroyed))
+	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), PROC_REF(check_bounds))
+	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), PROC_REF(on_try_move))
 
 	if(tips)
 		var/datum/mechanic_tip/bounded/bounded_tip = new(src)
@@ -172,7 +172,7 @@
 		SEND_SIGNAL(bound_to, COMSIG_SHOW_RADIUS, parent)
 		if(hide_radius_timer)
 			deltimer(hide_radius_timer)
-		hide_radius_timer = addtimer(CALLBACK(src, .proc/hide_radius), 20, TIMER_STOPPABLE)
+		hide_radius_timer = addtimer(CALLBACK(src, PROC_REF(hide_radius)), 20, TIMER_STOPPABLE)
 
 /datum/component/bounded/proc/hide_radius()
 	SEND_SIGNAL(bound_to, COMSIG_HIDE_RADIUS)

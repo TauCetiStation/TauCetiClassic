@@ -48,7 +48,7 @@ var/global/list/GPS_list = list()
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reboot), EMP_DISABLE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(reboot)), EMP_DISABLE_TIME)
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(user.incapacitated() || !user.Adjacent(src))

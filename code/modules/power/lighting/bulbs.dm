@@ -107,7 +107,8 @@
 	shatter()
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	shatter()
 
 /obj/item/weapon/light/proc/shatter()

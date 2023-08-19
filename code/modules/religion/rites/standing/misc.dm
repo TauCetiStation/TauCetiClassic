@@ -28,12 +28,10 @@
 	for(var/i in 1 to amount)
 		var/chosen = pick(borks)
 		var/obj/B = new chosen(location)
-		var/obj/randomcatcher/CATCH
 		if(!B.icon_state || !B.reagents || !B.reagents.reagent_list.len)
 			QDEL_NULL(B)
-			CATCH = new /obj/randomcatcher(location)
-			B = CATCH.get_item(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
-			QDEL_NULL(CATCH)
+			var/random_type = PATH_OR_RANDOM_PATH(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
+			B = new random_type
 		if(B && prob(80))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
@@ -242,7 +240,7 @@
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 		I.override = TRUE
 		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS * divine_power)
+		addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), M), 10 SECONDS * divine_power)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))

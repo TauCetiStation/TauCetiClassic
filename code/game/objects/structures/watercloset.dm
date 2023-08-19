@@ -68,7 +68,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			if(prob(problem_chance))
 				broken = TRUE
 				START_PROCESSING(SSobj, src)
-				addtimer(CALLBACK(user, /mob.proc/playsound_local, null, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE, null, null, null, null, null, TRUE), 2 SECOND) // so many nulls just to enable ignore_environment
+				user.playsound_local_timed(2 SECOND, turf_source = null, soundin = 'sound/misc/s_asshole_short.ogg', volume_channel = VOL_EFFECTS_MASTER, vol = 100, vary = FALSE, ignore_environment = TRUE)
+
 				if(HAS_TRAIT(user, TRAIT_CLUMSY))
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clown_evil", /datum/mood_event/clown_evil)
 					to_chat(user, "<span class='notice bold'>Oh yes!</span>")
@@ -431,12 +432,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				var/obj/item/weapon/card/C = I
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 				if(station_account)
-					var/datum/money_account/D = get_account(C.associated_account_number)
-					var/attempt_pin = 0
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Transaction") as num
-					if(attempt_pin)
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					var/datum/money_account/D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+					if(user.incapacitated() || !Adjacent(user))
+						return
 					if(D)
 						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
@@ -487,12 +485,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			return
 		if(!ismist)
 			if(on)
-				addtimer(CALLBACK(src, .proc/create_mist), 50)
+				addtimer(CALLBACK(src, PROC_REF(create_mist)), 50)
 		else
 			create_mist()
 	else if(ismist)
 		create_mist()
-		addtimer(CALLBACK(src, .proc/del_mist), 250)
+		addtimer(CALLBACK(src, PROC_REF(del_mist)), 250)
 		if(!on)
 			del_mist()
 

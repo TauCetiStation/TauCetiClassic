@@ -142,6 +142,23 @@
 			return 1
 	return 0
 
+/obj/structure/table/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+
+	if(. == PROJECTILE_ABSORBED)
+		return
+
+	// try to shot mobs under table
+	var/list/mobs = list()
+	for(var/mob/living/M in get_turf(loc)) // todo: check only for crawling/lying
+		if(M in Proj.permutated)
+			continue
+		mobs += M
+
+	if(length(mobs))
+		var/mob/M = pick(mobs)
+		M.bullet_act(Proj, def_zone)
+
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
@@ -367,7 +384,7 @@
 
 /obj/structure/table/glass/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, , CALLBACK(src, .proc/slam))
+	AddComponent(/datum/component/clickplace, , CALLBACK(src, PROC_REF(slam)))
 
 /obj/structure/table/glass/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
@@ -575,8 +592,8 @@
 	. = ..()
 
 	table_attached_to = Table
-	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/destroy_lot_holder)
-	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), .proc/destroy_lot_holder)
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
+	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
 
 	held_Item = Item
 	Item.forceMove(src)
@@ -584,7 +601,8 @@
 	add_overlay(Item)
 	name = Item.name
 	var/list/pricetag = Item.price_tag
-	name = "[name] ([pricetag["price"]]$)"
+	if(pricetag)
+		name = "[name] ([pricetag["price"]]$)"
 
 	var/old_invisibility = invisibility
 	invisibility = INVISIBILITY_ABSTRACT
@@ -639,46 +657,52 @@
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W.GetID()
 		scan_card(Card, user)
+	else if(istype(W, /obj/item/weapon/ewallet))
+		var/obj/item/weapon/ewallet/EW = W
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает чип к столу.</span>")
+		scan_ewallet(EW, user)
 	else
 		return ..()
 
-/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
-	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
-	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
 
+/obj/lot_holder/proc/pay_with_account(datum/money_account/Buyer, mob/user)
 	if(!Buyer)
 		return
 
-	var/attempt_pin = 0
-	if(Buyer.security_level > 0)
-		if(user.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == Buyer.account_number && user.mind.get_key_memory(MEM_ACCOUNT_PIN) == Buyer.remote_access_pin)
-			attempt_pin = user.mind.get_key_memory(MEM_ACCOUNT_PIN)
-		else
-			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
-		if(isnull(attempt_pin))
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+	if(Buyer.suspended)
+		table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Оплачивающий аккаунт заблокирован.</span>")
+		return
 
-		if(!Buyer)
-			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
-			return
-
+	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
 	var/cost = held_Item.price_tag["price"]
 
 	if(cost > 0 && Seller && Buyer != Seller)
 		if(Seller.suspended)
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
 			return
+
 		if(cost <= Buyer.money)
-			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
-			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+			charge_to_account(Buyer.account_number, Seller.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Buyer.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+
 		else
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
 	held_Item.remove_price_tag()
 	qdel(src)
+
+/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
+	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!Buyer)
+		to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+		return
+	pay_with_account(Buyer, user)
+
+/obj/lot_holder/proc/scan_ewallet(obj/item/weapon/ewallet/EW, mob/user)
+	pay_with_account(get_account(EW.account_number), user)
 
 /obj/structure/table/reinforced/stall
 	name = "stall table"
@@ -691,7 +715,7 @@
 
 /obj/structure/table/reinforced/stall/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
+	AddComponent(/datum/component/clickplace, CALLBACK(src, PROC_REF(try_magnet)))
 
 /obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user, params)
 	if(I.price_tag || istype(I, /obj/item/smallDelivery))

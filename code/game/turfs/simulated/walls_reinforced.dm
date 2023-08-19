@@ -8,6 +8,8 @@
 	damage_cap = 200
 	max_temperature = 20000
 
+	explosive_resistance = 5
+
 	sheet_type = /obj/item/stack/sheet/plasteel
 
 	seconds_to_melt = 60
@@ -344,6 +346,8 @@
 		user.drop_from_inventory(W)
 		W.pixel_x = X_OFFSET(24, get_dir(user, src))
 		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
 		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged

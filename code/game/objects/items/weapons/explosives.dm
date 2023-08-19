@@ -49,7 +49,7 @@
 	target = atom_target
 	loc = null
 	target.add_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
-	addtimer(CALLBACK(src, .proc/prime_explosion, target), timer SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(prime_explosion), target), timer SECONDS)
 
 /obj/item/weapon/plastique/proc/prime_explosion(atom/target)
 	if(!target)

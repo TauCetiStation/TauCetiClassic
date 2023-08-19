@@ -41,7 +41,7 @@
 
 /obj/structure/inflatable/atom_init()
 	. = ..()
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/structure/inflatable/Destroy()
 	update_nearby_tiles()
@@ -147,9 +147,11 @@
 
 /obj/structure/inflatable/door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates) return
+	if(world.time - last_bumped <= 22)
+		return
+	last_bumped = world.time
 	if(ismob(user))
 		var/mob/M = user
-		if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M

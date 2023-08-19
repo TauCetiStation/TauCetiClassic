@@ -6,7 +6,7 @@
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 
-	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Blueshield Officer")
+	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Head of Security", "Captain", "Blueshield Officer")
 	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
@@ -191,7 +191,7 @@
 		for(var/obj/item/I in changeling) //drops all items
 			changeling.drop_from_inventory(I)
 		changeling.Stun(10)
-		addtimer(CALLBACK(src, .proc/turn_to_abomination), 30)
+		addtimer(CALLBACK(src, PROC_REF(turn_to_abomination)), 30)
 
 /datum/role/changeling/proc/turn_to_abomination()
 	var/mob/living/carbon/human/changeling = antag.current

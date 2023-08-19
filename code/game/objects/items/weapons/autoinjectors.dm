@@ -76,7 +76,7 @@
 	icon_state = "bonepen"
 	item_state = "bonepen"
 	volume = 30
-	list_reagents = list("nanocalcium" = 10, "mednanobots" = 0.3)
+	list_reagents = list("nanocalcium" = 30)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola
 	name = "nuka cola autoinjector"

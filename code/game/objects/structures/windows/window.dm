@@ -18,6 +18,10 @@
 
 	var/list/drops = list(/obj/item/weapon/shard)
 
+/obj/structure/window/atom_init()
+	update_nearby_tiles()
+	return ..()
+
 /obj/structure/window/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
 		if(BRUTE)
