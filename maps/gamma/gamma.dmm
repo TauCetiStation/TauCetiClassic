@@ -19813,6 +19813,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"dqq" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "dqt" = (
 /obj/structure/object_wall/pod{
 	dir = 8;
@@ -37480,6 +37494,15 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/sppodconstr)
+"gTa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "gTi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -43734,20 +43757,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormtwo)
-"ikx" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "ikz" = (
 /obj/machinery/door_control{
 	id = "MedUnit1";
@@ -89207,13 +89216,6 @@
 	icon_state = "darkpurplefull"
 	},
 /area/station/rnd/hor)
-"rHG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "religion_cult_of_blood"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/bridge)
 "rHM" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
@@ -90280,6 +90282,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"rUc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "rUe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -113832,8 +113841,7 @@
 /area/station/hallway/secondary/entry)
 "wHq" = (
 /obj/machinery/computer/cargo{
-	dir = 4;
-	req_access = list()
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -114936,15 +114944,6 @@
 	icon_state = "darkbrown"
 	},
 /area/station/cargo/recycleroffice)
-"wVP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "wVR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -136007,8 +136006,8 @@ lAY
 vIp
 srk
 mcz
-ikx
-wVP
+dqq
+gTa
 vzr
 doH
 fXg
@@ -159609,7 +159608,7 @@ yfj
 obN
 jIl
 jIl
-rHG
+rUc
 dSo
 vyZ
 jIl
