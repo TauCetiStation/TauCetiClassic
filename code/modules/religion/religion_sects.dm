@@ -57,7 +57,7 @@
 /datum/religion_sect/preset/chaplain/bloodgods
 	name = "The Slaves of "
 	desc = "Anything you need, little demon."
-	convert_opener = "Да начнется жатва! Принесите больше крови!"
+	convert_opener = "Да начнется Великая Жатва! Принесите больше крови!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
