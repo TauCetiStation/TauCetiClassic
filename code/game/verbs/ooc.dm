@@ -218,17 +218,15 @@ var/global/bridge_ooc_colour = "#7b804f"
 		to_chat(src, "<div class='test_merges'>No test merges are currently active</div>")
 		return
 
-	to_chat(src, json_encode(test_merges))
-
-	var/joined_text = "<strong>Test merged PRs:</strong><br>"
+	var/joined_text = "[EMBED_TIP("<b>Test merged PRs</b>", "Данные изменения временно залиты на сервер, для теста перед окончательным принятием изменений или сбора отзывов")]<b>:</b><br>"
 	var/is_loading = FALSE
 	for(var/pr in test_merges)
 		if(test_merges[pr])
-			joined_text += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - [test_merges[pr]] </a><br>"
-		else
-			joined_text += " - <a href='[config.repository_link]/pull/[pr]'>#[pr] - LOADING... </a><br>"
+			joined_text += "[ENTITY_TAB]<a href='[config.repository_link]/pull/[pr]'>#[pr]</a>: [test_merges[pr]]<br>"
+			if(test_merges[pr] == TEST_MERGE_DEFAULT_TEXT)
+				is_loading = TRUE
 
 	if(is_loading)
-		joined_text += "<br>Note: You can use OOC - Show Test Merges a bit later for more information about current test merges."
+		joined_text += "<br><i>You can use OOC - Show Test Merges a bit later for more information about current test merges.</i>"
 
 	to_chat(src, "<div class='test_merges'>[joined_text]</div>")

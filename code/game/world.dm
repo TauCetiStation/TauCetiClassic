@@ -32,7 +32,7 @@ var/global/it_is_a_snow_day = FALSE
 	load_last_mode()
 	load_motd()
 	load_host_announcements()
-	load_test_merge_fast()
+	load_test_merges()
 	load_admins()
 	load_mentors()
 	load_supporters()
@@ -320,32 +320,32 @@ var/global/shutdown_processed = FALSE
 
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
-/world/proc/load_test_merge_fast()
-	if(fexists("test_merge.txt"))
-		test_merges = splittext(trim(file2text("test_merge.txt")), " ")
-		var/list/cached_tms = flist("cache/github/pr/")
-		var/list/to_fetch = list()
-		for(var/pr in test_merges)
-			var/title = file2text("cache/github/pr/[pr]")
-			if(title)
-				test_merges[pr] = title
-				cached_tms.Remove(pr)
-			else
-				to_fetch.Add(pr)
-		for(var/old_pr in cached_tms)
-			fdel("cache/github/pr/[old_pr]")
-		fetch_test_merge(to_fetch)
-
-/world/proc/fetch_test_merge(list/prs_to_fetch)
-	set waitfor = FALSE
-
-	if(isnull(prs_to_fetch))
-		prs_to_fetch = splittext(trim(file2text("test_merge.txt")), " ")
-	
-	if(!prs_to_fetch)
+/world/proc/load_test_merges()
+	if(!fexists("test_merge.txt"))
 		return
 
-	var/arguments = prs_to_fetch.Join(" ")
+	test_merges = splittext(trim(file2text("test_merge.txt")), " ")
+
+	var/list/to_fetch = list()
+
+	for(var/pr in test_merges)
+		var/path = "[PERSISTENT_CACHE_FOLDER]/github/[pr]"
+		if(fexists(path))
+			test_merges[pr] = sanitize(file2text(path))
+		else
+			test_merges[pr] = TEST_MERGE_DEFAULT_TEXT
+			to_fetch += pr
+
+	if(length(to_fetch))
+		fetch_new_test_merges(to_fetch)
+
+/world/proc/fetch_new_test_merges(list/to_fetch)
+	set waitfor = FALSE
+
+	if(!to_fetch)
+		return
+
+	var/arguments = to_fetch.Join(" ")
 	if(config.github_token)
 		arguments += " -t '[config.github_token]'"
 	if(config.repository_link)
@@ -355,7 +355,12 @@ var/global/shutdown_processed = FALSE
 	if(!json_content)
 		return
 
-	test_merges = json_decode(json_content) | test_merges
+	var/list/fetch = json_decode(json_content) // {"number": {"title": title, "success": TRUE|FALSE}}
+	for(var/pr in fetch)
+		test_merges[pr] = sanitize(fetch[pr]["title"])
+		if(fetch[pr]["success"])
+			var/path = "[PERSISTENT_CACHE_FOLDER]/github/[pr]"
+			text2file(fetch[pr]["title"], path)
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)

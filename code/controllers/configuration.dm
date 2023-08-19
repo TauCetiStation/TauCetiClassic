@@ -172,7 +172,7 @@ var/global/bridge_secret = null
 	var/ghost_interaction = 0
 
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
-	var/github_token = ""
+	var/github_token = "" // todo: move this to globals for security
 	var/use_overmap = 0
 
 	var/chat_bridge = 0

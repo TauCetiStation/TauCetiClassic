@@ -57,7 +57,7 @@ def fetch_merge(args: FetchArgs):
             print(error_msg, file=sys.stderr)
             return args.pr_id, ("GITHUB API ERROR", False)
         json_object = json.loads(resp.text)
-        return args.pr_id, (f'{json_object["title"]} by {json_object["user"]["login"]}', True)
+        return args.pr_id, (f'{json_object["title"]} ({json_object["user"]["login"]})', True)
     except (requests.exceptions.RequestException, json.JSONDecodeError) as exc:
         print(exc, file=sys.stderr)
         return args.pr_id, ("FAILED TO GET PR TITLE", False)
@@ -82,10 +82,7 @@ def main(options):
             fetch_merge,
             (FetchArgs(merge_id, options.repo, headers) for merge_id in to_fetch),
         ):
-            test_merges[merge_id] = title # return the title anyway
-            if success: # but save it to cache only if this is an actual title
-                with open(base_cache_path / merge_id, "w", encoding="utf-8") as file:
-                    file.write(title)
+            test_merges[merge_id] = {'title': title, 'success': success}
 
     sys.stdout.buffer.write(json.dumps(test_merges).encode("utf-8"))
 

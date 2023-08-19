@@ -319,6 +319,9 @@
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
 
+#define TEST_MERGE_DEFAULT_TEXT "Loading..."
+
+// todo: do something with this monster
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
 		/turf/simulated/wall, \
