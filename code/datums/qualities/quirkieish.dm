@@ -415,4 +415,4 @@
 		return
 	var/datum/role/debtor/debtor = create_and_setup_role(/datum/role/debtor, H)
 	var/datum/objective/target/debt/objective = debtor.objectives.FindObjective(/datum/objective/target/debt)
-	to_chat(objective.target.current, "<span class='notice'>Ты вспоминаешь, что [H.real_name] перед тобой в долгу и сделает всё, что ты попросишь. Чтобы считать долг оплаченным, пожми им ПРАВУЮ РУКУ, СНЯВ ПЕРЧАТКИ.</span>")
+	to_chat(objective.target.current, "<span class='notice'>Ты вспоминаешь, что [H.real_name] перед тобой в долгу и сделает всё, что ты попросишь. Чтобы считать долг оплаченным, пожми ему/ей/оно ПРАВУЮ РУКУ, СНЯВ ПЕРЧАТКИ.</span>")
