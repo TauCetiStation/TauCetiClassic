@@ -1687,11 +1687,6 @@
 				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
 				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
 				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span><br>"
-/*				var/has_oxy_damage = (C.getOxyLoss() > 50)
-				var/has_tox_damage = (C.getToxLoss() > 50)
-				var/has_fire_damage = (C.getFireLoss() > 50)
-				var/has_brute_damage = (C.getBruteLoss() > 50)
-*/
 				data_message += "&emsp; Damage Specifics: <font color='blue'>[C.getOxyLoss()]</font> - <font color='green'>[C.getToxLoss()]</font> - <font color='#FFA500'>[C.getFireLoss()]</font> - <font color='red'>[C.getBruteLoss()]</font>"
 				data_message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
 
