@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(smartlight)
 
 /client/proc/add_smartlight_preset()
 	set category = "Debug"
-	set name = "Add Smartlight Preset"
+	set name = "Smartlight: Add Preset"
 
 	if(!check_rights(R_VAREDIT)) // todo: debug, maybe, we can't trust admins sanity
 		return
@@ -115,3 +115,22 @@ SUBSYSTEM_DEF(smartlight)
 		message_admins("[key_name_admin(usr)] switched smartlight mode to new preset '[preset_name]'.")
 		log_admin("[key_name(usr)] switched smartlight mode to new preset '[preset_name]'.")
 		return
+
+/client/proc/set_area_smartlight()
+	set category = "Debug"
+	set name = "Smartlight: Set Area"
+
+	if(!check_rights(R_VAREDIT)) // todo: debug, maybe, we can't trust admins sanity
+		return
+
+	var/area/A = get_area(usr)
+	var/obj/machinery/power/apc/APC = A.get_apc()
+	if(!APC)
+		to_chat(usr, "Can't find area APC.")
+		return
+
+	var/mode = input("Select new lighting mode for area.", "Force Mode") as null|anything in light_modes_by_name
+	if(!mode)
+		return
+
+	APC.set_light_mode(light_modes_by_name[mode])
