@@ -101,6 +101,9 @@
 	siemens_coefficient = 0
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/rcd, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
+	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
+	/obj/item/weapon/tank,/obj/item/weapon/rcd, /obj/item/weapon/storage/lockbox/anti_singulo)
 
 //Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical
