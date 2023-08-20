@@ -64,12 +64,12 @@
 	desc = "Восстановление Империи!"
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("О Великая Мать!...",
-							"...Помогите нам в напасти!...",
+							"...Помоги нам в напасти!...",
 							"...Мы молим, пошли нам стойкость!...",
 							"...Наполни эти бананы своей энергией...",
 							"...И пусть они обретут твою могучую силу, дабы помочь нам!...",
 							"...Мы нуждаемся в твоей помощи, пожалуйста, помоги, о Великая!...")
-	invoke_msg = "...Вы молим тебя!!!"
+	invoke_msg = "...Мы молим тебя!!!"
 	favor_cost = 150
 	sacrifice_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	spawn_type = /obj/item/weapon/ore/clown
