@@ -29,3 +29,9 @@
 	logo_state = "raider-logo"
 	initroletype = /datum/role/pirate
 	var/booty = 0 //money stolen from station
+
+/datum/faction/responders/soviet
+	name = "USSP Recon Platoon"
+	ID = "USSP Recon Platoon"
+	logo_state = "soviet"
+	initroletype = /datum/role/soviet
