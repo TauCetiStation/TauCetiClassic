@@ -364,7 +364,6 @@
 /datum/quality/quirkieish/prisoner
 	name = "Prisoner"
 	desc = "Ты загремел в каталажку за какое-то серьёзное преступление и, конечно, не собираешься исправляться."
-
 	requirement = "Подопытный."
 
 /datum/quality/quirkieish/prisoner/satisfies_requirements(mob/living/carbon/human/H, latespawn)
@@ -405,3 +404,15 @@
 
 	create_and_setup_role(/datum/role/prisoner, H)
 	H.sec_hud_set_security_status()
+
+/datum/quality/quirkieish/debtor
+	name = "Debtor"
+	desc = "Ты в долгу перед кем-то на станции."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/debtor/add_effect(mob/living/carbon/human/H, latespawn)
+	if(isanyantag(H))
+		return
+	var/datum/role/debtor/debtor = create_and_setup_role(/datum/role/debtor, H)
+	var/datum/objective/target/debt/objective = debtor.objectives.FindObjective(/datum/objective/target/debt)
+	to_chat(objective.target.current, "<span class='notice'>Ты вспоминаешь, что [H.real_name] перед тобой в долгу и сделает всё, что ты попросишь. Чтобы считать долг оплаченным, пожми им ПРАВУЮ РУКУ, СНЯВ ПЕРЧАТКИ.</span>")
