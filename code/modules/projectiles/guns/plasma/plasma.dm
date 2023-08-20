@@ -13,7 +13,7 @@
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
-	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	desc = "Стандартный плазменный карабин типа буллпап с высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
 	fire_delay = 1
@@ -36,7 +36,7 @@
 
 /obj/item/weapon/gun/plasma/p104sass
 	name = "plasma 104-sass" // its actually 10/4. 10 - because its based in some technical aspects of carbine and even shoots the same projectiles. 4 - stands for prototype number.
-	desc = "A plasma-based semi-automatic short shotgun."
+	desc = "Полуавтоматический короткоствольный дробовик на основе плазмы"
 	icon_state = "plasma104_stg"
 	item_state = "plasma104_stg"
 	origin_tech = "combat=4;magnets=3"
