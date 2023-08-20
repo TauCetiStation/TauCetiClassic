@@ -208,21 +208,30 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "ay" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door_control{
+	id = "Out2";
+	name = "Out Door Control";
+	pixel_y = -28;
+	req_access = list(71)
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Out2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/arrival)
+"az" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/turf/environment/snow{
-	temperature = 50
-	},
-/area/space)
-"az" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 8
-	},
-/turf/environment/snow{
-	temperature = 50
-	},
+/turf/environment/space,
 /area/space)
 "aA" = (
 /obj/machinery/vending/cigarette,
@@ -856,14 +865,29 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bO" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/black,
-/turf/environment/snow{
-	temperature = 50
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/firedoor,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Out2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/arrival)
 "bP" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -3009,6 +3033,13 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/atmos)
+"fw" = (
+/obj/machinery/space_heater,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "fy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -3090,9 +3121,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
-/turf/environment/snow{
-	temperature = 50
-	},
+/turf/environment/space,
 /area/space)
 "gp" = (
 /obj/machinery/firealarm{
@@ -3232,14 +3261,12 @@
 	},
 /area/station/hallway/secondary/exit)
 "he" = (
-/obj/machinery/light/smart,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1;
-	start_pressure = 5000.13
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -3312,12 +3339,12 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "hO" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/black,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/station/engineering/engine)
+/turf/environment/space,
+/area/space)
 "hU" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -3405,9 +3432,17 @@
 	},
 /area/station/hallway/primary/central)
 "io" = (
+/obj/machinery/light/smart,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 1;
 	start_pressure = 5000.13
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -3418,9 +3453,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 6
 	},
-/turf/environment/snow{
-	temperature = 50
-	},
+/turf/environment/space,
 /area/space)
 "iz" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -3875,19 +3908,15 @@
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mq" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/tank/nitrogen{
+	dir = 1;
+	start_pressure = 5000.13
 	},
-/obj/machinery/embedded_controller/radio/access_controller{
-	id_tag = "recucler_airlock_control";
-	name = "Recucler Access Console";
-	pixel_y = 28;
-	tag_exterior_door = "recucler_airlock_exterior";
-	tag_interior_door = "recucler_airlock_interior"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/area/station/engineering/engine)
 "mr" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -4429,7 +4458,20 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "rH" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/embedded_controller/radio/access_controller{
+	id_tag = "recucler_airlock_control";
+	name = "Recucler Access Console";
+	pixel_y = 28;
+	tag_exterior_door = "recucler_airlock_exterior";
+	tag_interior_door = "recucler_airlock_interior"
+	},
 /obj/machinery/space_heater,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "rN" = (
@@ -7914,13 +7956,24 @@
 	},
 /area/station/engineering/equip)
 "So" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1
+/obj/structure/fans/tiny,
+/obj/machinery/door_control{
+	id = "Out2";
+	name = "Out Door Control";
+	pixel_y = 28;
+	req_access = list(71)
 	},
-/turf/environment/snow{
-	temperature = 50
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "Out2"
 	},
-/area/space)
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/arrival)
 "Sr" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/structure/cable{
@@ -30451,12 +30504,12 @@ Mi
 eS
 RP
 TK
-So
-So
-So
-So
-So
-ay
+CH
+CH
+CH
+CH
+CH
+BS
 OI
 QK
 Ru
@@ -30708,12 +30761,12 @@ Mi
 aU
 EO
 TK
-So
+CH
 iv
 go
 go
-bO
 az
+hO
 bD
 rN
 uA
@@ -32266,7 +32319,7 @@ aK
 bb
 bm
 gN
-mq
+rH
 fk
 fl
 ft
@@ -32519,11 +32572,11 @@ QR
 wV
 ba
 cr
-hO
+he
 bc
 bm
 gN
-rH
+fw
 fk
 fn
 SY
@@ -32776,7 +32829,7 @@ Pr
 uZ
 dB
 cs
-he
+io
 gN
 gN
 bA
@@ -33033,7 +33086,7 @@ UC
 cT
 cc
 cu
-io
+mq
 gN
 MC
 SY
@@ -36099,9 +36152,9 @@ as
 MC
 yq
 yq
-YY
-YY
-YY
+So
+bO
+ay
 yq
 Ro
 mR
