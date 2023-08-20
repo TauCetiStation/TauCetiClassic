@@ -43,7 +43,7 @@
 
 	if(mob.mind)
 		if(mob.mind.assigned_role == "Clown")
-			to_chat(mob, "Ваши тренировки позволили вам превзойти своего внутреннего клоуна, позволяя вам пользоватся боевым снаряжением без вреда для себя.")
+			to_chat(mob, "Ваши тренировки позволили вам преодолеть клоунскую неуклюжесть, что позволит вам без вреда для себя применять любое вооружение.")
 			REMOVE_TRAIT(mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	mob.equip_to_slot_or_del(new /obj/item/device/cult_camera(mob), SLOT_IN_BACKPACK)

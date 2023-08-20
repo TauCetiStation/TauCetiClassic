@@ -25,7 +25,7 @@
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<span class='warning'><FONT size = 3>С этого момента вы Революционер! Продвигайте и помогайте вашему движению к свободе. Не вредите своим товарищам в борьбе за свободу. Вы можете определить своих союзников по красному ярлыку \"R\", а также своих лидеров по синему ярлыку \"R\". Помогай им убить, захватить или присоединить глав станции для достижения победы Революции!</FONT></span>")
+	to_chat(antag.current, "<span class='warning'><FONT size = 3>С этого момента вы Революционер! Распространяйте всюду ваше освободительное движение. Не вредите своим товарищам в борьбе за свободу. Вы можете определить своих союзников по красному ярлыку \"R\", а также своих лидеров по синему ярлыку \"R\". ПомогайТе им в вербовке, захвате или убийстве глав станции для достижения победы Революции!</FONT></span>")
 
 /datum/role/rev_leader
 	name = HEADREV
@@ -58,7 +58,7 @@
 		// Tell them about people they might want to contact.
 		var/mob/living/carbon/human/M = get_nt_opposed()
 		if(M && !isrevhead(M) && !(M in already_considered))
-			to_chat(rev_mob, "Мы получили информацию из достоверных источников что данный сотрудник,[M.real_name], может помочь вам в вашем деле. Если вам нужна помощь, то можете обратится к данному сотруднику.")
+			to_chat(rev_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
 			rev_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
 
 /mob/living/carbon/human/proc/RevConvert()
@@ -85,15 +85,15 @@
 	if(isrevhead(M) || isrev(M))
 		to_chat(src, "<span class='bold warning'>[M] уже революционер!</span>")
 	else if(M.ismindprotect())
-		to_chat(src, "<span class='bold warning'>[M] под влиянием импланта защиты разума - сначало нужно его вытащить!</span>")
+		to_chat(src, "<span class='bold warning'>[M] под влиянием импланта защиты разума - сначало нужно его извлечь!</span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='bold warning'>[M] в черном списке!</span>")
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)
-			to_chat(src, "<span class='warning'>Подождите пять секунд перед попыткой повторной конвертации.</span>")
+			to_chat(src, "<span class='warning'>Подождите пять секунд перед попыткой повторной вербовки.</span>")
 			return
-		to_chat(src, "<span class='warning'>Попытка конвертации [M]...</span>")
+		to_chat(src, "<span class='warning'>Попытка вербовки [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 		var/datum/faction/revolution/rev = lead.GetFaction()

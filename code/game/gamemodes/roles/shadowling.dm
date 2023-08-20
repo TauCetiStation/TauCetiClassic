@@ -16,8 +16,8 @@
 
 /datum/role/shadowling/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<b>На данный момент, вы скрыты в оболочке одного из сотрудников станции [station_name()].</b>")
-	to_chat(antag.current, "<b>В этой слабой оболочке, вы способны лишь: Enthrall - поработить не просвещённого, Hatch - облачиться в свою истинную форму(находится во вкладке Shadowling Evolution в верхней-правой части экрана), и Hivemind Commune - общаться с себе подобными братьями и рабами.</b>")
+	to_chat(antag.current, "<b>На данный момент, вы скрываетесь под личиной одного из сотрудников станции [station_name()].</b>")
+	to_chat(antag.current, "<b>В этой слабой оболочке, вы способны лишь: Enthrall - поработить не просвещённого, Hatch - облачиться в свою истинную форму (находится во вкладке Shadowling Evolution в верхней-правой части экрана), и Hivemind Commune - общаться с себе подобными братьями и рабами.</b>")
 	to_chat(antag.current, "<b>Другие Шедоулинги являются вашими братьями и союзниками. Вы должны помогать им, как и они вам, для достижения общей цели.</b>")
 	to_chat(antag.current, "<b>Если вы впервые играете за Шедоулинга, или хотите ознакомится с вашими способностями, перейдите на эту страницу нашей вики - https://wiki.taucetistation.org/Shadowling</b><br>")
 
@@ -52,7 +52,7 @@
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
-	to_chat(antag.current, "<b>Ты был прорабощен Шедоулингом и стал его рабом. Ты обязан выполнять любой приказ своего мастера и помогать ему в достижении его целей.</b>")
+	to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и стали его рабом. Ты обязан выполнять любой приказ своего владики и помогать ему в достижении его целей.</b>")
 	for(var/obj/effect/proc_holder/spell/targeted/shadowling_hivemind/S in antag.current.spell_list)
 		antag.current.RemoveSpell(S)
 	..()
