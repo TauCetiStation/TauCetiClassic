@@ -97,6 +97,62 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
+/atom/movable/screen/plane_master/exposure
+	name = "exposure plane master"
+	plane = LIGHTING_EXPOSURE_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_ADD
+	blend_mode_override = BLEND_ADD
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob)
+	. = ..()
+	remove_filter("blur_exposure")
+	add_filter("blur_exposure", 1, gauss_blur_filter(size = 25))
+
+/atom/movable/screen/plane_master/lamps_selfglow
+	name = "lamps selfglow plane master"
+	plane = LIGHTING_LAMPS_SELFGLOW
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_ADD
+	blend_mode_override = BLEND_ADD
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob)
+	. = ..()
+	remove_filter("add_lamps_to_selfglow")
+	add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
+
+	remove_filter("lamps_selfglow_bloom")
+	add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = 5, offset = 1, alpha = 100))
+
+/atom/movable/screen/plane_master/lamps
+	name = "lamps plane master"
+	plane = LIGHTING_LAMPS_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode_override = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+	render_target = LIGHTING_LAMPS_RENDER_TARGET
+
+/atom/movable/screen/plane_master/lamps_glare
+	name = "lamps glare plane master"
+	plane = LIGHTING_LAMPS_GLARE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode_override = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/lamps_glare/backdrop(mob/mymob)
+	. = ..()
+	remove_filter("add_lamps_to_glare")
+	add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
+	remove_filter("lamps_glare")
+	add_filter("lamps_glare", 1, radial_blur_filter(size = 0.05))
+
 /atom/movable/screen/plane_master/above_lighting
 	name = "above lighting plane master"
 	plane = ABOVE_LIGHTING_PLANE

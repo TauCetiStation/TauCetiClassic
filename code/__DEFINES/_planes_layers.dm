@@ -144,7 +144,13 @@ What is the naming convention for planes or layers?
 #define POINT_PLANE 90
 
 //---------- -----LIGHTING -------------
-#define LIGHTING_PLANE 100
+#define LIGHTING_PLANE 100 //Свет сам по себе
+#define LIGHTING_EXPOSURE_PLANE 101 //Пересвет в мире
+#define LIGHTING_LAMPS_SELFGLOW 102 //Блум свет на лампах
+#define LIGHTING_LAMPS_PLANE 103 //Лампы
+#define LIGHTING_LAMPS_GLARE 104 //Блик от ламп
+#define LIGHTING_LAMPS_RENDER_TARGET "*LIGHTING_LAMPS_RENDER_TARGET"
+
 #define ABOVE_LIGHTING_PLANE 120
   #define ABOVE_LIGHTING_LAYER 1
   #define RUNECHAT_LAYER 2

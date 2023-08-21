@@ -6,6 +6,18 @@
 	var/tmp/datum/light_source/light // Our light source. Don't fuck with this directly unless you have a good reason!
 	var/tmp/list/light_sources       // Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
 
+	var/lamp_icon = 'icons/obj/lamps.dmi'
+	var/exposure_icon = 'icons/effects/exposures.dmi'
+
+	var/lamp_icon_state
+	var/lamp_colored = FALSE
+
+	var/exposure_icon_state
+	var/exposure_colored = TRUE
+
+	var/image/lampimage
+	var/image/exposureimage
+
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
 #define NONSENSICAL_VALUE -99999
@@ -102,3 +114,47 @@
 
 /atom/proc/turn_light_off()
 	set_light(0)
+
+#define EXPOSURE_BASE 0.2
+#define EXPOSURE_POWER 0.1
+/atom/proc/update_lights()
+	cut_overlay(lampimage)
+	cut_overlay(exposureimage)
+	if(lamp_icon && lamp_icon_state)
+		if(!lampimage)
+			lampimage = image(icon = lamp_icon, icon_state = lamp_icon_state, dir = dir, layer = 1)
+
+		lampimage.plane = LIGHTING_LAMPS_PLANE
+		lampimage.blend_mode = BLEND_OVERLAY
+		if(lamp_colored)
+			var/datum/ColorMatrix/MATRIX = new(light_color, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
+			lampimage.color = MATRIX.Get()
+
+		add_overlay(lampimage)
+
+	if(exposure_icon && exposure_icon_state)
+		if(!exposureimage)
+			exposureimage = image(icon = exposure_icon, icon_state = exposure_icon_state, dir = dir, layer = 1)
+
+		exposureimage.plane = LIGHTING_EXPOSURE_PLANE
+		exposureimage.blend_mode = BLEND_ADD
+
+		var/datum/ColorMatrix/MATRIX = new(1, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
+		if(exposure_colored)
+			MATRIX.SetColor(light_color, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
+
+		exposureimage.color = MATRIX.Get()
+
+		var/icon/EX = icon(icon = exposure_icon, icon_state = exposure_icon_state)
+		exposureimage.pixel_x = 16 - EX.Width() / 2
+		exposureimage.pixel_y = 16 - EX.Height() /2
+
+		add_overlay(exposureimage)
+#undef EXPOSURE_BASE
+#undef EXPOSURE_POWER
+
+/atom/proc/delete_lights()
+	cut_overlay(lampimage)
+	cut_overlay(exposureimage)
+	QDEL_NULL(lampimage)
+	QDEL_NULL(exposureimage)
