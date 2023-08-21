@@ -1100,15 +1100,22 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "cl" = (
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_y = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/o2,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "black"
 	},
-/area/station/hallway/primary/central)
+/area/station/hallway/secondary/arrival)
 "cm" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -2763,11 +2770,14 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "fb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
@@ -3040,6 +3050,46 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
+"fx" = (
+/obj/machinery/alarm{
+	pixel_y = 22
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
+/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
+/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/obj/structure/closet/cabinet,
+/turf/simulated/floor,
+/area/station/engineering/equip)
 "fy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -3059,6 +3109,13 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
+"fA" = (
+/obj/structure/closet/wardrobe/atmospherics_yellow,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "caution"
+	},
+/area/station/engineering/atmos)
 "fD" = (
 /obj/machinery/light{
 	dir = 4
@@ -3463,16 +3520,18 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "iA" = (
-/obj/machinery/door_control{
-	id = "Skynet_launch";
-	name = "Mech Bay Door Control";
-	pixel_x = 25
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "blackcorner"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/hallway/primary/central)
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "iE" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -4323,45 +4382,16 @@
 	},
 /area/station/hallway/secondary/arrival)
 "qC" = (
-/obj/machinery/alarm{
-	pixel_y = 22
+/obj/machinery/door_control{
+	id = "Skynet_launch";
+	name = "Mech Bay Door Control";
+	pixel_x = 25
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -22
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/closet,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
-/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
-/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor,
-/area/station/engineering/equip)
+/area/station/hallway/primary/central)
 "qF" = (
 /obj/machinery/light/small,
 /obj/structure/window/thin/reinforced,
@@ -4681,11 +4711,16 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "tJ" = (
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_y = 4
+	},
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/o2,
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "caution"
+	icon_state = "black"
 	},
-/area/station/engineering/atmos)
+/area/station/hallway/primary/central)
 "tY" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -4695,7 +4730,10 @@
 	dir = 8;
 	icon_state = "arrow"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
 /area/station/hallway/primary/central)
 "ur" = (
 /obj/structure/closet/secure_closet/recycler{
@@ -6697,6 +6735,11 @@
 	icon_state = "1-8"
 	},
 /obj/effect/decal/turf_decal/goonplaque,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "GX" = (
@@ -7242,6 +7285,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
@@ -35132,11 +35180,11 @@ yq
 gS
 GH
 ew
-iA
+qC
 tY
 tY
 tY
-cl
+tJ
 sH
 vb
 XL
@@ -35896,7 +35944,7 @@ YY
 YY
 nK
 Lx
-Lx
+cl
 ON
 Td
 Ro
@@ -36409,10 +36457,10 @@ as
 MC
 MC
 MC
-MC
-MC
-MC
-MC
+tH
+iA
+tH
+ap
 Ro
 GZ
 xx
@@ -36669,7 +36717,7 @@ MC
 MC
 MC
 MC
-MC
+ap
 Zi
 Zi
 GM
@@ -36679,7 +36727,7 @@ EI
 EI
 Zi
 Zi
-qC
+fx
 sO
 wh
 Az
@@ -38750,7 +38798,7 @@ Yk
 uC
 WI
 iP
-tJ
+fA
 yT
 AR
 zU
