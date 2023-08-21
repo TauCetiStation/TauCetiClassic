@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 43
+#define SAVEFILE_VERSION_MAX 44
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -71,9 +71,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!CanBeRole(role))
 				be_role -= role
 
-	if(current_version < 43)
-		for(var/emote in global.emotes_for_emote_panel)
-			custom_emote_panel |= emote
+	if(current_version < 44)
+		custom_emote_panel = global.emotes_for_emote_panel
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)

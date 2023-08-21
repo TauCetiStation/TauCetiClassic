@@ -24,7 +24,7 @@
 		if("switchEmote")
 			var/emote = params["emote"]
 
-			if(!(emote in emotes_for_emote_panel))
+			if(!(emote in global.emotes_for_emote_panel))
 				return
 
 			if(emote in custom_emote_panel)
