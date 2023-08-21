@@ -93,9 +93,8 @@
 	id = "ntcruiser1";
 	name = "Front Hull Door"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/nt_troopship)
 "gO" = (
 /obj/structure/sign/nanotrasen,
@@ -259,7 +258,7 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /obj/item/weapon/gun/energy/laser,
 /turf/simulated/floor/plating/airless{
 	icon = 'icons/turf/shuttle.dmi';
