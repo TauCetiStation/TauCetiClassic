@@ -593,7 +593,7 @@
 								var/datum/objective/target/debt/objective = D.objectives.FindObjective(/datum/objective/target/debt)
 								if(objective.target == N.mind && objective.completed == OBJECTIVE_LOSS)
 									to_chat(N, "<span class='notice'>Ты прощаешь долг [H]!</span>")
-									to_chat(H, "<font color='green'>[N] прощает твой долг!</span>")
+									to_chat(H, "<span color='green'>[N] прощает твой долг!</span>")
 									objective.completed = OBJECTIVE_WIN
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
 							var/mob/living/carbon/human/H = src
