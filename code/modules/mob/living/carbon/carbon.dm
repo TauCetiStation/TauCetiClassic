@@ -585,17 +585,19 @@
 					if(BP_R_ARM, BP_L_ARM)
 						M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 										"<span class='notice'>You shake [src]'s hand.</span>", )
-						var/mob/living/carbon/human/H = src
-						var/mob/living/carbon/human/N = M
-						if(M.get_targetzone() == BP_R_ARM && !H.gloves && !N.gloves)
-							var/datum/role/debtor/D = mind.GetRoleByType(/datum/role/debtor)
-							var/datum/objective/target/debt/objective = D.objectives.FindObjective(/datum/objective/target/debt)
-							if(objective.target == N.mind && objective.completed == OBJECTIVE_LOSS)
-								to_chat(N, "<span class='notice'>Ты прощаешь долг [H]!</span>")
-								to_chat(H, "<font color='green'>[N] прощает твой долг!</span>")
-								objective.completed = OBJECTIVE_WIN
+						if(ishuman(src) && ishuman(M))
+							var/mob/living/carbon/human/H = src
+							var/mob/living/carbon/human/N = M
+							if(M.get_targetzone() == BP_R_ARM && !H.gloves && !N.gloves)
+								var/datum/role/debtor/D = mind.GetRoleByType(/datum/role/debtor)
+								var/datum/objective/target/debt/objective = D.objectives.FindObjective(/datum/objective/target/debt)
+								if(objective.target == N.mind && objective.completed == OBJECTIVE_LOSS)
+									to_chat(N, "<span class='notice'>Ты прощаешь долг [H]!</span>")
+									to_chat(H, "<font color='green'>[N] прощает твой долг!</span>")
+									objective.completed = OBJECTIVE_WIN
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
-							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
+							var/mob/living/carbon/human/H = src
+							var/obj/item/organ/external/BP = 	H.get_bodypart(M.get_targetzone())
 							if(BP && BP.is_robotic())
 								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 								sparks.set_up(3, 0, get_turf(H))
