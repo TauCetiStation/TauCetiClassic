@@ -7602,10 +7602,10 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "My" = (
-/obj/machinery/vending/eva/engineering,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/vending/eva,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
