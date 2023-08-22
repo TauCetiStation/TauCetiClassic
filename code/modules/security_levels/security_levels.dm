@@ -12,6 +12,10 @@
 		if("delta")
 			level = SEC_LEVEL_DELTA
 
+	if(level < SEC_LEVEL_DELTA)
+		SSsmartlight.forced_admin_mode = FALSE
+		SSsmartlight.reset_smartlight()
+
 	//Will not be announced if you try to set to the same level as it already is
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
 		var/datum/announcement/station/code/code_announce
@@ -61,6 +65,8 @@
 			if(SEC_LEVEL_DELTA)
 				security_level = SEC_LEVEL_DELTA
 				code_announce = new /datum/announcement/station/code/delta
+				SSsmartlight.update_mode(/datum/light_mode/default/bulb/emergency, TRUE)
+				SSsmartlight.forced_admin_mode = TRUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
@@ -84,6 +90,7 @@ var/global/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenanc
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
             else if (is_type_in_typecache(A, loud_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
     return
 
 /proc/get_security_level()
