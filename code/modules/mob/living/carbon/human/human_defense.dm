@@ -256,21 +256,9 @@
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
 	if(wear_suit && isitem(wear_suit))
-		var/obj/item/I = wear_suit
-		if(prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = list()
-			for(var/turf/T in orange(6))
-				if(isenvironmentturf(T)) continue
-				if(T.density) continue
-				if(T.x>world.maxx-6 || T.x<6)	continue
-				if(T.y>world.maxy-6 || T.y<6)	continue
-				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
-			src.loc = picked
-			return 1
+		var/obj/item/clothing/suit/armor/vest/reactive/R = wear_suit
+		if(prob(R.Get_shield_chance() - round(damage / 3) ))
+			R.teleport_user(6, src, attack_text)
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)
