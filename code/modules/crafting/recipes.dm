@@ -338,3 +338,16 @@
 	result = /obj/item/weapon/kitchenknife/makeshift_shiv/phoron
 	time = 10
 
+/datum/crafting_recipe/xenos_helmet
+	name = "Alien Chitin Helmet"
+	reqs = list(/obj/item/stack/sheet/xenochitin = 5,
+				/obj/item/stack/cable_coil = 15)
+	result = /obj/item/clothing/head/xenos/armored
+	time = 30
+
+/datum/crafting_recipe/xenos_armor
+	name = "Alien Chitin Armor"
+	reqs = list(/obj/item/stack/sheet/xenochitin = 10,
+				/obj/item/stack/cable_coil = 30)
+	result = /obj/item/clothing/suit/xenos/armored
+	time = 60

@@ -258,11 +258,17 @@
 	name = "xenos helmet"
 	icon_state = "xenos"
 	item_state = "xenos_helm"
-	desc = "A helmet made out of chitinous alien hide."
-	flags = BLOCKHAIR
+	desc = "A helmet made out of chitinous alien hide (synthetically produced)."
+	flags = BLOCKHAIR|HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
+
+/obj/item/clothing/head/xenos/armored
+	desc = "A helmet made out of chitinous alien hide."
+	armor = list(melee = 60, bullet = 30, laser = 25,energy = 0, bomb = 0, bio = 75, rad = 0)
+	flashbang_protection = TRUE
+	pierce_protection = HEAD
 
 /obj/item/clothing/head/fedora
 	name = "black fedora"

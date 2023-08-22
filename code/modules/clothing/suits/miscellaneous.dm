@@ -403,12 +403,19 @@
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
-	desc = "A suit made out of chitinous alien hide."
+	desc = "A suit made out of chitinous alien hide (synthetically produced)."
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
+
+/obj/item/clothing/suit/xenos/armored
+	desc = "A suit made out of chitinous alien hide."
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 60, bullet = 30, laser = 25,energy = 0, bomb = 0, bio = 75, rad = 0)
+
 //swimsuit
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1

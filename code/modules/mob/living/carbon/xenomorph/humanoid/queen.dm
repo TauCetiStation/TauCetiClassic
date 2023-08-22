@@ -22,6 +22,7 @@
 						/obj/effect/proc_holder/spell/no_target/lay_egg,
 						/obj/effect/proc_holder/spell/targeted/screech,
 						/obj/effect/proc_holder/spell/no_target/air_plant)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 10, /obj/item/stack/sheet/xenochitin = 15)
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()
