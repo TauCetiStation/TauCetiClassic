@@ -179,7 +179,7 @@
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
 	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
-	welding_sparks.plane = ABOVE_LIGHTING_PLANE
+	welding_sparks.plane = LIGHTING_LAMPS_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
