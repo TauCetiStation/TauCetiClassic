@@ -284,6 +284,18 @@
 	else
 		icon_state = "ramen_open"
 
+/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "hot_coco_empty"
+	else
+		icon_state = "hot_coco"
+
+/obj/item/weapon/reagent_containers/food/drinks/coffee/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "coffee_empty"
+	else
+		icon_state = "coffee"
+
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
 	if (!is_open_container())
 		flags |= OPENCONTAINER
