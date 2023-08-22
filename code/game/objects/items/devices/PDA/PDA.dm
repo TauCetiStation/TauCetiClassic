@@ -1679,30 +1679,12 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (iscarbon(L))
+	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
 			if(1)
-				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
-				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
-				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span><br>"
-				data_message += "&emsp; Damage Specifics: <font color='blue'>[C.getOxyLoss()]</font> - <font color='green'>[C.getToxLoss()]</font> - <font color='#FFA500'>[C.getFireLoss()]</font> - <font color='red'>[C.getBruteLoss()]</font>"
-				data_message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
-
-				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					data_message += "<span class='notice'>Localized Damage, <font color='red'>Brute</font>/<font color='#FFA500'>Burn</font>:</span><br>"
-					if(length(damaged)>0)
-						for(var/obj/item/organ/external/BP in damaged)
-							data_message += text("<span class='notice'>&emsp; []: [][] - []</span>",capitalize(BP.name), (BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0, (BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;", (BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0)
-					else
-						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
-
-				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
+				data_message = health_analyze(L, user, TRUE, TRUE, TRUE)
 				to_chat(user, data_message)
 
 			if(2)
