@@ -146,6 +146,34 @@
 	icon_state = "shuttle"
 	parallax_movedir = WEST
 
+//Escape Pod Five
+/area/shuttle/escape_pod5
+	name = "Escape Pod Five"
+
+/area/shuttle/escape_pod5/station
+	icon_state = "shuttle2"
+
+/area/shuttle/escape_pod5/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod5/transit
+	icon_state = "shuttle"
+	parallax_movedir = NORTH
+
+//Escape Pod Six
+/area/shuttle/escape_pod6
+	name = "Escape Pod Six"
+
+/area/shuttle/escape_pod6/station
+	icon_state = "shuttle2"
+
+/area/shuttle/escape_pod6/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod6/transit
+	icon_state = "shuttle"
+	parallax_movedir = NORTH
+
 //Mining-Research Shuttle
 /area/shuttle/mining
 	name = "Mining-Research Shuttle"

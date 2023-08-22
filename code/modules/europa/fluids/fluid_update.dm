@@ -1,3 +1,5 @@
+// wtf is this, why we need additional init/del call everywhere for fluid_update
+
 /atom/movable/update_nearby_tiles()
 	. = ..()
 	fluid_update()

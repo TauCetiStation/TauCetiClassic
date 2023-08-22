@@ -1,12 +1,18 @@
 
-//Bartender
+//Cook
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
-	icon_state = "chef"
+	icon_state = "chefhat"
 	item_state = "chefhat"
-	desc = "The commander in chef's head wear."
 	siemens_coefficient = 0.9
+
+//Cook-alt
+/obj/item/clothing/head/sushi_band
+	name = "sushi master headband"
+	desc = "Beautiful minimalistic headband."
+	icon_state = "sushiband"
+	item_state = "sushiband"
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/caphat

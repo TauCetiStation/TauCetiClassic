@@ -463,6 +463,9 @@
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
 	has_gendered_icons = FALSE
 
+	speed_mod = 1.5
+	speed_mod_no_shoes = -1.6
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
@@ -471,6 +474,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_organ = list(
@@ -1089,6 +1093,7 @@
 	dietflags = DIET_ALL
 	flesh_color = "#c0c0c0"
 
+	brute_mod = 2
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0

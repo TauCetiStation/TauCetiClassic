@@ -160,6 +160,9 @@
 	if(spare_slots <= 0)
 		return
 
+	if((!user.delay_clothing_unequip(I)))
+		return
+
 	var/atom/old_loc = I.loc
 
 	jump_out(I, user.loc)

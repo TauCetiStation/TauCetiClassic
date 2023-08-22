@@ -4,7 +4,7 @@
 	required_pref = ROLE_TRAITOR
 	logo_state = "synd-logo"
 
-	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
+	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
@@ -23,8 +23,10 @@
 	switch(rand(1,120))
 		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(21 to 50)
+		if(21 to 40)
 			AppendObjective(/datum/objective/target/harm, TRUE)
+		if(41 to 50)
+			AppendObjective(/datum/objective/research_sabotage, TRUE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else

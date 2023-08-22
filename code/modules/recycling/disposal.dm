@@ -351,7 +351,11 @@
 					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
 					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>Так...</span>"), 1 SECOND)
 					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
-					new /obj/random/guns/set_special(loc)
+
+					var/weapon_type = PATH_OR_RANDOM_PATH(/obj/random/guns/set_special)
+					var/obj/item/weapon/gun/projectile/P = new weapon_type(loc)
+					P.magazine.make_empty()
+					QDEL_NULL(P.chambered)
 					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
 	return TRUE
@@ -1171,11 +1175,11 @@
 /obj/structure/disposalpipe/sortjunction/proc/updatedesc()
 	desc = initial(desc)
 	if(sortType)
-		desc += "\nIt's filtering objects with the '[sortType]' tag."
+		desc += "\nIt's filtering objects with the '[istext(sortType) ? sortType : "multiple"]' tag."
 
 /obj/structure/disposalpipe/sortjunction/proc/updatename()
 	if(sortType)
-		name = "[initial(name)] ([sortType])"
+		name = "[initial(name)] ([istext(sortType) ? sortType : "multiple"])"
 	else
 		name = initial(name)
 
@@ -1192,7 +1196,7 @@
 
 /obj/structure/disposalpipe/sortjunction/atom_init()
 	. = ..()
-	if(sortType)
+	if(sortType && istext(sortType))
 		tagger_locations |= sortType
 
 	updatedir()
@@ -1215,7 +1219,13 @@
 			updatedesc()
 
 /obj/structure/disposalpipe/sortjunction/proc/divert_check(checkTag)
-	return sortType == checkTag
+	if(sortType && istext(sortType))
+		return sortType == checkTag
+	else if(islist(sortType))
+		for(var/sortType_variant in sortType)
+			if(sortType_variant == checkTag)
+				return TRUE
+		return FALSE
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir

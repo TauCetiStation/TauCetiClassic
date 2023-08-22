@@ -150,6 +150,9 @@ var/global/list/debug_verbs = list (
 	,/client/proc/testZAScolors
 	,/client/proc/testZAScolors_remove
 	,/client/proc/setup_supermatter_engine
+	,/client/proc/burn_tile
+	,/client/proc/break_tile
+	,/client/proc/fix_tile
 	)
 
 

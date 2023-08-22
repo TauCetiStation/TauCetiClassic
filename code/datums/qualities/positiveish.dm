@@ -67,7 +67,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/insulated(H), SLOT_L_STORE)
 
 
 /datum/quality/positiveish/disguise
@@ -386,7 +386,7 @@
 	if(is_species(H, TAJARAN))
 		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
 	else
-		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/wjpp(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/wjpp(H), SLOT_S_STORE)
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)

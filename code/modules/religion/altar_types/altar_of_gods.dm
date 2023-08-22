@@ -279,6 +279,7 @@
 	T.rite.religion = religion
 	T.rite.favor_cost = 0
 	T.rite.piety_cost = 0
+	T.rite.divine_power = round(sqrt(R.divine_power))
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
 

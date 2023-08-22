@@ -51,6 +51,9 @@
 	attack_sound = SOUNDIN_PUNCH_HEAVY
 	. = ..()
 
+/mob/living/simple_animal/hulk/blob_act()
+	adjustBruteLoss(120) //+- 40 damage for hulks
+
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,

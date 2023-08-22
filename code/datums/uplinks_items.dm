@@ -186,14 +186,14 @@
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round or 16-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 	cost = 6
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
-	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened
 	cost = 8
 	uplink_types = list("dealer")
 
@@ -202,7 +202,7 @@
 /datum/uplink_item/dangerous/deagle_gold
 	name = "Desert Eagle Gold"
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
-	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened/gold
 	cost = 9
 	uplink_types = list("dealer")
 
@@ -751,6 +751,13 @@
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
 
+/datum/uplink_item/device_tools/disk
+	name = "Diskette With Virus"
+	desc = "A floppy disk containing a virus to sabotage R&D systems. Insert this diskette into the R&D Server Controller to destroy scientific data."
+	item = /obj/item/weapon/disk/data/syndi
+	cost = 10
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
@@ -1200,7 +1207,7 @@
 /datum/uplink_item/revolution/stechkin
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round magazines."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 	cost = 5
 
 /datum/uplink_item/revolution/stechkin_ammo

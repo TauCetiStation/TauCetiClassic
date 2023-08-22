@@ -31,7 +31,7 @@
 	prob(14);/obj/item/ammo_box/magazine/a74,\
 	prob(14);/obj/item/weapon/grenade/spawnergrenade/manhacks,\
 	prob(14);/obj/item/device/healthanalyzer/rad_laser,\
-	prob(16);/obj/item/weapon/gun/projectile/automatic/pistol,\
+	prob(16);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 	prob(16);/obj/item/weapon/grenade/syndieminibomb,\
 	prob(16);/obj/item/weapon/storage/box/syndie_kit/throwing_weapon,\
 	prob(16);/obj/item/weapon/card/emag,\
