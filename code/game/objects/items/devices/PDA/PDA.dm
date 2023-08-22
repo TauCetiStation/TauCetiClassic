@@ -1679,12 +1679,33 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if(iscarbon(L))
+	if (iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
 			if(1)
-				data_message = health_analyze(L, user, TRUE, TRUE, TRUE)
+				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
+				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
+				var/has_oxy_damage = (C.getOxyLoss() > 50)
+				var/has_tox_damage = (C.getToxLoss() > 50)
+				var/has_fire_damage = (C.getFireLoss() > 50)
+				var/has_brute_damage = (C.getBruteLoss() > 50)
+				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>"
+				data_message += "<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>"
+				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
+				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
+					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					var/list/damaged = H.get_damaged_bodyparts(1, 1)
+					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
+					if(length(damaged)>0)
+						for(var/obj/item/organ/external/BP in damaged)
+							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
+					else
+						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
+
+				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
 				to_chat(user, data_message)
 
 			if(2)
