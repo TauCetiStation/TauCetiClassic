@@ -21,7 +21,10 @@
 
 	var/datum/pipe_system/process/process = new()
 
-	var/datum/pipe_system/component/data/log_target/terminal_logger = new(src, src)
+	var/datum/pipe_system/component/data/log_target/terminal_logger_data = new(src, src)
+	process.AddComponentPipe(terminal_logger_data)
+
+	var/datum/pipe_system/component/proc_component/log_terminal/terminal_logger = new(src)
 	var/datum/pipe_system/component/awaiter/logger = new(src, null, terminal_logger, null)
 	process.AddComponentPipe(logger)
 

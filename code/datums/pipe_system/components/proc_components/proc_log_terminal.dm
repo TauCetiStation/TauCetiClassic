@@ -1,4 +1,4 @@
-/datum/pipe_system/component/proc_component/clear_active_awaiters/RunTimeAction(datum/pipe_system/process/process)
+/datum/pipe_system/component/proc_component/log_terminal/RunTimeAction(datum/pipe_system/process/process)
 
 	var/datum/pipe_system/component/data/log_target/terminal_data = process.GetCacheData(LOG_TARGET_DATA)
 
