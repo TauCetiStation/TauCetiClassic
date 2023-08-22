@@ -344,6 +344,7 @@
 /datum/outfit/responders/ussp/leader
 	name = "Responders: Soviet Leader"
 
+	suit = /obj/item/clothing/suit/storage/comissar
 	head = /obj/item/clothing/head/soviet_peaked_cap
 	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 
