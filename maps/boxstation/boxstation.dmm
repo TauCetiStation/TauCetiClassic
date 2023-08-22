@@ -1121,8 +1121,8 @@
 /obj/machinery/constructable_frame/machine_frame,
 /obj/machinery/camera{
 	c_tag = "Labor Shuttle Dock North";
-	network = list("SS13","Security");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -3496,8 +3496,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Head of Security";
-	network = list("SS13","Security");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6580,7 +6580,7 @@
 "alt" = (
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber";
-	network = list("Toxins Test Area")
+	network = list("Toxins  Test  Area")
 	},
 /turf/simulated/floor/plating/airless{
 	dir = 1;
@@ -7371,8 +7371,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Brig Center-West";
-	network = list("SS13","Security");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -14479,7 +14479,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
+	network = list("Toxins  Test  Area");
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -14512,7 +14512,7 @@
 	desc = "Used for watching the test chamber.";
 	layer = 4;
 	name = "Test Chamber Telescreen";
-	network = list("Toxins Test Area");
+	network = list("Toxins  Test  Area");
 	pixel_y = 30
 	},
 /obj/machinery/driver_button{
@@ -15284,8 +15284,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Toxins Launch Room";
-	network = list("SS13","Research");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Research")
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -31260,8 +31260,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology Access South";
-	network = list("SS13","Medical");
-	dir = 1
+	dir = 1;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	icon_state = "warnwhite"
@@ -36120,8 +36120,8 @@
 /obj/item/weapon/bell,
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 15;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 15
 	},
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
@@ -42230,8 +42230,8 @@
 "bzv" = (
 /obj/machinery/camera{
 	c_tag = "Research Division West";
-	network = list("SS13","Research");
-	dir = 5
+	dir = 5;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -43960,7 +43960,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	name = "Research Monitor";
-	network = list("Research","Toxins Test Area","Robots","Anomaly Isolation");
+	network = list("Research","Toxins  Test  Area","Robots","Anomaly  Isolation");
 	pixel_y = 2
 	},
 /obj/structure/table,
@@ -46171,7 +46171,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon  Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous  Oxide","waste_sensor"="Gas  Mix  Tank")
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -46479,8 +46479,8 @@
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 15;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 15
 	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
@@ -53224,7 +53224,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
+	sensors = list("mair_in_meter"="Mixed  Air  In","air_sensor"="Mixed  Air  Supply  Tank","mair_out_meter"="Mixed  Air  Out","dloop_atm_meter"="Distribution  Loop","wloop_atm_meter"="Waste  Loop")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -56005,8 +56005,8 @@
 /obj/machinery/door/firedoor,
 /obj/item/device/cardpay{
 	dir = 8;
-	pixel_y = 10;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/break_room)
@@ -57694,8 +57694,8 @@
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /obj/machinery/camera{
 	c_tag = "Atmospherics Access";
-	network = list("SS13","Engineering");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -59831,8 +59831,8 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber South";
-	network = list("RD","MiniSat");
-	dir = 6
+	dir = 6;
+	network = list("RD","MiniSat")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62712,8 +62712,8 @@
 "cxN" = (
 /obj/machinery/camera{
 	c_tag = "Brig Center-East";
-	network = list("SS13","Security");
-	dir = 10
+	dir = 10;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -63553,8 +63553,8 @@
 /obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Surgery Operating 2";
-	network = list("SS13","Medical");
-	dir = 6
+	dir = 6;
+	network = list("SS13","Medical")
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
@@ -66614,8 +66614,8 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics North North";
-	network = list("SS13","Engineering");
-	dir = 8
+	dir = 8;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -68892,8 +68892,8 @@
 	},
 /obj/item/device/cardpay{
 	dir = 4;
-	pixel_y = 15;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 15
 	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor/plating,
@@ -70297,7 +70297,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
+	network = list("Engineering","Engineering  Robots");
 	pixel_y = 30
 	},
 /mob/living/simple_animal/parrot/Poly,
