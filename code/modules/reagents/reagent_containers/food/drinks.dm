@@ -31,6 +31,7 @@
 
 	if(reagents.total_volume <= 0)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
+		update_icon()
 		return 0
 
 	if(!CanEat(user, M, src, "drink"))
@@ -120,6 +121,7 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
+		update_icon()
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
