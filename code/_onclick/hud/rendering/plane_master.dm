@@ -128,7 +128,7 @@
 	add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
 
 	remove_filter("lamps_selfglow_bloom")
-	add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = 5, offset = 2, alpha = 100))
+	add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = 3, offset = 2, alpha = 100))
 
 //<-------------------------ЛАМПОЧКИ И СВЕТЯЩИЕСЯ ПОВЕРХНОСТИ------------------------->
 /atom/movable/screen/plane_master/lamps
