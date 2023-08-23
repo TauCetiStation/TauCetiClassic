@@ -65,7 +65,8 @@
 /obj/item/clothing/under/rank/chef
 	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
 	name = "chef's uniform"
-	icon_state = "chef"
+	icon_state = "chef_uniform"
+	item_state = "chef_uniform"
 	flags = ONESIZEFITSALL
 
 //Chef
