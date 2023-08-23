@@ -25,6 +25,7 @@
 	var/nanoUI[0]
 
 	//Secondary variables
+	var/output_to_chat = TRUE //will print scan results (for medical scanner) in chat?
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 2 //Luminosity for the flashlight function
@@ -1684,8 +1685,13 @@
 		var/data_message = ""
 		switch(scanmode)
 			if(1)
-				data_message = health_analyze(L, user, TRUE, TRUE, TRUE)
-				to_chat(user, data_message)
+				data_message = health_analyze(L, user, TRUE, output_to_chat, TRUE)
+				if(!output_to_chat)
+					var/datum/browser/popup = new(user, "[L.name]_scan_report", "[L.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+					popup.set_content(data_message)
+					popup.open()
+				else
+					to_chat(user, data_message)
 
 			if(2)
 				if (!istype(C.dna, /datum/dna))
