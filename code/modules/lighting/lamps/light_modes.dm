@@ -17,8 +17,8 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/default
 	name = "Default"
 
-	color = "#fff9fd"
-	power = 1.2
+	color = "#faf6ff"
+	power = 0.7
 	range = 7
 
 /datum/light_mode/default/bulb
@@ -47,6 +47,43 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 
 	power = 0.5
 	range = 4
+
+/* Department light */
+
+/datum/light_mode/rnd
+	name = "RnD"
+
+	color = "#e3cddf"
+	power = 0.8
+	range = 7
+
+/datum/light_mode/medbay
+	name = "MedBay"
+
+	color = "#e7e8ff"
+	power = 0.8
+	range = 7
+
+/datum/light_mode/brig
+	name = "Brig"
+
+	color = "#ffeedd"
+	power = 0.8
+	range = 7
+
+/datum/light_mode/engineering
+	name = "Engineering"
+
+	color = "#f3e9ca"
+	power = 0.8
+	range = 7
+
+/datum/light_mode/cargo
+	name = "Cargo"
+
+	color = "#eee1d3"
+	power = 0.8
+	range = 7
 
 /* Customs for new smart lamps */
 
