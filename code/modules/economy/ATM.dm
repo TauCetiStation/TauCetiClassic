@@ -119,11 +119,22 @@ log transactions
 
 	if(istype(I, /obj/item/weapon/ewallet))
 		var/obj/item/weapon/ewallet/EW = I
+		var/stocks_amount = EW.get_stocks()
+		var/money_amount = EW.get_money()
 
-		authenticated_account.adjust_stocks(EW.get_stocks())
-		authenticated_account.adjust_money(EW.get_money())
+		authenticated_account.adjust_stocks(stocks_amount)
+		authenticated_account.adjust_money(money_amount)
 
-		deposit(EW, user, EW.get_money(), get_stocks_string(EW.get_stocks()))
+		var/datum/money_account/wallet_account = get_account(EW.account_number)
+
+		if(wallet_account)
+			for(var/stock_type in stocks_amount)
+				var/stock_amount = stocks_amount[stock_type]
+				wallet_account.adjust_stock(stock_type, -stock_amount)
+
+			wallet_account.adjust_money(-money_amount)
+
+		deposit(EW, user, money_amount, get_stocks_string(stocks_amount))
 		return
 
 /obj/machinery/atm/emag_act(mob/user)
@@ -397,7 +408,7 @@ log transactions
 					if(!MA)
 						to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 						return
-						
+
 					var/security_level_passed = held_card && held_card.associated_account_number == tried_account_num ? ACCOUNT_SECURITY_LEVEL_MAXIMUM : ACCOUNT_SECURITY_LEVEL_STANDARD
 					if(href_list["account_pin"])
 						authenticated_account = attempt_account_access(tried_account_num, text2num(href_list["account_pin"]), security_level_passed)
