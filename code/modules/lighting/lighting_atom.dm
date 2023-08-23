@@ -134,10 +134,11 @@
 
 	if(exposure_icon && exposure_icon_state)
 		if(!exposureimage)
-			exposureimage = image(icon = exposure_icon, icon_state = exposure_icon_state, dir = dir, layer = 1)
+			exposureimage = image(icon = exposure_icon, icon_state = exposure_icon_state, dir = dir, layer = -1)
 
 		exposureimage.plane = LIGHTING_EXPOSURE_PLANE
 		exposureimage.blend_mode = BLEND_ADD
+		exposureimage.appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART
 
 		var/datum/ColorMatrix/MATRIX = new(1, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
 		if(exposure_colored)
@@ -147,7 +148,7 @@
 
 		var/icon/EX = icon(icon = exposure_icon, icon_state = exposure_icon_state)
 		exposureimage.pixel_x = 16 - EX.Width() / 2
-		exposureimage.pixel_y = 16 - EX.Height() /2
+		exposureimage.pixel_y = 16 - EX.Height() / 2
 
 		add_overlay(exposureimage)
 #undef EXPOSURE_BASE
