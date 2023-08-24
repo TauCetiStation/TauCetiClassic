@@ -372,3 +372,12 @@
 	else
 		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
 	feedback_add_details("admin_verb", "thm")
+
+/client/verb/edit_emote_panel()
+	set name = "Edit Emote Panel"
+	set category = "Preferences"
+
+	if(!emote_panel_editor)
+		emote_panel_editor = new /datum/emote_panel_editor(src)
+	emote_panel_editor.tgui_interact(usr)
+

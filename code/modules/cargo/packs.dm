@@ -862,8 +862,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Electrical maintenance crate"
 	contains = list(/obj/item/weapon/storage/toolbox/electrical,
 					/obj/item/weapon/storage/toolbox/electrical,
-					/obj/item/clothing/gloves/yellow,
-					/obj/item/clothing/gloves/yellow,
+					/obj/item/clothing/gloves/insulated,
+					/obj/item/clothing/gloves/insulated,
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell/high,
@@ -1161,6 +1161,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian)
 	crate_type = /obj/structure/closet/crate/medical
 	crate_name = "Civilian Medkits crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/adv_medkit
+	name = "Advanced Medkits"
+	contains = list(/obj/item/weapon/storage/firstaid/adv,
+					/obj/item/weapon/storage/firstaid/adv,
+					/obj/item/weapon/storage/firstaid/adv)
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "Advanced Medkits crate"
 	group = "Medical / Science"
 
 /datum/supply_pack/roller_beds

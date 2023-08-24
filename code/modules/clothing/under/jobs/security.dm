@@ -48,6 +48,11 @@
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/tactical/skrell
+	name = "raskinta uniform"
+	desc = "It's a traditional skrellian warrior-caste blue and black uniform. Skintight, sturdy and slightly wet."
+	icon_state = "raskinta"
+	item_state = "raskinta"
 /*
  * Detective
  */

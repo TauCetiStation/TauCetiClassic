@@ -249,6 +249,23 @@
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type
 
+	global.emotes_for_emote_panel = list()
+	var/emote_icons = 'icons/misc/emotes.dmi'
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human // meh initial doesn't work with lists
+	for(var/datum/emote/E as anything in H.default_emotes) // non-humans emotes but humans have them
+		if(initial(E.key) in icon_states(emote_icons))
+			global.emotes_for_emote_panel |= initial(E.key)
+	qdel(H)
+	for(var/datum/emote/E as anything in subtypesof(/datum/emote/human)) // humans emotes
+		if(initial(E.key) in icon_states(emote_icons))
+			global.emotes_for_emote_panel |= initial(E.key)
+	for(var/datum/species/S as anything in subtypesof(/datum/species)) // IPC emotes and etc.
+		S = new S
+		for(var/datum/emote/E as anything in S.emotes)
+			if(initial(E.key) in icon_states(emote_icons))
+				global.emotes_for_emote_panel |= initial(E.key)
+		qdel(S)
+
 	global.light_modes_by_type = list()
 	global.light_modes_by_name = list()
 	for(var/type as anything in subtypesof(/datum/light_mode))
@@ -259,6 +276,15 @@
 	global.smartlight_presets = list()
 	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
 		smartlight_presets[initial(type.name)] = type
+
+	global.virus_by_pool = list()
+	for(var/e in subtypesof(/datum/disease2/effect))
+		var/datum/disease2/effect/f = new e
+		var/list/L = f.pools
+		if(!L.len)
+			continue
+		for(var/pool in L)
+			LAZYADD(virus_by_pool[pool], f)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

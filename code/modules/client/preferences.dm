@@ -55,6 +55,8 @@ var/global/list/preferences_datums = list()
 
 	var/show_runechat = TRUE
 
+	var/list/custom_emote_panel = list()
+
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
@@ -173,6 +175,7 @@ var/global/list/preferences_datums = list()
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]
+	custom_emote_panel = global.emotes_for_emote_panel
 	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
