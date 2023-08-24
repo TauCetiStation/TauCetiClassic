@@ -47,7 +47,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	update_nearby_tiles()
-	electronics = null
+	QDEL_NULL(electronics)
 	return ..()
 
 /obj/machinery/door/window/proc/open_and_close()
@@ -73,7 +73,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		new /obj/item/stack/cable_coil/red(loc, 2)
 		var/obj/item/weapon/airlock_electronics/ae
 		if(!electronics)
-			ae = new/obj/item/weapon/airlock_electronics( src.loc )
+			ae = new (src.loc)
 			if(!src.req_access)
 				check_access()
 			if(src.req_access.len)
@@ -85,6 +85,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 			ae = electronics
 			electronics = null
 			ae.loc = src.loc
+		ae.unres_sides = unres_sides
 		if(operating == -1)
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
@@ -310,7 +311,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 						var/obj/item/weapon/airlock_electronics/ae
 						if(!electronics)
-							ae = new/obj/item/weapon/airlock_electronics( src.loc )
+							ae = new (src.loc)
 							if(!req_access)
 								check_access()
 							if(req_access.len)
@@ -323,6 +324,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 							ae = electronics
 							electronics = null
 							ae.loc = src.loc
+						ae.unres_sides = unres_sides
 
 						if(operating == -1)
 							ae.icon_state = "door_electronics_smoked"

@@ -382,6 +382,25 @@ var/global/list/airlock_overlays = list()
 			MA = mutable_appearance(icon_file, icon_state)
 		. = airlock_overlays[iconkey] = MA
 
+/obj/effect/mapping_helpers/airlock/unres
+	name = "airlock unrestricted side helper"
+	icon_state = "airlock_unres_helper"
+	dir = SOUTH
+
+/obj/effect/mapping_helpers/airlock/unres/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/airlock/unres/atom_init_late()
+	. = ..()
+	for(var/obj/machinery/door/airlock/airlock in get_turf(src))
+		airlock.unres_sides ^= dir
+		airlock.update_icon()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/airlock/unres/north
+	dir = NORTH
+
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
 		if("opening")
@@ -629,17 +648,9 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	var/obj/item/weapon/airlock_electronics/ae
-	ae = new/obj/item/weapon/airlock_electronics(loc)
-	if(!req_access)
-		check_access()
-	if(req_access.len)
-		ae.conf_access = req_access
-	else if (req_one_access.len)
-		ae.conf_access = req_one_access
-		ae.one_access = 1
-	ae.loc = da
-	da.electronics = ae
+	electronics.loc = da
+	da.electronics = electronics
+	electronics = null
 
 	qdel(src)
 
@@ -1178,8 +1189,12 @@ var/global/list/airlock_overlays = list()
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 	var/obj/item/weapon/airlock_electronics/ae
-	if(!electronics)
-		ae = new/obj/item/weapon/airlock_electronics(loc)
+	if(electronics)
+		ae = electronics
+		electronics = null
+		ae.loc = loc
+	else
+		ae = new /obj/item/weapon/airlock_electronics(loc)
 		if(!req_access)
 			check_access()
 		if(req_access.len)
@@ -1187,10 +1202,7 @@ var/global/list/airlock_overlays = list()
 		else if (req_one_access.len)
 			ae.conf_access = req_one_access
 			ae.one_access = 1
-	else
-		ae = electronics
-		electronics = null
-		ae.loc = loc
+
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
 		ae.broken = TRUE

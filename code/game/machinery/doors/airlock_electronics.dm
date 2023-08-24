@@ -13,6 +13,8 @@
 	var/last_configurator = null
 	var/locked = 1
 	var/broken = FALSE
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user)
 	if (!ishuman(user) && !isrobot(user))
