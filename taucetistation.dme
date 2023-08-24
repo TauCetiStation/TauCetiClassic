@@ -1465,6 +1465,7 @@
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences_toggles.dm"
 #include "code\modules\client\character_menu\customkeybindings.dm"
+#include "code\modules\client\character_menu\emote_panel_editor.dm"
 #include "code\modules\client\character_menu\general.dm"
 #include "code\modules\client\character_menu\global.dm"
 #include "code\modules\client\character_menu\load_slot.dm"
