@@ -107,7 +107,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/exposure/atom_init()
 	. = ..()
 	remove_filter("blur_exposure")
 	add_filter("blur_exposure", 1, gauss_blur_filter(size = 25))
@@ -122,7 +122,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/lamps_selfglow/atom_init()
 	. = ..()
 	remove_filter("add_lamps_to_selfglow")
 	add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
@@ -135,6 +135,7 @@
 	name = "lamps plane master"
 	plane = LIGHTING_LAMPS_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
 	blend_mode_override = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
