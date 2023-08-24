@@ -325,7 +325,7 @@
 	if(istype(target, /obj/effect/proc_holder/spell))
 		var/obj/effect/proc_holder/spell/S = target
 		if(S.charge_max < 1)
-			START_PROCESSING(SSprocessing, src)
+			START_PROCESSING(SSaction_buttons, src)
 
 /datum/action/spell_action/process()
 	UpdateButtonIcon()

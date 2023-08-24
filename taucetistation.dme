@@ -214,6 +214,7 @@
 #include "code\controllers\failsafe.dm"
 #include "code\controllers\master.dm"
 #include "code\controllers\subsystem.dm"
+#include "code\controllers\subsystem\action_buttons.dm"
 #include "code\controllers\subsystem\air.dm"
 #include "code\controllers\subsystem\assets.dm"
 #include "code\controllers\subsystem\atoms.dm"
@@ -2462,8 +2463,8 @@
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\centcom\centcom.dmm"
+#include "maps\delta\job_changes.dm"
 #include "maps\falcon\job_changes.dm"
 #include "maps\stroechka\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
-#include "maps\delta\job_changes.dm"
 // END_INCLUDE
