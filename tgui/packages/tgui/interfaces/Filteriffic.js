@@ -165,9 +165,10 @@ const FilterDataEntry = (props, context) => {
     radius: 'float',
     falloff: 'float',
     density: 'int',
-    threshold: 'float',
+    threshold: 'string', // float for many, color for bloom
     factor: 'float',
     repeat: 'int',
+    alpha: 'int',
   };
 
   return (

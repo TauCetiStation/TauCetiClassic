@@ -100,7 +100,7 @@
 	update_now(trigger)
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update_now(trigger)
+/obj/machinery/light/proc/update_now(trigger, forced)
 	update_icon()
 
 	if(on && inserted_bulb_type)
@@ -124,7 +124,7 @@
 		if(SSholiday.holidays[NEW_YEAR] && new_power == 2 && is_station_level(z))
 			new_power = 1.5
 
-		if(light_range != new_range || light_power != new_power || light_color != new_color)
+		if(forced || light_range != new_range || light_power != new_power || light_color != new_color)
 			switchcount++
 			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(rigged && trigger && status == LIGHT_OK)

@@ -115,8 +115,77 @@
 /atom/proc/turn_light_off()
 	set_light(0)
 
-#define EXPOSURE_BASE 0.2
-#define EXPOSURE_POWER 0.1
+var/global/GLOW_BASE = 0.2
+var/global/GLOW_POWER = 0.1
+var/global/EXPOSURE_BASE = 0.2
+var/global/EXPOSURE_POWER = 0.1
+
+/client/verb/debug_bloom_filter()
+	set name = "Debug Bloom: Glow Filter"
+	set category = "Debug"
+
+	var/LS = locate(/atom/movable/screen/plane_master/lamps_selfglow) in src.screen
+	if(LS)
+		open_filter_editor(LS)
+
+/client/var/datum/bloom_edit/debug_bloom
+/client/verb/debug_bloom()
+	set name = "Debug Bloom"
+	set category = "Debug"
+
+	if(!debug_bloom)
+		debug_bloom = new /datum/bloom_edit(src)
+	
+	debug_bloom.tgui_interact(usr)
+
+/datum/bloom_edit
+	
+/datum/bloom_edit/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BloomEdit", "Bloom Edit")
+		ui.open()
+
+/datum/bloom_edit/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["glow_base"] = global.GLOW_BASE
+	data["glow_power"] = global.GLOW_POWER
+	data["exposure_base"] = global.EXPOSURE_BASE
+	data["exposure_power"] = global.EXPOSURE_POWER
+
+	return data
+
+/datum/bloom_edit/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	world.log << "json_encode"
+	world.log << json_encode(action)
+	world.log << json_encode(params)
+
+	switch(action)
+		if("glow_base")
+			global.GLOW_BASE = clamp(params["value"], 0, 1)
+		if("glow_power")
+			global.GLOW_POWER = clamp(params["value"], 0, 1)
+		if("exposure_base")
+			global.EXPOSURE_BASE = clamp(params["value"], 0, 1)
+		if("exposure_power")
+			global.EXPOSURE_POWER = clamp(params["value"], 0, 1)
+		if("update_lamps") // idk, need to make this update all objects with glow if we need this in master
+			for(var/obj/machinery/light/L in machines)
+				if(L.lampimage || L.exposureimage)
+					//L.update_light() // does nothing
+					L.set_light(0) // so we make this ugly way
+					L.update_now()
+
+	return TRUE
+
+/datum/bloom_edit/tgui_state(mob/user)
+	return global.admin_state
+
 /atom/proc/update_lights()
 	cut_overlay(lampimage)
 	cut_overlay(exposureimage)
@@ -127,7 +196,7 @@
 		lampimage.plane = LIGHTING_LAMPS_PLANE
 		lampimage.blend_mode = BLEND_OVERLAY
 		if(lamp_colored)
-			var/datum/ColorMatrix/MATRIX = new(light_color, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
+			var/datum/ColorMatrix/MATRIX = new(light_color, 1, GLOW_BASE + GLOW_POWER * light_power)
 			lampimage.color = MATRIX.Get()
 
 		add_overlay(lampimage)
