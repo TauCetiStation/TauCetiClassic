@@ -934,7 +934,7 @@ var/global/list/ai_verbs_default = list(
 	cut_overlays()
 	playsound(src, 'sound/misc/ai_threads.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
 
-	visible_message("<span class='notice'>[src] [uses_legs ? "engages" : "disengages"] it's mobility module!")
+	visible_message("<span class='notice'>[src] [uses_legs ? "engages" : "disengages"] it's mobility module!</span>")
 
 	if(uses_legs)
 		var/image/legs = image(icon, src, "threads", MOB_LAYER, pixel_y = -9)
