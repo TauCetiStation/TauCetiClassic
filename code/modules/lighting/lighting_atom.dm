@@ -115,8 +115,10 @@
 /atom/proc/turn_light_off()
 	set_light(0)
 
-#define EXPOSURE_BASE 0.2
-#define EXPOSURE_POWER 0.1
+var/global/GLOW_BASE = 0.2
+var/global/GLOW_POWER = 0.1
+var/global/EXPOSURE_BASE = 0.2
+var/global/EXPOSURE_POWER = 0.1
 /atom/proc/update_lights()
 	cut_overlay(lampimage)
 	cut_overlay(exposureimage)
@@ -127,7 +129,7 @@
 		lampimage.plane = LIGHTING_LAMPS_PLANE
 		lampimage.blend_mode = BLEND_OVERLAY
 		if(lamp_colored)
-			var/datum/ColorMatrix/MATRIX = new(light_color, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
+			var/datum/ColorMatrix/MATRIX = new(light_color, 1, GLOW_BASE + GLOW_POWER * light_power)
 			lampimage.color = MATRIX.Get()
 
 		add_overlay(lampimage)
