@@ -115,10 +115,10 @@
 /atom/proc/turn_light_off()
 	set_light(0)
 
-var/global/GLOW_BASE = 0.2
-var/global/GLOW_POWER = 0.1
-var/global/EXPOSURE_BASE = 0.2
-var/global/EXPOSURE_POWER = 0.1
+var/global/GLOW_BASE = 0
+var/global/GLOW_POWER = 1
+var/global/EXPOSURE_BASE = 0
+var/global/EXPOSURE_POWER = 0.3
 /atom/proc/update_lights()
 	cut_overlay(lampimage)
 	cut_overlay(exposureimage)
