@@ -110,7 +110,7 @@
 /atom/movable/screen/plane_master/exposure/backdrop(mob/mymob)
 	. = ..()
 	remove_filter("blur_exposure")
-	add_filter("blur_exposure", 1, gauss_blur_filter(size = 25))
+	add_filter("blur_exposure", 1, gauss_blur_filter(size = 20))
 
 //<-------------------------GLOW------------------------->
 /atom/movable/screen/plane_master/lamps_selfglow
