@@ -268,6 +268,9 @@
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
+		if(isAI(D))
+			body += "<option value>---</option>"
+			body += "<option value='?_src_=vars;allowmoving=\ref[D]'>Allow Moving</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
@@ -1090,4 +1093,21 @@ body
 			if("clearreags")
 				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
 					R.clear_reagents()
+
+	else if(href_list["allowmoving"])
+		if(!check_rights(R_FUN))
+			return
+
+		var/mob/living/silicon/ai/A = locate(href_list["allowmoving"])
+		if(!istype(A))
+			to_chat(usr, "This can only be done to instances of type /mob")
+			return
+		if(A.legs)
+			A.legs = FALSE
+			to_chat(usr, "Disallowed [A] to move")
+			return
+
+		A.allow_walking()
+		to_chat(usr, "Allowed [A] to move")
+
 	return
