@@ -296,7 +296,10 @@ var/global/list/ai_verbs_default = list(
 
 	gen_radial_cores()
 
-	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
+	var/mob/showing_to = eyeobj
+	if(uses_legs)
+		showing_to = src
+	var/state = show_radial_menu(usr, showing_to, chooses_ai_cores, radius = 50, tooltips = TRUE)
 	if(!state)
 		return
 	icon_state = name_by_state[state]
