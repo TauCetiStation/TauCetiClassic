@@ -52,7 +52,7 @@
 			global.EXPOSURE_POWER = initial(global.EXPOSURE_POWER)
 		if("update_lamps") // todo: make this update all objects with glow
 			for(var/obj/machinery/light/L in machines)
-				if(L.lampimage || L.exposureimage)
+				if(L.glow_overlay || L.exposure_overlay)
 					//L.update_light() // does nothing
 					L.set_light(0) // so we make this ugly way
 					L.update_now()

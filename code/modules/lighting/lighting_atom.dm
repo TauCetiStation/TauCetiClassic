@@ -6,17 +6,17 @@
 	var/tmp/datum/light_source/light // Our light source. Don't fuck with this directly unless you have a good reason!
 	var/tmp/list/light_sources       // Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
 
-	var/lamp_icon = 'icons/obj/lamps.dmi'
+	var/glow_icon = 'icons/obj/lamps.dmi'
 	var/exposure_icon = 'icons/effects/exposures.dmi'
 
-	var/lamp_icon_state
-	var/lamp_colored = FALSE
+	var/glow_icon_state
+	var/glow_colored = FALSE
 
 	var/exposure_icon_state
 	var/exposure_colored = TRUE
 
-	var/image/lampimage
-	var/image/exposureimage
+	var/image/glow_overlay
+	var/image/exposure_overlay
 
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
@@ -119,45 +119,45 @@ var/global/GLOW_BASE = 0
 var/global/GLOW_POWER = 1
 var/global/EXPOSURE_BASE = 0
 var/global/EXPOSURE_POWER = 0.3
-/atom/proc/update_lights()
-	cut_overlay(lampimage)
-	cut_overlay(exposureimage)
-	if(lamp_icon && lamp_icon_state)
-		if(!lampimage)
-			lampimage = image(icon = lamp_icon, icon_state = lamp_icon_state, dir = dir, layer = 1)
+/atom/proc/update_bloom()
+	cut_overlay(glow_overlay)
+	cut_overlay(exposure_overlay)
+	if(glow_icon && glow_icon_state)
+		if(!glow_overlay)
+			glow_overlay = image(icon = glow_icon, icon_state = glow_icon_state, dir = dir, layer = 1)
 
-		lampimage.plane = LIGHTING_LAMPS_PLANE
-		lampimage.blend_mode = BLEND_OVERLAY
-		if(lamp_colored)
+		glow_overlay.plane = LIGHTING_LAMPS_PLANE
+		glow_overlay.blend_mode = BLEND_OVERLAY
+		if(glow_colored)
 			var/datum/ColorMatrix/MATRIX = new(light_color, 1, GLOW_BASE + GLOW_POWER * light_power)
-			lampimage.color = MATRIX.Get()
+			glow_overlay.color = MATRIX.Get()
 
-		add_overlay(lampimage)
+		add_overlay(glow_overlay)
 
 	if(exposure_icon && exposure_icon_state)
-		if(!exposureimage)
-			exposureimage = image(icon = exposure_icon, icon_state = exposure_icon_state, dir = dir, layer = -1)
+		if(!exposure_overlay)
+			exposure_overlay = image(icon = exposure_icon, icon_state = exposure_icon_state, dir = dir, layer = -1)
 
-		exposureimage.plane = LIGHTING_EXPOSURE_PLANE
-		exposureimage.blend_mode = BLEND_ADD
-		exposureimage.appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART
+		exposure_overlay.plane = LIGHTING_EXPOSURE_PLANE
+		exposure_overlay.blend_mode = BLEND_ADD
+		exposure_overlay.appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART
 
 		var/datum/ColorMatrix/MATRIX = new(1, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
 		if(exposure_colored)
 			MATRIX.SetColor(light_color, 1, EXPOSURE_BASE + EXPOSURE_POWER * light_power)
 
-		exposureimage.color = MATRIX.Get()
+		exposure_overlay.color = MATRIX.Get()
 
 		var/icon/EX = icon(icon = exposure_icon, icon_state = exposure_icon_state)
-		exposureimage.pixel_x = 16 - EX.Width() / 2
-		exposureimage.pixel_y = 16 - EX.Height() / 2
+		exposure_overlay.pixel_x = 16 - EX.Width() / 2
+		exposure_overlay.pixel_y = 16 - EX.Height() / 2
 
-		add_overlay(exposureimage)
+		add_overlay(exposure_overlay)
 #undef EXPOSURE_BASE
 #undef EXPOSURE_POWER
 
 /atom/proc/delete_lights()
-	cut_overlay(lampimage)
-	cut_overlay(exposureimage)
-	QDEL_NULL(lampimage)
-	QDEL_NULL(exposureimage)
+	cut_overlay(glow_overlay)
+	cut_overlay(exposure_overlay)
+	QDEL_NULL(glow_overlay)
+	QDEL_NULL(exposure_overlay)

@@ -224,7 +224,7 @@
 		needs_update = LIGHTING_CHECK_UPDATE
 		applied = TRUE
 		if(source_atom)
-			source_atom.update_lights()
+			source_atom.update_bloom()
 	else if (needs_update == LIGHTING_CHECK_UPDATE)
 		return //nothing's changed
 
