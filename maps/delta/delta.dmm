@@ -23209,7 +23209,9 @@
 	},
 /area/station/civilian/dormitories/service_bedrooms)
 "eOx" = (
-/obj/structure/bookcase/manuals/medical,
+/obj/structure/stool/bed/chair/electrotherapy{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
