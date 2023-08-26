@@ -14365,24 +14365,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/locker)
-"cOe" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Surgery";
-	req_access = list(12)
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/barricade/wooden{
-	layer = 2.8;
-	name = "doorway barricade"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "cOr" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/camera{
@@ -18512,12 +18494,6 @@
 "dLG" = (
 /turf/simulated/wall,
 /area/station/storage/emergency)
-"dLN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "dLV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
@@ -19652,11 +19628,10 @@
 	},
 /area/station/aisat/ai_chamber)
 "ear" = (
-/obj/structure/bonfire,
-/obj/effect/decal/remains/human,
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/obj/structure/closet,
+/obj/item/clothing/under/rank/mailman,
+/obj/item/clothing/head/mailman,
+/turf/simulated/floor/plating,
 /area/station/engineering/minisat_secure_area)
 "eaw" = (
 /obj/structure/cable{
@@ -40181,13 +40156,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"iys" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "iyt" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/structure/sign/nanotrasen{
@@ -55352,7 +55320,6 @@
 /area/station/aisat)
 "lKn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -55725,13 +55692,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/hallway/primary/central)
-"lNE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "lNF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -83614,12 +83574,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "rYZ" = (
@@ -99191,12 +99147,6 @@
 /area/station/rnd/hallway/lobby)
 "vIu" = (
 /obj/effect/decal/cleanable/generic,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "vIz" = (
@@ -108930,13 +108880,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/starboard)
-"xTD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "xTN" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
@@ -152473,10 +152416,10 @@ lgb
 srs
 srs
 dBv
-dLN
+nyv
 mNL
 tFG
-lNE
+oOP
 srs
 xIQ
 srs
@@ -152730,10 +152673,10 @@ hXl
 tMj
 srs
 lbq
-iys
+oOP
 lKn
 vIu
-xTD
+gux
 srs
 xIQ
 srs
@@ -152989,7 +152932,7 @@ srs
 srs
 srs
 srs
-cOe
+srs
 srs
 srs
 pnq
