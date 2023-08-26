@@ -29322,6 +29322,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/highsecurity{
+	locked = 1;
 	name = "Atmospherics Emergency Access";
 	req_access = list(24)
 	},
