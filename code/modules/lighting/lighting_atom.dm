@@ -115,8 +115,8 @@
 /atom/proc/turn_light_off()
 	set_light(0)
 
-var/global/GLOW_BASE = 0
-var/global/GLOW_POWER = 1
+var/global/GLOW_BASE = 0.5
+var/global/GLOW_POWER = 0.5
 var/global/EXPOSURE_BASE = 0
 var/global/EXPOSURE_POWER = 0.3
 /atom/proc/update_bloom()
