@@ -14,7 +14,7 @@
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
 
-	lamp_icon_state = "tube"
+	glow_icon_state = "tube"
 	exposure_icon_state = "cone"
 
 	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
@@ -42,9 +42,9 @@
 	base_icon_state = "tube" // not a typo
 	inserted_bulb_type = /obj/item/weapon/light/tube/smart
 
-	lamp_icon_state = "stube"
+	glow_icon_state = "stube"
 	exposure_icon_state = "cone"
-	lamp_colored = TRUE
+	glow_colored = TRUE
 
 /obj/machinery/light/small
 	desc = "A small lighting fixture."
@@ -53,7 +53,7 @@
 	fitting = LAMP_FITTING_BULB
 	inserted_bulb_type = /obj/item/weapon/light/bulb
 
-	lamp_icon_state = "bulb"
+	glow_icon_state = "bulb"
 	exposure_icon_state = "circle"
 
 /obj/machinery/light/small/emergency

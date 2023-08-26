@@ -97,7 +97,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-//<-------------------------EXPOSURE------------------------->
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
 	plane = LIGHTING_EXPOSURE_PLANE
@@ -107,12 +106,11 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob) // todo: prefs
 	. = ..()
 	remove_filter("blur_exposure")
-	add_filter("blur_exposure", 1, gauss_blur_filter(size = 20))
+	add_filter("blur_exposure", 1, gauss_blur_filter(size = 20)) // by refs such blur is heavy, but tests were okay and this allow us more flexibility with setup
 
-//<-------------------------GLOW------------------------->
 /atom/movable/screen/plane_master/lamps_selfglow
 	name = "lamps selfglow plane master"
 	plane = LIGHTING_LAMPS_SELFGLOW
@@ -122,7 +120,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob) // todo: prefs
 	. = ..()
 	remove_filter("add_lamps_to_selfglow")
 	add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
@@ -130,7 +128,6 @@
 	remove_filter("lamps_selfglow_bloom")
 	add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = 3, offset = 2, alpha = 100))
 
-//<-------------------------LAMPS------------------------->
 /atom/movable/screen/plane_master/lamps
 	name = "lamps plane master"
 	plane = LIGHTING_LAMPS_PLANE
@@ -142,7 +139,7 @@
 
 	render_target = LIGHTING_LAMPS_RENDER_TARGET
 
-//<-------------------------GLARE------------------------->
+// uncomment this if you are J.J.A.
 /*/atom/movable/screen/plane_master/lamps_glare
 	name = "lamps glare plane master"
 	plane = LIGHTING_LAMPS_GLARE

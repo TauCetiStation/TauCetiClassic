@@ -144,11 +144,11 @@ What is the naming convention for planes or layers?
 #define POINT_PLANE 90
 
 //---------- -----LIGHTING -------------
-#define LIGHTING_PLANE 100 //LIGHT
-#define LIGHTING_EXPOSURE_PLANE 101 //EXPOSURE
-#define LIGHTING_LAMPS_SELFGLOW 102 //GLOW
-#define LIGHTING_LAMPS_PLANE 103 //LAMP
-//#define LIGHTING_LAMPS_GLARE 104 //GLARE
+#define LIGHTING_PLANE 100
+#define LIGHTING_EXPOSURE_PLANE 101 // Light sources "cones"
+#define LIGHTING_LAMPS_SELFGLOW 102 // Light sources glow (lamps, doors overlay, etc.)
+#define LIGHTING_LAMPS_PLANE 103
+//#define LIGHTING_LAMPS_GLARE 104
 #define LIGHTING_LAMPS_RENDER_TARGET "*LIGHTING_LAMPS_RENDER_TARGET"
 
 #define ABOVE_LIGHTING_PLANE 120
