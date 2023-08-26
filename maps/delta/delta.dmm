@@ -30910,11 +30910,6 @@
 	icon_state = "grimy"
 	},
 /area/station/bridge)
-"gyA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "gyC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -44264,15 +44259,6 @@
 	icon_state = "darkredfull"
 	},
 /area/station/security/brig/equipment)
-"jsw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/airlock/maintenance{
-	name = "Chemistry";
-	req_access = list(12)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "jsI" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
@@ -61967,6 +61953,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker{
 	pixel_x = 5
 	},
+/obj/random/meds/chemical_bottle,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -63129,9 +63116,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -63140,6 +63124,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -65436,9 +65423,6 @@
 /area/station/maintenance/atmos)
 "nWf" = (
 /obj/machinery/iv_drip,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door_control{
 	id = "portbow_maint_shutters";
@@ -83494,9 +83478,6 @@
 /area/station/engineering/atmos)
 "rYj" = (
 /obj/effect/decal/cleanable/generic,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "rYl" = (
@@ -83999,9 +83980,6 @@
 	},
 /area/station/cargo/qm)
 "seF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
@@ -140067,8 +140045,8 @@ wyg
 cYr
 cLm
 nwl
-jsw
-gyA
+wwi
+kop
 seF
 gHZ
 niW
