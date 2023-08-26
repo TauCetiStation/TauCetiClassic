@@ -704,10 +704,6 @@
 	name = "Surgery Shutters";
 	pixel_y = 26
 	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/mask/muzzle,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
 /obj/effect/decal/turf_decal/alpha/blue{
 	dir = 4;
 	icon_state = "siding_line"
@@ -22302,6 +22298,9 @@
 /obj/item/device/cardpay{
 	dir = 1
 	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/mask/muzzle,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -58304,6 +58303,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/clothing/mask/muzzle,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
 /area/station/medical/storage)
 "mAH" = (
