@@ -16,7 +16,7 @@
 	var/ammo_type = /obj/item/ammo_casing/magic
 	var/global_access = FALSE
 	origin_tech = null
-	action_button_name = null
+	item_action_types = null
 	clumsy_check = 0
 	can_suicide_with = FALSE
 	can_be_holstered = FALSE
