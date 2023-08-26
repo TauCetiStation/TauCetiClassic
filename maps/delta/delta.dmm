@@ -63104,10 +63104,14 @@
 	},
 /area/station/civilian/gym)
 "nvX" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/item/device/cardpay{
+	dir = 1
+	},
+/obj/structure/closet/wardrobe/chemistry_white,
+/obj/item/device/radio/headset/headset_med,
 /obj/item/device/cardpay{
 	dir = 1
 	},
@@ -92277,12 +92281,14 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/device/cardpay{
-	dir = 1
-	},
 /obj/effect/decal/turf_decal/alpha/orange{
 	icon_state = "siding_line"
 	},
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/box/syringes,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
