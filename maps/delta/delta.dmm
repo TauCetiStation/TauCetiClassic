@@ -22129,11 +22129,11 @@
 	},
 /area/station/engineering/atmos)
 "eKF" = (
-/obj/machinery/power/smes,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/smes/inputting,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "eKH" = (
@@ -87550,12 +87550,12 @@
 	},
 /area/station/hallway/primary/port)
 "thM" = (
-/obj/machinery/power/smes,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/smes/inputting,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "thU" = (
