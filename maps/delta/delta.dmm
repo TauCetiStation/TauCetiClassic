@@ -125,6 +125,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"aap" = (
+/obj/machinery/smartfridge/chemistry{
+	name = "Refrigerated Medicine Storage";
+	req_access = list(72)
+	},
+/turf/simulated/wall/r_wall,
+/area/station/medical/chemistry)
 "aaq" = (
 /obj/structure/flora/rock/jungle,
 /obj/structure/window/thin{
@@ -148195,7 +148202,7 @@ nMT
 jdS
 pUP
 xyt
-fWT
+aap
 ohP
 mGd
 rcz
