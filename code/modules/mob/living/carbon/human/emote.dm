@@ -5,7 +5,6 @@
 		/datum/emote/shiver,
 		/datum/emote/whimper,
 		/datum/emote/moan,
-		/datum/emote/twitch,
 		/datum/emote/collapse,
 		/datum/emote/faint,
 		/datum/emote/roar,
@@ -29,3 +28,20 @@
 	set category = "IC"
 
 	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text)
+
+/mob/living/carbon/human/verb/emote_panel()
+	set name = "Emote Panel"
+	set category = "IC"
+
+	var/emote_icons = 'icons/misc/emotes.dmi'
+	var/list/emote_choice = list()
+
+	for(var/id in current_emotes)
+		var/datum/emote/E = current_emotes[id]
+		if(!(E.key in usr.client.prefs.custom_emote_panel))
+			continue
+		emote_choice += E.key
+		emote_choice[E.key] = image(icon = emote_icons, icon_state = E.key)
+
+	var/act = show_radial_menu(usr, src, emote_choice, radius = 54, min_angle = 36)
+	emote(act)

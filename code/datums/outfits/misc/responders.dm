@@ -60,6 +60,19 @@
 
 	assignment = "Emergency Response Team Leader"
 
+/datum/outfit/responders/nanotrasen_ert/leader/ect
+	name = "Responders: NT ERT Leader (ECT)"
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/r4046/rubber, /obj/item/weapon/storage/box/r4046/teargas,\
+								/obj/item/weapon/rcd/ert, /obj/item/weapon/storage/belt/utility/cool)
+
+	assignment = "Engineering Corps Team Leader"
+
+/datum/outfit/responders/nanotrasen_ert/leader/emt
+	name = "Responders: NT ERT Leader (EMT)"
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/r4046/rubber, /obj/item/weapon/storage/box/r4046/teargas,\
+								/obj/item/weapon/storage/pouch/medical_supply/combat, /obj/item/weapon/storage/firstaid/adv)
+
+	assignment = "Emergency Medical Team Leader"
 
 /datum/outfit/responders/nanotrasen_ert/engineer
 	name = "Responders: NT ERT Engineer"
@@ -77,6 +90,20 @@
 
 	assignment = "Emergency Response Team Engineer"
 
+/datum/outfit/responders/nanotrasen_ert/engineer/ect
+	name = "Responders: NT ERT Engineer (ECT)"
+	suit = /obj/item/clothing/suit/space/rig/ert/engineer
+	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
+	back = /obj/item/weapon/storage/backpack/ert/engineer
+
+	belt = /obj/item/weapon/storage/belt/utility/cool
+	l_hand = null
+	suit_store = /obj/item/weapon/storage/lockbox/anti_singulo
+
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/rcd/ert, /obj/item/device/multitool, /obj/item/stack/sheet/metal/fifty, /obj/item/stack/sheet/glass/fifty)
+
+	assignment = "Engineering Corps Team Engineer"
+
 /datum/outfit/responders/nanotrasen_ert/medic
 	name = "Responders: NT ERT Medic"
 	glasses = /obj/item/clothing/glasses/hud/health/night
@@ -92,6 +119,18 @@
 
 	assignment = "Emergency Response Team Medic"
 
+/datum/outfit/responders/nanotrasen_ert/medic/emt
+	name = "Responders: NT ERT Medic (EMT)"
+
+	l_pocket = /obj/item/weapon/storage/pouch/medical_supply/combat
+
+	assignment = "Emergency Medical Team Medic"
+
+/datum/outfit/responders/nanotrasen_ert/medic/emt/surgeon
+	name = "Responders: NT ERT Surgeon (EMT)"
+	belt = /obj/item/weapon/storage/belt/medical/surg/full
+	l_hand = /obj/item/roller/roller_holder_surg
+	assignment = "Emergency Medical Team Surgeon"
 
 /datum/outfit/responders/gorlex_marauders
 	name = "Responders: Gorlex Marauder"
@@ -132,7 +171,6 @@
 	suit = /obj/item/clothing/suit/space/rig/syndi/heavy
 	id = /obj/item/weapon/card/id/syndicate/commander
 	r_hand = /obj/item/device/radio/uplink
-
 
 /datum/outfit/responders/deathsquad
 	name = "Responders: Death Squad"
@@ -193,13 +231,11 @@
 	else
 		H.equip_or_collect(new /obj/item/weapon/gun/energy/pulse_rifle(H), SLOT_S_STORE)
 
-
 	H.real_name = "[pick(rank)] [pick(last_names)]"
 	var/obj/item/weapon/card/id/centcom/W = H.wear_id
 	W.assignment = assignment
 	W.rank = "Nanotrasen Representative"
 	W.assign(H.real_name)
-
 
 /datum/outfit/responders/deathsquad/leader
 	name = "Responders: Death Squad Leader"
@@ -269,6 +305,68 @@
 	W.assignment = "Pirate Captain"
 	W.assign(H.real_name)
 
+/datum/outfit/responders/ussp
+	name = "Responders: Soviet"
+
+	suit = /obj/item/clothing/suit/armor/vest/surplus
+	l_ear = /obj/item/device/radio/headset
+	uniform =/obj/item/clothing/under/soviet
+	shoes = /obj/item/clothing/shoes/boots
+	back = /obj/item/weapon/storage/backpack/kitbag
+	suit_store = /obj/item/weapon/gun/projectile/shotgun/bolt_action
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/soviet,
+	/obj/item/device/flashlight/seclite
+	)
+
+	l_pocket = /obj/item/ammo_box/magazine/a774clip
+	r_pocket = /obj/item/ammo_box/magazine/a774clip
+
+	belt = /obj/item/weapon/shovel/spade/soviet
+
+	id = /obj/item/weapon/card/id/syndicate
+	var/assignment = "Krasnoarmeets"
+	var/list/surnames = list("Ivanov", "Petrov", "Vasilyev", "Semenov", "Mihailov", "Pavlov", "Fedorov", "Andreev", "Stepanov", "Smirnov", "Kuznetsov")
+
+/datum/outfit/responders/ussp/post_equip(mob/living/carbon/human/H)
+	H.real_name = "[assignment] [pick(surnames)][H.gender == "male" ? "" : "a"]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
+	W.assignment = "[assignment]"
+	W.assign(H.real_name)
+
+	if(prob(30))
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/surplus(H), SLOT_HEAD)
+	else
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka(H), SLOT_HEAD)
+
+/datum/outfit/responders/ussp/leader
+	name = "Responders: Soviet Leader"
+
+	head = /obj/item/clothing/head/soviet_peaked_cap
+	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
+
+	l_hand = /obj/item/device/megaphone
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/soviet,
+	/obj/item/device/flashlight/seclite
+	)
+
+	l_pocket = /obj/item/ammo_box/magazine/stechkin
+	r_pocket = /obj/item/ammo_box/magazine/stechkin
+
+	belt = /obj/item/weapon/shovel/spade/soviet
+
+	assignment = "Komissar"
+	surnames = list("Makarov", "Zahaev", "Barkov", "Volkov")
+
+/datum/outfit/responders/ussp/leader/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.mind.skills.add_available_skillset(/datum/skillset/soviet_leader)
+	H.mind.skills.maximize_active_skills()
+
 /obj/item/weapon/storage/belt/security/ert
 	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
 
@@ -289,3 +387,44 @@
 /obj/item/weapon/rcd/ert
 	name = "advanced RCD"
 	matter = 100
+
+/obj/item/stack/sheet/metal/fifty
+	amount = 50
+	w_class = SIZE_SMALL
+
+/obj/item/stack/sheet/glass/fifty
+	amount = 50
+	w_class = SIZE_SMALL
+
+/obj/item/weapon/storage/pouch/medical_supply/combat
+	name = "combat medical supply pouch"
+	desc = "Can hold large amount of combat medical equipment."
+	icon_state = "medical_supply"
+	item_state = "medical_supply"
+
+	max_storage_space = 18
+	storage_slots = 9
+	max_w_class = SIZE_SMALL
+
+	startswith = list(
+		/obj/item/weapon/reagent_containers/hypospray/combat/bleed,
+		/obj/item/weapon/reagent_containers/hypospray/combat/bruteburn,
+		/obj/item/weapon/reagent_containers/hypospray/combat/dexalin,
+		/obj/item/weapon/reagent_containers/hypospray/combat/atoxin,
+		/obj/item/weapon/reagent_containers/hypospray/combat/intdam,
+		/obj/item/weapon/reagent_containers/hypospray/combat/pain,
+		/obj/item/weapon/reagent_containers/hypospray/combat/bone,
+		/obj/item/stack/medical/suture,
+		/obj/item/device/healthanalyzer,
+	)
+
+/obj/item/weapon/storage/box/space_suit
+	name = "boxed space suit"
+	desc = "It's a boxed space suit with breathing mask and emergency oxygen tank."
+
+/obj/item/weapon/storage/box/space_suit/soviet/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/syndicate/civilian(src)
+	new /obj/item/clothing/suit/space/syndicate/civilian(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
