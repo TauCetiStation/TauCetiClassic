@@ -39193,6 +39193,13 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "isX" = (
