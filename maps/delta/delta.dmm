@@ -50319,9 +50319,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "kEm" = (
-/obj/machinery/computer/med_data{
-	dir = 4
-	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -57205,6 +57203,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
 	icon_state = "siding_line"
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = -25;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -77600,9 +77602,12 @@
 	},
 /area/station/rnd/xenobiology)
 "qGQ" = (
-/obj/machinery/computer/crew{
-	dir = 4
+/obj/machinery/vending/wallmed2{
+	pixel_x = -28
 	},
+/obj/structure/table,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/pen,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -79853,11 +79858,7 @@
 	dir = 6;
 	network = list("SS13","Medical")
 	},
-/obj/machinery/vending/wallmed2{
-	pixel_y = 28
-	},
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/machinery/computer/med_data,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -88534,6 +88535,9 @@
 /obj/effect/decal/turf_decal/alpha/dark_red{
 	icon_state = "bot"
 	},
+/obj/machinery/vending/wallmed2{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -93680,7 +93684,9 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "upe" = (
-/obj/machinery/vending/medical,
+/obj/machinery/computer/crew{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
