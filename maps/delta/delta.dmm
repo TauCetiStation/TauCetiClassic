@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aab" = (
+/obj/structure/table/glass,
+/obj/item/weapon/screwdriver,
+/obj/item/device/multitool,
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
+	},
+/area/station/tcommsat/chamber)
 "aac" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -106217,6 +106225,7 @@
 /area/station/maintenance/atmos)
 "xAN" = (
 /obj/structure/table/glass,
+/obj/item/weapon/crowbar,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -148319,7 +148328,7 @@ txe
 kxd
 xAN
 xoQ
-xAN
+aab
 jJB
 pQF
 iGQ
