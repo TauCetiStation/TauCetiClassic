@@ -16,6 +16,28 @@
 	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/starboard)
+"aad" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate,
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor,
+/area/station/maintenance/escape)
+"aae" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
+"aaf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor,
+/area/station/maintenance/science)
 "aag" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	name = "mime's closet"
@@ -27,6 +49,23 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
+"aah" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor,
+/area/station/maintenance/medbay)
+"aai" = (
+/obj/structure/closet,
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aaj" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -37,6 +76,12 @@
 	icon_state = "green"
 	},
 /area/station/engineering/atmos)
+"aak" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "aam" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -61,6 +106,7 @@
 "aar" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/five,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "aas" = (
@@ -6993,6 +7039,7 @@
 "brW" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/pickaxe,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/cargo/miningoffice)
 "bsc" = (
@@ -10160,6 +10207,7 @@
 /obj/structure/closet,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bYy" = (
@@ -19225,11 +19273,11 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "ebE" = (
-/obj/structure/closet,
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
+/obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/maintenance/engineering)
 "ebK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -28422,6 +28470,7 @@
 "gha" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "ghi" = (
@@ -44580,10 +44629,11 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "jCa" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/structure/table/woodentable,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
+/area/station/maintenance/science)
 "jCp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -45519,6 +45569,7 @@
 "jLZ" = (
 /obj/structure/rack,
 /obj/item/weapon/wrench,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "jMd" = (
@@ -69861,10 +69912,11 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/item/weapon/storage/box/snappops,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/clothing/suit/storage/hazardvest,
+/obj/item/weapon/storage/box/snappops,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "pjq" = (
@@ -76449,6 +76501,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/structure/closet,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "qGy" = (
@@ -87601,11 +87654,11 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "tiJ" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/wardrobe/robotics_black,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/maintenance/cargo)
 "tiK" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -90050,6 +90103,7 @@
 "tMf" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "tMh" = (
@@ -96936,6 +96990,7 @@
 "vtN" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "vtS" = (
@@ -97251,6 +97306,7 @@
 	},
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "vyg" = (
@@ -98414,11 +98470,11 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "vLG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/turf/simulated/floor,
-/area/station/maintenance/science)
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "vLX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -101263,14 +101319,12 @@
 	},
 /area/station/medical/surgeryobs)
 "wvl" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/wardrobe/robotics_black,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/medbay)
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "wvu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -101818,13 +101872,11 @@
 /turf/simulated/wall/r_wall,
 /area/station/rnd/xenobiology)
 "wBs" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/closet/crate,
-/turf/simulated/floor,
-/area/station/maintenance/escape)
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/five,
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "wBB" = (
 /obj/structure/rack,
 /obj/item/weapon/screwdriver,
@@ -102116,13 +102168,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "wEJ" = (
+/obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/closet,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor,
-/area/station/maintenance/engineering)
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "wES" = (
 /obj/structure/closet/bombclosetsecurity,
 /turf/simulated/floor{
@@ -104652,8 +104702,9 @@
 "xkE" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor,
+/area/station/maintenance/chapel)
 "xlj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -108390,10 +108441,14 @@
 	},
 /area/station/engineering/atmos)
 "xZa" = (
-/obj/structure/table/woodentable,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating,
-/area/station/maintenance/science)
+/obj/structure/closet,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/item/clothing/suit/storage/hazardvest,
+/turf/simulated/floor,
+/area/station/maintenance/engineering)
 "xZd" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -133469,7 +133524,7 @@ qSd
 jNv
 dfb
 oEF
-xZa
+jCa
 rlO
 pAm
 fUZ
@@ -137042,7 +137097,7 @@ nsa
 nsa
 gjK
 hBT
-wEJ
+xZa
 cjX
 flE
 wtC
@@ -137238,7 +137293,7 @@ tEF
 lkD
 kmo
 dgu
-lKH
+wBs
 wwi
 nVH
 tEF
@@ -139640,7 +139695,7 @@ juy
 fVu
 vsB
 rOU
-vLG
+aaf
 tIo
 rja
 wnH
@@ -139850,7 +139905,7 @@ isB
 nRf
 uwq
 wtC
-agb
+ebE
 vhK
 wtC
 ncC
@@ -139862,7 +139917,7 @@ tcM
 beK
 djv
 oZa
-tiJ
+wvl
 bGV
 waU
 wtC
@@ -140674,7 +140729,7 @@ eFM
 ydN
 cGi
 mYj
-wvl
+aah
 hHr
 hzh
 tIo
@@ -142743,7 +142798,7 @@ aOo
 hqd
 eIU
 syY
-xkE
+aak
 dyv
 tIo
 tIo
@@ -144263,7 +144318,7 @@ jaM
 kFd
 nza
 pku
-wBs
+aad
 hXu
 wDZ
 wDZ
@@ -149162,7 +149217,7 @@ odg
 fNA
 rZJ
 beJ
-ebE
+aai
 uZL
 pku
 ryt
@@ -150330,7 +150385,7 @@ vea
 rVd
 boL
 srs
-gbS
+vLG
 gbS
 gux
 srs
@@ -150581,7 +150636,7 @@ srs
 srs
 srs
 srs
-reb
+tiJ
 gbS
 knn
 niH
@@ -156086,7 +156141,7 @@ dwn
 dLG
 vXL
 xln
-jCa
+aae
 mDI
 iJP
 ykI
@@ -160190,7 +160245,7 @@ sfm
 ovN
 vFo
 sfm
-fbX
+xkE
 kEZ
 xln
 xln
@@ -160924,7 +160979,7 @@ kJs
 vSz
 bCI
 cHH
-pzr
+wEJ
 eYX
 iEb
 gYo
