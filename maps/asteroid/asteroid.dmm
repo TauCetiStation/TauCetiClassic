@@ -222,9 +222,8 @@
 	dir = 1
 	},
 /obj/structure/stool,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "aM" = (
 /obj/structure/sign/departments/science{
@@ -552,9 +551,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -634,9 +631,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/research_outpost/hallway)
 "bG" = (
 /obj/structure/table,
@@ -1348,17 +1343,15 @@
 /area/shuttle/alien/mine)
 "dh" = (
 /obj/item/stack/rods,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "di" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "dj" = (
 /obj/structure/transit_tube{
@@ -1646,14 +1639,12 @@
 	icon_state = "medium"
 	},
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "dJ" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "dL" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
@@ -1894,9 +1885,8 @@
 /area/shuttle/alien/mine)
 "eh" = (
 /obj/item/weapon/shard,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "ei" = (
 /turf/simulated/wall,
@@ -2192,14 +2182,8 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
-/area/asteroid/mine/abandoned)
-"eO" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "eP" = (
 /obj/structure/cable{
@@ -2623,15 +2607,13 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "fu" = (
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "fv" = (
 /obj/structure/transit_tube{
@@ -2919,15 +2901,13 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "gc" = (
 /obj/effect/decal/remains/xeno,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "gd" = (
 /obj/structure/transit_tube{
@@ -3132,15 +3112,8 @@
 /area/asteroid/mine/abandoned)
 "gD" = (
 /obj/structure/table,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
-/area/asteroid/mine/abandoned)
-"gE" = (
-/obj/structure/table,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "gG" = (
 /obj/structure/alien/weeds,
@@ -3370,36 +3343,9 @@
 /obj/item/clothing/suit/space/syndicate,
 /turf/simulated/floor/plating/airless,
 /area/asteroid/mine/abandoned)
-"hi" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/asteroid/mine/abandoned)
 "hj" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
-/area/asteroid/mine/abandoned)
-"hk" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
-/area/asteroid/mine/abandoned)
-"hl" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
-/area/asteroid/mine/abandoned)
-"hn" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "ho" = (
 /obj/structure/alien/weeds{
@@ -3685,15 +3631,13 @@
 /area/asteroid/mine/abandoned)
 "hV" = (
 /obj/effect/gibspawner/robot,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "hW" = (
 /obj/effect/gibspawner/human,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "hX" = (
 /obj/structure/alien/weeds{
@@ -4241,29 +4185,19 @@
 /area/asteroid/mine/abandoned)
 "iQ" = (
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "iR" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
-"iS" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
-/area/asteroid/mine/abandoned)
 "iT" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "iU" = (
 /obj/structure/window/fulltile/reinforced{
@@ -4661,11 +4595,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
-"jJ" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
-/area/asteroid/mine/abandoned)
 "jK" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4674,9 +4603,8 @@
 /area/asteroid/mine/abandoned)
 "jL" = (
 /obj/effect/decal/remains/xeno,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "jM" = (
 /turf/simulated/floor/airless,
@@ -4684,12 +4612,6 @@
 "jN" = (
 /obj/structure/alien/weeds,
 /turf/simulated/floor,
-/area/asteroid/mine/abandoned)
-"jO" = (
-/obj/effect/decal/remains/xeno,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
 /area/asteroid/mine/abandoned)
 "jP" = (
 /obj/structure/table,
@@ -5216,36 +5138,22 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/outpost_misc_lab)
-"kH" = (
-/obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/asteroid/mine/abandoned)
 "kI" = (
 /obj/effect/decal/remains/human,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "kJ" = (
 /obj/structure/alien/weeds,
 /turf/simulated/floor/plating/airless,
-/area/asteroid/mine/abandoned)
-"kK" = (
-/obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
 /area/asteroid/mine/abandoned)
 "kL" = (
 /obj/item/clothing/mask/facehugger{
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "kM" = (
 /obj/structure/table,
@@ -5614,23 +5522,11 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
-"lx" = (
-/obj/item/weapon/shard,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
-/area/asteroid/mine/abandoned)
 "ly" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /turf/simulated/floor/airless,
-/area/asteroid/mine/abandoned)
-"lz" = (
-/obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
 /area/asteroid/mine/abandoned)
 "lA" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -5888,9 +5784,8 @@
 "me" = (
 /obj/structure/table,
 /obj/item/weapon/paper/crumpled,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "mg" = (
 /obj/structure/grille,
@@ -6218,17 +6113,8 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
-/area/asteroid/mine/abandoned)
-"na" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "nb" = (
 /obj/effect/decal/remains/xeno,
@@ -6485,12 +6371,6 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "green"
-	},
-/area/asteroid/mine/abandoned)
-"nD" = (
-/obj/effect/gibspawner/human,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
 	},
 /area/asteroid/mine/abandoned)
 "nE" = (
@@ -6814,18 +6694,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
-"ot" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
-/area/asteroid/mine/abandoned)
 "ou" = (
 /obj/structure/ore_box,
 /obj/machinery/light_construct/small{
@@ -6869,9 +6737,8 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oA" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
@@ -7086,14 +6953,6 @@
 	icon_state = "asteroidplating"
 	},
 /area/asteroid/mine/unexplored/safe)
-"oX" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/asteroid/mine/abandoned)
 "oY" = (
 /obj/item/weapon/shard,
 /obj/structure/window/fulltile/reinforced{
@@ -7159,9 +7018,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "pg" = (
 /obj/structure/cable{
@@ -7566,9 +7423,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qd" = (
 /obj/machinery/door/firedoor,
@@ -7736,9 +7591,8 @@
 "qB" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/bio_suit/new_hazmat/security,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "qC" = (
 /obj/structure/alien/resin/wall,
@@ -7902,9 +7756,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qX" = (
 /obj/effect/decal/turf_decal{
@@ -8237,9 +8089,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "rN" = (
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
+/turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "rO" = (
 /obj/structure/barricade/wooden,
@@ -8582,9 +8432,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sQ" = (
 /obj/structure/sign/xeno_warning_mining{
@@ -8742,9 +8591,8 @@
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
 "tl" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tm" = (
 /obj/machinery/light_construct/small,
@@ -8896,11 +8744,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/asteroid/mine/dwarf)
-"tG" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /area/asteroid/mine/dwarf)
 "tH" = (
 /obj/machinery/mineral/output,
@@ -11652,9 +11495,8 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/production)
 "AL" = (
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "AO" = (
 /obj/structure/table,
@@ -12544,9 +12386,8 @@
 	pixel_x = 25;
 	pixel_y = -5
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "Mb" = (
 /obj/structure/sign/departments/chemistry{
@@ -13316,6 +13157,9 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"XD" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -31208,7 +31052,7 @@ aa
 ar
 ei
 dJ
-eO
+dJ
 nC
 op
 ei
@@ -31464,10 +31308,10 @@ aa
 ar
 ac
 ei
-hk
+hj
 dJ
-eO
-hi
+dJ
+dJ
 ei
 ad
 ad
@@ -31722,8 +31566,8 @@ ar
 ac
 ei
 me
-hi
-eO
+dJ
+dJ
 gD
 ei
 ad
@@ -32233,17 +32077,17 @@ aa
 hT
 iM
 fY
-gE
+gD
 gD
 bM
 ml
-eO
+dJ
 oq
 oq
 oq
 oq
 oq
-hk
+hj
 qQ
 rh
 pA
@@ -32489,12 +32333,12 @@ aa
 ar
 hg
 iN
-jJ
-kH
+dJ
+fu
 hj
 mg
-kH
-lz
+fu
+fu
 ei
 ei
 ei
@@ -32748,12 +32592,12 @@ hU
 gB
 gB
 kI
-lx
+eh
 bM
 mZ
 gb
 bM
-oX
+iT
 jN
 jN
 ei
@@ -33005,10 +32849,10 @@ hg
 iO
 iP
 kJ
-kH
+fu
 ei
-kH
-eO
+fu
+dJ
 bM
 jN
 jN
@@ -33261,17 +33105,17 @@ gA
 gB
 iP
 jK
-jJ
+dJ
 hj
 iR
-na
-nD
+iT
+hW
 ei
-hk
+hj
 py
 iT
 ei
-hi
+dJ
 qQ
 ri
 rl
@@ -33514,16 +33358,16 @@ aa
 aa
 ar
 gB
-hi
+dJ
 gB
 gB
-hi
-kK
+dJ
+iQ
 iQ
 ei
 dJ
-na
-hk
+iT
+hj
 jN
 iQ
 jN
@@ -33773,13 +33617,13 @@ fY
 gC
 hj
 gb
-eO
+dJ
 jL
 kL
 ly
 bM
 dJ
-lz
+fu
 ei
 fu
 di
@@ -34028,18 +33872,18 @@ ar
 ar
 fY
 gD
-hk
+hj
 hV
 iQ
 hj
-hk
+hj
 kM
 bM
 nb
 fu
 bM
 hj
-hi
+dJ
 fu
 ei
 qC
@@ -34284,10 +34128,10 @@ df
 ar
 fr
 fY
-gE
-hl
+gD
+di
 hj
-hk
+hj
 jM
 kM
 kM
@@ -34295,7 +34139,7 @@ bM
 jN
 nE
 bM
-kK
+iQ
 jN
 iT
 ei
@@ -34550,7 +34394,7 @@ bM
 bM
 ei
 dJ
-eO
+dJ
 ei
 hj
 ei
@@ -34801,13 +34645,13 @@ gb
 dJ
 jN
 fu
-iS
+gb
 jN
 dJ
 jN
 dJ
-eO
-kK
+dJ
+iQ
 hj
 iT
 hj
@@ -35052,21 +34896,21 @@ bM
 di
 dJ
 di
-eO
+dJ
 fu
 gc
 jN
-hn
+gb
 hW
 iT
-jO
+gc
 fu
 jN
 ml
-eO
+dJ
 fu
 ml
-hi
+dJ
 fu
 ei
 ei
@@ -35576,9 +35420,9 @@ ei
 jP
 jP
 jP
-kH
+fu
 co
-kH
+fu
 nb
 bM
 pz
@@ -35832,11 +35676,11 @@ hX
 ei
 jN
 fu
-eO
-eO
-lz
+dJ
+dJ
+fu
 co
-ot
+ft
 oY
 pA
 co
@@ -36089,9 +35933,9 @@ ei
 ei
 jQ
 jN
-lz
+fu
 ft
-eO
+dJ
 ml
 co
 oZ
@@ -38226,7 +38070,7 @@ sJ
 sJ
 sJ
 tx
-tG
+tl
 st
 kO
 kO
@@ -51344,7 +51188,7 @@ ac
 ac
 ac
 mY
-rN
+XD
 ar
 aa
 aa
@@ -51601,7 +51445,7 @@ aa
 mY
 aa
 ar
-rN
+XD
 ar
 aa
 kO
@@ -51858,7 +51702,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 kO
 kO
@@ -52115,7 +51959,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 rK
 rK
@@ -52372,7 +52216,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 rK
 rK
 rK
@@ -52629,7 +52473,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 rK
 rK
 aa
@@ -52886,7 +52730,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
@@ -53143,7 +52987,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa
@@ -53400,7 +53244,7 @@ aa
 aa
 aa
 ar
-rN
+XD
 ar
 aa
 aa

@@ -1,34 +1,34 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"
-	set desc = "Visit the wiki."
+	set desc = "Посетить Википедию."
 	set hidden = TRUE
 	link_with_alert(src, config.wikiurl)
 
 /client/verb/forum()
 	set name = "forum"
-	set desc = "Visit the forum."
+	set desc = "Посетить форум."
 	set hidden = TRUE
 	link_with_alert(src, config.forumurl)
 
 /client/verb/rules()
 	set name = "Rules"
-	set desc = "Show Server Rules."
+	set desc = "Ознакомиться с правилами сервера."
 	set hidden = TRUE
 	link_with_alert(src, config.server_rules_url)
 
 /client/verb/reportissue()
 	set name = "report-issue"
-	set desc = "Report an issue"
+	set desc = "Сообщить о баге или проблеме."
 	set hidden = 1
 
 	var/githuburl = config.repository_link
 	if(!githuburl)
-		to_chat(src, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")
+		to_chat(src, "<span class='danger'>Данная ссылка не встроена в конфигурацию сервера. Пожалуйста, оповестите об этом хоста.</span>")
 		return
 
-	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
-	if(tgui_alert(usr, message, "Report Issue", list("Yes", "No")) != "Yes")
+	var/message = "Вы откроете GitHub в вашем браузере. Вы уверены?"
+	if(tgui_alert(usr, message, "Report Issue", list("Да", "Нет")) != "Да")
 		return
 	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 	var/servername = config.server_name
@@ -43,7 +43,7 @@
 
 /client/verb/changes()
 	set name = "Changelog"
-	set desc = "View the changelog."
+	set desc = "Ознакомиться со списком недавних изменений."
 	set hidden = 1
 
 	link_with_alert(src, config.changelog_link)
@@ -55,13 +55,13 @@
 
 /client/verb/discord()
 	set name = "Discord"
-	set desc = "Invite Discord conference."
+	set desc = "Посетить Discord сервер."
 	set hidden = TRUE
 	link_with_alert(src, config.discord_invite_url)
 
 /proc/link_with_alert(client/user, link_url)
 	if(link_url)
-		if(tgui_alert(usr, "This will open your browser. Are you sure?",, list("Yes", "No")) == "Yes")
+		if(tgui_alert(usr, "Будет открыт ваш браузер. Вы уверены?",, list("Да", "Нет")) == "Да")
 			user << link(link_url)
 	else
-		to_chat(user, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")
+		to_chat(user, "<span class='danger'>Данная ссылка не встроена в конфигурацию сервера. Пожалуйста, оповестите об этом хоста.</span>")
