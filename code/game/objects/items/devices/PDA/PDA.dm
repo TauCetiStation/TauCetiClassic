@@ -78,7 +78,14 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	action_button_name = "Toggle light"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pda_light)
+
+/datum/action/item_action/hands_free/toggle_pda_light
+	name = "Toggle light"
+
+/datum/action/item_action/hands_free/toggle_pda_light/Activate()
+	var/obj/item/device/pda/P = target
+	P.toggle_light()
 
 /obj/item/device/pda/atom_init()
 	. = ..()
@@ -122,9 +129,6 @@
 		return
 
 	return ..()
-
-/obj/item/device/pda/ui_action_click()
-	toggle_light()
 
 /obj/item/device/pda/verb/toggle_light()
 	set name = "Toggle light"

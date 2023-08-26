@@ -25,7 +25,10 @@
 	var/list/icons_available
 	var/icon_directory = 'icons/hud/radial.dmi'
 
-	action_button_name = "Toggle Recorder"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_recorder)
+
+/datum/action/item_action/hands_free/toggle_recorder
+	name = "Toggle Recorder"
 
 /obj/item/device/taperecorder/Destroy()
 	deltimer(timer_to_destruct)

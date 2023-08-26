@@ -631,16 +631,19 @@
 	name = "Student Jacket"
 	desc = "A Student's jacket from the eighties."
 	icon_state = "student_jacket"
-	action_button_name = "To Fasten"
+	item_action_types = list(/datum/action/item_action/hands_free/to_fasten)
 	var/fastened = TRUE
+/datum/action/item_action/hands_free/to_fasten
+	name = "To Fasten"
 
-/obj/item/clothing/suit/student_jacket/ui_action_click()
-	if(fastened)
-		icon_state = "student_jacket_open"
+/datum/action/item_action/hands_free/to_fasten/Activate()
+	var/obj/item/clothing/suit/student_jacket/S = target
+	if(S.fastened)
+		S.icon_state = "student_jacket_open"
 	else
-		icon_state = "student_jacket"
-	update_inv_mob()
-	fastened = !fastened
+		S.icon_state = "student_jacket"
+	S.update_inv_mob()
+	S.fastened = !S.fastened
 
 /obj/item/clothing/suit/atlas_jacket
 	name = "atlas jacket"
