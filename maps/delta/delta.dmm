@@ -355,11 +355,9 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "aaF" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Check Crossing Point";
-	req_access = list(12)
-	},
-/obj/machinery/door/firedoor,
+/obj/item/clothing/gloves/rainbow,
+/obj/item/clothing/shoes/rainbow,
+/obj/item/clothing/suit/poncho/rainbow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aaG" = (
@@ -4733,6 +4731,7 @@
 	id = "maint_contraption"
 	},
 /obj/structure/plasticflaps/mining,
+/obj/item/clothing/under/rainbow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aOp" = (
@@ -61710,6 +61709,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/thin/reinforced,
 /obj/random/tools/tool,
+/obj/item/clothing/head/soft/rainbow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "ngu" = (
@@ -144043,7 +144043,7 @@ vhU
 hqd
 lSy
 iYp
-pku
+aaF
 hqd
 tIo
 tIo
@@ -144298,7 +144298,7 @@ mYj
 hqd
 pPW
 hqd
-aaF
+hqd
 hqd
 hqd
 hqd
