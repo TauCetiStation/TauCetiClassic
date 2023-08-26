@@ -41738,12 +41738,13 @@
 /area/station/engineering/atmos/distribution)
 "iVK" = (
 /obj/structure/rack,
-/obj/item/weapon/mop,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = 3
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -44445,6 +44446,8 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/structure/mopbucket,
+/obj/item/weapon/mop,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
