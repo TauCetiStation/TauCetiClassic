@@ -20063,6 +20063,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/vending/wallmed2{
+	pixel_x = 26
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -57641,6 +57644,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/vending/wallmed2{
+	pixel_x = 26
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
