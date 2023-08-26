@@ -15,7 +15,7 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	wire_count = 13
-	window_y = 590
+	window_y = 600
 
 /datum/wires/airlock/can_use()
 	var/obj/machinery/door/airlock/A = holder
