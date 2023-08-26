@@ -1260,13 +1260,13 @@ var/global/list/airlock_overlays = list()
 	pixel_x = 0
 
 /obj/effect/unrestricted_side/east
-	icon_state = "unres_2"
+	icon_state = "unres_4"
 	dir = EAST
 	pixel_x = 32
 	pixel_y = 0
 
 /obj/effect/unrestricted_side/south
-	icon_state = "unres_4"
+	icon_state = "unres_2"
 	dir = SOUTH
 	pixel_y = -32
 	pixel_x = 0
