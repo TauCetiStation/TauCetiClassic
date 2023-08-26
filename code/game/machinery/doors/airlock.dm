@@ -356,17 +356,13 @@ var/global/list/airlock_overlays = list()
 			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, ABOVE_LIGHTING_PLANE)
 			switch (heading)
 				if (NORTH)
-					floorlight.pixel_x = 0
 					floorlight.pixel_y = 32
 				if (SOUTH)
-					floorlight.pixel_x = 0
 					floorlight.pixel_y = -32
 				if (EAST)
 					floorlight.pixel_x = 32
-					floorlight.pixel_y = 0
 				if (WEST)
 					floorlight.pixel_x = -32
-					floorlight.pixel_y = 0
 			. += floorlight
 
 	cut_overlays()
@@ -381,25 +377,6 @@ var/global/list/airlock_overlays = list()
 		else
 			MA = mutable_appearance(icon_file, icon_state)
 		. = airlock_overlays[iconkey] = MA
-
-/obj/effect/mapping_helpers/airlock/unres
-	name = "airlock unrestricted side helper"
-	icon_state = "airlock_unres_helper"
-	dir = SOUTH
-
-/obj/effect/mapping_helpers/airlock/unres/atom_init()
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/mapping_helpers/airlock/unres/atom_init_late()
-	. = ..()
-	for(var/obj/machinery/door/airlock/airlock in get_turf(src))
-		airlock.unres_sides ^= dir
-		airlock.update_icon()
-	return INITIALIZE_HINT_QDEL
-
-/obj/effect/mapping_helpers/airlock/unres/north
-	dir = NORTH
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
@@ -1255,3 +1232,47 @@ var/global/list/airlock_overlays = list()
 #undef AIRLOCK_DENY_LIGHT_COLOR
 #undef AIRLOCK_LIGHT_POWER
 #undef AIRLOCK_LIGHT_RANGE
+
+///Mapping helper. Just place it on the map on the airlock and select side, in the round this side will be unrestricted
+/obj/effect/unrestricted_side
+	name = "airlock unrestricted side helper"
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 16
+	pixel_x = 16
+
+/obj/effect/unrestricted_side/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/unrestricted_side/atom_init_late()
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	airlock.unres_sides ^= dir
+	airlock.update_icon()
+	qdel(src)
+
+//Also, you can set the value to 5 (3, 6, 7, etc), and have unrestricted access to both north and east sides, but who cares
+/obj/effect/unrestricted_side/north
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/east
+	icon_state = "unres_2"
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/effect/unrestricted_side/south
+	icon_state = "unres_4"
+	dir = SOUTH
+	pixel_y = -32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/west
+	icon_state = "unres_8"
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0
