@@ -161,6 +161,12 @@
 	},
 /turf/simulated/floor,
 /area/space)
+"bB" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/turf/simulated/floor,
+/area/space)
 "bE" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -5580,7 +5586,7 @@ Hy
 Nd
 IG
 ok
-yc
+bB
 Rh
 En
 rK
