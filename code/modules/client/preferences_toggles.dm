@@ -253,6 +253,11 @@
 		var/atom/movable/screen/plane_master/lamps_selfglow/BLM = locate() in screen
 		var/atom/movable/screen/plane_master/lamps_glare/GLR = locate() in screen
 
+		if(prefs.old_lighting)
+			EXP.alpha = 0
+		else
+			EXP.alpha = 255
+
 		EXP.backdrop(mob)
 		BLM.backdrop(mob)
 		GLR.backdrop(mob)
