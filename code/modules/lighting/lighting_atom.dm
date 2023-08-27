@@ -115,10 +115,10 @@
 /atom/proc/turn_light_off()
 	set_light(0)
 
-var/global/GLOW_BRIGHTNESS_BASE = 0.2
-var/global/GLOW_BRIGHTNESS_POWER = 0
+var/global/GLOW_BRIGHTNESS_BASE = 0.46
+var/global/GLOW_BRIGHTNESS_POWER = -1.6
 var/global/GLOW_CONTRAST_BASE = 10
-var/global/GLOW_CONTRAST_POWER = -7.5
+var/global/GLOW_CONTRAST_POWER = -0.15
 var/global/EXPOSURE_BRIGHTNESS_BASE = 0.2
 var/global/EXPOSURE_BRIGHTNESS_POWER = -0.2
 var/global/EXPOSURE_CONTRAST_BASE = 10
