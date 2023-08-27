@@ -14,6 +14,8 @@
 	///reference: current relay this plane is utilizing to render
 	var/atom/movable/render_plane_relay/relay
 
+	var/hidden_for_user = FALSE
+
 //Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /atom/movable/screen/plane_master/proc/backdrop(mob/mymob)
