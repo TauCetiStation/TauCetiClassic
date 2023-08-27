@@ -41281,9 +41281,6 @@
 	dir = 8
 	},
 /obj/item/weapon/storage/firstaid/regular,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bwR" = (
