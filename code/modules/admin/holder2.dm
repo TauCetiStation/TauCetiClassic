@@ -16,6 +16,7 @@ var/global/list/admin_datums = list()
 
 	var/datum/filter_editor/filteriffic
 	var/datum/particle_editor/particool
+	var/datum/bloom_edit/debug_bloom
 
 /datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
 	if(!ckey)

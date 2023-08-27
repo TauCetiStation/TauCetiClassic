@@ -118,7 +118,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	minimap_image = "nano/images/nanomap_[SSmapping.station_image]_1.png"
 	server_address = BYOND_SERVER_ADDRESS
 	base_commit_sha = global.base_commit_sha
-	test_merges = global.test_merges
+	if(global.test_merges)
+		test_merges = "#" + jointext(global.test_merges, "# ")
 	completion_html = SSticker.mode.completition_text
 
 	save_manifest_entries()

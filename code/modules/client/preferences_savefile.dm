@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 42
+#define SAVEFILE_VERSION_MAX 44
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -70,6 +70,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		for(var/role in be_role)
 			if(!CanBeRole(role))
 				be_role -= role
+
+	if(current_version < 44)
+		custom_emote_panel = global.emotes_for_emote_panel
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -365,6 +368,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_color"]     >> outline_color
 	S["eorg_enabled"]      >> eorg_enabled
 	S["show_runechat"]     >> show_runechat
+	S["emote_panel"]       >> custom_emote_panel
 
 	// Custom hotkeys
 	S["key_bindings"] >> key_bindings
@@ -421,6 +425,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
+	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
 	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
@@ -483,6 +488,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size
 	S["tooltip_font"]      << tooltip_font
+	S["emote_panel"]       << custom_emote_panel
 
 
 	// Custom hotkeys
@@ -793,6 +799,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!length(base_bindings[key]))
 			base_bindings -= key
 	return base_bindings
+
+/proc/sanitize_emote_panel(value)
+	var/list/emote_panel = SANITIZE_LIST(value)
+	var/list/sanitized_emote_panel = list()
+	for(var/key in emote_panel)
+		if(!(key in global.emotes_for_emote_panel))
+			continue
+		sanitized_emote_panel |= key
+	return sanitized_emote_panel
 
 #undef SAVEFILE_TOO_OLD
 #undef SAVEFILE_UP_TO_DATE

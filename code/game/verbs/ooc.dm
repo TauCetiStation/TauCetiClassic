@@ -209,3 +209,24 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
 
+/client/verb/show_test_merges()
+	set name = "Show Test Merges"
+	set desc = "Shows a list of all test merges that are currently active"
+	set category = "OOC"
+
+	if(!test_merges)
+		to_chat(src, "<div class='test_merges'>No test merges are currently active</div>")
+		return
+
+	var/joined_text = "[EMBED_TIP("<b>Test merged PRs</b>", "Данные изменения временно залиты на сервер, для теста перед окончательным принятием изменений или сбора отзывов")]<b>:</b><br>"
+	var/is_loading = FALSE
+	for(var/pr in test_merges)
+		if(test_merges[pr])
+			joined_text += "[ENTITY_TAB]<a href='[config.repository_link]/pull/[pr]'>#[pr]</a>: [test_merges[pr]]<br>"
+			if(test_merges[pr] == TEST_MERGE_DEFAULT_TEXT)
+				is_loading = TRUE
+
+	if(is_loading)
+		joined_text += "<br><i>You can use OOC - Show Test Merges a bit later for more information about current test merges.</i>"
+
+	to_chat(src, "<div class='test_merges'>[joined_text]</div>")
