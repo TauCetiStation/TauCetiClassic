@@ -251,14 +251,11 @@
 	if(screen && screen.len)
 		var/atom/movable/screen/plane_master/exposure/EXP = locate() in screen
 		var/atom/movable/screen/plane_master/lamps_selfglow/BLM = locate() in screen
-		if(prefs.old_lighting)
-			EXP.alpha = 0
-			BLM.alpha = 0
-		else
-			EXP.alpha = 255
-			BLM.alpha = 255
+		var/atom/movable/screen/plane_master/lamps_glare/GLR = locate() in screen
+
 		EXP.backdrop(mob)
 		BLM.backdrop(mob)
+		GLR.backdrop(mob)
 	feedback_add_details("admin_verb","OLGHT")
 
 /client/verb/toggle_glare()
@@ -271,10 +268,7 @@
 	prefs.save_preferences()
 	if(screen && screen.len)
 		var/atom/movable/screen/plane_master/lamps_glare/PM = locate() in screen
-		if(!prefs.lampsglare)
-			PM.alpha = 0
-		else
-			PM.alpha = 255
+
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","GLR")
 

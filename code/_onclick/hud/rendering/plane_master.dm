@@ -127,23 +127,24 @@
 	remove_filter("add_lamps_to_selfglow")
 	remove_filter("lamps_selfglow_bloom")
 
-	if(istype(mymob) && mymob?.client?.prefs?.old_lighting)
+	if(!istype(mymob))
 		return
-	var/bloomsize
-	var/bloomoffset
-	if(istype(mymob) && mymob?.client?.prefs?.bloomlevel)
-		switch(mymob?.client?.prefs?.bloomlevel)
-			if(BLOOM_DISABLE)
-				return
-			if(BLOOM_LOW)
-				bloomsize = 2
-				bloomoffset = 1
-			if(BLOOM_MED)
-				bloomsize = 3
-				bloomoffset = 2
-			if(BLOOM_HIGH)
-				bloomsize = 5
-				bloomoffset = 3
+	if(mymob?.client?.prefs?.old_lighting)
+		return
+	var/bloomsize = 0
+	var/bloomoffset = 0
+	switch(mymob?.client?.prefs?.bloomlevel)
+		if(BLOOM_DISABLE)
+			return
+		if(BLOOM_LOW)
+			bloomsize = 2
+			bloomoffset = 1
+		if(BLOOM_MED)
+			bloomsize = 3
+			bloomoffset = 2
+		if(BLOOM_HIGH)
+			bloomsize = 5
+			bloomoffset = 3
 
 		add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
 		add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = bloomsize, offset = bloomoffset, alpha = 100))

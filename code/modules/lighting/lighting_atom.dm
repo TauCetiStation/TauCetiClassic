@@ -153,8 +153,6 @@ var/global/EXPOSURE_POWER = 0.3
 		exposure_overlay.pixel_y = 16 - EX.Height() / 2
 
 		add_overlay(exposure_overlay)
-#undef EXPOSURE_BASE
-#undef EXPOSURE_POWER
 
 /atom/proc/delete_lights()
 	cut_overlay(glow_overlay)
