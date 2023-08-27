@@ -116,13 +116,13 @@
 	set_light(0)
 
 var/global/GLOW_BRIGHTNESS_BASE = 0.2
-var/global/GLOW_BRIGHTNESS_POWER = 0.25
-var/global/GLOW_CONTRAST_BASE = 5
-var/global/GLOW_CONTRAST_POWER = -1
-var/global/EXPOSURE_BRIGHTNESS_BASE = 0
-var/global/EXPOSURE_BRIGHTNESS_POWER = 0.1
-var/global/EXPOSURE_CONTRAST_BASE = 5
-var/global/EXPOSURE_CONTRAST_POWER = -1
+var/global/GLOW_BRIGHTNESS_POWER = 0
+var/global/GLOW_CONTRAST_BASE = 10
+var/global/GLOW_CONTRAST_POWER = -7.5
+var/global/EXPOSURE_BRIGHTNESS_BASE = 0.2
+var/global/EXPOSURE_BRIGHTNESS_POWER = -0.2
+var/global/EXPOSURE_CONTRAST_BASE = 10
+var/global/EXPOSURE_CONTRAST_POWER = 0
 /atom/proc/update_bloom()
 	cut_overlay(glow_overlay)
 	cut_overlay(exposure_overlay)
