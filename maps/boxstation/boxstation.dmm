@@ -15307,7 +15307,6 @@
 /area/station/hallway/primary/central)
 "aBd" = (
 /obj/item/airbag,
-/obj/machinery/light/smart,
 /turf/environment/space,
 /area/space)
 "aBe" = (
