@@ -42,6 +42,7 @@ def fetch_merge(args: FetchArgs):
         resp = requests.get(
             f"https://api.github.com/repos/{args.repo}/pulls/{args.pr_id}",
             timeout=30,
+            headers=args.headers,
         )
         if resp.status_code == 429:
             # you look at your anonymous access and sigh
