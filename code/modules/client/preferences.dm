@@ -163,6 +163,9 @@ var/global/list/preferences_datums = list()
 	// jukebox volume
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
+	var/bloomlevel = BLOOM_MED
+	var/old_lighting = FALSE
+	var/lampsglare = FALSE
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE

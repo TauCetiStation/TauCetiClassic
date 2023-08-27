@@ -14,6 +14,8 @@
 	///reference: current relay this plane is utilizing to render
 	var/atom/movable/render_plane_relay/relay
 
+	var/hidden_for_user = FALSE
+
 //Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /atom/movable/screen/plane_master/proc/backdrop(mob/mymob)
@@ -96,6 +98,86 @@
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/exposure
+	name = "exposure plane master"
+	plane = LIGHTING_EXPOSURE_PLANE
+	appearance_flags = PLANE_MASTER|PIXEL_SCALE //should use client color
+	blend_mode = BLEND_ADD
+	blend_mode_override = BLEND_ADD
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob) // todo: prefs
+	. = ..()
+	remove_filter("blur_exposure")
+	if(istype(mymob) && mymob?.client?.prefs?.old_lighting)
+		return
+	add_filter("blur_exposure", 1, gauss_blur_filter(size = 20)) // by refs such blur is heavy, but tests were okay and this allow us more flexibility with setup
+
+/atom/movable/screen/plane_master/lamps_selfglow
+	name = "lamps selfglow plane master"
+	plane = LIGHTING_LAMPS_SELFGLOW
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_ADD
+	blend_mode_override = BLEND_ADD
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob) // todo: prefs
+	. = ..()
+	remove_filter("add_lamps_to_selfglow")
+	remove_filter("lamps_selfglow_bloom")
+
+	if(!istype(mymob))
+		return
+	if(mymob?.client?.prefs?.old_lighting)
+		return
+	var/bloomsize = 0
+	var/bloomoffset = 0
+	switch(mymob?.client?.prefs?.bloomlevel)
+		if(BLOOM_DISABLE)
+			return
+		if(BLOOM_LOW)
+			bloomsize = 2
+			bloomoffset = 1
+		if(BLOOM_MED)
+			bloomsize = 3
+			bloomoffset = 2
+		if(BLOOM_HIGH)
+			bloomsize = 5
+			bloomoffset = 3
+
+	add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
+	add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = bloomsize, offset = bloomoffset, alpha = 100))
+
+/atom/movable/screen/plane_master/lamps
+	name = "lamps plane master"
+	plane = LIGHTING_LAMPS_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+	blend_mode_override = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+	render_target = LIGHTING_LAMPS_RENDER_TARGET
+
+/atom/movable/screen/plane_master/lamps_glare
+	name = "lamps glare plane master"
+	plane = LIGHTING_LAMPS_GLARE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode_override = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/lamps_glare/backdrop(mob/mymob)
+	. = ..()
+	remove_filter("add_lamps_to_glare")
+	remove_filter("lamps_glare")
+	if(istype(mymob) && mymob?.client?.prefs?.old_lighting || !mymob?.client?.prefs?.lampsglare)
+		return
+	add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
+	add_filter("lamps_glare", 1, radial_blur_filter(size = 0.05))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "above lighting plane master"
