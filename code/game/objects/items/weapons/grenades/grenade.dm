@@ -13,7 +13,10 @@
 	var/det_time = 50
 	var/activate_sound = 'sound/weapons/armbomb.ogg'
 
-	action_button_name = "Activate Grenade"
+	item_action_types = list(/datum/action/item_action/hands_free/activate_grenade)
+
+/datum/action/item_action/hands_free/activate_grenade
+	name = "Activate Grenade"
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if(user.ClumsyProbabilityCheck(50))
@@ -53,6 +56,7 @@
 			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
 	icon_state = initial(icon_state) + "_active"
+	update_item_actions()
 	active = 1
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	addtimer(CALLBACK(src, PROC_REF(prime)), det_time)

@@ -99,8 +99,11 @@
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.3
-	action_button_name = "Adjust helmet visor"
 	var/up = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_helmet_visor)
+
+/datum/action/item_action/hands_free/adjust_helmet_visor
+	name = "Adjust helmet visor"
 
 /obj/item/clothing/head/helmet/riot/attack_self()
 	toggle()
@@ -122,6 +125,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
 		update_inv_mob() //so our mob-overlays update
+		update_item_actions()
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -200,12 +204,16 @@
 	icon_state = "shitcuritron_0"
 	item_state = "helmet"
 	var/on = 0
-	action_button_name = "Toggle Helmet"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet)
+
+/datum/action/item_action/hands_free/toggle_helmet
+	name = "Toggle Helmet"
 
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"

@@ -25,8 +25,10 @@ RCD
 	var/canRwall = 0
 	var/disabled = 0
 
-	action_button_name = "Switch RCD"
+	item_action_types = list(/datum/action/item_action/hands_free/switch_rcd)
 
+/datum/action/item_action/hands_free/switch_rcd
+	name = "Switch RCD"
 
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
