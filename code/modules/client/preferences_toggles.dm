@@ -228,7 +228,7 @@
 			prefs.bloomlevel = BLOOM_DISABLE
 		if("Low")
 			prefs.bloomlevel = BLOOM_LOW
-		if("Medium")
+		if("Medium (Default)")
 			prefs.bloomlevel = BLOOM_MED
 		if("High")
 			prefs.bloomlevel = BLOOM_HIGH
