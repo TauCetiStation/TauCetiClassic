@@ -319,20 +319,23 @@ log transactions
 	authenticated_account.transaction_log.Add(T)
 	return TRUE
 
-/obj/machinery/atm/proc/transfer_stocks(target_account, department, transfer_amount, transfer_purpose)
+/obj/machinery/atm/proc/transfer_stocks(target_account, stock_type, transfer_amount, transfer_purpose)
 	if(!authenticated_account.stocks)
-		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough stock to do that!</span>")
+		to_chat(usr, "[bicon(src)]<span class='warning'>No stocks on this account!</span>")
 		return FALSE
-	if(transfer_amount > authenticated_account.stocks[department])
-		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough stock to do that!</span>")
+	if(!authenticated_account.stocks[stock_type])
+		to_chat(usr, "[bicon(src)]<span class='warning'>No stock of type [stock_type] on this account!</span>")
+		return FALSE
+	if(transfer_amount > authenticated_account.stocks[stock_type])
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
 		return FALSE
 
-	if(!transfer_stock_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, department, transfer_amount))
+	if(!transfer_stock_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, stock_type, transfer_amount))
 		to_chat(usr, "[bicon(src)]<span class='warning'>Funds transfer failed.</span>")
 		return FALSE
 
 	to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
-	authenticated_account.adjust_stock(department, -transfer_amount)
+	authenticated_account.adjust_stock(stock_type, -transfer_amount)
 
 	//create an entry in the account transaction log
 	var/datum/transaction/T = new()
@@ -357,18 +360,19 @@ log transactions
 					return
 				var/target_account = text2num(href_list["target_acc_number"])
 				var/money_amount = text2num(href_list["funds_amount"])
-				var/stock_type = text2num(href_list["stock_type"])
+				var/stock_type = href_list["stock_type"]
 				var/stock_amount = text2num(href_list["stock_amount"])
+				var/purpose = href_list["purpose"]
 
 				var/show_invalid_amount_message = FALSE
 
 				if(money_amount > 0.0)
-					transfer_money(target_account, money_amount, href_list["purpose"])
+					transfer_money(target_account, money_amount, purpose)
 				else if(stock_amount <= 0)
 					show_invalid_amount_message = TRUE
 
 				if(stock_amount > 0)
-					transfer_stocks(target_account, stock_type, stock_amount, href_list["purpose"])
+					transfer_stocks(target_account, stock_type, stock_amount, purpose)
 				else if(money_amount <= 0.0)
 					show_invalid_amount_message = TRUE
 
