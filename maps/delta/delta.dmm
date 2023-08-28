@@ -1947,6 +1947,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
