@@ -162,12 +162,12 @@ var/global/list/wedge_image_cache = list()
 			return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
-	var/atom/check_access = user
 
-	if(!requiresID())
-		check_access = null
+	if(!requiresID() && !check_access(null))
+		do_animate("deny")
+		return
 
-	if(allowed(check_access))
+	if(allowed(user))
 		if(density)
 			open()
 		else
