@@ -18,6 +18,9 @@
 /obj/item/weapon/implanter/attack(mob/living/M, mob/user, def_zone)
 	if (!iscarbon(M))
 		return
+	if (isskeleton(M))
+		to_chat(receiver, "<span class='warning'>Implant where?.</span>")
+		return
 	if (!user || !imp)
 		return
 
