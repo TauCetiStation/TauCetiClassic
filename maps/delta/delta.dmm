@@ -30822,7 +30822,6 @@
 /area/station/security/brig)
 "gwH" = (
 /obj/structure/table/glass,
-/obj/machinery/light/smart,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	dir = 8;
@@ -36499,6 +36498,9 @@
 /area/station/civilian/library)
 "hGZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -36884,7 +36886,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -42943,9 +42945,6 @@
 "jbV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Medbay Paramedic Dispatch";
 	network = list("SS13","Medical")
@@ -59379,6 +59378,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -75774,14 +75774,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"qjH" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
-/area/station/medical/hallway)
 "qjL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -79218,7 +79210,6 @@
 /area/station/maintenance/atmos)
 "qYJ" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/smart,
 /obj/machinery/camera{
 	c_tag = "Medbay Paramedic Desk";
 	dir = 8;
@@ -81348,6 +81339,9 @@
 "ryx" = (
 /obj/structure/sign/departments/chemistry{
 	pixel_x = -32
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -85644,6 +85638,9 @@
 	name = "apc left";
 	pixel_x = -28
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -89371,9 +89368,6 @@
 /area/station/hallway/secondary/entry)
 "tpH" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
@@ -108605,9 +108599,6 @@
 /area/station/medical/cryo)
 "xOa" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -151721,7 +151712,7 @@ vVA
 szQ
 bOW
 sBD
-qjH
+pxa
 xZn
 kpr
 eeT
