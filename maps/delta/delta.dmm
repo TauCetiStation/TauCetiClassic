@@ -602,6 +602,16 @@
 /area/shuttle/syndicate/southwest{
 	name = "south-west of station"
 	})
+"abd" = (
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
+	},
+/area/station/medical/morgue)
 "abf" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -3911,9 +3921,6 @@
 	},
 /area/station/medical/sleeper)
 "aEZ" = (
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_x = -32
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3922,6 +3929,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -4705,15 +4715,24 @@
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "aNW" = (
-/obj/machinery/smartfridge/chemistry,
-/obj/structure/window/thin/reinforced{
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/smart{
 	dir = 8
 	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkblue"
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_x = -32
 	},
-/area/station/medical/morgue)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/hallway)
 "aOc" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile{
@@ -39167,20 +39186,24 @@
 /area/station/maintenance/medbay)
 "ilZ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/light/smart{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/station/medical/hallway)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "imd" = (
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -149190,7 +149213,7 @@ oTI
 cyh
 gvn
 iDX
-ilZ
+aNW
 oSU
 nAk
 ndu
@@ -150753,7 +150776,7 @@ dJA
 wDh
 pfr
 jMG
-aNW
+abd
 beJ
 eAS
 eHc
@@ -160976,7 +160999,7 @@ dUz
 fQi
 adp
 oYL
-wzd
+ilZ
 vpp
 vst
 kIM
