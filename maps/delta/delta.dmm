@@ -10611,10 +10611,10 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "bXP" = (
@@ -74383,10 +74383,10 @@
 /turf/simulated/wall,
 /area/station/civilian/gym)
 "pVF" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "pVK" = (
