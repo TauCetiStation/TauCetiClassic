@@ -6788,7 +6788,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Shooting Range";
-	req_access = list(63)
+	req_access = list(1)
 	},
 /obj/structure/cable{
 	d1 = 4;
