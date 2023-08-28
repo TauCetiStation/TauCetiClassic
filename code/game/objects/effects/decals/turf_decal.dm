@@ -55,27 +55,27 @@
 	name = "Transparent Gray Turf Decals"
 	color = "#666666"
 
-/obj/effect/decal/turf_decal/alpha/orange
+/obj/effect/decal/turf_decal/orange
 	name = "Transparent Orange Turf Decals"
 	color = "#efb341"
 
-/obj/effect/decal/turf_decal/alpha/white
+/obj/effect/decal/turf_decal/white
 	name = "Transparent White Turf Decals"
 	color = "#bcbcbc"
 
-/obj/effect/decal/turf_decal/alpha/purple
+/obj/effect/decal/turf_decal/purple
 	name = "Transparent Purple Turf Decals"
 	color = "#d381c9"
 
-/obj/effect/decal/turf_decal/alpha/blue
+/obj/effect/decal/turf_decal/blue
 	name = "Transparent Blue Turf Decals"
 	color = "#52b4e9"
 
-/obj/effect/decal/turf_decal/alpha/dark_red
+/obj/effect/decal/turf_decal/dark_red
 	name = "Transparent Dark Red Turf Decals"
 	color = "#b11111"
 
-/obj/effect/decal/turf_decal/alpha/green
+/obj/effect/decal/turf_decal/green
 	name = "Transparent Green Turf Decals"
 	color = "#9fed58"
 
