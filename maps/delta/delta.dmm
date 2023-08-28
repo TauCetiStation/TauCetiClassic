@@ -597,6 +597,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"abc" = (
+/turf/environment/space,
+/area/shuttle/syndicate/southwest{
+	name = "south-west of station"
+	})
 "abf" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -124973,7 +124978,7 @@ plf
 plf
 plf
 plf
-rrj
+abc
 rrj
 rrj
 rrj
