@@ -70448,6 +70448,10 @@
 	dir = 1;
 	icon_state = "siding_line"
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitered"
@@ -73357,15 +73361,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
-"pKx" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -22
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/security/main)
 "pKL" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
@@ -162457,7 +162452,7 @@ tnw
 fLE
 qZx
 wHE
-pKx
+mzV
 pfc
 ock
 eTC
