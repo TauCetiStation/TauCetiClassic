@@ -1131,7 +1131,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "yellowfull"
 	},
 /area/station/medical/chemistry)
 "adp" = (
@@ -42607,7 +42607,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "whiteyellowcorner"
+	icon_state = "whiteyellow"
 	},
 /area/station/medical/hallway)
 "iZo" = (
