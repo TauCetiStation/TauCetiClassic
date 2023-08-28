@@ -19,7 +19,7 @@
 	if (!iscarbon(M))
 		return
 	if (isskeleton(M))
-		to_chat(receiver, "<span class='warning'>Implant where?.</span>")
+		to_chat(user, "<span class='warning'>Implant where?.</span>")
 		return
 	if (!user || !imp)
 		return
