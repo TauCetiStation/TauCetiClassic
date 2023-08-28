@@ -44504,6 +44504,7 @@
 /area/station/security/brig/storage)
 "jtU" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -63390,6 +63391,7 @@
 /area/station/rnd/hallway)
 "nxi" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -66391,6 +66393,7 @@
 "oft" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -73930,6 +73933,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -75327,6 +75331,7 @@
 /area/station/civilian/locker)
 "qfS" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -106680,6 +106685,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -107207,6 +107213,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
