@@ -136,6 +136,7 @@
 				C.buckled.unbuckle_mob()
 	else
 		..()
+
 /*
  * Welding Tool
  */
@@ -147,7 +148,6 @@
 	icon_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	action_button_name = "Switch Welding tool"
 	usesound = 'sound/items/Welder2.ogg'
 
 	force = 3.0
@@ -171,6 +171,10 @@
 	var/image/welding_sparks    // Welding overlay for targets
 
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+	item_action_types = list(/datum/action/item_action/hands_free/switch_welding_tool)
+
+/datum/action/item_action/hands_free/switch_welding_tool
+	name = "Switch Welding tool"
 
 /obj/item/weapon/weldingtool/atom_init()
 	. = ..()
@@ -179,7 +183,7 @@
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
 	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
-	welding_sparks.plane = ABOVE_LIGHTING_PLANE
+	welding_sparks.plane = LIGHTING_LAMPS_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
@@ -394,6 +398,7 @@
 		src.active = FALSE
 
 	update_inv_mob()
+	update_item_actions()
 
 // Decides whether or not to damage a player's eyes based on what they're wearing as protection
 // Note: This should probably be moved to mob
@@ -523,7 +528,6 @@
 		QUALITY_PRYING = 0.7
 	)
 
-
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
 
 	if(ishuman(M))
@@ -572,10 +576,13 @@
 	throwforce = 8
 	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed")
-	action_button_name = "Change mode"
 	qualities = list(
 		QUALITY_WRENCHING = 1
 	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
 
 /obj/item/weapon/multi/hand_drill/attack_self(mob/user)
 	mode = !mode
@@ -592,6 +599,7 @@
 		)
 		icon_state = "drill_bolt"
 		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
+	update_item_actions()
 
 /obj/item/weapon/multi/jaws_of_life
 	name = "Jaws of Life"
@@ -601,12 +609,15 @@
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	action_button_name = "Change mode"
 	toolspeed = 0.7
 	sharp = 1
 	qualities = list(
 		QUALITY_CUTTING = 1
 	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
 
 /obj/item/weapon/multi/jaws_of_life/attack_self(mob/user)
 	mode = !mode
@@ -625,3 +636,4 @@
 		sharp = 1
 		icon_state = "jaws_cutter"
 		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
+	update_item_actions()

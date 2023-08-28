@@ -313,25 +313,27 @@
 
 
 /obj/machinery/door/firedoor/update_icon()
-	cut_overlays()
+	var/list/firedoor_overlays = list()
 	if(density)
 		icon_state = "door_closed"
 		if(hatch_open)
-			add_overlay("hatch")
+			firedoor_overlays += get_airlock_overlay("hatch", icon, FALSE)
 		if(blocked)
-			add_overlay("welded")
+			firedoor_overlays += get_airlock_overlay("welded", icon, FALSE)
 		if(pdiff_alert)
-			add_overlay("palert")
+			firedoor_overlays += get_airlock_overlay("palert", icon, FALSE)//сделать TRUE кога решится проблема со створками
 		if(dir_alerts)
 			for(var/d in 1 to 4)
-				var/cdir = cardinal[d]
 				for(var/i in 1 to ALERT_STATES.len)
 					if(dir_alerts[d] & (1<<(i-1)))
-						add_overlay(new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir))
+						firedoor_overlays += get_airlock_overlay("alert_[ALERT_STATES[i]]", icon, FALSE)//сделать TRUE кога решится проблема со створками
 	else
 		icon_state = "door_open"
 		if(blocked)
-			add_overlay("welded_open")
+			firedoor_overlays += get_airlock_overlay("welded_open", icon, FALSE)
+
+	cut_overlays()
+	add_overlay(firedoor_overlays)
 
 	if(underlays.len)
 		underlays.Cut()

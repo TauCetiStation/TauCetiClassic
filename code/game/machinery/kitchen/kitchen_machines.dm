@@ -427,6 +427,19 @@
 			dispose()
 	updateUsrDialog()
 
+/obj/machinery/kitchen_machine/CtrlClick(mob/user)
+	if(!Adjacent(user))
+		return ..()
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(operating || panel_open)
+		return ..()
+
+	cook()
+
 /*******************
 *   Microwave
 ********************/

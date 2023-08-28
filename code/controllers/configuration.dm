@@ -172,6 +172,7 @@ var/global/bridge_secret = null
 	var/ghost_interaction = 0
 
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
+	var/github_token = "" // todo: move this to globals for security
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
@@ -533,6 +534,9 @@ var/global/bridge_secret = null
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
 
+				if("github_token")
+					config.github_token = value
+
 				if("allow_cult_ghostwriter")
 					config.cult_ghostwriter = 1
 
@@ -635,8 +639,8 @@ var/global/bridge_secret = null
 					var/repo_path = replacetext(config.repository_link, "https://github.com/", "")
 					if(repo_path != config.repository_link)
 						var/split = splittext(repo_path, "/")
-						github_repository_owner = split[1]
-						github_repository_name = split[2]
+						config.github_repository_owner = split[1]
+						config.github_repository_name = split[2]
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
