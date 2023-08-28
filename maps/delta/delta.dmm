@@ -32557,6 +32557,10 @@
 /obj/item/weapon/storage/box/cdeathalarm_kit{
 	pixel_x = 10
 	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 4;
+	pixel_y = 23
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -39103,24 +39107,38 @@
 /area/station/security/brig/storage)
 "ils" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_y = -2
-	},
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_y = -2
-	},
 /obj/machinery/firealarm{
 	pixel_y = 22
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = 1
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = 1
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = 1
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_y = -2
+	},
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_x = 20
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -57002,7 +57020,7 @@
 /area/station/medical/cmo)
 "mdQ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/recharger,
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -85691,7 +85709,13 @@
 /area/station/hallway/primary/starboard)
 "sxG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/flashbangs,
+/obj/item/weapon/storage/box/r4046/rubber{
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/box/r4046/teargas{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/r4046/EMP,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -89350,9 +89374,11 @@
 /area/station/rnd/hallway)
 "tte" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/teargas{
-	pixel_x = -10
+	pixel_x = 6
+	},
+/obj/item/weapon/storage/box/teargas{
+	pixel_x = -3
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
