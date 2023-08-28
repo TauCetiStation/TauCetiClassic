@@ -2993,6 +2993,7 @@
 /area/station/rnd/xenobiology)
 "atL" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -24525,6 +24526,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -38333,6 +38335,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "largecell apc right";
 	pixel_x = 28
@@ -55011,6 +55014,7 @@
 	icon_state = "warn_corner"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -56472,6 +56476,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 1;
 	name = "largecell apc top";
 	pixel_y = 28
@@ -73013,6 +73018,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -75872,6 +75878,7 @@
 /area/station/rnd/hallway)
 "qmi" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -80126,6 +80133,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -83975,6 +83983,7 @@
 "scX" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
 	name = "apc down";
 	pixel_y = -28
 	},
