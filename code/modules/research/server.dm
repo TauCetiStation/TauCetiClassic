@@ -328,6 +328,7 @@
 		for(var/i in 1 to s.files.researched_tech.len)
 			s.files.forget_random_technology()
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
+		if(c.sabotagable)
 		explosion(c.loc, 0, 1, 3)
 	var/datum/faction/traitor/faction = find_faction_by_type(/datum/faction/traitor)
 	for(var/datum/role/traitor/T in faction.members)
