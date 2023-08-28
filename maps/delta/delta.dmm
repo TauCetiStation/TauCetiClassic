@@ -50798,6 +50798,10 @@
 /area/station/engineering/atmos/supermatter)
 "kJq" = (
 /obj/machinery/computer/secure_data/detective_computer,
+/obj/item/toy/figure/detective{
+	pixel_x = -1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "kJs" = (
@@ -69801,10 +69805,15 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "oXr" = (
-/obj/item/toy/figure/detective,
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
-/obj/item/device/flashlight/lamp,
+/obj/item/weapon/reagent_containers/food/drinks/flask/detflask{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "oXw" = (
@@ -70584,6 +70593,10 @@
 	name = "Station Intercom (Security)";
 	pixel_x = 28;
 	pixel_y = -5
+	},
+/obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
