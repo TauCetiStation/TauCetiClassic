@@ -719,10 +719,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Change your view range"
 	set category = "Ghost"
 
-	var/viewx = clamp(input("Enter view width ([world.view]-[config.ghost_max_view])") as num|null, world.view, config.ghost_max_view) * 2 + 1
-	var/viewy = clamp(input("Enter view height ([world.view]-[config.ghost_max_view])") as num|null, world.view, config.ghost_max_view) * 2 + 1
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
+		to_chat(usr, "<span class='warning'>That verb is currently globally disabled.</span>")
+		return
+
+	var/max_view_range = client.supporter ? config.ghost_max_view_member : config.ghost_max_view
+
+	var/viewx = clamp(input("Enter view width ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
+	var/viewy = clamp(input("Enter view height ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
 
 	if(!client)
+		return
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
 		return
 
 	client.change_view("[viewx]x[viewy]")

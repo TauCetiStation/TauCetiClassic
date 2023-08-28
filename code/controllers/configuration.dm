@@ -222,7 +222,8 @@ var/global/bridge_secret = null
 
 	var/deathmatch_arena = TRUE
 
-	var/ghost_max_view = 12 // 25x25
+	var/ghost_max_view = 10 // 21x21
+	var/ghost_max_view_member = 13 // 27x27
 
 	var/hard_deletes_overrun_threshold = 0.5
 	var/hard_deletes_overrun_limit = 0
@@ -545,6 +546,9 @@ var/global/bridge_secret = null
 
 				if("ghost_max_view")
 					config.ghost_max_view = text2num(value)
+
+				if("ghost_max_view_member")
+					config.ghost_max_view_member = text2num(value)
 
 				if("deathtime_required")
 					config.deathtime_required = text2num(value)
