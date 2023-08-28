@@ -1508,7 +1508,6 @@
 /area/station/security/main)
 "afB" = (
 /obj/structure/table/glass,
-/obj/item/device/sensor_device,
 /obj/item/weapon/stamp/cmo,
 /turf/simulated/floor{
 	dir = 8;
@@ -17982,6 +17981,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/item/weapon/defibrillator/compact/loaded,
 /turf/simulated/floor,
 /area/station/medical/cmo)
 "dGn" = (
@@ -19481,6 +19481,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
+	},
+/obj/item/device/taperecorder{
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/station/rnd/hor)
@@ -28003,10 +28006,8 @@
 /area/station/engineering/chiefs_office)
 "fUz" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/figure/ce,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = 28
+/obj/machinery/faxmachine{
+	department = "CE Office"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -30690,6 +30691,9 @@
 /obj/effect/decal/turf_decal/orange{
 	dir = 6;
 	icon_state = "siding_line"
+	},
+/obj/item/toy/figure/ce{
+	pixel_y = 13
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -34122,9 +34126,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
+/obj/machinery/faxmachine{
+	department = "HoS Office"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -42849,6 +42853,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table/reinforced,
+/obj/item/weapon/folder/red,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -43713,8 +43718,9 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/item/device/megaphone,
-/obj/item/weapon/defibrillator/compact/loaded,
+/obj/machinery/faxmachine{
+	department = "CMO Office"
+	},
 /turf/simulated/floor,
 /area/station/medical/cmo)
 "jlH" = (
@@ -62492,6 +62498,8 @@
 /obj/machinery/requests_console/cmo{
 	pixel_y = -32
 	},
+/obj/item/device/megaphone,
+/obj/item/device/sensor_device,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -65850,14 +65858,15 @@
 /area/station/engineering/engine)
 "nZH" = (
 /obj/structure/table/reinforced,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
+/obj/item/device/aicard,
+/obj/item/weapon/circuitboard/teleporter,
 /obj/item/weapon/circuitboard/aicore{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
-/obj/item/weapon/circuitboard/teleporter,
 /obj/item/borg/upgrade/security,
 /turf/simulated/floor{
 	dir = 4;
@@ -102328,9 +102337,8 @@
 /area/station/maintenance/atmos)
 "wwp" = (
 /obj/structure/table/reinforced,
-/obj/item/device/aicard,
-/obj/item/device/taperecorder{
-	pixel_y = 3
+/obj/machinery/faxmachine{
+	department = "RD Office"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -103352,9 +103360,6 @@
 "wHp" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/requests_console/ce{
-	pixel_y = 32
-	},
 /obj/effect/decal/turf_decal/orange{
 	dir = 5;
 	icon_state = "siding_line"
@@ -103454,6 +103459,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 5;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -103494,7 +103503,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/machinery/requests_console/ce{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -105566,6 +105575,9 @@
 /area/shuttle/specops/station)
 "xjw" = (
 /obj/item/weapon/flora/random,
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -109834,7 +109846,9 @@
 	dir = 8;
 	icon_state = "siding_wood_line"
 	},
-/obj/machinery/faxmachine,
+/obj/machinery/faxmachine{
+	department = "HoP Office"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "ydI" = (
