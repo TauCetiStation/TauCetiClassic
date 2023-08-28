@@ -11806,11 +11806,11 @@
 /area/station/engineering/atmos)
 "cko" = (
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/command{
 	name = "Corporate Lounge";
-	req_access = list(19,38)
+	req_one_access = list(19,38)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -49731,6 +49731,9 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
+/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -85287,7 +85290,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Corporate Lounge";
-	req_access = list(19,38)
+	req_one_access = list(19,38)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -86462,7 +86465,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Corporate Lounge";
-	req_access = list(19,38)
+	req_one_access = list(19,38)
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
