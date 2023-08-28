@@ -21,7 +21,7 @@
 	if (!user || !imp)
 		return
 	if (isskeleton(M))
-		to_chat(user, "<span class='warning'>Implant where?.</span>")
+		to_chat(user, "<span class='warning'>Implant where?</span>")
 		return
 
 	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
