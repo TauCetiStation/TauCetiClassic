@@ -2676,9 +2676,7 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "qS" = (
-/obj/machinery/computer/rdconsole{
-	sabotagable = 0
-	},
+/obj/machinery/computer/rdconsole,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "rb" = (
