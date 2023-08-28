@@ -186,6 +186,7 @@
 /area/station/security/checkpoint/escape)
 "aap" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -5032,6 +5033,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -9395,6 +9397,7 @@
 /area/station/maintenance/science)
 "bKg" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -13802,6 +13805,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -17527,6 +17531,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -23708,6 +23713,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -37753,6 +37759,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -40402,6 +40409,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -46845,6 +46853,7 @@
 /area/station/solar/port)
 "jRv" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -48099,6 +48108,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -48237,6 +48247,7 @@
 /area/station/civilian/gym)
 "khm" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -50277,6 +50288,7 @@
 "kDB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -63175,6 +63187,7 @@
 "nvw" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -63924,6 +63937,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -70240,6 +70254,7 @@
 /obj/item/weapon/flora/random,
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -71467,6 +71482,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -80647,6 +80663,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -84678,6 +84695,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
 	dir = 8;
 	name = "smallcell apc left";
 	pixel_x = -28
@@ -89506,6 +89524,7 @@
 "ttW" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -90201,6 +90220,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -90592,6 +90612,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -94695,6 +94716,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -96959,6 +96981,7 @@
 "vhF" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
 	name = "apc down";
 	pixel_y = -28
 	},
