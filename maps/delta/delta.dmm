@@ -40861,7 +40861,7 @@
 "iGj" = (
 /obj/machinery/camera{
 	c_tag = "Firing Range";
-	dir = 9;
+	dir = 10;
 	network = list("SS13","Security")
 	},
 /obj/effect/decal/turf_decal{
@@ -43498,9 +43498,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
