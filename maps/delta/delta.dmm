@@ -19815,6 +19815,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/weapon/storage/briefcase/centcomm,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -62943,7 +62944,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/folder/white,
+/obj/item/weapon/paper_bin,
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "ntM" = (
@@ -82712,7 +82713,7 @@
 /area/station/maintenance/chapel)
 "rOo" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/clipboard,
+/obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
@@ -93399,12 +93400,13 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/weapon/folder/brown,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/weapon/clipboard,
+/obj/item/weapon/folder/brown,
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "unL" = (
@@ -109823,7 +109825,6 @@
 /area/station/security/prison)
 "ydE" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/briefcase/centcomm,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -109833,6 +109834,7 @@
 	dir = 8;
 	icon_state = "siding_wood_line"
 	},
+/obj/machinery/faxmachine,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "ydI" = (
