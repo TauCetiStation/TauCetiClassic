@@ -12394,6 +12394,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -15456,6 +15457,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -18897,6 +18899,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -23597,6 +23600,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -26302,6 +26306,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -29346,6 +29351,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -38104,6 +38110,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -45665,6 +45672,7 @@
 "jGD" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -45882,6 +45890,7 @@
 	pixel_y = 29
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -46514,6 +46523,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -65112,6 +65122,7 @@
 	icon_state = "siding_line"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -68184,6 +68195,7 @@
 	icon_state = "siding_line"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -68352,6 +68364,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -68881,6 +68894,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/blue,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -69830,6 +69844,7 @@
 "oWE" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
 	name = "apc down";
 	pixel_y = -28
 	},
