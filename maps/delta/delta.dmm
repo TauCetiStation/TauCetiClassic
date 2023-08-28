@@ -21788,8 +21788,6 @@
 /area/station/civilian/chapel/mass_driver)
 "eyL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -21809,6 +21807,18 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the medbay foyer.";
+	id = "ScienceTransOut";
+	name = "Science Doors Control";
+	pixel_x = -6
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the medbay foyer.";
+	id = "MedTransOut";
+	name = "Medbay Doors Control";
+	pixel_x = 6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -23271,11 +23281,11 @@
 /area/station/maintenance/science)
 "ePL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar,
-/obj/item/weapon/wrench,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/item/weapon/folder/red,
+/obj/item/weapon/pen,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -35262,7 +35272,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/recharger,
+/obj/item/weapon/wrench,
+/obj/item/weapon/crowbar,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
@@ -48715,6 +48726,7 @@
 "kmW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
+	id_tag = "MedTransOut";
 	name = "Medsci Airlock";
 	req_one_access = list(2,5)
 	},
@@ -51358,7 +51370,7 @@
 /area/station/maintenance/medbay)
 "kQf" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar,
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -72981,6 +72993,7 @@
 /area/station/security/interrogation)
 "pFz" = (
 /obj/machinery/door/airlock/research{
+	id_tag = "ScienceTransOut";
 	name = "Medsci Airlock";
 	req_one_access = list(2,47)
 	},
@@ -109866,7 +109879,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/research{
 	name = "Genetics Lab";
-	req_access = list(9)
+	req_access = list(9,47)
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
