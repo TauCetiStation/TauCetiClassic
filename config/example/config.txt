@@ -163,7 +163,7 @@ ALIEN_AVAILABLE_BY_TIME DIONA 40000
 #GHOST_MAX_VIEW 10
 
 ## A ghosts max view range if they are a byond/patron/boosty supporter
-#GHOST_MAX_VIEW_MEMBER 13
+#GHOST_MAX_VIEW_SUPPORTER 13
 
 ## Required time to respawn after death
 #DEATHTIME_REQUIRED 18000

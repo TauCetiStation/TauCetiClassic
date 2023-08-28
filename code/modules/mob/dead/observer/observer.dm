@@ -723,7 +723,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>That verb is currently globally disabled.</span>")
 		return
 
-	var/max_view_range = client.supporter ? config.ghost_max_view_member : config.ghost_max_view
+	var/max_view_range = client.supporter ? config.ghost_max_view_supporter : config.ghost_max_view
 
 	var/viewx = clamp(input("Enter view width ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
 	var/viewy = clamp(input("Enter view height ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
