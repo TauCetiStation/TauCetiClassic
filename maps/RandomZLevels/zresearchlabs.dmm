@@ -161,7 +161,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
@@ -242,7 +242,10 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "aS" = (
-/turf/simulated/floor/mech_bay_recharge_floor,
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor,
 /area/awaymission/labs/cave)
 "aT" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -603,21 +606,22 @@
 	},
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "ca" = (
 /obj/machinery/dna_scannernew,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cb" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
 "cc" = (
@@ -626,8 +630,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cd" = (
@@ -660,15 +663,13 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cg" = (
 /obj/machinery/computer/scan_consolenew,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "ch" = (
@@ -689,8 +690,7 @@
 /area/awaymission/labs/researchdivision)
 "cj" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "ck" = (
@@ -711,8 +711,7 @@
 /obj/item/weapon/reagent_containers/blood/empty,
 /obj/item/weapon/storage/box/bodybags,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cm" = (
@@ -776,27 +775,31 @@
 /obj/structure/table/reinforced,
 /obj/item/device/mass_spectrometer,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cv" = (
 /obj/machinery/door/airlock/research/glass,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cw" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnwhitecorner"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
 "cx" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
 "cy" = (
@@ -843,8 +846,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cE" = (
@@ -860,8 +862,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/hypospray,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "cG" = (
@@ -1282,10 +1283,11 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/commander,
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "dH" = (
 /obj/machinery/power/apc{
@@ -1363,9 +1365,8 @@
 "dP" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "dQ" = (
 /obj/structure/stool/bed/chair/office/light,
@@ -1523,19 +1524,21 @@
 "ep" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "eq" = (
 /obj/structure/rack,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "er" = (
 /obj/machinery/light{
@@ -1554,8 +1557,7 @@
 	pixel_x = 13
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "et" = (
@@ -1564,29 +1566,25 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "eu" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "ev" = (
 /obj/structure/alien/weeds,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "ew" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "ex" = (
 /obj/structure/cable{
@@ -1659,15 +1657,13 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "eE" = (
 /obj/machinery/power/smes,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "eF" = (
@@ -1736,21 +1732,18 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/gibspawner/human,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "eO" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/remains/robot,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "eP" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "eQ" = (
@@ -1765,9 +1758,8 @@
 /area/awaymission/labs/gateway)
 "eR" = (
 /obj/effect/decal/mecha_wreckage/durand,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "eS" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1786,28 +1778,31 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eU" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eV" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eW" = (
 /obj/structure/cable{
@@ -1843,8 +1838,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "fb" = (
@@ -1884,9 +1878,12 @@
 /area/awaymission/labs/researchdivision)
 "fg" = (
 /obj/structure/target_stake,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
 "fh" = (
@@ -1930,8 +1927,7 @@
 	name = "Armory Door"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/gateway)
 "fn" = (
@@ -1948,18 +1944,18 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fo" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/gateway)
 "fp" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fq" = (
 /obj/machinery/gateway/center,
@@ -1969,10 +1965,11 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fs" = (
 /obj/machinery/power/apc{
@@ -1991,8 +1988,7 @@
 	},
 /obj/item/ammo_box/c45,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "ft" = (
@@ -2014,8 +2010,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "fv" = (
@@ -2056,8 +2051,7 @@
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fA" = (
@@ -2097,8 +2091,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fF" = (
@@ -2107,8 +2100,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fG" = (
@@ -2121,33 +2113,35 @@
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fH" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fI" = (
 /obj/machinery/gateway,
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fJ" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fK" = (
 /obj/structure/table/reinforced,
@@ -2241,8 +2235,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fU" = (
@@ -2250,15 +2243,13 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "fW" = (
@@ -2323,8 +2314,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/researchdivision)
 "gc" = (
@@ -2428,8 +2418,7 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "gn" = (
@@ -2591,22 +2580,25 @@
 	},
 /area/awaymission/labs/researchdivision)
 "gI" = (
-/turf/simulated/floor{
-	icon_state = "warningcorner"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "gJ" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "gK" = (
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "gL" = (
 /obj/effect/decal/cleanable/blood,
@@ -2614,10 +2606,11 @@
 	mobname = "James MacDonald";
 	name = "James MacDonald"
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "gN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2665,7 +2658,10 @@
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "gU" = (
-/turf/simulated/floor/mech_bay_recharge_floor,
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "gV" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -2680,10 +2676,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "gX" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -2722,17 +2719,18 @@
 	},
 /area/awaymission/labs/researchdivision)
 "hc" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hd" = (
 /obj/machinery/r_n_d/protolathe,
-/turf/simulated/floor{
-	dir = 1;
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "he" = (
 /obj/structure/cable{
@@ -2743,17 +2741,18 @@
 /obj/machinery/computer/rdconsole/core{
 	id = 0
 	},
-/turf/simulated/floor{
-	dir = 1;
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hf" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hk" = (
 /obj/structure/cable{
@@ -2823,10 +2822,11 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hs" = (
 /obj/effect/landmark/corpse/scientist{
@@ -2871,10 +2871,10 @@
 	dir = 8
 	},
 /obj/machinery/r_n_d/circuit_imprinter,
-/turf/simulated/floor{
-	dir = 1;
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hx" = (
 /obj/structure/cable{
@@ -2883,10 +2883,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/r_n_d/destructive_analyzer,
-/turf/simulated/floor{
-	dir = 1;
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hy" = (
 /turf/simulated/wall/r_wall,
@@ -2962,10 +2962,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hH" = (
 /turf/simulated/floor{
@@ -3079,26 +3080,29 @@
 	},
 /area/awaymission/labs/researchdivision)
 "hR" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hS" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hT" = (
 /obj/machinery/camera{
 	c_tag = "Mining Dock External";
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hU" = (
 /turf/simulated/floor/plating,
@@ -3156,9 +3160,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ic" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -3167,29 +3169,21 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "id" = (
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ie" = (
 /obj/structure/closet/secure_closet/personal,
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "if" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ig" = (
 /obj/machinery/door/airlock/research{
@@ -3303,9 +3297,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "it" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -3464,9 +3456,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Team Leader's Desk"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iP" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -3477,32 +3467,24 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iQ" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/glass{
 	pixel_y = 2
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iR" = (
 /obj/structure/table/woodentable,
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iS" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "iT" = (
 /obj/structure/stool/bed/chair,
@@ -3671,9 +3653,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jn" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -3689,9 +3669,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jo" = (
 /obj/structure/table/woodentable,
@@ -3701,9 +3679,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jp" = (
 /obj/structure/table/woodentable,
@@ -3712,9 +3688,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jq" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -3725,9 +3699,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jr" = (
 /obj/machinery/camera{
@@ -3739,9 +3711,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "js" = (
 /obj/structure/table,
@@ -3908,9 +3878,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jN" = (
 /obj/structure/cable{
@@ -3918,9 +3886,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "jO" = (
 /obj/structure/table,
@@ -3970,7 +3936,10 @@
 	},
 /area/awaymission/labs/researchdivision)
 "jT" = (
-/turf/simulated/floor/mech_bay_recharge_floor,
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "jU" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -4006,9 +3975,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
+/turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
 "ka" = (
 /obj/structure/table,
@@ -4034,8 +4001,10 @@
 /area/awaymission/labs/researchdivision)
 "kd" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor{
-	icon_state = "delivery";
 	temperature = 393.15
 	},
 /area/awaymission/labs/researchdivision)
@@ -4315,10 +4284,11 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "kH" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/command)
 "kI" = (
 /obj/structure/cable{
@@ -4331,10 +4301,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/command)
 "kJ" = (
 /obj/structure/cable{
@@ -5208,9 +5179,8 @@
 "mr" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/xenomorph/sentinel,
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "ms" = (
 /obj/structure/rack,
@@ -5290,28 +5260,30 @@
 /area/awaymission/labs/cargo)
 "mD" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "mE" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "mF" = (
 /obj/effect/decal/mecha_wreckage/ripley,
-/turf/simulated/floor/mech_bay_recharge_floor,
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "mG" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "mH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -5496,9 +5468,8 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "nc" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/cargo)
 "nd" = (
 /obj/structure/table/reinforced,
@@ -5656,15 +5627,17 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "nw" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "nx" = (
 /obj/machinery/bot/mulebot,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ny" = (
 /obj/structure/table,
@@ -5864,9 +5837,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "nX" = (
 /obj/machinery/bot/mulebot,
@@ -5875,9 +5849,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "nY" = (
 /obj/structure/cable{
@@ -6069,9 +6044,10 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ov" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ow" = (
 /obj/structure/table,
@@ -6878,9 +6854,11 @@
 /area/awaymission/labs/command)
 "qn" = (
 /obj/structure/closet/secure_closet/freezer/money,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qo" = (
@@ -6916,9 +6894,11 @@
 	frequency = 1379;
 	id_tag = "medsci_pump"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qs" = (
@@ -7017,9 +6997,11 @@
 	},
 /area/awaymission/labs/command)
 "qF" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qG" = (
@@ -7059,9 +7041,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qK" = (
@@ -7139,18 +7123,22 @@
 	},
 /obj/item/weapon/storage/belt/champion,
 /obj/item/weapon/stock_parts/cell/infinite,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qT" = (
 /obj/machinery/nuclearbomb{
 	r_code = "LOLNO"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qU" = (
@@ -7177,9 +7165,11 @@
 /obj/structure/closet/crate{
 	name = "Silver Crate"
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "qV" = (
@@ -7220,9 +7210,11 @@
 	pixel_x = 12;
 	pixel_y = 11
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/command)
 "ra" = (
@@ -7234,9 +7226,8 @@
 /area/awaymission/labs/cave)
 "rb" = (
 /obj/effect/gibspawner/robot,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/command)
 "rc" = (
 /obj/structure/stool/bed/chair{
@@ -7285,12 +7276,6 @@
 	},
 /turf/simulated/floor{
 	icon_state = "vault"
-	},
-/area/awaymission/labs/command)
-"rj" = (
-/obj/effect/gibspawner/robot,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
 	},
 /area/awaymission/labs/command)
 "rk" = (
@@ -7373,20 +7358,13 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "rs" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/command)
 "rt" = (
 /obj/effect/decal/mecha_wreckage/gygax,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/awaymission/labs/command)
-"ru" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/awaymission/labs/command)
 "rv" = (
 /obj/structure/alien/weeds{
@@ -7908,9 +7886,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "sS" = (
@@ -8330,24 +8310,30 @@
 	name = "Pistol";
 	silenced = 0
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tR" = (
 /obj/structure/rack,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tS" = (
 /obj/structure/rack,
 /obj/item/ammo_box/c45,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tT" = (
@@ -8356,31 +8342,37 @@
 /obj/item/weapon/melee/baton,
 /obj/item/weapon/shield/riot,
 /obj/item/clothing/head/helmet/riot,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tU" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/security)
 "tV" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/security)
 "tW" = (
 /obj/structure/rack,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/awaymission/labs/security)
 "tX" = (
@@ -8574,22 +8566,25 @@
 	},
 /area/awaymission/labs/security)
 "uB" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/security)
 "uC" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/security)
 "uD" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/awaymission/labs/security)
 "uE" = (
 /obj/machinery/vending/snack,
@@ -8697,7 +8692,10 @@
 /area/awaymission/labs/security)
 "uT" = (
 /obj/machinery/light,
-/turf/simulated/floor/mech_bay_recharge_floor,
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor,
 /area/awaymission/labs/security)
 "uU" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -28418,7 +28416,7 @@ ii
 iy
 iy
 rs
-rj
+rb
 iy
 iy
 lF
@@ -28675,7 +28673,7 @@ ii
 iy
 iy
 rt
-ru
+rs
 iy
 iy
 mc
@@ -28931,7 +28929,7 @@ qP
 ii
 iy
 iy
-ru
+rs
 rp
 iy
 iy

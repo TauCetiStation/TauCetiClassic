@@ -10,17 +10,21 @@
 	item_state = "backpack"
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
-	action_button_name = "Storage"
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
+	item_action_types = list(/datum/action/item_action/storage)
 
-/obj/item/weapon/storage/backpack/ui_action_click()
-	if(!opened)
-		open(loc)
+/datum/action/item_action/storage
+	name = "Storage"
+
+/datum/action/item_action/storage/Activate()
+	var/obj/item/weapon/storage/backpack/S = target
+	if(!S.opened)
+		S.open(S.loc)
 	else
-		close(loc)
-	opened = !opened
+		S.close(S.loc)
+	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))

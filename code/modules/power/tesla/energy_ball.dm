@@ -252,7 +252,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_plane=ABOVE_LIGHTING_PLANE)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_plane=LIGHTING_LAMPS_PLANE)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir

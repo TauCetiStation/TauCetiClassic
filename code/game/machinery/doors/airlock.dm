@@ -33,7 +33,7 @@ var/global/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
-	explosion_resistance = 15
+	explosive_resistance = 2
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
@@ -357,7 +357,7 @@ var/global/list/airlock_overlays = list()
 	if(!(. = airlock_overlays[iconkey]))
 		var/mutable_appearance/MA
 		if(light_source)
-			MA = mutable_appearance(icon_file, icon_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+			MA = mutable_appearance(icon_file, icon_state, 1, LIGHTING_LAMPS_PLANE)
 		else
 			MA = mutable_appearance(icon_file, icon_state)
 		. = airlock_overlays[iconkey] = MA
@@ -1201,8 +1201,8 @@ var/global/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()
-	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = ABOVE_LIGHTING_LAYER)
-	fire_overlay.plane = ABOVE_LIGHTING_PLANE
+	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = 1)
+	fire_overlay.plane = LIGHTING_LAMPS_PLANE
 	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)
 

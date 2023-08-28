@@ -250,6 +250,10 @@
 	can_be_holstered = TRUE
 	short = 1
 
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/beanbag
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+
+
 /obj/item/weapon/gun/projectile/revolver/syndie
 	name = "revolver"
 	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."

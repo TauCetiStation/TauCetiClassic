@@ -25,6 +25,7 @@
 	var/nanoUI[0]
 
 	//Secondary variables
+	var/output_to_chat = TRUE //will print scan results (for medical scanner) in chat?
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 2 //Luminosity for the flashlight function
@@ -78,7 +79,14 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	action_button_name = "Toggle light"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pda_light)
+
+/datum/action/item_action/hands_free/toggle_pda_light
+	name = "Toggle light"
+
+/datum/action/item_action/hands_free/toggle_pda_light/Activate()
+	var/obj/item/device/pda/P = target
+	P.toggle_light()
 
 /obj/item/device/pda/atom_init()
 	. = ..()
@@ -122,9 +130,6 @@
 		return
 
 	return ..()
-
-/obj/item/device/pda/ui_action_click()
-	toggle_light()
 
 /obj/item/device/pda/verb/toggle_light()
 	set name = "Toggle light"
@@ -437,10 +442,15 @@
 	popup.set_content(HTML)
 	popup.open()
 
-
 /obj/item/device/pda/silicon/can_use()
-	return 1
-
+	var/mob/living/silicon/ai/ai_user = loc
+	if(istype(ai_user) && ai_user.control_disabled)
+		return FALSE
+	else
+		var/mob/living/silicon/robot/borg_user = loc
+		if(istype(borg_user) && borg_user.incapacitated())
+			return FALSE
+	return TRUE
 
 /obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -515,7 +525,7 @@
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
-	
+
 	data["owner_insurance_type"] = OR ? OR.fields["insurance_type"] : "error"
 	data["owner_insurance_price"] = OR ? SSeconomy.insurance_prices[data["owner_insurance_type"]] : "error"
 	data["owner_preferred_insurance_type"] = MA ? MA.owner_preferred_insurance_type : "error"
@@ -1674,34 +1684,18 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (iscarbon(L))
+	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
 			if(1)
-				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
-				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
-				var/has_oxy_damage = (C.getOxyLoss() > 50)
-				var/has_tox_damage = (C.getToxLoss() > 50)
-				var/has_fire_damage = (C.getFireLoss() > 50)
-				var/has_brute_damage = (C.getBruteLoss() > 50)
-				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>"
-				data_message += "<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>"
-				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
-				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
-					if(length(damaged)>0)
-						for(var/obj/item/organ/external/BP in damaged)
-							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
-					else
-						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
-
-				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
-				to_chat(user, data_message)
+				data_message = health_analyze(L, user, TRUE, output_to_chat, TRUE)
+				if(!output_to_chat)
+					var/datum/browser/popup = new(user, "[L.name]_scan_report", "[L.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+					popup.set_content(data_message)
+					popup.open()
+				else
+					to_chat(user, data_message)
 
 			if(2)
 				if (!istype(C.dna, /datum/dna))

@@ -2,9 +2,50 @@
 "ab" = (
 /turf/simulated/floor/beach/sand,
 /area/space)
+"ac" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor,
+/area/space)
 "ad" = (
 /turf/simulated/floor{
 	icon_state = "darkbrown"
+	},
+/area/space)
+"ae" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/space)
+"af" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/space)
+"ag" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/space)
+"ah" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space)
 "am" = (
@@ -19,8 +60,15 @@
 	},
 /area/space)
 "ay" = (
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"az" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "wood_stairs2"
 	},
 /area/space)
 "aA" = (
@@ -46,8 +94,8 @@
 /turf/environment/space,
 /area/space)
 "aN" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/turf/simulated/floor{
+	icon_state = "whitechoco"
 	},
 /area/space)
 "aO" = (
@@ -75,9 +123,12 @@
 	},
 /area/space)
 "aY" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "bd" = (
@@ -99,15 +150,22 @@
 /area/space)
 "bu" = (
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "darkpurplechoco"
 	},
 /area/space)
 "bv" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
+/area/space)
+"bB" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/turf/simulated/floor,
 /area/space)
 "bE" = (
 /turf/simulated/floor{
@@ -122,8 +180,11 @@
 	},
 /area/space)
 "bN" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	icon_state = "white"
 	},
 /area/space)
 "bO" = (
@@ -133,9 +194,8 @@
 	},
 /area/space)
 "bX" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space)
 "bY" = (
 /turf/simulated/floor{
@@ -171,16 +231,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "cn" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
-/area/space)
-"cx" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "chapel"
-	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "cB" = (
 /turf/simulated/floor{
@@ -226,8 +281,8 @@
 	},
 /area/space)
 "cZ" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "panelscorched"
+/turf/simulated/floor{
+	icon_state = "purplechoco"
 	},
 /area/space)
 "dd" = (
@@ -237,9 +292,8 @@
 	},
 /area/space)
 "di" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "dk" = (
 /turf/simulated/floor{
@@ -251,6 +305,13 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
+/area/space)
+"dm" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "do" = (
 /turf/simulated/floor{
@@ -271,16 +332,18 @@
 	},
 /area/space)
 "dJ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "dL" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/space)
 "dM" = (
 /turf/simulated/floor{
@@ -294,7 +357,9 @@
 	},
 /area/space)
 "dT" = (
-/turf/simulated/floor/goonplaque,
+/turf/simulated/floor{
+	icon_state = "bluechoco"
+	},
 /area/space)
 "dV" = (
 /obj/structure/cable,
@@ -318,11 +383,6 @@
 	icon_state = "redblue"
 	},
 /area/space)
-"ee" = (
-/turf/simulated/floor{
-	icon_state = "loadingareadirty1"
-	},
-/area/space)
 "eh" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -330,10 +390,11 @@
 	},
 /area/space)
 "ei" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "em" = (
 /turf/simulated/floor{
@@ -347,10 +408,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ep" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warningcorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/space)
 "ev" = (
 /turf/simulated/floor{
@@ -360,12 +422,6 @@
 "ew" = (
 /turf/simulated/floor{
 	icon_state = "yellowfull"
-	},
-/area/space)
-"eB" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "loadingareadirty1"
 	},
 /area/space)
 "eF" = (
@@ -399,8 +455,7 @@
 /area/space)
 "eN" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "floorgrimecaution"
+	icon_state = "darkorangechoco"
 	},
 /area/space)
 "eP" = (
@@ -441,15 +496,21 @@
 	},
 /area/space)
 "fm" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "fu" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
+	},
+/area/space)
+"fE" = (
+/turf/simulated/floor{
+	icon_state = "orangechoco"
 	},
 /area/space)
 "fG" = (
@@ -475,10 +536,11 @@
 	},
 /area/space)
 "gg" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "gh" = (
 /turf/simulated/floor{
@@ -515,28 +577,18 @@
 	icon_state = "white"
 	},
 /area/space)
-"gy" = (
-/turf/simulated/floor{
-	icon_state = "chapel"
-	},
-/area/space)
 "gz" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "caution"
 	},
 /area/space)
-"gF" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "chapel"
-	},
-/area/space)
 "gG" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "gN" = (
 /turf/simulated/floor{
@@ -599,9 +651,12 @@
 	},
 /area/space)
 "hs" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnwhitecorner"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "ht" = (
@@ -611,9 +666,12 @@
 	},
 /area/space)
 "hu" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "hD" = (
@@ -709,8 +767,7 @@
 /area/space)
 "iS" = (
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "floorgrimecaution"
+	icon_state = "darkyellowchoco"
 	},
 /area/space)
 "iT" = (
@@ -777,6 +834,11 @@
 	icon_state = "orange"
 	},
 /area/space)
+"jv" = (
+/turf/simulated/floor{
+	icon_state = "darkgreenchecker"
+	},
+/area/space)
 "jw" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -784,11 +846,6 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"jy" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
 /area/space)
 "jz" = (
 /turf/simulated/floor{
@@ -914,11 +971,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"kn" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/space)
 "kq" = (
 /turf/simulated/floor{
 	icon_state = "cafeteria"
@@ -932,7 +984,7 @@
 /area/space)
 "ku" = (
 /turf/simulated/floor{
-	icon_state = "floorgrimecaution"
+	icon_state = "darkbrownchoco"
 	},
 /area/space)
 "kz" = (
@@ -949,10 +1001,11 @@
 	},
 /area/space)
 "kD" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "kG" = (
 /turf/simulated/floor{
@@ -1049,6 +1102,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/effect/landmark/start/ai,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1065,8 +1119,7 @@
 /area/space)
 "lr" = (
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "floorgrimecaution"
+	icon_state = "neutralchoco"
 	},
 /area/space)
 "lu" = (
@@ -1153,10 +1206,11 @@
 	},
 /area/space)
 "ma" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "me" = (
 /turf/simulated/floor{
@@ -1165,15 +1219,15 @@
 	},
 /area/space)
 "mj" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space)
 "mk" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ml" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1213,15 +1267,17 @@
 	},
 /area/space)
 "mU" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "mZ" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "nc" = (
 /turf/simulated/floor{
@@ -1230,16 +1286,20 @@
 	},
 /area/space)
 "nd" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnwhitecorner"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "nf" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "ng" = (
 /turf/simulated/floor{
@@ -1265,9 +1325,10 @@
 	},
 /area/space)
 "nE" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplatecorner"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "nF" = (
 /obj/structure/cable/blue,
@@ -1279,6 +1340,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"nH" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redchoco"
+	},
+/area/space)
 "nL" = (
 /turf/simulated/floor/plating,
 /area/space)
@@ -1289,9 +1356,10 @@
 	},
 /area/space)
 "nV" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "nX" = (
 /obj/machinery/atm{
@@ -1317,10 +1385,11 @@
 	},
 /area/space)
 "od" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "oi" = (
 /obj/structure/cable/yellow{
@@ -1331,10 +1400,15 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ok" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 1;
 	icon_state = "loadingarea"
 	},
+/obj/effect/decal/turf_decal/alpha/black{
+	dir = 1;
+	icon_state = "arrow"
+	},
+/turf/simulated/floor,
 /area/space)
 "ol" = (
 /turf/simulated/floor{
@@ -1354,15 +1428,15 @@
 	icon_state = "purplecorner"
 	},
 /area/space)
-"oy" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/space)
 "oA" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
+	},
+/area/space)
+"oE" = (
+/turf/simulated/floor{
+	icon_state = "orangechecker"
 	},
 /area/space)
 "oG" = (
@@ -1370,6 +1444,13 @@
 	dir = 8;
 	icon_state = "darkstairs2_wide"
 	},
+/area/space)
+"oL" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "oO" = (
 /turf/simulated/floor{
@@ -1475,12 +1556,6 @@
 	icon_state = "yellow"
 	},
 /area/space)
-"qh" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingareadirty1"
-	},
-/area/space)
 "qi" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -1502,20 +1577,16 @@
 	},
 /area/space)
 "qD" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "qI" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
-	},
-/area/space)
-"qK" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken5"
 	},
 /area/space)
 "qQ" = (
@@ -1577,14 +1648,18 @@
 	},
 /area/space)
 "rw" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "rG" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
+	},
 /turf/simulated/floor{
-	icon_state = "warndarkcorners"
+	icon_state = "dark"
 	},
 /area/space)
 "rK" = (
@@ -1600,10 +1675,11 @@
 	},
 /area/space)
 "rR" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "rU" = (
 /obj/structure/cable/green,
@@ -1628,10 +1704,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "so" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ss" = (
 /turf/simulated/floor{
@@ -1646,9 +1723,12 @@
 	},
 /area/space)
 "sx" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "sy" = (
@@ -1658,10 +1738,15 @@
 	},
 /area/space)
 "sH" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
 	icon_state = "loadingarea"
 	},
+/obj/effect/decal/turf_decal/alpha/black{
+	dir = 8;
+	icon_state = "arrow"
+	},
+/turf/simulated/floor,
 /area/space)
 "sN" = (
 /turf/simulated/floor{
@@ -1671,7 +1756,8 @@
 /area/space)
 "sX" = (
 /turf/simulated/floor{
-	icon_state = "vault"
+	dir = 5;
+	icon_state = "brownchoco"
 	},
 /area/space)
 "sY" = (
@@ -1738,8 +1824,7 @@
 /area/space)
 "tN" = (
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingareadirty2"
+	icon_state = "darkgreenchoco"
 	},
 /area/space)
 "tP" = (
@@ -1753,9 +1838,12 @@
 	},
 /area/space)
 "ub" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "ud" = (
@@ -1850,6 +1938,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_x = 28
 	},
+/obj/structure/sign/departments/medbay/alt,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1884,8 +1973,11 @@
 /turf/simulated/floor/carpet/orange,
 /area/space)
 "uW" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor{
-	icon_state = "whitedelivery"
+	icon_state = "white"
 	},
 /area/space)
 "va" = (
@@ -1994,14 +2086,10 @@
 /turf/simulated/floor/beach/water/waterpool,
 /area/space)
 "ww" = (
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/area/space)
-"wA" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken3"
-	},
+/turf/simulated/floor/plating,
 /area/space)
 "wB" = (
 /obj/structure/cable{
@@ -2101,8 +2189,7 @@
 /area/space)
 "xz" = (
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "xC" = (
@@ -2128,19 +2215,13 @@
 	},
 /area/space)
 "xT" = (
-/turf/simulated/floor{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor,
 /area/space)
 "xV" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "redblue"
-	},
-/area/space)
-"xW" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
 	},
 /area/space)
 "xZ" = (
@@ -2214,6 +2295,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"yC" = (
+/turf/simulated/floor{
+	icon_state = "darkbluechecker"
+	},
+/area/space)
 "yH" = (
 /turf/simulated/floor{
 	icon_state = "wood2_stairs"
@@ -2241,6 +2327,11 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "bluered"
+	},
+/area/space)
+"yV" = (
+/turf/simulated/floor{
+	icon_state = "graybluechecker"
 	},
 /area/space)
 "zb" = (
@@ -2272,8 +2363,7 @@
 /area/space)
 "zr" = (
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "loadingareadirty2"
+	icon_state = "darkredchecker"
 	},
 /area/space)
 "zu" = (
@@ -2347,9 +2437,10 @@
 	},
 /area/space)
 "Al" = (
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "An" = (
 /turf/simulated/floor{
@@ -2522,11 +2613,6 @@
 	icon_state = "whitegreen"
 	},
 /area/space)
-"CK" = (
-/turf/simulated/floor{
-	icon_state = "floorscorched2"
-	},
-/area/space)
 "CR" = (
 /turf/simulated/floor{
 	icon_state = "purplecorner"
@@ -2536,6 +2622,11 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkredcorners"
+	},
+/area/space)
+"Dc" = (
+/turf/simulated/floor{
+	icon_state = "neutralchecker"
 	},
 /area/space)
 "Dg" = (
@@ -2559,9 +2650,10 @@
 	},
 /area/space)
 "Dh" = (
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "Dn" = (
 /turf/simulated/floor{
@@ -2575,9 +2667,12 @@
 	},
 /area/space)
 "Dw" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warndarkcorners"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "Dy" = (
@@ -2624,6 +2719,13 @@
 	dir = 4;
 	icon_state = "green"
 	},
+/area/space)
+"DP" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "DS" = (
 /turf/simulated/floor/engine/cult/lava,
@@ -2692,10 +2794,11 @@
 	},
 /area/space)
 "EA" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "EB" = (
 /turf/simulated/floor{
@@ -2739,9 +2842,10 @@
 	},
 /area/space)
 "EV" = (
-/turf/simulated/floor{
-	icon_state = "warningcorner"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor,
 /area/space)
 "EY" = (
 /turf/simulated/floor{
@@ -2755,10 +2859,11 @@
 	},
 /area/space)
 "Fe" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "Fj" = (
 /turf/simulated/floor{
@@ -2767,10 +2872,11 @@
 	},
 /area/space)
 "Fn" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Fr" = (
 /turf/simulated/floor{
@@ -2810,12 +2916,6 @@
 	icon_state = "darkstairs_middle"
 	},
 /area/space)
-"FG" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "loadingareadirty1"
-	},
-/area/space)
 "FL" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -2828,12 +2928,6 @@
 	icon_state = "wood_stairs2"
 	},
 /area/space)
-"FQ" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "floorscorched2"
-	},
-/area/space)
 "FU" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -2841,9 +2935,12 @@
 	},
 /area/space)
 "FY" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "FZ" = (
@@ -2854,9 +2951,10 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Gb" = (
-/turf/simulated/floor/plating{
-	icon_state = "warnplatecorner"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "Gj" = (
 /obj/structure/cable/orange{
@@ -2867,9 +2965,12 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Gk" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "Gn" = (
@@ -2891,10 +2992,11 @@
 	},
 /area/space)
 "Gx" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/space)
 "GA" = (
 /turf/simulated/floor{
@@ -2978,6 +3080,11 @@
 	icon_state = "barber"
 	},
 /area/space)
+"Ht" = (
+/turf/simulated/floor{
+	icon_state = "yellowchoco"
+	},
+/area/space)
 "Hu" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -2992,6 +3099,11 @@
 /area/space)
 "Hy" = (
 /turf/simulated/wall,
+/area/space)
+"HB" = (
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
 /area/space)
 "HD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -3055,6 +3167,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/sign/departments/medbay/alt,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -3111,6 +3224,11 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/space)
+"Ii" = (
+/turf/simulated/floor{
+	icon_state = "darkbrownchecker"
+	},
+/area/space)
 "Ij" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -3130,9 +3248,12 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Ir" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "It" = (
@@ -3158,22 +3279,19 @@
 	icon_state = "yellow"
 	},
 /area/space)
-"IE" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "chapel"
-	},
-/area/space)
 "IF" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnwhitecorner"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "IG" = (
+/obj/effect/decal/turf_decal/goonplaque,
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "IJ" = (
@@ -3221,9 +3339,10 @@
 	},
 /area/space)
 "Je" = (
-/turf/simulated/floor{
-	icon_state = "wood"
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
 	},
+/turf/simulated/floor/wood,
 /area/space)
 "Jg" = (
 /turf/simulated/floor{
@@ -3276,8 +3395,16 @@
 /turf/simulated/floor/plating,
 /area/space)
 "JL" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
+	},
+/area/space)
+"JO" = (
+/turf/simulated/floor{
+	icon_state = "escapefull"
 	},
 /area/space)
 "JR" = (
@@ -3299,8 +3426,7 @@
 /area/space)
 "Kl" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "loadingareadirty2"
+	icon_state = "graychoco"
 	},
 /area/space)
 "Ko" = (
@@ -3364,6 +3490,11 @@
 	icon_state = "caution"
 	},
 /area/space)
+"KM" = (
+/turf/simulated/floor{
+	icon_state = "graypurplechecker"
+	},
+/area/space)
 "KN" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -3395,10 +3526,11 @@
 	},
 /area/space)
 "La" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Lc" = (
 /turf/simulated/floor{
@@ -3419,9 +3551,12 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Li" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warndarkcorners"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "Lj" = (
@@ -3438,8 +3573,8 @@
 /area/space)
 "Lm" = (
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "wood_stairs"
+	dir = 1;
+	icon_state = "redbluefull"
 	},
 /area/space)
 "Ln" = (
@@ -3467,10 +3602,11 @@
 	},
 /area/space)
 "LI" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "LP" = (
 /turf/simulated/floor/carpet/blue,
@@ -3540,9 +3676,12 @@
 	},
 /area/space)
 "MI" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "MJ" = (
@@ -3587,9 +3726,12 @@
 	},
 /area/space)
 "MP" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "MU" = (
@@ -3607,15 +3749,18 @@
 	},
 /area/space)
 "Nd" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space)
 "Nk" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/space)
 "Nl" = (
 /turf/simulated/floor{
@@ -3748,11 +3893,6 @@
 	icon_state = "blueyellowfull"
 	},
 /area/space)
-"OI" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken6"
-	},
-/area/space)
 "ON" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -3760,9 +3900,12 @@
 	},
 /area/space)
 "OO" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "OP" = (
@@ -3872,9 +4015,16 @@
 	icon_state = "darkstairs_alone"
 	},
 /area/space)
+"PQ" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
+/area/space)
 "PR" = (
 /turf/simulated/floor{
-	icon_state = "loadingareadirty2"
+	icon_state = "blackchoco"
 	},
 /area/space)
 "PS" = (
@@ -3885,15 +4035,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"PU" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken7"
-	},
-/area/space)
 "PZ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "Qe" = (
@@ -3903,18 +4051,23 @@
 	},
 /area/space)
 "Qh" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Qi" = (
 /obj/structure/cable/white,
 /turf/simulated/floor/plating,
 /area/space)
 "Qj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space)
+"Ql" = (
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "darkpurplechecker"
 	},
 /area/space)
 "Qr" = (
@@ -3924,16 +4077,20 @@
 	},
 /area/space)
 "Qs" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "QC" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "QD" = (
 /obj/structure/cable{
@@ -3955,10 +4112,11 @@
 	},
 /area/space)
 "QI" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "QK" = (
 /turf/simulated/floor{
@@ -3982,6 +4140,11 @@
 	icon_state = "bluecorner"
 	},
 /area/space)
+"QZ" = (
+/turf/simulated/floor{
+	icon_state = "brownchecker"
+	},
+/area/space)
 "Ra" = (
 /turf/simulated/floor{
 	icon_state = "whitecorner"
@@ -4001,9 +4164,13 @@
 	},
 /area/space)
 "Rh" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "loadingarea"
 	},
+/obj/effect/decal/turf_decal/alpha/black{
+	icon_state = "arrow"
+	},
+/turf/simulated/floor,
 /area/space)
 "Rp" = (
 /turf/simulated/floor{
@@ -4047,19 +4214,17 @@
 /turf/simulated/floor/plating,
 /area/space)
 "RA" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space)
 "RD" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "wood_stairs2"
+	dir = 6;
+	icon_state = "wood_stairs"
 	},
-/area/space)
-"RE" = (
-/turf/simulated/floor/mech_bay_recharge_floor,
 /area/space)
 "RH" = (
 /turf/simulated/floor{
@@ -4113,6 +4278,11 @@
 	icon_state = "caution"
 	},
 /area/space)
+"Sf" = (
+/turf/simulated/floor{
+	icon_state = "darkbluechoco"
+	},
+/area/space)
 "Sj" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -4145,9 +4315,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -28
 	},
-/obj/structure/sign/warning{
-	name = "SECURITY"
-	},
+/obj/structure/sign/departments/security,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -4186,6 +4354,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/sign/departments/security,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -4238,6 +4407,13 @@
 /turf/simulated/floor/light{
 	icon_state = "light_on-r"
 	},
+/area/space)
+"Tp" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 10;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "Tr" = (
 /obj/structure/cable/yellow{
@@ -4300,6 +4476,11 @@
 	icon_state = "orangecorner"
 	},
 /area/space)
+"TL" = (
+/turf/simulated/floor{
+	icon_state = "graygreenchecker"
+	},
+/area/space)
 "TO" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -4313,9 +4494,12 @@
 	},
 /area/space)
 "Ua" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "Um" = (
@@ -4369,9 +4553,11 @@
 	},
 /area/space)
 "UN" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space)
 "UO" = (
@@ -4394,9 +4580,12 @@
 	},
 /area/space)
 "US" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space)
 "UY" = (
@@ -4409,6 +4598,11 @@
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
+	},
+/area/space)
+"Vd" = (
+/turf/simulated/floor{
+	icon_state = "darkyellowchecker"
 	},
 /area/space)
 "Vg" = (
@@ -4433,11 +4627,6 @@
 	icon_state = "whitegreenfull"
 	},
 /area/space)
-"Vz" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/space)
 "VC" = (
 /turf/simulated/floor/carpet/red,
 /area/space)
@@ -4448,8 +4637,11 @@
 	},
 /area/space)
 "VI" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "whitebot"
+	icon_state = "white"
 	},
 /area/space)
 "VJ" = (
@@ -4478,13 +4670,16 @@
 /area/space)
 "VQ" = (
 /turf/simulated/floor{
-	icon_state = "whitegreen_v"
+	icon_state = "greenchoco"
 	},
 /area/space)
 "Wb" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warndarkcorners"
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "Wf" = (
@@ -4515,10 +4710,22 @@
 	},
 /area/space)
 "WH" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 4;
 	icon_state = "loadingarea"
 	},
+/obj/effect/decal/turf_decal/alpha/black{
+	dir = 4;
+	icon_state = "arrow"
+	},
+/turf/simulated/floor,
+/area/space)
+"WJ" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 9;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "WQ" = (
 /turf/simulated/floor{
@@ -4526,30 +4733,26 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/space)
-"WT" = (
-/turf/simulated/floor{
-	icon_state = "wood-broken2"
-	},
-/area/space)
 "WU" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/area/space)
-"Xd" = (
-/turf/simulated/floor{
-	icon_state = "whiteblue_ex"
-	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Xe" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
+	},
 /turf/simulated/floor{
-	icon_state = "warnwhitecorner"
+	icon_state = "white"
 	},
 /area/space)
 "Xo" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_right"
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/space)
 "Xs" = (
@@ -4693,6 +4896,13 @@
 "YF" = (
 /turf/simulated/floor/engine/cult,
 /area/space)
+"YG" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 6;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
+/area/space)
 "YI" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -4746,9 +4956,10 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Zo" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/turf/simulated/floor,
 /area/space)
 "Zz" = (
 /turf/simulated/floor{
@@ -4779,10 +4990,11 @@
 	},
 /area/space)
 "ZD" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ZH" = (
 /turf/simulated/floor{
@@ -4818,6 +5030,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/effect/landmark/start/ai,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -4953,7 +5166,7 @@ ke
 Hy
 Hy
 nL
-aN
+nL
 mj
 Gb
 EA
@@ -4967,8 +5180,8 @@ Zo
 rw
 dJ
 ma
-yc
-yc
+TL
+VQ
 RH
 DO
 YV
@@ -4977,13 +5190,13 @@ ve
 qa
 QH
 Ba
-yc
-yc
+KM
+cZ
 PI
 EI
 Nl
-yc
-yc
+yV
+dT
 BW
 ED
 fu
@@ -5004,8 +5217,8 @@ Hy
 Hy
 Hy
 nL
-aN
-jy
+nL
+mj
 Fe
 mZ
 RA
@@ -5055,8 +5268,8 @@ Hy
 Hy
 Hy
 nL
-aN
-Vz
+nL
+mj
 ay
 ww
 QC
@@ -5126,17 +5339,17 @@ XC
 DF
 PB
 UA
-Lr
+Ht
 FL
 YI
 He
 Bv
-Lr
+cZ
 rO
 qi
 wj
 Hr
-Xd
+aL
 gW
 xP
 lc
@@ -5259,7 +5472,7 @@ pI
 Hy
 Hy
 uA
-cZ
+Td
 di
 nE
 mk
@@ -5273,23 +5486,23 @@ Nd
 Gk
 MP
 Qs
-An
-An
+jv
+tN
 lH
 pd
 zv
-An
-An
+Vd
+iS
 TR
 RW
 jz
-An
-An
+Ql
+bu
 vV
 qI
 Ar
-An
-An
+yC
+Sf
 uE
 pY
 gO
@@ -5310,8 +5523,8 @@ Hy
 Hy
 Hy
 aM
-cZ
-kn
+Td
+di
 so
 Fn
 rR
@@ -5319,11 +5532,11 @@ Td
 nV
 uA
 Hy
-yc
-yc
-Qj
-iS
-Qj
+UN
+xz
+Nk
+sH
+Nk
 ZN
 ia
 jk
@@ -5361,8 +5574,8 @@ Hy
 Hy
 Hy
 uA
-cZ
-xW
+Td
+di
 mU
 WU
 ZD
@@ -5370,15 +5583,15 @@ La
 cn
 uA
 Hy
-yc
-yc
-eN
-Qj
-ku
+Nd
+IG
+ok
+bB
+Rh
 En
 rK
 ii
-yc
+HB
 KB
 Rg
 QO
@@ -5421,18 +5634,18 @@ uA
 uA
 uA
 Hy
-yc
-yc
-Qj
-lr
-Qj
+Xo
+xz
 Zo
-Nk
+WH
+Zo
+QZ
+sX
 dE
 FU
 NH
-yc
 lQ
+nH
 Pa
 pS
 bo
@@ -5546,7 +5759,7 @@ lg
 PG
 uf
 cV
-yc
+JO
 Yf
 "}
 (15,1,1) = {"
@@ -5574,18 +5787,18 @@ Ef
 ot
 Ce
 ot
-yc
-yc
+oE
+fE
 qw
 bY
 eL
-yc
-yc
+Ii
+ku
 Tx
 dq
 JY
 Pk
-Lr
+nH
 pD
 jp
 Le
@@ -5684,7 +5897,7 @@ By
 je
 nc
 Jl
-dT
+An
 dl
 CW
 xm
@@ -5699,7 +5912,7 @@ Yv
 Rg
 pu
 ki
-yc
+Lm
 QK
 "}
 (18,1,1) = {"
@@ -5732,13 +5945,13 @@ yc
 zw
 iH
 PJ
-yc
 IO
+PR
 zH
 OP
 gj
-An
-An
+zr
+eN
 kd
 VH
 VP
@@ -5885,13 +6098,13 @@ yc
 fK
 kZ
 Ao
-yc
-yc
+kq
+aN
 sv
 HP
 Ey
-kq
-yc
+Dc
+lr
 MJ
 ss
 EY
@@ -5936,14 +6149,14 @@ uR
 uR
 HN
 HN
-Je
-Je
-IG
-UN
-xz
 yc
-zr
 yc
+WJ
+dm
+Tp
+Kl
+Kl
+Kl
 Hy
 Oh
 Xv
@@ -5987,14 +6200,14 @@ uR
 uR
 HN
 HN
+yc
+yc
+DP
 bX
-bX
-sX
-Nd
-xz
+Je
 Kl
 yc
-PR
+Kl
 jd
 am
 am
@@ -6038,14 +6251,14 @@ wI
 wI
 VC
 VC
-WT
-WT
-bu
-Xo
-xz
-Zo
-tN
-Zo
+yc
+yc
+oL
+PQ
+YG
+Kl
+Kl
+Kl
 bO
 am
 am
@@ -6089,26 +6302,26 @@ wI
 wI
 VC
 VC
-wA
-wA
 yc
-sH
 yc
-Nk
-eB
-Nk
+yc
+yc
+yc
+yc
+yc
+yc
 pA
 am
 am
 am
 am
 RJ
+az
+Eh
+Eh
+Eh
+Eh
 RD
-Eh
-Eh
-Eh
-Eh
-Lm
 "}
 (26,1,1) = {"
 Hy
@@ -6140,14 +6353,14 @@ Wf
 Wf
 pM
 pM
-oy
-oy
-ok
 yc
-Rh
-FG
 yc
-ee
+yc
+yc
+yc
+yc
+yc
+yc
 jU
 am
 am
@@ -6191,13 +6404,13 @@ Wf
 Wf
 pM
 pM
-qK
-qK
-yc
-WH
 yc
 yc
-qh
+yc
+yc
+yc
+yc
+yc
 yc
 Hy
 jH
@@ -6242,8 +6455,8 @@ LP
 LP
 ig
 ig
-OI
-OI
+yc
+yc
 Hy
 hD
 gY
@@ -6293,8 +6506,8 @@ LP
 LP
 ig
 ig
-PU
-PU
+yc
+yc
 Tg
 Lr
 Lr
@@ -6564,10 +6777,10 @@ XO
 XO
 tn
 tn
-RE
-RE
-IE
-cx
+ac
+ac
+ae
+ag
 "}
 (35,1,1) = {"
 Hy
@@ -6615,10 +6828,10 @@ XO
 XO
 tn
 tn
-RE
-RE
-gF
-gy
+ac
+ac
+af
+ah
 "}
 (36,1,1) = {"
 Hy
@@ -6658,10 +6871,10 @@ ZP
 ZP
 Fd
 Fd
-FQ
-FQ
-CK
-CK
+xT
+xT
+xT
+xT
 zb
 zb
 mp
@@ -6709,10 +6922,10 @@ ZP
 ZP
 Fd
 Fd
-FQ
-FQ
-CK
-CK
+xT
+xT
+xT
+xT
 zb
 zb
 mp

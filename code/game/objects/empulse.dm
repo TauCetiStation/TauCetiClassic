@@ -10,10 +10,7 @@
 
 	SSStatistics.add_emp_stat(epicenter, heavy_range, light_range)
 
-	var/power = heavy_range * 2 + light_range
-	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
-		if(get_dist(W, epicenter) < 10)
-			W.react_empulse(epicenter, power)
+	SEND_SIGNAL(SSexplosions, COMSIG_EXPLOSIONS_EMPULSE, epicenter, heavy_range, light_range)
 
 	if(heavy_range > 1)
 		var/obj/effect/overlay/pulse = new /obj/effect/overlay(epicenter)

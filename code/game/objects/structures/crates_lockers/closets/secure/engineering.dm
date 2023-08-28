@@ -24,7 +24,7 @@
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/welding(src)
-	new /obj/item/clothing/gloves/yellow(src)
+	new /obj/item/clothing/gloves/insulated(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/weapon/cartridge/ce(src)
 	new /obj/item/device/radio/headset/heads/ce(src)
@@ -49,7 +49,7 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 	for (var/i in 1 to 3)

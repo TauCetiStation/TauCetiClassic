@@ -214,6 +214,69 @@
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","TAC")
 
+/client/verb/set_bloom_level()
+	set name = "LIGHTING: Set Bloom Level"
+	set category = "Preferences"
+	set desc = "Set bloom level near lamps."
+
+	var/new_setting = input(src, "LIGHTING: Bloom Level:") as null|anything in list("Disable", "Low", "Medium (Default)", "High")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Disable")
+			prefs.bloomlevel = BLOOM_DISABLE
+		if("Low")
+			prefs.bloomlevel = BLOOM_LOW
+		if("Medium (Default)")
+			prefs.bloomlevel = BLOOM_MED
+		if("High")
+			prefs.bloomlevel = BLOOM_HIGH
+
+	to_chat(src, "Bloom: [new_setting].")
+	prefs.save_preferences()
+	if(screen && screen.len)
+		var/atom/movable/screen/plane_master/lamps_selfglow/PM = locate() in screen
+		PM.backdrop(mob)
+	feedback_add_details("admin_verb","BLM")
+
+/client/verb/toggle_oldnew_lighting()
+	set name = "LIGHTING: Toggle Old/New Lighting"
+	set category = "Preferences"
+	set desc = "Toggle lighting variant."
+
+	prefs.old_lighting = !prefs.old_lighting
+	to_chat(src, "Lighting: [prefs.old_lighting ? "Old" : "New"].")
+	prefs.save_preferences()
+	if(screen && screen.len)
+		var/atom/movable/screen/plane_master/exposure/EXP = locate() in screen
+		var/atom/movable/screen/plane_master/lamps_selfglow/BLM = locate() in screen
+		var/atom/movable/screen/plane_master/lamps_glare/GLR = locate() in screen
+
+		if(prefs.old_lighting)
+			EXP.alpha = 0
+		else
+			EXP.alpha = 255
+
+		EXP.backdrop(mob)
+		BLM.backdrop(mob)
+		GLR.backdrop(mob)
+	feedback_add_details("admin_verb","OLGHT")
+
+/client/verb/toggle_glare()
+	set name = "LIGHTING: Toggle Glare"
+	set category = "Preferences"
+	set desc = "Toggle glare of lamps."
+
+	prefs.lampsglare = !prefs.lampsglare
+	to_chat(src, "Glare: [prefs.old_lighting ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	if(screen && screen.len)
+		var/atom/movable/screen/plane_master/lamps_glare/PM = locate() in screen
+
+		PM.backdrop(mob)
+	feedback_add_details("admin_verb","GLR")
+
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
 	set category = "Preferences"
@@ -372,3 +435,12 @@
 	else
 		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
 	feedback_add_details("admin_verb", "thm")
+
+/client/verb/edit_emote_panel()
+	set name = "Edit Emote Panel"
+	set category = "Preferences"
+
+	if(!emote_panel_editor)
+		emote_panel_editor = new /datum/emote_panel_editor(src)
+	emote_panel_editor.tgui_interact(usr)
+
