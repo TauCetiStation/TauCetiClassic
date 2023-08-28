@@ -39,7 +39,7 @@
 		L.SetSleeping(weakness * (10 SECONDS)) //0 resistance gives you 10 seconds of sleep
 
 /datum/artifact_effect/sleepy/proc/apply_sleepy(mob/receiver, power)
-	if(ishuman(receiver))
+	if(ishuman(receiver) && receiver.get_species() != IPC)
 		var/mob/living/carbon/human/H = receiver
 		var/weakness = get_anomaly_protection(H)
 		if(!weakness)
@@ -47,5 +47,5 @@
 		to_chat(H, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))
 		H.drowsyness = H.drowsyness + power * weakness
 		H.adjustBlurriness(power * weakness)
-	if(isrobot(receiver))
+	if(isrobot(receiver) || receiver.get_species() == IPC)
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: CPU cycles slowing down.</span>")

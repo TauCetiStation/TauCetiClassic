@@ -42,6 +42,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/id = 0                //ID of the computer (for server restrictions).
 	var/sync = TRUE           //If sync = 0, it doesn't show up on Server Control Console
 	var/can_research = TRUE   //Is this console capable of researching
+	var/sabotagable = TRUE // if traitor can sabotage it with disk, used in survival map.
 
 	var/selected_tech_tree
 	var/selected_technology

@@ -307,7 +307,7 @@
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
 		sabotage_time = 15 SECOND
-		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
+		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 		return TRUE
 	return FALSE
 
@@ -328,7 +328,8 @@
 		for(var/i in 1 to s.files.researched_tech.len)
 			s.files.forget_random_technology()
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
-		explosion(c.loc, 0, 1, 3)
+		if(c.sabotagable)
+			explosion(c.loc, 0, 1, 3)
 	var/datum/faction/traitor/faction = find_faction_by_type(/datum/faction/traitor)
 	for(var/datum/role/traitor/T in faction.members)
 		for(var/datum/objective/research_sabotage/rs in T.objectives.objectives)
