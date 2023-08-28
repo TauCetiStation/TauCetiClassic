@@ -4422,6 +4422,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -11130,6 +11131,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -15691,6 +15693,7 @@
 /area/station/bridge)
 "dfo" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -17550,6 +17553,7 @@
 	icon_state = "siding_line"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -20326,6 +20330,7 @@
 "ehY" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -23166,6 +23171,7 @@
 	pixel_y = 22
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -34979,6 +34985,7 @@
 /area/station/engineering/break_room)
 "htF" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -41936,6 +41943,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
@@ -50461,6 +50469,7 @@
 	icon_state = "siding_line"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
@@ -52952,6 +52961,7 @@
 	icon_state = "siding_wood_line"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -81941,6 +81951,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	name = "apc down";
 	pixel_y = -28
 	},
@@ -85520,6 +85531,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
@@ -107809,6 +107821,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
