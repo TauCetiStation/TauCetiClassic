@@ -3114,7 +3114,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	dir = 4;
 	icon_state = "siding_wideplating_line"
 	},
@@ -3348,7 +3348,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	dir = 8;
 	icon_state = "siding_wideplating_line"
 	},
@@ -4112,7 +4112,7 @@
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_thinplating_line"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "box_white"
 	},
 /turf/simulated/shuttle/floor{
@@ -5040,7 +5040,7 @@
 	dir = 1;
 	icon_state = "siding_thinplating_line"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "box_white"
 	},
 /turf/simulated/shuttle/floor{
@@ -5062,7 +5062,7 @@
 	dir = 1;
 	icon_state = "siding_thinplating_line"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "box_white"
 	},
 /turf/simulated/shuttle/floor{
@@ -5100,7 +5100,7 @@
 	dir = 1;
 	icon_state = "siding_thinplating_line"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "box_white"
 	},
 /turf/simulated/shuttle/floor{
@@ -5156,7 +5156,7 @@
 	dir = 10;
 	icon_state = "siding_thinplating_line"
 	},
-/obj/effect/decal/turf_decal/blue{
+/obj/effect/decal/turf_decal/alpha/blue{
 	icon_state = "box_white"
 	},
 /turf/simulated/shuttle/floor{
@@ -5244,7 +5244,7 @@
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_thinplating_line"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "box_white"
 	},
 /turf/simulated/shuttle/floor{
@@ -13452,7 +13452,7 @@
 	},
 /area/space)
 "aDw" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 4;
 	icon_state = "siding_line"
 	},
@@ -13619,7 +13619,7 @@
 	},
 /area/centcom/specops)
 "aDU" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	icon_state = "siding_corner"
 	},
 /turf/unsimulated/floor{
@@ -13645,7 +13645,7 @@
 	},
 /area/centcom/specops)
 "aDX" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	icon_state = "siding_line"
 	},
 /turf/unsimulated/floor{
@@ -13688,7 +13688,7 @@
 	},
 /area/centcom/specops)
 "aEd" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 8;
 	icon_state = "siding_line"
 	},
@@ -13859,7 +13859,7 @@
 	},
 /area/custom/syndicate_mothership)
 "aEC" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 8;
 	icon_state = "siding_corner"
 	},
@@ -14632,7 +14632,7 @@
 	},
 /area/space)
 "aGk" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 1;
 	icon_state = "siding_line"
 	},
@@ -14918,7 +14918,7 @@
 	},
 /area/custom/wizard_station)
 "aGP" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 4;
 	icon_state = "siding_corner"
 	},
@@ -15314,7 +15314,7 @@
 	},
 /area/centcom/evac)
 "aHK" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	dir = 1;
 	icon_state = "siding_corner"
 	},
@@ -16408,7 +16408,7 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "outline_bold"
 	},
 /obj/effect/decal/turf_decal/metal{
@@ -17324,7 +17324,7 @@
 	pixel_y = -4
 	},
 /obj/structure/table/glass,
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	dir = 4;
 	icon_state = "siding_wideplating_line"
 	},
@@ -17343,7 +17343,7 @@
 /obj/machinery/sleeper/upgraded{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	dir = 8;
 	icon_state = "siding_wideplating_line"
 	},
@@ -21526,7 +21526,7 @@
 "baE" = (
 /obj/machinery/body_scanconsole,
 /obj/machinery/life_assist/artificial_ventilation,
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/shuttle/floor{
@@ -21535,7 +21535,7 @@
 /area/shuttle/syndicate/start)
 "baF" = (
 /obj/machinery/bodyscanner,
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/shuttle/floor{
@@ -21558,7 +21558,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/weapon/tank/anesthetic,
 /obj/structure/table/glass,
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/shuttle/floor{
@@ -21587,7 +21587,7 @@
 /obj/item/weapon/scalpel/laser3,
 /obj/item/weapon/surgicaldrill,
 /obj/structure/table/glass,
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/shuttle/floor{
@@ -21673,7 +21673,7 @@
 /obj/item/stack/medical/suture,
 /obj/item/stack/medical/suture,
 /obj/item/stack/medical/suture,
-/obj/effect/decal/turf_decal/green{
+/obj/effect/decal/turf_decal/alpha/green{
 	dir = 6;
 	icon_state = "siding_wideplating_line"
 	},
@@ -22174,7 +22174,7 @@
 	},
 /area/space)
 "bdv" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/effect/decal/turf_decal/alpha/dark_red{
 	icon_state = "religion_cult_of_blood"
 	},
 /turf/unsimulated/floor/cult,

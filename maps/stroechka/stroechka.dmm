@@ -755,7 +755,7 @@
 /area/station/cargo/storage)
 "bB" = (
 /obj/machinery/constructable_frame/machine_frame,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
@@ -3251,7 +3251,7 @@
 /area/station/hallway/secondary/exit)
 "fK" = (
 /obj/machinery/r_n_d/protolathe,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
@@ -3288,7 +3288,7 @@
 /area/station/hallway/primary/central)
 "fO" = (
 /obj/machinery/r_n_d/circuit_imprinter,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
@@ -4184,7 +4184,7 @@
 	dir = 8;
 	req_access = list(71)
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
