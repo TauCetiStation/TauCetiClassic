@@ -164,7 +164,7 @@
 		if(Machine.emagged)
 			return TRUE
 
-	if(!req_access.len && !req_one_access.len) //no requirements
+	if(!length(req_access) && !length(req_one_access)) //no requirements
 		return TRUE
 	if(!AM)
 		return FALSE

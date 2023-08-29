@@ -15,7 +15,7 @@
 	var/action_type = AB_ITEM
 	var/atom/movable/target = null
 	var/check_flags = 0
-	var/restained_check = ARMS // for AB_CHECK_INCAPACITATED
+	var/restrained_check = ARMS // for AB_CHECK_INCAPACITATED
 	var/processing = 0
 	var/active = 0
 	var/atom/movable/screen/movable/action_button/button = null
@@ -62,9 +62,7 @@
 		return
 	switch(action_type)
 		if(AB_ITEM)
-			if(target)
-				var/obj/item/item = target
-				item.ui_action_click()
+			Activate()
 		if(AB_SPELL)
 			if(target)
 				var/obj/effect/proc_holder/spell = target
@@ -74,15 +72,19 @@
 				Activate()
 			else
 				Deactivate()
+	if(!owner)
+		return
+	if(button == null)
+		var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
+		N.owner = src.owner
+		button = N
+	button.UpdateIcon()
 	return
 
 /datum/action/proc/Activate()
 	return
 
 /datum/action/proc/Deactivate()
-	return
-
-/datum/action/proc/Process()
 	return
 
 /datum/action/proc/CheckRemoval(mob/user) // TRUE if action is no longer valid for this mob and should be removed
@@ -104,14 +106,15 @@
 /atom/movable/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
-/datum/action/proc/Checks()// returns 1 if all checks pass
+/// returns 1 if all checks pass
+/datum/action/proc/Checks()
 	if(!owner)
 		return FALSE
 	if(check_flags & AB_CHECK_INCAPACITATED)
-		if(owner.incapacitated(restained_check))
+		if(owner.incapacitated(restrained_check))
 			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying && !owner.crawling)
+		if(owner.lying)
 			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat != CONSCIOUS)
@@ -295,19 +298,37 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_INSIDE
 
-/datum/action/item_action/CheckRemoval(mob/living/user)
+/datum/action/item_action/Activate()
+	var/obj/item/I = target
+	I.attack_self(usr)
+
+/datum/action/item_action/IsAvailable()
+	return TRUE
+
+/datum/action/item_action/CheckRemoval(mob/user)
 	return !(target in user)
 
 /datum/action/item_action/hands_free
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE|AB_CHECK_ALIVE
+
 
 //Preset for spells
 /datum/action/spell_action
 	action_type = AB_SPELL
 	check_flags = 0
 	background_icon_state = "bg_spell"
+
+/datum/action/spell_action/Grant(mob/T)
+	. = ..()
+	if(istype(target, /obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = target
+		if(S.charge_max < 1)
+			START_PROCESSING(SSaction_buttons, src)
+
+/datum/action/spell_action/process()
+	UpdateButtonIcon()
 
 /datum/action/spell_action/UpdateName()
 	var/obj/effect/proc_holder/spell/spell = target
@@ -320,9 +341,8 @@
 
 	if(usr)
 		return spell.can_cast(usr)
-	else
-		if(owner)
-			return spell.can_cast(owner)
+	else if(owner)
+		return spell.can_cast(owner)
 	return TRUE
 
 /datum/action/spell_action/CheckRemoval()

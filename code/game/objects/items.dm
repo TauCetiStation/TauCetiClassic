@@ -26,9 +26,12 @@
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/datum/action/item_action/action = null
-	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
-	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	///Actions that item spawns on atom_init(), paths
+	var/list/item_action_types = list()
+	///Spawned actions, datums
+	var/list/item_actions = list()
+	///Add actions on equip(), otherwise we have a special behavior
+	var/item_actions_special = FALSE
 
 	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
@@ -115,6 +118,10 @@
 	if(item_state_world)
 		update_world_icon()
 
+	for(var/path in item_action_types)
+		var/datum/action/B = new path (src)
+		item_actions += B
+
 	return INITIALIZE_HINT_NORMAL
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -127,7 +134,8 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
-	QDEL_NULL(action)
+	for(var/datum/action/A in item_actions)
+		qdel(A)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -146,6 +154,22 @@
 
 /obj/item/blob_act()
 	return
+
+///Updates all icons of action buttons associated with this item
+/obj/item/proc/update_item_actions()
+	for(var/datum/action/A as anything in item_actions)
+		A.button.UpdateIcon()
+
+///Adds action buttons to user associated with this item
+/obj/item/proc/add_item_actions(mob/user)
+	for(var/datum/action/A in item_actions)
+		A.Grant(user)
+
+///Removes all action buttons from user associated with this item
+/obj/item/proc/remove_item_actions(mob/user)
+	for(var/datum/action/A in item_actions)
+		if(A.CheckRemoval(user))
+			A.Remove(user)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -357,6 +381,8 @@
 		qdel(src)
 	update_world_icon()
 	set_alt_apperances_layers()
+	if(!item_actions_special)
+		remove_item_actions(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -396,6 +422,8 @@
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	update_world_icon()
 	set_alt_apperances_layers()
+	if(!item_actions_special)
+		add_item_actions(user)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -770,12 +798,6 @@
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks, target)
 	return tool_use_check(user, amount, target) && (!extra_checks || extra_checks.Invoke())
-
-//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
-//The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
-/obj/item/proc/ui_action_click()
-	attack_self(usr)
 
 /obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return FALSE

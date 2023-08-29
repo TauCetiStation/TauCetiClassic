@@ -81,6 +81,10 @@
 	target = E.tome
 	button.UpdateIcon()
 
+/datum/action/innate/eminence/tome/Activate()
+	var/obj/item/I = target
+	I.attack_self(usr)
+
 //Forbids research to cultists
 /datum/action/innate/eminence/forbid_research
 	name = "Запретить/разрешить исследования"
