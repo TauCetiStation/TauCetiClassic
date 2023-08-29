@@ -197,6 +197,6 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 
 		if(AIRLOCK_WIRE_UNRES_SIDE)
 			if(!A.hasPower())
-				A.unres_sides = turn(A.unres_sides, 90)
+				A.unres_sides = A.unres_sides < 1 ? NORTH : turn(A.unres_sides, -90)
 
 	A.update_icon()
