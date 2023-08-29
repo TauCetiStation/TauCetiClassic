@@ -46,6 +46,7 @@ var/global/list/airlock_overlays = list()
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
+	//var/obj/machinery/door/airlock/closeOthers = list()
 	var/closeOtherId = null
 	var/lockdownbyai = 0
 	autoclose = 1
@@ -104,6 +105,11 @@ var/global/list/airlock_overlays = list()
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
+	/*if(close_others) //remove this airlock from the list of every linked airlock
+		closeOtherId = null
+		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
+			otherlock.close_others -= src
+		close_others.Cut()*/
 	return ..()
 
 /obj/machinery/door/airlock/process()
@@ -1176,7 +1182,20 @@ var/global/list/airlock_overlays = list()
 		ae.broken = TRUE
 		operating = 0
 	..()
-
+/*
+/obj/machinery/door/airlock/proc/update_other_id()
+	for(var/obj/machinery/door/airlock/Airlock in airlock_list)
+		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
+			if(!(Airlock in close_others))
+				close_others += Airlock
+			if(!(src in Airlock.close_others))
+				Airlock.close_others += src
+	if(closeOtherId != null)
+		for (var/obj/machinery/door/airlock/A in airlock_list)
+			if(A.closeOtherId == closeOtherId && A != src)
+				closeOther = A
+				break
+				*/
 /obj/structure/door_scrap
 	name = "Door Scrap"
 	desc = "Just a bunch of garbage."

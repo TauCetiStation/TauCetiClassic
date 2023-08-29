@@ -174,6 +174,8 @@
 				door.req_access = electronics.conf_access
 			if(created_name)
 				door.name = created_name
+			else if(electronics.passed_name)
+				door.name = sanitize(electronics.passed_name)
 			electronics.loc = door
 			electronics = null
 			qdel(src)
