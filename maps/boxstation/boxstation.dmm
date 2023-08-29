@@ -229,8 +229,7 @@
 	pixel_x = 27;
 	dir = 4;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/range)
@@ -1423,8 +1422,7 @@
 	pixel_x = 27;
 	dir = 4;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -1673,8 +1671,7 @@
 	pixel_x = 27;
 	dir = 4;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2516,8 +2513,7 @@
 	pixel_y = 27;
 	dir = 1;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2907,8 +2903,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Brig area power controller";
-	smartlight_preset = /datum/smartlight_preset/brig;
-	custom_smartlight_preset = Brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -3986,8 +3981,7 @@
 	pixel_y = 27;
 	dir = 1;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6334,8 +6328,7 @@
 	pixel_x = 27;
 	dir = 4;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/interrogation)
@@ -7176,8 +7169,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Brig area power controller";
-	smartlight_preset = /datum/smartlight_preset/brig;
-	custom_smartlight_preset = Brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -7324,8 +7316,7 @@
 	pixel_x = 27;
 	dir = 4;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -9593,13 +9584,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -27
 	},
-/obj/machinery/power/apc{
-	pixel_y = -27;
-	dir = 1;
-	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitered"
@@ -9725,8 +9709,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Brig area power controller";
-	smartlight_preset = /datum/smartlight_preset/brig;
-	custom_smartlight_preset = Brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -14328,8 +14311,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "RnD area power controller";
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -15489,8 +15471,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "RnD area power controller";
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
@@ -19505,9 +19486,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	smartlight_preset = /datum/smartlight_preset/rnd;
 	name = "RnD area power controller";
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor,
 /area/station/rnd/mixing)
@@ -21287,8 +21267,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD;
+	custom_smartlight_preset = "RnD";
 	name = "RnD area power controller"
 	},
 /turf/simulated/floor,
@@ -23487,8 +23466,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Brig area power controller";
-	smartlight_preset = /datum/smartlight_preset/brig;
-	custom_smartlight_preset = Brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24620,8 +24598,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -25668,9 +25645,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	smartlight_preset = /datum/smartlight_preset/rnd;
 	name = "RnD area power controller";
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
@@ -26950,8 +26926,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Cargo area power controller";
-	custom_smartlight_preset = Cargo;
-	smartlight_preset = /datum/smartlight_preset/cargo;
+	custom_smartlight_preset = "Cargo";
 	dir = 4;
 	pixel_x = 27
 	},
@@ -27269,8 +27244,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD;
+	custom_smartlight_preset = "RnD";
 	name = "RnD area power controller"
 	},
 /turf/simulated/floor{
@@ -29799,8 +29773,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "RnD area power controller";
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -32415,8 +32388,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Medbay area power controller";
-	smartlight_preset = /datum/smartlight_preset/medbay;
-	custom_smartlight_preset = MedBay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -33531,8 +33503,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD;
+	custom_smartlight_preset = "RnD";
 	name = "RnD area power controller"
 	},
 /turf/simulated/floor{
@@ -35086,9 +35057,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	smartlight_preset = /datum/smartlight_preset/rnd;
 	name = "RnD area power controller";
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -35313,8 +35283,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Bar area power controller";
-	smartlight_preset = /datum/smartlight_preset/bar;
-	custom_smartlight_preset = bar
+	custom_smartlight_preset = "bar"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -35413,8 +35382,7 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	name = "Medbay area power controller";
-	smartlight_preset = /datum/smartlight_preset/medbay;
-	custom_smartlight_preset = MedBay;
+	custom_smartlight_preset = "MedBay";
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -36620,8 +36588,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Cargo area power controller";
-	custom_smartlight_preset = Cargo;
-	smartlight_preset = /datum/smartlight_preset/cargo
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -37692,9 +37659,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	smartlight_preset = /datum/smartlight_preset/rnd;
 	name = "RnD area power controller";
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -38340,8 +38306,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "RnD area power controller";
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -41610,8 +41575,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Medbay area power controller";
-	smartlight_preset = /datum/smartlight_preset/medbay;
-	custom_smartlight_preset = MedBay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -43576,8 +43540,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Medbay area power controller";
-	smartlight_preset = /datum/smartlight_preset/medbay;
-	custom_smartlight_preset = MedBay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -44170,8 +44133,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Medbay area power controller";
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/patients_rooms)
@@ -44670,8 +44632,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Medbay area power controller";
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -46401,8 +46362,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Medbay area power controller";
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -47344,8 +47304,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -47491,8 +47450,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -48080,8 +48038,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "RnD area power controller";
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -48269,8 +48226,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD;
+	custom_smartlight_preset = "RnD";
 	name = "RnD area power controller"
 	},
 /turf/simulated/floor,
@@ -51755,8 +51711,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD;
+	custom_smartlight_preset = "RnD";
 	name = "RnD area power controller"
 	},
 /turf/simulated/floor{
@@ -53946,8 +53901,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Engineering area power controller";
-	smartlight_preset = /datum/smartlight_preset/engineering;
-	custom_smartlight_preset = Engineering;
+	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -54607,8 +54561,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Engineering area power controller";
-	smartlight_preset = /datum/smartlight_preset/engineering;
-	custom_smartlight_preset = Engineering;
+	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -62003,8 +61956,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Engineering area power controller";
-	smartlight_preset = /datum/smartlight_preset/engineering;
-	custom_smartlight_preset = Engineering;
+	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor,
@@ -67453,8 +67405,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Medbay area power controller";
-	smartlight_preset = /datum/smartlight_preset/medbay;
-	custom_smartlight_preset = MedBay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -68442,8 +68393,7 @@
 	pixel_y = 27;
 	dir = 1;
 	name = "Brig area power controller";
-	custom_smartlight_preset = Brig;
-	smartlight_preset = /datum/smartlight_preset/brig
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -71209,8 +71159,7 @@
 /obj/item/clothing/mask/gas/coloured,
 /obj/machinery/power/apc{
 	name = "Engineering area power controller";
-	smartlight_preset = /datum/smartlight_preset/engineering;
-	custom_smartlight_preset = Engineering;
+	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -71361,8 +71310,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Engineering area power controller";
-	smartlight_preset = /datum/smartlight_preset/engineering;
-	custom_smartlight_preset = Engineering;
+	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -71757,13 +71705,6 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	pixel_x = -27;
-	dir = 4;
-	smartlight_preset = /datum/smartlight_preset/rnd;
-	custom_smartlight_preset = RnD;
-	name = "RnD area power controller"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -74185,8 +74126,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Cargo area power controller";
-	custom_smartlight_preset = Cargo;
-	smartlight_preset = /datum/smartlight_preset/cargo;
+	custom_smartlight_preset = "Cargo";
 	dir = 4;
 	pixel_x = 27
 	},
@@ -74757,8 +74697,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Medbay area power controller";
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -74905,8 +74844,7 @@
 	pixel_x = -27;
 	dir = 8;
 	name = "Medbay area power controller";
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -77563,8 +77501,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -79252,8 +79189,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -80405,8 +80341,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Cargo area power controller";
-	custom_smartlight_preset = Cargo;
-	smartlight_preset = /datum/smartlight_preset/cargo
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -80773,8 +80708,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -82069,8 +82003,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Engineering area power controller";
-	smartlight_preset = /datum/smartlight_preset/engineering;
-	custom_smartlight_preset = Engineering
+	custom_smartlight_preset = "Engineering"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82132,8 +82065,7 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	custom_smartlight_preset = MedBay;
-	smartlight_preset = /datum/smartlight_preset/medbay;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay area power controller"
 	},
 /turf/simulated/floor{
@@ -84778,8 +84710,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Cargo area power controller";
-	custom_smartlight_preset = Cargo;
-	smartlight_preset = /datum/smartlight_preset/cargo
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
