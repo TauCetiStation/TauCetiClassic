@@ -1102,12 +1102,8 @@ body
 		if(!istype(A))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
-		if(A.legs)
-			A.legs = FALSE
-			to_chat(usr, "Disallowed [A] to move")
-			return
 
 		A.allow_walking()
-		to_chat(usr, "Allowed [A] to move")
+		to_chat(usr, "Toggled [A] moving")
 
 	return

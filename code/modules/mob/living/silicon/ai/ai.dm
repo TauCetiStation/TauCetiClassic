@@ -919,6 +919,8 @@ var/global/list/ai_verbs_default = list(
 	if(!legs)
 		verbs -= /mob/living/silicon/ai/proc/toggle_walking
 		to_chat(src, "M.O.V.E. protocol has been disabled.")
+		if(uses_legs)
+			toggle_walking()
 	else
 		verbs += /mob/living/silicon/ai/proc/toggle_walking
 		to_chat(src, "M.O.V.E. protocol has been enabled.")
