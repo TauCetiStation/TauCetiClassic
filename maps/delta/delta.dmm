@@ -20,7 +20,7 @@
 "aac" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -239,7 +239,7 @@
 "aau" = (
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -303,7 +303,7 @@
 	pixel_x = -12
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/mirror{
 	pixel_x = -28
@@ -703,7 +703,7 @@
 	dir = 6
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -717,7 +717,7 @@
 "aby" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
@@ -760,7 +760,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -820,14 +820,14 @@
 "abU" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/port)
 "abX" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1000,7 +1000,7 @@
 /obj/item/clothing/under/karate,
 /obj/item/clothing/under/karate,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/gym)
@@ -1168,7 +1168,7 @@
 "adw" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1570,7 +1570,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -2011,7 +2011,7 @@
 	req_access = list(29)
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -2055,7 +2055,7 @@
 "akv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
@@ -2529,7 +2529,7 @@
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/kitchenknife/combat,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -2544,7 +2544,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/item/weapon/gun/energy/laser/practice,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2837,7 +2837,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -2857,7 +2857,7 @@
 "asm" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -3056,7 +3056,7 @@
 /obj/machinery/light/smart,
 /obj/machinery/computer/station_alert,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -3218,7 +3218,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -3268,7 +3268,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -3278,7 +3278,7 @@
 "axc" = (
 /obj/machinery/computer/diseasesplicer,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3705,7 +3705,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -4067,7 +4067,7 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4436,7 +4436,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "MedBay";
@@ -4458,7 +4458,7 @@
 	pixel_x = 28
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -4483,7 +4483,7 @@
 "aKS" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom North-East";
@@ -4635,7 +4635,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -4897,7 +4897,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -4920,7 +4920,7 @@
 /obj/item/device/multitool,
 /obj/item/clothing/gloves/insulated,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5062,7 +5062,7 @@
 "aRv" = (
 /obj/machinery/computer/station_alert,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -5316,7 +5316,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5396,7 +5396,7 @@
 "aVy" = (
 /obj/machinery/computer/centrifuge,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5571,7 +5571,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -5594,7 +5594,7 @@
 /obj/item/device/multitool,
 /obj/item/weapon/stock_parts/cell/high,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5707,7 +5707,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -5724,7 +5724,7 @@
 "aZN" = (
 /obj/structure/closet/secure_closet/cargotech,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5750,7 +5750,7 @@
 	},
 /obj/item/bodybag/cryobag,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5764,7 +5764,7 @@
 "ban" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/dryer{
 	dir = 4;
@@ -5868,7 +5868,7 @@
 	network = list("SS13","Research")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway/lobby)
@@ -6021,7 +6021,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
@@ -6235,7 +6235,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -6266,7 +6266,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/port)
@@ -6720,7 +6720,7 @@
 "bjH" = (
 /obj/machinery/computer/arcade,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "redyellowfull"
@@ -7028,7 +7028,7 @@
 "bmj" = (
 /obj/structure/closet/radiation,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -7154,7 +7154,7 @@
 	req_access = list(47)
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -7360,7 +7360,7 @@
 	},
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7378,7 +7378,7 @@
 	location = "Bridge"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -7466,7 +7466,7 @@
 	pixel_y = 30
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -7657,7 +7657,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/clothing/under/lightred,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -7835,7 +7835,7 @@
 /obj/machinery/hologram/holopad,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7895,7 +7895,7 @@
 /area/station/hallway/primary/fore)
 "bvL" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -7996,7 +7996,7 @@
 "bwZ" = (
 /obj/structure/closet/secure_closet/exile,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -8045,7 +8045,7 @@
 	pixel_x = -26
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "yellowpatch_inv"
@@ -8135,7 +8135,7 @@
 "byB" = (
 /obj/machinery/chem_master,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8144,7 +8144,7 @@
 "byG" = (
 /obj/machinery/photocopier,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -8465,7 +8465,7 @@
 	anchored = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -8504,7 +8504,7 @@
 	},
 /obj/item/clothing/head/collectable/hardhat,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -8601,7 +8601,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/minisat_secure_area)
@@ -8825,7 +8825,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -9160,7 +9160,7 @@
 	req_access = list(55)
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -9301,7 +9301,7 @@
 "bJd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -9486,7 +9486,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "bKC" = (
@@ -9579,7 +9579,7 @@
 	pixel_x = -22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -9627,7 +9627,7 @@
 "bNa" = (
 /obj/machinery/vending/dinnerware,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9636,7 +9636,7 @@
 "bNb" = (
 /obj/structure/filingcabinet/security,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -9868,7 +9868,7 @@
 "bOW" = (
 /obj/machinery/vending/medical,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchecker"
@@ -10420,7 +10420,7 @@
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -10637,7 +10637,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor,
@@ -10752,7 +10752,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -11005,7 +11005,7 @@
 /obj/item/clothing/head/soft/mime,
 /obj/item/clothing/under/pants/white,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -11158,7 +11158,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/weapon/storage/belt/medical,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -11201,7 +11201,7 @@
 	},
 /obj/item/weapon/circuitboard/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -11647,7 +11647,7 @@
 /area/station/hallway/primary/fore)
 "cit" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/vending/phoronresearch,
 /turf/simulated/floor{
@@ -11886,7 +11886,7 @@
 "clc" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -11940,7 +11940,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11984,7 +11984,7 @@
 	dir = 10
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
@@ -12033,7 +12033,7 @@
 	},
 /obj/machinery/disease2/diseaseanalyser,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -12163,7 +12163,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "cnS" = (
@@ -12309,7 +12309,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13318,7 +13318,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
@@ -13428,7 +13428,7 @@
 	},
 /obj/item/weapon/storage/wallet,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -13443,7 +13443,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13608,7 +13608,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/medbay)
@@ -13683,7 +13683,7 @@
 "cGi" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13746,7 +13746,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -13850,7 +13850,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -13873,7 +13873,7 @@
 "cHN" = (
 /obj/machinery/disease2/incubator,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13968,7 +13968,7 @@
 "cIT" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
@@ -14010,14 +14010,14 @@
 /area/station/engineering/break_room)
 "cJC" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "cJM" = (
 /obj/machinery/shieldgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -14301,7 +14301,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -14403,7 +14403,7 @@
 "cNZ" = (
 /obj/structure/closet/wardrobe/pjs,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -14623,7 +14623,7 @@
 	pixel_x = 6
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -14754,7 +14754,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -14941,7 +14941,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/atmos_office)
@@ -15136,7 +15136,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -15325,7 +15325,7 @@
 "cZp" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -15508,7 +15508,7 @@
 	pixel_x = 3
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -15558,13 +15558,13 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "ddl" = (
 /obj/machinery/monkey_recycler,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -15729,7 +15729,7 @@
 	icon_state = "0-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -15764,7 +15764,7 @@
 "dfA" = (
 /obj/random/vending/cola,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -15829,7 +15829,7 @@
 /obj/item/weapon/cane,
 /obj/item/clothing/mask/muzzle,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/ears/earmuffs,
@@ -15891,7 +15891,7 @@
 "dgr" = (
 /obj/machinery/vending/assist,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -15903,7 +15903,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -16207,7 +16207,7 @@
 /area/station/security/brig/storage)
 "diI" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/power/emitter{
 	dir = 8;
@@ -16258,7 +16258,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -16346,7 +16346,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
@@ -16386,7 +16386,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -16412,7 +16412,7 @@
 	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -16755,7 +16755,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -16778,7 +16778,7 @@
 "dqA" = (
 /obj/random/vending/cola,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -17165,7 +17165,7 @@
 "duo" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -17211,7 +17211,7 @@
 "duM" = (
 /obj/structure/filingcabinet,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -17365,7 +17365,7 @@
 "dwK" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -17504,7 +17504,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
@@ -17805,7 +17805,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -18535,7 +18535,7 @@
 /area/station/engineering/atmos)
 "dLx" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -18805,7 +18805,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -18833,7 +18833,7 @@
 	},
 /obj/effect/landmark/start/cyborg,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -19016,7 +19016,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -19063,7 +19063,7 @@
 /area/station/rnd/hallway)
 "dTH" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -19973,7 +19973,7 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -20132,7 +20132,7 @@
 	pixel_x = 26
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -20144,7 +20144,7 @@
 	state = 2
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -20227,7 +20227,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -20301,7 +20301,7 @@
 "egV" = (
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -20531,7 +20531,7 @@
 /obj/structure/window/thin/reinforced,
 /obj/item/device/gps/medical,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -20626,7 +20626,7 @@
 	name = "CondiMaster Neo"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -20663,7 +20663,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -20760,7 +20760,7 @@
 	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -21070,7 +21070,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -21246,7 +21246,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -21633,7 +21633,7 @@
 /area/station/maintenance/brig)
 "ewG" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -21659,7 +21659,7 @@
 	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon  Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous  Oxide","waste_sensor"="Gas  Mix  Tank")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -21677,7 +21677,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/rack,
 /obj/item/clothing/glasses/welding,
@@ -21773,7 +21773,7 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/clothing/head/welding,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -22412,7 +22412,7 @@
 "eFM" = (
 /obj/machinery/portable_atmospherics/powered/pump,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -22503,7 +22503,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -22599,7 +22599,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -22888,7 +22888,7 @@
 	},
 /obj/machinery/power/emitter,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -23525,7 +23525,7 @@
 "eRS" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/gym)
@@ -23622,7 +23622,7 @@
 "eSP" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23703,7 +23703,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -23993,7 +23993,7 @@
 "eXY" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -24026,7 +24026,7 @@
 	pixel_y = 28
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -24078,7 +24078,7 @@
 "eYy" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -24445,7 +24445,7 @@
 	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/dispenser,
 /turf/simulated/floor{
@@ -24731,7 +24731,7 @@
 "ffw" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -24938,7 +24938,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
@@ -25218,7 +25218,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -25253,7 +25253,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/minisat_secure_area)
@@ -25302,14 +25302,14 @@
 "flE" = (
 /obj/structure/closet/firecloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "flQ" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -25320,7 +25320,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -25475,7 +25475,7 @@
 "foK" = (
 /obj/machinery/computer/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25563,7 +25563,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -25811,7 +25811,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -26047,7 +26047,7 @@
 "fuM" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -26382,7 +26382,7 @@
 "fyI" = (
 /obj/structure/closet/secure_closet/freezer/milkshake,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -26657,7 +26657,7 @@
 	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -26696,7 +26696,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -26715,7 +26715,7 @@
 "fCi" = (
 /obj/structure/filingcabinet/security,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -27605,7 +27605,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "fNC" = (
@@ -27722,7 +27722,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -27867,7 +27867,7 @@
 "fRu" = (
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -28019,7 +28019,7 @@
 /area/station/security/range)
 "fTi" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/lipstick/random,
@@ -28735,7 +28735,7 @@
 "gbQ" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -28931,7 +28931,7 @@
 /obj/item/clothing/under/boxing/white,
 /obj/structure/closet,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/gym)
@@ -29235,7 +29235,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -29317,7 +29317,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -29326,7 +29326,7 @@
 "gjc" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -29627,7 +29627,7 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
@@ -29852,7 +29852,7 @@
 	supply_display = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/light/smart,
 /turf/simulated/floor{
@@ -29887,7 +29887,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "gnB" = (
@@ -29965,7 +29965,7 @@
 	network = list("SS13","Research")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -30101,7 +30101,7 @@
 "gpz" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -30323,7 +30323,7 @@
 "gsT" = (
 /obj/structure/dispenser/oxygen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -30484,7 +30484,7 @@
 "gul" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -30880,7 +30880,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
@@ -30946,7 +30946,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "gyn" = (
@@ -31198,7 +31198,7 @@
 "gAr" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -31242,7 +31242,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/lab)
@@ -31276,7 +31276,7 @@
 	icon_state = "0-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -31423,7 +31423,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -31450,7 +31450,7 @@
 /obj/item/weapon/circuitboard/skills,
 /obj/item/weapon/circuitboard/med_data,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -31518,7 +31518,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -31636,7 +31636,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -31719,7 +31719,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
@@ -31786,7 +31786,7 @@
 	department_name = "Science"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -31997,7 +31997,7 @@
 "gKu" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -32066,7 +32066,7 @@
 "gLD" = (
 /obj/machinery/field_generator,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -32125,7 +32125,7 @@
 /obj/item/target/alien,
 /obj/item/target/syndicate,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -32301,7 +32301,7 @@
 	pixel_x = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -32559,7 +32559,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -32713,7 +32713,7 @@
 /obj/machinery/hologram/holopad,
 /obj/structure/grille,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -33047,7 +33047,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -33116,7 +33116,7 @@
 /obj/item/weapon/storage/lockbox/anti_singulo,
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -33320,7 +33320,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -33380,7 +33380,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/engi)
@@ -33783,7 +33783,7 @@
 /obj/machinery/power/tesla_coil,
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -34087,7 +34087,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -34125,7 +34125,7 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
@@ -34176,7 +34176,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Engineering Foyer Break Room";
@@ -34273,7 +34273,7 @@
 	},
 /obj/machinery/computer/cargo/request,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -34328,7 +34328,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -34363,7 +34363,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -34543,7 +34543,7 @@
 "hpf" = (
 /obj/random/vending/cola,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -34748,7 +34748,7 @@
 	node2_concentration = 0.8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -34899,7 +34899,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -34963,7 +34963,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -35189,7 +35189,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/blue{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -35222,7 +35222,7 @@
 "hva" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -35411,7 +35411,7 @@
 	},
 /obj/machinery/computer/prisoner,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -35849,7 +35849,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -36005,7 +36005,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -36410,7 +36410,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/gym)
@@ -36452,7 +36452,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -36636,7 +36636,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -36818,7 +36818,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -37252,7 +37252,7 @@
 /area/station/security/checkpoint/escape_custom_desk)
 "hQj" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/atm{
 	pixel_y = -28
@@ -37540,7 +37540,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -37649,7 +37649,7 @@
 "hVo" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -37679,7 +37679,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -37850,7 +37850,7 @@
 "hWY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -38058,7 +38058,7 @@
 "hYY" = (
 /obj/structure/closet/secure_closet/freezer/icecream,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -38155,7 +38155,7 @@
 	req_access = list(55)
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -38309,7 +38309,7 @@
 "ibt" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -38380,7 +38380,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/power/apc/largecell{
 	custom_smartlight_preset = "Engineering";
@@ -38509,7 +38509,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -38566,7 +38566,7 @@
 	},
 /obj/machinery/power/rad_collector,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -38906,7 +38906,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -38972,7 +38972,7 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
@@ -39045,7 +39045,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -40052,7 +40052,7 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/item/weapon/storage/wallet,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -40195,7 +40195,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -40210,7 +40210,7 @@
 "ixG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -40287,7 +40287,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -40509,7 +40509,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -40740,7 +40740,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -41456,7 +41456,7 @@
 "iLo" = (
 /obj/machinery/life_assist/external_cooling_device,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -41497,7 +41497,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -41699,7 +41699,7 @@
 	},
 /obj/item/weapon/circuitboard/clonepod,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -41733,7 +41733,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -41893,7 +41893,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -42392,7 +42392,7 @@
 "iVK" = (
 /obj/structure/rack,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -42825,7 +42825,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -42864,7 +42864,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -42885,7 +42885,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -42900,7 +42900,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
@@ -43051,7 +43051,7 @@
 /obj/item/weapon/circuitboard/destructive_analyzer,
 /obj/item/weapon/circuitboard/protolathe,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -43520,7 +43520,7 @@
 "jia" = (
 /obj/machinery/bookbinder,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43561,7 +43561,7 @@
 "jin" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43799,7 +43799,7 @@
 "jlk" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43905,7 +43905,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43973,7 +43973,7 @@
 "jnB" = (
 /obj/machinery/computer/operating,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -44397,7 +44397,7 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -44431,7 +44431,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "jtd" = (
@@ -44441,7 +44441,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -44756,7 +44756,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -44887,7 +44887,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -45141,7 +45141,7 @@
 	pixel_y = 10
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -45275,7 +45275,7 @@
 /obj/item/weapon/caution/cone,
 /obj/item/weapon/caution/cone,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -45288,7 +45288,7 @@
 	},
 /obj/item/weapon/storage/firstaid/o2,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -45398,7 +45398,7 @@
 "jBY" = (
 /obj/machinery/the_singularitygen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -45668,7 +45668,7 @@
 "jFX" = (
 /obj/machinery/power/rad_collector,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -46122,7 +46122,7 @@
 	},
 /obj/item/weapon/storage/box/engineer,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -46401,7 +46401,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -46418,7 +46418,7 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -46734,7 +46734,7 @@
 "jPQ" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/medical/storage)
@@ -46749,7 +46749,7 @@
 	dir = 5
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -46798,7 +46798,7 @@
 /obj/structure/closet/secure_closet/medical1,
 /obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -46995,7 +46995,7 @@
 	},
 /obj/item/weapon/circuitboard/message_monitor,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -47445,7 +47445,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -47494,7 +47494,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -47574,7 +47574,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/minisat_secure_area)
@@ -47630,7 +47630,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -47799,7 +47799,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -47820,7 +47820,7 @@
 	dir = 9
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -47924,7 +47924,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -47976,7 +47976,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -48006,7 +48006,7 @@
 "kej" = (
 /obj/machinery/shield_gen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -48050,7 +48050,7 @@
 "keN" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -48411,7 +48411,7 @@
 	pixel_x = 26
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -48593,7 +48593,7 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -48893,7 +48893,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -49327,7 +49327,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
@@ -49462,7 +49462,7 @@
 "ksU" = (
 /obj/structure/closet/radiation,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -49476,7 +49476,7 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -49488,7 +49488,7 @@
 	network = list("SS13","Medical")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -49617,7 +49617,7 @@
 "kvh" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
@@ -49642,7 +49642,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -49666,7 +49666,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "kwI" = (
@@ -49829,7 +49829,7 @@
 "kyk" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -50071,7 +50071,7 @@
 /area/station/civilian/cold_room)
 "kAU" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -50230,7 +50230,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -50248,7 +50248,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -50338,7 +50338,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -50450,7 +50450,7 @@
 "kFI" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -50577,7 +50577,7 @@
 "kGW" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -50881,7 +50881,7 @@
 	suffix = "#2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -51341,7 +51341,7 @@
 /obj/item/clothing/head/fedora/white,
 /obj/item/clothing/under/mafia/white,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -52145,7 +52145,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -52284,7 +52284,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
@@ -52334,7 +52334,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -52471,7 +52471,7 @@
 	pixel_y = 17
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hor)
@@ -52602,7 +52602,7 @@
 "lbo" = (
 /obj/machinery/flasher/portable,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -52942,7 +52942,7 @@
 "lgM" = (
 /obj/machinery/power/emitter,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -53009,7 +53009,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -53346,7 +53346,7 @@
 	pixel_x = 30
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
@@ -53561,7 +53561,7 @@
 /obj/effect/landmark/start/recycler,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -53572,7 +53572,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
@@ -53820,7 +53820,7 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -54117,7 +54117,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -54177,7 +54177,7 @@
 	pixel_y = -3
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -54324,7 +54324,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -54410,7 +54410,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/clothing/under/brown,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -54458,7 +54458,7 @@
 	name = "Toxin Test Large Air Vent"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
@@ -54593,7 +54593,7 @@
 	},
 /obj/item/weapon/flora/random,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -54666,7 +54666,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/lab)
@@ -54775,7 +54775,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -54876,7 +54876,7 @@
 	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
@@ -55483,7 +55483,7 @@
 "lKD" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/blue{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
@@ -56022,7 +56022,7 @@
 	color = "#ffff00"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -56077,7 +56077,7 @@
 	pixel_y = -30
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -56219,7 +56219,7 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchecker"
@@ -56931,7 +56931,7 @@
 	},
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -56943,7 +56943,7 @@
 	pixel_y = -25
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -57434,7 +57434,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -57497,7 +57497,7 @@
 /area/station/hallway/primary/central)
 "miA" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -57533,7 +57533,7 @@
 "miI" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -57549,7 +57549,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -57570,7 +57570,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -57814,7 +57814,7 @@
 	pixel_x = 26
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -57880,7 +57880,7 @@
 /obj/item/clothing/head/helmet/space/rig/security,
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -58173,7 +58173,7 @@
 	},
 /obj/item/weapon/circuitboard/scan_consolenew,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -58651,7 +58651,7 @@
 	name = "Science Cell Locker"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -58664,7 +58664,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -58713,7 +58713,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -58882,7 +58882,7 @@
 	},
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -58932,7 +58932,7 @@
 "mxZ" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/emergency)
@@ -59175,7 +59175,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -59421,7 +59421,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -59500,7 +59500,7 @@
 /area/station/medical/hallway)
 "mCL" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -59811,7 +59811,7 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/lab)
@@ -59979,7 +59979,7 @@
 "mKv" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -60189,7 +60189,7 @@
 "mNx" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "bluefull"
@@ -60524,7 +60524,7 @@
 	dir = 5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -60850,7 +60850,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -61500,7 +61500,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -61515,7 +61515,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -61677,7 +61677,7 @@
 "ndh" = (
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -61689,7 +61689,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -61817,7 +61817,7 @@
 	},
 /obj/machinery/photocopier,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -61847,7 +61847,7 @@
 "nfV" = (
 /obj/machinery/bookbinder,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -61886,7 +61886,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -62152,7 +62152,7 @@
 "nja" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62312,7 +62312,7 @@
 "nlp" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -62523,7 +62523,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62611,7 +62611,7 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -63178,7 +63178,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -63705,7 +63705,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -63841,7 +63841,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -64265,7 +64265,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -64315,7 +64315,7 @@
 	},
 /obj/machinery/photocopier,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -64515,7 +64515,7 @@
 "nJn" = (
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -64695,7 +64695,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -65167,7 +65167,7 @@
 	},
 /obj/machinery/computer/secure_data,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -65259,7 +65259,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -65283,7 +65283,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -65342,7 +65342,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/medical/medbreak)
@@ -65362,7 +65362,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -65448,7 +65448,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "nTN" = (
@@ -66156,7 +66156,7 @@
 "oba" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -66316,7 +66316,7 @@
 "odd" = (
 /obj/machinery/shield_capacitor,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -66347,7 +66347,7 @@
 	pixel_x = -30
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -66718,7 +66718,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -66895,7 +66895,7 @@
 "ojS" = (
 /obj/machinery/computer/arcade,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -66936,7 +66936,7 @@
 	id = "stationscrap"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -67462,7 +67462,7 @@
 	icon_state = "1-4"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -67784,7 +67784,7 @@
 "oxs" = (
 /obj/structure/closet/athletic_mixed,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -68069,7 +68069,7 @@
 "oBr" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -68468,7 +68468,7 @@
 "oFV" = (
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "RnD";
@@ -68849,7 +68849,7 @@
 "oKu" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -68859,7 +68859,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -68946,7 +68946,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -68972,7 +68972,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -69014,7 +69014,7 @@
 /area/station/rnd/storage)
 "oLE" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Holodeck Exit";
@@ -69164,7 +69164,7 @@
 	},
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -69221,7 +69221,7 @@
 "oNG" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -69309,7 +69309,7 @@
 "oOk" = (
 /obj/structure/closet/secure_closet/cargotech,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -69536,7 +69536,7 @@
 	pixel_y = -3
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -69626,7 +69626,7 @@
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -69700,7 +69700,7 @@
 "oTu" = (
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -70203,7 +70203,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "oZA" = (
@@ -70476,7 +70476,7 @@
 "pdk" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -70938,7 +70938,7 @@
 	pixel_x = -24
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -70994,7 +70994,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/clothing/suit/storage/hazardvest,
 /obj/item/weapon/storage/box/snappops,
@@ -71124,7 +71124,7 @@
 	amount = 10
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -71320,7 +71320,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -71738,7 +71738,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -72321,7 +72321,7 @@
 "pxs" = (
 /obj/structure/closet/secure_closet/cargotech,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72640,7 +72640,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -72874,7 +72874,7 @@
 "pCp" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -73043,7 +73043,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73479,7 +73479,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/gym)
@@ -73548,7 +73548,7 @@
 /area/station/maintenance/chapel)
 "pKL" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
@@ -73637,7 +73637,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -73743,7 +73743,7 @@
 /obj/item/clothing/gloves/black,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73835,7 +73835,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -74270,7 +74270,7 @@
 /obj/item/clothing/mask/fake_face,
 /obj/item/clothing/under/mafia/vest,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -74526,7 +74526,7 @@
 /area/station/civilian/gym)
 "pVF" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor,
@@ -74563,7 +74563,7 @@
 "pWg" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -75013,7 +75013,7 @@
 /obj/item/clothing/suit/poncho/green,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -75107,7 +75107,7 @@
 "qbF" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -75487,7 +75487,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -75770,7 +75770,7 @@
 	name = "plasma mixer"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -75783,7 +75783,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -76081,7 +76081,7 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -76141,7 +76141,7 @@
 	name = "(OUT) Space Large Air Vent"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/atmos/supermatter)
@@ -76254,7 +76254,7 @@
 	dir = 2
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
@@ -76388,7 +76388,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -76404,7 +76404,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -76653,7 +76653,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/lab)
@@ -77029,7 +77029,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "qzy" = (
@@ -77156,7 +77156,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -77456,7 +77456,7 @@
 "qEa" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -77778,7 +77778,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -77815,7 +77815,7 @@
 "qIx" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -77837,7 +77837,7 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/gun/energy/pyrometer/engineering/robotics,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -78184,7 +78184,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "qMw" = (
@@ -78332,7 +78332,7 @@
 /obj/item/weapon/storage/box/lights/bulbs,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
@@ -78434,7 +78434,7 @@
 	name = "Prisoner Locker"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -78697,7 +78697,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/blue{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -79004,7 +79004,7 @@
 "qWc" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -79243,7 +79243,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
@@ -79262,7 +79262,7 @@
 /obj/machinery/hologram/holopad,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
@@ -79334,7 +79334,7 @@
 "raB" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -79692,7 +79692,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -79732,7 +79732,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -79821,7 +79821,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -80115,7 +80115,7 @@
 	},
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -80377,7 +80377,7 @@
 "roT" = (
 /obj/effect/landmark/start/cyborg,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -80417,7 +80417,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -80823,7 +80823,7 @@
 "rtL" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -81320,7 +81320,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -81467,7 +81467,7 @@
 "rzL" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -81897,7 +81897,7 @@
 	use_power = 1
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82078,7 +82078,7 @@
 /obj/effect/landmark/start/quartermaster,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -82144,7 +82144,7 @@
 "rHG" = (
 /obj/structure/closet/radiation,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -82498,7 +82498,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -82515,7 +82515,7 @@
 "rJY" = (
 /obj/machinery/optable,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -82793,7 +82793,7 @@
 	icon_state = "bot"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -83641,7 +83641,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -83813,7 +83813,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "rZM" = (
@@ -84536,7 +84536,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -85098,7 +85098,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -85263,7 +85263,7 @@
 "spC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
@@ -85380,7 +85380,7 @@
 	icon_state = "bot"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -85578,7 +85578,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -85618,7 +85618,7 @@
 "suB" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86362,7 +86362,7 @@
 	name = "Medical Cell Locker"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -86995,7 +86995,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -87453,7 +87453,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -87639,7 +87639,7 @@
 "sTP" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -87774,7 +87774,7 @@
 /area/station/aisat/ai_chamber)
 "sVd" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -87882,7 +87882,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -88559,7 +88559,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -88899,7 +88899,7 @@
 "tjH" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway/lobby)
@@ -88945,7 +88945,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/clothing/under/aqua,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -89017,7 +89017,7 @@
 /obj/item/weapon/stock_parts/cell/super,
 /obj/item/weapon/stock_parts/cell/super,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -89262,7 +89262,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -89468,7 +89468,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -89978,7 +89978,7 @@
 "txv" = (
 /obj/random/vending/cola,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -90062,7 +90062,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -90487,7 +90487,7 @@
 "tCX" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -90712,7 +90712,7 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 10;
@@ -91358,7 +91358,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -91434,7 +91434,7 @@
 "tNG" = (
 /obj/random/vending/cola,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -91484,7 +91484,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -91652,7 +91652,7 @@
 /area/station/medical/psych)
 "tRu" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -92588,7 +92588,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -92676,7 +92676,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -92767,7 +92767,7 @@
 	},
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -92825,7 +92825,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -92962,7 +92962,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/medical/morgue)
 "uhT" = (
@@ -93358,7 +93358,7 @@
 "uly" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -93995,7 +93995,7 @@
 "usP" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
@@ -94035,7 +94035,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -94758,7 +94758,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -94867,7 +94867,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -94890,7 +94890,7 @@
 	},
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -94912,7 +94912,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -95373,7 +95373,7 @@
 "uMd" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway/lobby)
@@ -95757,7 +95757,7 @@
 /obj/structure/closet/wardrobe/xenos,
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -96346,7 +96346,7 @@
 "uYj" = (
 /obj/structure/closet/blueshield,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -96560,7 +96560,7 @@
 /obj/structure/closet/secure_closet/engineering_welding,
 /obj/item/clothing/gloves/insulated,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -96722,7 +96722,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -96863,7 +96863,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -96877,7 +96877,7 @@
 	anchored = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -97595,7 +97595,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
@@ -98230,7 +98230,7 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/item/weapon/storage/briefcase,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -98359,7 +98359,7 @@
 	name = "blobstart"
 	},
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -98514,7 +98514,7 @@
 "vyx" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -98759,7 +98759,7 @@
 /obj/item/weapon/medical/teleporter,
 /obj/item/weapon/medical/teleporter,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -99037,7 +99037,7 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -99276,7 +99276,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -99326,7 +99326,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway/lobby)
@@ -99452,7 +99452,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -99466,7 +99466,7 @@
 "vKc" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -99609,7 +99609,7 @@
 /obj/item/clothing/under/rank/chef,
 /obj/item/device/radio/headset,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -99942,7 +99942,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "redyellowfull"
@@ -100003,7 +100003,7 @@
 	department_name = "Medical"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -100174,7 +100174,7 @@
 "vTJ" = (
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -100205,7 +100205,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -100255,7 +100255,7 @@
 /area/station/hallway/secondary/entry)
 "vUh" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Central Primary Hallway Robotist Lobby";
@@ -100278,7 +100278,7 @@
 	},
 /obj/machinery/recharge_station,
 /obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "bluechoco"
@@ -100358,7 +100358,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/gateway)
@@ -100445,7 +100445,7 @@
 "vWI" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
@@ -100459,7 +100459,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -100659,7 +100659,7 @@
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
@@ -100715,7 +100715,7 @@
 /obj/item/weapon/wirecutters,
 /obj/item/weapon/screwdriver,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -100770,7 +100770,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -101383,7 +101383,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -101548,7 +101548,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -101680,7 +101680,7 @@
 	dir = 5
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -101786,7 +101786,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -102368,7 +102368,7 @@
 	pixel_y = 10
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -102541,7 +102541,7 @@
 	},
 /obj/machinery/field_generator,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -103067,7 +103067,7 @@
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/wirecutters,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -103079,7 +103079,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
@@ -103207,7 +103207,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -103223,7 +103223,7 @@
 	},
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -103400,7 +103400,7 @@
 	req_access = list()
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -103508,7 +103508,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -103586,7 +103586,7 @@
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/robotics)
 "wHv" = (
@@ -103670,7 +103670,7 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/glasses/meson,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 5;
@@ -103686,7 +103686,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -103792,7 +103792,7 @@
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd_ammo,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -103878,7 +103878,7 @@
 /obj/structure/closet,
 /obj/item/weapon/storage/box/ids,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -104148,7 +104148,7 @@
 	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
@@ -104405,7 +104405,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Research Toxin Entry";
@@ -104454,7 +104454,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -104509,7 +104509,7 @@
 	},
 /obj/machinery/power/rad_collector,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -104889,7 +104889,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -105043,7 +105043,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/weapon/storage/belt/medical,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchecker"
@@ -105059,7 +105059,7 @@
 "xas" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -105156,7 +105156,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -105186,7 +105186,7 @@
 "xbZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -105253,7 +105253,7 @@
 "xdd" = (
 /obj/machinery/vending/robotics,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -105927,7 +105927,7 @@
 	req_access = list(58)
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -106330,7 +106330,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -106843,7 +106843,7 @@
 	icon_state = "pipe-y"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -106898,7 +106898,7 @@
 "xuZ" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -106953,7 +106953,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -107275,7 +107275,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -107388,7 +107388,7 @@
 /area/station/civilian/gym)
 "xAq" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Holodeck Entry";
@@ -107500,7 +107500,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
@@ -107992,7 +107992,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "bluechecker"
@@ -108020,7 +108020,7 @@
 /obj/item/weapon/circuitboard/solar_control,
 /obj/item/weapon/tracker_electronics,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -108055,7 +108055,7 @@
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -108167,7 +108167,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -108470,7 +108470,7 @@
 	},
 /obj/structure/closet/crate/internals,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/machinery/camera{
 	c_tag = "Gateway Atrium";
@@ -108668,7 +108668,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -108881,7 +108881,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal/blue{
 	dir = 8;
@@ -109064,7 +109064,7 @@
 /obj/item/clothing/mask/bandana/skull,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -109492,7 +109492,7 @@
 /obj/item/weapon/wrench,
 /obj/item/device/analyzer,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/distribution)
@@ -109597,7 +109597,7 @@
 "xYg" = (
 /obj/structure/closet/firecloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
@@ -109649,7 +109649,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor,
@@ -109671,7 +109671,7 @@
 	dir = 9
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -110202,7 +110202,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -110286,7 +110286,7 @@
 "ygF" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/station/medical/surgeryobs)
@@ -110350,7 +110350,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
