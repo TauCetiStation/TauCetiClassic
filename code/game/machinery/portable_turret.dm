@@ -550,6 +550,9 @@ var/global/list/turret_icons
 	if(!M.occupant)
 		return TURRET_NOT_TARGET //dont shoot empty guys, maybe the HOS parked it there "just in case"
 
+	if(assess_living(M.occupant) == TURRET_NOT_TARGET)
+    	return TURRET_NOT_TARGET
+
 	if(!check_n_synth)
 		return TURRET_NOT_TARGET // targeting disabled
 
