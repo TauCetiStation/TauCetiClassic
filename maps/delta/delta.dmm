@@ -1250,7 +1250,7 @@
 	},
 /obj/random/misc/book,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "adT" = (
@@ -1902,7 +1902,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "ajn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -6001,7 +6003,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/hallway/primary/central)
 "bcE" = (
@@ -7998,7 +8000,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "bxe" = (
 /obj/structure/disposalpipe/segment,
@@ -8457,7 +8461,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "bBP" = (
@@ -10832,7 +10836,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "cak" = (
@@ -13346,7 +13350,7 @@
 /obj/structure/table/woodentable,
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "cCK" = (
@@ -14304,7 +14308,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "cNb" = (
@@ -16757,7 +16761,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "dqw" = (
 /obj/structure/object_wall/cargo{
@@ -17214,7 +17220,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "duP" = (
@@ -18510,7 +18516,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "dLc" = (
@@ -20414,7 +20420,7 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/hallway/primary/central)
 "eiz" = (
@@ -21105,7 +21111,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "ern" = (
@@ -23625,7 +23631,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "eSU" = (
@@ -24196,7 +24202,9 @@
 	name = "apc top";
 	pixel_y = 28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "fau" = (
 /obj/effect/decal/turf_decal{
@@ -24358,7 +24366,7 @@
 	dir = 5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "fbF" = (
@@ -29034,7 +29042,9 @@
 "gfs" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "gfv" = (
 /obj/structure/cable{
@@ -30285,7 +30295,7 @@
 "gsr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "gsz" = (
@@ -34769,7 +34779,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/gateway)
 "hqT" = (
@@ -36108,7 +36118,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "hDh" = (
@@ -37262,7 +37272,7 @@
 	pixel_y = -28
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/hallway/primary/central)
 "hQk" = (
@@ -39040,7 +39050,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "ikm" = (
@@ -39792,7 +39802,9 @@
 	id = "Gateway_shutters";
 	name = "Gateway Shutters"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "isB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -40517,7 +40529,9 @@
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "iAz" = (
 /obj/structure/cable{
@@ -42069,7 +42083,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "iRz" = (
@@ -43529,7 +43543,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "jib" = (
@@ -44472,7 +44486,7 @@
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "jtq" = (
@@ -47092,7 +47106,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "jUl" = (
@@ -47406,7 +47420,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/gateway)
 "jXf" = (
@@ -47502,7 +47516,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "jXX" = (
 /obj/structure/grille,
@@ -47639,7 +47655,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "jZs" = (
@@ -47687,7 +47703,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/gateway)
 "kaf" = (
@@ -49484,7 +49500,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "ktg" = (
 /obj/machinery/computer/cargo/request,
@@ -51920,7 +51938,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_right"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "kUo" = (
 /obj/effect/decal/turf_decal{
@@ -52680,7 +52700,7 @@
 	icon_state = "bot_left"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "lcI" = (
@@ -52886,7 +52906,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "lfs" = (
@@ -56213,7 +56233,7 @@
 	icon_state = "bot_right"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "lRD" = (
@@ -59536,7 +59556,7 @@
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "mDB" = (
@@ -59848,7 +59868,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "mIw" = (
@@ -60088,7 +60108,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "mLS" = (
@@ -61681,7 +61701,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "nds" = (
@@ -62731,7 +62751,7 @@
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "npX" = (
@@ -63064,7 +63084,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "nsX" = (
@@ -63779,7 +63799,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "nAM" = (
@@ -65878,7 +65898,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "nYs" = (
@@ -67233,7 +67253,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/gateway)
 "oqg" = (
@@ -69973,7 +69993,9 @@
 /area/station/civilian/dormitories/courtroom)
 "oWQ" = (
 /obj/item/weapon/flora/random,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "oXd" = (
 /obj/structure/closet/secure_closet/injection,
@@ -72343,7 +72365,7 @@
 	icon_state = "bot_left"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "pxK" = (
@@ -75297,7 +75319,7 @@
 "qeh" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "qej" = (
@@ -76412,7 +76434,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "qrx" = (
@@ -80443,7 +80465,7 @@
 	pixel_y = -11
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "rpV" = (
@@ -81021,7 +81043,7 @@
 	icon_state = "bot_right"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "rvT" = (
@@ -82278,7 +82300,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "rIs" = (
@@ -83546,7 +83568,7 @@
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "rWu" = (
@@ -84425,7 +84447,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "sht" = (
@@ -87810,7 +87832,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/primary/central)
 "sVt" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -89481,7 +89505,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "trR" = (
 /obj/machinery/door/airlock/external{
@@ -93405,7 +93431,7 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/hallway/primary/central)
 "ulW" = (
@@ -95529,7 +95555,9 @@
 "uOe" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "uOm" = (
 /obj/machinery/door/firedoor,
@@ -98243,7 +98271,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/primary/central)
 "vuQ" = (
 /obj/structure/computerframe{
@@ -98564,7 +98594,7 @@
 /obj/item/device/lens/posterization,
 /obj/item/device/camera,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "vzq" = (
@@ -99430,7 +99460,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "vJQ" = (
@@ -100371,7 +100401,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "vVM" = (
 /obj/machinery/seed_extractor,
@@ -102188,7 +102220,9 @@
 	dir = 8;
 	pixel_x = -22
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "wra" = (
 /obj/effect/decal/turf_decal/dark_red{
@@ -103521,7 +103555,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/primary/central)
 "wGs" = (
 /obj/structure/closet/wardrobe/white,
@@ -106355,7 +106391,7 @@
 	pixel_y = -30
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/civilian/library)
 "xpU" = (
@@ -106966,7 +107002,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/primary/central)
 "xwa" = (
 /obj/structure/disposalpipe/segment{
@@ -108334,7 +108372,9 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "xKO" = (
 /obj/structure/grille,
@@ -108487,7 +108527,9 @@
 	c_tag = "Gateway Atrium";
 	dir = 5
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/gateway)
 "xMc" = (
 /obj/machinery/light/smart{
@@ -109444,7 +109486,7 @@
 "xWS" = (
 /obj/machinery/gateway/center/station,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/gateway)
 "xWW" = (
