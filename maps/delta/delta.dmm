@@ -5329,7 +5329,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "aUN" = (
@@ -9139,7 +9139,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "bGV" = (
@@ -10065,7 +10065,7 @@
 	req_access = list(5,6)
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "bRA" = (
@@ -23519,7 +23519,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "eRS" = (
@@ -25615,7 +25615,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "fqN" = (
@@ -35047,7 +35047,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "htK" = (
@@ -35822,7 +35822,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "hAs" = (
@@ -37384,7 +37384,7 @@
 	dir = 9
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "hSk" = (
@@ -38423,7 +38423,7 @@
 	req_access = list(19)
 	},
 /turf/simulated/floor{
-	icon_state = "bluefull"
+	icon_state = "bluechoco"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "idn" = (
@@ -44450,7 +44450,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "jtl" = (
@@ -48637,7 +48637,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "kkv" = (
@@ -49189,7 +49189,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "kqh" = (
@@ -55225,11 +55225,6 @@
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/wood,
 /area/station/storage/tools)
-"lHw" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel/mass_driver)
 "lHD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -55460,7 +55455,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "lKi" = (
@@ -57467,7 +57462,7 @@
 	req_one_access = list(12,22)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "mhX" = (
 /obj/machinery/light/smart{
@@ -65292,7 +65287,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "nRV" = (
@@ -66277,7 +66272,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "ocs" = (
@@ -66337,7 +66332,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "odu" = (
@@ -72695,7 +72690,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "pAM" = (
@@ -75753,7 +75748,9 @@
 	name = "Confession Booth"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/chapel)
 "qjA" = (
 /obj/structure/cable{
@@ -77960,7 +77957,7 @@
 "qJI" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "vaultfull"
 	},
 /area/station/medical/morgue)
 "qJS" = (
@@ -78326,7 +78323,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "qOn" = (
@@ -82970,7 +82967,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "rOO" = (
@@ -88070,7 +88067,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "sZe" = (
@@ -89777,7 +89774,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "tvw" = (
@@ -92643,7 +92640,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "udW" = (
@@ -97945,7 +97942,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "vre" = (
@@ -99644,7 +99641,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "vLF" = (
@@ -99750,7 +99747,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "bluefull"
+	icon_state = "bluechoco"
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "vNs" = (
@@ -108192,7 +108189,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
 "xJP" = (
@@ -159693,7 +159690,7 @@ dLG
 iIt
 pne
 kkt
-lHw
+nOh
 pAL
 ptR
 rKR
@@ -160207,7 +160204,7 @@ dLG
 iIt
 pne
 eRo
-lHw
+nOh
 fqL
 ivc
 fXD
