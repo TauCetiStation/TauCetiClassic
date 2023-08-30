@@ -17,11 +17,7 @@
 		addtimer(CALLBACK(src, PROC_REF(dissolve_electropack), user, user.back), 30)
 		used = TRUE
 
-	if(user.wear_mask && (istype(user.wear_mask, /obj/item/clothing/mask/horsehead) || \
-		                  istype(user.wear_mask, /obj/item/clothing/mask/pig) || \
-		                  istype(user.wear_mask, /obj/item/clothing/mask/cowmask) || \
-		                  istype(user.wear_mask, /obj/item/clothing/head/chicken)
-						  ))
+	if(user.wear_mask && is_animal_head(user.wear_mask))
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid on \his [user.wear_mask]!</span>",
 		                     "<span class='warning'>We vomit acidic ooze onto our mask!</span>")
 		addtimer(CALLBACK(src, PROC_REF(dissolve_horsehead), user, user.wear_mask), 30)
@@ -103,10 +99,12 @@
 		qdel(O)
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/item/clothing/mask/O)
-	if(user.wear_mask == O && (istype(O, /obj/item/clothing/mask/horsehead) || \
-		                       istype(O, /obj/item/clothing/mask/pig) || \
-		                       istype(O, /obj/item/clothing/mask/cowmask) || \
-		                       istype(O, /obj/item/clothing/head/chicken)
-		))
+	if(user.wear_mask == O && is_animal_head(O))
 		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
 		qdel(O)
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/is_animal_head(obj/item/clothing/mask/O)
+	return (istype(O, /obj/item/clothing/mask/horsehead) || \
+		    istype(O, /obj/item/clothing/mask/pig) || \
+		    istype(O, /obj/item/clothing/mask/cowmask) || \
+		    istype(O, /obj/item/clothing/head/chicken))
