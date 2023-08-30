@@ -272,7 +272,9 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "aax" = (
 /obj/item/weapon/flora/random,
@@ -676,6 +678,35 @@
 	icon_state = "red"
 	},
 /area/station/security/checkpoint/engi)
+"abj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/door_control{
+	id = "EVA_shutters";
+	name = "EVA Shutters";
+	pixel_x = -6;
+	pixel_y = 26;
+	req_one_access = list(1,5,11,18,24)
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
+"abk" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Library"
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/civilian/library)
 "abl" = (
 /obj/structure/table/woodentable,
 /obj/structure/cable{
@@ -690,6 +721,18 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
+"abm" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Library"
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/civilian/library)
 "abp" = (
 /obj/structure/easel,
 /obj/effect/decal/cleanable/dirt,
@@ -2912,7 +2955,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "asJ" = (
 /obj/structure/object_wall/mining{
@@ -4391,20 +4436,20 @@
 /area/station/maintenance/auxsolarport)
 "aJH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+	dir = 4
 	},
-/obj/machinery/door_control{
-	id = "EVA_shutters";
-	name = "EVA Shutters";
-	pixel_x = -6;
-	pixel_y = 26;
-	req_one_access = list(1,5,11,18,24)
+/obj/machinery/camera{
+	c_tag = "EVA Entrance";
+	dir = 6
 	},
 /obj/effect/decal/turf_decal{
-	dir = 1;
+	dir = 4;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "aJW" = (
 /obj/machinery/door/firedoor,
@@ -7691,7 +7736,9 @@
 /obj/machinery/camera{
 	c_tag = "Teleporter"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "btY" = (
 /obj/structure/rack,
@@ -10426,7 +10473,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
 /area/station/ai_monitored/eva)
 "bVS" = (
 /obj/structure/cable{
@@ -16811,7 +16860,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "dqO" = (
 /obj/machinery/door/firedoor,
@@ -17016,7 +17067,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "dte" = (
 /obj/machinery/hydroponics/soil,
@@ -18965,7 +19018,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/multitool,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "dSJ" = (
@@ -21010,19 +21063,26 @@
 	},
 /area/station/cargo/miningoffice)
 "eoW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "EVA Entrance";
-	dir = 6
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn_corner"
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/door/window/brigdoor/westleft,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/ai_monitored/eva)
 "epa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -22532,12 +22592,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "eHr" = (
-/obj/structure/table/reinforced,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/clothing/head/welding,
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "neutralfull"
 	},
 /area/station/ai_monitored/eva)
 "eHx" = (
@@ -23128,23 +23188,13 @@
 	},
 /area/station/security/prison)
 "eNG" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/turf/simulated/floor{
+	icon_state = "neutralfull"
 	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westleft,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "eNH" = (
 /obj/item/device/radio/intercom{
@@ -23690,7 +23740,7 @@
 "eTx" = (
 /obj/structure/fireplace,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "neutralchoco"
 	},
 /area/station/bridge/corp_lounge)
 "eTC" = (
@@ -29639,7 +29689,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "glk" = (
 /obj/machinery/light/small,
@@ -29955,7 +30007,9 @@
 	name = "apc left";
 	pixel_x = -28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "gnM" = (
 /obj/effect/decal/turf_decal{
@@ -30268,7 +30322,7 @@
 /obj/item/device/tagger/shop,
 /obj/item/weapon/packageWrap,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "gsa" = (
@@ -30857,7 +30911,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "gxk" = (
 /obj/machinery/alarm{
@@ -30883,7 +30939,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "gxx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -33081,7 +33139,9 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "gWA" = (
 /obj/structure/cable{
@@ -34137,7 +34197,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "hkw" = (
 /obj/item/weapon/flora/random,
@@ -34321,7 +34383,10 @@
 	dir = 4;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "hmp" = (
 /obj/structure/cable{
@@ -34891,7 +34956,9 @@
 /obj/machinery/telescience_jammer{
 	radius = 5
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/ai_monitored/eva)
 "hsi" = (
 /obj/effect/decal/cleanable/dirt,
@@ -35278,7 +35345,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "hvR" = (
 /obj/structure/closet/secure_closet/captains,
@@ -44077,7 +44146,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "neutralchoco"
 	},
 /area/station/bridge/corp_lounge)
 "joW" = (
@@ -44645,7 +44714,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "juu" = (
 /obj/machinery/door/firedoor,
@@ -46070,7 +46141,9 @@
 	id = "teleporter_gate";
 	name = "Teleporter Gate"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "jJB" = (
 /obj/structure/cable{
@@ -47390,7 +47463,7 @@
 	amount = 25
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "jWU" = (
@@ -48700,7 +48773,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "kkN" = (
@@ -49626,7 +49699,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "kvb" = (
 /obj/structure/stool/bed/chair/metal/red,
@@ -52408,7 +52483,10 @@
 	icon_state = "warn"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "kYF" = (
 /turf/simulated/floor{
@@ -53923,7 +54001,7 @@
 	amount = 50
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "lrS" = (
@@ -53945,7 +54023,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "lrZ" = (
 /obj/machinery/door/firedoor,
@@ -56151,7 +56231,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "lQC" = (
 /obj/structure/object_wall/mining{
@@ -60204,7 +60286,7 @@
 "mNo" = (
 /obj/machinery/vending/eva,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "mNx" = (
@@ -60411,7 +60493,9 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	icon_state = "arrow"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "mQa" = (
 /obj/structure/stool/bed/chair{
@@ -68470,15 +68554,14 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "oFJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
+/obj/item/clothing/head/welding,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/ai_monitored/eva)
 "oFM" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -69177,7 +69260,10 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/central)
 "oMG" = (
 /obj/structure/cable{
@@ -69246,7 +69332,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/ai_monitored/eva)
 "oNQ" = (
 /obj/effect/decal/turf_decal{
@@ -69561,7 +69649,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
 /area/station/ai_monitored/eva)
 "oRv" = (
 /obj/structure/table,
@@ -69609,7 +69699,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "oRY" = (
 /obj/structure/cable{
@@ -70267,7 +70359,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "oZN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -75376,7 +75470,7 @@
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/eva)
 "qfd" = (
@@ -83152,15 +83246,18 @@
 	},
 /area/station/tcommsat/chamber)
 "rQX" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
-	name = "Library"
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
 	},
-/turf/simulated/floor,
-/area/station/civilian/library)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "rQZ" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -84510,7 +84607,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "shY" = (
 /obj/item/device/lens/nude,
@@ -91108,7 +91207,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "tJV" = (
 /obj/machinery/door/firedoor,
@@ -91151,7 +91252,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "tKM" = (
 /obj/effect/landmark/start/warden,
@@ -92194,7 +92297,9 @@
 "tXB" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "tXU" = (
 /obj/structure/cable{
@@ -95047,7 +95152,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "uGd" = (
 /obj/structure/table/reinforced,
@@ -99090,7 +99197,7 @@
 	c_tag = "Corporate Lounge"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "neutralchoco"
 	},
 /area/station/bridge/corp_lounge)
 "vEK" = (
@@ -99412,7 +99519,9 @@
 	dir = 8;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "vIX" = (
 /turf/simulated/floor,
@@ -100590,7 +100699,9 @@
 	req_access = list(17)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "vXE" = (
 /obj/machinery/light/smart,
@@ -109762,7 +109873,9 @@
 	req_one_access = list(1,5,11,18,24)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/ai_monitored/eva)
 "xZG" = (
 /obj/effect/decal/cleanable/spiderling_remains,
@@ -146338,7 +146451,7 @@ lrS
 rTk
 aQq
 aVg
-eoW
+aJH
 ogP
 klp
 bZk
@@ -146590,12 +146703,12 @@ aVg
 wqk
 baa
 exf
-exf
+eHr
 exf
 rTk
 qbf
 unR
-oFJ
+rQX
 ogP
 vpT
 bZk
@@ -146852,7 +146965,7 @@ oNG
 rTk
 qbf
 unR
-oFJ
+rQX
 ogP
 njw
 bZk
@@ -147104,12 +147217,12 @@ aVg
 wqk
 baa
 hlQ
-hlQ
+eNG
 hlQ
 rTk
 qbf
 unR
-oFJ
+rQX
 ogP
 inC
 bZk
@@ -147362,11 +147475,11 @@ iWg
 baa
 gxj
 asE
-eNG
+eoW
 rTk
 uUR
 aVg
-aJH
+abj
 dxK
 vpT
 fAY
@@ -147878,7 +147991,7 @@ oRh
 aVg
 bVQ
 kkG
-eHr
+oFJ
 aVg
 ofl
 ogP
@@ -154827,9 +154940,9 @@ kbS
 kbS
 kbS
 exA
-hWH
+abk
 fSl
-rQX
+abm
 exA
 kbS
 kbS
