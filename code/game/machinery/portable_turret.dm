@@ -562,8 +562,6 @@ var/global/list/turret_icons
 	if(!check_trajectory(M, src))
 		return TURRET_NOT_TARGET
 
-	if(istype(M, /obj/mecha/combat))//gygax scary, shoot.
-		return TURRET_PRIORITY_TARGET
 
 	return TURRET_SECONDARY_TARGET //at least you dont get shoot at as priority like in human assess....
 
