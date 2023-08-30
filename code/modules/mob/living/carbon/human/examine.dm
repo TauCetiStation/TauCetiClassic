@@ -462,7 +462,7 @@
 
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C.isabsorbing)
+		if(HAS_TRAIT_FROM(src, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 		if(species.name == ABOMINATION)
 			if(C.absorbed_dna.len)

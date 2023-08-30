@@ -9,8 +9,7 @@
 /obj/effect/proc_holder/changeling/swallow/can_sting(mob/living/carbon/user)
 	if(!..())
 		return FALSE
-	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
-	if(changeling.isabsorbing)
+	if(HAS_TRAIT_FROM(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 		to_chat(user, "<span class='warning'>We are already swallowing!</span>")
 		return FALSE
 
@@ -42,14 +41,13 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/swallow/sting_action(mob/living/user)
-	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
-	changeling.isabsorbing = TRUE
+	ADD_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 	feedback_add_details("changeling_powers","S")
 	if(!do_mob(user, target, 15 SECONDS))
 		to_chat(user, "<span class='warning'>Our swallow of [target] has been interrupted!</span>")
-		changeling.isabsorbing = FALSE
+		REMOVE_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 		return FALSE
 	user.visible_message("<span class='danger'>[user] swallows [target]!</span>",
 	                     "<span class='notice'>We have swallow [target]!</span>")
@@ -58,5 +56,5 @@
 		target.drop_from_inventory(I)
 	target.spawn_gibs()
 	qdel(target)
-	changeling.isabsorbing = FALSE
+	REMOVE_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 	return TRUE
