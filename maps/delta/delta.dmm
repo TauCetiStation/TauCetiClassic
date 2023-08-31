@@ -61446,9 +61446,6 @@
 	department = "Internal Affairs"
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -85057,6 +85054,9 @@
 /obj/structure/closet/secure_closet/iaa,
 /obj/machinery/camera{
 	c_tag = "Internal Affairs"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -111903,6 +111903,9 @@
 	},
 /obj/machinery/requests_console/internal_affairs{
 	pixel_x = -32
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
