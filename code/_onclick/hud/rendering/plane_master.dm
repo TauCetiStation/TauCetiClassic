@@ -22,6 +22,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!isnull(render_relay_plane))
 		relay_render_to_plane(mymob, render_relay_plane)
+	apply_effects(mymob)
+
+/atom/movable/screen/plane_master/proc/apply_effects(mob/mymob)
+	return
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -39,8 +43,7 @@
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/game_world/backdrop(mob/mymob)
-	. = ..()
+/atom/movable/screen/plane_master/game_world/apply_effects(mob/mymob)
 	remove_filter("AO")
 	if(istype(mymob) && mymob?.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
@@ -65,8 +68,7 @@
 	plane = GHOST_ILLUSION_PLANE
 	render_relay_plane = RENDER_PLANE_ABOVE_GAME
 
-/atom/movable/screen/plane_master/ghost_illusion/backdrop(mob/mymob)
-	. = ..()
+/atom/movable/screen/plane_master/ghost_illusion/apply_effects(mob/mymob)
 	remove_filter("ghost_illusion")
 	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
 
@@ -108,8 +110,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob) // todo: prefs
-	. = ..()
+/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob) // todo: prefs
 	remove_filter("blur_exposure")
 	if(istype(mymob) && mymob?.client?.prefs?.old_lighting)
 		return
@@ -124,8 +125,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob) // todo: prefs
-	. = ..()
+/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob) // todo: prefs
 	remove_filter("add_lamps_to_selfglow")
 	remove_filter("lamps_selfglow_bloom")
 
@@ -170,8 +170,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_glare/backdrop(mob/mymob)
-	. = ..()
+/atom/movable/screen/plane_master/lamps_glare/apply_effects(mob/mymob)
 	remove_filter("add_lamps_to_glare")
 	remove_filter("lamps_glare")
 	if(istype(mymob) && mymob?.client?.prefs?.old_lighting || !mymob?.client?.prefs?.lampsglare)
