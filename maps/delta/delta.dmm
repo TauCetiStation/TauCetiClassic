@@ -8339,7 +8339,6 @@
 	name = "HoP Office";
 	sortType = "HoP Office"
 	},
-/obj/machinery/light/smart,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -10290,12 +10289,12 @@
 	},
 /area/station/medical/surgeryobs)
 "bLg" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
-	},
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 4;
 	icon_state = "siding_wood_line"
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -24505,9 +24504,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "Brig";
 	dir = 4;
@@ -27559,6 +27555,7 @@
 /obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -39457,23 +39454,22 @@
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "iex" = (
+/obj/structure/stool/bed/chair{
+	dir = 4
+	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/light/smart,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "darkblue"
 	},
-/area/station/hallway/primary/central)
+/area/station/bridge/corp_lounge)
 "ieA" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -50236,9 +50232,6 @@
 /area/station/medical/virology)
 "kqB" = (
 /obj/structure/morgue,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	dir = 1;
 	icon_state = "box_corners_white"
@@ -73061,6 +73054,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -97335,19 +97329,14 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
 "uUy" = (
-/obj/structure/stool/bed/chair{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	dir = 4;
+	icon_state = "bluecorner"
 	},
-/area/station/bridge/corp_lounge)
+/area/station/hallway/primary/central)
 "uUD" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -110583,13 +110572,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/smart,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -147661,7 +147650,7 @@ ebM
 xqN
 xyY
 mmd
-pUo
+uUy
 bXp
 hvB
 bCO
@@ -149723,7 +149712,7 @@ uLu
 oMG
 siC
 cPi
-uUy
+iex
 nHg
 nXi
 kyW
@@ -149975,7 +149964,7 @@ plf
 plf
 oXw
 ixa
-iex
+mKJ
 mMA
 uPD
 hkF
@@ -150745,7 +150734,7 @@ eXe
 hfS
 pDU
 pQD
-nvi
+wVZ
 mKJ
 mMA
 vEH
