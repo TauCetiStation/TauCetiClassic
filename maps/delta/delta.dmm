@@ -12890,13 +12890,15 @@
 /obj/item/weapon/storage/box/monkeycubes{
 	pixel_x = -6
 	},
-/obj/machinery/light/smart,
 /obj/item/weapon/storage/box/monkeycubes,
 /obj/item/weapon/storage/box/monkeycubes{
 	pixel_x = 6
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
 	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
@@ -14713,6 +14715,9 @@
 /obj/effect/decal/turf_decal/purple{
 	dir = 9;
 	icon_state = "siding_line"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -37137,14 +37142,6 @@
 "hEr" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/teleporter)
-"hEs" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "blackchoco"
-	},
-/area/station/rnd/xenobiology)
 "hEv" = (
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -45233,7 +45230,6 @@
 /area/station/maintenance/science)
 "jrf" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/smart,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -56889,9 +56885,6 @@
 /area/station/medical/sleeper)
 "lNl" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -63478,9 +63471,6 @@
 "nlY" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /obj/machinery/disposal,
 /obj/effect/decal/turf_decal/purple{
@@ -82879,6 +82869,9 @@
 "rAU" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/landmark/start/xenobiologist,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "neutral"
@@ -85534,6 +85527,9 @@
 	dir = 5;
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "sfe" = (
@@ -85820,9 +85816,6 @@
 	power_setting = 20;
 	set_temperature = 73;
 	use_power = 1
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
@@ -91574,9 +91567,6 @@
 	},
 /area/station/rnd/lab)
 "tAS" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/machinery/optable{
 	name = "Xenobiology Operating Table"
 	},
@@ -94885,6 +94875,9 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "unp" = (
@@ -96354,9 +96347,6 @@
 "uGd" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
 /obj/item/clothing/glasses/science,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -6;
@@ -96365,6 +96355,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "uGq" = (
@@ -97589,6 +97580,9 @@
 	},
 /obj/effect/decal/turf_decal/purple{
 	icon_state = "siding_line"
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "purple"
@@ -102364,7 +102358,6 @@
 /area/station/maintenance/brig)
 "wcV" = (
 /obj/machinery/smartfridge/secure/extract,
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -130442,7 +130435,7 @@ cjx
 cjx
 fRJ
 gVo
-hEs
+fRJ
 fRJ
 fRJ
 cjx
