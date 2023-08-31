@@ -37862,7 +37862,7 @@
 	},
 /area/station/rnd/xenobiology)
 "hOq" = (
-/obj/machinery/light/small,
+/obj/machinery/light/smart,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)
 "hOA" = (
