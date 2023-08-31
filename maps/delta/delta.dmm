@@ -814,6 +814,46 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
+"abt" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "HoP_private";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel's Office";
+	req_access = list(57)
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/bridge/hop_office)
+"abu" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel's Office";
+	req_access = list(57)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/bridge/hop_office)
 "aby" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -2312,7 +2352,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "amp" = (
@@ -2870,16 +2910,9 @@
 /area/station/maintenance/engineering)
 "are" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/guestpass{
-	dir = 1;
-	pixel_y = -28
-	},
-/obj/item/device/radio/off{
-	pixel_x = -6;
-	pixel_y = 4
-	},
+/obj/machinery/cell_charger,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "arj" = (
@@ -4385,7 +4418,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/hydroponics)
 "aIJ" = (
 /obj/item/device/radio/beacon,
@@ -7623,7 +7658,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "brM" = (
@@ -7636,7 +7671,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "brV" = (
@@ -20487,7 +20522,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "egG" = (
@@ -30327,7 +30362,7 @@
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "gph" = (
@@ -31604,7 +31639,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "gBR" = (
@@ -31651,7 +31686,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "gCM" = (
@@ -39032,7 +39067,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "igF" = (
@@ -40639,7 +40674,7 @@
 /obj/item/weapon/storage/box/ids,
 /obj/item/device/tagger/shop,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "iyv" = (
@@ -42282,7 +42317,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "iQw" = (
@@ -42307,7 +42342,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "iQz" = (
@@ -45029,7 +45064,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "juW" = (
@@ -46616,7 +46651,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "jKZ" = (
@@ -46852,7 +46887,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "jNB" = (
@@ -47964,7 +47999,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "jYR" = (
@@ -53830,7 +53865,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "llZ" = (
@@ -55715,7 +55750,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "lIx" = (
@@ -55754,7 +55789,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "lIF" = (
@@ -57948,7 +57983,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "miI" = (
@@ -59638,7 +59673,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "mBe" = (
@@ -67971,7 +68006,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "otl" = (
@@ -77376,7 +77411,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "qws" = (
@@ -83223,7 +83258,7 @@
 "rLi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "rLk" = (
@@ -85599,7 +85634,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "snp" = (
@@ -90314,19 +90349,8 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)
 "tvj" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "tvk" = (
@@ -90549,8 +90573,11 @@
 	},
 /area/station/civilian/janitor)
 "txp" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -91732,25 +91759,19 @@
 	},
 /area/station/security/warden)
 "tKR" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+/obj/structure/table/reinforced,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = -28
 	},
-/obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office";
-	req_access = list(57)
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = -32
+/turf/simulated/floor{
+	icon_state = "blackchoco"
 	},
-/turf/simulated/floor/plating,
-/area/station/bridge/hop_office)
+/area/station/bridge)
 "tKX" = (
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 32;
@@ -94445,7 +94466,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "uqE" = (
@@ -97625,7 +97646,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "vgN" = (
@@ -100443,21 +100464,21 @@
 	},
 /area/station/engineering/drone_fabrication)
 "vOQ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office";
-	req_access = list(57)
-	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/bridge/hop_office)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge)
 "vOS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed/chair,
@@ -100696,7 +100717,7 @@
 "vSo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "vSs" = (
@@ -103035,7 +103056,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/bridge)
 "wtr" = (
@@ -111143,7 +111164,7 @@
 /obj/item/weapon/handcuffs,
 /obj/item/device/flash,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/bridge)
 "yjy" = (
@@ -146722,7 +146743,7 @@ eKQ
 vAK
 mmd
 vAK
-tKR
+abt
 mmd
 mmd
 pUo
@@ -147216,8 +147237,8 @@ kHU
 plf
 lYH
 nNG
-gNf
-imK
+txp
+tvj
 uCj
 qrj
 fAm
@@ -147473,8 +147494,8 @@ kHU
 kHU
 lYH
 nJF
-gNf
-imK
+txp
+tvj
 nxF
 qrj
 waH
@@ -147495,7 +147516,7 @@ kuq
 eAM
 xjW
 kyV
-vOQ
+abu
 wyL
 bsX
 aVg
@@ -148245,7 +148266,7 @@ plf
 fDA
 abO
 amg
-imK
+tvj
 rSm
 qrj
 fAm
@@ -148758,8 +148779,8 @@ lYH
 qsS
 lYH
 qwb
+vOQ
 tvj
-imK
 pjP
 qrj
 oIM
@@ -149014,9 +149035,9 @@ plf
 fDA
 asW
 vnt
-imK
 tvj
-imK
+vOQ
+tvj
 nxF
 uqv
 lZx
@@ -149271,11 +149292,11 @@ plf
 fDA
 fcH
 egz
-imK
 tvj
+vOQ
 hno
 ltF
-txp
+are
 lZx
 bvH
 efE
@@ -149784,7 +149805,7 @@ hBZ
 kHU
 shk
 yiC
-imK
+tvj
 rLi
 uzR
 gyz
@@ -150042,7 +150063,7 @@ plf
 fDA
 gdV
 gCE
-imK
+tvj
 lEC
 wnY
 dfg
@@ -150556,7 +150577,7 @@ plf
 fDA
 bfl
 gCE
-imK
+tvj
 lEC
 mrs
 dfg
@@ -150812,7 +150833,7 @@ hBZ
 kHU
 shk
 vgF
-imK
+tvj
 vSo
 vwl
 vbR
@@ -151327,11 +151348,11 @@ plf
 fDA
 ddT
 gCE
-imK
 tvj
+vOQ
 gyZ
 sFh
-are
+tKR
 lZx
 vip
 nQC
@@ -151584,9 +151605,9 @@ plf
 fDA
 jIl
 uOR
-imK
 tvj
-imK
+vOQ
+tvj
 nxF
 uqv
 lZx
@@ -151842,8 +151863,8 @@ lYH
 rIs
 lYH
 iyu
+vOQ
 tvj
-imK
 nxF
 iaL
 iaL
@@ -152100,7 +152121,7 @@ kHU
 fDA
 gBM
 miH
-imK
+tvj
 oXT
 iaL
 ttl
@@ -152357,7 +152378,7 @@ plf
 fDA
 gpg
 llT
-imK
+tvj
 jEM
 iaL
 pwQ
@@ -153128,7 +153149,7 @@ kHU
 lYH
 lBB
 otj
-imK
+tvj
 nxF
 iaL
 ttG
@@ -153385,7 +153406,7 @@ plf
 lYH
 nNG
 otj
-imK
+tvj
 uCj
 iaL
 wjr
