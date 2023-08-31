@@ -5894,7 +5894,7 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -8495,7 +8495,7 @@
 /area/station/medical/virology)
 "byG" = (
 /obj/machinery/photocopier,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -10001,7 +10001,7 @@
 /area/station/civilian/kitchen)
 "bNb" = (
 /obj/structure/filingcabinet/security,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -14684,7 +14684,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -17651,7 +17651,7 @@
 /area/station/engineering/break_room)
 "duM" = (
 /obj/structure/filingcabinet,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -20546,7 +20546,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_x = 26
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -21482,7 +21482,7 @@
 "eqn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -24032,7 +24032,7 @@
 /area/station/rnd/xenobiology)
 "eSP" = (
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -27171,7 +27171,7 @@
 /area/station/medical/genetics)
 "fCi" = (
 /obj/structure/filingcabinet/security,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -44096,7 +44096,7 @@
 /area/station/rnd/xenobiology)
 "jia" = (
 /obj/machinery/bookbinder,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -47350,7 +47350,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -58469,7 +58469,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_x = 26
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -62498,7 +62498,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/photocopier,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -64542,7 +64542,7 @@
 	dir = 4
 	},
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -68200,7 +68200,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -77185,7 +77185,7 @@
 	dir = 5
 	},
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -80063,7 +80063,7 @@
 "qZH" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
@@ -80499,7 +80499,7 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -88308,7 +88308,7 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -97255,7 +97255,7 @@
 /area/station/cargo/recycler)
 "uYj" = (
 /obj/structure/closet/blueshield,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -100365,7 +100365,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -101362,7 +101362,7 @@
 /area/station/civilian/locker)
 "vWI" = (
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
@@ -106858,7 +106858,7 @@
 /obj/structure/filingcabinet{
 	req_access = list(58)
 	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
@@ -109014,7 +109014,7 @@
 	},
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
