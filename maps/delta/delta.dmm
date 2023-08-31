@@ -1216,6 +1216,15 @@
 	icon_state = "blackchoco"
 	},
 /area/station/security/checkpoint/escape)
+"abZ" = (
+/obj/machinery/camera{
+	c_tag = "Chapel South";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/civilian/chapel)
 "acc" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door_control{
@@ -3085,7 +3094,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "aqx" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3830,7 +3841,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_left"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "azQ" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
@@ -7347,7 +7360,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "blu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -7705,7 +7720,9 @@
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/primary/starboard)
 "bpi" = (
 /obj/structure/fireplace,
@@ -31491,7 +31508,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "gyf" = (
 /obj/machinery/door/firedoor,
@@ -49939,9 +49958,13 @@
 	},
 /area/station/security/forensic_office)
 "kqE" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor,
-/area/station/civilian/chapel)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/hallway/primary/starboard)
 "kqI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -59693,7 +59716,9 @@
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "mye" = (
 /obj/machinery/door/firedoor,
@@ -65047,7 +65072,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_left"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "nGr" = (
 /obj/structure/table/glass,
@@ -66832,7 +66859,8 @@
 	name = "Central Access"
 	},
 /turf/simulated/floor{
-	icon_state = "whiteredfull"
+	dir = 9;
+	icon_state = "redchoco"
 	},
 /area/station/hallway/primary/starboard)
 "nZC" = (
@@ -69665,11 +69693,10 @@
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "oJJ" = (
-/obj/machinery/camera{
-	c_tag = "Chapel South";
-	dir = 1
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/turf/simulated/floor,
 /area/station/civilian/chapel)
 "oJM" = (
 /obj/structure/stool,
@@ -79553,7 +79580,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/storage/emergency)
 "qSt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -84224,7 +84253,8 @@
 	name = "Central Access"
 	},
 /turf/simulated/floor{
-	icon_state = "whiteredfull"
+	dir = 9;
+	icon_state = "redchoco"
 	},
 /area/station/hallway/primary/starboard)
 "rST" = (
@@ -85086,7 +85116,8 @@
 	name = "Central Access"
 	},
 /turf/simulated/floor{
-	icon_state = "whiteredfull"
+	dir = 9;
+	icon_state = "redchoco"
 	},
 /area/station/hallway/primary/starboard)
 "sev" = (
@@ -155352,7 +155383,7 @@ ffw
 kFX
 eXV
 rSL
-lDB
+kqE
 kFX
 xUM
 qBt
@@ -155609,7 +155640,7 @@ kFX
 kFX
 eXV
 rSL
-lDB
+kqE
 xQo
 xQo
 iVc
@@ -156907,7 +156938,7 @@ rYm
 qWs
 opy
 xLl
-kqE
+oJJ
 mUR
 mUR
 kHU
@@ -157680,7 +157711,7 @@ mtw
 cUU
 gEm
 huZ
-kqE
+oJJ
 mUR
 plf
 plf
@@ -157937,7 +157968,7 @@ iih
 jjD
 gEm
 pKo
-oJJ
+abZ
 eiH
 kHU
 kHU
@@ -158194,7 +158225,7 @@ mtw
 cUU
 gEm
 huZ
-kqE
+oJJ
 mUR
 plf
 plf
@@ -158963,7 +158994,7 @@ ffM
 vLd
 ygB
 otx
-kqE
+oJJ
 mUR
 mUR
 kHU
