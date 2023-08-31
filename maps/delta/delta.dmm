@@ -2596,7 +2596,7 @@
 	},
 /area/station/cargo/lobby)
 "akB" = (
-/obj/structure/dumbbells_rack,
+/mob/living/pbag,
 /turf/simulated/floor,
 /area/station/security/prison)
 "akJ" = (
@@ -6123,6 +6123,9 @@
 "aYb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -17674,9 +17677,6 @@
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_x = -30
 	},
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "dtg" = (
@@ -27505,17 +27505,24 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "fDB" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/device/flashlight/lamp{
-	on = 0;
-	pixel_x = -4;
-	pixel_y = 15
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 4;
 	icon_state = "redcorner"
 	},
-/area/station/security/lobby)
+/area/station/security/prison)
 "fDL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -33172,7 +33179,10 @@
 	},
 /area/station/bridge)
 "gPN" = (
-/mob/living/pbag,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "gPY" = (
@@ -34599,12 +34609,6 @@
 	},
 /turf/simulated/floor,
 /area/station/tcommsat/chamber)
-"hfX" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/security/prison)
 "hgd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -44814,6 +44818,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "jnw" = (
@@ -44957,6 +44962,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "jps" = (
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -53020,9 +53028,6 @@
 "kWw" = (
 /obj/structure/table,
 /obj/item/trash/popcorn,
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -56926,12 +56931,10 @@
 /area/station/maintenance/chapel)
 "lOy" = (
 /obj/machinery/hydroponics/soil,
-/obj/machinery/camera{
-	c_tag = "Prison Wing Permanent Containment Botany";
-	dir = 9;
-	network = list("SS13","Prison")
-	},
 /obj/item/device/plant_analyzer,
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "lOJ" = (
@@ -58307,8 +58310,9 @@
 /area/station/hallway/secondary/entry)
 "mgr" = (
 /obj/machinery/hydroponics/soil,
-/obj/machinery/light/smart{
-	dir = 4
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
@@ -58405,6 +58409,7 @@
 "mhH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -59153,14 +59158,11 @@
 	},
 /area/station/hallway/primary/fore)
 "mpR" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -62328,12 +62330,15 @@
 	},
 /area/station/hallway/secondary/entry)
 "mZo" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
 /obj/structure/table/reinforced,
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -65312,7 +65317,7 @@
 	},
 /area/station/rnd/xenobiology)
 "nGP" = (
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -67024,6 +67029,7 @@
 	pixel_y = -6
 	},
 /obj/item/device/flashlight/lamp{
+	on = 0;
 	pixel_x = -4;
 	pixel_y = 10
 	},
@@ -69075,9 +69081,6 @@
 	},
 /area/station/security/prison)
 "oAK" = (
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -71056,15 +71059,12 @@
 /area/station/maintenance/medbay)
 "oXr" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/detflask{
-	pixel_x = 12;
-	pixel_y = 5
-	},
 /obj/item/device/flashlight/lamp{
 	on = 0;
 	pixel_x = -4;
 	pixel_y = 15
 	},
+/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "oXw" = (
@@ -71313,6 +71313,9 @@
 "oZN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -77781,6 +77784,9 @@
 "qum" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -82637,13 +82643,6 @@
 	icon_state = "blackchoco"
 	},
 /area/station/engineering/minisat_secure_area)
-"rzP" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "redcorner"
-	},
-/area/station/security/prison)
 "rzT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
@@ -99136,6 +99135,9 @@
 "vqV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/bodybags,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "vra" = (
@@ -102292,7 +102294,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/light/small,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
@@ -109669,11 +109670,12 @@
 "xLY" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/seeds/walkingmushroommycelium,
-/obj/machinery/alarm{
-	pixel_y = 22
-	},
 /obj/structure/window/thin,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Prison Wing Permanent Containment Botany";
+	network = list("SS13","Prison")
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "xLZ" = (
@@ -111897,6 +111899,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
@@ -161632,7 +161637,7 @@ fbW
 vXb
 emw
 emw
-fDB
+emw
 emw
 emw
 lvZ
@@ -162636,7 +162641,7 @@ qZx
 qZx
 qZx
 jaC
-rzP
+czU
 qZx
 vev
 vev
@@ -164434,8 +164439,8 @@ hlv
 hlv
 rFp
 qZx
-tnw
-rzP
+fDB
+czU
 qZx
 afw
 rlC
@@ -164679,13 +164684,13 @@ qZx
 gPN
 xKc
 nGA
-hfX
+bZu
 onb
 qxx
 oZN
 bZu
 bZu
-hfX
+bZu
 iVe
 onb
 aYb
