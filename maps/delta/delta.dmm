@@ -1084,6 +1084,16 @@
 	icon_state = "blackchoco"
 	},
 /area/station/bridge/nuke_storage)
+"abM" = (
+/obj/structure/stool,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "whitechoco"
+	},
+/area/station/civilian/gym)
 "abN" = (
 /obj/machinery/light,
 /turf/simulated/shuttle/floor/cargo{
@@ -1571,7 +1581,9 @@
 /obj/machinery/door/airlock{
 	name = "Locker Room"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/dormitories)
 "adW" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -1825,7 +1837,7 @@
 /area/station/security/brig)
 "afu" = (
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "afw" = (
@@ -2134,7 +2146,7 @@
 /area/station/cargo/miningoffice)
 "aiy" = (
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "aiN" = (
@@ -4496,7 +4508,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "aHs" = (
@@ -6293,7 +6305,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "bcg" = (
@@ -7216,7 +7228,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "bll" = (
@@ -7875,7 +7887,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/locker)
 "bsn" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -8719,7 +8733,7 @@
 "bAH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "bAM" = (
@@ -15610,7 +15624,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/locker)
 "cXg" = (
 /obj/structure/cable{
@@ -16156,7 +16172,6 @@
 	},
 /area/station/medical/cmo)
 "dft" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -16182,14 +16197,10 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "dfA" = (
-/obj/random/vending/cola,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
-	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
-/area/station/civilian/gym)
+/area/station/civilian/locker)
 "dfC" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/atmospherics/components/unary/portables_connector,
@@ -18435,7 +18446,7 @@
 	name = "Dormitory"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/locker)
 "dFs" = (
@@ -18749,7 +18760,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "dJe" = (
@@ -23894,7 +23905,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Library"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/station/civilian/library)
 "eRf" = (
 /obj/structure/cable{
@@ -28508,7 +28521,9 @@
 	name = "Dorm 2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/dormitories)
 "fTz" = (
 /turf/simulated/wall,
@@ -31583,7 +31598,7 @@
 	dir = 5
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "gzt" = (
@@ -35744,7 +35759,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "hvk" = (
@@ -36036,7 +36051,9 @@
 	codes_txt = "patrol;next_patrol=CS-AR";
 	location = "SWW-FC"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/locker)
 "hyx" = (
 /obj/machinery/bodyscanner,
@@ -37514,7 +37531,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "hMZ" = (
@@ -38303,7 +38320,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Library"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/station/civilian/library)
 "hWI" = (
 /obj/machinery/door/window/brigdoor/westleft{
@@ -41575,10 +41594,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "iGt" = (
-/obj/item/trash/candle,
-/obj/structure/table/woodentable,
+/obj/random/vending/cola,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "iGv" = (
@@ -42301,7 +42322,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/locker)
 "iOa" = (
@@ -43907,7 +43928,7 @@
 "jfQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "jfS" = (
@@ -44434,7 +44455,6 @@
 	},
 /area/station/medical/cmo)
 "jlH" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/glass,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -44951,7 +44971,9 @@
 	name = "Dorm 4"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/dormitories)
 "jrZ" = (
 /obj/structure/cable{
@@ -47064,7 +47086,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Cryogenic Storage"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/station/civilian/dormitories)
 "jNu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -48003,14 +48027,13 @@
 	},
 /area/station/gateway)
 "jXf" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "jXj" = (
@@ -49708,7 +49731,7 @@
 	icon_state = "outline_bold"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/locker)
 "kpw" = (
@@ -57216,13 +57239,10 @@
 	},
 /area/station/engineering/atmos)
 "lWC" = (
-/obj/structure/stool,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
-	},
+/obj/item/trash/candle,
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "lWD" = (
@@ -59542,7 +59562,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "mxD" = (
@@ -61482,7 +61502,7 @@
 	name = "Smoking Room"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "mTB" = (
@@ -70123,7 +70143,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible/red,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "oOJ" = (
@@ -71492,7 +71512,9 @@
 	name = "Brig Maintenance";
 	req_access = list(12)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/gym)
 "pfC" = (
 /obj/machinery/door/firedoor,
@@ -79876,7 +79898,7 @@
 	icon_state = "outline_bold"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/locker)
 "qXE" = (
@@ -81850,7 +81872,7 @@
 	name = "Dormitory"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/locker)
 "rwf" = (
@@ -88716,7 +88738,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/civilian/gym)
 "sWC" = (
@@ -89042,7 +89064,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "taF" = (
@@ -92187,7 +92209,9 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/locker)
 "tMy" = (
 /obj/machinery/door/firedoor,
@@ -94340,7 +94364,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/dormitories)
 "umm" = (
 /obj/structure/cable{
@@ -97550,7 +97576,9 @@
 	name = "Dorm 3"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/dormitories)
 "vbh" = (
 /obj/machinery/light/smart{
@@ -99245,7 +99273,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/locker)
 "vvL" = (
@@ -100450,7 +100478,9 @@
 	},
 /area/station/aisat/teleport)
 "vKG" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/locker)
 "vKI" = (
 /obj/structure/table/reinforced,
@@ -101357,7 +101387,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/locker)
 "vWI" = (
@@ -102327,7 +102357,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Cryogenic Storage"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/station/civilian/dormitories)
 "wix" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -106279,10 +106311,9 @@
 	},
 /area/station/rnd/xenobiology)
 "xef" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/glass,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/locker)
 "xei" = (
@@ -106966,7 +106997,9 @@
 	name = "Dorm 1"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/dormitories)
 "xnl" = (
 /obj/structure/sink{
@@ -107131,7 +107164,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/locker)
 "xot" = (
 /obj/structure/table,
@@ -109299,7 +109334,7 @@
 	icon_state = "outline_bold"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/locker)
 "xLi" = (
@@ -109463,7 +109498,7 @@
 "xMC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "xMD" = (
@@ -111581,7 +111616,7 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/civilian/dormitories/courtroom)
 "ylo" = (
@@ -160353,8 +160388,8 @@ fCz
 lBQ
 tAM
 hHN
-hVa
-hVa
+dfA
+dfA
 hHN
 sXW
 kbS
@@ -160610,8 +160645,8 @@ jYp
 bAd
 tAM
 aUb
-hVa
-hVa
+dfA
+dfA
 bcX
 mFY
 xRq
@@ -160867,8 +160902,8 @@ axb
 wlR
 tAM
 hMR
-hVa
-hVa
+dfA
+dfA
 blj
 xef
 ipa
@@ -167308,7 +167343,7 @@ plf
 adB
 hva
 afu
-iGt
+lWC
 adB
 kHU
 kHU
@@ -167563,9 +167598,9 @@ auc
 dXZ
 kHU
 adB
-dfA
+iGt
 afu
-lWC
+abM
 dJL
 kHU
 kHU
