@@ -48614,7 +48614,7 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "kgq" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/constructable_frame/machine_frame,
+/obj/machinery/vending/sovietsoda,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kgH" = (
