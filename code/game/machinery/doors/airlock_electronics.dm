@@ -40,7 +40,15 @@
 
 		t1 += conf_access == null ? "<span class='red'>All</span><br>" : "<a href='?src=\ref[src];access=all'>All</a><br>"
 
-		t1 += "<br>"
+		t1 += "<hr><br>"
+
+		t1 += "Unrestricted access sides is set to:<br>"
+		for(var/side in list(NORTH, EAST, SOUTH, WEST))
+			if(unres_sides & side)
+				t1 += "[capitalize(dir2text(side))]: <a class='green' href='?src=\ref[src];unres_side=[side]'>Enabled</a><br>"
+			else
+				t1 += "[capitalize(dir2text(side))]:<a href='?src=\ref[src];unres_side=[side]'>Disabled</a><br>"
+		t1 += "<hr><br>"
 
 		var/list/accesses = get_all_accesses()
 		for (var/acc in accesses)
@@ -79,6 +87,9 @@
 
 	if (href_list["logout"])
 		locked = 1
+
+	if (href_list["unres_side"])
+		unres_sides ^= text2num(href_list["unres_side"])
 
 	if (href_list["one_access"])
 		one_access = !one_access
