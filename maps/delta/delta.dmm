@@ -496,10 +496,12 @@
 "aaS" = (
 /obj/structure/closet/radiation,
 /obj/effect/decal/turf_decal{
-	dir = 6;
+	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "aaT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -737,6 +739,27 @@
 	icon_state = "blackchoco"
 	},
 /area/station/engineering/engine)
+"abo" = (
+/obj/machinery/door/airlock{
+	name = "Vacant Room";
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/hallway/primary/fore)
 "abp" = (
 /obj/structure/easel,
 /obj/effect/decal/cleanable/dirt,
@@ -744,6 +767,36 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"abq" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Hydroponics Pasture";
+	req_access = list(28)
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/civilian/kitchen)
+"abr" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/westright{
+	dir = 1;
+	name = "Kitchen Maintenance";
+	req_access = list(28)
+	},
+/obj/effect/decal/turf_decal/white{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/civilian/cold_room)
 "abs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -13338,7 +13391,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/hydroponics)
 "cAW" = (
 /obj/structure/disposalpipe/segment{
@@ -13431,7 +13486,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
@@ -14048,7 +14103,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "cIy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -16365,7 +16422,9 @@
 	dir = 8;
 	state = 2
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "diQ" = (
 /obj/structure/cable{
@@ -20307,7 +20366,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "eeZ" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -22772,23 +22833,10 @@
 	},
 /area/station/rnd/hallway/lobby)
 "eIm" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/obj/machinery/door/window/westright{
-	dir = 1;
-	name = "Kitchen Maintenance";
-	req_access = list(28)
-	},
-/obj/effect/decal/turf_decal/white{
-	dir = 4;
-	icon_state = "siding_line"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor,
-/area/station/civilian/cold_room)
+/area/station/hallway/primary/fore)
 "eIB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/briefcase,
@@ -24436,7 +24484,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "fbb" = (
@@ -28075,7 +28123,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/drone_fabrication)
 "fRG" = (
@@ -29556,11 +29604,9 @@
 	layer = 2.8;
 	name = "doorway barricade"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
 "gjl" = (
 /obj/structure/cable{
@@ -32438,7 +32484,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/drone_fabrication)
 "gNf" = (
@@ -33304,7 +33350,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "gWn" = (
@@ -35453,7 +35499,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "huT" = (
@@ -36112,7 +36158,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -38842,7 +38888,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "ieL" = (
 /obj/effect/decal/turf_decal{
@@ -41066,7 +41114,7 @@
 	name = "Hydroponics"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "iDO" = (
@@ -45987,7 +46035,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "jFZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -48774,7 +48824,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "kiI" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -50593,7 +50645,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/drone_fabrication)
 "kCI" = (
@@ -54392,7 +54444,9 @@
 	name = "Hydroponics";
 	req_access = list(35)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/hydroponics)
 "ltn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -56798,7 +56852,7 @@
 /obj/machinery/vending/hydroseeds,
 /obj/structure/window/thin,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "lUB" = (
@@ -62473,7 +62527,9 @@
 	dir = 4;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "nit" = (
 /obj/machinery/flasher_button{
@@ -64635,8 +64691,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "caution_white"
+/obj/effect/decal/turf_decal/alpha{
+	dir = 8;
+	icon_state = "warn_end"
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos/supermatter)
@@ -66550,7 +66607,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "oaP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -67146,7 +67205,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/drone_fabrication)
 "ohV" = (
@@ -73115,7 +73174,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "pAG" = (
 /obj/structure/table/reinforced,
@@ -76878,7 +76939,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "qrH" = (
 /obj/structure/object_wall/pod{
@@ -79172,7 +79235,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "qSX" = (
@@ -81338,7 +81401,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/hydroponics)
 "rud" = (
 /obj/effect/decal/cleanable/dirt,
@@ -82897,7 +82962,9 @@
 	name = "Hydroponics Pasture";
 	req_one_access = list(28,35)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/kitchen)
 "rIT" = (
 /obj/structure/cable{
@@ -83294,7 +83361,7 @@
 "rNm" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/atmos/supermatter)
 "rNn" = (
@@ -86384,7 +86451,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/atmos/supermatter)
 "syl" = (
@@ -88398,7 +88465,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/drone_fabrication)
 "sWL" = (
@@ -89794,13 +89861,10 @@
 	},
 /area/station/engineering/engine)
 "toJ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	name = "Hydroponics Pasture";
-	req_access = list(28)
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/turf/simulated/floor,
-/area/station/civilian/kitchen)
+/area/station/engineering/atmos/supermatter)
 "toN" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -91909,7 +91973,7 @@
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/window/thin,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "tMV" = (
@@ -97503,7 +97567,9 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "vfW" = (
 /turf/simulated/floor{
@@ -98160,7 +98226,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
@@ -98752,7 +98818,7 @@
 	name = "Hydroponics"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "vtX" = (
@@ -98935,7 +99001,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/engineering/drone_fabrication)
 "vwz" = (
@@ -99584,24 +99650,10 @@
 	},
 /area/station/engineering/break_room)
 "vEF" = (
-/obj/machinery/door/airlock{
-	name = "Vacant Room";
-	req_access = list(12)
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/fore)
+/area/station/civilian/hydroponics)
 "vEG" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/sechailer{
@@ -101360,7 +101412,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "vZA" = (
@@ -102855,7 +102907,7 @@
 /obj/machinery/vending/hydronutrients,
 /obj/structure/window/thin,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "wrI" = (
@@ -105119,7 +105171,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "wUb" = (
 /turf/simulated/floor{
@@ -105788,7 +105842,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "xbY" = (
 /turf/simulated/floor,
@@ -105850,7 +105906,9 @@
 	layer = 2.8;
 	name = "doorway barricade"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "xcZ" = (
 /obj/machinery/door/firedoor,
@@ -106201,7 +106259,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "xgQ" = (
@@ -106374,10 +106432,12 @@
 /obj/machinery/light/small,
 /obj/structure/closet/l3closet/general,
 /obj/effect/decal/turf_decal{
-	dir = 5;
+	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "xiZ" = (
 /obj/random/foods/food_trash,
@@ -107533,13 +107593,15 @@
 "xuZ" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
+	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "xvk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/engineering/atmos/supermatter)
 "xvs" = (
 /obj/structure/toilet{
@@ -108387,7 +108449,7 @@
 	icon_state = "warn_box"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/hydroponics)
 "xDQ" = (
@@ -138897,7 +138959,7 @@ aaS
 nGb
 xiX
 dyt
-xTO
+toJ
 xvk
 oaG
 qrx
@@ -141747,7 +141809,7 @@ dOS
 rfL
 qsE
 kAI
-eIm
+abr
 wwi
 ciW
 wwi
@@ -142241,7 +142303,7 @@ xDP
 sWq
 xDe
 xaF
-xaF
+vEF
 lsX
 exU
 exU
@@ -142761,7 +142823,7 @@ wKd
 hjY
 jOY
 yhA
-toJ
+abq
 aSY
 slU
 xTk
@@ -143529,7 +143591,7 @@ tCb
 pLk
 qTX
 ohm
-vIX
+eIm
 rAY
 tJq
 qUi
@@ -144044,7 +144106,7 @@ qTX
 tJq
 tJq
 noW
-vEF
+abo
 tJq
 ajJ
 dkf
