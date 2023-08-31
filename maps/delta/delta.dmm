@@ -4731,7 +4731,7 @@
 	name = "Station Intercom (Security)";
 	pixel_y = 22
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -8506,9 +8506,6 @@
 /obj/structure/stool/bed/chair/office/dark,
 /obj/machinery/alarm{
 	pixel_y = 22
-	},
-/obj/machinery/light/small{
-	dir = 1
 	},
 /obj/effect/decal/turf_decal/dark_red{
 	dir = 4;
@@ -12411,6 +12408,9 @@
 	dir = 9;
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -15278,7 +15278,6 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
-/obj/machinery/light/smart,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -19636,6 +19635,9 @@
 	pixel_y = -22
 	},
 /obj/structure/closet/crate,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -21596,6 +21598,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -31816,6 +31821,9 @@
 /area/station/civilian/chapel/crematorium)
 "gzf" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -37700,6 +37708,7 @@
 /obj/machinery/requests_console/security{
 	pixel_y = -32
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -38840,6 +38849,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -44105,7 +44117,6 @@
 "jfF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	frequency = 1475;
 	name = "Station Intercom (Security)";
@@ -46937,6 +46948,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -52914,9 +52926,6 @@
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -63766,6 +63775,9 @@
 	frequency = 1475;
 	name = "Station Intercom (Security)";
 	pixel_y = 22
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -92410,14 +92422,13 @@
 "tLX" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
-	},
 /obj/machinery/camera{
 	c_tag = "Security Proccesing";
 	dir = 7;
 	network = list("SS13","Security")
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -92905,9 +92916,6 @@
 /area/station/engineering/atmos/supermatter)
 "tSE" = (
 /obj/machinery/computer/security,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
