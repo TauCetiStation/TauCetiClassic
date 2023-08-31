@@ -1545,6 +1545,30 @@
 	icon_state = "blackchoco"
 	},
 /area/station/engineering/monitoring)
+"acD" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "box_white"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/rnd/mixing)
+"acE" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/rnd/mixing)
 "acF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -1555,6 +1579,18 @@
 	icon_state = "blackchoco"
 	},
 /area/station/engineering/engine)
+"acG" = (
+/obj/machinery/atmospherics/pipe/manifold/visible/black{
+	dir = 4
+	},
+/obj/machinery/meter,
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/rnd/mixing)
 "acH" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/telescreen{
@@ -1570,6 +1606,21 @@
 	icon_state = "blackchecker"
 	},
 /area/station/security/interrogation)
+"acI" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "box_white"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/mixing)
 "acL" = (
 /obj/effect/landmark/start/captain,
 /obj/structure/stool/bed,
@@ -8245,9 +8296,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "bsQ" = (
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 10
 	},
@@ -10410,13 +10458,6 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/dark_red{
-	icon_state = "box_white"
-	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -11603,10 +11644,11 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "caz" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/black{
-	dir = 4
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
 	},
-/obj/machinery/meter,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -27003,13 +27045,15 @@
 	},
 /area/station/engineering/engine)
 "fwl" = (
-/obj/machinery/light/smart{
-	dir = 1
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
-/area/station/rnd/tox_launch)
+/area/station/rnd/storage)
 "fwH" = (
 /mob/living/simple_animal/corgi/borgi,
 /obj/effect/decal/turf_decal/dark_red{
@@ -27162,6 +27206,9 @@
 "fyE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -28871,14 +28918,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "fTK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /obj/machinery/light/smart{
-	dir = 1
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/storage)
 "fUu" = (
 /obj/effect/landmark/start/chief_engineer,
 /obj/structure/stool/bed/chair/office/light{
@@ -42453,19 +42503,9 @@
 	},
 /area/station/civilian/library)
 "iMf" = (
-/obj/machinery/light/smart,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/dark_red{
-	icon_state = "box_white"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/mixing)
 "iMh" = (
@@ -44506,9 +44546,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "jiS" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
@@ -107826,14 +107863,17 @@
 	},
 /area/station/engineering/atmos)
 "xrA" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
+/obj/structure/closet/bombcloset,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
 	},
-/obj/machinery/meter,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "xrB" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -140458,7 +140498,7 @@ juy
 qNK
 vee
 plf
-eWN
+oIK
 kLU
 naR
 pSS
@@ -140715,8 +140755,8 @@ fbF
 kNm
 vee
 kHU
-eWN
-kLU
+oIK
+xrA
 kDj
 hLq
 kDj
@@ -140973,7 +141013,7 @@ ire
 fUZ
 kHU
 oIK
-fwl
+kDj
 xfJ
 xwP
 aso
@@ -143277,7 +143317,7 @@ wPi
 daS
 jbl
 uEC
-gkn
+fTK
 jDw
 jiS
 xom
@@ -143546,7 +143586,7 @@ esc
 mYj
 eFM
 ydN
-cGi
+caz
 mYj
 fby
 cCK
@@ -143801,7 +143841,7 @@ tLa
 esc
 erV
 mYj
-fTK
+iMf
 gEU
 sKL
 btd
@@ -144052,7 +144092,7 @@ pyz
 xUE
 nLP
 gYy
-sJS
+fwl
 cOy
 hbM
 ohg
@@ -144577,7 +144617,7 @@ ydN
 uKh
 imv
 djG
-xrA
+acE
 xiI
 mYj
 hcE
@@ -144835,7 +144875,7 @@ ghN
 ghN
 ffe
 cLY
-iMf
+acI
 mYj
 xbY
 dnd
@@ -145857,12 +145897,12 @@ ruF
 tyr
 pOP
 jom
-uKh
+bNA
 uKh
 uDA
-bNA
+acD
 hXp
-caz
+acG
 kfk
 mYj
 hqd
