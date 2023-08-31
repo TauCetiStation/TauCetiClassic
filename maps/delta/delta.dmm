@@ -2746,7 +2746,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "aqF" = (
@@ -5359,7 +5359,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "aUN" = (
@@ -15241,7 +15241,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "cWR" = (
@@ -17194,7 +17194,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "dtR" = (
@@ -23604,7 +23604,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "eRS" = (
@@ -25697,12 +25697,13 @@
 	},
 /area/station/security/brig)
 "fqL" = (
+/obj/structure/morgue,
 /obj/effect/decal/turf_decal/alpha/gray{
 	dir = 8;
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "fqN" = (
@@ -29881,7 +29882,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "gmk" = (
@@ -35966,7 +35967,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "hAs" = (
@@ -48815,7 +48816,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "kkv" = (
@@ -66498,7 +66499,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "ocs" = (
@@ -72941,7 +72942,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "pAM" = (
@@ -90037,7 +90038,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "tvw" = (
@@ -98223,7 +98224,7 @@
 	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "vre" = (
@@ -106956,10 +106957,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "xss" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/forensic_office)
+/area/station/civilian/chapel/mass_driver)
 "xsw" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -108492,13 +108497,8 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "xJL" = (
-/obj/structure/morgue,
-/obj/effect/decal/turf_decal/alpha/gray{
-	dir = 8;
-	icon_state = "box_corners_white"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
 "xJP" = (
@@ -157124,7 +157124,7 @@ gmw
 koy
 fDB
 aUh
-xss
+mlK
 fAN
 gmw
 xWN
@@ -159753,7 +159753,7 @@ pIG
 pne
 tvu
 aUA
-xJL
+fqL
 eIC
 cuB
 xAZ
@@ -160009,7 +160009,7 @@ dLG
 iIt
 pne
 kkt
-nOh
+xJL
 pAL
 ptR
 rKR
@@ -160523,8 +160523,8 @@ dLG
 iIt
 pne
 eRo
-nOh
-fqL
+xJL
+xss
 ivc
 fXD
 pne
