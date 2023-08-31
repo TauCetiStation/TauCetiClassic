@@ -1495,6 +1495,40 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
+"acA" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/light/smart,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/fore)
+"acB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "yellowpatch_inv"
+	},
+/area/station/hallway/primary/fore)
 "acF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -7193,11 +7227,11 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/structure/stool/bed/chair{
+/obj/structure/stool/bed/chair/metal/yellow{
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -15184,7 +15218,6 @@
 	},
 /area/station/bridge/corp_lounge)
 "cPq" = (
-/obj/random/vending/cola,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
@@ -15192,8 +15225,8 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/structure/stool/bed/chair/metal/yellow{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -17891,6 +17924,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "greenblue"
@@ -19359,20 +19395,14 @@
 	},
 /area/station/security/forensic_office)
 "dOC" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/random/vending/cola,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "yellowcorner"
+	icon_state = "graychoco"
 	},
-/area/station/hallway/primary/fore)
+/area/station/hallway/secondary/entry)
 "dOE" = (
 /obj/random/vending/snack,
 /turf/simulated/floor{
@@ -34191,7 +34221,9 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "gZV" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -42698,11 +42730,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "iOK" = (
-/obj/structure/stool/bed/chair/metal/yellow{
+/obj/structure/stool/bed/chair{
 	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -45749,7 +45778,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "jwD" = (
 /obj/structure/cable{
@@ -51048,7 +51079,9 @@
 	dir = 8;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "kAI" = (
 /obj/structure/cable{
@@ -82839,19 +82872,14 @@
 	},
 /area/station/rnd/xenobiology)
 "rAY" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "yellowcorner"
 	},
 /area/station/hallway/primary/fore)
@@ -88862,15 +88890,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
 	},
 /turf/simulated/floor{
-	icon_state = "yellowpatch_inv"
+	dir = 8;
+	icon_state = "yellowcorner"
 	},
 /area/station/hallway/primary/fore)
 "sTt" = (
@@ -90963,20 +90990,13 @@
 	},
 /area/station/rnd/hallway)
 "tuz" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellowcorner"
+	icon_state = "neutralcorner"
 	},
-/area/station/hallway/primary/fore)
+/area/station/hallway/secondary/entry)
 "tuE" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -97156,10 +97176,12 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/checkpoint/engi)
 "uSg" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/obj/random/vending/snack,
 /turf/simulated/floor{
-	icon_state = "neutralcorner"
+	icon_state = "graychoco"
 	},
 /area/station/hallway/secondary/entry)
 "uSD" = (
@@ -111573,9 +111595,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "ygh" = (
-/obj/random/vending/snack,
+/obj/structure/stool/bed/chair/metal/yellow{
+	dir = 4
+	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	dir = 4;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -143685,7 +143710,7 @@ lbj
 eAW
 iMs
 iMs
-uSg
+tuz
 wwi
 wwi
 wwi
@@ -143968,7 +143993,7 @@ smf
 qTX
 bxB
 mnW
-dOC
+sTk
 tJq
 cnk
 bgs
@@ -144225,7 +144250,7 @@ pLk
 qTX
 ohm
 eIm
-rAY
+acA
 tJq
 qUi
 sEJ
@@ -144480,9 +144505,9 @@ tCb
 eph
 qTX
 qTX
-tuz
+rAY
 wWa
-sTk
+acB
 tJq
 kli
 xCL
@@ -149069,8 +149094,8 @@ qgt
 yaE
 cmk
 iOK
-iOK
-iOK
+dOC
+uSg
 yaE
 qgt
 yaE
