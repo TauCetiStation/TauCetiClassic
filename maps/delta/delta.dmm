@@ -31266,6 +31266,7 @@
 /area/station/rnd/storage)
 "guO" = (
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
