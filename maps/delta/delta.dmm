@@ -35540,6 +35540,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -36281,9 +36282,6 @@
 	},
 /obj/item/weapon/wrench,
 /obj/item/weapon/crowbar,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
@@ -43833,9 +43831,6 @@
 /area/station/maintenance/chapel)
 "jaM" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -57688,7 +57683,6 @@
 	},
 /area/station/hallway/primary/central)
 "lWZ" = (
-/obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
@@ -80128,7 +80122,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
