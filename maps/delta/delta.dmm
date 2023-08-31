@@ -1057,7 +1057,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/brig)
 "abJ" = (
@@ -1442,6 +1442,27 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
+"acx" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Gear Room";
+	req_access = list(1)
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/security/brig/equipment)
 "acz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1539,24 +1560,33 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "acS" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Gear Room";
-	req_access = list(1)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/turf/simulated/floor,
-/area/station/security/brig/equipment)
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/security/brig)
 "adb" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -2024,7 +2054,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "afu" = (
@@ -4029,7 +4059,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/brig)
 "aAA" = (
@@ -4373,7 +4403,9 @@
 	range = 10;
 	req_access = list(2)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "aED" = (
 /obj/item/device/radio/intercom{
@@ -4735,7 +4767,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/security/brig)
 "aHT" = (
@@ -4960,7 +4992,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "aKs" = (
 /obj/structure/cable{
@@ -5746,7 +5780,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "aTh" = (
@@ -7393,7 +7427,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/range)
 "bkF" = (
 /obj/structure/cable{
@@ -7424,7 +7460,9 @@
 	id = "Cell 4 perma";
 	name = "Cell 4 Locker"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "blj" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -8390,7 +8428,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "bvf" = (
 /obj/machinery/computer/station_alert{
@@ -8774,7 +8814,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/warden)
 "bzn" = (
@@ -9203,7 +9243,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "bDc" = (
 /obj/structure/table/woodentable,
@@ -9242,7 +9284,7 @@
 "bDv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "bDE" = (
@@ -11193,7 +11235,7 @@
 	},
 /obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "bXH" = (
@@ -11419,7 +11461,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "bZT" = (
@@ -11466,7 +11508,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "caw" = (
 /obj/structure/window/thin/reinforced{
@@ -11817,12 +11861,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "cdI" = (
-/obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "cdK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -12952,7 +12999,9 @@
 	id = "Cell 4 perma";
 	pixel_y = -28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "crx" = (
 /obj/machinery/door/firedoor,
@@ -16829,7 +16878,7 @@
 	network = list("SS13","Prison")
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "diH" = (
@@ -18122,7 +18171,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/interrogation)
 "dxH" = (
@@ -18804,16 +18853,15 @@
 	},
 /area/station/hallway/primary/starboard)
 "dHv" = (
-/obj/machinery/door/poddoor{
-	id = "armouryaccess";
-	name = "Armoury Access"
+/obj/machinery/light/small,
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
 	},
-/obj/machinery/door/firedoor,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/turf/simulated/floor,
-/area/station/security/armoury)
+/area/station/security/prison)
 "dHA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -19787,36 +19835,18 @@
 	},
 /area/station/civilian/dormitories/service_bedrooms)
 "dUz" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/machinery/door/poddoor{
+	id = "armouryaccess";
+	name = "Armoury Access"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
-/area/station/security/brig)
+/area/station/security/armoury)
 "dUJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -19912,7 +19942,9 @@
 	id = "Cell 3 perma";
 	name = "Cell 3 Locker"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "dVA" = (
 /obj/structure/stool/bed/chair/comfy/black,
@@ -21275,7 +21307,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "ekH" = (
@@ -22111,7 +22143,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "evl" = (
 /obj/machinery/door/firedoor,
@@ -22145,7 +22179,7 @@
 	req_access = list(3)
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/warden)
 "evL" = (
@@ -22580,7 +22614,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "ezJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -23340,7 +23376,9 @@
 	name = "Cell 5";
 	req_access = list(2)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "eIU" = (
 /obj/structure/closet/crate,
@@ -24797,7 +24835,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "eZT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -24935,7 +24975,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "fbg" = (
@@ -26379,7 +26419,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig/storage)
 "frM" = (
@@ -26525,7 +26565,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "fsX" = (
@@ -29097,7 +29137,9 @@
 	name = "Cell 1";
 	req_access = list(2)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "fXS" = (
 /obj/effect/decal/cleanable/dirt,
@@ -32276,7 +32318,7 @@
 /area/station/rnd/misc_lab)
 "gFh" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "gFl" = (
@@ -33248,7 +33290,9 @@
 	id = "Cell 3 perma";
 	pixel_y = -28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "gRg" = (
 /obj/structure/cable{
@@ -34470,7 +34514,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "hef" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -35719,7 +35765,7 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "hss" = (
@@ -37070,7 +37116,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "hFb" = (
 /obj/machinery/alarm{
@@ -38617,7 +38665,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig/storage)
 "hWV" = (
@@ -39915,7 +39963,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "ikZ" = (
@@ -39992,7 +40040,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig/storage)
 "ils" = (
@@ -41758,7 +41806,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "iFx" = (
 /obj/structure/cable{
@@ -42830,7 +42880,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig/storage)
 "iQE" = (
@@ -43372,7 +43422,7 @@
 	req_access = list(1)
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/brig)
 "iWS" = (
@@ -46554,7 +46604,9 @@
 	id = "Cell 5 perma";
 	name = "Cell 5 Locker"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "jGc" = (
 /turf/simulated/floor{
@@ -47422,7 +47474,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "jNY" = (
@@ -48049,7 +48101,9 @@
 	name = "Cell 4";
 	req_access = list(2)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "jUE" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -48198,7 +48252,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "jWr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -50858,7 +50914,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig/storage)
 "kzh" = (
@@ -51469,7 +51525,7 @@
 "kGr" = (
 /obj/machinery/computer/prisoner,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "kGu" = (
@@ -51900,7 +51956,9 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "kJs" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "kJD" = (
 /turf/simulated/floor{
@@ -52841,7 +52899,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/prison)
 "kUh" = (
@@ -53409,7 +53467,7 @@
 /obj/item/device/radio/headset,
 /obj/item/device/radio/headset,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "kZU" = (
@@ -53987,7 +54045,7 @@
 	icon_state = "arrow"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "lij" = (
@@ -54814,7 +54872,9 @@
 	name = "Infirmary"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "lrr" = (
 /obj/machinery/access_button{
@@ -55607,7 +55667,9 @@
 	id = "Cell 5 perma";
 	pixel_y = -28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "lAX" = (
 /obj/structure/cable{
@@ -57119,7 +57181,7 @@
 	req_access = list(3)
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/armoury)
 "lQK" = (
@@ -60793,7 +60855,7 @@
 "mHj" = (
 /obj/machinery/computer/card,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "mHC" = (
@@ -62017,7 +62079,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "mVu" = (
 /obj/structure/cable{
@@ -69077,7 +69141,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/security/prison)
 "oAK" = (
@@ -69844,7 +69908,7 @@
 	req_access = list(2)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "oJu" = (
@@ -71119,7 +71183,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "oYe" = (
@@ -71244,7 +71308,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/security/main)
 "oZa" = (
@@ -71874,7 +71938,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "pgW" = (
@@ -72729,7 +72793,7 @@
 	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "ppu" = (
@@ -72957,7 +73021,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "pss" = (
 /obj/machinery/door/firedoor,
@@ -73145,7 +73211,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/armoury)
 "puO" = (
@@ -75453,7 +75519,7 @@
 /area/station/security/checkpoint)
 "pTm" = (
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/warden)
 "pTu" = (
@@ -76409,7 +76475,9 @@
 	name = "Security Equipment";
 	sortType = "Security Equipment"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "qeY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -77248,7 +77316,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "qob" = (
@@ -79346,7 +79414,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/brig)
 "qNE" = (
@@ -80196,7 +80264,7 @@
 /obj/item/weapon/storage/box/ids,
 /obj/item/weapon/handcuffs,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "qXN" = (
@@ -80807,7 +80875,7 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "rfC" = (
@@ -80907,7 +80975,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "rgY" = (
 /obj/structure/cable{
@@ -82020,7 +82090,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "rut" = (
 /obj/machinery/conveyor{
@@ -82381,7 +82453,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/warden)
 "rxU" = (
@@ -83333,7 +83405,9 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "rIb" = (
 /obj/structure/cable{
@@ -84698,30 +84772,33 @@
 /area/station/gateway)
 "rWu" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/security/brig)
 "rWJ" = (
@@ -85715,7 +85792,9 @@
 	name = "Cell 2";
 	req_access = list(2)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "siM" = (
 /obj/machinery/light/smart{
@@ -86789,7 +86868,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "suL" = (
@@ -87058,7 +87137,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/security/prison)
 "syE" = (
@@ -88503,7 +88582,7 @@
 	req_access = list(63)
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/security/brig)
 "sPU" = (
@@ -89431,7 +89510,7 @@
 	dir = 9
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/station/security/main)
 "tbR" = (
@@ -90590,7 +90669,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "tqF" = (
 /obj/structure/window/thin/reinforced,
@@ -91037,7 +91118,8 @@
 	opacity = 0
 	},
 /turf/simulated/floor{
-	icon_state = "redfull"
+	dir = 9;
+	icon_state = "redchoco"
 	},
 /area/station/security/prison)
 "twi" = (
@@ -91281,7 +91363,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "tyD" = (
 /obj/structure/sign/poster/official/report_crimes{
@@ -95288,7 +95372,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "utL" = (
@@ -95484,7 +95568,7 @@
 	req_access = list(2)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/prison)
 "uwa" = (
@@ -96479,7 +96563,7 @@
 "uLd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "uLf" = (
@@ -96569,21 +96653,10 @@
 	},
 /area/station/cargo/storage)
 "uLX" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
-/area/station/security/brig)
+/area/station/security/lobby)
 "uMd" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -96761,7 +96834,7 @@
 	req_access = list(63)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "uOv" = (
@@ -97891,7 +97964,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "vbP" = (
 /obj/effect/decal/cleanable/dirt,
@@ -98203,7 +98278,7 @@
 	req_access = list(63)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "vgF" = (
@@ -99336,7 +99411,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "vtb" = (
 /turf/simulated/floor/plating,
@@ -99816,10 +99893,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/security/brig)
 "vzD" = (
@@ -99901,7 +99978,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "vAB" = (
 /obj/effect/landmark/start/chaplain,
@@ -100627,7 +100706,9 @@
 	name = "Cell 3";
 	req_access = list(2)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/prison)
 "vJT" = (
 /obj/machinery/hologram/holopad,
@@ -101294,7 +101375,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "vSA" = (
 /obj/effect/landmark/start/chef,
@@ -102218,7 +102301,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig)
 "wcQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -102299,7 +102384,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "wdy" = (
@@ -106202,7 +106287,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "wZX" = (
 /obj/effect/decal/cleanable/generic,
@@ -107788,7 +107875,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "darkorangechoco"
 	},
 /area/station/security/execution)
 "xrO" = (
@@ -108286,7 +108373,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "graychoco"
 	},
 /area/station/security/brig)
 "xxd" = (
@@ -108614,7 +108701,7 @@
 	req_access = list(63)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/brig)
 "xAl" = (
@@ -109647,7 +109734,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/main)
 "xLK" = (
 /obj/machinery/conveyor{
@@ -110158,7 +110247,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/warden)
 "xRL" = (
@@ -111138,7 +111227,9 @@
 	name = "Gear Room";
 	req_access = list(1)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/brig/equipment)
 "ycg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -161376,7 +161467,7 @@ fKP
 qJx
 dhy
 iWK
-hTu
+uLX
 bBm
 hTu
 hTu
@@ -161389,7 +161480,7 @@ flQ
 pUN
 oCd
 bNq
-tVx
+kJs
 mQb
 adp
 bRZ
@@ -162160,7 +162251,7 @@ oYa
 wdw
 adp
 mhe
-uLX
+vzx
 fdP
 adp
 oYL
@@ -162417,7 +162508,7 @@ jAB
 hWG
 adp
 sBe
-dUz
+rWu
 fQi
 adp
 oYL
@@ -162931,7 +163022,7 @@ dGp
 kJs
 tRo
 gca
-vzx
+vSz
 aEM
 apq
 oYL
@@ -163152,7 +163243,7 @@ eTq
 fAF
 wNM
 oPD
-tif
+cdI
 rHZ
 jCr
 czU
@@ -163188,7 +163279,7 @@ vZJ
 nPi
 fRG
 rwj
-rWu
+acS
 mfS
 uef
 oLT
@@ -163702,7 +163793,7 @@ xRz
 fDm
 aoj
 yce
-acS
+acx
 onz
 onz
 pzr
@@ -165499,7 +165590,7 @@ soA
 ekd
 lZw
 gqC
-dHv
+dUz
 ouN
 xhl
 mGO
@@ -165756,7 +165847,7 @@ wUB
 xiS
 mNC
 gqC
-dHv
+dUz
 rCQ
 xhl
 mGO
@@ -168038,7 +168129,7 @@ pwa
 nEi
 xrJ
 bCW
-cdI
+dHv
 qZx
 qZx
 qZx
