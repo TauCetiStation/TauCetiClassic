@@ -10005,7 +10005,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "bNg" = (
@@ -24156,7 +24156,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/blueshield)
 "eUj" = (
@@ -38115,7 +38115,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/blueshield)
 "hUW" = (
@@ -43645,7 +43645,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "jde" = (
@@ -50563,7 +50563,7 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "kzl" = (
@@ -55243,7 +55243,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "lAt" = (
@@ -68774,7 +68774,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "oBa" = (
@@ -76317,7 +76317,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "qhC" = (
@@ -78787,7 +78787,7 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "qKc" = (
@@ -83091,7 +83091,7 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "rIr" = (
@@ -87269,7 +87269,7 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "sEI" = (
@@ -95796,7 +95796,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/blueshield)
 "uES" = (
@@ -97259,7 +97259,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "uYo" = (
@@ -99149,7 +99149,7 @@
 	},
 /obj/effect/landmark/start/blueshield_officer,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "vuL" = (
@@ -104782,7 +104782,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "wKZ" = (
@@ -109018,7 +109018,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "xIq" = (
@@ -110227,7 +110227,7 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/blueshield)
 "xVu" = (
@@ -160082,7 +160082,7 @@ aEr
 wPw
 jQy
 qJY
-siM
+xPR
 jcX
 fJg
 nPU
@@ -160337,7 +160337,7 @@ jXs
 dnn
 fJg
 eUf
-xPR
+siM
 kzi
 xIe
 uYj
