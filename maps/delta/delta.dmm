@@ -1463,6 +1463,20 @@
 	icon_state = "graychoco"
 	},
 /area/station/security/brig/equipment)
+"acy" = (
+/obj/structure/table/woodentable,
+/obj/machinery/light/small,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/item/toy/figure/mime{
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	icon_state = "blackchecker"
+	},
+/area/station/civilian/theatre)
 "acz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -65439,11 +65453,11 @@
 /obj/item/toy/figure/clown,
 /obj/structure/table/woodentable/fancy,
 /obj/item/toy/sound_button,
-/obj/structure/mirror{
-	pixel_y = 32
-	},
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -80318,12 +80332,12 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "qYj" = (
-/obj/item/toy/figure/mime{
-	pixel_y = 6
-	},
-/obj/structure/table/woodentable/fancy/black,
+/obj/structure/dresser,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
+	},
+/obj/structure/mirror{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -87711,16 +87725,15 @@
 	},
 /area/station/hallway/secondary/entry)
 "sEY" = (
-/obj/structure/table/woodentable,
+/obj/structure/table/woodentable/fancy/black,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/item/weapon/reagent_containers/food/snacks/baguette,
-/obj/machinery/light/small,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/simulated/floor{
-	icon_state = "blackchecker"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "sEZ" = (
 /obj/machinery/door/firedoor,
@@ -149628,9 +149641,9 @@ nHp
 tAg
 ahQ
 bRX
-qYj
-kSI
 sEY
+kSI
+acy
 bRX
 pnq
 srs
@@ -149881,7 +149894,7 @@ eHx
 unt
 jQT
 kvu
-tbR
+qYj
 mly
 dmr
 bRX
