@@ -14376,12 +14376,21 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/medbay)
 "cFk" = (
-/obj/item/weapon/flora/random,
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	icon_state = "blackchoco"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
-/area/station/aisat/antechamber_interior)
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/camera{
+	c_tag = "MiniSat South";
+	network = list("MiniSat")
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
 "cFp" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
@@ -22315,12 +22324,8 @@
 	},
 /area/station/engineering/break_room)
 "evW" = (
-/obj/machinery/light/smart,
 /obj/item/weapon/flora/random,
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -27923,7 +27928,6 @@
 /obj/machinery/computer/monitor{
 	dir = 1
 	},
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -35355,6 +35359,9 @@
 	dir = 1;
 	network = list("MiniSat")
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/space)
 "hnu" = (
@@ -39190,6 +39197,7 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -43468,6 +43476,7 @@
 	pixel_y = -32
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -54859,6 +54868,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage_secure)
 "lqU" = (
@@ -55312,6 +55324,9 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	pixel_y = -32
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -57117,18 +57132,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "lPy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/camera{
-	c_tag = "MiniSat South";
-	network = list("MiniSat")
+/obj/item/weapon/flora/random,
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
-/area/station/aisat)
+/area/station/bridge/ai_upload)
 "lPB" = (
 /obj/machinery/camera{
 	c_tag = "Courtroom South";
@@ -80038,9 +80050,6 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
 "qTJ" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -86581,7 +86590,7 @@
 	},
 /area/station/hallway/primary/port)
 "sqg" = (
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -90332,10 +90341,13 @@
 /area/station/engineering/chiefs_office)
 "tlH" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
-/area/station/bridge/ai_upload)
+/area/station/aisat/antechamber_interior)
 "tlK" = (
 /turf/simulated/wall,
 /area/station/security/checkpoint/escape)
@@ -92158,6 +92170,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = -32
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -99279,6 +99292,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -100820,16 +100834,9 @@
 	},
 /area/station/medical/reception)
 "vKF" = (
-/obj/machinery/teleport/station,
+/obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
 	dir = 1
-	},
-/obj/machinery/ai_status_display{
-	pixel_y = 32
-	},
-/obj/effect/decal/turf_decal{
-	dir = 3;
-	icon_state = "warn"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -101058,11 +101065,18 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "vNN" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/teleport/station,
+/obj/machinery/ai_status_display{
+	pixel_y = 32
 	},
-/area/station/aisat/ai_chamber)
+/obj/effect/decal/turf_decal{
+	dir = 3;
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/aisat/teleport)
 "vNW" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
@@ -108110,7 +108124,6 @@
 "xtC" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/figure/borg,
-/obj/machinery/light/smart,
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
@@ -111493,7 +111506,6 @@
 	},
 /area/station/hallway/primary/fore)
 "yeo" = (
-/obj/machinery/light/smart,
 /obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	dir = 8;
@@ -119620,7 +119632,7 @@ vwn
 ddm
 vwn
 cUG
-vNN
+aBc
 vSK
 hER
 ppR
@@ -119633,7 +119645,7 @@ hxf
 uBd
 xLs
 uTC
-tlH
+evW
 oer
 oer
 xzf
@@ -119879,11 +119891,11 @@ aBc
 tBo
 kHF
 vSK
-jWu
+tlH
 lnX
 hfx
 hPY
-cFk
+jWu
 oer
 iJx
 jFo
@@ -120408,7 +120420,7 @@ sft
 pIu
 cQF
 gDg
-lPy
+cFk
 nyl
 ozn
 vYy
@@ -120919,7 +120931,7 @@ sJk
 jFo
 pjx
 jFo
-evW
+lPy
 oer
 lbh
 xUy
@@ -121162,7 +121174,7 @@ mjD
 mpd
 mjD
 qMw
-vNN
+aBc
 vSK
 hER
 ppR
@@ -121678,7 +121690,7 @@ irC
 vrt
 sVa
 pGn
-ehd
+vKF
 bOy
 pAH
 wJp
@@ -122192,7 +122204,7 @@ sVa
 sVa
 sVa
 pGn
-vKF
+vNN
 cwC
 qqT
 cwC
