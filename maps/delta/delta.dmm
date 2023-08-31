@@ -1532,7 +1532,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "afo" = (
 /obj/machinery/door/airlock/security/glass{
@@ -2428,7 +2430,7 @@
 "anG" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "anN" = (
@@ -2483,7 +2485,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "aoi" = (
 /obj/structure/plasticflaps,
@@ -3614,7 +3618,9 @@
 	icon_state = "2-8"
 	},
 /obj/item/device/radio/intercom,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "aAZ" = (
 /obj/structure/table,
@@ -3634,7 +3640,9 @@
 	dir = 4;
 	pixel_x = 22
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "aBc" = (
 /turf/simulated/floor{
@@ -4375,7 +4383,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "aJo" = (
@@ -7191,7 +7199,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "bns" = (
 /obj/structure/sign/nanotrasen{
@@ -8989,7 +8999,7 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "bFT" = (
@@ -9203,7 +9213,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "bGY" = (
 /obj/effect/decal/turf_decal{
@@ -9422,7 +9434,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "bJO" = (
 /obj/machinery/hologram/holopad{
@@ -9834,7 +9848,9 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/maintenance/science)
 "bOn" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -12249,9 +12265,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor{
-	icon_state = "purple"
-	},
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "con" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -14807,7 +14821,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "cRL" = (
 /obj/structure/cable{
@@ -15634,7 +15650,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "ddm" = (
@@ -20012,7 +20028,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "ecM" = (
 /obj/machinery/power/apc{
@@ -23136,10 +23154,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "purple"
-	},
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "eNj" = (
 /obj/machinery/door/firedoor,
@@ -25741,7 +25756,9 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "frw" = (
 /obj/structure/stool/bar,
@@ -28973,11 +28990,6 @@
 	icon_state = "blackchoco"
 	},
 /area/station/ai_monitored/storage_secure)
-"gdS" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/xenobiology)
 "gdT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -30164,7 +30176,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "gpg" = (
 /obj/structure/cable{
@@ -37853,7 +37867,9 @@
 /obj/machinery/computer/operating{
 	name = "Xenobiology Operating Computer"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "hVJ" = (
 /turf/simulated/floor{
@@ -38034,7 +38050,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "hXl" = (
 /obj/structure/cable{
@@ -38306,7 +38324,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "iau" = (
 /obj/machinery/light/small{
@@ -43719,7 +43739,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "jif" = (
 /obj/effect/landmark/start/chaplain,
@@ -44439,7 +44461,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "jrs" = (
 /obj/machinery/navbeacon{
@@ -46869,7 +46893,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "jPx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -47740,7 +47766,9 @@
 	pixel_y = 4
 	},
 /obj/item/toy/figure/scientist,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "jYB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -52525,7 +52553,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/hallway)
 "kYf" = (
 /obj/machinery/disposal,
@@ -56011,7 +56041,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "lNr" = (
 /obj/effect/decal/turf_decal/white{
@@ -57598,16 +57630,6 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
-"mhk" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "purple"
-	},
-/area/station/rnd/xenobiology)
 "mhm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -61071,7 +61093,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "mTP" = (
 /obj/machinery/access_button{
@@ -62692,7 +62716,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "nny" = (
@@ -64987,7 +65011,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "box_white"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "nMJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -70733,7 +70759,7 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "pdv" = (
@@ -75897,9 +75923,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor{
-	icon_state = "purple"
-	},
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "qiK" = (
 /obj/machinery/door/firedoor,
@@ -77936,7 +77960,9 @@
 	id = "xenobiomisc";
 	name = "Containment Blast Doors"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "qHr" = (
 /obj/structure/cable{
@@ -79099,7 +79125,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "qTU" = (
@@ -81532,7 +81558,9 @@
 	dir = 5;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/maintenance/science)
 "ryd" = (
 /obj/machinery/computer/security{
@@ -82753,7 +82781,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "rJU" = (
 /obj/structure/cable{
@@ -84578,7 +84608,9 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/maintenance/science)
 "sfV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -84798,7 +84830,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "siI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -85023,7 +85057,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "skg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -85650,7 +85686,9 @@
 	dir = 8
 	},
 /obj/machinery/computer/reconstitutor/animal,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "srP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -85839,7 +85877,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "stW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -90546,7 +90586,9 @@
 /obj/machinery/optable{
 	name = "Xenobiology Operating Table"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "tAV" = (
 /obj/structure/table/reinforced,
@@ -90810,7 +90852,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "tDn" = (
@@ -91245,7 +91287,9 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 5
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "tIo" = (
 /turf/simulated/wall,
@@ -91643,7 +91687,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "tMS" = (
 /obj/structure/closet/secure_closet/hydroponics,
@@ -93264,7 +93310,9 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "uhY" = (
 /obj/effect/landmark/start/assistant/test_subject,
@@ -94660,7 +94708,9 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "uwP" = (
 /obj/structure/table/woodentable,
@@ -94986,10 +95036,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "purple"
-	},
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "uCB" = (
 /obj/machinery/alarm{
@@ -95321,9 +95368,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor{
-	icon_state = "purple"
-	},
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "uGq" = (
 /obj/structure/cable{
@@ -95510,10 +95555,7 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "purple"
-	},
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "uKd" = (
 /turf/simulated/wall/r_wall,
@@ -98879,7 +98921,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "vzx" = (
 /obj/structure/cable{
@@ -99524,7 +99568,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "vGp" = (
 /obj/structure/closet/toolcloset,
@@ -101496,7 +101542,9 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/maintenance/science)
 "weQ" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -101570,7 +101618,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/rnd/xenobiology)
 "wgu" = (
@@ -110001,7 +110049,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "xZm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -110334,7 +110384,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/rnd/xenobiology)
 "ydb" = (
 /obj/structure/cable{
@@ -131718,9 +131770,9 @@ gVW
 uhT
 frn
 aAZ
-gdS
+fRJ
 tDm
-gdS
+fRJ
 xZd
 siE
 gVW
@@ -132232,9 +132284,9 @@ fRJ
 snG
 fXd
 bJD
-gdS
+fRJ
 tDm
-gdS
+fRJ
 ecA
 hTC
 kfG
@@ -135059,7 +135111,7 @@ fRJ
 vpb
 vFZ
 mTN
-gdS
+fRJ
 qTT
 aJg
 tMM
@@ -135316,9 +135368,9 @@ gVW
 wBr
 gVW
 pdk
-gdS
+fRJ
 wgr
-gdS
+fRJ
 ddl
 gVW
 wBr
@@ -136599,7 +136651,7 @@ jwI
 nUw
 vCS
 xOr
-mhk
+cIK
 bfh
 qiE
 cjx
