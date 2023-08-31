@@ -5491,7 +5491,7 @@
 /area/station/rnd/chargebay)
 "aQL" = (
 /obj/machinery/icecream_vat,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -12426,12 +12426,9 @@
 	},
 /area/station/bridge/corp_lounge)
 "ckw" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "blackcorner"
+	icon_state = "blackchoco"
 	},
 /area/station/hallway/primary/starboard)
 "ckx" = (
@@ -26453,6 +26450,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blackcorner"
@@ -30353,9 +30353,6 @@
 /area/station/hallway/secondary/entry)
 "glD" = (
 /obj/item/device/radio,
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -43897,9 +43894,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/ai_chamber)
 "jdG" = (
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/candle_box/red,
 /turf/simulated/floor{
@@ -46339,6 +46333,9 @@
 /area/station/engineering/atmos/supermatter)
 "jEc" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blackcorner"
@@ -70852,6 +70849,7 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -107146,9 +107144,6 @@
 	},
 /obj/structure/table/glass,
 /obj/item/device/radio,
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -110715,9 +110710,6 @@
 /obj/structure/table,
 /obj/machinery/chem_dispenser/soda{
 	pixel_y = 4
-	},
-/obj/machinery/light/smart{
-	dir = 1
 	},
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -154702,7 +154694,7 @@ npd
 npd
 npd
 jEc
-ckw
+syl
 tgA
 xQo
 oid
@@ -154968,7 +154960,7 @@ xfr
 xfr
 xfr
 xfr
-xfr
+ckw
 rmY
 xjH
 bAQ
