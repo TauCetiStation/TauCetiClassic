@@ -57371,8 +57371,7 @@
 	pixel_y = 26;
 	dir = 1;
 	name = "Engineering area power controller";
-	custom_smartlight_preset = Engineering;
-	smartlight_preset = /datum/smartlight_preset/engineering
+	custom_smartlight_preset = "Engineering"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -84559,8 +84558,7 @@
 	pixel_x = -26;
 	dir = 8;
 	name = "Cargo area power controller";
-	smartlight_preset = /datum/smartlight_preset/cargo;
-	custom_smartlight_preset = Cargo
+	custom_smartlight_preset = "Cargo"
 	},
 /obj/structure/cable{
 	d2 = 4;
