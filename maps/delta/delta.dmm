@@ -1398,6 +1398,26 @@
 	},
 /turf/simulated/wall,
 /area/station/security/iaa_office)
+"acu" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/simulated/floor,
+/area/station/civilian/toilet)
+"acv" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/civilian/toilet)
 "acw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15679,10 +15699,9 @@
 	},
 /area/station/storage/tech)
 "cVc" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -19186,9 +19205,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/light/smart,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -27128,7 +27149,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -81428,6 +81448,9 @@
 /area/station/hallway/secondary/entry)
 "rox" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/toilet)
 "roF" = (
@@ -85675,6 +85698,9 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "siM" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -89685,9 +89711,6 @@
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "tfV" = (
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -89695,6 +89718,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/civilian/toilet)
@@ -95871,8 +95897,8 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "uCB" = (
-/obj/machinery/alarm{
-	pixel_y = 22
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -158274,7 +158300,7 @@ orJ
 bYH
 eYd
 vmR
-sGH
+acu
 bYH
 bYH
 kbS
@@ -158788,7 +158814,7 @@ orJ
 bYH
 rox
 lnf
-cVc
+acv
 bYH
 bYH
 kbS
@@ -159815,7 +159841,7 @@ cWT
 tMl
 fzp
 bYH
-lnf
+cVc
 nMB
 erN
 qhM
