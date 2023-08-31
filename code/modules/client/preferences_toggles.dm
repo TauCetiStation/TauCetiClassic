@@ -249,7 +249,7 @@
 	if(length(screen))
 		var/atom/movable/screen/plane_master/exposure/EXP = locate() in screen
 		EXP.apply_effects(mob)
-	feedback_add_details("admin_verb","GLR")
+	feedback_add_details("admin_verb","LEXP")
 
 /client/verb/toggle_lamps_glare()
 	set name = "Lighting: Lamp Glare"
