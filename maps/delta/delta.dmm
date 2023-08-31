@@ -1368,12 +1368,30 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"acp" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
+/area/station/hallway/primary/central)
 "acq" = (
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
+"acr" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/central)
+"acs" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/central)
 "act" = (
 /obj/structure/sign/directions/command{
 	dir = 1
@@ -2565,9 +2583,8 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "akJ" = (
-/obj/item/device/radio/beacon,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	icon_state = "neutralchoco"
 	},
 /area/station/hallway/primary/central)
 "akL" = (
@@ -101161,7 +101178,9 @@
 	},
 /area/station/hallway/primary/central)
 "vSe" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/primary/central)
 "vSk" = (
 /obj/structure/cable{
@@ -149511,7 +149530,7 @@ nHg
 nXi
 kyW
 efb
-vAu
+nvi
 ogP
 tGK
 oXw
@@ -149766,9 +149785,9 @@ wRX
 ewp
 mMA
 ulv
+vSe
+acr
 bgO
-mZU
-vSs
 ogP
 mso
 umq
@@ -150023,9 +150042,9 @@ qLw
 kVV
 sHG
 fZz
-ogP
-vSe
-vSe
+bgO
+mZU
+vSs
 ogP
 oHt
 wwR
@@ -150280,7 +150299,7 @@ lGH
 cje
 nHg
 fZz
-ogP
+akJ
 aca
 ack
 ogP
@@ -150537,7 +150556,7 @@ rOO
 mzL
 nHg
 fZz
-ogP
+akJ
 acb
 acl
 ogP
@@ -150794,7 +150813,7 @@ qpt
 lrM
 nHg
 uyt
-akJ
+acp
 ace
 acm
 nyL
@@ -151051,7 +151070,7 @@ eZe
 wAA
 nHg
 nvi
-ogP
+akJ
 acg
 acn
 lNz
@@ -151308,7 +151327,7 @@ lBF
 hDy
 nHg
 nvi
-ogP
+akJ
 aci
 aco
 lNz
@@ -151565,9 +151584,9 @@ nPF
 lpN
 sHG
 nvi
-ogP
-vSe
-vSe
+vSs
+pfv
+bgO
 lNz
 wSk
 sew
@@ -151822,9 +151841,9 @@ umP
 jVM
 mMA
 elI
+vSe
+acs
 vSs
-pfv
-bgO
 lNz
 vof
 nPb
@@ -152081,7 +152100,7 @@ nHg
 jBH
 bpO
 ojc
-mXl
+fZz
 lNz
 vof
 tDl
