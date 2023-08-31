@@ -5357,6 +5357,9 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -27166,6 +27169,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redbluefull"
 	},
@@ -38613,9 +38619,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "hVC" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
@@ -44306,6 +44309,9 @@
 	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -66492,6 +66498,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/medical/medbreak)
 "nSo" = (
@@ -82162,6 +82171,9 @@
 /obj/machinery/ai_status_display{
 	pixel_x = -32
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -87937,7 +87949,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/light/smart,
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -155880,9 +155892,9 @@ vAu
 vAu
 vAu
 vAu
-vAu
-kpD
 qDF
+kpD
+vAu
 koY
 bJk
 xTn
