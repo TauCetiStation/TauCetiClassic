@@ -3830,9 +3830,6 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -17194,6 +17191,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "dkQ" = (
@@ -29325,6 +29325,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "fYW" = (
@@ -31326,7 +31329,9 @@
 /obj/machinery/computer/station_alert{
 	dir = 1
 	},
-/obj/machinery/light/smart,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -31520,6 +31525,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "box_white"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -35314,9 +35320,6 @@
 /area/space)
 "hnu" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -42235,7 +42238,6 @@
 "iIJ" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas/coloured,
-/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -46254,9 +46256,6 @@
 /area/station/engineering/minisat_secure_area)
 "jBe" = (
 /obj/structure/dispenser/oxygen,
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -47764,9 +47763,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/light/smart{
-	dir = 1
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -50789,7 +50785,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light/smart,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
@@ -53875,6 +53870,9 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -53944,9 +53942,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -57890,6 +57885,9 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
@@ -60121,12 +60119,12 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -76013,6 +76011,9 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/toilet)
 "pZb" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -77293,6 +77294,9 @@
 "qns" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "qnB" = (
@@ -81910,9 +81914,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/machinery/light/smart{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -84962,6 +84963,7 @@
 /obj/effect/decal/turf_decal/orange{
 	icon_state = "siding_corner"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -87469,14 +87471,6 @@
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/cold_room)
-"sBQ" = (
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "caution"
-	},
-/area/station/engineering/break_room)
 "sBT" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -90984,7 +90978,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "caution"
+	icon_state = "graychoco"
 	},
 /area/station/engineering/break_room)
 "tuv" = (
@@ -93213,6 +93207,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -104061,7 +104058,6 @@
 	},
 /area/station/hallway/primary/central)
 "wyP" = (
-/obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
@@ -104571,7 +104567,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
 	},
-/obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -105036,9 +105031,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /obj/machinery/requests_console/ce{
 	pixel_x = 32
@@ -135288,7 +135280,7 @@ vPk
 vPk
 ifq
 ifq
-wjb
+qlj
 eCF
 qJk
 aQc
@@ -135802,7 +135794,7 @@ hsm
 rwr
 sQF
 dWt
-wjb
+qlj
 ifq
 vsI
 qlj
@@ -136828,9 +136820,9 @@ vPk
 vPk
 wjb
 wjb
-wjb
-ifq
-wjb
+qlj
+qlj
+qlj
 fJs
 vLF
 rii
@@ -137086,8 +137078,8 @@ eya
 vWT
 wjb
 gjn
-dXf
 tur
+bUP
 lcI
 vLF
 rii
@@ -137858,7 +137850,7 @@ vlF
 wjb
 aPN
 xxe
-sBQ
+bUP
 uRD
 sXQ
 xEE
