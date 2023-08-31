@@ -54209,7 +54209,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/checkpoint/medbay)
 "lmd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -102663,7 +102665,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/checkpoint/medbay)
 "wjU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
