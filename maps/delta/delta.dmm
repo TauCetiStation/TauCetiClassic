@@ -11548,7 +11548,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "bluefull"
+	icon_state = "bluechoco"
 	},
 /area/station/security/checkpoint)
 "cfr" = (
@@ -13633,7 +13633,8 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "redfull"
+	dir = 9;
+	icon_state = "redchoco"
 	},
 /area/station/security/checkpoint)
 "cDB" = (
@@ -26477,7 +26478,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/secondary/entry)
 "fwj" = (
 /obj/structure/table/reinforced,
@@ -27729,6 +27732,7 @@
 	},
 /area/station/security/brig)
 "fKS" = (
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34069,7 +34073,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "dark"
 	},
 /area/station/security/checkpoint)
 "heo" = (
@@ -58352,13 +58356,6 @@
 	icon_state = "graychoco"
 	},
 /area/station/rnd/hor)
-"mlH" = (
-/obj/item/weapon/flora/random,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "mlK" = (
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -78260,7 +78257,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "bluefull"
+	icon_state = "bluechoco"
 	},
 /area/station/security/checkpoint)
 "qGo" = (
@@ -79969,7 +79966,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/janitor)
 "raB" = (
 /obj/machinery/hologram/holopad,
@@ -91329,7 +91328,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/civilian/janitor)
 "tED" = (
 /obj/structure/cable{
@@ -105946,7 +105947,9 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/security/checkpoint)
 "xbM" = (
 /obj/item/toy/figure/ninja,
@@ -149585,7 +149588,7 @@ plf
 plf
 kHU
 eeB
-mlH
+cmk
 csG
 fYS
 kBx
@@ -150117,7 +150120,7 @@ sEX
 srs
 rzN
 hSq
-fKS
+vRu
 srs
 bDf
 bll
