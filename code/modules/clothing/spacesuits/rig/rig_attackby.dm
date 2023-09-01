@@ -100,10 +100,11 @@
 			current_mounts[module] = image(icon = module.icon, icon_state = module.icon_state)
 
 		for(var/obj/item/weapon/stock_parts/cell/cell in current_mounts)
+		var/atom/I = current_mounts[cell]
 			if(cell.charge/cell.maxcharge >= 0.995)
-				current_mounts[cell].add_overlay(image('icons/obj/power.dmi', "cell-o2"))
+				I.add_overlay(image('icons/obj/power.dmi', "cell-o2"))
 			else
-				current_mounts[cell].add_overlay(image('icons/obj/power.dmi', "cell-o1"))
+				I.add_overlay(image('icons/obj/power.dmi', "cell-o1"))
 
 		if(current_mounts_modules.len)
 			current_mounts += list("Modules" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
