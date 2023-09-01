@@ -87,11 +87,10 @@
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
-		var/list/mounts_image = list()
+
 		var/list/current_mounts = list()
 		var/list/current_mounts_modules = list()
 		for(var/mounted in src)
-			mounts_image += mounted
 			if(!istype(mounted, /obj/item/rig_module))
 				current_mounts += mounted
 			else
