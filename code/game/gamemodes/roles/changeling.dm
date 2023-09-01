@@ -181,7 +181,7 @@
 	var/mob/living/carbon/human/changeling = antag.current
 
 	if(absorbedamount == round(OVEREATING_AMOUNT / 2))
-		to_chat(changeling, "<span class='warning'>Поглощение многих генов, заставило нас осознать, что мы на полпути к превращению в Мерзость - большую угрозу для всех, даже для нас. С поглощениями следует быть аккуратнее.</span>")
+		to_chat(changeling, "<span class='warning'>Поглощение многих генов, заставило нас осознать, что мы на полпути к превращению в Мерзость - большую угрозу для всех, даже для нас. Нам следует быть аккуратнее с поглощениями.</span>")
 
 	else if(absorbedamount == OVEREATING_AMOUNT - 1)
 		to_chat(changeling, "<span class='warning'>Мы ощущаем грань, за которой находится еще более жестокое и бесчеловечное обличие - <B>это необратимо</B>.</span>")
