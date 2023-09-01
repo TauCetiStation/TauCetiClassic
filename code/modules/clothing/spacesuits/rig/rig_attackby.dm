@@ -90,22 +90,16 @@
 
 		var/list/current_mounts = list()
 		var/list/current_mounts_modules = list()
-		for(var/mounted in src)
-			if(!istype(mounted, /obj/item/rig_module))
-				current_mounts += mounted
-			else
-				current_mounts_modules += mounted
 
-		for(var/atom/module as anything in current_mounts)
-			current_mounts[module] = image(icon = module.icon, icon_state = module.icon_state)
+		for(var/obj/item/rig_module/mounted in src)
+			current_mounts_modules += mounted
 
-		for(var/obj/item/weapon/stock_parts/cell/cell in current_mounts)
-			var/atom/C = current_mounts[cell]
-			if(cell.charge/cell.maxcharge >= 0.995)
-				C.add_overlay(image('icons/obj/power.dmi', "cell-o2"))
-			else if(cell.charge/cell.maxcharge >= 0.1)
-				C.add_overlay(image('icons/obj/power.dmi', "cell-o1"))
-
+		if(helmet)
+			current_mounts += list("Helmet" = image(icon = helmet.icon, icon_state = helmet.icon_state))
+		if(cell)
+			current_mounts += list("Cell" = image(getFlatIcon(cell)))
+		if(boots)
+			current_mounts += list("Boots" = image(icon = boots.icon, icon_state = boots.icon_state))
 		if(current_mounts_modules.len)
 			current_mounts += list("Modules" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
 
@@ -116,43 +110,15 @@
 		if(!Adjacent(user) || wearer)
 			return
 
-
-		if(istype(to_remove, /obj/item/weapon/stock_parts/cell))
-			to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
-			for(var/obj/item/rig_module/module in installed_modules)
-				module.deactivate()
-			cell.updateicon()
-			user.put_in_hands(cell)
-			cell = null
-
-		else if(istype(to_remove, /obj/item/clothing/head/helmet/space/rig))
-			to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
-			helmet.rig_connect = null
-			user.put_in_hands(helmet)
-			helmet = null
-
-		else if(istype(to_remove, /obj/item/clothing/shoes/magboots))
-			to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
-			user.put_in_hands(boots)
-			boots = null
-
-		else if(to_remove == "Modules")
-			for(var/atom/module as anything in current_mounts_modules)
-				current_mounts_modules[module] = image(icon = module.icon, icon_state = module.icon_state)
-
-			var/removal_choice = show_radial_menu(user, src, current_mounts_modules, require_near = TRUE, tooltips = TRUE)
-
-			if(!removal_choice)
-				return
-			if(!Adjacent(user) || wearer)
-				return
-
-			var/obj/item/rig_module/removed = removal_choice
-			to_chat(user, "You detach \the [removed] from \the [src].")
-			user.put_in_hands(removed)
-			removed.removed()
-			installed_modules -= removed
-
+		switch(to_remove)
+			if("Cell")
+				detach_cell(user)
+			if("Helmet")
+				detach_helmet(user)
+			if("Boots")
+				detach_boots(user)
+			if("Modules")
+				detach_module(user, current_mounts_modules)
 		return
 
 	// If we've gotten this far, all we have left to do before we pass off to root procs
@@ -162,3 +128,39 @@
 			return
 
 	return ..()
+
+/obj/item/clothing/suit/space/rig/proc/detach_cell(mob/user)
+	to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
+	for(var/obj/item/rig_module/module in installed_modules)
+		module.deactivate()
+	cell.updateicon()
+	user.put_in_hands(cell)
+	cell = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_helmet(mob/user)
+	to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
+	helmet.rig_connect = null
+	user.put_in_hands(helmet)
+	helmet = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_boots(mob/user)
+	to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
+	user.put_in_hands(boots)
+	boots = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_module(mob/user, var/list/current_mounts_modules)
+	for(var/atom/module as anything in current_mounts_modules)
+		current_mounts_modules[module] = image(icon = module.icon, icon_state = module.icon_state)
+
+	var/removal_choice = show_radial_menu(user, src, current_mounts_modules, require_near = TRUE, tooltips = TRUE)
+
+	if(!removal_choice)
+		return
+	if(!Adjacent(user) || wearer)
+		return
+
+	var/obj/item/rig_module/removed = removal_choice
+	to_chat(user, "You detach \the [removed] from \the [src].")
+	user.put_in_hands(removed)
+	removed.removed()
+	installed_modules -= removed
