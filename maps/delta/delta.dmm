@@ -1444,6 +1444,11 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "acx" = (
@@ -3380,6 +3385,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -17842,11 +17852,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "dtg" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
@@ -17862,6 +17867,16 @@
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -20574,6 +20589,11 @@
 	},
 /area/station/engineering/atmos)
 "ebo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "ebr" = (
@@ -31101,6 +31121,10 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "gro" = (
@@ -34109,6 +34133,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
@@ -37308,6 +37337,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "hGm" = (
@@ -74452,6 +74482,11 @@
 /area/station/rnd/lab)
 "pGs" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "pGv" = (
@@ -91498,6 +91533,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "tzR" = (
@@ -104404,6 +104440,11 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "wBm" = (
@@ -107663,6 +107704,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "xpu" = (
