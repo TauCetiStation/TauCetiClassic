@@ -69,7 +69,7 @@
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"
 	icon_state = "egun"
-	desc = "Объект окружает энергетическими шипами. Вы не знаете, что это за оружие."
+	desc = "Объект излучает энергетические шипы. Вы не знаете, что это за оружие."
 	force = 5
 	origin_tech = null
 	charge_rate = 50

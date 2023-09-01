@@ -5,7 +5,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/silenced
 	name = "silenced pistol"
-	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
+	desc = "Небольшой, бесшумный, легко скрываемый пистолет. Использует патроны 45-го калибра."
 	icon_state = "silenced_pistol"
 	item_state = "gun"
 	silenced = 1
@@ -16,7 +16,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/glock
 	name = "G17"
-	desc = "Semi-automatic service pistol of 9x19mm cal. Designed for professionals."
+	desc = "Полуавтоматический служебный пистолет калибра 9х19 мм. Предназначен для профессионалов."
 	icon_state = "9mm_glock"
 	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle
 	name = "desert eagle"
-	desc = "A robust handgun that uses .50 AE ammo."
+	desc = "Надежный убойный пистолет, использующий патроны калибра .50 AE."
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0

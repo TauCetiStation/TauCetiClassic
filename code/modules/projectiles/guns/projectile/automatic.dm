@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
-	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
+	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
 	icon_state = "saber"
 	item_state = null
 	w_class = SIZE_SMALL
@@ -47,7 +47,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
-	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
+	desc = "Легкий и скорострельный пистолет-пулемёт для тех случаев, когда нужно кого-то быстро убить. Использует патроны калибра 9мм."
 	icon_state = "mac"
 	item_state = "mac"
 	w_class = SIZE_SMALL
@@ -58,7 +58,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
-	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	desc = "Легкий компактный пистолет-пулемет типа буллпап. Использует патроны .45 ACP в магазинах средней емкости и имеет нарезной ствол для установки глушителя. На прикладе имеется клеймо 'Scarborough Arms - Per falcis, per pravitas'."
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = SIZE_SMALL
@@ -71,7 +71,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
-	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
+	desc = "Сильно модифицированный легкий пулемет с тактической пластиковой рамкой, опирающейся на довольно традиционную баллистику. На ствольной коробке выгравировано 'Оружейная мастерская Aussec - 2531', а также использует патроны '7.62x51мм' ."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = SIZE_BIG
@@ -124,7 +124,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
-	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
+	desc = "Индивидуальное оружие самообороны 'L13', предназначенное для контртеррористических операций. Использует .38 калибр."
 	icon_state = "l13"
 	item_state = "l13"
 	w_class = SIZE_SMALL
@@ -136,7 +136,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
-	desc = "A genuine Chicago Typewriter."
+	desc = "Подлинная 'Чикагская пишущая машинка'."
 	icon_state = "tommygun"
 	item_state = "tommygun"
 	w_class = SIZE_BIG
@@ -149,7 +149,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
-	desc = "Browning Automatic Rifle."
+	desc = "Автоматическая винтовка Браунинга"
 	icon_state = "bar"
 	item_state = "bar"
 	w_class = SIZE_BIG
@@ -180,7 +180,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = SIZE_SMALL
@@ -192,7 +192,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"
-	desc = ""
+	desc = "Автоматическая винтовка типа буллпап с воздушным охлождением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Сэр, я заканчиваю этот бой'. Использует патроны калибром 5.56мм."
 	icon_state = "a28"
 	item_state = "a28"
 	w_class = SIZE_SMALL
@@ -216,7 +216,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a74/krinkov
 	name = "Krinkov"
-	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
+	desc = "Маленький и смертоносный A74U легче своего старшего брата, но, тем не менее, обладает серьезной мощью."
 	initial_mag = /obj/item/ammo_box/magazine/a74/krinkov
 	recoil = 1.5
 	two_hand_weapon = FALSE
@@ -225,7 +225,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
-	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
+	desc = "Известный также как Дрозд, этот маленький сукин сын оснащен чертовым гранатометом! Как же это круто!"
 	icon_state = "drozd"
 	item_state = "drozd"
 	initial_mag = /obj/item/ammo_box/magazine/drozd

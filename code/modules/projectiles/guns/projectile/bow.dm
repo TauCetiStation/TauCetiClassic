@@ -1,7 +1,7 @@
 /obj/item/weapon/arrow
 
 	name = "bolt"
-	desc = "It's got a tip for you - get the point?"
+	desc = "В нем есть подсказка для вас - уловили суть?"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
 	item_state = "bolt"
@@ -16,7 +16,7 @@
 /obj/item/weapon/arrow/quill
 
 	name = "vox quill"
-	desc = "A wickedly barbed quill from some bizarre animal."
+	desc = "Колючее перо какого-то диковинного животного."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "quill"
 	item_state = "quill"
@@ -25,7 +25,7 @@
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
-	desc = "Don't cry for me, Orithena."
+	desc = "Не плачь по мне, Орифина."
 	icon_state = "metal-rod"
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
