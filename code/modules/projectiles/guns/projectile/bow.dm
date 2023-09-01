@@ -30,7 +30,7 @@
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		to_chat(user, "[src] при попадании из арбалета разлетается на россыпь осколков из перенапряженного металла.")
+		to_chat(user, "[src] при выпуске из арбалета разлетается на россыпь осколков из перенапряженного металла.")
 		var/obj/item/weapon/shard/shrapnel/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
