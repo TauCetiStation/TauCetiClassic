@@ -23,13 +23,13 @@
 	name = "Атомная Реконструкция Молекулярной Решётки Целого Благословлённого Банана."
 	desc = "БАНАНЫ!"
 	ritual_length = (10 SECONDS)
-	ritual_invocations = list("Oh great mother!...",
-							"...May your power descend to us and bestow upon your part....",
-							"...Rising from sleep, in the middle of the night I bring you a song...",
-							"...and falling at Your feet, I appeal to Thee...",
-							"...take pity on me, and over all the clowns of the world!...",
-							"...pick me up lying carelessly and save me...")
-	invoke_msg = "...and send me strength!!!"
+	ritual_invocations = list("О великая Мать!...",
+							"...Пусть твоя сила снизойдет к нам и одарит нас...",
+							"...Отойдя от сна , в темной ночи, я приношу тебе песню...",
+							"...склоняясь на коленях, Я взываю к Тебе...",
+							"...сжалься надо мной, и всеми клоунами мира!...",
+							"...подними меня, небрежно лежащего, и спаси меня...")
+	invoke_msg = "...Пошли мне силу!!!"
 	favor_cost = 75
 	spawn_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 
@@ -63,13 +63,13 @@
 	name = "Обогащение Молекул Кислорода Атомами Банана"
 	desc = "Восстановление Империи!"
 	ritual_length = (50 SECONDS)
-	ritual_invocations = list("Oh great mother!...",
-							"...Help us in this difficult moment!...",
-							"...We pray, please send us strength!...",
-							"...Empower these bananas with your energy...",
-							"...And may they gain your mighty power in order to help us!...",
-							"...Now is the time for your help, so please do, oh great one!...")
-	invoke_msg = "...We believe in you!!!"
+	ritual_invocations = list("О Великая Мать!...",
+							"...Помоги нам в напасти!...",
+							"...Мы молим, пошли нам стойкость!...",
+							"...Наполни эти бананы своей энергией...",
+							"...И пусть они обретут твою могучую силу, дабы помочь нам!...",
+							"...Мы нуждаемся в твоей помощи, пожалуйста, помоги, о Великая!...")
+	invoke_msg = "...Мы молим тебя!!!"
 	favor_cost = 150
 	sacrifice_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	spawn_type = /obj/item/weapon/ore/clown
@@ -103,12 +103,12 @@
 	name = "Призыв Животного"
 	desc = "Создаёт случайного дружелюбного помощника."
 	ritual_length = (1 MINUTES)
-	ritual_invocations = list("As these complex nodules of the world are interconnected...",
-						"...so even my animal will be connected with this place...",
-						"...My will has allowed me to create and call you to life...",
-						"...Your existence is limited to fulfilling your goal...",
-						"...Let you come here...")
-	invoke_msg = "...Let it be so!"
+	ritual_invocations = list("Как все сложные узлы мира взаимосвязаны...",
+						"...так и мое животное связано этим местом...",
+						"...Моя воля позволила мне создать тебя и призвать к жизни...",
+						"...Ты существуешь ради выполнения цели...",
+						"...Приди же...")
+	invoke_msg = "...Да будет так!"
 	favor_cost = 150
 
 	needed_aspects = list(
@@ -158,15 +158,15 @@
 	name = "Создание Меча"
 	desc = "Создаёт меч во имя Бога."
 	ritual_length = (40 SECONDS)
-	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
-						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
-						"...who abides with all the storms of life...",
-						"...In this prayer, I want to thank you for everything...",
-						"...looking for time to prove that I will never part with you...",
-						"...despite any illusory matter...",
-						"...I want to abide with you in your eternal glory...",
-						"...I thank you for all your blessings to me and my neighbors...",)
-	invoke_msg = "...Let it be so!"
+	ritual_invocations = list("Святой Дух, который спасает от напасти, который освещает путь, чтобы я мог достичь своей цели....",
+						"...Ты даешь мне Божественный дар прощения и прощение всего зла, совершенного против меня...",
+						"...Ты со мной, во всех жизненных бурях...",
+						"...В этой молитве я хочу поблагодарить тебя за все...",
+						"...Ожидаю время когда я докажу, что никогда не расстанусь с тобой...",
+						"...несмотря на любые мирские трудности...",
+						"...Я хочу пребывать в твоем вечном величии...",
+						"...Я благодарю тебя за все милости мне и моим соседям...",)
+	invoke_msg = "...Да будет так!"
 	favor_cost = 100
 
 	spawn_type = /obj/item/weapon/claymore/religion
