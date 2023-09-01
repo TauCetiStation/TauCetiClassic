@@ -87,68 +87,66 @@
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
-
+		var/list/mounts_image = list()
 		var/list/current_mounts = list()
-		if(cell)
-			current_mounts += "cell"
-		if(installed_modules && installed_modules.len)
-			current_mounts += "system module"
-		if(helmet)
-			current_mounts += "helmet"
-		if(boots)
-			current_mounts += "boots"
+		var/list/current_mounts_modules = list()
+		for(var/mounted in src)
+			mounts_image += mounted
+			if(!istype(mounted, /obj/item/rig_module))
+				current_mounts += mounted
+			else
+				current_mounts_modules += mounted
 
-		var/to_remove = input("Which would you like to modify?") as null|anything in current_mounts
+		for(var/atom/module as anything in current_mounts)
+			current_mounts[module] = image(icon = module.icon, icon_state = module.icon_state)
+
+		if(current_mounts_modules.len)
+			current_mounts += list("Modules" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
+
+		var/to_remove = show_radial_menu(user, src, current_mounts, require_near = TRUE, tooltips = TRUE)
+
 		if(!to_remove)
 			return
 		if(!Adjacent(user) || wearer)
 			return
 
-		switch(to_remove)
-			if("cell")
-				if(cell)
-					to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
-					for(var/obj/item/rig_module/module in installed_modules)
-						module.deactivate()
-					cell.updateicon()
-					user.put_in_hands(cell)
-					cell = null
-				else
-					to_chat(user, "There is nothing loaded in that mount.")
 
-			if("system module")
-				var/list/possible_removals = list()
-				for(var/obj/item/rig_module/module in installed_modules)
-					if(module.permanent)
-						continue
-					possible_removals[module.name] = module
+		if(istype(to_remove, /obj/item/weapon/stock_parts/cell))
+			to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
+			for(var/obj/item/rig_module/module in installed_modules)
+				module.deactivate()
+			cell.updateicon()
+			user.put_in_hands(cell)
+			cell = null
 
-				if(!possible_removals.len)
-					to_chat(user, "There are no installed modules to remove.")
-					return
+		else if(istype(to_remove, /obj/item/clothing/head/helmet/space/rig))
+			to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
+			helmet.rig_connect = null
+			user.put_in_hands(helmet)
+			helmet = null
 
-				var/removal_choice = input("Which module would you like to remove?") as null|anything in possible_removals
-				if(!removal_choice)
-					return
-				if(!Adjacent(user) || wearer)
-					return
+		else if(istype(to_remove, /obj/item/clothing/shoes/magboots))
+			to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
+			user.put_in_hands(boots)
+			boots = null
 
-				var/obj/item/rig_module/removed = possible_removals[removal_choice]
-				to_chat(user, "You detach \the [removed] from \the [src].")
-				removed.forceMove(get_turf(src))
-				removed.removed()
-				installed_modules -= removed
+		else if("Module")
+			for(var/atom/module as anything in current_mounts_modules)
+				current_mounts_modules[module] = image(icon = module.icon, icon_state = module.icon_state)
 
-			if("helmet")
-				to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
-				helmet.forceMove(get_turf(src))
-				helmet.rig_connect = null
-				helmet = null
+			var/removal_choice = show_radial_menu(user, src, current_mounts_modules, require_near = TRUE, tooltips = TRUE)
 
-			if("boots")
-				to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
-				boots.forceMove(get_turf(src))
-				boots = null
+			if(!removal_choice)
+				return
+			if(!Adjacent(user) || wearer)
+				return
+
+			var/obj/item/rig_module/removed = removal_choice
+			to_chat(user, "You detach \the [removed] from \the [src].")
+			user.put_in_hands(removed)
+			removed.removed()
+			installed_modules -= removed
+
 		return
 
 	// If we've gotten this far, all we have left to do before we pass off to root procs
