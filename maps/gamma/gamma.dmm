@@ -42029,7 +42029,12 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
-/turf/simulated/floor/plating,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "hRV" = (
 /mob/living/simple_animal/mouse,
@@ -96448,7 +96453,13 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "arrow";
+	dir = 2
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "teL" = (
 /obj/machinery/disposal,
@@ -103556,7 +103567,12 @@
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
 	},
-/turf/simulated/floor/plating,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "uzO" = (
 /obj/structure/stool/bed/chair/metal/black{
