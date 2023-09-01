@@ -87,7 +87,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
-		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
+		to_chat(user, "<span class='notice'>[src] крышка открыта! Закройте ее перед стрельбой!</span>")
 	else
 		..()
 		update_icon()
@@ -99,7 +99,7 @@
 		return ..()//let them take it from inventory
 	if(!cover_open)
 		cover_open = !cover_open
-		to_chat(user, "<span class='notice'>You open [src]'s cover.</span>")
+		to_chat(user, "<span class='notice'>Вы открыли крышку [src].</span>")
 		update_icon()
 	else if(cover_open && magazine)
 		//drop the mag
@@ -109,7 +109,7 @@
 		magazine = null
 		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+		to_chat(user, "<span class='notice'>Вы вытащили обойму из [src].</span>")
 	else
 		if(chambered)
 			playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
@@ -118,7 +118,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
 	if(!cover_open)
-		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
+		to_chat(user, "<span class='notice'>[src] крышка закрыта! Вы не можете вставить новую обойму!</span>")
 		return
 	return ..()
 
@@ -173,9 +173,9 @@
 		magazine.update_icon()
 		magazine = null
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете обойму из [src]!</span>")
 	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+		to_chat(user, "<span class='notice'>Внутри [src] нет обоймы.</span>")
 	return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
@@ -251,12 +251,12 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
-		user.visible_message("<span class='warning'>[user] flicks a little switch, activating their [gl]!</span>",\
-		"<span class='warning'>You activate your [gl].</span>",\
+		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [gl]!</span>",\
+		"<span class='warning'>Вы активирует ваш [gl].</span>",\
 		"You hear an ominous click.")
 	else
-		user.visible_message("<span class='notice'>[user] flicks a little switch, deciding to stop the bombings.</span>",\
-		"<span class='notice'>You deactivate your [gl].</span>",\
+		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете ваш [gl].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	update_icon()

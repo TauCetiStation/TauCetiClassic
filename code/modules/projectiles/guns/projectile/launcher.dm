@@ -17,7 +17,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/try_chambering(obj/item/I, mob/user)
 	if(chambered)
-		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
+		to_chat(user, "<span class='warning'>Внутри [src] уже есть снаряд!</span>")
 		return
 	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
@@ -69,7 +69,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/special_check(mob/user)
 	if(open)
-		to_chat(user, "<span class='warning'>You can't fire [src] while it is open!</span>")
+		to_chat(user, "<span class='warning'>Вы не можете стрелять из [src] пока оно открыто!</span>")
 		return FALSE
 	return ..()
 
