@@ -359,6 +359,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["permamuted"]        >> muted
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
+	S["glowlevel"]         >> glowlevel
+	S["lampsexposure"]     >> lampsexposure
+	S["lampsglare"]        >> lampsglare
 	S["auto_fit_viewport"] >> auto_fit_viewport
 	S["lobbyanimation"]    >> lobbyanimation
 	S["tooltip"]           >> tooltip
@@ -414,6 +417,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
+	lampsexposure	= sanitize_integer(lampsexposure, 0, 1, initial(lampsexposure))
+	lampsglare		= sanitize_integer(lampsglare, 0, 1, initial(lampsglare))
 	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
@@ -483,6 +489,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
+	S["glowlevel"]         << glowlevel
+	S["lampsexposure"]     << lampsexposure
+	S["lampsglare"]        << lampsglare
 	S["lobbyanimation"]    << lobbyanimation
 	S["auto_fit_viewport"] << auto_fit_viewport
 	S["tooltip"]           << tooltip

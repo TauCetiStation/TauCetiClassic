@@ -319,8 +319,11 @@
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
 
+#define TEST_MERGE_DEFAULT_TEXT "Loading..."
+
 #define TURF_DECALS_LIMIT 4 // max of /obj/effect/decal/turf_decal in one turf
 
+// todo: do something with this monster
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
 		/turf/simulated/wall, \

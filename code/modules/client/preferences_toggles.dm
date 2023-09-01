@@ -209,10 +209,59 @@
 	prefs.ambientocclusion = !prefs.ambientocclusion
 	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
-	if(screen && screen.len)
+	if(length(screen))
 		var/atom/movable/screen/plane_master/game_world/PM = locate() in screen
-		PM.backdrop(mob)
+		PM.apply_effects(mob)
 	feedback_add_details("admin_verb","TAC")
+
+/client/verb/set_glow_level()
+	set name = "Lighting: Glow Level"
+	set category = "Preferences"
+
+	var/new_setting = input(src, "Set glow level of light sources:") as null|anything in list("Disable", "Low", "Medium (Default)", "High")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Disable")
+			prefs.glowlevel = GLOW_DISABLE
+		if("Low")
+			prefs.glowlevel = GLOW_LOW
+		if("Medium (Default)")
+			prefs.glowlevel = GLOW_MED
+		if("High")
+			prefs.glowlevel = GLOW_HIGH
+
+	to_chat(src, "Glow level: [new_setting].")
+	prefs.save_preferences()
+	if(length(screen))
+		var/atom/movable/screen/plane_master/lamps_selfglow/PM = locate() in screen
+		PM.apply_effects(mob)
+	feedback_add_details("admin_verb","LGL")
+
+/client/verb/toggle_lamp_exposure()
+	set name = "Lighting: Lamp Exposure"
+	set category = "Preferences"
+
+	prefs.lampsexposure = !prefs.lampsexposure
+	to_chat(src, "Lamp exposure: [prefs.lampsexposure ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	if(length(screen))
+		var/atom/movable/screen/plane_master/exposure/EXP = locate() in screen
+		EXP.apply_effects(mob)
+	feedback_add_details("admin_verb","LEXP")
+
+/client/verb/toggle_lamps_glare()
+	set name = "Lighting: Lamp Glare"
+	set category = "Preferences"
+
+	prefs.lampsglare = !prefs.lampsglare
+	to_chat(src, "Glare: [prefs.lampsglare ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	if(length(screen))
+		var/atom/movable/screen/plane_master/lamps_glare/PM = locate() in screen
+		PM.apply_effects(mob)
+	feedback_add_details("admin_verb","GLR")
 
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
