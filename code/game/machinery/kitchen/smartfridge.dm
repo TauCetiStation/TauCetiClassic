@@ -95,17 +95,6 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/smartfridge/extract
-	name = "Slime Extract Storage"
-	desc = "A refrigerated storage unit for slime extracts."
-	req_access = list(access_xenobiology)
-	content_overlay = "smartfridge-slime"
-
-/obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
-	if(istype(O,/obj/item/slime_extract))
-		return 1
-	return 0
-
 /obj/machinery/smartfridge/secure/extract
 	name = "Slime Extract Storage"
 	desc = "A refrigerated storage unit for slime extracts."
