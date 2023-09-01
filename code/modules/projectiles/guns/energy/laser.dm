@@ -139,7 +139,7 @@
 			var/obj/item/clothing/suit/lasertag/L = M.wear_suit
 			if(L.lasertag_color == lasertag_color)
 				return ..()
-		to_chat(M, "<span class='warning'>You need to be wearing your appropriate color laser tag vest!</span>")
+		to_chat(M, "<span class='warning'>Вы должны быть одеты в броню для лазертага соответствующего цвета!</span>")
 	return FALSE
 
 /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag

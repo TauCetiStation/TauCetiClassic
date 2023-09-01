@@ -203,16 +203,16 @@
 /obj/item/weapon/gun/tesla/attack_self(mob/living/user)
 	if(charging)
 		charging = FALSE
-		user.visible_message("<span class='danger'>[user] stops spinning generator on Tesla Cannon!</span>",\
-		                     "<span class='red'>You stop charging Tesla Cannon...</span>")
+		user.visible_message("<span class='danger'>[user] останавливает вращение рукоятки генератора на пушке Тесла!</span>",\
+		                     "<span class='red'>Вы остановились заряжать пушку Тесла...</span>")
 		cooldown = TRUE
 		spawn(50)
 			cooldown = FALSE
 		return
 	if(cooldown || charge == 3)
 		return
-	user.visible_message("<span class='danger'>[user] starts spinning generator on Tesla Cannon!</span>",\
-	                     "<span class='red'>You start charging Tesla Cannon...</span>")
+	user.visible_message("<span class='danger'>[user] начинает вращать рукоятку генератор на пушке Тесла!</span>",\
+	                     "<span class='red'>Вы начинаете заряжать пушку Тесла...</span>")
 	charging = TRUE
 	charge(user)
 
@@ -220,13 +220,13 @@
 	if(!..())
 		return FALSE
 	if(!charge)
-		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
+		to_chat(user, "<span class='red'>Пушка Тесла не заряжена!</span>")
 	else if(!isliving(target))
-		to_chat(user, "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>")
+		to_chat(user, "<span class='red'>Пушка Тесла должна быть направлена непосредственно на живую цель.</span>")
 	else if(charging)
-		to_chat(user, "<span class='red'>You can't shoot while charging!</span>")
+		to_chat(user, "<span class='red'>Вы не можете стрелять во время зарядки!</span>")
 	else if(!los_check(user, target))
-		to_chat(user, "<span class='red'>Something is blocking our line of shot!</span>")
+		to_chat(user, "<span class='red'>Что-то загораживает нам линию выстрела!</span>")
 	else
 		Bolt(user, target, user, charge)
 		charge = 0
@@ -283,7 +283,7 @@
 */
 /obj/item/weapon/gun/energy/pyrometer
 	name = "pyrometer"
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда в результате прямого физического контакта с пользователем."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда в результате прямого физического контакта с пользователем."
 
 	w_class = SIZE_TINY
 	icon = 'icons/obj/gun.dmi'
@@ -352,7 +352,7 @@
 	fire_delay = 12
 	origin_tech += ";syndicate=1"
 	emagged = TRUE
-	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибка ошибкаааааааа .</span>")
 	return TRUE
 
 /obj/item/weapon/gun/energy/pyrometer/update_icon()
@@ -365,7 +365,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/universal
 	name = "universal pyrometer"
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинить вред при непосредственном физическом контакте. Поставляется со встроенным многоцветным лазерным указателем и способен работать во всех возможных режимах!"
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте. Поставляется со встроенным многоцветным лазерным указателем и способен работать во всех возможных режимах!"
 	icon_state = "pyrometer_robotics"
 	item_state = "pyrometer_robotics"
 
@@ -383,7 +383,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/ce
 	name = "chief engineer's tactical pyrometer"
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем и с удобным снайперским прицелом!"
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем и с удобным снайперским прицелом!"
 	icon_state = "pyrometer_ce"
 	item_state = "pyrometer_ce"
 
@@ -401,7 +401,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Настроен для определения момента прорыва трубы."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Настроен для определения момента прорыва трубы."
 	icon_state = "pyrometer_science_phoron"
 	item_state = "pyrometer_science_phoron"
 
@@ -411,7 +411,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/engineering
 	name = "machinery pyrometer"
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Обнаруживает перегрев оборудования."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Обнаруживает перегрев оборудования."
 	icon_state = "pyrometer_engineering"
 	item_state = "pyrometer_engineering"
 
@@ -424,7 +424,7 @@
 
 
 /obj/item/weapon/gun/energy/pyrometer/atmospherics
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения того, насколько сильно пострадает живой человек, если он будет дышать воздухом, находящимся в комнате \"scan\"."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения того, насколько сильно пострадает живой человек, если он будет дышать воздухом, находящимся в комнате \"scan\"."
 	icon_state = "pyrometer_atmospherics"
 	item_state = "pyrometer_atmospherics"
 
@@ -434,7 +434,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/medical
 	name = "NC thermometer"
-	desc = "Инструмент, используемый для быстрого измерения температуры без опасения причинения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения температуры скелета в шкафу."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения температуры скелета в шкафу."
 	icon_state = "pyrometer_medical"
 	item_state = "pyrometer_medical"
 
@@ -463,7 +463,7 @@
 /obj/item/weapon/gun/energy/gun/portal/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(!prob(reliability))
 		if(firing_core && !is_centcom_level(z))
-			to_chat(user, "<span class='warning'>The wormhole projector malfunctions, teleporting away!</span>")
+			to_chat(user, "<span class='warning'>Проектор червоточины неисправен, оно телепортирует прочь!</span>")
 			user.drop_from_inventory(src)
 			do_teleport(src, get_turf(src), 7, asoundin = 'sound/effects/phasein.ogg')
 			return
@@ -477,11 +477,11 @@
 /obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
 		if(firing_core)
-			to_chat(user, "<span class='warning'>Wormhole projector already has an anomaly core installed!</span>")
+			to_chat(user, "<span class='warning'>В проекторе червоточины уже установлено ядро аномалии!</span>")
 			playsound(user, 'sound/machines/airlock/access_denied.ogg', VOL_EFFECTS_MASTER)
 			return
 		user.drop_from_inventory(C, src)
-		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		to_chat(user, "<span class='notice'>Вы вставляете [C] в проектор червоточины, и устройство начинает мягко гудеть.</span>")
 		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
 		firing_core = C
 		modifystate = 2
@@ -490,11 +490,11 @@
 
 	if(isscrewing(C))
 		if(!firing_core)
-			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
+			to_chat(user, "<span class='warning'>В нем не установлено ядро аномалии!</span>")
 			return
 		firing_core.forceMove(get_turf(user))
 		firing_core = null
-		to_chat(user, "<span class='notice'>You pop the anomaly core out of the projector.</span>")
+		to_chat(user, "<span class='notice'>Вы извлекли ядро аномалии из проектора.</span>")
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		icon_state = "portal"
 		modifystate = 0
@@ -638,7 +638,7 @@
 
 	if(get_dist(source, current_target) > max_range || !check_trajectory(source, current_target, pass_flags = PASSTABLE, flags = 0))
 		LoseTarget()
-		to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
+		to_chat(source, "<span class='warning'>Вы потеряли контроль над лучом!</span>")
 		return
 
 	if(current_target)
