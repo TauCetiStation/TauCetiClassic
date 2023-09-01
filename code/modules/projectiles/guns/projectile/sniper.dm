@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/heavyrifle
 	name = "PTR-7 rifle"
-	desc = "Бронебойное ружьё. Предназначалось для поражения бронированных мехов. С лёгкостью пробивает стёкло пулей калибра 14.5мм."
+	desc = "Бронебойное ружьё. Предназначалось для поражения бронированных мехов. С лёгкостью пробивает стекло пулей калибра 14.5мм."
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
 	w_class = SIZE_NORMAL
