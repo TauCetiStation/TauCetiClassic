@@ -130,7 +130,7 @@
 			user.put_in_hands(boots)
 			boots = null
 
-		else if("Module")
+		else if(to_remove == "Modules")
 			for(var/atom/module as anything in current_mounts_modules)
 				current_mounts_modules[module] = image(icon = module.icon, icon_state = module.icon_state)
 
