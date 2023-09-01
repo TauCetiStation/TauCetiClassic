@@ -552,6 +552,35 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
+/obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		var/static/list/names_of_smartfridges = list()
+		var/static/list/radial_icons = list()
+
+		if(names_of_smartfridges.len == 0)
+			for(var/obj/machinery/smartfridge/type as anything in subtypesof(/obj/machinery/smartfridge/radialmenu))
+				var/full_name = initial(type.name)
+
+				ASSERT(!names_of_smartfridges[full_name])
+
+				names_of_smartfridges[full_name] = type
+				radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
+
+		var/smartfridge_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(smartfridge_name))
+			return
+
+		var/obj/machinery/smartfridge_type = names_of_smartfridges[smartfridge_name]
+
+		to_chat(user, "<span class='notice'>You set the board to [smartfridge_name].</span>")
+
+		name = "circuit board ([smartfridge_name])"
+		build_path = smartfridge_type
+		req_components = list(
+								/obj/item/weapon/stock_parts/matter_bin = 1)
+		return
+	return ..()
+
 /obj/item/weapon/circuitboard/smartfridge/secure/bluespace
 	name = "circuit board (Bluespace Storage)"
 	build_path = /obj/machinery/smartfridge/secure/bluespace
