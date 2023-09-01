@@ -17,6 +17,8 @@
 	var/HELMET_TYPE = null
 	var/obj/item/clothing/mask/MASK = null  //All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	var/MASK_TYPE = null //Erro's idea on standarising SSUs whle keeping creation of other SSU types easy: Make a child SSU, name it something then set the TYPE vars to your desired suit output. New() should take it from there by itself.
+	var/obj/item/clothing/shoes/magboots/BOOTS = null
+	var/BOOTS_TYPE = null
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
@@ -53,6 +55,8 @@
 		HELMET = new HELMET_TYPE(src)
 	if(MASK_TYPE)
 		MASK = new MASK_TYPE(src)
+	if(BOOTS_TYPE)
+		BOOTS = new BOOTS_TYPE(src)
 	update_icon()
 
 /obj/machinery/suit_storage_unit/update_icon()
@@ -96,7 +100,7 @@
 				dump_everything()
 				qdel(src)
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user)
+/* /obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat = ""
 
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
@@ -134,9 +138,9 @@
 
 	var/datum/browser/popup = new(user, "window=suit_storage_unit", name, 400, 500)
 	popup.set_content(dat)
-	popup.open()
+	popup.open() */
 
-/obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
+/* /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	. = ..()
 	if(!.)
 		return
@@ -161,10 +165,10 @@
 		eject_occupant(usr)
 
 	updateUsrDialog()
-	update_icon()
+	update_icon() */
 
 
-/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
+/* /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen)
@@ -188,7 +192,7 @@
 			to_chat(user, "You crank the dial all the way up to \"15nm\".")
 			src.issuperUV = 1
 		return
-
+ */
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
 //	var/protected = 0
@@ -451,6 +455,27 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(!src.ispowered)
 		return
+	var/list/suit_storage = list()
+	for(var/contents in src)
+		suit_storage += contents
+
+	if(suit_storage.len)
+		for(var/atom/contents_image in suit_storage)
+			suit_storage[contents_image] = image(icon = contents_image.icon, icon_state = contents_image.icon_state)
+
+	var/to_dispense = show_radial_menu(user, src, suit_storage, radius = 50, require_near = TRUE, tooltips = TRUE)
+
+	if(to_dispense)
+		switch(to_dispense)
+			if(helmet)
+				dispense_helmet()
+			if(suit)
+				dispense_suit()
+			if(boots)
+				dispense_boots()
+			if(mask)
+				dispense_mask()
+
 	if(isscrewing(I))
 		src.panelopen = !src.panelopen
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
