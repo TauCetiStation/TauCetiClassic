@@ -124,6 +124,7 @@
 
 	if(cell_type)
 		cell = new cell_type(src)
+		cell.updateicon()
 
 /obj/item/clothing/suit/space/rig/Destroy()
 	if(wearer) // remove overlays if rig gets deleted while wearing
