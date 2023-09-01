@@ -6185,6 +6185,9 @@
 	pixel_y = -6
 	},
 /obj/structure/table/glass,
+/obj/item/toy/figure/scientist{
+	pixel_x = 9
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10993,6 +10996,7 @@
 	pixel_y = -32
 	},
 /obj/structure/table/woodentable,
+/obj/item/toy/figure/detective,
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
 "bCB" = (
@@ -12986,9 +12990,6 @@
 /area/station/engineering/engine)
 "bXU" = (
 /obj/structure/table,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = -1;
 	pixel_y = -2
@@ -15683,6 +15684,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/item/toy/figure/borg{
+	pixel_y = 15;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -20523,6 +20528,7 @@
 	pixel_y = -28
 	},
 /obj/structure/table,
+/obj/item/toy/figure/atmos,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -29243,6 +29249,9 @@
 /obj/item/weapon/packageWrap{
 	pixel_x = -2;
 	pixel_y = 11
+	},
+/obj/item/toy/figure/hop{
+	pixel_x = 10
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -40185,7 +40194,9 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/lipstick/jade,
-/obj/item/toy/sound_button,
+/obj/item/toy/sound_button{
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "hxV" = (
@@ -45487,6 +45498,9 @@
 "iAf" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
+/obj/item/toy/figure/rd{
+	pixel_x = -13
+	},
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)
 "iAr" = (
@@ -50237,6 +50251,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/item/toy/figure/ce,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -50386,6 +50401,7 @@
 	pixel_x = -7;
 	pixel_y = 2
 	},
+/obj/item/toy/figure/librarian,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -50814,6 +50830,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Theater Closet"
+	},
+/obj/item/toy/figure/mime{
+	pixel_x = 12
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
@@ -53553,6 +53572,10 @@
 "kkN" = (
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white,
+/obj/item/toy/figure/virologist{
+	pixel_y = 16;
+	pixel_x = -6
+	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "klh" = (
@@ -56406,6 +56429,9 @@
 "kRR" = (
 /obj/structure/table,
 /obj/item/clothing/suit/storage/hazardvest,
+/obj/item/toy/figure/engineer{
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "kSo" = (
@@ -64311,6 +64337,9 @@
 /obj/item/weapon/storage/box/mousetraps{
 	pixel_y = -3
 	},
+/obj/item/toy/figure/janitor{
+	pixel_x = 11
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -64737,6 +64766,10 @@
 /obj/item/weapon/flora/pottedplant/shoot{
 	pixel_x = 12;
 	pixel_y = 8
+	},
+/obj/item/toy/figure/bartender{
+	pixel_x = -8;
+	pixel_y = 14
 	},
 /turf/simulated/floor{
 	icon_state = "bar_floor"
@@ -73351,13 +73384,6 @@
 /area/station/civilian/hydroponics)
 "orR" = (
 /obj/structure/table,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = -1;
-	pixel_y = -2
-	},
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
@@ -73365,6 +73391,13 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/toy/figure/roboticist{
+	pixel_y = 7;
+	pixel_x = -9
+	},
+/obj/item/device/mmi,
+/obj/item/device/mmi,
+/obj/item/device/mmi,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -81751,6 +81784,7 @@
 /obj/item/weapon/shovel/spade,
 /obj/item/weapon/wrench,
 /obj/item/weapon/minihoe,
+/obj/item/toy/figure/botanist,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenbluefull"
@@ -82150,6 +82184,10 @@
 	stamp_message = "Cargo"
 	},
 /obj/item/clothing/head/soft,
+/obj/item/toy/figure/miner{
+	pixel_x = 8;
+	pixel_y = 13
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -90512,6 +90550,9 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/toy/figure/chaplain{
+	pixel_x = 9
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -94227,6 +94268,9 @@
 "sHG" = (
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/item/toy/figure/geneticist{
+	pixel_x = -15
+	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -96843,10 +96887,6 @@
 /obj/item/toy/figure/cargotech{
 	pixel_x = 4;
 	pixel_y = 4
-	},
-/obj/item/toy/figure/captain{
-	pixel_x = -3;
-	pixel_y = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/firealarm{
@@ -101908,6 +101948,9 @@
 	pixel_x = 30
 	},
 /obj/structure/table/woodentable,
+/obj/item/toy/figure/qm{
+	pixel_x = 8
+	},
 /turf/simulated/floor/carpet,
 /area/station/cargo/qm)
 "uhI" = (
@@ -103387,6 +103430,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/toy/figure/chef,
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
 "uwP" = (
@@ -104476,6 +104520,9 @@
 /obj/item/device/assembly/igniter,
 /obj/item/device/assembly/timer,
 /obj/item/device/assembly/timer,
+/obj/item/toy/figure/chemist{
+	pixel_x = 14
+	},
 /turf/simulated/floor{
 	icon_state = "whiteyellow"
 	},
@@ -114136,6 +114183,10 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/item/toy/figure/warden{
+	pixel_x = -13;
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
