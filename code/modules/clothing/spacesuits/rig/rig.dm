@@ -609,7 +609,7 @@
 	user.put_in_hands(boots)
 	boots = null
 
-/obj/item/clothing/suit/space/rig/proc/detach_module(mob/user, var/list/current_mounts_modules)
+/obj/item/clothing/suit/space/rig/proc/detach_module(mob/user, list/current_mounts_modules)
 	for(var/atom/module as anything in current_mounts_modules)
 		current_mounts_modules[module] = image(icon = module.icon, icon_state = module.icon_state)
 
