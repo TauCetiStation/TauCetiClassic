@@ -103,10 +103,8 @@
 			var/atom/C = current_mounts[cell]
 			if(cell.charge/cell.maxcharge >= 0.995)
 				C.add_overlay(image('icons/obj/power.dmi', "cell-o2"))
-			else if(cell.charge/cell.maxcharge >= 0.5)
+			else if(cell.charge/cell.maxcharge >= 0.1)
 				C.add_overlay(image('icons/obj/power.dmi', "cell-o1"))
-			else
-				continue
 
 		if(current_mounts_modules.len)
 			current_mounts += list("Modules" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
