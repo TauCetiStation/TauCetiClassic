@@ -124,7 +124,7 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете обойму из [src]!</span>")
 	else
 		to_chat(user, "<span class='notice'>Внутри [src] нет обоймы.</span>")
 	update_icon(user)

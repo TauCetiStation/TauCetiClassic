@@ -122,14 +122,14 @@
 	var/fire_pressure = (tank.air_contents.return_pressure()/100)*pressure_setting
 
 	if (fire_pressure < minimum_tank_pressure)
-		to_chat(user, "Давление в баллоне недостаточно.")
+		to_chat(user, "Давления в баллоне недостаточно для выстрела.")
 		return 0
 
 	var/obj/item/object = contents[1]
 	var/speed = min(PNEUMATIC_SPEED_CAP, ((fire_pressure*tank.volume)/object.w_class)/PNEUMATIC_SPEED_DIVISOR) //projectile speed.
 
 	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2)
-	user.visible_message("<span class='danger'>[user] выстреляет [object] по [target] из пневматической пушки!</span>","<span class='danger'>Вы стреляете [object] по [target] из пневматической пушки!</span>")
+	user.visible_message("<span class='danger'>[user] выстреливает [object] по [target] из пневматической пушки!</span>","<span class='danger'>Вы стреляете [object] по [target] из пневматической пушки!</span>")
 
 	remove_from_storage(object,user.loc)
 	object.throw_at(target, speed + 1, speed, user)
@@ -152,7 +152,7 @@
 
 /obj/item/weapon/cannonframe1
 	name = "pneumo-gun(1 stage)"
-	desc = "Для завершения сборки: вставьте и проварите трубу; добавьте и приварите 5 листов металла; прикрутите вентиль и заварите швы."
+	desc = "Для завершения сборки: вставьте и приварите трубу; добавьте и приварите 5 листов металла; прикрутите вентиль и заварите швы."
 	icon_state = "pneumaticframe1"
 	item_state = "pneumatic"
 

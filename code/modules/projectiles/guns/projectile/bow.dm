@@ -25,12 +25,12 @@
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
-	desc = "Не плачь по мне, Орифина."
+	desc = "Не плачь по мне, Орифена."
 	icon_state = "metal-rod"
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		to_chat(user, "[src] при попадании из арбалета разлетается на россыпь осколков из сверхпрочного металла.")
+		to_chat(user, "[src] при попадании из арбалета разлетается на россыпь осколков из перенапряженного металла.")
 		var/obj/item/weapon/shard/shrapnel/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
@@ -170,7 +170,7 @@
 		return 0
 
 	if (!arrow)
-		to_chat(user, "У вас нет болта лежащего в [src]!")
+		to_chat(user, "Болт отсутствует в [src]!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
