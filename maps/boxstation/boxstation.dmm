@@ -53936,7 +53936,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -54596,7 +54597,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -61995,7 +61997,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -71212,7 +71215,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -71363,7 +71367,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -71761,7 +71766,7 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = -27;
-	dir = 4;
+	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
 	},

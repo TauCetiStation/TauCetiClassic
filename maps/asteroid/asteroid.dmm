@@ -598,7 +598,7 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = -27;
-	dir = 4;
+	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
 	},
@@ -2785,7 +2785,7 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = -27;
-	dir = 4;
+	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
 	},
@@ -8903,7 +8903,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	name = "Cargo top APC";
-	custom_smartlight_preset = "Cargo"
+	custom_smartlight_preset = "Cargo";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10429,7 +10430,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	name = "Cargo top APC";
-	custom_smartlight_preset = "Cargo"
+	custom_smartlight_preset = "Cargo";
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -11863,7 +11865,7 @@
 /obj/machinery/power/apc{
 	name = "Cargo left APC";
 	custom_smartlight_preset = "Cargo";
-	dir = 4;
+	dir = 8;
 	pixel_x = -27
 	},
 /turf/simulated/floor{

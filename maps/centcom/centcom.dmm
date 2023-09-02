@@ -6661,11 +6661,11 @@
 	},
 /area/velocity)
 "apE" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},

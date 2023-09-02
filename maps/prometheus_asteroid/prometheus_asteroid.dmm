@@ -2379,7 +2379,7 @@
 /obj/machinery/power/apc{
 	name = "Cargo left APC";
 	custom_smartlight_preset = "Cargo";
-	dir = 4;
+	dir = 8;
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -4687,7 +4687,6 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "RnD largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "RnD"
@@ -6165,7 +6164,7 @@
 /obj/item/weapon/flora/random,
 /obj/structure/cable,
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "RnD largecell apc right";
 	custom_smartlight_preset = "RnD";
 	pixel_x = 27
@@ -6798,7 +6797,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "Cargo largecell apc right";
 	custom_smartlight_preset = "Cargo";
 	pixel_x = 27
@@ -7253,7 +7252,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "Cargo largecell apc right";
 	custom_smartlight_preset = "Cargo";
 	pixel_x = 27
@@ -8910,7 +8909,6 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "RnD largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "RnD"
@@ -10451,7 +10449,6 @@
 	network = list("SS13","MINE","Research")
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "RnD largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "RnD"
@@ -10603,7 +10600,6 @@
 	},
 /obj/machinery/light/small,
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "RnD largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "RnD"
@@ -10623,7 +10619,7 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = -27;
-	dir = 4;
+	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
 	},
@@ -10655,7 +10651,7 @@
 "Vr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "RnD largecell apc right";
 	custom_smartlight_preset = "RnD";
 	pixel_x = 27

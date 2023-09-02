@@ -1893,7 +1893,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	name = "Cargo top APC";
-	custom_smartlight_preset = "Cargo"
+	custom_smartlight_preset = "Cargo";
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -3009,7 +3010,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
@@ -3165,7 +3167,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5219,7 +5222,7 @@
 	pixel_y = -21
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "Brig largecell apc left";
 	custom_smartlight_preset = "Brig";
 	pixel_x = -27
@@ -6655,7 +6658,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "Engineering largecell apc left";
 	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
@@ -7857,7 +7860,7 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = -27;
-	dir = 4;
+	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
 	},
@@ -8654,7 +8657,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -8738,7 +8742,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "Cargo largecell apc left";
 	custom_smartlight_preset = "Cargo";
 	pixel_x = -27
@@ -10247,9 +10251,9 @@
 	},
 /obj/effect/decal/turf_decal/set_burned,
 /obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
@@ -10896,7 +10900,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -12309,6 +12314,11 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -14487,6 +14497,12 @@
 	c_tag = "Security HoS Office";
 	network = list("SS13","Security")
 	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14835,6 +14851,10 @@
 	dir = 1
 	},
 /obj/machinery/light/small,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -16581,12 +16601,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -24
 	},
-/obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
-	custom_smartlight_preset = "MedBay";
-	name = "Medbay right APC"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -17081,6 +17095,11 @@
 	icon_state = "0-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
 "hRP" = (
@@ -22466,6 +22485,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/apc/largecell{
+	name = "largecell apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -25824,7 +25847,6 @@
 /obj/machinery/light/smart,
 /obj/machinery/life_assist/artificial_ventilation,
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "MedBay largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "MedBay"
@@ -32142,10 +32164,13 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "Bar apc down";
 	custom_smartlight_preset = "bar";
 	pixel_y = -27
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -34107,7 +34132,8 @@
 /obj/machinery/power/apc{
 	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)

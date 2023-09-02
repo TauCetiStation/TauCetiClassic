@@ -270,25 +270,18 @@
 "co" = (
 /obj/structure/sign/departments/cargo,
 /obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Cargo largecell apc top";
-	pixel_y = 27;
-	custom_smartlight_preset = "Cargo"
-	},
-/obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "Cargo largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "Cargo"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "Cargo largecell apc right";
 	custom_smartlight_preset = "Cargo";
 	pixel_x = 27
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "Cargo largecell apc left";
 	custom_smartlight_preset = "Cargo";
 	pixel_x = -27
@@ -677,19 +670,18 @@
 	custom_smartlight_preset = "Brig"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "Brig largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "Brig"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "Brig largecell apc right";
 	custom_smartlight_preset = "Brig";
 	pixel_x = 27
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "Brig largecell apc left";
 	custom_smartlight_preset = "Brig";
 	pixel_x = -27
@@ -1438,19 +1430,18 @@
 	custom_smartlight_preset = "MedBay"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "MedBay largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "MedBay"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "MedBay largecell apc right";
 	custom_smartlight_preset = "MedBay";
 	pixel_x = 27
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "MedBay largecell apc left";
 	custom_smartlight_preset = "MedBay";
 	pixel_x = -27
@@ -2265,19 +2256,18 @@
 	custom_smartlight_preset = "RnD"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "RnD largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "RnD"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "RnD largecell apc right";
 	custom_smartlight_preset = "RnD";
 	pixel_x = 27
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "RnD largecell apc left";
 	custom_smartlight_preset = "RnD";
 	pixel_x = -27
@@ -2668,7 +2658,7 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = -27;
-	dir = 4;
+	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
 	},
@@ -2758,7 +2748,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	name = "Engineering top APC";
-	custom_smartlight_preset = "Engineering"
+	custom_smartlight_preset = "Engineering";
+	dir = 1
 	},
 /obj/machinery/power/apc{
 	pixel_y = -27;
@@ -2766,14 +2757,16 @@
 	custom_smartlight_preset = "Engineering"
 	},
 /obj/machinery/power/apc{
-	name = "Engineering left APC";
-	custom_smartlight_preset = "Engineering";
-	pixel_x = -27
-	},
-/obj/machinery/power/apc{
 	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "yellowfull"
@@ -3320,19 +3313,18 @@
 	custom_smartlight_preset = "Engineering"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
 	name = "Engineering largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "Engineering"
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 4;
 	name = "Engineering largecell apc right";
 	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /obj/machinery/power/apc/largecell{
-	dir = 1;
+	dir = 8;
 	name = "Engineering largecell apc left";
 	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
@@ -5299,13 +5291,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	name = "Cargo top APC";
-	custom_smartlight_preset = "Cargo"
-	},
-/obj/machinery/power/apc{
-	name = "Cargo left APC";
 	custom_smartlight_preset = "Cargo";
-	dir = 4;
-	pixel_x = -27
+	dir = 1
 	},
 /obj/machinery/power/apc{
 	name = "Cargo right APC";
@@ -5317,6 +5304,12 @@
 	pixel_y = -27;
 	name = "Cargo down APC";
 	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc{
+	name = "Cargo left APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
@@ -5558,7 +5551,7 @@
 /area/space)
 "Zy" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 1;
 	name = "Bar apc top";
 	custom_smartlight_preset = "bar";
 	pixel_y = 27
@@ -5571,12 +5564,11 @@
 	},
 /obj/machinery/power/apc{
 	pixel_x = 27;
-	dir = 8;
+	dir = 4;
 	name = "Bar apc right";
 	custom_smartlight_preset = "bar"
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "Bar apc down";
 	custom_smartlight_preset = "bar";
 	pixel_y = -27
