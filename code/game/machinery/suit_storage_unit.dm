@@ -174,9 +174,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/proc/open(mob/user)
 	if(opened)
 		return
-	if(user.loc == src)
-		to_chat(user, "<span class='notice'>You can't open the [src] from inside it.</span>")
-		return
 	if(locked || UV)
 		to_chat(user, "<span class ='danger'>Unable to opened unit.</span>")
 		return
@@ -310,8 +307,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	return
 
 /obj/machinery/suit_storage_unit/proc/move_into_unit(mob/mobToMove)
-	if(usr.incapacitated())
-		return
 	if(!opened)
 		to_chat(usr, "<span class ='danger'>The unit's doors are shut.</span>")
 		return
