@@ -132,7 +132,6 @@ Class Procs:
 	var/panel_open = 0
 	var/state_open = 0
 	var/mob/living/occupant = null
-	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
 	var/allowed_checks = ALLOWED_CHECK_EVERYWHERE // should machine call allowed() in attack_hand(). See machinery/turretid for example.

@@ -155,13 +155,23 @@
 
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
-#define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
+#define iscoil(A) 		istype(A, /obj/item/stack/cable_coil)
 
 // OBJECTS
 
-#define isitem(A) (istype(A, /obj/item))
+#define isitem(A)		 istype(A, /obj/item)
 
-#define isunder(A) (istype(A, /obj/item/clothing/under))
+#define isunder(A)		 istype(A, /obj/item/clothing/under)
+
+#define isspacesuit(A) 	 istype(A, /obj/item/clothing/suit/space)
+
+#define isspacehelmet(A) istype(A,/obj/item/clothing/head/helmet/space)
+
+#define isbreathmask(A)  istype(A,/obj/item/clothing/mask)
+
+#define ismagboots(A)	 istype(A, /obj/item/clothing/shoes/magboots)
+
+#define istank(A) 		 istype(A, /obj/item/weapon/tank)
 
 // ROLES / ANTAG
 
