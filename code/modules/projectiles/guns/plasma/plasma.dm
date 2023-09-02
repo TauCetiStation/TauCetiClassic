@@ -13,7 +13,7 @@
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
-	desc = "Стандартный плазменный карабин типа буллпап с высокой скорострельностью."
+	desc = "Стандартный плазменный карабин типа булл-пап с высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
 	fire_delay = 1
