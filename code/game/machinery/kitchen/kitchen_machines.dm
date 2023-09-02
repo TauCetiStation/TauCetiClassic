@@ -91,7 +91,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(O.use_tool(src, user, 100, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -102,16 +102,16 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(O.use_tool(src, user, 100, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
 				)
 				broken = NOT_BROKEN // Fix it!
-				return TRUE
 		else
 			to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 			return TRUE
+
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
@@ -122,7 +122,9 @@
 				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			dirty = 0 // It's clean!
+			update_icon()
 			return TRUE // Disables the after-attack so we don't spray the floor/user.
+
 		else
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return TRUE
@@ -132,21 +134,24 @@
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
+		if(O.use_tool(src, user, 20, volume = 100))
 			user.visible_message( \
-				"<span class='notice'>[user]  has cleaned [src].</span>", \
+				"<span class='notice'>[user] has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			dirty = 0 // It's clean!
+
 	else if(dirty == MAX_DIRTY) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 		return TRUE
+
 	else if(is_type_in_list(O, acceptable_items))
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='danger'>\The [src] is full of ingredients, you cannot put more.</span>")
 			return TRUE
+
 		var/obj/item/stack/S = O
-		if (istype(S) && S.get_amount() > 1)
+		if(istype(S) && S.get_amount() > 1)
 			new O.type (src)
 			S.use(1)
 			user.visible_message( \
@@ -157,6 +162,7 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
+
 	else if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RC = O
 		if(!RC.reagents)
@@ -167,13 +173,15 @@
 				return TRUE
 		var/trans = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [src].</span>")
+
 	else if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
-		return TRUE
+
 	else
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return TRUE
+
 	update_icon()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
@@ -184,6 +192,13 @@
 ********************/
 
 /obj/machinery/kitchen_machine/ui_interact(mob/user, require_near = TRUE)
+	if(user.is_busy())
+		return
+	if(!Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		return
+
 	if(broken || dirty == MAX_DIRTY)
 		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 		return
