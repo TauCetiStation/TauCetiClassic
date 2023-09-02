@@ -13,8 +13,6 @@
 	var/obj/item/clothing/suit/space/rig/suit 			= null
 	var/obj/item/clothing/head/helmet/space/rig/helmet 	= null
 
-	var/list/speciesAvailable = list(HUMAN, SKRELL, UNATHI, TAJARAN, DIONA, VOX)
-
 /obj/machinery/suit_modifier/atom_init()
 	. = ..()
 	update_icon()
@@ -34,26 +32,40 @@
 	else
 		cut_overlay("industrial_open")
 
-/obj/machinery/suit_modifier/proc/eject(obj/I)
-	if(!I)
+/obj/machinery/suit_modifier/proc/eject_helmet()
+	if(!helmet)
 		return
 	else
-		I.forceMove(get_turf(src))
-		I = null
+		helmet.forceMove(get_turf(src))
+		helmet = null
+		update_icon()
+		return
+
+/obj/machinery/suit_modifier/proc/eject_suit()
+	if(!suit)
+		return
+	else
+		suit.forceMove(get_turf(src))
+		suit = null
 		update_icon()
 		return
 
 /obj/machinery/suit_modifier/proc/modify_race(obj/item/clothing/C, atom/target_species, mob/user)
-
 	C.refit_for_species(target_species)
-	eject(C)
+	if(ishardhelmet(C))
+		eject_helmet()
+	else if(ishardsuit(C))
+		eject_suit()
 
 /obj/machinery/suit_modifier/proc/show_menu(obj/item/clothing/C, mob/user)
 	var/list/modifySelect = list()
+	var/list/speciesAvailable = C.species_restricted
+	speciesAvailable.Remove(DIONA)
+
 	var/obj/item/clothing/temp = C
 	for(var/species in speciesAvailable)
 		temp.icon = temp.sprite_sheets_obj[species]
-		modifySelect += list(species = image(icon = temp.icon, icon_state = temp.icon_state))
+		modifySelect[species] += image(icon = temp.icon, icon_state = temp.icon_state)
 
 	var/toModifi = show_radial_menu(user, src, modifySelect, require_near = TRUE, tooltips = TRUE)
 	switch(toModifi)
@@ -90,7 +102,7 @@
 	if(opened)
 		if(isspacesuit(C))
 			var/obj/item/clothing/suit/space/S = C
-			if(helmet)
+			if(suit)
 				to_chat(user, "<span class ='succsess'>The unit already contains a suit.</span>")
 				return
 			to_chat(user, "You load the [S.name] into the modifi unit.")

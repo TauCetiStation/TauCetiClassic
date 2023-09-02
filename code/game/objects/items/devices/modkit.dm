@@ -22,13 +22,6 @@
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
 
-	var/excluding = ("exclude" in I.species_restricted)
-	var/in_list = (target_species in I.species_restricted)
-
-	if (excluding ^ in_list)
-		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
-		return
-
 	if(!isturf(target.loc))
 		to_chat(user, "<span class='warning'>[target] must be safely placed on the ground for modification.</span>")
 		return

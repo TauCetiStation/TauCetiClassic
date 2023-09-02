@@ -16,19 +16,20 @@
 	can_be_modded = TRUE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
+	species_restricted = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
 	species_restricted_locked = TRUE
 	sprite_sheets_refit = list(
-		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
+		UNATHI  = 'icons/mob/species/unathi/helmet.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
-		SKRELL = 'icons/mob/species/skrell/helmet.dmi',
-		VOX = 'icons/mob/species/vox/helmet.dmi',
+		SKRELL  = 'icons/mob/species/skrell/helmet.dmi',
+		VOX     = 'icons/mob/species/vox/helmet.dmi',
 		)
 	sprite_sheets_obj = list(
-		UNATHI = 'icons/obj/clothing/species/unathi/hats.dmi',
+		HUMAN   = 'icons/obj/clothing/hats.dmi',
+		UNATHI  = 'icons/obj/clothing/species/unathi/hats.dmi',
 		TAJARAN = 'icons/obj/clothing/species/tajaran/hats.dmi',
-		SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi',
-		VOX = 'icons/obj/clothing/species/vox/hats.dmi',
+		SKRELL  = 'icons/obj/clothing/species/skrell/hats.dmi',
+		VOX     = 'icons/obj/clothing/species/vox/hats.dmi',
 		)
 
 	var/rig_variant = "engineering"
@@ -70,7 +71,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted_locked = TRUE
-	species_restricted = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
+	species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 	sprite_sheets_refit = list(
 		UNATHI  = 'icons/mob/species/unathi/suit.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
@@ -78,6 +79,7 @@
 		VOX     = 'icons/mob/species/vox/suit.dmi',
 		)
 	sprite_sheets_obj = list(
+		HUMAN   = 'icons/obj/clothing/suits.dmi',
 		UNATHI  = 'icons/obj/clothing/species/unathi/suits.dmi',
 		TAJARAN = 'icons/obj/clothing/species/tajaran/suits.dmi',
 		SKRELL  = 'icons/obj/clothing/species/skrell/suits.dmi',

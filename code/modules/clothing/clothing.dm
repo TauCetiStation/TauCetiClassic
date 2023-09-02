@@ -52,15 +52,15 @@
 	//Set species_restricted list
 	switch(target_species)
 		if(HUMAN)
-			species_restricted = list(SKRELL, UNATHI,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+			species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 		if(SKRELL)
-			species_restricted = list(UNATHI, TAJARAN, DIONA,   TAJARAN,   VOX, VOX_ARMALIS)
+			species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 		if(TAJARAN)
-			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  DIONA,     VOX, VOX_ARMALIS)
+			species_restricted = list(HUMAN, SKRELL, UNATHI, DIONA, VOX)
 		if(UNATHI)
-			species_restricted = list(HUMAN,  SKRELL,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+			species_restricted = list(HUMAN, SKRELL, TAJARAN, DIONA, VOX)
 		if(VOX)
-			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  TAJARAN, DIONA, VOX_ARMALIS)
+			species_restricted = list(HUMAN, SKRELL, UNATHI, TAJARAN, DIONA)
 
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
@@ -78,18 +78,20 @@
 	//Set species_restricted list
 	switch(target_species)
 		if(HUMAN)
-			species_restricted = list(SKRELL, UNATHI,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+			species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 		if(SKRELL)
-			species_restricted = list(UNATHI, TAJARAN, DIONA,   TAJARAN,   VOX, VOX_ARMALIS)
+			species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 		if(TAJARAN)
-			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  DIONA,     VOX, VOX_ARMALIS)
+			species_restricted = list(HUMAN, SKRELL, UNATHI, DIONA, VOX)
 		if(UNATHI)
-			species_restricted = list(HUMAN,  SKRELL,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+			species_restricted = list(HUMAN, SKRELL, TAJARAN, DIONA, VOX)
 		if(VOX)
-			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  TAJARAN, DIONA, VOX_ARMALIS)
+			species_restricted = list(HUMAN, SKRELL, UNATHI, TAJARAN, DIONA)
 
 	if(target_species == VOX)
 		flags &= ~BLOCKHAIR
+	else
+		flags |= BLOCKHAIR
 
 	//Set icon
 	if(sprite_sheets_refit && (target_species in sprite_sheets_refit))
