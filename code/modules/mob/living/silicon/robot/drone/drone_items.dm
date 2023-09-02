@@ -203,7 +203,6 @@
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
 		/obj/item/weapon/tank/anesthetic,
-		/obj/item/organ/external,
 		/obj/item/bodybag,
 		/obj/item/weapon/reagent_containers/syringe
 		)
