@@ -170,7 +170,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "<span class='notice'>You can't open the [src] from inside it.</span>")
 		return
 	if(locked || UV)
-		to_chat(user, "<font color='red'>Unable to opened unit.</font>")
+		to_chat(user, "<span class = 'danger'>Unable to opened unit.</span'>")
 		return
 	if(occupant)
 		eject_occupant(occupant)
@@ -192,7 +192,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(emagged)
 		return
 	if(occupant && !superUV)
-		to_chat(user, "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>")
+		to_chat(user, "<span class = 'danger'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span'>")
 		return
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src] appears to be broken.</span>")
@@ -212,10 +212,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
 	if(occupant && !superUV)
-		to_chat(user, "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</font>")
+		to_chat(user, "<span class = 'danger'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</span'>")
 		return
 	if(!HELMET && !MASK && !SUIT && !BOOTS && !TANK && !occupant)
-		to_chat(user, "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>")
+		to_chat(user, "<span class = 'danger'>Unit storage bays empty. Nothing to disinfect -- Aborting.</span'>")
 		return
 	to_chat(user, "You start the Unit's cauterisation cycle.")
 	if(opened)
@@ -278,7 +278,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 					if(BOOTS)
 						BOOTS  = null
 				broken = TRUE
-			visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</font>", 3)
+			visible_message("<span class = 'danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span'>", 3)
 
 	opened = TRUE
 	locked = FALSE
@@ -326,13 +326,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(usr.incapacitated())
 		return
 	if(!opened)
-		to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
+		to_chat(usr, "<span class = 'danger'>The unit's doors are shut.</span'>")
 		return
 	if(!powered || broken)
-		to_chat(usr, "<font color='red'>The unit is not operational.</font>")
+		to_chat(usr, "<span class = 'danger'>The unit is not operational.</span'>")
 		return
 	if(occupant || HELMET || SUIT || TANK || BOOTS)
-		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
+		to_chat(usr, "<span class = 'danger'>It's too cluttered inside for you to fit in!</span'>")
 		return
 	if(usr.is_busy())
 		return
@@ -360,7 +360,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
 	add_fingerprint(user)
 	if(!powered || broken)
-		to_chat(usr, "<font color='red'>The unit is not operational.</font>")
+		to_chat(usr, "<span class = 'danger'>The unit is not operational.</span'>")
 		return
 	if(UV)
 		return
@@ -408,23 +408,23 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(UV)
 		return
 	if(!powered || broken)
-		to_chat(usr, "<font color='red'>The unit is not operational.</font>")
+		to_chat(usr, "<span class = 'danger'>The unit is not operational.</span'>")
 		return
 	if(isscrewing(I))
 		if(!user.is_busy(src) && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.5))
 			panel_open = !panel_open
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, "<font color='blue'>You [panel_open ? "opened up" : "close"] the unit's maintenance panel.</font>")
+			to_chat(user, "<span class = 'succsess'>You [panel_open ? "opened up" : "close"] the unit's maintenance panel.</span'>")
 			update_icon()
 			return
 	if(iscutter(I))
 		if(!user.is_busy(src) && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.5))
 			if(!emagged)
 				superUV = !superUV
-				to_chat(user, "<font color='red'>You [superUV ? "disable" : "activete"] the unit's UV safety.</font>")
+				to_chat(user, "<span class = 'danger'>You [superUV ? "disable" : "activete"] the unit's UV safety.</span'>")
 				playsound(src, 'sound/items/resonator_ready.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "<font color='red'>Something is stopping you from turning off UV safety.</font>")
+				to_chat(user, "<span class = 'danger'>Something is stopping you from turning off UV safety.</span'>")
 			return
 	if(opened)
 		if(istype(I, /obj/item/weapon/grab))
@@ -444,12 +444,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/proc/load_something(obj/something, mob/user)
 	if(occupant)
-		to_chat(usr, "<font color='red'>It's too cluttered inside for add something else!</font>")
+		to_chat(usr, "<span class = 'danger'>It's too cluttered inside for add something else!</span'>")
 		return
 	if(isspacesuit(something))
 		var/obj/item/clothing/suit/space/S = something
 		if(SUIT)
-			to_chat(user, "<font color='blue'>The unit already contains a suit.</font>")
+			to_chat(user, "<span class = 'succsess'>The unit already contains a suit.</span'>")
 			return
 		to_chat(user, "You load the [S.name] into the storage compartment.")
 		user.drop_from_inventory(S, src)
@@ -457,7 +457,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(isspacehelmet(something))
 		var/obj/item/clothing/head/helmet/H = something
 		if(HELMET)
-			to_chat(user, "<font color='blue'>The unit already contains a helmet.</font>")
+			to_chat(user, "<span class = 'succsess'>The unit already contains a helmet.</span'>")
 			return
 		to_chat(user, "You load the [H.name] into the storage compartment.")
 		user.drop_from_inventory(H, src)
@@ -465,7 +465,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(isbreathmask(something))
 		var/obj/item/clothing/mask/M = something
 		if(MASK)
-			to_chat(user, "<font color='blue'>The unit already contains a mask.</font>")
+			to_chat(user, "<span class = 'succsess'>The unit already contains a mask.</span'>")
 			return
 		to_chat(user, "You load the [M.name] into the storage compartment.")
 		user.drop_from_inventory(M, src)
@@ -473,7 +473,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(ismagboots(something))
 		var/obj/item/clothing/shoes/magboots/B = something
 		if(BOOTS)
-			to_chat(user, "<font color='blue'>The unit already contains a magboots.</font>")
+			to_chat(user, "<span class = 'succsess'>The unit already contains a magboots.</span'>")
 			return
 		to_chat(user, "You load the [B.name] into the storage compartment.")
 		user.drop_from_inventory(B, src)
@@ -481,7 +481,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(istank(something))
 		var/obj/item/weapon/tank/T = something
 		if(TANK)
-			to_chat(user, "<font color='blue'>The unit already contains a mask.</font>")
+			to_chat(user, "<span class = 'succsess'>The unit already contains a mask.</span'>")
 			return
 		to_chat(user, "You load the [T.name] into the storage compartment.")
 		user.drop_from_inventory(T, src)
