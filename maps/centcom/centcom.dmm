@@ -6630,7 +6630,7 @@
 /area/space)
 "apz" = (
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/custom/alien)
 "apA" = (
@@ -6796,7 +6796,7 @@
 "apS" = (
 /obj/machinery/door/airlock/hatch,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/custom/alien)
 "apT" = (
@@ -15310,7 +15310,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "aHK" = (
@@ -15718,7 +15718,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "aIK" = (
@@ -15752,7 +15752,7 @@
 /area/centcom/evac)
 "aIP" = (
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "aIQ" = (
@@ -23171,7 +23171,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "bOb" = (
@@ -24851,7 +24851,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "eOb" = (
@@ -25294,7 +25294,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "fLb" = (
@@ -27590,7 +27590,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "plating"
 	},
 /area/centcom/evac)
 "ksb" = (
@@ -57083,7 +57083,7 @@ apv
 apv
 aqi
 aps
-azi
+apS
 aps
 aaM
 aaM
