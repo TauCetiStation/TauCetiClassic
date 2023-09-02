@@ -36,16 +36,11 @@
 
 	if(species_restricted && ishuman(M))
 		var/wearable = null
-		var/exclusive = ("exclude" in species_restricted)
 		var/mob/living/carbon/human/H = M
 
 		if(H.species)
-			if(exclusive)
-				if(!(H.species.name in species_restricted))
-					wearable = TRUE
-			else
-				if(H.species.name in species_restricted)
-					wearable = TRUE
+			if(!(H.species.name in species_restricted))
+				wearable = TRUE
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
@@ -56,10 +51,16 @@
 /obj/item/clothing/proc/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
-		if(HUMAN , SKRELL, PODMAN)	//humanoid bodytypes
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
-		else
-			species_restricted = list(target_species)
+		if(HUMAN)
+			species_restricted = list(SKRELL, UNATHI,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+		if(SKRELL)
+			species_restricted = list(UNATHI, TAJARAN, DIONA,   TAJARAN,   VOX, VOX_ARMALIS)
+		if(TAJARAN)
+			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  DIONA,     VOX, VOX_ARMALIS)
+		if(UNATHI)
+			species_restricted = list(HUMAN,  SKRELL,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+		if(VOX)
+			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  TAJARAN, DIONA, VOX_ARMALIS)
 
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
@@ -76,26 +77,28 @@
 /obj/item/clothing/head/helmet/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
-		if(SKRELL)
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
-		if(PODMAN)
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		if(HUMAN)
-			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
-		else
-			species_restricted = list(target_species)
+			species_restricted = list(SKRELL, UNATHI,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+		if(SKRELL)
+			species_restricted = list(UNATHI, TAJARAN, DIONA,   TAJARAN,   VOX, VOX_ARMALIS)
+		if(TAJARAN)
+			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  DIONA,     VOX, VOX_ARMALIS)
+		if(UNATHI)
+			species_restricted = list(HUMAN,  SKRELL,  TAJARAN, DIONA,     VOX, VOX_ARMALIS)
+		if(VOX)
+			species_restricted = list(HUMAN,  SKRELL,  UNATHI,  TAJARAN, DIONA, VOX_ARMALIS)
 
 	if(target_species == VOX)
 		flags &= ~BLOCKHAIR
 
 	//Set icon
-	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+	if(sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
 	//Set icon
-	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+	if(sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)

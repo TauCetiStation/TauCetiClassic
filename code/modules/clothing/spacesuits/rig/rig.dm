@@ -70,18 +70,18 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted_locked = TRUE
-	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+	species_restricted = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
 	sprite_sheets_refit = list(
-		UNATHI = 'icons/mob/species/unathi/suit.dmi',
+		UNATHI  = 'icons/mob/species/unathi/suit.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
-		SKRELL = 'icons/mob/species/skrell/suit.dmi',
-		VOX = 'icons/mob/species/vox/suit.dmi',
+		SKRELL  = 'icons/mob/species/skrell/suit.dmi',
+		VOX     = 'icons/mob/species/vox/suit.dmi',
 		)
 	sprite_sheets_obj = list(
-		UNATHI = 'icons/obj/clothing/species/unathi/suits.dmi',
+		UNATHI  = 'icons/obj/clothing/species/unathi/suits.dmi',
 		TAJARAN = 'icons/obj/clothing/species/tajaran/suits.dmi',
-		SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
-		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
+		SKRELL  = 'icons/obj/clothing/species/skrell/suits.dmi',
+		VOX     = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
