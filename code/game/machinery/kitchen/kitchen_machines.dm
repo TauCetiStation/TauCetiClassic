@@ -190,7 +190,7 @@
 	else if(operating)
 		to_chat(user, "<span class='notice'>Cooking in progress. Please wait!</span>")
 		return
-	else if(!length(contents))
+	else if(!length(contents) && !length(reagents.reagent_list))
 		to_chat(user, "<span class='warning'>It's empty.</span>")
 		return
 
