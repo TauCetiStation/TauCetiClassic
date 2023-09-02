@@ -174,7 +174,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return
 	if(occupant)
 		eject_occupant(occupant)
-		return  // eject_occupant opens the door, so we need to return
+		return
 	opened = TRUE
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -291,13 +291,11 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return
 	if(!occupant)
 		return
-	if(occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
 	occupant.forceMove(get_turf(src))
 	occupant = null
 	if(!opened)
-		opened = !opened
+		opened = TRUE
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	return
 
@@ -341,8 +339,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 5 SECOND, target = src))
 		mobToMove.stop_pulling()
-/* 		mobToMove.client.perspective ? mobToMove.client.perspective = EYE_PERSPECTIVE : null
-		mobToMove.client.eye ? mobToMove.client.eye = src : null */
 		mobToMove.loc = src
 		occupant = mobToMove
 		update_icon()
@@ -447,6 +443,9 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	return
 
 /obj/machinery/suit_storage_unit/proc/load_something(obj/something, mob/user)
+	if(occupant)
+		to_chat(usr, "<font color='red'>It's too cluttered inside for add something else!</font>")
+		return
 	if(isspacesuit(something))
 		var/obj/item/clothing/suit/space/S = something
 		if(SUIT)
@@ -523,7 +522,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return FALSE
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
-	s.start() //sparks always.
+	s.start()
 	emagged = TRUE
 	superUV = TRUE
 	locked = FALSE
