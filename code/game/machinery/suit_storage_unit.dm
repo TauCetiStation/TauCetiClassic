@@ -66,10 +66,18 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		add_overlay("classic_panel")
 	else
 		cut_overlay("classic_panel")
-
+	if(UV && !superUV)
+		add_overlay("classic_lights_closed")
+		add_overlay("classic_uv")
+		return
+	else if(UV && superUV)
+		add_overlay("classic_super")
+		add_overlay("classic_lights_red")
+		add_overlay("classic_uvstrong")
+		return
 	if(!opened)
 		add_overlay("classic_lights_closed")
-		if(locked && !emagged)
+		if(locked && !emagged && !UV)
 			add_overlay("classic_locked")
 		else
 			add_overlay("classic_unlocked")
@@ -189,8 +197,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	return
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
-	if(emagged)
-		return
 	if(occupant && !superUV)
 		to_chat(user, "<span class ='danger'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>")
 		return
@@ -220,8 +226,8 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		opened = FALSE
 	if(!locked)
 		locked = TRUE
-	update_icon()
 	UV = TRUE
+	update_icon()
 	UV_cleaning()
 
 /obj/machinery/suit_storage_unit/proc/UV_cleaning()
@@ -229,18 +235,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		cycletime_left = 5
 	else
 		cycletime_left = 25
-	cut_overlays()
-	if(panel_open)
-		add_overlay("classic_panel")
-	else
-		cut_overlay("classic_panel")
-	if(UV && !superUV)
-		add_overlay("classic_lights_closed")
-		add_overlay("classic_uv")
-	else
-		add_overlay("classic_super")
-		add_overlay("classic_lights_red")
-		add_overlay("classic_uvstrong")
 	while(cycletime_left)
 		cycletime_left--
 		sleep(10)
@@ -306,15 +300,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		user.last_special = world.time + 100
 		to_chat(user, "<span class='notice'>You start kicking against the doors to escape!</span>")
 		visible_message("You see [user] kicking against the doors of the [src]!")
-		if(do_after(user, 2 MINUTE,target = src))
-			if(user.incapacitated() || user.loc != src || opened || !locked)
-				return
-			else
-				opened = TRUE
-				locked = FALSE
-				visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
-		else
-			return
+		if(do_after(user, 2 MINUTE, target = src))
+			opened = TRUE
+			locked = FALSE
+			visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 	eject_occupant(user)
 	add_fingerprint(user)
 	update_icon()
@@ -409,14 +398,14 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 	if(isscrewing(I))
-		if(!user.is_busy(src) && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.5))
+		if(!user.is_busy(src) && I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 			panel_open = !panel_open
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class ='succsess'>You [panel_open ? "opened up" : "close"] the unit's maintenance panel.</span>")
 			update_icon()
 			return
 	if(iscutter(I))
-		if(!user.is_busy(src) && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.5))
+		if(!user.is_busy(src) && I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 			if(!emagged)
 				superUV = !superUV
 				to_chat(user, "<span class ='danger'>You [superUV ? "disable" : "activete"] the unit's UV safety.</span>")
