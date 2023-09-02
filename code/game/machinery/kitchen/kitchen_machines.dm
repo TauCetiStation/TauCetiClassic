@@ -12,7 +12,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	flags = OPENCONTAINER | NOREACT
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // {0 - MAX_DIRTY} Does it need cleaning?
 	var/broken = NOT_BROKEN // How broken is it???
@@ -92,7 +91,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 20, volume = 100))
+			if(O.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -103,17 +102,16 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
+			if(O.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
 				)
 				broken = NOT_BROKEN // Fix it!
-				flags = OPENCONTAINER
 				return TRUE
 		else
-			to_chat(user, "<span class='danger'>It's broken!</span>")
-			return
+			to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
+			return TRUE
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
@@ -124,7 +122,6 @@
 				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			dirty = 0 // It's clean!
-			flags = OPENCONTAINER
 			return TRUE // Disables the after-attack so we don't spray the floor/user.
 		else
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
@@ -141,12 +138,11 @@
 				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			dirty = 0 // It's clean!
-			flags = OPENCONTAINER
 	else if(dirty == MAX_DIRTY) // The microwave is all dirty so can't be used!
-		to_chat(user, "<span class='warning'>It's dirty!</span>")
+		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 		return TRUE
 	else if(is_type_in_list(O, acceptable_items))
-		if(contents.len>=max_n_of_items)
+		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='danger'>\The [src] is full of ingredients, you cannot put more.</span>")
 			return TRUE
 		var/obj/item/stack/S = O
@@ -161,17 +157,16 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
-	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
-		)
-		if(!O.reagents)
+	else if(istype(O, /obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/RC = O
+		if(!RC.reagents)
 			return TRUE
-		for(var/datum/reagent/R in O.reagents.reagent_list)
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
 			if (!(R.id in acceptable_reagents))
-				to_chat(user, "Your [O] contains components unsuitable for cookery")
+				to_chat(user, "Your [RC] contains components unsuitable for cookery")
 				return TRUE
-		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
+		var/trans = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [src].</span>")
 	else if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
@@ -182,17 +177,15 @@
 	update_icon()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
-	if(IsAdminGhost(user))
-		return ..()
-	return 0
+	ui_interact(user, FALSE)
 
 /*******************
 *   Kitchen Machine Menu
 ********************/
 
-/obj/machinery/kitchen_machine/ui_interact(mob/user)
+/obj/machinery/kitchen_machine/ui_interact(mob/user, require_near = TRUE)
 	if(broken || dirty == MAX_DIRTY)
-		to_chat(user, "<span class='warning'>It doesn't react.</span>")
+		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 		return
 	else if(operating)
 		to_chat(user, "<span class='notice'>Cooking in progress. Please wait!</span>")
@@ -211,7 +204,7 @@
 	options["Eject Contents"] = radial_eject
 	options["Check Contents"] = radial_info
 
-	var/choice = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, options, require_near = require_near, tooltips = TRUE)
 
 	switch(choice)
 		if("Turn On")
@@ -284,7 +277,7 @@
 		stop()
 		if(cooked)
 			cooked.loc = loc
-		for(var/i=1, i < efficiency, i++)
+		for(var/i = 1, i < efficiency, i++)
 			cooked = new cooked.type(loc)
 		if(byproduct)
 			new byproduct(loc)
@@ -292,7 +285,7 @@
 		return
 
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)
-	for(var/i=1 to seconds)
+	for(var/i = 1 to seconds)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		use_power(500)
@@ -337,7 +330,6 @@
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] gets covered in muck!</span>")
 	dirty = MAX_DIRTY // Make it dirty so it can't be used util cleaned
-	flags = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	update_icon()
 
@@ -347,7 +339,6 @@
 	s.start()
 	visible_message("<span class='warning'>[src] breaks!</span>") //Let them know they're stupid
 	broken = FULL_BROKEN // Make it broken so it can't be used util fixed
-	flags = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	update_icon()
 
@@ -356,14 +347,14 @@
 	var/amount = 0
 	for(var/obj/O in contents-ffuu)
 		amount++
-		if (O.reagents)
+		if(O.reagents)
 			var/id = O.reagents.get_master_reagent_id()
 			if (id)
-				amount+=O.reagents.get_reagent_amount(id)
+				amount += O.reagents.get_reagent_amount(id)
 		qdel(O)
 	reagents.clear_reagents()
 	ffuu.reagents.add_reagent("carbon", amount)
-	ffuu.reagents.add_reagent("toxin", amount/10)
+	ffuu.reagents.add_reagent("toxin", amount / 10)
 	return ffuu
 
 /obj/machinery/kitchen_machine/CtrlClick(mob/user)
@@ -382,13 +373,13 @@
 /obj/machinery/kitchen_machine/examine(mob/user)
 	. = ..()
 	if(dirty == MAX_DIRTY)
-		to_chat(user, EMBED_TIP_MINI("<span class='warning'>It looks dirty. Maybe you should try to clean it?</span>", "Use a space cleaner or soap."))
+		to_chat(user, EMBED_TIP("<span class='warning'>It looks dirty. Maybe you should call a janitor?</span>", "Use a space cleaner or soap to clean this."))
 	if(broken)
-		to_chat(user, EMBED_TIP_MINI("<span class='warning'>It looks broken. Maybe you should call an engineer?</span>", "Use a wirecutters and welding tool to repair this."))
+		to_chat(user, EMBED_TIP("<span class='warning'>It looks broken. Maybe you should call an engineer?</span>", "Use a wirecutters and welding tool to repair this."))
 	show_contents(user)
 
 /obj/machinery/kitchen_machine/proc/show_contents(mob/user)
-	if(!length(contents))
+	if(!length(contents) && !length(reagents.reagent_list))
 		return
 	to_chat(user, "<span class='notice'>It contains:</span>")
 	var/list/items_counts = list()
@@ -396,20 +387,20 @@
 	var/list/items_measures_p = list()
 	for(var/obj/O in contents)
 		var/display_name = O.name
-		if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/egg))
 			items_measures[display_name] = "egg"
 			items_measures_p[display_name] = "eggs"
-		if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/tofu))
 			items_measures[display_name] = "tofu chunk"
 			items_measures_p[display_name] = "tofu chunks"
-		if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
 			items_measures[display_name] = "slab of meat"
 			items_measures_p[display_name] = "slabs of meat"
-		if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/donkpocket))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/donkpocket))
 			display_name = "Turnovers"
 			items_measures[display_name] = "turnover"
 			items_measures_p[display_name] = "turnovers"
-		if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/carpmeat))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/carpmeat))
 			items_measures[display_name] = "fillet of meat"
 			items_measures_p[display_name] = "fillets of meat"
 		items_counts[display_name]++
@@ -418,7 +409,7 @@
 		if(!(O in items_measures))
 			to_chat(user, "<span class='notice'>[capitalize(O)]: [N] [lowertext(O)]\s</span>")
 		else
-			if(N==1)
+			if(N == 1)
 				to_chat(user, "<span class='notice'>[capitalize(O)]: [N] [items_measures[O]]</span>")
 			else
 				to_chat(user, "<span class='notice'>[capitalize(O)]: [N] [items_measures_p[O]]</span>")
