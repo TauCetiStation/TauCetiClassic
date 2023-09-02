@@ -4083,6 +4083,12 @@
 	icon_state = "0-2"
 	},
 /obj/structure/closet/wardrobe/red,
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "Brig largecell apc left";
+	custom_smartlight_preset = "Brig";
+	pixel_x = -27
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
