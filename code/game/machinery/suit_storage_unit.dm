@@ -202,9 +202,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return
 	if(allowed(user))
 		locked = !locked
-		for(var/mob/O in viewers(user, 3))
-			if((O.client && !( O.blinded )))
-				to_chat(O, "<span class='notice'>The [src] been [locked ? null : "un"]locked by [user].</span>")
+		visible_message("<span class='notice'>The [src] been [locked ? null : "un"]locked by [user].</span>")
 		update_icon()
 	else
 		to_chat(user, "<span class='notice'>Access Denied</span>")
