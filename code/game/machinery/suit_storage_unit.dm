@@ -306,25 +306,31 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	update_icon()
 	return
 
-/obj/machinery/suit_storage_unit/proc/move_into_unit(mob/mobToMove)
+/obj/machinery/suit_storage_unit/proc/move_into_unit(mob/mobToMove, mob/user, obj/item/G)
 	if(!opened)
-		to_chat(usr, "<span class ='danger'>The unit's doors are shut.</span>")
-		return
-	if(!powered || broken)
-		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		to_chat(user, "<span class ='danger'>The unit's doors are shut.</span>")
 		return
 	if(occupant || HELMET || SUIT || TANK || BOOTS)
-		to_chat(usr, "<span class ='danger'>It's too cluttered inside for you to fit in!</span>")
+		to_chat(user, "<span class ='danger'>It's too cluttered inside for you to fit in!</span>")
 		return
-	if(usr.is_busy())
+	if(user.is_busy())
 		return
-	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
-	if(do_after(usr, 5 SECOND, target = src))
+	visible_message("[user] starts squeezing into the suit storage unit!", 3)
+	if(do_after(user, 5 SECOND, target = src))
 		mobToMove.stop_pulling()
 		mobToMove.loc = src
 		occupant = mobToMove
+		G ? qdel(G) : null
+		add_fingerprint(user)
 		update_icon()
-		add_fingerprint(usr)
+		return
+
+/obj/machinery/suit_storage_unit/MouseDrop_T(atom/dropping, mob/user)
+	add_fingerprint(user)
+	if(opened)
+		if(dropping != user)
+			return
+		move_into_unit(dropping, user)
 		return
 
 /obj/machinery/suit_storage_unit/AltClick(mob/user)
@@ -334,9 +340,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(!allowed(user))
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 		return
-	if(opened)
-		move_into_unit(user)
-	else
+	if(!opened && !locked)
 		start_UV(user)
 
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
@@ -410,12 +414,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(opened)
 		if(istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
-			if(!ismob(G.affecting))
+			if(!ismob(G.affecting) || G.state < GRAB_AGGRESSIVE)
 				return
 			var/mob/M = G.affecting
-			move_into_unit(M)
-			add_fingerprint(user)
-			qdel(G)
+			move_into_unit(M, user, G)
 			update_icon()
 			return
 		if(isspacesuit(I) || isspacehelmet(I) || isbreathmask(I) || ismagboots(I) || istank(I))
