@@ -104780,7 +104780,6 @@
 	},
 /obj/structure/curtain/open/bed,
 /obj/machinery/door/poddoor{
-	density = 0;
 	id = "xenobiosouth";
 	name = "Containment Blast Doors"
 	},
