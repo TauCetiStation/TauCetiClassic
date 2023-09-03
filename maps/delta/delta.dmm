@@ -23055,11 +23055,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
@@ -36772,14 +36767,9 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -52926,11 +52916,11 @@
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
 "kUp" = (
-/obj/machinery/door/airlock/mining/glass{
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
 	name = "Drone Bay";
 	req_one_access = list(31,48)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brownchoco"
@@ -78685,18 +78675,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
-"qFO" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/cargo)
 "qGc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -82996,18 +82974,13 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -90954,14 +90927,6 @@
 	icon_state = "darkbluechoco"
 	},
 /area/station/medical/sleeper)
-"tvC" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
-	},
-/turf/simulated/floor/plating,
-/area/station/cargo/office)
 "tvE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -103681,11 +103646,6 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -111228,14 +111188,9 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -152595,7 +152550,7 @@ xiM
 sld
 ppa
 nLe
-tvC
+sht
 kVk
 eJg
 bJO
@@ -153104,11 +153059,11 @@ bas
 bas
 bas
 bas
-qFO
 bas
 bas
-qFO
-qFO
+bas
+bas
+bas
 bas
 pbb
 wpa
