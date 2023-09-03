@@ -1626,6 +1626,35 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/mixing)
+"acJ" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/black,
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the singularity chamber.";
+	layer = 4;
+	name = "Singularity Engine Telescreen";
+	network = list("Singularity");
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellow"
+	},
+/area/station/engineering/engine)
+"acK" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity South-East";
+	dir = 8;
+	network = list("Singularity")
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "acL" = (
 /obj/effect/landmark/start/captain,
 /obj/structure/stool/bed,
@@ -1669,6 +1698,20 @@
 	icon_state = "red"
 	},
 /area/station/security/main)
+"acO" = (
+/obj/structure/cable/yellow,
+/obj/machinery/power/emitter{
+	anchored = 1;
+	dir = 1;
+	state = 2
+	},
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity South-West";
+	dir = 10;
+	network = list("Singularity")
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "acP" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
@@ -23726,11 +23769,18 @@
 	},
 /area/station/engineering/minisat_secure_area)
 "eLT" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/machinery/power/emitter{
 	anchored = 1;
-	dir = 1;
 	state = 2
+	},
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity North-West";
+	dir = 6;
+	network = list("Singularity")
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -27801,6 +27851,11 @@
 	dir = 5;
 	icon_state = "warn"
 	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "fGm" = (
@@ -28541,6 +28596,13 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the singularity chamber.";
+	layer = 4;
+	name = "Singularity Engine Telescreen";
+	network = list("Singularity");
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -33426,7 +33488,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering  Robots");
+	network = list("Engineering","Engineering  Robots", "Singularity");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -38575,6 +38637,11 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity Observation";
+	dir = 4;
+	network = list("Singularity")
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -97867,14 +97934,18 @@
 	},
 /area/station/engineering/break_room)
 "vch" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/gloves/black,
-/obj/item/weapon/storage/box/lights/mixed,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "yellow"
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/station/engineering/engine)
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity North-East";
+	dir = 9;
+	network = list("Singularity")
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "vct" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -103877,10 +103948,6 @@
 	},
 /area/station/hallway/primary/central)
 "wyP" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
-	},
 /obj/machinery/camera{
 	c_tag = "Enginnering Engine Access";
 	dir = 8;
@@ -132278,7 +132345,7 @@ ttr
 qVs
 vKa
 tvt
-btC
+eLT
 peZ
 kHU
 kHU
@@ -132298,7 +132365,7 @@ ajh
 kHU
 kHU
 abE
-eLT
+acO
 jwI
 hRb
 cjx
@@ -134593,7 +134660,7 @@ gWQ
 wtG
 sNl
 gma
-vNC
+vch
 vJD
 oex
 hQo
@@ -134609,7 +134676,7 @@ lwK
 oGO
 oex
 hap
-vNC
+acK
 cyw
 ilb
 jwI
@@ -136397,13 +136464,13 @@ sUm
 shG
 wDR
 ksU
-nsa
+kZh
 fGh
 yfy
 kkY
 hmC
 wyP
-nsa
+kZh
 ksU
 ehX
 oGF
@@ -136655,11 +136722,11 @@ caP
 ehX
 hXd
 nsa
-kZh
+nsa
 nXA
 xta
 nXA
-kZh
+nsa
 nsa
 hUk
 wDR
@@ -136916,7 +136983,7 @@ fwj
 jvA
 rVN
 sFd
-vch
+acJ
 rpW
 lEA
 lEA
