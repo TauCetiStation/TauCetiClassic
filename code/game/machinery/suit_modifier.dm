@@ -91,13 +91,11 @@
 	var/list/modifySelect = list()
 	var/list/speciesAvailable = C.species_restricted
 	speciesAvailable.Remove(DIONA)
-	var/obj/item/clothing/temp = new C(null)
 
 	for(var/species in speciesAvailable)
-		temp.icon = temp.sprite_sheets_obj[species]
-		modifySelect[species] += image(icon = temp.icon, icon_state = temp.icon_state)
+		var/icon_path = C.sprite_sheets_obj[species]
+		modifySelect[species] += image(icon = icon_path, icon_state = C.icon_state)
 
-	qdel(temp)
 	var/toModifi = show_radial_menu(user, src, modifySelect, require_near = TRUE, tooltips = TRUE)
 	switch(toModifi)
 		if("Human")
