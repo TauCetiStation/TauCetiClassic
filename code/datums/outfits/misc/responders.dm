@@ -339,11 +339,12 @@
 	if(prob(30))
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/surplus(H), SLOT_HEAD)
 	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka(H), SLOT_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka/black(H), SLOT_HEAD)
 
 /datum/outfit/responders/ussp/leader
 	name = "Responders: Soviet Leader"
 
+	suit = /obj/item/clothing/suit/storage/comissar
 	head = /obj/item/clothing/head/soviet_peaked_cap
 	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 
