@@ -41,10 +41,10 @@
 
 /obj/item/weapon/storage/secure/AltClick(mob/user)
 	add_fingerprint(user)
-	if(!try_open(user))
+	if(!try_open_secure(user))
 		tgui_interact(user)
 
-/obj/item/weapon/storage/secure/proc/try_open(mob/user)
+/obj/item/weapon/storage/secure/proc/try_open_secure(mob/user)
 	. = ..()
 	if(!.)
 		return FALSE
