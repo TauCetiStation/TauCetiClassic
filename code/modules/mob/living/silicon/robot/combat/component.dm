@@ -9,4 +9,4 @@
 
 /datum/robot_component/armour/class_3
 	name = "armour plating (Class III)"
-	max_damage = 120
+	max_damage = 150
