@@ -53784,10 +53784,6 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenblue"
