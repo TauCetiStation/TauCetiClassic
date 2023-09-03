@@ -32117,8 +32117,12 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "gAc" = (
-/obj/item/toy/figure/captain,
 /obj/structure/table/woodentable,
+/obj/item/weapon/spacecash/c50,
+/obj/item/weapon/lighter{
+	pixel_x = 6;
+	pixel_y = 12
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -33813,6 +33817,10 @@
 "gUC" = (
 /obj/structure/filingcabinet/security,
 /obj/machinery/light/small,
+/obj/item/toy/figure/captain{
+	pixel_x = -1;
+	pixel_y = 17
+	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "gUH" = (
@@ -44593,7 +44601,6 @@
 /area/station/engineering/minisat_secure_area)
 "jiY" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/stamp/captain,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -44604,6 +44611,8 @@
 /obj/machinery/door/window/brigdoor/northleft{
 	req_access = list(20)
 	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/stamp/captain,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "jjk" = (
@@ -44758,9 +44767,12 @@
 /area/station/rnd/storage)
 "jle" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green,
 /obj/structure/window/thin/reinforced{
 	dir = 8
+	},
+/obj/item/toy/plushie/space_whale,
+/obj/item/device/flashlight/lamp/green{
+	pixel_y = 15
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -46458,10 +46470,10 @@
 /area/station/civilian/barbershop)
 "jCI" = (
 /obj/structure/table/woodentable,
-/obj/item/device/megaphone,
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/pinpointer/advpinpointer,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -88812,10 +88824,10 @@
 /area/station/maintenance/medbay)
 "sTY" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/pinpointer/advpinpointer,
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/item/device/megaphone,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "sTZ" = (
@@ -96490,7 +96502,6 @@
 "uLJ" = (
 /obj/machinery/recharger,
 /obj/structure/table/woodentable,
-/obj/item/toy/plushie/space_whale,
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
@@ -103749,6 +103760,10 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/item/weapon/reagent_containers/food/drinks/flask{
+	pixel_x = 8
+	},
+/obj/item/weapon/razor,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -104323,6 +104338,7 @@
 	dir = 8
 	},
 /obj/machinery/light/smart,
+/obj/item/weapon/paper_bin,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
