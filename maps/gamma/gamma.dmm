@@ -57403,7 +57403,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitebluefull"
 	},
 /area/station/medical/genetics_cloning)
 "laJ" = (
