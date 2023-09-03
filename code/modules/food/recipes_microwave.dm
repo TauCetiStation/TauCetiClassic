@@ -761,7 +761,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash
 
 /datum/recipe/microwave/ajurahma
 	reagents = list("water" = 10, "sugar" = 10)
