@@ -44,6 +44,16 @@
 	if(!try_open(user))
 		tgui_interact(user)
 
+/obj/item/weapon/storage/secure/proc/try_open(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(locked)
+		return FALSE
+
+	open(user)
+	return TRUE
+
 
 /obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
 	if(locked)
