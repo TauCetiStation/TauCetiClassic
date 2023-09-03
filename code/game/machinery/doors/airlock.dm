@@ -813,6 +813,11 @@ var/global/list/airlock_overlays = list()
 					else if(secondsElectrified)
 						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
+						if(isdrone(usr) && !istype(usr, /mob/living/silicon/robot/drone/syndi))
+							var/mob/living/silicon/robot/drone/Drone = usr
+							if(!Drone.emagged)
+								to_chat(Drone, "<span class='warning'><B>Дрон не может своими действиями причинить вред.</B></span>")
+								return
 						if(isrobot(usr))
 							var/mob/living/silicon/robot/Robot = usr
 							if(!Robot.emagged && !(Robot.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
@@ -833,6 +838,11 @@ var/global/list/airlock_overlays = list()
 					else if(secondsElectrified)
 						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
+						if(isdrone(usr) && !istype(usr, /mob/living/silicon/robot/drone/syndi))
+							var/mob/living/silicon/robot/drone/Drone = usr
+							if(!Drone.emagged)
+								to_chat(Drone, "<span class='warning'><B>Дрон не может своими действиями причинить вред.</B></span>")
+								return
 						if(isrobot(usr))
 							var/mob/living/silicon/robot/Robot = usr
 							if(!Robot.emagged && !(Robot.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
