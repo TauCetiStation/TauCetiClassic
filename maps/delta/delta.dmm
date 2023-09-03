@@ -1721,6 +1721,16 @@
 	icon_state = "bluecorner"
 	},
 /area/station/maintenance/chapel)
+"acQ" = (
+/obj/structure/closet/secure_closet/security,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
+/turf/simulated/floor{
+	icon_state = "darkredchecker"
+	},
+/area/station/security/checkpoint/escape)
 "acR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/dresser,
@@ -5720,6 +5730,10 @@
 /obj/machinery/icecream_vat,
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -56785,6 +56799,10 @@
 	dir = 1;
 	icon_state = "box_corners_white"
 	},
+/obj/machinery/camera{
+	c_tag = "Escape Shuttle Hallway East";
+	dir = 9
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87210,10 +87228,6 @@
 /obj/item/weapon/flora/deskleaf{
 	pixel_y = 7
 	},
-/obj/machinery/camera{
-	c_tag = "Escape Shuttle Hallway East";
-	dir = 9
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -89949,13 +89963,9 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Escape Shuttle Hallway Mid";
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
+/obj/machinery/firealarm{
 	dir = 1;
-	icon_state = "box_corners_white"
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -102266,10 +102276,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/newspaper,
 /obj/item/weapon/pen,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -28;
-	pixel_y = -5
+/obj/machinery/camera{
+	c_tag = "Escape Shuttle Hallway West";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -109036,9 +109045,9 @@
 /obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Escape Shuttle Hallway West";
-	dir = 1
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -152133,7 +152142,7 @@ uVq
 vfW
 vfW
 vfW
-oBw
+acQ
 tlK
 kHU
 pka
@@ -154697,7 +154706,7 @@ onH
 rmY
 phn
 ier
-tiS
+mnw
 rmY
 tlK
 tlK
@@ -154954,7 +154963,7 @@ fJU
 fXZ
 djc
 ier
-rXN
+tiS
 rmY
 nKi
 nKi
@@ -156232,8 +156241,8 @@ lez
 pyv
 rmY
 rmY
-sug
-sug
+rmY
+rmY
 sug
 sug
 sug
