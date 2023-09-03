@@ -112,6 +112,7 @@
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm)
 
 	var/rig_variant = "engineering"
 
@@ -590,6 +591,26 @@
 			if(equipped)
 				user.add_overlay(module.suit_overlay_image)
 
+// action battons
+/datum/action/item_action/hands_free/toggle_hardsuit_magboots
+	name = "Toggle hardsuit magboots"
+	button_icon = 'icons/obj/clothing/shoes.dmi'
+	button_icon_state = "magboots"
+
+/datum/action/item_action/hands_free/toggle_hardsuit_magboots/Activate()
+	var/obj/item/clothing/suit/space/rig/S = target
+	S.toggle_magboots()
+
+
+/datum/action/item_action/hands_free/toggle_hardsuit_helm
+	name = "Toggle helmet"
+
+/datum/action/item_action/hands_free/toggle_hardsuit_helm/Activate()
+	var/obj/item/clothing/suit/space/rig/S = target
+	S.toggle_helmet()
+
+
+
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
 	name = "engineering hardsuit helmet"
@@ -811,7 +832,6 @@
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_space_suit_mode)
 
 /datum/action/item_action/hands_free/toggle_space_suit_mode
 	name = "Toggle space suit mode"
@@ -822,6 +842,7 @@
 
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
 	. = ..()
+	item_action_types += /datum/action/item_action/hands_free/toggle_space_suit_mode
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
 	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
 	boots = SB
@@ -1060,7 +1081,8 @@
 	var/on = 0
 
 	light_color = "#ff00ff"
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_light)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm,
+	/datum/action/item_action/hands_free/toggle_hardsuit_light)
 
 /datum/action/item_action/hands_free/toggle_hardsuit_light
 	name = "Toggle Hardsuit Light"
@@ -1094,7 +1116,7 @@
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
 
-	item_action_types = null
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm)
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
