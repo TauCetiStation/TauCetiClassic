@@ -137,6 +137,10 @@
 		return FALSE
 	if(!user.in_interaction_vicinity(src))
 		return FALSE
+	if(istype(src, /obj/item/weapon/storage/secure))
+		var/obj/item/weapon/storage/secure/stor
+		if(stor.locked)
+			return FALSE
 
 	open(user)
 	return TRUE

@@ -41,10 +41,9 @@
 
 /obj/item/weapon/storage/secure/AltClick(mob/user)
 	add_fingerprint(user)
-	if(locked)
+	if(!try_open(user))
 		tgui_interact(user)
-	else
-		return ..()
+
 
 /obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
 	if(locked)
