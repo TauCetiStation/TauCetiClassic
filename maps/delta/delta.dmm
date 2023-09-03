@@ -19156,6 +19156,7 @@
 "dJV" = (
 /obj/structure/closet/toolcloset,
 /obj/item/clothing/gloves/insulated,
+/obj/item/stack/cable_coil,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "dJY" = (
@@ -23559,7 +23560,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/inputting,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "eKH" = (
@@ -26166,9 +26169,6 @@
 /turf/simulated/wall,
 /area/station/civilian/dormitories/courtroom)
 "fnI" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -26176,6 +26176,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/power/smes/inputting,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "fnT" = (
@@ -31779,14 +31780,14 @@
 "gxY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -48192,9 +48193,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/incinerator)
 "jVJ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high/empty,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "jVM" = (
@@ -57243,11 +57241,9 @@
 	},
 /area/station/engineering/engine)
 "lRU" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/light/small,
+/obj/machinery/power/smes/inputting,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "lRY" = (
@@ -59925,10 +59921,10 @@
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "mxZ" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot_old"
-	},
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high/empty,
+/obj/item/weapon/module/power_control,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -75868,12 +75864,9 @@
 	},
 /area/station/maintenance/cargo)
 "pYY" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/cable_coil,
 /obj/structure/sign/poster/official/build{
 	pixel_x = 32
 	},
-/obj/item/weapon/module/power_control,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "pYZ" = (
@@ -81222,16 +81215,16 @@
 	},
 /area/station/rnd/scibreak)
 "rkZ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -89871,7 +89864,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/inputting,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "thU" = (
