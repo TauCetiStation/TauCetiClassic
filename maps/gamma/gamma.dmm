@@ -30152,8 +30152,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkyellowfull"
+	icon_state = "brownfull"
 	},
 /area/station/cargo/miningoffice)
 "fwG" = (
@@ -112287,8 +112286,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkyellowfull"
+	icon_state = "brownfull"
 	},
 /area/station/cargo/miningoffice)
 "wmV" = (
