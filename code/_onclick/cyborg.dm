@@ -140,7 +140,10 @@
 /atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlClick() // Bolts doors. Forwards to AI code.
+/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
+	if(!user.emagged && !(user.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate", "Engineering")))
+		to_chat(user, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+		return
 	AICtrlClick()
 
 /obj/machinery/power/apc/BorgCtrlClick() // turns off/on APCs. Forwards to AI code.
@@ -153,7 +156,10 @@
 	AltClick(user)
 	return
 
-/obj/machinery/door/airlock/BorgAltClick() // Eletrifies doors. Forwards to AI code.
+/obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
+	if(!user.emagged && !(user.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
+		to_chat(user, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+		return
 	AIAltClick()
 
 /obj/machinery/turretid/BorgAltClick() //turret lethal on/off. Forwards to AI code.

@@ -718,6 +718,11 @@ var/global/list/airlock_overlays = list()
 					if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						to_chat(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
 					else if(!locked)
+						if(isrobot(usr))
+							var/mob/living/silicon/robot/Robot = usr
+							if(!Robot.emagged && !(Robot.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate", "Engineering")))
+								to_chat(Robot, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+								return
 						bolt()
 
 				if(5)
@@ -808,6 +813,11 @@ var/global/list/airlock_overlays = list()
 					else if(secondsElectrified)
 						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
+						if(isrobot(usr))
+							var/mob/living/silicon/robot/Robot = usr
+							if(!Robot.emagged && !(Robot.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
+								to_chat(Robot, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+								return
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
 						secondsElectrified = 30
@@ -823,6 +833,11 @@ var/global/list/airlock_overlays = list()
 					else if(secondsElectrified)
 						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
+						if(isrobot(usr))
+							var/mob/living/silicon/robot/Robot = usr
+							if(!Robot.emagged && !(Robot.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
+								to_chat(Robot, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+								return
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
 						secondsElectrified = -1
