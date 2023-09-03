@@ -89,10 +89,6 @@
 			return
 
 		var/list/current_mounts = list()
-		var/list/current_mounts_modules = list()
-
-		for(var/obj/item/rig_module/mounted in src)
-			current_mounts_modules += mounted
 
 		if(helmet)
 			current_mounts += list("Helmet" = image(icon = helmet.icon, icon_state = helmet.icon_state))
@@ -100,7 +96,7 @@
 			current_mounts += list("Cell" = image(getFlatIcon(cell)))
 		if(boots)
 			current_mounts += list("Boots" = image(icon = boots.icon, icon_state = boots.icon_state))
-		if(current_mounts_modules.len)
+		if(installed_modules.len)
 			current_mounts += list("Modules" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
 
 		var/to_remove = show_radial_menu(user, src, current_mounts, require_near = TRUE, tooltips = TRUE)
@@ -118,7 +114,7 @@
 			if("Boots")
 				detach_boots(user)
 			if("Modules")
-				detach_module(user, current_mounts_modules)
+				detach_module(user, installed_modules)
 		return
 
 	// If we've gotten this far, all we have left to do before we pass off to root procs
