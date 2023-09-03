@@ -36123,7 +36123,8 @@
 /area/station/rnd/xenobiology)
 "huw" = (
 /obj/structure/bookcase{
-	name = "Holy Bookcase"
+	name = "Holy Bookcase";
+	opacity = 0
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
