@@ -38597,11 +38597,6 @@
 	},
 /area/station/hallway/primary/central)
 "hVD" = (
-/obj/machinery/camera{
-	c_tag = "Xenobiology Access";
-	dir = 6;
-	network = list("SS13","Research")
-	},
 /obj/machinery/computer/operating{
 	name = "Xenobiology Operating Computer"
 	},
@@ -91453,6 +91448,10 @@
 "tAS" = (
 /obj/machinery/optable{
 	name = "Xenobiology Operating Table"
+	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Access";
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
