@@ -13210,13 +13210,11 @@
 	},
 /area/station/hallway/secondary/entry)
 "ctb" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE"
+/mob/living/carbon/slime,
+/turf/simulated/floor/bluegrid{
+	icon_state = "gcircuit"
 	},
-/turf/simulated/wall/r_wall,
-/area/station/maintenance/engineering)
+/area/station/rnd/xenobiology)
 "ctc" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -40403,16 +40401,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -49076,11 +49064,6 @@
 	},
 /area/station/rnd/storage)
 "kfd" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /mob/living/carbon/monkey,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
@@ -65624,16 +65607,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -68658,21 +68631,6 @@
 	icon_state = "black"
 	},
 /area/station/civilian/chapel)
-"otI" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/poddoor{
-	id = "xenobionorth";
-	name = "Containment Blast Doors"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
 "otJ" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -77311,16 +77269,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -83485,16 +83433,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -91352,14 +91290,6 @@
 /obj/machinery/door_control{
 	id = "xenobiosouth";
 	name = "South Containment Blast Doors";
-	pixel_x = 6;
-	pixel_y = -26;
-	req_access = list(55)
-	},
-/obj/machinery/door_control{
-	id = "xenobionorth";
-	name = "North Containment Blast Doors";
-	pixel_x = -6;
 	pixel_y = -26;
 	req_access = list(55)
 	},
@@ -104842,10 +104772,8 @@
 /obj/structure/curtain/open/bed,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
 	id = "xenobiosouth";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -106550,17 +106478,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/cold_room)
-"xdW" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/mob/living/carbon/monkey,
-/turf/simulated/floor{
-	icon_state = "blackchoco"
-	},
-/area/station/rnd/xenobiology)
 "xef" = (
 /obj/machinery/door/airlock/multi_tile/glass,
 /turf/simulated/floor{
@@ -133136,7 +133053,7 @@ xwj
 jwI
 buY
 waU
-ctb
+jwI
 vUH
 fRJ
 snG
@@ -133393,10 +133310,10 @@ xwj
 jwI
 ara
 crH
-otI
-xdW
+jwI
+fGG
 kfd
-xdW
+fGG
 rIz
 stV
 gBf
@@ -134164,10 +134081,10 @@ gRp
 jwI
 qMT
 cMM
-otI
-mph
-atC
-mph
+jwI
+fRJ
+jKB
+fRJ
 inR
 bGW
 iqa
@@ -134935,10 +134852,10 @@ nsa
 nsa
 nOD
 wTL
-otI
-mph
-atC
-mph
+jwI
+fRJ
+jKB
+fRJ
 nJq
 bGW
 iqa
@@ -135706,10 +135623,10 @@ nsa
 nsa
 jwI
 cMM
-otI
-mph
-wYO
-mph
+jwI
+fRJ
+ctb
+fRJ
 qob
 bGW
 ujR
@@ -135963,7 +135880,7 @@ gRV
 rtL
 jwI
 gPy
-ctb
+jwI
 vLf
 fRJ
 vpb
