@@ -26841,12 +26841,12 @@
 	},
 /area/station/cargo/qm)
 "ftZ" = (
-/obj/machinery/door/airlock/research{
-	name = "Ordnance Lab";
-	req_access = list(8)
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/blue,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research/glass{
+	name = "Toxin Lab";
+	req_access = list(8)
+	},
 /turf/simulated/floor{
 	icon_state = "purplechoco"
 	},
@@ -140035,7 +140035,7 @@ sIc
 uDL
 ivx
 ilA
-fUZ
+vee
 kHU
 kHU
 kHU
@@ -140292,7 +140292,7 @@ pNq
 ilA
 fbF
 jBD
-fUZ
+vee
 kHU
 oIK
 eWN
@@ -140549,7 +140549,7 @@ dNy
 dNy
 juy
 qNK
-vee
+fUZ
 plf
 oIK
 kLU
@@ -140806,7 +140806,7 @@ laE
 dNy
 fbF
 kNm
-vee
+fUZ
 kHU
 oIK
 xrA
@@ -141320,9 +141320,9 @@ tUP
 dNy
 eAO
 fVu
-vee
+fUZ
 kHU
-eWN
+oIK
 oAi
 kDj
 elZ
@@ -141577,9 +141577,9 @@ lAx
 dNy
 iIB
 jBD
-vee
+fUZ
 plf
-eWN
+oIK
 dxm
 bhz
 elZ
