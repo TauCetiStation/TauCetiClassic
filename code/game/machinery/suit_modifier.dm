@@ -13,6 +13,30 @@
 	var/obj/item/clothing/suit/space/rig/suit 			= null
 	var/obj/item/clothing/head/helmet/space/rig/helmet 	= null
 
+	var/list/modulesToBuy = list(
+		/obj/item/rig_module/simple_ai,
+		/obj/item/rig_module/emp_shield/adv,
+		/obj/item/rig_module/device/healthscanner,
+		/obj/item/rig_module/device/analyzer,
+		/obj/item/rig_module/device/science_tool,
+		/obj/item/rig_module/device/drill,
+		/obj/item/rig_module/device/anomaly_scanner,
+		/obj/item/rig_module/device/orescanner,
+		/obj/item/rig_module/device/rcd,
+		/obj/item/rig_module/chem_dispenser,
+		/obj/item/rig_module/chem_dispenser/combat,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/emp_shield,
+		/obj/item/rig_module/teleporter_stabilizer,
+		/obj/item/rig_module/selfrepair,
+		/obj/item/rig_module/med_teleport,
+		/obj/item/rig_module/nuclear_generator,
+		/obj/item/rig_module/mounted_relay,
+		/obj/item/rig_module/device/extinguisher,
+		/obj/item/rig_module/metalfoam_spray,
+
+	)
+
 /obj/machinery/suit_modifier/atom_init()
 	. = ..()
 	update_icon()
@@ -50,6 +74,12 @@
 		update_icon()
 		return
 
+/obj/machinery/suit_modifier/proc/buy_module(obj/item/clothing/C, mob/user)
+
+/obj/machinery/suit_modifier/proc/detach_module()
+
+/obj/machinery/suit_modifier/proc/attach_module()
+
 /obj/machinery/suit_modifier/proc/modify_race(obj/item/clothing/C, atom/target_species, mob/user)
 	C.refit_for_species(target_species)
 	if(ishardhelmet(C))
@@ -61,12 +91,13 @@
 	var/list/modifySelect = list()
 	var/list/speciesAvailable = C.species_restricted
 	speciesAvailable.Remove(DIONA)
+	var/obj/item/clothing/temp = new C(null)
 
-	var/obj/item/clothing/temp = C
 	for(var/species in speciesAvailable)
 		temp.icon = temp.sprite_sheets_obj[species]
 		modifySelect[species] += image(icon = temp.icon, icon_state = temp.icon_state)
 
+	qdel(temp)
 	var/toModifi = show_radial_menu(user, src, modifySelect, require_near = TRUE, tooltips = TRUE)
 	switch(toModifi)
 		if("Human")
@@ -85,9 +116,9 @@
 		if(helmet || suit)
 			var/list/contents = list()
 			if(helmet)
-				contents += list("Helmet" = image(getFlatIcon(helmet)))
+				contents += list("Helmet" = image(icon = helmet.icon, icon_state = helmet.icon_state))
 			if(suit)
-				contents += list("Suit"   = image(getFlatIcon(suit)))
+				contents += list("Suit"   = image(icon = suit.icon, icon_state = suit.icon_state))
 			var/toModify = show_radial_menu(user, src, contents, require_near = TRUE, tooltips = TRUE)
 
 			switch(toModify)
