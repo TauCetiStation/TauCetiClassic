@@ -52384,7 +52384,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "jXm" = (
 /obj/item/weapon/table_parts/stall,
