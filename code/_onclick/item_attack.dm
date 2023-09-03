@@ -53,6 +53,12 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)
 		return
 
+	if(isdrone(user) && !istype(user, /mob/living/silicon/robot/drone/syndi))
+		var/mob/living/silicon/robot/drone/Drone = user
+		if(!Drone.emagged)
+			to_chat(user, "<span class='warning'><B>Дрон не может причинять вред.</B></span>")
+			return
+
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
