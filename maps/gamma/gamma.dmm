@@ -68812,7 +68812,7 @@
 /obj/machinery/conveyor{
 	id = "QMLoad"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "nug" = (
 /obj/structure/table/woodentable,
@@ -96087,7 +96087,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "browncorner"
+	},
 /area/station/cargo/storage)
 "taY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
