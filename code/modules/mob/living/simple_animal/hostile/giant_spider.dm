@@ -40,6 +40,11 @@
 
 	has_head = TRUE
 	has_leg = TRUE
+	var/is_alive = TRUE
+
+/mob/living/simple_animal/hostile/giant_spider/atom_init()
+	. = ..()
+	spiders_count++
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
@@ -83,18 +88,25 @@
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	..()
-	if(stat == CONSCIOUS)
-		if(stance == HOSTILE_STANCE_IDLE)
-			//1% chance to skitter madly away
-			if(!busy && prob(1))
-				/*var/list/move_targets = list()
-				for(var/turf/T in orange(20, src))
-					move_targets.Add(T)*/
-				stop_automated_movement = TRUE
-				walk_to(src, pick(orange(20, src)), 1, move_to_delay)
-				spawn(50)
-					stop_automated_movement = FALSE
-					walk(src,0)
+	if(stat != CONSCIOUS)
+		if(is_alive)
+			spiders_count--
+			is_alive = FALSE
+		return
+	if(stance != HOSTILE_STANCE_IDLE)
+		return
+	//1% chance to skitter madly away
+	if(!busy && prob(1))
+		stop_automated_movement = TRUE
+		walk_to(src, pick(orange(20, src)), 1, move_to_delay)
+		spawn(50)
+			stop_automated_movement = FALSE
+			walk(src,0)
+
+/mob/living/simple_animal/hostile/giant_spider/Destroy()
+	if(is_alive)
+		spiders_count--
+	return ..()
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
@@ -143,7 +155,8 @@
 							if(busy == LAYING_EGGS)
 								E = locate() in get_turf(src)
 								if(!E)
-									new /obj/structure/spider/eggcluster(src.loc)
+									if(global.spiders_count < MAX_SPIDERS_SPAWN)
+										new /obj/structure/spider/eggcluster(src.loc)
 									fed--
 								busy = 0
 								stop_automated_movement = FALSE
@@ -153,7 +166,8 @@
 
 							if(O.anchored)
 								continue
-
+							if(istype(O, /obj/structure/spider))
+								continue
 							if(isitem(O) || istype(O, /obj/structure) || ismachinery(O))
 								cocoon_target = O
 								busy = MOVING_TO_TARGET
