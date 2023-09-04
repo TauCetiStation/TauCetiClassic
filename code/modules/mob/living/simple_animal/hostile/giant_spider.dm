@@ -132,35 +132,21 @@
 							new /obj/structure/spider/stickyweb(src.loc)
 							busy = 0
 							stop_automated_movement = FALSE
-				else
-					//third, lay an egg cluster there
-					var/obj/structure/spider/eggcluster/E = locate() in get_turf(src)
-					if(!E && fed > 0)
-						busy = LAYING_EGGS
-						visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
-						stop_automated_movement = TRUE
-						spawn(50)
-							if(busy == LAYING_EGGS)
-								E = locate() in get_turf(src)
-								if(!E)
-									new /obj/structure/spider/eggcluster(src.loc)
-									fed--
-								busy = 0
-								stop_automated_movement = FALSE
-					else
-						//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
-						for(var/obj/O in can_see)
 
-							if(O.anchored)
+				else
+					//third, cocoon any nearby items so those pesky pinkskins can't use them
+					for(var/obj/O in can_see)
+
+						if(O.anchored)
 								continue
 
-							if(isitem(O) || istype(O, /obj/structure) || ismachinery(O))
-								cocoon_target = O
-								busy = MOVING_TO_TARGET
-								stop_automated_movement = TRUE
-								walk_to(src, O, 1, move_to_delay)
-								//give up if we can't reach them after 10 seconds
-								GiveUp(O)
+						if(isitem(O) || istype(O, /obj/structure) || ismachinery(O))
+							cocoon_target = O
+							busy = MOVING_TO_TARGET
+							stop_automated_movement = TRUE
+							walk_to(src, O, 1, move_to_delay)
+							//give up if we can't reach them after 10 seconds
+							GiveUp(O)
 
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)
