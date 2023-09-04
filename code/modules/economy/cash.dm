@@ -141,6 +141,10 @@
 	var/datum/money_account/M = create_account(name, 0, null, 0)
 	account_number = M.account_number
 
+/obj/item/weapon/ewallet/Destroy()
+	qdel(get_account(account_number))
+	return ..()
+
 /obj/item/weapon/ewallet/examine(mob/user)
 	..()
 	if(!(src in view(1, user)))
