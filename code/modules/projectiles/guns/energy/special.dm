@@ -96,7 +96,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
-	desc = "Эта ручка могущественнее, чем меч."
+	desc = "Перо сильнее меча."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
