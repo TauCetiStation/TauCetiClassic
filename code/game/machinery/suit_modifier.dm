@@ -13,7 +13,8 @@
 	var/obj/item/clothing/suit/space/rig/suit 			= null
 	var/obj/item/clothing/head/helmet/space/rig/helmet 	= null
 
-	var/list/modulesToBuy = list(
+// -== Regular Stuff ==-
+	var/list/modulesAvalible = list(
 		/obj/item/rig_module/device/extinguisher,
 		/obj/item/rig_module/device/healthscanner,
 		/obj/item/rig_module/device/analyzer,
@@ -35,16 +36,26 @@
 		/obj/item/rig_module/emp_shield,
 		/obj/item/rig_module/nuclear_generator,
 		/obj/item/rig_module/mounted_relay,
-		/obj/item/rig_module/metalfoam_spray,
+		/obj/item/rig_module/metalfoam_spray)
+	var/list/modulesToBuy = list()
 
-	)
-	var/list/Modules = list()
+// -== Syndicate Stuff ==-
+	var/list/syndicateModulesAvalible = list(
+		/obj/item/rig_module/emp_shield/adv,
+		/obj/item/rig_module/mounted,
+		/obj/item/rig_module/grenade_launcher,
+		/obj/item/rig_module/syndiemmessage)
+	var/list/syndicateModulesToMount = list()
+	var/syndicateModulesCount = 2
 
 /obj/machinery/suit_modifier/atom_init()
 	. = ..()
-	for(var/path in modulesToBuy)
+	for(var/path in modulesAvalible)
 		var/obj/item/rig_module/module = new path(src)
-		Modules += module
+		modulesToBuy += module
+	for(var/path in syndicateModulesAvalible)
+		var/obj/item/rig_module/module = new path(src)
+		syndicateModulesToMount += module
 	update_icon()
 
 /obj/machinery/suit_modifier/update_icon()
@@ -80,11 +91,26 @@
 		update_icon()
 		return
 
-/obj/machinery/suit_modifier/proc/buyModule(obj/item/clothing/suit/space/rig/R, mob/user)
-	for(var/atom/selectModule as anything in Modules)
-		Modules[selectModule] = image(icon = selectModule.icon, icon_state = selectModule.icon_state)
+/obj/machinery/suit_modifier/proc/mountSyndicateModule(obj/item/clothing/suit/space/rig/R, mob/user)
+	for(var/atom/selectModule in syndicateModulesToMount)
+		syndicateModulesToMount[selectModule] = image(icon = selectModule.icon, icon_state = selectModule.icon_state)
 
-	var/obj/item/rig_module/toBuyModule = show_radial_menu(user, src, Modules, require_near = TRUE, tooltips = TRUE)
+	var/obj/item/rig_module/toInstallModule = show_radial_menu(user, src, syndicateModulesToMount, require_near = TRUE, tooltips = TRUE)
+
+	if(R.can_install(toInstallModule))
+		toInstallModule.installed(R)
+	else if(R.detach_module(user, R.installed_modules, src))
+		toInstallModule.installed(R)
+	else
+		return
+
+	syndicateModulesCount--
+
+/obj/machinery/suit_modifier/proc/buyModule(obj/item/clothing/suit/space/rig/R, mob/user)
+	for(var/atom/selectModule in modulesToBuy)
+		modulesToBuy[selectModule] = image(icon = selectModule.icon, icon_state = selectModule.icon_state)
+
+	var/obj/item/rig_module/toBuyModule = show_radial_menu(user, src, modulesToBuy, require_near = TRUE, tooltips = TRUE)
 
 	if(R.can_install(toBuyModule))
 		toBuyModule.installed(R)
@@ -127,8 +153,10 @@
 
 	if(!ishardhelmet(C))
 		var/list/menu = list()
-		menu += list("Suit Race"      = image(icon = suit.icon, icon_state = suit.icon_state))
-		menu += list("Suit Modules"   = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
+		menu += list("Suit Race"             = image(icon = suit.icon, icon_state = suit.icon_state))
+		menu += list("Suit Modules"          = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
+		if(emagged && syndicateModulesCount)
+			menu += list("Sundicate Gifts"   = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "stamp"))
 		var/choose = show_radial_menu(user, src, menu, require_near = TRUE, tooltips = TRUE)
 
 		switch(choose)
@@ -136,14 +164,26 @@
 				selectRace(C, user)
 			if("Suit Modules")
 				buyModule(C, user)
+			if("Sundicate Gifts")
+				mountSyndicateModule(C, user)
 	else
 		var/list/menu = list()
 		menu += list("Helmet Race"      = image(icon = suit.icon, icon_state = suit.icon_state))
-		menu += list("Helmet Modules"   = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
+		menu += list("Helmet modulesToBuy"   = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
 		var/choose = show_radial_menu(user, src, menu, require_near = TRUE, tooltips = TRUE)
 		switch(choose)
 			if("Helmet Race")
 				selectRace(C, user)
+
+/obj/machinery/suit_modifier/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	emagged = TRUE
+	flick_overlay(I = "industrial_emagged", duration = 2 SECONDS)
+	return TRUE
 
 /obj/machinery/suit_modifier/attack_hand(mob/user)
 	if(!opened)
