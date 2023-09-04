@@ -138,7 +138,7 @@
 					for(var/obj/O in can_see)
 
 						if(O.anchored)
-								continue
+							continue
 
 						if(isitem(O) || istype(O, /obj/structure) || ismachinery(O))
 							cocoon_target = O
