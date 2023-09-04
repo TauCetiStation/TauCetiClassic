@@ -259,3 +259,5 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+#define MAX_SPIDERS_SPAWN 75
