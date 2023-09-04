@@ -28,6 +28,7 @@
 	activate_on_start = TRUE
 	mount_type = MODULE_MOUNT_AI
 	icon_state = "IIS"
+	price = 15
 
 	var/list/message_queue = list() // associative list of /datum/rig_message
 
@@ -303,6 +304,7 @@
 	origin_tech = "programming=4"
 	interface_name = "advanced diagnostic system"
 	interface_desc = "System that might actually save you, wow."
+	price = 50
 
 /obj/item/rig_module/simple_ai/advanced/proc/get_random_voice()
 	var/voice_type = pick(subtypesof(/datum/rig_aivoice))

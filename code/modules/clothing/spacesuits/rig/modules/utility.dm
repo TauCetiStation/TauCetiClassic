@@ -4,6 +4,7 @@
 	usable = FALSE
 	selectable = TRUE
 	toggleable = FALSE
+	price = 15
 
 	var/device_type
 	var/obj/item/device
@@ -56,6 +57,7 @@
 	usable = TRUE // Allow mode switching
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
+	price = 35
 
 /obj/item/rig_module/device/anomaly_scanner
 	name = "hardsuit anomaly scanner module"
@@ -116,6 +118,7 @@
 	use_power_cost = 0
 	origin_tech = "magnets=5;programming=4;engineering=4;powerstorage=4"
 	device_type = /obj/item/weapon/rcd/mounted
+	price = 150
 
 /obj/item/rig_module/device/atom_init()
 	. = ..()
@@ -160,6 +163,7 @@
 	selectable = FALSE
 	toggleable = FALSE
 	use_power_cost = 500
+	price = 50
 	mount_type = MODULE_MOUNT_INJECTOR
 	origin_tech = "biotech=2;programming=3"
 
@@ -283,6 +287,7 @@
 	name = "hardsuit combat chemical injector"
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	suit_overlay = null // hidden
+	price = 100
 
 	interface_name = "combat chem dispenser"
 	interface_desc = "Dispenses loaded chemicals directly into the bloodstream."
@@ -343,6 +348,7 @@
 	var/charge_consumption = 200
 	var/max_cooling = 30 // uses way more energy, cools better
 	var/thermostat = T20C
+	price = 25
 
 /obj/item/rig_module/cooling_unit/process_module()
 	if(!active)
@@ -366,12 +372,14 @@
 	origin_tech = "engineering=2;magnets=2"
 	interface_name = "EMP shield"
 	var/uses = 5
+	price = 25
 
 /obj/item/rig_module/emp_shield/adv
 	name = "hardsuit advanced EMP shield"
 	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
 	origin_tech = "engineering=2;magnets=2;bluespace=3;"
 	uses = 20
+	price = 100
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
@@ -381,6 +389,7 @@
 	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
 	passive_power_cost = 3
 	use_power_cost = 1500
+	price = 25
 
 /obj/item/rig_module/teleporter_stabilizer/proc/calculate_cost(dangerous_coeff)
 	var/cost = use_power_cost
@@ -418,6 +427,7 @@
 	use_power_cost = 0
 	module_cooldown = 0
 	origin_tech = "engineering=3;programming=3"
+	price = 50
 
 /obj/item/rig_module/selfrepair/init_charges()
 	charges = list()
@@ -499,6 +509,7 @@
 
 	var/preparing = FALSE
 	var/teleport_timer = 0
+	price = 50
 
 /obj/item/rig_module/med_teleport/process_module()
 	var/mob/living/carbon/human/H = holder.wearer
@@ -557,6 +568,7 @@
 	mount_type = MODULE_MOUNT_CHEST
 	icon_state = "nuclear"
 	suit_overlay = "nuclear"
+	price = 250
 
 	passive_power_cost = -50
 	var/unstable = FALSE
@@ -605,6 +617,7 @@
 	activate_string = "Activate radio relay"
 	deactivate_string = "Deactivate radio relay"
 	active_power_cost = 50
+	price = 250
 
 	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
 	var/obj/machinery/telecomms/relay

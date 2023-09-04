@@ -592,6 +592,42 @@
 			if(equipped)
 				user.add_overlay(module.suit_overlay_image)
 
+/obj/item/clothing/suit/space/rig/proc/detach_cell(mob/user)
+	to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
+	for(var/obj/item/rig_module/module in installed_modules)
+		module.deactivate()
+	cell.updateicon()
+	user.put_in_hands(cell)
+	cell = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_helmet(mob/user)
+	to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
+	helmet.rig_connect = null
+	user.put_in_hands(helmet)
+	helmet = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_boots(mob/user)
+	to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
+	user.put_in_hands(boots)
+	boots = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_module(mob/user, list/current_mounts_modules, atom/anchor)
+	for(var/atom/module as anything in current_mounts_modules)
+		current_mounts_modules[module] = image(icon = module.icon, icon_state = module.icon_state)
+
+	var/removal_choice = show_radial_menu(user, anchor ? anchor : src, current_mounts_modules, require_near = TRUE, tooltips = TRUE)
+
+	if(!removal_choice || wearer)
+		return FALSE
+
+	var/obj/item/rig_module/removed = removal_choice
+	to_chat(user, "You detach \the [removed] from \the [src].")
+	user.put_in_hands(removed)
+	removed.removed()
+	installed_modules -= removed
+
+	return TRUE
+
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
 	name = "engineering hardsuit helmet"

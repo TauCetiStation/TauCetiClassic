@@ -14,8 +14,7 @@
 	var/obj/item/clothing/head/helmet/space/rig/helmet 	= null
 
 	var/list/modulesToBuy = list(
-		/obj/item/rig_module/simple_ai,
-		/obj/item/rig_module/emp_shield/adv,
+		/obj/item/rig_module/device/extinguisher,
 		/obj/item/rig_module/device/healthscanner,
 		/obj/item/rig_module/device/analyzer,
 		/obj/item/rig_module/device/science_tool,
@@ -23,22 +22,29 @@
 		/obj/item/rig_module/device/anomaly_scanner,
 		/obj/item/rig_module/device/orescanner,
 		/obj/item/rig_module/device/rcd,
+
 		/obj/item/rig_module/chem_dispenser,
 		/obj/item/rig_module/chem_dispenser/combat,
 		/obj/item/rig_module/cooling_unit,
-		/obj/item/rig_module/emp_shield,
 		/obj/item/rig_module/teleporter_stabilizer,
 		/obj/item/rig_module/selfrepair,
 		/obj/item/rig_module/med_teleport,
+
+		/obj/item/rig_module/simple_ai,
+		/obj/item/rig_module/simple_ai/advanced,
+		/obj/item/rig_module/emp_shield,
 		/obj/item/rig_module/nuclear_generator,
 		/obj/item/rig_module/mounted_relay,
-		/obj/item/rig_module/device/extinguisher,
 		/obj/item/rig_module/metalfoam_spray,
 
 	)
+	var/list/Modules = list()
 
 /obj/machinery/suit_modifier/atom_init()
 	. = ..()
+	for(var/path in modulesToBuy)
+		var/obj/item/rig_module/module = new path(src)
+		Modules += module
 	update_icon()
 
 /obj/machinery/suit_modifier/update_icon()
@@ -74,11 +80,18 @@
 		update_icon()
 		return
 
-/obj/machinery/suit_modifier/proc/buy_module(obj/item/clothing/C, mob/user)
+/obj/machinery/suit_modifier/proc/buyModule(obj/item/clothing/suit/space/rig/R, mob/user)
+	for(var/atom/selectModule as anything in Modules)
+		Modules[selectModule] = image(icon = selectModule.icon, icon_state = selectModule.icon_state)
 
-/obj/machinery/suit_modifier/proc/detach_module()
+	var/obj/item/rig_module/toBuyModule = show_radial_menu(user, src, Modules, require_near = TRUE, tooltips = TRUE)
 
-/obj/machinery/suit_modifier/proc/attach_module()
+	if(R.can_install(toBuyModule))
+		toBuyModule.installed(R)
+	else if(R.detach_module(user, R.installed_modules, src))
+		toBuyModule.installed(R)
+	else
+		return
 
 /obj/machinery/suit_modifier/proc/modify_race(obj/item/clothing/C, atom/target_species, mob/user)
 	C.refit_for_species(target_species)
@@ -87,7 +100,7 @@
 	else if(ishardsuit(C))
 		eject_suit()
 
-/obj/machinery/suit_modifier/proc/show_menu(obj/item/clothing/C, mob/user)
+/obj/machinery/suit_modifier/proc/selectRace(obj/item/clothing/C, mob/user)
 	var/list/modifySelect = list()
 	var/list/speciesAvailable = C.species_restricted
 	speciesAvailable.Remove(DIONA)
@@ -96,8 +109,8 @@
 		var/icon_path = C.sprite_sheets_obj[species]
 		modifySelect[species] += image(icon = icon_path, icon_state = C.icon_state)
 
-	var/toModifi = show_radial_menu(user, src, modifySelect, require_near = TRUE, tooltips = TRUE)
-	switch(toModifi)
+	var/toModify = show_radial_menu(user, src, modifySelect, require_near = TRUE, tooltips = TRUE)
+	switch(toModify)
 		if("Human")
 			modify_race(C, HUMAN, user)
 		if("Skrell")
@@ -108,6 +121,29 @@
 			modify_race(C, UNATHI, user)
 		if("Vox")
 			modify_race(C, VOX, user)
+
+
+/obj/machinery/suit_modifier/proc/show_menu(obj/item/clothing/C, mob/user)
+
+	if(!ishardhelmet(C))
+		var/list/menu = list()
+		menu += list("Suit Race"      = image(icon = suit.icon, icon_state = suit.icon_state))
+		menu += list("Suit Modules"   = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
+		var/choose = show_radial_menu(user, src, menu, require_near = TRUE, tooltips = TRUE)
+
+		switch(choose)
+			if("Suit Race")
+				selectRace(C, user)
+			if("Suit Modules")
+				buyModule(C, user)
+	else
+		var/list/menu = list()
+		menu += list("Helmet Race"      = image(icon = suit.icon, icon_state = suit.icon_state))
+		menu += list("Helmet Modules"   = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
+		var/choose = show_radial_menu(user, src, menu, require_near = TRUE, tooltips = TRUE)
+		switch(choose)
+			if("Helmet Race")
+				selectRace(C, user)
 
 /obj/machinery/suit_modifier/attack_hand(mob/user)
 	if(!opened)
