@@ -1,4 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aab" = (
+/turf/simulated/wall/r_wall,
+/area/station/bridge/corp_lounge)
 "aac" = (
 /obj/random/vending/snack,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -8,6 +11,35 @@
 	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/starboard)
+"aad" = (
+/obj/effect/decal/turf_decal/alpha/white{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
+"aae" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/station/medical/morgue)
+"aaf" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "aag" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	name = "mime's closet"
@@ -19,6 +51,25 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
+"aah" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/tox_launch)
+"aai" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/station/security/prison)
 "aaj" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -13506,9 +13557,6 @@
 /obj/item/seeds/glowshroom,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"cKN" = (
-/turf/simulated/floor/carpet/blue2,
-/area/station/medical/psych)
 "cKQ" = (
 /obj/machinery/door/window/eastleft{
 	name = "Shrubbery";
@@ -20606,15 +20654,17 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/engineering)
 "esZ" = (
-/obj/effect/decal/turf_decal/alpha/white{
-	dir = 1;
-	icon_state = "siding_line"
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/area/station/civilian/kitchen)
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "etb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -23216,12 +23266,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "eVM" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating,
-/area/station/security/prison)
+/obj/structure/sign/warning/pods,
+/turf/simulated/wall,
+/area/station/hallway/secondary/entry)
 "eWb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -25877,10 +25924,6 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/station/rnd/xenobiology)
-"fAi" = (
-/obj/structure/sign/warning/pods,
-/turf/simulated/wall,
-/area/station/hallway/secondary/entry)
 "fAm" = (
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
@@ -38257,9 +38300,7 @@
 	},
 /area/station/hallway/primary/central)
 "iih" = (
-/obj/structure/stool/bed/chair/lectern{
-	dir = 1
-	},
+/obj/structure/altar_of_gods,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -43692,14 +43733,6 @@
 	icon_state = "neutralfull"
 	},
 /area/station/hallway/secondary/entry)
-"jtc" = (
-/obj/structure/morgue{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/medical/morgue)
 "jtd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -59333,7 +59366,7 @@
 /area/station/civilian/chapel/office)
 "mMA" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/corp_lounge)
+/area/station/hallway/primary/central)
 "mMT" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -72874,13 +72907,6 @@
 	},
 /area/station/maintenance/chapel)
 "pOr" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -89479,14 +89505,8 @@
 	},
 /area/station/bridge/meeting_room)
 "tCY" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 5;
-	icon_state = "siding_wood_line"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden"
-	},
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/carpet/blue2,
+/area/station/medical/psych)
 "tDb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -97991,13 +98011,11 @@
 	},
 /area/station/bridge/corp_lounge)
 "vEK" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
+/obj/structure/morgue{
+	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/medical/morgue)
 "vEN" = (
@@ -138799,7 +138817,7 @@ oAi
 kDj
 elZ
 gbQ
-pOr
+aah
 oIK
 agO
 tBc
@@ -141027,7 +141045,7 @@ kBq
 biv
 pED
 bNa
-esZ
+aad
 kIU
 lBN
 yeY
@@ -141284,7 +141302,7 @@ dtM
 fty
 abG
 vLv
-esZ
+aad
 kIU
 jVV
 ekm
@@ -142015,7 +142033,7 @@ ffS
 yaE
 yaE
 ffS
-fAi
+eVM
 lNi
 fYS
 uDS
@@ -145613,7 +145631,7 @@ ffS
 yaE
 yaE
 ffS
-fAi
+eVM
 coT
 kuh
 hne
@@ -147492,12 +147510,12 @@ plf
 oXw
 ixa
 iex
-mMA
+aab
 uPD
 hkF
 wRX
 ewp
-mMA
+aab
 ulv
 bgO
 mZU
@@ -148006,7 +148024,7 @@ uoS
 pQD
 oHl
 mKJ
-mMA
+aab
 bLg
 pzj
 lGH
@@ -148263,7 +148281,7 @@ pDU
 pQD
 nvi
 mKJ
-mMA
+aab
 vEH
 kSv
 rOO
@@ -148520,7 +148538,7 @@ qEv
 xmf
 wYL
 omQ
-mMA
+aab
 eTx
 lqU
 qpt
@@ -148777,7 +148795,7 @@ lNP
 pQD
 fZz
 fgA
-mMA
+aab
 joF
 kSv
 eZe
@@ -149034,7 +149052,7 @@ pcp
 pQD
 amY
 fgA
-mMA
+aab
 oFl
 mue
 lBF
@@ -149548,12 +149566,12 @@ plf
 oXw
 wFk
 xVa
-mMA
+aab
 eIB
 pYl
 umP
 jVM
-mMA
+aab
 elI
 vSs
 pfv
@@ -149596,7 +149614,7 @@ jmY
 eOJ
 beJ
 cnr
-jtc
+vEK
 odg
 cnr
 nTu
@@ -150624,7 +150642,7 @@ fBQ
 mlF
 beJ
 jnB
-vEK
+aae
 guB
 mnO
 iVK
@@ -151659,7 +151677,7 @@ xQo
 ukM
 rmY
 kbr
-tCY
+aaf
 jvL
 nbF
 ryF
@@ -151898,7 +151916,7 @@ sTP
 mzd
 kdH
 keK
-cKN
+tCY
 xnG
 tfW
 lij
@@ -152412,8 +152430,8 @@ omM
 gUd
 kdH
 gLL
-cKN
-cKN
+tCY
+tCY
 sOe
 fFv
 qxl
@@ -166982,7 +167000,7 @@ hYi
 hUq
 eOL
 wzH
-eVM
+aai
 hlv
 plf
 lgc

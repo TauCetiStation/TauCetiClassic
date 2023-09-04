@@ -2306,14 +2306,17 @@
 /area/station/maintenance/science)
 "adP" = (
 /obj/machinery/computer/general_air_control{
-	dir = 8;
-	frequency = 1444;
+	dir = 4;
+	frequency = 1443;
 	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	name = "Distribution and Waste Monitor";
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
+	},
+/obj/structure/sign/map/prometheus{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/station/engineering/monitoring)
 "adQ" = (
@@ -2331,19 +2334,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
-"adR" = (
-/obj/machinery/computer/general_air_control{
-	dir = 4;
-	frequency = 1444;
-	level = 3;
-	name = "Supermatter Monitor";
-	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkyellow"
-	},
-/area/station/engineering/chiefs_office)
 "adS" = (
 /obj/machinery/door/airlock/vault{
 	name = "Blueshield Storage";
@@ -34900,6 +34890,17 @@
 	icon_state = "darkbluecorners"
 	},
 /area/station/tcommsat/computer)
+"hTr" = (
+/obj/machinery/computer/general_air_control{
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/engine)
 "hTs" = (
 /turf/simulated/wall,
 /area/station/cargo/office)
@@ -65051,7 +65052,7 @@
 	},
 /area/station/engineering/equip)
 "pBY" = (
-/obj/structure/altar_of_gods/chaplain,
+/obj/structure/altar_of_gods,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -69549,15 +69550,17 @@
 /area/station/civilian/garden)
 "qJU" = (
 /obj/machinery/computer/general_air_control{
+	dir = 4;
 	frequency = 1444;
 	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkyellow"
 	},
-/area/station/engineering/engine)
+/area/station/engineering/chiefs_office)
 "qJZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -73008,17 +73011,14 @@
 /area/station/cargo/storage)
 "rFw" = (
 /obj/machinery/computer/general_air_control{
-	dir = 4;
-	frequency = 1443;
+	dir = 8;
+	frequency = 1444;
 	level = 3;
-	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
-	},
-/obj/structure/sign/map/prometheus{
-	pixel_x = -32
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "dark"
 	},
 /area/station/engineering/monitoring)
 "rFM" = (
@@ -131620,7 +131620,7 @@ eKW
 fmz
 pyu
 pyu
-rFw
+adP
 gNu
 oxd
 pyu
@@ -133167,7 +133167,7 @@ pyu
 aen
 fNz
 oEg
-adP
+rFw
 xAj
 oop
 vnU
@@ -133681,7 +133681,7 @@ sWO
 fLZ
 cOA
 qaA
-adR
+qJU
 tsa
 sWO
 sWO
@@ -139329,7 +139329,7 @@ vdJ
 kVn
 nZt
 tye
-qJU
+hTr
 hvk
 tcP
 rJO

@@ -5272,7 +5272,7 @@
 /area/station/civilian/chapel)
 "ajz" = (
 /obj/structure/window/thin/reinforced,
-/obj/structure/altar_of_gods/chaplain,
+/obj/structure/altar_of_gods,
 /obj/item/weapon/storage/bible{
 	pixel_y = 12
 	},

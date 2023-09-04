@@ -5925,19 +5925,6 @@
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"akc" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engineering Department.";
-	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
-	pixel_y = 30
-	},
-/mob/living/simple_animal/parrot/Poly,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellow"
-	},
-/area/station/engineering/chiefs_office)
 "akd" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/processing)
@@ -24145,7 +24132,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/storage)
 "aRT" = (
-/obj/structure/altar_of_gods/chaplain,
+/obj/structure/altar_of_gods,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -70876,6 +70863,19 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"gmb" = (
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering","Engineering Robots");
+	pixel_y = 30
+	},
+/mob/living/simple_animal/parrot/Poly,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "gmI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -114612,7 +114612,7 @@ bNi
 bIZ
 crK
 crK
-akc
+gmb
 cXC
 gwb
 fvU
