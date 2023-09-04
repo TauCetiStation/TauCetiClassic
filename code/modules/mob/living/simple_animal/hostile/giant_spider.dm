@@ -1,8 +1,7 @@
 
 #define SPINNING_WEB 1
-#define LAYING_EGGS 2
-#define MOVING_TO_TARGET 3
-#define SPINNING_COCOON 4
+#define MOVING_TO_TARGET 2
+#define SPINNING_COCOON 3
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/giant_spider
@@ -191,6 +190,5 @@
 			stop_automated_movement = FALSE
 
 #undef SPINNING_WEB
-#undef LAYING_EGGS
 #undef MOVING_TO_TARGET
 #undef SPINNING_COCOON
