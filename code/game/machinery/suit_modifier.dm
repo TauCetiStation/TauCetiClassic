@@ -23,14 +23,12 @@
 		/obj/item/rig_module/device/anomaly_scanner,
 		/obj/item/rig_module/device/orescanner,
 		/obj/item/rig_module/device/rcd,
-
 		/obj/item/rig_module/chem_dispenser,
 		/obj/item/rig_module/chem_dispenser/combat,
 		/obj/item/rig_module/cooling_unit,
 		/obj/item/rig_module/teleporter_stabilizer,
 		/obj/item/rig_module/selfrepair,
 		/obj/item/rig_module/med_teleport,
-
 		/obj/item/rig_module/simple_ai,
 		/obj/item/rig_module/simple_ai/advanced,
 		/obj/item/rig_module/emp_shield,
