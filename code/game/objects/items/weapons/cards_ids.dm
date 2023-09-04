@@ -1,4 +1,4 @@
-/* Cards
+ 	/* Cards
  * Contains:
  *		DATA CARD
  *		ID CARD
@@ -284,6 +284,13 @@
 	desc = "ID карта начальника, олицетворяющая умения владельца обеспечивать и планировать."
 	icon_state = "cargoGold"
 	item_state = "cargoGold_id"
+
+/obj/item/weapon/card/id/apartments
+	name = "apartments access card"
+	desc = "Карта доступа к одной из комнат в апарт-отеле \"Каюта\"."
+	icon_state = "apartments"
+
+	slot_flags = 0
 
 /obj/item/weapon/card/id/syndicate
 	name = "Agent card"

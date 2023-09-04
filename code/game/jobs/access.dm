@@ -92,6 +92,12 @@
 	//MONEY
 /var/const/access_crate_cash = 200
 
+	//HOTEL
+/var/const/access_hotel_one = 301
+/var/const/access_hotel_two = 302
+/var/const/access_hotel_three = 303
+/var/const/access_hotel_four = 304
+
 /obj/var/list/req_access = list()
 /obj/var/list/req_one_access = list()
 
