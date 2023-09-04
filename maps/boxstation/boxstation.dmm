@@ -24156,7 +24156,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/storage)
 "aRT" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

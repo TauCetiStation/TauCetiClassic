@@ -5272,10 +5272,10 @@
 /area/station/civilian/chapel)
 "ajz" = (
 /obj/structure/window/thin/reinforced,
-/obj/structure/altar_of_gods,
 /obj/item/weapon/storage/bible{
 	pixel_y = 12
 	},
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "ajA" = (

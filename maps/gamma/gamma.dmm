@@ -1410,6 +1410,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
+"acs" = (
+/obj/structure/altar_of_gods/chaplain,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/altar)
 "act" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/metal{
@@ -66092,12 +66098,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/vacantoffice)
-"mTg" = (
-/obj/structure/altar_of_gods,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel/altar)
 "mTq" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/window/thin/reinforced{
@@ -97890,11 +97890,17 @@
 	},
 /area/station/medical/surgery3)
 "tuv" = (
-/obj/structure/altar_of_gods,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/station/civilian/chapel/altar)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "wood_stairs2"
+	},
+/area/station/civilian/chapel)
 "tuz" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access = list(8,12)
@@ -150657,7 +150663,7 @@ rhg
 vts
 gbd
 adC
-tuv
+acs
 adC
 orb
 adN

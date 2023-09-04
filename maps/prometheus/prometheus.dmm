@@ -65052,13 +65052,13 @@
 	},
 /area/station/engineering/equip)
 "pBY" = (
-/obj/structure/altar_of_gods,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/altar_of_gods/chaplain,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
