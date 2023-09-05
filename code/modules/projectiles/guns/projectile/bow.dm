@@ -136,7 +136,7 @@
 
 	current_user = user
 
-	user.visible_message("[user] начинает натягивать тетеву [src].","Вы начинаете натягивать тетеву [src].")
+	user.visible_message("[user] начинает натягивать тетиву [src].","Вы начинаете натягивать тетиву [src].")
 	tension = 1
 	spawn(25) increase_tension(user)
 
