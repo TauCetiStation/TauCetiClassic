@@ -186,6 +186,8 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		if(BP.status & ORGAN_BLEEDING)
 			if(BP.open)
 				blood_max += 2 // Yer stomach is cut open
+			if(HAS_TRAIT(src, TRAIT_HEMOPHILIAC))
+				blood_max += 4
 
 			for(var/datum/wound/W in BP.wounds)
 				if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())

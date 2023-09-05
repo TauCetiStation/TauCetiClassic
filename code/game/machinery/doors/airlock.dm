@@ -357,7 +357,7 @@ var/global/list/airlock_overlays = list()
 	if(!(. = airlock_overlays[iconkey]))
 		var/mutable_appearance/MA
 		if(light_source)
-			MA = mutable_appearance(icon_file, icon_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+			MA = mutable_appearance(icon_file, icon_state, 1, LIGHTING_LAMPS_PLANE)
 		else
 			MA = mutable_appearance(icon_file, icon_state)
 		. = airlock_overlays[iconkey] = MA
@@ -1201,8 +1201,8 @@ var/global/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()
-	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = ABOVE_LIGHTING_LAYER)
-	fire_overlay.plane = ABOVE_LIGHTING_PLANE
+	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = 1)
+	fire_overlay.plane = LIGHTING_LAMPS_PLANE
 	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)
 

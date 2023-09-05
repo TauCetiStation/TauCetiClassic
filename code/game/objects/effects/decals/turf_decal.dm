@@ -31,6 +31,30 @@
 // It's just for quick access, feel free to varset decals with any color and alpha in map editor
 
 // strips and text decals
+/obj/effect/decal/turf_decal/orange
+	name = "Transparent Orange Turf Decals"
+	color = "#efb341"
+
+/obj/effect/decal/turf_decal/white
+	name = "Transparent White Turf Decals"
+	color = "#bcbcbc"
+
+/obj/effect/decal/turf_decal/purple
+	name = "Transparent Purple Turf Decals"
+	color = "#d381c9"
+
+/obj/effect/decal/turf_decal/blue
+	name = "Transparent Blue Turf Decals"
+	color = "#52b4e9"
+
+/obj/effect/decal/turf_decal/dark_red
+	name = "Transparent Dark Red Turf Decals"
+	color = "#b11111"
+
+/obj/effect/decal/turf_decal/green
+	name = "Transparent Green Turf Decals"
+	color = "#9fed58"
+
 /obj/effect/decal/turf_decal/alpha
 	name = "Transparent Turf Decals"
 	alpha = 100
