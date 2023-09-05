@@ -560,6 +560,7 @@ to destroy them and players will be able to make replacements.
 		if (!names_of_smartfridges || !radial_icons)
 			names_of_smartfridges = list()
 			radial_icons = list()
+
 			var/available_designs = list(
 				/obj/machinery/smartfridge/seeds,
 				/obj/machinery/smartfridge/chemistry,
@@ -567,10 +568,11 @@ to destroy them and players will be able to make replacements.
 				/obj/machinery/smartfridge/secure/virology,
 				/obj/machinery/smartfridge/drinks,
 				/obj/machinery/smartfridge) // Food
+
 			for(var/obj/machinery/smartfridge/type as anything in available_designs)
 				var/full_name = initial(type.name)
-
 				names_of_smartfridges[full_name] = type
+				// Icon stuff
 				var/atom/fridge_icon = image(initial(type.icon), initial(type.icon_state))
 				fridge_icon.add_overlay(icon(initial(type.icon), initial(type.content_overlay)))
 				fridge_icon.add_overlay(icon(initial(type.icon), "smartfridge-glass"))
@@ -581,9 +583,7 @@ to destroy them and players will be able to make replacements.
 			return
 
 		var/obj/machinery/smartfridge_type = names_of_smartfridges[smartfridge_name]
-
 		to_chat(user, "<span class='notice'>You set the board to [smartfridge_name].</span>")
-
 		name = "circuit board ([smartfridge_name])"
 		build_path = smartfridge_type
 
