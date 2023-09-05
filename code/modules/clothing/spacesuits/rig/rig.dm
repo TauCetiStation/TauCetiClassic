@@ -92,7 +92,7 @@
 	//Component/device holders.
 	var/obj/item/weapon/stock_parts/gloves = null               // Basic capacitor allows insulation, upgrades allow shock gloves etc.
 	var/obj/item/weapon/tank/tank = null
-	var/TANK_TYPE = /obj/item/weapon/tank/oxygen
+	var/TANK_TYPE = /obj/item/weapon/tank/oxygen				// THIS MUST BY ALWAYS FIRST IN CONTENTS
 	var/attached_boots = 1                                      // Can't wear boots if some are attached
 	var/obj/item/clothing/shoes/magboots/boots = null           // Deployable boots, if any.
 	var/BOOTS_TYPE = /obj/item/clothing/shoes/magboots
