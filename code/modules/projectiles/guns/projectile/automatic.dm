@@ -118,7 +118,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
 	if(!cover_open)
-		to_chat(user, "<span class='notice'>[src] крышка закрыта! Вы не можете вставить новую обойму!</span>")
+		to_chat(user, "<span class='notice'> Крышка [src] закрыта! Вы не можете вставить новую обойму!</span>")
 		return
 	return ..()
 
