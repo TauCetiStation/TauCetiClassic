@@ -40283,26 +40283,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
-"ilZ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/cleaner{
-	pixel_x = -32
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "imd" = (
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -162386,7 +162366,7 @@ rWu
 fQi
 adp
 oYL
-ilZ
+wzd
 vpp
 vst
 kIM
