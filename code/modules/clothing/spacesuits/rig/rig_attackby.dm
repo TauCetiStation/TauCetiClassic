@@ -93,8 +93,6 @@
 			current_mounts += "cell"
 		if(installed_modules && installed_modules.len)
 			current_mounts += "system module"
-		if(helmet)
-			current_mounts += "helmet"
 		if(boots)
 			current_mounts += "boots"
 
@@ -138,12 +136,6 @@
 				removed.forceMove(get_turf(src))
 				removed.removed()
 				installed_modules -= removed
-
-			if("helmet")
-				to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
-				helmet.forceMove(get_turf(src))
-				helmet.rig_connect = null
-				helmet = null
 
 			if("boots")
 				to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")

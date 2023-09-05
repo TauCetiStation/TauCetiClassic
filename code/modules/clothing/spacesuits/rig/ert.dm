@@ -44,6 +44,7 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
+	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/ert
 
 /obj/item/clothing/suit/space/rig/ert/atom_init()
 	. = ..()
@@ -66,6 +67,7 @@
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	breach_threshold = 28
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/mounted, /obj/item/rig_module/grenade_launcher/flashbang, /obj/item/rig_module/cooling_unit)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/ert/commander
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
@@ -83,6 +85,7 @@
 	breach_threshold = 25
 	slowdown = 0.7
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/ert/security
 
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
@@ -104,6 +107,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
 	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
 	/obj/item/weapon/tank,/obj/item/weapon/rcd, /obj/item/weapon/storage/lockbox/anti_singulo)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/ert/engineer
 
 //Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical
@@ -119,6 +123,7 @@
 	item_state = "ert_medical"
 	slowdown = 0.4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/healthscanner, /obj/item/rig_module/chem_dispenser/medical/ert)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/ert/medical
 
 /obj/item/clothing/head/helmet/space/rig/ert/stealth
 	name = "emergency response team stealth helmet"
@@ -136,3 +141,4 @@
 	armor = list(melee = 40, bullet = 20, laser = 30,energy = 10, bomb = 30, bio = 100, rad = 100)
 	slowdown = 0.3
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/stealth, /obj/item/rig_module/nuclear_generator,/obj/item/rig_module/chem_dispenser/combat)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/ert/stealth
