@@ -252,7 +252,7 @@
 	using_gl = !using_gl
 	if(using_gl)
 		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [gl]!</span>",\
-		"<span class='warning'>Вы активирует ваш [gl].</span>",\
+		"<span class='warning'>Вы активируете ваш [gl].</span>",\
 		"You hear an ominous click.")
 	else
 		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
