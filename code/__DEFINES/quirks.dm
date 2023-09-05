@@ -8,6 +8,7 @@
 #define QUIRK_LIGHT_STEP "Лёгкий Шаг"
 #define QUIRK_FAST_EQUIP "Улучшенная Координация"
 #define QUIRK_FRIENDLY "Дружелюбный"
+#define QUIRK_HEMOPHILIAC "Гемофилия"
 
 // neutral quirks.
 #define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"
