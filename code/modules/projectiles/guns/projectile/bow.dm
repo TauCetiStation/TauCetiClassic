@@ -119,7 +119,7 @@
 			A.removed(user)
 			arrow = null
 		else
-			user.visible_message("[user] ослабляет натяжение тетевы [src].", "Вы ослабляете натяжение тетевы [src].")
+			user.visible_message("[user] ослабляет натяжение тетивы [src].", "Вы ослабляете натяжение тетивы [src].")
 		tension = 0
 		icon_state = "crossbow"
 	else
