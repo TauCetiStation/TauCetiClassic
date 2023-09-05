@@ -243,7 +243,7 @@
 	value = -1
 	mob_trait = TRAIT_HEMOPHILIAC
 
-	gain_text = "<span class='danger'>Вы чувствуете, насколько жидкая кровь в ваших венах.</span>"
+	gain_text = "<span class='danger'>Вы чувствуете, насколько жидка кровь в ваших венах.</span>"
 	lose_text = "<span class='notice'>Ваша кровь неожиданно густеет!</span>"
 
 	req_species_flags = list(
