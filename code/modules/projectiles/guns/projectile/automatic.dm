@@ -87,7 +87,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
-		to_chat(user, "<span class='notice'>[src] крышка открыта! Закройте ее перед стрельбой!</span>")
+		to_chat(user, "<span class='notice'>Крышка [src] открыта! Закройте ее перед стрельбой!</span>")
 	else
 		..()
 		update_icon()
