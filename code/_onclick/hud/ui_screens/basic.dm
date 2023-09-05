@@ -381,8 +381,8 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-		tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+		nicename = list ("suit", "suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+		tankcheck = list (H.s_store, H.wear_suit?.contents[1], C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
 	else
 		nicename = list("Right Hand", "Left Hand", "Back")
 		tankcheck = list(C.r_hand, C.l_hand, C.back)

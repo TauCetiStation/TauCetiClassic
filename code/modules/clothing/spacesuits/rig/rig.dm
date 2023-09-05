@@ -91,15 +91,14 @@
 
 	//Component/device holders.
 	var/obj/item/weapon/stock_parts/gloves = null               // Basic capacitor allows insulation, upgrades allow shock gloves etc.
-
+	var/obj/item/weapon/tank/tank = null
+	var/TANK_TYPE = /obj/item/weapon/tank/oxygen
 	var/attached_boots = 1                                      // Can't wear boots if some are attached
 	var/obj/item/clothing/shoes/magboots/boots = null           // Deployable boots, if any.
 	var/BOOTS_TYPE = /obj/item/clothing/shoes/magboots
 	var/attached_helmet = 1                                     // Can't wear a helmet if one is deployable.
 	var/obj/item/clothing/head/helmet/space/rig/helmet = null   // Deployable helmet, if any.
 	var/HELMET_TYPE = null
-	var/obj/item/weapon/tank/tank = null
-	var/TANK_TYPE = /obj/item/weapon/tank/oxygen
 	var/max_mounted_devices = 4                                 // Maximum devices. Easy.
 	var/list/can_mount = null                                   // Types of device that can be hardpoint mounted.
 	var/list/mounted_devices = null                             // Holder for the above device.
@@ -122,12 +121,12 @@
 
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()
+	if(TANK_TYPE)
+		tank   = new TANK_TYPE(src)
 	if(HELMET_TYPE)
 		helmet = new HELMET_TYPE(src)
 	if(BOOTS_TYPE)
 		boots  = new BOOTS_TYPE(src)
-	if(TANK_TYPE)
-		tank   = new TANK_TYPE(src)
 
 	if(initial_modules && initial_modules.len)
 		for(var/path in initial_modules)
