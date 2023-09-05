@@ -180,7 +180,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах."
+	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Требуются специальные патроны"
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = SIZE_SMALL
