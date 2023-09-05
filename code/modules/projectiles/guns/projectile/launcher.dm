@@ -75,7 +75,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung
 	name = "underslung grenade launcher"
-	desc = "Это маленькая крошечная пусковая установка. Вы не должны этого видеть."
+	desc = "Это маленькая крошечная пусковая установка. Вам не следовало этого видеть."
 	initial_mag = /obj/item/ammo_box/magazine/internal/m79/underslung
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
 	two_hand_weapon = FALSE
