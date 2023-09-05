@@ -152,7 +152,7 @@
 		tension = max_tension
 		to_chat(usr, "[src] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
 	else
-		user.visible_message("[usr] натягивает тетеву [src]!", "Вы продолжаете натягивать тетеву [src]!")
+		user.visible_message("[usr] натягивает тетиву [src]!", "Вы продолжаете натягивать тетиву [src]!")
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
