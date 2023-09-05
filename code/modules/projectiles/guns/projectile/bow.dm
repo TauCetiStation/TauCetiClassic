@@ -166,7 +166,7 @@
 		return
 
 	if(!tension)
-		to_chat(user, "Вы не натянули болт на тетеву!")
+		to_chat(user, "Вы не натянули болт на тетиву!")
 		return 0
 
 	if (!arrow)
