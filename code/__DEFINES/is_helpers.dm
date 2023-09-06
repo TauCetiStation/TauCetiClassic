@@ -155,11 +155,11 @@
 
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
-#define iscoil(A) 		istype(A, /obj/item/stack/cable_coil)
+#define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
-#define isitem(A)		 istype(A, /obj/item)
+#define isitem(A)		(istype(A, /obj/item))
 
 #define isunder(A)		 istype(A, /obj/item/clothing/under)
 

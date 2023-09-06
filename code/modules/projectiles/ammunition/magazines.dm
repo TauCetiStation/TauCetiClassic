@@ -465,6 +465,7 @@
 		power_supply = new cell_type(src)
 	else
 		power_supply = new(src)
+	power_supply.updateicon()
 	update_icon()
 
 /obj/item/ammo_box/magazine/plasma/Destroy()

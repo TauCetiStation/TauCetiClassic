@@ -114,7 +114,7 @@
 	var/obj/item/rig_module/selected_module = null // Primary system (used with middle-click)
 	var/list/initial_modules
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
-	var/cell_type = /obj/item/weapon/stock_parts/cell/high
+	var/CELL_TYPE = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
 
 	var/rig_variant = "engineering"
@@ -133,9 +133,9 @@
 			var/obj/item/rig_module/module = new path(src)
 			module.installed(src)
 
-	if(cell_type)
-		cell = new cell_type(src)
-
+	if(CELL_TYPE)
+		cell = new CELL_TYPE(src)
+		cell.updateicon()
 /obj/item/clothing/suit/space/rig/Destroy()
 	if(wearer) // remove overlays if rig gets deleted while wearing
 		var/old_wearer = wearer
@@ -852,7 +852,7 @@
 	species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/emp_shield)
-	cell_type = /obj/item/weapon/stock_parts/cell/super
+	CELL_TYPE = /obj/item/weapon/stock_parts/cell/super
 	var/combat_mode = FALSE
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 30, bomb = 50, bio = 100, rad = 60)
