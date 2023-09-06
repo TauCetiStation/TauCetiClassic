@@ -169,7 +169,7 @@
 /obj/machinery/telecomms/proc/add_link(obj/machinery/telecomms/T)
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
-	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
+	if((position?.z == T_position?.z) || (src.long_range_link && T.long_range_link))
 		for(var/x in autolinkers)
 			if(T.autolinkers.Find(x))
 				if(src != T)
