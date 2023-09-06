@@ -143,7 +143,7 @@
 	if(!listening_level)
 		//Defaults to our Z level!
 		var/turf/position = get_turf(src)
-		listening_level = position.z
+		listening_level = position?.z
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/atom_init_late()
@@ -217,7 +217,7 @@
 /obj/machinery/telecomms/proc/checkheat()
 	// Checks heat from the environment and applies any integrity damage
 	var/datum/gas_mixture/environment = loc.return_air()
-	switch(environment.temperature)
+	switch(environment?.temperature)
 		if(T0C to (T20C + 20))
 			integrity = between(0, integrity, 100)
 		if((T20C + 20) to (T0C + 70))

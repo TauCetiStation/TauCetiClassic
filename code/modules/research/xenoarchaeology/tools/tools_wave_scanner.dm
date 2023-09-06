@@ -41,7 +41,7 @@
 	var/turf/cur_turf = get_turf(src)
 	for(var/turf/simulated/mineral/T in SSxenoarch.turfs_with_artifacts)
 		if(T.artifact_find)
-			if(T.z == cur_turf.z)
+			if(T.z == cur_turf?.z)
 				var/cur_dist = get_dist(cur_turf, T) * 2
 				if( (nearest_artifact_distance < 0 || cur_dist < nearest_artifact_distance) && cur_dist <= T.artifact_find.artifact_detect_range )
 					nearest_artifact_distance = cur_dist + rand() * 2 - 1

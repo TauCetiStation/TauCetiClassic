@@ -664,7 +664,6 @@
 	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
-
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-chief"
 	name = "advanced hardsuit"
@@ -727,7 +726,7 @@
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	var/combat_mode = FALSE
-	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
+	species_restricted = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
 	var/image/lamp = null
 	var/equipped_on_head = FALSE
 	var/rig_type = "syndie"
@@ -850,7 +849,7 @@
 	               /obj/item/weapon/melee/baton,
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs)
-	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
+	species_restricted = list(UNATHI, TAJARAN, DIONA, VOX)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/emp_shield)
 	cell_type = /obj/item/weapon/stock_parts/cell/super
@@ -872,8 +871,6 @@
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
-	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
-	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/AltClick(mob/user)
 	if(wearer?.wear_suit != src)
