@@ -524,6 +524,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
 	req_access = list(access_syndicate)
+/obj/machinery/suit_storage_unit/syndicate_unit/striker
+	name = "Syndicate Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/syndicate/elite
+	HELMET 		= /obj/item/clothing/suit/space/syndicate/elite
+	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
+	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/chem
 	name = "Hazmat Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/hazmat
@@ -608,6 +614,14 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 	req_access = list(access_research)
+/obj/machinery/suit_storage_unit/mining
+	name = "Mining Space Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/globose/mining
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/mining
+	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
+	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
+	req_access = list(access_mining)
 /obj/machinery/suit_storage_unit/skrell
 	name = "Skrellian Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/skrell/white
@@ -635,7 +649,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
-
 /obj/machinery/suit_storage_unit/captain
 	name = "Captain Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/armor/captain
@@ -644,7 +657,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/jetpack/oxygen
 	req_access = list(access_captain)
-
 /obj/machinery/suit_storage_unit/nasa
 	name = "NASA Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/nasavoid
@@ -653,3 +665,39 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/jetpack/void
 	req_access = list(access_minisat)
+/obj/machinery/suit_storage_unit/wizard
+	name = "Strange Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/wizard
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/wizard
+	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
+	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
+	req_access = list(access_minisat)
+/obj/machinery/suit_storage_unit/vox
+	name = "Vox Carapace Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/vox/carapace
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/carapace
+	MASK_TYPE   = /obj/item/clothing/mask/gas/vox
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/vox
+	TANK_TYPE 	= /obj/item/weapon/tank/nitrogen
+/obj/machinery/suit_storage_unit/vox/medic
+	name = "Vox Alien Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/vox/medic
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/medic
+	MASK_TYPE   = /obj/item/clothing/mask/gas/vox
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/vox
+	TANK_TYPE 	= /obj/item/weapon/tank/nitrogen
+/obj/machinery/suit_storage_unit/vox/stealth
+	name = "Vox Stealth Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/vox/stealth
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/stealth
+	MASK_TYPE   = /obj/item/clothing/mask/gas/vox
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/vox
+	TANK_TYPE 	= /obj/item/weapon/tank/nitrogen
+/obj/machinery/suit_storage_unit/vox/engine
+	name = "Vox Engineer Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/vox/pressure
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/pressure
+	MASK_TYPE   = /obj/item/clothing/mask/gas/vox
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/vox
+	TANK_TYPE 	= /obj/item/weapon/tank/nitrogen
