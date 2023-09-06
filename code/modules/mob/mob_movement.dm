@@ -139,6 +139,9 @@
 		move_delay = world.time + add_delay //set move delay
 
 		//Relaymoves
+		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
+			return mob.pulledby.relaymove(mob, direct)
+		
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
