@@ -51,9 +51,7 @@
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
 		var/num = rand(6,24)
-		for(var/i = 0, i < num, i++)
-			if(global.spiders_count > MAX_SPIDERS_SPAWN)
-				break
+		for(var/i=0, i<num, i++)
 			new /obj/structure/spider/spiderling(src.loc)
 		qdel(src)
 
@@ -75,8 +73,7 @@
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
 	//50% chance to grow up
-	if(prob(50) && global.spiders_count < MAX_SPIDERS_SPAWN)
-		spiders_count++
+	if(prob(50))
 		amount_grown = 1
 
 /obj/structure/spider/spiderling/Bump(atom/user)
@@ -173,14 +170,9 @@
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			if(global.spiders_count < MAX_SPIDERS_SPAWN)
-				grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-				new grow_as(loc)
+			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
+			new grow_as(loc)
 			qdel(src)
-
-/obj/structure/spider/spiderling/Destroy()
-	spiders_count--
-	return ..()
 
 /obj/effect/decal/cleanable/spiderling_remains
 	name = "spiderling remains"
