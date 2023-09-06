@@ -6,7 +6,7 @@
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "classic"
-	damage_deflection = 50
+	damage_deflection = 35
 
 	anchored = TRUE
 	density = TRUE
@@ -525,21 +525,18 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
 	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
-	name = "Syndicate Suit Storage Unit"
+	name = "Syndicate Striker Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/syndicate/elite
 	HELMET 		= /obj/item/clothing/suit/space/syndicate/elite
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/chem
 	name = "Hazmat Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/hazmat
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
 	name = "Elite Syndicate Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/elite
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander
 	name = "Comander Syndicate Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/elite/comander
@@ -649,6 +646,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
+	req_access = list(access_captain)
 /obj/machinery/suit_storage_unit/captain
 	name = "Captain Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/armor/captain
@@ -672,7 +670,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
-	req_access = list(access_minisat)
+	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/vox
 	name = "Vox Carapace Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/vox/carapace
@@ -680,6 +678,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE   = /obj/item/clothing/mask/gas/vox
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/vox
 	TANK_TYPE 	= /obj/item/weapon/tank/nitrogen
+	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/vox/medic
 	name = "Vox Alien Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/vox/medic
