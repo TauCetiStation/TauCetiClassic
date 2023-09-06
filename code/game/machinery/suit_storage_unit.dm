@@ -85,12 +85,15 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		add_overlay("classic_open")
 		add_overlay("classic_lights_open")
 		add_overlay("classic_unlocked")
-		if(HELMET)
-			add_overlay("classic_helm")
-		if(SUIT)
-			add_overlay("classic_suit")
-		if(BOOTS || TANK || MASK)
-			add_overlay("classic_storage")
+		if(ishardsuit(SUIT))
+			add_overlay("classic_loaded")
+		else
+			if(HELMET)
+				add_overlay("classic_helm")
+			if(SUIT)
+				add_overlay("classic_suit")
+			if(BOOTS || TANK || MASK)
+				add_overlay("classic_storage")
 
 /obj/machinery/suit_storage_unit/proc/make_powered()
 	stat &= ~NOPOWER
@@ -231,7 +234,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(!superUV)
 		cycletime_left = 5
 	else
-		cycletime_left = 25
+		cycletime_left = 40
 	while(cycletime_left)
 		cycletime_left--
 		sleep(10)
@@ -241,16 +244,11 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				occupant.adjustFireLoss(rand(5, 15))
 		if(!cycletime_left)
 			if(!superUV)
-				if(HELMET)
-					HELMET.clean_blood()
-				if(SUIT)
-					SUIT.clean_blood()
-				if(MASK)
-					MASK.clean_blood()
-				if(TANK)
-					TANK.clean_blood()
-				if(BOOTS)
-					BOOTS.clean_blood()
+				HELMET?.clean_blood()
+				SUIT?.clean_blood()
+				MASK?.clean_blood()
+				TANK?.clean_blood()
+				BOOTS?.clean_blood()
 			else
 				if(occupant)
 					occupant.dust()
@@ -267,7 +265,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 					if(BOOTS)
 						BOOTS  = null
 				broken = TRUE
-			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
+				visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 	opened = TRUE
 	locked = FALSE
@@ -428,7 +426,15 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(occupant)
 		to_chat(usr, "<span class ='danger'>It's too cluttered inside for add something else!</span>")
 		return
-	if(isspacesuit(something))
+	if(ishardsuit(something))
+		var/obj/item/clothing/suit/space/S = something
+		if(SUIT || HELMET)
+			to_chat(user, "<span class ='succsess'>The unit out of space.</span>")
+			return
+		to_chat(user, "You load the [S.name] into the storage compartment.")
+		user.drop_from_inventory(S, src)
+		SUIT = S
+	else if(isspacesuit(something))
 		var/obj/item/clothing/suit/space/S = something
 		if(SUIT)
 			to_chat(user, "<span class ='succsess'>The unit already contains a suit.</span>")
@@ -436,7 +442,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [S.name] into the storage compartment.")
 		user.drop_from_inventory(S, src)
 		SUIT = S
-	if(isspacehelmet(something))
+	else if(isspacehelmet(something) && !ishardsuit(SUIT))
 		var/obj/item/clothing/head/helmet/H = something
 		if(HELMET)
 			to_chat(user, "<span class ='succsess'>The unit already contains a helmet.</span>")
@@ -444,7 +450,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [H.name] into the storage compartment.")
 		user.drop_from_inventory(H, src)
 		HELMET = H
-	if(isbreathmask(something))
+	else if(isbreathmask(something))
 		var/obj/item/clothing/mask/M = something
 		if(MASK)
 			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
@@ -452,7 +458,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [M.name] into the storage compartment.")
 		user.drop_from_inventory(M, src)
 		MASK = M
-	if(ismagboots(something))
+	else if(ismagboots(something) && !ishardsuit(SUIT))
 		var/obj/item/clothing/shoes/magboots/B = something
 		if(BOOTS)
 			to_chat(user, "<span class ='succsess'>The unit already contains a magboots.</span>")
@@ -460,7 +466,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [B.name] into the storage compartment.")
 		user.drop_from_inventory(B, src)
 		BOOTS = B
-	if(istank(something))
+	else if(istank(something) && !ishardsuit(SUIT))
 		var/obj/item/weapon/tank/T = something
 		if(TANK)
 			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
@@ -468,6 +474,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [T.name] into the storage compartment.")
 		user.drop_from_inventory(T, src)
 		TANK = T
+
 	update_icon()
 	return
 
@@ -513,99 +520,78 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 //The units themselves
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
+	name = "Syndicate Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/syndie
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/red
 	req_access = list(access_syndicate)
-/obj/machinery/suit_storage_unit/syndicate_unit
+/obj/machinery/suit_storage_unit/syndicate_unit/chem
+	name = "Hazmat Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/hazmat
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/syndie
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/red
 	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
+	name = "Elite Syndicate Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/elite
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/syndie
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/red
 	req_access = list(access_syndicate)
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander
+	name = "Comander Syndicate Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/syndi/elite/comander
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 	MASK_TYPE   = /obj/item/clothing/mask/gas/syndicate
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots/syndie
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/red
 	req_access = list(access_syndicate_commander)
 //Sience
 /obj/machinery/suit_storage_unit/science
+	name = "Sience Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/science
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 	req_access = list(access_research)
 /obj/machinery/suit_storage_unit/science/rd
+	name = "Researh Director Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/science/rd
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science/rd
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/yellow
 	req_access = list(access_rd)
 //Engine
 /obj/machinery/suit_storage_unit/engine
+	name = "Engineer Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/engineering
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 	req_access = list(access_engine)
 /obj/machinery/suit_storage_unit/engine/atmos
+	name = "Atmospheric Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/atmos
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 	req_access = list(access_atmospherics)
 /obj/machinery/suit_storage_unit/engine/chief
+	name = " Chief Engineer Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/engineering/chief
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/yellow
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	req_access = list(access_ce)
 //Security
 /obj/machinery/suit_storage_unit/security
+	name = "Security Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/security
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
 	MASK_TYPE   = /obj/item/clothing/mask/gas/sechailer
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/red
 	req_access = list(access_security)
 /obj/machinery/suit_storage_unit/security/hos
+	name = "Head of Security Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/security/hos
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security/hos
 	MASK_TYPE   = /obj/item/clothing/mask/gas/sechailer
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/red
 	req_access = list(access_hos)
 //Medical
 /obj/machinery/suit_storage_unit/medical
+	name = "Medical Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/medical
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 	req_access = list(access_medbay_storage)
-/obj/machinery/suit_storage_unit/medical/cmo
-	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/medical/cmo
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical/cmo
+/obj/machinery/suit_storage_unit/medical/paramedic
+	name = "Paremedic Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/medical
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
-	TANK_TYPE 	= /obj/item/weapon/tank/oxygen/yellow
+	req_access = list(access_paramedic)
+/obj/machinery/suit_storage_unit/medical/cmo
+	name = "Chief Medical Officer Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/rig/medical/cmo
+	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
 	req_access = list(access_cmo)
 //Other
 /obj/machinery/suit_storage_unit/standard_unit
@@ -615,6 +601,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 /obj/machinery/suit_storage_unit/science/globose
+	name = "Science Space Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/globose/science
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
@@ -622,6 +609,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 	req_access = list(access_research)
 /obj/machinery/suit_storage_unit/skrell
+	name = "Skrellian Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/skrell/white
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/white
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
@@ -634,14 +622,34 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 /obj/machinery/suit_storage_unit/unathi
+	name = "Unathi Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/unathi/rig_cheap
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
 /obj/machinery/suit_storage_unit/unathi/breacher
+	name = "Breacher Suit Storage Unit"
 	SUIT_TYPE   = /obj/item/clothing/suit/space/unathi/breacher
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/breacher
 	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
 	TANK_TYPE 	= /obj/item/weapon/tank/oxygen
+
+/obj/machinery/suit_storage_unit/captain
+	name = "Captain Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/armor/captain
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
+	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
+	TANK_TYPE 	= /obj/item/weapon/tank/jetpack/oxygen
+	req_access = list(access_captain)
+
+/obj/machinery/suit_storage_unit/nasa
+	name = "NASA Suit Storage Unit"
+	SUIT_TYPE   = /obj/item/clothing/suit/space/nasavoid
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/nasavoid
+	MASK_TYPE   = /obj/item/clothing/mask/gas/coloured
+	BOOTS_TYPE  = /obj/item/clothing/shoes/magboots
+	TANK_TYPE 	= /obj/item/weapon/tank/jetpack/void
+	req_access = list(access_minisat)

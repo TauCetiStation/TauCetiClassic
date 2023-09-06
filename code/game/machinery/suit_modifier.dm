@@ -84,13 +84,14 @@
 
 	var/obj/item/rig_module/toInstallModule = show_radial_menu(user, src, syndicateModulesAvalible, require_near = TRUE, tooltips = TRUE)
 
-	if(R.can_install(toInstallModule))
+	if(!toInstallModule)
+		return
+	else if(R.can_install(toInstallModule))
 		toInstallModule.installed(R)
 	else if(R.detach_module(user, R.installed_modules, src))
 		toInstallModule.installed(R)
 	else
 		return
-
 	syndicateModulesCount--
 
 /obj/machinery/suit_modifier/proc/buyModule(obj/item/clothing/suit/space/rig/R, mob/user)
@@ -137,6 +138,8 @@
 		cellsToBuy[selectCell] = image(icon = selectCell.icon, icon_state = selectCell.icon_state)
 
 	var/choose = show_radial_menu(user, src, cellsToBuy, require_near = TRUE, tooltips = TRUE)
+	if(!choose)
+		return
 	if(R.cell)
 		R.detach_cell(user)
 	R.cell = choose
@@ -185,10 +188,10 @@
 		var/obj/item/weapon/stock_parts/cell/cell = R.cell
 		menu += list("Cell"  		   = image(icon = cell.icon, icon_state = cell.icon_state) )
 	menu += list("Suit Modules"        = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
-	var/obj/item/clothing/head/helmet/space/rig/H = R.helmet
-	menu += list("Helmet Modules"      = image(icon = H.icon, icon_state = H.icon_state))
 	if(emagged && syndicateModulesCount)
 		menu += list("Sundicate Gifts" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "stamp"))
+	var/obj/item/clothing/head/helmet/space/rig/H = R.helmet
+	menu += list("Helmet Modules"      = image(icon = H.icon, icon_state = H.icon_state))
 	var/choose = show_radial_menu(user, src, menu, require_near = TRUE, tooltips = TRUE)
 
 	switch(choose)
@@ -231,7 +234,8 @@
 	s.set_up(5, 1, src)
 	s.start()
 	emagged = TRUE
-	flick("industrial_emagged", src)
+	var/image/I = image(icon = 'icons/obj/suitstorage.dmi', icon_state = "industrial_emagged")
+	flick_overlay_view(I, src, 30)
 	return TRUE
 
 /obj/machinery/suit_modifier/attack_hand(mob/user)
