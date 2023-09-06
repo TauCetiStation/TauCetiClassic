@@ -2,6 +2,7 @@
 	name = "Emergency Responder"
 	desc = "Вы появляетесь на корабле на подходе к станции Нанотрейзен с какой-то задачей..."
 	wiki_ref = "Emergency_Response_Team"
+	id = "ert"
 
 	ranks = list(ROLE_ERT, "Security Officer")
 	time_to_del = 5 MINUTES
@@ -80,6 +81,7 @@
 	return
 
 /datum/spawner/responders/nt_ert
+	id = "ert_nt"
 	outfit = /datum/outfit/responders/nanotrasen_ert/security
 	leader_outfit = /datum/outfit/responders/nanotrasen_ert/leader
 	engineer_outfit = /datum/outfit/responders/nanotrasen_ert/engineer
@@ -89,6 +91,7 @@
 	faction = /datum/faction/responders/nt_ert
 
 /datum/spawner/responders/gorlex
+	id = "ert_gorlex"
 	outfit = /datum/outfit/responders/gorlex_marauders
 	leader_outfit = /datum/outfit/responders/gorlex_marauders/leader
 	leader_text = "Ты - <B>лидер</B> патрульного отряда Мародёров Горлекса. Вы засекли сигнал бедствия от одной из станций НТ - и было бы глупо не воспользоваться предоставившимся шансом. Ваша задача - уничтожить станцию с помощью ядерной бомбы."
@@ -96,6 +99,7 @@
 	faction = /datum/faction/responders/gorlex
 
 /datum/spawner/responders/deathsquad
+	id = "ert_ds"
 	outfit = /datum/outfit/responders/deathsquad
 	leader_outfit = /datum/outfit/responders/deathsquad/leader
 	leader_text = "Ты - <B>лидер</B> Отряда Смерти. Закалённые ветераны множества конфликтов и зачисток, вы должны выполнить своё задание с минимумом дипломатии и максимумом кровопролития."
@@ -104,6 +108,7 @@
 	faction = /datum/faction/responders/deathsquad
 
 /datum/spawner/responders/pirates
+	id = "ert_pirates"
 	outfit = /datum/outfit/responders/pirate
 	leader_outfit = /datum/outfit/responders/pirate/leader
 	leader_text = "Яррр! Ты - <B>капитан</B> космических пиратов! Жалкие сухопутные крысы подали сигнал о помощи и должны за это расплатиться своим добром! Свистать всех наверх, сегодня грабим (но не мочим, фортуна тебя дери!) корпоратов!"
@@ -112,6 +117,7 @@
 	faction = /datum/faction/responders/pirates
 
 /datum/spawner/responders/engineering
+	id = "ert_engi"
 	outfit = /datum/outfit/responders/nanotrasen_ert/engineer/ect
 	leader_outfit = /datum/outfit/responders/nanotrasen_ert/leader/ect
 	leader_text = "Ты - <B>лидер</B> отряда Инженерного Корпуса НТ! Вы засекли сигнал бедствия от одной из станций НТ, и зная, насколько часто на них случаются разные аварии, вы решили добавить ещё одну заслугу в рапорт. Будучи лидером отряда, ты так же отвечаешь за его охрану, как самый тяжеловооруженный боец."
@@ -119,6 +125,7 @@
 	faction = /datum/faction/responders
 
 /datum/spawner/responders/medical
+	id = "ert_med"
 	outfit = /datum/outfit/responders/nanotrasen_ert/medic/emt
 	leader_outfit = /datum/outfit/responders/nanotrasen_ert/leader/emt
 	medic_outfit = /datum/outfit/responders/nanotrasen_ert/medic/emt/surgeon
@@ -127,6 +134,7 @@
 	faction = /datum/faction/responders
 
 /datum/spawner/responders/soviet
+	id = "ert_soviet"
 	outfit = /datum/outfit/responders/ussp
 	leader_outfit = /datum/outfit/responders/ussp/leader
 	leader_text = "Ты - <B>комиссар</B> разведвзвода СССП! Чертовы капиталисты отправили сигнал бедствия и скоро об этом пожалеют! Буржуев-глав - к стенке, а их работникам нечего терять, кроме цепей!"
