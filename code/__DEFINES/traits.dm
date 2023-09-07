@@ -188,6 +188,7 @@
 #define TRAIT_VISUAL_TRACK        "visual_track"
 #define TRAIT_HEMOPHILIAC         "hemophiliac"
 #define TRAIT_AWKWARD             "awkward"
+
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
