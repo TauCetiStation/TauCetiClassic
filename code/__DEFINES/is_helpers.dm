@@ -177,6 +177,10 @@
 
 #define istank(A) 		 istype(A, /obj/item/weapon/tank)
 
+#define issuitcooling(A) istype(A, /obj/item/device/suit_cooling_unit)
+
+#define ismedical(A)	 istype(A, /obj/item/weapon/storage/firstaid)
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))
