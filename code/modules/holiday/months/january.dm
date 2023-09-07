@@ -11,3 +11,6 @@
 	)
 	staffwho_prefixs = list("Angelic", "Chilly", "Freezing", "Snowy", "Fun filled", "Icy", "Triumphant", "Whimsical", "Chilling", "Warmhearted", "Charming", "Beautiful", "Adorable", "Elegant", "Lovely", "Elf", "Deer")
 	staffwho_no_staff = "Santa`s sleigh is nowhere to be seen"
+
+/datum/holiday/christmas/greet()
+	return "Have a merry Christmas!"

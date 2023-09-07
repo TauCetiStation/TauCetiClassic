@@ -11,3 +11,6 @@
 	)
 	staffwho_prefixs = list("Drunk", "Shitfaced", "Intoxicated", "Stoned", "Puking", "Depressed", "Sober", "ZOSNIK", "Wet", "Dying", "Sleeping", "Only one drink", "Inebriated", "Rummy", "Too drunk", "Alive?", "Beer-lover", "Brewr")
 	staffwho_no_staff = "No beer left"
+
+/datum/holiday/beer/greet()
+	return "Beer is proof that God loves us – Ben Franklin"

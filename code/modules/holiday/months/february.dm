@@ -13,6 +13,10 @@
 	staffwho_prefixs = list("Loving", "Thoughtful", "ERP", "Amiable", "Amorous", "Horny", "Devoted", "Sentimental", "Adoring", "Warmhearted", "Charming", "Beautiful", "Tenderhearted", "Enchanting", "Romantic", "Intimate", "Incel", "Loner")
 	staffwho_no_staff = "THERE IS NO LOVE HERE"
 
+/datum/holiday/valentines/greet()
+	return "Happy Valentine’s Day!"
+
+
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
 
