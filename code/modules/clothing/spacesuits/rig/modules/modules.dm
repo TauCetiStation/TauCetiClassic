@@ -172,7 +172,6 @@
 
 // Proc for toggling off active abilities.
 /obj/item/rig_module/proc/deactivate()
-
 	if(!active)
 		return FALSE
 

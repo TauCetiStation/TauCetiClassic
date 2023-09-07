@@ -843,3 +843,14 @@
 		return FALSE
 
 	return TRUE
+
+/obj/item/gasHose
+
+/obj/item/rig_module/device/gasHose
+	name = "Gas Hose"
+	desc = "A special hose to supply internal hardsuit tank."
+	icon_state = "thrusters"
+	flags = NODROP | ABSTRACT
+	usable = TRUE
+	device_type = /obj/item/gasHose
+	interface_name = "Gas Hose"

@@ -280,7 +280,23 @@ update_flag
 		else
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
 		return 1
-
+	if(ishuman(user) && istype(W, /obj/item/gasHose))
+		var/mob/living/carbon/human/H = user
+		var/list/RIG = H.wear_suit.contents
+		var/obj/item/weapon/tank/TANK
+		for(var/tank in RIG)
+			if(istank(tank))
+				TANK = tank
+		var/datum/gas_mixture/thetank = TANK.air_contents
+		var/env_pressure = thetank.return_pressure()
+		var/pressure_delta = min(10 * ONE_ATMOSPHERE - env_pressure, (air_contents.return_pressure() - env_pressure) / 2)
+		var/transfer_moles = 0
+		if((air_contents.temperature > 0) && (pressure_delta > 0))
+			transfer_moles = pressure_delta*thetank.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+			thetank.merge(removed)
+			to_chat(H, "You pulse-pressurize your internal tank from the tank.")
+		return
 	if(isrobot(user) && istype(W, /obj/item/weapon/tank/jetpack))
 		var/obj/item/weapon/tank/jetpack/J = W
 		var/datum/gas_mixture/thejetpack = J.air_contents

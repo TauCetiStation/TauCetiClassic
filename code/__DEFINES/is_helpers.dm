@@ -181,6 +181,8 @@
 
 #define ismedical(A)	 istype(A, /obj/item/weapon/storage/firstaid)
 
+#define iscanister(A)	 istype(A, /obj/machinery/portable_atmospherics/canister)
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))
