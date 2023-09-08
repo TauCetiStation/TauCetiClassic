@@ -36780,8 +36780,9 @@
 	},
 /obj/machinery/power/apc/smallcell{
 	dir = 4;
-	name = "smallcell apc right";
-	pixel_x = 28
+	name = "Brig smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -69246,10 +69247,9 @@
 	pixel_x = 25
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -105440,8 +105440,9 @@
 	},
 /obj/machinery/power/apc/smallcell{
 	dir = 1;
-	name = "smallcell apc top";
-	pixel_y = 28
+	name = "Brig smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -111572,10 +111573,9 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
-	name = "Medbay top APC";
-	custom_smartlight_preset = "MedBay";
-	dir = 1
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
