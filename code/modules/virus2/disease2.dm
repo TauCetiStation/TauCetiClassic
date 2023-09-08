@@ -98,7 +98,6 @@ var/global/list/virus_types_by_pool
 		return get_random_effect_total(max(minlvl - 1, 1), maxlvl + 1, pickedpool)
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/effect = pick(effects_pool_list)
-	//create a copy of effect
 	effects_pool_list -= effect
 	holder.effect = effect
 	for(var/effect as anything in effects_pool_list)
