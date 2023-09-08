@@ -317,4 +317,4 @@ var/global/list/allergen_reagents_list
 	requirement = "Нет."
 
 /datum/quality/negativeish/awkward/add_effect(mob/living/carbon/human/H, latespawn)
-	ADD_TRAIT(H, TRAIT_AWKWARD, QUALITY_TRAIT)
+	H.AddElement(/datum/element/awkward)
