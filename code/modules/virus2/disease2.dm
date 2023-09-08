@@ -100,8 +100,8 @@ var/global/list/virus_types_by_pool
 	var/datum/disease2/effect/effect = pick(effects_pool_list)
 	effects_pool_list -= effect
 	holder.effect = effect
-	for(var/effect as anything in effects_pool_list)
-		qdel(effect)
+	for(var/eff as anything in effects_pool_list)
+		qdel(eff)
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
