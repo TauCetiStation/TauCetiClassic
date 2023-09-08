@@ -53,6 +53,9 @@
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "smallanesthetic"
 	item_state = "an_tank"
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = SIZE_TINY
+	force = 2.0
 	volume = 2
 
 /*
