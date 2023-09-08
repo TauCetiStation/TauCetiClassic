@@ -11,12 +11,22 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_LIVING_BUMPED)
 
+/datum/element/awkward/proc/custom_tablebump_effect(mob/living/carbon/human/affected, A)
+	var/mob/living/carbon/human/H = affected
+	H.visible_message("<span class='warning'>[affected] hit his little finger on \the [A]!</span>")
+	H.apply_damage(3, BRUTE, pick(BP_L_LEG , BP_R_LEG))
+
 /datum/element/awkward/proc/do_awkward_effect(mob/living/affected, atom/A)
 	playsound(get_turf(affected), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
-	affected.visible_message("<span class='warning'>[affected] [pick("ran", "slammed")] into \the [A]!</span>")
-	affected.apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
 	affected.Stun(1)
 	affected.Weaken(2)
+	if(istype(A, /obj/structure/table) && ishuman(affected))
+		var/mob/living/carbon/human/H = affected
+		if(H.species && !H.species.flags[NO_PAIN])
+			custom_tablebump_effect(H, A)
+			return
+	affected.visible_message("<span class='warning'>[affected] [pick("ran", "slammed")] into \the [A]!</span>")
+	affected.apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
 
 /datum/element/awkward/proc/atom_bumped(datum/source, atom/A)
 	SIGNAL_HANDLER
