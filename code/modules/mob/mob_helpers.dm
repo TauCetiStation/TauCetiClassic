@@ -578,6 +578,9 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 /mob/proc/become_not_busy(_hand = 0)
 	busy_with_action = FALSE
 
+/mob/proc/check_can_harm()
+	return TRUE
+
 /**
  * Fancy notifications for ghosts
  *

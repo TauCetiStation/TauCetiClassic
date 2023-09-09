@@ -141,9 +141,11 @@
 	CtrlClick(user)
 
 /obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
-	if(!user.emagged && !(user.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate", "Engineering")))
-		to_chat(user, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
-		return
+	if(!user.check_can_harm())
+		if(isdrone(user))
+			return
+		if(user.modtype != "Engineering")
+			return
 	AICtrlClick()
 
 /obj/machinery/power/apc/BorgCtrlClick() // turns off/on APCs. Forwards to AI code.
@@ -157,13 +159,7 @@
 	return
 
 /obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
-	if(isdrone(user) && !istype(user, /mob/living/silicon/robot/drone/syndi))
-		var/mob/living/silicon/robot/drone/Drone = user
-		if(!Drone.emagged)
-			to_chat(user, "<span class='warning'><B>Дрон не может своими действиями причинить вред.</B></span>")
-			return
-	if(!user.emagged && !(user.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
-		to_chat(user, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+	if(!user.check_can_harm())
 		return
 	AIAltClick()
 

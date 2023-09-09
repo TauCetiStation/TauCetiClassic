@@ -220,3 +220,9 @@
 
 /mob/living/silicon/robot/drone/mob_has_gravity()
 	return mob_negates_gravity()
+
+/mob/living/silicon/robot/drone/check_can_harm()
+	if(!istype(usr, /mob/living/silicon/robot/drone/syndi) && !emagged)
+		to_chat(src, "<span class='warning'><B>Дрон не может своими действиями причинить вред.</B></span>")
+		return FALSE
+	return TRUE
