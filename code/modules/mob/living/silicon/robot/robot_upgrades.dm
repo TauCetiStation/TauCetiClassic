@@ -124,19 +124,14 @@
 	return TRUE
 
 /obj/item/borg/upgrade/jetpack
-	name = "Mining Borg Jetpack"
-	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
+	name = "Borg Jetpack"
+	desc = "A carbon dioxide jetpack suitable for low-gravity operations."
 	icon_state = "cyborg_upgrade3"
 	require_module = TRUE
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
-		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
-		to_chat(usr, "There's no mounting point for the module!")
-		return FALSE
 	var/obj/item/weapon/tank/jetpack/carbondioxide/J = new(R.module)
 	R.module.add_item(J)
 	for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 		R.internals = src
-	R.icon_state="Miner+j"
 	return TRUE
