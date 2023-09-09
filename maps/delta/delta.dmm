@@ -24007,7 +24007,6 @@
 	},
 /area/shuttle/mining/station)
 "eOb" = (
-/obj/item/weapon/flora/random,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -24021,6 +24020,7 @@
 	name = "apc left";
 	pixel_x = -28
 	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
