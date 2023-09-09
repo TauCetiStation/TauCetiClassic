@@ -1250,7 +1250,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/mediumcell{
 	dir = 8;
-	name = "Research APC";
+	name = "mediumcell apc left";
 	pixel_x = -28
 	},
 /turf/simulated/floor{
@@ -1747,12 +1747,12 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "eN" = (
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "North Block APC";
+	name = "apc right";
 	pixel_x = 28
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
@@ -2400,14 +2400,14 @@
 /area/awaymission/stationcollision/midblock)
 "gG" = (
 /obj/item/ammo_casing/shotgun,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mid Block APC";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
@@ -2888,14 +2888,14 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/arrivalblock)
 "ib" = (
-/obj/machinery/power/apc/mediumcell{
-	dir = 8;
-	name = "Arrivals Block APC";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "mediumcell apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -3465,11 +3465,11 @@
 /area/awaymission/stationcollision/southblock)
 "kf" = (
 /obj/machinery/light/small,
-/obj/machinery/power/apc{
-	name = "South Block APC";
-	pixel_y = -30
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/southblock)
 "kg" = (
@@ -4279,14 +4279,14 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "mo" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Gateroom APC";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
