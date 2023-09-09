@@ -1196,3 +1196,9 @@
 /mob/living/silicon/robot/crawl()
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
+
+/mob/living/silicon/robot/check_can_harm()
+	if(!emagged && !(modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
+		to_chat(src, "<span class='warning'><B>Робот не может своими действиями причинить вред.</B></span>")
+		return FALSE
+	return TRUE

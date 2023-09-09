@@ -53,10 +53,8 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)
 		return
 
-	if(isdrone(user) && !istype(user, /mob/living/silicon/robot/drone/syndi))
-		var/mob/living/silicon/robot/drone/Drone = user
-		if(!Drone.emagged)
-			to_chat(user, "<span class='warning'><B>Дрон не может причинять вред.</B></span>")
+	if(isdrone(user))
+		if(!user.check_can_harm())
 			return
 
 	var/mob/messagesource = M
@@ -64,11 +62,8 @@
 		if (do_surgery(M, user, src))
 			return FALSE
 
-	if(isrobot(user))
-		var/mob/living/silicon/robot/Robot = user
-		if(!Robot.emagged && !(Robot.modtype in list("PeaceKeeper", "Combat", "Security", "Syndicate")))
-			to_chat(user, "<span class='warning'><B>Робот не может причинять вред.</B></span>")
-			return
+	if(!user.check_can_harm())
+		return
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if(user.ClumsyProbabilityCheck(50))
