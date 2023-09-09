@@ -349,6 +349,22 @@ var/global/list/airlock_overlays = list()
 				if(atom_integrity < (0.75 * max_integrity))
 					. += get_airlock_overlay("sparks_open", overlays_file, TRUE)
 
+	if(hasPower() && unres_sides)
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER)
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_y = 32
+				if (SOUTH)
+					floorlight.pixel_y = -32
+				if (EAST)
+					floorlight.pixel_x = 32
+				if (WEST)
+					floorlight.pixel_x = -32
+			. += floorlight
+
 	cut_overlays()
 	add_overlay(.)
 
@@ -609,17 +625,9 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	var/obj/item/weapon/airlock_electronics/ae
-	ae = new/obj/item/weapon/airlock_electronics(loc)
-	if(!req_access)
-		check_access()
-	if(req_access.len)
-		ae.conf_access = req_access
-	else if (req_one_access.len)
-		ae.conf_access = req_one_access
-		ae.one_access = 1
-	ae.loc = da
-	da.electronics = ae
+	electronics.loc = da
+	da.electronics = electronics
+	electronics = null
 
 	qdel(src)
 
@@ -1158,8 +1166,12 @@ var/global/list/airlock_overlays = list()
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 	var/obj/item/weapon/airlock_electronics/ae
-	if(!electronics)
-		ae = new/obj/item/weapon/airlock_electronics(loc)
+	if(electronics)
+		ae = electronics
+		electronics = null
+		ae.loc = loc
+	else
+		ae = new /obj/item/weapon/airlock_electronics(loc)
 		if(!req_access)
 			check_access()
 		if(req_access.len)
@@ -1167,10 +1179,7 @@ var/global/list/airlock_overlays = list()
 		else if (req_one_access.len)
 			ae.conf_access = req_one_access
 			ae.one_access = 1
-	else
-		ae = electronics
-		electronics = null
-		ae.loc = loc
+
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
 		ae.broken = TRUE
@@ -1223,3 +1232,47 @@ var/global/list/airlock_overlays = list()
 #undef AIRLOCK_DENY_LIGHT_COLOR
 #undef AIRLOCK_LIGHT_POWER
 #undef AIRLOCK_LIGHT_RANGE
+
+///Mapping helper. Just place it on the map on the airlock and select side, in the round this side will be unrestricted
+/obj/effect/unrestricted_side
+	name = "airlock unrestricted side helper"
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 16
+	pixel_x = 16
+
+/obj/effect/unrestricted_side/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/unrestricted_side/atom_init_late()
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	airlock.unres_sides ^= dir
+	airlock.update_icon()
+	qdel(src)
+
+//Also, you can set the value to 5 (3, 6, 7, etc), and have unrestricted access to both north and east sides, but who cares
+/obj/effect/unrestricted_side/north
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/east
+	icon_state = "unres_4"
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/effect/unrestricted_side/south
+	icon_state = "unres_2"
+	dir = SOUTH
+	pixel_y = -32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/west
+	icon_state = "unres_8"
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0
