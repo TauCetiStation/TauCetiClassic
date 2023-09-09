@@ -83,7 +83,9 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(n,direct,mob)
+		var/mob/living/silicon/ai/A = mob
+		if(!A.uses_legs)
+			return AIMove(n,direct,mob)
 
 	if(mob.notransform)
 		return//This is sota the goto stop mobs from moving var
