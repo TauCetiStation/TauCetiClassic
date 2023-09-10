@@ -100,12 +100,18 @@
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
+
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 	body_parts_covered = 0
+
+/obj/item/clothing/glasses/eyepatch/atom_init()
+	. = ..()
+	//"Snake" Plissken moment
+	AddComponent(/datum/component/style, 15)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -132,20 +138,40 @@
 	desc = "Stylish glasses with orange lenses"
 	icon_state = "aviators_orange"
 
+/obj/item/clothing/glasses/aviator_orange/atom_init()
+	. = ..()
+	//Fluff only
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/glasses/aviator_black
 	name = "aviator glasses"
 	desc = "Stylish glasses with black lenses"
 	icon_state = "aviators_black"
+
+/obj/item/clothing/glasses/aviator_black/atom_init()
+	. = ..()
+	//Fluff only
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/glasses/aviator_red
 	name = "aviator glasses"
 	desc = "Stylish glasses with red lenses"
 	icon_state = "aviators_red"
 
+/obj/item/clothing/glasses/aviator_red/atom_init()
+	. = ..()
+	//Fluff only
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/glasses/aviator_mirror
 	name = "aviator glasses"
 	desc = "Stylish glasses with transparent lenses"
 	icon_state = "aviators_mirror"
+
+/obj/item/clothing/glasses/aviator_mirror/atom_init()
+	. = ..()
+	//Fluff only
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/glasses/jerusalem
 	name = "Jerusalem glasses"
@@ -188,6 +214,11 @@
 	darkness_view = -1
 	flash_protection = FLASHES_PARTIAL_PROTECTION
 	flash_protection_slots = list(SLOT_GLASSES)
+
+/obj/item/clothing/glasses/sunglasses/atom_init()
+	. = ..()
+	//Sunglasses is cool by default
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -243,6 +274,11 @@
 	item_state = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
+/obj/item/clothing/glasses/sunglasses/blindfold/atom_init()
+	. = ..()
+	//Blind Fury moment
+	AddComponent(/datum/component/style, 15)
+
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
@@ -264,6 +300,10 @@
 	name = "prescription sunglasses"
 	prescription = 1
 
+/*
+If you want to change the values of style to default sunglasses,
+I was expecting a 5 style points for IAA glasses
+*/
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
 	icon_state = "bigsunglasses"
@@ -274,6 +314,11 @@
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
 	hud_types = list(DATA_HUD_SECURITY)
+
+/obj/item/clothing/glasses/sunglasses/hud/sechud/atom_init()
+	. = ..()
+	//Red huds like sunglasses, but cooler
+	AddComponent(/datum/component/style, 7)
 
 /obj/item/clothing/glasses/hud/hos_aug
 	name = "augmented shades"
@@ -291,6 +336,11 @@
 	flash_protection = FLASHES_AMPLIFIER
 	flash_protection_slots = list(SLOT_GLASSES)
 	item_action_types = list(/datum/action/item_action/switch_shades_mode)
+
+/obj/item/clothing/glasses/hud/hos_aug/atom_init()
+	. = ..()
+	//Adam Jensen moment
+	AddComponent(/datum/component/style, 15)
 
 /datum/action/item_action/switch_shades_mode
 	name = "Switch Shades Mode"
@@ -441,6 +491,11 @@
 	sightglassesmod = "greyscale"
 	toggleable = TRUE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_noir)
+
+/obj/item/clothing/glasses/sunglasses/noir/atom_init()
+	. = ..()
+	//Noir is cooler than other glasses, ofc
+	AddComponent(/datum/component/style, 10)
 
 /datum/action/item_action/hands_free/toggle_noir
 	name = "Toggle Noir"
