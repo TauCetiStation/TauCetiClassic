@@ -1,7 +1,7 @@
 /obj/item/weapon/arrow
 
 	name = "bolt"
-	desc = "В нем есть подсказка для вас - уловили суть?"
+	desc = "У меня есть подсказка для тебя - найди цель"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
 	item_state = "bolt"
