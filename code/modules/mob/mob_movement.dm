@@ -83,7 +83,9 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(n,direct,mob)
+		var/mob/living/silicon/ai/A = mob
+		if(!A.uses_legs)
+			return AIMove(n,direct,mob)
 
 	if(mob.notransform)
 		return//This is sota the goto stop mobs from moving var
@@ -139,6 +141,9 @@
 		move_delay = world.time + add_delay //set move delay
 
 		//Relaymoves
+		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
+			return mob.pulledby.relaymove(mob, direct)
+		
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space

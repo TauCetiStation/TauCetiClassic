@@ -234,3 +234,18 @@
 		IS_PLANT = FALSE,
 		IS_SYNTHETIC = FALSE,
 	)
+
+
+
+/datum/quirk/hemophiliac
+	name = QUIRK_HEMOPHILIAC
+	desc = "Вы с рождения больны гемофилией - пониженной свертываемостью крови. Кровотечения для вас очень опасны!"
+	value = -1
+	mob_trait = TRAIT_HEMOPHILIAC
+
+	gain_text = "<span class='danger'>Вы чувствуете, насколько жидка кровь в ваших венах.</span>"
+	lose_text = "<span class='notice'>Ваша кровь неожиданно густеет!</span>"
+
+	req_species_flags = list(
+		NO_BLOOD = FALSE,
+	)

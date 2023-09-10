@@ -552,6 +552,44 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
+/obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		var/static/list/names_of_smartfridges
+		var/static/list/radial_icons
+
+		if (!names_of_smartfridges || !radial_icons)
+			names_of_smartfridges = list()
+			radial_icons = list()
+
+			var/available_designs = list(
+				/obj/machinery/smartfridge/seeds,
+				/obj/machinery/smartfridge/chemistry,
+				/obj/machinery/smartfridge/secure/extract,
+				/obj/machinery/smartfridge/secure/virology,
+				/obj/machinery/smartfridge/drinks,
+				/obj/machinery/smartfridge) // Food
+
+			for(var/obj/machinery/smartfridge/type as anything in available_designs)
+				var/full_name = initial(type.name)
+				names_of_smartfridges[full_name] = type
+				// Icon stuff
+				var/atom/fridge_icon = image(initial(type.icon), initial(type.icon_state))
+				fridge_icon.add_overlay(icon(initial(type.icon), initial(type.content_overlay)))
+				fridge_icon.add_overlay(icon(initial(type.icon), "smartfridge-glass"))
+				radial_icons[full_name] = fridge_icon
+
+		var/smartfridge_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(smartfridge_name))
+			return
+
+		var/obj/machinery/smartfridge_type = names_of_smartfridges[smartfridge_name]
+		to_chat(user, "<span class='notice'>You set the board to [smartfridge_name].</span>")
+		name = "circuit board ([smartfridge_name])"
+		build_path = smartfridge_type
+
+		return
+	return ..()
+
 /obj/item/weapon/circuitboard/smartfridge/secure/bluespace
 	name = "circuit board (Bluespace Storage)"
 	build_path = /obj/machinery/smartfridge/secure/bluespace
