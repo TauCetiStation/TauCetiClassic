@@ -380,5 +380,8 @@
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
 
+// send this signal to modify misschance value in /datum/component/style: (datum/source, all_slots)
+#define COMSIG_PROJECTILE_STYLE_DODGE "style_dodge"
+
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
