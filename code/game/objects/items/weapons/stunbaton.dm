@@ -45,22 +45,16 @@
 	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
 		return
 	if(charges > 0)
-		set_status(!status)
+		set_status(user.a_intent, !status)
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 	else
-		set_status(0)
+		set_status(user.a_intent, 0)
 		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/proc/get_force_by_intent(mob/living/user)
-	if(user.a_intent == INTENT_HARM)
-		return initial(force)
-	return 0
-
 /obj/item/weapon/melee/baton/attack(mob/living/M, mob/living/user, def_zone)
-	force = get_force_by_intent(user)
 	if(!status && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
@@ -91,18 +85,37 @@
 	discharge()
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/melee/baton/proc/set_status(value)
+/obj/item/weapon/melee/baton/proc/attempt_change_work(datum/source, intent)
+	SIGNAL_HANDLER
+	set_status(intent, status)
+
+/obj/item/weapon/melee/baton/proc/set_status(intent, value)
+	if(intent == INTENT_HARM)
+		force = initial(force)
+	else
+		force = 0
 	if(value)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
 	status = value
 
+/obj/item/weapon/melee/baton/equipped(mob/living/user, slot)
+	. = ..()
+	set_status(user.a_intent, status)
+	if(istype(user))
+		RegisterSignal(user, COMSIG_LIVING_INTENT_CHANGE, PROC_REF(attempt_change_work))
+
+/obj/item/weapon/melee/baton/dropped(mob/living/user)
+	if(istype(user))
+		UnregisterSignal(user, COMSIG_LIVING_INTENT_CHANGE)
+	return ..()
+
 /obj/item/weapon/melee/baton/proc/discharge(amount = 1)
 	charges = max(0, charges - amount)
 	if(charges <= 0)
 		charges = 0
-		set_status(0)
+		set_status(INTENT_HARM, 0)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 
@@ -116,9 +129,6 @@
 		if(isliving(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
-				//H.apply_effect(10, STUN, 0)
-				//H.apply_effect(10, WEAKEN, 0)
-				//H.apply_effect(10, STUTTER, 0)
 				H.apply_effect(agony,AGONY,0)
 				discharge()
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)

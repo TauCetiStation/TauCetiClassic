@@ -449,13 +449,16 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 	set hidden = 1
 
 	if(isliving(src))
+		var/setting_intent = input
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
-				set_a_intent(input)
+				setting_intent = input
 			if(INTENT_HOTKEY_RIGHT)
-				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
+				setting_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
 			if(INTENT_HOTKEY_LEFT)
-				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
+				setting_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
+		set_a_intent(setting_intent)
+		SEND_SIGNAL(src, COMSIG_LIVING_INTENT_CHANGE, setting_intent)
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]
