@@ -174,6 +174,19 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
 
+// Jobs flags
+#define SECURITY 1
+#define COMMAND 2
+#define ENGINEERING 4
+#define MEDBAY 8
+#define CIVIL 16
+#define CARGO 32
+#define SCIENCE 64
+#define NON_HUMAN 128
+#define HEAD_OF_STAFF 256
+#define BLUESHIELD_PROTEC 512
+#define IMPOSTER_PRIORITIZE 1024
+
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))

@@ -28,7 +28,7 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-
+	flags = COMMAND|ENGINEERING|HEAD_OF_STAFF|BLUESHIELD_PROTEC
 
 /datum/job/engineer
 	title = "Station Engineer"
@@ -47,7 +47,7 @@
 	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
-
+	flags = ENGINEERING
 
 /datum/job/atmos
 	title = "Atmospheric Technician"
@@ -65,7 +65,7 @@
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
 	skillsets = list("Atmospheric Technician" = /datum/skillset/atmostech)
-
+	flags = ENGINEERING
 
 /datum/job/technical_assistant
 	title = "Technical Assistant"
@@ -81,7 +81,7 @@
 	salary = 50
 	outfit = /datum/outfit/job/technical_assistant
 	skillsets = list("Technical Assistant" = /datum/skillset/technicassistant)
-
+	flags = ENGINEERING
 
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]

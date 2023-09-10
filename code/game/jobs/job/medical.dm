@@ -30,7 +30,7 @@
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 	department_stocks = list("Medical" = 40)
-
+	flags = COMMAND|HEAD_OF_STAFF|MEDBAY|BLUESHIELD_PROTEC
 
 /datum/job/doctor
 	title = "Medical Doctor"
@@ -64,7 +64,7 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 	department_stocks = list("Medical" = 20)
-
+	flags = MEDBAY
 
 /datum/job/paramedic
 	title = "Paramedic"
@@ -90,6 +90,7 @@
 	restricted_species = list(IPC)
 
 	department_stocks = list("Medical" = 15)
+	flags = MEDBAY
 
 // Slow species shouldn't be paramedics.
 /datum/job/paramedic/special_species_check(datum/species/S)
@@ -115,7 +116,7 @@
 	skillsets = list("Chemist" = /datum/skillset/chemist)
 
 	department_stocks = list("Medical" = 10)
-
+	flags = MEDBAY
 
 /datum/job/geneticist
 	title = "Geneticist"
@@ -134,7 +135,7 @@
 	skillsets = list("Geneticist" = /datum/skillset/geneticist)
 
 	department_stocks = list("Medical" = 10)
-
+	flags = MEDBAY
 
 /datum/job/virologist
 	title = "Virologist"
@@ -161,7 +162,7 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 	department_stocks = list("Medical" = 10)
-
+	flags = MEDBAY
 
 /datum/job/psychiatrist
 	title = "Psychiatrist"
@@ -181,7 +182,7 @@
 	skillsets = list("Psychiatrist" = /datum/skillset/psychiatrist)
 
 	department_stocks = list("Medical" = 10)
-
+	flags = MEDBAY
 
 /datum/job/intern
 	title = "Medical Intern"
@@ -199,3 +200,4 @@
 	skillsets = list("Medical Intern" = /datum/skillset/intern)
 
 	department_stocks = list("Medical" = 5)
+	flags = MEDBAY
