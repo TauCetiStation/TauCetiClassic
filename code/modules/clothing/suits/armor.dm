@@ -8,6 +8,10 @@
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
 
+/obj/item/clothing/suit/armor/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 15)
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
@@ -57,6 +61,7 @@
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
+	AddComponent(/datum/component/style, 15)
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"
