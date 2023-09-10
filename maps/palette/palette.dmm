@@ -65,6 +65,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"az" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "wood_stairs2"
+	},
+/area/space)
 "aA" = (
 /turf/simulated/floor{
 	dir = 9;
@@ -88,8 +94,9 @@
 /turf/environment/space,
 /area/space)
 "aN" = (
-/obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "whitechoco"
+	},
 /area/space)
 "aO" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -124,6 +131,36 @@
 	icon_state = "white"
 	},
 /area/space)
+"ba" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "Brig mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "Brig mediumcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "Brig mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/mediumcell{
+	name = "Brig mediumcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "Brig"
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
+	},
+/area/space)
 "bd" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -143,14 +180,20 @@
 /area/space)
 "bu" = (
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "darkpurplechoco"
 	},
 /area/space)
 "bv" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"bB" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
 /area/space)
@@ -224,6 +267,29 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"co" = (
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc/largecell{
+	name = "Cargo largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "Cargo largecell apc right";
+	custom_smartlight_preset = "Cargo";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "Cargo largecell apc left";
+	custom_smartlight_preset = "Cargo";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space)
 "cB" = (
 /turf/simulated/floor{
 	icon_state = "greencorner"
@@ -268,8 +334,9 @@
 	},
 /area/space)
 "cZ" = (
-/obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor{
+	icon_state = "purplechoco"
+	},
 /area/space)
 "dd" = (
 /turf/simulated/floor{
@@ -291,6 +358,13 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
+/area/space)
+"dm" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "do" = (
 /turf/simulated/floor{
@@ -336,8 +410,9 @@
 	},
 /area/space)
 "dT" = (
-/obj/effect/decal/turf_decal/goonplaque,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "bluechoco"
+	},
 /area/space)
 "dV" = (
 /obj/structure/cable,
@@ -432,12 +507,9 @@
 	},
 /area/space)
 "eN" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "darkorangechoco"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "eP" = (
 /turf/simulated/floor{
@@ -487,6 +559,11 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
+	},
+/area/space)
+"fE" = (
+/turf/simulated/floor{
+	icon_state = "orangechoco"
 	},
 /area/space)
 "fG" = (
@@ -582,6 +659,36 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
+	},
+/area/space)
+"gU" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Brig largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/largecell{
+	name = "Brig largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "Brig largecell apc right";
+	custom_smartlight_preset = "Brig";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "Brig largecell apc left";
+	custom_smartlight_preset = "Brig";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
 	},
 /area/space)
 "gW" = (
@@ -742,12 +849,9 @@
 	},
 /area/space)
 "iS" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "darkyellowchoco"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "iT" = (
 /turf/simulated/floor{
@@ -791,6 +895,36 @@
 	icon_state = "brown"
 	},
 /area/space)
+"jm" = (
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "RnD mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "RnD mediumcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "RnD mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/mediumcell{
+	name = "RnD mediumcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "RnD"
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
+	},
+/area/space)
 "jp" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -811,6 +945,11 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "orange"
+	},
+/area/space)
+"jv" = (
+/turf/simulated/floor{
+	icon_state = "darkgreenchecker"
 	},
 /area/space)
 "jw" = (
@@ -957,11 +1096,33 @@
 	},
 /area/space)
 "ku" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "darkbrownchoco"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/area/space)
+"ky" = (
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/space)
 "kz" = (
 /obj/structure/cable/yellow{
@@ -1078,6 +1239,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/effect/landmark/start/ai,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1093,12 +1255,9 @@
 	},
 /area/space)
 "lr" = (
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "lu" = (
 /turf/simulated/floor{
@@ -1123,27 +1282,32 @@
 /turf/simulated/floor/plating,
 /area/space)
 "lC" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
-/obj/machinery/power/apc{
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc/mediumcell{
 	dir = 1;
-	name = "apc top";
-	pixel_y = 28
+	name = "Cargo mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Cargo"
 	},
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "Cargo mediumcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Cargo"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+	name = "Cargo mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc/mediumcell{
+	name = "Cargo mediumcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "brownfull"
 	},
 /area/space)
 "lG" = (
@@ -1257,6 +1421,35 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"nb" = (
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "MedBay largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/largecell{
+	name = "MedBay largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "MedBay largecell apc right";
+	custom_smartlight_preset = "MedBay";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "MedBay largecell apc left";
+	custom_smartlight_preset = "MedBay";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space)
 "nc" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -1317,6 +1510,12 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
+/area/space)
+"nH" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redchoco"
+	},
 /area/space)
 "nL" = (
 /turf/simulated/floor/plating,
@@ -1406,11 +1605,23 @@
 	icon_state = "whiteblue"
 	},
 /area/space)
+"oE" = (
+/turf/simulated/floor{
+	icon_state = "orangechecker"
+	},
+/area/space)
 "oG" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkstairs2_wide"
 	},
+/area/space)
+"oL" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "oO" = (
 /turf/simulated/floor{
@@ -1716,7 +1927,8 @@
 /area/space)
 "sX" = (
 /turf/simulated/floor{
-	icon_state = "vault"
+	dir = 5;
+	icon_state = "brownchoco"
 	},
 /area/space)
 "sY" = (
@@ -1782,16 +1994,9 @@
 	},
 /area/space)
 "tN" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 4;
-	icon_state = "loadingarea"
+/turf/simulated/floor{
+	icon_state = "darkgreenchoco"
 	},
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 4;
-	icon_state = "arrow"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "tP" = (
 /turf/simulated/floor{
@@ -1904,6 +2109,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_x = 28
 	},
+/obj/structure/sign/departments/medbay/alt,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -2039,6 +2245,36 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
+	},
+/area/space)
+"wn" = (
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "RnD largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/largecell{
+	name = "RnD largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "RnD largecell apc right";
+	custom_smartlight_preset = "RnD";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "RnD largecell apc left";
+	custom_smartlight_preset = "RnD";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
 	},
 /area/space)
 "wr" = (
@@ -2260,6 +2496,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"yC" = (
+/turf/simulated/floor{
+	icon_state = "darkbluechecker"
+	},
+/area/space)
 "yH" = (
 /turf/simulated/floor{
 	icon_state = "wood2_stairs"
@@ -2287,6 +2528,11 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "bluered"
+	},
+/area/space)
+"yV" = (
+/turf/simulated/floor{
+	icon_state = "graybluechecker"
 	},
 /area/space)
 "zb" = (
@@ -2317,16 +2563,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "zr" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "loadingarea"
+/turf/simulated/floor{
+	icon_state = "darkredchecker"
 	},
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 8;
-	icon_state = "arrow"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "zu" = (
 /obj/structure/cable/yellow{
@@ -2396,6 +2635,36 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greencorner"
+	},
+/area/space)
+"Ai" = (
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "RnD top APC";
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "RnD down APC";
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "RnD";
+	name = "RnD right APC"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	custom_smartlight_preset = "RnD";
+	name = "RnD left APC"
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
 	},
 /area/space)
 "Al" = (
@@ -2472,6 +2741,35 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkbrown"
+	},
+/area/space)
+"Bs" = (
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Engineering top APC";
+	custom_smartlight_preset = "Engineering";
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Engineering down APC";
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc{
+	name = "Engineering right APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = 27;
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
 	},
 /area/space)
 "Bv" = (
@@ -2586,6 +2884,11 @@
 	icon_state = "darkredcorners"
 	},
 /area/space)
+"Dc" = (
+/turf/simulated/floor{
+	icon_state = "neutralchecker"
+	},
+/area/space)
 "Dg" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -2654,6 +2957,36 @@
 	icon_state = "white"
 	},
 /area/space)
+"DB" = (
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "RnD smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/smallcell{
+	name = "RnD smallcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "RnD smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "RnD smallcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "RnD"
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
+	},
+/area/space)
 "DF" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -2676,6 +3009,13 @@
 	dir = 4;
 	icon_state = "green"
 	},
+/area/space)
+"DP" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "DS" = (
 /turf/simulated/floor/engine/cult/lava,
@@ -2772,6 +3112,35 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purple"
+	},
+/area/space)
+"EO" = (
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "Engineering smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/smallcell{
+	name = "Engineering smallcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "Engineering smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "Engineering smallcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Engineering"
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
 	},
 /area/space)
 "EP" = (
@@ -2935,6 +3304,65 @@
 	icon_state = "caution"
 	},
 /area/space)
+"Gs" = (
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Engineering largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/largecell{
+	name = "Engineering largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "Engineering largecell apc right";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "Engineering largecell apc left";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space)
+"Gu" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Brig down APC";
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	name = "Brig right APC";
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Brig left APC";
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
+	},
+/area/space)
 "Gw" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -3030,6 +3458,11 @@
 	icon_state = "barber"
 	},
 /area/space)
+"Ht" = (
+/turf/simulated/floor{
+	icon_state = "yellowchoco"
+	},
+/area/space)
 "Hu" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -3044,6 +3477,11 @@
 /area/space)
 "Hy" = (
 /turf/simulated/wall,
+/area/space)
+"HB" = (
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
 /area/space)
 "HD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -3107,6 +3545,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/sign/departments/medbay/alt,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -3163,6 +3602,11 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/space)
+"Ii" = (
+/turf/simulated/floor{
+	icon_state = "darkbrownchecker"
+	},
+/area/space)
 "Ij" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -3173,6 +3617,12 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "arrival"
+	},
+/area/space)
+"In" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
 	},
 /area/space)
 "Ip" = (
@@ -3223,9 +3673,9 @@
 	},
 /area/space)
 "IG" = (
+/obj/effect/decal/turf_decal/goonplaque,
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/space)
 "IJ" = (
@@ -3273,9 +3723,10 @@
 	},
 /area/space)
 "Je" = (
-/turf/simulated/floor{
-	icon_state = "wood"
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
 	},
+/turf/simulated/floor/wood,
 /area/space)
 "Jg" = (
 /turf/simulated/floor{
@@ -3327,12 +3778,46 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"JJ" = (
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "Cargo smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc/smallcell{
+	name = "Cargo smallcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "Cargo smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "Cargo smallcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Cargo"
+	},
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space)
 "JL" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/space)
+"JO" = (
+/turf/simulated/floor{
+	icon_state = "escapefull"
 	},
 /area/space)
 "JR" = (
@@ -3353,16 +3838,9 @@
 	},
 /area/space)
 "Kl" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 1;
-	icon_state = "loadingarea"
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 1;
-	icon_state = "arrow"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "Ko" = (
 /turf/simulated/floor{
@@ -3423,6 +3901,11 @@
 "KF" = (
 /turf/simulated/floor{
 	icon_state = "caution"
+	},
+/area/space)
+"KM" = (
+/turf/simulated/floor{
+	icon_state = "graypurplechecker"
 	},
 /area/space)
 "KN" = (
@@ -3503,8 +3986,8 @@
 /area/space)
 "Lm" = (
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "wood_stairs"
+	dir = 1;
+	icon_state = "redbluefull"
 	},
 /area/space)
 "Ln" = (
@@ -3664,6 +4147,35 @@
 	icon_state = "dark"
 	},
 /area/space)
+"MT" = (
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "Engineering mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "Engineering mediumcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "Engineering mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Engineering"
+	},
+/obj/machinery/power/apc/mediumcell{
+	name = "Engineering mediumcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "Engineering"
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space)
 "MU" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -3758,6 +4270,35 @@
 "NY" = (
 /turf/simulated/floor{
 	icon_state = "wood_stairs"
+	},
+/area/space)
+"Oa" = (
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "MedBay smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/smallcell{
+	name = "MedBay smallcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "MedBay smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "MedBay smallcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "MedBay"
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
 	},
 /area/space)
 "Ob" = (
@@ -3945,15 +4486,17 @@
 	icon_state = "darkstairs_alone"
 	},
 /area/space)
+"PQ" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
+/area/space)
 "PR" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "loadingarea"
+/turf/simulated/floor{
+	icon_state = "blackchoco"
 	},
-/obj/effect/decal/turf_decal/alpha/black{
-	icon_state = "arrow"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/space)
 "PS" = (
 /obj/structure/cable/cyan{
@@ -3978,6 +4521,35 @@
 	icon_state = "blueyellow"
 	},
 /area/space)
+"Qf" = (
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "MedBay mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "MedBay mediumcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "MedBay mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc/mediumcell{
+	name = "MedBay mediumcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "MedBay"
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space)
 "Qh" = (
 /obj/effect/decal/turf_decal{
 	dir = 9;
@@ -3992,6 +4564,11 @@
 "Qj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
+/area/space)
+"Ql" = (
+/turf/simulated/floor{
+	icon_state = "darkpurplechecker"
+	},
 /area/space)
 "Qr" = (
 /turf/simulated/floor{
@@ -4061,6 +4638,11 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
+	},
+/area/space)
+"QZ" = (
+/turf/simulated/floor{
+	icon_state = "brownchecker"
 	},
 /area/space)
 "Ra" = (
@@ -4140,8 +4722,8 @@
 /area/space)
 "RD" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "wood_stairs2"
+	dir = 6;
+	icon_state = "wood_stairs"
 	},
 /area/space)
 "RH" = (
@@ -4196,6 +4778,11 @@
 	icon_state = "caution"
 	},
 /area/space)
+"Sf" = (
+/turf/simulated/floor{
+	icon_state = "darkbluechoco"
+	},
+/area/space)
 "Sj" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -4228,9 +4815,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -28
 	},
-/obj/structure/sign/warning{
-	name = "SECURITY"
-	},
+/obj/structure/sign/departments/security,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -4269,6 +4854,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/sign/departments/security,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -4321,6 +4907,13 @@
 /turf/simulated/floor/light{
 	icon_state = "light_on-r"
 	},
+/area/space)
+"Tp" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 10;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "Tr" = (
 /obj/structure/cable/yellow{
@@ -4381,6 +4974,11 @@
 "TK" = (
 /turf/simulated/floor{
 	icon_state = "orangecorner"
+	},
+/area/space)
+"TL" = (
+/turf/simulated/floor{
+	icon_state = "graygreenchecker"
 	},
 /area/space)
 "TO" = (
@@ -4454,6 +5052,36 @@
 	icon_state = "blue"
 	},
 /area/space)
+"UM" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "Brig smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/smallcell{
+	name = "Brig smallcell apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "Brig smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Brig"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "Brig smallcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Brig"
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
+	},
+/area/space)
 "UN" = (
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
@@ -4500,6 +5128,11 @@
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
+	},
+/area/space)
+"Vd" = (
+/turf/simulated/floor{
+	icon_state = "darkyellowchecker"
 	},
 /area/space)
 "Vg" = (
@@ -4567,7 +5200,7 @@
 /area/space)
 "VQ" = (
 /turf/simulated/floor{
-	icon_state = "whitegreen_v"
+	icon_state = "greenchoco"
 	},
 /area/space)
 "Wb" = (
@@ -4606,6 +5239,35 @@
 	icon_state = "yellowcorner"
 	},
 /area/space)
+"WB" = (
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Medbay down APC";
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay right APC"
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space)
 "WH" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 4;
@@ -4616,6 +5278,42 @@
 	icon_state = "arrow"
 	},
 /turf/simulated/floor,
+/area/space)
+"WJ" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 9;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
+/area/space)
+"WN" = (
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Cargo top APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	name = "Cargo right APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Cargo down APC";
+	custom_smartlight_preset = "Cargo"
+	},
+/obj/machinery/power/apc{
+	name = "Cargo left APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
 /area/space)
 "WQ" = (
 /turf/simulated/floor{
@@ -4755,7 +5453,7 @@
 "YC" = (
 /obj/machinery/power/apc/largecell{
 	dir = 1;
-	name = "largecell apc top";
+	name = "lаrgecell apc top";
 	pixel_y = 28
 	},
 /obj/machinery/power/apc/largecell{
@@ -4785,6 +5483,13 @@
 /area/space)
 "YF" = (
 /turf/simulated/floor/engine/cult,
+/area/space)
+"YG" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 6;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "YI" = (
 /turf/simulated/floor{
@@ -4843,6 +5548,35 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor,
+/area/space)
+"Zy" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Bar apc top";
+	custom_smartlight_preset = "bar";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Bar apc left";
+	custom_smartlight_preset = "bar"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	name = "Bar apc right";
+	custom_smartlight_preset = "bar"
+	},
+/obj/machinery/power/apc{
+	name = "Bar apc down";
+	custom_smartlight_preset = "bar";
+	pixel_y = -27
+	},
+/obj/machinery/vending/boozeomat,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/space)
 "Zz" = (
 /turf/simulated/floor{
@@ -4913,6 +5647,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/effect/landmark/start/ai,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -5048,7 +5783,7 @@ ke
 Hy
 Hy
 nL
-aN
+nL
 mj
 Gb
 EA
@@ -5062,8 +5797,8 @@ Zo
 rw
 dJ
 ma
-yc
-yc
+TL
+VQ
 RH
 DO
 YV
@@ -5072,13 +5807,13 @@ ve
 qa
 QH
 Ba
-yc
-yc
+KM
+cZ
 PI
 EI
 Nl
-yc
-yc
+yV
+dT
 BW
 ED
 fu
@@ -5099,7 +5834,7 @@ Hy
 Hy
 Hy
 nL
-aN
+nL
 mj
 Fe
 mZ
@@ -5150,7 +5885,7 @@ Hy
 Hy
 Hy
 nL
-aN
+nL
 mj
 ay
 ww
@@ -5188,16 +5923,16 @@ GD
 (6,1,1) = {"
 Hy
 Hy
-wR
+nX
 Hy
 Hy
-LQ
+OS
 Hy
 Hy
-YC
+Dg
 Hy
 Hy
-lC
+pI
 Hy
 Hy
 nL
@@ -5221,17 +5956,17 @@ XC
 DF
 PB
 UA
-Lr
+Ht
 FL
 YI
 He
 Bv
-Lr
+cZ
 rO
 qi
 wj
 Hr
-GD
+aL
 gW
 xP
 lc
@@ -5341,20 +6076,20 @@ xC
 (9,1,1) = {"
 Hy
 Hy
-nX
+Sv
 Hy
 Hy
-OS
+Um
 Hy
 Hy
-Dg
+DA
 Hy
 Hy
-pI
+UO
 Hy
 Hy
 uA
-cZ
+Td
 di
 nE
 mk
@@ -5368,23 +6103,23 @@ Nd
 Gk
 MP
 Qs
-An
-An
+jv
+tN
 lH
 pd
 zv
-An
-An
+Vd
+iS
 TR
 RW
 jz
-An
-An
+Ql
+bu
 vV
 qI
 Ar
-An
-An
+yC
+Sf
 uE
 pY
 gO
@@ -5405,7 +6140,7 @@ Hy
 Hy
 Hy
 aM
-cZ
+Td
 di
 so
 Fn
@@ -5414,11 +6149,11 @@ Td
 nV
 uA
 Hy
-yc
-yc
-Qj
-iS
-Qj
+UN
+xz
+Nk
+sH
+Nk
 ZN
 ia
 jk
@@ -5456,7 +6191,7 @@ Hy
 Hy
 Hy
 uA
-cZ
+Td
 di
 mU
 WU
@@ -5465,15 +6200,15 @@ La
 cn
 uA
 Hy
-yc
-yc
-eN
-Qj
-ku
+Nd
+IG
+ok
+bB
+Rh
 En
 rK
 ii
-yc
+HB
 KB
 Rg
 QO
@@ -5494,16 +6229,16 @@ kN
 (12,1,1) = {"
 Hy
 Hy
-Sv
+uK
 Hy
 Hy
-Um
+Kq
 Hy
 Hy
-DA
+ZR
 Hy
 Hy
-UO
+ZC
 Hy
 Hy
 uA
@@ -5516,18 +6251,18 @@ uA
 uA
 uA
 Hy
-yc
-yc
-Qj
-lr
-Qj
+Xo
+xz
 Zo
-Nk
+WH
+Zo
+QZ
+sX
 dE
 FU
 NH
-yc
 lQ
+nH
 Pa
 pS
 bo
@@ -5641,22 +6376,22 @@ lg
 PG
 uf
 cV
-yc
+JO
 Yf
 "}
 (15,1,1) = {"
 Hy
 Hy
-uK
+gv
 Hy
 Hy
-Kq
+MO
 Hy
 Hy
-ZR
+IN
 Hy
 Hy
-ZC
+KU
 Hy
 Hy
 yB
@@ -5669,18 +6404,18 @@ Ef
 ot
 Ce
 ot
-yc
-yc
+oE
+fE
 qw
 bY
 eL
-yc
-yc
+Ii
+ku
 Tx
 dq
 JY
 Pk
-Lr
+nH
 pD
 jp
 Le
@@ -5779,7 +6514,7 @@ By
 je
 nc
 Jl
-dT
+An
 dl
 CW
 xm
@@ -5794,22 +6529,22 @@ Yv
 Rg
 pu
 ki
-yc
+Lm
 QK
 "}
 (18,1,1) = {"
 Hy
 Hy
-gv
+uQ
 Hy
 Hy
-MO
+jF
 Hy
 Hy
-IN
+Zy
 Hy
 Hy
-KU
+HF
 Hy
 Hy
 wr
@@ -5827,13 +6562,13 @@ yc
 zw
 iH
 PJ
-yc
 IO
+PR
 zH
 OP
 gj
-An
-An
+zr
+eN
 kd
 VH
 VP
@@ -5902,16 +6637,16 @@ RV
 (20,1,1) = {"
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+Lr
 Hy
 Hy
 yt
@@ -5952,18 +6687,18 @@ AA
 "}
 (21,1,1) = {"
 Hy
-Hy
-uQ
-Hy
-Hy
-jF
-Hy
-Hy
 Lr
-Hy
-Hy
-HF
-Hy
+wR
+Lr
+Lr
+LQ
+Lr
+Lr
+YC
+Lr
+Lr
+ky
+Lr
 Hy
 yt
 NT
@@ -5980,13 +6715,13 @@ yc
 fK
 kZ
 Ao
-yc
-yc
+kq
+aN
 sv
 HP
 Ey
-kq
-yc
+Dc
+lr
 MJ
 ss
 EY
@@ -6004,16 +6739,16 @@ xh
 (22,1,1) = {"
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+Lr
 Hy
 Hy
 yt
@@ -6031,14 +6766,14 @@ uR
 uR
 HN
 HN
-Je
-Je
-IG
-UN
-xz
 yc
-zr
 yc
+WJ
+dm
+Tp
+Kl
+Kl
+Kl
 Hy
 Oh
 Xv
@@ -6055,16 +6790,16 @@ Hy
 (23,1,1) = {"
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+OD
 Hy
 Hy
 nL
@@ -6082,14 +6817,14 @@ uR
 uR
 HN
 HN
+yc
+yc
+DP
 bX
-bX
-sX
-Nd
-xz
+Je
 Kl
 yc
-PR
+Kl
 jd
 am
 am
@@ -6105,18 +6840,18 @@ NY
 "}
 (24,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+OD
+UM
+OD
+OD
+ba
+OD
+OD
+gU
+OD
+OD
+Gu
+OD
 Hy
 nL
 ci
@@ -6133,14 +6868,14 @@ wI
 wI
 VC
 VC
-bX
-bX
-bu
-Xo
-xz
-Zo
-tN
-Zo
+yc
+yc
+oL
+PQ
+YG
+Kl
+Kl
+Kl
 bO
 am
 am
@@ -6157,16 +6892,16 @@ ns
 (25,1,1) = {"
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+OD
 Hy
 Hy
 yp
@@ -6184,40 +6919,40 @@ wI
 wI
 VC
 VC
-bX
-bX
 yc
-sH
 yc
-Nk
-zr
-Nk
+yc
+yc
+yc
+yc
+yc
+yc
 pA
 am
 am
 am
 am
 RJ
+az
+Eh
+Eh
+Eh
+Eh
 RD
-Eh
-Eh
-Eh
-Eh
-Lm
 "}
 (26,1,1) = {"
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+yO
 Hy
 Hy
 yp
@@ -6235,14 +6970,14 @@ Wf
 Wf
 pM
 pM
-bX
-bX
-ok
 yc
-Rh
-Kl
 yc
-PR
+yc
+yc
+yc
+yc
+yc
+yc
 jU
 am
 am
@@ -6258,18 +6993,18 @@ bd
 "}
 (27,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+yO
+Oa
+yO
+yO
+Qf
+yO
+yO
+nb
+yO
+yO
+WB
+yO
 Hy
 yp
 Ck
@@ -6286,13 +7021,13 @@ Wf
 Wf
 pM
 pM
-bX
-bX
-yc
-WH
 yc
 yc
-tN
+yc
+yc
+yc
+yc
+yc
 yc
 Hy
 jH
@@ -6310,16 +7045,16 @@ Hy
 (28,1,1) = {"
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+yO
 Hy
 Hy
 nL
@@ -6337,8 +7072,8 @@ LP
 LP
 ig
 ig
-bX
-bX
+yc
+yc
 Hy
 hD
 gY
@@ -6361,16 +7096,16 @@ Hy
 (29,1,1) = {"
 Hy
 Hy
+In
 Hy
 Hy
+In
 Hy
 Hy
+In
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+In
 Hy
 Hy
 nL
@@ -6388,8 +7123,8 @@ LP
 LP
 ig
 ig
-bX
-bX
+yc
+yc
 Tg
 Lr
 Lr
@@ -6411,18 +7146,18 @@ ev
 "}
 (30,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+In
+DB
+In
+In
+jm
+In
+In
+wn
+In
+In
+Ai
+In
 Hy
 YD
 jw
@@ -6463,16 +7198,16 @@ zU
 (31,1,1) = {"
 Hy
 Hy
+In
 Hy
 Hy
+In
 Hy
 Hy
+In
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+In
 Hy
 Hy
 YD
@@ -6514,16 +7249,16 @@ FF
 (32,1,1) = {"
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+ew
 Hy
 Hy
 YD
@@ -6564,18 +7299,18 @@ kI
 "}
 (33,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+ew
+EO
+ew
+ew
+MT
+ew
+ew
+Gs
+ew
+ew
+Bs
+ew
 Hy
 nL
 vZ
@@ -6616,16 +7351,16 @@ Hy
 (34,1,1) = {"
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+ew
 Hy
 Hy
 nL
@@ -6667,16 +7402,16 @@ ag
 (35,1,1) = {"
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+HB
 Hy
 Hy
 kl
@@ -6717,18 +7452,18 @@ ah
 "}
 (36,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+HB
+JJ
+HB
+HB
+lC
+HB
+HB
+co
+HB
+HB
+WN
+HB
 Hy
 Wq
 jG
@@ -6769,16 +7504,16 @@ Ad
 (37,1,1) = {"
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+HB
 Hy
 Hy
 kl

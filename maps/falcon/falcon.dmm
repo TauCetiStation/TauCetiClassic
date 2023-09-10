@@ -24082,12 +24082,12 @@
 	},
 /area/station/hallway/primary/central)
 "oyq" = (
-/obj/machinery/life_assist/artificial_ventilation,
 /obj/machinery/camera{
 	c_tag = "Medbay Surgery Operating";
 	dir = 10;
 	network = list("SS13","Medical")
 	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -25709,6 +25709,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
