@@ -15,7 +15,7 @@
 	var/deepfried = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, var/silent)
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, silent = FALSE)
 	if(!usr)	return
 	if(isliving(M))
 		var/mob/living/L = M
