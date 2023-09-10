@@ -171,6 +171,11 @@
 			return 0// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
+		var/list/all_slots = M.get_equipped_items()
+		var/list/reflist = list(miss_modifier, all_slots, M)
+		for(var/obj/O in all_slots)
+			SEND_SIGNAL(O, COMSIG_PROJECTILE_STYLE_DODGE, reflist)
+		miss_modifier = reflist[1]
 		if(damage && (distance > 7))
 			if(damage < 55)
 				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
