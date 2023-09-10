@@ -175,7 +175,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ESSENCE_ALL 511
 
 // Jobs flags
-#define SECURITY 1
+#define BRIG 1
 #define COMMAND 2
 #define ENGINEERING 4
 #define MEDBAY 8
