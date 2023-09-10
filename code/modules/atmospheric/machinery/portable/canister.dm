@@ -139,7 +139,7 @@
 	var/list/air_mix = StandardAirMix()
 	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/create_gas()
+/obj/machinery/portable_atmospherics/canister/anesthetic/create_gas()
 	var/list/air_mix = StandardAirMix()
 	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "sleeping_agent", air_mix["sleeping_agent"])
 
