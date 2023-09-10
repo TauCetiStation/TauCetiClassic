@@ -20,7 +20,8 @@
 	playsound(get_turf(affected), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 	affected.Stun(1)
 	affected.Weaken(2)
-	if(istype(A, /obj/structure/table) && ishuman(affected))
+	//20% chance to harm a one (little) finger of five on the leg
+	if(istype(A, /obj/structure/table) && ishuman(affected) && prob(50))
 		var/mob/living/carbon/human/H = affected
 		if(H.species && !H.species.flags[NO_PAIN])
 			custom_tablebump_effect(H, A)
@@ -30,6 +31,9 @@
 
 /datum/element/awkward/proc/atom_bumped(datum/source, atom/A)
 	SIGNAL_HANDLER
+	//40% chance to get effect. Balance stuff
+	if(prob(60))
+		return
 	if(!isliving(source))
 		return
 	var/mob/living/affected = source
