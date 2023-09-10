@@ -766,7 +766,7 @@
 "abp" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("OnlineShop", "Карго шаттл","Переработка")
+	sortType = list("OnlineShop","Карго шаттл","Переработка")
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -11853,7 +11853,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 2;
-	sortType = list("Карго Офис", "Кабинет Завхоза","OnlineShop")
+	sortType = list("Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -55935,7 +55935,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","OnlineShop")
+	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -63170,7 +63170,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","OnlineShop")
+	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -64822,7 +64822,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 2;
-	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория", "Вирусология","Прочие �?сследования")
+	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория","Вирусология","Прочие �?сследования")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -81167,7 +81167,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","OnlineShop")
+	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -86685,7 +86685,7 @@
 "rcv" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	sortType = list("Карго Офис", "Кабинет Завхоза")
+	sortType = list("Карго Офис","Кабинет Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -87905,7 +87905,7 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	sortType = list("Переработка", "Карго шаттл")
+	sortType = list("Переработка","Карго шаттл")
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
@@ -91196,7 +91196,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
-	sortType = list("Карго Офис", "Кабинет Завхоза")
+	sortType = list("Карго Офис","Кабинет Завхоза")
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -94454,7 +94454,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/sortjunction{
-	sortType = list("Мусоросброс","Карго Офис", "Кабинет Завхоза","Парк","Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Тренажерный Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка Уборщика","OnlineShop")
+	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","Парк","Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Тренажерный Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка Уборщика","OnlineShop")
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -103514,6 +103514,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/virology)
+"uxx" = (
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/station/medical/surgerystorage)
 "uxC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
@@ -154785,7 +154791,7 @@ qEc
 sTF
 nuz
 uoe
-nuz
+uxx
 cri
 fXF
 cBC
