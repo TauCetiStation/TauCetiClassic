@@ -103515,7 +103515,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/virology)
 "uxx" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/portable_atmospherics/canister/anesthetic,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},

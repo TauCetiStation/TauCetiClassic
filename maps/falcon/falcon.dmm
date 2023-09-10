@@ -24087,7 +24087,7 @@
 	dir = 10;
 	network = list("SS13","Medical")
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/portable_atmospherics/canister/anesthetic,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
