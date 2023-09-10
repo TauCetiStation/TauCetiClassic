@@ -254,6 +254,7 @@
 	icon_state = "medical_syndie"
 	item_state = "medical_supply"
 
+	max_storage_space = 18
 	storage_slots = 9
 	max_w_class = SIZE_SMALL
 

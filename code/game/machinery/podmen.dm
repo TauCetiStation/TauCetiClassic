@@ -49,7 +49,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	priveleged_player = null
 
 /obj/item/seeds/replicapod/proc/replicate_blood_data(list/data, mob/living/user)
-	blood_source = data["donor"]
+	blood_source = locate(data["donor"])
 	if(!istype(blood_source) || !blood_source.mind)
 		blood_source = null
 		if(user)
@@ -84,8 +84,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(memory_time)
 		replicant_memory += "Your memory fades somewhere around [worldtime2text(memory_time)].<BR>"
 
-	RegisterSignal(priveleged_player, list(COMSIG_PARENT_QDELETING), .proc/clear_priveleged_player)
-	RegisterSignal(blood_source, list(COMSIG_PARENT_QDELETING), .proc/clear_blood_source)
+	RegisterSignal(priveleged_player, list(COMSIG_PARENT_QDELETING), PROC_REF(clear_priveleged_player))
+	RegisterSignal(blood_source, list(COMSIG_PARENT_QDELETING), PROC_REF(clear_blood_source))
 	return TRUE
 
 /obj/item/seeds/replicapod/attackby(obj/item/I, mob/user, params)
@@ -199,7 +199,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(copycat_replica)
 		return
 
-	vine_timer = addtimer(CALLBACK(src, .proc/spawn_vine), 1 MINUTE, TIMER_STOPPABLE)
+	vine_timer = addtimer(CALLBACK(src, PROC_REF(spawn_vine)), 1 MINUTE, TIMER_STOPPABLE)
 
 /obj/item/seeds/replicapod/real_deal/harvest()
 	deltimer(vine_timer)

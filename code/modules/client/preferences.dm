@@ -55,6 +55,8 @@ var/global/list/preferences_datums = list()
 
 	var/show_runechat = TRUE
 
+	var/list/custom_emote_panel = list()
+
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
@@ -105,8 +107,12 @@ var/global/list/preferences_datums = list()
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
+	var/r_belly = 0
+	var/g_belly = 0
+	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
+	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -160,6 +166,10 @@ var/global/list/preferences_datums = list()
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE
+	// lighting settings
+	var/glowlevel = GLOW_MED // or bloom
+	var/lampsexposure = TRUE // idk how we should name it
+	var/lampsglare = FALSE // aka lens flare
 
   //custom loadout
 	var/list/gear = list()
@@ -169,6 +179,7 @@ var/global/list/preferences_datums = list()
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]
+	custom_emote_panel = global.emotes_for_emote_panel
 	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -385,6 +396,10 @@ var/global/list/preferences_datums = list()
 	character.g_hair = g_hair
 	character.b_hair = b_hair
 
+	character.r_belly = r_belly
+	character.g_belly = g_belly
+	character.b_belly = b_belly
+
 	character.r_grad = r_grad
 	character.g_grad = g_grad
 	character.b_grad = b_grad
@@ -405,6 +420,7 @@ var/global/list/preferences_datums = list()
 
 	character.home_system = home_system
 	character.citizenship = citizenship
+	character.roundstart_insurance = insurance
 	character.personal_faction = faction
 	character.religion = religion
 	character.vox_rank = vox_rank

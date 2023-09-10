@@ -42,7 +42,7 @@
 	if(bolt_open)
 		playsound(src, 'sound/weapons/guns/heavybolt_out.ogg', VOL_EFFECTS_MASTER)
 		if(chambered)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
 			to_chat(user, "<span class='notice'>You work the bolt open, ejecting [chambered]!</span>")
 			chambered.loc = get_turf(src)//Eject casing
 			chambered.SpinAnimation(5, 1)

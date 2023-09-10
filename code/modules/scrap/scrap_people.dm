@@ -20,25 +20,37 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	generate_random_bum()
 
 /mob/living/carbon/human/proc/generate_random_bum()
-	var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
 	if(prob(80))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/cloth/under), SLOT_W_UNIFORM)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/under)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_W_UNIFORM)
 	if(prob(60))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/cloth/shoes), SLOT_SHOES)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/shoes)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_SHOES)
 	if(prob(30))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/cloth/backpack), SLOT_BACK)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/backpack)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_BACK)
 	if(prob(80))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/cloth/gloves), SLOT_GLOVES)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/gloves)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_GLOVES)
 	if(prob(30))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/cloth/randomsuit), SLOT_WEAR_SUIT)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/randomsuit)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_WEAR_SUIT)
 	if(prob(80))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/misc/lightsource), SLOT_R_HAND)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/misc/lightsource)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_R_HAND)
 	if(prob(25))
-		equip_to_slot_or_del(CATCH.get_item(/obj/random/cloth/randomhead), SLOT_HEAD)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/randomhead)
+		var/atom/random_item = new random_type
+		equip_to_slot_or_del(random_item, SLOT_HEAD)
 	equip_to_slot_or_del(new /obj/item/weapon/shovel(src), SLOT_L_HAND)
 	for(var/obj/item/loot in contents)
 		loot.make_old()
-	qdel(CATCH)
 	randomize_human(src)
 	sight |= SEE_BLACKNESS
 

@@ -5,13 +5,15 @@
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN, PODMAN)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
 
-
-	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 
 	light_color = "#00ffff"
+
+/datum/action/item_action/hands_free/toggle_helmet_light
+	name = "Toggle Helmet Light"
 
 /obj/item/clothing/head/helmet/space/skrell/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -20,6 +22,7 @@
 	on = !on
 	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
 	update_inv_mob()
+	update_item_actions()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
@@ -63,11 +66,14 @@
 	icon_state = "unathi_helm_cheap"
 	item_state = "unathi_helm_cheap"
 
-	action_button_name = "Toggle Helmet Light"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 
 	light_color = "#00ffff"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
+
+/datum/action/item_action/hands_free/toggle_helmet_light
+	name = "Toggle Helmet Light"
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -76,6 +82,7 @@
 	on = !on
 	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
 	update_inv_mob()
+	update_item_actions()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
@@ -227,19 +234,24 @@
 	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
 	slowdown = 0.2
-	action_button_name = "Toggle Stealth Technology"
 	var/on = FALSE
 	var/mob/living/carbon/human/wearer
 	var/current_charge = MAX_STEALTH_SPACESUIT_CHARGE
 	var/last_try = 0
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_stealth_technology)
+
+/datum/action/item_action/hands_free/toggle_stealth_technology
+	name = "Toggle Stealth Technology"
+
+/datum/action/item_action/hands_free/toggle_stealth_technology/Activate()
+	var/obj/item/clothing/suit/space/vox/stealth/S = target
+	S.toggle_stealth()
 
 /obj/item/clothing/suit/space/vox/stealth/examine(mob/user)
 	..()
 	if(wearer)
 		to_chat(wearer, "On your left wrist you see <span class='electronicblue'>\[ [current_charge] \]</span>. [damage ? "Looks like the reactor is damaged" : "The reactor is functioning stably"].")
 
-/obj/item/clothing/suit/space/vox/stealth/ui_action_click()
-	toggle_stealth()
 
 /obj/item/clothing/suit/space/vox/stealth/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -380,7 +392,7 @@
 	icon_state = "vox-casual-2"
 	item_state = "vox-casual-2"
 
-/obj/item/clothing/gloves/yellow/vox
+/obj/item/clothing/gloves/insulated/vox
 	desc = "These bizarre gauntlets seem to be fitted for... bird claws?"
 	name = "insulated gauntlets"
 	icon_state = "gloves-vox"
@@ -396,7 +408,10 @@
 	icon_state = "boots-vox"
 
 	species_restricted = list(VOX , VOX_ARMALIS)
-	action_button_name = "Toggle the magclaws"
+	item_action_types = list(/datum/action/item_action/toggle_magclaws)
+
+/datum/action/item_action/toggle_magclaws
+	name = "Toggle the magclaws"
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
 	if(src.magpulse)

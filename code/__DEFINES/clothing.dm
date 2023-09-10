@@ -96,6 +96,12 @@
 #define ARMS_COVERAGE    10
 #define LEGS_COVERAGE    10
 
+// Flash protection
+// Used in eyecheck() on flashes, welders and etc. More - better, less - more damage
+#define FLASHES_FULL_PROTECTION 2
+#define FLASHES_PARTIAL_PROTECTION 1
+#define FLASHES_AMPLIFIER -1
+
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.

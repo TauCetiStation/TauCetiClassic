@@ -186,7 +186,7 @@
 /datum/quirk/nyctophobia/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), PROC_REF(on_move))
 
 /datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
 	var/mob/living/carbon/human/H = quirk_holder
@@ -233,4 +233,19 @@
 		NO_SCAN = FALSE,
 		IS_PLANT = FALSE,
 		IS_SYNTHETIC = FALSE,
+	)
+
+
+
+/datum/quirk/hemophiliac
+	name = QUIRK_HEMOPHILIAC
+	desc = "Вы с рождения больны гемофилией - пониженной свертываемостью крови. Кровотечения для вас очень опасны!"
+	value = -1
+	mob_trait = TRAIT_HEMOPHILIAC
+
+	gain_text = "<span class='danger'>Вы чувствуете, насколько жидка кровь в ваших венах.</span>"
+	lose_text = "<span class='notice'>Ваша кровь неожиданно густеет!</span>"
+
+	req_species_flags = list(
+		NO_BLOOD = FALSE,
 	)

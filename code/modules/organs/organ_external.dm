@@ -581,7 +581,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
 		if(species.eyes_glowing)
-			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+			img_eyes_s.plane = LIGHTING_LAMPS_PLANE
 			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
 
 		if(HULK in owner.mutations)

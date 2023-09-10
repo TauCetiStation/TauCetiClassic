@@ -34,9 +34,13 @@
 	)
 	contraband = list(
 		/obj/item/weapon/lighter/zippo = 4,
+		/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 	)
 	premium = list(
-		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
+		/obj/item/clothing/mask/cigarette/cigar = 2,
+		/obj/item/clothing/mask/cigarette/cigar/havana = 1,
+		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+		/obj/item/clothing/mask/cigarette/pipe = 1,
 	)
 	syndie = list(
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
@@ -64,6 +68,8 @@
 		/obj/item/weapon/grenade/flashbang = 4,
 		/obj/item/device/flash = 5,
 		/obj/item/weapon/storage/box/evidence = 6,
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 5,
+		/obj/item/ammo_box/magazine/glock/rubber = 10,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
@@ -72,6 +78,10 @@
 	syndie = list(
 		/obj/item/ammo_box/speedloader/a357 = 1,
 		/obj/item/ammo_box/magazine/stechkin = 1,
+	)
+	prices = list(
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 200,
+		/obj/item/ammo_box/magazine/glock/rubber = 50,
 	)
 	private = TRUE
 
@@ -189,7 +199,8 @@
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
-		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/clothing/suit/chef_classic = 2,
+		/obj/item/clothing/suit/chef = 1,
 		/obj/item/weapon/kitchen/mould/bear = 1,
 		/obj/item/weapon/kitchen/mould/worm = 1,
 		/obj/item/weapon/kitchen/mould/bean = 1,
@@ -200,9 +211,11 @@
 		/obj/item/weapon/kitchen/mould/loli = 1,
 	)
 	contraband = list(
+		/obj/item/clothing/under/rank/chef/sushi = 1,
+		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,
+		/obj/item/weapon/kitchenknife/butch = 2,		
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,

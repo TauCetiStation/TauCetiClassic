@@ -25,7 +25,7 @@
 /obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
-		INVOKE_ASYNC(src, .proc/scan)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else
@@ -62,16 +62,20 @@
 	icon_state = "wave_scanner"
 	item_state = "wave_scanner"
 	w_class = SIZE_NORMAL
-	action_button_name = "Toggle Searcher"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_searcher)
 
 	var/obj/item/device/searcher/processor
+
+/datum/action/item_action/hands_free/toggle_searcher
+	name = "Toggle Searcher"
+
+/datum/action/item_action/hands_free/toggle_searcher/Activate()
+	var/obj/item/device/wave_scanner_backpack/S = target
+	S.toggle_searcher()
 
 /obj/item/device/wave_scanner_backpack/atom_init()
 	. = ..()
 	processor = new(src, src)
-
-/obj/item/device/wave_scanner_backpack/ui_action_click()
-	toggle_searcher()
 
 /obj/item/device/wave_scanner_backpack/verb/toggle_searcher()
 	set name = "Toggle Searcher"
@@ -118,7 +122,7 @@
 
 /obj/item/device/wave_scanner_backpack/attack_hand(mob/user)
 	if(loc == user)
-		ui_action_click()
+		toggle_searcher()
 		return
 	..()
 
@@ -200,7 +204,7 @@
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', VOL_EFFECTS_MASTER, 10)
-		INVOKE_ASYNC(src, .proc/scan)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else

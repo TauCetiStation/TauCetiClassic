@@ -144,7 +144,7 @@
 		for(var/page in PB.pages)
 			hashes += get_content(page)
 
-		hashes = sortList(hashes, cmp=/proc/cmp_text_asc)
+		hashes = sortList(hashes, cmp=GLOBAL_PROC_REF(cmp_text_asc))
 
 		var/hashstr = ""
 		for(var/hash in hashes)
@@ -236,7 +236,7 @@
 	UNSETEMPTY(notice_hashes_to_notes)
 
 	if(!notice_hashes_to_notes)
-		LAZYSET(hash_removal_timers, note_hash, addtimer(CALLBACK(src, .proc/remove_hash, note_hash), 2 MINUTES, TIMER_STOPPABLE))
+		LAZYSET(hash_removal_timers, note_hash, addtimer(CALLBACK(src, PROC_REF(remove_hash), note_hash), 2 MINUTES, TIMER_STOPPABLE))
 
 /obj/structure/noticeboard/proc/remove_hash(note_hash)
 	LAZYREMOVE(hash_removal_timers, note_hash)

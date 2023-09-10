@@ -27,6 +27,12 @@ map gamma
 	votable
 endmap
 
+map delta
+	votable
+	minplayers 70
+	voteweight 2.0
+endmap
+
 map testmap
 endmap
 

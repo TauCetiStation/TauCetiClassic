@@ -28,6 +28,7 @@
 	var/load_junkyard = TRUE
 
 	var/minetype = "asteroid"
+	var/smartlight_preset = "default"
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
@@ -138,6 +139,9 @@
 
 	if("station_image" in json)
 		station_image = json["station_image"]
+
+	if("smartlight_preset" in json)
+		smartlight_preset = json["smartlight_preset"]
 
 	defaulted = FALSE
 	return TRUE

@@ -359,6 +359,11 @@
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
+/obj/item/rig_module/cooling_unit/advanced
+	name = "advanced hardsuit mounted cooling unit"
+	charge_consumption = 20
+	interface_name = "advanced mounted cooling unit"
+
 /obj/item/rig_module/emp_shield
 	name = "hardsuit EMP shield"
 	icon_state = "powersink"
@@ -577,7 +582,7 @@
 			else
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE
-			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(boom)), rand(60 SECONDS, 120 SECONDS))
 			light_color = LIGHT_COLOR_FLARE
 			set_light(5)
 
@@ -664,7 +669,7 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, PROC_REF(update_foam_amount)), 5) // because extinguisher uses spawns
 
 /obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
@@ -715,7 +720,7 @@
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
 	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-	INVOKE_ASYNC(src, .proc/spray_at, T)
+	INVOKE_ASYNC(src, PROC_REF(spray_at), T)
 
 	return TRUE
 

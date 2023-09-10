@@ -18,7 +18,7 @@
 	rad_choices = list(
 		"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
 		"Emblem" = image(icon = 'icons/obj/lectern.dmi', icon_state = "christianity"),
-		"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
+		"Mat symbol" = image(icon = 'icons/turf/turf_decals.dmi', icon_state = "religion_christianity")
 	)
 
 /obj/item/weapon/storage/bible/booze
@@ -83,7 +83,7 @@
 
 	return ..()
 
-/obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user, mob/to_anchor)
+/obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user)
 	if(religify_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
@@ -102,14 +102,14 @@
 		for(var/choose in choices)
 			temp_images[choose] += rad_choices[choose]
 
-		var/looks = show_radial_menu(user, to_anchor, temp_images, tooltips = TRUE, require_near = TRUE)
+		var/looks = show_radial_menu(user, src, temp_images, tooltips = TRUE, require_near = TRUE)
 		if(!looks)
 			done = TRUE
 			break
 
 		switch(looks)
 			if("Altar")
-				var/new_look = show_radial_menu(user, to_anchor, religion.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, src, religion.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -118,7 +118,7 @@
 				choices -= "Altar"
 
 			if("Emblem")
-				var/new_look = show_radial_menu(user, to_anchor, religion.emblem_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, src, religion.emblem_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -127,11 +127,11 @@
 				choices -= "Emblem"
 
 			if("Mat symbol")
-				var/new_mat = show_radial_menu(user, to_anchor, religion.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_mat = show_radial_menu(user, src, religion.decal_radial_menu, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 
-				religion.carpet_dir = religion.carpet_dir_by_name[new_mat]
+				religion.decal = "religion_[lowertext(new_mat)]"
 				changes = TRUE
 				choices -= "Mat symbol"
 

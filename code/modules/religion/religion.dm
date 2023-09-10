@@ -28,8 +28,6 @@
 	var/bible_type
 
 	var/list/bible_info_by_name
-	// Radial menu
-	var/list/bible_skins
 
 	var/religious_tool_type
 
@@ -53,11 +51,10 @@
 	var/list/floor_types
 	var/list/door_types
 
-	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
-	var/carpet_dir
-	var/list/carpet_dir_by_name
-	// Radial menu
-	var/list/carpet_skins
+	var/decal
+	// List of possible decals
+	var/list/decal_by_name
+	var/list/decal_radial_menu
 	// Main area with structures
 	var/area_type
 	// Subtypes of area_type
@@ -220,14 +217,15 @@
 	for(var/info in emblem_info_by_name)
 		emblem_skins[info] = image(icon = 'icons/obj/lectern.dmi', icon_state = "[emblem_info_by_name[info]]")
 
-/datum/religion/proc/gen_carpet_variants()
-	carpet_skins = list()
+/datum/religion/proc/gen_decal_variants()
+	decal_radial_menu = list()
 	var/matrix/M = matrix()
 	M.Scale(0.7)
-	for(var/info in carpet_dir_by_name)
-		var/image/I = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol", dir = carpet_dir_by_name[info])
+	for(var/name in decal_by_name)
+		var/image/I = image(icon = 'icons/turf/turf_decals.dmi', icon_state = "religion_[lowertext(name)]")
 		I.transform = M
-		carpet_skins[info] = I
+		//I.color = "#000000"
+		decal_radial_menu[name] = I
 
 // This proc creates a "preset" of religion, before allowing to fill out the details.
 /datum/religion/proc/create_default()
@@ -243,7 +241,7 @@
 	gen_bible_info()
 	gen_altar_variants()
 	gen_emblem_variants()
-	gen_carpet_variants()
+	gen_decal_variants()
 
 	gen_agent_lists()
 
@@ -251,12 +249,6 @@
 
 // Update all info regarding structure based on current religion info.
 /datum/religion/proc/update_structure_info()
-	var/carpet_symbol_info = carpet_dir_by_name[name]
-	if(carpet_symbol_info)
-		carpet_dir = carpet_symbol_info
-	else
-		carpet_dir = 0
-
 	var/emblem_info = emblem_info_by_name[name]
 	if(emblem_info)
 		emblem_icon_state = emblem_info
@@ -515,7 +507,7 @@
 // Is called after any addition of new aspects.
 // Manages new spells and rites, gained by adding the new aspects.
 /datum/religion/proc/update_aspects()
-	var/datum/callback/aspect_pred = CALLBACK(src, .proc/satisfy_requirements)
+	var/datum/callback/aspect_pred = CALLBACK(src, PROC_REF(satisfy_requirements))
 
 	for(var/aspect_name in aspects)
 		var/datum/aspect/asp = aspects[aspect_name]
@@ -622,7 +614,7 @@
 	init_subtypes(tech_agent_type, available_techs)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
-	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)
+	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), PROC_REF(holy_reagent_react_turf))
 
 /datum/religion/proc/holy_reagent_react_turf(datum/source, turf/T, volume)
 	if(!isfloorturf(T))

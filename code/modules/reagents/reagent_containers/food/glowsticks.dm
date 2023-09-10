@@ -6,7 +6,7 @@
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
-	action_button_name = null	//just pull it manually, neckbeard.
+	item_action_types = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_FLAGS_BELT
 	light_power = 2
 	var/on = 0
@@ -16,7 +16,10 @@
 	var/start_brightness = 4
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
-	action_button_name = "Break Glowstick"
+	item_action_types = list(/datum/action/item_action/hands_free/break_glowstick)
+
+/datum/action/item_action/hands_free/break_glowstick
+	name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
 	name = "[colourName] glowstick"
@@ -53,6 +56,7 @@
 	else
 		icon_state = "glowstick_[colourName]"
 		set_light(0)
+	update_item_actions()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/turn_off()
 	on = 0
@@ -61,6 +65,15 @@
 		update_brightness(U)
 	else
 		update_brightness(null)
+	update_item_actions()
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/turn_light_off()
+	. = ..()
+	on = FALSE
+	if(liquid_fuel)
+		reagents.remove_reagent("luminophore", liquid_fuel.volume)
+	icon_state = "glowstick_[colourName]-over"
+	STOP_PROCESSING(SSobj, src)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)
@@ -88,7 +101,7 @@
 		return
 	on = !on
 	update_brightness(user)
-	action_button_name = null
+	item_action_types = null
 	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS_MASTER, 35, FALSE)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	START_PROCESSING(SSobj, src)

@@ -27,6 +27,8 @@ var/global/list/wedge_image_cache = list()
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
 
 	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
 	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
@@ -44,18 +46,18 @@ var/global/list/wedge_image_cache = list()
 	. = ..()
 	if(density)
 		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
+		explosive_resistance = initial(explosive_resistance)
 		update_heat_protection(get_turf(src))
 	else
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
+		explosive_resistance = 0
 
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 
 /obj/machinery/door/Destroy()
@@ -66,44 +68,29 @@ var/global/list/wedge_image_cache = list()
 	QDEL_NULL(wedged_item)
 	return ..()
 
-//process()
-	//return
-
-/obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
+/obj/machinery/door/Bumped(atom/movable/AM)
+	if(p_open || operating)
+		return
+	if(world.time - last_bumped <= 7)
+		return //Can bump-open one airlock per animation. This is to prevent shock spam.
+	last_bumped = world.time
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
-
-	if(isbot(AM))
-		var/obj/machinery/bot/bot = AM
-		if(check_access(bot.botcard) || emergency)
-			if(density)
-				open()
+	else if(isitem(AM))
+		if(AM.w_class < SIZE_NORMAL)
+			if(!length(AM.GetAccess()) || check_access(null))
+				return
+		if(allowed(AM))
+			open()
 		return
 
-	if(istype(AM, /obj/mecha))
-		var/obj/mecha/mecha = AM
-		if(density)
-			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)) || emergency)
-				open()
-			else
-				do_animate("deny")
-		return
-
-	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
-		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
-		if(density)
-			if((wheel.pulling && allowed(wheel.pulling)) || emergency)
-				open()
-			else
-				do_animate("deny")
-		return
-	return
+	if(allowed(AM))
+		open()
+	else
+		do_animate("deny")
 
 /obj/machinery/door/AltClick(mob/user)
 	if(user.incapacitated())
@@ -177,12 +164,12 @@ var/global/list/wedge_image_cache = list()
 			return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
-	var/atom/check_access = user
 
-	if(!requiresID())
-		check_access = null
+	if(!requiresID() && !check_access(null))
+		do_animate("deny")
+		return
 
-	if(allowed(check_access) || emergency)
+	if(allowed(user))
 		if(density)
 			open()
 		else
@@ -191,6 +178,16 @@ var/global/list/wedge_image_cache = list()
 
 	if(density)
 		do_animate("deny")
+
+/obj/machinery/door/allowed(atom/movable/M)
+	if(emergency)
+		return TRUE
+	if(unrestricted_side(M))
+		return TRUE
+	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(atom/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, opener) & unres_sides
 
 /obj/machinery/door/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
@@ -372,7 +369,7 @@ var/global/list/wedge_image_cache = list()
 				density = TRUE
 				wedging = TRUE
 
-				INVOKE_ASYNC(src, .proc/crush_wedge_animation, I)
+				INVOKE_ASYNC(src, PROC_REF(crush_wedge_animation), I)
 				return
 
 	if(close_checks(forced))
@@ -436,7 +433,7 @@ var/global/list/wedge_image_cache = list()
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
-	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/on_wedge_destroy)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), PROC_REF(on_wedge_destroy))
 
 /obj/machinery/door/proc/try_wedge_item(mob/living/user)
 	if(!can_wedge_items)
@@ -524,7 +521,7 @@ var/global/list/wedge_image_cache = list()
 	density = FALSE
 	sleep(4)
 	layer = base_layer
-	explosion_resistance = 0
+	explosive_resistance = 0
 	update_icon()
 	update_nearby_tiles()
 
@@ -537,7 +534,7 @@ var/global/list/wedge_image_cache = list()
 	if(visible && !glass)
 		set_opacity(TRUE)
 	layer = base_layer + DOOR_CLOSED_MOD
-	explosion_resistance = initial(explosion_resistance)
+	explosive_resistance = initial(explosive_resistance)
 	do_afterclose()
 	update_icon()
 	update_nearby_tiles()
@@ -565,7 +562,7 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/update_nearby_tiles(need_rebuild)
+/obj/machinery/door/update_nearby_tiles()
 	. = ..()
 
 	if(.)

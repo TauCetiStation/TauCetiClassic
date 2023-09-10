@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 7
+#define STAT_OUTPUT_VERSION 8
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:
@@ -39,6 +39,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/mode
 	// string, ["win", "lose"], shows whether all objectives of all antagonists' are completed
 	var/mode_result
+	// string, pool in ./code/game/gamemodes/modesbundle.dm in var name
+	var/bundle
 	// string, pool in ./maps/ directory in json files in var map_name
 	var/map
 	// You can get the nanoui map using
@@ -79,6 +81,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/faction/factions = list()
 	// array of objects
 	var/list/datum/stat/emp_stat/emps = list()
+	// array of objects
+	var/list/datum/stat/vote/completed_votes = list()
 
 /datum/stat_collector/New()
 	var/datum/default_datum = new
@@ -109,11 +113,13 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	duration = roundduration2text()
 	mode = SSticker.mode.name
 	mode_result = SSticker.mode.get_mode_result()
+	bundle = SSticker.bundle?.name
 	map = SSmapping.config.map_name
 	minimap_image = "nano/images/nanomap_[SSmapping.station_image]_1.png"
 	server_address = BYOND_SERVER_ADDRESS
 	base_commit_sha = global.base_commit_sha
-	test_merges = global.test_merges
+	if(global.test_merges)
+		test_merges = "#" + jointext(global.test_merges, "# ")
 	completion_html = SSticker.mode.completition_text
 
 	save_manifest_entries()

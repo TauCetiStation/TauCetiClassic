@@ -34,11 +34,11 @@
 
 /obj/item/weapon/gripper/atom_init()
 	. = ..()
-	RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
-	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
-	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
-	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
-	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), .proc/get_item)
+	RegisterSignal(src, list(COMSIG_HAND_IS), PROC_REF(is_hand))
+	RegisterSignal(src, list(COMSIG_HAND_ATTACK), PROC_REF(attack_as_hand))
+	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), PROC_REF(drop_item))
+	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), PROC_REF(put_in))
+	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), PROC_REF(get_item))
 
 /obj/item/weapon/gripper/Destroy()
 	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
@@ -56,7 +56,7 @@
 /obj/item/weapon/gripper/proc/wrap(obj/item/I)
 	wrapped = I
 	I.forceMove(src)
-	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/clear_wrapped)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), PROC_REF(clear_wrapped))
 
 /obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
 	if(wrapped)
@@ -202,7 +202,7 @@
 		/obj/item/robot_parts/l_leg,
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
-		/obj/item/weapon/tank/anesthetic,
+		/obj/item/weapon/tank/anesthetic
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)

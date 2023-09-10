@@ -444,7 +444,7 @@
 	for(var/turf/simulated/target_tile in range(1, T))
 		if(!target_tile.blocks_air && !target_tile.density)
 			target_tile.assume_gas("phoron", created_volume * 0.2)
-			INVOKE_ASYNC(target_tile, /turf/simulated.proc/hotspot_expose, 700, 400, holder.my_atom)
+			INVOKE_ASYNC(target_tile, TYPE_PROC_REF(/turf/simulated, hotspot_expose), 700, 400, holder.my_atom)
 	holder.del_reagent("napalm")
 
 /datum/chemical_reaction/chemsmoke
@@ -484,7 +484,7 @@
 	name = "Potassium Chlorophoride"
 	id = "potassium_chlorophoride"
 	result = "potassium_chlorophoride"
-	required_reagents = list("potassium_chloride" = 1, "phoron" = 1, "sodiumchloride" = 1)
+	required_reagents = list("potassium_chloride" = 1, "phoron" = 1, "chloralhydrate" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/zombiepowder
@@ -834,7 +834,7 @@
 
 /datum/chemical_reaction/slimefreeze/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	addtimer(CALLBACK(src, .proc/do_freeze, holder), 50)
+	addtimer(CALLBACK(src, PROC_REF(do_freeze), holder), 50)
 
 /datum/chemical_reaction/slimefreeze/proc/do_freeze(datum/reagents/holder)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
@@ -863,7 +863,7 @@
 
 /datum/chemical_reaction/slimefire/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	addtimer(CALLBACK(src, .proc/do_fire, holder), 50)
+	addtimer(CALLBACK(src, PROC_REF(do_fire), holder), 50)
 
 /datum/chemical_reaction/slimefire/proc/do_fire(datum/reagents/holder)
 	if(!(holder.my_atom && holder.my_atom.loc))
@@ -1021,7 +1021,7 @@
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	addtimer(CALLBACK(src, .proc/do_explosion, holder), 50)
+	addtimer(CALLBACK(src, PROC_REF(do_explosion), holder), 50)
 
 /datum/chemical_reaction/slimeexplosion/proc/do_explosion(datum/reagents/holder)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)

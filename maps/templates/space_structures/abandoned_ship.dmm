@@ -112,9 +112,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "as" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
@@ -159,9 +158,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "aA" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aB" = (
 /turf/simulated/floor{
@@ -196,9 +194,8 @@
 /area/space_structures/abandoned_ship)
 "aF" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aG" = (
 /obj/structure/stool/bed/chair/metal{
@@ -246,20 +243,17 @@
 /area/space_structures/abandoned_ship)
 "aM" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aN" = (
 /obj/machinery/light/small,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aO" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
@@ -703,9 +697,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "bX" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
@@ -791,9 +784,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "cg" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},

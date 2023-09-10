@@ -5,12 +5,14 @@
 	icon_state = "faith_glasses"
 	item_state = "faith_glasses"
 
-	action_button_name = "Assess Holyness"
-
 	var/next_assessment = 0
 	var/assessment_cooldown = 6 SECONDS
 
 	hud_types = list(DATA_HUD_HOLY)
+	item_action_types = list(/datum/action/item_action/hands_free/assess_holyness)
+
+/datum/action/item_action/hands_free/assess_holyness
+	name = "Assess Holyness"
 
 /obj/item/clothing/glasses/sunglasses/hud/chaplain/proc/gen_holy_overlay(turf/simulated/floor/F)
 	var/image/I = image('icons/effects/effects.dmi', "holy_land")
@@ -56,5 +58,5 @@
 		if(!F.holy)
 			continue
 		var/image/I = gen_holy_overlay(F)
-		INVOKE_ASYNC(src, .proc/animate_holy_overlay, I)
+		INVOKE_ASYNC(src, PROC_REF(animate_holy_overlay), I)
 		flick_overlay(I, list(user.client), assessment_cooldown)

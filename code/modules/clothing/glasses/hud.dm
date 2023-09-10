@@ -60,7 +60,7 @@
 		broke_hud()
 		if(glasses_user)
 			enable_hud(glasses_user)
-		addtimer(CALLBACK(src, .proc/fix_hud), (90 SECONDS) / severity)
+		addtimer(CALLBACK(src, PROC_REF(fix_hud)), (90 SECONDS) / severity)
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
@@ -90,10 +90,13 @@
 	icon_state = "diagnostichud"
 	item_state = "diagnostichud"
 	origin_tech = "engineering=2;programming=2"
-	action_button_name = "Toggle Goggles"
 	toggleable = 1
 	sightglassesmod = "sepia"
 	hud_types = list(DATA_HUD_DIAGNOSTIC)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"
@@ -115,7 +118,7 @@
 		broke_hud()
 		if(glasses_user)
 			enable_hud(glasses_user)
-		addtimer(CALLBACK(src, .proc/fix_hud), (90 SECONDS) / severity)
+		addtimer(CALLBACK(src, PROC_REF(fix_hud)), (90 SECONDS) / severity)
 
 /obj/item/clothing/glasses/sunglasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()

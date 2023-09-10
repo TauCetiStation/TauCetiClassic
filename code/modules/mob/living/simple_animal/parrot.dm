@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/parrot
 	name = "Parrot"
-	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
+	desc = "Попугай кричит, \"Это Попугай! РАААА!\""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
@@ -36,9 +36,9 @@
 	w_class = SIZE_TINY
 
 	speak = list("Прривет","Здаррова!","Кррекер?","БВААААА! Джамес Морган дрразнит меня!")
-	speak_emote = list("squawks","says","yells")
-	emote_hear = list("squawks","bawks")
-	emote_see = list("flutters its wings")
+	speak_emote = list("кричит","говорит")
+	emote_hear = list("кричит","бормочет")
+	emote_see = list("машет крыльями")
 
 	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
@@ -683,7 +683,7 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
-	desc = "Poly the Parrot. An expert on quantum cracker theory."
+	desc = "Попугай Поли. Эксперт по теории квантовых разломов."
 	speak = list(
 		":e Поли хочет кррекер!",
 		":e Прроверьте сингулярность, лоботррясы!",
@@ -711,16 +711,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	Read_Memory()
 	if(rounds_survived == longest_survival)
 		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
-		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
+		desc += " Старый как грех, и такой же громкий. Утверждал, что выжил [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("Чего же ты ждёшь!?", "Насилие поррождает насилие!", "Крровь! Кровь!", "Убей меня, если посмеешь!")
-		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
+		desc += " В ушах звенят крики [-rounds_survived] мертвых попугаев..."
 		color = "#bb7777"
 	else if(rounds_survived > 0)
 		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
-		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
+		desc += " Более [rounds_survived] смен без \"ужасных\" \"инцидентов\"!"
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
@@ -781,7 +781,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
-	desc = "Doomed to squawk the earth."
+	desc = "Обреченный бродить по Земле."
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE

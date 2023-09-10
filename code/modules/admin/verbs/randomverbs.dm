@@ -164,56 +164,25 @@
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
-	if(automute)
-		if(!config.automute_on)
-			return
-	else
-		if(!usr || !usr.client)
-			return
-		if(!usr.client.holder)
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You don't have permission to do this.</font>")
-			return
-		if(!M.client)
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>")
-		if(M.client.holder && (M.client.holder.rights & R_ADMIN) && !check_rights(R_PERMISSIONS))
-			return
-		if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>")
-			return
-	if(!M.client)
+/proc/cmd_admin_mute(mob/M as mob, mute_type)
+	if(!usr || !usr.client)
 		return
-
+	if(!usr.client.holder)
+		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You don't have permission to do this.</font>")
+		return
+	if(!M.client)
+		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>")
+	if(M.client.holder && (M.client.holder.rights & R_ADMIN) && !check_rights(R_PERMISSIONS))
+		return
+	if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
+		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>")
+		return
 
 	var/muteunmute
-	var/mute_string
+	var/mute_string = get_mute_text(mute_type)
 
-	switch(mute_type)
-		if(MUTE_IC)
-			mute_string = "IC (say and emote)"
-		if(MUTE_OOC)
-			mute_string = "OOC"
-		if(MUTE_PRAY)
-			mute_string = "pray"
-		if(MUTE_ADMINHELP)
-			mute_string = "adminhelp, admin PM and ASAY"
-		if(MUTE_MENTORHELP)
-			mute_string = "mentorhelp and mentor PM"
-		if(MUTE_DEADCHAT)
-			mute_string = "deadchat and DSAY"
-		if(MUTE_ALL)
-			mute_string = "everything"
-		else
-			return
-
-	if(automute)
-		muteunmute = "auto-muted"
-		M.client.prefs.muted |= mute_type
-		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
-		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].")
-		to_chat(M, "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.")
-		feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return
+	if(!mute_string)
+		CRASH("Can't parse mute type: [mute_type]")
 
 	if(M.client.prefs.muted & mute_type)
 		muteunmute = "unmuted"
@@ -720,7 +689,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if (tgui_alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", list("Yes", "No")) == "No")
 				return
 
-		explosion(O, devastation, heavy, light, flash)
+		explosion(O, devastation, heavy, light, flash, ignorecap = TRUE)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at [COORD(O)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EXPL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -936,7 +905,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(timer_maint_revoke_id)
 		deltimer(timer_maint_revoke_id)
 		timer_maint_revoke_id = 0
-	timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
+	timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	return
 

@@ -98,16 +98,39 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife)
+	var/rolled = FALSE
+
+/obj/item/clothing/suit/chef/verb/roll_down()
+	set name = "Rolled Down Apron"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(rolled)
+		icon_state = initial(icon_state)
+		item_state = initial(icon_state)
+		to_chat(usr, "You roll up [src] sleeves")
+		rolled = FALSE
+	else
+		icon_state += "_r"
+		item_state += "_r"
+		to_chat(usr, "You roll down [src] sleeves")
+		rolled = TRUE
+	update_inv_mob()
 
 //Chef
-/obj/item/clothing/suit/chef/classic
-	name = "A classic chef's apron."
+/obj/item/clothing/suit/chef_classic
+	name = "A classic chef's apron"
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
-	body_parts_covered = 0
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.50
+	allowed = list (/obj/item/weapon/kitchenknife, /obj/item/weapon/kitchen/rollingpin)
+
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
@@ -156,12 +179,14 @@
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
 	desc = "A red forensics technician jacket."
-	icon_state = "forensics_red"
+	icon_state = "forensicsredsuit"
+	item_state = "forensicsredsuit"
 
 /obj/item/clothing/suit/storage/forensics/blue
 	name = "blue jacket"
 	desc = "A blue forensics technician jacket."
-	icon_state = "forensics_blue"
+	icon_state = "forensicsblusuit"
+	item_state = "forensicsblusuit"
 
 //Engineering
 /obj/item/clothing/suit/storage/hazardvest
@@ -267,17 +292,21 @@
 
 //Recycler
 /obj/item/clothing/suit/recyclervest
-    name = "recycler vest"
-    desc = "This is Recycler vest."
-    icon = 'icons/obj/clothing/suits.dmi'
-    icon_state = "recycler_vest_open"
-    item_state = "recycler_vest"
-    blood_overlay_type = "coat" //it's the less thing that I can put here
-    body_parts_covered = 0
-    action_button_name = "Toggle vest buttons"
+	name = "recycler vest"
+	desc = "This is Recycler vest."
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "recycler_vest_open"
+	item_state = "recycler_vest"
+	blood_overlay_type = "coat" //it's the less thing that I can put here
+	body_parts_covered = 0
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_vest_buttons)
 
-/obj/item/clothing/suit/recyclervest/ui_action_click()
-    toggle()
+/datum/action/item_action/hands_free/toggle_vest_buttons
+	name = "Toggle vest buttons"
+
+/datum/action/item_action/hands_free/toggle_vest_buttons/Activate()
+	var/obj/item/clothing/suit/recyclervest/S = target
+	S.toggle()
 
 /obj/item/clothing/suit/recyclervest/proc/toggle()
     switch(icon_state)

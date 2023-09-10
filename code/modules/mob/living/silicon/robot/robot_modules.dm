@@ -211,6 +211,7 @@
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/device/hailer(src)
 	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
@@ -235,7 +236,7 @@
 	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash(src)
 	modules += new /obj/item/weapon/mop(src)
-	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/lightreplacer/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -374,6 +375,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/science(src)
 	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/taperoll/science(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
 	modules += new /obj/item/device/science_tool(src)
@@ -443,7 +445,7 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/device/multitool(src)
-	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/lightreplacer/robot(src)
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)

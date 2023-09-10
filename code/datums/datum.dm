@@ -77,13 +77,17 @@
 /datum/proc/update_filters()
 	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images.
 	A.filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		A.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
+
+/obj/item/update_filters()
+	. = ..()
+	update_item_actions()
 
 /datum/proc/transition_filter(name, time, list/new_params, easing, loop)
 	var/filter = get_filter(name)

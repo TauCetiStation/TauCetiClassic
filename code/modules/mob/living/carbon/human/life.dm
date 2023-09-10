@@ -232,7 +232,7 @@ var/global/list/tourette_bad_words= list(
 					SetCrawling(TRUE)
 
 			if(13 to 18)
-				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
+				if(getBrainLoss() >= 60 && (!HAS_TRAIT(src, TRAIT_STRONGMIND) || get_species() != SKRELL))
 					switch(rand(1, 3))
 						if(1)
 							say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
@@ -770,16 +770,20 @@ var/global/list/tourette_bad_words= list(
 				//src << "<span class='notice'>You're in too much pain to keep going...</span>"
 				//for(var/mob/O in oviewers(src, null))
 				//	O.show_messageold("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
-				if(prob(3))
-					Paralyse(10)
-				else
-					Stun(5)
-					Weaken(10)
+				var/long_shock_allowed = !HAS_TRAIT_FROM(src, TRAIT_STEEL_NERVES, VIRUS_TRAIT)
+				if(long_shock_allowed)
+					if(prob(3))
+						Paralyse(10)
+					else
+						Stun(5)
+						Weaken(10)
 				setHalLoss(99)
 
 		if(paralysis)
 			blinded = 1
 			stat = UNCONSCIOUS
+			drop_from_inventory(l_hand)
+			drop_from_inventory(r_hand)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else if(IsSleeping())

@@ -50,6 +50,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/selected_protolathe_category
 	var/selected_imprinter_category
 	var/search_text
+	var/sabotagable = TRUE // if traitor can sabotage it with disk
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -58,27 +59,25 @@ cause a ton of data to be lost, an admin can go send it back.
 ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
-	var/return_name = null
-	if (copytext(ID, 1, 2) == "$")
-		return_name = copytext(ID, 2)
-		switch(return_name)
-			if("metal")
-				return_name = "Metal"
-			if("glass")
-				return_name = "Glass"
-			if("gold")
-				return_name = "Gold"
-			if("silver")
-				return_name = "Silver"
-			if("phoron")
-				return_name = "Solid Phoron"
-			if("uranium")
-				return_name = "Uranium"
-			if("diamond")
-				return_name = "Diamond"
-			if("bananium")
-				return_name = "Bananium"
-	else
+	var/return_name
+	switch(ID)
+		if("metal")
+			return_name = "Metal"
+		if("glass")
+			return_name = "Glass"
+		if("gold")
+			return_name = "Gold"
+		if("silver")
+			return_name = "Silver"
+		if("phoron")
+			return_name = "Solid Phoron"
+		if("uranium")
+			return_name = "Uranium"
+		if("diamond")
+			return_name = "Diamond"
+		if("bananium")
+			return_name = "Bananium"
+	if(!return_name)
 		for(var/R in subtypesof(/datum/reagent))
 			temp_reagent = null
 			temp_reagent = new R()
@@ -211,7 +210,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		else
 			screen = "working"
 			griefProtection() //Putting this here because I dont trust the sync process
-			addtimer(CALLBACK(src, .proc/sync_tech), 3 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(sync_tech)), 3 SECONDS)
 	if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
 		sync = !sync
 	if(href_list["select_category"])
@@ -278,7 +277,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		linked_imprinter.eject_sheet(href_list["imprinter_ejectsheet"], desired_num_sheets)
 	if(href_list["find_device"])
 		screen = "working"
-		addtimer(CALLBACK(src, .proc/find_devices), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(find_devices)), 2 SECONDS)
 	if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
 		switch(href_list["disconnect"])
 			if("destroy")

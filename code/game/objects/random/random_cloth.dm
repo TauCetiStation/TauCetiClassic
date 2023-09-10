@@ -50,7 +50,7 @@
 				/obj/item/clothing/suit/unathi/robe ,\
 				/obj/item/clothing/suit/hooded/skhima,\
 				/obj/item/clothing/suit/hooded/nun,\
-				/obj/item/clothing/suit/chef/classic,\
+				/obj/item/clothing/suit/chef_classic,\
 				/obj/item/clothing/suit/suspenders,\
 				/obj/item/clothing/suit/pirate,\
 				/obj/item/clothing/suit/cyborg_suit,\
@@ -111,7 +111,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "orange"
 /obj/random/cloth/gloves_safe/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja,) - typesof(/obj/item/clothing/gloves/black/silence) - typesof(/obj/item/clothing/gloves/security))
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/insulated, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja,) - typesof(/obj/item/clothing/gloves/black/silence) - typesof(/obj/item/clothing/gloves/security))
 
 /obj/random/cloth/glasses
 	name = "random glasses"

@@ -14,8 +14,6 @@
 	return module_active
 
 /mob/living/silicon/robot/put_in_active_hand(obj/item/W)
-	if(lying && !(W.flags & ABSTRACT))
-		return FALSE
 	if(!istype(W))
 		return FALSE
 	if(W.anchored)

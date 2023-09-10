@@ -1,7 +1,7 @@
 /turf/unsimulated/floor
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "Floor3"
+	icon_state = "floor"
 
 /turf/unsimulated/floor/attack_paw(user)
 	return attack_hand(user)

@@ -9,6 +9,7 @@
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/engGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 		access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -94,7 +95,8 @@
 		"[AIRLOCK_WIRE_ELECTRIFY]"   = "electrify",
 		"[AIRLOCK_WIRE_SAFETY]"      = "door safety",
 		"[AIRLOCK_WIRE_SPEED]"       = "timing mechanism",
-		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light"
+		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light",
+		"[AIRLOCK_WIRE_UNRES_SIDE]"  = "unrestricted sides"
 	)
 
 	var/info = ""

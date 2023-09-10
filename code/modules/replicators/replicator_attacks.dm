@@ -16,9 +16,9 @@
 	// Thus it shouldn't also protect you from pew pew.
 	flag = BULLET
 
-/obj/item/projectile/disabler/on_impact(atom/A)
+/obj/item/projectile/disabler/on_hit(atom/target)
 	..()
-	spit_prismaline(src, A, 1.5)
+	spit_prismaline(src, target, 1.5)
 
 
 /mob/living
@@ -32,7 +32,7 @@
 		return
 	L.next_replicator_explosion = world.time + 3 SECONDS
 
-	INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L, null, TRUE, "disintegrate", null)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_attack_animation), L, null, TRUE, "disintegrate", null)
 	playsound(L, 'sound/weapons/crystal_explosion.ogg', VOL_EFFECTS_MASTER, vol=150)
 
 /mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/A)
@@ -49,10 +49,13 @@
 		L.silent = max(L.silent, 2)
 
 		if(L.stat == CONSCIOUS && !L.lying && !L.crawling)
-			addtimer(CALLBACK(src, .proc/check_for_explosion, A), 2 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(check_for_explosion), A), 2 SECONDS)
 
-		INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L)
-		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_attack_animation), L)
+		if(!attack_sound.len)
+			playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(L, pick(attack_sound), VOL_EFFECTS_MASTER)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
@@ -65,7 +68,7 @@
 		return
 
 	if(a_intent == INTENT_GRAB)
-		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
+		INVOKE_ASYNC(src, PROC_REF(disintegrate_turf), get_turf(A))
 		return
 
 	if(istype(A, /obj/structure/forcefield_node))
@@ -81,32 +84,37 @@
 		return
 
 	if(istype(A, /turf))
-		INVOKE_ASYNC(src, .proc/disintegrate, A)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), A)
 		return
 
 	if(istype(A, /obj))
-		INVOKE_ASYNC(src, .proc/disintegrate, A)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), A)
 		return
 
 	if(isreplicator(A))
 		var/mob/living/simple_animal/hostile/replicator/R = A
-		if(R == src || R.stat == DEAD || !R.ckey)
-			INVOKE_ASYNC(src, .proc/disintegrate, A)
+		if(R == src || R.stat == DEAD || !R.is_controlled())
+			INVOKE_ASYNC(src, PROC_REF(disintegrate), A)
 		return
 
 	if(isliving(A))
-		INVOKE_ASYNC(src, .proc/disintegrate, A)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), A)
 		return
 
 /mob/living/simple_animal/hostile/replicator/RangedAttack(atom/A, params)
 	// Adjacent() checks make this work in an unintuitive way otherwise.
 	if(get_dist(src, A) <= 1 && a_intent == INTENT_GRAB)
-		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
+		INVOKE_ASYNC(src, PROC_REF(disintegrate_turf), get_turf(A))
 		return
 
 	if(a_intent == INTENT_HARM && get_turf(A) && get_turf(src))
 		SetNextMove(CLICK_CD_MELEE)
-		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
+
+		if(!attack_sound.len)
+			playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, pick(attack_sound), VOL_EFFECTS_MASTER)
+
 		var/obj/item/projectile/disabler/D = new(loc)
 		D.color = color
 
@@ -118,7 +126,7 @@
 
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
-		INVOKE_ASYNC(D, /obj/item/projectile.proc/Fire, A, src, params)
+		INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/item/projectile, Fire), A, src, params)
 		scatter_offset()
 
 		newtonian_move(get_dir(A, src))
@@ -141,6 +149,22 @@
 		visual_effect_color = color
 	return ..(A, end_pixel_y, has_effect, visual_effect_icon, visual_effect_color)
 
+var/global/list/replicator_mines = list()
+ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
+
+/obj/item/mine/replicator/proc/pretend_disintegration()
+	if(fake_disintegrating)
+		return
+	fake_disintegrating = TRUE
+	var/amount = rand(1, 3)
+	for (var/i in 1 to amount)
+		playsound(src, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
+		sleep(rand(1, 3))
+		if(QDELING(src))
+			fake_disintegrating = FALSE
+			return
+		playsound(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
+	fake_disintegrating = FALSE
 
 /obj/item/mine/replicator
 	name = "mine"
@@ -158,6 +182,8 @@
 	var/being_disarmed = FALSE
 
 	var/creator_ckey
+
+	var/fake_disintegrating = FALSE
 
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
@@ -206,7 +232,7 @@
 	armed = FALSE
 	update_icon()
 
-	addtimer(CALLBACK(src, .proc/rearm), 8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(rearm)), 8 SECONDS)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
@@ -307,7 +333,7 @@
 
 		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/hostile/replicator/other = r
-			if(other.ckey)
+			if(other.is_controlled())
 				continue
 			if(get_dist(src, other) > 7)
 				continue
@@ -324,4 +350,4 @@
 	armed = FALSE
 	update_icon()
 
-	addtimer(CALLBACK(src, .proc/rearm), (8 SECONDS / severity))
+	addtimer(CALLBACK(src, PROC_REF(rearm)), (8 SECONDS / severity))
