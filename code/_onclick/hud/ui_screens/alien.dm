@@ -1,6 +1,6 @@
 // basic screens
 /atom/movable/screen/health/alien
-	icon = 'icons/hud/screen1_xeno.dmi'
+	icon = 'icons/hud/screen2_xeno.dmi'
 	screen_loc = ui_alien_health
 
 /atom/movable/screen/xenomorph
