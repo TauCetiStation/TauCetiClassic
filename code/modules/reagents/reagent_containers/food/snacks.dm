@@ -46,7 +46,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, var/silent = FALSE)
+/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
