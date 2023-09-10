@@ -20,16 +20,6 @@
 
 	return TRUE
 
-/datum/faction/traitor/auto/proc/is_shuttle_staying()
-	if(SSshuttle.departed)
-		log_mode("But shuttle was departed.")
-		return FALSE
-	if(SSshuttle.online) //shuttle in the way, but may be revoked
-		addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), global.autotraitors_spawn_cd)
-		log_mode("But shuttle was online.")
-		return FALSE
-	return TRUE
-
 /datum/faction/traitor/auto/proc/calculate_autotraitor_probability(playercount, current_traitors, max_traitors)
 	var/traitor_prob = 0
 	traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
@@ -39,7 +29,13 @@
 
 /datum/faction/traitor/auto/proc/traitorcheckloop()
 	log_mode("Try add new autotraitor.")
-	if(!is_shuttle_staying())
+
+	if(SSshuttle.departed)
+		log_mode("But shuttle was departed.")
+		return
+	if(SSshuttle.online) //shuttle in the way, but may be revoked
+		addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), global.autotraitors_spawn_cd)
+		log_mode("But shuttle was online.")
 		return
 
 	var/list/possible_autotraitor = list()
