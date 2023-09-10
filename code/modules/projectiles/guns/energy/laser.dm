@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
-	desc = "Модифицированная версия стандартного лазерного оружия, стреляет менее концентрированными энергетическими зарядами, предназначенными для стрельбы по мишеням."
+	desc = "Модифицированная версия стандартной лазерной винтовки, стреляет менее концентрированными энергетическими зарядами, предназначенными для стрельбы по мишеням."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 
@@ -59,7 +59,7 @@
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
-	desc = "Это антикварный лазерный пистолет. Все детали высочайшего качества. В отделке есть элементы из хрома, стали и ассистента? Предмет излучает энергетику и власть. На нем выгравирована космическая станция 13. И эта станция взрывается."
+	desc = "Это антикварный лазерный пистолет. Качество исполнения всех его деталей высочайшее. Он украшен элементами из хрома и шкуры ассистента. Буквально излучает энергетику и власть. На нем выгравирована космическая станция 13. И эта станция взрывается."
 	force = 10
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = null
@@ -69,7 +69,7 @@
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"
 	icon_state = "egun"
-	desc = "Объект излучает энергетические шипы. Вы не знаете, что это за оружие."
+	desc = "Оно излучает инопланетную энергетику. Вы не знаете, что это за оружие."
 	force = 5
 	origin_tech = null
 	charge_rate = 50
@@ -77,7 +77,7 @@
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	icon_state = "oldlaser"
-	desc = "Лазерная пушка, оснащенная комплектом преломления, которая создает несколько энергетических зарядов."
+	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
 	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
@@ -88,7 +88,7 @@
 /obj/item/weapon/gun/energy/laser/scatter/alien
 	name = "scatter laser rife"
 	icon_state = "subegun"
-	desc = "Лазерная пушка, оснащенная комплектом преломления, которая создает несколько энергетических зарядов."
+	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 	origin_tech = null
 

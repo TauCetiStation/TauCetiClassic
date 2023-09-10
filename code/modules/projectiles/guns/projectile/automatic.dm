@@ -58,7 +58,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
-	desc = "Легкий компактный пистолет-пулемет типа буллпап. Использует патроны .45 ACP в магазинах средней емкости и имеет нарезной ствол для установки глушителя. На прикладе имеется клеймо 'Scarborough Arms - Per falcis, per pravitas'."
+	desc = "Легкий компактный пистолет-пулемет типа булл-пап. Использует патроны .45 ACP в магазинах средней емкости и имеет нарезной ствол для установки глушителя. На прикладе виднеется клеймо: blahblahblah ."
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = SIZE_SMALL
@@ -71,7 +71,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
-	desc = "Сильно модифицированный легкий пулемет с тактической рамкой из пластали, опирающейся на довольно традиционную баллистику. На ствольной коробке выгравировано 'Оружейная мастерская Aussec - 2531', кроме того используются патроны '7.62x51мм' ."
+	desc = "Сильно модифицированный легкий пулемет с тактической рамкой из пластали, опирающейся на довольно традиционную баллистическую систему. На ствольной коробке выгравировано 'Оружейная мастерская Aussec - 2531', кроме того используются патроны '7.62x51мм' ."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = SIZE_BIG
@@ -109,7 +109,7 @@
 		magazine = null
 		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>Вы вытащили обойму из [src].</span>")
+		to_chat(user, "<span class='notice'>Вы вытащили магазин из [src].</span>")
 	else
 		if(chambered)
 			playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
@@ -118,7 +118,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
 	if(!cover_open)
-		to_chat(user, "<span class='notice'> Крышка [src] закрыта! Вы не можете вставить новую обойму!</span>")
+		to_chat(user, "<span class='notice'> Крышка [src] закрыта! Вы не можете вставить новый магазин!</span>")
 		return
 	return ..()
 
@@ -173,14 +173,14 @@
 		magazine.update_icon()
 		magazine = null
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>Вы вытаскиваете обойму из [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else
 		to_chat(user, "<span class='notice'>Внутри [src] нет обоймы.</span>")
 	return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Требуются специальные патроны"
+	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Совместим лишь со специальными магазинами."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = SIZE_SMALL

@@ -13,7 +13,7 @@
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
-	desc = "Стандартный плазменный карабин типа булл-пап с высокой скорострельностью."
+	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
 	fire_delay = 1
@@ -124,9 +124,9 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		to_chat(user, "<span class='notice'>Вы вытаскиваете обойму из [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else
-		to_chat(user, "<span class='notice'>Внутри [src] нет обоймы.</span>")
+		to_chat(user, "<span class='notice'>Внутри [src] нет магазина.</span>")
 	update_icon(user)
 	return
 
@@ -136,7 +136,7 @@
 		if(!magazine && istype(AB, initial_mag))
 			user.drop_from_inventory(AB, src)
 			magazine = AB
-			to_chat(user, "<span class='notice'>Вы загрузили новую обойму в [src].</span>")
+			to_chat(user, "<span class='notice'>Вы загрузили новый магазин в [src].</span>")
 			if(AB.get_charge())
 				if(!AB.has_overcharge())
 					playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
@@ -147,7 +147,7 @@
 			return TRUE
 
 		else if (magazine)
-			to_chat(user, "<span class='notice'>Внутри [src] уже установлена обойма.</span>")
+			to_chat(user, "<span class='notice'>Внутри [src] уже установлен магазин.</span>")
 			return
 
 	return ..()

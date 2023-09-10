@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "Стандартный энергетический пистолет с двумя настройками: оглушить или убить."
+	desc = "Стандартный энергетический пистолет с двумя режимами работы: оглушающим и летальным."
 	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
@@ -14,19 +14,19 @@
 	update_inv_mob()
 
 /obj/item/weapon/gun/energy/gun/head
-	desc = "Основной энергетический пистолет с деревянной рукояткой и с двумя настройками: оглушить или убить."
+	desc = "Основной энергетический пистолет с деревянной рукояткой и с двумя режимами работы: оглушающим и летальным."
 	icon_state = "energy"
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\"Revenant\" Energy Advanced Pistol"
-	desc = "Вершина оружейной инженерии, этот пистолет способен стрелять электрошоковыми разрядами, боевым лазером и электромагнитными разрядами. Выдается только высокопоставленным офицерам службы безопасности."
+	desc = "Вершина оружейной инженерии, Этот пистолет способен поражать цели электрошоком, лазером или ЭМИ. Выдается только высокопоставленным офицерам службы безопасности."
 	icon_state = "hosgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
 
 /obj/item/weapon/gun/energy/gun/adv
 	name = "Energy Gun Mark II"
-	desc = "Новейшая модель энергетического оружия. Новая, передовая конструкция отличается улучшенной системой охлаждения и внутренней батареей."
+	desc = "Новейшая модель энергетического оружия. Передовая конструкция отличается улучшенной системой охлаждения и внутренней батареей."
 	icon_state = "advgun"
 	origin_tech = "combat=6;magnets=5;powerstorage=2;syndicate=1"
 	fire_delay = 4

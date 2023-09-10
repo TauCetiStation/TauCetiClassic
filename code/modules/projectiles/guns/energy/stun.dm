@@ -50,7 +50,7 @@
 
 /obj/item/weapon/gun/energy/taser/stunrevolver
 	name = "stun revolver"
-	desc = "Высокотехнологичный револьвер, стреляющий электрошоковыми патронами. Зарядить патроны можно с помощью обычного зарядного устройства для энергетического оружия."
+	desc = "Высокотехнологичный револьвер, стреляющий электрошоковыми патронами. Пополнить боезапас/зарядить оружие можно с помощью обычного зарядного устройства для энергетического оружия."
 	icon_state = "stunrevolver"
 	item_state = "taser"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
@@ -96,7 +96,7 @@
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
-	desc = "Оружие, предпочитаемое ударными силами синдиката."
+	desc = "Оружие, высоко ценимое оперативниками синдиката"
 	w_class = SIZE_NORMAL
 	can_be_holstered = FALSE
 	force = 10
