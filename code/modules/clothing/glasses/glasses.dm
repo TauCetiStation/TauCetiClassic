@@ -452,6 +452,10 @@ I was expecting a 5 style points for IAA glasses
 	icon_state = "gar"
 	item_state = "gar"
 
+/obj/item/clothing/glasses/gar/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar sunglasses"
 	icon_state = "garb"
@@ -463,6 +467,10 @@ I was expecting a 5 style points for IAA glasses
 	item_state = "garm"
 	toggleable = FALSE
 	item_action_types = null
+
+/obj/item/clothing/glasses/meson/gar/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
