@@ -59,6 +59,10 @@
 	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/katana/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 15, list(SLOT_BELT, SLOT_BACK))
+
 /obj/item/weapon/katana/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>")
 	return(BRUTELOSS)
