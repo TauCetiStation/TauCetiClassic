@@ -264,6 +264,10 @@
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/storage/fr_jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/storage/fr_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
 	set category = "Object"
