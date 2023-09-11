@@ -1,5 +1,6 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
+	cases = list("шлема", "шлему", "шлем", "шлемом", "шлеме")
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	flags = HEADCOVERSEYES
@@ -67,6 +68,7 @@
 
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
+	cases = list("усилителя", "усилителю", "усилитель", "усилителем", "усилителе")
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
 	icon_state = "amp"
 	item_state = "amp"
@@ -80,6 +82,7 @@
 
 /obj/item/clothing/head/helmet/HoS
 	name = "head of security's hat"
+	cases = list("шляпы", "шляпе", "шляпу", "шляпой", "шляпе")
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoshat"
 	item_state = "hoshat"
