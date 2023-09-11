@@ -86,6 +86,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/mask/cigarette/get_current_temperature()
 	if(lit)
@@ -249,6 +250,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigaroff"
 	smoketime = 1500
 	chem_volume = 20
+
+/obj/item/clothing/mask/cigarette/cigar/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 7)
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "Cohiba Robusto cigar"
