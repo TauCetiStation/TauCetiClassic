@@ -3,11 +3,10 @@
 	var/style_in_desired = 0
 	var/list/desired_slots
 
-/datum/component/style/Initialize(style_initial, amount_in_desired, slot_initial, set_initial)
+/datum/component/style/Initialize(style_initial, amount_in_desired, slot_initial)
 	. = ..()
 	style_amount = style_initial
 	style_in_desired = amount_in_desired
-	style_set = set_initial
 	if(islist(slot_initial))
 		var/list/L = slot_initial
 		desired_slots = L
