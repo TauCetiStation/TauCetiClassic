@@ -101,6 +101,10 @@
 /datum/action/item_action/hands_free/toggle_mask
 	name = "Toggle Mask"
 
+/obj/item/clothing/mask/gas/sechailer/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, -15)
+
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		var/obj/item/weapon/screwdriver/S = I
