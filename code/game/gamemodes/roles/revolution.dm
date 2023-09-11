@@ -25,7 +25,7 @@
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<span class='warning'><FONT size = 3>С этого момента вы Революционер! Распространяйте всюду ваше освободительное движение. Не вредите своим товарищам в борьбе за свободу. Вы можете определить своих союзников по красному ярлыку \"R\", а также своих лидеров по синему ярлыку \"R\". Помогайте им в вербовке, захвате или убийстве глав станции для достижения победы Революции!</FONT></span>")
+	to_chat(antag.current, "<span class='warning'><FONT size = 3>С этого момента вы - революционер! Распространяйте всюду ваше освободительное движение. Не вредите своим товарищам в борьбе за свободу. Вы можете определить своих союзников по красному ярлыку \"R\", а также своих лидеров по синему ярлыку \"R\". Помогайте им в вербовке, захвате или убийстве глав станции для достижения победы Революции!</FONT></span>")
 
 /datum/role/rev_leader
 	name = HEADREV
@@ -91,7 +91,7 @@
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)
-			to_chat(src, "<span class='warning'>Подождите пять секунд перед попыткой повторной вербовки.</span>")
+			to_chat(src, "<span class='warning'>Подождите 5 секунд перед попыткой повторной вербовки.</span>")
 			return
 		to_chat(src, "<span class='warning'>Попытка вербовки [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
