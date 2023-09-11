@@ -14,6 +14,7 @@
 //Captain's space suit This is not the proper path but I don't currently know enough about how this all works to mess with it.
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
+	cases = list("бронекостюма", "бронекостюму", "бронекостюм", "бронекостюмом", "бронекостюме")
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"

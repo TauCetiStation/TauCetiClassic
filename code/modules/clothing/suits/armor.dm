@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/armor
+	cases = list("бронежилета", "бронежилету", "бронежилет", "бронежилетом", "бронежилете")
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
@@ -31,6 +32,7 @@
 
 /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
 	name = "purple robes"
+	cases = list("робы", "робе", "робу", "робой", "робе")
 	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
 	icon_state = "psyamp"
 	item_state = "psyamp"
@@ -38,6 +40,7 @@
 
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
+	cases = list("бронежилет", "бронежилету", "бронежилет", "бронежилетом", "бронежилете")
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
 	icon_state = "armorsec"
 	item_state = "armor"
@@ -105,6 +108,7 @@
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
+	cases = list("плаща", "плащу", "плащ", "плащом", "плаще")
 	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
 	icon_state = "leather_overcoat-sec"
 	item_state = "hostrench"
@@ -114,6 +118,7 @@
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
+	cases = list("пальто", "пальто", "пальто", "пальто", "пальто")
 	desc = "A greatcoat enhanced with a special alloy for some protection and style."
 	icon_state = "hos"
 	item_state = "hos"
@@ -188,6 +193,7 @@
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
+	cases = list("бронекостюма", "бронекостюму", "бронекостюм", "бронекостюмом", "бронекостюме")
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
@@ -205,6 +211,7 @@
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
+	cases = list("тренча", "тренчу", "тренч", "тренчем", "тренче")
 	desc = "An armored jacket used in special operations."
 	icon_state = "detective_trenchcoat_brown"
 	item_state = "detective_trenchcoat_brown"
@@ -303,6 +310,7 @@
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
+	cases = list("бронекостюма", "бронекостюму", "бронекостюм", "бронекостюмом", "бронекостюме")
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
@@ -316,6 +324,7 @@
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
+	cases = list("бронекостюма", "бронекостюму", "бронекостюм", "бронекостюмом", "бронекостюме")
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
@@ -328,6 +337,7 @@
 	siemens_coefficient = 0
 
 /obj/item/clothing/suit/armor/tdome
+	cases = list("бронекостюма", "бронекостюму", "бронекостюм", "бронекостюмом", "бронекостюме")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -424,6 +434,7 @@
 
 /obj/item/clothing/suit/armor/crusader
 	name = "crusader tabard"
+	cases = list("доспеха", "доспеху", "доспех", "доспехом", "доспехе")
 	desc = "It's a chainmail with some cloth draped over. Non nobis domini and stuff."
 	icon_state = "crusader"
 	item_state = "armor"
@@ -451,6 +462,7 @@
 
 /obj/item/clothing/suit/armor/duracoat
 	name = "durathread coat"
+	cases = list("пальто", "пальто", "пальто", "пальто", "пальто")
 	desc = "A coat made from durathread, looks stylish."
 	icon_state = "Duracoat"
 	item_state = "Duracoat"
