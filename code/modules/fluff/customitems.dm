@@ -38,30 +38,58 @@
 	name = "Custom hat"
 	body_parts_covered = 0
 
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/custom
 	name = "Custom uniform"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
 	body_parts_covered = 0
 
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
 	body_parts_covered = 0
 
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/glasses/custom
 	name = "Custom glasses"
 	body_parts_covered = 0
+
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/gloves/custom
 	name = "Custom gloves"
 	body_parts_covered = 0
 	species_restricted = null
 
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/shoes/custom
 	name = "Custom shoes"
 	body_parts_covered = 0
+
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/accessory/custom
 	name = "Custom accessory"
@@ -69,6 +97,9 @@
 /obj/item/clothing/suit/storage/labcoat/custom
 	name = "Custom labcoat"
 
+/obj/item/clothing/head/custom/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
