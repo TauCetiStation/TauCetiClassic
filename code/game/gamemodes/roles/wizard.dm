@@ -66,7 +66,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), SLOT_R_STORE)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), SLOT_R_HAND)
 
-	to_chat(wizard_mob, "<span class='info'>Вы были достойны получить в свои руки Книгу Волшебства, открыв ее вы найдете большой арсенал различных заклинаний. Выбирайте свои чародейские фокусы с умом.</span>")
+	to_chat(wizard_mob, "<span class='info'>Вы были достойны получить в свои руки Книгу Волшебства, открыв её вы найдете большой арсенал различных заклинаний. Выбирайте свои чародейские фокусы с умом.</span>")
 	to_chat(wizard_mob, "<span class='info'>У вас в карманах вы сможете найти Свиток Телепортации, который телепортирует вас в указанное место под покровом дыма. Используйте его при надобности.</span>")
 	wizard_mob.mind.store_memory("<B>Не забудьте приготовить свои заклинания.</B>")
 	wizard_mob.update_icons()

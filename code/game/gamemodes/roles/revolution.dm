@@ -74,7 +74,7 @@
 		if(stat == CONSCIOUS && P.client && P.mind && (!isrev(P) || !isrevhead(P)))
 			Possible += P
 	if(!Possible.len)
-		to_chat(src, "<span class='warning'>Рядом с вами нет никого кто мог бы присоединиться к Революции.</span>")
+		to_chat(src, "<span class='warning'>Рядом с вами нет никого, кто мог бы присоединиться к Революции.</span>")
 		return
 
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
