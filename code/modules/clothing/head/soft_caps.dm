@@ -17,6 +17,7 @@
 /obj/item/clothing/head/soft/atom_init()
 	. = ..()
 	icon_state = "[cap_color]soft"
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/head/soft/wash_act(w_color)
 	. = ..()
