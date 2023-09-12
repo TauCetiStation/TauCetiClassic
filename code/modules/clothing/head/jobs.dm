@@ -102,6 +102,10 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+/obj/item/clothing/head/det_hat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/head/det_hat/gray
 	name = "detective's gray hat"
 	icon_state = "detective_hat_gray"

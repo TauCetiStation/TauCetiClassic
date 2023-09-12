@@ -65,6 +65,10 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/det/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/under/det/max_payne
 	name = "white hard-worn suit with blue jeans"
 	desc = "Style suit for those who want vengence."

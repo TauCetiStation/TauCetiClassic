@@ -227,6 +227,10 @@
 	flags = ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/det_suit/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/storage/flak/blueshield
 	name = "blueshield armor vest"
 	desc = "It's heavy and somehow... comfortable?"

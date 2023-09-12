@@ -144,6 +144,10 @@
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	var/is_fasten = TRUE
 
+/obj/item/clothing/suit/storage/det_suit/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/storage/det_suit/verb/toggle()
 	set name = "Toggle Trenchcoat Belt"
 	set category = "Object"
