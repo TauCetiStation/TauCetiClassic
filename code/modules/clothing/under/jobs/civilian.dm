@@ -169,6 +169,10 @@
 	item_state = "oldman"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/lawyer/oldman/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
