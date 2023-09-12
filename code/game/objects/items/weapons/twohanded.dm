@@ -110,6 +110,7 @@
 	TCB.on_wield = CALLBACK(src, PROC_REF(on_wield))
 	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
 	AddComponent(/datum/component/twohanded, TCB)
+	AddComponent(/datum/component/style, -calculate_block_chance_active())
 
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
@@ -156,9 +157,12 @@
 				user.set_dir(i)
 				sleep(1)
 
+/obj/item/weapon/dualsaber/proc/calculate_block_chance_active()
+	return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
+
 /obj/item/weapon/dualsaber/Get_shield_chance()
 	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)
-		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
+		return calculate_block_chance_active()
 	else
 		return 0
 

@@ -244,10 +244,15 @@
 	item_state = "reactiveoff"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/active = FALSE
+	var/block_chance = 50
+
+/obj/item/clothing/suit/armor/vest/reactive/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, -block_chance)
 
 /obj/item/clothing/suit/armor/vest/reactive/Get_shield_chance()
 	if(active)
-		return 50
+		return block_chance
 	return 0
 
 /obj/item/clothing/suit/armor/vest/reactive/attack_self(mob/user)
