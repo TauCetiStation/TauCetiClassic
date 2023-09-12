@@ -16,6 +16,7 @@
 /obj/item/clothing/head/hardhat/atom_init()
 	. = ..()
 	update_icon()
+	AddComponent(/datum/component/style, 0, -5, SLOT_HEAD)
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
 	if(!isturf(user.loc))
