@@ -105,6 +105,10 @@
 
 	var/waddling = FALSE
 
+/obj/item/clothing/shoes/jolly_gravedigger/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/shoes/jolly_gravedigger/Destroy()
 	if(waddling)
 		stop_waddling(loc)
@@ -167,6 +171,10 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
+
+/obj/item/clothing/shoes/laceup/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."

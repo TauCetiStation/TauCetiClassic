@@ -107,6 +107,9 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
+/obj/item/clothing/suit/wcoat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"

@@ -1,3 +1,7 @@
+/obj/item/clothing/under/color/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
@@ -27,6 +31,10 @@
 	icon_state = "grey"
 	item_state = "grey"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/color/grey/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
