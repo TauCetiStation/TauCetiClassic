@@ -116,6 +116,7 @@
 
 	var/rig_variant = "engineering"
 
+
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()
 	if(initial_modules && initial_modules.len)
@@ -594,8 +595,8 @@
 // action battons
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots
 	name = "Toggle hardsuit magboots"
-	button_icon = 'icons/obj/clothing/shoes.dmi'
-	button_icon_state = "magboots"
+	button_icon_state = "toggle_rig_magboots"
+
 
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots/Activate()
 	var/obj/item/clothing/suit/space/rig/S = target
@@ -604,6 +605,7 @@
 
 /datum/action/item_action/hands_free/toggle_hardsuit_helm
 	name = "Toggle helmet"
+	button_icon_state = "toggle_rig_helm"
 
 /datum/action/item_action/hands_free/toggle_hardsuit_helm/Activate()
 	var/obj/item/clothing/suit/space/rig/S = target
