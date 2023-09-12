@@ -113,3 +113,7 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "champ"
 	item_state = "champ"
+
+/obj/item/weapon/storage/belt/champion/alt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)

@@ -192,6 +192,10 @@
 		/obj/item/clothing/mask/luchador
 		)
 
+/obj/item/weapon/storage/belt/champion/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/weapon/storage/belt/security/tactical
 	name = "combat belt"
 	desc = "Can hold security gear like handcuffs and flashes, with more pouches for more storage."
