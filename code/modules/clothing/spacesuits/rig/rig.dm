@@ -833,6 +833,8 @@
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm,
+	/datum/action/item_action/hands_free/toggle_space_suit_mode)
 
 /datum/action/item_action/hands_free/toggle_space_suit_mode
 	name = "Toggle space suit mode"
@@ -843,7 +845,6 @@
 
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
 	. = ..()
-	item_action_types += /datum/action/item_action/hands_free/toggle_space_suit_mode
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
 	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
 	boots = SB
