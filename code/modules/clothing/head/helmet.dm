@@ -22,7 +22,7 @@
 /obj/item/clothing/head/helmet/atom_init()
 	. = ..()
 	//Stylish people don't wear a helmets
-	AddComponent(/datum/component/style, -15)
+	AddComponent(/datum/component/style, 0, -15, SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(holochip)
