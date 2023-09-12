@@ -101,6 +101,9 @@
 	item_state = "syndballoon"
 	w_class = SIZE_NORMAL
 
+/obj/item/toy/syndicateballoon/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 /*
  * Fake telebeacon
  */

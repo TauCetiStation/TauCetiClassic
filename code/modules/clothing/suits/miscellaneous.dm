@@ -677,6 +677,10 @@
 	item_state = "syndieshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/syndieshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
 	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
