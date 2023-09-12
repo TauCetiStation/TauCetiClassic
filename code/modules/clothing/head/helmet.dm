@@ -19,6 +19,11 @@
 
 	var/obj/item/holochip/holochip
 
+/obj/item/clothing/head/helmet/atom_init()
+	. = ..()
+	//Stylish people don't wear a helmets
+	AddComponent(/datum/component/style, -15)
+
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(holochip)
 	return ..()
