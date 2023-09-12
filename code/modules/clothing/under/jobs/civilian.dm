@@ -133,6 +133,9 @@
 	desc = "Slick threads."
 	name = "lawyer suit"
 
+/obj/item/clothing/under/lawyer/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
@@ -168,10 +171,6 @@
 	icon_state = "oldman"
 	item_state = "oldman"
 	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/lawyer/oldman/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/librarian
 	name = "sensible suit"
