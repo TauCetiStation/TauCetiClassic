@@ -596,6 +596,10 @@
 	name = "karate underwear"
 	icon_state = "karate"
 
+/obj/item/clothing/under/karate/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/under/smoking
 	name = "smoking"
 	icon_state = "smoking_new"
