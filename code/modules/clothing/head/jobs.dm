@@ -104,7 +104,7 @@
 
 /obj/item/clothing/head/det_hat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/head/det_hat/gray
 	name = "detective's gray hat"
