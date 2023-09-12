@@ -111,7 +111,7 @@
 /obj/item/clothing/glasses/eyepatch/atom_init()
 	. = ..()
 	//"Snake" Plissken moment
-	AddComponent(/datum/component/style, 15)
+	AddComponent(/datum/component/style, 12)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -277,7 +277,7 @@
 /obj/item/clothing/glasses/sunglasses/blindfold/atom_init()
 	. = ..()
 	//Blind Fury moment
-	AddComponent(/datum/component/style, 15)
+	AddComponent(/datum/component/style, 12)
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"
@@ -340,7 +340,7 @@ I was expecting a 5 style points for IAA glasses
 /obj/item/clothing/glasses/hud/hos_aug/atom_init()
 	. = ..()
 	//Adam Jensen moment
-	AddComponent(/datum/component/style, 15)
+	AddComponent(/datum/component/style, 12)
 
 /datum/action/item_action/switch_shades_mode
 	name = "Switch Shades Mode"
