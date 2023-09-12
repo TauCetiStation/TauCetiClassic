@@ -116,7 +116,6 @@
 
 	var/rig_variant = "engineering"
 
-
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()
 	if(initial_modules && initial_modules.len)
@@ -592,7 +591,7 @@
 			if(equipped)
 				user.add_overlay(module.suit_overlay_image)
 
-// action battons
+// action buttons
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots
 	name = "Toggle hardsuit magboots"
 	button_icon_state = "toggle_rig_magboots"
