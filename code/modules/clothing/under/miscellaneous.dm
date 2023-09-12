@@ -158,6 +158,10 @@
 	icon_state = "black_suit"
 	item_state = "black_suit"
 
+/obj/item/clothing/under/suit_jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
 	name = "black suit"
 	desc = "A black suit and red tie. Very formal. This one looks a bit stronger than others."
