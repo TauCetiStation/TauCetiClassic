@@ -10,7 +10,7 @@
 		SW_XENOVISORS = "Xeno-lovers",
 		SW_DEVELOPERS = "Love-makers",
 	)
-	staffwho_prefixs = list("Loving", "Thoughtful", "ERP", "Amiable", "Amorous", "Horny", "Devoted", "Sentimental", "Adoring", "Warmhearted", "Charming", "Beautiful", "Tenderhearted", "Enchanting", "Romantic", "Intimate", "Incel", "Loner")
+	staffwho_prefixs = list("Loving", "adorable", "Thoughtful", "ERP", "Amiable", "Amorous", "Horny", "Devoted", "Sentimental", "Adoring", "Warmhearted", "Charming", "Beautiful", "Tenderhearted", "Enchanting", "Romantic", "Intimate", "Incel", "Loner")
 	staffwho_no_staff = "THERE IS NO LOVE HERE"
 
 /datum/holiday/valentines/greet()

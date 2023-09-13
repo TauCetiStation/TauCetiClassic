@@ -20,7 +20,7 @@
 
 	staffwho_group_name = list(
 		SW_ADMINS     = "EvilAdmins",
-		SW_MENTORS    = "Gourds",
+		SW_MENTORS    = "Tikvyaks",
 		SW_XENOVISORS = "Monstervisors",
 		SW_DEVELOPERS = "Skeletons",
 	)

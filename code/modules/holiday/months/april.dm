@@ -6,7 +6,7 @@
 	staffwho_group_name = list(
 		SW_ADMINS     = "ClownAdmins",
 		SW_MENTORS    = "Mimes",
-		SW_XENOVISORS = "Clownvisors",
+		SW_XENOVISORS = "Honkovisors",
 		SW_DEVELOPERS = "Janitors",
 	)
 	staffwho_prefixs = list("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue", "ERP")
@@ -21,9 +21,9 @@
 	begin_month = APRIL
 
 	staffwho_group_name = list(
-		SW_ADMINS     = "AstroAdmins",
+		SW_ADMINS     = "Astronauts",
 		SW_MENTORS    = "Cosmonauts",
-		SW_XENOVISORS = "Astrovisors",
+		SW_XENOVISORS = "Space-observers",
 		SW_DEVELOPERS = "Houstons",
 	)
 	staffwho_prefixs = list("Spaced", "Frozen", "Alien", "Comrade", "Dog", "Flying", "Galactical", "Puzzled", "Decompressed", "Amazed", "Ready", "Proud", "Space Erp", "Xenos", "Pilot", "Astronaut", "Cosmonavt")
