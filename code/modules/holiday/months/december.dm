@@ -15,9 +15,9 @@
 	end_day = 27
 
 	staffwho_group_name = list(
-		SW_ADMINS     = "SantaAdmins",
-		SW_MENTORS    = "Elfs",
-		SW_XENOVISORS = "Santavisors",
+		SW_ADMINS     = "Elf-Admins",
+		SW_MENTORS    = "Snowmans",
+		SW_XENOVISORS = "Beastvisors",
 		SW_DEVELOPERS = "Reindeers",
 	)
 	staffwho_prefixs = list("Angelic", "Chilly", "Freezing", "Snowy", "Fun filled", "Icy", "Triumphant", "Whimsical", "Chilling", "Warmhearted", "Charming", "Beautiful", "Adorable", "Elegant", "Lovely", "Elf", "Deer")
