@@ -503,7 +503,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 					return
 				to_chat(user, "<span class='notice'>Вы начинаете укреплять обшивку.</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
-					ChangeTurf(/turf/simulated/floor/carpet/hardfloor)
+					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					return
 			else
