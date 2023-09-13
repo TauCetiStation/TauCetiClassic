@@ -15,11 +15,3 @@
 	name = "Flowers Day"
 	begin_day = 19
 	begin_month = NOVEMBER
-
-/datum/holiday/remembrance_day
-	name = "Remembrance Day"
-	begin_month = NOVEMBER
-	begin_day = 11
-
-/datum/holiday/remembrance_day/getStationPrefix()
-	return pick("Peace", "Armistice", "Poppy")
