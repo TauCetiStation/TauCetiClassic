@@ -96,16 +96,15 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "aai" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "EVA APC";
-	pixel_x = 3;
-	pixel_y = 23
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1765,10 +1764,6 @@
 /obj/item/weapon/reagent_containers/dropper/precision{
 	pixel_y = 4
 	},
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -1777,6 +1772,10 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -2142,17 +2141,17 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Chapel APC";
-	pixel_x = 26
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
 /obj/effect/decal/turf_decal/metal{
 	dir = 8;
 	icon_state = "spline_plain"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2416,14 +2415,15 @@
 	pixel_y = 3
 	},
 /obj/item/device/tagger/shop,
-/obj/machinery/power/apc/mediumcell{
-	dir = 1;
-	name = "mediumcell apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "RnD mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -3288,11 +3288,6 @@
 "agb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/bodybags,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Crematorium APC";
-	pixel_x = 26
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -3301,6 +3296,11 @@
 	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/cobweb2,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3907,11 +3907,6 @@
 /area/station/engineering/monitoring)
 "alc" = (
 /obj/structure/table/woodentable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Telecoms Sat. Control APC";
-	pixel_y = 25
-	},
 /obj/item/device/radio/off,
 /obj/item/device/radio/off,
 /obj/item/weapon/screwdriver,
@@ -3921,6 +3916,11 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -5948,11 +5948,6 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/vacantoffice)
 "aEY" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Dormitory APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5966,6 +5961,11 @@
 /obj/effect/decal/turf_decal/metal{
 	dir = 8;
 	icon_state = "spline_plain"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6098,11 +6098,6 @@
 	},
 /area/shuttle/supply/station)
 "aFY" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Engineering Foyer APC";
-	pixel_x = -26
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -6111,6 +6106,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -8303,11 +8304,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "beE" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Theater APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -8316,6 +8312,11 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
@@ -9762,13 +9763,13 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -10405,11 +10406,6 @@
 	},
 /area/station/civilian/chapel)
 "bwo" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Science Maintenance APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -10418,6 +10414,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -10692,14 +10693,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "byL" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Arrival APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -11842,11 +11843,6 @@
 	},
 /area/station/hallway/primary/central)
 "bNE" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Bridge Hallway APC";
-	pixel_x = -25
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -11854,6 +11850,11 @@
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 2;
 	sortType = list("Карго Офис","Кабинет Завхоза","OnlineShop")
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12751,11 +12752,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -12763,6 +12759,12 @@
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
 	sortType = "Прочие �?сследования"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "RnD top APC";
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -16821,10 +16823,6 @@
 	},
 /area/station/engineering/monitoring)
 "cKP" = (
-/obj/machinery/power/apc{
-	name = "Genetics Cloning APC";
-	pixel_y = -25
-	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = -1;
@@ -16832,6 +16830,11 @@
 	},
 /obj/item/weapon/pen,
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Medbay down APC";
+	custom_smartlight_preset = "MedBay"
+	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -17088,11 +17091,6 @@
 /obj/item/device/suit_cooling_unit,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -17100,6 +17098,12 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "RnD";
+	name = "RnD right APC"
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -19018,17 +19022,18 @@
 	},
 /area/station/security/brig/solitary_confinement)
 "dgv" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Colonial Marshals Equip APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/structure/closet/wardrobe/red,
 /obj/item/clothing/suit/battonshirt,
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Brig left APC";
+	custom_smartlight_preset = "Brig"
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -20036,11 +20041,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -20049,6 +20049,12 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/ears/earmuffs,
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -20355,14 +20361,15 @@
 	},
 /obj/item/device/flashlight/seclite,
 /obj/item/device/flash,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
@@ -20377,14 +20384,15 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Brig left APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -20796,11 +20804,6 @@
 	dir = 9
 	},
 /obj/structure/table,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "MiniSat Maint APC";
-	pixel_x = 25
-	},
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
@@ -20811,6 +20814,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23837,14 +23845,15 @@
 	},
 /area/station/engineering/equip)
 "eid" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Surgery Storage APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -24473,12 +24482,13 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/weapon/flora/random,
 /obj/machinery/power/apc/mediumcell{
 	dir = 8;
-	name = "mediumcell apc left";
-	pixel_x = -28
+	name = "Engineering mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Engineering"
 	},
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24648,10 +24658,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	pixel_x = -27;
 	dir = 8;
-	level = 4;
-	name = "Patient Room One APC";
-	pixel_x = -25
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -24854,13 +24864,14 @@
 	dir = 1;
 	network = list("SS13","Medical")
 	},
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Medbay down APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	icon_state = "whitehall"
@@ -25431,11 +25442,6 @@
 /area/station/engineering/engine)
 "eyn" = (
 /obj/structure/table,
-/obj/machinery/power/apc/largecell{
-	dir = 8;
-	name = "Engineering APC";
-	pixel_x = -25
-	},
 /obj/machinery/camera{
 	c_tag = "Engine SMES";
 	dir = 5
@@ -25460,6 +25466,12 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "Engineering largecell apc left";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -25536,11 +25548,6 @@
 /area/station/engineering/atmos)
 "ezt" = (
 /obj/structure/table,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Operating 1 APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -25552,6 +25559,12 @@
 	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
 	name = "Surgery Cleaner";
 	pixel_x = 5
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -26126,16 +26139,16 @@
 /area/shuttle/supply/station)
 "eGh" = (
 /obj/structure/table/woodentable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Captain's Office APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/recharger,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -27591,14 +27604,14 @@
 /area/station/rnd/hallway/florahall)
 "eWq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "North Tech Storage APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
@@ -28319,15 +28332,16 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -28658,14 +28672,14 @@
 	},
 /area/station/civilian/gym)
 "fiP" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Auxiliary Tool Storage APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -28870,12 +28884,12 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/effect/decal/turf_decal/set_damaged,
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Library APC";
-	pixel_y = 25
+	name = "apc top";
+	pixel_y = 28
 	},
-/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "fkM" = (
@@ -30662,17 +30676,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "fCw" = (
-/obj/machinery/power/apc/mediumcell{
-	dir = 4;
-	name = "Bridge APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/structure/closet/emcloset,
 /obj/item/weapon/storage/toolbox/emergency,
+/obj/machinery/power/apc/mediumcell{
+	dir = 4;
+	name = "mediumcell apc right";
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -31417,18 +31431,17 @@
 	pixel_y = 4
 	},
 /obj/item/device/radio/off,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Gateway APC";
-	pixel_x = -24;
-	pixel_y = -1
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -31741,11 +31754,6 @@
 	},
 /area/station/ai_monitored/eva)
 "fOG" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "USP implanting APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -31753,6 +31761,11 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/computer/skills_console,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/cmf_room)
 "fOH" = (
@@ -33189,14 +33202,14 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "gbd" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -33751,14 +33764,15 @@
 	},
 /area/station/bridge/ai_upload)
 "ggG" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Medbay Reception APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay right APC"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -36755,12 +36769,6 @@
 /turf/simulated/floor/wood,
 /area/station/security/tribunal)
 "gLM" = (
-/obj/machinery/power/apc/smallcell{
-	dir = 4;
-	name = "Execution Chamber APC";
-	pixel_x = 24;
-	pixel_y = -3
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -36769,6 +36777,12 @@
 	c_tag = "Brig Execution Chamber";
 	dir = 1;
 	network = list("SS13","Security")
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 4;
+	name = "Brig smallcell apc right";
+	pixel_x = 28;
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -37324,15 +37338,16 @@
 /area/station/maintenance/dormitory)
 "gQk" = (
 /obj/structure/closet/wardrobe/genetics_white,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Genetics APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "RnD top APC";
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -37397,16 +37412,17 @@
 	},
 /area/station/civilian/dormitories)
 "gQT" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Virology APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/structure/closet/emcloset,
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay right APC"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitegreen"
@@ -40389,13 +40405,13 @@
 	},
 /area/station/medical/genetics)
 "hAn" = (
-/obj/machinery/power/apc{
-	name = "Coworking APC";
-	pixel_y = -30
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -40633,8 +40649,8 @@
 	},
 /obj/machinery/power/apc/mediumcell{
 	dir = 4;
-	name = "Central Hall APC";
-	pixel_x = 24
+	name = "mediumcell apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -40728,14 +40744,15 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -40988,14 +41005,15 @@
 	},
 /area/station/security/execution)
 "hGM" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Blueshield APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Brig left APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -41300,18 +41318,18 @@
 	},
 /area/station/rnd/hor)
 "hKi" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Aft Starboard Solar APC";
-	pixel_x = -26;
-	pixel_y = 3
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
@@ -42275,17 +42293,17 @@
 	pixel_y = -2
 	},
 /obj/item/weapon/storage/belt/champion,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Vault APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -42506,14 +42524,15 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -42912,11 +42931,6 @@
 /obj/item/weapon/razor{
 	pixel_x = -6
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Operating 3 APC";
-	pixel_x = 24
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -42924,6 +42938,12 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay right APC"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -43035,16 +43055,16 @@
 	},
 /area/station/medical/virology)
 "idB" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Hydroponics APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenbluefull"
@@ -43668,8 +43688,8 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Fitness Room APC";
-	pixel_y = 25
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/gym)
@@ -43808,13 +43828,13 @@
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
-/obj/machinery/power/apc{
-	name = "First Room APC";
-	pixel_y = -25
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormtwo)
@@ -43984,14 +44004,14 @@
 	},
 /area/station/medical/genetics_cloning)
 "ild" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/tribunal)
@@ -46373,17 +46393,17 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "iJd" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Chapel Office APC";
-	pixel_x = 25
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/alarm{
 	pixel_y = 22
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -47058,11 +47078,6 @@
 	},
 /area/station/civilian/garden)
 "iQY" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Toxins Lab APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -47071,6 +47086,12 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "RnD top APC";
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -48072,11 +48093,6 @@
 	c_tag = "Disposals";
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Disposal APC";
-	pixel_x = 27
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -48086,6 +48102,12 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	name = "Cargo right APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	pixel_x = 27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -49962,14 +49984,15 @@
 /obj/machinery/camera{
 	c_tag = "Security Briefing"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Security Office APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/security/secconfhall)
@@ -50583,18 +50606,18 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "jCA" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Aft Port Solar APC";
-	pixel_x = 23;
-	pixel_y = 2
-	},
 /obj/machinery/camera{
 	c_tag = "Aft Port Solar Control";
 	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/light/small,
+/obj/machinery/power/apc{
+	name = "Engineering right APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = 27;
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "jCB" = (
@@ -50864,16 +50887,17 @@
 	dir = 5;
 	network = list("SS13","Research")
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	custom_smartlight_preset = "RnD";
+	name = "RnD left APC"
+	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
 "jFs" = (
@@ -55578,8 +55602,8 @@
 	},
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Escape Shuttle Hallway APC";
-	pixel_x = 26
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
@@ -56046,12 +56070,6 @@
 	},
 /area/station/bridge/hop_office)
 "kMS" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	level = 4;
-	name = "Chemistry APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -56059,6 +56077,12 @@
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	network = list("SS13","Medical")
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -56359,14 +56383,14 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "First Room APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormone)
@@ -59148,11 +59172,6 @@
 /area/station/rnd/hallway)
 "lsv" = (
 /obj/structure/stool/bed/chair/metal,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Asteroid Hallway APC";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -59163,6 +59182,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
@@ -60159,11 +60183,6 @@
 	},
 /area/station/medical/reception)
 "lEo" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "south bump";
-	pixel_x = -24
-	},
 /obj/machinery/camera{
 	c_tag = "Drone Fabrication";
 	dir = 4
@@ -60171,6 +60190,12 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -60436,14 +60461,15 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Tech Storage APC";
-	pixel_y = 27
-	},
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Engineering top APC";
+	custom_smartlight_preset = "Engineering";
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -60561,14 +60587,14 @@
 	},
 /area/station/rnd/mixing)
 "lIM" = (
-/obj/machinery/power/apc/smallcell{
-	dir = 8;
-	name = "MiniSat Antechamber Power APC";
-	pixel_x = -25
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "smallcell apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/antechamber_interior)
@@ -60945,11 +60971,6 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "lMJ" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Incinerator APC";
-	pixel_x = 24
-	},
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
@@ -60960,6 +60981,11 @@
 	},
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
 /turf/simulated/floor,
 /area/station/maintenance/incinerator)
 "lMU" = (
@@ -61577,11 +61603,6 @@
 	},
 /area/station/engineering/rust)
 "lTV" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Patients APC";
-	pixel_y = 24
-	},
 /obj/item/weapon/flora/random,
 /obj/structure/cable{
 	d2 = 2;
@@ -61590,6 +61611,12 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
@@ -61984,12 +62011,6 @@
 	name = "Security Equipment"
 	})
 "lXW" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Primary Tool Storage APC";
-	pixel_x = -1;
-	pixel_y = 26
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -62003,6 +62024,11 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/packageWrap,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62120,11 +62146,6 @@
 /turf/simulated/floor,
 /area/station/rnd/mixing)
 "lYS" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 28
 	},
@@ -62142,6 +62163,12 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	custom_smartlight_preset = "RnD";
+	name = "RnD left APC"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62221,15 +62248,15 @@
 /area/station/security/brig)
 "lZq" = (
 /obj/machinery/photocopier,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Marshal Office APC";
-	pixel_x = 27;
-	pixel_y = 2
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	name = "Brig right APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -64058,14 +64085,15 @@
 	},
 /obj/item/weapon/circuitboard/teleporter,
 /obj/item/borg/upgrade/security,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "RD Office APC";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "RnD";
+	name = "RnD right APC"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -64317,11 +64345,6 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "mwL" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Custodial Closet APC";
-	pixel_x = -24
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -64340,6 +64363,11 @@
 	},
 /obj/item/toy/figure/janitor{
 	pixel_x = 11
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -64754,12 +64782,6 @@
 "mBm" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/rag,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Bar APC";
-	pixel_x = 24;
-	pixel_y = -1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -64771,6 +64793,12 @@
 /obj/item/toy/figure/bartender{
 	pixel_x = -8;
 	pixel_y = 14
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	name = "Bar apc right";
+	custom_smartlight_preset = "bar"
 	},
 /turf/simulated/floor{
 	icon_state = "bar_floor"
@@ -65809,11 +65837,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Psyciatric Office APC";
-	pixel_y = 28
-	},
 /obj/structure/table/woodentable,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -65825,6 +65848,12 @@
 	},
 /obj/item/toy/figure/secofficer{
 	pixel_x = -9
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
@@ -66849,11 +66878,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "mZU" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Operation Observation Room APC";
-	pixel_x = 25
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -66862,6 +66886,12 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay right APC"
 	},
 /turf/simulated/floor{
 	icon_state = "bluefull"
@@ -67242,18 +67272,18 @@
 	},
 /area/station/civilian/chapel)
 "ncP" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Aft Port Solar APC";
-	pixel_x = 23;
-	pixel_y = 2
-	},
 /obj/machinery/camera{
 	c_tag = "Aft Port Solar Control";
 	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/light/small,
+/obj/machinery/power/apc{
+	name = "Engineering right APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = 27;
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "ncQ" = (
@@ -68196,10 +68226,6 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "nnE" = (
-/obj/machinery/power/apc{
-	name = "Dormitory Bathrooms APC";
-	pixel_y = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -68208,6 +68234,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -69208,11 +69238,6 @@
 	},
 /area/station/rnd/sppodconstr)
 "nyB" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Checkpoint APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -69221,6 +69246,12 @@
 /obj/structure/closet/wardrobe/red,
 /obj/item/device/radio/intercom{
 	pixel_x = 25
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -71548,11 +71579,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "nWu" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Conference Room APC";
-	pixel_y = 24
-	},
 /obj/structure/table/woodentable,
 /obj/machinery/recharger,
 /obj/structure/cable{
@@ -71563,6 +71589,11 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
@@ -71820,14 +71851,14 @@
 	name = "Aisat Turret Control";
 	pixel_x = 30
 	},
-/obj/machinery/power/apc/smallcell{
-	dir = 1;
-	name = "MiniSat External Power APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "smallcell apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -72145,11 +72176,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "obJ" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Messaging Server APC";
-	pixel_x = 24
-	},
 /obj/structure/table,
 /obj/structure/cable{
 	d2 = 8;
@@ -72158,6 +72184,11 @@
 /obj/item/weapon/phone{
 	pixel_x = -3;
 	pixel_y = 3
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/server)
@@ -72176,11 +72207,6 @@
 	},
 /area/station/hallway/primary/central)
 "ocb" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Recycler APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -72188,6 +72214,12 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Cargo top APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -76363,12 +76395,6 @@
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
-/obj/machinery/power/apc/mediumcell{
-	dir = 1;
-	name = "Cargo Bay APC";
-	pixel_x = 1;
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -76376,6 +76402,12 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 1;
+	name = "Cargo mediumcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -76679,17 +76711,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "oZs" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Cryogenics APC";
-	pixel_x = -24
-	},
 /obj/structure/stool/bed/roller,
 /obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Medbay Cryogenics West";
 	dir = 10;
 	network = list("SS13","Medical")
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -78228,15 +78261,15 @@
 	icon_state = "0-2";
 	pixel_y = 0
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Space Pod Construction APC";
-	pixel_x = -25
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/station/rnd/sppodconstr)
@@ -78495,11 +78528,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "ptm" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -78508,6 +78536,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	custom_smartlight_preset = "RnD";
+	name = "RnD left APC"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -79648,14 +79682,15 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Sergeant APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Brig left APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -80389,8 +80424,8 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "AI Satellite APC";
-	pixel_x = -25
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -81491,14 +81526,15 @@
 	c_tag = "Armory West";
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Armory APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Brig left APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -81714,11 +81750,6 @@
 	},
 /area/station/security/prison)
 "qcg" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Operating 2 APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -81727,6 +81758,12 @@
 	c_tag = "Surgery Operating 2";
 	dir = 9;
 	network = list("SS13","Medical")
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay right APC"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -84505,15 +84542,16 @@
 	},
 /area/station/security/interrogation)
 "qGx" = (
-/obj/machinery/power/apc/smallcell{
-	dir = 1;
-	name = "smallcell apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "MedBay smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -85765,14 +85803,14 @@
 "qRN" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/reset,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Upload APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
@@ -86048,14 +86086,15 @@
 /area/station/civilian/garden)
 "qVF" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/power/apc/mediumcell{
-	dir = 8;
-	name = "Cargo Office APC";
-	pixel_x = -25
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "Cargo mediumcell apc left";
+	pixel_x = -28;
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -87872,14 +87911,15 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
 	},
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "largecell apc top";
-	pixel_y = 28
-	},
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Engineering largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "Engineering"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -88828,14 +88868,14 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Asteroid Shuttle Hallway APC";
-	pixel_y = 24
-	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/mine_sci_shuttle)
@@ -89850,13 +89890,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Starboard Emergency Storage APC";
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -90602,15 +90642,15 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "AI Chamber APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -91323,10 +91363,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	name = "Cargo right APC";
+	custom_smartlight_preset = "Cargo";
 	dir = 4;
-	name = "Quartermaster APC";
-	pixel_x = 27;
-	pixel_y = 2
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -95617,13 +95657,13 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/machinery/power/apc{
-	name = "First Room APC";
-	pixel_y = -25
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormthree)
@@ -98908,14 +98948,15 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/stock_parts/cell/super,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -100452,18 +100493,18 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Star Vigilance Lobby APC";
-	pixel_x = 25;
-	pixel_y = -3
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/alarm{
 	pixel_y = -32
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	name = "Brig right APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -101617,11 +101658,6 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Security Wing APC";
-	pixel_y = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Marshals Dorm"
 	},
@@ -101629,6 +101665,12 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/secdorm)
@@ -102945,12 +102987,6 @@
 /turf/simulated/floor,
 /area/station/construction/assembly_line)
 "urv" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	level = 4;
-	name = "Patient Room Two APC";
-	pixel_x = -25
-	},
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/medical,
 /obj/machinery/firealarm{
@@ -102959,6 +102995,12 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -105401,14 +105443,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/smallcell{
-	dir = 1;
-	name = "Prison Wing APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "Brig smallcell apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -106637,14 +106680,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "Brig top APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -108034,16 +108078,16 @@
 	},
 /area/station/civilian/gym)
 "vwn" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Explosives Testing APC";
-	pixel_x = 25
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
 /turf/simulated/floor,
 /area/station/rnd/test_area)
 "vwA" = (
@@ -108061,8 +108105,9 @@
 	},
 /obj/machinery/power/apc/largecell{
 	dir = 1;
-	name = "largecell apc top";
-	pixel_y = 28
+	name = "Engineering largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "Engineering"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -108678,14 +108723,14 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "vEi" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Telecoms Sat. Central Compartment APC";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
@@ -108699,17 +108744,17 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 1
 	},
-/obj/machinery/power/apc/smallcell{
-	dir = 1;
-	name = "MiniSat Internal Power APC";
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 1;
+	name = "smallcell apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -110446,14 +110491,15 @@
 	pixel_x = -6;
 	pixel_y = 1
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "CM Office APC";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -110741,13 +110787,14 @@
 /obj/item/clothing/gloves/black{
 	pixel_y = 6
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Mech Bay APC";
-	pixel_x = 25
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "RnD";
+	name = "RnD right APC"
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -111532,13 +111579,14 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Morgue APC";
-	pixel_y = 24
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	name = "Medbay top APC";
+	custom_smartlight_preset = "MedBay";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -112929,14 +112977,14 @@
 	},
 /area/station/storage/tech)
 "wsF" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "apc right";
 	pixel_x = 28
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -113736,17 +113784,18 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/head/welding,
 /obj/item/clothing/head/welding,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Robotics Lab APC";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	custom_smartlight_preset = "RnD";
+	name = "RnD left APC"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -114336,12 +114385,13 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/item/weapon/shovel/spade,
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable,
 /obj/item/weapon/book/manual/wiki/hydroponics,
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "RnD down APC";
+	custom_smartlight_preset = "RnD"
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "green"
@@ -114356,14 +114406,15 @@
 	pixel_x = -2;
 	pixel_y = -5
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Law Office APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	name = "Brig right APC";
+	custom_smartlight_preset = "Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -115384,14 +115435,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "wXx" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -115437,11 +115488,6 @@
 	},
 /area/station/medical/virology)
 "wXS" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Teleporter APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -115449,6 +115495,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
@@ -118313,11 +118364,6 @@
 	c_tag = "Research and Development Lab";
 	network = list("SS13","Research")
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Research Lab APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -118328,6 +118374,12 @@
 	},
 /obj/structure/table/glass,
 /obj/item/device/science_tool,
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "RnD top APC";
+	custom_smartlight_preset = "RnD"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -119305,17 +119357,17 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "xRh" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Fore Starboard Solar APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/light/small,
+/obj/machinery/power/apc{
+	name = "Engineering left APC";
+	custom_smartlight_preset = "Engineering";
+	pixel_x = -27;
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "xRq" = (
