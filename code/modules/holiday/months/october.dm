@@ -21,7 +21,7 @@
 	staffwho_group_name = list(
 		SW_ADMINS     = "EvilAdmins",
 		SW_MENTORS    = "Gourds",
-		SW_XENOVISORS = "MonsterVisors",
+		SW_XENOVISORS = "Monstervisors",
 		SW_DEVELOPERS = "Skeletons",
 	)
 	staffwho_prefixs = list("Gory", "Supernatural", "Ominous", "Wicked", "Twisted", "Creepy", "Haunted", "Unsettling", "Chilling", "Eerie", "Mysterious", "Otherworldly", "Spookish", "Spooky", "Petrifying", "Scary", "Skeletal")
