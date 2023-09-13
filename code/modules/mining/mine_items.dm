@@ -284,6 +284,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	throwforce = 7.0
 	w_class = SIZE_TINY
 
+/obj/item/weapon/shovel/spade/soviet
+	name = "malaya pehotnaya lopata"
+	desc = "A small tool for digging trenches, burying dead and bashing heads in. URA!"
+	force = 15
+	throwforce = 20
+	icon_state = "spade_soviet"
+	item_state = "spade_soviet"
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 /obj/structure/closet/crate/miningcar

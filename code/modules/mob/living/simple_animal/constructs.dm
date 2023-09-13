@@ -44,7 +44,7 @@
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 	var/image/glow = image(icon, src, "glow_[icon_state]", ABOVE_LIGHTING_LAYER)
-	glow.plane = ABOVE_LIGHTING_PLANE
+	glow.plane = LIGHTING_LAMPS_PLANE
 	add_overlay(glow)
 
 	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)

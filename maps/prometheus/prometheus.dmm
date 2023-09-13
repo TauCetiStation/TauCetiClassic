@@ -7561,10 +7561,10 @@
 	},
 /area/shuttle/mining/station)
 "boS" = (
-/obj/machinery/life_assist/cardiopulmonary_bypass,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -47858,13 +47858,13 @@
 	},
 /area/station/rnd/robotics)
 "ljR" = (
-/obj/structure/closet/crate/freezer,
 /obj/machinery/door_control{
 	id = "Medical_Surgery";
 	name = "Privacy Shutters";
 	pixel_y = -28
 	},
 /obj/machinery/light/smart,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -90499,6 +90499,7 @@
 "vZR" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/curtain/open/privacy,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

@@ -1290,15 +1290,15 @@
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "dH" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1972,34 +1972,30 @@
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fs" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/closet/crate/secure/weapon,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/item/ammo_box/c45,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
 /area/awaymission/labs/militarydivision)
 "ft" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -2253,18 +2249,14 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fW" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -2375,19 +2367,15 @@
 	},
 /area/awaymission/labs/militarydivision)
 "gj" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3229,16 +3217,15 @@
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "im" = (
-/obj/machinery/power/apc{
-	dir = 0;
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/terminal,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "in" = (
@@ -3640,18 +3627,14 @@
 	},
 /area/awaymission/labs/militarydivision)
 "jm" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
@@ -4326,19 +4309,15 @@
 	name = "Desert"
 	})
 "kK" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4891,14 +4870,14 @@
 	c_tag = "Aft Port Solar Control";
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
@@ -5293,14 +5272,14 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "mI" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Virology APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -5890,14 +5869,14 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "oc" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
@@ -6249,14 +6228,13 @@
 	},
 /area/awaymission/labs/civilian)
 "oS" = (
-/obj/machinery/power/apc{
-	dir = 0;
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6264,18 +6242,14 @@
 	},
 /area/awaymission/labs/civilian)
 "oT" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -6443,14 +6417,14 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "po" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6839,14 +6813,14 @@
 	},
 /area/awaymission/labs/command)
 "qm" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -7032,17 +7006,17 @@
 	},
 /area/awaymission/labs/command)
 "qJ" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7279,14 +7253,13 @@
 	},
 /area/awaymission/labs/command)
 "rk" = (
-/obj/machinery/power/apc{
-	dir = 0;
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7702,14 +7675,14 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sq" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -8427,12 +8400,12 @@
 	},
 /area/awaymission/labs/security)
 "ug" = (
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Virology APC";
-	pixel_y = 24
+	name = "apc top";
+	pixel_y = 28
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -8493,12 +8466,11 @@
 "ur" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/machinery/power/apc{
-	dir = 0;
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
