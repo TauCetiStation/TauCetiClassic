@@ -8,5 +8,13 @@
 	begin_day = 4
 	begin_month = MAY
 
+/datum/holiday/pobeda
+	name = "Victory Day"
+	begin_day = 9
+	begin_month = MAY
+
+/datum/holiday/pobeda/greet()
+	return "С Днем Победы!"
+
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
