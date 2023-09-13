@@ -2301,9 +2301,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
-"agn" = (
-/turf/simulated/floor/engine/carbon_dioxide,
-/area/station/engineering/atmos)
 "agq" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/hor)
@@ -2946,7 +2943,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "amv" = (
 /obj/structure/sign/directions/science{
@@ -4432,7 +4429,7 @@
 	id_tag = "n2_out";
 	name = "(A) N2 Vent"
 	},
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "aBY" = (
 /obj/machinery/door_control{
@@ -7606,7 +7603,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "bks" = (
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "bkz" = (
 /obj/machinery/door/firedoor,
@@ -9142,7 +9139,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "bAC" = (
 /obj/structure/cable{
@@ -10032,11 +10029,7 @@
 	id_tag = "waste_out";
 	name = "(A) Waste Vent"
 	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bIg" = (
 /obj/structure/disposalpipe/segment,
@@ -10575,7 +10568,7 @@
 	id = "n2o_in";
 	name = "N2O air injector"
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bOi" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -11335,7 +11328,7 @@
 /area/station/maintenance/medbay)
 "bWB" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bWV" = (
 /obj/structure/cable{
@@ -13097,7 +13090,7 @@
 	id_tag = "air_out";
 	name = "(A) Air Vent"
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cpL" = (
 /obj/machinery/light/smart{
@@ -13403,7 +13396,7 @@
 /area/station/security/brig)
 "cvh" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cvk" = (
 /obj/item/weapon/scrap_lump,
@@ -14096,7 +14089,7 @@
 	layer = 3.2;
 	name = "Out Supermatter"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "cBY" = (
 /obj/effect/decal/turf_decal{
@@ -16364,7 +16357,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "dcY" = (
 /obj/structure/disposalpipe/segment,
@@ -16445,13 +16438,6 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
-	},
-/area/station/engineering/atmos)
-"ddJ" = (
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
 	},
 /area/station/engineering/atmos)
 "ddT" = (
@@ -17062,7 +17048,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "diU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18635,7 +18621,7 @@
 	id = "tox_in";
 	name = "TOX air injector"
 	},
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "dCn" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -18941,7 +18927,7 @@
 	id_tag = "co2_out";
 	name = "(A) CO2 Vent"
 	},
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "dGB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -22002,7 +21988,7 @@
 	id = "mixingsparker";
 	pixel_y = -23
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "erZ" = (
 /obj/structure/cable{
@@ -22012,7 +21998,7 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
 "esc" = (
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "esk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -23246,7 +23232,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "eFQ" = (
 /obj/structure/table/reinforced,
@@ -24321,7 +24307,7 @@
 /area/station/security/checkpoint/engi)
 "eRk" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "eRn" = (
 /obj/machinery/chem_master,
@@ -26182,7 +26168,7 @@
 	dir = 4;
 	icon_state = "box_corners_white"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "fmI" = (
 /obj/structure/table,
@@ -27486,7 +27472,7 @@
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "fBl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -27879,7 +27865,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "fGm" = (
 /obj/structure/cable{
@@ -29829,7 +29815,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "gea" = (
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -30576,7 +30562,7 @@
 	id_tag = "sm_out";
 	name = "(A) SM Vent"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type3,
 /area/station/engineering/atmos/supermatter)
 "glm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -30789,7 +30775,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "gnv" = (
 /obj/structure/cable{
@@ -31048,7 +31034,7 @@
 /obj/structure/particle_accelerator/end_cap{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "gqd" = (
 /obj/structure/table/woodentable,
@@ -31581,7 +31567,7 @@
 	id = "o2_in";
 	name = "O2 air injector"
 	},
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "gvn" = (
 /obj/structure/cable{
@@ -31723,7 +31709,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "gwm" = (
 /obj/structure/dresser,
@@ -33310,12 +33296,6 @@
 	icon_state = "bluecorner"
 	},
 /area/station/maintenance/chapel)
-"gPe" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/engine/carbon_dioxide,
-/area/station/engineering/atmos)
 "gPj" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/simulated/floor/plating,
@@ -33522,7 +33502,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering  Robots", "Singularity");
+	network = list("Engineering","Engineering  Robots","Singularity");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
@@ -33795,7 +33775,7 @@
 /area/station/hallway/primary/central)
 "gUl" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type3,
 /area/station/engineering/atmos/supermatter)
 "gUo" = (
 /obj/machinery/door/firedoor,
@@ -33830,7 +33810,7 @@
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "gUC" = (
 /obj/structure/filingcabinet/security,
@@ -34336,7 +34316,7 @@
 	id = "mixvent";
 	name = "Mixer Room Vent"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "gZU" = (
 /obj/machinery/door/firedoor,
@@ -34507,7 +34487,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "hbP" = (
 /obj/machinery/door/firedoor,
@@ -35335,7 +35315,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "hmN" = (
 /obj/structure/cable{
@@ -36425,7 +36405,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "hxr" = (
 /obj/structure/cable{
@@ -36843,7 +36823,7 @@
 	},
 /area/station/civilian/locker)
 "hAz" = (
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "hAE" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -38301,7 +38281,7 @@
 	frequency = 1443;
 	id = "air_in"
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "hQQ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -41889,9 +41869,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/wood,
 /area/station/maintenance/medbay)
-"iFl" = (
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
 "iFm" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -42761,7 +42738,7 @@
 	name = "Mixing Room Interior Airlock";
 	req_access = list(8)
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "iOz" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
@@ -42830,7 +42807,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "iPB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -45027,7 +45004,7 @@
 /obj/machinery/door/airlock/research/glass{
 	name = "Ordnance Lab"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "jor" = (
 /obj/effect/landmark{
@@ -45520,7 +45497,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "jtD" = (
 /obj/machinery/door/firedoor,
@@ -46573,11 +46550,7 @@
 	id_tag = "waste_sensor";
 	output = 63
 	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "jEM" = (
 /obj/machinery/camera{
@@ -47991,7 +47964,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "jSU" = (
 /obj/structure/table,
@@ -48054,7 +48027,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "jTu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -49659,7 +49632,7 @@
 	id_tag = "tox_out";
 	name = "(A) Toxin Vent"
 	},
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "kkt" = (
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -49739,7 +49712,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "kli" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -51480,7 +51453,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "kFc" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
@@ -52316,7 +52289,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "kMb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -53816,7 +53789,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "ldE" = (
 /obj/structure/disposalpipe/segment{
@@ -57150,7 +57123,7 @@
 	frequency = 1441;
 	id_tag = "n2o_sensor"
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "lPP" = (
 /obj/machinery/computer/atmos_alert{
@@ -57575,7 +57548,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "lVh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -58147,7 +58120,7 @@
 	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "mcU" = (
 /obj/structure/cable{
@@ -58843,9 +58816,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
-"mkX" = (
-/turf/simulated/floor/engine/n20,
-/area/station/engineering/atmos)
 "mlv" = (
 /obj/random/misc/cigarettes,
 /obj/machinery/constructable_frame/machine_frame,
@@ -59773,7 +59743,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "muK" = (
 /obj/structure/disposalpipe/segment{
@@ -61114,7 +61084,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "mKJ" = (
 /obj/structure/cable{
@@ -61536,7 +61506,7 @@
 	id_tag = "n2o_out";
 	name = "(A) N2O Vent"
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "mQn" = (
 /obj/machinery/door/firedoor,
@@ -61858,7 +61828,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "mTi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -64514,7 +64484,7 @@
 	name = "Supermatter Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "nwK" = (
 /obj/machinery/door_control{
@@ -64923,7 +64893,7 @@
 /obj/structure/particle_accelerator/fuel_chamber{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "nBv" = (
 /obj/item/clothing/accessory/armband/hydro,
@@ -67668,11 +67638,7 @@
 	id = "waste_in";
 	name = "waste air injector"
 	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ogl" = (
 /obj/structure/filingcabinet/filingcabinet,
@@ -67784,7 +67750,7 @@
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(8)
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "ohm" = (
 /obj/structure/table,
@@ -68283,7 +68249,7 @@
 /obj/structure/particle_accelerator/power_box{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "ooG" = (
 /obj/effect/decal/turf_decal{
@@ -68648,12 +68614,6 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/atmos/distribution)
-"otq" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
 "otw" = (
 /obj/structure/stool,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -70372,7 +70332,7 @@
 	dir = 1;
 	icon_state = "box_corners_white"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "oNS" = (
 /obj/structure/cable{
@@ -71425,7 +71385,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "paW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -74785,7 +74745,7 @@
 	name = "Supermatter Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "pLE" = (
 /obj/effect/decal/cleanable/blood/xeno,
@@ -75016,7 +74976,7 @@
 	id_tag = "rnd_out";
 	name = "(A) Heat Vent"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "pOR" = (
 /obj/machinery/door/airlock/engineering{
@@ -75708,7 +75668,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "pWA" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -75874,7 +75834,7 @@
 /obj/structure/particle_accelerator/particle_emitter/center{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "pYK" = (
 /obj/item/weapon/flora/random,
@@ -76623,7 +76583,7 @@
 	id = "n2_in";
 	name = "N2 air injector"
 	},
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "qhh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -77569,7 +77529,7 @@
 	dir = 8;
 	icon_state = "box_corners_white"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "qrM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -78132,7 +78092,7 @@
 	id = "sm_in";
 	name = "SM air injector"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type3,
 /area/station/engineering/atmos/supermatter)
 "qyR" = (
 /obj/structure/cable{
@@ -80296,7 +80256,7 @@
 	id_tag = "o2_out";
 	name = "(A) O2 Vent"
 	},
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "qYD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -81406,7 +81366,7 @@
 /area/station/hallway/secondary/exit)
 "rnl" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type3,
 /area/station/engineering/atmos/supermatter)
 "rnn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -82051,7 +82011,7 @@
 	id = "rnd_in";
 	name = "Heat air injector"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "ruI" = (
 /obj/machinery/ai_status_display{
@@ -85038,7 +84998,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "saA" = (
 /obj/machinery/computer/security,
@@ -85126,7 +85086,7 @@
 	frequency = 1441;
 	id_tag = "tox_sensor"
 	},
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "sbV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -85388,7 +85348,7 @@
 /obj/structure/particle_accelerator/particle_emitter/left{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "seU" = (
 /obj/effect/landmark/start/cargo_technician,
@@ -85567,7 +85527,7 @@
 	name = "Supermatter";
 	req_access = list(24)
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "shk" = (
 /obj/machinery/status_display,
@@ -85737,9 +85697,6 @@
 	icon_state = "purplechoco"
 	},
 /area/station/hallway/primary/central)
-"siW" = (
-/turf/simulated/floor/engine/airmix,
-/area/station/engineering/atmos)
 "siZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -86303,9 +86260,6 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
-"sow" = (
-/turf/simulated/floor/engine/oxygen,
-/area/station/engineering/atmos)
 "sox" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 10
@@ -86485,7 +86439,7 @@
 	id = "tox_airlock_pump";
 	name = "Toxin Large Dual Port Air Vent"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "sqE" = (
 /obj/structure/cable{
@@ -86923,7 +86877,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "swq" = (
 /obj/machinery/vending/clothing,
@@ -87034,7 +86988,7 @@
 	dir = 5;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "sxV" = (
 /obj/item/device/radio/beacon,
@@ -89396,7 +89350,7 @@
 	name = "Supermatter";
 	req_access = list(24)
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "tbx" = (
 /obj/machinery/light/smart{
@@ -90156,7 +90110,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "tlq" = (
 /obj/structure/cable{
@@ -91242,7 +91196,7 @@
 	frequency = 1444;
 	id_tag = "rnd_sensor"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "tyB" = (
 /obj/structure/cable{
@@ -92331,7 +92285,7 @@
 	frequency = 1443;
 	id = "air_in"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "tLi" = (
 /obj/structure/closet/firecloset,
@@ -93209,7 +93163,7 @@
 /area/station/security/brig/equipment)
 "tVQ" = (
 /obj/machinery/telepad,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "tWr" = (
 /obj/structure/table/reinforced,
@@ -97984,7 +97938,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "vea" = (
 /obj/structure/girder,
@@ -99065,7 +99019,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "vqO" = (
 /obj/structure/cable{
@@ -100434,7 +100388,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "vHR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -100742,7 +100696,7 @@
 	layer = 3.2;
 	name = "In Supermatter"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "vLs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -101546,7 +101500,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "vWf" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "vWh" = (
 /obj/structure/cable{
@@ -101850,12 +101804,6 @@
 	},
 /turf/environment/space,
 /area/space)
-"vYC" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/engine/oxygen,
-/area/station/engineering/atmos)
 "vYM" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -101906,7 +101854,7 @@
 /area/station/medical/virology)
 "vYT" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "vZt" = (
 /obj/structure/cable{
@@ -102290,7 +102238,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "wdH" = (
 /obj/structure/table/glass,
@@ -102408,7 +102356,7 @@
 	id_tag = "air_sensor";
 	output = 7
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "wfK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -102531,7 +102479,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "wii" = (
 /obj/machinery/ai_status_display{
@@ -102822,7 +102770,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "wkf" = (
 /obj/structure/sign/poster/contraband/borg_fancy_1{
@@ -103916,7 +103864,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "wzc" = (
 /obj/structure/cable{
@@ -104471,7 +104419,7 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "wDG" = (
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "wDH" = (
 /obj/item/device/radio/intercom{
@@ -104525,12 +104473,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
-"wEr" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/engine/nitrogen,
-/area/station/engineering/atmos)
 "wEE" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -105465,7 +105407,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "wRk" = (
 /obj/machinery/door/firedoor,
@@ -105755,7 +105697,7 @@
 	frequency = 1444;
 	id_tag = "sm_sensor"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type3,
 /area/station/engineering/atmos/supermatter)
 "wUR" = (
 /obj/item/weapon/flora/random,
@@ -105778,7 +105720,7 @@
 	name = "Supermatter Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "wVg" = (
 /obj/structure/stool,
@@ -107548,7 +107490,7 @@
 /area/station/bridge/cmf_room)
 "xqi" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "xqm" = (
 /obj/item/clothing/mask/gas/coloured,
@@ -108797,12 +108739,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
-"xBK" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/engine/n20,
-/area/station/engineering/atmos)
 "xBO" = (
 /obj/item/weapon/bedsheet/ce,
 /obj/structure/stool/bed,
@@ -109748,7 +109684,7 @@
 /area/station/hallway/secondary/entry)
 "xNJ" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/atmos/supermatter)
 "xNK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -110281,7 +110217,7 @@
 /obj/structure/particle_accelerator/particle_emitter/right{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "xUd" = (
 /obj/structure/stool/bed/chair/comfy/brown,
@@ -110362,7 +110298,7 @@
 	id = "co2_in";
 	name = "CO2 air injector"
 	},
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "xUW" = (
 /obj/machinery/shieldwallgen,
@@ -110576,7 +110512,7 @@
 /area/station/maintenance/escape)
 "xWI" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "xWN" = (
 /turf/simulated/floor{
@@ -110631,15 +110567,8 @@
 	},
 /area/station/tcommsat/chamber)
 "xXk" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
-/area/station/engineering/atmos)
+/turf/simulated/floor/carpet/hardfloor/type3,
+/area/station/engineering/atmos/supermatter)
 "xXr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -111400,7 +111329,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "yfN" = (
 /obj/structure/displaycase/labcage,
@@ -132243,37 +132172,37 @@ pka
 plf
 kHU
 jXX
-sow
-vYC
-sow
-jXX
 wDG
-wEr
-wDG
-jXX
-siW
 jtB
-siW
+wDG
+jXX
+wDG
+jtB
+wDG
+jXX
+wDG
+jtB
+wDG
 jXX
 kHU
 jXX
-agn
-gPe
-agn
+wDG
+jtB
+wDG
 jXX
-mkX
-xBK
-mkX
+wDG
+jtB
+wDG
 jXX
-iFl
-otq
-iFl
+wDG
+jtB
+wDG
 jXX
 kHU
 jXX
-ddJ
-xXk
-ddJ
+wDG
+jtB
+wDG
 jXX
 plf
 tvt
@@ -132500,37 +132429,37 @@ pka
 plf
 kHU
 jXX
-sow
+wDG
 xqi
-sow
+wDG
 jXX
 wDG
 eRk
 wDG
 jXX
-siW
+wDG
 cvh
-siW
+wDG
 jXX
 plf
 jXX
-agn
+wDG
 xWI
-agn
+wDG
 jXX
-mkX
+wDG
 vYT
-mkX
+wDG
 jXX
-iFl
+wDG
 bWB
-iFl
+wDG
 jXX
 kHU
 jXX
-ddJ
-ddJ
-ddJ
+wDG
+wDG
+wDG
 jXX
 kHU
 lLE
@@ -136866,7 +136795,7 @@ aQP
 wqg
 gIe
 wUS
-hAz
+xXk
 qyx
 gUl
 vLk
@@ -137123,8 +137052,8 @@ cxI
 vPc
 dPj
 wUS
-hAz
-hAz
+xXk
+xXk
 wUK
 tbt
 hAz
@@ -137380,7 +137309,7 @@ dsq
 rot
 nFq
 wUS
-hAz
+xXk
 gll
 rnl
 cBU

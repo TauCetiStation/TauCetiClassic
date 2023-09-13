@@ -270,7 +270,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aaC" = (
 /obj/machinery/alarm{
@@ -9635,7 +9635,7 @@
 /obj/structure/disposaloutlet{
 	dir = 8
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aqv" = (
 /obj/structure/window/fulltile/reinforced{
@@ -9654,7 +9654,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aqw" = (
 /obj/machinery/door/window/southright{
@@ -9680,7 +9680,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aqx" = (
 /obj/structure/window/fulltile/reinforced{
@@ -9700,7 +9700,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aqy" = (
 /obj/structure/disposalpipe/segment,
@@ -10608,7 +10608,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "ase" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -11178,7 +11178,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "atk" = (
 /obj/machinery/door/firedoor,
@@ -11498,7 +11498,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "atP" = (
 /obj/structure/window/fulltile/reinforced{
@@ -11514,7 +11514,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "atQ" = (
 /obj/item/weapon/flora/pottedplant{
@@ -12346,7 +12346,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "avu" = (
 /obj/structure/stool{
@@ -12380,7 +12380,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "avy" = (
 /turf/environment/space,
@@ -12418,7 +12418,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "avB" = (
 /obj/structure/cable{
@@ -12466,7 +12466,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "avD" = (
 /obj/machinery/alarm{
@@ -12721,7 +12721,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "awa" = (
 /obj/machinery/door/window/northleft{
@@ -12747,7 +12747,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "awb" = (
 /obj/effect/landmark/sound_source/shuttle_docking,
@@ -13160,7 +13160,7 @@
 	dir = 1;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "awW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -21652,7 +21652,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aNh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -22267,7 +22267,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "aOv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -23923,7 +23923,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "aRx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -25374,7 +25374,7 @@
 	frequency = 1443;
 	id = "air_in"
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "aUf" = (
 /obj/structure/table,
@@ -25591,9 +25591,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/rnd/misc_lab)
-"aUz" = (
-/turf/simulated/floor/engine,
-/area/station/rnd/mixing)
 "aUA" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
@@ -26257,7 +26254,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aVM" = (
 /obj/structure/window/fulltile/reinforced{
@@ -26273,7 +26270,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aVN" = (
 /obj/structure/cable{
@@ -26338,7 +26335,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aVR" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -26400,7 +26397,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aVW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -26471,7 +26468,7 @@
 	id = "mixvent";
 	name = "Mixer Room Vent"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "aWd" = (
 /obj/item/device/radio/off{
@@ -26675,7 +26672,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aWq" = (
 /obj/structure/rack,
@@ -26710,7 +26707,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aWs" = (
 /obj/machinery/alarm{
@@ -26923,7 +26920,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aWN" = (
 /obj/machinery/disposal,
@@ -28015,7 +28012,7 @@
 	dir = 8;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aYN" = (
 /obj/machinery/light/small{
@@ -28362,7 +28359,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aZr" = (
 /obj/structure/closet/wardrobe/mixed,
@@ -28525,7 +28522,7 @@
 	dir = 8;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "aZF" = (
 /obj/structure/disposalpipe/segment{
@@ -28904,7 +28901,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bao" = (
 /obj/machinery/light/smart{
@@ -29226,7 +29223,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "baR" = (
 /obj/item/weapon/flora/pottedplant{
@@ -33690,7 +33687,7 @@
 /area/station/hallway/primary/starboard)
 "bje" = (
 /obj/machinery/light/smart,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bjf" = (
 /obj/machinery/account_database,
@@ -33709,7 +33706,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bji" = (
 /obj/structure/cable{
@@ -42032,7 +42029,7 @@
 	id = "teles_blast2";
 	name = "Test Chamber Blast Doors"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "byi" = (
 /obj/effect/landmark/dealer_spawn,
@@ -42105,7 +42102,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "byn" = (
 /turf/simulated/floor{
@@ -44406,7 +44403,7 @@
 	pixel_y = 25;
 	req_access = list(7)
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "bCE" = (
 /obj/structure/cable{
@@ -46255,7 +46252,7 @@
 	dir = 9;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "bFU" = (
 /obj/structure/table/woodentable,
@@ -48275,7 +48272,7 @@
 "bJy" = (
 /obj/machinery/light/smart,
 /obj/item/device/multitool,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "bJz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -49102,10 +49099,10 @@
 /area/station/hallway/primary/aft)
 "bLi" = (
 /obj/machinery/portable_atmospherics/canister,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bLj" = (
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bLk" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -49123,7 +49120,7 @@
 	amount = 10
 	},
 /obj/item/device/radio/electropack,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bLn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -49936,7 +49933,7 @@
 /area/station/rnd/misc_lab)
 "bMJ" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bMK" = (
 /obj/structure/table,
@@ -49949,7 +49946,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bML" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -50878,7 +50875,7 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bOp" = (
 /obj/machinery/firealarm{
@@ -50984,7 +50981,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bOz" = (
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "bOA" = (
 /obj/machinery/light/smart{
@@ -51797,7 +51794,7 @@
 /area/station/civilian/dormitories)
 "bPX" = (
 /obj/machinery/telepad,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "bPY" = (
 /obj/structure/disposalpipe/segment{
@@ -52301,7 +52298,7 @@
 	req_access = list(55)
 	},
 /obj/structure/cable,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bQY" = (
 /obj/machinery/door/poddoor{
@@ -52315,7 +52312,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bQZ" = (
 /obj/machinery/door/window/southleft{
@@ -52334,7 +52331,7 @@
 	name = "Test Chamber Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bRa" = (
 /obj/machinery/door/window/southright{
@@ -52353,7 +52350,7 @@
 	name = "Test Chamber Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bRb" = (
 /obj/machinery/door/poddoor{
@@ -52368,7 +52365,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bRc" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
@@ -53372,7 +53369,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "bTO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -53383,7 +53380,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "bTT" = (
 /obj/machinery/camera{
@@ -53400,7 +53397,7 @@
 	pixel_x = -25
 	},
 /obj/machinery/portable_atmospherics/canister,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/misc_lab)
 "bTV" = (
 /obj/item/trash/chips,
@@ -53649,11 +53646,7 @@
 	id_tag = "waste_out";
 	name = "(A) Waste Vent"
 	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bUD" = (
 /obj/machinery/firealarm{
@@ -53700,7 +53693,7 @@
 	id = "tox_airlock_pump";
 	name = "Toxin Large Dual Port Air Vent"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "bUQ" = (
 /obj/machinery/airlock_sensor{
@@ -53714,7 +53707,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "bUT" = (
 /obj/structure/disposalpipe/segment,
@@ -53905,7 +53898,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "bVC" = (
 /obj/machinery/hologram/holopad,
@@ -54202,11 +54195,7 @@
 	id = "waste_in";
 	name = "waste air injector"
 	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bWj" = (
 /obj/structure/cable{
@@ -54414,7 +54403,7 @@
 	dir = 1;
 	name = "Toxin Air Vent"
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "bWP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -54480,13 +54469,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"bWZ" = (
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
-/area/station/engineering/atmos)
 "bXa" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
@@ -54716,7 +54698,7 @@
 	id_tag = "n2o_out";
 	name = "(A) N2O Vent"
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bXR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -54956,21 +54938,7 @@
 	id_tag = "waste_sensor";
 	output = 63
 	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
-/area/station/engineering/atmos)
-"bYy" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bYz" = (
 /obj/structure/table,
@@ -55005,7 +54973,7 @@
 /area/station/engineering/atmos)
 "bYF" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bYG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -55182,7 +55150,7 @@
 	id = "n2o_in";
 	name = "N2O air injector"
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "bZk" = (
 /obj/machinery/light/smart{
@@ -55384,9 +55352,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"bZY" = (
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
 "bZZ" = (
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -55397,7 +55362,7 @@
 	id_tag = "tox_out";
 	name = "(A) Toxin Vent"
 	},
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cab" = (
 /obj/effect/decal/cleanable/dirt,
@@ -55513,20 +55478,14 @@
 /area/station/maintenance/engineering)
 "caB" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "caC" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "tox_sensor"
 	},
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
-"caD" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "caE" = (
 /obj/machinery/alarm{
@@ -55687,7 +55646,7 @@
 	id = "tox_in";
 	name = "TOX air injector"
 	},
-/turf/simulated/floor/engine/phoron,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cbv" = (
 /obj/structure/cable{
@@ -55964,7 +55923,7 @@
 	},
 /area/station/engineering/atmos)
 "ccB" = (
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ccC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -55973,7 +55932,7 @@
 	id_tag = "co2_out";
 	name = "(A) CO2 Vent"
 	},
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ccD" = (
 /obj/structure/toilet{
@@ -55984,9 +55943,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/medbreak)
-"ccE" = (
-/turf/simulated/floor/engine/n20,
-/area/station/engineering/atmos)
 "ccF" = (
 /obj/structure/table,
 /obj/item/weapon/folder/blue,
@@ -56179,20 +56135,14 @@
 /area/station/engineering/break_room)
 "cdx" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cdy" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
-/turf/simulated/floor/engine/carbon_dioxide,
-/area/station/engineering/atmos)
-"cdz" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cdA" = (
 /turf/simulated/wall,
@@ -56393,13 +56343,13 @@
 	frequency = 1441;
 	id_tag = "n2o_sensor"
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cej" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/engine/n20,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cel" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -56460,7 +56410,7 @@
 	id = "co2_in";
 	name = "CO2 air injector"
 	},
-/turf/simulated/floor/engine/carbon_dioxide,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cew" = (
 /obj/structure/closet,
@@ -56489,7 +56439,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 1
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/maintenance/incinerator)
 "ceC" = (
 /obj/machinery/camera{
@@ -56497,7 +56447,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "ceD" = (
 /obj/structure/cable{
@@ -57205,7 +57155,7 @@
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(8)
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "cgF" = (
 /obj/item/weapon/storage/toolbox/mechanical{
@@ -57451,7 +57401,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cho" = (
 /obj/structure/cable/yellow{
@@ -57466,7 +57416,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "chp" = (
 /obj/structure/cable/yellow{
@@ -57489,7 +57439,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "chq" = (
 /obj/machinery/door/firedoor,
@@ -57528,7 +57478,7 @@
 	dir = 5;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cht" = (
 /obj/structure/table,
@@ -57860,7 +57810,7 @@
 	id = "n2_in";
 	name = "N2 air injector"
 	},
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -57869,7 +57819,7 @@
 	id_tag = "n2_out";
 	name = "(A) N2 Vent"
 	},
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -57891,7 +57841,7 @@
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/simulated/floor/engine/nitrogen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciL" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -57900,7 +57850,7 @@
 	id = "o2_in";
 	name = "O2 air injector"
 	},
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -57909,7 +57859,7 @@
 	id_tag = "o2_out";
 	name = "(A) O2 Vent"
 	},
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciO" = (
 /obj/machinery/conveyor{
@@ -57932,7 +57882,7 @@
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciS" = (
 /obj/structure/cable{
@@ -57954,7 +57904,7 @@
 	frequency = 1443;
 	id = "air_in"
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -57963,7 +57913,7 @@
 	id_tag = "air_out";
 	name = "(A) Air Vent"
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciW" = (
 /obj/machinery/firealarm{
@@ -57980,7 +57930,7 @@
 	id_tag = "air_sensor";
 	output = 7
 	},
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "ciY" = (
 /obj/machinery/door/airlock/external{
@@ -58033,19 +57983,13 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/engineering/engine)
-"cjg" = (
-/turf/simulated/floor/engine/nitrogen,
-/area/station/engineering/atmos)
 "cjh" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/engine/nitrogen,
-/area/station/engineering/atmos)
-"cji" = (
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cjj" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cjk" = (
 /obj/structure/cable{
@@ -58059,12 +58003,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech/north)
-"cjl" = (
-/turf/simulated/floor/engine/airmix,
-/area/station/engineering/atmos)
 "cjm" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/engine/airmix,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cjn" = (
 /obj/structure/window/thin/reinforced,
@@ -58075,13 +58016,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "cjr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "cjs" = (
 /obj/machinery/door/airlock/glass{
@@ -58152,7 +58093,7 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cjC" = (
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/rnd/mixing)
 "cjD" = (
 /obj/structure/disposalpipe/segment{
@@ -58194,18 +58135,13 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/starboard)
-"cjI" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/engine/nitrogen,
-/area/station/engineering/atmos)
 "cjJ" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/engine/oxygen,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/engineering/atmos)
 "cjK" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/engine/airmix,
-/area/station/engineering/atmos)
+/turf/simulated/floor/carpet/hardfloor,
+/area/station/engineering/engine)
 "cjL" = (
 /obj/structure/chalkboard,
 /obj/structure/cable{
@@ -58237,7 +58173,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "cjO" = (
 /obj/effect/decal/cleanable/generic,
@@ -58262,7 +58198,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "cjW" = (
 /obj/item/trash/chips,
@@ -58440,11 +58376,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "ckC" = (
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "ckD" = (
 /mob/living/carbon/slime,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "ckE" = (
 /obj/effect/landmark/start/assistant/test_subject,
@@ -59338,7 +59274,7 @@
 /area/station/aisat/antechamber_interior)
 "cmR" = (
 /obj/item/weapon/crowbar/red,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/telesci)
 "cmT" = (
 /obj/structure/window/thin/reinforced{
@@ -63534,11 +63470,11 @@
 /area/station/civilian/garden)
 "cxT" = (
 /obj/machinery/clonepod,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "cxU" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "cxW" = (
 /obj/machinery/door/firedoor,
@@ -63931,7 +63867,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "czn" = (
 /obj/structure/cable{
@@ -64072,14 +64008,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "czH" = (
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "czI" = (
 /obj/structure/cable{
@@ -64203,14 +64135,14 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "czS" = (
 /obj/structure/particle_accelerator/end_cap,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "czT" = (
 /obj/structure/cable/yellow{
@@ -64222,7 +64154,7 @@
 	pixel_x = 3;
 	pixel_y = -7
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "czU" = (
 /obj/structure/cable/yellow{
@@ -64234,7 +64166,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "czV" = (
 /obj/machinery/door/poddoor{
@@ -64414,14 +64346,14 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cAs" = (
 /obj/structure/particle_accelerator/fuel_chamber,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cAx" = (
 /obj/machinery/door/airlock/maintenance{
@@ -64563,18 +64495,18 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cAP" = (
 /obj/structure/stool,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cAQ" = (
 /obj/structure/particle_accelerator/power_box,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cAR" = (
 /turf/simulated/floor/plating,
@@ -64756,14 +64688,14 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBp" = (
 /obj/structure/particle_accelerator/particle_emitter/right,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBq" = (
 /obj/item/weapon/crowbar,
@@ -64771,7 +64703,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBs" = (
 /obj/structure/stool,
@@ -64953,7 +64885,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBQ" = (
 /obj/structure/cable/yellow{
@@ -64965,20 +64897,20 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBR" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBS" = (
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cBT" = (
 /obj/structure/window/fulltile/reinforced{
@@ -65342,7 +65274,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cCM" = (
 /obj/effect/decal/turf_decal{
@@ -65421,7 +65353,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cDf" = (
 /obj/structure/sign/warning/smoking{
@@ -65977,9 +65909,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "cEV" = (
 /obj/machinery/door/firedoor,
@@ -67146,7 +67076,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "cJq" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -68253,9 +68183,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "cOb" = (
 /obj/structure/table/reinforced,
@@ -68648,7 +68576,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "dmb" = (
 /obj/structure/disposalpipe/segment{
@@ -69043,9 +68971,7 @@
 	dir = 5;
 	network = list("SS13","Engineering")
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "dMb" = (
 /obj/machinery/door/firedoor,
@@ -69682,7 +69608,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "ezx" = (
 /obj/machinery/door/firedoor,
@@ -69813,7 +69739,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "eIi" = (
 /obj/structure/disposalpipe/segment,
@@ -71295,7 +71221,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "gvg" = (
 /obj/structure/disposalpipe/segment,
@@ -71430,14 +71356,14 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "gEa" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "gEb" = (
 /obj/machinery/access_button{
@@ -71728,7 +71654,7 @@
 	id = "disvent";
 	name = "Incinerator Vent"
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/maintenance/incinerator)
 "gSX" = (
 /obj/structure/disposalpipe/segment,
@@ -71901,9 +71827,7 @@
 /area/space)
 "hbs" = (
 /obj/effect/decal/remains/robot,
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "hbw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
@@ -71918,9 +71842,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "hcb" = (
 /turf/simulated/shuttle/floor/mining{
@@ -72394,7 +72316,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "hIb" = (
 /obj/machinery/door/airlock/external{
@@ -73513,7 +73435,7 @@
 	dir = 8;
 	network = list("SS13","Research")
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "iPb" = (
 /obj/structure/sign/warning/securearea{
@@ -74504,7 +74426,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "jPO" = (
 /obj/machinery/door/poddoor{
@@ -74515,7 +74437,7 @@
 	name = "Singularity Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "jQb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -74877,9 +74799,7 @@
 /obj/machinery/computer/drone_control{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "kjb" = (
 /obj/structure/stool,
@@ -75282,7 +75202,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/maintenance/incinerator)
 "kDT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -75558,7 +75478,7 @@
 /area/station/maintenance/incinerator)
 "kZn" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "kZC" = (
 /obj/machinery/light{
@@ -78059,7 +77979,7 @@
 /area/station/maintenance/portsolar)
 "nXs" = (
 /mob/living/carbon/monkey,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "nYb" = (
 /obj/structure/sign/warning/securearea{
@@ -78396,7 +78316,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/engine)
 "ooW" = (
 /obj/machinery/door/firedoor,
@@ -78944,7 +78864,7 @@
 	name = "Mixing Room Exterior Airlock";
 	req_access = list(12)
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/maintenance/incinerator)
 "pgZ" = (
 /obj/structure/sink/puddle,
@@ -79879,7 +79799,7 @@
 "qoQ" = (
 /obj/machinery/light/small,
 /obj/machinery/light/small,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "qoS" = (
 /obj/structure/disposalpipe/segment,
@@ -80995,7 +80915,7 @@
 "rxg" = (
 /obj/machinery/light/small,
 /mob/living/carbon/monkey,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/hardfloor/type2,
 /area/station/rnd/xenobiology)
 "rxx" = (
 /obj/structure/object_wall/cargo{
@@ -81356,9 +81276,7 @@
 /area/station/medical/virology)
 "rSY" = (
 /obj/machinery/drone_fabricator,
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
+/turf/simulated/floor/carpet/hardfloor,
 /area/station/engineering/drone_fabrication)
 "rTb" = (
 /turf/simulated/floor{
@@ -82284,7 +82202,7 @@
 	id = "Incinerator";
 	on = 0
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/carpet/hardfloor/type4,
 /area/station/maintenance/incinerator)
 "sQb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -115481,8 +115399,8 @@ krJ
 cgI
 cho
 czT
-cAR
-cAR
+cjK
+cjK
 cBp
 cBR
 oMx
@@ -119081,8 +118999,8 @@ cjS
 ctj
 chS
 ciB
-cjg
-cjg
+ccB
+ccB
 bVI
 crH
 apD
@@ -119339,7 +119257,7 @@ aah
 aLM
 ciK
 cjh
-cjI
+cjJ
 bVI
 crH
 anX
@@ -119595,8 +119513,8 @@ cgV
 ctk
 chT
 ciC
-cjg
-cjg
+ccB
+ccB
 bVI
 crH
 kSi
@@ -120109,8 +120027,8 @@ cjS
 ctj
 chS
 ciL
-cji
-cji
+ccB
+ccB
 bVI
 crH
 cnF
@@ -120623,8 +120541,8 @@ cgV
 ctk
 chT
 ciM
-cji
-cji
+ccB
+ccB
 bVI
 aaa
 aaa
@@ -121137,8 +121055,8 @@ bTq
 ctl
 chU
 ciU
-cjl
-cjl
+ccB
+ccB
 bVI
 aaa
 aaa
@@ -121395,7 +121313,7 @@ aah
 aLM
 ciX
 cjm
-cjK
+cjJ
 bVI
 aaa
 aaa
@@ -121651,8 +121569,8 @@ cli
 ctl
 chW
 ciV
-cjl
-cjl
+ccB
+ccB
 bVI
 aaa
 aaa
@@ -122656,17 +122574,17 @@ cAi
 cdA
 aah
 bVI
-bWZ
-bWZ
-bWZ
+ccB
+ccB
+ccB
 bVI
-ccE
+ccB
 bYF
-ccE
+ccB
 bVI
-bZY
+ccB
 caB
-bZY
+ccB
 bVI
 ccB
 cdx
@@ -122913,20 +122831,20 @@ bLt
 cdA
 aah
 bVI
-bWZ
-bYy
-bWZ
-bVI
-ccE
+ccB
 cej
-ccE
-bVI
-bZY
-caD
-bZY
+ccB
 bVI
 ccB
-cdz
+cej
+ccB
+bVI
+ccB
+cej
+ccB
+bVI
+ccB
+cej
 ccB
 bVI
 aaa
@@ -126971,7 +126889,7 @@ bTO
 bUQ
 bVB
 bWO
-aUz
+cjC
 aWc
 aXx
 aSe
@@ -127228,7 +127146,7 @@ bTM
 bUP
 cgD
 cjC
-aUz
+cjC
 aWc
 aXx
 bWa
@@ -127485,7 +127403,7 @@ aOu
 aRw
 bVB
 aUe
-aUz
+cjC
 aWc
 aXx
 bah
