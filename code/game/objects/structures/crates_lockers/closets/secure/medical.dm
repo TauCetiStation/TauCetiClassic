@@ -34,8 +34,8 @@
 	req_access = list(access_surgery)
 
 /obj/structure/closet/secure_closet/medical2/PopulateContents()
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/tank/anesthetic(src)
+	for (var/i in 1 to 4)
+		new /obj/item/weapon/tank/anesthetic/small(src)
 		new /obj/item/clothing/mask/breath/medical(src)
 
 /obj/structure/closet/secure_closet/medical3

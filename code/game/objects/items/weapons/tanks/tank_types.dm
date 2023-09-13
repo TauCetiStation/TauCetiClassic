@@ -43,9 +43,20 @@
 /obj/item/weapon/tank/anesthetic/atom_init()
 	. = ..()
 
-	air_contents.gas["oxygen"] = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-	air_contents.gas["sleeping_agent"] = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+	air_contents.gas["oxygen"] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+	air_contents.gas["sleeping_agent"] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 	air_contents.update_values()
+
+/obj/item/weapon/tank/anesthetic/small
+	name = "small anesthetic tank"
+	desc = "A small tank with an N2O/O2 gas mix."
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	icon_state = "smallanesthetic"
+	item_state = "an_tank"
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = SIZE_TINY
+	force = 2.0
+	volume = 2
 
 /*
  * Air
