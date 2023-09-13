@@ -8,6 +8,10 @@
 	siemens_coefficient = 0.9
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/syndicate/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/syndicate/equipped(mob/M)
 	if(M.gender == "male")
 		item_state = "syndicate"
