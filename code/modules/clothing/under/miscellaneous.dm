@@ -295,6 +295,10 @@
 /obj/item/clothing/under/dress
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
+/obj/item/clothing/under/dress/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/dress/dress_fire
 	name = "flame dress"
 	desc = "A small black dress with blue flames print on it."
@@ -411,6 +415,10 @@
 /obj/item/clothing/under/wedding
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
+/obj/item/clothing/under/wedding/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
 	desc = "A big and puffy orange dress."
@@ -448,6 +456,10 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/sundress/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/rank/cadet
 	desc = ""
@@ -507,6 +519,10 @@
 	desc = "Filled with latin fire."
 	icon_state = "tango"
 	item_state = "tango"
+
+/obj/item/clothing/under/blacktango/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 //Mafia
 /obj/item/clothing/under/mafia
@@ -586,6 +602,10 @@
 	desc = "An Enchanting blue dress."
 	icon_state = "pretty_dress"
 
+/obj/item/clothing/under/pretty_dress/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/sukeban_pants
 	name = "sukeban pants"
 	desc = "A white shirt with wide baggy pants"
@@ -595,6 +615,10 @@
 	name = "sukeban dress"
 	desc = "A Dress of Japanese schoolgirls"
 	icon_state = "sukeban_dress"
+
+/obj/item/clothing/under/sukeban_dress/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/karate
 	name = "karate underwear"
