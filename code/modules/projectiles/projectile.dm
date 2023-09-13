@@ -171,22 +171,28 @@
 			return 0// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
-		var/list/all_slots = M.get_equipped_items()
-		var/list/reflist = list(miss_modifier, all_slots, M)
-		for(var/obj/O in all_slots)
-			SEND_SIGNAL(O, COMSIG_PROJECTILE_STYLE_DODGE, reflist)
-		miss_modifier = reflist[1]
 		if(damage && (distance > 7))
-			if(damage < 55)
-				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
+			//PTR and sniper riffle has +100 accurency
+			if(damage > 55)
 				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
-		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
+			//EVERY shot has reduced damage if distance is big
+			damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
+		if(istype(shot_from, /obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
+			if(daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
 				miss_modifier -= 60
-		if(distance > 1)
+		if(distance > 0)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
-
+			//It is impossible to dodge in any of the situations as defined above.
+			if(miss_modifier >= 0)
+				var/operate_miss_mod = miss_modifier
+				var/list/all_slots = M.get_equipped_items()
+				var/list/reflist = list(operate_miss_mod, all_slots, M)
+				for(var/obj/O in all_slots)
+					SEND_SIGNAL(O, COMSIG_PROJECTILE_STYLE_DODGE, reflist)
+				operate_miss_mod = reflist[1]
+				if(prob(operate_miss_mod))
+					forcedodge = PROJECTILE_FORCE_MISS
 		if(!def_zone)
 			forcedodge = PROJECTILE_FORCE_MISS
 
