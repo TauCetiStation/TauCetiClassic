@@ -19,9 +19,9 @@
 	end_month = NOVEMBER
 
 	staffwho_group_name = list(
-		SW_ADMINS     = "GhostAdmins",
-		SW_MENTORS    = "Witches",
-		SW_XENOVISORS = "Ghostvisors",
+		SW_ADMINS     = "EvilAdmins",
+		SW_MENTORS    = "Gourds",
+		SW_XENOVISORS = "MonsterVisors",
 		SW_DEVELOPERS = "Skeletons",
 	)
 	staffwho_prefixs = list("Gory", "Supernatural", "Ominous", "Wicked", "Twisted", "Creepy", "Haunted", "Unsettling", "Chilling", "Eerie", "Mysterious", "Otherworldly", "Spookish", "Spooky", "Petrifying", "Scary", "Skeletal")
