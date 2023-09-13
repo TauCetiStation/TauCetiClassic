@@ -38,35 +38,35 @@
 
 /turf/simulated/floor/smoothtile
 	name = "smooth floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile.dmi'
+	icon = 'icons/turf/floors/smooth/floortile.dmi'
 	icon_state = "center_8"
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/floor/smoothtile/neutral
-	icon = 'icons/turf/floors/carpets/carpet_floortile_neutral.dmi'
+	icon = 'icons/turf/floors/smooth/floortile_neutral.dmi'
 
 /turf/simulated/floor/smoothtile/white
-	icon = 'icons/turf/floors/carpets/carpet_floortile_white.dmi'
+	icon = 'icons/turf/floors/smooth/floortile_white.dmi'
 
 /turf/simulated/floor/smoothtile/dark
-	icon = 'icons/turf/floors/carpets/carpet_floortile_dark.dmi'
+	icon = 'icons/turf/floors/smooth/floortile_dark.dmi'
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
-	icon = 'icons/turf/floors/carpets/carpet_hardfloor_1.dmi'
+	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
 	icon_state = "center_8"
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/floor/engine/type2
-	icon = 'icons/turf/floors/carpets/carpet_hardfloor_2.dmi'
+	icon = 'icons/turf/floors/smooth/hardfloor_2.dmi'
 
 /turf/simulated/floor/engine/type3
-	icon = 'icons/turf/floors/carpets/carpet_hardfloor_3.dmi'
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi'
 
 /turf/simulated/floor/engine/type4
-	icon = 'icons/turf/floors/carpets/carpet_hardfloor_4.dmi'
+	icon = 'icons/turf/floors/smooth/hardfloor_4.dmi'
 
 /turf/simulated/floor/engine/break_tile()
 	return
