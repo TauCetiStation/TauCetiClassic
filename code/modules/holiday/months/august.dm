@@ -7,7 +7,7 @@
 		SW_ADMINS     = "AlcoAdmins",
 		SW_MENTORS    = "Boozer",
 		SW_XENOVISORS = "Beer-watchers",
-		SW_DEVELOPERS = "Brewers",
+		SW_DEVELOPERS = "Brewmasters",
 	)
 	staffwho_prefixs = list("Drunk", "Shitfaced", "Intoxicated", "Stoned", "Puking", "Depressed", "Sober", "ZOSNIK", "Wet", "Dying", "Sleeping", "Only one drink", "Inebriated", "Rummy", "Too drunk", "Alive?", "Beer-lover", "Brewr")
 	staffwho_no_staff = "No beer left"
