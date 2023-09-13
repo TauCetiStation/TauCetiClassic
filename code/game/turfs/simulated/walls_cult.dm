@@ -16,6 +16,8 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+	smooth = FALSE
+
 /turf/simulated/floor/engine/cult/lava
 	name = "lava"
 	icon_state = "cultlava"
