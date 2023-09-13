@@ -4,7 +4,7 @@
 	begin_month = AUGUST
 
 	staffwho_group_name = list(
-		SW_ADMINS     = "AlcoholicAdmins",
+		SW_ADMINS     = "AlcoAdmins",
 		SW_MENTORS    = "Boozer",
 		SW_XENOVISORS = "Beer-watchers",
 		SW_DEVELOPERS = "Brewers",
