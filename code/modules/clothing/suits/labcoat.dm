@@ -109,3 +109,7 @@
 	desc = "It smells like weird science."
 	icon_state = "labcoat_rd"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 20, bio = 50, rad = 50)
+
+/obj/item/clothing/suit/storage/labcoat/rd/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
