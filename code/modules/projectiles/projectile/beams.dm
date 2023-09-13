@@ -137,7 +137,8 @@
 /obj/item/projectile/beam/sniper
 	name = "sniper beam"
 	icon_state = "laser"
-	damage = 50
+	//Higher damage for better accurency when shooting from long distance (projectile.dm)
+	damage = 60
 	stutter = 5
 	armor_multiplier = 0.5
 
