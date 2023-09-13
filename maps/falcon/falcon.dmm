@@ -1721,7 +1721,7 @@
 /obj/effect/landmark{
 	name = "xeno_spawn"
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "adf" = (
 /turf/simulated/floor/bluegrid{
@@ -3264,7 +3264,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "afE" = (
 /obj/structure/cable{
@@ -6973,7 +6973,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "anh" = (
 /obj/machinery/vending/hydronutrients,
@@ -7608,7 +7608,9 @@
 	name = "Test Chamber Blast Doors"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/rnd/telesci)
 "aoG" = (
 /obj/item/weapon/scrap_lump,
@@ -12026,7 +12028,7 @@
 /area/station/bridge)
 "cIt" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "cIU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -12748,7 +12750,7 @@
 	req_access = list(47)
 	},
 /obj/structure/window/thin/reinforced,
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "dtX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -13243,7 +13245,7 @@
 	id_tag = "air_out";
 	name = "(A) Air Vent"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "dMV" = (
 /obj/structure/barricade/wooden,
@@ -14097,7 +14099,7 @@
 /area/station/medical/morgue)
 "eFK" = (
 /obj/machinery/telepad,
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "eFT" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -14603,7 +14605,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "fis" = (
 /obj/structure/object_wall/pod{
@@ -14960,7 +14962,7 @@
 	id = "n2_in";
 	name = "N2 air injector"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "fGY" = (
 /obj/machinery/disposal,
@@ -16102,7 +16104,7 @@
 /area/station/security/hos)
 "gLL" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "gMz" = (
 /obj/structure/cable{
@@ -16884,7 +16886,7 @@
 	},
 /area/station/hallway/primary/central)
 "hCa" = (
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hCQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -16913,7 +16915,7 @@
 	pixel_y = -28
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hEu" = (
 /obj/structure/girder,
@@ -17053,6 +17055,9 @@
 	icon_state = "solarpanel"
 	},
 /area/station/solar/auxstarboard)
+"hPs" = (
+/turf/simulated/floor/engine/airmix,
+/area/station/engineering/atmos)
 "hPK" = (
 /obj/structure/table/woodentable,
 /obj/machinery/recharger/wallcharger{
@@ -17333,7 +17338,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "ibW" = (
 /obj/random/scrap/safe_even,
@@ -18344,7 +18349,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jcr" = (
 /obj/machinery/door/window/eastleft{
@@ -19115,7 +19120,7 @@
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "jOl" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -20188,7 +20193,7 @@
 	id_tag = "o2_out";
 	name = "(A) O2 Vent"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "kNi" = (
 /obj/structure/object_wall/cargo{
@@ -20949,7 +20954,7 @@
 	frequency = 1443;
 	id = "air_in"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "lBf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -23337,7 +23342,7 @@
 	id_tag = "n2_out";
 	name = "(A) N2 Vent"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "nKz" = (
 /obj/machinery/firealarm{
@@ -24292,6 +24297,9 @@
 	icon_state = "darkpurple"
 	},
 /area/station/rnd/hor)
+"oFi" = (
+/turf/simulated/floor/engine/nitrogen,
+/area/station/engineering/atmos)
 "oFA" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -24499,7 +24507,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 22
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "oPe" = (
 /obj/structure/rack,
@@ -24650,7 +24658,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "oVl" = (
 /obj/machinery/door/window/eastleft{
@@ -24670,7 +24678,7 @@
 	pixel_y = -28;
 	req_access = list(7)
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "oYf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -25883,7 +25891,7 @@
 	dir = 8;
 	network = list("Anomaly Isolation")
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "pYv" = (
 /obj/structure/table,
@@ -26194,7 +26202,7 @@
 	id_tag = "air_sensor";
 	output = 7
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "qoL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -26813,7 +26821,7 @@
 	id = "o2_in";
 	name = "O2 air injector"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "qJb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -26845,7 +26853,7 @@
 /area/station/medical/storage)
 "qJu" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "qLd" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -27181,7 +27189,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "rau" = (
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "rct" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
@@ -28248,7 +28256,7 @@
 	network = list("SS13","Research");
 	pixel_y = -22
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "slH" = (
 /obj/structure/window/thin/reinforced,
@@ -29787,7 +29795,7 @@
 	},
 /area/station/hallway/primary/central)
 "tPd" = (
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "tPg" = (
 /obj/machinery/atmospherics/components/trinary/mixer/on{
@@ -30351,7 +30359,7 @@
 	name = "Test Chamber Blast Doors";
 	opacity = 0
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "upf" = (
 /obj/structure/closet/secure_closet/freezer/meat,
@@ -31325,7 +31333,7 @@
 /area/station/civilian/chapel)
 "vmy" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "vnl" = (
 /obj/structure/cable{
@@ -31525,7 +31533,7 @@
 /obj/machinery/clonepod{
 	req_access = list(7)
 	},
-/turf/simulated/floor/carpet/hardfloor/type2,
+/turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "vzF" = (
 /obj/structure/closet/secure_closet/security,
@@ -32352,7 +32360,7 @@
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/simulated/floor/carpet/hardfloor/type4,
+/turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "wnk" = (
 /obj/item/tape/engineering{
@@ -55686,7 +55694,7 @@ akb
 aed
 azn
 fFG
-rau
+oFi
 nKm
 aXH
 azn
@@ -55942,9 +55950,9 @@ akb
 akb
 crv
 anS
-rau
+oFi
 qJu
-rau
+oFi
 anT
 anS
 rau
@@ -57754,7 +57762,7 @@ rsx
 crv
 ojo
 lzD
-rau
+hPs
 lzD
 ojo
 crv
@@ -58012,7 +58020,7 @@ crv
 aab
 qof
 cIt
-rau
+hPs
 ojo
 crv
 gay
@@ -58268,7 +58276,7 @@ rsx
 crv
 ojo
 dMO
-rau
+hPs
 dMO
 ojo
 gay
