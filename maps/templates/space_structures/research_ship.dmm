@@ -392,7 +392,8 @@
 	frequency = 1379;
 	id_tag = "alien_der_inner";
 	locked = 1;
-	name = "Research Ship External Access"
+	name = "Research Ship External Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -669,7 +670,8 @@
 	frequency = 1379;
 	id_tag = "alien_der_outer";
 	locked = 1;
-	name = "Research Ship External Access"
+	name = "Research Ship External Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d2 = 8;
