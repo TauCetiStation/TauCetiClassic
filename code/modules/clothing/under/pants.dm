@@ -2,6 +2,10 @@
 	gender = PLURAL
 	body_parts_covered = LOWER_TORSO|LEGS
 
+/obj/item/clothing/under/pants/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"
 	desc = "You feel cooler already."

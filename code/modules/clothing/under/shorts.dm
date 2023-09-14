@@ -5,6 +5,10 @@
 	flags = ONESIZEFITSALL
 	body_parts_covered = LOWER_TORSO
 
+/obj/item/clothing/under/shorts/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"
 
