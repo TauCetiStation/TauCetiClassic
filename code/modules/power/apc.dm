@@ -1309,7 +1309,6 @@
 	return APC_CHANNEL_OFF
 
 /obj/machinery/power/apc/proc/init_smartlight()
-	var/area/my_area = get_area(src)
 	if(custom_smartlight_preset)
 		var/type = smartlight_presets[custom_smartlight_preset]
 		smartlight_preset = new type
