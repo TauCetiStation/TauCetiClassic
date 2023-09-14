@@ -106,10 +106,6 @@
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/rank/nursesuit/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
-
 /obj/item/clothing/under/rank/nurse
 	desc = "A dress commonly worn by the nursing staff in the medical department."
 	name = "nurse's dress"
@@ -119,10 +115,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/rank/nurse/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
-
 /obj/item/clothing/under/rank/orderly
 	desc = "A white suit to be worn by orderly people who love orderly things."
 	name = "orderly's uniform"
@@ -130,10 +122,6 @@
 	item_state = "orderly"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
-
-/obj/item/clothing/under/rank/orderly/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/rank/medical
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
@@ -143,10 +131,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/rank/medical/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/rank/medical/skirt
 	name = "medical doctor's jumpskirt"
