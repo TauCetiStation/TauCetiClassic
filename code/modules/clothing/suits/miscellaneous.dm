@@ -175,6 +175,9 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/holidaypriest/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
@@ -222,6 +225,10 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
+/obj/item/clothing/suit/straight_jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 10, SLOT_WEAR_SUIT)
+
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
@@ -229,11 +236,19 @@
 	item_state = "ianshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/ianshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
 	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
+
+/obj/item/clothing/suit/nerdshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/blueshirt
 	name = "blue shirt"
@@ -241,11 +256,19 @@
 	icon_state = "blueshirt"
 	item_state = "blueshirt"
 
+/obj/item/clothing/suit/blueshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/chemshirt
 	name = "chemistry shirt"
 	desc = "A nice orange shirt made from a special fabric that hides any reagent stains. Has a drawn beaker with some glowy acid inside. Wanna cook?"
 	icon_state = "chemshirt"
 	item_state = "chemshirt"
+
+/obj/item/clothing/suit/chemshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/roundshirt
 	name = "science shirt"
@@ -253,11 +276,19 @@
 	icon_state = "roundshirt"
 	item_state = "roundshirt"
 
+/obj/item/clothing/suit/roundshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/catshirt
 	name = "cat shirt"
 	desc = "Very comfy, grey t-shirt with a picture of a cute kitty. And the best part: any cat or tajaran hair blends into the design very well!"
 	icon_state = "catshirt"
 	item_state = "catshirt"
+
+/obj/item/clothing/suit/catshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/engishirt
 	name = "engineer shirt"
@@ -265,11 +296,19 @@
 	icon_state = "engishirt"
 	item_state = "engishirt"
 
+/obj/item/clothing/suit/engishirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/badengishirt
 	name = "bad engineer shirt"
 	desc = "A loose T-shirt made of insulating material with a picture of gravitational singularity on it. Don't trust me i'm a bad engineer"
 	icon_state = "badengishirt"
 	item_state = "badengishirt"
+
+/obj/item/clothing/suit/badengishirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/docshirt
 	name = "doc shirt"
@@ -277,11 +316,19 @@
 	icon_state = "docshirt"
 	item_state = "docshirt"
 
+/obj/item/clothing/suit/docshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/battonshirt
 	name = "stunning shirt"
 	desc = "A red T-shirt made from durable Rip-Stop material with a picture of bloody stun batton on it. It makes you stunned"
 	icon_state = "battonshirt"
 	item_state = "battonshirt"
+
+/obj/item/clothing/suit/battonshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/arstotzkashirt
 	name = "dictator shirt"
@@ -289,11 +336,19 @@
 	icon_state = "arstotzkashirt"
 	item_state = "arstotzkashirt"
 
+/obj/item/clothing/suit/arstotzkashirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/toxicshirt
 	name = "toxic shirt"
 	desc = "Acidic-green t-shirt in order to show who is the biggest asshole here"
 	icon_state = "toxicshirt"
 	item_state = "toxicshirt"
+
+/obj/item/clothing/suit/toxicshirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -301,6 +356,10 @@
 	icon_state = "bomberjacket"
 	item_state = "johnny"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
+
+/obj/item/clothing/suit/jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -338,6 +397,10 @@
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
 	item_state = "jensensuit"
+
+/obj/item/clothing/suit/storage/postal_dude_coat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -565,6 +628,10 @@
 	item_state = "necromancer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
+/obj/item/clothing/suit/chaplain_hoodie/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/chaplain_hoodie/brown
 	name = "brown robe"
 	icon_state = "brown_robe"
@@ -591,6 +658,10 @@
 	name = "brown jacket"
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
+
+/obj/item/clothing/suit/goodman_jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/goodman_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
