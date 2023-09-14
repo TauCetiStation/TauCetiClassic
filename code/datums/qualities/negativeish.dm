@@ -313,7 +313,7 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/awkward
 	name = "Awkward"
-	desc = "Ты уклюжий слон, ходячая авария, постоянно ударяешься о что-нибудь."
+	desc = "Ты слон в посудной лавке, ходячая авария, постоянно ударяешься о что-нибудь."
 	requirement = "Нет."
 
 /datum/quality/negativeish/awkward/add_effect(mob/living/carbon/human/H, latespawn)
