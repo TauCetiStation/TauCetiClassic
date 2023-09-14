@@ -632,7 +632,7 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()
-
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/head/festive
 	name = "festive paper hat"
