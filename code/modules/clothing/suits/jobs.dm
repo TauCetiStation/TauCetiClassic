@@ -54,6 +54,10 @@
 					/obj/item/weapon/storage/fancy/crayons,
 					/obj/item/weapon/paper)
 
+/obj/item/clothing/suit/hooded/skhima/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/hooded/nun
 	name = "nun robe"
 	desc = "A religion female suit commonly weared by monastery sisters."
@@ -70,6 +74,10 @@
 					/obj/item/weapon/lighter,
 					/obj/item/weapon/storage/fancy/crayons,
 					/obj/item/weapon/paper)
+
+/obj/item/clothing/suit/hooded/nun/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/hooded/nun/verb/adjust_sleeves()
 	set name = "Toggle Sleeves"
@@ -210,6 +218,7 @@
 	icon_state = "hazard_[vest_color]"
 	item_state = icon_state
 	desc = "A high-visibility [vest_color] vest used in work zones."
+	AddComponent(/datum/component/style, 3)
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket
@@ -298,6 +307,10 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
 
+/obj/item/clothing/suit/suspenders/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 //Recycler
 /obj/item/clothing/suit/recyclervest
 	name = "recycler vest"
@@ -308,6 +321,10 @@
 	blood_overlay_type = "coat" //it's the less thing that I can put here
 	body_parts_covered = 0
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_vest_buttons)
+
+/obj/item/clothing/suit/recyclervest/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /datum/action/item_action/hands_free/toggle_vest_buttons
 	name = "Toggle vest buttons"
