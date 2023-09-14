@@ -139,8 +139,6 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(TAJARAN)
-
 
 /datum/job/hydro
 	title = "Botanist"
