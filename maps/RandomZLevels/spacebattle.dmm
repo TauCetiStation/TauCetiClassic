@@ -1587,7 +1587,8 @@
 "fl" = (
 /obj/machinery/door/poddoor{
 	id = "spacebattlestorage";
-	name = "Secure Storage"
+	name = "Secure Storage";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
@@ -1603,7 +1604,9 @@
 /turf/simulated/shuttle/wall,
 /area/awaymission/spacebattle/cruiser)
 "fp" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2441,7 +2444,9 @@
 	},
 /area/awaymission/spacebattle/syndicate7)
 "hY" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2688,7 +2693,9 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "iJ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/floor/airless{
 	dir = 10;
 	icon_state = "floor4"
@@ -2776,7 +2783,9 @@
 /turf/environment/space,
 /area)
 "iX" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2851,7 +2860,9 @@
 	},
 /area/awaymission/spacebattle/syndicate6)
 "jj" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2976,9 +2987,35 @@
 /turf/simulated/wall/mineral/phoron,
 /area/awaymission/spacebattle/secret)
 "jD" = (
-/obj/machinery/door/airlock/phoron,
+/obj/machinery/door/airlock/phoron{
+	dir = 4
+	},
 /turf/simulated/wall/mineral/phoron,
 /area/awaymission/spacebattle/secret)
+"oQ" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/awaymission/spacebattle/syndicate1)
+"yd" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/awaymission/spacebattle/syndicate3)
+"Af" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/awaymission/spacebattle/syndicate2)
 
 (1,1,1) = {"
 aa
@@ -21275,8 +21312,8 @@ ab
 aP
 aW
 aW
-bd
-bd
+oQ
+oQ
 aW
 aW
 aW
@@ -25130,8 +25167,8 @@ ab
 aT
 aW
 aW
-bd
-bd
+oQ
+oQ
 aW
 aW
 aW
@@ -36670,8 +36707,8 @@ ab
 ac
 ah
 ah
-ak
-ak
+Af
+Af
 ah
 ah
 ah
@@ -40525,8 +40562,8 @@ ab
 ag
 ah
 ah
-ak
-ak
+Af
+Af
 ah
 ah
 ah
@@ -50052,8 +50089,8 @@ ab
 av
 aB
 aB
-aE
-aE
+yd
+yd
 aB
 aB
 aB
@@ -53907,8 +53944,8 @@ ab
 az
 aB
 aB
-aE
-aE
+yd
+yd
 aB
 aB
 aB
