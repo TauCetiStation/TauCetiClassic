@@ -188,7 +188,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	id = "Out"
+	id = "Out";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -229,7 +230,8 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2"
+	id = "Out2";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -628,7 +630,8 @@
 /area/station/engineering/engine)
 "bn" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -885,7 +888,8 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2"
+	id = "Out2";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1139,7 +1143,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Incinerator Monitor";
-	sensors = list("inc_meter"="Incinerator pipe meter", "incinerator_sensor"="Incinerator sensor")
+	sensors = list("inc_meter"="Incinerator pipe meter","incinerator_sensor"="Incinerator sensor")
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -2308,7 +2312,8 @@
 /area/station/hallway/secondary/exit)
 "ee" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall"
+	name = "Escape Hall";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2922,7 +2927,8 @@
 	frequency = 1379;
 	id_tag = "recucler_airlock_interior";
 	locked = 1;
-	name = "Recucler Internal Airlock"
+	name = "Recucler Internal Airlock";
+	dir = 4
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -3633,7 +3639,8 @@
 "hK" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Mech Bay";
-	req_access = list(71)
+	req_access = list(71);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3959,7 +3966,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -5243,7 +5251,8 @@
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
 	locked = 1;
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -5503,7 +5512,8 @@
 "yW" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering EVA";
-	req_access = list(71)
+	req_access = list(71);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6279,7 +6289,8 @@
 /area/station/hallway/secondary/arrival)
 "DJ" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall"
+	name = "Escape Hall";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -6567,7 +6578,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
-	req_access = list(71)
+	req_access = list(71);
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -6830,7 +6842,8 @@
 "GM" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(71)
+	req_access = list(71);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8253,7 +8266,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2"
+	id = "Out2";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -8489,7 +8503,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	id = "Out"
+	id = "Out";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -8804,7 +8819,8 @@
 "Wn" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = list(71)
+	req_access = list(71);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -9078,7 +9094,8 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	id = "Out"
+	id = "Out";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"

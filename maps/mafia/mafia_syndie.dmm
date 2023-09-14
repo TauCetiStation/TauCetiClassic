@@ -163,6 +163,14 @@
 	icon_state = "bar"
 	},
 /area/mafia)
+"Y" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	locked = 1;
+	req_access = list(101);
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/mafia)
 
 (1,1,1) = {"
 a
@@ -275,9 +283,9 @@ w
 w
 a
 a
-j
+Y
 a
-j
+Y
 a
 a
 w
@@ -297,7 +305,7 @@ w
 w
 a
 a
-j
+Y
 a
 b
 r
@@ -305,7 +313,7 @@ a
 o
 l
 a
-j
+Y
 a
 a
 w
@@ -597,7 +605,7 @@ w
 w
 a
 a
-j
+Y
 a
 l
 o
@@ -605,7 +613,7 @@ a
 r
 b
 a
-j
+Y
 a
 a
 w
@@ -625,9 +633,9 @@ w
 w
 a
 a
-j
+Y
 a
-j
+Y
 a
 a
 w
