@@ -296,7 +296,8 @@
 /area/space_structures/iss)
 "aZ" = (
 /obj/machinery/door/airlock/hatch{
-	name = "E.V.A"
+	name = "E.V.A";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -337,21 +338,24 @@
 /area/space_structures/iss)
 "be" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Engineering"
+	name = "Engineering";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bf" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Dormitories"
+	name = "Dormitories";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bg" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Medbay"
+	name = "Medbay";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -368,6 +372,13 @@
 	name = "External Airlock"
 	},
 /turf/environment/space,
+/area/space_structures/iss)
+"EM" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/space_structures/iss)
 
 (1,1,1) = {"
@@ -959,7 +970,7 @@ aa
 aa
 aa
 ae
-aw
+EM
 ae
 aa
 aa
@@ -988,7 +999,7 @@ aa
 aa
 af
 ae
-aw
+EM
 ae
 aI
 aa
@@ -1035,7 +1046,7 @@ aa
 aa
 ad
 ae
-aw
+EM
 ae
 aH
 aa
@@ -1263,7 +1274,7 @@ aa
 aa
 af
 ae
-aw
+EM
 ae
 aI
 aa
@@ -1310,7 +1321,7 @@ aa
 aa
 ad
 ae
-aw
+EM
 ae
 aH
 aa
@@ -1339,7 +1350,7 @@ aa
 aa
 aa
 ae
-aw
+EM
 ae
 aa
 aa

@@ -10,11 +10,12 @@ var/global/const/AIRLOCK_WIRE_ELECTRIFY     = 256
 var/global/const/AIRLOCK_WIRE_SAFETY        = 512
 var/global/const/AIRLOCK_WIRE_SPEED         = 1024
 var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
+var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	wire_count = 12
-	window_y = 570
+	wire_count = 13
+	window_y = 600
 
 /datum/wires/airlock/can_use()
 	var/obj/machinery/door/airlock/A = holder
@@ -38,6 +39,7 @@ var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
 	. += "[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
 	. += "[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
+	. += "[A.unres_sides ? "The unrestricted exit display is indicating that it is letting people pass from [(A.unres_sides in list(NORTH, SOUTH, EAST, WEST)) ? "the [dir2text(A.unres_sides)]" : "multiple sides"]" : "The unrestricted exit display is faintly flickering"]."
 	. += list(list(
 		"label" = "Save to the buffer of your multitool",
 		"act" = "buffer",
@@ -123,6 +125,12 @@ var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = mended
 
+		if(AIRLOCK_WIRE_UNRES_SIDE)
+			if(mended)
+				A.unres_sides = initial(A.unres_sides)
+			else
+				A.unres_sides = NONE
+
 	A.update_icon()
 
 /datum/wires/airlock/update_pulsed(index)
@@ -186,5 +194,9 @@ var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
+
+		if(AIRLOCK_WIRE_UNRES_SIDE)
+			if(!A.hasPower())
+				A.unres_sides = A.unres_sides < 1 ? NORTH : turn(A.unres_sides, -90)
 
 	A.update_icon()

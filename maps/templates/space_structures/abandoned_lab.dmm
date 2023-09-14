@@ -293,6 +293,16 @@
 	icon_state = "whitegreen"
 	},
 /area/space_structures/derelict_lab)
+"aV" = (
+/obj/machinery/door/airlock/virology/glass{
+	name = "Isolation B";
+	req_access = list(39);
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
 "aW" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
@@ -690,7 +700,9 @@
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "ch" = (
-/obj/machinery/door/airlock/engineering/glass,
+/obj/machinery/door/airlock/engineering/glass{
+	dir = 4
+	},
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)
@@ -796,7 +808,8 @@
 "cv" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(7)
+	req_access = list(7);
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -905,6 +918,16 @@
 /area/space_structures/derelict_lab)
 "qp" = (
 /obj/machinery/autolathe,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"vP" = (
+/obj/machinery/door/airlock/virology/glass{
+	name = "Isolation A";
+	req_access = list(39);
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1165,11 +1188,11 @@ aL
 aZ
 aR
 ae
-aX
+vP
 ae
 ae
 ae
-aX
+vP
 ae
 bG
 aa
@@ -1357,11 +1380,11 @@ ar
 aU
 aR
 ae
-ah
+aV
 ae
 ae
 ae
-ah
+aV
 ae
 bG
 aa
