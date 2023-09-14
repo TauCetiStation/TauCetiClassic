@@ -36,12 +36,20 @@
 	item_state = "waiter"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/waiter/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/tourist
 	name = "hawaiian shirt"
 	desc = "How gauche."
 	icon_state = "tourist"
 	item_state = "tourist"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/tourist/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -125,12 +133,20 @@
 	item_state = "rainbow"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rainbow/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/psysuit
 	name = "dark undersuit"
 	desc = "A thick, layered grey undersuit lined with power cables. Feels a little like wearing an electrical storm."
 	icon_state = "psysuit"
 	item_state = "psysuit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/under/psysuit/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/gentlesuit
 	name = "gentlemans suit"
@@ -238,6 +254,10 @@
 	icon_state = "blackskirt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/under/blackskirt/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
@@ -245,11 +265,19 @@
 	item_state = "schoolgirl"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
+/obj/item/clothing/under/schoolgirl/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
 	icon_state = "overalls"
 	item_state = "overalls"
+
+/obj/item/clothing/under/overalls/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -258,11 +286,19 @@
 	item_state = "pirate"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
+/obj/item/clothing/under/pirate/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"
 	desc = "For the Motherland!"
 	icon_state = "soviet"
 	item_state = "soviet"
+
+/obj/item/clothing/under/soviet/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
@@ -290,6 +326,10 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	body_parts_covered = LOWER_TORSO
+
+/obj/item/clothing/under/gladiator/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 //dress
 /obj/item/clothing/under/dress
@@ -531,6 +571,10 @@
 	icon_state = "mafia"
 	item_state = "mafia"
 
+/obj/item/clothing/under/mafia/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/mafia/vest
 	name = "mafia vest"
 	desc = "Extreme problems often require extreme solutions."
@@ -591,6 +635,10 @@
 	icon_state = "roman"
 	item_state = "roman"
 
+/obj/item/clothing/under/roman/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/patient_gown
 	name = "patient gown"
 	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
@@ -610,6 +658,10 @@
 	name = "sukeban pants"
 	desc = "A white shirt with wide baggy pants"
 	icon_state = "sukeban_pants"
+
+/obj/item/clothing/under/sukeban_pants/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/sukeban_dress
 	name = "sukeban dress"
@@ -645,6 +697,10 @@
 	desc = "The classic image of an American gangster 80. Hello from Miami."
 	icon_state = "pinkpolo"
 
+/obj/item/clothing/under/pinkpolo/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/bathrobe
 	name = "bath robe"
 	icon_state = "bathrobe"
@@ -673,6 +729,10 @@
 	desc = "No pain - no gain."
 	icon_state = "DDR_sport"
 	item_state = "DDR_sport"
+
+/obj/item/clothing/under/sport/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/sport/blue
 	name = "blue sport uniform"
@@ -711,11 +771,19 @@
 	icon_state = "JackFrostUniform"
 	item_state = "JackFrostUniform"
 
+/obj/item/clothing/under/jackbros/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/under/yakuza
 	name = "tojo clan pants"
 	desc = "For those long nights under the traffic cone."
 	icon_state = "MajimaPants"
 	item_state = "MajimaPants"
+
+/obj/item/clothing/under/yakuza/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/dutch
 	name = "dutch's jacket"
@@ -724,11 +792,19 @@
 	body_parts_covered = ARMS
 	item_state = "DutchJacket"
 
+/obj/item/clothing/suit/dutch/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/under/dutch
 	name = "dutch's suit"
 	desc = "You can feel a <b>god damn plan</b> coming on."
 	icon_state = "DutchUniform"
 	item_state = "DutchUniform"
+
+/obj/item/clothing/under/dutch/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/head/spacepolice
 	name = "police cap"
@@ -744,20 +820,36 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES
 
+/obj/item/clothing/under/henchmen/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"
 	desc = "Steel-toed and intimidating."
 	icon_state = "MajimaShoes"
+
+/obj/item/clothing/shoes/yakuza/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 
+/obj/item/clothing/shoes/jackbros/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/head/jackbros
 	name = "frosty hat"
 	desc = "Hee-ho!"
 	icon_state = "JackFrostHat"
+
+/obj/item/clothing/head/jackbros/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/under/test_subject
 	name = "NT-SID jumpsuit"
@@ -774,11 +866,19 @@
 	item_state = "indiana"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/indiana/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/cowboy
 	name = "western suit"
 	desc = "Revolver is your best friend."
 	icon_state = "cowboy"
 	item_state = "cowboy"
+
+/obj/item/clothing/under/cowboy/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/cowboy/brown
 	icon_state = "cowboy_brown"
@@ -793,6 +893,10 @@
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
 	w_class = SIZE_SMALL
+
+/obj/item/clothing/under/kung/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/durathread
 	name = "durathread suit"
