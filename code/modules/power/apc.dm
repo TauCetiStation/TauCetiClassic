@@ -1313,20 +1313,6 @@
 	if(custom_smartlight_preset)
 		var/type = smartlight_presets[custom_smartlight_preset]
 		smartlight_preset = new type
-
-	// temp code before we replace all station APC
-	else if(istype(my_area, /area/station/rnd) || istype(my_area, /area/asteroid/research_outpost))
-		smartlight_preset = new /datum/smartlight_preset/rnd
-	else if(istype(my_area, /area/station/medical))
-		smartlight_preset = new /datum/smartlight_preset/medbay
-	else if(istype(my_area, /area/station/security))
-		smartlight_preset = new /datum/smartlight_preset/brig
-	else if(istype(my_area, /area/station/engineering))
-		smartlight_preset = new /datum/smartlight_preset/engineering
-	else if(istype(my_area, /area/station/cargo) || istype(my_area, /area/asteroid/mine/production))
-		smartlight_preset = new /datum/smartlight_preset/cargo
-	// temp code end
-
 	else
 		smartlight_preset = new
 
