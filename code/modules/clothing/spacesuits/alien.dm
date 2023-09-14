@@ -379,6 +379,10 @@
 	has_sensor = 0
 	species_restricted = list(VOX)
 
+/obj/item/clothing/under/vox/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
 	desc = "This doesn't look very comfortable."
