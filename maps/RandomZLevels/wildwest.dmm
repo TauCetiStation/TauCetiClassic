@@ -2025,6 +2025,31 @@
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
+"oV" = (
+/obj/machinery/door/airlock/vault{
+	locked = 1;
+	dir = 4
+	},
+/turf/simulated/floor/engine/cult,
+/area/awaymission/wildwest/vaultdoors)
+"pt" = (
+/obj/machinery/door/airlock/sandstone{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/wildwest/refinery)
+"xE" = (
+/obj/machinery/door/airlock/sandstone{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/awaymission/wildwest/mines)
+"GZ" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/wildwest/refinery)
 
 (1,1,1) = {"
 aa
@@ -15360,7 +15385,7 @@ br
 aa
 aa
 eO
-fd
+GZ
 eO
 aa
 aa
@@ -16131,7 +16156,7 @@ et
 et
 eJ
 eR
-fd
+GZ
 eR
 eR
 eR
@@ -22262,8 +22287,8 @@ aL
 aL
 aX
 aW
-bd
-bd
+pt
+pt
 aW
 aL
 aL
@@ -23779,8 +23804,8 @@ ac
 ac
 ac
 ah
-aF
-aF
+oV
+oV
 ah
 ah
 ah
@@ -37711,14 +37736,14 @@ bj
 bj
 bu
 bu
-dL
+xE
 bu
 bu
 bu
 bu
 bu
 bu
-dL
+xE
 bu
 bu
 bj
@@ -39770,11 +39795,11 @@ bu
 bu
 bu
 bu
-dL
+xE
 bu
 bu
 bu
-dL
+xE
 bu
 bu
 bu

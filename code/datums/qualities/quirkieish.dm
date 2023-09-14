@@ -98,9 +98,9 @@
 /datum/quality/quirkieish/informed
 	name = "Informed"
 	desc = "В баре тебе удалось подслушать странный разговор о каких-то кодовых словах."
-	requirement = "Все, кроме охраны, Капитана и ХоПа."
+	requirement = "Все, кроме охраны, Синего щита, Капитана и ХоПа."
 
-	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel", "Blueshield Officer")
 
 /datum/quality/quirkieish/informed/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return !(H.mind.assigned_role in funpolice)
