@@ -115,7 +115,7 @@
 	var/list/imposter_prioritize_list = list()
 	for(var/J in subtypesof(/datum/job))
 		var/datum/job/type_of_job = J
-		if(type_of_job.flags & IMPOSTER_PRIORITIZE)
+		if(type_of_job.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
 			imposter_prioritize_list += type_of_job.title
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(!player.mind || !player.client)

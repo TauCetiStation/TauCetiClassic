@@ -28,7 +28,7 @@
 		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
 		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
 		)
-	flags = CIVIL
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)
