@@ -21,7 +21,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
+	restricted_species = list(TAJARAN, VOX, DIONA)
 
 	department_stocks = list("Cargo" = 40)
 
@@ -88,7 +88,6 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA)
 
 	department_stocks = list("Cargo" = 10)
 
@@ -237,7 +236,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 
 /datum/job/clown
@@ -255,6 +254,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
 	skillsets = list("Clown" = /datum/skillset/clown)
+	restricted_species = list(SKRELL)
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)

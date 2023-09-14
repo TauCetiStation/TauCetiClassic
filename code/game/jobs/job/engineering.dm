@@ -27,7 +27,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
+	restricted_species = list(TAJARAN, VOX, DIONA)
 
 
 /datum/job/engineer
