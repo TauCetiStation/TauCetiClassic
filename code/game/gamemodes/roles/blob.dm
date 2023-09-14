@@ -67,10 +67,10 @@
 	if(isovermind(antag.current))
 		return FALSE
 
-	to_chat(antag.current, "<span class='warning'>Your body is ready to give spawn to a new blob core which will eat this station.</span>")
-	to_chat(antag.current, "<span class='warning'>Find a good location to spawn the core and then take control and overwhelm the station!</span>")
-	to_chat(antag.current, "<span class='warning'>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</span>")
-	to_chat(antag.current, "<span class='warning'>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</span>")
+	to_chat(antag.current, "<span class='warning'>Ваше тело готово дать начало новому ядру Блоба, которое поглотит эту станцию.</span>")
+	to_chat(antag.current, "<span class='warning'>Найдите хорошее место для создания ядра, после чего возьмите контроль над ядром и разраститесь по всей станции!</span>")
+	to_chat(antag.current, "<span class='warning'>Когда вы найдете подходящее место, ожидайте созревания ядра; это произойдет автоматически и вы никак не можете ускорить данный процесс.</span>")
+	to_chat(antag.current, "<span class='warning'>Если вы покинете сектор станции, или улетите в космос, тогда вы умрете; убедитесь в том, что ваше место имеет достаточно твердой поверхности, чтобы закрепиться на станции.</span>")
 
 	return TRUE
 
