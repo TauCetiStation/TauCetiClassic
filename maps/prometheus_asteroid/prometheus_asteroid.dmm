@@ -2126,11 +2126,6 @@
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "hT" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -2144,6 +2139,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/power/apc{
+	pixel_y = 27;
+	dir = 1;
+	name = "RnD top APC";
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -2371,14 +2372,15 @@
 /area/asteroid/research_outpost/gearstore)
 "iC" = (
 /obj/machinery/light/small,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "Cargo left APC";
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -2618,11 +2620,6 @@
 /turf/environment/space,
 /area/space)
 "jw" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = 5
 	},
@@ -2632,6 +2629,11 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Cargo down APC";
+	custom_smartlight_preset = "Cargo"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -3488,14 +3490,15 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	name = "Medbay left APC";
+	custom_smartlight_preset = "MedBay"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -4684,8 +4687,9 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/power/apc/largecell{
-	name = "largecell apc down";
-	pixel_y = -28
+	name = "RnD largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -6158,12 +6162,13 @@
 /area/asteroid/mine/eva)
 "zy" = (
 /obj/item/weapon/flora/random,
+/obj/structure/cable,
 /obj/machinery/power/apc/largecell{
 	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
+	name = "RnD largecell apc right";
+	custom_smartlight_preset = "RnD";
+	pixel_x = 27
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
@@ -6755,11 +6760,6 @@
 	},
 /area/asteroid/research_outpost/med)
 "Cb" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -6773,6 +6773,11 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "RnD down APC";
+	custom_smartlight_preset = "RnD"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6784,17 +6789,18 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/mining,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "Cargo largecell apc right";
+	custom_smartlight_preset = "Cargo";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7743,14 +7749,14 @@
 	},
 /area/asteroid/mine/production)
 "Hq" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "RnD down APC";
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10124,14 +10130,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	pixel_x = 27;
+	dir = 4;
+	custom_smartlight_preset = "RnD";
+	name = "RnD right APC"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -10433,16 +10440,16 @@
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4
 	},
-/obj/machinery/power/apc/largecell{
-	dir = 2;
-	name = "largecell apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "RnD Outpost Isolation Room Three West";
 	dir = 1;
 	network = list("SS13","MINE","Research")
+	},
+/obj/machinery/power/apc/largecell{
+	name = "RnD largecell apc down";
+	pixel_y = -27;
+	custom_smartlight_preset = "RnD"
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -10638,12 +10645,13 @@
 	},
 /area/asteroid/research_outpost/sample)
 "Vr" = (
+/obj/structure/cable,
 /obj/machinery/power/apc/largecell{
 	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
+	name = "RnD largecell apc right";
+	custom_smartlight_preset = "RnD";
+	pixel_x = 27
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
@@ -10910,13 +10918,13 @@
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable,
 /obj/machinery/light/small,
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "RnD down APC";
+	custom_smartlight_preset = "RnD"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
