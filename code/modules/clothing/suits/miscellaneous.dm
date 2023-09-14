@@ -46,6 +46,9 @@
 	item_state = "pirate"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/pirate/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/hgpirate
 	name = "pirate captain coat"
@@ -55,6 +58,9 @@
 	flags_inv = HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/hgpirate/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
@@ -88,6 +94,9 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/justice/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -98,6 +107,9 @@
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/judgerobe/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
@@ -118,6 +130,9 @@
 	item_state = "overalls"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
+/obj/item/clothing/suit/apron/overalls/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
@@ -146,6 +161,9 @@
 	body_parts_covered = HEAD|UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+/obj/item/clothing/suit/imperium_monk/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/chickensuit
 	name = "chicken suit"
@@ -212,6 +230,10 @@
 	icon_state = "Byzantine_dress"
 	item_state = "Byzantine_dress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/byzantine_dress/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /*
  * Misc
@@ -427,6 +449,10 @@
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 
+/obj/item/clothing/suit/leathercoat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
 	desc = "A old coat"
@@ -523,6 +549,10 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+/obj/item/clothing/suit/batman/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/superman
 	name = "Superman costume"
 	desc = "Is it a bird? Is it a plane?"
@@ -531,6 +561,9 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+/obj/item/clothing/suit/superman/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/storage/miljacket_army
 	name = "field jacket olive"
@@ -540,6 +573,10 @@
 	var/can_button_up = 1
 	var/is_button_up = 1
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/storage/miljacket_army/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/storage/miljacket_army/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -628,6 +665,10 @@
 	item_state = "necromancer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
+/obj/item/clothing/suit/necromancer_hoodie/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/chaplain_hoodie/atom_init()
 	. = ..()
 	AddComponent(/datum/component/style, 5)
@@ -703,11 +744,19 @@
 	allowed = list()
 	hoodtype = /obj/item/clothing/head/hooded/ian_hood
 
+/obj/item/clothing/suit/hooded/ian_costume/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/hooded/angel_suit
 	name = "Angel Suit"
 	desc = "Angel costume, which Emits aura of light."
 	icon_state = "angela_suit"
 	hoodtype = /obj/item/clothing/head/angel_nimb
+
+/obj/item/clothing/suit/hooded/angel_suit/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/student_jacket
 	name = "Student Jacket"
@@ -715,6 +764,11 @@
 	icon_state = "student_jacket"
 	item_action_types = list(/datum/action/item_action/hands_free/to_fasten)
 	var/fastened = TRUE
+
+/obj/item/clothing/suit/student_jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /datum/action/item_action/hands_free/to_fasten
 	name = "To Fasten"
 
@@ -732,25 +786,45 @@
 	desc = "Stylish white satin jacket with a scorpion embroidered on the back."
 	icon_state = "atlas_jacket"
 
+/obj/item/clothing/suit/atlas_jacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/shawl
 	name = "shawl"
 	desc = "A pink Shawl for Hindi Womans."
 	icon_state = "shawl"
+
+/obj/item/clothing/suit/shawl/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/sukeban_coat
 	name = "sukeban coat"
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
 
+/obj/item/clothing/suit/sukeban_coat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/plaid
 	name = "plaid"
 	desc = "Home warm plaid"
 	icon_state = "plaid"
 
+/obj/item/clothing/suit/plaid/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/tuxedo
 	name = "tuxedo"
 	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
 	icon_state = "tuxedo"
+
+/obj/item/clothing/suit/tuxedo/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/syndieshirt
 	name = "red shirt"
@@ -790,6 +864,10 @@
 	item_state = "kung_jacket"
 	w_class = SIZE_SMALL
 
+/obj/item/clothing/suit/kung/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/storage/comissar
 	name = "comissar's coat"
 	desc = "Red and black will never go out of fashion."
@@ -799,3 +877,7 @@
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 30, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/storage/comissar/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT)
