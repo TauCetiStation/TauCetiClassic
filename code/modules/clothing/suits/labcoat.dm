@@ -77,6 +77,10 @@
 	item_state = "labcoat_cmo"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 70, rad = 10)
 
+/obj/item/clothing/suit/storage/labcoat/cmo/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
