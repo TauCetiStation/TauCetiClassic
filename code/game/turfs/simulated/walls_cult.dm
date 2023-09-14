@@ -14,6 +14,7 @@
 
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "cult"
 
 	smooth = FALSE
