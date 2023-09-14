@@ -456,8 +456,6 @@ var/global/list/turret_icons
 
 	for(var/mob/M in mobs_in_view(world.view, src))
 		assess_and_assign(M, targets, secondarytargets)
-	for(var/obj/mecha/mech in view(world.view, src))
-		assess_and_assign_mechs(mech, targets, secondarytargets)
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			popDown() // no valid targets, close the cover
@@ -469,21 +467,22 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
 	switch(assess_living(L))
 		if(TURRET_PRIORITY_TARGET)
-			targets += L
+			if(istype(L.loc, /obj/mecha))
+				var/obj/mecha/mech_target = L.loc
+				targets += mech_target
+			else
+				targets += L
 		if(TURRET_SECONDARY_TARGET)
-			secondarytargets += L
+			if(istype(L.loc, /obj/mecha))
+				var/obj/mecha/mech_target = L.loc
+				targets += mech_target
+			else
+				secondarytargets += L
 
-/obj/machinery/porta_turret/proc/assess_and_assign_mechs(obj/mecha/mech, list/targets, list/secondarytargets)
-	switch(assess_mechs(mech))
-		if(TURRET_PRIORITY_TARGET)
-			targets += mech
-		if(TURRET_SECONDARY_TARGET)
-			secondarytargets += mech
 
 /obj/machinery/porta_turret/proc/assess_living(mob/living/L)
 	if(!istype(L))
 		return TURRET_NOT_TARGET
-
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
@@ -493,12 +492,14 @@ var/global/list/turret_icons
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
+	if(istype(L.loc, /obj/mecha))
+		return TURRET_SECONDARY_TARGET
+
 	if(!check_trajectory(L, src))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
 	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
-
 	if(L.stat != CONSCIOUS)		//if the perp is dead/dying...
 		if(!emagged)
 			return TURRET_NOT_TARGET	//no need to bother really, move onto next potential victim!
@@ -545,25 +546,6 @@ var/global/list/turret_icons
 		return 10
 
 	return H.assess_perp(src, check_access, check_weapons, check_records, check_arrest)
-
-/obj/machinery/porta_turret/proc/assess_mechs(obj/mecha/M)
-	if(!M.occupant)
-		return TURRET_NOT_TARGET //dont shoot empty guys, maybe the HOS parked it there "just in case"
-
-	if(assess_living(M.occupant) == TURRET_NOT_TARGET)
-		return TURRET_NOT_TARGET
-
-	if(!check_n_synth)
-		return TURRET_NOT_TARGET // targeting disabled
-
-	if(get_dist(src, M) > 7)
-		return TURRET_NOT_TARGET
-
-	if(!check_trajectory(M, src))
-		return TURRET_NOT_TARGET
-
-
-	return TURRET_SECONDARY_TARGET //at least you dont get shoot at as priority like in human assess....
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/mob/living/targets)
 	if(targets.len && last_target && (last_target in targets) && target(last_target))
