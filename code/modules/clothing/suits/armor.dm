@@ -128,6 +128,11 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.6
 
+/obj/item/clothing/suit/armor/hos/atom_init()
+	. = ..()
+	//Because 80% armor melee
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks."
@@ -137,6 +142,11 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/riot/atom_init()
+	. = ..()
+	//Because 80% armor melee
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof fullbody armor"
@@ -207,6 +217,11 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
+
+/obj/item/clothing/suit/armor/swat/atom_init()
+	. = ..()
+	//Because 80% armor melee
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -415,6 +430,13 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/suit/armor/syndiassault/atom_init()
+	. = ..()
+	//Because 80% armor melee
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+
+AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/armor/syndilight
 	name = "recon armor"
