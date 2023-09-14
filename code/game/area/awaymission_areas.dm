@@ -43,6 +43,54 @@
 	icon_state = "away"
 	always_unpowered = 1
 	outdoors = TRUE
+	var/static/list/mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath = 1,
+		/mob/living/simple_animal/hostile/giant_spider/nurse = 1,
+		/mob/living/simple_animal/hostile/asteroid/basilisk = 2,
+		/mob/living/simple_animal/hostile/giant_spider/hunter = 2,
+		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
+		/mob/living/simple_animal/hostile/giant_spider = 3,
+		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining = 3,
+		/mob/living/simple_animal/hostile/asteroid/goldgrub = 4,
+		/mob/living/simple_animal/tindalos = 5,
+		/mob/living/simple_animal/lizard = 5,
+		/mob/living/simple_animal/mouse = 5,
+		/mob/living/simple_animal/yithian = 5
+	)
+
+/area/awaymission/junkyard/atom_init()
+	. = ..()
+	InitSpawnArea()
+
+/area/awaymission/junkyard/proc/InitSpawnArea()
+	AddComponent(/datum/component/spawn_area,
+		"junkyard",
+		CALLBACK(src, PROC_REF(Spawn)),
+		CALLBACK(src, PROC_REF(Despawn)),
+		CALLBACK(src, PROC_REF(CheckSpawn)),
+		8,
+		16,
+		15 SECONDS,
+		1 MINUTE,
+	)
+
+/area/awaymission/junkyard/proc/Spawn(turf/T)
+	var/to_spawn = pickweight(mob_spawn_list)
+	var/atom/A = new to_spawn(T)
+	if(A)
+		return list(A)
+	return null
+
+/area/awaymission/junkyard/proc/Despawn(atom/movable/instance)
+	var/mob/M = instance
+	if(M.stat == DEAD)
+		return
+	qdel(M)
+
+/area/awaymission/junkyard/proc/CheckSpawn(turf/T)
+	if(!istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
+		return FALSE
+	return T.is_mob_placeable(null)
 
 /area/awaymission/BMPship1
 	name = "Aft Block"
