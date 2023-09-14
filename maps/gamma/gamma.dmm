@@ -60320,7 +60320,8 @@
 /area/station/cargo/storage)
 "lCU" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	req_access = list(12);
+	dir = 4
 	},
 /obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor,
@@ -86351,7 +86352,8 @@
 /obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	req_access = list(12);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -149533,7 +149535,7 @@ ouf
 nmC
 nmC
 nmC
-iai
+nbn
 nmC
 nmC
 tgL
