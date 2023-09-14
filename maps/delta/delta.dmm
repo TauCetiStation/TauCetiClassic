@@ -24014,13 +24014,13 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
 	name = "Medbay left APC";
 	custom_smartlight_preset = "MedBay"
 	},
+/obj/machinery/portable_atmospherics/canister/anesthetic,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -33522,7 +33522,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering","Engineering  Robots", "Singularity");
+	network = list("Engineering","Engineering  Robots","Singularity");
 	pixel_x = -30
 	},
 /obj/machinery/camera{
