@@ -10,7 +10,7 @@
 
 /obj/item/clothing/suit/armor/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 15)
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -61,7 +61,7 @@
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
-	AddComponent(/datum/component/style, 15)
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"
