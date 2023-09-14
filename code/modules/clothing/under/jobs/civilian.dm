@@ -179,12 +179,20 @@
 	item_state = "red_suit"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/librarian/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/under/mime
 	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mimesuit"
 	item_state = "mimesuit"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/mime/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
