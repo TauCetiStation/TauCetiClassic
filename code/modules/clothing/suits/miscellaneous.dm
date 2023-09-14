@@ -370,6 +370,10 @@
 	icon_state = "serif_coat"
 	item_state = "det_suit"
 
+/obj/item/clothing/suit/serifcoat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 //stripper
 /obj/item/clothing/under/stripper
 	body_parts_covered = 0
@@ -512,6 +516,10 @@
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
+
+/obj/item/clothing/suit/poncho/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"

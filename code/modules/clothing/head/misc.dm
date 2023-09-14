@@ -348,11 +348,19 @@
 	item_state = "cowboy_hat"
 	desc = "Howdy, partner!"
 
+/obj/item/clothing/head/western/cowboy/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	icon_state = "indiana_hat"
 	item_state = "indiana_hat"
 	desc = "Be aware of rolling boulders."
+
+/obj/item/clothing/head/indiana/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/head/black_hood
 	name = "black hood"

@@ -197,6 +197,10 @@
 	name = "western boots"
 	icon_state = "western_boots"
 
+/obj/item/clothing/shoes/western/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/shoes/western/wizard
 
 /obj/item/clothing/shoes/western/wizard/atom_init(mapload, ...)
