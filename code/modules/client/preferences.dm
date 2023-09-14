@@ -163,12 +163,13 @@ var/global/list/preferences_datums = list()
 	// jukebox volume
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
-	var/bloomlevel = BLOOM_MED
-	var/old_lighting = FALSE
-	var/lampsglare = FALSE
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE
+	// lighting settings
+	var/glowlevel = GLOW_MED // or bloom
+	var/lampsexposure = TRUE // idk how we should name it
+	var/lampsglare = FALSE // aka lens flare
 
   //custom loadout
 	var/list/gear = list()
