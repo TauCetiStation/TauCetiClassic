@@ -61,7 +61,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	name = "RnD"
 
 	//color = "#e3cddf"
-	color = "#e6c4e6"
+	color = "#ffddff"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
