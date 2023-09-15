@@ -31447,7 +31447,8 @@
 /obj/machinery/power/apc{
 	name = "3000k apc top";
 	pixel_y = 28;
-	custom_smartlight_preset = "default 3000k"
+	custom_smartlight_preset = "default 3000k";
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -72330,19 +72331,9 @@
 	},
 /area/station/engineering/engine)
 "hmR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -74917,6 +74908,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/incinerator)
+"jWp" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "jXb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -83670,6 +83666,22 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"uyE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "uBz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/disposalpipe/segment{
@@ -102976,7 +102988,7 @@ oQM
 bBw
 gYf
 wAe
-hmR
+hHe
 brd
 bfH
 bRC
@@ -103233,7 +103245,7 @@ aNi
 aSM
 aSM
 aSM
-bEW
+uyE
 bcE
 bgu
 bEk
@@ -104519,7 +104531,7 @@ uru
 iXb
 bSZ
 bDk
-sCd
+hmR
 kGX
 qPE
 hOV
@@ -105545,8 +105557,8 @@ aFf
 byP
 bEL
 bEW
-bEW
-bEW
+spt
+jWp
 aSM
 bGv
 aSM
