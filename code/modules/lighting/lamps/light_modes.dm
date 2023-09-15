@@ -61,7 +61,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	name = "RnD"
 
 	//color = "#e3cddf"
-	color = "#ffcdff"
+	color = "#e6c4e6"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
@@ -75,9 +75,9 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/brig
 	name = "Brig"
 
-	color = "#ffeedd"
-	power = DEFAULT_POWER
-	range = DEFAULT_RANGE
+	color = "#ffe4c9"
+	power = 0.7
+	range = 6
 
 /datum/light_mode/engineering
 	name = "Engineering"
