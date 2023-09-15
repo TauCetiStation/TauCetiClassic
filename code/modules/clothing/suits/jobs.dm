@@ -21,6 +21,10 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/captunic/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 7)
+
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
 	desc = "A less formal jacket for everyday captain use."
@@ -28,6 +32,10 @@
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/captunic/capjacket/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
@@ -139,6 +147,9 @@
 	permeability_coefficient = 0.50
 	allowed = list (/obj/item/weapon/kitchenknife, /obj/item/weapon/kitchen/rollingpin)
 
+/obj/item/clothing/suit/chef_classic/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
@@ -188,6 +199,9 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/storage/forensics
+3
+
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
 	desc = "A red forensics technician jacket."
@@ -221,6 +235,10 @@
 	AddComponent(/datum/component/style, 3)
 
 //Lawyer
+/obj/item/clothing/suit/storage/lawyer/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
+
 /obj/item/clothing/suit/storage/lawyer/bluejacket
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
@@ -245,6 +263,10 @@
 	item_state = "ia_jacket"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+/obj/item/clothing/suit/storage/internalaffairs/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/storage/internalaffairs/verb/toggle()
 	set name = "Toggle Coat Buttons"
