@@ -437,6 +437,10 @@ BLIND     // can't see anything
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_HEAD)
 
+/obj/item/clothing/head/helmet/space/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, -15)
+
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
@@ -460,6 +464,10 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
+
+/obj/item/clothing/suit/space/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, -15)
 
 /obj/item/clothing/suit/space/equipped(mob/M)
 	check_limb_support()
