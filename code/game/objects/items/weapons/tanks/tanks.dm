@@ -202,7 +202,7 @@
 	internal_switch = world.time + 16
 	update_actions_icons(C)
 
-/obj/item/weapon/tank/proc/update_actions_icons(var/mob/living/carbon/T)
+/obj/item/weapon/tank/proc/update_actions_icons(mob/living/carbon/T)
 	for(var/datum/action/item_action/hands_free/toggle_internals/TI in T.actions)
 		if(T.internal == src)
 			TI.background_icon_state = "bg_active"
