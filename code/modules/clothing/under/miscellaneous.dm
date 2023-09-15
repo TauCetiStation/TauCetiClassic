@@ -878,7 +878,7 @@
 
 /obj/item/clothing/under/cowboy/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 3, 0, 0, DETECTIVE_STYLE)
 
 /obj/item/clothing/under/cowboy/brown
 	icon_state = "cowboy_brown"

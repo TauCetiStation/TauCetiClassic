@@ -154,7 +154,7 @@
 
 /obj/item/clothing/suit/storage/det_suit/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT,  WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/storage/det_suit/verb/toggle()
 	set name = "Toggle Trenchcoat Belt"
