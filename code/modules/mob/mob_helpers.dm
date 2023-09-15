@@ -67,6 +67,33 @@
 			return TRUE
 	return FALSE
 
+/proc/get_chances_by_flag(zone, flag)
+	var/miss_chance = 0
+	//Projectiles misschances
+	if(flag == BULLET || flag == LASER || flag == ENERGY || flag == BOMB || flag == BIO)
+		//better be red than dead
+		if(BP_HEAD)
+			miss_chance = 50
+		else
+			miss_chance = 10
+		return miss_chance
+
+	miss_chance = 10
+	switch(zone)
+		if(BP_HEAD)
+			miss_chance = 50
+		if(BP_GROIN)
+			miss_chance = 50
+		if(BP_L_ARM)
+			miss_chance = 60
+		if(BP_R_ARM)
+			miss_chance = 60
+		if(BP_L_LEG)
+			miss_chance = 60
+		if(BP_R_LEG)
+			miss_chance = 60
+	return miss_chance
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
@@ -107,46 +134,25 @@
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
 // miss_chance_mod may be negative.
-/proc/get_zone_with_miss_chance(zone, mob/target, miss_chance_mod = 0)
+/proc/get_zone_with_miss_chance(zone, mob/target, miss_chance_mod = 0, flag)
 	zone = check_zone(zone)
-
 	// you can only miss if your target is standing and not restrained
 	if(!target.buckled && !target.lying)
-		var/miss_chance = 10
-		switch(zone)
-			if(BP_HEAD)
-				miss_chance = 50
-			if(BP_GROIN)
-				miss_chance = 50
-			if(BP_L_ARM)
-				miss_chance = 60
-			if(BP_R_ARM)
-				miss_chance = 60
-			if(BP_L_LEG)
-				miss_chance = 60
-			if(BP_R_LEG)
-				miss_chance = 60
-		if(prob(max(miss_chance + miss_chance_mod, 0)))
-			if(prob(max(20, (miss_chance/2))))
-				return null
-			else
-				var/t = rand(1, 100)
-				switch(t)
-					if(1 to 65)
-						return BP_CHEST
-					if(66 to 75)
-						return BP_HEAD
-					if(76 to 80)
-						return BP_L_ARM
-					if(81 to 85)
-						return BP_R_ARM
-					if(86 to 90)
-						return BP_R_LEG
-					if(91 to 95)
-						return BP_L_LEG
-					if(96 to 100)
-						return BP_GROIN
-
+		var/miss_chance = get_chances_by_flag(zone, flag)
+		if(miss_chance + miss_chance_mod < 0)
+			return zone
+		if(prob(max(0, miss_chance / 2)))
+			return null
+		var/static/list/distribution_chances_randomize_zone = list(
+			BP_CHEST = 65,
+			BP_HEAD = 10,
+			BP_L_ARM = 5,
+			BP_R_ARM = 5,
+			BP_R_LEG = 5,
+			BP_L_LEG = 5,
+			BP_GROIN = 5
+		)
+		return pickweight(distribution_chances_randomize_zone)
 	return zone
 
 /proc/get_zone_with_probabilty(zone, probability = 80)
