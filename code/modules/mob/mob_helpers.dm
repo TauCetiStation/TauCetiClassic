@@ -72,7 +72,7 @@
 	//Projectiles misschances
 	if(flag == BULLET || flag == LASER || flag == ENERGY || flag == BOMB || flag == BIO)
 		//better be red than dead
-		if(BP_HEAD)
+		if(zone == BP_HEAD)
 			miss_chance = 50
 		else
 			miss_chance = 10
