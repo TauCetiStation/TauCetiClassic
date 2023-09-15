@@ -54792,8 +54792,8 @@
 /area/station/security/detectives_office)
 "kvo" = (
 /obj/item/weapon/rack_parts,
-/obj/item/weapon/poster,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/poster/contraband,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "kvs" = (
@@ -106135,8 +106135,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "uVc" = (
-/obj/item/weapon/poster,
 /obj/structure/rack,
+/obj/item/weapon/poster/legit,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "uVh" = (
@@ -109479,7 +109479,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/stack/tile,
+/obj/item/stack/tile/plasteel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "vHg" = (
