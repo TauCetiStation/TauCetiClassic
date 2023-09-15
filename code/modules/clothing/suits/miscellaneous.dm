@@ -551,7 +551,7 @@
 
 /obj/item/clothing/suit/batman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/superman
 	name = "Superman costume"
@@ -563,7 +563,7 @@
 
 /obj/item/clothing/suit/superman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/storage/miljacket_army
 	name = "field jacket olive"
@@ -735,6 +735,10 @@
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
+/obj/item/clothing/suit/hooded/carp_costume/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 5)
+
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
@@ -746,7 +750,7 @@
 
 /obj/item/clothing/suit/hooded/ian_costume/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/hooded/angel_suit
 	name = "Angel Suit"
@@ -756,7 +760,7 @@
 
 /obj/item/clothing/suit/hooded/angel_suit/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 5)
 
 /obj/item/clothing/suit/student_jacket
 	name = "Student Jacket"
