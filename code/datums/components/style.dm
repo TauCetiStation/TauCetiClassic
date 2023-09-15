@@ -37,15 +37,15 @@
 	for(var/style_string in style_sets)
 		switch(style_string)
 			if(CLUSMY_STYLE)
-				if(istype(affected_by_style) && HAS_TRAIT(affected_by_style, TRAIT_CLUMSY))
+				if(istype(M) && HAS_TRAIT(M, TRAIT_CLUMSY))
 					bonus_amount += 5
 			if(WITHOUT_BACKPACK_STYLE)
 				//Destroy most style points if player has wear armor with many additional slots from backpack
 				if(is_backpack_equipped(M))
 					bonus_amount -= 100
 			if(DETECTIVE_STYLE)
-				var/datum/mind/M = M.mind
-				if(M && M.assigned_role == "detective")
+				var/datum/mind/mind = M.mind
+				if(mind && mind.assigned_role == "detective")
 					//Always increase style to 5 maximum
 					bonus_amount += max(0, min(5, 5 - style_amount))
 	return bonus_amount
