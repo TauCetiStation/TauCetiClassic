@@ -320,6 +320,7 @@
 	update_icon(hud.mymob)
 	hud.mymob.move_intent = src
 
+
 // Internals
 /atom/movable/screen/internal
 	name = "internal"
@@ -336,7 +337,6 @@
 /atom/movable/screen/internal/add_to_hud(datum/hud/hud)
 	..()
 	update_icon(hud.mymob)
-	hud.mymob.internals = src
 
 /atom/movable/screen/internal/action()
 	if(!iscarbon(usr))
