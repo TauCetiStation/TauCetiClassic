@@ -172,15 +172,11 @@
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
-			//Reduce 60% damage if distance is 2 players view (can't notice and expect shot)
-			var/amount_percent_damage_reduced_by_pass_tile = 4.3
 			//PTR and sniper riffle has +100 accurency
 			if(damage > 55)
-				//Legacy damage percent reducing per tile
-				amount_percent_damage_reduced_by_pass_tile = 3
-				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
+				miss_modifier = -100 // so sniper rifle and PTR-rifle projectiles cannot miss
 			//EVERY shot has reduced damage if distance is big
-			damage = max(1, damage - round(damage * (((distance - 7) * amount_percent_damage_reduced_by_pass_tile) / 100)))
+			damage = max(1, damage - round(damage * (((distance - 6) * 3) / 100)))
 		if(istype(shot_from, /obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 			if(daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
