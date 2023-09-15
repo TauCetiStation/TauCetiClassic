@@ -130,8 +130,8 @@
 
 /obj/item/clothing/suit/armor/hos/atom_init()
 	. = ..()
-	//Because 80% armor melee
-	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
+	AddComponent(/datum/component/style, 0)
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -145,8 +145,8 @@
 
 /obj/item/clothing/suit/armor/riot/atom_init()
 	. = ..()
-	//Because 80% armor melee
-	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
+	AddComponent(/datum/component/style, 0)
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof fullbody armor"
@@ -220,8 +220,8 @@
 
 /obj/item/clothing/suit/armor/swat/atom_init()
 	. = ..()
-	//Because 80% armor melee
-	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
+	AddComponent(/datum/component/style, 0)
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -277,13 +277,13 @@
 /obj/item/clothing/suit/armor/vest/reactive/attack_self(mob/user)
 	active = !(active)
 	if(active)
-		to_chat(user, "<span class='notice'>The reactive armor is now active. Solid protective system deactivated.</span>")
+		to_chat(user, "<span class='notice'>The reactive armor is now active. Solid melee-protective system deactivated.</span>")
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 		icon_state = "reactive"
 		item_state = "reactive"
 		add_fingerprint(user)
 	else
-		to_chat(user, "<span class='notice'>The reactive armor is now inactive. Solid protective system activated.</span>")
+		to_chat(user, "<span class='notice'>The reactive armor is now inactive. Solid melee-protective system activated.</span>")
 		armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
@@ -433,10 +433,8 @@
 
 /obj/item/clothing/suit/armor/syndiassault/atom_init()
 	. = ..()
-	//Because 80% armor melee
-	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
-
-AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
+	AddComponent(/datum/component/style, 0)
 
 /obj/item/clothing/suit/armor/syndilight
 	name = "recon armor"
