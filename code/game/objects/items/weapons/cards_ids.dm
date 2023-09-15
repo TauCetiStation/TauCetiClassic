@@ -10,6 +10,8 @@
 	name = "card"
 	desc = "Используется в карточных делах."
 	icon = 'icons/obj/card.dmi'
+	icon_state = "blank"
+	item_state_world = "blank_world"
 	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
 
@@ -210,6 +212,7 @@
 	desc = "ID карта, принадлежащая агенту внутренних дел."
 	icon_state = "int"
 	item_state = "int_id"
+	item_state_world = "int_world"
 
 /obj/item/weapon/card/id/blueshield
 	name = "identification card"
