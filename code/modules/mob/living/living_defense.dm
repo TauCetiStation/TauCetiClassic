@@ -126,9 +126,9 @@
 		//check if we hit
 		if(O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
-			zone = get_zone_with_miss_chance(zone, src, min(15 * (distance - 2), 0))
+			zone = get_zone_with_miss_chance(zone, src, min(15 * (distance - 2), 0), MELEE)
 		else
-			zone = get_zone_with_miss_chance(zone, src, 15)
+			zone = get_zone_with_miss_chance(zone, src, 15, MELEE)
 
 		if(!zone)
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")

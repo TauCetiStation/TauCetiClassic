@@ -225,7 +225,7 @@
 	if(user == M)
 		def_zone = user.get_targetzone()
 	else
-		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), M)
+		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), M, 0, MELEE)
 
 	if(!def_zone)
 		visible_message("<span class='userdanger'>[user] misses [M] with \the [src]!</span>")
