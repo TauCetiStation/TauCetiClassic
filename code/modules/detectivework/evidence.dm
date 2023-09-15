@@ -103,6 +103,7 @@
 	desc = "Used to take fingerprints."
 	icon = 'icons/obj/card.dmi'
 	icon_state = "fingerprint0"
+	item_state_world = "fingerprint0_world"
 	var/amount = 10.0
 	item_state = "paper"
 	throwforce = 1

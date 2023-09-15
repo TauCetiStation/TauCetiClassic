@@ -48,6 +48,7 @@
 			F.amount = 1
 			F.add_fingerprint(M)
 			F.icon_state = "fingerprint1"
+			F.item_state_world = "fingerprint1_world"
 			F.name = text("FPrintC- '[M.name]'")
 
 			to_chat(user, "<span class='notice'>Done printing.</span>")
