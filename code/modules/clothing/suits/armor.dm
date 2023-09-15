@@ -10,7 +10,7 @@
 
 /obj/item/clothing/suit/armor/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -61,7 +61,7 @@
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
-	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"
@@ -131,7 +131,7 @@
 /obj/item/clothing/suit/armor/hos/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0)
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -146,7 +146,7 @@
 /obj/item/clothing/suit/armor/riot/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0)
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof fullbody armor"
@@ -221,7 +221,7 @@
 /obj/item/clothing/suit/armor/swat/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0)
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -434,7 +434,7 @@
 /obj/item/clothing/suit/armor/syndiassault/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0)
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/syndilight
 	name = "recon armor"

@@ -1,4 +1,5 @@
 #define CLUSMY_STYLE "clumsy_set"
+#define WITHOUT_BACKPACK_STYLE "without_backpack_set"
 
 /datum/component/style
 	var/style_amount = 0
@@ -19,6 +20,11 @@
 		desired_slots = L
 	RegisterSignal(parent, COMSIG_PROJECTILE_STYLE_DODGE, PROC_REF(mod_misschance))
 
+/datum/component/style/proc/is_backpack_equipped(mob/living/user)
+	if(istype(user.back, /obj/item/weapon/storage/backpack))
+		return TRUE
+	return FALSE
+
 /datum/component/style/proc/meet_set_requirments(datum/source, list/reflist)
 	var/datum/affected_by_style = reflist[3]
 	var/bonus_amount = 0
@@ -26,6 +32,10 @@
 		if(CLUSMY_STYLE)
 			if(istype(affected_by_style) && HAS_TRAIT(affected_by_style, TRAIT_CLUMSY))
 				bonus_amount += 5
+		if(WITHOUT_BACKPACK_STYLE)
+			//Destroy most style points if player has wear armor with many additional slots from backpack
+			if(is_backpack_equipped(reflist[3]))
+				bonus_amount -= 100
 	return bonus_amount
 
 /datum/component/style/proc/is_slot_desired(datum/source, mob/living/carbon/user)
@@ -38,24 +48,8 @@
 			return TRUE
 	return FALSE
 
-/datum/component/style/proc/is_armorsuit(item)
-	if(istype(item, /obj/item/clothing/suit/armor))
-		return TRUE
-	if(istype(item, /obj/item/clothing/suit/storage/flak))
-		return TRUE
-	return FALSE
-
-/datum/component/style/proc/is_backpack_equipped(mob/living/user)
-	if(istype(user.back, /obj/item/weapon/storage/backpack))
-		return TRUE
-	return FALSE
-
 /datum/component/style/proc/mod_misschance(datum/source, list/reflist)
 	SIGNAL_HANDLER
-	//Destroy most style points if player has wear armor with many additional slots from backpack
-	if(is_armorsuit(source))
-		if(is_backpack_equipped(reflist[3]))
-			reflist[1] -= 100
 	if(style_set)
 		var/set_bonus = meet_set_requirments(source, reflist)
 		if(set_bonus)

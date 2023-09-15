@@ -884,4 +884,4 @@
 
 /obj/item/clothing/suit/storage/comissar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT, WITHOUT_BACKPACK_STYLE)
