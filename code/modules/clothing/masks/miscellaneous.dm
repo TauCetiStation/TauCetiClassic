@@ -276,6 +276,10 @@
 	icon_state = "pectoral_golden_cross"
 	item_state = "pectoral_golden_cross"
 
+/obj/item/clothing/mask/tie/golden_cross/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 1)
+
 /obj/item/clothing/mask/ecig
 	name = "electronic cigarette"
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
