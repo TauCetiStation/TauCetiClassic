@@ -86,7 +86,7 @@
 
 /obj/item/clothing/under/rank/clown/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5, 0, 0, CLUSMY_STYLE)
+	AddComponent(/datum/component/style, 5, 0, 0, CLUMSY_STYLE)
 
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."

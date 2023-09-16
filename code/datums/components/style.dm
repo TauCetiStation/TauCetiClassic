@@ -1,4 +1,4 @@
-#define CLUSMY_STYLE "clumsy_set"
+#define CLUMSY_STYLE "clumsy_set"
 #define WITHOUT_BACKPACK_STYLE "without_backpack_set"
 #define DETECTIVE_STYLE "detective_style"
 
@@ -12,18 +12,23 @@
 	. = ..()
 	style_amount = style_initial
 	style_in_desired = amount_in_desired
+	//Initialize Style Sets
 	if(islist(style_set_initial))
 		var/list/L = style_set_initial
 		style_sets = L
+	else if(!style_set_initial)
+		style_sets = list()
 	else
 		var/list/L = list(style_set_initial)
 		style_sets = L
+	//Initialize Desired Slot
 	if(islist(slot_initial))
 		var/list/L = slot_initial
 		desired_slots = L
 	else
 		var/list/L = list(slot_initial)
 		desired_slots = L
+
 	RegisterSignal(parent, COMSIG_PROJECTILE_STYLE_DODGE, PROC_REF(mod_misschance))
 
 /datum/component/style/proc/is_backpack_equipped(mob/living/user)
@@ -36,7 +41,7 @@
 	var/bonus_amount = 0
 	for(var/style_string in style_sets)
 		switch(style_string)
-			if(CLUSMY_STYLE)
+			if(CLUMSY_STYLE)
 				if(istype(M) && HAS_TRAIT(M, TRAIT_CLUMSY))
 					bonus_amount += 5
 			if(WITHOUT_BACKPACK_STYLE)
