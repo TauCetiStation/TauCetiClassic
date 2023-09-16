@@ -217,7 +217,7 @@
 /obj/item/clothing/glasses/sunglasses/atom_init()
 	. = ..()
 	//Sunglasses is cool by default
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -312,7 +312,7 @@ I was expecting a 5 style points for IAA glasses
 /obj/item/clothing/glasses/sunglasses/hud/sechud/atom_init()
 	. = ..()
 	//Red huds like sunglasses, but cooler
-	AddComponent(/datum/component/style, 7)
+	AddComponent(/datum/component/style, 0, 7, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/hud/hos_aug
 	name = "augmented shades"
@@ -333,7 +333,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/hud/hos_aug/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 7)
+	AddComponent(/datum/component/style, 0, 7, SLOT_GLASSES)
 
 /datum/action/item_action/switch_shades_mode
 	name = "Switch Shades Mode"
@@ -447,7 +447,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/gar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 1)
+	AddComponent(/datum/component/style, 0, 1, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar sunglasses"
@@ -463,7 +463,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/meson/gar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 1)
+	AddComponent(/datum/component/style, 0, 1, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
@@ -496,7 +496,7 @@ I was expecting a 5 style points for IAA glasses
 /obj/item/clothing/glasses/sunglasses/noir/atom_init()
 	. = ..()
 	//Noir is cooler than other glasses, ofc
-	AddComponent(/datum/component/style, 7)
+	AddComponent(/datum/component/style, 0, 7, SLOT_GLASSES)
 
 /datum/action/item_action/hands_free/toggle_noir
 	name = "Toggle Noir"

@@ -23,7 +23,7 @@
 
 /obj/item/clothing/suit/captunic/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 7)
+	AddComponent(/datum/component/style, 0, 7, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
@@ -35,7 +35,7 @@
 
 /obj/item/clothing/suit/captunic/capjacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie

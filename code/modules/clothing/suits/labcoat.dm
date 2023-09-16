@@ -79,7 +79,7 @@
 
 /obj/item/clothing/suit/storage/labcoat/cmo/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
@@ -116,4 +116,4 @@
 
 /obj/item/clothing/suit/storage/labcoat/rd/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)

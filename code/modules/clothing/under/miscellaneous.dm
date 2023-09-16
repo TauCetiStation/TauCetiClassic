@@ -329,7 +329,7 @@
 
 /obj/item/clothing/under/gladiator/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_W_UNIFORM)
 
 //dress
 /obj/item/clothing/under/dress
@@ -678,7 +678,7 @@
 
 /obj/item/clothing/under/karate/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/smoking
 	name = "smoking"
@@ -773,7 +773,7 @@
 
 /obj/item/clothing/under/jackbros/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/yakuza
 	name = "tojo clan pants"
@@ -783,7 +783,7 @@
 
 /obj/item/clothing/under/yakuza/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_W_UNIFORM)
 
 /obj/item/clothing/suit/dutch
 	name = "dutch's jacket"
@@ -794,7 +794,7 @@
 
 /obj/item/clothing/suit/dutch/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/under/dutch
 	name = "dutch's suit"
@@ -804,7 +804,7 @@
 
 /obj/item/clothing/under/dutch/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_W_UNIFORM)
 
 /obj/item/clothing/head/spacepolice
 	name = "police cap"
@@ -822,7 +822,7 @@
 
 /obj/item/clothing/under/henchmen/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_W_UNIFORM)
 
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"
@@ -831,7 +831,7 @@
 
 /obj/item/clothing/shoes/yakuza/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_SHOES)
 
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
@@ -840,7 +840,7 @@
 
 /obj/item/clothing/shoes/jackbros/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_SHOES)
 
 /obj/item/clothing/head/jackbros
 	name = "frosty hat"
@@ -849,7 +849,7 @@
 
 /obj/item/clothing/head/jackbros/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_HEAD)
 
 /obj/item/clothing/under/test_subject
 	name = "NT-SID jumpsuit"

@@ -60,7 +60,7 @@
 
 /obj/item/clothing/suit/hgpirate/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
@@ -96,7 +96,7 @@
 
 /obj/item/clothing/suit/justice/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -109,7 +109,7 @@
 
 /obj/item/clothing/suit/judgerobe/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
@@ -163,7 +163,7 @@
 
 /obj/item/clothing/suit/imperium_monk/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/chickensuit
 	name = "chicken suit"
@@ -551,7 +551,7 @@
 
 /obj/item/clothing/suit/batman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/superman
 	name = "Superman costume"
@@ -563,7 +563,7 @@
 
 /obj/item/clothing/suit/superman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/miljacket_army
 	name = "field jacket olive"
@@ -667,11 +667,11 @@
 
 /obj/item/clothing/suit/necromancer_hoodie/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/chaplain_hoodie/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/chaplain_hoodie/brown
 	name = "brown robe"
@@ -737,7 +737,7 @@
 
 /obj/item/clothing/suit/hooded/carp_costume/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -750,7 +750,7 @@
 
 /obj/item/clothing/suit/hooded/ian_costume/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/hooded/angel_suit
 	name = "Angel Suit"
@@ -760,7 +760,7 @@
 
 /obj/item/clothing/suit/hooded/angel_suit/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/student_jacket
 	name = "Student Jacket"
@@ -839,7 +839,7 @@
 
 /obj/item/clothing/suit/syndieshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
