@@ -273,10 +273,6 @@
 	item_state = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
-/obj/item/clothing/glasses/sunglasses/blindfold/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
-
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
@@ -451,7 +447,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/gar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 1)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar sunglasses"
@@ -467,7 +463,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/meson/gar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 1)
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
