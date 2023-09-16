@@ -124,7 +124,7 @@
 	name = "IT'S A WIZARD TRAP"
 
 /obj/structure/trap/wizard/Crossed()
-	if(ishuman(AM)
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		 if(iswizard(H))
 			return
