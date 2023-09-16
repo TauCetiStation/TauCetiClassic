@@ -66,6 +66,10 @@
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN + 1.0
 
+/obj/item/clothing/shoes/clown_shoes/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, CLUMSY_STYLE)
+
 /obj/item/clothing/shoes/clown_shoes/Destroy()
 	if(slot_equipped == SLOT_SHOES)
 		// Since slot_equipped is changed only when item is worn
@@ -104,10 +108,6 @@
 	icon_state = "laceups"
 
 	var/waddling = FALSE
-
-/obj/item/clothing/shoes/jolly_gravedigger/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/shoes/jolly_gravedigger/Destroy()
 	if(waddling)
@@ -172,10 +172,6 @@
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
 
-/obj/item/clothing/shoes/laceup/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
-
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."
 	name = "swimming fins"
@@ -196,10 +192,6 @@
 /obj/item/clothing/shoes/western
 	name = "western boots"
 	icon_state = "western_boots"
-
-/obj/item/clothing/shoes/western/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/shoes/western/wizard
 
