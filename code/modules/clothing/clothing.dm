@@ -336,6 +336,11 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_GLOVES
 
+/obj/item/clothing/gloves/atom_init()
+	. = ..()
+	//Cool guys don’t need to protect themselfs from many environmental factors, just be cool and everything will work out
+	AddComponent(/datum/component/style, -5)
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
