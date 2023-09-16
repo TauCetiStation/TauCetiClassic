@@ -121,8 +121,7 @@
 
 
 /obj/structure/trap/wizard
-	name = "IT'S A WIZARD TARP"
-	alpha = 20
+	name = "IT'S A WIZARD TRAP"
 
 /obj/structure/trap/wizard/Crossed()
 	if(ishuman(AM)
