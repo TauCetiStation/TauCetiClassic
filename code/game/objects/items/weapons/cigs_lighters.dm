@@ -253,7 +253,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/cigar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 2)
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "Cohiba Robusto cigar"
