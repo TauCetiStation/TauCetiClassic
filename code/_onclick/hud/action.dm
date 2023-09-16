@@ -200,7 +200,7 @@
 
 	cut_overlays()
 	var/image/img
-	if(owner.action_type == AB_ITEM && owner.target && owner.button_icon_state == "default")
+	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
 		img = image(I.icon, src , I.icon_state)
 	else if(owner.button_icon && owner.button_icon_state)

@@ -595,6 +595,7 @@
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots
 	name = "Toggle hardsuit magboots"
 	button_icon_state = "toggle_rig_magboots"
+	action_type = AB_INNATE
 
 
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots/Activate()
@@ -605,6 +606,7 @@
 /datum/action/item_action/hands_free/toggle_hardsuit_helm
 	name = "Toggle helmet"
 	button_icon_state = "toggle_rig_helm"
+	action_type = AB_INNATE
 
 /datum/action/item_action/hands_free/toggle_hardsuit_helm/Activate()
 	var/obj/item/clothing/suit/space/rig/S = target
