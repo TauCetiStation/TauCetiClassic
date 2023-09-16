@@ -64,7 +64,7 @@
 
 /obj/item/clothing/suit/hooded/skhima/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/hooded/nun
 	name = "nun robe"
@@ -85,7 +85,7 @@
 
 /obj/item/clothing/suit/hooded/nun/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/hooded/nun/verb/adjust_sleeves()
 	set name = "Toggle Sleeves"
@@ -149,7 +149,7 @@
 
 /obj/item/clothing/suit/chef_classic/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
@@ -201,7 +201,7 @@
 
 /obj/item/clothing/suit/storage/forensics/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
@@ -233,12 +233,12 @@
 	icon_state = "hazard_[vest_color]"
 	item_state = icon_state
 	desc = "A high-visibility [vest_color] vest used in work zones."
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/lawyer/bluejacket
 	name = "blue suit jacket"
@@ -267,7 +267,7 @@
 
 /obj/item/clothing/suit/storage/internalaffairs/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/internalaffairs/verb/toggle()
 	set name = "Toggle Coat Buttons"
@@ -302,7 +302,7 @@
 
 /obj/item/clothing/suit/storage/fr_jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/fr_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -332,7 +332,7 @@
 
 /obj/item/clothing/suit/suspenders/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 //Recycler
 /obj/item/clothing/suit/recyclervest
@@ -347,7 +347,7 @@
 
 /obj/item/clothing/suit/recyclervest/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /datum/action/item_action/hands_free/toggle_vest_buttons
 	name = "Toggle vest buttons"

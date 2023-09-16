@@ -14,7 +14,7 @@
 
 /obj/item/clothing/suit/storage/labcoat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"

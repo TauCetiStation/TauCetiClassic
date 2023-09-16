@@ -110,7 +110,7 @@
 
 /obj/item/clothing/glasses/eyepatch/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -140,7 +140,7 @@
 /obj/item/clothing/glasses/aviator_orange/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/aviator_black
 	name = "aviator glasses"
@@ -150,7 +150,7 @@
 /obj/item/clothing/glasses/aviator_black/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/aviator_red
 	name = "aviator glasses"
@@ -160,7 +160,7 @@
 /obj/item/clothing/glasses/aviator_red/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/aviator_mirror
 	name = "aviator glasses"
@@ -170,7 +170,7 @@
 /obj/item/clothing/glasses/aviator_mirror/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
 
 /obj/item/clothing/glasses/jerusalem
 	name = "Jerusalem glasses"

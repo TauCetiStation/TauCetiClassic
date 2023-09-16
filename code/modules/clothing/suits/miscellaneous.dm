@@ -48,7 +48,7 @@
 
 /obj/item/clothing/suit/pirate/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/hgpirate
 	name = "pirate captain coat"
@@ -121,7 +121,7 @@
 
 /obj/item/clothing/suit/wcoat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
@@ -132,7 +132,7 @@
 
 /obj/item/clothing/suit/apron/overalls/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
@@ -195,7 +195,7 @@
 
 /obj/item/clothing/suit/holidaypriest/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
@@ -233,7 +233,7 @@
 
 /obj/item/clothing/suit/byzantine_dress/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /*
  * Misc
@@ -260,7 +260,7 @@
 
 /obj/item/clothing/suit/ianshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
@@ -270,7 +270,7 @@
 
 /obj/item/clothing/suit/nerdshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/blueshirt
 	name = "blue shirt"
@@ -280,7 +280,7 @@
 
 /obj/item/clothing/suit/blueshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/chemshirt
 	name = "chemistry shirt"
@@ -290,7 +290,7 @@
 
 /obj/item/clothing/suit/chemshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/roundshirt
 	name = "science shirt"
@@ -300,7 +300,7 @@
 
 /obj/item/clothing/suit/roundshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/catshirt
 	name = "cat shirt"
@@ -310,7 +310,7 @@
 
 /obj/item/clothing/suit/catshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/engishirt
 	name = "engineer shirt"
@@ -320,7 +320,7 @@
 
 /obj/item/clothing/suit/engishirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/badengishirt
 	name = "bad engineer shirt"
@@ -330,7 +330,7 @@
 
 /obj/item/clothing/suit/badengishirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/docshirt
 	name = "doc shirt"
@@ -340,7 +340,7 @@
 
 /obj/item/clothing/suit/docshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/battonshirt
 	name = "stunning shirt"
@@ -350,7 +350,7 @@
 
 /obj/item/clothing/suit/battonshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/arstotzkashirt
 	name = "dictator shirt"
@@ -360,7 +360,7 @@
 
 /obj/item/clothing/suit/arstotzkashirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/toxicshirt
 	name = "toxic shirt"
@@ -370,7 +370,7 @@
 
 /obj/item/clothing/suit/toxicshirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -381,7 +381,7 @@
 
 /obj/item/clothing/suit/jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -422,7 +422,7 @@
 
 /obj/item/clothing/suit/storage/postal_dude_coat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -451,7 +451,7 @@
 
 /obj/item/clothing/suit/leathercoat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
@@ -461,7 +461,7 @@
 
 /obj/item/clothing/suit/serifcoat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 //stripper
 /obj/item/clothing/under/stripper
@@ -576,7 +576,7 @@
 
 /obj/item/clothing/suit/storage/miljacket_army/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/miljacket_army/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -619,7 +619,7 @@
 
 /obj/item/clothing/suit/poncho/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
@@ -702,7 +702,7 @@
 
 /obj/item/clothing/suit/goodman_jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/goodman_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -771,7 +771,7 @@
 
 /obj/item/clothing/suit/student_jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /datum/action/item_action/hands_free/to_fasten
 	name = "To Fasten"
@@ -792,7 +792,7 @@
 
 /obj/item/clothing/suit/atlas_jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/shawl
 	name = "shawl"
@@ -801,7 +801,7 @@
 
 /obj/item/clothing/suit/shawl/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/sukeban_coat
 	name = "sukeban coat"
@@ -810,7 +810,7 @@
 
 /obj/item/clothing/suit/sukeban_coat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/plaid
 	name = "plaid"
@@ -819,7 +819,7 @@
 
 /obj/item/clothing/suit/plaid/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/tuxedo
 	name = "tuxedo"
@@ -828,7 +828,7 @@
 
 /obj/item/clothing/suit/tuxedo/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/syndieshirt
 	name = "red shirt"
@@ -870,7 +870,7 @@
 
 /obj/item/clothing/suit/kung/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
 
 /obj/item/clothing/suit/storage/comissar
 	name = "comissar's coat"

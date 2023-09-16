@@ -38,7 +38,7 @@
 
 /obj/item/clothing/under/waiter/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/tourist
 	name = "hawaiian shirt"
@@ -49,7 +49,7 @@
 
 /obj/item/clothing/under/tourist/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -135,7 +135,7 @@
 
 /obj/item/clothing/under/rainbow/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/psysuit
 	name = "dark undersuit"
@@ -146,7 +146,7 @@
 
 /obj/item/clothing/under/psysuit/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/gentlesuit
 	name = "gentlemans suit"
@@ -176,7 +176,7 @@
 
 /obj/item/clothing/under/suit_jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
 	name = "black suit"
@@ -256,7 +256,7 @@
 
 /obj/item/clothing/under/blackskirt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -267,7 +267,7 @@
 
 /obj/item/clothing/under/schoolgirl/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -277,7 +277,7 @@
 
 /obj/item/clothing/under/overalls/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -288,7 +288,7 @@
 
 /obj/item/clothing/under/pirate/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"
@@ -298,7 +298,7 @@
 
 /obj/item/clothing/under/soviet/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
@@ -337,7 +337,7 @@
 
 /obj/item/clothing/under/dress/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/dress/dress_fire
 	name = "flame dress"
@@ -457,7 +457,7 @@
 
 /obj/item/clothing/under/wedding/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
@@ -499,7 +499,7 @@
 
 /obj/item/clothing/under/sundress/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/rank/cadet
 	desc = ""
@@ -562,7 +562,7 @@
 
 /obj/item/clothing/under/blacktango/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 //Mafia
 /obj/item/clothing/under/mafia
@@ -573,7 +573,7 @@
 
 /obj/item/clothing/under/mafia/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/mafia/vest
 	name = "mafia vest"
@@ -637,7 +637,7 @@
 
 /obj/item/clothing/under/roman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/patient_gown
 	name = "patient gown"
@@ -652,7 +652,7 @@
 
 /obj/item/clothing/under/pretty_dress/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/sukeban_pants
 	name = "sukeban pants"
@@ -661,7 +661,7 @@
 
 /obj/item/clothing/under/sukeban_pants/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/sukeban_dress
 	name = "sukeban dress"
@@ -670,7 +670,7 @@
 
 /obj/item/clothing/under/sukeban_dress/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/karate
 	name = "karate underwear"
@@ -699,7 +699,7 @@
 
 /obj/item/clothing/under/pinkpolo/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/bathrobe
 	name = "bath robe"
@@ -732,7 +732,7 @@
 
 /obj/item/clothing/under/sport/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/sport/blue
 	name = "blue sport uniform"
@@ -868,7 +868,7 @@
 
 /obj/item/clothing/under/indiana/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/cowboy
 	name = "western suit"
@@ -896,7 +896,7 @@
 
 /obj/item/clothing/under/kung/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, 3, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/durathread
 	name = "durathread suit"
