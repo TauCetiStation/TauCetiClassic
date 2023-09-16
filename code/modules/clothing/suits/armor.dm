@@ -33,6 +33,11 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/armor/vest/fullbody/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+
 /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
 	name = "purple robes"
 	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
@@ -76,6 +81,11 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/storage/flak/police/fullbody/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+
 /obj/item/clothing/suit/storage/flak/police/fullbody/heavy
 	name = "heavy fullbody armor"
 	desc = "A set of armor used by special weapons and tactics units of OCD. Justice will be served."
@@ -92,6 +102,11 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/marinad/atom_init()
+	. = ..()
+	//Marine has cool dufflebag, so style with backpack allowed
+	AddComponent(/datum/component/style, 0, 0, 0)
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
@@ -116,6 +131,11 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/suit/armor/vest/leather/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
@@ -159,6 +179,11 @@
 	armor = list(melee = 10, bullet = 80, laser = 20, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/armor/bulletproof/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+
 /obj/item/clothing/suit/storage/flak/bulletproof
 	name = "bulletproof fullbody armor"
 	desc = "A set of armor covering the entire body that excels in protecting the wearer against high-velocity solid projectiles."
@@ -188,6 +213,11 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0
 	var/hit_reflect_chance = 40
+
+/obj/item/clothing/suit/armor/laserproof/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list(BP_CHEST , BP_GROIN))) //If not shot where ablative is covering you, you don't get the reflection bonus!
@@ -339,6 +369,11 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
+/obj/item/clothing/suit/armor/centcomm/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
@@ -352,10 +387,20 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 0
 
+/obj/item/clothing/suit/armor/heavy/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/tdome/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit (red)"
@@ -381,6 +426,11 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/tactical/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
@@ -443,6 +493,11 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/armor/syndilight/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+
 /obj/item/clothing/suit/armor/m66_kevlarvest
 	name = "M66 Tactical Vest"
 	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
@@ -461,6 +516,11 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
+
+/obj/item/clothing/suit/armor/crusader/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/vest/surplus
 	name = "surplus armor vest"
@@ -491,3 +551,8 @@
 	armor = list(melee = 40, bullet = 5, laser = 40, energy = 25, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
+
+/obj/item/clothing/suit/armor/duracoat/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
