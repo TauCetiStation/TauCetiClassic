@@ -199,8 +199,9 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/storage/forensics
-3
+/obj/item/clothing/suit/storage/forensics/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3)
 
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
