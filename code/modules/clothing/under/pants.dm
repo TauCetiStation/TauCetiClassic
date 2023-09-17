@@ -11,6 +11,10 @@
 	desc = "You feel cooler already."
 	icon_state = "jeansclassic"
 
+/obj/item/clothing/under/pants/classicjeans/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/under/pants/mustangjeans
 	name = "Must Hang jeans"
 	desc = "Made in the finest space jeans factory this side of Alpha Centauri."

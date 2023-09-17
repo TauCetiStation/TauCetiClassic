@@ -34,7 +34,7 @@
 
 /obj/item/clothing/under/color/grey/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 5)
+	AddComponent(/datum/component/style, 3, 5, SLOT_W_UNIFORM)
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
@@ -51,11 +51,19 @@
 	item_state = "pink"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/color/pink/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
 	icon_state = "red"
 	item_state = "red"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/color/red/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
@@ -68,6 +76,10 @@
 	icon_state = "yellow"
 	item_state = "yellow"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/color/yellow/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/under/psyche
 	name = "psychedelic"
@@ -98,10 +110,18 @@
 	icon_state = "lightpurple"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/lightpurple/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/under/lightgreen
 	name = "lightgreen"
 	desc = "lightgreen"
 	icon_state = "lightgreen"
+
+/obj/item/clothing/under/lightgreen/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/under/lightblue
 	name = "lightblue"
