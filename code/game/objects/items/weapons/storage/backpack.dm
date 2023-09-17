@@ -401,6 +401,10 @@
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
 
+/obj/item/weapon/storage/backpack/henchmen/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/weapon/storage/backpack/dufflebag/cops
 	name = "NanoTrasen bag"
 	desc = "A large duffel bag for holding extra NanoTrasen gear."
