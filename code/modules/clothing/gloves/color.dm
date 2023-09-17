@@ -77,6 +77,11 @@
 	icon_state = "purple"
 	item_state = "purplegloves"
 
+/obj/item/clothing/gloves/purple/atom_init()
+	. = ..()
+	//Ballas gang gloves, override for remove debuff style
+	AddComponent(/datum/component/style, 0, 0, 0)
+
 /obj/item/clothing/gloves/green
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
