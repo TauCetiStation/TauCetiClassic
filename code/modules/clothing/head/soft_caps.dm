@@ -47,11 +47,19 @@
 	icon_state = "redsoft"
 	cap_color = "red"
 
+/obj/item/clothing/head/soft/red/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
 	desc = "It's a baseball hat in a tasteless blue color."
 	icon_state = "bluesoft"
 	cap_color = "blue"
+
+/obj/item/clothing/head/soft/blue/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
@@ -59,11 +67,19 @@
 	icon_state = "greensoft"
 	cap_color = "green"
 
+/obj/item/clothing/head/soft/green/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "yellowsoft"
 	cap_color = "yellow"
+
+/obj/item/clothing/head/soft/yellow/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
@@ -89,6 +105,10 @@
 	icon_state = "purplesoft"
 	cap_color = "purple"
 
+/obj/item/clothing/head/soft/purple/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
@@ -106,6 +126,10 @@
 	desc = "It's baseball hat in corporate colors."
 	icon_state = "corpsoft"
 	cap_color = "corp"
+
+/obj/item/clothing/head/soft/sec/corp/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/head/soft/trash
 	name = "trash cap"

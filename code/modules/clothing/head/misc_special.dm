@@ -122,6 +122,7 @@
 	. = ..()
 	icon_state = "[ushanka_state]-down"
 	item_state = "[ushanka_state]-down"
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(flags_inv & HIDEEARS)
