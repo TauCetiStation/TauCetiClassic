@@ -1,6 +1,7 @@
 #define CLUMSY_STYLE "clumsy_set"
 #define WITHOUT_BACKPACK_STYLE "without_backpack_set"
 #define DETECTIVE_STYLE "detective_style"
+#define GANG_STYLE "gang_style"
 
 /datum/component/style
 	var/style_amount = 0
@@ -51,6 +52,10 @@
 			if(DETECTIVE_STYLE)
 				var/datum/mind/mind = M.mind
 				if(mind && mind.assigned_role == "detective")
+					//Always increase style to 5 maximum
+					bonus_amount += max(0, min(5, 5 - style_amount))
+			if(GANG_STYLE)
+				if(isanygangster(M))
 					//Always increase style to 5 maximum
 					bonus_amount += max(0, min(5, 5 - style_amount))
 	return bonus_amount
