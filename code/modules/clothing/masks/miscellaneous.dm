@@ -78,11 +78,19 @@
 	icon_state = "redscarf"
 	item_state = "redscarf"
 
+/obj/item/clothing/mask/scarf/red/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/mask/scarf/green
 	name = "green scarf"
 	desc = "A green neck scarf."
 	icon_state = "greenscarf"
 	item_state = "greenscarf"
+
+/obj/item/clothing/mask/scarf/green/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/mask/scarf/yellow
 	name = "yellow scarf"
@@ -90,11 +98,19 @@
 	icon_state = "yellowscarf"
 	item_state = "yellowscarf"
 
+/obj/item/clothing/mask/scarf/yellow/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/mask/scarf/violet
 	name = "violet scarf"
 	desc = "A violet neck scarf."
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
+
+/obj/item/clothing/mask/scarf/violet/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/mask/scarf/attack_self(mob/user)
 
@@ -225,30 +241,54 @@
 	desc = "A fine red bandana with nanotech lining."
 	icon_state = "bandred"
 
+/obj/item/clothing/mask/bandana/red/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
 	icon_state = "bandblue"
+
+/obj/item/clothing/mask/bandana/blue/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/green
 	name = "green bandana"
 	desc = "A fine green bandana with nanotech lining."
 	icon_state = "bandgreen"
 
+/obj/item/clothing/mask/bandana/green/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/mask/bandana/gold
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
 	icon_state = "bandgold"
+
+/obj/item/clothing/mask/bandana/gold/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	icon_state = "bandblack"
 
+/obj/item/clothing/mask/bandana/black/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/bandana/skull/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/mask/tie
 	body_parts_covered = 0
