@@ -389,6 +389,10 @@
 	icon_state = "leatherjacket"
 	item_state = "hostrench"
 
+/obj/item/clothing/suit/jacket/leather/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
@@ -627,6 +631,10 @@
 	icon_state = "greenponcho"
 	item_state = "greenponcho"
 
+/obj/item/clothing/suit/poncho/green/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+
 /obj/item/clothing/suit/poncho/rainbow
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is rainbow."
@@ -850,6 +858,10 @@
 	name = "red letterman jacket"
 	desc = "A letterman jacket in a sick red color. Radical."
 	icon_state = "letterman_red"
+
+/obj/item/clothing/suit/jacket/letterman_red/atom_init()
+	. = ..()
+	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
 
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"
