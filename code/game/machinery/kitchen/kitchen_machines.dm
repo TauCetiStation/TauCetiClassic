@@ -336,8 +336,7 @@
 
 /obj/machinery/kitchen_machine/proc/stop()
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-	operating = FALSE // Turn it off again aferwards
-	update_icon()
+	abort()
 
 /obj/machinery/kitchen_machine/proc/dispose()
 	for(var/obj/O in contents)
@@ -351,8 +350,7 @@
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] gets covered in muck!</span>")
 	dirty = MAX_DIRTY // Make it dirty so it can't be used util cleaned
-	operating = FALSE // Turn it off again aferwards
-	update_icon()
+	abort()
 
 /obj/machinery/kitchen_machine/proc/broke()
 	var/datum/effect/effect/system/spark_spread/s = new
