@@ -270,11 +270,14 @@
 	if(user == occupant)
 		return
 
-	if(!user.incapacitated() && Adjacent(user))
-		if(!do_skill_checks(user))
-			return
-		on = !on
-		update_icon()
+	if(user.incapacitated() || !Adjacent(user))
+		return
+
+	if(!do_skill_checks(user))
+		return
+
+	on = !on
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -287,15 +290,16 @@
 	if(user == occupant)
 		return
 
-	if(!user.incapacitated() && Adjacent(user))
-		if(state_open)
-			if(!do_skill_checks(user))
-				return
-			close_machine()
-		else
-			if(!do_skill_checks(user))
-				return
-			open_machine()
+	if(user.incapacitated() || !Adjacent(user))
+		return
+
+	if(!do_skill_checks(user))
+		return
+
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
