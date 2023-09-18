@@ -358,8 +358,7 @@
 	s.start()
 	visible_message("<span class='warning'>[src] breaks!</span>") //Let them know they're stupid
 	broken = FULL_BROKEN // Make it broken so it can't be used util fixed
-	operating = FALSE // Turn it off again aferwards
-	update_icon()
+	abort()
 
 /obj/machinery/kitchen_machine/proc/fail()
 	var/obj/item/weapon/reagent_containers/food/snacks/badrecipe/ffuu = new(src)
