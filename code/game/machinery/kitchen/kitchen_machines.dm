@@ -284,7 +284,7 @@
 			cooked.loc = loc
 			return
 	else
-		var/halftime = round(recipe.time / 10 / 2) // /10 is converting to seconds, /2 is halfing
+		var/halftime = round(recipe.time / 10 / 2) // /10 is converting to seconds, /2 is halving
 		if(!cook_process(halftime))
 			abort()
 			return
