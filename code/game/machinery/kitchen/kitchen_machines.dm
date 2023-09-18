@@ -97,6 +97,9 @@
 					"<span class='notice'>You have fixed part of the [src].</span>" \
 				)
 				broken = HALF_BROKEN // Fix it a bit
+				update_icon()
+				return TRUE
+
 		else if(broken == HALF_BROKEN && iswelding(O) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
@@ -108,6 +111,8 @@
 					"<span class='notice'>You have fixed the [src].</span>" \
 				)
 				broken = NOT_BROKEN // Fix it!
+				update_icon()
+				return TRUE
 		else
 			to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 			return TRUE
@@ -140,6 +145,8 @@
 				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			dirty = 0 // It's clean!
+			update_icon()
+			return TRUE
 
 	else if(dirty == MAX_DIRTY) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
@@ -162,6 +169,7 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
+		return TRUE
 
 	else if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RC = O
@@ -177,12 +185,10 @@
 	else if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
-
+		return TRUE
 	else
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return TRUE
-
-	update_icon()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
 	ui_interact(user, FALSE)
