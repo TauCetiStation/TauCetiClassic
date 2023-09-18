@@ -70,7 +70,8 @@
 	id_tag = "Listening_Post_outer";
 	locked = 1;
 	name = "Listening Post";
-	req_access = list(150)
+	req_access = list(150);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
@@ -572,7 +573,8 @@
 	id_tag = "Listening_Post_inner";
 	locked = 1;
 	name = "Listening Post";
-	req_access = list(150)
+	req_access = list(150);
+	dir = 4
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
@@ -719,7 +721,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "Personal Quarters";
-	req_access = list(150)
+	req_access = list(150);
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/listening_post)

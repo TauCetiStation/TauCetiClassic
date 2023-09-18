@@ -95,7 +95,8 @@
 		"[AIRLOCK_WIRE_ELECTRIFY]"   = "electrify",
 		"[AIRLOCK_WIRE_SAFETY]"      = "door safety",
 		"[AIRLOCK_WIRE_SPEED]"       = "timing mechanism",
-		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light"
+		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light",
+		"[AIRLOCK_WIRE_UNRES_SIDE]"  = "unrestricted sides"
 	)
 
 	var/info = ""

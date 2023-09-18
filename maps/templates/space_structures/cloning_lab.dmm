@@ -161,7 +161,8 @@
 /area/space_structures/cloning_lab)
 "C" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Reabilitaion Chamber"
+	name = "Reabilitaion Chamber";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
@@ -174,7 +175,8 @@
 /area/space_structures/cloning_lab)
 "E" = (
 /obj/machinery/door/airlock/research{
-	name = "Cloning Facility"
+	name = "Cloning Facility";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
