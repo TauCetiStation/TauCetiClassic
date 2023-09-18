@@ -372,19 +372,6 @@
 	ffuu.reagents.add_reagent("toxin", amount / 10)
 	return ffuu
 
-/obj/machinery/kitchen_machine/CtrlClick(mob/user)
-	if(!Adjacent(user))
-		return ..()
-	if(user.incapacitated())
-		return
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-	if(!anchored || operating || panel_open)
-		return ..()
-
-	cook()
-
 /obj/machinery/kitchen_machine/examine(mob/user)
 	. = ..()
 	if(dirty == MAX_DIRTY)
