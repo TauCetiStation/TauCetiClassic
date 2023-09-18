@@ -210,7 +210,7 @@
 			if(!beaker)
 				return
 			if(!usr.put_in_active_hand(beaker))
-				beaker.forceMove(loc)
+				beaker.forceMove(get_step(loc, dir))
 			beaker = null
 
 	update_icon()
