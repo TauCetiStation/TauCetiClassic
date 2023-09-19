@@ -1078,10 +1078,6 @@
 	min_age = 100
 	max_age = 500
 
-/datum/species/abductor/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
-
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
 
