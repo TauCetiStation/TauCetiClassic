@@ -7,10 +7,14 @@
 	initroletype = /datum/role/shadowling
 	roletype = /datum/role/thrall
 
-	min_roles = 2
+	min_roles = 1
 	max_roles = 2
 
 	var/shadowling_ascended = FALSE
+
+/datum/faction/shadowlings/can_setup(num_players)
+	max_roles = 1 + round(num_players / 15)
+	return TRUE
 
 /datum/faction/shadowlings/forgeObjectives()
 	if(!..())
