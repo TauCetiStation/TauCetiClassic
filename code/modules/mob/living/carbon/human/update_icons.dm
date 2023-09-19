@@ -796,7 +796,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.open)
-			standing += image("icon" = 'icons/mob/surgery.dmi', "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
+			standing += image("icon" = species.surgery_icon_states, "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
 
 	if(standing.len)
 		for(var/image/I in standing)
