@@ -18,8 +18,10 @@
 		return FALSE
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
+	var/changeling_original_name = user.dna.original_character_name
 	user.dna = chosen_dna.Clone()
 	user.real_name = chosen_dna.real_name
+	user.dna.original_character_name = changeling_original_name
 	user.flavor_text = ""
 	user.UpdateAppearance()
 	domutcheck(user, null)
@@ -33,7 +35,7 @@
 /datum/role/changeling/proc/select_dna(prompt, title)
 	var/list/names = list()
 	for(var/datum/dna/DNA in absorbed_dna)
-		names += "[DNA.real_name]"
+		names += "[DNA.original_character_name]"
 
 	var/chosen_name = input(prompt, title, null) as null|anything in names
 	if(!chosen_name)

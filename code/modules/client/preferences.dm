@@ -55,6 +55,8 @@ var/global/list/preferences_datums = list()
 
 	var/show_runechat = TRUE
 
+	var/list/custom_emote_panel = list()
+
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
@@ -164,6 +166,10 @@ var/global/list/preferences_datums = list()
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE
+	// lighting settings
+	var/glowlevel = GLOW_MED // or bloom
+	var/lampsexposure = TRUE // idk how we should name it
+	var/lampsglare = FALSE // aka lens flare
 
   //custom loadout
 	var/list/gear = list()
@@ -173,6 +179,7 @@ var/global/list/preferences_datums = list()
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]
+	custom_emote_panel = global.emotes_for_emote_panel
 	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))

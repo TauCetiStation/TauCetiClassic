@@ -80,7 +80,7 @@ var/global/list/wire_daltonism_colors = list()
 	var/required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 	// All possible wires colors are here.
-	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "gray", "cyan", "lime", "purple", "pink")
+	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "grey", "cyan", "lime", "purple", "pink", "crimson", "magenta", "silver", "violet", "yellow")
 
 /datum/wires/New(atom/holder)
 	..()

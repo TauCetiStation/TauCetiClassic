@@ -95,7 +95,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<span class='bold'>[src]</span> пищит <span class='userdanger'>В@ры# п!дгот$влен, а-а-ак>ив&ция...</span>")
-	explosion(get_turf(src), 0, 2, 2, 2, 1)
+	explosion(get_turf(src), 0, 2, 2, 2)
 	death()
 
 /mob/living/simple_animal/det5/emag_act(mob/user)

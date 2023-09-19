@@ -438,6 +438,11 @@
 	assignment = "Emergency Response Team"
 	rank = "Emergency Response Team"
 
+/obj/item/weapon/card/id/centcom/ert/leader
+	icon_state = "ert-leader"
+	assignment = "Emergency Response Team Leader"
+	rank = "Emergency Response Team Leader"
+
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
 	desc = "ID карта сотрудников Велосити."

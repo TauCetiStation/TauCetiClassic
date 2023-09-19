@@ -263,9 +263,20 @@
 /obj/machinery/power/solar_control/atom_init()
 	. = ..()
 	connect_to_network()
+	if(track == 2 && SSticker.current_state != GAME_STATE_PLAYING)
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_sun_generated)
+
+/obj/machinery/power/solar_control/Destroy()
+		UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+		return ..()
+
+/obj/machinery/power/solar_control/proc/on_sun_generated(datum/source)
+	SIGNAL_HANDLER
 	if(!powernet)
 		return
+	setup_auto_tracking()
 	set_panels(cdir)
+	updateDialog()
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
@@ -438,12 +449,7 @@
 			nexttime = world.time + 6000 / trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!SSsun.solars.Find(src,1,0))
-				SSsun.solars.Add(src)
-			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
-				if(powernet.nodes[T])
-					cdir = T.sun_angle
-					break
+			setup_auto_tracking()
 
 	else if(href_list["trackdir"])
 		trackdir = text2num(href_list["trackdir"])
@@ -451,6 +457,14 @@
 	set_panels(cdir)
 	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/power/solar_control/proc/setup_auto_tracking()
+	if(!SSsun.solars.Find(src,1,0))
+		SSsun.solars.Add(src)
+	for(var/obj/machinery/power/tracker/T in get_solars_powernet())
+		if(powernet.nodes[T])
+			cdir = T.sun_angle
+			break
 
 
 /obj/machinery/power/solar_control/proc/set_panels(cdir)

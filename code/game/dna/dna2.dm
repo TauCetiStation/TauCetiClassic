@@ -47,6 +47,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	// From old dna.
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
+	var/original_character_name //Stores THE REAL NAME for changeling transform sting
 
 	// New stuff
 	var/species = HUMAN

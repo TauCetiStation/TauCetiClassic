@@ -226,6 +226,7 @@
 	layer = TURF_LAYER
 	melee_damage = 2
 	incorporeal_move = 1
+	maxHealth = 15
 	health = 15
 	icon_state = "ghost2"
 	icon_living = "ghost2"
@@ -239,4 +240,4 @@
 /mob/living/simple_animal/shade/Destroy()
 	global.wizard_shades_count--
 	return ..()
-	
+

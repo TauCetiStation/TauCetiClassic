@@ -1709,17 +1709,23 @@
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
-		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
+		var/injection_time
+		if(user != src)
+			//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
+			injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
+		else
+			//it is much easier to prick yourself than another person
+			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) 
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
-				if(!stealth)
+				if(!stealth && user != src)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
 				if(!do_mob(user, src, injection_time / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
-				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
+				if(user != src)
+					user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
 			if(!do_mob(user, src, injection_time, TRUE))
 				return FALSE

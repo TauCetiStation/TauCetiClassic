@@ -40,7 +40,7 @@
 /area/station/aisat/teleport)
 "i" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor/plating/airless,
 /area/station/aisat/teleport)
 "j" = (

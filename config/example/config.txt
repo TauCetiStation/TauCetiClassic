@@ -162,9 +162,13 @@ ALIEN_AVAILABLE_BY_TIME DIONA 40000
 ## Required time to respawn after death
 #DEATHTIME_REQUIRED 18000
 
-## Path to the python executable on the system.  Leave blank for default.
+## Path to the python executable on the system. Leave blank for default.
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
+
+## GitHub PAT with no scopes to increase rate limits of GitHub requests.
+## Ignored when PYTHON_PATH is not set.
+#GITHUB_TOKEN
 
 ## Expected round length in minutes
 EXPECTED_ROUND_LENGTH 90

@@ -751,6 +751,13 @@
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
 
+/datum/uplink_item/device_tools/disk
+	name = "Diskette With Virus"
+	desc = "A floppy disk containing a virus to sabotage R&D systems. Insert this diskette into the R&D Server Controller to destroy scientific data."
+	item = /obj/item/weapon/disk/data/syndi
+	cost = 10
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
@@ -809,7 +816,7 @@
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
-	cost = 5
+	cost = 2
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/bonepen

@@ -118,6 +118,8 @@
 		if(BP.vital)
 			death()
 			BP.brainmob.death()
+			if(HAS_TRAIT(src, TRAIT_NO_CLONE))
+				ADD_TRAIT(BP.brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
 
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0

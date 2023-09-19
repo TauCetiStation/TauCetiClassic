@@ -21,25 +21,32 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 
 /mob/living/carbon/human/proc/generate_random_bum()
 	if(prob(80))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/cloth/under)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/under)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_W_UNIFORM)
 	if(prob(60))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/cloth/shoes)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/shoes)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_SHOES)
 	if(prob(30))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/cloth/backpack)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/backpack)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_BACK)
 	if(prob(80))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/cloth/gloves)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/gloves)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_GLOVES)
 	if(prob(30))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/cloth/randomsuit)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/randomsuit)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_WEAR_SUIT)
 	if(prob(80))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/misc/lightsource)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/misc/lightsource)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_R_HAND)
 	if(prob(25))
-		var/atom/random_item = new PATH_OR_RANDOM_PATH(/obj/random/cloth/randomhead)
+		var/random_type = PATH_OR_RANDOM_PATH(/obj/random/cloth/randomhead)
+		var/atom/random_item = new random_type
 		equip_to_slot_or_del(random_item, SLOT_HEAD)
 	equip_to_slot_or_del(new /obj/item/weapon/shovel(src), SLOT_L_HAND)
 	for(var/obj/item/loot in contents)

@@ -235,7 +235,7 @@
 	loadProgram()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram()
-
+	set waitfor = FALSE
 	if(world.time < (last_change + 25))
 		audible_message("<b>ERROR. Recalibrating projection apparatus.</b>")
 		return

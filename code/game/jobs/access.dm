@@ -95,35 +95,53 @@
 /obj/var/list/req_access = list()
 /obj/var/list/req_one_access = list()
 
-//returns 1 if this mob has sufficient access to use this object
-/obj/proc/allowed(mob/M) // todo: rename to try_access or something
+///returns 1 if this atom has sufficient access to use this object
+/obj/proc/allowed(atom/movable/AM)
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
-	if(issilicon(M))
-		var/mob/living/silicon/S = M
-		if(check_access(S))
-			return TRUE
-	if(IsAdminGhost(M))
+	if(IsAdminGhost(AM))
 		//Access can't stop the abuse
 		return TRUE
-	if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_TRIED_ACCESS, src) & COMSIG_ACCESS_ALLOWED)
+	if(ismob(AM))
+		var/mob/M = AM
+		if(SEND_SIGNAL(M, COMSIG_MOB_TRIED_ACCESS, src) & COMSIG_ACCESS_ALLOWED)
+			return TRUE
+	if(AM.try_access(src))
 		return TRUE
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.wear_id) || check_access(H.get_active_hand()) || check_access(H.get_inactive_hand()))
-			return TRUE
-	else if(isIAN(M))
-		var/mob/living/carbon/ian/IAN = M
-		if(check_access(IAN.mouth) || check_access(IAN.neck))
-			return TRUE
-	else if(ismonkey(M) || isxenoadult(M))
-		var/mob/living/carbon/george = M
-		//they can only hold things :(
-		if(check_access(george.get_active_hand()))
-			return TRUE
 	return FALSE
+
+///Internal proc. Use allowed() if possible. TRUE if src has the necessary access for obj
+/atom/movable/proc/try_access(obj/O)
+	return FALSE
+
+/mob/living/silicon/try_access(obj/O)
+	return O.check_access(src)
+
+/mob/living/carbon/try_access(obj/O)
+	return O.check_access(get_active_hand())
+
+/mob/living/carbon/human/try_access(obj/O) //if they are holding or wearing a card that has access, that works
+	for(var/obj/item/I in list(wear_id) + get_hand_slots())
+		if(O.check_access(I))
+			return TRUE
+
+/mob/living/carbon/ian/try_access(obj/O)
+	for(var/obj/item/I in list(neck) + get_hand_slots())
+		if(O.check_access(I))
+			return TRUE
+
+/obj/machinery/bot/try_access(obj/O)
+	return O.check_access(botcard)
+
+/obj/mecha/try_access(obj/O)
+	return occupant && (O.allowed(occupant) || O.check_access_list(operation_req_access))
+
+/obj/structure/stool/bed/chair/wheelchair/try_access(obj/O)
+	return pulling && O.allowed(pulling)
+
+/obj/item/try_access(obj/O)
+	return O.check_access(src)
 
 /atom/movable/proc/GetAccess()
 	return list()
@@ -146,7 +164,7 @@
 		if(Machine.emagged)
 			return TRUE
 
-	if(!req_access.len && !req_one_access.len) //no requirements
+	if(!length(req_access) && !length(req_one_access)) //no requirements
 		return TRUE
 	if(!AM)
 		return FALSE

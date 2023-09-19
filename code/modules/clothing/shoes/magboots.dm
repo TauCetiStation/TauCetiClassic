@@ -6,9 +6,12 @@
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2
-	action_button_name = "Toggle Magboots"
 	origin_tech = "materials=3;magnets=4;engineering=4"
 //	flags = NOSLIP //disabled by default
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_magboots)
+
+/datum/action/item_action/hands_free/toggle_magboots
+	name = "Toggle Magboots"
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(magpulse)
@@ -24,6 +27,7 @@
 		icon_state = "[magboot_state]1"
 		to_chat(user, "You enable the mag-pulse traction system.")
 	update_inv_mob()
+	update_item_actions()
 	user.update_gravity(user.mob_has_gravity())
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)

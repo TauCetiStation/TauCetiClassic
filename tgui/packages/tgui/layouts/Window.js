@@ -67,6 +67,8 @@ export class Window extends Component {
       title,
       children,
       buttons,
+      className,
+      titleClassName,
     } = this.props;
     const {
       config,
@@ -83,10 +85,10 @@ export class Window extends Component {
     );
     return (
       <Layout
-        className="Window"
+        className={classes(["Window", className])}
         theme={theme}>
         <TitleBar
-          className="Window__titleBar"
+          className={classes(["Window__titleBar", titleClassName])}
           title={!suspended && (title || decodeHtmlEntities(config.title))}
           status={config.status}
           fancy={fancy}

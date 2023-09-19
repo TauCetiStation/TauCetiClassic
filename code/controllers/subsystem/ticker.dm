@@ -309,6 +309,7 @@ SUBSYSTEM_DEF(ticker)
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
 		show_blurbs()
+		populate_response_teams()
 
 		SSevents.start_roundstart_event()
 		SSqualities.give_all_qualities()
@@ -391,8 +392,8 @@ SUBSYSTEM_DEF(ticker)
 	addtimer(CALLBACK(src, PROC_REF(station_explosion_effects), explosion, summary, cinematic), screen_time)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
-	for(var/mob/M as anything in mob_list) //search any goodest
-		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+/*	for(var/mob/M as anything in mob_list) //search any goodest
+		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)*/
 	if(explosion)
 		flick(explosion,cinematic)
 	if(summary)
@@ -421,6 +422,16 @@ SUBSYSTEM_DEF(ticker)
 			else
 				player.create_character()
 		CHECK_TICK
+
+/datum/controller/subsystem/ticker/proc/station_explosion_detonation(source)
+
+	// unfortunately airnet and powernet don't have own SS, so we need to break them completly to make things less laggy
+	// no one will notice anyway
+	SSair.stop_airnet_processing = TRUE
+	SSmachines.stop_powernet_processing = TRUE
+
+	explosion(get_turf(source), 30, 60, 120, ignorecap = TRUE)
+
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)

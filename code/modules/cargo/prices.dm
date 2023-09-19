@@ -92,7 +92,7 @@
 /obj/item/clothing/gloves/boxing/price = 63
 /obj/item/clothing/gloves/combat/price = 880
 /obj/item/clothing/gloves/rainbow/price = 443
-/obj/item/clothing/gloves/yellow/price = 2181
+/obj/item/clothing/gloves/insulated/price = 2181
 
 /obj/item/clothing/head/helmet/price = 3000
 /obj/item/clothing/head/helmet/gladiator/price = 432
@@ -120,7 +120,7 @@
 /obj/item/clothing/suit/armor/hos/price = 27000
 /obj/item/clothing/suit/armor/hos/jensen/price = 29500
 /obj/item/clothing/suit/armor/laserproof/price = 16500
-/obj/item/clothing/suit/armor/reactive/price = 50000
+/obj/item/clothing/suit/armor/vest/reactive/price = 50000
 /obj/item/clothing/suit/armor/swat/price = 33500
 /obj/item/clothing/suit/armor/tactical/price = 9990
 /obj/item/clothing/suit/captunic/price = 6000

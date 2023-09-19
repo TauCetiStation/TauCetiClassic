@@ -174,6 +174,7 @@
 				door.req_access = electronics.conf_access
 			if(created_name)
 				door.name = created_name
+			door.unres_sides = electronics.unres_sides
 			electronics.loc = door
 			electronics = null
 			qdel(src)

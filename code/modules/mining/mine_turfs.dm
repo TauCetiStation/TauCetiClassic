@@ -16,6 +16,8 @@
 	blocks_air = AIR_BLOCKED
 	temperature = TCMB
 
+	explosive_resistance = 1
+
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
@@ -92,6 +94,7 @@
 			return
 	mined_ore = 3 - severity
 	GetDrilled()
+
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
 	if(ishuman(AM))
@@ -492,6 +495,12 @@
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	can_deconstruct = FALSE
 
+/turf/simulated/floor/plating/airless/asteroid/break_tile()
+	return
+
+/turf/simulated/floor/plating/airless/asteroid/burn_tile()
+	return
+
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
 	var/sanity = TRUE
@@ -642,6 +651,18 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
+
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(30))

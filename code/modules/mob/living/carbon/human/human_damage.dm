@@ -410,7 +410,7 @@ This function restores all bodyparts.
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
 	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
 		BP.status &= ~ORGAN_SPLINTED
-		playsound('sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='bold warning'>You see how the splint falls off from [src]'s [BP.name]!</span>")
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
