@@ -399,3 +399,12 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
+
+
+/datum/quality/positiveish/rollercoaster
+	name = "Roller Coaster"
+	desc = "Случайная встреча с подопытным в техах научила тебя безболезненно кататься по мусорным трубам."
+	requirement = "Нет."
+
+/datum/quality/positiveish/rollercoaster/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE, QUALITY_TRAIT)

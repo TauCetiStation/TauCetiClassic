@@ -609,13 +609,13 @@
 
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
-				if(!isdrone(H) && !isreplicator(H)) //Drones use the mailing code to move through the disposal system,
+				if(!isdrone(H) && !isreplicator(H) && !HAS_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE)) //Drones use the mailing code to move through the disposal system,
 					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
 
 		if(has_bodybag && prob(3))
 			for(var/obj/structure/closet/body_bag/B in src)
 				for(var/mob/living/H in B)
-					if(!isdrone(H) && !isreplicator(H))
+					if(!isdrone(H) && !isreplicator(H) && !HAS_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE))
 						H.take_overall_damage(20, 0, "Blunt Trauma")
 
 		if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy

@@ -187,6 +187,7 @@
 #define TRAIT_VISUAL_CHEM         "visual_chem"
 #define TRAIT_VISUAL_TRACK        "visual_track"
 #define TRAIT_HEMOPHILIAC         "hemophiliac"
+#define TRAIT_NO_DISPOSALS_DAMAGE "no_disposals_damage"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
