@@ -348,3 +348,10 @@
 	if(!isspaceturf(T))
 		return FALSE
 	return T.is_mob_placeable(null)
+
+/area/space_structures/flagship
+	name = "Destroyed Flagship"
+	icon_state = "syndie-elite"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE
+	ambience = list('sound/ambience/ambiruin_4.ogg', 'sound/ambience/syndicate_station.ogg')
