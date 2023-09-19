@@ -657,6 +657,7 @@
 		if(!stored_dna)
 			if(!H.dna.unique_enzymes)
 				to_chat(intruder, "<span class='warning'>No DNA was found.</span>")
+				return
 			stored_dna = H.dna.unique_enzymes
 			to_chat(intruder, "<span class='notice'>Dna key stored.</span>")
 		else
