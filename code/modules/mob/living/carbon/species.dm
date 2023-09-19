@@ -160,7 +160,7 @@
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
-	var/surgery_icon_states = 'icons/mob/surgery.dmi'
+	var/surgery_icobase = 'icons/mob/surgery.dmi'
 
 
 /datum/species/New()
