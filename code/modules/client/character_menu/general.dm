@@ -71,6 +71,12 @@
 						organ_name = "heart"
 					if(O_EYES)
 						organ_name = "eyes"
+					if(O_LUNGS)
+						organ_name = "lungs"
+					if(O_LIVER)
+						organ_name = "liver"
+					if(O_KIDNEYS)
+						organ_name = "kidneys"
 
 				if(status == "cyborg")
 					++ind
@@ -314,10 +320,10 @@
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages
 
-				
+
 				if("insurance")
 					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
-					
+
 
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])
@@ -561,7 +567,7 @@
 									organ_data[limb] = "cyborg"
 
 						if("Organs")
-							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes", "Lungs", "Liver", "Kidneys")
 							if(!organ_name) return
 
 							var/organ = null
@@ -570,6 +576,12 @@
 									organ = O_HEART
 								if("Eyes")
 									organ = O_EYES
+								if("Lungs")
+									organ = O_LUNGS
+								if("Liver")
+									organ = O_LIVER
+								if("Kidneys")
+									organ = O_KIDNEYS
 
 							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 							if(!new_state) return
