@@ -933,7 +933,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
-	surgery_icon_states = 'icons/mob/species/ipc/surgery.dmi'
+	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
 	eyes = null
 
