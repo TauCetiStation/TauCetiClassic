@@ -27,6 +27,8 @@ var/global/list/wedge_image_cache = list()
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
 
 	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
 	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
@@ -180,7 +182,12 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/allowed(atom/movable/M)
 	if(emergency)
 		return TRUE
+	if(unrestricted_side(M))
+		return TRUE
 	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(atom/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, opener) & unres_sides
 
 /obj/machinery/door/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())

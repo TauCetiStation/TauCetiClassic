@@ -202,7 +202,9 @@
 		/obj/item/robot_parts/l_leg,
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
-		/obj/item/weapon/tank/anesthetic
+		/obj/item/weapon/tank/anesthetic,
+		/obj/item/bodybag,
+		/obj/item/weapon/reagent_containers/syringe
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
