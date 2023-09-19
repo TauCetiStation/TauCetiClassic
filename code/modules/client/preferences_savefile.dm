@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 44
+#define SAVEFILE_VERSION_MAX 45
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -539,6 +539,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["real_name"]             >> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender
+	S["neuter_gender_voice"]   >> neuter_gender_voice
 	S["age"]                   >> age
 	S["height"]                >> height
 	S["species"]               >> species
@@ -629,7 +630,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!gear) gear = list()
 	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
-	gender			= sanitize_gender(gender)
+	gender			= sanitize_gender(gender, species_obj.flags[NO_GENDERS])
 	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
 	height			= sanitize_inlist(height, heights_list, initial(height))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
@@ -657,6 +658,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
+	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 	positive_quirks = SANITIZE_LIST(positive_quirks)
@@ -735,6 +737,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["real_name"]             << real_name
 	S["name_is_always_random"] << be_random_name
 	S["gender"]                << gender
+	S["neuter_gender_voice"]   << neuter_gender_voice
 	S["age"]                   << age
 	S["height"]                << height
 	S["species"]               << species

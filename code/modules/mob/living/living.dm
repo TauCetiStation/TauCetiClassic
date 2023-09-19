@@ -1340,6 +1340,8 @@
 							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FRIGVOMIT
+			else if(gender == NEUTER)
+				vomitsound = neuter_gender_voice == MALE ? SOUNDIN_MRIGVOMIT : SOUNDIN_FRIGVOMIT
 			else
 				vomitsound = SOUNDIN_MRIGVOMIT
 			eye_blurry = max(10, eye_blurry)
@@ -1349,6 +1351,8 @@
 							"<span class='warning'>You throw up!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FEMALEVOMIT
+			else if(gender == NEUTER)
+				vomitsound = neuter_gender_voice == MALE ? SOUNDIN_MALEVOMIT : SOUNDIN_FEMALEVOMIT
 			else
 				vomitsound = SOUNDIN_MALEVOMIT
 		make_jittery(max(35 - jitteriness, 0))

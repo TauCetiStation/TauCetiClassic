@@ -237,6 +237,9 @@
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(flags[NO_GENDERS])
+		H.gender = NEUTER
+
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
@@ -537,6 +540,7 @@
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
+		,NO_GENDERS = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -585,10 +589,6 @@
 	skeleton_type = SKELETON_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
-
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -681,6 +681,7 @@
 	,NO_PAIN = TRUE
 	,NO_FAT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -749,6 +750,7 @@
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -792,10 +794,6 @@
 	var/regen_mod = 1.0
 	// Podmen don't.
 	var/regen_limbs = TRUE
-
-/datum/species/diona/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/diona/regen(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -887,6 +885,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_HAIR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -980,6 +979,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1070,6 +1070,7 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
@@ -1117,6 +1118,7 @@
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
 	,NO_FAT = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1141,7 +1143,6 @@
 
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
-	H.gender = NEUTER
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
@@ -1292,6 +1293,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	burn_mod = 2
@@ -1301,10 +1303,6 @@
 
 	min_age = 1
 	max_age = 10000
-
-/datum/species/shadowling/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/shadowling/regen(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
@@ -1365,6 +1363,7 @@
 		NO_EMOTION = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
 		)
 
 	has_organ = list(
@@ -1656,6 +1655,7 @@
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
 	,NO_PAIN = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1717,6 +1717,7 @@
 		HAS_TAIL = TRUE,
 		HAS_HAIR = TRUE,
 		HAS_HAIR_COLOR = TRUE,
+		NO_GENDERS = TRUE,
 		)
 
 	has_gendered_icons = FALSE
