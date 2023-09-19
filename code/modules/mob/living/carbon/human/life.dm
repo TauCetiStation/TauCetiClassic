@@ -748,6 +748,8 @@ var/global/list/tourette_bad_words= list(
 					emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
 				adjustOxyLoss(1)*/
+		if(species.flags[IS_SYNTHETIC])
+			hallucination = 0
 
 		if(hallucination)
 			if(hallucination >= 20)

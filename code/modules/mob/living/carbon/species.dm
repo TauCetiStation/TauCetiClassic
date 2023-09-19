@@ -1011,7 +1011,7 @@
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 	min_age = 1
-	max_age = 125
+	max_age = 50
 
 	is_common = TRUE
 
