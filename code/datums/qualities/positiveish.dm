@@ -408,8 +408,8 @@
 
 /datum/quality/positiveish/spaceartist/add_effect(mob/living/carbon/human/H)
 	if(H.job == "Clown")
-		H.equip_to_slot(new /obj/item/clothing/suit/space/clown, SLOT_WEAR_SUIT)
-		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/clown, SLOT_HEAD)
+		H.equip_to_slot(new /obj/item/clothing/suit/space/clown, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/clown, SLOT_L_HAND)
 	else if(H.job == "Mime")
-		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_WEAR_SUIT)
-		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_HEAD)
+		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
