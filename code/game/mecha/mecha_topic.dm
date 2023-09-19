@@ -412,6 +412,7 @@
 		if(src.occupant)
 			if(!occupant.dna.unique_enzymes)
 				to_chat(occupant, "<span class='warning'>No DNA was found.</span>")
+				return
 			src.dna = src.occupant.dna.unique_enzymes
 			occupant_message("You feel a prick as the needle takes your DNA sample.")
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
