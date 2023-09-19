@@ -118,11 +118,11 @@
 			if(occupant)
 				break
 			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(ishuman(occupant))
+				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(H.species.flags[NO_DNA])
 						continue
+				var/mob/living/carbon/C = M
 				occupant = occupant_body = C
 				break
 			if(isbrain(M))
