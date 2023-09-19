@@ -1114,7 +1114,6 @@
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
 	,NO_FAT = TRUE
-	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
