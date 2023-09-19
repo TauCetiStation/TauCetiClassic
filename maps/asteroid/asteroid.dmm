@@ -542,7 +542,8 @@
 "bw" = (
 /obj/machinery/door/airlock{
 	id_tag = "rdorm1";
-	name = "Dorm 1"
+	name = "Dorm 1";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -623,7 +624,8 @@
 "bF" = (
 /obj/machinery/door/airlock{
 	id_tag = "rdorm2";
-	name = "Dorm 2"
+	name = "Dorm 2";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -728,7 +730,8 @@
 "bR" = (
 /obj/machinery/door/airlock/research{
 	name = "Spectrometry Lab Sample Preparation";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -1103,7 +1106,8 @@
 "cE" = (
 /obj/machinery/door/airlock{
 	id_tag = "rbath";
-	name = "Bathroom"
+	name = "Bathroom";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1504,7 +1508,8 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Anomalous Materials Sample Preparation";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1634,7 +1639,9 @@
 	},
 /area/shuttle/alien/mine)
 "dH" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
@@ -1815,7 +1822,8 @@
 "dZ" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Outpost Atmospherics";
-	req_one_access = list(65,10,24)
+	req_one_access = list(65,10,24);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2336,7 +2344,8 @@
 "eY" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -2428,7 +2437,8 @@
 "fd" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2834,7 +2844,8 @@
 "fQ" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Outpost Power";
-	req_one_access = list(65,10,24)
+	req_one_access = list(65,10,24);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3569,7 +3580,8 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Shuttle Dock";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -3734,7 +3746,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "";
 	name = "Medbay";
-	req_one_access = list(65,5)
+	req_one_access = list(65,5);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -3819,7 +3832,8 @@
 "il" = (
 /obj/machinery/door/airlock/research{
 	name = "Temporary Storage";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5132,7 +5146,8 @@
 "kG" = (
 /obj/machinery/door/airlock/research{
 	name = "Isolation room 4";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5148,6 +5163,12 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/outpost_misc_lab)
+"kH" = (
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/asteroid/mine/abandoned)
 "kI" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -5287,7 +5308,8 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Loading Area";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/tempstorage)
@@ -5858,7 +5880,8 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Equipment storage";
-	req_access = list(65)
+	req_access = list(65);
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -6267,7 +6290,8 @@
 /area/asteroid/research_outpost/longtermstorage)
 "nr" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(12,65)
+	req_one_access = list(12,65);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal{
@@ -6562,7 +6586,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
@@ -7029,7 +7055,8 @@
 "pf" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningdorm1";
-	name = "Room 1"
+	name = "Room 1";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7434,7 +7461,8 @@
 "qc" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningdorm3";
-	name = "Room 3"
+	name = "Room 3";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7617,7 +7645,8 @@
 "qD" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Bridge";
-	req_one_access = list(54,65)
+	req_one_access = list(54,65);
+	dir = 4
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -7767,7 +7796,8 @@
 "qW" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningdorm2";
-	name = "Room 2"
+	name = "Room 2";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8477,7 +8507,9 @@
 	},
 /area/asteroid/mine/living_quarters)
 "sS" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sT" = (
@@ -8499,11 +8531,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /turf/simulated/floor/plating,
@@ -8969,7 +9001,8 @@
 	frequency = 1379;
 	id_tag = "mining_west_outpost_inner";
 	locked = 1;
-	name = "Mining External Access"
+	name = "Mining External Access";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9352,7 +9385,8 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA";
-	req_access = list(54)
+	req_access = list(54);
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9715,7 +9749,8 @@
 	id_tag = "mining_west_outpost_outer";
 	locked = 1;
 	name = "Mining External Access";
-	req_access = list(10,13)
+	req_access = list(10,13);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
@@ -10072,7 +10107,8 @@
 "wH" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Break Room";
-	req_access = list(54)
+	req_access = list(54);
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10377,7 +10413,8 @@
 /area/asteroid/mine/living_quarters)
 "xl" = (
 /obj/machinery/door/airlock{
-	name = "Toilet"
+	name = "Toilet";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -10686,7 +10723,8 @@
 	id_tag = "mining_east_outer";
 	locked = 1;
 	name = "Mining External Access";
-	req_access = list(10,13)
+	req_access = list(10,13);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
@@ -10926,7 +10964,8 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
-	req_access = list(48)
+	req_access = list(48);
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11068,7 +11107,8 @@
 	frequency = 1379;
 	id_tag = "mining_east_inner";
 	locked = 1;
-	name = "Mining External Access"
+	name = "Mining External Access";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -11187,7 +11227,8 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
-	req_access = list(48)
+	req_access = list(48);
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11461,7 +11502,8 @@
 	icon_state = "pdoor0";
 	id = "out_misclab";
 	name = "Test Chamber Blast Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -11542,7 +11584,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Mining Shuttle Airlock";
-	req_access = list(48)
+	req_access = list(48);
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/production)
@@ -12406,6 +12449,17 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
+"Lz" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining Bridge";
+	req_access = list(54);
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Mb" = (
 /obj/structure/sign/departments/chemistry{
 	desc = "A warning sign which reads 'SAMPLE PREPARATION'";
@@ -26799,7 +26853,7 @@ qA
 qA
 qA
 ql
-tP
+Lz
 ql
 lA
 qA
@@ -31839,8 +31893,8 @@ fY
 ei
 ei
 ei
-iR
-iR
+kH
+kH
 ei
 ei
 ei
@@ -34404,7 +34458,7 @@ ei
 bM
 bM
 ei
-iR
+kH
 ei
 bM
 bM
