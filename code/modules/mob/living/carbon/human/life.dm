@@ -427,7 +427,7 @@ var/global/list/tourette_bad_words= list(
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
 	var/is_in_space = isspaceturf(get_turf(src))
 
-	if(!is_in_space) //space is not meant to change your body temperature.
+	if(environment.total_moles) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
