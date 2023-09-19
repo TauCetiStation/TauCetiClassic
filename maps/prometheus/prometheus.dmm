@@ -53800,7 +53800,8 @@
 "mDK" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "E.V.A.";
-	req_one_access = list(1,5,11,18,24)
+	req_one_access = list(1,5,11,18,24);
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -83755,7 +83756,8 @@
 	},
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list(6)
+	req_access = list(6);
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
