@@ -709,7 +709,9 @@
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
 "ch" = (
-/obj/machinery/door/airlock/phoron,
+/obj/machinery/door/airlock/phoron{
+	dir = 4
+	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ci" = (
@@ -1192,7 +1194,9 @@
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
 "dB" = (
-/obj/machinery/door/airlock/freezer,
+/obj/machinery/door/airlock/freezer{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1255,7 +1259,9 @@
 	},
 /area/awaymission/academy/classrooms)
 "dL" = (
-/obj/machinery/door/airlock/freezer,
+/obj/machinery/door/airlock/freezer{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1523,11 +1529,15 @@
 /area/awaymission/academy)
 "ew" = (
 /obj/machinery/door/airlock/glass,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "ex" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "ey" = (
@@ -2462,7 +2472,9 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "gK" = (
-/obj/structure/mineral_door/metal,
+/obj/structure/mineral_door/metal{
+	dir = 4
+	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/classrooms)
 "gL" = (
@@ -2480,7 +2492,8 @@
 /area/awaymission/academy/academyaft)
 "gM" = (
 /obj/machinery/door/airlock/gold{
-	locked = 1
+	locked = 1;
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2762,7 +2775,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/airlock/maintenance_hatch{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "hw" = (
@@ -3070,7 +3085,9 @@
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "ii" = (
-/obj/structure/mineral_door/metal,
+/obj/structure/mineral_door/metal{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
