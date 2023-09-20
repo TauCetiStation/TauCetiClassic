@@ -193,7 +193,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
 		if(Head && !Head.is_stump)
-			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -FACEMASK_LAYER)
+			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -BODY_LAYER)
 			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
 			standing += jaw
 
