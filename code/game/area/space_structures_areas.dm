@@ -353,5 +353,4 @@
 	name = "Destroyed Flagship"
 	icon_state = "syndie-elite"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = TRUE
-	ambience = list('sound/ambience/ambiruin_4.ogg', 'sound/ambience/syndicate_station.ogg')
+	ambience = list('sound/ambience/ambiruin4.ogg', 'sound/ambience/syndicate_station.ogg')

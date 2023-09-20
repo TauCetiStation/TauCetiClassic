@@ -336,9 +336,6 @@
 /area/space_structures/flagship)
 "pU" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/pistol/silenced{
-	pixel_y = 8
-	},
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -371,6 +368,7 @@
 	dir = 1
 	},
 /obj/structure/window/thin/reinforced,
+/obj/item/weapon/gun/projectile/automatic/pistol/wjpp,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkredcorners"
@@ -478,8 +476,10 @@
 	},
 /area/space_structures/flagship)
 "uy" = (
-/obj/structure/door_assembly/door_assembly_vault,
-/turf/simulated/floor/plating,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
 /area/space_structures/flagship)
 "uZ" = (
 /obj/item/weapon/storage/firstaid/adv{
@@ -579,14 +579,14 @@
 /obj/item/ammo_box/magazine/stechkin{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/silenced_pistol{
-	pixel_x = -5
-	},
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube-broken";
 	status = 2;
 	use_power = 1
+	},
+/obj/item/ammo_box/magazine/wjpp{
+	pixel_x = -4
 	},
 /turf/simulated/floor{
 	icon_state = "darkredcorners"
@@ -604,10 +604,9 @@
 	},
 /area/space_structures/flagship)
 "zA" = (
-/obj/item/ammo_casing/c9mm,
-/turf/simulated/floor{
-	icon_state = "cult"
-	},
+/obj/structure/lattice,
+/obj/structure/door_assembly/door_assembly_vault,
+/turf/environment/space,
 /area/space_structures/flagship)
 "zY" = (
 /turf/simulated/floor{
@@ -643,12 +642,6 @@
 	icon_state = "dark"
 	},
 /area/space_structures/flagship)
-"BE" = (
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,
-/turf/simulated/floor{
-	icon_state = "darkbluefull"
-	},
-/area/space_structures/flagship)
 "Ca" = (
 /obj/structure/computerframe,
 /turf/simulated/floor{
@@ -674,7 +667,7 @@
 "CR" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/plasteel{
-	amount = 50
+	amount = 15
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -715,6 +708,9 @@
 /turf/environment/space,
 /area/space_structures/flagship)
 "Ej" = (
+/obj/machinery/sleeper/upgraded{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -755,7 +751,7 @@
 	},
 /area/space_structures/flagship)
 "FP" = (
-/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor{
 	icon_state = "darkredcorners"
 	},
@@ -768,11 +764,6 @@
 "Ga" = (
 /obj/structure/computerframe,
 /turf/simulated/floor/plating,
-/area/space_structures/flagship)
-"Go" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/environment/space,
 /area/space_structures/flagship)
 "GD" = (
 /obj/effect/decal/turf_decal{
@@ -788,7 +779,8 @@
 /turf/environment/space,
 /area/space_structures/flagship)
 "GJ" = (
-/obj/machinery/power/smes,
+/obj/machinery/constructable_frame/machine_frame,
+/obj/item/weapon/circuitboard/smes,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -807,6 +799,12 @@
 	dir = 9;
 	icon_state = "darkpurple"
 	},
+/area/space_structures/flagship)
+"GW" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
+/turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "Hb" = (
 /obj/effect/landmark/corpse/syndicatesoldier{
@@ -950,6 +948,22 @@
 	icon_state = "cult"
 	},
 /area/space_structures/flagship)
+"PU" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"PZ" = (
+/obj/machinery/door/airlock/highsecurity{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
 "Qa" = (
 /obj/structure/table/reinforced,
 /obj/item/device/megaphone,
@@ -1007,7 +1021,7 @@
 /area/space_structures/flagship)
 "RP" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "RX" = (
 /turf/simulated/floor{
@@ -1108,10 +1122,8 @@
 	},
 /area/space_structures/flagship)
 "Wz" = (
-/obj/effect/decal/remains/human/burned,
-/turf/simulated/floor{
-	icon_state = "darkbluefull"
-	},
+/obj/effect/decal/cleanable/blood/gibs/robot,
+/turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "Xg" = (
 /turf/simulated/floor{
@@ -1148,8 +1160,7 @@
 	},
 /area/space_structures/flagship)
 "ZF" = (
-/obj/item/ammo_casing/c9mm,
-/obj/item/ammo_casing/c9mm,
+/obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "ZL" = (
@@ -1281,7 +1292,7 @@ Hc
 EM
 Cj
 Hc
-Hc
+zA
 Hc
 Hc
 Hc
@@ -1306,7 +1317,7 @@ Cj
 Cj
 Cj
 Cj
-Hc
+Cj
 Hc
 Hc
 Hc
@@ -1344,7 +1355,7 @@ sw
 Ed
 Ed
 Ed
-Hc
+GW
 Ed
 Ed
 Ed
@@ -1354,7 +1365,7 @@ Ed
 wX
 JS
 cN
-uy
+cN
 Ed
 Ed
 Ed
@@ -1379,7 +1390,7 @@ Ed
 Ed
 Ed
 Ga
-cN
+ZF
 FT
 Ed
 Ed
@@ -1485,7 +1496,7 @@ Ed
 Ed
 Ed
 Ed
-vE
+PZ
 Ed
 Qw
 FN
@@ -1513,7 +1524,7 @@ fq
 (11,1,1) = {"
 sN
 kt
-Wz
+sc
 zf
 Ed
 qt
@@ -1548,11 +1559,11 @@ nV
 (12,1,1) = {"
 sN
 Qa
-BE
+sc
 JH
 ml
 JH
-AB
+PU
 gE
 AB
 eF
@@ -1625,7 +1636,7 @@ Ed
 Ed
 Ed
 Ed
-vE
+PZ
 Ed
 Xg
 UP
@@ -1656,11 +1667,11 @@ Ed
 Ed
 Ed
 Ed
-Hc
+cN
 Ed
 Ed
 FT
-FT
+uy
 Ed
 bq
 lM
@@ -1691,11 +1702,11 @@ ZL
 Ed
 Ed
 Hc
-Hc
-Hc
 cN
-ZF
-zA
+RP
+cN
+cN
+FT
 Ed
 pn
 qS
@@ -1762,7 +1773,7 @@ Cj
 Cj
 Hc
 Hc
-Go
+Hc
 Hc
 Hc
 Ee
@@ -1774,7 +1785,7 @@ Ed
 Ed
 cN
 cN
-cN
+Wz
 Ed
 Ed
 Ed
@@ -1867,7 +1878,7 @@ Cj
 Cj
 Cj
 Cj
-RP
+Cj
 Cj
 Cj
 Hc
