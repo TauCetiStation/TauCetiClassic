@@ -591,11 +591,13 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Вокс-Налётчик"
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
 	wiki_ref = "Vox_Raider"
+	id = "vox"
 
 /datum/spawner/living/abductor
 	name = "Похититель"
 	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
 	wiki_ref = "Abductor"
+	id = "abductor"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
@@ -645,6 +647,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
+	id = "vox"
 
 /datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(global.heiststart)
@@ -690,6 +693,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_ABDUCTOR, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
+	id = "abductor"
 
 /datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
 	// One team. Working together

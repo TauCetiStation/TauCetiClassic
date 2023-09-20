@@ -404,7 +404,8 @@
 /area/space_structures/export_outpost)
 "aY" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Booth"
+	name = "Security Booth";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -707,6 +708,28 @@
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
+"Ry" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"Wx" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
 
 (1,1,1) = {"
 aa
@@ -845,9 +868,9 @@ aa
 aa
 ab
 ab
-ad
-ad
-ad
+Wx
+Wx
+Wx
 ab
 ab
 aa
@@ -1144,9 +1167,9 @@ ab
 ab
 ab
 ab
-ad
-ad
-ad
+Ry
+Ry
+Ry
 ab
 aa
 aa

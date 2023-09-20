@@ -1,7 +1,7 @@
 #define POOL_POSITIVE_VIRUS "pool_positive_virus"
 #define POOL_NEUTRAL_VIRUS "pool_neutral_virus"
 #define POOL_NEGATIVE_VIRUS "pool_negative_virus"
-var/global/list/virus_by_pool
+var/global/list/virus_types_by_pool
 
 /datum/disease2/disease
 	var/infectionchance = 70
@@ -82,7 +82,10 @@ var/global/list/virus_by_pool
 		POOL_NEGATIVE_VIRUS = 50,
 	)
 	var/pickedpool = pool_name ? pool_name : pickweight(pool_distribution)
-	var/list/effects_pool_list = global.virus_by_pool[pickedpool]
+	var/list/effects_pool_list = list()
+	for(var/type as anything in global.virus_types_by_pool[pickedpool])
+		var/datum/disease2/effect/e = new type
+		effects_pool_list += e
 	for(var/datum/disease2/effect/e as anything in effects_pool_list)
 		if(e.level > maxlvl)
 			effects_pool_list -= e
@@ -95,9 +98,10 @@ var/global/list/virus_by_pool
 		return get_random_effect_total(max(minlvl - 1, 1), maxlvl + 1, pickedpool)
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/effect = pick(effects_pool_list)
-	//create a copy of effect
-	var/datum/disease2/effect/f = new effect.type
-	holder.effect = f
+	effects_pool_list -= effect
+	holder.effect = effect
+	for(var/eff as anything in effects_pool_list)
+		qdel(eff)
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
