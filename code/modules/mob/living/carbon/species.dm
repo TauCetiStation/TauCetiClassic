@@ -1712,7 +1712,6 @@
 		HAS_TAIL = TRUE,
 		HAS_HAIR = TRUE,
 		HAS_HAIR_COLOR = TRUE,
-		NO_GENDERS = TRUE,
 		)
 
 	has_gendered_icons = FALSE
