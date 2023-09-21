@@ -25,11 +25,11 @@
 
 
 //more specialised stuff
-/proc/sanitize_gender(gender, can_be_neuter = FALSE, default = MALE)
-	if(gender == MALE || gender == FEMALE)
-		return gender
+/proc/sanitize_gender(gender, must_be_neuter = FALSE, default = MALE)
+	if(must_be_neuter)
+		return NEUTER
 
-	if(gender == NEUTER && can_be_neuter)
+	if(gender == MALE || gender == FEMALE)
 		return gender
 
 	return default
