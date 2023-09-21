@@ -228,8 +228,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor,
 /area/station/security/range)
@@ -1424,8 +1424,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -1675,8 +1675,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2522,8 +2522,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2912,8 +2912,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -3994,8 +3994,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6347,8 +6347,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor,
 /area/station/security/interrogation)
@@ -7192,8 +7192,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -7339,8 +7339,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -9617,8 +9617,8 @@
 	},
 /obj/machinery/power/apc{
 	pixel_y = -27;
-	name = "Brig down APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark down APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -9744,8 +9744,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -23555,8 +23555,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -35657,8 +35657,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -39341,8 +39341,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -47119,8 +47119,8 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
 	pixel_y = -27;
-	name = "Brig down APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark down APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -68657,8 +68657,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "DarkBrig"
 	},
 /turf/simulated/floor{
 	dir = 1;
