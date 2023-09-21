@@ -10,6 +10,7 @@
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
+	var/give_uplink = TRUE
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
 	moveset_type = /datum/combat_moveset/cqc
@@ -17,7 +18,8 @@
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
+	if(give_uplink)
+		AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -35,6 +37,10 @@
 /datum/role/traitor/forgeObjectives()
 	if(!..())
 		return FALSE
+	create_traitor_objectives()
+	return TRUE
+
+/datum/role/traitor/proc/create_traitor_objectives()
 	if(issilicon(antag.current))
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
@@ -55,7 +61,6 @@
 				AppendObjective(/datum/objective/survive)
 			else
 				AppendObjective(/datum/objective/hijack)
-	return TRUE
 
 /datum/role/traitor/process()
 	// For objectives such as "Make an example of...", which require mid-game checks for completion
@@ -102,6 +107,9 @@
 	. = ..()
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
+		return
+	for(var/datum/objective/O in objectives.GetObjectives())
+		O.give_required_equipment()
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
 	if(isAI(M.current))
@@ -138,3 +146,85 @@
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
+
+/datum/role/traitor/imposter
+	name = IMPOSTER
+	id = IMPOSTER
+	required_pref = ROLE_IMPOSTER
+	//No restricts, everyone can be a imposter
+	restricted_jobs = list()
+	//Challenge
+	give_uplink = FALSE
+	telecrystals = 0
+
+/datum/role/traitor/imposter/add_one_objective(datum/mind/traitor)
+	switch(rand(1, 100))
+		//most imposters is just stealers
+		if(1 to 70)
+			//remove objectives for heads of staff to steal own items
+			if(antag.assigned_role in global.command_positions - list("Blueshield Officer"))
+				AppendObjective(/datum/objective/steal/non_heads_items, TRUE)
+			else
+				AppendObjective(/datum/objective/steal, TRUE)
+		if(71 to 80)
+			AppendObjective(/datum/objective/target/assassinate, TRUE)
+		if(81 to 90)
+			AppendObjective(/datum/objective/target/harm, TRUE)
+		else
+			AppendObjective(/datum/objective/target/dehead, TRUE)
+
+/datum/role/traitor/imposter/proc/add_killhead_objectives()
+	var/list/heads = get_living_heads()
+	for(var/datum/mind/head_mind in heads)
+		if(antag == head_mind)
+			continue
+		var/datum/objective/target/assassinate/killhead_obj = AppendObjective(/datum/objective/target/assassinate, TRUE)
+		if(killhead_obj)
+			killhead_obj.target = head_mind
+
+/datum/role/traitor/imposter/create_traitor_objectives()
+	if(issilicon(antag.current))
+		//probability 10% for default silent assassin AI
+		if(prob(10))
+			log_mode("IMPOSTERS: silicon imposter ([antag.current]) has standart objectives")
+			return ..()
+		//probability 90% for peace-protecter AI
+		AppendObjective(/datum/objective/target/protect, TRUE)
+		AppendObjective(/datum/objective/target/protect, TRUE)
+		AppendObjective(/datum/objective/survive)
+		log_mode("IMPOSTERS: silicon imposter ([antag.current]) has protect objectives")
+		//and 10% prob to hijack shuttle when has protect objective
+		if(prob(10))
+			AppendObjective(/datum/objective/block)
+			log_mode("IMPOSTERS: silicon [antag.current] has hijack with protect objectives")
+		return
+	//5% prob to killhead objectives for non-silicon imposter
+	if(prob(5))
+		add_killhead_objectives()
+		log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has killhead objectives")
+		return
+	//default traitor objectives
+	for(var/i in 1 to 3)
+		add_one_objective()
+	//Setup last objective
+	switch(rand(1, 100))
+		//Escape is more interesting
+		if(1 to 90)
+			AppendObjective(/datum/objective/escape)
+		if(91 to 99)
+			AppendObjective(/datum/objective/survive)
+		else
+			AppendObjective(/datum/objective/hijack)
+	log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has standart traitor objectives")
+
+/datum/role/traitor/imposter/OnPostSetup(laterole)
+	. = ..()
+	if(antag.current.isloyal() && iscarbon(antag.current))
+		var/mob/living/carbon/C = antag.current
+		C.fake_loyal_implant_replacement()
+
+/mob/living/carbon/proc/fake_loyal_implant_replacement()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		qdel(L)
+	var/obj/item/weapon/implant/fake_loyal/F = new(src)
+	F.inject(src, BP_CHEST)
