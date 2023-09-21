@@ -195,7 +195,7 @@
 
 
 /datum/quality/positiveish/freakish_linguist
-	name = "Freakish linguist"
+	name = "Freakish Linguist"
 	desc = "Ты знаешь все языки. Абсолютно все. Но какой ценой?"
 	requirement = "Мим."
 
@@ -399,3 +399,17 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
+
+/datum/quality/positiveish/spaceartist
+	name = "Space Artist"
+	desc = "Как же быть актёром в космосе, но без космического скафандра?"
+	requirement = "Клоун, Мим."
+	jobs_required = list("Clown", "Mime")
+
+/datum/quality/positiveish/spaceartist/add_effect(mob/living/carbon/human/H)
+	if(H.job == "Clown")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/clown, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/clown, SLOT_L_HAND)
+	else if(H.job == "Mime")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
