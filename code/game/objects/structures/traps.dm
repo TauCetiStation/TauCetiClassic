@@ -128,7 +128,7 @@
 		var/mob/living/carbon/human/H = AM
 		if(iswizard(H))
 			return
-		 return ..()
+	return ..()
 
 /obj/structure/trap/wizard/stun
 	name = "shock trap"
