@@ -310,3 +310,11 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/proudandwalking/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_NO_CRAWL, QUALITY_TRAIT)
+
+/datum/quality/negativeish/awkward
+	name = "Awkward"
+	desc = "Ты слон в посудной лавке, ходячая авария, постоянно ударяешься о что-нибудь."
+	requirement = "Нет."
+
+/datum/quality/negativeish/awkward/add_effect(mob/living/carbon/human/H, latespawn)
+	H.AddElement(/datum/element/awkward)

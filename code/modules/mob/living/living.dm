@@ -56,6 +56,7 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
+	SEND_SIGNAL(src, COMSIG_LIVING_BUMPED, A)
 	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)

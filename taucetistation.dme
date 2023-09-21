@@ -346,6 +346,7 @@
 #include "code\datums\components\rites\rite.dm"
 #include "code\datums\components\rites\spawn_item.dm"
 #include "code\datums\elements\_element.dm"
+#include "code\datums\elements\awkward.dm"
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\digitalcamo.dm"
 #include "code\datums\emotes\emote.dm"
