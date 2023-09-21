@@ -70,6 +70,7 @@
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
 	overlay_food_string = "food_spoon"
+	m_amt = 250
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
@@ -88,6 +89,7 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 	overlay_food_string = "food_fork"
+	m_amt = 300
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
