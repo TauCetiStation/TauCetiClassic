@@ -133,12 +133,12 @@ var/global/list/smartlight_presets
 
 
 /datum/smartlight_preset/brigdark
-	name = "DarkBrig"
+	name = "Dark Brig"
 
 	default_mode = /datum/light_mode/brigdark
 	no_nightshift_mode = TRUE
 
-	available_modes = list(/datum/light_mode/brig)
+	available_modes = list(/datum/light_mode/brigdark)
 
 /datum/smartlight_preset/engineering
 	name = "Engineering"

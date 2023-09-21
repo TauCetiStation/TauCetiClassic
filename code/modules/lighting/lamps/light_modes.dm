@@ -80,7 +80,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	range = DEFAULT_RANGE
 
 /datum/light_mode/brigdark
-	name = "DarkBrig"
+	name = "Dark Brig"
 
 	color = "#ffe4c9"
 	power = 0.7
