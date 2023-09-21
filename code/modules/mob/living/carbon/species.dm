@@ -464,7 +464,7 @@
 	has_gendered_icons = FALSE
 
 	speed_mod = 1.5
-	speed_mod_no_shoes = -1.6
+	speed_mod_no_shoes = -2.2
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
