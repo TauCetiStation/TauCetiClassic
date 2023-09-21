@@ -129,16 +129,21 @@ var/global/list/smartlight_presets
 	default_mode = /datum/light_mode/brig
 	no_nightshift_mode = TRUE
 
-	available_modes = list(/datum/light_mode/brig)
+	available_modes = list(
+							/datum/light_mode/brig,
+							/datum/light_mode/brig/dark,
+	)
 
-
-/datum/smartlight_preset/brigdark
+/datum/smartlight_preset/brig/dark
 	name = "Dark Brig"
 
-	default_mode = /datum/light_mode/brigdark
+	default_mode = /datum/light_mode/brig/dark
 	no_nightshift_mode = TRUE
 
-	available_modes = list(/datum/light_mode/brigdark)
+	available_modes = list(
+							/datum/light_mode/brig,
+							/datum/light_mode/brig/dark,
+	)
 
 /datum/smartlight_preset/engineering
 	name = "Engineering"
