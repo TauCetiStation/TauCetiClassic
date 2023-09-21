@@ -642,19 +642,6 @@
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
-/mob/living/carbon/clean_blood()
-	. = ..()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.gloves)
-			H.gloves.clean_blood()
-			H.gloves.germ_level = 0
-		else
-			if(H.bloody_hands)
-				H.bloody_hands = 0
-				H.update_inv_slot(SLOT_GLOVES)
-			H.germ_level = 0
-
 //Throwing stuff
 /mob/living/carbon/throw_mode_off()
 	..()
