@@ -128,7 +128,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
-	/obj/item/stack/sheet/plasteel/cyborg
+/obj/item/stack/sheet/plasteel/cyborg
 	name = "plasteel"
 	desc = "This sheet is an alloy of steel and platinum."
 	singular_name = "plasteel sheet"
