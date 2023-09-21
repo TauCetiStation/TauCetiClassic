@@ -160,6 +160,8 @@
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
+	var/surgery_icobase = 'icons/mob/surgery.dmi'
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -931,6 +933,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
+	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
 	eyes = null
 
