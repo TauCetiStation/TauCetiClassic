@@ -63,10 +63,10 @@ const CryoContent = (props, context) => {
         flexGrow="1"
         buttons={(
           <Button
-            icon="user-slash"
-            onClick={() => act('eject')}
-            disabled={!hasOccupant}>
-            Eject
+            icon={isOpen ? "toggle-off" : "toggle-on"}
+            onClick={() => act(isOpen ? 'close' : 'open')}
+            selected={!isOpen}>
+            {isOperating ? "Open" : "Close"}
           </Button>
         )}>
         {hasOccupant ? (

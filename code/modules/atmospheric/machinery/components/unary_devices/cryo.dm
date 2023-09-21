@@ -203,8 +203,11 @@
 		if("switchOff")
 			on = FALSE
 
-		if("eject")
+		if("open")
 			open_machine()
+
+		if("close")
+			close_machine()
 
 		if("ejectBeaker")
 			if(!beaker)
@@ -264,9 +267,6 @@
 		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 
-	if(state_open)
-		return
-
 	if(user == occupant)
 		return
 
@@ -282,9 +282,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
-		return
-
-	if(!occupant && state_open)
 		return
 
 	if(user == occupant)
