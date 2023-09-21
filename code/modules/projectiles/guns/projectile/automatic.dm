@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
-	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
+	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
 	icon_state = "saber"
 	item_state = null
 	w_class = SIZE_SMALL
@@ -47,7 +47,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
-	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
+	desc = "Легкий и скорострельный пистолет-пулемёт для тех случаев, когда нужно кого-то быстро убить. Использует патроны калибра 9мм."
 	icon_state = "mac"
 	item_state = "mac"
 	w_class = SIZE_SMALL
@@ -58,7 +58,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
-	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	desc = "Легкий компактный пистолет-пулемет типа булл-пап. Использует патроны .45 ACP в магазинах средней емкости и имеет нарезной ствол для установки глушителя. На прикладе виднеется клеймо: blahblahblah ."
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = SIZE_SMALL
@@ -71,7 +71,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
-	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
+	desc = "Сильно модифицированный легкий пулемет с тактической рамкой из пластали, опирающейся на довольно традиционную баллистическую систему. На ствольной коробке выгравировано 'Оружейная мастерская Aussec - 2531', кроме того используются патроны '7.62x51мм' ."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = SIZE_BIG
@@ -87,7 +87,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
-		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
+		to_chat(user, "<span class='notice'>Крышка [src] открыта! Закройте ее перед стрельбой!</span>")
 	else
 		..()
 		update_icon()
@@ -99,7 +99,7 @@
 		return ..()//let them take it from inventory
 	if(!cover_open)
 		cover_open = !cover_open
-		to_chat(user, "<span class='notice'>You open [src]'s cover.</span>")
+		to_chat(user, "<span class='notice'>Вы открыли крышку [src].</span>")
 		update_icon()
 	else if(cover_open && magazine)
 		//drop the mag
@@ -109,7 +109,7 @@
 		magazine = null
 		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+		to_chat(user, "<span class='notice'>Вы вытащили магазин из [src].</span>")
 	else
 		if(chambered)
 			playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
@@ -118,13 +118,13 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
 	if(!cover_open)
-		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
+		to_chat(user, "<span class='notice'> Крышка [src] закрыта! Вы не можете вставить новый магазин!</span>")
 		return
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
-	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
+	desc = "Индивидуальное оружие самообороны 'L13', предназначенное для контртеррористических операций. Использует .38 калибр."
 	icon_state = "l13"
 	item_state = "l13"
 	w_class = SIZE_SMALL
@@ -136,7 +136,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
-	desc = "A genuine Chicago Typewriter."
+	desc = "Подлинная 'Чикагская пишущая машинка'."
 	icon_state = "tommygun"
 	item_state = "tommygun"
 	w_class = SIZE_BIG
@@ -149,7 +149,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
-	desc = "Browning Automatic Rifle."
+	desc = "Автоматическая винтовка Браунинга"
 	icon_state = "bar"
 	item_state = "bar"
 	w_class = SIZE_BIG
@@ -173,14 +173,14 @@
 		magazine.update_icon()
 		magazine = null
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+		to_chat(user, "<span class='notice'>Внутри [src] нет обоймы.</span>")
 	return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Совместим лишь со специальными магазинами."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = SIZE_SMALL
@@ -192,7 +192,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"
-	desc = ""
+	desc = "Автоматическая винтовка типа булл-пап с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Сэр, я заканчиваю этот бой'. Использует патроны калибром 5.56мм."
 	icon_state = "a28"
 	item_state = "a28"
 	w_class = SIZE_SMALL
@@ -216,7 +216,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a74/krinkov
 	name = "Krinkov"
-	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
+	desc = "Маленький и смертоносный A74U легче своего старшего брата, но, тем не менее, обладает серьезной мощью."
 	initial_mag = /obj/item/ammo_box/magazine/a74/krinkov
 	recoil = 1.5
 	two_hand_weapon = FALSE
@@ -225,7 +225,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
-	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
+	desc = "Известный также как Дрозд, этот маленький сукин сын оснащен чертовым гранатометом! Как же это круто!"
 	icon_state = "drozd"
 	item_state = "drozd"
 	initial_mag = /obj/item/ammo_box/magazine/drozd
@@ -251,12 +251,12 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
-		user.visible_message("<span class='warning'>[user] flicks a little switch, activating their [gl]!</span>",\
-		"<span class='warning'>You activate your [gl].</span>",\
+		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [gl]!</span>",\
+		"<span class='warning'>Вы активируете ваш [gl].</span>",\
 		"You hear an ominous click.")
 	else
-		user.visible_message("<span class='notice'>[user] flicks a little switch, deciding to stop the bombings.</span>",\
-		"<span class='notice'>You deactivate your [gl].</span>",\
+		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете ваш [gl].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	update_icon()

@@ -60,7 +60,7 @@
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
-	QDEL_LIST(cam_plane_masters)
+	cam_plane_masters.Cut()
 	qdel(cam_background)
 	return ..()
 

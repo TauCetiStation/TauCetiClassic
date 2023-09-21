@@ -354,7 +354,6 @@ var/global/list/tourette_bad_words= list(
 
 	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
 		internal = null
-		internals?.update_icon(src)
 		return null
 
 	//internal breath sounds
@@ -427,7 +426,7 @@ var/global/list/tourette_bad_words= list(
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
 	var/is_in_space = isspaceturf(get_turf(src))
 
-	if(!is_in_space) //space is not meant to change your body temperature.
+	if(environment.total_moles) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
@@ -748,6 +747,8 @@ var/global/list/tourette_bad_words= list(
 					emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
 				adjustOxyLoss(1)*/
+		if(species.flags[IS_SYNTHETIC])
+			hallucination = 0
 
 		if(hallucination)
 			if(hallucination >= 20)

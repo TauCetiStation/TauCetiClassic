@@ -46,7 +46,7 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+	if(species.brain_mod == 0 || species.flags[IS_SYNTHETIC] || !should_have_organ(O_BRAIN))
 		brainloss = 0
 	else
 		amount = amount * species.brain_mod
