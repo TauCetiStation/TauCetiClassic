@@ -123,7 +123,7 @@
 /obj/structure/trap/wizard
 	name = "IT'S A WIZARD TRAP"
 
-/obj/structure/trap/wizard/Crossed()
+/obj/structure/trap/wizard/Crossed(atom/movable/AM)
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		 if(iswizard(H))
