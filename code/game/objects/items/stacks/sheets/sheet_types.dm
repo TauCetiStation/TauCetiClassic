@@ -128,14 +128,14 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
-/obj/item/stack/sheet/plasteel/cyborg
-name = "plasteel"
-desc = "This sheet is an alloy of steel and platinum."
-singular_name = "plasteel sheet"
-icon_state = "sheet-plasteel"
-m_amt = 0
-throwforce = 5.0
-flags = CONDUCT
+	/obj/item/stack/sheet/plasteel/cyborg
+	name = "plasteel"
+	desc = "This sheet is an alloy of steel and platinum."
+	singular_name = "plasteel sheet"
+	icon_state = "sheet-plasteel"
+	m_amt = 0
+	throwforce = 5.0
+	flags = CONDUCT
 
 /obj/item/stack/sheet/plasteel/atom_init()
 	recipes = plasteel_recipes
