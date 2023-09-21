@@ -66,7 +66,7 @@ const CryoContent = (props, context) => {
             icon={isOpen ? "toggle-off" : "toggle-on"}
             onClick={() => act(isOpen ? 'close' : 'open')}
             selected={!isOpen}>
-            {isOperating ? "Open" : "Close"}
+            {isOpen ? "Opened" : "Closed"}
           </Button>
         )}>
         {hasOccupant ? (
