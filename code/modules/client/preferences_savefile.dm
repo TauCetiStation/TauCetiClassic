@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 47
+#define SAVEFILE_VERSION_MAX 46
 
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
