@@ -96,7 +96,7 @@
 						qdel(src)
 					return
 
-			if(/obj/item/stack/sheet/plasteel)
+			if(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/plasteel/cyborg)
 				if(!anchored)
 					if(!S.use(2))
 						return
