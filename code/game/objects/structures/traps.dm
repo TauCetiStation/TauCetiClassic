@@ -126,7 +126,7 @@
 /obj/structure/trap/wizard/Crossed(atom/movable/AM)
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		 if(iswizard(H))
+		if(iswizard(H))
 			return
 		 return ..()
 
