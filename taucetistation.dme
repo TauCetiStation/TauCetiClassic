@@ -2478,5 +2478,6 @@
 #include "maps\delta\job_changes.dm"
 #include "maps\falcon\job_changes.dm"
 #include "maps\stroechka\job_changes.dm"
+#include "maps\templates\space_structures\flagship.dmm"
 #include "maps\testmap\job_changes.dm"
 // END_INCLUDE

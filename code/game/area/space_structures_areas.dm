@@ -354,3 +354,8 @@
 	icon_state = "syndie-elite"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambience = list('sound/ambience/ambiruin4.ogg', 'sound/ambience/syndicate_station.ogg')
+
+/area/space_structures/flagship/Entered()
+	. = ..()
+	for(var/obj/effect/spawner/mob_spawn/M in src)
+		M.creatMob()

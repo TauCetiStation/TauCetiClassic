@@ -63,9 +63,7 @@
 	},
 /area/space_structures/flagship)
 "cE" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
@@ -119,10 +117,9 @@
 /turf/environment/space,
 /area/space_structures/flagship)
 "gl" = (
-/mob/living/simple_animal/hostile/retaliate/malf_drone,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/bluegrid{
+	icon_state = "rcircuit"
 	},
 /area/space_structures/flagship)
 "gy" = (
@@ -198,18 +195,8 @@
 	icon_state = "darkyellow"
 	},
 /area/space_structures/flagship)
-"jT" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_4"
-	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "rcircuit"
-	},
-/area/space_structures/flagship)
 "kc" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -312,7 +299,7 @@
 /turf/environment/space,
 /area/space_structures/flagship)
 "nX" = (
-/mob/living/simple_animal/hostile/retaliate/malf_drone,
+/obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -538,9 +525,7 @@
 	},
 /area/space_structures/flagship)
 "wX" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "xo" = (
@@ -622,6 +607,7 @@
 	},
 /area/space_structures/flagship)
 "AB" = (
+/obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -743,9 +729,7 @@
 	},
 /area/space_structures/flagship)
 "FN" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
 	icon_state = "darkredfull"
 	},
@@ -774,8 +758,8 @@
 	},
 /area/space_structures/flagship)
 "GI" = (
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
 /obj/structure/lattice,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
 /turf/environment/space,
 /area/space_structures/flagship)
 "GJ" = (
@@ -792,9 +776,6 @@
 	pixel_y = -6
 	},
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang{
-	pixel_y = 8
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkpurple"
@@ -984,9 +965,7 @@
 	},
 /area/space_structures/flagship)
 "Qw" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -1020,7 +999,7 @@
 /turf/environment/space,
 /area/space_structures/flagship)
 "RP" = (
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
 /turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "RX" = (
@@ -1052,9 +1031,7 @@
 	},
 /area/space_structures/flagship)
 "TO" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -1107,6 +1084,7 @@
 	},
 /area/space_structures/flagship)
 "Wq" = (
+/obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
@@ -1126,6 +1104,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "Xg" = (
+/obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -1139,15 +1118,13 @@
 	},
 /area/space_structures/flagship)
 "Yu" = (
-/obj/effect/decal/turf_decal/set_damaged{
-	icon_state = "wood_damaged_4"
-	},
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube-broken";
 	status = 2;
 	use_power = 1
 	},
+/obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -1363,7 +1340,7 @@ Ed
 Ed
 Ed
 wX
-JS
+gl
 cN
 cN
 Ed
@@ -1399,7 +1376,7 @@ Ed
 Ed
 cN
 JS
-jT
+JS
 lE
 Ee
 Ed
@@ -1465,7 +1442,7 @@ iH
 Ed
 yl
 Hc
-gl
+Yv
 Ed
 jL
 ln
@@ -1783,8 +1760,8 @@ Ed
 Ed
 Ed
 Ed
-cN
-cN
+wX
+wX
 Wz
 Ed
 Ed
