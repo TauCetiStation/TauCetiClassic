@@ -12,7 +12,7 @@
 	if(istype(I, /obj/item/weapon/pen) && !holded)
 		user.drop_from_inventory(I, src)
 		holded = I
-		holded.pixel_x = -3
+		holded.pixel_x = -2
 		holded.pixel_y = 5
 		underlays += holded
 		icon_state = "penholder_full"
