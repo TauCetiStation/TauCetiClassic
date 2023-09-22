@@ -240,8 +240,6 @@
 			healthdoll.add_overlay(host.healthdoll.overlays)
 		if(healths && host.healths)
 			healths.icon_state = host.healths.icon_state
-		if(internals && host.internals)
-			internals.icon_state = host.internals.icon_state
 
 /obj/effect/proc_holder/changeling/manage_essencies
 	name = "Manage Essencies"

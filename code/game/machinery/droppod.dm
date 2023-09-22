@@ -655,6 +655,9 @@
 	if(href_list["set_dna"])
 		var/mob/living/carbon/human/H = intruder // players can choose this option only if they are playing for a human
 		if(!stored_dna)
+			if(!H.dna.unique_enzymes)
+				to_chat(intruder, "<span class='warning'>No DNA was found.</span>")
+				return
 			stored_dna = H.dna.unique_enzymes
 			to_chat(intruder, "<span class='notice'>Dna key stored.</span>")
 		else

@@ -825,15 +825,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
-	set name = "Change View Range"
-	set desc = "switches between 1x and custom views."
+	set name = "Admin Change View Range"
+	set desc = "Change your view range"
 
-	if(view == world.view)
-		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
-	else
-		change_view(world.view)
+	var/viewx = clamp(input("Enter view width (1-127)") as num, 1, 127) * 2 + 1
+	var/viewy = clamp(input("Enter view height (1-127)") as num, 1, 127) * 2 + 1
 
-	log_admin("[key_name(usr)] changed their view range to [view].")
+	change_view("[viewx]x[viewy]")
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
+
+	log_admin("[key_name(usr)] changed their view range to [viewx]x[viewy].")
 	//message_admins("<span class='notice'>[key_name_admin(usr)] changed their view range to [view].</span>", 1)	//why? removed by order of XSI
 
 	feedback_add_details("admin_verb","CVRA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
