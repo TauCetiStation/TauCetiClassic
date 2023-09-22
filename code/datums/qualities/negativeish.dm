@@ -10,7 +10,9 @@
 	requirement = "Нет."
 
 /datum/quality/negativeish/mute/add_effect(mob/living/carbon/human/H, latespawn)
-	H.add_quirk(QUIRK_MUTE)
+	if (HAS_TRAIT(src,TRAIT_MUTE))
+		return
+	else (H.add_quirk(QUIRK_MUTE))
 
 
 // It's 80% negative and 20% positive.
