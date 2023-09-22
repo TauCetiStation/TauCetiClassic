@@ -167,7 +167,7 @@
 
 	stacktypes = list(
 		/obj/item/stack/sheet/metal/cyborg = 50,
-		/obj/item/stack/sheet/plasteel/cyborg = 50,
+		/obj/item/stack/sheet/plasteel/cyborg = 25,
 		/obj/item/stack/sheet/glass/cyborg = 50,
 		/obj/item/stack/sheet/rglass/cyborg = 50,
 		/obj/item/stack/cable_coil/cyborg = 50,
