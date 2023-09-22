@@ -36,11 +36,37 @@
 	name = "sand"
 	icon_state = "asteroid"
 
+/turf/simulated/floor/smoothtile
+	name = "smooth floor tile"
+	icon = 'icons/turf/floors/smooth/floortile.dmi'
+	icon_state = "center_8"
+	smooth = SMOOTH_TRUE
+
+/turf/simulated/floor/smoothtile/neutral
+	icon = 'icons/turf/floors/smooth/floortile_neutral.dmi'
+
+/turf/simulated/floor/smoothtile/white
+	icon = 'icons/turf/floors/smooth/floortile_white.dmi'
+
+/turf/simulated/floor/smoothtile/dark
+	icon = 'icons/turf/floors/smooth/floortile_dark.dmi'
+
 /turf/simulated/floor/engine
 	name = "reinforced floor"
-	icon_state = "engine"
+	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
+	icon_state = "center_8"
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
+	smooth = SMOOTH_TRUE
+
+/turf/simulated/floor/engine/type2
+	icon = 'icons/turf/floors/smooth/hardfloor_2.dmi'
+
+/turf/simulated/floor/engine/type3
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi'
+
+/turf/simulated/floor/engine/type4
+	icon = 'icons/turf/floors/smooth/hardfloor_4.dmi'
 
 /turf/simulated/floor/engine/break_tile()
 	return

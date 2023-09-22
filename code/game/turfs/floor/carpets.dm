@@ -118,25 +118,3 @@
 /turf/unsimulated/floor/carpet/red
 	name = "red lattice carpet"
 	icon = 'icons/turf/floors/carpets/carpet_lattice_red.dmi'
-
-
-/turf/simulated/floor/carpet/floortile
-	name = "smooth floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile.dmi'
-
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
-/turf/simulated/floor/carpet/floortile/neutral
-	name = "smooth neutral floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile_neutral.dmi'
-
-/turf/simulated/floor/carpet/floortile/white
-	name = "smooth white floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile_white.dmi'
-
-/turf/simulated/floor/carpet/floortile/dark
-	name = "smooth dark floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile_dark.dmi'

@@ -350,6 +350,8 @@
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[HAS_HAIR])
+			return
 		var/list/species_hair = list()
 		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)

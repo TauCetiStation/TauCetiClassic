@@ -187,6 +187,7 @@
 #define TRAIT_VISUAL_CHEM         "visual_chem"
 #define TRAIT_VISUAL_TRACK        "visual_track"
 #define TRAIT_HEMOPHILIAC         "hemophiliac"
+#define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 
 /*

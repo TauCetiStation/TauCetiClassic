@@ -56,6 +56,7 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
+	SEND_SIGNAL(src, COMSIG_LIVING_BUMPED, A)
 	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
@@ -1338,19 +1339,13 @@
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
 							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FRIGVOMIT
-			else
-				vomitsound = SOUNDIN_MRIGVOMIT
+			vomitsound = get_sound_by_voice(src, SOUNDIN_MRIGVOMIT, SOUNDIN_FRIGVOMIT)
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
 							"<span class='warning'>You throw up!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FEMALEVOMIT
-			else
-				vomitsound = SOUNDIN_MALEVOMIT
+			vomitsound = get_sound_by_voice(src, SOUNDIN_MALEVOMIT, SOUNDIN_FEMALEVOMIT)
 		make_jittery(max(35 - jitteriness, 0))
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
