@@ -171,8 +171,6 @@
 			continue
 		if(!F.can_join_faction(mob))
 			continue
-		if(!F.can_latespawn_mob(mob))
-			continue
 		possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
@@ -182,7 +180,7 @@
 	addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 	addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended, /datum/game_mode/imposter)
+	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 

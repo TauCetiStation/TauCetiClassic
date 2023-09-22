@@ -9,8 +9,3 @@
 /datum/role/changeling/traitor/New()
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, 20, "traitor")
-
-/datum/role/changeling/traitor/OnPostSetup(laterole)
-	. = ..()
-	for(var/datum/objective/O in objectives.GetObjectives())
-		O.give_required_equipment()

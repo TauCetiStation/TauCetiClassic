@@ -755,11 +755,6 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 
-		if(jobban_isbanned(M, ROLE_IMPOSTER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
-
 		jobs += "</tr><tr align='center'>"
 
 		jobs += "</tr></table>"
