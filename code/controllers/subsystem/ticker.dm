@@ -278,6 +278,8 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
+	update_station_head_portraits()
+
 	CHECK_TICK
 
 	for(var/mob/dead/new_player/player as anything in new_player_list)

@@ -28,6 +28,58 @@
 	else
 		..()
 
+/obj/item/table_deco/pens_bin
+	name = "pens bin"
+	desc = "Органайзер для ручек."
+	icon_state = "pens_bin"
+
+	var/list/pens_locations = list(list(-2, 4), list(-2, 5), list(-3, 6), list(-3, 7), list(-4, 7))
+
+/obj/item/table_deco/pens_bin/atom_init(mapload)
+	. = ..()
+
+	if(mapload)
+		var/turf/T = get_turf(src)
+		for(var/obj/item/weapon/pen/Pen in T.contents)
+			var/list/offsets = pick(pens_locations)
+			Pen.pixel_x = offsets[1]
+			Pen.pixel_y = offsets[2]
+			Pen.forceMove(src)
+		update_icon()
+
+/obj/item/table_deco/pens_bin/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen))
+		var/list/offsets = pick(pens_locations)
+		I.pixel_x = offsets[1]
+		I.pixel_y = offsets[2]
+		user.drop_from_inventory(I, src)
+
+/obj/item/table_deco/pens_bin/attack_hand(mob/user)
+	if(contents.len)
+		var/list/pens = list()
+		for(var/obj/item/weapon/pen in contents)
+			pens[pen] = image(icon = pen.icon, icon_state = pen.icon_state)
+
+		var/obj/item/weapon/pen/selection = show_radial_menu(user, src, pens, require_near = TRUE, tooltips = TRUE)
+
+		if(selection)
+			if(ishuman(user))
+				user.put_in_hands(selection)
+			else
+				selection.forceMove(get_turf(src))
+			update_icon()
+	else
+		..()
+
+/obj/item/table_deco/pens_bin/update_icon()
+	cut_overlays()
+	for(var/obj/item/weapon/pen/Pen in contents)
+		add_overlay(Pen)
+
+	var/image/front_side = image('icons/obj/items.dmi', "pens_bin_front")
+	front_side.layer = layer + 0.01
+	add_overlay(front_side)
+
 /obj/item/table_deco/mars_globe
 	name = "mars globe"
 	desc = "Глобус Марса."
@@ -60,3 +112,80 @@
 		maptext = new_text
 
 		desc = "'Точное время в любое время'. Показывают: [worldtime2text()]"
+
+
+/obj/item/wall_deco
+	icon = 'icons/obj/stationobjs.dmi'
+	anchored = TRUE
+
+/obj/item/wall_deco/atom_init(mapload)
+	. = ..()
+	if(!mapload)
+		anchored = FALSE
+
+/obj/item/wall_deco/attack_hand(mob/user)
+	if(!Adjacent(usr) || usr.incapacitated())
+		return
+	src.anchored = FALSE
+	user.put_in_hands(src)
+
+/obj/item/wall_deco/clock
+	name = "wall clock"
+	desc = "Показывают время."
+	icon_state = "clock"
+
+/obj/item/wall_deco/clock/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
+
+/obj/item/wall_deco/portrait
+	name = "portrait"
+	desc = "Портрет должностного лица НаноТрейзен."
+	icon_state = "nt_portrait_1"
+
+/obj/item/wall_deco/portrait/atom_init()
+	. = ..()
+	var/portrait_number = rand(1, 3)
+	icon_state = "nt_portrait_[portrait_number]"
+	switch(portrait_number)
+		if(1)
+			desc = "Альфред Д.Кроуфорд - директор отдела развития и интеграциий НаноТрейзен."
+		if(2)
+			desc = "Измаил Моше - генеральный инспектор НаноТрейзен."
+		if(3)
+			desc = "Константин Карпатенко - ранее  адмирал ракетного флота, ныне духовный лидер флота НаноТрейзен."
+
+var/global/list/station_head_portraits = list()
+ADD_TO_GLOBAL_LIST(/obj/item/wall_deco/portrait/captain, station_head_portraits)
+/obj/item/wall_deco/portrait/captain
+	desc = "Портрет главы станции Исход."
+	icon_state = "portrait_empty"
+
+proc/update_station_head_portraits()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES)
+	var/image/Heads_photo
+
+	var/newdesc
+	var/datum/data/record/CAP = find_general_record("rank", "Captain")
+	var/datum/data/record/HOS = find_general_record("rank", "Head of Security")
+	var/datum/data/record/HOP = find_general_record("rank", "Head of Personnel")
+
+	if(HOP)
+		Heads_photo = image(HOP.fields["photo_f"])
+		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы станции Исход."
+	if(HOS)
+		Heads_photo = image(HOS.fields["photo_f"])
+		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности станции Исход."
+	if(CAP)
+		Heads_photo = image(CAP.fields["photo_f"])
+		newdesc = "Портрет [CAP.fields["name"]], главы станции Исход."
+
+	Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
+	Heads_photo.pixel_y = -2
+
+	for(var/obj/item/wall_deco/portrait/captain/Portrait in global.station_head_portraits)
+		if(Heads_photo)
+			Portrait.cut_overlays()
+			Portrait.icon_state = "portrait_empty"
+			Portrait.desc = newdesc
+			Portrait.add_overlay(Heads_photo)
