@@ -12,7 +12,6 @@
 	var/recharge_coeff = 4
 
 	var/obj/item/clothing/suit/space/rig/suit 			= null
-	var/obj/item/clothing/head/helmet/space/rig/helmet 	= null
 
 // -== Regular Stuff ==-
 	var/list/modulesAvalible = list(
@@ -115,6 +114,7 @@
 		speak("Whiskey. Echo. Whiskey.")
 		sleep(2 SECOND)
 		speak("Lima. Alpha. Delta.")
+
 /obj/machinery/suit_modifier/proc/buyModule(obj/R, mob/user)
 	var/obj/item/clothing/suit/space/rig/RIG = R
 	for(var/atom/selectModule as anything in modulesAvalible)
@@ -235,11 +235,10 @@
 	var/obj/item/clothing/suit/space/rig/RIG = R
 	var/list/menu = list()
 	var/obj/item/clothing/head/helmet/space/rig/HEL = RIG.helmet
+	var/obj/item/weapon/stock_parts/cell/cell = RIG.cell
 	menu 	 += list("Helmet Modules"  = image(icon = HEL.icon, 				   icon_state = HEL.icon_state))
 	menu 	 += list("Suit Race"       = image(icon = suit.icon, icon_state = suit.icon_state))
-	if(RIG.cell)
-		var/obj/item/weapon/stock_parts/cell/cell = RIG.cell
-		menu += list("Cell"  		   = image(icon = cell.icon, 				   icon_state = cell.icon_state) )
+	menu 	 += list("Cell"  		   = image(icon = cell.icon, 				   icon_state = cell.icon_state) )
 	menu 	 += list("Suit Modules"    = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "IIS"))
 	if(emagged && syndicateModulesCount)
 		menu += list("Sundicate Gifts" = image(icon = 'icons/obj/rig_modules.dmi', icon_state = "stamp"))
