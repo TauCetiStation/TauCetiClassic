@@ -115,6 +115,9 @@
 	if(istype(loc, /obj/item/weapon/storage)) // todo: need to catch all spawns in /storage/ objects and make them use handle_item_insertion or forceMove, so we can remove this
 		flags_2 |= IN_STORAGE
 
+	if(isrobot(usr))
+		flags_2 |= IN_STORAGE
+
 	if(item_state_world)
 		update_world_icon()
 
@@ -1066,7 +1069,7 @@
 
 	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
 		// moving to inventory, restore icon (big inventory icon)
-		icon_state = initial(icon_state)
+		icon_state = item_state
 
 	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
 		// moving to world, change icon (small world icon)

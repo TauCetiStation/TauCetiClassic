@@ -60,7 +60,7 @@
 			for(var/P in typesof(/obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/C = new P
 				if(C.customizable_view == UNIVERSAL_VIEW)
-					radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
+					radial_chooses[C] = image(icon = C.icon, icon_state = C.item_state)
 
 		var/obj/item/weapon/card/id/C = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 		if(!C)
@@ -68,6 +68,8 @@
 
 		storedcard.icon = 'icons/obj/card.dmi'
 		storedcard.icon_state = C.icon_state
+		storedcard.item_state = C.item_state
+		storedcard.item_state_world = C.item_state_world
 		storedcard.desc = C.desc
 
 	else
