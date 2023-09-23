@@ -64,7 +64,6 @@
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	var/item_state = null         // has priority over icon_state for on-mob sprites
-	var/item_state_world = null   // has priority over icon_state for world (not in inventory) sprites
 	var/icon_override = null      // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
 
 	/* Species-specific sprite sheets for inventory sprites
@@ -118,8 +117,8 @@
 	if(isrobot(usr))
 		flags_2 |= IN_STORAGE
 
-	if(item_state_world)
-		update_world_icon()
+
+	update_world_icon()
 
 	for(var/path in item_action_types)
 		var/datum/action/B = new path (src)
@@ -1064,16 +1063,6 @@
 // swap between world (small) and ui (big) icons when item changes location
 // feel free to override for items with complicated icon mechanics
 /obj/item/proc/update_world_icon()
-	if(!item_state_world)
-		return
-
-	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
-		// moving to inventory, restore icon (big inventory icon)
-		icon_state = item_state
-
-	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
-		// moving to world, change icon (small world icon)
-		icon_state = item_state_world
 
 /obj/item/CtrlShiftClick(mob/user)
 	. = ..()

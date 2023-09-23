@@ -110,7 +110,6 @@
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	item_state_world = "large_world"
 	var/item_state_base = ""
 	sharp = 1
 	edge = 1
@@ -127,7 +126,6 @@
 /obj/item/weapon/shard/atom_init()
 	var/icon_variant = pick("large", "medium", "small")
 	item_state_base = "[item_state_base][icon_variant]"
-	item_state_world = "[item_state_base]_world"
 
 	switch(icon_variant)
 		if("small")
@@ -143,10 +141,13 @@
 	return ..()
 
 /obj/item/weapon/shard/update_icon()
-	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
-		icon_state = item_state_base
-	else if(icon_state != item_state_world)
-		icon_state = item_state_world
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
+		// moving to inventory, restore icon (big inventory icon)
+		icon ='icons/obj/shards.dmi'
+
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
+		// moving to world, change icon (small world icon)
+		icon = 'icons/obj/shards_world.dmi'
 
 /obj/item/weapon/shard/update_world_icon()
 	update_icon()
@@ -237,7 +238,7 @@
 	force = 8.0
 	throwforce = 15.0
 	icon_state = "phoronlarge"
-	item_state_world = "phoronlarge_world"
+
 	item_state_base = "phoron"
 	sharp = 1
 	edge = 1
@@ -257,7 +258,7 @@
 	name = "shrapnel"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
-	item_state_world = "shrapnellarge_world"
+
 	item_state_base = "shrapnel"
 	desc = "A bunch of tiny bits of shattered metal."
 	on_step_sound = 'sound/effects/metalstep.ogg'

@@ -11,7 +11,8 @@
 	desc = "Используется в карточных делах."
 	icon = 'icons/obj/card.dmi'
 	icon_state = "blank"
-	item_state_world = "blank_world"
+	item_state = "card-id"
+
 	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
 
@@ -21,16 +22,14 @@
 	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
 	name = "broken cryptographic sequencer"
 	icon_state = "emag"
-	item_state = "emag"
-	item_state_world = "emag_world"
+
 	origin_tech = "magnets=2;syndicate=2"
 
 /obj/item/weapon/card/emag
 	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
-	item_state = "emag"
-	item_state_world = "emag_world"
+
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
@@ -63,11 +62,10 @@
 	name = "data disk"
 	desc = "Дискета для данных."
 	icon_state = "data"
-	item_state_world = "data_world"
+
 	var/function = "storage"
 	var/data = "null"
 	var/special = null
-	item_state = "card-id"
 
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
@@ -84,8 +82,7 @@
 /obj/item/weapon/card/data/clown
 	name = "the coordinates to clown planet"
 	icon_state = "data"
-	item_state = "card-id"
-	item_state_world = "data_world"
+
 	layer = 3
 	level = 2
 	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
@@ -100,8 +97,7 @@
 	name = "identification card"
 	desc = "ID карта, используемая для определения личности, должности и станционного доступа."
 	icon_state = "id"
-	item_state = "id"
-	item_state_world = "id_world"
+
 	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
@@ -127,6 +123,15 @@
 	blood_type = H.dna.b_type
 	dna_hash = H.dna.unique_enzymes
 	fingerprint_hash = md5(H.dna.uni_identity)
+
+/obj/item/weapon/card/id/update_world_icon()
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
+		// moving to inventory, restore icon (big inventory icon)
+		icon ='icons/obj/card.dmi'
+
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
+		// moving to world, change icon (small world icon)
+		icon = 'icons/obj/card_world.dmi'
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
@@ -176,141 +181,123 @@
 	name = "identification card"
 	desc = "Серебряная ID карта, свидетельствующая о чести и преданности владельца."
 	icon_state = "silver"
-	item_state = "silver"
-	item_state_world = "silver_world"
+	item_state = "silver-id"
+
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
 	desc = "Золотая ID карта, которая показывает силу и могущество владельца."
 	icon_state = "gold"
-	item_state = "gold"
-	item_state_world = "gold_world"
+	item_state = "gold-id"
+
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
 	desc = "ID карта, выдаваемая сотрудникам обслуживающего персонала."
 	icon_state = "civ"
-	item_state = "civ"
-	item_state_world = "civ_world"
+
 
 /obj/item/weapon/card/id/civGold //This is not the HoP. There's no position that uses this right now.
 	name = "identification card"
 	desc = "ID карта начальника, олицетворяющая здравый смысл и ответственность владельца."
 	icon_state = "civGold"
-	item_state = "civGold"
-	item_state_world = "civGold_world"
+
 
 /obj/item/weapon/card/id/sec
 	name = "identification card"
 	desc = "ID карта, принадлежащая сотруднику службы безопасности."
 	icon_state = "sec"
-	item_state = "sec"
-	item_state_world = "sec_world"
+
 
 /obj/item/weapon/card/id/int
 	name = "identification card"
 	desc = "ID карта, принадлежащая агенту внутренних дел."
 	icon_state = "int"
-	item_state = "int"
-	item_state_world = "int_world"
+
 
 /obj/item/weapon/card/id/blueshield
 	name = "identification card"
 	desc = "A card issued to blueshield officer."
 	icon_state = "blueshield"
-	item_state = "int"
-	item_state_world = "blueshield_world"
+
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
 	desc = "ID карта начальника, которая олицетворяет доблесть владельца и его покровительство над беззащитными."
 	icon_state = "secGold"
-	item_state = "secGold"
-	item_state_world = "secGold_world"
+
 
 /obj/item/weapon/card/id/eng
 	name = "identification card"
 	desc = "ID карта, принадлежащая сотруднику инженерного отдела."
 	icon_state = "eng"
-	item_state = "eng"
-	item_state_world = "eng_world"
+
 
 /obj/item/weapon/card/id/engGold
 	name = "identification card"
 	desc = "ID карта начальника, олицетворяющая креативность и изобретательность владельца."
 	icon_state = "engGold"
-	item_state = "engGold"
-	item_state_world = "engGold_world"
+
 
 /obj/item/weapon/card/id/med
 	name = "identification card"
 	desc = "ID карта, принадлежащая сотруднику медицинского отдела."
 	icon_state = "med"
-	item_state = "med"
-	item_state_world = "med_world"
+
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
 	desc = "ID карта начальника, олицетворяющая заботу и сострадание к раненым и больным."
 	icon_state = "medGold"
-	item_state = "medGold"
-	item_state_world = "medGold_world"
+
 
 /obj/item/weapon/card/id/sci
 	name = "identification card"
 	desc = "ID карта, принадлежащая сотруднику научного отдела."
 	icon_state = "sci"
-	item_state = "sci"
-	item_state_world = "sci_world"
+
 
 /obj/item/weapon/card/id/sciGold
 	name = "identification card"
 	desc = "ID карта начальника, представляющая мудрость и рассудительность владельца."
 	icon_state = "sciGold"
-	item_state = "sciGold"
-	item_state_world = "sciGold_world"
+
 
 /obj/item/weapon/card/id/clown
 	name = "identification card"
 	desc = "Радужная ID карта, которая олицетворяет смех и несгибаемость владельца."
 	icon_state = "clown"
-	item_state = "clown"
-	item_state_world = "clown_world"
+
 
 /obj/item/weapon/card/id/clownGold //not in use
 	name = "identification card"
 	desc = "Радужная ID карта начальника, которая символизирует смех и несгибаемость владельца."
 	icon_state = "clownGold"
-	item_state = "clownGold"
-	item_state_world = "clownGold_world"
+
 
 /obj/item/weapon/card/id/mime
 	name = "identification card"
 	desc = "Чёрно-белая ID карта, которая символизирует слезы и молчаливость владельца."
 	icon_state = "mime"
-	item_state = "mime"
-	item_state_world = "mime_world"
+
 
 /obj/item/weapon/card/id/mimeGold //not in use
 	name = "identification card"
 	desc = "Чёрно-белая ID карта начальника, символизирующая слезы и молчаливость владельца."
 	icon_state = "mimeGold"
-	item_state = "mimeGold"
-	item_state_world = "mimeGold_world"
+
 
 /obj/item/weapon/card/id/cargo
 	name = "identification card"
 	desc = "ID карта, принадлежащая сотруднику отдела снабжения."
 	icon_state = "cargo"
-	item_state = "cargo"
-	item_state_world = "cargo_world"
+
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
 	desc = "ID карта начальника, олицетворяющая умения владельца обеспечивать и планировать."
 	icon_state = "cargoGold"
-	item_state = "cargoGold"
-	item_state_world = "cargoGold_world"
+
 
 /obj/item/weapon/card/id/syndicate
 	name = "Agent card"
@@ -318,8 +305,7 @@
 	origin_tech = "syndicate=3"
 	assignment = "Agent"
 	icon_state = "syndicate"
-	item_state = "syndicate"
-	item_state_world = "syndicate_world"
+
 	var/registered_user=null
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
@@ -375,15 +361,13 @@
 					radial_chooses = list()
 					for(var/P in typesof(/obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = new P
-						if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
-							radial_chooses[C] = image(icon = C.icon, icon_state = C.item_state)
+						if(C.customizable_view == UNIVERSAL_VIEW)
+							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
 
 				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 				if (newc)
 					icon = 'icons/obj/card.dmi'
-					icon_state = newc.item_state
-					item_state = newc.item_state
-					item_state_world = newc.item_state_world
+					icon_state = newc.icon_state
 					desc = newc.desc
 				update_icon()
 				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
@@ -421,8 +405,7 @@
 	name = "syndicate commander ID card"
 	assignment = "Syndicate Commander"
 	icon_state = "syndicate-command"
-	item_state = "syndicate-command"
-	item_state_world = "syndicate-command_world"
+
 	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
 
 
@@ -432,8 +415,7 @@
 	name = "captain's spare ID"
 	desc = "Запасная ID карта самого Верховного Властелина."
 	icon_state = "gold"
-	item_state = "gold"
-	item_state_world = "gold_world"
+
 	registered_name = "Captain"
 	assignment = "Captain"
 
@@ -446,7 +428,7 @@
 	name = "CentCom. ID"
 	desc = "ID карта прямиком с Центрального Командования."
 	icon_state = "centcom"
-	item_state_world = "centcom_world"
+
 	registered_name = "Central Command"
 	assignment = "General"
 	rank = "NanoTrasen Representative"
@@ -470,13 +452,13 @@
 
 /obj/item/weapon/card/id/centcom/ert
 	icon_state = "ert"
-	item_state_world = "ert_world"
+
 	assignment = "Emergency Response Team"
 	rank = "Emergency Response Team"
 
 /obj/item/weapon/card/id/centcom/ert/leader
 	icon_state = "ert-leader"
-	item_state_world = "ert-leader_world"
+
 	assignment = "Emergency Response Team Leader"
 	rank = "Emergency Response Team Leader"
 
@@ -484,8 +466,7 @@
 	name = "Cargo Industries. ID"
 	desc = "ID карта сотрудников Велосити."
 	icon_state = "velocity"
-	item_state = "velocity"
-	item_state_world = "velocity_world"
+
 	registered_name = "Cargo Industries"
 	assignment = "General"
 
@@ -510,7 +491,7 @@
 	rank = "Organized Crimes Department"
 
 	icon_state = "ert"
-	item_state_world = "ert_world"
+
 
 /obj/item/weapon/card/id/space_police/atom_init()
 	. = ..()
@@ -545,8 +526,7 @@
 
 /obj/item/weapon/card/id/syndicate/strike/leader
 	icon_state = "syndicate-command"
-	item_state = "syndicate-command"
-	item_state_world = "syndicate-command_world"
+
 	assignment = "Syndicate Commando Leader"
 
 /obj/item/weapon/card/id/syndicate/unknown
@@ -560,16 +540,14 @@
 	name = "captain's ID"
 	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
 	icon_state = "gold"
-	item_state = "gold"
-	item_state_world = "gold_world"
+
 	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_surgery, access_captain, access_engine, access_research, access_tox, access_robotics, access_heads)
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
 	desc = "ID карта, принадлежащая старшему сотруднику инженерного отдела станции 'LCR'."
 	icon_state = "eng"
-	item_state = "eng"
-	item_state_world = "eng_world"
+
 	rank = "Senior Engineer"
 	assignment = "Senior Engineer"
 	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research, access_tox, access_robotics)
@@ -578,8 +556,7 @@
 	name = "medic ID"
 	desc = "ID карта, принадлежащая старшему сотруднику медицинского отдела станции 'LCR'."
 	icon_state = "med"
-	item_state = "med"
-	item_state_world = "med_world"
+
 	rank = "Senior Medic"
 	assignment = "Senior Medic"
 	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_surgery, access_research, access_tox, access_robotics)
