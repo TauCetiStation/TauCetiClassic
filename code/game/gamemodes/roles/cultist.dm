@@ -3,7 +3,7 @@
 	id = CULTIST
 
 	required_pref = ROLE_CULTIST
-	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
+	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
 	restricted_species_flags = list(NO_BLOOD)
 
 	antag_hud_type = ANTAG_HUD_CULT
@@ -20,6 +20,11 @@
 	if(!..())
 		return FALSE
 	antag.current.playsound_local(null, 'sound/antag/cultist_alert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	to_chat(antag.current, "<span class='cult'>Вы - Культист, поклоняющийся древнему богу Нар-Си. Вам была дарована потустороняя сила для достижения поставленых целей. Если вы их не выполните, то вас ждёт СТРАШНАЯ КАРА...</span>")
+	to_chat(antag.current, "<span class='cult'>Вам был дарован том древних писаний культа. Открыв том, вы сможете начертить различные руны которые позволят вам: телепортироваться, отправляя предметы или же себя в Рай, захватывать зоны станции, призывать невидимые баръеры и активировать древние кристаллы - пилоны, для быстрого уничтожения неверных.</span>")
+	to_chat(antag.current, "<span class='cult'>Помимо рун, том способен возводить строения культа необходимых вам в вашем противостоянии против еретиков, обустраивать комнату для проведения нужных ритуалов или же перестроить уже существующие отделы(для строительства вам необходимо исследовать Строительство везде или же возводить строения на захваченых территориях).</span>")
+	to_chat(antag.current, "<span class='cult'>Благодаря руне Телепорт в Рай, вы можете попасть в обитель культа где вы можете проводить свои исследования(для выбора необходимого исследования, нажмите на письменный стол пустой рукой), приковать неверных к пыточным столам для пыток или особых ритуалов(не забудьте зарядить стол нажав на него томом), а также кузница где хранятся одеяния и орудия культа(чтобы взаимодействовать с кузницей, нужно нажать на нее пустой рукой).</span>")
+	to_chat(antag.current, "<span class='cult'>Более подробная информация о ритуалах, аспектах, текущему положению дел культа вы найдете в томе у алтаря(возмите том, нажмите им по алтарю чтобы открыть меню алтаря культа). Есди вы осмотрите сам том, то вы узнаете сколько в культе последователей, сколько накоплено Благосклонности(Favor) и Благочестия(Piety), сколько рун вы используете в данный момент и максимальное возможное количество рун которое может выдержать ваше тело или же убрать все начертаные вами руны.</span>")
 
 /datum/role/cultist/CanBeAssigned(datum/mind/M, laterole)
 	if(laterole == FALSE) // can be null
@@ -38,7 +43,7 @@
 
 	if(mob.mind)
 		if(mob.mind.assigned_role == "Clown")
-			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+			to_chat(mob, "Ваши тренировки позволили вам преодолеть клоунскую неуклюжесть, что позволит вам без вреда для себя применять любое вооружение.")
 			REMOVE_TRAIT(mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	mob.equip_to_slot_or_del(new /obj/item/device/cult_camera(mob), SLOT_IN_BACKPACK)

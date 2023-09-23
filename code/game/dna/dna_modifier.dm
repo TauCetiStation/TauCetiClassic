@@ -118,6 +118,10 @@
 			if(occupant)
 				break
 			if(iscarbon(M))
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.flags[NO_DNA])
+						continue
 				var/mob/living/carbon/C = M
 				occupant = occupant_body = C
 				break
@@ -239,8 +243,14 @@
 			if(prob(75))
 				return
 	for(var/atom/movable/A as anything in src)
-		A.loc = loc
-		A.ex_act(severity)
+		A.forceMove(loc)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	qdel(src)
 
 /obj/machinery/dna_scannernew/deconstruct(disassembled)

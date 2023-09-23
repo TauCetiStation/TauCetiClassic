@@ -528,7 +528,7 @@ var/global/list/slot_equipment_priority = list(
 
 //Create delay for unequipping
 /mob/proc/delay_clothing_unequip(obj/item/clothing/C)
-	if(!istype(C) || !C.equip_time || C.slot_equipped == SLOT_R_HAND || C.slot_equipped == SLOT_L_HAND)
+	if(!istype(C) || !C.equip_time || C.slot_equipped == SLOT_R_HAND || C.slot_equipped == SLOT_L_HAND || !C.slot_equipped)
 		return TRUE // clothing have no eqip delay or currently in hands
 	if(usr.is_busy())
 		return FALSE

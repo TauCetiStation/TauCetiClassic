@@ -120,7 +120,8 @@
 	discharge(2 * discharge_rate_per_minute / 60)
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(..())
+		return
 	if (prob(50))
 		if(isliving(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom

@@ -209,3 +209,10 @@
 	shirt["dictator"] = /obj/item/clothing/suit/arstotzkashirt
 	shirt["toxic"] = /obj/item/clothing/suit/toxicshirt
 	gear_tweaks += new/datum/gear_tweak/path(shirt)
+
+/datum/gear/suit/raskinta
+	display_name = "Raskinta Uniform"
+	path = /obj/item/clothing/under/tactical/skrell
+	cost = 1
+	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
+	whitelisted = SKRELL

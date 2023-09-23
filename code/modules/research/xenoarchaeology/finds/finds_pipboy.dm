@@ -7,7 +7,7 @@
 	icon_state = "pipboy3000"
 	item_state = "pipboy3000"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_GLOVES
-	action_button_name = "Toggle Pip-Boy"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pip_boy)
 	species_restricted = null
 	protect_fingers = FALSE
 	clipped = TRUE
@@ -24,6 +24,13 @@
 
 	var/health_analyze_mode = FALSE
 	var/output_to_chat = TRUE
+
+/datum/action/item_action/hands_free/toggle_pip_boy
+	name = "Toggle Pip-Boy"
+
+/datum/action/item_action/hands_free/toggle_pip_boy/Activate()
+	var/obj/item/clothing/gloves/pipboy/S = target
+	S.open_interface()
 
 /obj/item/clothing/gloves/pipboy/atom_init()
 	. = ..()
@@ -58,8 +65,6 @@
 		return
 	return ..()
 
-/obj/item/clothing/gloves/pipboy/ui_action_click()
-	open_interface()
 
 /obj/item/clothing/gloves/pipboy/verb/open_interface()
 	set name = "Open Interface"

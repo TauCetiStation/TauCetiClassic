@@ -20,6 +20,7 @@
 /datum/gear/accessory/headwear
 	display_name = "Skrell headwear selection"
 	path = /obj/item/clothing/head/skrell_headwear
+	whitelisted = SKRELL
 
 /datum/gear/accessory/headwear/New()
 	..()

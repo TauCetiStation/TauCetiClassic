@@ -10,17 +10,21 @@
 	item_state = "backpack"
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
-	action_button_name = "Storage"
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
+	item_action_types = list(/datum/action/item_action/storage)
 
-/obj/item/weapon/storage/backpack/ui_action_click()
-	if(!opened)
-		open(loc)
+/datum/action/item_action/storage
+	name = "Storage"
+
+/datum/action/item_action/storage/Activate()
+	var/obj/item/weapon/storage/backpack/S = target
+	if(!S.opened)
+		S.open(S.loc)
 	else
-		close(loc)
-	opened = !opened
+		S.close(S.loc)
+	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))
@@ -384,6 +388,13 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
+	new /obj/item/weapon/reagent_containers/syringe/antiviral(src)
+	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/clothing/accessory/stethoscope(src)
+	new /obj/item/device/mmi(src)
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"

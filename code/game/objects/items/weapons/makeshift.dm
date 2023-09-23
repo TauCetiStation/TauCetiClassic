@@ -72,7 +72,8 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 
 /obj/item/weapon/melee/cattleprod/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(..())
+		return
 	if (!prob(50))
 		return
 	if(!ishuman(hit_atom))

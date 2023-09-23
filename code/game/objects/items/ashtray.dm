@@ -46,6 +46,8 @@
 		. = ..()
 
 /obj/item/ashtray/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
 	take_damage(3, BRUTE, MELEE)
 	if(contents.len)
 		visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")

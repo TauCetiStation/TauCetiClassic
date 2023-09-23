@@ -59,10 +59,10 @@
 	name = "Беспроводная Зарядка"
 	desc = "Заряжает оборудование, батарейки и другие штуки вокруг тебя."
 	ritual_length = (10 SECONDS)
-	ritual_invocations = list("By the power of our gods...",
-						"...We call upon you, who make the energy flow...",
-						"...to give us a piece of what we will be...")
-	invoke_msg = "...Flow! The energy through everything shall flow!"
+	ritual_invocations = list("Силой бога нашего...",
+						"...Мы взываем к вам, создающим поток энергии...",
+						"...даровать нам часть того, что будет...")
+	invoke_msg = "...Лейся! Пусть Энергия льется через все в этом мире!"
 	favor_cost = 400
 
 	needed_aspects = list(

@@ -771,7 +771,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0
+	custom_metabolism = 0.0001
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
@@ -796,7 +796,7 @@
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
 					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-					E.brute_dam = 0
+					E.heal_damage(30)
 					E.status &= ~ORGAN_BROKEN
 					E.perma_injury = 0
 					holder.remove_reagent("nanocalcium", 10)

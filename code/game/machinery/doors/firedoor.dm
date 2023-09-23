@@ -77,12 +77,13 @@
 		return
 	if(!density)
 		return ..()
+	if(world.time - last_bumped <= 10)
+		return //Can bump-open one airlock per second. This is to prevent popup message spam.
+	last_bumped = world.time
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if (mecha.occupant)
 			var/mob/M = mecha.occupant
-			if(world.time - M.last_bumped <= 10) return //Can bump-open one airlock per second. This is to prevent popup message spam.
-			M.last_bumped = world.time
 			attack_hand(M)
 	return 0
 
@@ -255,6 +256,7 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	take_out_wedged_item()
+	new /obj/item/weapon/airalarm_electronics(loc)
 	if(disassembled || prob(40))
 		var/obj/structure/firedoor_assembly/FA = new (loc)
 		if(disassembled)
@@ -311,25 +313,27 @@
 
 
 /obj/machinery/door/firedoor/update_icon()
-	cut_overlays()
+	var/list/firedoor_overlays = list()
 	if(density)
 		icon_state = "door_closed"
 		if(hatch_open)
-			add_overlay("hatch")
+			firedoor_overlays += get_airlock_overlay("hatch", icon, FALSE)
 		if(blocked)
-			add_overlay("welded")
+			firedoor_overlays += get_airlock_overlay("welded", icon, FALSE)
 		if(pdiff_alert)
-			add_overlay("palert")
+			firedoor_overlays += get_airlock_overlay("palert", icon, FALSE)//сделать TRUE кога решится проблема со створками
 		if(dir_alerts)
 			for(var/d in 1 to 4)
-				var/cdir = cardinal[d]
 				for(var/i in 1 to ALERT_STATES.len)
 					if(dir_alerts[d] & (1<<(i-1)))
-						add_overlay(new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir))
+						firedoor_overlays += get_airlock_overlay("alert_[ALERT_STATES[i]]", icon, FALSE)//сделать TRUE кога решится проблема со створками
 	else
 		icon_state = "door_open"
 		if(blocked)
-			add_overlay("welded_open")
+			firedoor_overlays += get_airlock_overlay("welded_open", icon, FALSE)
+
+	cut_overlays()
+	add_overlay(firedoor_overlays)
 
 	if(underlays.len)
 		underlays.Cut()

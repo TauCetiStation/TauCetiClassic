@@ -1,7 +1,7 @@
 /obj/item/weapon/arrow
 
 	name = "bolt"
-	desc = "It's got a tip for you - get the point?"
+	desc = "У меня есть подсказка для тебя - найди цель"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
 	item_state = "bolt"
@@ -16,7 +16,7 @@
 /obj/item/weapon/arrow/quill
 
 	name = "vox quill"
-	desc = "A wickedly barbed quill from some bizarre animal."
+	desc = "Колючее перо какого-то диковинного животного."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "quill"
 	item_state = "quill"
@@ -25,12 +25,12 @@
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
-	desc = "Don't cry for me, Orithena."
+	desc = "Не плачь по мне, Орифена."
 	icon_state = "metal-rod"
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")
+		to_chat(user, "[src] при выпуске из арбалета разлетается на россыпь осколков из перенапряженного металла.")
 		var/obj/item/weapon/shard/shrapnel/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
@@ -63,7 +63,7 @@
 		if(istype(I, /obj/item/weapon/arrow))
 			user.drop_from_inventory(I, src)
 			arrow = I
-			user.visible_message("[user] slides [arrow] into [src].","You slide [arrow] into [src].")
+			user.visible_message("[user] вставляет [arrow] в [src].","Вы вставляете [arrow] в [src].")
 			icon_state = "crossbow-nocked"
 			return
 
@@ -75,10 +75,10 @@
 			arrow.fingerprintslast = src.fingerprintslast
 			arrow.forceMove(src)
 			icon_state = "crossbow-nocked"
-			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
+			user.visible_message("[user] хаотично вставляет [arrow] в [src].","Вы хаотично вставляете [arrow] в [src].")
 			if(cell)
 				if(cell.charge >= 500)
-					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
+					to_chat(user, "<span class='notice'>В результате [arrow] начинает раскаляться докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
@@ -88,24 +88,24 @@
 		if(!cell)
 			user.drop_from_inventory(I, src)
 			cell = I
-			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
+			to_chat(user, "<span class='notice'>Вы вставляете [cell] в [src] и подключаете его к катушке зажигания.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
+					to_chat(user, "<span class='notice'>[arrow] мерцает и трещит, раскаляясь докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
 		else
-			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
+			to_chat(user, "<span class='notice'>Батарейка уже установлена в [src]</span>")
 
 	else if(isscrewing(I))
 		if(cell)
 			var/obj/item/C = cell
 			C.forceMove(get_turf(user))
 			cell = null
-			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [I].</span>")
+			to_chat(user, "<span class='notice'>Вы вынимаете [cell] из [src] с [I].</span>")
 		else
-			to_chat(user, "<span class='notice'>[src] doesn't have a cell installed.</span>")
+			to_chat(user, "<span class='notice'>[src] не имеет батарейки внутри.</span>")
 
 	else
 		return ..()
@@ -113,13 +113,13 @@
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
-			user.visible_message("[user] relaxes the tension on [src]'s string and removes [arrow].","You relax the tension on [src]'s string and remove [arrow].")
+			user.visible_message("[user] ослабляет натяжение тетивы [src] и вытаскивает [arrow].","Вы ослабляете натяжение тетивы [src] и вытаскиваете [arrow].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
 			A.removed(user)
 			arrow = null
 		else
-			user.visible_message("[user] relaxes the tension on [src]'s string.","You relax the tension on [src]'s string.")
+			user.visible_message("[user] ослабляет натяжение тетивы [src].", "Вы ослабляете натяжение тетивы [src].")
 		tension = 0
 		icon_state = "crossbow"
 	else
@@ -128,7 +128,7 @@
 /obj/item/weapon/crossbow/proc/draw(mob/user)
 
 	if(!arrow)
-		to_chat(user, "You don't have anything nocked to [src].")
+		to_chat(user, "У вас нет стрелы в [src].")
 		return
 
 	if(user.restrained())
@@ -136,7 +136,7 @@
 
 	current_user = user
 
-	user.visible_message("[user] begins to draw back the string of [src].","You begin to draw back the string of [src].")
+	user.visible_message("[user] начинает натягивать тетиву [src].","Вы начинаете натягивать тетиву [src].")
 	tension = 1
 	spawn(25) increase_tension(user)
 
@@ -150,9 +150,9 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		to_chat(usr, "[src] clunks as you draw the string to its maximum tension!")
+		to_chat(usr, "[src] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
 	else
-		user.visible_message("[usr] draws back the string of [src]!","You continue drawing back the string of [src]!")
+		user.visible_message("[usr] натягивает тетиву [src]!", "Вы продолжаете натягивать тетиву [src]!")
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
@@ -166,11 +166,11 @@
 		return
 
 	if(!tension)
-		to_chat(user, "You haven't drawn back the bolt!")
+		to_chat(user, "Вы не натянули болт на тетиву!")
 		return 0
 
 	if (!arrow)
-		to_chat(user, "You have no arrow nocked to [src]!")
+		to_chat(user, "Болт отсутствует в [src]!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
@@ -189,7 +189,7 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	user.visible_message("<span class='danger'>[user] releases [src] and sends [arrow] streaking toward [target]!</span>","<span class='danger'>You release [src] and send [arrow] streaking toward [target]!</span>")
+	user.visible_message("<span class='danger'>[user] стреляет из [src] и [arrow] летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете [src] и отправляете в полёт [arrow] несущуюся навстречу [target]!</span>")
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
@@ -212,37 +212,37 @@
 
 /obj/item/weapon/crossbowframe1
 	name = "crossbow(1 stage)"
-	desc = "To finish you need: add 3 rods; weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	desc = "Чтобы завершить, вам нужно: добавить 3 стержня; заварить швы; добавить 5 проводов; добавить 3 пластика; добавить 5 проводов; затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe1"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe2
 	name = "crossbow(2 stage)"
-	desc = "To finish you need: weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	desc = "Чтобы завершить, вам нужно: заварить швы; добавить 5 проводов; добавить 3 пластика; добавить 5 проводов; затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe2"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe3
 	name = "crossbow(3 stage)"
-	desc = "To finish you need: add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	desc = "Чтобы завершить, вам нужно: добавить 5 проводов; добавить 3 пластика; добавить 5 проводов; затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe3"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe4
 	name = "crossbow(4 stage)"
-	desc = "To finish you need: add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	desc = "Чтобы завершить, вам нужно: добавить 3 пластика; добавить 5 проводов; затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe4"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe5
 	name = "crossbow(5 stage)"
-	desc = "To finish you need: add 5 cable coil; tighten the bolts by screwdriver."
+	desc = "Чтобы завершить, вам нужно: добавить 5 проводов; затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe5"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe6
 	name = "crossbow(6 stage)"
-	desc = "To finish you need: tighten the bolts by screwdriver."
+	desc = "Чтобы завершить, вам нужно: затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe6"
 	item_state = "crossbow-solid"
 

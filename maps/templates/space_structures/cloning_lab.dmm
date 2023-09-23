@@ -130,9 +130,12 @@
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
 "w" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space_structures/cloning_lab)
 "x" = (
@@ -158,7 +161,8 @@
 /area/space_structures/cloning_lab)
 "C" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Reabilitaion Chamber"
+	name = "Reabilitaion Chamber";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
@@ -171,7 +175,8 @@
 /area/space_structures/cloning_lab)
 "E" = (
 /obj/machinery/door/airlock/research{
-	name = "Cloning Facility"
+	name = "Cloning Facility";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)

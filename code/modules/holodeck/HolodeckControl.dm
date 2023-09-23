@@ -235,7 +235,7 @@
 	loadProgram()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram()
-
+	set waitfor = FALSE
 	if(world.time < (last_change + 25))
 		audible_message("<b>ERROR. Recalibrating projection apparatus.</b>")
 		return
@@ -327,3 +327,14 @@
 	active = 0
 	set_power_use(IDLE_POWER_USE)
 	current_scene = null
+
+/obj/machinery/computer/HolodeckControl/horizontal
+	supported_programs = list( \
+	"Empty Court" = "emptycourt", \
+	"Beach" = "beach",	\
+	"Desert" = "desert",	\
+	"Space" = "space",	\
+	"Snow Field" = "snowfield",	\
+	"Meeting Hall" = "meetinghall",	\
+	"Theatre" = "theatre", \
+	)

@@ -30,8 +30,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ah" = (
@@ -39,8 +38,7 @@
 	dir = 9
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ai" = (
@@ -48,8 +46,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "aj" = (
@@ -57,8 +54,7 @@
 	dir = 5
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ak" = (
@@ -66,14 +62,12 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "al" = (
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "am" = (
@@ -81,15 +75,13 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "an" = (
 /obj/machinery/gateway/center/station,
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ao" = (
@@ -97,8 +89,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ap" = (
@@ -106,15 +97,13 @@
 	dir = 10
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "aq" = (
 /obj/machinery/gateway,
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "ar" = (
@@ -122,8 +111,7 @@
 	dir = 6
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "vaultfull"
 	},
 /area/centcom)
 "as" = (
@@ -288,15 +276,17 @@
 	},
 /area/centcom)
 "aR" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aT" = (
-/turf/unsimulated/floor{
-	icon_state = "warning"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aW" = (
 /obj/structure/table/reinforced,

@@ -7,37 +7,28 @@
 /area/mafia)
 "c" = (
 /obj/structure/temple_falsewall,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "d" = (
 /turf/simulated/floor/plating,
 /area/mafia)
-"e" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
 "f" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "h" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/mafia)
 "i" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "j" = (
 /turf/simulated/wall/mineral/silver,
@@ -51,23 +42,20 @@
 	locked = 1;
 	req_access = list(101)
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/mafia)
 "m" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/mafia)
 "o" = (
 /obj/structure/temple_falsewall,
@@ -79,9 +67,8 @@
 /turf/unsimulated/floor,
 /area/mafia)
 "q" = (
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/mafia)
 "s" = (
 /turf/unsimulated/floor/fakespace,
@@ -99,9 +86,17 @@
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
+/area/mafia)
+"U" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	locked = 1;
+	req_access = list(101);
+	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/mafia)
 
 (1,1,1) = {"
@@ -212,12 +207,12 @@ b
 h
 d
 d
-e
+i
 j
 j
-l
+U
 j
-l
+U
 j
 j
 d
@@ -237,7 +232,7 @@ b
 i
 j
 j
-l
+U
 j
 m
 q
@@ -245,7 +240,7 @@ j
 q
 m
 j
-l
+U
 j
 j
 d
@@ -374,7 +369,7 @@ q
 q
 n
 l
-e
+i
 b
 b
 a
@@ -537,7 +532,7 @@ b
 d
 j
 j
-l
+U
 j
 m
 q
@@ -545,7 +540,7 @@ j
 q
 m
 j
-l
+U
 j
 j
 d
@@ -565,13 +560,13 @@ d
 d
 j
 j
-l
+U
 j
-l
+U
 j
 j
 d
-e
+i
 d
 h
 b
@@ -588,7 +583,7 @@ k
 h
 d
 d
-e
+i
 d
 d
 o

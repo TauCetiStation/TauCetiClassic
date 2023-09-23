@@ -9,8 +9,8 @@
 
 	if(join_motd)
 		to_chat(src, "<div class='motd'>[join_motd]</div>")
-	if(join_test_merge)
-		to_chat(src, "<div class='test_merges'>[join_test_merge]</div>")
+	if(test_merges)
+		client.show_test_merges()
 	if(host_announcements)
 		to_chat(src, "<div class='host_announcements emojify linkify'>[host_announcements]</div>")
 

@@ -75,10 +75,11 @@
 		C.throw_mode_on()
 
 /obj/item/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	qdel(src)
 
-/obj/item/snowball/fire_act()
+/obj/item/snowball/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	qdel(src)
 
 /obj/item/snowball/ex_act(severity)

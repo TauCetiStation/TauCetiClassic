@@ -369,7 +369,7 @@ var/global/bomb_set
 		else
 			SSStatistics.score.nuked++
 			sleep(10)
-			explosion(src, 15, 70, 200)
+			SSticker.station_explosion_detonation(src)
 	else
 		off_station = 2
 

@@ -52,7 +52,7 @@
 
 	deaths += stat
 
-/datum/stat_collector/proc/add_explosion_stat(turf/epicenter, dev_range, hi_range, li_range, flash_range)
+/datum/stat_collector/proc/add_explosion_stat(turf/epicenter, dev_range, hi_range, li_range, flash_range, flame_range)
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 
@@ -64,6 +64,7 @@
 	stat.heavy_impact_range = hi_range
 	stat.light_impact_range = li_range
 	stat.flash_range = flash_range
+	stat.flame_range = flame_range
 	stat.occurred_time = roundduration2text()
 
 	explosions += stat

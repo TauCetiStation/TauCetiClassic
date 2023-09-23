@@ -170,15 +170,18 @@ Class Procs:
 	set_power_use(NO_POWER_USE)
 	machines -= src
 
+	stop_processing()
+
+	dropContents()
+	return ..()
+
+/obj/machinery/proc/stop_processing()
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else if (process_last)
 		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
-
-	dropContents()
-	return ..()
 
 /obj/machinery/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

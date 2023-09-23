@@ -6,8 +6,8 @@
 	icon_state = "9mm_glock"
 /obj/random/guns/handgun_security/item_to_spawn()
 		return pick(\
-						prob(3);/obj/item/weapon/gun/projectile/automatic/glock,\
-						prob(1);/obj/item/weapon/gun/projectile/automatic/glock/spec
+						prob(3);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(1);/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec
 					)
 
 /obj/random/guns/projectile_security
@@ -54,18 +54,18 @@
 	icon_state = "revolver"
 /obj/random/guns/projectile_handgun/item_to_spawn()
 		return pick(\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/glock,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/colt1911,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/glock,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
+						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/deagle,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba\
 					)
 
@@ -139,8 +139,8 @@
 						prob(180);/obj/item/ammo_casing/c9mm,\
 						prob(25);/obj/item/ammo_casing/c9mmr,\
 						prob(5);/obj/item/ammo_box/c9mm,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/glock,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)
 
@@ -194,15 +194,10 @@
 						/obj/item/weapon/gun/projectile/automatic/l13,\
 						/obj/item/weapon/gun/projectile/automatic/tommygun,\
 						/obj/item/weapon/gun/projectile/automatic/bulldog,\
-						/obj/item/weapon/gun/projectile/automatic/glock,\
-						/obj/item/weapon/gun/projectile/automatic/pistol,\
-						/obj/item/weapon/gun/projectile/automatic/colt1911,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
 						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,\
 						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate,\
-						/obj/item/weapon/gun/projectile/automatic/wjpp\
+						/obj/item/weapon/gun/projectile/automatic/pistol/wjpp\
 					)
-
-/obj/random/guns/set_special/spawn_item()
-	var/obj/item/weapon/gun/projectile/P = ..()
-	P.magazine.make_empty()
-	QDEL_NULL(P.chambered)

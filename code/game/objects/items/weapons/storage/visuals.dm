@@ -32,10 +32,13 @@
 	if(!user)
 		return FALSE
 
+	if(!user.in_interaction_vicinity(src))
+		return FALSE
+
 	if(require_opened && !opened)
 		to_chat(user, "<span class='notice'>You can't view [src]'s inventory without opening it up!</span>")
 		return FALSE
-	
+
 	open(user)
 	return TRUE
 

@@ -1,6 +1,6 @@
 /obj/item/weapon/storage/pouch/pistol_holster/stechkin
 	startswith = list(
-	/obj/item/weapon/gun/projectile/automatic/pistol,
+	/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,
 	)
 
 /datum/outfit/nuclear

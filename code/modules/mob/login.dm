@@ -35,7 +35,7 @@
 
 /mob/Login()
 	player_list |= src
-	
+
 	if(client.holder)
 		global.keyloop_list |= src
 	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
@@ -93,3 +93,5 @@
 
 	if(client.click_intercept)
 		client.click_intercept.post_login()
+
+	client.change_view(world.view)

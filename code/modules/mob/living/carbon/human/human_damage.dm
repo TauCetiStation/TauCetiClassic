@@ -46,7 +46,7 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+	if(species.brain_mod == 0 || species.flags[IS_SYNTHETIC] || !should_have_organ(O_BRAIN))
 		brainloss = 0
 	else
 		amount = amount * species.brain_mod
@@ -410,7 +410,7 @@ This function restores all bodyparts.
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
 	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
 		BP.status &= ~ORGAN_SPLINTED
-		playsound('sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='bold warning'>You see how the splint falls off from [src]'s [BP.name]!</span>")
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()

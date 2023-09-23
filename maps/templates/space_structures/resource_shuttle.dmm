@@ -22,11 +22,6 @@
 	},
 /turf/environment/space,
 /area/space_structures/resource_shuttle)
-"ee" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "platingdmg2"
-	},
-/area/space_structures/resource_shuttle)
 "gv" = (
 /obj/structure/object_wall/cargo,
 /obj/structure/object_wall/cargo{
@@ -76,9 +71,8 @@
 	icon_state = "pdoor0";
 	opacity = 0
 	},
-/turf/simulated/shuttle/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/shuttle/plating,
 /area/space_structures/resource_shuttle)
 "rH" = (
 /obj/structure/object_wall/cargo{
@@ -100,9 +94,8 @@
 /turf/environment/space,
 /area/space_structures/resource_shuttle)
 "sy" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/shuttle/plating,
 /area/space_structures/resource_shuttle)
 "sI" = (
 /obj/structure/object_wall/cargo,
@@ -121,9 +114,8 @@
 /turf/environment/space,
 /area/space_structures/resource_shuttle)
 "vY" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/shuttle/plating,
 /area/space_structures/resource_shuttle)
 "wa" = (
 /obj/structure/object_wall/cargo{
@@ -186,11 +178,6 @@
 	icon_state = "9,1"
 	},
 /turf/environment/space,
-/area/space_structures/resource_shuttle)
-"Bz" = (
-/turf/simulated/shuttle/plating{
-	icon_state = "platingdmg1"
-	},
 /area/space_structures/resource_shuttle)
 "BY" = (
 /obj/structure/object_wall/cargo{
@@ -409,7 +396,7 @@ RY
 Vs
 qR
 sy
-ee
+sy
 XB
 XB
 qG
@@ -423,7 +410,7 @@ RY
 RY
 RY
 qR
-Bz
+sy
 XB
 YD
 dM
@@ -434,7 +421,7 @@ Vs
 RY
 RY
 rr
-ee
+sy
 vY
 sy
 XB
@@ -448,7 +435,7 @@ RY
 xm
 Nn
 vY
-Bz
+sy
 XB
 XB
 GK

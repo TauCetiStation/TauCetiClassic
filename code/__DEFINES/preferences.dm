@@ -20,6 +20,10 @@
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_NOCLIENT_ATTACK|CHAT_GHOSTEARS|CHAT_PRAYER|CHAT_RADIO|CHAT_GHOSTRADIO|CHAT_GHOSTNPC|CHAT_ATTACKLOGS|CHAT_LOOC|CHAT_CKEY)
 
+#define GLOW_HIGH    0
+#define GLOW_MED     1 //default.
+#define GLOW_LOW     2
+#define GLOW_DISABLE 3 //this option must be the highest number
 
 #define PARALLAX_INSANE -1 //for show offs
 #define PARALLAX_HIGH    0 //default.

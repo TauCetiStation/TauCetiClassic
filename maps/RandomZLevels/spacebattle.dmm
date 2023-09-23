@@ -716,9 +716,8 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "cc" = (
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "cd" = (
 /obj/machinery/computer/pod{
@@ -752,9 +751,8 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "cj" = (
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
@@ -769,9 +767,8 @@
 /turf/simulated/shuttle/plating,
 /area/awaymission/spacebattle/cruiser)
 "cl" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -780,38 +777,6 @@
 "cm" = (
 /mob/living/simple_animal/hostile/syndicate/melee/space,
 /turf/simulated/floor,
-/area/awaymission/spacebattle/cruiser)
-"cn" = (
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
-	},
-/area/awaymission/spacebattle/cruiser)
-"co" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
-/area/awaymission/spacebattle/cruiser)
-"cp" = (
-/turf/simulated/floor{
-	icon_state = "damaged3"
-	},
-/area/awaymission/spacebattle/cruiser)
-"cq" = (
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/awaymission/spacebattle/cruiser)
-"cr" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
 /area/awaymission/spacebattle/cruiser)
 "cs" = (
 /obj/effect/landmark/corpse/engineer{
@@ -850,9 +815,8 @@
 "cy" = (
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm,
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "cz" = (
 /obj/item/stack/sheet/metal,
@@ -941,11 +905,6 @@
 "cO" = (
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/spacebattle/cruiser)
-"cP" = (
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
 /area/awaymission/spacebattle/cruiser)
 "cQ" = (
 /obj/effect/landmark{
@@ -1088,14 +1047,6 @@
 	icon_state = "bar"
 	},
 /area/awaymission/spacebattle/cruiser)
-"ds" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
-	},
-/area/awaymission/spacebattle/cruiser)
 "dt" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -1104,15 +1055,6 @@
 	name = "Front Hull Door"
 	},
 /turf/simulated/shuttle/plating,
-/area/awaymission/spacebattle/cruiser)
-"du" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/awaymission/spacebattle/cruiser)
 "dv" = (
 /turf/simulated/shuttle/wall{
@@ -1182,10 +1124,11 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dF" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "dG" = (
 /obj/effect/decal/cleanable/blood,
@@ -1204,15 +1147,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/awaymission/spacebattle/cruiser)
-"dL" = (
-/turf/simulated/floor{
-	icon_state = "damaged3"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/awaymission/spacebattle/cruiser)
 "dM" = (
 /obj/item/stack/rods,
@@ -1292,10 +1226,11 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dZ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "ea" = (
 /obj/effect/landmark/corpse/engineer/rig{
@@ -1319,9 +1254,8 @@
 	mobname = "Clay Dawson";
 	name = "Clay Dawson"
 	},
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "ef" = (
 /obj/machinery/gateway{
@@ -1370,10 +1304,11 @@
 /area/awaymission/spacebattle/cruiser)
 "em" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "eo" = (
 /turf/simulated/floor/engine,
@@ -1453,7 +1388,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/projectile/automatic/deagle,
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -1652,7 +1587,8 @@
 "fl" = (
 /obj/machinery/door/poddoor{
 	id = "spacebattlestorage";
-	name = "Secure Storage"
+	name = "Secure Storage";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
@@ -1668,7 +1604,9 @@
 /turf/simulated/shuttle/wall,
 /area/awaymission/spacebattle/cruiser)
 "fp" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2383,10 +2321,11 @@
 /area/awaymission/spacebattle/cruiser)
 "hw" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hA" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -2471,10 +2410,11 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hQ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warning"
+	icon_state = "warn"
 	},
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hT" = (
 /obj/structure/grille,
@@ -2504,7 +2444,9 @@
 	},
 /area/awaymission/spacebattle/syndicate7)
 "hY" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2688,9 +2630,8 @@
 "iy" = (
 /obj/effect/landmark/corpse/syndicatesoldier,
 /obj/item/weapon/gun/projectile/automatic/c20r,
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "iz" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -2752,7 +2693,9 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "iJ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/floor/airless{
 	dir = 10;
 	icon_state = "floor4"
@@ -2840,7 +2783,9 @@
 /turf/environment/space,
 /area)
 "iX" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -2915,7 +2860,9 @@
 	},
 /area/awaymission/spacebattle/syndicate6)
 "jj" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -3040,9 +2987,35 @@
 /turf/simulated/wall/mineral/phoron,
 /area/awaymission/spacebattle/secret)
 "jD" = (
-/obj/machinery/door/airlock/phoron,
+/obj/machinery/door/airlock/phoron{
+	dir = 4
+	},
 /turf/simulated/wall/mineral/phoron,
 /area/awaymission/spacebattle/secret)
+"oQ" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/awaymission/spacebattle/syndicate1)
+"yd" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/awaymission/spacebattle/syndicate3)
+"Af" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/awaymission/spacebattle/syndicate2)
 
 (1,1,1) = {"
 aa
@@ -21339,8 +21312,8 @@ ab
 aP
 aW
 aW
-bd
-bd
+oQ
+oQ
 aW
 aW
 aW
@@ -22689,7 +22662,7 @@ bO
 bO
 cj
 ce
-cr
+cc
 ce
 ce
 ce
@@ -22945,7 +22918,7 @@ bS
 bQ
 cd
 bO
-cn
+cj
 ce
 cN
 ce
@@ -23202,9 +23175,9 @@ bQ
 bQ
 bQ
 ck
-co
+cc
 cy
-cr
+cc
 ce
 cS
 ce
@@ -23459,8 +23432,8 @@ bQ
 bQ
 bQ
 ck
-cp
-co
+cc
+cc
 cO
 ce
 ce
@@ -23716,9 +23689,9 @@ bT
 bQ
 bQ
 bO
-cq
+cl
 cz
-cP
+cc
 cO
 ce
 ce
@@ -23973,9 +23946,9 @@ bO
 bO
 bO
 cl
-cr
+cc
 ce
-cP
+cc
 ce
 ce
 ct
@@ -25194,8 +25167,8 @@ ab
 aT
 aW
 aW
-bd
-bd
+oQ
+oQ
 aW
 aW
 aW
@@ -25548,7 +25521,7 @@ ce
 ce
 ce
 ce
-cP
+cc
 ce
 cN
 bX
@@ -25806,8 +25779,8 @@ ce
 ce
 ce
 cO
-cP
-cP
+cc
+cc
 bX
 ab
 ab
@@ -26064,7 +26037,7 @@ ce
 ce
 ce
 iy
-cr
+cc
 bX
 ab
 ab
@@ -26319,9 +26292,9 @@ ce
 ce
 ce
 ce
-cr
-cP
-cP
+cc
+cc
+cc
 bX
 ab
 ab
@@ -36734,8 +36707,8 @@ ab
 ac
 ah
 ah
-ak
-ak
+Af
+Af
 ah
 ah
 ah
@@ -40589,8 +40562,8 @@ ab
 ag
 ah
 ah
-ak
-ak
+Af
+Af
 ah
 ah
 ah
@@ -50116,8 +50089,8 @@ ab
 av
 aB
 aB
-aE
-aE
+yd
+yd
 aB
 aB
 aB
@@ -50963,7 +50936,7 @@ ab
 ab
 bX
 ce
-co
+cc
 ce
 ce
 ce
@@ -51219,11 +51192,11 @@ ab
 ab
 ab
 bX
-co
-cp
-cr
-cr
-cp
+cc
+cc
+cc
+cc
+cc
 ce
 dM
 ce
@@ -51478,8 +51451,8 @@ bO
 bO
 bO
 bO
-ds
-co
+cj
+cc
 ce
 ce
 ce
@@ -51737,7 +51710,7 @@ bQ
 de
 bO
 cj
-cr
+cc
 ce
 ce
 cS
@@ -51993,9 +51966,9 @@ bQ
 bQ
 bQ
 dt
-cp
-cr
-cp
+cc
+cc
+cc
 ce
 ce
 ce
@@ -52507,7 +52480,7 @@ bT
 bQ
 bQ
 bO
-dL
+cl
 ce
 cc
 ce
@@ -52763,10 +52736,10 @@ bO
 bO
 bO
 bO
-du
+cl
 ce
-cp
-cr
+cc
+cc
 cS
 ce
 ce
@@ -53019,7 +52992,7 @@ ab
 ab
 bX
 ce
-cP
+cc
 ce
 ce
 ce
@@ -53275,7 +53248,7 @@ ab
 ab
 ab
 bX
-cr
+cc
 ce
 ce
 dM
@@ -53971,8 +53944,8 @@ ab
 az
 aB
 aB
-aE
-aE
+yd
+yd
 aB
 aB
 aB

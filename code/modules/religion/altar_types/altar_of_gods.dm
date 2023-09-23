@@ -1,6 +1,6 @@
 /obj/structure/altar_of_gods
 	name = "Altar of the Gods"
-	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
+	desc = "Алтарь, позволяющий главе церкви выбирать религиозное учение и приносить жертвы для того, чтобы заработать милость богов."
 	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "altar"
 	density = TRUE
@@ -98,7 +98,7 @@
 // This proc is used to sacrifice all items on altar. Returns TRUE if at least something was sacrificed.
 /obj/structure/altar_of_gods/proc/sacrifice(mob/user)
 	if(!religion || !religion.aspects.len)
-		to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
+		to_chat(user, "<span class ='warning'>Сначала выберите аспекты своей религии!</span>")
 		return FALSE
 
 	if(user.is_busy(src))
@@ -146,11 +146,11 @@
 	if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
 		sacrifice(user)
 	else
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+		to_chat(user, "<span class='warning'>Вы не знаете, как это использовать.</span>")
 
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
 	if(religion && user.my_religion != religion)
-		to_chat(user, "Are you a member of another religion.")
+		to_chat(user, "Вы последователь другой религии.")
 		return FALSE
 	if(!user.mind)
 		return FALSE
@@ -248,11 +248,11 @@
 		return
 
 	if(performing_rite)
-		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
+		to_chat(user, "<span class='warning'>Вы уже проводите [performing_rite.name]!</span>")
 		return
 
 	if(!Adjacent(user))
-		to_chat(user, "<span class='warning'>You are too far away!</span>")
+		to_chat(user, "<span class='warning'>Вы слишком далеко!</span>")
 		return
 
 	performing_rite = religion.rites_by_name[rite_name]
@@ -279,6 +279,7 @@
 	T.rite.religion = religion
 	T.rite.favor_cost = 0
 	T.rite.piety_cost = 0
+	T.rite.divine_power = round(sqrt(R.divine_power))
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
 

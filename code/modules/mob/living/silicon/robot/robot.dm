@@ -1192,3 +1192,7 @@
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
+
+/mob/living/silicon/robot/crawl()
+	toggle_all_components()
+	to_chat(src, "<span class='notice'>You toggle all your components.</span>")

@@ -173,7 +173,7 @@
 	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
-			if(istype(G,/obj/item/clothing/gloves/yellow))
+			if(istype(G,/obj/item/clothing/gloves/insulated))
 				protected = 1
 
 	if(!protected)
@@ -199,7 +199,7 @@
 	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
-			if(istype(G,/obj/item/clothing/gloves/yellow) )
+			if(istype(G,/obj/item/clothing/gloves/insulated) )
 				protected = 1
 
 	if(!protected)
