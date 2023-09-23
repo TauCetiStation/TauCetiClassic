@@ -125,9 +125,10 @@
 		if(player.mind.assigned_role in imposter_prioritize_list)
 			mindprotected_list += player
 	log_mode("IMPOSTERS: First addition list has [mindprotected_list.len] lenght")
-	var/mob/M = pick(mindprotected_list)
-	add_faction_member(src, M)
-	antag_counting++
+	if(mindprotected_list.len)
+		var/mob/M = pick(mindprotected_list)
+		add_faction_member(src, M)
+		antag_counting++
 
 /datum/faction/traitor/auto/imposter/get_max_traitors(playercount)
 	return antag_counting
