@@ -11,48 +11,34 @@
  * Metal
  */
 var/global/list/datum/stack_recipe/metal_recipes = list (
-	new/datum/stack_recipe_list("Мебель", list(
-		new/datum/stack_recipe("Кровать", /obj/structure/stool/bed, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-		new/datum/stack_recipe("Шкаф", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE,  required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
-		new/datum/stack_recipe("Табурет", /obj/structure/stool, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-		new/datum/stack_recipe("Парикмахерское кресло", /obj/structure/stool/bed/chair/barber, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-		null,
-		new/datum/stack_recipe_list("Металлический стул", list(
-			new/datum/stack_recipe("Серый стул", /obj/structure/stool/bed/chair/metal, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Синий стул", /obj/structure/stool/bed/chair/metal/blue, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Красный стул", /obj/structure/stool/bed/chair/metal/red, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Зелёный стул", /obj/structure/stool/bed/chair/metal/green, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Чёрный стул", /obj/structure/stool/bed/chair/metal/black, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Белый стул", /obj/structure/stool/bed/chair/metal/white, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Жёлтый стул", /obj/structure/stool/bed/chair/metal/yellow, 1, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("barber chair", /obj/structure/stool/bed/chair/barber, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe_list("metal chairs", list(
+		new/datum/stack_recipe("grey chair", /obj/structure/stool/bed/chair/metal, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("blue chair", /obj/structure/stool/bed/chair/metal/blue, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("red chair", /obj/structure/stool/bed/chair/metal/red, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("green chair", /obj/structure/stool/bed/chair/metal/green, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("black chair", /obj/structure/stool/bed/chair/metal/black, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("white chair", /obj/structure/stool/bed/chair/metal/white, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("yellow chair", /obj/structure/stool/bed/chair/metal/yellow, one_per_turf = TRUE, on_floor = TRUE),
 		), 1),
-		null,
-		new/datum/stack_recipe_list("Кресло", list(
-			new/datum/stack_recipe("Бежевое кресло", /obj/structure/stool/bed/chair/comfy/beige, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Чёрное кресло", /obj/structure/stool/bed/chair/comfy/black, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Коричневое кресло", /obj/structure/stool/bed/chair/comfy/brown, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Лаймовое кресло", /obj/structure/stool/bed/chair/comfy/lime, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Бирюзовое кресло", /obj/structure/stool/bed/chair/comfy/teal, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-		), 2),
-		null,
-		new/datum/stack_recipe_list("Офисный стул",list(
-			new/datum/stack_recipe("Чёрный офисный стул", /obj/structure/stool/bed/chair/office/dark, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Белый офисный стул", /obj/structure/stool/bed/chair/office/light, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-		), 5),
-		null,
-		new/datum/stack_recipe_list("Комод", list(
-			new/datum/stack_recipe("Светлая картотека", /obj/structure/filingcabinet/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Тёмная картотека", /obj/structure/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Светлый комод", /obj/structure/filingcabinet/chestdrawer, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-			new/datum/stack_recipe("Тёмный комод", /obj/structure/filingcabinet/chestdrawer/black, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
-		), 4),
-	), 1),
-
+	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = TRUE, on_floor = TRUE),
 	null,
-
+	new/datum/stack_recipe_list("office chairs",list(
+		new/datum/stack_recipe("dark office chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = TRUE, on_floor = TRUE),
+		), 5),
+	new/datum/stack_recipe_list("comfy chairs", list(
+		new/datum/stack_recipe("beige comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("black comfy chair", /obj/structure/stool/bed/chair/comfy/black, 2, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("brown comfy chair", /obj/structure/stool/bed/chair/comfy/brown, 2, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("lime comfy chair", /obj/structure/stool/bed/chair/comfy/lime, 2, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE),
+		), 2),
+	null,
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2),
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts),
-
+	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE,  required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
 	null,
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
 	null,

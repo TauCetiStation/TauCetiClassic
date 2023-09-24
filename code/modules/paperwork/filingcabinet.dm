@@ -54,7 +54,7 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/weapon/paper_bundle))
-		to_chat(user, "<span class='notice'>[P] положен в [src].</span>")
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		user.drop_from_inventory(P, src)
 		flick("[initial(icon_state)]-open", src)
 		updateUsrDialog()
@@ -63,26 +63,22 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
-		to_chat(user, "<span class='notice'>[src] [anchored ? "прикручен" : "откручен"].</span>")
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
-	else if(isscrewing(P) && !anchored)
-		if(P.use_tool(src, user, 15))
-			deconstruct(TRUE)
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
-		..()
+		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
 
 /obj/structure/filingcabinet/deconstruct(disassembled)
 	for(var/obj/item/I as anything in contents)
 		I.forceMove(loc)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	new /obj/item/stack/sheet/metal(loc, 4)
+	new /obj/item/stack/sheet/metal(loc, 2)
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
 	if(contents.len <= 0)
-		to_chat(user, "<span class='notice'>[src] пуст.</span>")
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 		return
 
 	user.set_machine(src)
