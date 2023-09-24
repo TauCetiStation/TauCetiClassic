@@ -164,8 +164,10 @@
 	var/heavy_impact_range = 0
 	// int, [-infinity...]
 	var/light_impact_range = 0
-	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
+	// int, [-infinity...]
 	var/flash_range = 0
+	// int, [-infinity...]
+	var/flame_range = 0
 	// string, [hh:mm]
 	var/occurred_time
 
@@ -223,3 +225,15 @@
 /datum/stat/rating
 	// map of [string, float] where float is [0..5]
 	var/list/ratings = list()
+
+/datum/stat/vote
+	// string from /datum/poll name
+	var/name
+	// int, [0...]
+	var/total_votes
+	// int, [0...]
+	var/total_voters
+	// string rfom /datum/vote_choice
+	var/winner
+	// map of [string, int] where int is [0...]
+	var/list/results = list()

@@ -183,10 +183,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	AddComponent(/datum/component/replicator_regeneration)
 
-	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), .proc/on_clientmob_move)
+	RegisterSignal(src, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_be_tracked))
+
+	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), PROC_REF(on_clientmob_move))
+
+/mob/living/simple_animal/hostile/replicator/proc/can_be_tracked(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
 
 /mob/living/simple_animal/hostile/replicator/Destroy()
-	UnregisterSignal(src, list(COMSIG_CLIENTMOB_MOVE))
+	UnregisterSignal(src, list(COMSIG_CLIENTMOB_MOVE, COMSIG_LIVING_CAN_TRACK))
 
 	global.idle_replicators -= src
 
@@ -288,13 +294,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 				var/obj/structure/bluespace_corridor/BC_anim = locate() in anim_turf
 				if(BC_anim)
-					INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
+					INVOKE_ASYNC(BC, TYPE_PROC_REF(/obj/structure/bluespace_corridor, animate_obstacle))
 
 			return FALSE
 
 		if(BC.neighbor_count > 1)
 			to_chat(src, "<span class='notice'>Can not place Bluespace Corridor, a neighbor has more than one other neighboring Bluespace Corridor.</span>")
-			INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
+			INVOKE_ASYNC(BC, TYPE_PROC_REF(/obj/structure/bluespace_corridor, animate_obstacle))
 			return FALSE
 
 	return TRUE
@@ -502,7 +508,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		to_chat(R, "<span class='notice'>Issued a self-destruct order to [name].</span>")
 		set_state(REPLICATOR_STATE_HARVESTING)
 		set_last_controller(R.ckey)
-		INVOKE_ASYNC(src, .proc/disintegrate, src)
+		INVOKE_ASYNC(src, PROC_REF(disintegrate), src)
 		return
 
 	if(href_list["replicator_objection"])

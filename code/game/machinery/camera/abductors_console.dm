@@ -8,7 +8,6 @@
 	var/datum/action/innate/teleport_in/I = new
 	var/datum/action/innate/teleport_out/O = new
 	var/datum/action/innate/teleport_self/S = new
-	var/datum/action/innate/vest_mode_swap/M = new
 	var/datum/action/innate/vest_disguise_swap/D = new
 	var/datum/action/innate/set_droppoint/P = new
 
@@ -21,7 +20,6 @@
 	actions += I
 	actions += O
 	actions += S
-	actions += M
 	actions += D
 	actions += P
 	networks += "Abductor[team]"
@@ -110,19 +108,6 @@
 	use_delay = (world.time + teleport_self_cooldown)
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		P.MobToLoc(remote_eye.loc,C)
-
-/datum/action/innate/vest_mode_swap
-	name = "Switch Vest Mode"
-	button_icon = 'icons/hud/actions.dmi'
-	button_icon_state = "vest_mode"
-
-/datum/action/innate/vest_mode_swap/Activate()
-	if(!target || !iscarbon(owner))
-		return
-	var/obj/machinery/computer/camera_advanced/abductor/C = target
-	var/obj/machinery/abductor/console/console = C.console
-	console.FlipVest()
-
 
 /datum/action/innate/vest_disguise_swap
 	name = "Switch Vest Disguise"

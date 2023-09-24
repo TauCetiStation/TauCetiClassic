@@ -67,7 +67,7 @@
 		to_chat(user, "<span class='cult'>Вы решили подготовиться перед началом ритуала</span>")
 		return FALSE
 
-	addtimer(CALLBACK(src, .proc/announce_summon, user), 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(announce_summon), user), 15 SECONDS)
 
 	return TRUE
 
@@ -88,7 +88,7 @@
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
-	addtimer(CALLBACK(src, .proc/summon, get_turf(AOG)), 40)
+	addtimer(CALLBACK(src, PROC_REF(summon), get_turf(AOG)), 40)
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)

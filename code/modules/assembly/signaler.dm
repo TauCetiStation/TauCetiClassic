@@ -26,7 +26,7 @@
 	. = ..()
 	if(my_new_frequency)
 		frequency = my_new_frequency
-	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
+	addtimer(CALLBACK(src, PROC_REF(set_frequency), frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
@@ -39,7 +39,7 @@
 	if(cooldown > 0)
 		return FALSE
 	cooldown = 2
-	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
+	addtimer(CALLBACK(src, PROC_REF(process_cooldown)), 10)
 	signal()
 	return TRUE
 

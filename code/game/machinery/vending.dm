@@ -287,18 +287,10 @@
 		if(check_accounts)
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				var/attempt_pin = 0
 				if(D)
-					if(D.security_level > 0)
-						if(usr.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == D.account_number && usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == D.remote_access_pin)
-							attempt_pin = usr.mind.get_key_memory(MEM_ACCOUNT_PIN)
-						else
-							attempt_pin = input("Enter pin code", "Vendor transaction") as num
-						if(isnull(attempt_pin))
-							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
-							return
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
-
+					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
@@ -424,15 +416,6 @@
 
 	else if (href_list["vend"] && vend_ready && !currently_vending)
 
-		if(isrobot(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return FALSE
-		else if(issilicon(usr))
-			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return FALSE
-
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny, src)
@@ -518,7 +501,7 @@
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 
-		addtimer(CALLBACK(src, .proc/say_slogan), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/shoot_inventory_timer()
 	if(stat & (BROKEN|NOPOWER))
@@ -527,16 +510,16 @@
 	if(shoot_inventory)
 		throw_item()
 
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/update_wires_check()
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	if(slogan_list.len > 0 && !shut_up)
-		addtimer(CALLBACK(src, .proc/say_slogan), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 	if(shoot_inventory)
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 
 /obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
@@ -564,11 +547,17 @@
 				update_power_use()
 	update_power_use()
 
+/obj/machinery/vending/turn_light_off()
+	. = ..()
+	stat |= NOPOWER
+	icon_state = "[initial(icon_state)]-off"
+	update_power_use()
+
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
 	if(refill_canister)
 		//Dropping actual items
-		var/max_drop = rand(1, 3)
+		var/max_drop = rand(5, 7)
 		for(var/i = 1, i < max_drop, i++)
 			var/datum/data/vending_product/R = pick(src.product_records)
 			var/dump_path = R.product_path

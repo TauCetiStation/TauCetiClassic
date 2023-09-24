@@ -19,7 +19,7 @@
 
 /obj/item/toy/crayon/atom_init()
 	. = ..()
-	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), .proc/afterattack_no_params)
+	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), PROC_REF(afterattack_no_params))
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")

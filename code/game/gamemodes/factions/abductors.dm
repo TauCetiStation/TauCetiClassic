@@ -1,3 +1,6 @@
+/mob/living/carbon/human/abductor/event
+	spawner_args = list(/datum/spawner/living/abductor, 2 MINUTES)
+
 /obj/effect/landmark/abductor
 	var/team = 1
 
@@ -7,7 +10,6 @@
 
 /obj/effect/landmark/abductor/console/atom_init_late()
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
-	c.team = team
 	c.Initialize()
 	qdel(src)
 
@@ -16,34 +18,33 @@
 /obj/effect/landmark/abductor/scientist
 	name = "Abductor scientist"
 
-var/global/list/obj/effect/landmark/abductor/agent_landmarks[MAX_ABDUCTOR_TEAMS]
-var/global/list/obj/effect/landmark/abductor/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
-
-var/global/abductor_landmarks_setuped = FALSE
+var/global/list/agent_landmarks[MAX_ABDUCTOR_TEAMS]
+var/global/list/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
 
 /datum/faction/abductors
 	name = F_ABDUCTORS
 	ID = F_ABDUCTORS
 	required_pref = ROLE_ABDUCTOR
 
-	initroletype = /datum/role/abductor/agent
-	roletype = /datum/role/abducted
+	initroletype = /datum/role/abductor/scientist
+	roletype = /datum/role/abductor/agent
 
 	logo_state = "abductor-logo"
 
-	min_roles = 2
-	max_roles = 2
+	max_roles = 8
 
-	var/team_number
-	var/list/datum/role/abducted/abductees = list()
-	var/static/team_count = 1
+	var/num_agents = 0
+	var/num_scientists = 0
 	var/static/finished = FALSE
+	var/abductor_landmarks_setuped = FALSE
 
 /datum/faction/abductors/New()
 	..()
 	if(!abductor_landmarks_setuped)
 		abductor_landmarks_setuped = TRUE
 		setup_landmarks()
+	//Always max teams, because major event
+	create_spawners(/datum/spawner/abductor, max_roles)
 
 /datum/faction/abductors/proc/setup_landmarks()
 	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor agent"])
@@ -51,36 +52,35 @@ var/global/abductor_landmarks_setuped = FALSE
 	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor scientist"])
 		scientist_landmarks[A.team] = A
 
-/datum/faction/abductors/get_initrole_type()
-	if(members.len == 0)
-		return /datum/role/abductor/agent
-	return /datum/role/abductor/scientist
-
-/datum/faction/abductors/OnPostSetup()
-	for(var/datum/role/R in members)
-		if(istype(R, /datum/role/abductor/scientist))
-			var/obj/effect/landmark/L = scientist_landmarks[team_number]
-			R.antag.current.forceMove(L.loc)
-
-		else if(istype(R, /datum/role/abductor/agent))
-			var/obj/effect/landmark/L = agent_landmarks[team_number]
-			R.antag.current.forceMove(L.loc)
-
-	return ..()
-
 /datum/faction/abductors/forgeObjectives()
 	if(!..())
 		return FALSE
-	var/datum/objective/experiment/E = AppendObjective(/datum/objective/experiment)
-	if(E)
-		E.team = team_number
+	AppendObjective(/datum/objective/experiment/long)
 	return TRUE
+
+/datum/faction/abductors/HandleNewMind(datum/mind/M, laterole)
+	var/datum/role/newRole = ..()
+	if(!newRole)
+		return
+	num_scientists++
+	newRole.OnPostSetup()
+
+/datum/faction/abductors/HandleRecruitedMind(datum/mind/M, laterole)
+	var/datum/role/newRole = ..()
+	if(!newRole)
+		return
+	num_agents++
+	newRole.OnPostSetup()
+
+/datum/faction/abductors/proc/get_needed_teamrole()
+	. = FALSE
+	if(num_scientists > 0)
+		. = num_scientists > num_agents
 
 /datum/faction/abductors/can_setup()
 	if(!..())
 		return FALSE
-	team_number = team_count++
-	name = "Mothership [pick(greek_pronunciation)]"
+	name = "Mothership"
 	return TRUE
 
 /datum/faction/abductors/check_win()
@@ -95,8 +95,3 @@ var/global/abductor_landmarks_setuped = FALSE
 			return FALSE
 
 	return FALSE
-
-/datum/faction/abductors/proc/get_team_console(team)
-	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)
-		if(c.team == team_number)
-			return c

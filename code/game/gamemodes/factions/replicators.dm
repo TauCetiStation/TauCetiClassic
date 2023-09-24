@@ -70,6 +70,10 @@
 
 	var/will_do_fake_announcement = FALSE
 
+	var/next_fake_disintegration = 0
+	var/min_fake_disintegration_cooldown = 1 SECOND
+	var/max_fake_disintegration_cooldown = 3 SECONDS
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -123,6 +127,8 @@
 
 	process_announcements()
 
+	process_fake_disintegration()
+
 	if(next_materials_update < world.time)
 		last_second_materials_change = this_second_materials_change
 		this_second_materials_change = 0
@@ -150,6 +156,26 @@
 		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
 		swarm_chat_message("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
 		bandwidth++
+
+/datum/faction/replicators/proc/process_fake_disintegration()
+	if(length(global.replicator_mines) <= 0)
+		return
+	if(next_fake_disintegration > world.time)
+		return
+	next_fake_disintegration = world.time + rand(min_fake_disintegration_cooldown, max_fake_disintegration_cooldown)
+
+	var/list/pos_mines = global.replicator_mines.Copy()
+	var/max_iterations = 100
+	while(length(pos_mines) > 0 && max_iterations > 0)
+		var/obj/item/mine/replicator/mine = pick(pos_mines)
+		pos_mines -= mine
+		max_iterations -= 1
+
+		if(SSchunks.has_ally_faction(mine, "replicator", 7))
+			continue
+		if(!SSchunks.has_enemy_faction(mine, "replicator", 7))
+			continue
+		INVOKE_ASYNC(mine, TYPE_PROC_REF(/obj/item/mine/replicator, pretend_disintegration))
 
 /datum/faction/replicators/proc/process_announcements()
 	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
@@ -261,7 +287,7 @@ Message ends."}
 	sleep(10)
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 	SSticker.station_explosion_cinematic(0, "replicators")
-	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(blue_screen)), 17.6 SECONDS)
 
 	var/obj/effect/cross_action/spacetime_dist/center = new(T)
 	center.linked_dist = center

@@ -6,7 +6,7 @@
 /datum/event/feature/area/replace/del_cable/setup()
 	. = ..()
 	num_replaceable = rand(2, 8)
-	replace_callback = CALLBACK(src, .proc/remove_wire)
+	replace_callback = CALLBACK(src, PROC_REF(remove_wire))
 
 /datum/event/feature/area/replace/del_cable/proc/remove_wire(obj/structure/cable/C)
 	var/turf/T = get_turf(C)

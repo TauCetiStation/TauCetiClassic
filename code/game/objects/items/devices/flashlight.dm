@@ -9,11 +9,14 @@
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
 	g_amt = 20
-	action_button_name = "Toggle Flashlight"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flashlight)
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
 	var/last_button_sound = 0 // Prevents spamming for Object lights
+
+/datum/action/item_action/hands_free/toggle_flashlight
+	name = "Toggle Flashlight"
 
 /obj/item/device/flashlight/atom_init()
 	. = ..()
@@ -23,6 +26,7 @@
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+	update_item_actions()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
@@ -31,6 +35,15 @@
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+	update_item_actions()
+
+/obj/item/device/flashlight/turn_light_off()
+	. = ..()
+	on = FALSE
+	icon_state = initial(icon_state)
+	last_button_sound = world.time + 3
+	if(button_sound)
+		playsound(src, button_sound, VOL_EFFECTS_MASTER, 20)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if (last_button_sound >= world.time)
@@ -169,14 +182,15 @@
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
-	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
 	light_color = LIGHT_COLOR_FLARE
 	light_power = 2
-	action_button_name = "Toggle Flare"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flare)
 
+/datum/action/item_action/hands_free/toggle_flare
+	name = "Toggle Flare"
 
 /obj/item/device/flashlight/flare/atom_init()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -209,7 +223,13 @@
 		icon_state = "[initial(icon_state)]-burned"
 		item_state = "[initial(item_state)]-burned"
 		update_inv_mob()
+		update_item_actions()
 	STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/turn_light_off()
+	. = ..()
+	fuel = 0
+	turn_off()
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
@@ -237,7 +257,7 @@
 	name = "glowing slime extract"
 	desc = "A glowing ball of what appears to be amber."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "floor1" //not a slime extract sprite but... something close enough!
+	icon_state = "floor" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
 	w_class = SIZE_MINUSCULE
 	m_amt = 0
@@ -256,12 +276,17 @@
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
 
+/obj/item/device/flashlight/slime/turn_light_off()
+	. = ..()
+	to_chat(loc, "<span class='notice'>[src] melts!</span>")
+	qdel(src)
+
+
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
-
 
 /obj/item/device/flashlight/emp/atom_init()
 	. = ..()

@@ -1,0 +1,6 @@
+@font-face{
+  font-family: "Gys14Segment";
+  src: url(Gys14Segment.ttf) format("truetype"), url(Gys14Segment.eof) format("embedded-opentype"), url(Gys14Segment.woff) format("woff");
+}
+/* font-face in ie doesn't work without styles defined. Fuck you microsoft */
+:root {}

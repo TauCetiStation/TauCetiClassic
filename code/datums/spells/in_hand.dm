@@ -12,10 +12,10 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
-	return (!user.lying && ..())
+	return ..()
 
 /obj/effect/proc_holder/spell/in_hand/cast(mob/living/carbon/human/user = usr)
-	if(!istype(user) || user.lying)
+	if(!istype(user))
 		return
 
 	if(!user.is_in_hands(summon_path))
@@ -47,7 +47,7 @@
 	update_icon()
 
 /obj/item/weapon/magic/afterattack(atom/target, mob/user, proximity, params)
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated())
 		return FALSE
 
 	if(!touch_spell)
@@ -141,7 +141,7 @@
 		var/mob/living/M = target
 		M.fire_act()
 		M.adjust_fire_stacks(5)
-	explosion(get_turf(target), 1)
+	explosion(get_turf(target), 0, 0, 1, adminlog = FALSE)
 	return ..()
 
 ///////////////////////////////////////////

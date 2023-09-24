@@ -41,7 +41,7 @@
 
 /obj/item/clothing/shoes/boots/proc/add_knife(obj/item/K)
 	knife = K
-	RegisterSignal(knife, list(COMSIG_PARENT_QDELETING), .proc/remove_knife)
+	RegisterSignal(knife, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_knife))
 
 /obj/item/clothing/shoes/boots/proc/remove_knife()
 	UnregisterSignal(knife, list(COMSIG_PARENT_QDELETING))

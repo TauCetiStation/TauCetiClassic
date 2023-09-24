@@ -6,7 +6,7 @@
 	item_state = "stamp"
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
-	throw_speed = 7
+	throw_speed = 4
 	throw_range = 15
 	m_amt = 60
 	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build
@@ -16,6 +16,7 @@
 	var/stamp_color = "#a23e3e"
 	var/stamp_border = "#660000"
 	var/big_stamp = FALSE
+	var/borderstyle = "solid"
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
@@ -160,6 +161,15 @@
 	stamp_border = "#257cc3"
 	big_stamp = TRUE
 
+/obj/item/weapon/stamp/copy_correct
+	name = "Copy is Correct rubber stamp"
+	icon_state = "stamp-hop"
+	dye_color = DYE_HOP
+	stamp_message = "Копия верна"
+	stamp_color = "#6ec0ea"
+	stamp_border = "#1f66a0"
+	borderstyle = "dashed"
+
 // Syndicate stamp to forge documents.
 /obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 
@@ -195,7 +205,7 @@
 	if (big_stamp)
 		P.stamp_text += "<div style=\"margin-top:20px;\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:5px;border-style:double;padding:3px\">[message]</div></font></div>"
 	else
-		P.stamp_text += "<div style=\"margin-top:20px;margin-left:3px\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:2px;border-style:solid;padding:3px\">[message]</div></font></div>"
+		P.stamp_text += "<div style=\"margin-top:20px;margin-left:3px\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:2px;border-style:[borderstyle];padding:3px\">[message]</div></font></div>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	var/x

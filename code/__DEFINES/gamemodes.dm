@@ -9,9 +9,12 @@
 #define F_CUSTOMSQUAD        "Custom Squad"
 #define F_DEATHSQUAD         "Nanotrasen Deathsquad"
 #define F_EMERSQUAD          "Emergency Response Team"
+#define F_EMERNUKE           "Gorlex Marauders Recon Squad"
+#define F_EMERPIRATES        "Pirate Gang"
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"
+#define F_IMPOSTERS          "Imposters"
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"
@@ -41,10 +44,12 @@
 #define GANGSTER_LEADER "Gangster Leader"
 #define GANGSTER_DEALER "Gangster Dealer"
 #define HEADREV "Head Revolutionary"
+#define IMPOSTER "Imposter"
 #define MALF "Malf AI"
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
 #define NUKE_OP_LEADER "Nuclear Operative Leader"
+#define LONE_OP "Solo Nuclear Operative"
 #define NINJA "Space Ninja"
 #define PROP "Prop"
 #define REV "Revolutionary"
@@ -62,6 +67,8 @@
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
 #define REPLICATOR "Replicator"
+#define PIRATE "Pirate"
+#define PRISONER "Prisoner"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
@@ -75,9 +82,11 @@
 ///////////////// FACTION STAGES //////////////////////
 #define FS_DEFEATED    -1
 #define FS_DORMANT      0
-#define FS_ACTIVE       1
-#define FS_ENDGAME      2
-#define FS_VICTORY      3
+#define FS_START        1
+#define FS_ACTIVE       2
+#define FS_MIDGAME      3
+#define FS_ENDGAME      4
+#define FS_VICTORY      5
 
 /////////////////////// OTHERS ////////////////////////
 

@@ -14,7 +14,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/radio/intercom, intercom_list)
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	add_fingerprint(user)
-	INVOKE_ASYNC(src, .proc/attack_self, user)
+	INVOKE_ASYNC(src, PROC_REF(attack_self), user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
@@ -22,7 +22,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/radio/intercom, intercom_list)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	add_fingerprint(user)
-	INVOKE_ASYNC(src, .proc/attack_self, user)
+	INVOKE_ASYNC(src, PROC_REF(attack_self), user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if (!on)

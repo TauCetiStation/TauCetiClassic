@@ -188,6 +188,8 @@
 			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
 		var/icon/I = new('icons/obj/drinks.dmi', icon_state)

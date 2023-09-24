@@ -60,7 +60,7 @@
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
-	addtimer(CALLBACK(src, .proc/follow_tube), 5)
+	addtimer(CALLBACK(src, PROC_REF(follow_tube)), 5)
 
 /obj/structure/transit_tube_pod/examine(mob/user)
 	..()
@@ -143,7 +143,7 @@
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
 		icon_state = "opening"
-		addtimer(CALLBACK(src, .proc/check_opening_icon), OPEN_DURATION)
+		addtimer(CALLBACK(src, PROC_REF(check_opening_icon)), OPEN_DURATION)
 
 /obj/structure/transit_tube/station/proc/check_opening_icon()
 	if(icon_state == "opening")
@@ -152,7 +152,7 @@
 /obj/structure/transit_tube/station/proc/close_animation()
 	if(icon_state == "open")
 		icon_state = "closing"
-		addtimer(CALLBACK(src, .proc/check_closing_icon), CLOSE_DURATION)
+		addtimer(CALLBACK(src, PROC_REF(check_closing_icon)), CLOSE_DURATION)
 
 /obj/structure/transit_tube/station/proc/check_closing_icon()
 	if(icon_state == "closing")
@@ -161,7 +161,7 @@
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving && (pod.dir in directions()))
-			addtimer(CALLBACK(src, .proc/move_pod, pod), 5)
+			addtimer(CALLBACK(src, PROC_REF(move_pod), pod), 5)
 			return
 
 /obj/structure/transit_tube/station/proc/move_pod(obj/structure/transit_tube_pod/pod)
@@ -203,7 +203,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
-	addtimer(CALLBACK(src, .proc/cycle_stopped_pod, pod, from_dir), 5)
+	addtimer(CALLBACK(src, PROC_REF(cycle_stopped_pod), pod, from_dir), 5)
 
 /obj/structure/transit_tube/station/proc/cycle_stopped_pod(obj/structure/transit_tube_pod/pod, from_dir)
 	open_animation()
@@ -426,7 +426,7 @@
 /obj/structure/transit_tube/proc/init_dirs()
 	if(icon_state == "auto")
 		// Additional delay, for map loading.
-		addtimer(CALLBACK(src, .proc/init_dirs_automatic), 1)
+		addtimer(CALLBACK(src, PROC_REF(init_dirs_automatic)), 1)
 
 	else
 		tube_dirs = parse_dirs(icon_state)

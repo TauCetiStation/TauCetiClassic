@@ -9,7 +9,7 @@
 	var/ignore_if_not_on_turf
 	///The signals of the connect range component, needed to monitor the turfs in range.
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
@@ -27,11 +27,11 @@
 	if(new_receiver)
 		hasprox_receiver = new_receiver
 		if(new_receiver != new_host)
-			RegisterSignal(new_receiver, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
+			RegisterSignal(new_receiver, COMSIG_PARENT_QDELETING, PROC_REF(on_host_or_receiver_del))
 	else if(hasprox_receiver == host) //Default case
 		hasprox_receiver = new_host
 	host = new_host
-	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
+	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, PROC_REF(on_host_or_receiver_del))
 	update_connect_range()
 
 /datum/proximity_monitor/proc/update_connect_range()
@@ -39,7 +39,7 @@
 		qdel(GetComponent(/datum/component/connect_range))
 		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 		return
-	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(host, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	//If the connect_range component exists already, this will just update its args. No errors or duplicates.
 	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, !ignore_if_not_on_turf)
 

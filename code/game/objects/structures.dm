@@ -41,7 +41,13 @@
 			return
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(loc)
-		AM.ex_act(severity++)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += AM
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += AM
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += AM
 	qdel(src)
 
 /obj/structure/proc/climb_on()

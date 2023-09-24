@@ -71,7 +71,7 @@
 	icon_state = "red_1"
 	light_color = "#ff0000"
 
-/obj/item/projectile/magic/animate/on_impact(atom/change)
+/obj/item/projectile/magic/animate/on_hit(atom/change)
 	. = ..()
 	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change
@@ -83,14 +83,20 @@
 		create_spawner(/datum/spawner/living/mimic, C)
 	else if(isshade(change) || isxeno(change))
 		var/mob/living/M = wabbajack(change)
+		if(!M)
+			return
 		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
 			var/datum/faction/wizards/federation = mage.GetFaction()
-			if(federation)
+			if(federation && M.mind)
 				var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M)
 				var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
 				new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
 				new_objective.target = firer.mind
+				var/datum/role/R = M.mind.GetRole(EVIL_SHADE)
+				if(R)
+					R.Deconvert()
+
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"

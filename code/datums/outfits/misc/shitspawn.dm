@@ -411,7 +411,7 @@
 /datum/outfit/velocity/chief
 	name = "Velocity: chief"
 
-	uniform = /obj/item/clothing/under/rank/head_of_security/corp
+	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat
 	l_ear = /obj/item/device/radio/headset/velocity/chief

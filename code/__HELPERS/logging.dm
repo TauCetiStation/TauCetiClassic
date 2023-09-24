@@ -9,6 +9,10 @@
 /proc/error(msg)
 	world.log << "## ERROR: [msg][log_end]"
 
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
+
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)

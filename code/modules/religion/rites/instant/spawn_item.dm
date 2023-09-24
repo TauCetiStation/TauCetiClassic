@@ -8,7 +8,7 @@
 	var/adding_favor = 75
 
 /datum/religion_rites/instant/spawn_item/New()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, .proc/modify_item))
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, PROC_REF(modify_item)))
 
 // Used to apply some effect to an item after its spawn.
 /datum/religion_rites/instant/spawn_item/proc/modify_item(atom/item)

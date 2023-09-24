@@ -1,14 +1,14 @@
 /mob/living/simple_animal/lizard
 	name = "lizard"
-	desc = "A cute tiny lizard."
+	desc = "Милая крошечная ящерица."
 	icon_state = "lizard"
 	icon_living = "lizard"
 	icon_dead = "lizard_dead"
 	icon_gib = "lizard_gib"
-	speak = list("hiss", "hiss", "hiss", "hiss", "hiss?", "hiss...")
-	speak_emote = list("hisses")
-	emote_hear = list("hisses")
-	emote_see = list("runs in a circle", "shakes", "scritches at something")
+	speak = list("Хсс","Хсс","Хсс","Хсс","Хсс?","Хсс...")
+	speak_emote = list("шипит")
+	emote_hear = list("шипит")
+	emote_see = list("бегает по кругу","чешется","выпускает язык")
 	speak_chance = 1
 	health = 10
 	maxHealth = 10
@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()
-	desc = "It doesn't hiss anymore."
+	desc = "Она больше не будет шипеть..."
 
 /mob/living/simple_animal/lizard/Crossed(atom/movable/AM)
 	if(ishuman(AM))

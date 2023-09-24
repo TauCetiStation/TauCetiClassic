@@ -255,9 +255,13 @@
 		if(pai.master_dna)
 			return
 		var/mob/M = usr
-		if(!iscarbon(M))
+		if(!ishuman(M))
 			to_chat(usr, "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>")
 		else
+			var/mob/living/carbon/human/H = M
+			if(!H.dna.unique_enzymes)
+				to_chat(H, "<span class='warning'>No DNA was found.</span>")
+				return
 			var/datum/dna/dna = usr.dna
 			pai.master = M.real_name
 			pai.master_dna = dna.unique_enzymes

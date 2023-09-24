@@ -159,7 +159,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		tgui_alert(usr, "Wait until the game starts")
 		return
 	log_admin("[key_name(src)] has blobized [key_name(M)].")
-	addtimer(CALLBACK(M, /mob/proc/Blobize), 1 SECOND)
+	addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, Blobize)), 1 SECOND)
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
@@ -625,7 +625,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 /datum/debug_color_matrix/proc/edit(client/user)
 	var/static/editor = file2text('html/admin/color_matrix.html')
 	user << browse(editor, "window=colormatrix;size=410x500;")
-	addtimer(CALLBACK(src, .proc/callJsFunc, usr, "setRef", list("\ref[src]")), 10) //This is shit but without it, it calls the JS before the window is open and doesn't work.
+	addtimer(CALLBACK(src, PROC_REF(callJsFunc), usr, "setRef", list("\ref[src]")), 10) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 
 /datum/debug_color_matrix/Topic(href, href_list)
 	if(!islist(usr.client.color))
@@ -659,3 +659,35 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 /datum/debug_color_matrix/proc/callJsFunc(client, funcName, list/params)
 	var/paramsJS = list2params(params)
 	client << output(paramsJS,"colormatrix.browser:[funcName]")
+
+/client/proc/burn_tile()
+	set category = "Debug"
+	set name = "Floor: Burn"
+
+	var/turf/simulated/floor/T = get_turf(usr)
+	if(!istype(T))
+		return
+
+	T.burn_tile()
+
+/client/proc/break_tile()
+	set category = "Debug"
+	set name = "Floor: Break"
+
+	var/turf/simulated/floor/T = get_turf(usr)
+	if(!istype(T))
+		return
+
+	T.break_tile()
+
+/client/proc/fix_tile()
+	set category = "Debug"
+	set name = "Floor: Fix"
+
+	var/turf/simulated/floor/T = get_turf(usr)
+	if(!istype(T))
+		return
+
+	T.burnt = 0
+	T.broken = 0
+	T.update_icon()

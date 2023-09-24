@@ -116,6 +116,11 @@
 		radio_controller.remove_object(src,frequency)
 	return ..()
 
+/obj/machinery/door/airlock/turn_light_off()
+	if(lights && hasPower())
+		lights = 0
+		update_icon()
+
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"

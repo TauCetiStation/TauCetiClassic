@@ -63,9 +63,9 @@
 	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
 	AddComponent(/datum/component/spawn_area,
 		"asteroid",
-		CALLBACK(src, .proc/Spawn),
-		CALLBACK(src, .proc/Despawn),
-		CALLBACK(src, .proc/CheckSpawn),
+		CALLBACK(src, PROC_REF(Spawn)),
+		CALLBACK(src, PROC_REF(Despawn)),
+		CALLBACK(src, PROC_REF(CheckSpawn)),
 		8,
 		16,
 		1.2 MINUTES,

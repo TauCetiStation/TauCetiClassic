@@ -157,7 +157,6 @@
 		wear_mask = null
 		if(internal)
 			internal = null
-			internals?.update_icon(src)
 		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null
@@ -291,7 +290,7 @@
 		if(SLOT_IN_BACKPACK)
 			if(get_active_hand() == W)
 				remove_from_mob(W)
-			W.loc = src.back
+			W.forceMove(src.back)
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
 			uniform.attach_accessory(W, src)

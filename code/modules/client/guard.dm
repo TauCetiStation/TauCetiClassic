@@ -26,7 +26,7 @@
 	if(!config.guard_enabled)
 		return
 
-	addtimer(CALLBACK(src, .proc/trigger_init), 20 SECONDS) // time for other systems to collect data
+	addtimer(CALLBACK(src, PROC_REF(trigger_init)), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)

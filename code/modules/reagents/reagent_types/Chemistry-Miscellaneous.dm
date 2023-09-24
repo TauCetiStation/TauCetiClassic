@@ -350,6 +350,8 @@
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[HAS_HAIR])
+			return
 		var/list/species_hair = list()
 		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)
@@ -909,7 +911,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	. = ..()
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
 	if(F)
-		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+		INVOKE_ASYNC(F, TYPE_PROC_REF(/obj/effect/effect/aqueous_foam, performAction)) // So we don't instantinate a new object, but still make the room slightly colder.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 

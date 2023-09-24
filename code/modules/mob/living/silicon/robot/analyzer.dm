@@ -10,7 +10,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = SIZE_TINY
-	throw_speed = 5
+	throw_speed = 4
 	throw_range = 10
 	//matter = list("metal" = 200)
 	origin_tech = "magnets=1;biotech=1"

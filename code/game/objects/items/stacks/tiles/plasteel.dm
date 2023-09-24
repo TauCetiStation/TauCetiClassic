@@ -6,11 +6,13 @@
 	force = 6.0
 	m_amt = 937.5
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 3
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor
+
+	
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()

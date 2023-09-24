@@ -115,7 +115,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	recipes = metal_recipes
 	. = ..()
 
-
 /*
  * Plasteel
  */

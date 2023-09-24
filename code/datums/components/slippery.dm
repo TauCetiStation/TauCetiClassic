@@ -15,7 +15,7 @@
 	weaken_time = max(_weaken, 0)
 	lube_flags = _lube_flags
 	callback = _callback
-	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), PROC_REF(Slip))
 
 	var/datum/mechanic_tip/slippery/slip_tip = new
 	parent.AddComponent(/datum/component/mechanic_desc, list(slip_tip))

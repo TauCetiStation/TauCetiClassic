@@ -135,7 +135,7 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
 	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -365,7 +365,7 @@
 			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
 			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
-			addtimer(CALLBACK(src, .proc/print_scan, storedinfo), 1 SECOND)
+			addtimer(CALLBACK(src, PROC_REF(print_scan), storedinfo), 1 SECOND)
 		else
 			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")
 

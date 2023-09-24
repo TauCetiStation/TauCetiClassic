@@ -150,7 +150,7 @@
 		send_to_chat(R.antag.current, processed_message, message, speaker=drone)
 
 /datum/faction/replicators/proc/object_communicate(atom/object, tone, message, transfer=FALSE)
-	object.visible_message("<b>[src]</b> <i>beeps[tone]</i>")
+	object.visible_message("<b>[object]</b> <i>beeps[tone]</i>")
 
 	var/indicator = say_test(tone)
 

@@ -321,9 +321,9 @@
 	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
 	AddComponent(/datum/component/spawn_area,
 		"space",
-		CALLBACK(src, .proc/spawnmob),
-		CALLBACK(src, .proc/despawn),
-		CALLBACK(src, .proc/checkspawn),
+		CALLBACK(src, PROC_REF(spawnmob)),
+		CALLBACK(src, PROC_REF(despawn)),
+		CALLBACK(src, PROC_REF(checkspawn)),
 		8,
 		16,
 		1 MINUTE,

@@ -12,7 +12,7 @@
 
 /datum/emote/pray/do_emote(mob/user, emote_key, intentional)
 	. = ..()
-	INVOKE_ASYNC(user, /mob.proc/pray_animation)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, pray_animation))
 
 
 /datum/emote/blink

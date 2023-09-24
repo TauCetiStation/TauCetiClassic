@@ -44,6 +44,9 @@ SUBSYSTEM_DEF(events)
 		EC.process()
 
 /datum/controller/subsystem/events/proc/start_roundstart_event()
+	if(!config.allow_random_events)
+		message_admins("RoundStart Event: No event, random events has been disabled by SERVER.")
+		return
 	var/datum/event_container/feature/EC = event_containers[EVENT_LEVEL_FEATURE]
 	for(var/i in 1 to rand(1, 3))
 		EC.start_event()

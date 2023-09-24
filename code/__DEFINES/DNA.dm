@@ -40,7 +40,11 @@
 #define DNA_UI_GENDER      15
 #define DNA_UI_BEARD_STYLE 16
 #define DNA_UI_HAIR_STYLE  17
-#define DNA_UI_LENGTH      17 // Update this when you add something, or you WILL break shit.
+#define DNA_UI_BELLY_R     18
+#define DNA_UI_BELLY_G     19
+#define DNA_UI_BELLY_B     20
+#define DNA_UI_LENGTH      20 // Update this when you add something, or you WILL break shit.
+
 
 #define DNA_SE_LENGTH 27
 #define DNA_UNIQUE_ENZYMES_LEN 32

@@ -383,7 +383,7 @@
 	loc = AimTarget
 	sleep(10)
 	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20, easing = CUBIC_EASING)
-	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+	addtimer(CALLBACK(src, PROC_REF(perform_drop)), 20)
 
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
@@ -655,6 +655,9 @@
 	if(href_list["set_dna"])
 		var/mob/living/carbon/human/H = intruder // players can choose this option only if they are playing for a human
 		if(!stored_dna)
+			if(!H.dna.unique_enzymes)
+				to_chat(intruder, "<span class='warning'>No DNA was found.</span>")
+				return
 			stored_dna = H.dna.unique_enzymes
 			to_chat(intruder, "<span class='notice'>Dna key stored.</span>")
 		else
@@ -776,7 +779,7 @@
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -803,7 +806,7 @@
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn

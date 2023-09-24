@@ -1159,7 +1159,7 @@
 	chassis.pixel_x = rand(-150, 150)
 	chassis.pixel_y = 500
 	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
-	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+	addtimer(CALLBACK(src, PROC_REF(perform_drop)), 20)
 
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()

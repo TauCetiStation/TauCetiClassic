@@ -44,7 +44,7 @@
 
 	var/datum/announcement/centcomm/malf/declared/announce_declared = new
 	announce_declared.play()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(set_security_level), "delta"), 50)
 
 /datum/faction/malf_silicons/process()
 	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
@@ -63,7 +63,7 @@
 		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
 		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
 		new /datum/AI_Module/ai_win(AI)
-	addtimer(CALLBACK(src, .proc/remove_ai_win_verb), 600)
+	addtimer(CALLBACK(src, PROC_REF(remove_ai_win_verb)), 600)
 
 /datum/faction/malf_silicons/check_win()
 	if (AI_win_timeleft <= 0 && !station_captured)
@@ -119,7 +119,7 @@
 	SSticker.station_explosion_cinematic(0, null)
 	if(malf_turf)
 		sleep(20)
-		explosion(malf_turf, 15, 70, 200)
+		SSticker.station_explosion_detonation(malf_turf)
 	SSticker.station_was_nuked = TRUE
 	SSticker.explosion_in_progress = FALSE
 

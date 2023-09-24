@@ -16,7 +16,7 @@
 		to_chat(user, "<span class='red'>You can hear strange humming, hiding all other sounds away.</span>")
 		SEND_SIGNAL(src, COMSIG_START_SUPPRESSING)
 		SEND_SIGNAL(src, COMSIG_SHOW_RADIUS, user)
-		hide_radius_timer = addtimer(CALLBACK(src, .proc/hide_radius), 2 SECOND, TIMER_STOPPABLE)
+		hide_radius_timer = addtimer(CALLBACK(src, PROC_REF(hide_radius)), 2 SECOND, TIMER_STOPPABLE)
 
 /obj/item/clothing/gloves/black/silence/proc/hide_radius()
 	SEND_SIGNAL(src, COMSIG_HIDE_RADIUS)

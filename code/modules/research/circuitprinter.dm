@@ -173,7 +173,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		else
 			reagents.remove_reagent(M, D.materials[M]/efficiency_coeff)
 
-	addtimer(CALLBACK(src, .proc/create_design, RNDD), 19)
+	addtimer(CALLBACK(src, PROC_REF(create_design), RNDD), 19)
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design

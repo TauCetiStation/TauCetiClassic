@@ -256,6 +256,11 @@
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
 
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/C = M
+	C.AdjustClumsyStatus(-2)
+
 /datum/reagent/consumable/drink/coffee/icecoffee
 	name = "Iced Coffee"
 	id = "icecoffee"
@@ -607,7 +612,7 @@
 		data["ticks"]++
 	else
 		data["ticks"] = 1
-		
+
 	M.make_dizzy(6)
 	switch(data["ticks"])
 		if(1 to 5)

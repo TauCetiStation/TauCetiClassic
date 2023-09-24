@@ -4,8 +4,8 @@
 	var/image/radius_img
 
 /datum/component/vis_radius/Initialize(radius, icon_state = "radius", color = COLOR_RED)
-	RegisterSignal(parent, COMSIG_SHOW_RADIUS, .proc/show_radius)
-	RegisterSignal(parent, COMSIG_HIDE_RADIUS, .proc/hide_radius)
+	RegisterSignal(parent, COMSIG_SHOW_RADIUS, PROC_REF(show_radius))
+	RegisterSignal(parent, COMSIG_HIDE_RADIUS, PROC_REF(hide_radius))
 
 	setup_radius(radius, icon_state, color)
 

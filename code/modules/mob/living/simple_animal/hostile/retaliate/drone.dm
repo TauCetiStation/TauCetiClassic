@@ -100,7 +100,7 @@
 	stat = UNCONSCIOUS
 	wander = FALSE
 	speak_chance = 0
-	addtimer(CALLBACK(src, .proc/enable), time)
+	addtimer(CALLBACK(src, PROC_REF(enable)), time)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/proc/enable()
 	visible_message("<span class='notice'>[bicon(src)] [src] включается.</span>")

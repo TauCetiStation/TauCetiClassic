@@ -1,20 +1,20 @@
-/obj/item/clothing/gloves/yellow
+/obj/item/clothing/gloves/insulated
 	desc = "These gloves will protect the wearer from electric shock."
 	name = "insulated gloves"
-	icon_state = "yellow"
+	icon_state = "insulated"
 	item_state = "ygloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 
-/obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
+/obj/item/clothing/gloves/budget_insulated                             //Cheap Chinese Crap
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
 	name = "budget insulated gloves"
-	icon_state = "yellow"
+	icon_state = "insulated"
 	item_state = "ygloves"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 
-/obj/item/clothing/gloves/fyellow/atom_init()
+/obj/item/clothing/gloves/budget_insulated/atom_init()
 	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
@@ -101,12 +101,19 @@
 	icon_state = "brown"
 	item_state = "browngloves"
 
+/obj/item/clothing/gloves/yellow
+	name = "yellow gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "yellow"
+	item_state = "ygloves"
+
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "random_gloves"
 	loot = list(
+		/obj/item/clothing/gloves/yellow = 1,
 		/obj/item/clothing/gloves/orange = 1,
 		/obj/item/clothing/gloves/red = 1,
 		/obj/item/clothing/gloves/blue = 1,

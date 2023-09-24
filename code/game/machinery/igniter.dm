@@ -8,6 +8,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
+	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 	var/id = null
 	var/on = TRUE
 
@@ -50,6 +51,7 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
+	resistance_flags = FIRE_PROOF | CAN_BE_HIT
 	var/id = null
 	var/disable = 0
 	var/last_spark = 0

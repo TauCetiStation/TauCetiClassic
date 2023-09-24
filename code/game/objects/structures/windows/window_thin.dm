@@ -16,15 +16,13 @@
 	var/ini_dir = null
 
 /obj/structure/window/thin/atom_init()
-	. = ..()
-
 	ini_dir = dir
 	color = SSstation_coloring.get_default_color()
 
 	if(dir in cornerdirs)
 		world.log << "WARNING: [x].[y].[z]: DIR [dir]"
 
-	update_nearby_tiles(need_rebuild = 1)
+	return ..()
 
 /obj/structure/window/thin/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
 	. = ..()
@@ -113,9 +111,9 @@
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
+	update_nearby_tiles() //Compel updates before
 	set_dir(turn(dir, 90))
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	ini_dir = dir
 	return
 
@@ -131,9 +129,9 @@
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
+	update_nearby_tiles() //Compel updates before
 	set_dir(turn(dir, 270))
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	ini_dir = dir
 	return
 
@@ -143,14 +141,14 @@
 	return ..()
 
 /obj/structure/window/thin/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 	. = ..()
 
 	if(moving_diagonally)
 		return .
 
 	set_dir(ini_dir)
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 
 /**

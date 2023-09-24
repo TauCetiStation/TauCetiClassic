@@ -528,6 +528,21 @@
 	multiple_sprites = TWO_STATES
 	overlay = "drozd-mag"
 
+/obj/item/ammo_box/magazine/wjpp
+	name = "small magazine (9mm)"
+	icon_state = "wjpp_mag"
+	origin_tech = "combat=1"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 6
+	multiple_sprites = TWO_STATES
+	overlay = "wjpp-mag"
+
+/obj/item/ammo_box/magazine/wjpp/rubber
+	name = "small magazine (9mm rubber)"
+	icon_state = "wjpp_mag_rubber"
+	ammo_type = /obj/item/ammo_casing/c9mmr
+
 /obj/item/ammo_box/speedloader
 	name = "nonexistant speedloader"
 	multiple_sprites = MANY_STATES

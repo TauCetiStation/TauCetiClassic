@@ -8,7 +8,7 @@
 			tally -= 2.5
 			nullify_debuffs = TRUE
 
-	if(!has_gravity(src))
+	if(!has_gravity(src) && !lying)
 		return tally - 1 // It's hard to be slowed down in space by... anything
 
 	if(iszombie(src))
@@ -130,17 +130,13 @@
 					tally += 2
 
 	var/turf/T = get_turf(src)
-	if(T)
+	if(T && (get_species() != SKRELL || shoes))
+		tally += T.get_fluid_depth() * 0.0075 // in basic, waterpool have 800 depth
+	if(T.slowdown)
 		tally += T.slowdown
-		var/obj/effect/fluid/F = locate(/obj/effect/fluid) in T
-		if(F)
-			tally += F.fluid_amount * 0.005
 
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
-
-	if(mood_additive_speed_modifier < 0 || !nullify_debuffs)
-		tally += mood_additive_speed_modifier
 
 	return (tally + config.human_delay)
 

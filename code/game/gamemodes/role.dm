@@ -86,6 +86,8 @@
 	if (!OnPreSetup())
 		return FALSE
 
+	OnPostSetup()
+
 	return TRUE
 
 /datum/role/proc/Deconvert()

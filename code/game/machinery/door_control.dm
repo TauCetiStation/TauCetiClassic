@@ -343,8 +343,8 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 	for(var/door in connected_doors)
-		INVOKE_ASYNC(src, .proc/toggle_door, door)
-	addtimer(CALLBACK(src, /atom.proc/update_icon), 15)
+		INVOKE_ASYNC(src, PROC_REF(toggle_door), door)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 15)
 
 /obj/machinery/door_control/proc/toggle_door(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
