@@ -68,7 +68,7 @@
 	create_random_account_and_store_in_mind(M)
 
 	if(R)
-		add_faction_member(R, M, FALSE)
+		add_faction_member(R, M, FALSE, TRUE)
 	post_spawn(M)
 
 	to_chat(M, "Ты почти у цели...")
