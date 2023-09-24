@@ -43,26 +43,31 @@
 	icon_state = "away"
 	always_unpowered = 1
 	outdoors = TRUE
-	var/static/list/mob_spawn_list = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath = 1,
-		/mob/living/simple_animal/hostile/giant_spider/nurse = 1,
-		/mob/living/simple_animal/hostile/asteroid/basilisk = 2,
-		/mob/living/simple_animal/hostile/giant_spider/hunter = 2,
-		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
-		/mob/living/simple_animal/hostile/giant_spider = 3,
-		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining = 3,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub = 4,
+	var/list/mob_spawn_list = list(
 		/mob/living/simple_animal/tindalos = 5,
-		/mob/living/simple_animal/lizard = 5,
-		/mob/living/simple_animal/mouse = 5,
-		/mob/living/simple_animal/yithian = 5
+		/mob/living/simple_animal/lizard = 4,
+		/mob/living/simple_animal/mouse = 1,
+		/mob/living/simple_animal/yithian = 3,
+		/mob/living/simple_animal/hostile/asteroid/goldgrub = 2
+	)
+
+/area/awaymission/junkyard/medium
+	mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath = 3,
+		/mob/living/simple_animal/hostile/asteroid/basilisk = 3,
+		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
+		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining = 1,
+	)
+
+/area/awaymission/junkyard/hard
+	mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/giant_spider/nurse = 1,
+		/mob/living/simple_animal/hostile/giant_spider/hunter = 1,
+		/mob/living/simple_animal/hostile/giant_spider = 1
 	)
 
 /area/awaymission/junkyard/atom_init()
 	. = ..()
-	InitSpawnArea()
-
-/area/awaymission/junkyard/proc/InitSpawnArea()
 	AddComponent(/datum/component/spawn_area,
 		"junkyard",
 		CALLBACK(src, PROC_REF(Spawn)),
@@ -70,7 +75,7 @@
 		CALLBACK(src, PROC_REF(CheckSpawn)),
 		8,
 		16,
-		15 SECONDS,
+		10 SECONDS,
 		1 MINUTE,
 	)
 
