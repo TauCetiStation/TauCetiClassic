@@ -161,7 +161,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/wall_deco/portrait/captain, station_head_portraits)
 	desc = "Портрет главы станции Исход."
 	icon_state = "portrait_empty"
 
-proc/update_station_head_portraits()
+/proc/update_station_head_portraits()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES)
 	var/image/Heads_photo
 
