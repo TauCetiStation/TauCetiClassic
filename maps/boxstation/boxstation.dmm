@@ -5370,11 +5370,8 @@
 /area/station/security/interrogation)
 "ajf" = (
 /obj/structure/filingcabinet{
-<<<<<<< HEAD
+	req_access = list(58);
 	dir = 8
-=======
-	req_access = list(58)
->>>>>>> upstream/master
 	},
 /obj/machinery/keycard_auth{
 	pixel_x = 26
@@ -15907,16 +15904,12 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aCa" = (
-<<<<<<< HEAD
-/obj/structure/filingcabinet/filingcabinet,
-=======
 /obj/structure/filingcabinet{
 	req_access = list(41)
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Cargo"
 	},
->>>>>>> upstream/master
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -23423,7 +23416,8 @@
 	pixel_x = 32
 	},
 /obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(30)
+	req_access = list(30);
+	dir = 8
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Science"
@@ -40763,18 +40757,13 @@
 /turf/simulated/wall,
 /area/station/medical/genetics_cloning)
 "bvS" = (
-<<<<<<< HEAD
-/obj/structure/filingcabinet/chestdrawer{
-	dir = 4
-	},
-=======
->>>>>>> upstream/master
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
 /obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(57)
+	req_access = list(57);
+	dir = 4
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Civilian"
@@ -43895,11 +43884,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
-"bBm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/station/cargo/storage)
 "bBn" = (
 /obj/machinery/door_control{
 	id = "bridge blast";
@@ -46903,15 +46887,10 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bGJ" = (
-<<<<<<< HEAD
 /obj/structure/filingcabinet/chestdrawer{
 	dir = 8
 	},
-/turf/simulated/floor{
-=======
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/turf_decal/alpha/yellow{
->>>>>>> upstream/master
 	icon_state = "delivery"
 	},
 /turf/simulated/floor,
@@ -49453,14 +49432,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
-<<<<<<< HEAD
 /obj/structure/filingcabinet/chestdrawer/black{
 	dir = 1
 	},
-/obj/machinery/light/small,
-=======
-/obj/structure/filingcabinet/chestdrawer/black,
->>>>>>> upstream/master
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -71653,7 +71627,8 @@
 	icon_state = "0-8"
 	},
 /obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(56)
+	req_access = list(56);
+	dir = 8
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Engineering"
@@ -101490,7 +101465,7 @@ qAF
 vdm
 aFg
 bcf
-bBm
+bxz
 bba
 vIi
 pal
