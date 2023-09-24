@@ -109,8 +109,6 @@
 	var/new_text = {"<div style="font-size:3;color:#61a53f;font-family:'TINIESTONE';text-align:center;" valign="middle">[round(time / 36000)+12] [(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]</div>"}
 
 	if(maptext != new_text)
-		maptext = ""
-		sleep(5)
 		maptext = new_text
 
 		desc = "'Точное время в любое время'. Показывают: [worldtime2text()]"
