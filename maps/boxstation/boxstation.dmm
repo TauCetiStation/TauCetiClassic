@@ -3598,7 +3598,7 @@
 	dir = 8;
 	network = list("SS13","Security")
 	},
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -7804,7 +7804,7 @@
 	},
 /obj/item/device/flashlight/seclite,
 /obj/item/weapon/storage/briefcase,
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 12;
 	pixel_x = 4
 	},
@@ -7991,7 +7991,7 @@
 /obj/item/ashtray/bronze{
 	pixel_x = -14
 	},
-/obj/item/table_deco/pen_holder{
+/obj/item/pen_holder{
 	pixel_y = 12;
 	pixel_x = 10
 	},
@@ -8730,7 +8730,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -8859,7 +8859,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/item/table_deco/newtons_pendulum{
+/obj/item/newtons_pendulum{
 	pixel_x = -5
 	},
 /turf/simulated/floor/carpet/red,
@@ -13405,10 +13405,10 @@
 	pixel_x = -7;
 	pixel_y = -13
 	},
-/obj/item/wall_deco/portrait{
+/obj/item/portrait{
 	pixel_x = -32
 	},
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 12;
 	pixel_x = 6
 	},
@@ -13520,7 +13520,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_y = 11;
 	pixel_x = -7
 	},
@@ -13536,7 +13536,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/table_deco/mars_globe{
+/obj/item/mars_globe{
 	pixel_x = 8;
 	pixel_y = 14
 	},
@@ -13660,7 +13660,7 @@
 /area/station/maintenance/auxsolarstarboard)
 "axI" = (
 /obj/structure/table,
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_y = 32
 	},
 /obj/item/folder_holder{
@@ -13673,7 +13673,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/folder/red,
-/obj/item/table_deco/mars_globe{
+/obj/item/mars_globe{
 	pixel_x = 8;
 	pixel_y = 2
 	},
@@ -14537,7 +14537,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -15410,7 +15410,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -22224,7 +22224,7 @@
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = 7;
 	pixel_y = 10
 	},
@@ -22821,7 +22821,7 @@
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 12;
 	pixel_x = 4
 	},
@@ -23302,7 +23302,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -23470,7 +23470,7 @@
 	},
 /obj/item/weapon/storage/secure/briefcase,
 /obj/item/weapon/changeling_test,
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -25882,7 +25882,7 @@
 	pixel_x = -8
 	},
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/table_deco/newtons_pendulum{
+/obj/item/newtons_pendulum{
 	pixel_y = -8;
 	pixel_x = 6
 	},
@@ -26620,7 +26620,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = -8;
 	pixel_y = 10
 	},
@@ -29332,7 +29332,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -30529,7 +30529,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = -8;
 	pixel_y = 10
 	},
@@ -31305,7 +31305,7 @@
 /obj/machinery/camera{
 	c_tag = "Conference Room"
 	},
-/obj/item/wall_deco/portrait{
+/obj/item/portrait{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -31316,7 +31316,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -31892,7 +31892,7 @@
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = -30
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = 7;
 	pixel_y = 10
 	},
@@ -32741,7 +32741,7 @@
 /area/station/bridge/meeting_room)
 "bgI" = (
 /obj/structure/table/woodentable,
-/obj/item/table_deco/mars_globe{
+/obj/item/mars_globe{
 	pixel_x = 9
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -33879,7 +33879,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table,
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -34508,7 +34508,7 @@
 /obj/item/ashtray/glass{
 	pixel_x = -10
 	},
-/obj/item/table_deco/newtons_pendulum{
+/obj/item/newtons_pendulum{
 	pixel_y = 10;
 	pixel_x = 5
 	},
@@ -35372,7 +35372,7 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = 12;
 	pixel_y = 6
 	},
@@ -35497,7 +35497,7 @@
 "blV" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = 7;
 	pixel_y = 18
 	},
@@ -35928,7 +35928,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 10;
 	pixel_x = 3
 	},
@@ -38590,11 +38590,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 12;
 	pixel_x = 4
 	},
-/obj/item/table_deco/mars_globe{
+/obj/item/mars_globe{
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -43097,7 +43097,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -43221,7 +43221,7 @@
 	pixel_x = -9
 	},
 /obj/item/weapon/paper/cmf_manual,
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_y = 16;
 	pixel_x = 8
 	},
@@ -46589,7 +46589,7 @@
 /area/station/rnd/telesci)
 "bFU" = (
 /obj/structure/table/woodentable,
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_y = -10;
 	pixel_x = 8
 	},
@@ -47097,7 +47097,7 @@
 	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/cobweb2,
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -47343,7 +47343,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 12;
 	pixel_x = 4
 	},
@@ -47357,7 +47357,7 @@
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4
 	},
-/obj/item/table_deco/newtons_pendulum{
+/obj/item/newtons_pendulum{
 	pixel_y = -8;
 	pixel_x = 6
 	},
@@ -47607,7 +47607,7 @@
 "bHH" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -49515,7 +49515,7 @@
 /obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_y = 16;
 	pixel_x = 8
 	},
@@ -56211,7 +56211,7 @@
 	pixel_y = 28
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -69836,7 +69836,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_x = -8;
 	pixel_y = 10
 	},
@@ -69903,7 +69903,7 @@
 /area/station/construction)
 "eib" = (
 /obj/random/vending/cola,
-/obj/item/wall_deco/portrait{
+/obj/item/portrait{
 	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
@@ -69939,7 +69939,7 @@
 /area/station/bridge/meeting_room)
 "elb" = (
 /obj/machinery/vending/coffee,
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
@@ -74926,7 +74926,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/item/wall_deco/clock{
+/obj/item/wallclock{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -77042,10 +77042,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/table_deco/pens_bin{
+/obj/item/pens_bin{
 	pixel_y = 16
 	},
-/obj/item/table_deco/newtons_pendulum{
+/obj/item/newtons_pendulum{
 	pixel_y = -7
 	},
 /obj/item/weapon/pen/blue,
@@ -77064,7 +77064,7 @@
 "lZb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/stamp/cmo,
-/obj/item/table_deco/clocks{
+/obj/item/tableclock{
 	pixel_y = 12;
 	pixel_x = 4
 	},
@@ -77113,7 +77113,7 @@
 	},
 /obj/item/device/megaphone,
 /obj/item/weapon/defibrillator/compact/loaded,
-/obj/item/wall_deco/portrait/captain{
+/obj/item/portrait/captain{
 	pixel_y = 32
 	},
 /obj/item/device/sensor_device,

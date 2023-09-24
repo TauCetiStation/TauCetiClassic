@@ -1,14 +1,12 @@
-/obj/item/table_deco
-	icon = 'icons/obj/items.dmi'
-
-/obj/item/table_deco/pen_holder
+/obj/item/pen_holder
 	name = "pen holder"
 	desc = "Держатель для ручки."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "penholder"
 
 	var/obj/item/weapon/pen/holded
 
-/obj/item/table_deco/pen_holder/attackby(obj/item/I, mob/user, params)
+/obj/item/pen_holder/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) && !holded)
 		user.drop_from_inventory(I, src)
 		holded = I
@@ -17,7 +15,7 @@
 		underlays += holded
 		icon_state = "penholder_full"
 
-/obj/item/table_deco/pen_holder/attack_hand(mob/user)
+/obj/item/pen_holder/attack_hand(mob/user)
 	if(holded)
 		underlays = null
 		holded.pixel_x = 0
@@ -28,14 +26,15 @@
 	else
 		..()
 
-/obj/item/table_deco/pens_bin
+/obj/item/pens_bin
 	name = "pens bin"
 	desc = "Органайзер для ручек."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "pens_bin"
 
 	var/list/pens_locations = list(list(-2, 4), list(-2, 5), list(-3, 6), list(-3, 7), list(-4, 7))
 
-/obj/item/table_deco/pens_bin/atom_init(mapload)
+/obj/item/pens_bin/atom_init(mapload)
 	. = ..()
 
 	if(mapload)
@@ -47,14 +46,14 @@
 			Pen.forceMove(src)
 		update_icon()
 
-/obj/item/table_deco/pens_bin/attackby(obj/item/I, mob/user, params)
+/obj/item/pens_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		var/list/offsets = pick(pens_locations)
 		I.pixel_x = offsets[1]
 		I.pixel_y = offsets[2]
 		user.drop_from_inventory(I, src)
 
-/obj/item/table_deco/pens_bin/attack_hand(mob/user)
+/obj/item/pens_bin/attack_hand(mob/user)
 	if(contents.len)
 		var/list/pens = list()
 		for(var/obj/item/weapon/pen in contents)
@@ -71,7 +70,7 @@
 	else
 		..()
 
-/obj/item/table_deco/pens_bin/update_icon()
+/obj/item/pens_bin/update_icon()
 	cut_overlays()
 	for(var/obj/item/weapon/pen/Pen in contents)
 		add_overlay(Pen)
@@ -80,29 +79,32 @@
 	front_side.layer = layer + 0.01
 	add_overlay(front_side)
 
-/obj/item/table_deco/mars_globe
+/obj/item/mars_globe
 	name = "mars globe"
 	desc = "Глобус Марса."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "globe"
 
-/obj/item/table_deco/newtons_pendulum
+/obj/item/newtons_pendulum
 	name = "newton's pendulum"
 	desc = "Вечный двигатель в миниатюре."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
 
-/obj/item/table_deco/clocks
+/obj/item/tableclock
 	name = "table clock"
 	desc = "Точное время в любое время."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "clock"
 
 	maptext_x = 1
 	maptext_y = 1
 
-/obj/item/table_deco/clocks/atom_init()
+/obj/item/tableclock/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/table_deco/clocks/process()
+/obj/item/tableclock/process()
 	var/time = world.time
 	var/new_text = {"<div style="font-size:3;color:#61a53f;font-family:'TINIESTONE';text-align:center;" valign="middle">[round(time / 36000)+12] [(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]</div>"}
 
@@ -113,38 +115,41 @@
 
 		desc = "'Точное время в любое время'. Показывают: [worldtime2text()]"
 
-
-/obj/item/wall_deco
+/obj/item/wallclock
+	name = "wall clock"
+	desc = "Показывают время."
 	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "clock"
+
 	anchored = TRUE
 
-/obj/item/wall_deco/atom_init(mapload)
+/obj/item/wallclock/atom_init(mapload)
 	. = ..()
 	if(!mapload)
 		anchored = FALSE
 
-/obj/item/wall_deco/attack_hand(mob/user)
+/obj/item/wallclock/attack_hand(mob/user)
 	if(!Adjacent(usr) || usr.incapacitated())
 		return
 	src.anchored = FALSE
 	user.put_in_hands(src)
 
-/obj/item/wall_deco/clock
-	name = "wall clock"
-	desc = "Показывают время."
-	icon_state = "clock"
-
-/obj/item/wall_deco/clock/examine(mob/user)
+/obj/item/wallclock/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
 
-/obj/item/wall_deco/portrait
+/obj/item/portrait
 	name = "portrait"
 	desc = "Портрет должностного лица НаноТрейзен."
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nt_portrait_1"
 
-/obj/item/wall_deco/portrait/atom_init()
+	anchored = TRUE
+
+/obj/item/portrait/atom_init(mapload)
 	. = ..()
+	if(!mapload)
+		anchored = FALSE
 	var/portrait_number = rand(1, 3)
 	icon_state = "nt_portrait_[portrait_number]"
 	switch(portrait_number)
@@ -154,6 +159,12 @@
 			desc = "Измаил Моше - генеральный инспектор НаноТрейзен."
 		if(3)
 			desc = "Константин Карпатенко - ранее  адмирал ракетного флота, ныне духовный лидер флота НаноТрейзен."
+
+/obj/item/portrait/attack_hand(mob/user)
+	if(!Adjacent(usr) || usr.incapacitated())
+		return
+	src.anchored = FALSE
+	user.put_in_hands(src)
 
 var/global/list/station_head_portraits = list()
 ADD_TO_GLOBAL_LIST(/obj/item/wall_deco/portrait/captain, station_head_portraits)
