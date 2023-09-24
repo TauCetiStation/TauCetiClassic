@@ -102,9 +102,13 @@
 
 /obj/item/weapon/melee/baton/equipped(mob/living/user, slot)
 	. = ..()
-	set_status(user.a_intent, status)
-	if(istype(user))
-		RegisterSignal(user, COMSIG_LIVING_INTENT_CHANGE, PROC_REF(attempt_change_work))
+	if(!istype(user))
+		return
+	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND)
+		set_status(user.a_intent, status)
+		RegisterSignal(user, COMSIG_LIVING_INTENT_CHANGE, PROC_REF(attempt_change_work), override = TRUE)
+	else
+		UnregisterSignal(user, COMSIG_LIVING_INTENT_CHANGE)
 
 /obj/item/weapon/melee/baton/dropped(mob/living/user)
 	if(istype(user))
