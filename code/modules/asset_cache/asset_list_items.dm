@@ -14,6 +14,8 @@
 		"Gys14Segment.eot" = 'html/custom-fonts/Gys14Segment.eot',
 		"Gys14Segment.woff" = 'html/custom-fonts/Gys14Segment.woff',
 		"TINIESTONE.ttf" = 'html/custom-fonts/TINIESTONE.ttf',
+		"TINIESTONE.eot" = 'html/custom-fonts/TINIESTONE.eot',
+		"TINIESTONE.woff" = 'html/custom-fonts/TINIESTONE.woff',
 		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 
