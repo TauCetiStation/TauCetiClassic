@@ -5,7 +5,7 @@
 
 @font-face{
   font-family: "StatusDisplays";
-  src: url(StatusDisplays.ttf) format("truetype");
+  src: url(StatusDisplays.ttf) format("truetype"), url(StatusDisplays.eof) format("embedded-opentype"), url(StatusDisplays.woff) format("woff");
 }
 /* font-face in ie doesn't work without styles defined. Fuck you microsoft */
 :root {}
