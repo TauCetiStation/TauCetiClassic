@@ -383,8 +383,7 @@
 
 	// flush handle
 	if(flush)
-		status_overlay = image(icon = 'icons/obj/pipes/disposal.dmi',\
-							   icon_state = "dispover-handle")
+		add_overlay("dispover-handle")
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
