@@ -381,7 +381,7 @@
 
 	// flush handle
 	if(flush)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
+		add_overlay("dispover-handle")
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
@@ -389,13 +389,13 @@
 
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-full"))
+		add_overlay("dispover-full")
 
 	// charging and ready light
 	if(mode == 1)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-charge"))
+		add_overlay("dispover-charge")
 	else if(mode == 2)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-ready"))
+		add_overlay("dispover-ready")
 
 // timed process
 // charge the gas reservoir and perform flush if ready
@@ -410,7 +410,7 @@
 	if( flush_count >= flush_every_ticks )
 		if( contents.len )
 			if(mode == 2)
-				feedback_inc("disposal_auto_flush",1)
+				feedback_inc("disposal_auto_flush", 1)
 				INVOKE_ASYNC(src, PROC_REF(flush))
 		flush_count = 0
 
