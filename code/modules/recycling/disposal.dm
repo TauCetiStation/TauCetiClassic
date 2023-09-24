@@ -27,6 +27,8 @@
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
 	var/need_env_pressure = 1
+	var/image/status_overlay
+	var/image/full_status
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -381,7 +383,8 @@
 
 	// flush handle
 	if(flush)
-		add_overlay("dispover-handle")
+		status_overlay = image(icon = 'icons/obj/pipes/disposal.dmi',\
+							   icon_state = "dispover-handle")
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
@@ -389,13 +392,27 @@
 
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay("dispover-full")
+		full_status = image(icon = 'icons/obj/pipes/disposal.dmi',\
+							   icon_state = "dispover-full-light")
+		full_status.plane = LIGHTING_LAMPS_PLANE
+		set_light(1, 1, "#006381")
+		add_overlay(full_status)
 
 	// charging and ready light
 	if(mode == 1)
+		status_overlay = image(icon = 'icons/obj/pipes/disposal.dmi',\
+							   icon_state = "dispover-charge-light")
 		add_overlay("dispover-charge")
+		set_light(1, 1, "#940101")
+
 	else if(mode == 2)
+		status_overlay = image(icon = 'icons/obj/pipes/disposal.dmi',\
+							   icon_state = "dispover-ready-light")
 		add_overlay("dispover-ready")
+		set_light(1, 1, "#0c8801")
+
+	status_overlay.plane = LIGHTING_LAMPS_PLANE
+	add_overlay(status_overlay)
 
 // timed process
 // charge the gas reservoir and perform flush if ready
