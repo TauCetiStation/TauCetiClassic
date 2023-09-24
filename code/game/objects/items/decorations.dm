@@ -167,8 +167,8 @@
 	user.put_in_hands(src)
 
 var/global/list/station_head_portraits = list()
-ADD_TO_GLOBAL_LIST(/obj/item/wall_deco/portrait/captain, station_head_portraits)
-/obj/item/wall_deco/portrait/captain
+ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
+/obj/item/portrait/captain
 	desc = "Портрет главы станции Исход."
 	icon_state = "portrait_empty"
 
@@ -194,7 +194,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/wall_deco/portrait/captain, station_head_portraits)
 	Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
 	Heads_photo.pixel_y = -2
 
-	for(var/obj/item/wall_deco/portrait/captain/Portrait in global.station_head_portraits)
+	for(var/obj/item/portrait/captain/Portrait in global.station_head_portraits)
 		if(Heads_photo)
 			Portrait.cut_overlays()
 			Portrait.icon_state = "portrait_empty"
