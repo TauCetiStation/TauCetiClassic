@@ -23863,9 +23863,6 @@
 	dir = 1;
 	pixel_y = 28
 	},
-/obj/structure/sign/poster/sivtsev{
-	pixel_x = -32
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
