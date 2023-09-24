@@ -106,7 +106,7 @@
 			to_chat(user, "<span class='notice'>There are no papers in the bin.</span>")
 
 /obj/item/weapon/paper_bin/update_icon()
-	var/icon_number = ceil(amount/3)
+	var/icon_number = CEIL(amount/3)
 	icon_state = "paper_bin_[icon_number]"
 
 /obj/item/weapon/paper_refill
