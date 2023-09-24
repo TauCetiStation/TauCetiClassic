@@ -65,15 +65,20 @@
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
+	else if(isscrewing(P))
+		if(P.use_tool(src, user, 15))
+			deconstruct(TRUE)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
+		..()
 
 /obj/structure/filingcabinet/deconstruct(disassembled)
 	for(var/obj/item/I as anything in contents)
 		I.forceMove(loc)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/stack/sheet/metal(loc, 4)
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
