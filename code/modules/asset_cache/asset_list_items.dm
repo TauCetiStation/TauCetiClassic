@@ -13,6 +13,7 @@
 		"Gys14Segment.ttf" = 'html/custom-fonts/Gys14Segment.ttf',
 		"Gys14Segment.eot" = 'html/custom-fonts/Gys14Segment.eot',
 		"Gys14Segment.woff" = 'html/custom-fonts/Gys14Segment.woff',
+		"StatusDisplays.ttf" = 'html/custom-fonts/StatusDisplays.ttf',
 		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 
