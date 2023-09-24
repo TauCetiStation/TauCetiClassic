@@ -29,6 +29,7 @@ var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_SHADOWLING = 4320,
 	ROLE_FAMILIES = 2160,
 	ROLE_REPLICATOR = 2880,
+	ROLE_IMPOSTER = 720,
 	ROLE_GHOSTLY = 360,
 )
 

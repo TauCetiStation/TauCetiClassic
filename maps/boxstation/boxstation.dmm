@@ -228,8 +228,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/range)
@@ -492,11 +492,11 @@
 /turf/simulated/floor,
 /area/station/security/range)
 "aaU" = (
-/obj/machinery/light/smart,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/smart,
 /turf/simulated/floor,
 /area/station/security/range)
 "aaV" = (
@@ -576,11 +576,11 @@
 	},
 /area/station/security/main)
 "abf" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -639,7 +639,7 @@
 /obj/structure/table,
 /obj/item/weapon/paper,
 /obj/item/weapon/pen,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -698,7 +698,7 @@
 	pixel_x = -1;
 	pixel_y = -2
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1424,8 +1424,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -1497,10 +1497,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/brig,
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -1675,8 +1675,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2522,8 +2522,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2769,14 +2769,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aeK" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2912,8 +2912,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -3994,8 +3994,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5365,6 +5365,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/smart,
 /turf/simulated/floor,
 /area/station/security/interrogation)
 "ajf" = (
@@ -5685,9 +5686,6 @@
 /area/station/security/brig)
 "ajE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
@@ -6349,8 +6347,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/interrogation)
@@ -7194,8 +7192,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -7209,7 +7207,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -7240,7 +7238,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -7341,8 +7339,8 @@
 /obj/machinery/power/apc{
 	pixel_x = 27;
 	dir = 4;
-	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark right APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -8594,9 +8592,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "aor" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -8604,6 +8599,9 @@
 /obj/item/weapon/paper,
 /obj/item/weapon/pen,
 /obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aos" = (
@@ -9124,8 +9122,9 @@
 /obj/item/clothing/suit/batman,
 /obj/item/clothing/head/batman_helmet,
 /obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
+	name = "3000k apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "default 3000k"
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -9616,6 +9615,11 @@
 /obj/machinery/light_switch{
 	pixel_y = -27
 	},
+/obj/machinery/power/apc{
+	pixel_y = -27;
+	name = "Brig dark down APC";
+	custom_smartlight_preset = "Dark Brig"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitered"
@@ -9740,8 +9744,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -10111,11 +10115,11 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "arj" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -11758,9 +11762,6 @@
 "auh" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brownold"
@@ -13490,9 +13491,6 @@
 	pixel_y = -2
 	},
 /obj/structure/table/woodentable,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 20
@@ -13860,9 +13858,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aym" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/door_control{
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -13876,6 +13871,9 @@
 "ayn" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -14868,10 +14866,10 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech/north)
 "aAf" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/vending/wallmed1{
 	pixel_y = 30
 	},
+/obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aAg" = (
@@ -16600,6 +16598,9 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
+/obj/machinery/light/small/emergency{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17735,7 +17736,7 @@
 /area/station/storage/primary)
 "aFM" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -18661,6 +18662,9 @@
 /obj/item/device/healthanalyzer{
 	pixel_y = 4
 	},
+/obj/machinery/light/small/emergency{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -18778,9 +18782,6 @@
 /obj/item/weapon/pen/blue{
 	pixel_x = 5;
 	pixel_y = 5
-	},
-/obj/machinery/light/small{
-	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -20977,7 +20978,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aLL" = (
@@ -22653,7 +22654,8 @@
 /area/station/rnd/brainstorm_center)
 "aOX" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access"
+	name = "Central Access";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/port)
@@ -23091,9 +23093,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aPQ" = (
@@ -23234,9 +23233,6 @@
 	},
 /area/station/civilian/playroom)
 "aQf" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/item/device/taperecorder{
 	pixel_y = 3
@@ -23559,8 +23555,8 @@
 /obj/machinery/power/apc{
 	pixel_x = -27;
 	dir = 8;
-	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24310,6 +24306,9 @@
 	pixel_x = 30
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aRZ" = (
@@ -24603,13 +24602,13 @@
 	},
 /area/station/hallway/primary/central)
 "aSF" = (
-/obj/machinery/light/smart{
-	dir = 4
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/gateway)
+/area/station/civilian/hydroponics)
 "aSG" = (
 /obj/item/weapon/dice/d20,
 /obj/structure/table/woodentable/poker,
@@ -27980,11 +27979,11 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYy" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYz" = (
@@ -29828,9 +29827,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
+	name = "3000k apc left";
 	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+	pixel_x = -28;
+	custom_smartlight_preset = "default 3000k"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -30114,7 +30114,8 @@
 /area/station/rnd/hallway)
 "bck" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access"
+	name = "Central Access";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -31098,7 +31099,8 @@
 /area/station/hallway/primary/port)
 "beb" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access"
+	name = "Central Access";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -31443,9 +31445,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
+	name = "3000k apc top";
+	pixel_y = 28;
+	custom_smartlight_preset = "default 3000k";
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -31462,6 +31465,9 @@
 	dir = 4
 	},
 /obj/item/weapon/flora/monkey,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -32078,9 +32084,6 @@
 	},
 /area/station/rnd/hallway)
 "bfH" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -32482,9 +32485,6 @@
 	},
 /area/station/medical/medbreak)
 "bgt" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/computer/med_data,
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -32839,6 +32839,9 @@
 /area/station/medical/storage)
 "bhb" = (
 /obj/machinery/optable,
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -33200,6 +33203,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -33430,9 +33436,6 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -34007,11 +34010,11 @@
 	},
 /area/station/storage/tech)
 "bjG" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -35652,9 +35655,10 @@
 	pixel_y = 24
 	},
 /obj/machinery/power/apc{
+	pixel_x = -27;
 	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+	name = "Brig dark left APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -35756,14 +35760,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bmC" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
+/obj/structure/closet/secure_closet/hydroponics,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+	dir = 9;
+	icon_state = "green"
 	},
-/area/station/hallway/primary/central)
+/area/station/civilian/hydroponics)
 "bmD" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
@@ -36372,9 +36374,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -36391,6 +36390,9 @@
 "bnV" = (
 /obj/machinery/alarm{
 	pixel_y = 23
+	},
+/obj/machinery/light/small/emergency{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vault"
@@ -36590,9 +36592,6 @@
 /area/station/cargo/office)
 "bop" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -38521,8 +38520,8 @@
 	},
 /area/station/bridge/cmf_room)
 "brR" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -39037,7 +39036,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39060,9 +39058,6 @@
 /area/station/aisat)
 "bsT" = (
 /obj/structure/dispenser/oxygen,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39346,8 +39341,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -39595,9 +39590,6 @@
 /area/station/hallway/primary/central)
 "btN" = (
 /obj/structure/closet/secure_closet/recycler,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41248,6 +41240,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -41318,9 +41311,6 @@
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/machinery/light/small{
-	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -41812,9 +41802,6 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -42189,13 +42176,14 @@
 	},
 /area/station/hallway/primary/port)
 "byk" = (
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Central Access";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -42343,9 +42331,6 @@
 /obj/machinery/camera{
 	c_tag = "Pre Vault";
 	dir = 6
-	},
-/obj/machinery/light/small{
-	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -42936,6 +42921,9 @@
 /obj/machinery/faxmachine{
 	department = "Internal Affairs"
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -43352,7 +43340,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -45344,6 +45332,9 @@
 /area/station/hallway/primary/central)
 "bDX" = (
 /obj/structure/closet/secure_closet/miner,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -45917,12 +45908,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bFa" = (
-/obj/structure/grille,
-/obj/structure/window/thin/reinforced{
-	dir = 8
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics";
+	req_access = list(35)
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/hydroponics)
 "bFb" = (
 /obj/structure/stool/bed/chair/metal/blue,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -46036,6 +46029,9 @@
 	},
 /obj/machinery/light_switch{
 	pixel_x = -27
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -46436,14 +46432,12 @@
 /turf/simulated/wall,
 /area/station/civilian/barbershop)
 "bFX" = (
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot_right"
-	},
-/obj/machinery/light/small,
+/obj/structure/closet/secure_closet/hydroponics,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "green"
 	},
-/area/station/bridge/nuke_storage)
+/area/station/civilian/hydroponics)
 "bFY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -46793,9 +46787,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bGA" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/alarm{
 	dir = 4;
@@ -46803,6 +46794,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -46955,9 +46949,6 @@
 	},
 /area/station/medical/reception)
 "bGP" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/alarm{
 	dir = 8;
@@ -47127,8 +47118,9 @@
 /obj/structure/cable,
 /obj/item/weapon/flora/random,
 /obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
+	pixel_y = -27;
+	name = "Brig dark down APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -47348,7 +47340,6 @@
 	},
 /area/station/civilian/cold_room)
 "bHD" = (
-/obj/machinery/light/small,
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
@@ -47823,6 +47814,9 @@
 /obj/machinery/windowtint{
 	id = "Patients";
 	pixel_x = -27
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/patients_rooms)
@@ -49282,6 +49276,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brownold"
@@ -49425,7 +49422,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/light/small,
 /obj/structure/filingcabinet/chestdrawer/black,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -53313,16 +53309,9 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "bSZ" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/cargo/recycleroffice)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/wall,
+/area/station/civilian/hydroponics)
 "bTa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54894,9 +54883,6 @@
 "bXR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -67680,9 +67666,9 @@
 "cKK" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	pixel_y = -27;
-	name = "Medbay down APC";
-	custom_smartlight_preset = "MedBay"
+	name = "3000k apc down";
+	pixel_y = -28;
+	custom_smartlight_preset = "default 3000k"
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -68671,8 +68657,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 27;
 	dir = 1;
-	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	name = "Brig dark top APC";
+	custom_smartlight_preset = "Dark Brig"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -68808,6 +68794,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
+"dif" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "dih" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -69841,6 +69836,18 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
+"euc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/recycleroffice)
 "euT" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,4"
@@ -71721,6 +71728,19 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/engineering/break_room)
+"gGR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor,
+/area/station/civilian/hydroponics)
 "gHb" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "engineering_east_sensor";
@@ -72010,6 +72030,12 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	pixel_x = -27;
+	dir = 8;
+	custom_smartlight_preset = "RnD";
+	name = "RnD left APC"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -72305,19 +72331,9 @@
 	},
 /area/station/engineering/engine)
 "hmR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -73947,19 +73963,15 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "iXb" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/sign/poster/random{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "green"
 	},
-/area/station/security/brig)
+/area/station/civilian/hydroponics)
 "iYb" = (
 /obj/machinery/light/smart,
 /obj/structure/sign/nanotrasen{
@@ -74896,6 +74908,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/incinerator)
+"jWp" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "jXb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -75579,15 +75596,16 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "kFb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
-/obj/machinery/light/small,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/cargo/recycleroffice)
+/area/station/civilian/hydroponics)
 "kFe" = (
 /obj/effect/landmark/start/botanist,
 /turf/simulated/floor{
@@ -75669,8 +75687,6 @@
 	},
 /area/station/engineering/break_room)
 "kLo" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -77614,15 +77630,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mZs" = (
-/obj/structure/stool,
-/obj/effect/landmark/start/shaft_miner,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "bar"
+	icon_state = "neutralcorner"
 	},
-/area/station/cargo/miningoffice)
+/area/station/hallway/primary/central)
 "nab" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 5
@@ -79419,6 +79433,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"pto" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/primary/central)
 "puI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -80415,9 +80437,6 @@
 	},
 /area/station/engineering/engine)
 "qEb" = (
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -80430,6 +80449,10 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Central Access";
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -83475,6 +83498,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"uia" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/security/range)
 "ujL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced/stall,
@@ -83569,9 +83599,16 @@
 	},
 /area/station/hallway/secondary/entry)
 "uru" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/hydroponics)
 "usn" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -83629,6 +83666,22 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"uyE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "uBz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/disposalpipe/segment{
@@ -84106,6 +84159,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"vTu" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "vTE" = (
 /obj/structure/stool,
 /turf/simulated/floor,
@@ -84252,11 +84314,11 @@
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -85138,12 +85200,12 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/light/small,
 /obj/machinery/power/apc{
 	pixel_y = -27;
 	name = "Cargo down APC";
 	custom_smartlight_preset = "Cargo"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -102923,10 +102985,10 @@ cUv
 vDF
 aSM
 oQM
-sCd
-bDk
-wZc
-bEW
+bBw
+gYf
+wAe
+hHe
 brd
 bfH
 bRC
@@ -103180,10 +103242,10 @@ aNi
 aNi
 aNi
 aNi
-bBw
-gYf
-wAe
-hmR
+aSM
+aSM
+aSM
+uyE
 bcE
 bgu
 bEk
@@ -103437,8 +103499,8 @@ oXb
 aVf
 aFH
 aNi
-aSM
-aSM
+osT
+fVd
 aSM
 tgJ
 brd
@@ -103694,13 +103756,13 @@ sfk
 gni
 rFw
 aNi
-osT
-fVd
-aSM
+gWz
+pVE
+rku
 bDk
 brd
 aYl
-mZs
+bEl
 bcw
 boK
 brd
@@ -103951,9 +104013,9 @@ aVg
 aZs
 ayy
 aNi
-gWz
-pVE
-aSM
+aNi
+aNi
+aNi
 bDk
 brd
 brd
@@ -104200,7 +104262,7 @@ ipb
 aqD
 wld
 nHV
-eho
+gGR
 ayy
 iyb
 ayy
@@ -104208,11 +104270,11 @@ ayy
 aZs
 aFJ
 aNi
-aSM
-rku
-aSM
+kFb
+bmC
+aNi
 bDk
-bEW
+pNN
 kGX
 bEJ
 jhk
@@ -104466,16 +104528,16 @@ aZs
 lFQ
 aNi
 uru
-bEW
-sCd
+iXb
+bSZ
 bDk
-sCd
+hmR
 kGX
 qPE
 hOV
 lpD
 bNk
-bSZ
+buA
 bvs
 bxd
 bNk
@@ -104721,10 +104783,10 @@ asT
 aVh
 hTE
 kLo
-aNi
-pNN
-bEW
 bFa
+aSF
+bFX
+aNi
 bDk
 bEW
 kGX
@@ -104980,8 +105042,8 @@ aqD
 aqD
 aNi
 aNi
-bEW
-bEW
+aNi
+aNi
 gYf
 wAe
 wAe
@@ -105238,17 +105300,17 @@ qex
 aMQ
 bEI
 bEW
-aSM
-aSM
-aSM
 bEW
-moP
+bEW
+aSM
+aSM
+aSM
 wuI
 bDk
 bNk
 buA
 mtS
-kFb
+lqO
 bNk
 aBd
 aaa
@@ -105495,10 +105557,10 @@ aFf
 byP
 bEL
 bEW
+spt
+jWp
 aSM
 bGv
-aSM
-bEW
 aSM
 qcd
 bDk
@@ -106789,7 +106851,7 @@ bEW
 fDx
 bNk
 bNk
-lqO
+euc
 lqO
 csU
 bNk
@@ -110867,7 +110929,7 @@ cjX
 bMV
 aCq
 aJd
-aSF
+aUZ
 aVS
 aWd
 aCq
@@ -111395,7 +111457,7 @@ aMM
 bht
 bhP
 bjv
-bmC
+bht
 bht
 aNA
 aKx
@@ -114430,7 +114492,7 @@ act
 aba
 abl
 adV
-iXb
+adV
 adV
 aeT
 adM
@@ -114678,7 +114740,7 @@ aaa
 aaa
 aaj
 aao
-aao
+uia
 aao
 abl
 sCX
@@ -115266,7 +115328,7 @@ blW
 bnT
 bsM
 brc
-bFX
+bsM
 blW
 aaa
 byw
@@ -115529,7 +115591,7 @@ bnM
 kxb
 byx
 btO
-bvi
+brR
 bDy
 bxq
 bxZ
@@ -116041,9 +116103,9 @@ bsP
 blW
 bnM
 kyb
-brR
-btO
 bvi
+btO
+pto
 bDy
 bxr
 byb
@@ -120131,7 +120193,7 @@ aEa
 bfq
 coj
 bfA
-bfA
+mZs
 bnG
 bfA
 bfA
@@ -120145,7 +120207,7 @@ aKx
 bfA
 jAb
 bWl
-aPE
+vTu
 bXR
 cAE
 aPE
@@ -120153,7 +120215,7 @@ aPE
 qMb
 gWp
 aMN
-aMN
+dif
 aRD
 aPE
 aPE

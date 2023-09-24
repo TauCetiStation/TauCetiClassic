@@ -129,7 +129,21 @@ var/global/list/smartlight_presets
 	default_mode = /datum/light_mode/brig
 	no_nightshift_mode = TRUE
 
-	available_modes = list(/datum/light_mode/brig)
+	available_modes = list(
+							/datum/light_mode/brig,
+							/datum/light_mode/brig/dark,
+	)
+
+/datum/smartlight_preset/brig/dark
+	name = "Dark Brig"
+
+	default_mode = /datum/light_mode/brig/dark
+	no_nightshift_mode = TRUE
+
+	available_modes = list(
+							/datum/light_mode/brig,
+							/datum/light_mode/brig/dark,
+	)
 
 /datum/smartlight_preset/engineering
 	name = "Engineering"
@@ -146,3 +160,40 @@ var/global/list/smartlight_presets
 	no_nightshift_mode = TRUE
 
 	available_modes = list(/datum/light_mode/cargo)
+
+/datum/smartlight_preset/k3000
+    name = "default 3000k"
+    default_mode = /datum/light_mode/k3000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k3000)
+
+/datum/smartlight_preset/k4000
+    name = "default 4000k"
+    default_mode = /datum/light_mode/k4000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k4000)
+
+/datum/smartlight_preset/k5000
+    name = "default 5000k"
+    default_mode = /datum/light_mode/k5000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k5000)
+
+/datum/smartlight_preset/k6000
+    name = "default 6000k"
+    no_nightshift_mode = TRUE
+    default_mode = /datum/light_mode/k6000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k6000)
+
+/datum/smartlight_preset/soft
+    name = "soft"
+    default_mode = /datum/light_mode/soft
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/soft)
+
+/datum/smartlight_preset/hard
+    name = "hard"
+   	default_mode = /datum/light_mode/hard
+   	no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/hard)
