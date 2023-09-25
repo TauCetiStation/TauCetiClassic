@@ -190,7 +190,7 @@
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/taperoll/engineering(src)
-	modules += new /obj/item/weapon/gripper(src)
+	modules += new /obj/item/weapon/gripper/magnetic(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
@@ -374,7 +374,7 @@
 /obj/item/weapon/robot_module/science/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/gripper/science(src)
+	modules += new /obj/item/weapon/gripper/magnetic(src)
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/taperoll/science(src)
 	modules += new /obj/item/device/assembly/signaler(src)
