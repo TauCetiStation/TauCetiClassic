@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
-	update_station_head_portraits()
+	//update_station_head_portraits()
 
 	CHECK_TICK
 
