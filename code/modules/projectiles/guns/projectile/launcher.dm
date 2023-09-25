@@ -17,7 +17,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/try_chambering(obj/item/I, mob/user)
 	if(chambered)
-		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
+		to_chat(user, "<span class='warning'>Внутри [src] уже есть снаряд!</span>")
 		return
 	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
@@ -36,7 +36,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79
 	name = "m79 grenade launcher"
-	desc = "Uses 40x46 ammunition."
+	desc = "Используются снаряды 40х46."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
 	item_state = "m79"
@@ -69,13 +69,13 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/special_check(mob/user)
 	if(open)
-		to_chat(user, "<span class='warning'>You can't fire [src] while it is open!</span>")
+		to_chat(user, "<span class='warning'>Вы не можете стрелять из [src] пока оно открыто!</span>")
 		return FALSE
 	return ..()
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung
 	name = "underslung grenade launcher"
-	desc = "It's a little tiny launcher. You shouldn't be seeing this."
+	desc = "Это маленькая крошечная пусковая установка. Вам не следовало этого видеть."
 	initial_mag = /obj/item/ammo_box/magazine/internal/m79/underslung
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
 	two_hand_weapon = FALSE

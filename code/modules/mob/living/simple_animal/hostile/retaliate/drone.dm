@@ -182,3 +182,9 @@
 					C.origin_tech = "syndicate=[rand(4, 6)]"
 
 	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/dangerous
+	health = 400
+	maxHealth = 400
+	retreat_distance = 7
+	minimum_distance = 7

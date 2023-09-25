@@ -105,6 +105,9 @@
 		return FALSE
 	return TRUE
 
+/datum/faction/proc/can_latespawn_mob(mob/P)
+	return TRUE
+
 // Basically, they are members of the new faction
 /datum/faction/proc/HandleNewMind(datum/mind/M, laterole) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)
