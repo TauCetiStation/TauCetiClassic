@@ -32,7 +32,7 @@
 
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
-  AddComponent(/datum/component/style, -block_chance)
+	AddComponent(/datum/component/style, -block_chance)
 	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 	switch(blade_color)
 		if("red")
