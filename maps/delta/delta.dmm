@@ -48248,11 +48248,6 @@
 /turf/simulated/wall,
 /area/station/civilian/dormitories/courtroom)
 "jUd" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	frequency = 1379;
@@ -92719,11 +92714,6 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "tLA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	frequency = 1379;
