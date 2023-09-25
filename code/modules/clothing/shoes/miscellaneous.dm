@@ -68,7 +68,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, CLUMSY_STYLE)
+	AddComponent(/datum/component/style, 0, 0, 0, CLUMSY_STYLE)
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
 	if(slot_equipped == SLOT_SHOES)
