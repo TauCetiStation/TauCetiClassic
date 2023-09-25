@@ -29,7 +29,7 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_SCIENCE|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/scientist
 	title = "Scientist"
@@ -50,7 +50,7 @@
 		"Scientist" = /datum/skillset/scientist,
 		"Phoron Researcher" = /datum/skillset/scientist/phoron
 		)
-
+	flags = JOB_FLAG_SCIENCE
 
 /datum/job/xenoarchaeologist
 	title = "Xenoarchaeologist"
@@ -74,7 +74,7 @@
 		~Luduk
 	*/
 	restricted_species = list(IPC)
-
+	flags = JOB_FLAG_SCIENCE
 
 /datum/job/xenobiologist
 	title = "Xenobiologist"
@@ -91,7 +91,7 @@
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
 	skillsets = list("Xenobiologist" = /datum/skillset/xenobiologist)
-
+	flags = JOB_FLAG_SCIENCE
 
 /datum/job/roboticist
 	title = "Roboticist"
@@ -113,7 +113,7 @@
 		"Biomechanical Engineer" = /datum/skillset/roboticist/bio,
 		"Mechatronic Engineer" = /datum/skillset/roboticist/mecha
 	)
-
+	flags = JOB_FLAG_SCIENCE
 
 /datum/job/research_assistant
 	title = "Research Assistant"
@@ -129,4 +129,4 @@
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
 	skillsets = list("Research Assistant" = /datum/skillset/research_assistant)
-
+	flags = JOB_FLAG_SCIENCE

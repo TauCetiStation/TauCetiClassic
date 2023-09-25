@@ -286,6 +286,12 @@
 	custom_smartlight_preset = "Cargo";
 	pixel_x = -27
 	},
+/obj/machinery/power/apc/largecell{
+	name = "Cargo largecell apc top";
+	pixel_y = 27;
+	custom_smartlight_preset = "Cargo";
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
 	},

@@ -74,6 +74,11 @@
 		M.radiation += rand(15,45)
 		M.dna_inject_count += rand(1,3)
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[NO_DNA])
+			return
+
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (buf.types & DNA2_BUF_UI)
 			if (!block) //isolated block?

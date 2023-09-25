@@ -686,6 +686,9 @@
 	H.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
 	H.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 
+	if(H.species.flags[NO_BLOOD])
+		return
+
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()
 	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type

@@ -110,7 +110,7 @@
 					for(var/mob/living/carbon/M as anything in carbon_list)
 						if(!M.dna)
 							continue
-						if(M.dna.unique_enzymes == DNAstring)
+						if(M.dna.unique_enzymes && M.dna.unique_enzymes == DNAstring)
 							target = M
 							break
 				if("AI System")

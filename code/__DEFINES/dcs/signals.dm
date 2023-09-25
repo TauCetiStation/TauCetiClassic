@@ -336,6 +336,7 @@
 ///from ai_actual_track(): (mob/living)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+#define COMSIG_LIVING_BUMPED "living_bumped"
 
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
