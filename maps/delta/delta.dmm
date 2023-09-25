@@ -1783,6 +1783,36 @@
 	icon_state = "graychoco"
 	},
 /area/station/security/brig)
+"acT" = (
+/obj/structure/table,
+/obj/item/toy/carpplushie,
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/station/civilian/gym)
+"acU" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel/mass_driver)
+"acV" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/candle_box,
+/obj/machinery/newscaster{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/civilian/chapel)
 "adb" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -13017,14 +13047,16 @@
 	},
 /area/station/security/lobby)
 "cnk" = (
-/obj/structure/closet/emcloset,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
-/area/station/hallway/primary/fore)
+/area/station/hallway/secondary/entry)
 "cno" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable/poker,
@@ -16306,25 +16338,13 @@
 	},
 /area/station/cargo/storage)
 "dax" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/obj/effect/landmark/start/technical_assistant,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "box_corners_white"
+/obj/machinery/newscaster{
+	pixel_y = -28
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "caution"
+	icon_state = "blackchoco"
 	},
-/area/station/hallway/primary/port)
+/area/station/civilian/dormitories/service_bedrooms)
 "daK" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -22876,10 +22896,10 @@
 /area/station/maintenance/engineering)
 "ezR" = (
 /obj/machinery/access_button{
-	command = "cycle_interior";
+	command = "cycle_exterior";
 	frequency = 1379;
 	master_tag = "arrival_exit";
-	name = "interior access button";
+	name = "exterior access button";
 	pixel_x = -25;
 	pixel_y = -25;
 	req_access = list(13)
@@ -26294,14 +26314,15 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "fmI" = (
-/obj/structure/table,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen,
-/obj/item/device/paicard,
-/turf/simulated/floor{
-	icon_state = "whitechoco"
+/obj/machinery/autolathe,
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = list(50)
 	},
-/area/station/rnd/hallway/lobby)
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/station/cargo/office)
 "fmL" = (
 /obj/structure/grille,
 /obj/structure/window/thin/reinforced{
@@ -34434,6 +34455,9 @@
 	dir = 1
 	},
 /obj/machinery/light/smart,
+/obj/machinery/alarm{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -35180,11 +35204,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
@@ -35591,15 +35610,28 @@
 	},
 /area/station/aisat)
 "hoj" = (
-/obj/machinery/alarm{
-	pixel_x = -28;
-	pixel_y = -6
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/stool/bed/chair{
+	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/effect/landmark/start/technical_assistant,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/obj/machinery/newscaster{
+	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "yellow"
+	dir = 4;
+	icon_state = "caution"
 	},
-/area/station/hallway/secondary/mine_sci_shuttle)
+/area/station/hallway/primary/port)
 "hoM" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -38076,6 +38108,10 @@
 "hMx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "hMC" = (
@@ -51053,6 +51089,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -55112,17 +55152,17 @@
 	},
 /area/station/security/main)
 "lrr" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
 /obj/machinery/access_button{
-	command = "cycle_exterior";
+	command = "cycle_interior";
 	frequency = 1379;
 	master_tag = "arrival_exit";
-	name = "exterior access button";
+	name = "interior access button";
 	pixel_x = -25;
 	pixel_y = 25;
 	req_access = list(13)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -59320,6 +59360,10 @@
 /area/station/medical/morgue)
 "mnW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -64405,16 +64449,17 @@
 	},
 /area/station/civilian/library)
 "nsX" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/toy/figure/md{
-	pixel_x = -1;
-	pixel_y = 10
+/obj/structure/table,
+/obj/item/weapon/folder,
+/obj/item/weapon/pen,
+/obj/item/device/paicard,
+/obj/machinery/newscaster{
+	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitebluecorner"
+	icon_state = "whitechoco"
 	},
-/area/station/medical/reception)
+/area/station/rnd/hallway/lobby)
 "ntf" = (
 /obj/machinery/light/smart{
 	dir = 4
@@ -77115,13 +77160,11 @@
 "qjs" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -28;
-	pixel_y = -5
-	},
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -80863,12 +80906,19 @@
 	},
 /area/station/solar/starboard)
 "rby" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/candle_box,
-/turf/simulated/floor{
-	icon_state = "graychoco"
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/toy/figure/md{
+	pixel_x = -1;
+	pixel_y = 10
 	},
-/area/station/civilian/chapel)
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/station/medical/reception)
 "rbD" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/structure/cable/yellow{
@@ -89121,10 +89171,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -97500,11 +97546,16 @@
 	},
 /area/station/bridge/ai_upload)
 "uTH" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "blackchoco"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/civilian/chapel/mass_driver)
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "uTY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -97560,6 +97611,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
 	icon_state = "box_corners_white"
+	},
+/obj/machinery/newscaster{
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -98997,28 +99051,32 @@
 	},
 /area/station/engineering/break_room)
 "vlH" = (
-/obj/structure/table,
-/obj/item/toy/carpplushie,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "neutral"
+/obj/machinery/newscaster{
+	pixel_y = 28
 	},
-/area/station/civilian/gym)
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "shutter0";
+	id = "kitchen_shuttes";
+	name = "KitchenShutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/fore)
 "vlJ" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/rnd/robotics)
 "vlN" = (
-/obj/machinery/autolathe,
 /obj/machinery/alarm{
-	pixel_y = -32
-	},
-/obj/machinery/door/window/brigdoor/northleft{
-	req_access = list(50)
+	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 10;
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
@@ -111779,6 +111837,9 @@
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/machinery/newscaster{
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -139633,7 +139694,7 @@ hqu
 qsC
 sHQ
 cMl
-dax
+hoj
 juY
 dfZ
 tYK
@@ -144234,7 +144295,7 @@ bxB
 mnW
 sTk
 tJq
-cnk
+vlH
 bgs
 bgs
 ybJ
@@ -145068,7 +145129,7 @@ xfI
 eIi
 fcv
 pFf
-fmI
+nsX
 vOU
 tdH
 dwb
@@ -145752,7 +145813,7 @@ oOy
 ffS
 dbB
 idn
-fRR
+cnk
 ofi
 tIf
 miI
@@ -149108,7 +149169,7 @@ wts
 wts
 vTO
 ibt
-bll
+dax
 xVN
 xVN
 tJq
@@ -150642,7 +150703,7 @@ gHT
 alc
 neM
 fYS
-sEX
+uTH
 srs
 srs
 srs
@@ -151950,7 +152011,7 @@ nie
 izS
 aRr
 oft
-vlN
+fmI
 sht
 yfb
 rKy
@@ -152974,7 +153035,7 @@ sld
 ppa
 nLe
 sht
-kVk
+vlN
 eJg
 bJO
 bTo
@@ -153962,7 +154023,7 @@ urR
 tRY
 eBe
 qJA
-hoj
+tRY
 tRY
 aex
 pwd
@@ -155096,7 +155157,7 @@ nBR
 xjp
 png
 osT
-nsX
+rby
 nBR
 qYJ
 nPb
@@ -155609,8 +155670,8 @@ wjc
 wjc
 wjc
 wjc
-wjc
 bof
+wjc
 wjc
 vXe
 byA
@@ -157181,7 +157242,7 @@ qOl
 vLC
 rsN
 qdH
-rby
+acV
 scJ
 cUU
 tpQ
@@ -161291,7 +161352,7 @@ rKR
 mWg
 hhF
 bEe
-uTH
+acU
 lAX
 qws
 qtT
@@ -165635,7 +165696,7 @@ tSG
 rsJ
 iqB
 aat
-vlH
+acT
 dJL
 plf
 sfm
