@@ -27,7 +27,6 @@
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
 	var/need_env_pressure = 1
-	var/list/status_overlay = list()
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -374,7 +373,6 @@
 // update the icon & overlays to reflect mode & status
 /obj/machinery/disposal/proc/update()
 	cut_overlays()
-	clearlist(status_overlay)
 	if(stat & BROKEN)
 		icon_state = "disposal-broken"
 		mode = 0
@@ -389,6 +387,7 @@
 	if(stat & NOPOWER || mode == -1)
 		return
 
+	var/list/status_overlay = list()
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
 		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
