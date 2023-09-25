@@ -192,6 +192,14 @@
 				for(var/obj/O in all_slots)
 					SEND_SIGNAL(O, COMSIG_PROJECTILE_STYLE_DODGE, reflist)
 				operate_miss_mod = reflist[1]
+				//debugging
+				if(operate_miss_mod > 50)
+					var/text_to_log = "STYLE: [operate_miss_mod], from [M]"
+					if(all_slots.len)
+						text_to_log += "<br>Equipped items:<br>"
+						for(var/i in all_slots)
+							text_to_log += "[i]<br>"
+					log_debug(text_to_log)
 				if(prob(operate_miss_mod))
 					forcedodge = PROJECTILE_FORCE_MISS
 		if(!def_zone)
