@@ -61,7 +61,6 @@
 
 /area/awaymission/junkyard/hard
 	mob_spawn_list = list(
-		/mob/living/simple_animal/hostile/giant_spider/nurse = 1,
 		/mob/living/simple_animal/hostile/giant_spider/hunter = 1,
 		/mob/living/simple_animal/hostile/giant_spider = 1
 	)
