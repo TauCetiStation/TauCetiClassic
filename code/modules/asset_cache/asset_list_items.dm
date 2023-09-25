@@ -16,6 +16,9 @@
 		"TINIESTONE.ttf" = 'html/custom-fonts/TINIESTONE.ttf',
 		"TINIESTONE.eot" = 'html/custom-fonts/TINIESTONE.eot',
 		"TINIESTONE.woff" = 'html/custom-fonts/TINIESTONE.woff',
+		"StatusDisplays.ttf" = 'html/custom-fonts/StatusDisplays.ttf',
+		"StatusDisplays.eot" = 'html/custom-fonts/StatusDisplays.eot',
+		"StatusDisplays.woff" = 'html/custom-fonts/StatusDisplays.woff',
 		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 
