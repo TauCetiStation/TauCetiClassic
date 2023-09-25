@@ -11054,7 +11054,11 @@
 	id_tag = "rust_out";
 	name = "(A) Waste Vent"
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine{
+	name = "vacuum floor";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
 /area/station/engineering/rust)
 "bBs" = (
 /obj/structure/extinguisher_cabinet{
@@ -38132,9 +38136,6 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
-"gRX" = (
-/turf/simulated/floor/engine/vacuum,
-/area/station/engineering/rust)
 "gSa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
@@ -51148,6 +51149,9 @@
 	dir = 4
 	},
 /obj/item/toy/figure/ce,
+/obj/item/device/tagger/shop{
+	pixel_y = 17
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -52734,7 +52738,11 @@
 	id = "rust_in";
 	name = "waste air injector"
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine{
+	name = "vacuum floor";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
 /area/station/engineering/rust)
 "jPS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -63952,7 +63960,11 @@
 	id_tag = "rust_sensor";
 	output = 63
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine{
+	name = "vacuum floor";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
 /area/station/engineering/rust)
 "meQ" = (
 /obj/structure/cable{
@@ -65666,7 +65678,11 @@
 /obj/machinery/camera{
 	c_tag = "R-UST Mixing Tank"
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine{
+	name = "vacuum floor";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
 /area/station/engineering/rust)
 "myq" = (
 /obj/item/weapon/scrap_lump{
@@ -71252,7 +71268,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine{
+	name = "vacuum floor";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
 /area/station/engineering/rust)
 "nGX" = (
 /obj/machinery/hologram/holopad,
@@ -157394,9 +157414,9 @@ plf
 plf
 kHU
 kpN
-gRX
+pBk
 nGT
-gRX
+pBk
 kpN
 kHU
 aov
@@ -157652,8 +157672,8 @@ kHU
 kHU
 kpN
 myk
-gRX
-gRX
+pBk
+pBk
 kpN
 kHU
 aov
