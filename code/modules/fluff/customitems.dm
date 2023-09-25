@@ -72,6 +72,11 @@
 	body_parts_covered = 0
 	species_restricted = null
 
+/obj/item/clothing/gloves/custom/atom_init()
+	. = ..()
+	//Override for do not fine a player for his fluff
+	AddComponent(/datum/component/style, 0, 0, 0, 0)
+
 /obj/item/clothing/shoes/custom
 	name = "Custom shoes"
 	body_parts_covered = 0
