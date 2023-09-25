@@ -7,6 +7,7 @@
 	initroletype = /datum/role/shadowling
 	roletype = /datum/role/thrall
 
+	min_roles = 2
 	max_roles = 2
 
 	var/shadowling_ascended = FALSE
