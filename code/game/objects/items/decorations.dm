@@ -53,8 +53,8 @@
 		I.pixel_y = offsets[2]
 		user.drop_from_inventory(I, src)
 		update_icon()
-	else
-		..()
+		return
+	return ..()
 
 /obj/item/pens_bin/attack_hand(mob/user)
 	if(contents.len)
