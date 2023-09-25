@@ -4,6 +4,10 @@
 }
 
 @font-face{
+  font-family: "TINIESTONE";
+  src: url(TINIESTONE.ttf) format("truetype"), url(TINIESTONE.eof) format("embedded-opentype"), url(TINIESTONE.woff) format("woff");
+
+@font-face{
   font-family: "StatusDisplays";
   src: url(StatusDisplays.ttf) format("truetype"), url(StatusDisplays.eof) format("embedded-opentype"), url(StatusDisplays.woff) format("woff");
 }
