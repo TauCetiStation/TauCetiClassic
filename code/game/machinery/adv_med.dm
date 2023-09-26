@@ -162,7 +162,7 @@
 
 	if (src.connected) //Is something connected?
 		var/mob/living/carbon/human/occupant = src.connected.occupant
-		dat = "<font color='blue'><B>Информация об пациенте:</B></FONT><BR>" //Blah obvious
+		dat = "<font color='blue'><B>Информация о пациенте:</B></FONT><BR>" //Blah obvious
 		if (istype(occupant)) //is there REALLY someone in there?
 			var/t1
 			switch(occupant.stat) // obvious, see what their status is
@@ -173,7 +173,7 @@
 				else
 					t1 = "*Мёртв*"
 			if (!ishuman(occupant))
-				dat += "<font color='red'>Это устройство может сканировать только человекоподобный персонал.</font>"
+				dat += "<font color='red'>Это устройство может сканировать только гуманоидных существ.</font>"
 			else
 				dat += text("<font color='[]'>\tЗдоровье %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
@@ -181,7 +181,7 @@
 					dat += text("<font color='red'>Обнаружена аномальная биохимическая активность!</font><BR>")
 
 				if(occupant.virus2.len)
-					dat += text("<font color='red'>В кровотоке обнаружен вирусный возбудитель.</font><BR>")
+					dat += text("<font color='red'>В кровотоке обнаружен вирусный патоген.</font><BR>")
 
 				dat += text("<font color='[]'>\t-Физический урон %: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getBruteLoss())
 				dat += text("<font color='[]'>\t-Урон от удушья %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
@@ -196,7 +196,7 @@
 				dat += text("Температура тела: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
 				if(occupant.has_brain_worms())
-					dat += "В лобной доле обнаружено большое образование, возможно, раковое. Рекомендуется хирургическое вмешательство.<BR/>"
+					dat += "В лобной доле обнаружено злокачественное новообразование, есть шанс развития рака. Рекомендуется хирургическое вмешательство.<BR/>"
 
 				var/blood_volume = occupant.blood_amount()
 				var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
@@ -277,7 +277,7 @@
 							unknown_body++
 
 					if(unknown_body || BP.hidden)
-						imp += "Неизвестный в теле предмет:"
+						imp += "Обнаружен инородный предмет:"
 					if(!AN && !open && !infected && !imp)
 						AN = "Не обнаружено:"
 					if(!(BP.is_stump))
@@ -378,7 +378,7 @@
 	t1 += "Станционное время: <B>[worldtime2text()]</B><BR>"
 	switch(occupant.stat) // obvious, see what their status is
 		if(CONSCIOUS)
-			t1 += "Status: <B>В Сознание</B>"
+			t1 += "Status: <B>В Сознании</B>"
 		if(UNCONSCIOUS)
 			t1 += "Status: <B>Безсознания</B>"
 		else
