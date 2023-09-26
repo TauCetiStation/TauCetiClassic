@@ -167,7 +167,7 @@
 			var/t1
 			switch(occupant.stat) // obvious, see what their status is
 				if(0)
-					t1 = "В Сознании"
+					t1 = "В сознании"
 				if(1)
 					t1 = "Без сознания"
 				else
@@ -184,9 +184,9 @@
 					dat += text("<font color='red'>В кровотоке обнаружен вирусный патоген.</font><BR>")
 
 				dat += text("<font color='[]'>\t-Физический урон %: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getBruteLoss())
-				dat += text("<font color='[]'>\t-Урон от удушья %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
-				dat += text("<font color='[]'>\t-Урон от токсинов %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
-				dat += text("<font color='[]'>\t-Урон от ожогов %: []</font><BR><BR>", (occupant.getFireLoss() < 60 ? "blue" : "red"), occupant.getFireLoss())
+				dat += text("<font color='[]'>\t-Повреждения от удушья %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
+				dat += text("<font color='[]'>\t-Повреждения от токсинов %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
+				dat += text("<font color='[]'>\t-Повреждения от ожогов %: []</font><BR><BR>", (occupant.getFireLoss() < 60 ? "blue" : "red"), occupant.getFireLoss())
 
 				dat += text("<font color='[]'>\tУровень радиации %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
 				dat += text("<font color='[]'>\tГенетическое повреждение тканей %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
@@ -214,14 +214,14 @@
 				dat += "<HR><table border='1'>"
 				dat += "<tr>"
 				dat += "<th>Часть тела</th>"
-				dat += "<th>Урон от ожогов</th>"
+				dat += "<th>Повреждения от ожогов</th>"
 				dat += "<th>Физический урон</th>"
 				dat += "<th>Другие ранения</th>"
 				dat += "</tr>"
 				storedinfo += "<HR><table border='1'>"
 				storedinfo += "<tr>"
 				storedinfo += "<th>Часть тела</th>"
-				storedinfo += "<th>Урон от ожогов</th>"
+				storedinfo += "<th>Повреждения от ожогов</th>"
 				storedinfo += "<th>Физический урон</th>"
 				storedinfo += "<th>Другие ранения</th>"
 				storedinfo += "</tr>"
@@ -378,7 +378,7 @@
 	t1 += "Станционное время: <B>[worldtime2text()]</B><BR>"
 	switch(occupant.stat) // obvious, see what their status is
 		if(CONSCIOUS)
-			t1 += "Status: <B>В Сознании</B>"
+			t1 += "Status: <B>В сознании</B>"
 		if(UNCONSCIOUS)
 			t1 += "Status: <B>Без сознания</B>"
 		else
