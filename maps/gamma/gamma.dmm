@@ -7228,6 +7228,11 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/maintenance/brig)
+"aRH" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/storage/tech)
 "aRJ" = (
 /obj/structure/closet/malf/suits,
 /obj/item/clothing/glasses/night,
@@ -48663,7 +48668,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
 "jbi" = (
@@ -76270,7 +76275,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
 "oIn" = (
@@ -78197,7 +78202,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
 "pbo" = (
@@ -85806,7 +85811,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
 "qDC" = (
@@ -89314,7 +89319,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
 "rqP" = (
@@ -120848,7 +120853,7 @@
 /obj/item/device/flash,
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
 "xLi" = (
@@ -160124,7 +160129,7 @@ tUO
 tUO
 tUO
 iaI
-tyu
+aRH
 ayw
 faH
 faH
@@ -160381,7 +160386,7 @@ bWi
 seO
 mkW
 bBy
-tyu
+aRH
 onv
 uki
 wpt
@@ -160638,7 +160643,7 @@ dWx
 tyu
 nRi
 kIo
-tyu
+aRH
 onv
 tyu
 irw
