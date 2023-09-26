@@ -189,8 +189,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 		Heads_photo = image(CAP.fields["photo_f"])
 		newdesc = "Портрет [CAP.fields["name"]], главы станции Исход."
 
-	Heads_photo?.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
-	Heads_photo?.pixel_y = -2
+	Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
+	Heads_photo.pixel_y = -2
 
 	for(var/obj/item/portrait/captain/Portrait in global.station_head_portraits)
 		if(Heads_photo)
