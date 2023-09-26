@@ -385,5 +385,5 @@
 			t1 += "Status: <B><span class='warning'>*Мёртв*</span></B>"
 	t1 += additional_info
 	P.info = t1
-	P.name = "Отчет о сканирование [occupant.name]"
+	P.name = "Результаты сканирования [occupant.name]"
 	P.update_icon()
