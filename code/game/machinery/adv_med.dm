@@ -167,9 +167,9 @@
 			var/t1
 			switch(occupant.stat) // obvious, see what their status is
 				if(0)
-					t1 = "В Сознание"
+					t1 = "В Сознании"
 				if(1)
-					t1 = "Безсознания"
+					t1 = "Без сознания"
 				else
 					t1 = "*Мёртв*"
 			if (!ishuman(occupant))
@@ -380,7 +380,7 @@
 		if(CONSCIOUS)
 			t1 += "Status: <B>В Сознании</B>"
 		if(UNCONSCIOUS)
-			t1 += "Status: <B>Безсознания</B>"
+			t1 += "Status: <B>Без сознания</B>"
 		else
 			t1 += "Status: <B><span class='warning'>*Мёртв*</span></B>"
 	t1 += additional_info
