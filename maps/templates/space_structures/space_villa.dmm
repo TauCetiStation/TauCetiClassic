@@ -244,6 +244,7 @@
 /area/space_structures/space_villa)
 "iJ" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "asteroidder_inner";
 	req_access = list(101)
@@ -1112,6 +1113,7 @@
 /area/space_structures/space_villa)
 "NT" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "asteroidder_outer";
 	req_access = list(101)

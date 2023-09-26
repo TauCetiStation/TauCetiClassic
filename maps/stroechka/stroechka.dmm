@@ -188,6 +188,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -229,6 +230,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Out2"
 	},
 /turf/simulated/floor{
@@ -254,10 +256,20 @@
 	},
 /area/station/hallway/primary/central)
 "aB" = (
+/obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/clothing/suit/space/rig/atmos,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/head/helmet/space/rig/atmos,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/atmos,
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "aC" = (
@@ -618,6 +630,7 @@
 /area/station/engineering/engine)
 "bn" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Escape Airlock"
 	},
 /obj/machinery/door/firedoor,
@@ -875,6 +888,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Out2"
 	},
 /turf/simulated/floor{
@@ -1129,7 +1143,7 @@
 	frequency = 1444;
 	level = 3;
 	name = "Incinerator Monitor";
-	sensors = list("inc_meter"="Incinerator pipe meter", "incinerator_sensor"="Incinerator sensor")
+	sensors = list("inc_meter"="Incinerator pipe meter","incinerator_sensor"="Incinerator sensor")
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -1212,17 +1226,18 @@
 	},
 /area/station/cargo/storage)
 "cx" = (
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering largecell apc right";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1645,10 +1660,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "db" = (
-/obj/machinery/power/apc/largecell{
-	name = "largecell apc down";
-	pixel_y = -28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -1656,6 +1667,11 @@
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering largecell apc down";
+	pixel_y = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -1838,11 +1854,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dr" = (
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/machinery/floodlight,
 /obj/structure/cable{
 	d2 = 8;
@@ -1850,6 +1861,12 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo largecell apc right";
+	pixel_x = 27
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -2295,6 +2312,7 @@
 /area/station/hallway/secondary/exit)
 "ee" = (
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Escape Hall"
 	},
 /obj/structure/cable{
@@ -2906,6 +2924,7 @@
 	},
 /obj/machinery/door/airlock/mining{
 	autoclose = 0;
+	dir = 4;
 	frequency = 1379;
 	id_tag = "recucler_airlock_interior";
 	locked = 1;
@@ -3126,8 +3145,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/item/weapon/tank/emergency_oxygen/double,
@@ -3621,6 +3638,7 @@
 /area/space)
 "hK" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Mech Bay";
 	req_access = list(71)
 	},
@@ -3786,17 +3804,18 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/glasses/welding,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "largecell apc top";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD largecell apc top";
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -3946,6 +3965,7 @@
 "jR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
+	dir = 8;
 	id = "Skynet_launch";
 	name = "Mech Bay"
 	},
@@ -4369,14 +4389,15 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/set_burned{
 	icon_state = "damaged_4"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -4457,11 +4478,6 @@
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd,
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -4472,6 +4488,12 @@
 /obj/item/device/megaphone{
 	pixel_x = 3;
 	pixel_y = 5
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering largecell apc right";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5227,6 +5249,7 @@
 /area/station/hallway/secondary/arrival)
 "vT" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	dock_tag = "arrival_escape";
 	locked = 1;
 	name = "Escape Airlock"
@@ -5488,6 +5511,7 @@
 /area/station/engineering/atmos)
 "yW" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering EVA";
 	req_access = list(71)
 	},
@@ -5994,7 +6018,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Cw" = (
-/obj/machinery/suit_storage_unit/engine/falcon/chief,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/head/helmet/space/rig/engineering/chief,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6190,17 +6219,18 @@
 	},
 /area/station/hallway/secondary/exit)
 "Dp" = (
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering largecell apc right";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -6259,6 +6289,7 @@
 /area/station/hallway/secondary/arrival)
 "DJ" = (
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Escape Hall"
 	},
 /obj/machinery/door/firedoor,
@@ -6389,11 +6420,6 @@
 	},
 /area/station/rnd/lab)
 "Ew" = (
-/obj/machinery/power/apc/largecell{
-	dir = 8;
-	name = "largecell apc left";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -6404,6 +6430,12 @@
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering largecell apc left";
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6545,6 +6577,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engine Room";
 	req_access = list(71)
 	},
@@ -6808,6 +6841,7 @@
 /area/station/hallway/primary/central)
 "GM" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
 	req_access = list(71)
 	},
@@ -7011,10 +7045,20 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Hi" = (
+/obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/clothing/suit/space/rig/engineering,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/head/helmet/space/rig/engineering,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/engineer,
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "Hk" = (
@@ -7580,7 +7624,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_modifier,
+/obj/machinery/vending/eva,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8222,6 +8266,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Out2"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -8298,11 +8343,6 @@
 /area/station/engineering/atmos)
 "SM" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -8312,6 +8352,12 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering largecell apc right";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8328,14 +8374,15 @@
 /turf/simulated/wall,
 /area/station/cargo/storage)
 "Tc" = (
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD largecell apc right";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8456,6 +8503,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -8770,6 +8818,7 @@
 /area/shuttle/supply/station)
 "Wn" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
 	req_access = list(71)
 	},
@@ -9045,6 +9094,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
