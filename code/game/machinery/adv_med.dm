@@ -252,7 +252,7 @@
 					if(BP.open)
 						open = "Открытое:"
 					if(BP.is_rejecting)
-						rejecting = "Genetic Rejection:"
+						rejecting = "Генетическое отторжение:"
 					switch (BP.germ_level)
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 							infected = "Легкая инфекция:"
