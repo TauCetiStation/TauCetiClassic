@@ -7228,16 +7228,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/maintenance/brig)
-"aRH" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "purplefull"
-	},
-/area/station/hallway/primary/bridgehall)
 "aRJ" = (
 /obj/structure/closet/malf/suits,
 /obj/item/clothing/glasses/night,
@@ -7632,11 +7622,6 @@
 "aWs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
@@ -18222,13 +18207,13 @@
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "cTV" = (
+/obj/machinery/atmospherics/pipe/simple/visible/universal{
+	dir = 8
+	},
 /obj/machinery/meter{
 	frequency = 1443;
 	id = "dloop_atm_meter";
 	name = "Distribution Loop"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/universal{
-	dir = 8
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
@@ -18553,11 +18538,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/bridgehall)
 "cXF" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction{
@@ -21581,11 +21561,6 @@
 /area/station/maintenance/medbay)
 "dEv" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -23132,7 +23107,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "dXy" = (
 /turf/simulated/floor{
@@ -27444,17 +27422,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"eQz" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "purple"
-	},
-/area/station/hallway/primary/bridgehall)
 "eQI" = (
 /obj/structure/table,
 /obj/item/device/flash,
@@ -29808,13 +29775,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/effect/landmark/start/cyborg,
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/effect/landmark/start/cyborg,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "foS" = (
@@ -33736,17 +33703,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"gaY" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "purple"
-	},
-/area/station/hallway/primary/bridgehall)
 "gbc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -36111,11 +36067,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
@@ -39114,11 +39065,6 @@
 /area/station/maintenance/medbay)
 "hdn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -44012,11 +43958,6 @@
 /area/station/rnd/storage)
 "ieU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
@@ -47329,6 +47270,9 @@
 "iKe" = (
 /obj/structure/table,
 /obj/machinery/recharger,
+/obj/item/device/tagger/shop{
+	pixel_y = 17
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -53215,11 +53159,6 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
@@ -53397,9 +53336,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "jXR" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
@@ -63435,18 +63371,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "lZC" = (
-/obj/effect/landmark/start/research_assistant,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -64491,24 +64416,19 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "mkR" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -70622,9 +70542,6 @@
 	},
 /area/station/cargo/recycleroffice)
 "nAl" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
@@ -71686,11 +71603,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
@@ -72095,21 +72007,18 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -72824,9 +72733,6 @@
 	},
 /area/station/maintenance/science)
 "nWc" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
@@ -74439,11 +74345,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
@@ -93373,11 +93274,6 @@
 	},
 /area/station/security/brig)
 "shc" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -95046,11 +94942,6 @@
 /turf/simulated/floor,
 /area/station/construction/assembly_line)
 "swN" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
@@ -107548,6 +107439,9 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/folder/green,
+/obj/item/device/tagger/shop{
+	pixel_y = -1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -109179,11 +109073,6 @@
 	},
 /area/station/bridge)
 "vlX" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
@@ -110211,14 +110100,6 @@
 /obj/structure/window/fulltile/reinforced,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
-"vyB" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/rnd/chargebay)
 "vyC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -110236,32 +110117,6 @@
 	icon_state = "bluefull"
 	},
 /area/station/medical/cryo)
-"vyK" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "Skynet_launch";
-	name = "Mech Bay"
-	},
-/turf/simulated/floor,
-/area/station/rnd/chargebay)
 "vyZ" = (
 /obj/item/stack/sheet/metal{
 	amount = 12
@@ -114184,7 +114039,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "dark"
+	},
 /area/station/civilian/kitchen)
 "wkJ" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -121665,7 +121523,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "dark"
+	},
 /area/station/civilian/hydroponics)
 "xSW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -123004,11 +122865,6 @@
 /area/station/maintenance/brigright)
 "yjN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -165196,7 +165052,7 @@ uTa
 gtS
 gDR
 oex
-aRH
+oex
 oex
 jhd
 aaJ
@@ -165453,7 +165309,7 @@ mxD
 sqC
 gDR
 adV
-eQz
+adV
 oex
 gdC
 nGu
@@ -165710,7 +165566,7 @@ izf
 izf
 wbP
 tCs
-gaY
+tCs
 fMY
 vnR
 hSR
@@ -165967,7 +165823,7 @@ fQA
 pVX
 xnE
 adV
-eQz
+adV
 adV
 tlO
 nGu
@@ -166224,7 +166080,7 @@ rwD
 rwD
 diK
 eVC
-vyK
+eVC
 eVC
 rwD
 rwD
@@ -166481,7 +166337,7 @@ rwD
 uet
 uVD
 mLS
-vyB
+mLS
 uKp
 mhJ
 krR
