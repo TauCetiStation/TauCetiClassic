@@ -38289,6 +38289,9 @@
 /area/station/maintenance/medbay)
 "gSc" = (
 /obj/item/weapon/flora/random,
+/obj/structure/sign/poster/calendar{
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brownold"
@@ -41695,6 +41698,15 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"hFl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/sign/poster/calendar{
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood14"
+	},
+/area/station/civilian/library)
 "hFq" = (
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -109389,6 +109401,9 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
+/obj/structure/sign/poster/calendar{
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -151408,7 +151423,7 @@ pKs
 hPZ
 ogG
 sIy
-kvE
+hFl
 bCE
 omf
 aNI
