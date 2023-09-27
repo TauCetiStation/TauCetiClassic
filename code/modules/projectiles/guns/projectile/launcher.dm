@@ -82,6 +82,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines
 	caliber = "30"
+	initial_mag = /obj/item/ammo_box/magazine/internal/m79/underslung/marines
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines/process_chamber()
 	return ..(1, 1, 1)

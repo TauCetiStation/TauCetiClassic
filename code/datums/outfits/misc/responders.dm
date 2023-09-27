@@ -535,11 +535,11 @@
 	backpack_contents = list(
 	/obj/item/weapon/storage/box/space_suit/combat,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-	/obj/item/ammo_casing/r4046/chem/Exp/light,
-	/obj/item/ammo_casing/r4046/chem/Exp/light,
-	/obj/item/ammo_casing/r4046/chem/Exp/light,
-	/obj/item/ammo_casing/r4046/chem/Exp/light,
-	/obj/item/ammo_casing/r4046/chem/Exp/light
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light
 	)
 
 	rank = list("Sergeant")
