@@ -2342,10 +2342,14 @@
 /area/station/rnd/test_area)
 "ael" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp,
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 15
+	},
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
+/obj/item/mars_globe,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormtwo)
 "aem" = (
@@ -8628,9 +8632,15 @@
 /area/station/medical/surgery)
 "bgu" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp,
+/obj/item/device/flashlight/lamp{
+	pixel_x = 5;
+	pixel_y = -2
+	},
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
+	},
+/obj/item/tableclock{
+	pixel_y = 12
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormthree)
@@ -18119,6 +18129,10 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/item/newtons_pendulum{
+	pixel_y = 19;
+	pixel_x = -3
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormone)
 "cTd" = (
@@ -30480,6 +30494,9 @@
 /area/station/medical/cmo)
 "fty" = (
 /obj/machinery/autolathe,
+/obj/item/wallclock{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
@@ -34195,6 +34212,9 @@
 /area/station/security/brig)
 "geC" = (
 /obj/effect/decal/turf_decal/religion_emblem,
+/obj/item/wallclock{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "geE" = (
@@ -43481,6 +43501,9 @@
 /obj/item/clothing/shoes/slippers{
 	pixel_y = 14
 	},
+/obj/structure/sign/poster/calendar{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories/dormtwo)
 "hYU" = (
@@ -52037,6 +52060,10 @@
 "jFz" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
+/obj/item/tableclock{
+	pixel_y = 15;
+	pixel_x = -3
+	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -52230,6 +52257,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28;
 	pixel_y = -5
+	},
+/obj/item/wallclock{
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories/dormtwo)
@@ -76073,6 +76103,10 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/item/tableclock{
+	pixel_y = 12;
+	pixel_x = -3
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -92066,6 +92100,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/tableclock{
+	pixel_y = 15;
+	pixel_x = -3
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -97850,6 +97888,10 @@
 	name = "apc down";
 	pixel_y = -28
 	},
+/obj/item/pens_bin{
+	pixel_x = -10;
+	pixel_y = 17
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormthree)
 "sWb" = (
@@ -98387,6 +98429,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn_corner"
+	},
+/obj/item/tableclock{
+	pixel_y = 12;
+	pixel_x = -3
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -115289,6 +115335,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
+	},
+/obj/item/tableclock{
+	pixel_y = 12
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/dormitories/dormone)
