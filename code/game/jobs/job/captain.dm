@@ -16,6 +16,7 @@
 	minimal_player_ingame_minutes = 3900
 	outfit = /datum/outfit/job/captain
 	skillsets = list("Captain" = /datum/skillset/captain)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 // Non-human species can't be captains.
 /datum/job/captain/special_species_check(datum/species/S)
@@ -61,6 +62,7 @@
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 	skillsets = list("Head of Personnel" = /datum/skillset/hop)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/blueshield
 	title = "Blueshield Officer"
@@ -87,3 +89,4 @@
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_IMPOSTER_PRIORITIZE

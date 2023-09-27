@@ -16,7 +16,6 @@
 
 	var/atom/movable/screen/module_icon = null
 	var/atom/movable/screen/pullin = null
-	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
 	var/atom/movable/screen/complex/gun/gun_setting_icon = null
@@ -236,3 +235,5 @@
 
 	var/can_point = TRUE
 	var/show_examine_log = TRUE
+
+	var/neuter_gender_voice = MALE // for male/female emote sounds but with neuter gender
