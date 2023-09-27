@@ -41698,15 +41698,6 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"hFl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/sign/poster/calendar{
-	pixel_x = -32
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood14"
-	},
-/area/station/civilian/library)
 "hFq" = (
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -64475,7 +64466,7 @@
 "mhF" = (
 /obj/machinery/optable,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/forensic_office)
 "mhH" = (
@@ -69544,6 +69535,11 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"nkv" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/forensic_office)
 "nkP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -71853,8 +71849,7 @@
 	location = "N-SV"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/station/security/lobby)
 "nJa" = (
@@ -73291,6 +73286,15 @@
 	icon_state = "darkredcorners"
 	},
 /area/station/security/brig)
+"nWI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/sign/poster/calendar{
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood14"
+	},
+/area/station/civilian/library)
 "nWK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -151361,7 +151365,7 @@ wAk
 giE
 uSD
 rJF
-eTq
+nkv
 jJo
 isW
 fWj
@@ -151423,7 +151427,7 @@ pKs
 hPZ
 ogG
 sIy
-hFl
+nWI
 bCE
 omf
 aNI
