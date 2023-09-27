@@ -30,3 +30,8 @@
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
+
+/obj/item/clothing/suit/armor/captain/atom_init()
+	. = ..()
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free and like spacesuits
+	AddComponent(/datum/component/style, -15)

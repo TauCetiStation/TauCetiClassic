@@ -250,8 +250,8 @@
 
 /obj/item/clothing/suit/armor/swat/atom_init()
 	. = ..()
-	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
+	AddComponent(/datum/component/style, -15, 0, 0, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
