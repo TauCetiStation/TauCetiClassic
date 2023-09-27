@@ -70,7 +70,7 @@
 	ammo_type = /obj/item/ammo_casing/r4046/explosive
 
 /obj/item/ammo_box/magazine/internal/m79/underslung/marines
-	ammo_type = /obj/item/projectile/bullet/grenade/explosive/light
+	ammo_type = /obj/item/ammo_casing/r4046/explosive/light
 	caliber = "30"
 
 /obj/item/ammo_box/magazine/internal/shotcom
