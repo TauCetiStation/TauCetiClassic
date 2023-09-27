@@ -89,6 +89,11 @@
 	damage = 35
 	embed = 0
 
+/obj/item/projectile/bullet/pulserifle
+	name = "pulse bullet"
+	damage = 15
+	embed = 0
+
 /obj/item/projectile/bullet/heavy/a145
 	damage = 110
 	stun = 3

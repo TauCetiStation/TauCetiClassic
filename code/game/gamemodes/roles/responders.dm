@@ -76,3 +76,10 @@
 
 	logo_state = "soviet"
 	skillset_type = /datum/skillset/soviet
+
+/datum/role/security_responder
+	name = "Security Officer"
+	id = "Security Officer"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/officer

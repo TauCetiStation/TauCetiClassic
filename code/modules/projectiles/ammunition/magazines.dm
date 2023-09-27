@@ -543,6 +543,17 @@
 	icon_state = "wjpp_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
+/obj/item/ammo_box/magazine/m41a
+	name = "M41A magazine (10x24 Caseless)"
+	desc = "99-round stick of doom."
+	icon_state = "M41A"
+	origin_tech = "combat=1"
+	ammo_type = /obj/item/ammo_casing/pulserifle
+	caliber = "10x24"
+	max_ammo = 99
+	multiple_sprites = TWO_STATES
+	overlay = "pulserifle-mag"
+
 /obj/item/ammo_box/speedloader
 	name = "nonexistant speedloader"
 	multiple_sprites = MANY_STATES

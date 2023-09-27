@@ -224,3 +224,9 @@
 	desc = "A 12.7 bullet casing."
 	caliber = "12.7mm"
 	projectile_type = /obj/item/projectile/bullet/rifle2
+
+/obj/item/ammo_casing/pulserifle
+	desc = "A 10x24 bullet 'casing'."
+	caliber = "10x24"
+	icon_state = "casing_1024"
+	projectile_type = /obj/item/projectile/bullet/pulserifle

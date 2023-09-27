@@ -35,3 +35,8 @@
 	ID = "USSP Recon Platoon"
 	logo_state = "soviet"
 	initroletype = /datum/role/soviet
+
+/datum/faction/responders/security
+	name = "Security Team"
+	ID = "Security Team"
+	initroletype = /datum/role/security_responder
