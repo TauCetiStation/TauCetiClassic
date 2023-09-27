@@ -86,7 +86,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
-	AddComponent(/datum/component/style, 1)
+	//1% is such a strong buff that it should also be limited from 5 to 3, ofc.
+	AddComponent(/datum/component/style, 0, 1, list(SLOT_WEAR_MASK, SLOT_L_EAR, SLOT_R_EAR))
 
 /obj/item/clothing/mask/cigarette/get_current_temperature()
 	if(lit)
