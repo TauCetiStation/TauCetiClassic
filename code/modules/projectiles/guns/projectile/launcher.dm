@@ -79,3 +79,5 @@
 	initial_mag = /obj/item/ammo_box/magazine/internal/m79/underslung
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
 	two_hand_weapon = FALSE
+
+/obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines

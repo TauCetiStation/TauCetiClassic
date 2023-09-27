@@ -83,3 +83,17 @@
 	disallow_job = TRUE
 
 	skillset_type = /datum/skillset/officer
+
+/datum/role/marine_responder
+	name = "Marine"
+	id = "Marine"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/hos
+
+/datum/role/emag_clown
+	name = "Clown That Emags Things"
+	id = "Clown That Emags Things"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/clown

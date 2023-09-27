@@ -151,6 +151,12 @@
 	icon_state = "expl40x46"
 	projectile_type = /obj/item/projectile/bullet/chem/Exp
 
+/obj/item/ammo_casing/r4046/chem/Exp/light
+	desc = "A 30mm grenade (Exp)."
+	icon_state = "expl30"
+	caliber = "30"
+	projectile_type = /obj/item/projectile/bullet/grenade/explosive/light
+
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 

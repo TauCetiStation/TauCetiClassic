@@ -292,14 +292,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/m41a
 	name = "M41A pulse rifle"
-	desc = "NTMC weapon of choice, M41A pulse rifle is a bit underpowered, but makes up for it in sheer amount of dispersed lead. Fires 10x24mm Caseless ammo."
+	desc = "Импульсная винтовка М41А, принятая на вооружение в КМП НТ. Малая поражающая способность с лихвой компенсируется количеством свинца, выпускаемого по противнику. Использует безгильзовые патроны 10х24 мм."
 	icon_state = "pulserifle"
 	item_state = "pulserifle"
 	fire_sound = 'sound/weapons/guns/gunshot_m41.ogg'
 	initial_mag = /obj/item/ammo_box/magazine/m41a
 	w_class = SIZE_SMALL
 	two_hand_weapon = DESIRABLE_TWOHAND
-	fire_delay = 0
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/m41a/process_chamber()
 	return ..(1, 1, 1)
@@ -308,7 +308,7 @@
 	desc = "\"I wanna introduce you to a personal friend of mine. This is an M41A Pulse Rifle. Ten millimeter, with over-and-under thirty millimeter pump action grenade launcher.\""
 	icon_state = "pulseriflegl"
 	var/using_gl = FALSE
-	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/launcher
+	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines/launcher
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_gl_m41)
 
 /datum/action/item_action/hands_free/toggle_gl_m41

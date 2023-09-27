@@ -88,14 +88,12 @@ var/global/list/datum/spawners_cooldown = list()
 		ckey_cooldowns[type] = world.time + cooldown
 
 /datum/spawner/proc/check_cooldown(mob/dead/observer/ghost)
-/*
 	if(global.spawners_cooldown[ghost.ckey])
 		var/list/ckey_cooldowns = global.spawners_cooldown[ghost.ckey]
 		if(world.time < ckey_cooldowns[type])
 			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
 			to_chat(ghost, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
-*/
 	return TRUE
 
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)

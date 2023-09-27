@@ -491,15 +491,16 @@
 	name = "Responders: Marine"
 	uniform = /obj/item/clothing/under/tactical/marinad
 	suit = /obj/item/clothing/suit/marinad
+	suit_store = /obj/item/weapon/gun/projectile/automatic/m41a
 	head = /obj/item/clothing/head/helmet/tactical/marinad
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
-	gloves = /obj/item/clothing/shoes/boots
+	gloves = /obj/item/clothing/gloves/security/marinad
 	belt = /obj/item/weapon/storage/belt/security/tactical/marines
 	shoes = /obj/item/clothing/shoes/boots
 	l_ear = /obj/item/device/radio/headset/headset_sec/marinad
 	back = /obj/item/weapon/storage/backpack/dufflebag/marinad
 
-	id = /obj/item/weapon/card/id
+	id = /obj/item/weapon/card/id/centcom/ert
 
 	l_pocket = /obj/item/weapon/storage/pouch/flare/full
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/marines
@@ -509,8 +510,76 @@
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 	)
 
-/datum/outfit/responders/marines
+	var/list/rank = list("Pvt.", "PFC", "LCpl.", "Cpl.")
+	var/assignment = "Marine"
+
+/datum/outfit/responders/marines/post_equip(mob/living/carbon/human/H)
+	H.real_name = "[pick(rank)] [pick(global.last_names)]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = assignment
+	ID.rank = assignment
+
+	H.sec_hud_set_ID()
+
+	H.mind.skills.add_available_skillset(/datum/skillset/hos) //best fighter there is
+	H.mind.skills.maximize_active_skills()
+
+/datum/outfit/responders/marines/leader
 	name = "Responders: Marine Squad Leader"
+
+	head = /obj/item/clothing/head/helmet/tactical/marinad/leader
+	suit_store = /obj/item/weapon/gun/projectile/automatic/m41a/launcher
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/combat,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	/obj/item/ammo_casing/r4046/chem/Exp/light,
+	/obj/item/ammo_casing/r4046/chem/Exp/light,
+	/obj/item/ammo_casing/r4046/chem/Exp/light,
+	/obj/item/ammo_casing/r4046/chem/Exp/light,
+	/obj/item/ammo_casing/r4046/chem/Exp/light
+	)
+
+	rank = list("Sergeant")
+	assignment = "Marine Squad Leader"
+
+/datum/outfit/responders/clown
+	name = "Responders: Clown"
+	uniform = /obj/item/clothing/under/rank/clown
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	l_ear = /obj/item/device/radio/headset
+	back = /obj/item/weapon/storage/backpack/clown
+
+	id = /obj/item/weapon/card/id/clown
+
+	r_hand = /obj/item/weapon/bikehorn
+	l_hand = /obj/item/weapon/card/emag/clown
+
+	r_pocket = /obj/item/weapon/reagent_containers/spray/lube
+
+	backpack_contents = list(
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+	)
+
+/datum/outfit/responders/clown/post_equip(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = "[pick(clown_names)], Clown That Emags Things"
+	H.name = H.real_name
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = "Clown"
+	ID.rank = ID.assignment
+
+	H.sec_hud_set_ID()
 
 /obj/item/weapon/storage/belt/security/ert
 	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
@@ -609,4 +678,10 @@
 	new /obj/item/clothing/head/helmet/space/syndicate/striker(src)
 	new /obj/item/clothing/suit/space/syndicate/striker(src)
 	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+
+/obj/item/weapon/storage/box/space_suit/clown/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/clown(src)
+	new /obj/item/clothing/suit/space/clown(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)

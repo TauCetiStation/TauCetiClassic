@@ -125,6 +125,10 @@
 	explosion(target, 0, 1, 2)
 	return 1
 
+/obj/item/projectile/bullet/grenade/explosive/light/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	explosion(target, 0, 0, 5)
+	return 1
+
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2

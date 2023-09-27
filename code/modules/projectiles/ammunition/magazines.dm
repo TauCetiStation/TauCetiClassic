@@ -69,6 +69,10 @@
 /obj/item/ammo_box/magazine/internal/m79/underslung
 	ammo_type = /obj/item/ammo_casing/r4046/explosive
 
+/obj/item/ammo_box/magazine/internal/m79/underslung/marines
+	ammo_type = /obj/item/projectile/bullet/grenade/explosive/light
+	caliber = "30"
+
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here!"
