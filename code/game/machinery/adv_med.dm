@@ -363,7 +363,7 @@
 	if(href_list["print"])
 		if (next_print < world.time) //10 sec cooldown
 			next_print = world.time + 10 SECONDS
-			to_chat(usr, "<span class='notice'>Распечатка... Пожалуйста подождите.</span>")
+			to_chat(usr, "<span class='notice'>Распечатка... Пожалуйста, подождите.</span>")
 			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
 			addtimer(CALLBACK(src, PROC_REF(print_scan), storedinfo), 1 SECOND)
 		else
