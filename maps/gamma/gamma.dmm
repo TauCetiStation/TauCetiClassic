@@ -28606,6 +28606,7 @@
 /area/station/maintenance/science)
 "fbt" = (
 /obj/structure/table/woodentable/poker,
+/obj/item/newtons_pendulum,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "fbD" = (
@@ -71611,6 +71612,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/item/wallclock{
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
