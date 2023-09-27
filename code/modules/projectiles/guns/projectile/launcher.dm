@@ -81,3 +81,7 @@
 	two_hand_weapon = FALSE
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines
+	caliber = "30"
+
+/obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines/process_chamber()
+	return ..(1, 1, 1)

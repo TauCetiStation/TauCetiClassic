@@ -561,6 +561,7 @@
 	r_pocket = /obj/item/weapon/reagent_containers/spray/lube
 
 	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/clown,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
