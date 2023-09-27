@@ -3,6 +3,30 @@
 #define DETECTIVE_STYLE "detective_style"
 #define GANG_STYLE "gang_style"
 
+#define STYLE_TIP "It may affect your style."
+
+/datum/mechanic_tip/style
+	tip_name = STYLE_TIP
+
+/datum/mechanic_tip/style/New(datum/component/style/S)
+	var/output_information = ""
+	//One slot can increase style, other can decrease
+	if((S.style_amount > 0 || S.style_in_desired > 0) && (S.style_amount < 0 || S.style_in_desired < 0))
+		output_information += "This may have a ambiguity impact on your style"
+	//Very good stylish points
+	else if(S.style_amount >= 5 || S.style_in_desired >= 5)
+		output_information += "It can improve your style."
+	//Only good stylish points
+	else if(S.style_amount > 0 || S.style_in_desired > 0)
+		output_information += "It might give you a little style."
+	//Can decrease or increase style by special requirments
+	else if(S.style_sets.len)
+		output_information += "This may have a ambiguity impact on your style."
+	//Negative stylish points
+	else if(S.style_amount < 0 || S.style_in_desired < 0)
+		output_information += "It might have a bad effect on your style"
+	description = output_information
+
 /datum/component/style
 	var/style_amount = 0
 	var/style_in_desired = 0
@@ -30,6 +54,8 @@
 		var/list/L = list(slot_initial)
 		desired_slots = L
 
+	var/datum/mechanic_tip/style/style_tip = new(src)
+	parent.AddComponent(/datum/component/mechanic_desc, list(style_tip))
 	RegisterSignal(parent, COMSIG_PROJECTILE_STYLE_DODGE, PROC_REF(mod_misschance))
 
 /datum/component/style/proc/is_backpack_equipped(mob/living/user)
