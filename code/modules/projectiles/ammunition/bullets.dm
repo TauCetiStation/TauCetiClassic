@@ -137,7 +137,7 @@
 	projectile_type = /obj/item/projectile/bullet/grenade/explosive
 
 /obj/item/ammo_casing/r4046/explosive/light
-	name = "30mm grenade
+	name = "30mm grenade"
 	desc = "A 30mm grenade (Exp)."
 	icon_state = "expl30"
 	caliber = "30"
