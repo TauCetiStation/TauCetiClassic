@@ -299,13 +299,13 @@
 	initial_mag = /obj/item/ammo_box/magazine/m41a
 	w_class = SIZE_SMALL
 	two_hand_weapon = DESIRABLE_TWOHAND
-	fire_delay = 2
+	fire_delay = 1
 
 /obj/item/weapon/gun/projectile/automatic/m41a/process_chamber()
 	return ..(1, 1, 1)
 
 /obj/item/weapon/gun/projectile/automatic/m41a/launcher
-	desc = "\"I wanna introduce you to a personal friend of mine. This is an M41A Pulse Rifle. Ten millimeter, with over-and-under thirty millimeter pump action grenade launcher.\""
+	desc = "\"Я хочу познакомить тебя со своим другом. Это - импульсная винтовка М41, десять миллиметров, здесь и здесь есть тридцатимиллиметровый гранатомет. Держи.\""
 	icon_state = "pulseriflegl"
 	var/using_gl = FALSE
 	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines/launcher
