@@ -52,7 +52,7 @@
 	if(!iscarbon(target))
 		return FALSE
 	if(target.abiotic())
-		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего либо в руках.</span>")
+		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
 		return FALSE
 	if(!do_skill_checks(user))
 		return
@@ -154,7 +154,7 @@
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
-		to_chat(user, "<span class='warning'>Это устройство может сканировать только совместимые формы жизни.</span>")
+		to_chat(user, "<span class='warning'>Это устройство может сканировать только гуманоидные формы жизни.</span>")
 		return
 	if(!do_skill_checks(user))
 		return
@@ -188,7 +188,7 @@
 				dat += text("<font color='[]'>\t-Повреждения от токсинов %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
 				dat += text("<font color='[]'>\t-Повреждения от ожогов %: []</font><BR><BR>", (occupant.getFireLoss() < 60 ? "blue" : "red"), occupant.getFireLoss())
 
-				dat += text("<font color='[]'>\tУровень радиации %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
+				dat += text("<font color='[]'>\tУровень облучения %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
 				dat += text("<font color='[]'>\tГенетическое повреждение тканей %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
 				dat += text("<font color='[]'>\tПовреждение мозга %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
 				var/occupant_paralysis = occupant.AmountParalyzed()
@@ -250,7 +250,7 @@
 					if(BP.is_robotic())
 						robot = "Протез:"
 					if(BP.open)
-						open = "Открытое:"
+						open = "Вскрытое:"
 					if(BP.is_rejecting)
 						rejecting = "Генетическое отторжение:"
 					switch (BP.germ_level)
@@ -307,7 +307,7 @@
 					if(istype(IO, /obj/item/organ/internal/heart))
 						var/obj/item/organ/internal/heart/Heart = IO
 						if(Heart.heart_status == HEART_FAILURE)
-							organ_status = "Сердечная недостаточность:"
+							organ_status = "Остановка сердца:"
 						else if(Heart.heart_status == HEART_FIBR)
 							organ_status = "Фибрилляция сердца:"
 
