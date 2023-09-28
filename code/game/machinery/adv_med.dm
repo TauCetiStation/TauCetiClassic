@@ -221,9 +221,9 @@
 				storedinfo += "<HR><table border='1'>"
 				storedinfo += "<tr>"
 				storedinfo += "<th>Часть тела</th>"
-				storedinfo += "<th>Повреждения от ожогов</th>"
-				storedinfo += "<th>Физический урон</th>"
-				storedinfo += "<th>Другие ранения</th>"
+				storedinfo += "<th>Ожоги</th>"
+				storedinfo += "<th>Травмы</th>"
+				storedinfo += "<th>Другое</th>"
 				storedinfo += "</tr>"
 
 				for(var/obj/item/organ/external/BP in occupant.bodyparts)
