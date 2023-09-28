@@ -32128,10 +32128,10 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "fLz" = (
-/obj/machinery/computer/med_data,
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
+/obj/machinery/computer/operating,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -50219,6 +50219,11 @@
 	icon_state = "green"
 	},
 /area/station/civilian/garden)
+"joU" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/forensic_office)
 "joY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
@@ -67139,6 +67144,15 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/vacantoffice)
+"mLJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/sign/poster/calendar{
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood14"
+	},
+/area/station/civilian/library)
 "mLR" = (
 /obj/structure/table,
 /obj/machinery/requests_console/tool_storage{
@@ -69535,11 +69549,6 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
-"nkv" = (
-/turf/simulated/floor{
-	icon_state = "blackchoco"
-	},
-/area/station/security/forensic_office)
 "nkP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -73286,15 +73295,6 @@
 	icon_state = "darkredcorners"
 	},
 /area/station/security/brig)
-"nWI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/sign/poster/calendar{
-	pixel_x = -32
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood14"
-	},
-/area/station/civilian/library)
 "nWK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -77034,7 +77034,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list(5,6)
+	req_access = list(6)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -151365,7 +151365,7 @@ wAk
 giE
 uSD
 rJF
-nkv
+joU
 jJo
 isW
 fWj
@@ -151427,7 +151427,7 @@ pKs
 hPZ
 ogG
 sIy
-nWI
+mLJ
 bCE
 omf
 aNI
