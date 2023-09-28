@@ -296,7 +296,7 @@
 					dat += "</tr>"
 					storedinfo += "</tr>"
 				for(var/obj/item/organ/internal/IO in occupant.organs)
-					var/mech = "Родные органы:"
+					var/mech = "Органические органы:"
 					var/organ_status = ""
 					var/infection = ""
 					if(IO.robotic == 1)
