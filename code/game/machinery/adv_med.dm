@@ -196,7 +196,7 @@
 				dat += text("Температура тела: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
 				if(occupant.has_brain_worms())
-					dat += "В лобной доле обнаружено злокачественное новообразование, есть шанс развития рака. Рекомендуется хирургическое вмешательство.<BR/>"
+					dat += "В лобной доле обнаружено новообразование, возможно злокачественное. Рекомендуется хирургическое вмешательство.<BR/>"
 
 				var/blood_volume = occupant.blood_amount()
 				var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
