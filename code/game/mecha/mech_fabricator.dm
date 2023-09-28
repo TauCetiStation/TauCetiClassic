@@ -486,6 +486,8 @@
 			type = /obj/item/stack/sheet/mineral/phoron
 		if(MAT_URANIUM)
 			type = /obj/item/stack/sheet/mineral/uranium
+		if(MAT_PLASTIC)
+			type = /obj/item/stack/sheet/mineral/plastic
 		else
 			return 0
 	var/result = 0
@@ -540,8 +542,13 @@
 				material = MAT_GLASS
 			if(/obj/item/stack/sheet/mineral/uranium)
 				material = MAT_URANIUM
+			if(/obj/item/stack/sheet/mineral/plastic)
+				material = MAT_PLASTIC
 			else
 				return ..()
+
+		if(!(material in resources))
+			return ..()
 
 		if(being_built)
 			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
@@ -565,7 +572,8 @@
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
 
-	try_to_recycle(I, user)
+	if(!try_to_recycle(I, user))
+		return ..()
 
 /obj/machinery/mecha_part_fabricator/MouseDrop_T(atom/A, mob/user)
 	if(user.incapacitated())
@@ -579,16 +587,16 @@
 /obj/machinery/mecha_part_fabricator/proc/try_to_recycle(obj/item/I, mob/user)
 	if(being_built)
 		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
-		return
+		return TRUE
 
 	if(isrobot(user))
-		return
+		return FALSE
 
 	var/datum/design/found_design = null
 
 	if(I.contents.len) // Needs review. Check to prevent recycling whole rigs/assembled borg endoskeletons.
 		to_chat(user, "<span class='warning'>You need to fully disassemble \the [I] before recycling.</span>")
-		return
+		return TRUE
 
 	for(var/datum/design/D as anything in files.known_designs) // TODO: Optimize and cache it with keeping "recycle only known designs" feature instead of cycling through all designs, but I can't think of any way with less than O(N) complexity on every check. Only way I can think of is to keep build_path to design list with all available designs in research files, but that seems as a bad solution. Review needed.
 		if((D.build_type & build_type) && istype(I, D.build_path))
@@ -596,8 +604,7 @@
 			break
 
 	if(!found_design)
-		to_chat(user, "<span class='warning'>\The [I] is incompatible and cannot be recycled by \the [src].</span>")
-		return
+		return FALSE // Just punch this bad boy
 
 	var/list/materials_to_add = list()
 
@@ -607,7 +614,7 @@
 
 			if((resources[material] + retrieved_materials) >= res_max_amount)
 				to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
-				return
+				return TRUE
 
 			materials_to_add[material] = retrieved_materials
 
@@ -625,6 +632,7 @@
 		sleep(10)
 		updateUsrDialog()
 		cut_overlay("fab-load-metal")
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/deconstruction()
 	. = ..()
