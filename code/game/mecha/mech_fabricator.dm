@@ -1,3 +1,6 @@
+#define FABRICATOR_RECYCLE_MATERIAL_RATE 0.8 // To be discussed. Maybe add dependency on part tiers.
+#define FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER 5 // Item.size * modifier is the time required to recycle an item.
+
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab"
@@ -502,25 +505,27 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/item/weapon/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
-		update_icon()
-		return
+/obj/machinery/mecha_part_fabricator/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon))
+		var/obj/item/weapon/W = I
+		if(default_deconstruction_screwdriver(user, "fab", "fab", W))
+			update_icon()
+			return
 
-	if(exchange_parts(user, W))
-		return
+		if(exchange_parts(user, W))
+			return
 
-	if(panel_open)
-		if(isprying(W))
-			default_deconstruction_crowbar(W)
-			return 1
-		else
-			to_chat(user, "<span class='warning'>You can't load \the [name] while it's opened!</span>")
-			return 1
+		if(panel_open)
+			if(isprying(W))
+				default_deconstruction_crowbar(W)
+				return 1
+			else
+				to_chat(user, "<span class='warning'>You can't load \the [name] while it's opened!</span>")
+				return 1
 
-	if(istype(W, /obj/item/stack))
+	if(istype(I, /obj/item/stack))
 		var/material
-		switch(W.type)
+		switch(I.type)
 			if(/obj/item/stack/sheet/mineral/gold)
 				material = MAT_GOLD
 			if(/obj/item/stack/sheet/mineral/silver)
@@ -544,7 +549,7 @@
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
 			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return
-		var/obj/item/stack/sheet/stack = W
+		var/obj/item/stack/sheet/stack = I
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
 			add_overlay("fab-load-[material]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
@@ -559,6 +564,67 @@
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
+
+	try_to_recycle(I, user)
+
+/obj/machinery/mecha_part_fabricator/MouseDrop_T(atom/A, mob/user)
+	if(user.incapacitated())
+		return
+	if(!isrobot(user) && isitem(A))
+		var/obj/item/I = A
+		try_to_recycle(I, user)
+		return
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/proc/try_to_recycle(obj/item/I, mob/user)
+	if(being_built)
+		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
+		return
+
+	if(isrobot(user))
+		return
+
+	var/datum/design/found_design = null
+
+	if(I.contents.len) // Needs review. Check to prevent recycling whole rigs/assembled borg endoskeletons.
+		to_chat(user, "<span class='warning'>You need to fully disassemble \the [I] before recycling.</span>")
+		return
+
+	for(var/datum/design/D as anything in files.known_designs) // TODO: Optimize and cache it with keeping "recycle only known designs" feature instead of cycling through all designs, but I can't think of any way with less than O(N) complexity on every check. Only way I can think of is to keep build_path to design list with all available designs in research files, but that seems as a bad solution. Review needed.
+		if((D.build_type & build_type) && istype(I, D.build_path))
+			found_design = D
+			break
+
+	if(!found_design)
+		to_chat(user, "<span class='warning'>\The [I] is incompatible and cannot be recycled by \the [src].</span>")
+		return
+
+	var/list/materials_to_add = list()
+
+	for(var/material in found_design.materials)
+		if(material in resources)
+			var/retrieved_materials = round(get_resource_cost_w_coeff(found_design, material, roundto = 0.01) * FABRICATOR_RECYCLE_MATERIAL_RATE, 1)
+
+			if((resources[material] + retrieved_materials) >= res_max_amount)
+				to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
+				return
+
+			materials_to_add[material] = retrieved_materials
+
+	// Every check passed, start to recycle'
+	user.visible_message("<span class='notice'>[user] starts placing \the [I] into \the [src].</span>",
+						 "<span class='notice'>You start placing \the [I] into \the [src].</span>")
+	if(I.use_tool(src, user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, required_skills_override = list()))
+		for(var/material in materials_to_add)
+			resources[material] += materials_to_add[material]
+
+		qdel(I)
+
+		add_overlay("fab-load-metal")
+		to_chat(user, "<span class='notice'>You successfully recycle \the [I] in \the [src].</span>")
+		sleep(10)
+		updateUsrDialog()
+		cut_overlay("fab-load-metal")
 
 /obj/machinery/mecha_part_fabricator/deconstruction()
 	. = ..()
@@ -577,3 +643,6 @@
 /obj/machinery/mecha_part_fabricator/power_change()
 	..()
 	update_icon()
+
+#undef FABRICATOR_RECYCLE_MATERIAL_RATE
+#undef FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER
