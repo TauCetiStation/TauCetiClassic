@@ -244,7 +244,7 @@
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Наложена шина:"
 					if(BP.status & ORGAN_BLEEDING)
-						bled = "Кровотечние:"
+						bled = "Кровотечение:"
 					if(BP.status & ORGAN_BROKEN)
 						AN = "[BP.broken_description]:"
 					if(BP.is_robotic())
