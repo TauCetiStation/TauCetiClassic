@@ -109,6 +109,7 @@
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
+	world_icon = 'icons/obj/shards_world.dmi'
 	icon_state = "large"
 	var/item_state_base = ""
 	sharp = 1
@@ -139,18 +140,6 @@
 			pixel_y = rand(-5, 5)
 
 	return ..()
-
-/obj/item/weapon/shard/update_icon()
-	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
-		// moving to inventory, restore icon (big inventory icon)
-		icon ='icons/obj/shards.dmi'
-
-	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
-		// moving to world, change icon (small world icon)
-		icon = 'icons/obj/shards_world.dmi'
-
-/obj/item/weapon/shard/update_world_icon()
-	update_icon()
 
 /obj/item/weapon/shard/Bump()
 	if(prob(20))

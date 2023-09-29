@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	var/world_icon = null
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
@@ -1063,7 +1064,16 @@
 // swap between world (small) and ui (big) icons when item changes location
 // feel free to override for items with complicated icon mechanics
 /obj/item/proc/update_world_icon()
-	return
+	if(!world_icon)
+		return
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
+		// moving to inventory, restore icon (big inventory icon)
+		icon = initial(icon)
+
+	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
+		// moving to world, change icon (small world icon)
+		icon = world_icon
+	update_icon()
 
 /obj/item/CtrlShiftClick(mob/user)
 	. = ..()

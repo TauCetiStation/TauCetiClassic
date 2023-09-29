@@ -10,6 +10,7 @@
 	name = "card"
 	desc = "Используется в карточных делах."
 	icon = 'icons/obj/card.dmi'
+	world_icon = 'icons/obj/card_world.dmi'
 	icon_state = "blank"
 	item_state = "card-id"
 
@@ -123,15 +124,6 @@
 	blood_type = H.dna.b_type
 	dna_hash = H.dna.unique_enzymes
 	fingerprint_hash = md5(H.dna.uni_identity)
-
-/obj/item/weapon/card/id/update_world_icon()
-	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
-		// moving to inventory, restore icon (big inventory icon)
-		icon ='icons/obj/card.dmi'
-
-	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
-		// moving to world, change icon (small world icon)
-		icon = 'icons/obj/card_world.dmi'
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")

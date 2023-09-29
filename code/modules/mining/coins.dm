@@ -1,5 +1,6 @@
 /obj/item/weapon/coin
 	icon = 'icons/obj/economy.dmi'
+	world_icon = 'icons/obj/economy_world.dmi'
 	name = COIN_IRON
 	icon_state = "coin__heads"
 	flags = CONDUCT
@@ -126,16 +127,6 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].",
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>",
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
-
-/obj/item/weapon/coin/update_world_icon()
-	update_icon()
-	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
-		// moving to inventory, restore icon (big inventory icon)
-		icon ='icons/obj/economy.dmi'
-
-	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
-		// moving to world, change icon (small world icon)
-		icon = 'icons/obj/economy_world.dmi'
 
 /obj/item/weapon/coin/update_icon()
 	icon_state = "coin_[cmineral]_[coinflip]"
