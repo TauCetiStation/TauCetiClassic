@@ -881,6 +881,8 @@ var/global/list/turret_icons
 			e_gun.power_supply.charge = gun_charge
 			e_gun.update_icon()
 			user.put_in_hands(e_gun)
+			e_gun = null
+			installation = null
 			gun_charge = 0
 			to_chat(user, "<span class='notice'>You remove [e_gun] from the turret frame.</span>")
 
