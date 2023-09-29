@@ -1063,6 +1063,7 @@
 // swap between world (small) and ui (big) icons when item changes location
 // feel free to override for items with complicated icon mechanics
 /obj/item/proc/update_world_icon()
+	return
 
 /obj/item/CtrlShiftClick(mob/user)
 	. = ..()
