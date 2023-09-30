@@ -113,7 +113,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/weapon/wrapping_paper,
 					/obj/item/weapon/wrapping_paper,
-					/obj/item/weapon/wrapping_paper)
+					/obj/item/weapon/wrapping_paper,
+					/obj/item/weapon/paper_refill)
 	crate_name = "Arts and Crafts crate"
 	group = "Operations"
 
@@ -130,6 +131,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/stamp/approve,
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/paper_bin,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen,
@@ -1623,6 +1626,17 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/device/toner,
 					/obj/item/device/toner)
 	crate_name = "Toner cartridges"
+	group = "Supply"
+
+/datum/supply_pack/papers
+	name = "Paper packs"
+	contains = list(/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill)
+	crate_name = "Paper packs"
 	group = "Supply"
 
 /datum/supply_pack/vest

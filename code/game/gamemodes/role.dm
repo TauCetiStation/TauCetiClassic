@@ -86,8 +86,6 @@
 	if (!OnPreSetup())
 		return FALSE
 
-	OnPostSetup()
-
 	return TRUE
 
 /datum/role/proc/Deconvert()
@@ -215,7 +213,7 @@
 	return TRUE
 
 /datum/role/proc/AppendObjective(objective_type, duplicates = 0)
-	if(!duplicates && locate(objective_type) in objectives)
+	if(!duplicates && locate(objective_type) in objectives.objectives)
 		return null
 	var/datum/objective/O
 	if(istype(objective_type, /datum/objective)) //Passed an actual objective
