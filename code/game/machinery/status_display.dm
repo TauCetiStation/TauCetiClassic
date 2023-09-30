@@ -1,4 +1,4 @@
-#define CHARS_PER_LINE 6
+#define CHARS_PER_LINE 7
 #define FONT_SIZE "3"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "StatusDisplays"
@@ -92,11 +92,11 @@
 				var/line1
 				var/line2 = get_shuttle_timer()
 				if(SSshuttle.location == 1)
-					line1 = "-ETD-"
+					line1 = "-Отпр.-"
 				else
-					line1 = "-ETA-"
+					line1 = "-Приб.-"
 				if(length_char(line2) > CHARS_PER_LINE)
-					line2 = "Error!"
+					line2 = "Ошибка!"
 				update_display(line1, line2)
 			else
 				remove_display()
@@ -123,15 +123,15 @@
 					index2 -= message2_len
 			update_display(line1, line2)
 		if(4)				// supply shuttle timer
-			var/line1 = "SUPPLY"
+			var/line1 = "-Груз.-"
 			var/line2
 			if(SSshuttle.moving)
 				line2 = get_SSshuttle_timer()
 				if(length_char(line2) > CHARS_PER_LINE)
-					line2 = "Error"
+					line2 = "Ошибка!"
 			else
 				if(SSshuttle.at_station)
-					line2 = "Docked"
+					line2 = "Стоянка"
 				else
 					line1 = ""
 			update_display(line1, line2)
@@ -140,6 +140,9 @@
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
+	if(stat & NOPOWER)
+		return
+
 	switch(mode)
 		if(1,2,4)
 			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
@@ -180,7 +183,7 @@
 	if(SSshuttle.moving)
 		var/timeleft = round((SSshuttle.eta_timeofday - REALTIMEOFDAY) / 10,1)
 		if(timeleft < 0)
-			return "Late"
+			return "Опозд."
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	return ""
 
