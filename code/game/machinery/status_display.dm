@@ -131,7 +131,7 @@
 					line2 = "Ошибка!"
 			else
 				if(SSshuttle.at_station)
-					line2 = "Стоянка"
+					line2 = "Прибыл"
 				else
 					line1 = ""
 			update_display(line1, line2)
