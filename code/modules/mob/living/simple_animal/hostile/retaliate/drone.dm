@@ -133,7 +133,7 @@
 			switch(chosen)
 				if(1)
 					C = new(loc)
-					C.name = "Drone CPU motherboard""
+					C.name = "Drone CPU motherboard"
 					C.origin_tech = "programming=[rand(4, 6)]"
 
 				if(2)
