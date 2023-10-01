@@ -112,18 +112,13 @@
 // Mindprotected gain imposter
 /datum/faction/traitor/auto/imposter/proc/first_imposter_addition()
 	var/list/mindprotected_list = list()
-	var/list/imposter_prioritize_list = list()
-	for(var/J in subtypesof(/datum/job))
-		var/datum/job/type_of_job = new J
-		if(type_of_job.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
-			imposter_prioritize_list += type_of_job.title
-		qdel(type_of_job)
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(!player.mind || !player.client)
 			continue
 		if(isanyantag(player))
 			continue
-		if(player.mind.assigned_role in imposter_prioritize_list)
+		var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+		if(J.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
 			mindprotected_list += player
 	log_mode("IMPOSTERS: First addition list has [mindprotected_list.len] lenght")
 	if(mindprotected_list.len)
