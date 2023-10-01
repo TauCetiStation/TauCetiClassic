@@ -113,13 +113,13 @@
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
-			user.visible_message("[user] ослабляет натяжение тетивы [src] и вытаскивает [arrow].","Вы ослабляете натяжение тетивы [src] и вытаскиваете [arrow]")
+			user.visible_message("[user] ослабляет натяжение тетивы [src] и вытаскивает [arrow].","Вы ослабляете натяжение тетивы [src] и вытаскиваете [arrow].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
 			A.removed(user)
 			arrow = null
 		else
-			user.visible_message("[user] ослабляет натяжение тетивы арбалета.", "Вы ослабляете натяжение тетивы арбалета.")
+			user.visible_message("[user] ослабляет натяжение тетивы [src].", "Вы ослабляете натяжение тетивы [src].")
 		tension = 0
 		icon_state = "crossbow"
 	else
