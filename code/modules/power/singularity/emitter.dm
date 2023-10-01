@@ -37,6 +37,8 @@
 	RefreshParts()
 
 /obj/machinery/power/emitter/RefreshParts()
+	..()
+
 	var/max_firedelay = 120
 	var/firedelay = 120
 	var/min_firedelay = 24
