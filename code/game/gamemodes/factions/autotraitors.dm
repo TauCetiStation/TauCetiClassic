@@ -114,9 +114,10 @@
 	var/list/mindprotected_list = list()
 	var/list/imposter_prioritize_list = list()
 	for(var/J in subtypesof(/datum/job))
-		var/datum/job/type_of_job = J
+		var/datum/job/type_of_job = new J
 		if(type_of_job.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
 			imposter_prioritize_list += type_of_job.title
+		qdel(type_of_job)
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(!player.mind || !player.client)
 			continue
@@ -152,9 +153,9 @@
 		log_mode("IMPOSTERS: Imposter count is [antag_counting], members count is [members.len]. Adding auto-imposters failed")
 
 /datum/faction/traitor/auto/imposter/limit_roles(num_players)
-	..()
-	max_roles /= 3
-	log_mode("IMPOSTERS: [src] faction has [max_roles] limit of roundstart roles")
+	// No imposters on roundstart
+	max_roles = 0
+	min_roles = 0
 	return max_roles
 
 /datum/faction/traitor/auto/imposter/can_latespawn_mob(mob/P)
