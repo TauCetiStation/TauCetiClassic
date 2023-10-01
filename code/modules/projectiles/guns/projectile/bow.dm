@@ -189,7 +189,7 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	user.visible_message("<span class='danger'><span class='danger'>[user] стреляет из [src] и [arrow] летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете [src] и отправляете в полёт [arrow] несущуюся навстречу [target]!</span>")
+	user.visible_message("<span class='danger'>[user] стреляет из [src] и [arrow] летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете [src] и отправляете в полёт [arrow] несущуюся навстречу [target]!</span>")
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
