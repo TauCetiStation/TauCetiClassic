@@ -1,6 +1,6 @@
 /// Quirk names defines. To ease keeping track.
 // positive quirks.
-#define QUIRK_MULTITASKING "Многозадачность"
+#define QUIRK_MULTITASKING "Амбидекстер"
 #define QUIRK_CHILD_OF_NATURE "Дитя Природы"
 #define QUIRK_STRONG_MIND "Психологическая Устойчивость"
 #define QUIRK_ALCOHOL_TOLERANCE "Стойкость к Алкоголю"
