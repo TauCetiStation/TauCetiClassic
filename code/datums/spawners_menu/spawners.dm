@@ -775,4 +775,4 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 
-	create_and_setup_role(/datum/role/operative/lone, H, TRUE)
+	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)

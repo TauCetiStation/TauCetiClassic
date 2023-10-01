@@ -16,7 +16,7 @@
 	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	fire_delay = 1
+	fire_delay = 2
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
@@ -85,7 +85,7 @@
 		fire_sound = initial(fire_sound)
 	else
 		shot = ammo_type[PLASMAGUN_OVERCHARGE_TYPE]
-		fire_delay = 0
+		fire_delay = 1
 		fire_sound = overcharge_fire_sound
 		max_projectile_per_fire = 1
 

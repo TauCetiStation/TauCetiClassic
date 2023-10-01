@@ -6,6 +6,7 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/smg
+	has_ammo_counter = TRUE
 	can_be_holstered = FALSE
 	var/alarmed = FALSE
 	var/should_alarm_when_empty = FALSE
@@ -68,6 +69,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	should_alarm_when_empty = TRUE
 	can_be_silenced = TRUE
+	has_ammo_counter = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
@@ -80,6 +82,7 @@
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
 	two_hand_weapon = ONLY_TWOHAND
+	has_ammo_counter = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
@@ -163,6 +166,7 @@
 	icon_state = "borg_smg"
 	initial_mag = /obj/item/ammo_box/magazine/borg45
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
+	has_ammo_counter = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
