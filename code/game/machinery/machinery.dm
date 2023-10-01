@@ -439,7 +439,7 @@ Class Procs:
 	..()
 	RefreshParts()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
+/obj/machinery/proc/RefreshParts()
 	var/caprat = 0
 	var/binrat = 0
 
