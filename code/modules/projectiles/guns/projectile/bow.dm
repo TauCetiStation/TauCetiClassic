@@ -56,14 +56,14 @@
 
 /obj/item/weapon/crossbow/atom_init()
 	. = ..()
-	desc = "Старая классика в стиле[gamestory_start_year+2]. Возьми в руки эту жестянку."
+	desc = "A [gamestory_start_year+2]AD twist on an old classic. Pick up that can."
 
 /obj/item/weapon/crossbow/attackby(obj/item/I, mob/user, params)
 	if(!arrow)
 		if(istype(I, /obj/item/weapon/arrow))
 			user.drop_from_inventory(I, src)
 			arrow = I
-			user.visible_message("[user] вставляет болт в арбалет.","Вы вставляете болт в арбалет.")
+			user.visible_message("[user] вставляет [arrow] в [src].","Вы вставляете [arrow] в [src].")
 			icon_state = "crossbow-nocked"
 			return
 
@@ -75,10 +75,10 @@
 			arrow.fingerprintslast = src.fingerprintslast
 			arrow.forceMove(src)
 			icon_state = "crossbow-nocked"
-			user.visible_message("[user] хаотично вставляет болт в арбалет.","Вы хаотично вставляете болт в арбалет.")
+			user.visible_message("[user] хаотично вставляет [arrow] в [src].","Вы хаотично вставляете [arrow] в [src].")
 			if(cell)
 				if(cell.charge >= 500)
-					to_chat(user, "<span class='notice'>В результате болт начинает раскаляться докрасна.</span>")
+					to_chat(user, "<span class='notice'>В результате [arrow] начинает раскаляться докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
@@ -88,24 +88,24 @@
 		if(!cell)
 			user.drop_from_inventory(I, src)
 			cell = I
-			to_chat(user, "<span class='notice'>Вы вставляете батарейку в арбалет и подключаете его к катушке зажигания.</span>")
+			to_chat(user, "<span class='notice'>Вы вставляете [cell] в [src] и подключаете его к катушке зажигания.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					to_chat(user, "<span class='notice'>Болт мерцает и трещит, раскаляясь докрасна.</span>")
+					to_chat(user, "<span class='notice'>[arrow] мерцает и трещит, раскаляясь докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
 		else
-			to_chat(user, "<span class='notice'>Батарейка уже установлена в арбалет</span>")
+			to_chat(user, "<span class='notice'>Батарейка уже установлена в [src]</span>")
 
 	else if(isscrewing(I))
 		if(cell)
 			var/obj/item/C = cell
 			C.forceMove(get_turf(user))
 			cell = null
-			to_chat(user, "<span class='notice'>Вы вынимаете батарейку из арбалета [I].</span>")
+			to_chat(user, "<span class='notice'>Вы вынимаете [cell] из [src] с [I].</span>")
 		else
-			to_chat(user, "<span class='notice'>Арбалет не имеет батарейки внутри.</span>")
+			to_chat(user, "<span class='notice'>[src] не имеет батарейки внутри.</span>")
 
 	else
 		return ..()
@@ -113,7 +113,7 @@
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
-			user.visible_message("[user] ослабляет натяжение тетивы арбалета и вытаскивает болт.","Вы ослабляете натяжение тетивы арбалета и вытаскиваете болт.")
+			user.visible_message("[user] ослабляет натяжение тетивы [src] и вытаскивает [arrow].","Вы ослабляете натяжение тетивы [src] и вытаскиваете [arrow]")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
 			A.removed(user)
@@ -128,7 +128,7 @@
 /obj/item/weapon/crossbow/proc/draw(mob/user)
 
 	if(!arrow)
-		to_chat(user, "У вас нет стрелы в арбалете.")
+		to_chat(user, "У вас нет стрелы в [src].")
 		return
 
 	if(user.restrained())
@@ -136,7 +136,7 @@
 
 	current_user = user
 
-	user.visible_message("[user] начинает натягивать тетиву арбалета.","Вы начинаете натягивать тетиву арбалета.")
+	user.visible_message("[user] начинает натягивать тетиву [src].","Вы начинаете натягивать тетиву [src].")
 	tension = 1
 	spawn(25) increase_tension(user)
 
@@ -150,9 +150,9 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		to_chat(usr, "арбалет лязгает, когда вы натягиваете тетиву до максимального натяжения!")
+		to_chat(usr, "[src] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
 	else
-		user.visible_message("[usr] натягивает тетиву арбалета!", "Вы продолжаете натягивать тетиву арбалета!")
+		user.visible_message("[usr] натягивает тетиву [src]!", "Вы продолжаете натягивать тетиву [src]!")
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
@@ -170,7 +170,7 @@
 		return 0
 
 	if (!arrow)
-		to_chat(user, "Болт отсутствует в арбалете!")
+		to_chat(user, "Болт отсутствует в [src]!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
@@ -189,7 +189,7 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	user.visible_message("<span class='danger'>[user] стреляет из арбалета и болт летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете тетиву арбалета и отправляете в полёт болт несущуюся навстречу [target]!</span>")
+	user.visible_message("<span class='danger'><span class='danger'>[user] стреляет из [src] и [arrow] летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете [src] и отправляете в полёт [arrow] несущуюся навстречу [target]!</span>")
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
