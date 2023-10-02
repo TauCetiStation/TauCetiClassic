@@ -37,7 +37,7 @@
 	value = -2
 	disability = TRUE
 	mob_trait = TRAIT_DEAF
-	gain_text = "<span class='danger'>Тут подозрительно тихо.</span>"
+	gain_text = "<span class='danger'>Вы оглохли.</span>"
 	lose_text = "<span class='notice'>Вы снова слышите!</span>"
 
 
