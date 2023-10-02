@@ -33,7 +33,7 @@
 
 /datum/quirk/deafness
 	name = QUIRK_DEAF
-	desc = "Вы неизлечимо глухи"
+	desc = "Вы неизлечимо глухи."
 	value = -2
 	disability = TRUE
 	mob_trait = TRAIT_DEAF
