@@ -114,7 +114,7 @@
 
 /datum/quirk/nervous
 	name = QUIRK_NERVOUS
-	desc = "Вы постоянно нервничаете"
+	desc = "Вы постоянно нервничаете."
 	value = -1
 	mob_trait = TRAIT_NERVOUS
 	gain_text = "<span class='danger'>Вы весь на нервах.</span>"
