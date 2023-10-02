@@ -146,8 +146,8 @@
 	disability = TRUE
 	value = -1
 	mob_trait = TRAIT_MUTE
-	gain_text = "<span class='danger'>Вы оглохли.</span>"
-	lose_text = "<span class='notice'>Вы снова слышите.</span>"
+	gain_text = "<span class='danger'>Вы не можете вымолвить ни слова.</span>"
+	lose_text = "<span class='notice'>Вы снова обрели дар речи.</span>"
 
 
 
