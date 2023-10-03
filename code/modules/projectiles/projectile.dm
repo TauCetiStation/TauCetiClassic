@@ -224,6 +224,7 @@
 		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
 			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
+			animatation_displace_reset(M)
 
 		if(istype(A, /turf))
 			loc = A
