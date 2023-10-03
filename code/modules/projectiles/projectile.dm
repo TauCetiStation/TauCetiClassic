@@ -185,7 +185,7 @@
 		if(distance > 0)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier, flag)
 			//It is impossible to dodge in any of the situations as defined above.
-			if(miss_modifier >= 0)
+			if(miss_modifier >= 0 && M.stat != DEAD)
 				var/operate_miss_mod = miss_modifier
 				var/list/all_slots = M.get_equipped_items()
 				var/list/reflist = list(operate_miss_mod, all_slots, M)
