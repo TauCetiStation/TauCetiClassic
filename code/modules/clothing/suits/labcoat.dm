@@ -14,7 +14,7 @@
 
 /obj/item/clothing/suit/storage/labcoat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 3, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/suit/storage/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
@@ -79,7 +79,7 @@
 
 /obj/item/clothing/suit/storage/labcoat/cmo/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
 
 /obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
@@ -116,4 +116,4 @@
 
 /obj/item/clothing/suit/storage/labcoat/rd/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 5, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
