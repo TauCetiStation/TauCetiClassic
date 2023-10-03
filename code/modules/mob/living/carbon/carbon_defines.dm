@@ -31,7 +31,7 @@
 
 	var/co2overloadtime = null
 
-	var/datum/modval/metabolism_factor = new (METABOLISM_FACTOR, multiple = 0.0)
+	var/datum/modval/metabolism_factor = new (METABOLISM_FACTOR)
 
 	var/obj/item/head
 	var/obj/item/shoes

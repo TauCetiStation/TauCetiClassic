@@ -145,6 +145,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Medical Mess",            /datum/event/feature/area/mess/med_storage,                   10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "MineField",               /datum/event/feature/area/minefield,                          5,  list(ASSIGNMENT_MEDICAL = 2), , list(ASSIGNMENT_SECURITY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Lasertag ED-209",         /datum/event/feature/area/lasertag_ed,                        10),list(ASSIGNMENT_ANY = 2),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Station Rearm: Bullets",  /datum/event/feature/area/replace/station_rearmament_bullets, 10, list(ASSIGNMENT_SECURITY = 3)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Station Rearm: Energy",   /datum/event/feature/area/replace/station_rearmament_energy,  10, list(ASSIGNMENT_SECURITY = 3)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen Weapon",           /datum/event/feature/area/replace/sec_weapons,                10, list(ASSIGNMENT_SECURITY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen First AID",        /datum/event/feature/area/replace/med_storage,                20, list(ASSIGNMENT_MEDICAL = 1)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Old Morgue",              /datum/event/feature/area/replace/med_morgue,                 10),
@@ -234,6 +236,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Carp Migration",          /datum/event/carp_migration,    0, list(ASSIGNMENT_SECURITY = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT, 1, 25),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Lone Syndicate Agent",    /datum/event/lone_op,         100, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Abduction",               /datum/event/abduction,         0, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 	)
 
 #undef ASSIGNMENT_ANY

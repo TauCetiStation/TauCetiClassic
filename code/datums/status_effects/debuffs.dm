@@ -33,6 +33,8 @@
 	owner.stunned = TRUE
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE
@@ -68,6 +70,8 @@
 		return
 	owner.weakened = TRUE
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /datum/status_effect/incapacitating/weakened/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
@@ -89,6 +93,11 @@
 			carbon_owner = owner
 		if(ishuman(owner))
 			human_owner = owner
+		ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	return ..()
 
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
@@ -113,6 +122,8 @@
 		if(prob(10) && owner.health)
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
+	owner.drop_from_inventory(owner.l_hand)
+	owner.drop_from_inventory(owner.r_hand)
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -226,3 +237,34 @@
 	desc = "Некоторое время вы гораздо быстрее залечиваете свои раны, более живучи и у вас куда больше плазмы."
 	icon_state = "alien_help"
 	alerttooltipstyle = "alien"
+
+/datum/status_effect/clumsy
+	id = "clumsy"
+	alert_type = /atom/movable/screen/alert/status_effect/clumsy
+	status_type = STATUS_EFFECT_REFRESH
+	var/applied_times = 1
+
+/datum/status_effect/clumsy/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/clumsy/on_apply()
+	. = ..()
+	if(!iscarbon(owner))
+		return FALSE
+	if(HAS_TRAIT_FROM(owner, TRAIT_CLUMSY_IMMUNE, STATUS_EFFECT_TRAIT))
+		if(prob(75))
+			return FALSE
+		REMOVE_TRAIT(owner, TRAIT_CLUMSY_IMMUNE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_CLUMSY, STATUS_EFFECT_TRAIT)
+	to_chat(owner, "<span class='warning'>You feel lightheaded</span>")
+
+/datum/status_effect/clumsy/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CLUMSY, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_CLUMSY_IMMUNE, STATUS_EFFECT_TRAIT)
+
+/atom/movable/screen/alert/status_effect/clumsy
+	name = "Неуклюжесть"
+	desc = "Вы чувствуете головокружение."
+	icon_state = "woozy"

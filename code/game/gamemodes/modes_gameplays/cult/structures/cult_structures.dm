@@ -113,10 +113,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	forceMove(charged)
 
 	if(time_to_stop)
-		charged.timer = addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate), time_to_stop, TIMER_STOPPABLE)
+		charged.timer = addtimer(CALLBACK(charged, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, deactivate)), time_to_stop, TIMER_STOPPABLE)
 
 	if(R)
-		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER,  /mob/living/simple_animal/hostile/pylon.proc/add_friend)
+		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, add_friend))
 	return charged
 
 /obj/structure/cult/pylon_platform
@@ -220,6 +220,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 
 	return TRUE
 
+/obj/structure/mineral_door/cult/attack_animal(mob/user)
+	if(user.my_religion && user.a_intent != INTENT_HARM && !isSwitchingStates)
+		add_fingerprint(user)
+		SwitchState()
+		return
+	return ..()
+
 /obj/structure/mineral_door/cult/MechChecks(obj/mecha/user)
 	if(!..())
 		return FALSE
@@ -286,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
-	INVOKE_ASYNC(src, .proc/async_destroying, C)
+	INVOKE_ASYNC(src, PROC_REF(async_destroying), C)
 
 /obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"

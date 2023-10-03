@@ -358,7 +358,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	state = AHELP_RESOLVED
 	global.ahelp_tickets.ListInsert(src)
 
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/giveadminhelpverb, initiator_ckey), 50)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(giveadminhelpverb), initiator_ckey), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")

@@ -12,6 +12,12 @@ SUBSYSTEM_DEF(economy)
 	var/list/total_department_stocks
 	var/list/department_dividends
 	var/list/stock_splits
+	var/list/insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
+	var/list/roundstart_insurance_prices = list(INSURANCE_NONE = 0, INSURANCE_STANDARD = 10, INSURANCE_PREMIUM = 40)
+	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
+
+	var/list/subsidion_priority = list("Science" = 1000, "Security" = 1000, "Medical" = 1000, "Engineering" = 1000, "Civilian" = 1000)
+
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
 	LAZYINITLIST(department_dividends)
@@ -80,6 +86,11 @@ SUBSYSTEM_DEF(economy)
 		if(D.owner_salary && !D.suspended)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
+	handle_insurances()
+
+	handle_subsidions()
+
+
 	monitor_cargo_shop()
 
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
@@ -88,7 +99,7 @@ SUBSYSTEM_DEF(economy)
 
 	qdel(announcer)
 
-	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
+	addtimer(CALLBACK(src, PROC_REF(dividend_payment)), 1 MINUTE)
 
 /datum/controller/subsystem/economy/proc/dividend_payment()
 	// All investors should have an equal opportunity to profit. Thus capital amount should be tallied before dividend distribution.
@@ -98,9 +109,16 @@ SUBSYSTEM_DEF(economy)
 
 	for(var/department in total_department_stocks)
 		var/datum/money_account/DA = global.department_accounts[department]
+		if(DA.suspended)
+			capitals[department] = 0.0
+			continue
+
 		capitals[department] = DA.money
 
 	for(var/datum/money_account/D in all_money_accounts)
+		if(D.suspended)
+			continue
+
 		var/total_dividend_payout = 0.0
 		for(var/department in D.stocks)
 			// Don't pay stocks to ourselves, less transaction spam.
@@ -122,3 +140,88 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
+
+
+
+/datum/controller/subsystem/economy/proc/handle_insurances()
+	var/insurance_sum = 0
+	var/list/problem_record_id = list()
+	for(var/datum/data/record/R in data_core.general)
+		if(!R)
+			continue
+		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
+		if(!MA)
+			R.fields["insurance_type"] = INSURANCE_NONE
+			problem_record_id.Add(R.fields["id"])
+			continue
+		var/insurance_type = get_next_insurance_type(R.fields["insurance_type"], MA)
+		var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+		R.fields["insurance_type"] = insurance_type
+		if(insurance_price == 0)
+			continue
+		insurance_sum += insurance_price
+		charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+
+	if(insurance_sum > 0)
+		var/med_account_number = global.department_accounts["Medical"].account_number
+		charge_to_account(med_account_number, med_account_number, "Insurance", "NT Insurance", insurance_sum)
+
+	if(problem_record_id.len)
+		send_message_about_problem_insurances(problem_record_id)
+
+/proc/get_insurance_type(mob/living/carbon/human/H)
+	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
+	if(!R)
+		return INSURANCE_NONE
+	return R.fields["insurance_type"]
+
+
+/proc/get_next_insurance_type(current_insurance_type, datum/money_account/MA, list/insurance_prices=SSeconomy.insurance_prices)
+	if(MA.suspended)
+		return INSURANCE_NONE
+
+	var/current_insurance_price = insurance_prices[current_insurance_type]
+	if(current_insurance_type == MA.owner_preferred_insurance_type && MA.money >= current_insurance_price  && MA.owner_max_insurance_payment >= current_insurance_price)
+		return current_insurance_type
+
+	var/prefprice = insurance_prices[MA.owner_preferred_insurance_type]
+	if(MA.money >= prefprice && MA.owner_max_insurance_payment >= prefprice)
+		return MA.owner_preferred_insurance_type
+
+	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
+		var/insprice = insurance_prices[insurance_type]
+		if(MA.money >= insprice && MA.owner_max_insurance_payment >= insprice)
+			return insurance_type
+
+
+/proc/send_message_about_problem_insurances(list/message)
+	var/message_text
+	message_text += "<B>ID of Medical Records With Data Problems:</B><br>"
+	for(var/r in message)
+		message_text += "<b>[r]</b> <br>"
+	for(var/obj/machinery/computer/med_data/comp in global.med_record_consoles_list)
+		if(!(comp.stat & (BROKEN | NOPOWER)))
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comp.loc )
+			intercept.name = "Records With Insurance Problems"
+			intercept.info = message_text
+			intercept.update_icon()
+
+/datum/controller/subsystem/economy/proc/handle_subsidions()
+	for(var/department in subsidion_priority)
+		if(!global.station_account.money)
+			break
+		var/subsidion_amount = subsidion_priority[department]
+		var/datum/money_account/department_account = global.department_accounts[department]
+		if(department_account.money >= subsidion_amount)
+			continue
+		var/needed_to_pay = subsidion_amount - department_account.money
+		if(!needed_to_pay || needed_to_pay < 0)
+			continue
+		if(global.station_account.money < needed_to_pay)
+			charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -global.station_account.money)
+			charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", global.station_account.money)
+			break
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Субсидии отделу [department_account.owner_name] из бюджета станции", "Бюджет станции", -needed_to_pay)
+		charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", needed_to_pay)
+		continue
+

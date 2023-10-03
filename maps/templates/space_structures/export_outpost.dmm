@@ -32,6 +32,11 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellowchecker"
@@ -48,9 +53,8 @@
 /obj/structure/sign/poster/contraband/syndicate_recruitment{
 	pixel_y = -32
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
 "ai" = (
 /obj/machinery/power/apc{
@@ -250,9 +254,12 @@
 /obj/machinery/computer/export{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space_structures/export_outpost)
 "aJ" = (
@@ -341,9 +348,12 @@
 /area/space_structures/export_outpost)
 "aS" = (
 /obj/machinery/export_pad,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warnwhite"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
 	},
 /area/space_structures/export_outpost)
 "aT" = (
@@ -394,7 +404,8 @@
 /area/space_structures/export_outpost)
 "aY" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Booth"
+	name = "Security Booth";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -569,7 +580,6 @@
 "bz" = (
 /obj/structure/rack,
 /obj/item/weapon/handcuffs,
-/obj/item/device/eftpos,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redchecker"
@@ -605,9 +615,8 @@
 "bD" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
 "bE" = (
 /obj/machinery/door/airlock/external{
@@ -696,6 +705,28 @@
 	id_tag = "export_outpost_outer";
 	locked = 1;
 	name = "Export Outpost"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"Ry" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"Wx" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
@@ -837,9 +868,9 @@ aa
 aa
 ab
 ab
-ad
-ad
-ad
+Wx
+Wx
+Wx
 ab
 ab
 aa
@@ -1136,9 +1167,9 @@ ab
 ab
 ab
 ab
-ad
-ad
-ad
+Ry
+Ry
+Ry
 ab
 aa
 aa

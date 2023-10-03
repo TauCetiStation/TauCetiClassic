@@ -9,7 +9,7 @@
 	light_color = LIGHT_COLOR_FIRE
 	on_damage = 10
 	slot_flags = null
-	action_button_name = null
+	item_action_types = null
 
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/I, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	. = ..()
@@ -32,6 +32,8 @@
 		to_chat(user, "<span class='notice'>It's out of fuel.</span>")
 		return
 	if(on)
+		to_chat(user, "<span class='notice'>You extenguish [src].</span>")
+		qdel(src)
 		return
 	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
@@ -42,6 +44,10 @@
 	item_state = icon_state
 	update_inv_mob()
 	START_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/torch/turn_light_off()
+	. = ..()
+	qdel(src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
 	return
@@ -158,7 +164,7 @@
 	Burn()
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
+/obj/structure/bonfire/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
@@ -203,6 +209,8 @@
 		QDEL_NULL(particles)
 		STOP_PROCESSING(SSobj, src)
 
+/obj/structure/bonfire/turn_light_off()
+	return
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
 	if(buckled_mob == M)

@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(throwing)
 		var/mob/M = thrownthing
 		ADD_TRAIT(M, TRAIT_ARIBORN, TRAIT_ARIBORN_THROWN)
 
-	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
+	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, PROC_REF(on_thrownthing_qdel))
 
 /datum/thrownthing/Destroy()
 

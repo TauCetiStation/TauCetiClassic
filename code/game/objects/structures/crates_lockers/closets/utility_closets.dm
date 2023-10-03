@@ -122,7 +122,7 @@
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	if(prob(5))
 		new /obj/item/weapon/storage/pouch/engineering_tools(src)
 	if(prob(1))

@@ -32,16 +32,6 @@
 	item_state = "secskirtred"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
-/obj/item/clothing/under/rank/security/corp
-	icon_state = "sec_corporate"
-	item_state = "sec_corporate"
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/rank/warden/corp
-	icon_state = "warden_corporate"
-	item_state = "warden_corporate"
-	flags = ONESIZEFITSALL
-
 /obj/item/clothing/under/tactical
 	name = "tactical jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
@@ -58,6 +48,11 @@
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/tactical/skrell
+	name = "raskinta uniform"
+	desc = "It's a traditional skrellian warrior-caste blue and black uniform. Skintight, sturdy and slightly wet."
+	icon_state = "raskinta"
+	item_state = "raskinta"
 /*
  * Detective
  */
@@ -100,6 +95,23 @@
 	item_state = item_state == "polsuit" ? "polsuit_rolled" : "polsuit"
 	update_inv_mob()
 
+//Forensics
+/obj/item/clothing/under/rank/forensic_technician
+	desc = "A very business suit, as for someone who is engaged in autopsy and inspection of crime scenes."
+	name = "forensics suit"
+	icon_state = "forensicsred"
+	item_state = "forensicsred"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/under/rank/forensic_technician/black
+	icon_state = "forensicsblack"
+	item_state = "forensicsblack"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.9
+
 /*
  * Head of Security
  */
@@ -117,11 +129,6 @@
 	icon_state = "hos_turtleneck"
 	item_state = "hos_turtleneck"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
-
-/obj/item/clothing/under/rank/head_of_security/corp
-	icon_state = "hos_corporate"
-	item_state = "hos_corporate"
-	flags = ONESIZEFITSALL
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen

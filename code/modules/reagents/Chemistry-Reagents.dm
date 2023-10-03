@@ -23,7 +23,7 @@
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 	var/list/flags = list()
 
-	var/overdose = 0
+	var/overdose = 0 // if var/overdose = 0, reagent has no overdose
 	var/overdose_dam = 1
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1

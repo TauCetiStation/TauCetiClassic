@@ -160,6 +160,8 @@
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
+	var/surgery_icobase = 'icons/mob/surgery.dmi'
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -237,6 +239,9 @@
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(flags[NO_GENDERS])
+		H.gender = NEUTER
+
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
@@ -273,14 +278,7 @@
 /datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
 	return TRUE
 
-/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
-	if(flags[IS_SYNTHETIC])
- //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
-		H.h_style = ""
-		spawn(100)
-			//H.is_jittery = 0
-			//H.jitteriness = 0
-			H.update_hair()
+/datum/species/proc/handle_death(mob/living/carbon/human/H, gibbed) //Handles any species-specific death events (such nymph spawns).
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 	if(!IO)
 		return
@@ -470,6 +468,9 @@
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
 	has_gendered_icons = FALSE
 
+	speed_mod = 1.5
+	speed_mod_no_shoes = -2.2
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
@@ -478,6 +479,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_organ = list(
@@ -514,6 +516,7 @@
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
 	has_gendered_icons = FALSE
+	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -540,6 +543,7 @@
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
+		,NO_GENDERS = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -588,10 +592,6 @@
 	skeleton_type = SKELETON_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
-
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -684,6 +684,7 @@
 	,NO_PAIN = TRUE
 	,NO_FAT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -752,6 +753,7 @@
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -796,10 +798,6 @@
 	// Podmen don't.
 	var/regen_limbs = TRUE
 
-/datum/species/diona/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
-
 /datum/species/diona/regen(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
@@ -837,7 +835,7 @@
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
 
-/datum/species/diona/handle_death(mob/living/carbon/human/H)
+/datum/species/diona/handle_death(mob/living/carbon/human/H, gibbed)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
 	S.real_name = H.real_name
 	S.name = S.real_name
@@ -890,6 +888,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_HAIR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -923,7 +922,7 @@
 	qdel(component)
 	return ..()
 
-/datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
+/datum/species/diona/podman/handle_death(mob/living/carbon/human/H, gibbed)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
@@ -934,6 +933,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
+	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
 	eyes = null
 
@@ -983,6 +983,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1014,7 +1015,7 @@
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 	min_age = 1
-	max_age = 125
+	max_age = 50
 
 	is_common = TRUE
 
@@ -1046,7 +1047,7 @@
 		H.set_light(0)
 	..()
 
-/datum/species/machine/handle_death(mob/living/carbon/human/H)
+/datum/species/machine/handle_death(mob/living/carbon/human/H, gibbed)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.r_hair = 15
@@ -1073,16 +1074,13 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
 
 	min_age = 100
 	max_age = 500
-
-/datum/species/abductor/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
@@ -1096,6 +1094,7 @@
 	dietflags = DIET_ALL
 	flesh_color = "#c0c0c0"
 
+	brute_mod = 2
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0
@@ -1143,7 +1142,6 @@
 
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
-	H.gender = NEUTER
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
@@ -1294,6 +1292,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	burn_mod = 2
@@ -1303,10 +1302,6 @@
 
 	min_age = 1
 	max_age = 10000
-
-/datum/species/shadowling/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/shadowling/regen(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
@@ -1367,6 +1362,7 @@
 		NO_EMOTION = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
 		)
 
 	has_organ = list(
@@ -1454,12 +1450,13 @@
 	,NO_EMBED = TRUE
 	)
 
-	brute_mod = 2
+	brute_mod = 1.8
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
 	speed_mod = -0.2
+	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
@@ -1480,6 +1477,9 @@
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+
+	var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
+	O.max_damage = 1000
 
 	add_zombie(H)
 
@@ -1504,7 +1504,7 @@
 	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 
-	brute_mod = 2.2
+	brute_mod = 2
 	burn_mod = 1.2
 	speed_mod = -0.8
 
@@ -1555,7 +1555,7 @@
 	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
 	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
 
-	brute_mod = 1.80
+	brute_mod = 1.6
 	burn_mod = 0.90
 	speed_mod = -0.2
 
@@ -1654,6 +1654,7 @@
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
 	,NO_PAIN = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1766,3 +1767,11 @@
 		O.adjust_pumped(rand(0, 60))
 		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
 			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
+
+/datum/species/homunculus/handle_death(mob/living/carbon/human/H, gibbed)
+	if(gibbed)
+		return FALSE
+	for(var/I in H.get_equipped_items())
+		H.remove_from_mob(I)
+	H.dust()
+	return TRUE

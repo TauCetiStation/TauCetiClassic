@@ -13,8 +13,25 @@
 		return
 	..()
 
+/mob/living/carbon/proc/can_catch_item()
+	if(!in_throw_mode)
+		return
+	if(incapacitated())
+		return
+	if(get_active_hand()) // yes, it returns thing in the hand, not the hand (#10051)
+		return
+	return TRUE
+
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(isitem(AM) && throwingdatum.speed < 5 && can_catch_item())
+		var/obj/item/I = AM
+		do_attack_animation(I, has_effect = FALSE)
+		put_in_active_hand(I)
+		visible_message("<span class='notice'>[src] catches [I].</span>", "<span class='notice'>You catch [I] in mid-air!</span>")
+		throw_mode_off()
+		return TRUE // aborts throw_impact
+
+	..()
 	if(!ismob(AM))
 		return
 
@@ -63,7 +80,6 @@
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -82,8 +98,6 @@
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
-		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -99,7 +113,6 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.pierce_protection & BP.body_part) // Is that body part being targeted covered?
 					visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
-					qdel(P)
 					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
@@ -107,7 +120,6 @@
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -244,21 +256,9 @@
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
 	if(wear_suit && isitem(wear_suit))
-		var/obj/item/I = wear_suit
-		if(prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = list()
-			for(var/turf/T in orange(6))
-				if(isenvironmentturf(T)) continue
-				if(T.density) continue
-				if(T.x>world.maxx-6 || T.x<6)	continue
-				if(T.y>world.maxy-6 || T.y<6)	continue
-				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
-			src.loc = picked
-			return 1
+		var/obj/item/clothing/suit/armor/vest/reactive/R = wear_suit
+		if(prob(R.Get_shield_chance() - round(damage / 3) ))
+			R.teleport_user(6, src, attack_text)
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)

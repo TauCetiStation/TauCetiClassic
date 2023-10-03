@@ -30,6 +30,21 @@
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
 	blade_color = pick("red","blue","green","purple","yellow","pink","black")
+	switch(blade_color)
+		if("red")
+			light_color = COLOR_RED
+		if("blue")
+			light_color = COLOR_BLUE
+		if("green")
+			light_color = COLOR_GREEN
+		if("purple")
+			light_color = COLOR_PURPLE
+		if("yellow")
+			light_color = COLOR_YELLOW
+		if("pink")
+			light_color = COLOR_PINK
+		if("black")
+			light_color = COLOR_GRAY
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if (user.ClumsyProbabilityCheck(50))
@@ -50,7 +65,7 @@
 		w_class = SIZE_SMALL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
-
+		set_light(2)
 	else
 		qualities = null
 		sharp = FALSE
@@ -64,11 +79,13 @@
 		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
+		set_light(0)
 
 	update_inv_mob()
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/sword/on_enter_storage(obj/item/weapon/storage/S)
+	..()
 	if(active)
 		attack_self(usr)
 
@@ -151,10 +168,10 @@
 
 	SCB.can_pull = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_pull)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_spin))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep_push))
+	SCB.can_pull_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep_pull))
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/telebaton/proc/can_sweep()
@@ -233,30 +250,37 @@
 /obj/item/weapon/melee/energy/sword/green/atom_init()
 	. = ..()
 	blade_color = "green"
+	light_color = COLOR_GREEN
 
 /obj/item/weapon/melee/energy/sword/red/atom_init()
 	. = ..()
 	blade_color = "red"
+	light_color = COLOR_RED
 
 /obj/item/weapon/melee/energy/sword/blue/atom_init()
 	. = ..()
 	blade_color = "blue"
+	light_color = COLOR_BLUE
 
 /obj/item/weapon/melee/energy/sword/purple/atom_init()
 	. = ..()
 	blade_color = "purple"
+	light_color = COLOR_PURPLE
 
 /obj/item/weapon/melee/energy/sword/yellow/atom_init()
 	. = ..()
 	blade_color = "yellow"
+	light_color = COLOR_YELLOW
 
 /obj/item/weapon/melee/energy/sword/pink/atom_init()
 	. = ..()
 	blade_color = "pink"
+	light_color = COLOR_PINK
 
 /obj/item/weapon/melee/energy/sword/black/atom_init()
 	. = ..()
 	blade_color = "black"
+	light_color = COLOR_GRAY
 
 
 /obj/item/weapon/melee/energy/blade/atom_init()

@@ -137,7 +137,6 @@
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>",
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 
-
 /obj/item/weapon/coin/update_world_icon()
 	update_icon()
 

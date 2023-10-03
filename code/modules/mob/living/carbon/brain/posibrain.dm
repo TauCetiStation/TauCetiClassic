@@ -21,7 +21,7 @@
 		icon_state = "posibrain-searching"
 		searching = TRUE
 		request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 300)
+		addtimer(CALLBACK(src, PROC_REF(reset_search)), 300)
 
 /obj/item/device/mmi/posibrain/proc/request_player()
 	var/list/candidates = pollGhostCandidates("Someone is requesting a personality for a positronic brain. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_POSBRAIN, 200, TRUE)

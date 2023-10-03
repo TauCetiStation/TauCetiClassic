@@ -7,9 +7,23 @@
 	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 50, bio = 100, rad = 50)
 	species_restricted = null
 	body_parts_covered = HEAD|FACE
-	blockTracking = 1
 	force = 0
 	hitsound = list()
+
+/obj/item/clothing/head/helmet/space/space_ninja/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/space/space_ninja/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/space/space_ninja/proc/can_track(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"

@@ -23,7 +23,7 @@
 		keyslot1 = new ks1type(src)
 	if(ks2type)
 		keyslot2 = new ks2type(src)
-	INVOKE_ASYNC(src, .proc/recalculateChannels)
+	INVOKE_ASYNC(src, PROC_REF(recalculateChannels))
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)

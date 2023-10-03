@@ -92,6 +92,11 @@
 
 	. = ..()
 
+	var/datum/action/innate/slime/E
+	for(var/V in subtypesof(/datum/action/innate/slime))
+		E = new V (src)
+		E.Grant(src)
+
 	regenerate_icons()
 
 /mob/living/carbon/slime/Destroy()
@@ -820,7 +825,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("slimejelly", 1)
-	addtimer(CALLBACK(src, .proc/Grow), rand(1200,1500)) // the egg takes a while to "ripen"
+	addtimer(CALLBACK(src, PROC_REF(Grow)), rand(1200,1500)) // the egg takes a while to "ripen"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1

@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/xenomorph
 	name = "alien hunter"
-	desc = "Hiss!"
+	desc = "Хсссссс!"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "alienh_running"
 	icon_living = "alienh_running"
@@ -44,6 +44,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/drone
 	name = "alien drone"
+	desc = "Выглядит не так опасно, как её сёстры."
 	icon_state = "aliend_running"
 	icon_living = "aliend_running"
 	icon_dead = "aliend_l"
@@ -52,6 +53,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/sentinel
 	name = "alien sentinel"
+	desc = "Из её пасти вытекает что-то зелёное..."
 	icon_state = "aliens_running"
 	icon_living = "aliens_running"
 	icon_dead = "aliens_l"
@@ -66,6 +68,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/queen
 	name = "alien queen"
+	desc = "ОНА ОГРОМНАЯ!"
 	icon_state = "alienq_running"
 	icon_living = "alienq_running"
 	icon_dead = "alienq_l"
@@ -83,6 +86,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/queen/large
 	name = "alien empress"
+	desc = "КУДА ЕЩЁ БОЛЬШЕ?!"
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
 	icon_living = "queen_s"

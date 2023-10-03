@@ -164,7 +164,7 @@
 /obj/machinery/door/airlock/phoron/proc/PhoronBurn(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2, loc))
 		target_tile.assume_gas("phoron", 35, 400 + T0C)
-		INVOKE_ASYNC(target_tile, /turf/simulated/floor.proc/hotspot_expose, temperature, 400)
+		INVOKE_ASYNC(target_tile, TYPE_PROC_REF(/turf/simulated/floor, hotspot_expose), temperature, 400)
 
 	for(var/obj/structure/falsewall/phoron/F in range(3, src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
@@ -349,7 +349,7 @@
 
 /obj/machinery/door/airlock/centcom
 	icon          = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 

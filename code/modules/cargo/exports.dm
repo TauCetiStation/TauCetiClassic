@@ -76,7 +76,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // What would be the cost of the export type if it were to appear in a pack somewhere.
 /datum/export/proc/get_type_cost(export_type, amount = 1, contr = 0, emag = 0)
-	return cost
+	return cost * amount
 
 /datum/export/proc/applies_to_type(export_type, contr = 0, emag = 0)
 	if(contraband && !contr)

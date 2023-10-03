@@ -168,7 +168,7 @@
 		name = "[area.name] APC"
 		stat |= MAINT
 		update_icon()
-		addtimer(CALLBACK(src, .proc/update), 5)
+		addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 	init_smartlight()
 
@@ -224,7 +224,7 @@
 
 	make_terminal()
 
-	addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -967,7 +967,7 @@
 	to_chat(ai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	ai.malfhack = src
 	ai.malfhacking = TRUE
-	addtimer(CALLBACK(src, .proc/malf_hack_done, ai), 600)
+	addtimer(CALLBACK(src, PROC_REF(malf_hack_done), ai), 600)
 
 /obj/machinery/power/apc/proc/malf_hack_done(mob/living/silicon/ai/ai)
 	if(!aidisabled)
@@ -1220,7 +1220,7 @@
 	environ = APC_CHANNEL_OFF
 	stat |= EMPED
 	update()
-	addtimer(CALLBACK(src, .proc/after_emp), 600 / severity)
+	addtimer(CALLBACK(src, PROC_REF(after_emp)), 600 / severity)
 	..()
 
 /obj/machinery/power/apc/proc/after_emp()
@@ -1235,19 +1235,19 @@
 		if(EXPLODE_DEVASTATE)
 			//set_broken() //now Destroy() do what we need
 			if(cell)
-				cell.ex_act(EXPLODE_DEVASTATE) // more lags woohoo
+				SSexplosions.high_mov_atom += cell
 			qdel(src)
 			return
 		if(EXPLODE_HEAVY)
 			if(prob(50))
 				set_broken()
 				if(cell && prob(50))
-					cell.ex_act(EXPLODE_HEAVY)
+					SSexplosions.med_mov_atom += cell
 		if(EXPLODE_LIGHT)
 			if(prob(25))
 				set_broken()
 				if(cell && prob(25))
-					cell.ex_act(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += cell
 
 /obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(stat & BROKEN)
@@ -1312,8 +1312,6 @@
 	if(custom_smartlight_preset)
 		var/type = smartlight_presets[custom_smartlight_preset]
 		smartlight_preset = new type
-	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist))
-		smartlight_preset = new /datum/smartlight_preset/hardlight_nightshift
 	else
 		smartlight_preset = new
 

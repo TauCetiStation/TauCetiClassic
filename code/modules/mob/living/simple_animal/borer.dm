@@ -2,6 +2,8 @@
 	name = "host brain"
 	real_name = "host brain"
 
+	show_examine_log = FALSE
+
 /mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
 	var/mob/living/simple_animal/borer/my_borer = loc
 	if(!istype(loc))
@@ -35,9 +37,9 @@
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"
-	desc = "A small, quivering sluglike creature."
-	speak_emote = list("chirrups")
-	emote_hear = list("chirrups")
+	desc = "Маленькое существо, похожее на слизняка."
+	speak_emote = list("шипит")
+	emote_hear = list("шипит")
 	response_help  = "pokes the"
 	response_disarm = "prods the"
 	response_harm   = "stomps on the"
@@ -74,6 +76,8 @@
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
 	var/has_reproduced = FALSE                 // Whether or not the borer has reproduced, for objective purposes.
+
+	show_examine_log = FALSE
 
 /mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1)
 	. = ..()
@@ -248,7 +252,7 @@
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
 	assuming = TRUE
 
-	addtimer(CALLBACK(src, .proc/take_control), 300 + (host.brainloss * 5))
+	addtimer(CALLBACK(src, PROC_REF(take_control)), 300 + (host.brainloss * 5))
 
 /mob/living/simple_animal/borer/proc/take_control()
 	assuming = FALSE
@@ -329,7 +333,7 @@
 	if(host.stat == CONSCIOUS)
 		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
 
-	addtimer(CALLBACK(src, .proc/let_go), 200)
+	addtimer(CALLBACK(src, PROC_REF(let_go)), 200)
 
 /mob/living/simple_animal/borer/proc/let_go()
 	if(!host || !src || QDELETED(host) || QDELETED(src))

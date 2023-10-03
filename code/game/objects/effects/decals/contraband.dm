@@ -165,6 +165,16 @@
 	icon_state = "random_anything"
 	random_basetype = /obj/structure/sign/poster
 
+/obj/structure/sign/poster/calendar
+	name = "2223 calendar"
+	icon_state = "calendar"
+	desc = "Календарь на 2223-й год."
+
+/obj/structure/sign/poster/sivtsev
+	name = "sivtsev table"
+	icon_state = "sivtsev"
+	desc = "Таблица Сивцева для проверки остроты зрения."
+
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."

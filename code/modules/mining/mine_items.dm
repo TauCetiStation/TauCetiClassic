@@ -284,6 +284,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	throwforce = 7.0
 	w_class = SIZE_TINY
 
+/obj/item/weapon/shovel/spade/soviet
+	name = "malaya pehotnaya lopata"
+	desc = "A small tool for digging trenches, burying dead and bashing heads in. URA!"
+	force = 15
+	throwforce = 20
+	icon_state = "spade_soviet"
+	item_state = "spade_soviet"
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 /obj/structure/closet/crate/miningcar
@@ -486,7 +493,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				if(!M)	return
 
 			if(target)
-				explosion(location, 3, 2, 2)
+				explosion(location, 0, 2, 4)
 				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
@@ -517,7 +524,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/reload), recharge_time)
+	addtimer(CALLBACK(src, PROC_REF(reload)), recharge_time)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)

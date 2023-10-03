@@ -46,7 +46,7 @@
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
-		explosion(get_turf(src),8,12,18,12)
+		explosion(get_turf(src),8,12,18,12, ignorecap = TRUE)
 		if(src) qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)

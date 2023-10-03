@@ -295,7 +295,7 @@
 						if(timer_maint_revoke_id)
 							deltimer(timer_maint_revoke_id)
 							timer_maint_revoke_id = 0
-						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
+						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
@@ -754,6 +754,11 @@
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
+
+		if(jobban_isbanned(M, ROLE_IMPOSTER) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
 
 		jobs += "</tr><tr align='center'>"
 
@@ -2254,7 +2259,7 @@
 
 	else if(href_list["salary"])
 		if(!check_rights(R_EVENT))	return
-		var/datum/money_account/account = locate(href_list["salary"])
+		var/datum/money_account/account = get_account(text2num(href_list["salary"]))
 		if(!account)
 			to_chat(usr, "<span class='warning'>Account not found!</span>")
 			return
@@ -2387,5 +2392,26 @@
 				log_admin("[key_name(usr)] disabled Demo recording for this round.")
 				message_admins("[key_name_admin(usr)] disabled Demo recording for this round.")
 
+			if("STOP_AIRNET")
+				if(!SSair.stop_airnet_processing)
+					to_chat(usr, "<span class='notice'>Airnet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Трубы и прочая атмосферная машинерия перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Атмос?", list("Нет", "Да")) != "Да")
+					return
+
+				SSair.stop_airnet_processing = TRUE
+				log_admin("[key_name(usr)] broke airnet for this round.")
+				message_admins("[key_name_admin(usr)] broke airnet for this round.")
+
+			if("STOP_POWERNET")
+				if(!SSmachines.stop_powernet_processing)
+					to_chat(usr, "<span class='notice'>Powernet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Проводка перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Проводку?", list("Нет", "Да")) != "Да")
+					return
+
+				SSmachines.stop_powernet_processing = TRUE
+				log_admin("[key_name(usr)] broke powernet for this round.")
+				message_admins("[key_name_admin(usr)] broke powernet for this round.")
 
 		show_lag_switch_panel()

@@ -371,34 +371,34 @@ var/global/const/INGEST = 2
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, TOUCH, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, TOUCH, R.volume+volume_modifier)
 				if(isturf(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 		if(INGEST)
 			for(var/datum/reagent/R in reagent_list)
 				if(ismob(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, INGEST, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, INGEST, R.volume+volume_modifier)
 				if(isturf(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 	return
 
 // adds new reagent by ID, mix it with those already present if needed

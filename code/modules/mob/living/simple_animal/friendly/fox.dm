@@ -1,14 +1,14 @@
 //Foxxy
 /mob/living/simple_animal/fox
 	name = "fox"
-	desc = "It's a fox. I wonder what it says?"
+	desc = "Это лиса. Интересно, что она говорит?"
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"
-	speak = list("Ack-Ack","Ack-Ack-Ack-Ackawoooo","Geckers","Awoo","Tchoff")
-	speak_emote = list("geckers", "barks")
-	emote_hear = list("howls","barks")
-	emote_see = list("shakes its head", "shivers")
+	speak = list("Акк-акк","Ак-ак-ак-акавуууу!","Хекь","Авууу","Тсиф!")
+	speak_emote = list("лает")
+	emote_hear = list("лает")
+	emote_see = list("облизывается", "принюхивается")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -28,4 +28,4 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/fox/Renault, chief_animal_list)
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
-	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+	desc = "Верный лис капитана. Интересно, что он говорит?"

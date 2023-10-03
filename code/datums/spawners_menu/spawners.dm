@@ -237,54 +237,6 @@ var/global/list/datum/spawners_cooldown = list()
 	roletype = /datum/role/cop/beatcop/military
 	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
 
-
-/*
- * ERT
-*/
-/datum/spawner/ert
-	name = "ЕРТ"
-	desc = "Вы появляетесь на ЦК в окружение других бойцов с целью помочь станции в решении их проблем."
-	wiki_ref = "Emergency_Response_Team"
-	important_info = "Ваша цель: "
-
-	ranks = list(ROLE_ERT, "Security Officer")
-	time_to_del = 5 MINUTES
-
-/datum/spawner/ert/New(mission)
-	..()
-	id = mission
-	important_info += mission
-
-/datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(landmarks_list["Commando"])
-	ghost.forceMove(get_turf(jump_to))
-
-/datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/obj/spawnloc = pick(landmarks_list["Commando"])
-	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
-
-	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
-
-	var/is_leader = FALSE
-	if(!ERT_team.leader_selected)
-		is_leader = TRUE
-		ERT_team.leader_selected = TRUE
-
-	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, is_leader, new_name)
-	new_commando.mind.key = ghost.key
-	new_commando.key = ghost.key
-	create_random_account_and_store_in_mind(new_commando)
-
-	to_chat(new_commando, "<span class='notice'>You are [!is_leader ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
-	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
-	if(!is_leader)
-		to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
-	else
-		to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
-
-	if(ERT_team)
-		add_faction_member(ERT_team, new_commando, FALSE)
-
 /*
  * Blob
 */
@@ -457,7 +409,7 @@ var/global/list/datum/spawners_cooldown = list()
 	mob = _mob
 	add_mob_roles()
 
-	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/self_qdel)
+	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), PROC_REF(self_qdel))
 
 /datum/spawner/living/Destroy()
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
@@ -583,6 +535,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/religion_familiar
 	name = "Фамильяр Религии"
 	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+	cooldown = 2 MINUTES
 
 	var/datum/religion/religion
 
@@ -608,11 +561,17 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Оживлённый предмет"
 	id = "mimic"
 	desc = "Вы магическим образом ожили на станции"
+	cooldown = 1 MINUTES
 
 /datum/spawner/living/evil_shade
 	name = "Злой Дух"
 	id = "evil_shade"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+	cooldown = 2 MINUTES
+
+/datum/spawner/living/evil_shade/spawn_ghost(mob/dead/observer/ghost)
+	..()
+	create_and_setup_role(/datum/role/evil_shade, mob)
 
 /datum/spawner/living/rat
 	name = "Крыса"
@@ -631,6 +590,13 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Вокс-Налётчик"
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
 	wiki_ref = "Vox_Raider"
+	id = "vox"
+
+/datum/spawner/living/abductor
+	name = "Похититель"
+	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
+	wiki_ref = "Abductor"
+	id = "abductor"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
@@ -680,6 +646,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
+	id = "vox"
 
 /datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(global.heiststart)
@@ -718,6 +685,30 @@ var/global/list/datum/spawners_cooldown = list()
 	var/jump_to = pick(global.heiststart)
 	ghost.forceMove(jump_to)
 
+/datum/spawner/abductor
+	name = "Похититель"
+	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
+	wiki_ref = "Abductor"
+
+	ranks = list(ROLE_ABDUCTOR, ROLE_GHOSTLY)
+	time_to_del = 5 MINUTES
+	id = "abductor"
+
+/datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
+	// One team. Working together
+	var/datum/faction/abductors/team_fac = create_uniq_faction(/datum/faction/abductors)
+	//Nullspace for spawning and assigned key causes image freeze, so move body to non-playing area
+	var/mob/living/carbon/human/abductor/event/body_abductor = new(pick(newplayer_start))
+	body_abductor.key = ghost.client.key
+	add_faction_member(team_fac, body_abductor, team_fac.get_needed_teamrole())
+
+/datum/spawner/abductor/jump(mob/dead/observer/ghost)
+	var/obj/effect/landmark/L = scientist_landmarks[1]
+	ghost.forceMove(L.loc)
+
+/datum/spawner/abductor/check_cooldown(mob/dead/observer/ghost)
+	return TRUE
+
 /datum/spawner/survival
 	name = "Выживший"
 	id = "survival"
@@ -740,8 +731,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/client/C = ghost.client
 
 	var/mob/living/carbon/human/H = new(null)
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(H, new_name)
+	C.create_human_apperance(H)
 
 	H.loc = spawnloc
 	H.key = C.key
@@ -760,3 +750,28 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/survival/med
 	outfit = /datum/outfit/survival/medic
 	skillset = /datum/skillset/survivalist_medic
+
+/*
+ * Lone operative
+*/
+/datum/spawner/lone_op_event
+	name = "Оперативник Синдиката"
+	id = "lone_op_event"
+	desc = "Вы появляетесь на малой базе Синдиката с невероятно сложным заданием."
+	wiki_ref = "Syndicate_Guide"
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/lone_op_event/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(loneopstart)
+	loneopstart -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Gorlex Maradeurs Operative"
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+
+	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)

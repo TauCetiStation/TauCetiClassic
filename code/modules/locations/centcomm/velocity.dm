@@ -1,6 +1,3 @@
-/turf/unsimulated/floor/velocity
-	icon = 'icons/locations/centcomm/floor.dmi'
-
 /obj/structure/stool/bed/chair/schair/monorail_chair
 	name = "monorail chair"
 	desc = "You sit in this. Either by will or force."

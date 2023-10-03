@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(overlays)
 	var/list/overlay_icon_cache = list()
 
 /datum/controller/subsystem/overlays/Initialize()
-	fire(mc_check = FALSE)
+	fire(init_fire = TRUE)
 	return ..()
 
 /datum/controller/subsystem/overlays/stat_entry()
@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(overlays)
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
-/datum/controller/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
+/datum/controller/subsystem/overlays/fire(resumed = FALSE, init_fire = FALSE)
 	var/list/queue = src.queue
 	var/static/count = 0
 	if (count)
@@ -39,11 +39,11 @@ SUBSYSTEM_DEF(overlays)
 			COMPILE_OVERLAYS(A)
 			UNSETEMPTY(A.add_overlays)
 			UNSETEMPTY(A.remove_overlays)
-		if(mc_check)
-			if(MC_TICK_CHECK)
-				break
-		else
+
+		if(init_fire)
 			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
 
 	if (count)
 		queue.Cut(1,count+1)

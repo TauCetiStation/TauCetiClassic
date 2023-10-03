@@ -52,7 +52,7 @@
 		return pick(subtypesof(/obj/item/weapon/reagent_containers/food/drinks/bottle))
 
 /obj/random/foods/food_without_garbage
-	name = "Random Food Supply with Garbage"
+	name = "Random Food Supply without Garbage"
 	desc = "This is a random food."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"

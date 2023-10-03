@@ -166,8 +166,8 @@
 	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
-		INVOKE_ASYNC(src, .proc/set_target_locked_sprite, "locking")
-		addtimer(CALLBACK(src, .proc/set_target_locked_sprite, "locked"), 20)
+		INVOKE_ASYNC(src, PROC_REF(set_target_locked_sprite), "locking")
+		addtimer(CALLBACK(src, PROC_REF(set_target_locked_sprite), "locked"), 20)
 
 	//Adding the buttons to the controller person
 	var/mob/living/T = I.loc

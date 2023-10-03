@@ -87,7 +87,7 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
+			addtimer(CALLBACK(src, PROC_REF(fix_emp_state), network), 900)
 			network = list()
 			stat |= EMPED
 			toggle_cam(TRUE)

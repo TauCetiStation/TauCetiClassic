@@ -37,6 +37,8 @@
 
 	var/vote_period = null //overrides default config.vote_period
 
+	var/datum/vote_choice/winner
+
 /datum/poll/proc/init_choices()
 	for(var/ch in choice_types)
 		choices.Add(new ch)
@@ -155,7 +157,6 @@
 			text += "Наибольший процент голосов: [PERCENT(max_votepercent)]%<br><br>"
 			invalid = TRUE
 
-	var/datum/vote_choice/winner = null
 	var/list/winners = list()
 	if(!invalid)
 		for(var/datum/vote_choice/V in choice_votes)

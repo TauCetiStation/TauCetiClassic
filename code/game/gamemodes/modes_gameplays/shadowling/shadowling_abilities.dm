@@ -46,36 +46,15 @@
 
 /proc/light_off_range(list/targets, atom/center)
 	for(var/turf/T in targets)
-		for(var/obj/item/F in T.contents)
-			F.set_light(0)
+		for(var/atom/A in T.contents)
+			A.turn_light_off()
 
-		for(var/obj/machinery/light/L in T.contents)
-			L.on = 0
-			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
-			L.update(0)
-
-		for(var/mob/living/carbon/human/H in T.contents)
-			for(var/obj/item/F in H)
-				F.set_light(0)
-			H.set_light(0) //This is required with the object-based lighting
-
-		for(var/obj/machinery/door/airlock/A in T.contents)
-			if(get_dist(center, A) <= 4)
-				if(A.lights && A.hasPower())
-					A.lights = 0
-					A.update_icon()
-
-		for(var/obj/structure/glowshroom/G in T.contents)
-			if(get_dist(center, G) <= 2) //Very small radius
-				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-				qdel(G)
-		
 		if(T.is_light_floor())
 			var/turf/simulated/floor/F = T
 			F.set_lightfloor_on(FALSE)
 			F.visible_message("<span class='danger'>\The [T] suddenly turns off!</span>")
 			F.update_icon()
-				
+
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
@@ -273,7 +252,7 @@
 		var/thralls = 0
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		var/crew = faction.check_crew()
-		var/victory_threshold = max(15, round(crew/2))	
+		var/victory_threshold = max(15, round(crew/2))
 		var/mob/M
 
 		to_chat(user, "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")

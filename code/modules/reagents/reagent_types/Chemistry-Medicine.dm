@@ -556,6 +556,41 @@
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
 
+/datum/reagent/xenojelly_n // only for alien nest
+	name = "Natural xenojelly"
+	id = "xenojelly_n"
+	description = "Natural xenomorph jelly is released only if the victim hits the nest"
+	reagent_state = LIQUID
+	color = "#3f6d3f"
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(35, 10)
+	M.adjustToxLoss(-10)
+	M.adjustOxyLoss(-20)
+	M.adjustHalLoss(-25)
+	M.adjustFireLoss(-20)
+
+/datum/reagent/xenojelly_un
+	name = "Unnatural xenojelly"
+	id = "xenojelly_un"
+	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
+	reagent_state = LIQUID
+	color = "#5ea95d2b"
+	custom_metabolism = 2
+	overdose = REAGENTS_OVERDOSE / 2
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_un/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(2,3)
+	M.adjustOxyLoss(-5)
+	M.adjustHalLoss(-5)
+	M.adjustFireLoss(-5)
+
 /datum/reagent/hyperzine
 	name = "Hyperzine"
 	id = "hyperzine"
@@ -736,7 +771,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0
+	custom_metabolism = 0.0001
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
@@ -761,7 +796,7 @@
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
 					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-					E.brute_dam = 0
+					E.heal_damage(30)
 					E.status &= ~ORGAN_BROKEN
 					E.perma_injury = 0
 					holder.remove_reagent("nanocalcium", 10)
@@ -800,5 +835,6 @@
 			if(IO.robotic == 1)
 				if(prob(75))
 					data["ticks"]--
-		if(200 to INFINITY && IO.robotic != 2)
-			IO.heart_stop()
+		if(200 to INFINITY)
+			if(IO.robotic != 2)
+				IO.heart_stop()

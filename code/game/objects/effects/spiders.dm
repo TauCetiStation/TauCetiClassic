@@ -111,7 +111,7 @@
 
 	forceMove(exit_vent.loc)
 	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
+	addtimer(CALLBACK(src, PROC_REF(do_vent_move), exit_vent, travel_time), travel_time)
 
 /obj/structure/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
 	if(QDELETED(exit_vent) || exit_vent.welded)
@@ -121,7 +121,7 @@
 	if(prob(50))
 		audible_message("<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
+	addtimer(CALLBACK(src, PROC_REF(finish_vent_move), exit_vent), travel_time)
 
 /obj/structure/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
 	if(QDELETED(exit_vent) || exit_vent.welded)
@@ -149,7 +149,7 @@
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
 							"<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(15,30))
+			addtimer(CALLBACK(src, PROC_REF(vent_move), exit_vent), rand(15,30))
 
 	//=================
 

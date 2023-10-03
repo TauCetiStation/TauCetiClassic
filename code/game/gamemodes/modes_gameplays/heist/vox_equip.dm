@@ -6,7 +6,7 @@
 
 	equip_to_slot_or_del(new /obj/item/clothing/under/vox/vox_robes, SLOT_W_UNIFORM)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox, SLOT_SHOES) // REPLACE THESE WITH CODED VOX ALTERNATIVES.
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow/vox, SLOT_GLOVES) // AS ABOVE.
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/insulated/vox, SLOT_GLOVES) // AS ABOVE.
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/kitbag, SLOT_BACK)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment, SLOT_IN_BACKPACK)
 
@@ -55,7 +55,6 @@
 	var/obj/item/weapon/tank/nitrogen/NITRO = new
 	equip_to_slot_or_del(NITRO, SLOT_S_STORE)
 	internal = NITRO
-	internals.update_icon(src)
 
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"

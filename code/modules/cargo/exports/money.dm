@@ -32,21 +32,21 @@
 	var/price = 0
 	switch(O.name)
 		if(COIN_IRON)
-			price = 50
+			price = 10
 		if(COIN_SILVER)
-			price = 100
+			price = 20
 		if(COIN_GOLD)
-			price = 150
+			price = 30
 		if(COIN_URANIUM)
-			price = 180
+			price = 36
 		if(COIN_PHORON)
-			price = 220
+			price = 44
 		if(COIN_PLATINUM, COIN_MYTHRIL)
-			price = 300
+			price = 60
 		if(COIN_DIAMOND)
-			price = 350
+			price = 70
 		if(COIN_BANANIUM)
-			price = 450
+			price = 90
 		else
 			price = 1
 	return ..() * price

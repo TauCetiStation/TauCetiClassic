@@ -451,7 +451,7 @@ SUBSYSTEM_DEF(job)
 
 	if(!joined_late)
 		var/obj/effect/landmark/start/spawn_mark
-		var/list/rank_landmarks = landmarks_list[rank]
+		var/list/rank_landmarks = landmarks_list[H.mind.role_alt_title]
 		if(length(rank_landmarks))
 			for(var/obj/effect/landmark/start/landmark as anything in rank_landmarks)
 				if(!(locate(/mob/living) in landmark.loc))
@@ -470,7 +470,7 @@ SUBSYSTEM_DEF(job)
 			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary, job.department_stocks)	//starting funds = salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary + job.starting_money, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -483,6 +483,9 @@ SUBSYSTEM_DEF(job)
 			remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
 
 		H.mind.store_memory(remembered_info)
+
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER, department_account.account_number)
+		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_PIN, department_account.remote_access_pin)
 
 	spawn(0)
 		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
@@ -587,6 +590,16 @@ SUBSYSTEM_DEF(job)
 			if(MA)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
+				MA.owner_preferred_insurance_type = job.is_head ? SSeconomy.insurance_quality_decreasing[1] : H.roundstart_insurance
+				MA.owner_max_insurance_payment = job.is_head ? SSeconomy.roundstart_insurance_prices[MA.owner_preferred_insurance_type] : SSeconomy.roundstart_insurance_prices[H.roundstart_insurance]
+				var/insurance_type = get_next_insurance_type(H.roundstart_insurance, MA, SSeconomy.roundstart_insurance_prices)
+				H.roundstart_insurance = insurance_type
+				var/med_account_number = global.department_accounts["Medical"].account_number
+				var/insurance_price = SSeconomy.roundstart_insurance_prices[insurance_type]
+				charge_to_account(med_account_number, med_account_number, "[insurance_type] Insurance payment", "NT Insurance", insurance_price)
+				charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+
+
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 

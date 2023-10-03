@@ -199,7 +199,7 @@ var/global/list/frozen_items = list()
 
 	O.target = null
 
-	addtimer(CALLBACK(src, .proc/delete_objective, O), 1) //This should ideally fire after the occupant is deleted.
+	addtimer(CALLBACK(src, PROC_REF(delete_objective), O), 1) //This should ideally fire after the occupant is deleted.
 
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()

@@ -587,7 +587,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/proc/calc_path(turf/avoid = null)
-	src.path = get_path_to(src.loc, src.target, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
+	src.path = get_path_to(src.loc, src.target, TYPE_PROC_REF(/turf, Distance_cardinal), 0, 250, id=botcard, exclude=avoid)
 
 
 // sets the current destination
@@ -685,6 +685,9 @@
 	H.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
 	H.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
 	H.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
+
+	if(H.species.flags[NO_BLOOD])
+		return
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()

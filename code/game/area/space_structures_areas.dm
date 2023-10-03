@@ -321,9 +321,9 @@
 	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
 	AddComponent(/datum/component/spawn_area,
 		"space",
-		CALLBACK(src, .proc/spawnmob),
-		CALLBACK(src, .proc/despawn),
-		CALLBACK(src, .proc/checkspawn),
+		CALLBACK(src, PROC_REF(spawnmob)),
+		CALLBACK(src, PROC_REF(despawn)),
+		CALLBACK(src, PROC_REF(checkspawn)),
 		8,
 		16,
 		1 MINUTE,
@@ -348,3 +348,14 @@
 	if(!isspaceturf(T))
 		return FALSE
 	return T.is_mob_placeable(null)
+
+/area/space_structures/flagship
+	name = "Destroyed Flagship"
+	icon_state = "syndie-elite"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambience = list('sound/ambience/ambiruin4.ogg', 'sound/ambience/syndicate_station.ogg')
+
+/area/space_structures/flagship/Entered()
+	. = ..()
+	for(var/obj/effect/spawner/mob_spawn/M in src)
+		M.creatMob()

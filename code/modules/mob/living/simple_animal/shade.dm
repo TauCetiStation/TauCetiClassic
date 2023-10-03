@@ -1,7 +1,7 @@
 /mob/living/simple_animal/shade
 	name = "Shade"
 	real_name = "Shade"
-	desc = "A bound spirit."
+	desc = "Связанный дух."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
@@ -9,8 +9,8 @@
 	maxHealth = 50
 	health = 50
 	universal_speak = 1
-	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	speak_emote = list("шипит")
+	emote_hear = list("стонет", "визжит")
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches the"
@@ -60,7 +60,7 @@
 /mob/living/simple_animal/shade/god
 	name = "Unbelievable God"
 	real_name = "Unbelievable God"
-	desc = "Strange looking hologram."
+	desc = "Странная голограмма..."
 	icon_state = "shade_god"
 	icon_living = "shade_god"
 	stat = CONSCIOUS
@@ -226,6 +226,7 @@
 	layer = TURF_LAYER
 	melee_damage = 2
 	incorporeal_move = 1
+	maxHealth = 15
 	health = 15
 	icon_state = "ghost2"
 	icon_living = "ghost2"
@@ -239,4 +240,4 @@
 /mob/living/simple_animal/shade/Destroy()
 	global.wizard_shades_count--
 	return ..()
-	
+

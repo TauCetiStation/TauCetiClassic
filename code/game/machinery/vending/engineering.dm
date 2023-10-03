@@ -53,10 +53,10 @@
 	)
 	contraband = list(
 		/obj/item/weapon/weldingtool/hugetank = 2,
-		/obj/item/clothing/gloves/fyellow = 2,
+		/obj/item/clothing/gloves/budget_insulated = 2,
 	)
 	premium = list(
-		/obj/item/clothing/gloves/yellow = 1,
+		/obj/item/clothing/gloves/insulated = 1,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 1,
 	)
 	prices = list(
@@ -90,6 +90,11 @@
 	)
 	contraband = list(
 		/obj/item/weapon/stock_parts/cell/potato = 3,
+		/obj/item/weapon/stock_parts/matter_bin/adv = 3,
+		/obj/item/weapon/stock_parts/micro_laser/high = 3,
+		/obj/item/weapon/stock_parts/manipulator/nano = 3,
+		/obj/item/weapon/stock_parts/capacitor/adv = 2,
+		/obj/item/weapon/stock_parts/scanning_module/adv = 2,
 	)
 	premium = list(
 		/obj/item/weapon/storage/belt/utility = 3,
@@ -115,7 +120,7 @@
 		/obj/item/clothing/head/hardhat/yellow/visor = 1,
 		/obj/item/weapon/storage/belt/utility = 4,
 		/obj/item/clothing/glasses/meson = 4,
-		/obj/item/clothing/gloves/yellow = 4,
+		/obj/item/clothing/gloves/insulated = 4,
 		/obj/item/weapon/screwdriver = 12,
 		/obj/item/weapon/crowbar = 12,
 		/obj/item/weapon/wirecutters = 12,

@@ -6,7 +6,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, INSURANCE_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD, IMPOBED_HUD)
 	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
@@ -46,6 +46,7 @@
 
 	if(species) // Just to be sure.
 		metabolism_factor.Set(species.metabolism_mod)
+		metabolism_factor.AddModifier("NeedHeart", multiple=-1)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -59,7 +60,7 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
 	human_list += src
 
-	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
+	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), PROC_REF(mood_item_equipped))
 
 	if(dna)
 		dna.real_name = real_name
@@ -97,6 +98,9 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
+	r_belly = HEX_VAL_RED(species.base_color)
+	g_belly = HEX_VAL_GREEN(species.base_color)
+	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
@@ -1705,17 +1709,23 @@
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
-		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
+		var/injection_time
+		if(user != src)
+			//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
+			injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
+		else
+			//it is much easier to prick yourself than another person
+			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15)
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
-				if(!stealth)
+				if(!stealth && user != src)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
 				if(!do_mob(user, src, injection_time / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
-				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
+				if(user != src)
+					user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
 			if(!do_mob(user, src, injection_time, TRUE))
 				return FALSE
@@ -1800,7 +1810,7 @@
 				V.overload()
 
 	toggle_leap()
-	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, PROC_REF(leap_end), prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	remove_status_flags(LEAPING)
@@ -1834,7 +1844,7 @@
 		else if(istype(hit_atom, /obj/machinery/disposal))
 			var/atom/old_loc = loc
 			forceMove(hit_atom)
-			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom, old_loc)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), hit_atom, old_loc)
 
 	update_canmove()
 
@@ -2121,7 +2131,7 @@
 	dizziness = min(1000, dizziness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(dizziness > 100 && !is_dizzy)
-		INVOKE_ASYNC(src, /mob.proc/dizzy_process)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, dizzy_process))
 
 /mob/living/carbon/human/make_jittery(amount)
 	if(species.flags[IS_SYNTHETIC])
@@ -2129,7 +2139,7 @@
 	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
-		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, jittery_process))
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
@@ -2342,17 +2352,17 @@
 
 	if(I.wet)
 		AdjustWetClothes(1)
-		RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), PROC_REF(mood_item_make_dry))
 	else
-		RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), PROC_REF(mood_item_make_wet))
 
 	if(I.dirt_overlay)
 		AdjustDirtyClothes(1)
-		RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+		RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), PROC_REF(mood_item_clean_blood))
 	else
-		RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+		RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), PROC_REF(mood_item_add_dirt))
 
-	RegisterSignal(I, list(COMSIG_ITEM_DROPPED), .proc/mood_item_dropped)
+	RegisterSignal(I, list(COMSIG_ITEM_DROPPED), PROC_REF(mood_item_dropped))
 
 /mob/living/carbon/human/proc/mood_item_dropped(datum/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -2380,7 +2390,7 @@
 
 	AdjustDirtyClothes(1)
 
-	RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+	RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), PROC_REF(mood_item_clean_blood))
 	UnregisterSignal(I, list(COMSIG_ATOM_ADD_DIRT))
 
 /mob/living/carbon/human/proc/mood_item_clean_blood(datum/source)
@@ -2390,7 +2400,7 @@
 
 	AdjustDirtyClothes(-1)
 
-	RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+	RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), PROC_REF(mood_item_add_dirt))
 	UnregisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD))
 
 /mob/living/carbon/human/proc/mood_item_make_wet(datum/source)
@@ -2400,7 +2410,7 @@
 
 	AdjustWetClothes(1)
 
-	RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), PROC_REF(mood_item_make_dry))
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_WET))
 
 /mob/living/carbon/human/proc/mood_item_make_dry(datum/source)
@@ -2410,7 +2420,7 @@
 
 	AdjustWetClothes(-1)
 
-	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), PROC_REF(mood_item_make_wet))
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
 
 /mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
@@ -2487,3 +2497,15 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/clean_blood()
+	. = ..()
+	if(gloves)
+		gloves.clean_blood()
+		gloves.germ_level = 0
+	else
+		bloody_hands = 0
+		bloody_hands_mob = null
+		QDEL_NULL(hand_dirt_datum)
+		update_inv_slot(SLOT_GLOVES)
+		germ_level = 0

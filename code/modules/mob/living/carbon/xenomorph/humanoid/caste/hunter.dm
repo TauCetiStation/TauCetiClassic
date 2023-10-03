@@ -77,7 +77,7 @@
 		stop_pulling()
 		leaping = TRUE
 		update_icons()
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/leap_end()
 	SetNextMove(CLICK_CD_MELEE) // so we can't click again right after leaping.

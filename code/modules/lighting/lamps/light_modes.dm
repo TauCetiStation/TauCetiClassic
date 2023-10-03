@@ -1,8 +1,8 @@
 var/global/list/datum/light_mode/light_modes_by_type
 var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ in content from light_modes_by_type
 
-#define DEFAULT_RANGE 8
-#define DEFAULT_POWER 2
+#define DEFAULT_RANGE 7
+#define DEFAULT_POWER 0.8
 
 /datum/light_mode
 	var/name
@@ -11,27 +11,35 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	var/power
 	var/range // minimum is 1.4, see MINIMUM_USEFUL_LIGHT_RANGE
 
+/datum/light_mode/New()
+	if(!name) // don't check admin created modes
+		return
+	// todo: we can adjust color and calculate power from difference
+	var/adjusted_color = adjust_to_white(color)
+	if(adjusted_color != color)
+		WARNING("Light mode \"[name]\" ([type]) color \"[color]\" is too dark! Please use adjusted color: \"[adjusted_color]\", and change darkness with \"power\"/\"range\" parameters!")
+
 
 /* Defaults for old dumb lamps */
 
 /datum/light_mode/default
 	name = "Default"
 
-	color = "#ffffff" // todo: replace with softer light (6500К - #FFF9FD?)
+	color = "#faf6ff"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/default/bulb
 	name = "Default Bulb"
 
-	color = "#a0a080"
+	color = "#ffaa66"
 	power = DEFAULT_POWER
 	range = 4
 
 /datum/light_mode/default/bulb/emergency
 	name = "Default Emergency"
 
-	color = "#da0205"
+	color = "#ff272a"
 	power = DEFAULT_POWER
 	range = 6
 
@@ -40,13 +48,58 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 
 	range = 12
 	power = DEFAULT_POWER
-	power = 4
 
-/datum/light_mode/default/dim
+/datum/light_mode/default/dim // default fallback mode, if something was broken with smartlight code
 	name = "Default Dim"
 
 	power = 0.5
 	range = 4
+
+/* Department light */
+
+/datum/light_mode/rnd
+	name = "RnD"
+
+	//color = "#e3cddf"
+	color = "#ffddff"
+	power = DEFAULT_POWER
+	range = DEFAULT_RANGE
+
+/datum/light_mode/medbay
+	name = "MedBay"
+
+	color = "#e8e9ff"
+	power = DEFAULT_POWER
+	range = DEFAULT_RANGE
+
+/datum/light_mode/brig
+	name = "Brig"
+
+	color = "#ffeedd"
+	power = DEFAULT_POWER
+	range = DEFAULT_RANGE
+
+/datum/light_mode/brig/dark
+	name = "Dark Brig"
+
+	power = 0.7
+	range = 6
+
+/datum/light_mode/engineering
+	name = "Engineering"
+
+	//color = "#f3e9ca"
+	color = "#fff5d6"
+	power = DEFAULT_POWER
+	range = DEFAULT_RANGE
+
+/datum/light_mode/cargo
+	name = "Cargo"
+
+	//color = "#eee1d3"
+	color = "#fff2e4"
+	power = DEFAULT_POWER
+	range = DEFAULT_RANGE
 
 /* Customs for new smart lamps */
 
@@ -54,42 +107,42 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	name = "Soft"
 
 	color = "#ffe4c9"
-	power = 0.8 //todo: ex-nightshift, should we adapt another for day ?
+	power = DEFAULT_POWER //todo: ex-nightshift, should we adapt another for day ?
 	range = DEFAULT_RANGE
 
 /datum/light_mode/hard
 	name = "Hard"
 
 	color = "#e8e9ff"
-	power = 0.8
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/k3000
 	name = "3000k"
 
 	color = "#ffb46b"
-	power = 0.8
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/k4000
 	name = "4000k"
 
 	color = "#ffd1a3"
-	power = 0.8
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/k5000
 	name = "5000k"
 
 	color = "#ffe4ce"
-	power = 0.8
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/k6000
 	name = "6000k"
 
 	color = "#fff3ef"
-	power = 0.8
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/shadows_soft
@@ -116,36 +169,41 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/code_red
 	name = "Code Red"
 
-	color = "#690101"
-	power = 0.8
+	//color = "#690101"
+	color = "#ff9797"
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/blue_night
 	name = "Blue Night"
 
-	color = "#22566a"
-	power = 0.8
+	//color = "#22566a"
+	color = "#b7ebff"
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/soft_blue
 	name = "Soft Blue"
 
-	color = "#009eda"
-	power = 0.8
+	//color = "#009eda"
+	color = "#25c3ff"
+	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/neon
 	name = "Neon"
 
-	color = "#b77ad0"
-	power = 0.8
+	//color = "#b77ad0"
+	color = "#e6a9ff"
+	power = DEFAULT_POWER
 	range = 6
 
 /datum/light_mode/neon_dark
 	name = "Neon Dark"
 
-	color = "#a339ce"
-	power = 0.8
+	//color = "#a339ce"
+	color = "#d46aff"
+	power = DEFAULT_POWER
 	range = 6
 
 #undef DEFAULT_RANGE

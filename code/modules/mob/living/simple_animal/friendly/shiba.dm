@@ -2,14 +2,14 @@
 /mob/living/simple_animal/shiba
 	name = "Shiba Inu"
 	real_name = "shiba inu"
-	desc = "It's a small, agile cute doggy."
+	desc = "Это маленькая, подвижная, симпатичная собачка."
 	icon_state = "shiba"
 	icon_living = "shiba"
 	icon_dead = "shiba_dead"
-	speak = list("Kyan!","Van!", "Woof!", "Bark!", "AUUUUUU", "Yap!")
-	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "pants", "vans")
-	emote_see = list("shakes its head", "shivers", "looks cute")
+	speak = list("Кьян!", "Ван!", "Ауф!", "Гав!", "АУУУУ!")
+	speak_emote = list("лает", "воет", "тявкает")
+	emote_hear = list("лает", "воет", "тявкает")
+	emote_see = list("облизывается", "виляет хвостом", "выглядит мило")
 	speak_chance = 20
 	turns_per_move = 3
 	w_class = SIZE_BIG
@@ -35,7 +35,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/shiba
 	name = "shiba meat"
-	desc = "Tastes like... well you know..."
+	desc = "На вкус как... ну ты знаешь..."
 
 /mob/living/simple_animal/shiba/regenerate_icons()
 	cut_overlays()
@@ -63,7 +63,7 @@
 
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
 		if(prob(30))
-			me_emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
+			me_emote(pick("лает", "воет!","рычит."))
 		break
 
 	if(stat == CONSCIOUS && !buckled)

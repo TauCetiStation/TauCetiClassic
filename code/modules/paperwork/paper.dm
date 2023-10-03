@@ -91,7 +91,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", 425, 600, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
 
@@ -929,3 +929,55 @@ var/global/list/contributor_names
 	S.stamp_paper(src, "CentComm DPA")
 
 	update_icon()
+
+/obj/item/weapon/paper/psc
+	name = "Разрешение на работу ЧОП"
+	info = {"<h1 style="text-align: center;"Разрешение на работу ЧОП></h1>
+	<p>Данный документ подтверждает, что держатель документа (далее Сотрудник) является сотрудником частного охранного предприятия, нанятого для охраны активов Карго.</p>
+	<p>Сотрудник имеет право на владение и использование пистолета W&J PP и/или флешера и средств личной защиты в целях охраны активов Карго.</p>
+	<p>При неправомерном применении спецсредств офицеры охраны имеют право изъять пистолет, флешер и средства личной защиты.</p>"}
+
+/obj/item/weapon/paper/psc/atom_init()
+	. = ..()
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Logistics Department")
+
+/obj/item/weapon/paper/depacc
+	name = "Реквизиты счёта отдела "
+	var/department_name = ""
+
+/obj/item/weapon/paper/depacc/atom_init()
+	. = ..()
+	if(!department_name)
+		qdel(src)
+		return
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+/obj/item/weapon/paper/depacc/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return ..()
+
+/obj/item/weapon/paper/depacc/proc/on_round_start()
+	var/datum/money_account/dep = global.department_accounts[department_name]
+	if(!dep)
+		qdel(src)
+		return
+
+	info = {"<h2>Бухгалтерия Центрального Коммитета «ЦК»</h2>
+	<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">[current_date_string]</blockquote>
+	<table align="center" border="3" cellpadding="10" width="100%">
+  		<caption><b><big>Реквизиты счёта отдела</big></b></caption>
+  		<tr><td>Отдел:</td><td>«[department_name]»</td></tr>
+  		<tr><td>Номер счёта:</td><td>№ [dep.account_number]</td></tr>
+  		<tr><td>Пин-код:</td><td>PIN: [dep.remote_access_pin]</td></tr>
+ 	 	<tr><td>Бюджет:</td><td>[dep.money] $</td></tr>
+	</table>
+	<hr>"}
+
+	var/obj/item/weapon/stamp/centcomm/Stamp1 = new
+	Stamp1.stamp_paper(src, "CentComm")
+	var/obj/item/weapon/stamp/copy_correct/Stamp2 = new
+	Stamp2.stamp_paper(src)
+
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)

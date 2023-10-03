@@ -20,7 +20,7 @@
 
 /obj/structure/pedestal/atom_init()
 	. = ..()
-	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/put_item))
+	AddComponent(/datum/component/clickplace, CALLBACK(src, PROC_REF(put_item)))
 	last_turf = get_turf(src)
 
 /obj/structure/pedestal/Destroy()
@@ -82,7 +82,7 @@
 				ill.alpha = 0
 				break
 
-	RegisterSignal(I, list(COMSIG_MOVABLE_MOVED), .proc/moved_item)
+	RegisterSignal(I, list(COMSIG_MOVABLE_MOVED), PROC_REF(moved_item))
 
 /obj/structure/pedestal/proc/moved_item(atom/movable/I, atom/oldLoc, dir)
 	lying_items -= I

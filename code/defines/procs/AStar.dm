@@ -90,7 +90,7 @@
 
 		maxnodedepth = maxnodes  // No need to consider path longer than maxnodes
 
-	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare)  // The open list
+	var/Heap/open = new /Heap(GLOBAL_PROC_REF(HeapPathWeightCompare))  // The open list
 	var/list/closed = list()                                // The closed list
 
 	var/list/path = null  // The returned path, if any
