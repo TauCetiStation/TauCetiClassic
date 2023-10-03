@@ -10,7 +10,7 @@
 
 /obj/item/clothing/suit/armor/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 15), WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -36,7 +36,7 @@
 /obj/item/clothing/suit/armor/vest/fullbody/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
 	name = "purple robes"
@@ -66,7 +66,7 @@
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
-	AddComponent(/datum/component/style, 0, 15, SLOT_WEAR_SUIT, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 15), WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"
@@ -84,7 +84,7 @@
 /obj/item/clothing/suit/storage/flak/police/fullbody/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/storage/flak/police/fullbody/heavy
 	name = "heavy fullbody armor"
@@ -135,7 +135,7 @@
 /obj/item/clothing/suit/armor/vest/leather/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
@@ -151,7 +151,7 @@
 /obj/item/clothing/suit/armor/hos/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -166,7 +166,7 @@
 /obj/item/clothing/suit/armor/riot/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof fullbody armor"
@@ -182,7 +182,7 @@
 /obj/item/clothing/suit/armor/bulletproof/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/storage/flak/bulletproof
 	name = "bulletproof fullbody armor"
@@ -217,7 +217,7 @@
 /obj/item/clothing/suit/armor/laserproof/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list(BP_CHEST , BP_GROIN))) //If not shot where ablative is covering you, you don't get the reflection bonus!
@@ -372,7 +372,7 @@
 /obj/item/clothing/suit/armor/centcomm/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -390,7 +390,7 @@
 /obj/item/clothing/suit/armor/heavy/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -400,7 +400,7 @@
 /obj/item/clothing/suit/armor/tdome/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit (red)"
@@ -430,7 +430,7 @@
 /obj/item/clothing/suit/armor/tactical/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
@@ -480,7 +480,7 @@
 /obj/item/clothing/suit/armor/syndiassault/atom_init()
 	. = ..()
 	//we reduce evasion to make a person in melee-protective equipment vulnerable to gunfire
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/syndilight
 	name = "recon armor"
@@ -496,7 +496,7 @@
 /obj/item/clothing/suit/armor/syndilight/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/m66_kevlarvest
 	name = "M66 Tactical Vest"
@@ -520,7 +520,7 @@
 /obj/item/clothing/suit/armor/crusader/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/vest/surplus
 	name = "surplus armor vest"
@@ -555,4 +555,4 @@
 /obj/item/clothing/suit/armor/duracoat/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, 0, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
