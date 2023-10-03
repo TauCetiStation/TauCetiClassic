@@ -10,33 +10,35 @@
 
 /datum/mechanic_tip/style/New(datum/component/style/S)
 	var/output_information = ""
+	var/list/buffs_in_desired_slots = list()
+	for(var/i in desired_slots)
+		buffs_in_desired_slots += desired_slots[i]
 	//One slot can increase style, other can decrease
-	if((S.style_amount > 0 || S.style_in_desired > 0) && (S.style_amount < 0 || S.style_in_desired < 0))
+	if(buffs_in_desired_slots.len || S.style_amount == 0)
 		output_information += "This may have a ambiguity impact on your style"
 	//Very good stylish points
-	else if(S.style_amount >= 5 || S.style_in_desired >= 5)
+	else if(S.style_amount >= 5)
 		output_information += "It can improve your style."
 	//Only good stylish points
-	else if(S.style_amount > 0 || S.style_in_desired > 0)
+	else if(S.style_amount > 0)
 		output_information += "It might give you a little style."
 	//Can decrease or increase style by special requirments
 	else if(S.style_sets.len)
 		output_information += "This may have a ambiguity impact on your style."
 	//Negative stylish points
-	else if(S.style_amount < 0 || S.style_in_desired < 0)
+	else if(S.style_amount < 0)
 		output_information += "It might have a bad effect on your style"
 	description = output_information
 
 /datum/component/style
 	var/style_amount = 0
-	var/style_in_desired = 0
 	var/list/desired_slots
 	var/list/style_sets
 
-/datum/component/style/Initialize(style_initial, amount_in_desired, slot_initial, style_set_initial)
+/datum/component/style/Initialize(style_initial, desired_slots_list, style_set_initial)
 	. = ..()
+	desiredslot = desiredslotlist
 	style_amount = style_initial
-	style_in_desired = amount_in_desired
 	//Initialize Style Sets
 	if(islist(style_set_initial))
 		var/list/L = style_set_initial
@@ -47,11 +49,8 @@
 		var/list/L = list(style_set_initial)
 		style_sets = L
 	//Initialize Desired Slot
-	if(islist(slot_initial))
-		var/list/L = slot_initial
-		desired_slots = L
-	else
-		var/list/L = list(slot_initial)
+	if(islist(desired_slots_list))
+		var/list/L = desired_slots_list
 		desired_slots = L
 
 	var/datum/mechanic_tip/style/style_tip = new(src)
@@ -86,13 +85,15 @@
 					bonus_amount += max(0, min(5, 5 - style_amount))
 	return bonus_amount
 
-/datum/component/style/proc/is_slot_desired(datum/source, mob/living/carbon/user)
+/datum/component/style/proc/is_slot_desired(datum/source, list/reflist)
 	if(!desired_slots)
 		return FALSE
+	var/mob/living/carbon/user = reflist[3]
 	if(!iscarbon(user))
 		return FALSE
-	for(var/i in desired_slots)
-		if(user.get_slot_ref(i) == parent)
+	for(var/i in desiredslot)
+		if(user.get_slot_ref(text2num(i)) == source)
+			reflist[1] += desiredslot[i]
 			return TRUE
 	return FALSE
 
@@ -102,8 +103,7 @@
 		var/set_bonus = meet_set_requirments(source, reflist)
 		if(set_bonus)
 			reflist[1] += set_bonus
-	if(is_slot_desired(source, reflist[3]))
-		reflist[1] += style_in_desired
+	if(is_slot_desired(source, reflist))
 		return
 	reflist[1] += style_amount
 
