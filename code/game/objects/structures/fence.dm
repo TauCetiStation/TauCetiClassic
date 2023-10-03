@@ -199,6 +199,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 	var/id
 	var/open = FALSE
 
+/obj/machinery/door/gate/atom_init()
+	. = ..()
+	if(open)
+		icon_state = "turnstile_open"
+
 /obj/machinery/door/gate/bumpopen(mob/user)
 	return
 
