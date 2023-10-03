@@ -465,18 +465,15 @@ var/global/list/turret_icons
 		repair_damage(1)
 
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
-	switch(assess_living(L))
-		if(TURRET_PRIORITY_TARGET)
-			if(istype(L.loc, /obj/mecha))
-				var/obj/mecha/mech_target = L.loc
-				targets += mech_target
-			else
+	if(istype(L.loc, /obj/mecha))
+		var/obj/mecha/mech_target = L.loc
+		if(assess_mechs(mech_target) == TURRET_SECONDARY_TARGET)
+			secondarytargets += mech_target
+	else
+		switch(assess_living(L))
+			if(TURRET_PRIORITY_TARGET)
 				targets += L
-		if(TURRET_SECONDARY_TARGET)
-			if(istype(L.loc, /obj/mecha))
-				var/obj/mecha/mech_target = L.loc
-				targets += mech_target
-			else
+			if(TURRET_SECONDARY_TARGET)
 				secondarytargets += L
 
 
@@ -492,14 +489,12 @@ var/global/list/turret_icons
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
-	if(istype(L.loc, /obj/mecha))
-		return TURRET_SECONDARY_TARGET
-
-	if(!check_trajectory(L, src))	//check if we have true line of sight
+	if(!check_trajectory(L, src) && !istype(L.loc, /obj/mecha))	//check if we have true line of sight and not in mecha.
 		return TURRET_NOT_TARGET
 
 	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
+
 	if(L.stat != CONSCIOUS)		//if the perp is dead/dying...
 		if(!emagged)
 			return TURRET_NOT_TARGET	//no need to bother really, move onto next potential victim!
@@ -546,6 +541,28 @@ var/global/list/turret_icons
 		return 10
 
 	return H.assess_perp(src, check_access, check_weapons, check_records, check_arrest)
+
+/obj/machinery/porta_turret/proc/assess_mechs(obj/mecha/M)
+	if(!M.occupant)
+		return TURRET_NOT_TARGET //dont shoot empty guys, maybe the HOS parked it there "just in case"
+
+	if(assess_living(M.occupant) == TURRET_NOT_TARGET)
+		return TURRET_NOT_TARGET
+
+	if(!check_n_synth)
+		return TURRET_NOT_TARGET // targeting disabled
+
+	if(get_dist(src, M) > 7)
+		return TURRET_NOT_TARGET
+
+	if(!check_trajectory(M, src))
+		return TURRET_NOT_TARGET
+
+	if(!lethal)
+		return TURRET_NOT_TARGET
+
+	return TURRET_SECONDARY_TARGET
+
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/mob/living/targets)
 	if(targets.len && last_target && (last_target in targets) && target(last_target))
