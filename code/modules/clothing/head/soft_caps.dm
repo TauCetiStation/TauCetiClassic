@@ -49,7 +49,7 @@
 
 /obj/item/clothing/head/soft/red/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
@@ -59,7 +59,7 @@
 
 /obj/item/clothing/head/soft/blue/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
@@ -69,7 +69,7 @@
 
 /obj/item/clothing/head/soft/green/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
@@ -79,7 +79,7 @@
 
 /obj/item/clothing/head/soft/yellow/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
@@ -107,7 +107,7 @@
 
 /obj/item/clothing/head/soft/purple/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
@@ -129,7 +129,7 @@
 
 /obj/item/clothing/head/soft/sec/corp/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/soft/trash
 	name = "trash cap"

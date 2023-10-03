@@ -53,7 +53,7 @@
 
 /obj/item/clothing/under/color/pink/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
@@ -63,7 +63,7 @@
 
 /obj/item/clothing/under/color/red/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
@@ -79,7 +79,7 @@
 
 /obj/item/clothing/under/color/yellow/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/under/psyche
 	name = "psychedelic"
@@ -112,7 +112,7 @@
 
 /obj/item/clothing/under/lightpurple/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/under/lightgreen
 	name = "lightgreen"
@@ -121,7 +121,7 @@
 
 /obj/item/clothing/under/lightgreen/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/under/lightblue
 	name = "lightblue"

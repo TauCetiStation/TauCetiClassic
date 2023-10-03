@@ -391,7 +391,7 @@
 
 /obj/item/clothing/suit/jacket/leather/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -633,7 +633,7 @@
 
 /obj/item/clothing/suit/poncho/green/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/suit/poncho/rainbow
 	name = "green poncho"
@@ -861,7 +861,7 @@
 
 /obj/item/clothing/suit/jacket/letterman_red/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"

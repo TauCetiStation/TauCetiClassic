@@ -403,7 +403,7 @@
 
 /obj/item/weapon/storage/backpack/henchmen/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/weapon/storage/backpack/dufflebag/cops
 	name = "NanoTrasen bag"

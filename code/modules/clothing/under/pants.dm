@@ -13,7 +13,7 @@
 
 /obj/item/clothing/under/pants/classicjeans/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 3, null, GANG_STYLE)
 
 /obj/item/clothing/under/pants/mustangjeans
 	name = "Must Hang jeans"

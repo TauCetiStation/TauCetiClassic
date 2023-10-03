@@ -80,7 +80,7 @@
 
 /obj/item/clothing/mask/scarf/red/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/scarf/green
 	name = "green scarf"
@@ -90,7 +90,7 @@
 
 /obj/item/clothing/mask/scarf/green/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/scarf/yellow
 	name = "yellow scarf"
@@ -100,7 +100,7 @@
 
 /obj/item/clothing/mask/scarf/yellow/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/scarf/violet
 	name = "violet scarf"
@@ -110,7 +110,7 @@
 
 /obj/item/clothing/mask/scarf/violet/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/scarf/attack_self(mob/user)
 
@@ -243,7 +243,7 @@
 
 /obj/item/clothing/mask/bandana/red/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
@@ -252,7 +252,7 @@
 
 /obj/item/clothing/mask/bandana/blue/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/green
 	name = "green bandana"
@@ -261,7 +261,7 @@
 
 /obj/item/clothing/mask/bandana/green/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/gold
 	name = "gold bandana"
@@ -270,7 +270,7 @@
 
 /obj/item/clothing/mask/bandana/gold/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
@@ -279,7 +279,7 @@
 
 /obj/item/clothing/mask/bandana/black/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
@@ -288,7 +288,7 @@
 
 /obj/item/clothing/mask/bandana/skull/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/mask/tie
 	body_parts_covered = 0

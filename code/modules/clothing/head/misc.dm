@@ -183,7 +183,7 @@
 
 /obj/item/clothing/head/bowler/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 //stylish bs12 hats
 
@@ -280,7 +280,7 @@
 
 /obj/item/clothing/head/fedora/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, GANG_STYLE)
+	AddComponent(/datum/component/style, 0, null, GANG_STYLE)
 
 /obj/item/clothing/head/fedora/attack_self(mob/user)
 	fedoraproc(user)
