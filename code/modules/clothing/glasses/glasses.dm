@@ -110,7 +110,7 @@
 
 /obj/item/clothing/glasses/eyepatch/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -140,7 +140,7 @@
 /obj/item/clothing/glasses/aviator_orange/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/glasses/aviator_black
 	name = "aviator glasses"
@@ -150,7 +150,7 @@
 /obj/item/clothing/glasses/aviator_black/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/glasses/aviator_red
 	name = "aviator glasses"
@@ -160,7 +160,7 @@
 /obj/item/clothing/glasses/aviator_red/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/glasses/aviator_mirror
 	name = "aviator glasses"
@@ -170,7 +170,7 @@
 /obj/item/clothing/glasses/aviator_mirror/atom_init()
 	. = ..()
 	//Fluff only
-	AddComponent(/datum/component/style, 0, 3, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/glasses/jerusalem
 	name = "Jerusalem glasses"
@@ -217,7 +217,7 @@
 /obj/item/clothing/glasses/sunglasses/atom_init()
 	. = ..()
 	//Sunglasses is cool by default
-	AddComponent(/datum/component/style, 0, 5, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 5))
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -312,7 +312,7 @@ I was expecting a 5 style points for IAA glasses
 /obj/item/clothing/glasses/sunglasses/hud/sechud/atom_init()
 	. = ..()
 	//Red huds like sunglasses, but cooler
-	AddComponent(/datum/component/style, 0, 7, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 7))
 
 /obj/item/clothing/glasses/hud/hos_aug
 	name = "augmented shades"
@@ -333,7 +333,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/hud/hos_aug/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 7, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 7))
 
 /datum/action/item_action/switch_shades_mode
 	name = "Switch Shades Mode"
@@ -496,7 +496,7 @@ I was expecting a 5 style points for IAA glasses
 /obj/item/clothing/glasses/sunglasses/noir/atom_init()
 	. = ..()
 	//Noir is cooler than other glasses, ofc
-	AddComponent(/datum/component/style, 0, 7, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 7))
 
 /datum/action/item_action/hands_free/toggle_noir
 	name = "Toggle Noir"
