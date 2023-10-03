@@ -89,6 +89,11 @@
 	damage = 35
 	embed = 0
 
+/obj/item/projectile/bullet/pulserifle
+	name = "pulse bullet"
+	damage = 15
+	embed = 0
+
 /obj/item/projectile/bullet/heavy/a145
 	damage = 110
 	stun = 3
@@ -118,6 +123,10 @@
 
 /obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	explosion(target, 0, 1, 2)
+	return 1
+
+/obj/item/projectile/bullet/grenade/explosive/light/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	explosion(target, 0, 0, 5)
 	return 1
 
 /obj/item/projectile/bullet/chem
