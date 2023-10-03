@@ -16037,6 +16037,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aCf" = (
@@ -25159,6 +25162,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -25935,6 +25939,18 @@
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/door_control{
+	id = "escape_2";
+	name = "Turnstile Control";
+	pixel_x = -6;
+	pixel_y = 18
+	},
+/obj/machinery/door_control{
+	id = "escape_1";
+	name = "Turnstile Control";
+	pixel_x = 6;
+	pixel_y = 18
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -29581,6 +29597,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bbh" = (
@@ -30066,6 +30088,9 @@
 "bbZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/fence/metal{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -36670,6 +36695,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/fence/metal{
+	color = "#f1641f"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "boi" = (
@@ -38719,6 +38747,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/door/gate{
+	id = "escape_2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -54677,6 +54708,7 @@
 "bWx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/fence/metal,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bWy" = (
@@ -69059,6 +69091,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"dja" = (
+/obj/structure/fence/metal,
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "dka" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
@@ -79262,6 +79300,15 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"oGT" = (
+/obj/machinery/door/gate{
+	dir = 1;
+	id = "escape_1"
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "oHi" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -79620,6 +79667,26 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"pjU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "pkf" = (
 /turf/simulated/floor{
 	icon_state = "wood_stairs2"
@@ -80102,6 +80169,15 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/storage)
+"pSP" = (
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "pSU" = (
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -101478,8 +101554,8 @@ urb
 aTv
 aWv
 aYR
-bbd
-xrW
+pSP
+pjU
 bhi
 aSP
 aJs
@@ -101988,11 +102064,11 @@ atL
 btF
 aUO
 bud
-bhj
-bhj
+oGT
+dja
 aWv
 aYU
-bbd
+pSP
 aCe
 ala
 aqe

@@ -19,13 +19,12 @@
 	var/screwed = TRUE
 
 /obj/structure/fence/atom_init()
+	. = ..()
 	switch(dir)
 		if(NORTH)
 			layer -= 0.01
 		if(SOUTH)
 			layer += 0.01
-
-	. = ..()
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(iswrenching(W))
@@ -52,17 +51,6 @@
 	if(istype(mover,/obj/item/projectile))
 		return TRUE
 	if(get_dir(loc, target) & dir)
-		if(HAS_TRAIT(mover, TRAIT_ARIBORN) || mover.checkpass(PASSTABLE))
-			return TRUE
-		var/turf/T = loc
-		if(T.density)
-			return FALSE
-		for(var/atom/A in T)
-			if(A == src)
-				continue
-			else
-				if(!A.CanPass(mover, target, height))
-					return FALSE
 		return FALSE
 	else
 		return TRUE
@@ -77,14 +65,6 @@
 	if(istype(O,/obj/item/projectile))
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		if(HAS_TRAIT(O, TRAIT_ARIBORN) || O.checkpass(PASSTABLE))
-			return TRUE
-		var/turf/T = get_step(O, dir)
-		if(T.density)
-			return FALSE
-		for(var/atom/A in T)
-			if(!A.CanPass(O, target))
-				return FALSE
 		return FALSE
 	return TRUE
 
@@ -102,6 +82,23 @@
 
 	set_dir(turn(dir, 90))
 	return
+
+/obj/structure/fence/on_climb(mob/living/climber, mob/living/user)
+	if(!screwed)
+		deconstruct(FALSE)
+		climber.throw_at(get_step(user, dir), 2, 2)
+		return
+
+	var/turf/T = get_step(climber, climber.dir)
+	if(T.density)
+		return
+	for(var/atom/A in T)
+		if(A == src)
+			continue
+		if(!A.CanPass(climber, T))
+			return
+
+	user.forceMove(T)
 
 /obj/structure/fence/wood
 	name = "wooden fence"
@@ -175,16 +172,17 @@
 
 var/global/list/gates_list = list()
 
-ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
+ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 /obj/machinery/door/gate
 	name = "turnstile"
 	desc = "Попросите вахтёра открыть."
 
 	icon = 'icons/obj/fences.dmi'
-	icon_state = "turniket_off"
+	icon_state = "turnstile_closed"
 
 	flags = ON_BORDER
 	layer = INFRONT_MOB_LAYER
+	base_layer = INFRONT_MOB_LAYER
 
 	throwpass = 1
 
@@ -195,20 +193,23 @@ ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
 
 	block_air_zones = FALSE
 
+	opacity = FALSE
+	can_wedge_items = FALSE
+
 	var/id
 	var/open = FALSE
 
 /obj/machinery/door/gate/bumpopen(mob/user)
 	return
 
-/obj/machinery/door/try_open(mob/user)
+/obj/machinery/door/gate/try_open(mob/user)
 	return
 
 /obj/machinery/door/gate/open()
 	if(open)
 		return
 	icon_state = "turnstile_open"
-	flick("turnstile_open_flick")
+	flick("turnstile_open_flick", src)
 	open = TRUE
 
 	addtimer(CALLBACK(src, PROC_REF(close)), 5 SECONDS)
@@ -217,7 +218,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
 	if(!open)
 		return
 	icon_state = "turnstile_closed"
-	flick("turnstile_closed_flick")
+	flick("turnstile_closed_flick", src)
 	open = FALSE
 
 /obj/machinery/door/gate/attackby(obj/item/W, mob/user)
@@ -237,12 +238,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
 /obj/machinery/door/gate/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return TRUE
-	if(open)
-		close()
-		return TRUE
 	if(get_dir(loc, target) & dir)
-		if(HAS_TRAIT(mover, TRAIT_ARIBORN) || mover.checkpass(PASSTABLE))
-			return TRUE
+		if(!open)
+			return FALSE
 		var/turf/T = loc
 		if(T.density)
 			return FALSE
@@ -252,7 +250,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
 			else
 				if(!A.CanPass(mover, target, height))
 					return FALSE
-		return FALSE
+		close()
+		return TRUE
 	else
 		return TRUE
 
@@ -265,17 +264,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
 /obj/machinery/door/gate/CheckExit(atom/movable/O, turf/target)
 	if(istype(O,/obj/item/projectile))
 		return TRUE
-	if(open)
-		close()
-		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		if(HAS_TRAIT(O, TRAIT_ARIBORN) || O.checkpass(PASSTABLE))
-			return TRUE
+		if(!open)
+			return FALSE
 		var/turf/T = get_step(O, dir)
 		if(T.density)
 			return FALSE
 		for(var/atom/A in T)
 			if(!A.CanPass(O, target))
 				return FALSE
-		return FALSE
+		close()
+		return TRUE
 	return TRUE
