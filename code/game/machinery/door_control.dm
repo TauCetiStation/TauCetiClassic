@@ -65,6 +65,9 @@
 	for(var/obj/machinery/door/window/W in windowdoor_list)
 		if(W.id == id)
 			connected_doors += W
+	for(var/obj/machinery/door/gate/G in gates_list)
+		if(G.id == id)
+			connected_doors += G
 	update_icon()
 
 /obj/machinery/door_control/Destroy()
@@ -353,6 +356,8 @@
 		toggle_poddoor(D)
 	else if(istype(D, /obj/machinery/door/window))
 		toggle_windowdoor(D)
+	else if(istype(D, /obj/machinery/door/gate))
+		toggle_gate(D)
 
 /obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
 	if(!A.isAllPowerCut() && A.hasPower())
@@ -413,6 +418,12 @@
 		W.open()
 	else
 		W.close()
+
+/obj/machinery/door_control/proc/toggle_gate(obj/machinery/door/gate/G)
+	if(G.open)
+		G.close()
+	else
+		G.open()
 
 /obj/machinery/door_control/power_change()
 	..()

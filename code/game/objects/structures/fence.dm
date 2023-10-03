@@ -8,6 +8,8 @@
 	flags = ON_BORDER
 	layer = INFRONT_MOB_LAYER
 
+	climbable = TRUE
+
 	throwpass = 1
 
 	max_integrity = 15
@@ -61,16 +63,6 @@
 			else
 				if(!A.CanPass(mover, target, height))
 					return FALSE
-		if(ismob(mover))
-			var/mob/user = mover
-			if(user.a_intent == INTENT_HARM)
-				if(!user.is_busy() && do_mob(user, src, 1 SECONDS))
-					if(screwed)
-						user.forceMove(T)
-					else
-						deconstruct(FALSE)
-						user.throw_at(get_step(user, reverse_dir[dir]), 2, 2)
-					return TRUE
 		return FALSE
 	else
 		return TRUE
@@ -93,16 +85,6 @@
 		for(var/atom/A in T)
 			if(!A.CanPass(O, target))
 				return FALSE
-		if(ismob(O))
-			var/mob/user = O
-			if(user.a_intent == INTENT_HARM)
-				if(!user.is_busy() && do_mob(user, src, 1 SECONDS))
-					if(screwed)
-						user.forceMove(target)
-					else
-						deconstruct(FALSE)
-						user.throw_at(get_step(user, dir), 2, 2)
-					return TRUE
 		return FALSE
 	return TRUE
 
@@ -190,3 +172,110 @@
 /obj/structure/fence/glass/deconstruct(disassembled)
 	new /obj/item/stack/sheet/glass(loc, 2)
 	..()
+
+var/global/list/gates_list = list()
+
+ADD_TO_GLOBAL_LIST(/obj/structure/fence/gate, gates_list)
+/obj/machinery/door/gate
+	name = "turnstile"
+	desc = "Попросите вахтёра открыть."
+
+	icon = 'icons/obj/fences.dmi'
+	icon_state = "turniket_off"
+
+	flags = ON_BORDER
+	layer = INFRONT_MOB_LAYER
+
+	throwpass = 1
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
+	anchored = TRUE
+
+	block_air_zones = FALSE
+
+	var/id
+	var/open = FALSE
+
+/obj/machinery/door/gate/bumpopen(mob/user)
+	return
+
+/obj/machinery/door/try_open(mob/user)
+	return
+
+/obj/machinery/door/gate/open()
+	if(open)
+		return
+	icon_state = "turnstile_open"
+	flick("turnstile_open_flick")
+	open = TRUE
+
+	addtimer(CALLBACK(src, PROC_REF(close)), 5 SECONDS)
+
+/obj/machinery/door/gate/close()
+	if(!open)
+		return
+	icon_state = "turnstile_closed"
+	flick("turnstile_closed_flick")
+	open = FALSE
+
+/obj/machinery/door/gate/attackby(obj/item/W, mob/user)
+	if(iswrenching(W))
+		if(!open)
+			return FALSE
+		if(user.is_busy(src))
+			return FALSE
+		if(W.use_tool(src, user, 50, volume = 50))
+			if(anchored)
+				to_chat(user, "<span class='notice'>Вы откручиваете турникет.</span>")
+			else
+				to_chat(user, "<span class='notice'>Вы прикручиваете турникет.</span>")
+			anchored = !anchored
+		return TRUE
+
+/obj/machinery/door/gate/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover,/obj/item/projectile))
+		return TRUE
+	if(open)
+		close()
+		return TRUE
+	if(get_dir(loc, target) & dir)
+		if(HAS_TRAIT(mover, TRAIT_ARIBORN) || mover.checkpass(PASSTABLE))
+			return TRUE
+		var/turf/T = loc
+		if(T.density)
+			return FALSE
+		for(var/atom/A in T)
+			if(A == src)
+				continue
+			else
+				if(!A.CanPass(mover, target, height))
+					return FALSE
+		return FALSE
+	else
+		return TRUE
+
+/obj/machinery/door/gate/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	if(dir == to_dir)
+		return FALSE
+
+	return TRUE
+
+/obj/machinery/door/gate/CheckExit(atom/movable/O, turf/target)
+	if(istype(O,/obj/item/projectile))
+		return TRUE
+	if(open)
+		close()
+		return TRUE
+	if(get_dir(O.loc, target) == dir)
+		if(HAS_TRAIT(O, TRAIT_ARIBORN) || O.checkpass(PASSTABLE))
+			return TRUE
+		var/turf/T = get_step(O, dir)
+		if(T.density)
+			return FALSE
+		for(var/atom/A in T)
+			if(!A.CanPass(O, target))
+				return FALSE
+		return FALSE
+	return TRUE
