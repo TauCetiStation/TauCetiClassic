@@ -48,7 +48,7 @@
 
 /obj/item/weapon/gun/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 5, SLOT_BACK)
+	AddComponent(/datum/component/style, 0, list("[SLOT_BACK]" = 5))
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
