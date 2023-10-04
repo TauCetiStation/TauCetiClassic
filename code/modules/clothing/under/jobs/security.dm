@@ -67,7 +67,7 @@
 
 /obj/item/clothing/under/det/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 0, 0, DETECTIVE_STYLE)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3), DETECTIVE_STYLE)
 
 /obj/item/clothing/under/det/max_payne
 	name = "white hard-worn suit with blue jeans"
