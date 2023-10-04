@@ -337,7 +337,7 @@
 
 /obj/item/clothing/under/gladiator/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 5))
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 //dress
 /obj/item/clothing/under/dress
