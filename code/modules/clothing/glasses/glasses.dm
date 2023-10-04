@@ -447,7 +447,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/gar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 1, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 1))
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar sunglasses"
@@ -463,7 +463,7 @@ I was expecting a 5 style points for IAA glasses
 
 /obj/item/clothing/glasses/meson/gar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, 1, SLOT_GLASSES)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 1))
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
