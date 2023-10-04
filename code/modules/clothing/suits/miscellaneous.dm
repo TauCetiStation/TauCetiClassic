@@ -745,7 +745,7 @@
 
 /obj/item/clothing/suit/hooded/carp_costume/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
