@@ -7,7 +7,7 @@
 
 /obj/item/clothing/under/shorts/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"

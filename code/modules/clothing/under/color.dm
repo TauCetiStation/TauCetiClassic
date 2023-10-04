@@ -1,6 +1,6 @@
 /obj/item/clothing/under/color/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"

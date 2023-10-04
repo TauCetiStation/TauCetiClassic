@@ -381,7 +381,7 @@
 
 /obj/item/clothing/under/vox/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
