@@ -74524,6 +74524,7 @@
 	dir = 10;
 	network = list("SS13","Research")
 	},
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
@@ -99638,6 +99639,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
 /obj/machinery/power/apc{
