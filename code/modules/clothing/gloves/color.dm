@@ -80,7 +80,7 @@
 /obj/item/clothing/gloves/purple/atom_init()
 	. = ..()
 	//Ballas gang gloves, override for remove debuff style
-	AddComponent(/datum/component/style, 0, 0, 0)
+	AddComponent(/datum/component/style, 0, null)
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
