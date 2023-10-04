@@ -65,7 +65,7 @@
 
 /obj/item/weapon/katana/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, -Get_shield_chance(), 5, list(SLOT_BELT, SLOT_BACK))
+	AddComponent(/datum/component/style, -Get_shield_chance(), list("[SLOT_BELT]" = 5, "[SLOT_BACK]" = 5))
 
 /obj/item/weapon/katana/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>")
