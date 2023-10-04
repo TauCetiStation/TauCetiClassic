@@ -555,7 +555,7 @@
 
 /obj/item/clothing/suit/batman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/suit/superman
 	name = "Superman costume"
@@ -567,7 +567,7 @@
 
 /obj/item/clothing/suit/superman/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/suit/storage/miljacket_army
 	name = "field jacket olive"
@@ -758,7 +758,7 @@
 
 /obj/item/clothing/suit/hooded/ian_costume/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/suit/hooded/angel_suit
 	name = "Angel Suit"
@@ -768,7 +768,7 @@
 
 /obj/item/clothing/suit/hooded/angel_suit/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 5))
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/suit/student_jacket
 	name = "Student Jacket"
