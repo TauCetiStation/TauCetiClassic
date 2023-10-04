@@ -135,7 +135,7 @@
 
 /obj/item/clothing/under/lawyer/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
@@ -181,7 +181,7 @@
 
 /obj/item/clothing/under/librarian/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/under/mime
 	name = "mime's outfit"
@@ -192,7 +192,7 @@
 
 /obj/item/clothing/under/mime/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
