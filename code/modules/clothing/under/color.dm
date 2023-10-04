@@ -32,10 +32,6 @@
 	item_state = "grey"
 	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/color/grey/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 3, 5, SLOT_W_UNIFORM)
-
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
