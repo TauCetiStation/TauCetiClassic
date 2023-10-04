@@ -143,7 +143,7 @@
 
 /obj/item/clothing/glasses/sunglasses/hud/secmed/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/glasses/sunglasses/hud/med
 	name = "MEDHUD sunglasses"
@@ -154,7 +154,7 @@
 
 /obj/item/clothing/glasses/sunglasses/hud/med/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/device/hud_calibrator
 	name = "Рекалибратор дисплея"
