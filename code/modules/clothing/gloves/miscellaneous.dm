@@ -92,6 +92,11 @@
 
 	dyed_type = DYED_FINGERLESS_GLOVES
 
+/obj/item/clothing/gloves/fingerless/atom_init()
+	. = ..()
+	//Override default decreasing for gloves, fingerless is stylish
+	AddComponent(/datum/component/style, 0)
+
 /obj/item/clothing/gloves/fingerless/red
 	name = "red fingerless gloves"
 	icon_state = "fingerless_red"
