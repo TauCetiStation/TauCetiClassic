@@ -356,10 +356,6 @@
 	item_state = "cowboy_hat"
 	desc = "Howdy, partner!"
 
-/obj/item/clothing/head/western/cowboy/atom_init()
-	. = ..()
-	AddComponent(/datum/component/style, 0, 0, 0, DETECTIVE_STYLE)
-
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	icon_state = "indiana_hat"
