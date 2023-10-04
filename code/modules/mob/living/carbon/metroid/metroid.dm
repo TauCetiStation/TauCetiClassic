@@ -595,6 +595,10 @@
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 
+/obj/item/clothing/under/golem/atom_init()
+	. = ..()
+	//No style for golems
+	AddComponent(/datum/component/style, -100)
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
