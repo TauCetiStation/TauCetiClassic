@@ -106,7 +106,7 @@
 /obj/item/clothing/suit/marinad/atom_init()
 	. = ..()
 	//Marine has cool dufflebag, so style with backpack allowed
-	AddComponent(/datum/component/style, 0, 0, 0)
+	AddComponent(/datum/component/style, 0, null)
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
@@ -251,7 +251,7 @@
 /obj/item/clothing/suit/armor/swat/atom_init()
 	. = ..()
 	//No style, because body_parts_covered includes arms + legs, cool guys should feel free
-	AddComponent(/datum/component/style, -15, 0, 0, WITHOUT_BACKPACK_STYLE)
+	AddComponent(/datum/component/style, 0, null, WITHOUT_BACKPACK_STYLE)
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
