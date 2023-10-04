@@ -141,6 +141,7 @@
 /area/asteroid/mine/abandoned)
 "as" = (
 /obj/structure/alien/weeds,
+/obj/machinery/suit_storage_unit/syndicate_unit,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
