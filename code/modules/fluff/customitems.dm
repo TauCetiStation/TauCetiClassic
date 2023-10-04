@@ -45,7 +45,7 @@
 
 /obj/item/clothing/under/custom/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_W_UNIFORM]" = 3))
 
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
@@ -53,7 +53,7 @@
 
 /obj/item/clothing/suit/custom/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
@@ -65,7 +65,7 @@
 
 /obj/item/clothing/glasses/custom/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_GLASSES]" = 3))
 
 /obj/item/clothing/gloves/custom
 	name = "Custom gloves"
@@ -89,7 +89,7 @@
 
 /obj/item/clothing/suit/storage/labcoat/custom/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_WEAR_SUIT]" = 3))
 
 /obj/item/weapon/storage/backpack/custom
 	name = "Custom backpack"
