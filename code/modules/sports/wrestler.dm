@@ -116,4 +116,4 @@
 
 /obj/item/weapon/storage/belt/champion/alt/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3)
+	AddComponent(/datum/component/style, 0, list("[SLOT_BELT]" = 3))

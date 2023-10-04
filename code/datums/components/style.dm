@@ -11,8 +11,8 @@
 /datum/mechanic_tip/style/New(datum/component/style/S)
 	var/output_information = ""
 	var/list/buffs_in_desired_slots = list()
-	for(var/i in desired_slots)
-		buffs_in_desired_slots += desired_slots[i]
+	for(var/i in S.desired_slots)
+		buffs_in_desired_slots += S.desired_slots[i]
 	//One slot can increase style, other can decrease
 	if(buffs_in_desired_slots.len || S.style_amount == 0)
 		output_information += "This may have a ambiguity impact on your style"
@@ -37,7 +37,7 @@
 
 /datum/component/style/Initialize(style_initial, desired_slots_list, style_set_initial)
 	. = ..()
-	desiredslot = desiredslotlist
+	desired_slots = desired_slots_list
 	style_amount = style_initial
 	//Initialize Style Sets
 	if(islist(style_set_initial))
@@ -91,9 +91,9 @@
 	var/mob/living/carbon/user = reflist[3]
 	if(!iscarbon(user))
 		return FALSE
-	for(var/i in desiredslot)
+	for(var/i in desired_slots)
 		if(user.get_slot_ref(text2num(i)) == source)
-			reflist[1] += desiredslot[i]
+			reflist[1] += desired_slots[i]
 			return TRUE
 	return FALSE
 
