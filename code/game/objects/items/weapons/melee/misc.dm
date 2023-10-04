@@ -23,7 +23,7 @@
 		return
 	if(!ishuman(target))
 		return
-	if(isimposter(user))
+	if(isanyantag(user))
 		to_chat(user, "<span class='warning'>[src] not working, broken, try another time.</span>")
 		return
 	var/mob/living/carbon/human/H = target

@@ -199,8 +199,6 @@
 
 #define istraitor(H) isrole(TRAITOR, H)
 
-#define isimposter(H) isrole(IMPOSTER, H)
-
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
 #define ismalf(H) isrole(MALF, H)
