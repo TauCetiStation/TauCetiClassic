@@ -11,6 +11,8 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	var/activate_cd = 8 SECONDS
+	var/next_activate
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
@@ -21,30 +23,16 @@
 	if(!user.isloyal())
 		to_chat(user, "<span class='danger'[bicon(src)] SPECIAL FUNCTION DISABLED. LOYALTY IMPLANT NOT FOUND.</span>")
 		return
-	if(!ishuman(target))
+	if(next_activate > world.time)
+		to_chat(user, "<span class='danger'[src] is recharging!</span>")
 		return
-	if(isanyantag(user))
-		to_chat(user, "<span class='warning'>[src] not working, broken, try another time.</span>")
+	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
-	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_OBEY, FAKE_IMPLANT_TRAIT))
-		//like clumsy
-		explosion(user.loc, 0, 0, 1, 7)
-		to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")
-		if(isliving(user))
-			var/mob/living/living_user = user
-			living_user.Sleeping(15 SECONDS)
-			if(ishuman(user))
-				var/mob/living/carbon/human/user_human = living_user
-				var/obj/item/organ/external/BP = user_human.get_bodypart(BP_ACTIVE_ARM)
-				if(BP)
-					BP.droplimb(FALSE, FALSE, DROPLIMB_BLUNT)
-		to_chat(target, "<span class='userdanger'>COVER BLOWN!!! THEY KNOW ABOUT US!!!</span>")
-		qdel(src)
-		return
 	if(!H.isimplantedobedience())
 		return
+	next_activate = world.time + activate_cd
 	H.Stun(5)
 	H.apply_effect(5, WEAKEN)
 	H.apply_effect(20, AGONY)
