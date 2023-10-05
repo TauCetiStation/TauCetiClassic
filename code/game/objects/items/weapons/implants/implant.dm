@@ -648,6 +648,6 @@ var/global/list/death_alarm_stealth_areas = list(
 		SEND_SIGNAL(imp_in, COMSIG_ADD_MOOD_EVENT, "blueshield", /datum/mood_event/blueshield)
 
 /obj/item/weapon/implant/fake_loyal
-	name = "loyality implant"
+	name = "loyaIty implant"
 	desc = "Makes you loyal or such."
 	implant_trait = TRAIT_FAKELOYAL_VISUAL
