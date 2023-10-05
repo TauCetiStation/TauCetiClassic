@@ -249,7 +249,7 @@
 
 /obj/item/clothing/suit/straight_jacket/atom_init()
 	. = ..()
-	AddComponent(/datum/component/style, 3, 10, SLOT_WEAR_SUIT)
+	AddComponent(/datum/component/style, 3, list("[SLOT_WEAR_SUIT]" = 10))
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
