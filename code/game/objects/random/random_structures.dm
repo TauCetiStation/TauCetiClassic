@@ -175,7 +175,6 @@
 					/obj/machinery/vending/blood,\
 					/obj/machinery/vending/holy,\
 					/obj/machinery/vending/eva,\
-					/obj/machinery/vending/omskvend,\
 					/obj/machinery/vending/sustenance,\
 					/obj/machinery/vending/theater,\
 					/obj/machinery/vending/weirdomat\

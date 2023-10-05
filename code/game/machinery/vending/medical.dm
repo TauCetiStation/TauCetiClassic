@@ -90,19 +90,6 @@
 	)
 	private = TRUE
 
-/obj/machinery/vending/omskvend
-	name = "Omsk-o-mat"
-	desc = "Drug dispenser."
-	icon_state = "omskvend"
-	product_ads = "NORKOMAN SUKA SHTOLE?;STOP NARTCOTICS!; so i heard u liek mudkipz; METRO ZATOPEELO"
-	products = list(
-		/obj/item/device/healthanalyzer = 5,
-	)
-	contraband = list(
-		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4,
-	)
-	private = TRUE
-
 /obj/item/weapon/reagent_containers/pill/LSD
 	name = "LSD"
 	desc = "Ahaha oh wow."
