@@ -227,6 +227,7 @@
 	if(isrobot(antag.current))
 		var/mob/living/silicon/robot/robot = antag.current
 		robot.UnlinkSelf()
+		robot.emagged = TRUE
 
 /mob/living/carbon/proc/fake_loyal_implant_replacement()
 	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
