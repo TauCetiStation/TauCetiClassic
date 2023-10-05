@@ -125,7 +125,7 @@
 	log_mode("IMPOSTERS: First addition list has [mindprotected_list.len] lenght")
 	if(mindprotected_list.len)
 		var/mob/M = pick(mindprotected_list)
-		add_faction_member(src, M)
+		add_faction_member(src, M, TRUE, TRUE)
 		antag_counting++
 
 /datum/faction/traitor/auto/imposter/get_max_traitors(playercount)
