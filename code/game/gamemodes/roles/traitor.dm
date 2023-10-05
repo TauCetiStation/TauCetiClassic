@@ -229,3 +229,25 @@
 		qdel(L)
 	var/obj/item/weapon/implant/fake_loyal/F = new(src)
 	F.inject(src, BP_CHEST)
+
+// Override Scoreboard which now dont show green/red text
+/datum/role/traitor/imposter/Declare()
+	var/win = TRUE
+	var/text = printplayerwithicon(antag)
+	if(objectives.objectives.len > 0)
+		var/count = 1
+		text += "<ul>"
+		for(var/datum/objective/objective in objectives.GetObjectives())
+			text += "<B>Objective #[count]</B>: [objective.explanation_text]"
+			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
+			if(objective.completed == OBJECTIVE_LOSS)
+				win = FALSE
+			if(count < objectives.objectives.len)
+				text += "<br>"
+		if(!faction)
+			if(win)
+				feedback_add_details("[id]_success","SUCCESS")
+				SSStatistics.score.roleswon++
+				feedback_add_details("[id]_success","FAIL")
+		text += "</ul>"
+	return text
