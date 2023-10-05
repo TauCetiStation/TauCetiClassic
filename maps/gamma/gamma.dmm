@@ -12893,6 +12893,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
