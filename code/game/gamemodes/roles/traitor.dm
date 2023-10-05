@@ -223,6 +223,10 @@
 	if(antag.current.isloyal() && iscarbon(antag.current))
 		var/mob/living/carbon/C = antag.current
 		C.fake_loyal_implant_replacement()
+	// Free a unit from AI
+	if(isrobot(antag.current))
+		var/mob/living/silicon/robot/robot = antag.current
+		robot.UnlinkSelf()
 
 /mob/living/carbon/proc/fake_loyal_implant_replacement()
 	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
