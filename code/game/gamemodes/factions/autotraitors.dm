@@ -118,6 +118,8 @@
 		if(isanyantag(player))
 			continue
 		var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+		if(!J)
+			continue
 		if(J.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
 			mindprotected_list += player
 	log_mode("IMPOSTERS: First addition list has [mindprotected_list.len] lenght")
