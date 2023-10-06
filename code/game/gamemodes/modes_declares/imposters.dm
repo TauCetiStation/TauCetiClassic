@@ -6,6 +6,6 @@
 	minimum_player_count = 1
 	minimum_players_bundles = 1
 
-/datum/game_mode/amogus/announce()
+/datum/game_mode/imposter/announce()
 	to_chat(world, "<B>The current game mode is - Imposter!</B>")
 	to_chat(world, "<B>There is a imposter on the station!</B>")
