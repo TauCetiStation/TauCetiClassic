@@ -163,7 +163,7 @@
 		if(1 to 70)
 			var/datum/job/J = SSjob.GetJob(antag.assigned_role)
 			//remove objectives for heads of staff to steal own items
-			if(J.flags & JOB_FLAG_HEAD_OF_STAFF)
+			if(J && (J.flags & JOB_FLAG_HEAD_OF_STAFF))
 				AppendObjective(/datum/objective/steal/non_heads_items, TRUE)
 			else
 				AppendObjective(/datum/objective/steal, TRUE)
