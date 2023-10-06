@@ -1813,6 +1813,75 @@
 	icon_state = "graychoco"
 	},
 /area/station/civilian/chapel)
+"acW" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/structure/closet/crate,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/obj/item/weapon/poster/calendar,
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"acX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/obj/item/pens_bin,
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"acY" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/item/tableclock,
+/obj/item/tableclock,
+/obj/item/tableclock,
+/obj/item/tableclock,
+/obj/item/tableclock,
+/obj/item/tableclock,
+/obj/item/tableclock,
+/obj/item/tableclock,
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"acZ" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/item/clothing/head/fedora/white,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"ada" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/obj/item/clothing/suit/poncho/green,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "adb" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -1821,6 +1890,15 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
+"adc" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/item/clothing/under/mafia/white,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "add" = (
@@ -1833,6 +1911,16 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/reception)
+"ade" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/item/clothing/under/pants/white,
+/obj/item/clothing/head/soft/mime,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "adf" = (
 /obj/machinery/pdapainter,
 /obj/structure/sign/poster/official/work_for_a_future{
@@ -1840,6 +1928,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"adg" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/item/clothing/mask/bandana/skull,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "adi" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/decal/cleanable/dirt,
@@ -10220,6 +10317,31 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/structure/closet/crate,
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
+/obj/item/portrait/captain{
+	anchored = 0
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bJf" = (
@@ -11917,11 +12039,17 @@
 "cbM" = (
 /obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/clothing/head/soft/mime,
-/obj/item/clothing/under/pants/white,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
+/obj/item/newtons_pendulum,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "cbP" = (
@@ -52626,11 +52754,18 @@
 /area/station/tcommsat/chamber)
 "kNa" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/head/fedora/white,
-/obj/item/clothing/under/mafia/white,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/item/folder_holder,
+/obj/item/folder_holder,
+/obj/item/folder_holder,
+/obj/item/folder_holder,
+/obj/item/folder_holder,
+/obj/item/folder_holder,
+/obj/item/folder_holder,
+/obj/item/folder_holder,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "kNi" = (
@@ -61861,6 +61996,31 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/structure/closet/crate,
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
+	},
+/obj/item/portrait{
+	anchored = 0
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -75701,15 +75861,18 @@
 	},
 /area/station/rnd/telesci)
 "pRL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/structure/closet/crate,
-/obj/item/clothing/mask/fake_face,
-/obj/item/clothing/under/mafia/vest,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/item/mars_globe,
+/obj/item/mars_globe,
+/obj/item/mars_globe,
+/obj/item/mars_globe,
+/obj/item/mars_globe,
+/obj/item/mars_globe,
+/obj/item/mars_globe,
+/obj/item/mars_globe,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "pRM" = (
@@ -76446,11 +76609,17 @@
 /area/station/bridge/captain_quarters)
 "qbm" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/suit/poncho/green,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
+/obj/item/device/flashlight/lamp/small,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "qbq" = (
@@ -84902,14 +85071,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "rUr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	icon_state = "bot_old"
 	},
+/obj/item/clothing/under/mafia/vest,
+/obj/item/clothing/mask/fake_face,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rUL" = (
@@ -110702,12 +110872,33 @@
 	},
 /area/station/aisat/ai_chamber)
 "xTi" = (
-/obj/structure/closet/crate,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/clothing/mask/bandana/skull,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/structure/closet/crate,
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
+	},
+/obj/item/wallclock{
+	anchored = 0
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -154052,9 +154243,9 @@ lWD
 ljj
 mQP
 cbM
-xTi
+kNa
 bJd
-pRL
+acX
 hPj
 bas
 xUB
@@ -154565,10 +154756,10 @@ nyv
 cpR
 uuH
 qbm
-miA
-kNa
-miA
-dPT
+xTi
+pRL
+acW
+acY
 aFX
 bas
 bas
@@ -155857,7 +156048,7 @@ fyx
 fyx
 luA
 fyx
-rUr
+ada
 cmY
 rha
 usV
@@ -156365,17 +156556,17 @@ aGL
 xAT
 uOv
 ojt
-beO
+rUr
 xuQ
 miA
 ojt
-dPT
+acZ
 ojt
-dPT
+adc
 seU
 miA
 fnT
-dPT
+adg
 ojm
 uLP
 igK
@@ -156630,7 +156821,7 @@ miA
 ojt
 miA
 ojt
-dPT
+ade
 fnT
 tkh
 ojm

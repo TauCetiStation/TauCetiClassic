@@ -5,8 +5,8 @@
 
 	factions_allowed = list(/datum/faction/nuclear)
 
-	minimum_player_count = 15
-	minimum_players_bundles = 25
+	minimum_player_count = 21
+	minimum_players_bundles = 20
 
 /datum/game_mode/nuclear/announce()
 	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")

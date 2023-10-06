@@ -49,7 +49,7 @@
 	var/check_weapons = FALSE		//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/check_access = TRUE			//if this is active, the turret shoots everything that does not meet the access requirements
 	var/check_anomalies = TRUE	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/check_n_synth = FALSE		//if active, will shoot at anything not an AI or cyborg
+	var/check_n_synth = FALSE		//if active, will shoot at anything not an AI or cyborg, mechs included
 	var/shot_synth = FALSE			//if active and in letal, will shoot any cyborgs
 	var/ailock = FALSE					// AI cannot use this
 	var/special_control = FALSE	//AI (and only AI) can set shot_synth
@@ -456,7 +456,6 @@ var/global/list/turret_icons
 
 	for(var/mob/M in mobs_in_view(world.view, src))
 		assess_and_assign(M, targets, secondarytargets)
-
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			popDown() // no valid targets, close the cover
@@ -466,16 +465,21 @@ var/global/list/turret_icons
 		repair_damage(1)
 
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
-	switch(assess_living(L))
-		if(TURRET_PRIORITY_TARGET)
-			targets += L
-		if(TURRET_SECONDARY_TARGET)
-			secondarytargets += L
+	if(istype(L.loc, /obj/mecha))
+		var/obj/mecha/mech_target = L.loc
+		if(assess_mechs(mech_target) == TURRET_SECONDARY_TARGET)
+			secondarytargets += mech_target
+	else
+		switch(assess_living(L))
+			if(TURRET_PRIORITY_TARGET)
+				targets += L
+			if(TURRET_SECONDARY_TARGET)
+				secondarytargets += L
+
 
 /obj/machinery/porta_turret/proc/assess_living(mob/living/L)
 	if(!istype(L))
 		return TURRET_NOT_TARGET
-
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
@@ -485,7 +489,7 @@ var/global/list/turret_icons
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
-	if(!check_trajectory(L, src))	//check if we have true line of sight
+	if(!check_trajectory(L, src) && !istype(L.loc, /obj/mecha))	//check if we have true line of sight and not in mecha.
 		return TURRET_NOT_TARGET
 
 	if(isAI(L))		//don't accidentally kill the AI!
@@ -537,6 +541,28 @@ var/global/list/turret_icons
 		return 10
 
 	return H.assess_perp(src, check_access, check_weapons, check_records, check_arrest)
+
+/obj/machinery/porta_turret/proc/assess_mechs(obj/mecha/M)
+	if(!M.occupant)
+		return TURRET_NOT_TARGET //dont shoot empty guys, maybe the HOS parked it there "just in case"
+
+	if(assess_living(M.occupant) == TURRET_NOT_TARGET)
+		return TURRET_NOT_TARGET
+
+	if(!check_n_synth)
+		return TURRET_NOT_TARGET // targeting disabled
+
+	if(get_dist(src, M) > 7)
+		return TURRET_NOT_TARGET
+
+	if(!check_trajectory(M, src))
+		return TURRET_NOT_TARGET
+
+	if(!lethal)
+		return TURRET_NOT_TARGET
+
+	return TURRET_SECONDARY_TARGET
+
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/mob/living/targets)
 	if(targets.len && last_target && (last_target in targets) && target(last_target))
