@@ -816,7 +816,7 @@ var/global/list/tourette_bad_words= list(
 		//Eyes
 		if(should_have_organ(O_EYES) && !has_organ(O_EYES))
 			blinded = 1
-		if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		else if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
