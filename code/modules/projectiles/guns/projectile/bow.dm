@@ -36,7 +36,6 @@
 		qdel(src)
 
 /obj/item/weapon/crossbow
-
 	name = "powered crossbow"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
@@ -121,6 +120,7 @@
 		else
 			user.visible_message("[user] ослабляет натяжение тетивы арбалета.", "Вы ослабляете натяжение тетивы арбалета.")
 		tension = 0
+		flags_2 &= ~CANT_BE_INSERTED
 		icon_state = "crossbow"
 	else
 		draw(user)
@@ -138,6 +138,7 @@
 
 	user.visible_message("[user] начинает натягивать тетиву арбалета.","Вы начинаете натягивать тетиву арбалета.")
 	tension = 1
+	flags_2 |= CANT_BE_INSERTED
 	spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/proc/increase_tension(mob/user)
@@ -195,18 +196,9 @@
 	A.loc = get_turf(user)
 	A.throw_at(target, (tension * release_speed) + 1, tension * release_speed, user)
 	arrow = null
+	flags_2 &= ~CANT_BE_INSERTED
 	tension = 0
 	icon_state = "crossbow"
-
-/obj/item/weapon/crossbow/dropped(mob/user)
-	..()
-	if(arrow)
-		var/obj/item/weapon/arrow/A = arrow
-		A.loc = get_turf(src)
-		A.removed(user)
-		arrow = null
-		tension = 0
-		icon_state = "crossbow"
 
 // *(CROSSBOW craft in recipes.dm)*
 

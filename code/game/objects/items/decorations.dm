@@ -182,21 +182,21 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	var/datum/data/record/HOS = find_general_record("rank", "Head of Security")
 	var/datum/data/record/HOP = find_general_record("rank", "Head of Personnel")
 
-	if(HOP)
-		Heads_photo = image(HOP.fields["photo_f"])
-		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы станции Исход."
-	if(HOS)
-		Heads_photo = image(HOS.fields["photo_f"])
-		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности станции Исход."
 	if(CAP)
 		Heads_photo = image(CAP.fields["photo_f"])
 		newdesc = "Портрет [CAP.fields["name"]], главы станции Исход."
+	else if(HOP)
+		Heads_photo = image(HOP.fields["photo_f"])
+		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы станции Исход."
+	else if(HOS)
+		Heads_photo = image(HOS.fields["photo_f"])
+		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности станции Исход."
 
-	Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
-	Heads_photo.pixel_y = -2
+	if(Heads_photo)
+		Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
+		Heads_photo.pixel_y = -2
 
-	for(var/obj/item/portrait/captain/Portrait in global.station_head_portraits)
-		if(Heads_photo)
+		for(var/obj/item/portrait/captain/Portrait in global.station_head_portraits)
 			Portrait.cut_overlays()
 			Portrait.icon_state = "portrait_empty"
 			Portrait.desc = newdesc

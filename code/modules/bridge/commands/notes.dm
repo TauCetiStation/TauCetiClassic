@@ -20,7 +20,7 @@
 	if(!ckey || !establish_db_connection("erro_messages"))
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery({"SELECT id, type, adminckey, timestamp, round_id, text
+	var/DBQuery/select_query = dbcon.NewQuery({"SELECT id, type, adminckey, timestamp, round_id, text, ingameage
 		FROM erro_messages 
 		WHERE targetckey='[ckey]' AND deleted=0
 		ORDER BY timestamp DESC
@@ -36,8 +36,9 @@
 		var/notetime  = select_query.item[4]
 		var/roundid  = select_query.item[5]
 		var/text = select_query.item[6]
+		var/ingameage = select_query.item[7]
 
-		message += "**ID**: [noteid];  **Type**: [notetype]; **Admin**: [admin]; **Note time**: [notetime]; **Round**: [roundid];\n**Text**: *[text]*\n\n"
+		message += "**ID**: [noteid];  **Type**: [notetype]; **Admin**: [admin]; **Note time**: [notetime] ([ingameage]); **Round**: [roundid];\n**Text**: *[text]*\n\n"
 
 	if(!length(message))
 		world.send2bridge(

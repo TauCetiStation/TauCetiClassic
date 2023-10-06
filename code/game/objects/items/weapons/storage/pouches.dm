@@ -194,6 +194,9 @@
 	if(contents.len)
 		add_overlay(image('icons/obj/pouches.dmi', "flare_[contents.len]"))
 
+/obj/item/weapon/storage/pouch/flare/full
+	startswith = list(/obj/item/device/flashlight/flare = 5)
+
 /obj/item/weapon/storage/pouch/flare/vial
 	name = "vial pouch"
 	desc = "Can hold about five vials. Rebranding!"
