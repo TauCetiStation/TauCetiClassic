@@ -348,7 +348,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.organs -= IO
 		owner.organs_by_name -= IO.organ_tag
 		IO.owner = null
-		STOP_PROCESSING(SSobj, IO)
 
 	if(parent && !(parent.is_stump) && disintegrate != DROPLIMB_BURN)
 		if(clean)
