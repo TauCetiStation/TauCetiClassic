@@ -18030,11 +18030,14 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/elite,
+/obj/item/clothing/head/helmet/space/syndicate/elite,
 /obj/item/weapon/paper{
 	info = "Just old elite space suit. MiraCorp makes your life better"
 	},
+/obj/structure/window/fulltile/reinforced,
 /obj/structure/spider/stickyweb,
-/obj/machinery/suit_storage_unit/syndicate_unit/striker,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
