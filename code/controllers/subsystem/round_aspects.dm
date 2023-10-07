@@ -1,4 +1,4 @@
-#define CHANCE_OF_NO_ASPECT 50
+#define CHANCE_OF_NO_ASPECT 20
 SUBSYSTEM_DEF(round_aspects)
 	name = "Round Aspects"
 	init_order = SS_INIT_ASPECTS
@@ -23,7 +23,8 @@ SUBSYSTEM_DEF(round_aspects)
 		return
 	for(var/aspect_type in subtypesof(/datum/round_aspect))
 		var/datum/round_aspect/RS = new aspect_type
-		if(RS.min_players <= player_list.len)
+		if(!RS.name)
+			qdel(RS)
 			continue
 		LAZYADD(possible_aspect, RS)
 	aspect = pick(possible_aspect)
