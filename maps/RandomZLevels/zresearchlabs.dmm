@@ -69,7 +69,6 @@
 /area/awaymission/labs/cave)
 "aq" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	dir = 4;
 	name = "Underground Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -531,13 +530,6 @@
 	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
-"bO" = (
-/obj/machinery/door/airlock/security/glass{
-	dir = 4;
-	name = "Security"
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/security)
 "bP" = (
 /obj/structure/kitchenspike,
 /turf/simulated/floor{
@@ -787,9 +779,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "cv" = (
-/obj/machinery/door/airlock/research/glass{
-	dir = 4
-	},
+/obj/machinery/door/airlock/research/glass,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -982,15 +972,6 @@
 	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
-"cT" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	name = "Medical"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/medical)
 "cU" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -1188,43 +1169,6 @@
 	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
-"do" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	name = "Medical"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/command)
-"dp" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	name = "Medical"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/medical)
-"dq" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	name = "Medical"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/command)
 "dr" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -1285,15 +1229,6 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
-"dy" = (
-/obj/machinery/door/airlock/medical{
-	dir = 4;
-	name = "Patient Room"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/medical)
 "dz" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
@@ -1355,13 +1290,20 @@
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "dH" = (
-/obj/structure/door_assembly/door_assembly_research{
-	dir = 4
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Worn-out APC";
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/labs/cave)
+/area/awaymission/labs/researchdivision)
 "dI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1981,20 +1923,13 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fm" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
+/obj/machinery/door/airlock/hatch{
+	name = "Armory Door"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "vaultfull"
 	},
-/area/awaymission/labs/researchdivision)
+/area/awaymission/labs/gateway)
 "fn" = (
 /obj/machinery/camera{
 	c_tag = "North Solars";
@@ -2037,27 +1972,37 @@
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fs" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
 	},
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "sandstorm shutters";
-	layer = 2.4;
-	name = "Sandstorm Shutters"
+/obj/structure/closet/crate/secure/weapon,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/turf/simulated/floor,
+/obj/item/ammo_box/c45,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/awaymission/labs/militarydivision)
 "ft" = (
-/obj/machinery/door/airlock/medical/glass{
+/obj/machinery/power/apc{
 	dir = 4;
-	name = "Medical"
+	name = "Worn-out APC";
+	pixel_x = 24
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/area/awaymission/labs/militarydivision)
+/turf/simulated/floor,
+/area/awaymission/labs/gateway)
 "fu" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2308,13 +2253,21 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fW" = (
-/obj/machinery/door/airlock/research/glass{
-	dir = 4
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/area/awaymission/labs/researchdivision)
+/turf/simulated/floor,
+/area/awaymission/labs/gateway)
 "fX" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2352,14 +2305,18 @@
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "gb" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4;
-	name = "Armory Door"
+/obj/machinery/door/airlock/research/glass{
+	name = "Storage"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/awaymission/labs/gateway)
+/area/awaymission/labs/researchdivision)
 "gc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy/xray,
@@ -2418,17 +2375,24 @@
 	},
 /area/awaymission/labs/militarydivision)
 "gj" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/gateway)
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/labs/militarydivision)
 "gk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2648,19 +2612,6 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
-"gM" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "sandstorm shutters";
-	layer = 2.4;
-	name = "Sandstorm Shutters"
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/security)
 "gN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -2762,21 +2713,11 @@
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "hb" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/item/ammo_box/c45,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
+/obj/machinery/door/airlock/research,
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "white"
 	},
-/area/awaymission/labs/militarydivision)
+/area/awaymission/labs/researchdivision)
 "hc" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -2813,42 +2754,6 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
-"hg" = (
-/obj/machinery/door/airlock/security/glass{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/security)
-"hh" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/labs/security)
-"hi" = (
-/obj/structure/table,
-/obj/machinery/light,
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/medical)
-"hj" = (
-/obj/machinery/door/airlock/security/glass{
-	dir = 4;
-	name = "Armory"
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/security)
 "hk" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2955,16 +2860,10 @@
 /area/awaymission/labs/researchdivision)
 "hv" = (
 /obj/machinery/door/airlock/research/glass{
-	dir = 4;
-	name = "Storage"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	name = "Development Labs"
 	},
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
 "hw" = (
@@ -3330,13 +3229,18 @@
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "im" = (
-/obj/machinery/door/airlock/research{
-	dir = 4
+/obj/machinery/power/apc{
+	dir = 0;
+	name = "Worn-out APC";
+	pixel_y = -24
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/area/awaymission/labs/researchdivision)
+/obj/machinery/power/terminal,
+/turf/simulated/floor/plating,
+/area/awaymission/labs/solars)
 "in" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3549,17 +3453,11 @@
 	},
 /area/awaymission/labs/militarydivision)
 "iO" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/door/airlock/command{
+	name = "Team Leader's Desk"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/gateway)
+/turf/simulated/floor/carpet,
+/area/awaymission/labs/militarydivision)
 "iP" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -3742,17 +3640,21 @@
 	},
 /area/awaymission/labs/militarydivision)
 "jm" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/terminal,
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/labs/solars)
+/turf/simulated/floor/carpet,
+/area/awaymission/labs/militarydivision)
 "jn" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -3887,20 +3789,16 @@
 	},
 /area/awaymission/labs/command)
 "jB" = (
+/obj/machinery/door/airlock/research{
+	name = "Research Division"
+	},
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/militarydivision)
+/turf/simulated/floor,
+/area/awaymission/labs/researchdivision)
 "jC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4428,14 +4326,22 @@
 	name = "Desert"
 	})
 "kK" = (
-/obj/machinery/door/airlock/research/glass{
-	dir = 4;
-	name = "Development Labs"
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
-/area/awaymission/labs/researchdivision)
+/turf/simulated/floor,
+/area/awaymission/labs/command)
 "kL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4772,18 +4678,15 @@
 	name = "Desert"
 	})
 "ls" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/command)
+/turf/simulated/floor/plating,
+/area/awaymission/labs/solars)
 "lt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -4830,10 +4733,12 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "lx" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4859,24 +4764,30 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "lB" = (
-/obj/machinery/door/airlock/command{
-	dir = 4;
-	name = "Team Leader's Desk"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet,
-/area/awaymission/labs/militarydivision)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/awaymission/labs/solars)
 "lC" = (
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/turf/simulated/floor/carpet,
-/area/awaymission/labs/militarydivision)
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/awaymission/labs/solars)
 "lD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4976,12 +4887,21 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "lL" = (
-/obj/machinery/door/airlock/research{
-	dir = 4;
-	name = "Military Division"
+/obj/machinery/camera{
+	c_tag = "Aft Port Solar Control";
+	dir = 1
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/militarydivision)
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Worn-out APC";
+	pixel_x = 24
+	},
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/labs/solars)
 "lM" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical,
@@ -5373,17 +5293,17 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "mI" = (
-/obj/machinery/door/airlock/research{
-	dir = 4;
-	name = "Research Division"
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Virology APC";
+	pixel_y = 24
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/labs/researchdivision)
+/area/awaymission/labs/cargo)
 "mJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5589,18 +5509,12 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "nh" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "sandstorm shutters";
-	layer = 2.4;
-	name = "Sandstorm Shutters"
+/obj/machinery/door/poddoor/shutters{
+	id = "qm_warehouse";
+	name = "Warehouse Shutters"
 	},
 /turf/simulated/floor,
-/area/awaymission/labs/command)
+/area/awaymission/labs/cargo)
 "ni" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
 	grilled = 1;
@@ -5976,14 +5890,14 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "oc" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Worn-out APC";
+	pixel_x = 24
+	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
@@ -6121,7 +6035,6 @@
 /area/awaymission/labs/command)
 "ot" = (
 /obj/machinery/door/airlock/mining/glass{
-	dir = 4;
 	name = "Cargo Bay"
 	},
 /turf/simulated/floor,
@@ -6205,38 +6118,27 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "oE" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	dir = 4
+/obj/machinery/door/airlock/glass{
+	name = "Civilian Division"
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/labs/solars)
+/turf/simulated/floor,
+/area/awaymission/labs/civilian)
 "oF" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/glass{
+	name = "Command Rotunda"
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/awaymission/labs/solars)
+/turf/simulated/floor,
+/area/awaymission/labs/command)
 "oG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6256,17 +6158,16 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "oH" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
 	},
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/awaymission/labs/solars)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/awaymission/labs/command)
 "oI" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -6306,21 +6207,16 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oN" = (
-/obj/machinery/camera{
-	c_tag = "Aft Port Solar Control";
-	dir = 1
+/obj/machinery/door/airlock/mining/glass{
+	name = "Excavation"
 	},
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/labs/solars)
+/turf/simulated/floor,
+/area/awaymission/labs/cargo)
 "oO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -6338,17 +6234,9 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "oQ" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
+/obj/machinery/door/airlock/external,
 /turf/simulated/floor,
-/area/awaymission/labs/cargo)
+/area/awaymission/labs/cave)
 "oR" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -6361,23 +6249,33 @@
 	},
 /area/awaymission/labs/civilian)
 "oS" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "qm_warehouse";
-	name = "Warehouse Shutters"
+/obj/machinery/power/apc{
+	dir = 0;
+	name = "Worn-out APC";
+	pixel_y = -24
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/cargo)
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/awaymission/labs/civilian)
 "oT" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
 	},
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "sandstorm shutters";
-	layer = 2.4;
-	name = "Sandstorm Shutters"
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -6404,9 +6302,9 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "oW" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Civilian Division"
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge";
+	req_access = list(19)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6414,7 +6312,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/labs/civilian)
+/area/awaymission/labs/command)
 "oX" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -6463,14 +6361,9 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "pb" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Command Rotunda"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge";
+	req_access = list(19)
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6550,14 +6443,14 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "po" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
+/obj/machinery/power/apc{
 	dir = 4;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	name = "Bridge Blast Doors";
-	opacity = 0
+	name = "Worn-out APC";
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6946,11 +6839,19 @@
 	},
 /area/awaymission/labs/command)
 "qm" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Worn-out APC";
+	pixel_x = 24
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/cave)
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/labs/command)
 "qn" = (
 /obj/structure/closet/secure_closet/freezer/money,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -7050,17 +6951,11 @@
 	},
 /area/awaymission/labs/civilian)
 "qz" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
+/obj/machinery/door/airlock/glass{
+	name = "Mess Hall"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "bar"
 	},
 /area/awaymission/labs/civilian)
 "qA" = (
@@ -7137,16 +7032,21 @@
 	},
 /area/awaymission/labs/command)
 "qJ" = (
-/obj/machinery/door/poddoor{
-	density = 0;
+/obj/machinery/power/apc{
 	dir = 4;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	name = "Bridge Blast Doors";
-	opacity = 0
+	name = "Worn-out APC";
+	pixel_x = 24
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot_left"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/awaymission/labs/command)
 "qK" = (
 /obj/item/ammo_casing/c9mm{
@@ -7300,17 +7200,11 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "qY" = (
-/obj/machinery/door/airlock/mining/glass{
-	dir = 4;
-	name = "Excavation"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/glass{
+	name = "Command Rotunda"
 	},
 /turf/simulated/floor,
-/area/awaymission/labs/cargo)
+/area/awaymission/labs/command)
 "qZ" = (
 /obj/item/weapon/coin/silver{
 	pixel_x = 12;
@@ -7385,16 +7279,18 @@
 	},
 /area/awaymission/labs/command)
 "rk" = (
+/obj/machinery/power/apc{
+	dir = 0;
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+/turf/simulated/floor{
+	icon_state = "bar"
 	},
-/turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "rl" = (
 /obj/structure/cable{
@@ -7750,19 +7646,13 @@
 	},
 /area/awaymission/labs/civilian)
 "sj" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
+/obj/machinery/door/airlock{
+	name = "Communal Bathroom"
 	},
 /turf/simulated/floor{
-	icon_state = "wood"
+	icon_state = "showroomfloor"
 	},
-/area/awaymission/labs/command)
+/area/awaymission/labs/civilian)
 "sk" = (
 /mob/living/simple_animal/hostile/cellular/meat/changeling{
 	desc = "A blob of pulsating human-like flesh, bearing one angry eye and a huge mouth.";
@@ -7775,13 +7665,10 @@
 	},
 /area/awaymission/labs/medical)
 "sl" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Mess Hall"
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Underground Maintenance"
 	},
-/turf/simulated/floor{
-	icon_state = "bar"
-	},
+/turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sm" = (
 /obj/machinery/door/airlock/glass{
@@ -7815,22 +7702,17 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sq" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Worn-out APC";
+	pixel_x = 24
+	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot_left"
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/awaymission/labs/command)
+/turf/simulated/floor,
+/area/awaymission/labs/civilian)
 "sr" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -7859,9 +7741,16 @@
 /turf/simulated/wall,
 /area/awaymission/labs/medical)
 "sv" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Command Rotunda"
+/obj/structure/window/fulltile/reinforced/indestructible{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Prison Gate";
+	name = "Prison Blast Door";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7974,26 +7863,17 @@
 	},
 /area/awaymission/labs/medical)
 "sO" = (
-/obj/machinery/door/airlock/command/glass{
-	dir = 4;
-	name = "Bridge";
-	req_access = list(19)
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/security/glass{
+	name = "Security"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "sP" = (
-/obj/machinery/door/airlock/command/glass{
-	dir = 4;
-	name = "Bridge";
-	req_access = list(19)
+/obj/machinery/door/airlock/security/glass{
+	name = "Security"
 	},
 /turf/simulated/floor,
-/area/awaymission/labs/command)
+/area/awaymission/labs/security)
 "sQ" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -8014,30 +7894,21 @@
 	},
 /area/awaymission/labs/security)
 "sS" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/command)
+/area/awaymission/labs/medical)
 "sT" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical"
 	},
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "sandstorm shutters";
-	layer = 2.4;
-	name = "Sandstorm Shutters"
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/cargo)
+/area/awaymission/labs/command)
 "sU" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -8096,18 +7967,18 @@
 	},
 /area/awaymission/labs/medical)
 "tc" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical"
 	},
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "bar"
+	icon_state = "white"
 	},
-/area/awaymission/labs/civilian)
+/area/awaymission/labs/medical)
 "td" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/cable{
@@ -8120,14 +7991,18 @@
 	},
 /area/awaymission/labs/medical)
 "te" = (
-/obj/machinery/door/airlock{
-	dir = 4;
-	name = "Communal Bathroom"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "showroomfloor"
+	icon_state = "white"
 	},
-/area/awaymission/labs/civilian)
+/area/awaymission/labs/command)
 "tf" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -8289,12 +8164,13 @@
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "tx" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	dir = 4;
-	name = "Underground Maintenance"
+/obj/machinery/door/airlock/medical{
+	name = "Patient Room"
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/civilian)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/labs/medical)
 "ty" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -8526,17 +8402,9 @@
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/security)
 "ub" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
+/obj/machinery/door/airlock/security/glass,
 /turf/simulated/floor,
-/area/awaymission/labs/civilian)
+/area/awaymission/labs/security)
 "uc" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8547,20 +8415,11 @@
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "ue" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "Prison Gate";
-	name = "Prison Blast Door";
-	opacity = 0
+/obj/machinery/door/airlock/security/glass{
+	name = "Armory"
 	},
 /turf/simulated/floor,
-/area/awaymission/labs/command)
+/area/awaymission/labs/security)
 "uf" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
@@ -8568,19 +8427,15 @@
 	},
 /area/awaymission/labs/security)
 "ug" = (
-/obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Virology APC";
+	pixel_y = 24
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "Prison Gate";
-	name = "Prison Blast Door";
-	opacity = 0
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
 	},
-/turf/simulated/floor,
 /area/awaymission/labs/security)
 "uh" = (
 /turf/simulated/floor{
@@ -8636,12 +8491,18 @@
 	},
 /area/awaymission/labs/medical)
 "ur" = (
-/obj/machinery/door/airlock/security/glass{
-	dir = 4;
-	name = "Security"
+/obj/structure/table,
+/obj/machinery/light,
+/obj/machinery/power/apc{
+	dir = 0;
+	name = "Worn-out APC";
+	pixel_y = -24
 	},
-/turf/simulated/floor,
-/area/awaymission/labs/command)
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/labs/medical)
 "us" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
@@ -20579,13 +20440,13 @@ bR
 bR
 mx
 mx
-oT
-oT
-oT
+my
+my
+my
 mx
-oT
-oT
-oT
+my
+my
+my
 mx
 mx
 rw
@@ -21086,10 +20947,10 @@ bR
 bR
 mx
 mx
-oT
-oT
-oT
-oT
+my
+my
+my
+my
 mx
 mx
 pt
@@ -21364,7 +21225,7 @@ mx
 mx
 mx
 mx
-te
+sj
 mx
 mx
 bR
@@ -21871,7 +21732,7 @@ qv
 pu
 pu
 pu
-tc
+rk
 mx
 rx
 rK
@@ -22632,7 +22493,7 @@ nj
 np
 nj
 nj
-qz
+oS
 mx
 pu
 pI
@@ -23126,7 +22987,7 @@ bR
 bR
 bR
 gr
-lx
+ls
 gr
 bR
 bR
@@ -23640,7 +23501,7 @@ bR
 bR
 gr
 gr
-lx
+ls
 gr
 gr
 bR
@@ -23666,9 +23527,9 @@ mx
 pK
 mx
 mx
-sl
+qz
 mx
-sl
+qz
 mx
 mx
 mx
@@ -23917,7 +23778,7 @@ mi
 nH
 nI
 og
-rk
+oT
 nI
 pz
 pL
@@ -24412,7 +24273,7 @@ bR
 hy
 lj
 lw
-oN
+lL
 hy
 bR
 bR
@@ -24449,7 +24310,7 @@ rG
 rG
 rG
 nI
-ub
+sq
 mx
 bR
 bR
@@ -24668,31 +24529,31 @@ bR
 hy
 hy
 kX
+lx
+hy
+hy
+hy
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+mi
+mi
+mi
+mi
+mi
+mx
+mx
 oE
-hy
-hy
-hy
-bR
-bR
-bR
-bR
-bR
-bR
-bR
-bR
-mi
-mi
-mi
-mi
-mi
-mx
-mx
-oW
 mx
 mx
 mx
-oT
-oT
+my
+my
 mx
 mx
 mx
@@ -24705,7 +24566,7 @@ mx
 mx
 mx
 mx
-tx
+sl
 mx
 mx
 bR
@@ -24902,17 +24763,17 @@ bR
 bR
 ec
 ec
-fs
-fs
-fs
+eo
+eo
+eo
 ec
 ec
-fs
-fs
+eo
+eo
 ec
 ec
-fs
-fs
+eo
+eo
 ec
 ec
 bR
@@ -26197,20 +26058,20 @@ gO
 ec
 ec
 ec
+iO
+ec
+ec
+ec
+ec
+bR
+bR
+bR
+bR
+bR
+hy
+hy
+hy
 lB
-ec
-ec
-ec
-ec
-bR
-bR
-bR
-bR
-bR
-hy
-hy
-hy
-oF
 hy
 hy
 hy
@@ -26455,7 +26316,7 @@ ec
 ib
 id
 id
-lC
+jm
 id
 id
 ec
@@ -26486,16 +26347,16 @@ mc
 mc
 mc
 mc
-pb
+oF
 mc
 mc
 mc
-nh
-nh
+lF
+lF
 mc
 mc
 mc
-sv
+qY
 mc
 mc
 mc
@@ -26512,10 +26373,10 @@ su
 su
 su
 tr
-dy
+tx
 su
 tr
-dy
+tx
 su
 su
 su
@@ -26701,7 +26562,7 @@ bR
 bR
 ec
 ec
-ft
+fj
 ec
 fR
 ec
@@ -26724,7 +26585,7 @@ bR
 bR
 bR
 hy
-oH
+lC
 hy
 bR
 bR
@@ -26961,7 +26822,7 @@ eL
 eM
 fk
 eM
-jB
+gj
 gl
 gQ
 hl
@@ -27546,7 +27407,7 @@ tF
 tF
 tF
 tF
-hi
+ur
 su
 bR
 bR
@@ -28029,7 +27890,7 @@ iy
 iy
 ii
 ks
-sO
+oW
 ks
 ii
 ii
@@ -28244,7 +28105,7 @@ ec
 ep
 eP
 eP
-hb
+fs
 fz
 ec
 gt
@@ -28285,9 +28146,9 @@ iy
 iy
 iy
 ii
-qJ
-po
-po
+oH
+oH
+oH
 ii
 pN
 pY
@@ -28543,7 +28404,7 @@ iy
 ii
 ii
 ii
-sO
+oW
 ii
 ii
 pN
@@ -28565,8 +28426,8 @@ bR
 bR
 su
 su
-cT
-dp
+sS
+tc
 su
 su
 su
@@ -29547,7 +29408,7 @@ iy
 kA
 ks
 iy
-ls
+kK
 kQ
 ii
 bR
@@ -29785,7 +29646,7 @@ dU
 dU
 dU
 dU
-gb
+fm
 dU
 dU
 dU
@@ -30044,7 +29905,7 @@ dP
 ev
 eh
 eh
-iO
+fW
 eh
 dU
 gU
@@ -30065,14 +29926,14 @@ iy
 jz
 ii
 ii
-nh
-nh
-nh
-nh
-nh
-nh
-nh
-nh
+lF
+lF
+lF
+lF
+lF
+lF
+lF
+lF
 mc
 mc
 iy
@@ -30107,8 +29968,8 @@ mc
 mc
 mc
 mc
-do
-dq
+sT
+te
 mc
 mc
 su
@@ -30310,7 +30171,7 @@ gO
 ec
 ec
 ec
-lL
+ih
 ec
 ec
 ec
@@ -30347,7 +30208,7 @@ iy
 ii
 oL
 pN
-sj
+qm
 qE
 qR
 ii
@@ -31093,14 +30954,14 @@ kE
 kS
 ii
 ii
-nh
-nh
-nh
-nh
-nh
-nh
-nh
-nh
+lF
+lF
+lF
+lF
+lF
+lF
+lF
+lF
 mc
 mc
 iy
@@ -31133,19 +30994,19 @@ iy
 mc
 mc
 ii
-ue
-ur
-ue
+sv
+sO
+sv
 kP
 ii
 ii
 ss
-gM
-gM
-gM
-gM
-gM
-gM
+st
+st
+st
+st
+st
+st
 ss
 ss
 bR
@@ -31574,7 +31435,7 @@ bG
 bG
 bG
 bG
-fW
+dn
 bG
 bG
 bG
@@ -31852,7 +31713,7 @@ gZ
 bG
 bG
 bG
-mI
+jB
 bG
 bG
 bG
@@ -32161,17 +32022,17 @@ lF
 bR
 bR
 ss
-ug
-bO
-ug
+sy
+sP
+sy
 tg
 sx
 sw
 sw
 sw
 ss
-hg
-hg
+ub
+ub
 ss
 uF
 uL
@@ -32337,7 +32198,7 @@ ae
 bp
 bp
 bp
-dH
+bm
 aX
 ae
 ad
@@ -32399,12 +32260,12 @@ kP
 or
 oK
 iy
-sS
+po
 ii
 pR
 ii
 qr
-sq
+qJ
 qU
 qZ
 ii
@@ -32602,11 +32463,11 @@ bG
 bG
 bG
 bG
-fW
+dn
 bG
 bG
 bG
-fW
+dn
 bG
 bG
 dU
@@ -32655,7 +32516,7 @@ iy
 kP
 ii
 ii
-sP
+pb
 ii
 ii
 pR
@@ -32911,9 +32772,9 @@ iy
 iy
 jz
 ii
-po
-po
-po
+oH
+oH
+oH
 ii
 pR
 pR
@@ -32936,16 +32797,16 @@ sB
 sQ
 sw
 tg
-ug
-ug
-ug
-ug
+sy
+sy
+sy
+sy
 ss
-hg
-hg
+ub
+ub
 ss
-ug
-ug
+sy
+sy
 ss
 bR
 bR
@@ -33126,7 +32987,7 @@ dW
 bG
 eC
 eZ
-gj
+ft
 eZ
 ga
 dU
@@ -33169,7 +33030,7 @@ iy
 jz
 ii
 ks
-sP
+pb
 ks
 ii
 ks
@@ -33902,8 +33763,8 @@ cj
 cj
 bG
 bG
-im
-im
+hb
+hb
 hL
 bG
 iE
@@ -34147,7 +34008,7 @@ bN
 bG
 ds
 dB
-fm
+dH
 dI
 dI
 dI
@@ -34156,7 +34017,7 @@ ek
 ek
 ek
 ek
-hv
+gb
 ek
 gE
 dI
@@ -34226,11 +34087,11 @@ sw
 sw
 sw
 ss
-ug
-ug
+sy
+sy
 uz
-ug
-ug
+sy
+sy
 ss
 bR
 bR
@@ -34405,7 +34266,7 @@ bG
 bG
 bG
 bG
-fW
+dn
 bG
 bG
 bG
@@ -34740,7 +34601,7 @@ tw
 tw
 tw
 ua
-hh
+ug
 un
 uh
 uh
@@ -34890,7 +34751,7 @@ ae
 ae
 bh
 ae
-dH
+bm
 bp
 ae
 ae
@@ -35187,7 +35048,7 @@ fL
 bN
 bG
 gH
-fm
+dH
 dI
 hQ
 bG
@@ -35445,7 +35306,7 @@ bN
 bG
 bG
 bG
-kK
+hv
 bG
 bG
 iJ
@@ -35484,8 +35345,8 @@ na
 mm
 pc
 mh
-sT
-sT
+mv
+mv
 mh
 ki
 ki
@@ -35514,7 +35375,7 @@ ss
 ss
 ss
 ss
-hj
+ue
 ss
 ss
 bR
@@ -35998,8 +35859,8 @@ ou
 mm
 pc
 mh
-sT
-sT
+mv
+mv
 mh
 ki
 ki
@@ -37018,7 +36879,7 @@ bR
 bR
 bR
 mh
-oQ
+mI
 mm
 mm
 mJ
@@ -37283,8 +37144,8 @@ nw
 mm
 pc
 mh
-sT
-sT
+mv
+mv
 mh
 ki
 ki
@@ -37797,8 +37658,8 @@ mh
 mm
 pc
 mh
-sT
-sT
+mv
+mv
 mh
 ki
 ki
@@ -39045,7 +38906,7 @@ gr
 gr
 hz
 hU
-jm
+im
 hy
 jg
 jK
@@ -39332,11 +39193,11 @@ mh
 mh
 mh
 mh
-oS
+nh
 mh
 mh
 mh
-qY
+oN
 mh
 mh
 bR
@@ -41135,7 +40996,7 @@ mh
 mh
 mh
 mh
-qY
+oN
 mh
 mh
 bR
@@ -42677,7 +42538,7 @@ ae
 ae
 ae
 ni
-qm
+oQ
 ni
 ae
 bz
@@ -43705,7 +43566,7 @@ aI
 aI
 ae
 ni
-qm
+oQ
 ni
 ae
 aI

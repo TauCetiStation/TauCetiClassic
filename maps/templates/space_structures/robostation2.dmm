@@ -7,32 +7,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
-"ac" = (
-/obj/machinery/door/airlock/clown{
-	dir = 4
-	},
-/turf/simulated/floor/greengrid,
-/area/space_structures/robostation2)
-"ad" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/robostation2)
-"ae" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/robostation2)
 "aM" = (
 /obj/item/clothing/head/collectable/petehat,
 /turf/simulated/floor/plating,
@@ -453,9 +427,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "tB" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/structure/sign/warning/lethal_turrets{
 	pixel_y = 32
 	},
@@ -839,10 +811,11 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "Lc" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
 	},
-/obj/item/weapon/bananapeel,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Ld" = (
@@ -870,18 +843,18 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "Mn" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/item/weapon/bananapeel,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Nf" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
 	},
-/turf/simulated/floor/greengrid,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Nj" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1048,10 +1021,8 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "VW" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/clown,
+/turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "Wy" = (
 /turf/simulated/floor{
@@ -1605,7 +1576,7 @@ mi
 iO
 gj
 gj
-ad
+Lc
 gj
 gj
 iO
@@ -1632,7 +1603,7 @@ tC
 tC
 gj
 gj
-Lc
+uA
 gj
 gj
 mi
@@ -1765,7 +1736,7 @@ iO
 iO
 gj
 gj
-Nf
+bD
 gj
 gj
 mi
@@ -1800,7 +1771,7 @@ gj
 tC
 tC
 gj
-VW
+XE
 gj
 gj
 iO
@@ -1815,7 +1786,7 @@ tC
 tC
 tC
 gj
-ae
+Nf
 gj
 gj
 iO
@@ -1981,7 +1952,7 @@ gj
 gj
 gj
 gj
-Nf
+bD
 gj
 gj
 gj
@@ -2017,7 +1988,7 @@ iO
 iO
 gj
 gj
-Nf
+bD
 gj
 gj
 iO
@@ -2065,7 +2036,7 @@ iO
 iO
 gj
 gj
-Nf
+bD
 gj
 gj
 gj
@@ -2318,7 +2289,7 @@ iO
 gj
 gj
 gj
-ac
+VW
 gj
 gj
 mi

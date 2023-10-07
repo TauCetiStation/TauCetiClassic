@@ -1452,19 +1452,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
-"db" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "agro blast";
-	name = "Blast Doors"
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
 "fK" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/decal/cleanable/dirt,
@@ -1518,9 +1505,9 @@ aa
 aa
 aa
 aE
-db
-db
-db
+aA
+aA
+aA
 aD
 cn
 aa
@@ -1537,7 +1524,7 @@ aa
 aa
 aa
 aE
-db
+aA
 aD
 bj
 da
@@ -1854,9 +1841,9 @@ aa
 aa
 aa
 aC
-db
-db
-db
+aA
+aA
+aA
 aD
 cB
 aa
