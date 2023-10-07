@@ -17,7 +17,7 @@
 	game_announcement = "<span class='warning'>Руководство Нанотрасен решило, что баллистическое оружие является слишком негуманным. Поэтому всё баллистическое оружие на всех станциях заменили на энергетическое.</span>"
 	min_players = 0
 
-/datum/round_aspect/rearm_laser/on_start()
+/datum/round_aspect/rearm_energy/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 
 /datum/round_aspect/rearm_ballistic
