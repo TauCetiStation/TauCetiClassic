@@ -12,13 +12,6 @@
 /obj/structure/cult/pylon,
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wildwest/vault)
-"ae" = (
-/obj/machinery/door/airlock/vault{
-	dir = 4;
-	locked = 1
-	},
-/turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vaultdoors)
 "af" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/simulated/floor/engine/cult,
@@ -39,18 +32,6 @@
 	},
 /turf/simulated/wall/cult,
 /area/awaymission/wildwest/vault)
-"aj" = (
-/obj/machinery/door/airlock/sandstone{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
-"ak" = (
-/obj/machinery/door/airlock/sandstone{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
 "al" = (
 /obj/structure/cult/anomaly/timewhole,
 /turf/simulated/floor/engine/cult,
@@ -166,12 +147,6 @@
 	icon_state = "bcircuitoff"
 	},
 /area/awaymission/wildwest/vault)
-"aC" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
 "aD" = (
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/vault)
@@ -15385,7 +15360,7 @@ br
 aa
 aa
 eO
-aC
+fd
 eO
 aa
 aa
@@ -16156,7 +16131,7 @@ et
 et
 eJ
 eR
-aC
+fd
 eR
 eR
 eR
@@ -22287,8 +22262,8 @@ aL
 aL
 aX
 aW
-aj
-aj
+bd
+bd
 aW
 aL
 aL
@@ -23804,8 +23779,8 @@ ac
 ac
 ac
 ah
-ae
-ae
+aF
+aF
 ah
 ah
 ah
@@ -37736,14 +37711,14 @@ bj
 bj
 bu
 bu
-ak
+dL
 bu
 bu
 bu
 bu
 bu
 bu
-ak
+dL
 bu
 bu
 bj
@@ -39795,11 +39770,11 @@ bu
 bu
 bu
 bu
-ak
+dL
 bu
 bu
 bu
-ak
+dL
 bu
 bu
 bu

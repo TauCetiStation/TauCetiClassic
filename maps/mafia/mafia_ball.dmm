@@ -13,15 +13,6 @@
 "d" = (
 /turf/simulated/floor/plating,
 /area/mafia)
-"e" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	dir = 4;
-	locked = 1;
-	req_access = list(101)
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/mafia)
 "f" = (
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
@@ -210,9 +201,9 @@ d
 i
 j
 j
-e
+l
 j
-e
+l
 j
 j
 d
@@ -232,7 +223,7 @@ b
 i
 j
 j
-e
+l
 j
 m
 q
@@ -240,7 +231,7 @@ j
 q
 m
 j
-e
+l
 j
 j
 d
@@ -532,7 +523,7 @@ b
 d
 j
 j
-e
+l
 j
 m
 q
@@ -540,7 +531,7 @@ j
 q
 m
 j
-e
+l
 j
 j
 d
@@ -560,9 +551,9 @@ d
 d
 j
 j
-e
+l
 j
-e
+l
 j
 j
 d

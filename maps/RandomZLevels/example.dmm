@@ -339,12 +339,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/example)
-"aY" = (
-/obj/machinery/door/airlock{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/awaymission/example)
 "aZ" = (
 /obj/machinery/door_control{
 	id = "example";
@@ -546,7 +540,6 @@
 /area/awaymission/example)
 "bE" = (
 /obj/machinery/door/airlock{
-	dir = 4;
 	name = "Unisex Restrooms";
 	req_access = list(0)
 	},
@@ -2772,7 +2765,7 @@ ab
 ab
 ab
 ab
-aY
+cg
 ab
 ab
 ac

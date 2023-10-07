@@ -134,20 +134,6 @@
 	},
 /turf/environment/space,
 /area/space_structures/abandoned_ship)
-"av" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Pod Bay"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/space_structures/abandoned_ship)
 "aw" = (
 /obj/machinery/bodyscanner,
 /turf/simulated/floor{
@@ -454,7 +440,7 @@
 /area/space_structures/abandoned_ship)
 "bp" = (
 /obj/machinery/door/airlock/glass{
-	dir = 4
+	name = "Living Module"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -735,9 +721,9 @@
 /turf/environment/space,
 /area/space_structures/abandoned_ship)
 "ca" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Living Module"
+/obj/machinery/door/poddoor{
+	id = "oldship_gun";
+	name = "Pod Bay Door"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -774,10 +760,13 @@
 	},
 /area/space_structures/abandoned_ship)
 "ce" = (
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "oldship_gun";
-	name = "Pod Bay Door"
+/obj/machinery/door/airlock/glass{
+	name = "Pod Bay"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -926,7 +915,7 @@ ah
 bP
 bR
 ad
-ce
+ca
 bF
 aa
 aa
@@ -974,7 +963,7 @@ ah
 ah
 aT
 ar
-bp
+aU
 ao
 bF
 aa
@@ -1015,7 +1004,7 @@ aI
 aI
 aI
 aD
-bp
+aU
 aD
 aI
 aI
@@ -1142,7 +1131,7 @@ bh
 bB
 ao
 aI
-av
+ce
 az
 ar
 bE
@@ -1255,7 +1244,7 @@ az
 aI
 aI
 aD
-ca
+bp
 aD
 aI
 aI
