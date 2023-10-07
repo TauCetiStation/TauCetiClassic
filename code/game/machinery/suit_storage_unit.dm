@@ -85,15 +85,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		add_overlay("classic_open")
 		add_overlay("classic_lights_open")
 		add_overlay("classic_unlocked")
-		if(ishardsuit(SUIT))
-			add_overlay("classic_loaded")
-		else
-			if(HELMET)
-				add_overlay("classic_helm")
-			if(SUIT)
-				add_overlay("classic_suit")
-			if(BOOTS || TANK || MASK)
-				add_overlay("classic_storage")
+		if(HELMET)
+			add_overlay("classic_helm")
+		if(SUIT)
+			add_overlay("classic_suit")
+		if(BOOTS || TANK || MASK)
+			add_overlay("classic_storage")
 
 /obj/machinery/suit_storage_unit/proc/make_powered()
 	stat &= ~NOPOWER
@@ -234,7 +231,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(!superUV)
 		cycletime_left = 5
 	else
-		cycletime_left = 40
+		cycletime_left = 25
 	while(cycletime_left)
 		cycletime_left--
 		sleep(10)
@@ -244,11 +241,16 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				occupant.adjustFireLoss(rand(5, 15))
 		if(!cycletime_left)
 			if(!superUV)
-				HELMET?.clean_blood()
-				SUIT?.clean_blood()
-				MASK?.clean_blood()
-				TANK?.clean_blood()
-				BOOTS?.clean_blood()
+				if(HELMET)
+					HELMET.clean_blood()
+				if(SUIT)
+					SUIT.clean_blood()
+				if(MASK)
+					MASK.clean_blood()
+				if(TANK)
+					TANK.clean_blood()
+				if(BOOTS)
+					BOOTS.clean_blood()
 			else
 				if(occupant)
 					occupant.dust()
@@ -265,7 +267,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 					if(BOOTS)
 						BOOTS  = null
 				broken = TRUE
-				visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
+			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 	opened = TRUE
 	locked = FALSE
@@ -430,15 +432,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(occupant)
 		to_chat(usr, "<span class ='danger'>It's too cluttered inside for add something else!</span>")
 		return
-	if(ishardsuit(something))
-		var/obj/item/clothing/suit/space/S = something
-		if(SUIT || HELMET)
-			to_chat(user, "<span class ='succsess'>The unit out of space.</span>")
-			return
-		to_chat(user, "You load the [S.name] into the storage compartment.")
-		user.drop_from_inventory(S, src)
-		SUIT = S
-	else if(isspacesuit(something))
+	if(isspacesuit(something))
 		var/obj/item/clothing/suit/space/S = something
 		if(SUIT)
 			to_chat(user, "<span class ='succsess'>The unit already contains a suit.</span>")
@@ -446,7 +440,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [S.name] into the storage compartment.")
 		user.drop_from_inventory(S, src)
 		SUIT = S
-	else if(isspacehelmet(something) && !ishardsuit(SUIT))
+	if(isspacehelmet(something))
 		var/obj/item/clothing/head/helmet/H = something
 		if(HELMET)
 			to_chat(user, "<span class ='succsess'>The unit already contains a helmet.</span>")
@@ -454,7 +448,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [H.name] into the storage compartment.")
 		user.drop_from_inventory(H, src)
 		HELMET = H
-	else if(isbreathmask(something))
+	if(isbreathmask(something))
 		var/obj/item/clothing/mask/M = something
 		if(MASK)
 			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
@@ -462,7 +456,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [M.name] into the storage compartment.")
 		user.drop_from_inventory(M, src)
 		MASK = M
-	else if(ismagboots(something) && !ishardsuit(SUIT))
+	if(ismagboots(something))
 		var/obj/item/clothing/shoes/magboots/B = something
 		if(BOOTS)
 			to_chat(user, "<span class ='succsess'>The unit already contains a magboots.</span>")
@@ -470,7 +464,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [B.name] into the storage compartment.")
 		user.drop_from_inventory(B, src)
 		BOOTS = B
-	else if(istank(something) && !ishardsuit(SUIT))
+	if(istank(something))
 		var/obj/item/weapon/tank/T = something
 		if(TANK)
 			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
@@ -478,7 +472,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [T.name] into the storage compartment.")
 		user.drop_from_inventory(T, src)
 		TANK = T
-
 	update_icon()
 	return
 

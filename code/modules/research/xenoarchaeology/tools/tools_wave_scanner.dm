@@ -48,7 +48,7 @@
 					nearest_artifact_id = T.artifact_find.artifact_id
 		else
 			SSxenoarch.turfs_with_artifacts.Remove(T)
-	cur_turf?.visible_message("<span class='info'>[src] clicks.</span>")
+	cur_turf.visible_message("<span class='info'>[src] clicks.</span>")
 
 /////////////////////////////////////////////////
 //Brand new version of Alden-Saraspova counter///

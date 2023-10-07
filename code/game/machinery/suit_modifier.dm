@@ -109,6 +109,7 @@
 		toInstallModule.installed(RIG)
 	else
 		return
+
 	syndicateModulesCount--
 	if(prob(15))
 		speak("Whiskey. Echo. Whiskey.")
