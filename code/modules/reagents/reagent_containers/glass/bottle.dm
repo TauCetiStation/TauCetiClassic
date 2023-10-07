@@ -196,6 +196,27 @@
 	icon_state = "bottle1"
 	list_reagents = list("zombiepowder" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/ambrosium
+	name = "ambrosium bottle"
+	desc = "A small bottle of ambrosium. It smells sweet."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("ambrosium" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/jenkem
+	name = "space jenkem bottle"
+	desc = "A small bottle of space jenkem. Say goodbye to your liver if you wanna try this."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("jenkem" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/mindbreaker
+	name = "mindbreaker toxin bottle"
+	desc = "A small bottle of mindbreaker toxin. The smell makes you dizzy."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("mindbreaker" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon
 	name = "peridaxon bottle"
 	desc = "A small bottle of peridaxon."
