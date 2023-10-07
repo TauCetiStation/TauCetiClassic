@@ -11,14 +11,14 @@
 
 /datum/round_aspect/rearm_energy
 	name = ROUND_ASPECT_REARM_ENERGY
-	game_announcement = "<span class='warning'>Руководство Нанотрасен решило, что баллистическое оружие является слишком негуманным. Поэтому всё баллистическое оружие на всех станциях заменили на энергетическое.</span>"
+	game_announcement = "<span class='warning'>Руководство НаноТрейзен решило, что баллистическое оружие является слишком негуманным. Поэтому всё баллистическое оружие на всех станциях заменили на энергетическое.</span>"
 
 /datum/round_aspect/rearm_energy/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
-	game_announcement = "<span class='warning'>Руководство Нанотрасен решило, что энергетическое оружие является слишком дорогим и неэффективным. Поэтому всё энергооружие на всех станциях заменили на баллистическое.</span>"
+	game_announcement = "<span class='warning'>Руководство НаноТрейзен решило, что энергетическое оружие является слишком дорогим и неэффективным. Поэтому всё энергооружие на всех станциях заменили на баллистическое.</span>"
 
 /datum/round_aspect/rearm_ballistic/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_bullets
