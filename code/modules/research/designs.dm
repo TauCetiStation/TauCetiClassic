@@ -1930,6 +1930,11 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
 	category = list("Weapons")
 
+/datum/design/nuclear_gun/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_URANIUM = 10000)
+
 /datum/design/stunrevolver
 	name = "Stun Revolver"
 	desc = "The prize of the Head of Security."
@@ -1938,6 +1943,11 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/weapon/gun/energy/taser/stunrevolver
 	category = list("Weapons")
+
+/datum/design/stunrevolver/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		materials = list(MAT_METAL = 20000)
 
 /datum/design/laserrifle
 	name = "Laser Rifle"
@@ -1948,6 +1958,11 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/laser
 	category = list("Weapons")
 
+/datum/design/laserrifle/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		materials = list (MAT_METAL = 16000, MAT_GLASS = 5000, MAT_URANIUM = 1000)
+
 /datum/design/lasercannon
 	name = "Laser Cannon"
 	desc = "A heavy duty laser cannon."
@@ -1956,6 +1971,11 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000, MAT_DIAMOND = 2000, MAT_URANIUM = 100)
 	build_path = /obj/item/weapon/gun/energy/lasercannon
 	category = list("Weapons")
+
+/datum/design/lasercannon/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_DIAMOND = 4000, MAT_URANIUM = 1000)
 
 /datum/design/decloner
 	name = "Decloner"
@@ -2047,6 +2067,11 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/plasma
 	category = list("Weapons")
 
+/datum/design/plasma_10_gun/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		materials = list(MAT_METAL = 25000, MAT_GOLD = 12000, MAT_SILVER = 9000, MAT_DIAMOND = 1000, MAT_URANIUM = 2000)
+
 /datum/design/plasma_104_gun
 	name = "plasma 104-sass"
 	desc = "A plasma-based semi-automatic short shotgun."
@@ -2055,6 +2080,11 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
 	build_path = /obj/item/weapon/gun/plasma/p104sass
 	category = list("Weapons")
+
+/datum/design/plasma_104_gun/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		materials = list(MAT_METAL = 25000, MAT_GOLD = 12000, MAT_SILVER = 15000, MAT_DIAMOND = 15000, MAT_URANIUM = 10000)
 
 /datum/design/plasma_mag
 	name = "plasma weapon battery pack"
@@ -2073,6 +2103,11 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	category = list("Weapons")
+
+/datum/design/smg/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+		materials = list(MAT_METAL = 16000, MAT_SILVER = 4000, MAT_DIAMOND = 2000)
 
 /datum/design/msmg9mm
 	name = "SMG magazine (9mm)"

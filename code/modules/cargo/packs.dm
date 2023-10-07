@@ -173,6 +173,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_brig
 	group = "Security"
 
+/datum/supply_pack/weapons/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		additional_costs *= 5
+
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
 	contains = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock,
@@ -183,6 +188,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "9mm pistol crate"
 	access = access_brig
 	group = "Security"
+
+/datum/supply_pack/pistol/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+		additional_costs *= 5
 
 /datum/supply_pack/pistol_magazine
 	name = "9mm magazine"
@@ -294,6 +304,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/ballistic/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+		additional_costs *= 3
+
 /datum/supply_pack/erifle
 	name = "Energy marksman crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
@@ -307,6 +322,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Energy marksman crate"
 	access = access_armory
 	group = "Security"
+
+/datum/supply_pack/erifle/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		additional_costs *= 3
 
 /datum/supply_pack/shotgunammo_nonlethal
 	name = "Shotgun shells (non-lethal)"
@@ -381,6 +401,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/m79/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+		additional_costs *= 3
+
 /datum/supply_pack/ion_rifle
 	name = "ion rifles"
 	contains = list(/obj/item/weapon/gun/energy/ionrifle,
@@ -390,6 +415,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "ion rifles crate"
 	access = access_armory
 	group = "Security"
+
+/datum/supply_pack/ion_rifle/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		additional_costs *= 3
 
 /datum/supply_pack/expenergy
 	name = "Experimental energy gear crate"
@@ -404,6 +434,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Experimental energy gear crate"
 	access = access_armory
 	group = "Security"
+
+/datum/supply_pack/expenergy/New()
+	..()
+	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+		additional_costs *= 5
+
 
 /datum/supply_pack/exparmor
 	name = "Experimental armor crate"
