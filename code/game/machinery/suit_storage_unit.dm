@@ -25,23 +25,19 @@
 Erro's idea on standarising SSUs whle keeping creation of other SSU types easy:
 Make a child SSU, name it something then set the TYPE vars to your desired suit output. New() should take it from there by itself.
 */
-	var/HELMET_TYPE  	 = null
-	var/MASK_TYPE    	 = null
-	var/SUIT_TYPE    	 = null
-	var/BOOTS_TYPE   	 = null
-	var/TANK_TYPE    	 = null
-	var/MEDICAL_TYPE 	 = null
-	var/SUITCOOLING_TYPE = null
+	var/HELMET_TYPE = null
+	var/MASK_TYPE   = null
+	var/SUIT_TYPE   = null
+	var/BOOTS_TYPE  = null
+	var/TANK_TYPE   = null
 /*
 All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 */
-	var/obj/item/clothing/suit/space/SUIT 			  = null
-	var/obj/item/clothing/head/helmet/space/HELMET 	  = null
-	var/obj/item/clothing/mask/MASK 				  = null
-	var/obj/item/clothing/shoes/magboots/BOOTS 		  = null
-	var/obj/item/weapon/tank/oxygen/TANK 			  = null
-	var/obj/item/device/suit_cooling_unit/SUITCOOLING = null
-	var/obj/item/weapon/storage/firstaid/MEDICAL 	  = null
+	var/obj/item/clothing/suit/space/SUIT 			= null
+	var/obj/item/clothing/head/helmet/space/HELMET 	= null
+	var/obj/item/clothing/mask/MASK 				= null
+	var/obj/item/clothing/shoes/magboots/BOOTS 		= null
+	var/obj/item/weapon/tank/oxygen/TANK 			= null
 
 /obj/machinery/suit_storage_unit/atom_init()
 	. = ..()
@@ -55,10 +51,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		BOOTS  = new BOOTS_TYPE(src)
 	if(TANK_TYPE)
 		TANK   = new TANK_TYPE(src)
-	if(MEDICAL_TYPE)
-		MEDICAL = new MEDICAL_TYPE(src)
-	if(SUITCOOLING_TYPE)
-		SUITCOOLING = new SUITCOOLING_TYPE(src)
 	set_power_use(IDLE_POWER_USE)
 	update_icon()
 
@@ -100,7 +92,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				add_overlay("classic_helm")
 			if(SUIT)
 				add_overlay("classic_suit")
-			if(BOOTS || TANK || MASK || MEDICAL || SUITCOOLING)
+			if(BOOTS || TANK || MASK)
 				add_overlay("classic_storage")
 
 /obj/machinery/suit_storage_unit/proc/make_powered()
@@ -109,6 +101,9 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/proc/make_unpowered()
 	stat |= NOPOWER
+	locked = FALSE
+	opened = TRUE
+	dump_everything()
 	update_power_use()
 	update_icon()
 
@@ -123,7 +118,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(prob(50))
-				dump_everything()
+				dump_everything() //So suits dont survive all the time
 			qdel(src)
 		if(EXPLODE_HEAVY)
 			if(prob(50))
@@ -170,30 +165,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		TANK = null
 		return
 
-/obj/machinery/suit_storage_unit/proc/dispense_medical()
-	if(!MEDICAL)
-		return
-	else
-		MEDICAL.forceMove(get_turf(src))
-		MEDICAL = null
-		return
-
-/obj/machinery/suit_storage_unit/proc/dispense_suitcooling()
-	if(!SUITCOOLING)
-		return
-	else
-		SUITCOOLING.forceMove(get_turf(src))
-		SUITCOOLING = null
-		return
-
 /obj/machinery/suit_storage_unit/proc/dump_everything()
-	dispense_suitcooling()
 	dispense_suit()
 	dispense_boots()
 	dispense_helmet()
 	dispense_tank()
 	dispense_mask()
-	dispense_medical()
 	eject_occupant(occupant)
 	return
 
@@ -272,27 +249,21 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				MASK?.clean_blood()
 				TANK?.clean_blood()
 				BOOTS?.clean_blood()
-				SUITCOOLING?.clean_blood()
-				MEDICAL?.clean_blood()
 			else
 				if(occupant)
 					occupant.dust()
 					occupant = null
 				else
 					if(HELMET)
-						HELMET  	= null
+						HELMET = null
 					if(SUIT)
-						SUIT    	= null
+						SUIT   = null
 					if(MASK)
-						MASK    	= null
+						MASK   = null
 					if(TANK)
-						TANK    	= null
+						TANK   = null
 					if(BOOTS)
-						BOOTS   	= null
-					if(MEDICAL)
-						MEDICAL 	= null
-					if(SUITCOOLING)
-						SUITCOOLING = null
+						BOOTS  = null
 				broken = TRUE
 				visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
@@ -337,7 +308,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(!opened)
 		to_chat(user, "<span class ='danger'>The unit's doors are shut.</span>")
 		return
-	if(occupant || HELMET || SUIT || TANK || BOOTS || MEDICAL || SUITCOOLING)
+	if(occupant || HELMET || SUIT || TANK || BOOTS)
 		to_chat(user, "<span class ='danger'>It's too cluttered inside for you to fit in!</span>")
 		return
 	if(user.is_busy())
@@ -417,10 +388,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 					dispense_tank()
 				if("Mask")
 					dispense_mask()
-				if("Medical")
-					dispense_medical()
-				if("Suit Cooling")
-					dispense_suitcooling()
 				if("Somebody")
 					eject_occupant()
 			update_icon()
@@ -454,9 +421,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 			var/mob/M = G.affecting
 			move_into_unit(M, user, G)
 			return
-		if(isspacesuit(I) || isspacehelmet(I) || isbreathmask(I)\
-		 || ismagboots(I) || istank(I) 		  || ismedical(I)\
-		 || issuitcooling(I))
+		if(isspacesuit(I) || isspacehelmet(I) || isbreathmask(I) || ismagboots(I) || istank(I))
 			load_something(I, user)
 	update_icon()
 	return
@@ -473,39 +438,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [S.name] into the storage compartment.")
 		user.drop_from_inventory(S, src)
 		SUIT = S
-	else if(isbreathmask(something))
-		var/obj/item/clothing/mask/M = something
-		if(MASK)
-			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
-			return
-		to_chat(user, "You load the [M.name] into the storage compartment.")
-		user.drop_from_inventory(M, src)
-		MASK = M
-	else if(istank(something))
-		var/obj/item/weapon/tank/T = something
-		if(TANK)
-			to_chat(user, "<span class ='succsess'>The unit already contains a tank.</span>")
-			return
-		to_chat(user, "You load the [T.name] into the storage compartment.")
-		user.drop_from_inventory(T, src)
-		TANK = T
-	else if(issuitcooling(something))
-		var/obj/item/device/suit_cooling_unit/SCU = something
-		if(SUITCOOLING)
-			to_chat(user, "<span class ='succsess'>The unit already contains a suit cooling unit.</span>")
-			return
-		to_chat(user, "You load the [SCU.name] into the storage compartment.")
-		user.drop_from_inventory(SCU, src)
-		SUITCOOLING = SCU
-	else if(ismedical(something))
-		var/obj/item/weapon/storage/firstaid/F = something
-		if(MEDICAL)
-			to_chat(user, "<span class ='succsess'>The unit already contains a firstaid.</span>")
-			return
-		to_chat(user, "You load the [F.name] into the storage compartment.")
-		user.drop_from_inventory(F, src)
-		MEDICAL = F
-	else if(isspacesuit(something) && !ishardsuit(SUIT))
+	else if(isspacesuit(something))
 		var/obj/item/clothing/suit/space/S = something
 		if(SUIT)
 			to_chat(user, "<span class ='succsess'>The unit already contains a suit.</span>")
@@ -513,14 +446,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [S.name] into the storage compartment.")
 		user.drop_from_inventory(S, src)
 		SUIT = S
-	else if(ismagboots(something) && !ishardsuit(SUIT))
-		var/obj/item/clothing/shoes/magboots/B = something
-		if(BOOTS)
-			to_chat(user, "<span class ='succsess'>The unit already contains a magboots.</span>")
-			return
-		to_chat(user, "You load the [B.name] into the storage compartment.")
-		user.drop_from_inventory(B, src)
-		BOOTS = B
 	else if(isspacehelmet(something) && !ishardsuit(SUIT))
 		var/obj/item/clothing/head/helmet/H = something
 		if(HELMET)
@@ -529,6 +454,31 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "You load the [H.name] into the storage compartment.")
 		user.drop_from_inventory(H, src)
 		HELMET = H
+	else if(isbreathmask(something))
+		var/obj/item/clothing/mask/M = something
+		if(MASK)
+			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
+			return
+		to_chat(user, "You load the [M.name] into the storage compartment.")
+		user.drop_from_inventory(M, src)
+		MASK = M
+	else if(ismagboots(something) && !ishardsuit(SUIT))
+		var/obj/item/clothing/shoes/magboots/B = something
+		if(BOOTS)
+			to_chat(user, "<span class ='succsess'>The unit already contains a magboots.</span>")
+			return
+		to_chat(user, "You load the [B.name] into the storage compartment.")
+		user.drop_from_inventory(B, src)
+		BOOTS = B
+	else if(istank(something) && !ishardsuit(SUIT))
+		var/obj/item/weapon/tank/T = something
+		if(TANK)
+			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
+			return
+		to_chat(user, "You load the [T.name] into the storage compartment.")
+		user.drop_from_inventory(T, src)
+		TANK = T
+
 	update_icon()
 	return
 
@@ -536,31 +486,22 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(flags & NODECONSTRUCT)
 		return ..()
 
-	if(HELMET && prob(15))
+	if(HELMET)
 		HELMET.forceMove(loc)
 		HELMET = null
-	if(SUIT && prob(15))
+	if(SUIT)
 		SUIT.forceMove(loc)
 		SUIT = null
-	if(MASK && prob(15))
+	if(MASK)
 		MASK.forceMove(loc)
 		MASK = null
-	if(BOOTS && prob(15))
+	if(BOOTS)
 		BOOTS.forceMove(loc)
 		BOOTS = null
-	if(TANK && prob(15))
+	if(TANK)
 		TANK.forceMove(loc)
 		TANK = null
-	if(SUITCOOLING && prob(15))
-		SUITCOOLING.forceMove(loc)
-		SUITCOOLING = null
-	if(MEDICAL && prob(15))
-		MEDICAL.forceMove(loc)
-		MEDICAL = null
-
-	if(occupant)
-		occupant.adjustBruteLoss(rand(15, 30))
-		eject_occupant(occupant)
+	eject_occupant(occupant)
 
 	new /obj/item/stack/sheet/metal(loc, 2)
 	..()

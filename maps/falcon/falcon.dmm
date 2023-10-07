@@ -3241,13 +3241,16 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+/obj/item/weapon/book/manual/wiki/possible_threats{
+	pixel_y = 5
+	},
 /obj/item/device/radio/intercom{
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = -22
 	},
-/obj/machinery/computer/skills,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -4015,7 +4018,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkpurple"
@@ -8638,6 +8641,11 @@
 	},
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/device/gps/engineering,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -8671,6 +8679,11 @@
 	dir = 4
 	},
 /obj/item/device/gps/engineering,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -9042,6 +9055,14 @@
 	name = "Station Intercom (General)";
 	pixel_x = -22;
 	pixel_y = 0
+	},
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12825,7 +12846,7 @@
 /obj/machinery/alarm{
 	pixel_y = 21
 	},
-/obj/machinery/suit_storage_unit/security/falcon/officer,
+/obj/machinery/suit_storage_unit/security,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -12926,7 +12947,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/atmos,
+/obj/machinery/suit_storage_unit/engine/atmos,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "caution"
@@ -13869,15 +13890,16 @@
 	pixel_x = -25;
 	pixel_y = 4
 	},
+/obj/structure/table/glass,
 /obj/machinery/alarm{
 	pixel_y = 21
 	},
+/obj/machinery/computer/skills,
 /obj/machinery/camera{
 	c_tag = "Medbay Chief Medical Office";
 	dir = 6;
 	network = list("SS13","Medical")
 	},
-/obj/machinery/suit_storage_unit/medical/falcon/cmo,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -16060,7 +16082,7 @@
 	},
 /area/station/hallway/primary/central)
 "gLI" = (
-/obj/machinery/suit_storage_unit/security/falcon/hos,
+/obj/machinery/suit_storage_unit/security/hos,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -20074,7 +20096,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/chief,
+/obj/machinery/suit_storage_unit/engine/chief,
 /turf/simulated/floor{
 	icon_state = "darkyellow"
 	},
@@ -22273,6 +22295,8 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/flashbangs,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -22814,6 +22838,7 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/glock,
 /obj/item/ammo_box/magazine/glock,
 /obj/item/ammo_box/magazine/glock,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -23427,7 +23452,7 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
@@ -24298,6 +24323,10 @@
 /obj/item/device/camera,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -26001,11 +26030,7 @@
 /obj/machinery/requests_console/cmo{
 	pixel_y = -32
 	},
-/obj/structure/table/glass,
-/obj/item/weapon/book/manual/wiki/possible_threats{
-	pixel_y = 5
-	},
-/obj/item/clothing/accessory/stethoscope,
+/obj/machinery/suit_storage_unit/medical/cmo,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -26346,40 +26371,25 @@
 "qvu" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/science{
-	pixel_x = 5;
-	pixel_y = -3
+	pixel_x = -4;
+	pixel_y = -6
 	},
 /obj/item/clothing/glasses/science{
 	pixel_x = 5;
 	pixel_y = -6
 	},
-/obj/item/device/gps/science{
-	pixel_x = -9;
-	pixel_y = 3
-	},
-/obj/item/device/gps/science{
-	pixel_x = -9;
-	pixel_y = 1
-	},
-/obj/item/device/gps/science{
-	pixel_x = -9;
-	pixel_y = -1
-	},
-/obj/item/device/gps/science{
-	pixel_x = -9;
-	pixel_y = -3
+/obj/item/bluespace_crystal/artificial{
+	pixel_y = 10
 	},
 /obj/item/bluespace_crystal/artificial{
+	pixel_x = -5;
 	pixel_y = 10
 	},
 /obj/item/bluespace_crystal/artificial{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/bluespace_crystal/artificial{
-	pixel_x = 3;
-	pixel_y = 4
-	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkpurple"
@@ -31955,7 +31965,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "waf" = (
-/obj/machinery/suit_storage_unit/medical/falcon/medic,
+/obj/machinery/suit_storage_unit/medical,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},

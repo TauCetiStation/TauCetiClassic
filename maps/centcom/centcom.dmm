@@ -7911,7 +7911,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/vox/carapace,
+/obj/machinery/suit_storage_unit/vox,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -11647,6 +11647,7 @@
 	icon_state = "bot"
 	},
 /obj/item/weapon/plastique,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/clothing/glasses/night{
 	pixel_y = 8
 	},
@@ -13543,6 +13544,7 @@
 /area/centcom/specops)
 "aDD" = (
 /obj/structure/rack,
+/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec,
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Commander";
 	dir = 4;
@@ -13551,17 +13553,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/ammo_box/magazine/glock/extended{
-	pixel_x = -3
-	},
-/obj/item/ammo_box/magazine/glock/extended,
-/obj/item/ammo_box/magazine/glock/extended/rubber{
-	pixel_x = 3
-	},
-/obj/item/ammo_box/magazine/glock/extended/rubber{
-	pixel_x = 6
-	},
-/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -14778,29 +14769,14 @@
 "aGt" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6;
 	pixel_y = 3
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6;
 	pixel_y = -3
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6;
-	pixel_y = -3
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -16886,21 +16862,15 @@
 /area/centcom/control)
 "aLt" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_y = -3
+	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/item/weapon/kitchenknife/combat{
-	pixel_x = 4
-	},
-/obj/item/weapon/kitchenknife/combat{
-	pixel_x = 2
-	},
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/kitchenknife/combat{
-	pixel_x = -2
-	},
-/obj/item/weapon/kitchenknife/combat{
-	pixel_x = -4
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -17292,6 +17262,7 @@
 	icon_state = "bot"
 	},
 /obj/item/weapon/plastique,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/clothing/glasses/night{
 	pixel_y = 8
 	},

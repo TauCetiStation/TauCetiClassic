@@ -141,7 +141,7 @@
 /area/asteroid/mine/abandoned)
 "as" = (
 /obj/structure/alien/weeds,
-/obj/machinery/suit_storage_unit/syndicate_unit/gorlex/light,
+/obj/machinery/suit_storage_unit/syndicate_unit,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1923,6 +1923,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1945,6 +1946,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2310,10 +2312,10 @@
 /obj/structure/rack,
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
+/obj/item/device/gps/engineering,
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -3904,6 +3906,7 @@
 /obj/structure/rack,
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
+/obj/item/device/gps/engineering,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -3911,7 +3914,6 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/gun/energy/kinetic_accelerator,
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4265,6 +4267,8 @@
 /turf/simulated/wall,
 /area/asteroid/research_outpost/sample)
 "qA" = (
+/obj/structure/rack,
+/obj/item/device/suit_cooling_unit,
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
@@ -4275,7 +4279,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/vending/eva/mining,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5200,12 +5203,12 @@
 /obj/structure/rack,
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
+/obj/item/device/gps/engineering,
 /obj/machinery/camera{
 	c_tag = "Mining Equipment";
 	dir = 4;
 	network = list("SS13","MINE")
 	},
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -6790,7 +6793,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/mining,
+/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9921,7 +9924,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
-/obj/machinery/suit_storage_unit/science/scientist,
+/obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitepurple"
@@ -10031,7 +10034,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10052,6 +10055,7 @@
 	name = "Mecha Shutters Control";
 	pixel_y = -28
 	},
+/obj/machinery/vending/eva/mining,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10684,6 +10688,8 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11009,6 +11015,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11054,7 +11061,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/mining,
+/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11281,6 +11288,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11289,7 +11297,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

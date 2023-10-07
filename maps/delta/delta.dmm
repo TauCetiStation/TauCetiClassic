@@ -4052,7 +4052,7 @@
 	dir = 3;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4196,7 +4196,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -8784,10 +8783,11 @@
 /area/station/rnd/test_area)
 "bxQ" = (
 /obj/structure/closet/secure_closet/miner,
+/obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/clothing/suit/space/globose/mining,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -11147,13 +11147,9 @@
 /area/station/security/brig)
 "bVQ" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_y = 3
-	},
 /obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_y = -3
-	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -11466,7 +11462,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science,
+/obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11893,9 +11889,11 @@
 	},
 /area/station/tcommsat/computer)
 "cde" = (
-/obj/machinery/suit_storage_unit/globose/mining,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/mine_sci_shuttle)
+/obj/effect/landmark/start/shaft_miner,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/cargo/miningoffice)
 "cdm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable,
@@ -16089,10 +16087,11 @@
 	pixel_y = -32
 	},
 /obj/structure/closet/secure_closet/miner,
+/obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/clothing/suit/space/globose/mining,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -16263,15 +16262,15 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "dcx" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
-	},
 /obj/structure/rack,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian{
 	pixel_x = -3
 	},
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian{
 	pixel_x = 3
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -16597,10 +16596,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "dfS" = (
+/obj/machinery/suit_storage_unit/engine,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer,
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "dfV" = (
@@ -19696,7 +19695,6 @@
 	name = "apc top";
 	pixel_y = 28
 	},
-/obj/machinery/suit_storage_unit/science/scientist,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purplecorner"
@@ -21241,10 +21239,10 @@
 	},
 /area/station/security/checkpoint/engi)
 "ejI" = (
+/obj/machinery/suit_storage_unit/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/security/officer,
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "ejJ" = (
@@ -21322,15 +21320,10 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
+/obj/machinery/suit_storage_unit/science,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/structure/table,
-/obj/item/device/multitool{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/weapon/crowbar/red,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -22965,6 +22958,8 @@
 /area/station/security/interrogation)
 "eCr" = (
 /obj/structure/closet/secure_closet/miner,
+/obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/clothing/suit/space/globose/mining,
 /obj/machinery/camera{
 	c_tag = "Mining Office";
 	dir = 1
@@ -22972,7 +22967,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/item/device/gps/mining,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -23245,6 +23239,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "eHg" = (
+/obj/effect/landmark/start/shaft_miner,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -23851,10 +23846,10 @@
 	},
 /area/station/security/prison)
 "eNG" = (
+/obj/machinery/suit_storage_unit/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/security/officer,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -26165,8 +26160,21 @@
 /area/station/cargo/storage)
 "fnU" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/griffin{
+/obj/item/device/gps/mining{
+	pixel_x = -3;
 	pixel_y = 3
+	},
+/obj/item/device/gps/mining,
+/obj/item/device/gps/mining{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/device/gps/mining,
+/obj/item/device/gps/mining{
+	pixel_x = -3
+	},
+/obj/item/device/gps/mining{
+	pixel_x = 3
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -35377,7 +35385,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -35440,7 +35448,6 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	icon_state = "arrow"
 	},
-/obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -36561,7 +36568,6 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	icon_state = "arrow"
 	},
-/obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -40619,7 +40625,6 @@
 	dir = 1;
 	icon_state = "arrow"
 	},
-/obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -45819,6 +45824,10 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
+/obj/item/device/multitool{
+	pixel_x = -3;
+	pixel_y = -2
+	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -46238,14 +46247,14 @@
 	},
 /area/station/engineering/engine)
 "jBf" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
-	},
 /obj/structure/rack,
 /obj/item/weapon/storage/firstaid/o2{
 	pixel_y = 6
 	},
 /obj/item/weapon/storage/firstaid/o2,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -48323,10 +48332,10 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
+/obj/item/weapon/storage/belt/medical,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/item/weapon/storage/belt/medical,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "neutral"
@@ -50608,7 +50617,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/unathi/nt,
+/obj/machinery/suit_storage_unit/unathi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -58659,7 +58668,6 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	icon_state = "arrow"
 	},
-/obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -58919,7 +58927,7 @@
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot_old"
 	},
-/obj/machinery/suit_storage_unit/security/officer,
+/obj/machinery/suit_storage_unit/security,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -66462,7 +66470,7 @@
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot_old"
 	},
-/obj/machinery/suit_storage_unit/security/officer,
+/obj/machinery/suit_storage_unit/security,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -70674,7 +70682,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/machinery/suit_storage_unit/globose/civil,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -85699,7 +85707,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/skrell/white,
+/obj/machinery/suit_storage_unit/skrell,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -87399,22 +87407,15 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/bluespace_crystal/artificial,
+/obj/item/bluespace_crystal/artificial,
+/obj/item/bluespace_crystal/artificial,
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/signaler{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/bluespace_crystal/artificial{
-	pixel_y = 10
-	},
-/obj/item/bluespace_crystal/artificial{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/bluespace_crystal/artificial{
-	pixel_x = 3;
-	pixel_y = 4
-	},
+/obj/item/weapon/crowbar/red,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purplecorner"
@@ -93065,10 +93066,10 @@
 	},
 /area/station/medical/reception)
 "tTp" = (
+/obj/machinery/vending/assist,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/vending/eva/mining,
 /turf/simulated/floor,
 /area/station/cargo/miningoffice)
 "tTA" = (
@@ -97676,6 +97677,7 @@
 	},
 /area/station/civilian/dormitories/courtroom)
 "uYY" = (
+/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
@@ -99994,10 +99996,10 @@
 	},
 /area/station/rnd/storage)
 "vBg" = (
+/obj/machinery/suit_storage_unit/medical,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/medical/medic,
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "vBv" = (
@@ -111021,6 +111023,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "yaA" = (
+/obj/effect/landmark/start/shaft_miner,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -111675,7 +111678,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -154670,7 +154673,7 @@ pIe
 nRr
 ybG
 tvg
-gcK
+wDO
 lgb
 kxe
 oGb
@@ -155439,7 +155442,7 @@ mZC
 uBG
 kIf
 aYo
-maC
+wDO
 fPv
 uuy
 lgb
@@ -155953,7 +155956,7 @@ mZC
 uBG
 cKj
 aYo
-maC
+wDO
 jbt
 fkc
 lgb
@@ -156210,7 +156213,7 @@ jgt
 jpg
 uvF
 nRr
-cde
+wDO
 wDO
 axI
 lgb
@@ -156467,7 +156470,7 @@ sQI
 lYW
 gYk
 nRr
-cde
+wDO
 wDO
 hOq
 lgb
@@ -156724,9 +156727,9 @@ hXc
 ajM
 wxS
 nRr
-cde
-wDO
-wDO
+maC
+maC
+gcK
 lgb
 gux
 vqa
@@ -156771,7 +156774,7 @@ xqF
 aAF
 iqI
 yaA
-kZj
+cde
 mji
 bxQ
 lGt
@@ -157028,7 +157031,7 @@ twC
 aAF
 iqI
 eHg
-kZj
+cde
 hpg
 cYR
 lGt
@@ -157284,8 +157287,8 @@ kQB
 qSZ
 aAF
 iqI
-kZj
-kZj
+cde
+cde
 hzw
 eCr
 lGt

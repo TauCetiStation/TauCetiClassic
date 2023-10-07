@@ -22,23 +22,11 @@
 /turf/environment/space,
 /area/space)
 "ag" = (
-/obj/machinery/light/smart,
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -2
-	},
-/obj/item/weapon/pen{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/asteroid/mine/production)
+/turf/simulated/floor,
+/area/asteroid/research_outpost/gearstore)
 "ah" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
@@ -3320,11 +3308,13 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "vault";
+	name = "Mainframe floor";
+	nitrogen = 100;
+	oxygen = 0;
+	temperature = 80
 	},
 /area/asteroid/research_outpost/tempstorage)
 "hd" = (
@@ -5538,7 +5528,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "ly" = (
@@ -5787,7 +5777,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "md" = (
@@ -5845,12 +5835,29 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "mt" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/machinery/light/smart,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
-/obj/machinery/suit_storage_unit/science,
-/turf/simulated/floor,
-/area/asteroid/research_outpost/gearstore)
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -2
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/weapon/pen{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/asteroid/mine/production)
 "mu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -5954,7 +5961,10 @@
 /area/asteroid/research_outpost/iso1)
 "mI" = (
 /obj/structure/table,
+/obj/item/device/suit_cooling_unit,
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/inflatable/door,
+/obj/item/inflatable,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "mJ" = (
@@ -6415,13 +6425,10 @@
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "nK" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/light/smart{
-	dir = 8
-	},
+/obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "nL" = (
@@ -7272,13 +7279,6 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
-"pI" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/suspension_gen,
-/turf/simulated/floor,
-/area/asteroid/research_outpost/gearstore)
 "pJ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -7415,7 +7415,11 @@
 	},
 /area/asteroid/research_outpost/gearstore)
 "qa" = (
+/obj/machinery/suspension_gen,
 /obj/machinery/light/smart,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "qb" = (
@@ -8901,6 +8905,10 @@
 	},
 /area/asteroid/mine/explored)
 "ue" = (
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = 5
+	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /turf/simulated/floor,
@@ -10954,24 +10962,12 @@
 	pixel_y = -23
 	},
 /obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	pixel_y = -4
+	},
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
-	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/device/gps/mining{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/device/gps/mining{
-	pixel_x = 3
-	},
-/obj/item/device/gps/mining{
-	pixel_x = 3;
-	pixel_y = -2
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
@@ -10979,7 +10975,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining,
+/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "zq" = (
@@ -10991,7 +10987,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining,
+/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "zs" = (
@@ -11232,6 +11228,7 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -11665,29 +11662,11 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "Bw" = (
-/obj/structure/table,
-/obj/item/inflatable{
-	pixel_x = -6;
-	pixel_y = 4
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/item/inflatable{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/inflatable/door{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/inflatable/door{
-	pixel_x = 6
-	},
-/obj/item/inflatable{
-	pixel_x = -6
-	},
-/obj/item/inflatable{
-	pixel_x = -6;
-	pixel_y = -2
-	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Bx" = (
@@ -11881,7 +11860,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "DL" = (
@@ -13124,10 +13103,14 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "Xf" = (
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Xn" = (
@@ -50318,13 +50301,13 @@ Ah
 Bb
 aW
 gV
-hp
-hP
-hP
-hP
-hP
-hP
-mp
+bL
+aa
+aa
+aa
+aa
+aa
+ar
 pU
 qq
 qD
@@ -50576,11 +50559,11 @@ Bc
 aW
 kS
 hp
-Bw
-Xf
-Xf
-nK
-mt
+hP
+hP
+hP
+hP
+hP
 mp
 pV
 ql
@@ -50834,10 +50817,10 @@ aW
 kb
 hp
 mI
-mr
-mr
-mr
-mr
+Bw
+Bw
+Xf
+mX
 mp
 pW
 pG
@@ -51093,7 +51076,7 @@ hp
 Dh
 mq
 nP
-mr
+ag
 qa
 mp
 Dc
@@ -51350,8 +51333,8 @@ hp
 lw
 lE
 ms
-mX
-pI
+ag
+pc
 hP
 pY
 qt
@@ -51607,7 +51590,7 @@ hp
 mc
 mr
 mw
-pc
+nK
 pc
 hP
 pZ
@@ -56358,7 +56341,7 @@ xB
 Ae
 Ae
 Of
-ag
+mt
 kc
 lA
 lA

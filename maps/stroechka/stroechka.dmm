@@ -257,7 +257,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/atmos,
+/obj/machinery/suit_storage_unit/engine/atmos,
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "aC" = (
@@ -3126,6 +3126,14 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/emergency_oxygen/double,
@@ -3148,6 +3156,14 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_x = 6;
+	pixel_y = -3
+	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "fD" = (
@@ -5994,7 +6010,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Cw" = (
-/obj/machinery/suit_storage_unit/engine/falcon/chief,
+/obj/machinery/suit_storage_unit/engine/chief,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7014,7 +7030,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/falcon/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "Hk" = (
@@ -7580,7 +7596,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_modifier,
+/obj/machinery/vending/eva,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8601,6 +8617,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"

@@ -33356,7 +33356,7 @@
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/cafeteria)
 "hyp" = (
-/obj/machinery/vending/eva/engineering,
+/obj/machinery/suit_modifier,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -33847,7 +33847,7 @@
 	},
 /area/station/rnd/mixing)
 "hEx" = (
-/obj/machinery/suit_storage_unit/skrell/white,
+/obj/machinery/suit_storage_unit/unathi,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -45585,7 +45585,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -56255,7 +56255,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57277,7 +57277,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nBd" = (
-/obj/machinery/suit_storage_unit/engine/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkyellow"
@@ -64864,7 +64864,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "pAv" = (
-/obj/machinery/suit_storage_unit/security/officer,
+/obj/machinery/suit_storage_unit/security,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -74094,7 +74094,7 @@
 	dir = 10;
 	network = list("SS13","Research")
 	},
-/obj/machinery/suit_storage_unit/science/scientist,
+/obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -79934,7 +79934,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/suit_storage_unit/globose/science,
+/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -80593,7 +80593,21 @@
 	},
 /area/station/gateway)
 "tCy" = (
-/obj/machinery/suit_storage_unit/globose/civil,
+/obj/item/device/suit_cooling_unit{
+	pixel_x = -5
+	},
+/obj/item/device/suit_cooling_unit{
+	pixel_x = 5
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/structure/rack,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -84716,7 +84730,7 @@
 	name = "Tribunal"
 	})
 "uEG" = (
-/obj/machinery/suit_storage_unit/globose/civil,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -91685,7 +91699,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security/officer,
+/obj/machinery/suit_storage_unit/security,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -96761,7 +96775,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "xEv" = (
-/obj/machinery/suit_storage_unit/medical/medic,
+/obj/machinery/suit_storage_unit/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkgreen"
@@ -96824,7 +96838,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "xFK" = (
-/obj/machinery/suit_storage_unit/unathi/nt,
+/obj/machinery/suit_storage_unit/skrell/black,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -98109,7 +98123,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/skrell/black,
+/obj/machinery/suit_storage_unit/skrell,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
