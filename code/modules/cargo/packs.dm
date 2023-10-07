@@ -175,7 +175,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/weapons/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS) == ROUND_ASPECT_REARM_BULLETS)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
 		additional_costs *= 5
 
 /datum/supply_pack/pistol
