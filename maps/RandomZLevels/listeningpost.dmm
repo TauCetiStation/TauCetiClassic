@@ -19,7 +19,9 @@
 /turf/simulated/floor/plating,
 /area/awaymission/listeningpost)
 "f" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/awaymission/listeningpost)
 "g" = (
