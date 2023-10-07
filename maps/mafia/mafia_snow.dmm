@@ -12,6 +12,15 @@
 	icon_state = "gravsnow"
 	},
 /area/mafia)
+"d" = (
+/obj/structure/mineral_door/silver{
+	dir = 4
+	},
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
 "f" = (
 /obj/structure/snowman,
 /turf/unsimulated/floor/snow,
@@ -253,9 +262,9 @@ i
 i
 b
 b
-j
+d
 b
-j
+d
 b
 b
 i
@@ -275,7 +284,7 @@ K
 i
 b
 b
-j
+d
 b
 I
 X
@@ -283,7 +292,7 @@ b
 X
 J
 b
-j
+d
 b
 b
 L
@@ -575,7 +584,7 @@ i
 i
 b
 b
-j
+d
 b
 P
 X
@@ -583,7 +592,7 @@ b
 X
 T
 b
-j
+d
 b
 b
 i
@@ -603,9 +612,9 @@ i
 L
 b
 b
-j
+d
 b
-j
+d
 b
 b
 i

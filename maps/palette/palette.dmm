@@ -48,15 +48,369 @@
 	icon_state = "vaultfull"
 	},
 /area/space)
+"ai" = (
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "lаrgecell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/largecell{
+	name = "largecell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	name = "largecell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "largecell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"aj" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	name = "Brig largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig largecell apc left";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
+	},
+/area/space)
+"ak" = (
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "MedBay largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	name = "MedBay largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "MedBay largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "MedBay largecell apc left";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"al" = (
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	name = "RnD largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD largecell apc left";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
+	},
+/area/space)
 "am" = (
 /turf/simulated/floor{
 	icon_state = "wooden-2"
+	},
+/area/space)
+"an" = (
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering largecell apc left";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space)
+"ao" = (
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo largecell apc left";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo largecell apc top";
+	pixel_y = 27
+	},
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space)
+"ap" = (
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space)
+"aq" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	name = "Brig down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig left APC";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig top APC";
+	pixel_y = 27
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
 	},
 /area/space)
 "ar" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkbrowncorners"
+	},
+/area/space)
+"as" = (
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "Medbay top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "Medbay left APC";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "Medbay right APC";
+	pixel_x = 27
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"at" = (
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	name = "RnD down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
+	},
+/area/space)
+"au" = (
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space)
+"av" = (
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo left APC";
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space)
+"aw" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor10"
+	},
+/area/space)
+"ax" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor11"
 	},
 /area/space)
 "ay" = (
@@ -77,9 +431,60 @@
 	icon_state = "orange"
 	},
 /area/space)
+"aB" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor13"
+	},
+/area/space)
+"aC" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor4"
+	},
+/area/space)
+"aD" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor12"
+	},
+/area/space)
+"aE" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor9"
+	},
+/area/space)
+"aF" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor8"
+	},
+/area/space)
 "aG" = (
 /turf/simulated/floor{
 	icon_state = "Stairs2_wide"
+	},
+/area/space)
+"aH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor5"
+	},
+/area/space)
+"aI" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor16"
+	},
+/area/space)
+"aJ" = (
+/turf/simulated/floor/engine/type2,
+/area/space)
+"aK" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor14"
 	},
 /area/space)
 "aL" = (
@@ -102,6 +507,24 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/space)
+"aP" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor15"
+	},
+/area/space)
+"aQ" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor7"
+	},
+/area/space)
+"aR" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor17"
+	},
+/area/space)
 "aS" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -110,16 +533,30 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"aT" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "freezerfloor6"
+	},
+/area/space)
 "aU" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
 	},
 /area/space)
+"aV" = (
+/turf/simulated/floor/engine/type3,
+/area/space)
 "aW" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkyellow"
+	},
+/area/space)
+"aX" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood8"
 	},
 /area/space)
 "aY" = (
@@ -130,6 +567,24 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
+/area/space)
+"aZ" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood7"
+	},
+/area/space)
+"ba" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood12"
+	},
+/area/space)
+"bb" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood10"
+	},
+/area/space)
+"bc" = (
+/turf/simulated/floor/wood,
 /area/space)
 "bd" = (
 /turf/simulated/floor{
@@ -142,11 +597,97 @@
 	icon_state = "whitepurple"
 	},
 /area/space)
+"bf" = (
+/turf/simulated/floor/engine/type4,
+/area/space)
+"bg" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
+/area/space)
+"bh" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood6"
+	},
+/area/space)
+"bi" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood4"
+	},
+/area/space)
+"bj" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood14"
+	},
+/area/space)
+"bk" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood11"
+	},
+/area/space)
+"bl" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood13"
+	},
+/area/space)
+"bm" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood15"
+	},
+/area/space)
+"bn" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood16"
+	},
+/area/space)
 "bo" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
 	},
+/area/space)
+"bp" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood17"
+	},
+/area/space)
+"bq" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 9;
+	icon_state = "siding_wood_line"
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"br" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bs" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"bt" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 9;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
 /area/space)
 "bu" = (
 /turf/simulated/floor{
@@ -161,9 +702,64 @@
 	},
 /turf/simulated/floor,
 /area/space)
+"bw" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "arrow"
+	},
+/turf/simulated/floor,
+/area/space)
+"bx" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 5;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"by" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bz" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bA" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
 "bB" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/turf/simulated/floor,
+/area/space)
+"bC" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/space)
+"bD" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 4;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor,
 /area/space)
@@ -173,11 +769,77 @@
 	icon_state = "darkgreen"
 	},
 /area/space)
+"bF" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 10;
+	icon_state = "siding_wood_line"
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"bG" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bH" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 6;
+	icon_state = "siding_wood_line"
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_corner"
+	},
+/turf/simulated/floor,
+/area/space)
 "bI" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkbluecorners"
 	},
+/area/space)
+"bJ" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 10;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 4;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"bK" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor,
+/area/space)
+"bL" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 6;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 1;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"bM" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 9;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
 /area/space)
 "bN" = (
 /obj/effect/decal/turf_decal{
@@ -193,15 +855,123 @@
 	icon_state = "wood2_stairs"
 	},
 /area/space)
+"bP" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bQ" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 5;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bR" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 9;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bS" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bT" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 5;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bU" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 9;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 2;
+	icon_state = "siding_corner"
+	},
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"bV" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"bW" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 5;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 8;
+	icon_state = "siding_corner"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 8;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
 "bX" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/wood,
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	name = "RnD mediumcell apc down";
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
+	},
 /area/space)
 "bY" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "orange"
 	},
+/area/space)
+"bZ" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 9;
+	icon_state = "spline_fancy"
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor,
 /area/space)
 "ca" = (
 /turf/simulated/floor{
@@ -217,11 +987,50 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"cc" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor,
+/area/space)
+"cd" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 5;
+	icon_state = "spline_fancy"
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"ce" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 8;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
 "cf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
 /turf/simulated/floor/plating,
+/area/space)
+"cg" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 4;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"ch" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
 /area/space)
 "ci" = (
 /obj/structure/cable/cyan{
@@ -230,12 +1039,147 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"cj" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"ck" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cl" = (
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "box_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"cm" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
 "cn" = (
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
 	},
 /turf/simulated/floor/plating/airless,
+/area/space)
+"co" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor,
+/area/space)
+"cp" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor,
+/area/space)
+"cq" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 10;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cr" = (
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cs" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 6;
+	icon_state = "siding_thinplating_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"ct" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 10;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cu" = (
+/obj/effect/decal/turf_decal/green{
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cv" = (
+/obj/effect/decal/turf_decal/green{
+	dir = 6;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cw" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 10;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "siding_corner"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"cx" = (
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cy" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 6;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 1;
+	icon_state = "siding_corner"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 1;
+	icon_state = "box_corners_white"
+	},
+/turf/simulated/floor,
+/area/space)
+"cz" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 10;
+	icon_state = "spline_fancy"
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"cA" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor,
 /area/space)
 "cB" = (
 /turf/simulated/floor{
@@ -248,11 +1192,71 @@
 	icon_state = "arrival"
 	},
 /area/space)
+"cD" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 6;
+	icon_state = "spline_fancy"
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"cE" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 9;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
+"cF" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
+"cG" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 5;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
+"cH" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 9;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/orange{
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"cI" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
 "cJ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
 	},
+/area/space)
+"cK" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 5;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/orange{
+	dir = 8;
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
 /area/space)
 "cL" = (
 /obj/structure/cable/green{
@@ -268,11 +1272,67 @@
 	icon_state = "darkblue"
 	},
 /area/space)
+"cN" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 9;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/purple{
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"cO" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cP" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 5;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/purple{
+	dir = 8;
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"cQ" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 8;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
 "cR" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escape"
 	},
+/area/space)
+"cS" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 4;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
+"cT" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cU" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
 /area/space)
 "cV" = (
 /turf/simulated/floor{
@@ -280,10 +1340,56 @@
 	icon_state = "escape"
 	},
 /area/space)
+"cW" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cX" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"cY" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 10;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
 "cZ" = (
 /turf/simulated/floor{
 	icon_state = "purplechoco"
 	},
+/area/space)
+"da" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 2;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
+"db" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 6;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor,
+/area/space)
+"dc" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 10;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/orange{
+	dir = 4;
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
 /area/space)
 "dd" = (
 /turf/simulated/floor{
@@ -291,9 +1397,55 @@
 	icon_state = "Stairs_wide"
 	},
 /area/space)
+"de" = (
+/obj/effect/decal/turf_decal/orange{
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
+"df" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 6;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/orange{
+	dir = 1;
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"dg" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 10;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/purple{
+	dir = 4;
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
+/area/space)
+"dh" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 2;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor,
+/area/space)
 "di" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating/airless,
+/area/space)
+"dj" = (
+/obj/effect/decal/turf_decal/purple{
+	dir = 6;
+	icon_state = "siding_line"
+	},
+/obj/effect/decal/turf_decal/purple{
+	dir = 1;
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor,
 /area/space)
 "dk" = (
 /turf/simulated/floor{
@@ -307,11 +1459,33 @@
 	},
 /area/space)
 "dm" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 8;
-	icon_state = "siding_wood_line"
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering mediumcell apc top";
+	pixel_y = 28
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering mediumcell apc down";
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
 /area/space)
 "do" = (
 /turf/simulated/floor{
@@ -1145,27 +2319,32 @@
 /turf/simulated/floor/plating,
 /area/space)
 "lC" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "apc right";
-	pixel_x = 28
-	},
-/obj/machinery/power/apc{
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
 	dir = 1;
-	name = "apc top";
+	name = "Cargo mediumcell apc top";
 	pixel_y = 28
 	},
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo mediumcell apc right";
+	pixel_x = 28
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
-	name = "apc left";
+	name = "Cargo mediumcell apc left";
 	pixel_x = -28
 	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo mediumcell apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "brownfull"
 	},
 /area/space)
 "lG" = (
@@ -1446,11 +2625,33 @@
 	},
 /area/space)
 "oL" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 5;
-	icon_state = "siding_wood_line"
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	dir = 1;
+	name = "Bar apc top";
+	pixel_y = 27
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	dir = 8;
+	name = "Bar apc left";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	dir = 4;
+	name = "Bar apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	name = "Bar apc down";
+	pixel_y = -27
+	},
+/obj/machinery/vending/boozeomat,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/space)
 "oO" = (
 /turf/simulated/floor{
@@ -2721,11 +3922,10 @@
 	},
 /area/space)
 "DP" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 1;
-	icon_state = "siding_wood_line"
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
 	},
-/turf/simulated/floor/wood,
 /area/space)
 "DS" = (
 /turf/simulated/floor/engine/cult/lava,
@@ -2854,8 +4054,33 @@
 	},
 /area/space)
 "Fd" = (
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	name = "Brig smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig smallcell apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor{
-	icon_state = "robar"
+	dir = 9;
+	icon_state = "redfull"
 	},
 /area/space)
 "Fe" = (
@@ -3339,10 +4564,33 @@
 	},
 /area/space)
 "Je" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line"
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "MedBay smallcell apc top";
+	pixel_y = 28
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	name = "MedBay smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "MedBay smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "MedBay smallcell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
 /area/space)
 "Jg" = (
 /turf/simulated/floor{
@@ -4016,11 +5264,34 @@
 	},
 /area/space)
 "PQ" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 4;
-	icon_state = "siding_wood_line"
+/obj/structure/sign/departments/science,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD smallcell apc top";
+	pixel_y = 28
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	name = "RnD smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD smallcell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitepurplefull"
+	},
 /area/space)
 "PR" = (
 /turf/simulated/floor{
@@ -4409,11 +5680,33 @@
 	},
 /area/space)
 "Tp" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 10;
-	icon_state = "siding_wood_line"
+/obj/structure/sign/departments/engineering,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering smallcell apc top";
+	pixel_y = 28
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering smallcell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
 /area/space)
 "Tr" = (
 /obj/structure/cable/yellow{
@@ -4721,11 +6014,33 @@
 /turf/simulated/floor,
 /area/space)
 "WJ" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 9;
-	icon_state = "siding_wood_line"
+/obj/structure/sign/departments/cargo,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo smallcell apc top";
+	pixel_y = 28
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo smallcell apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
 /area/space)
 "WQ" = (
 /turf/simulated/floor{
@@ -4863,27 +6178,33 @@
 	},
 /area/space)
 "YC" = (
-/obj/machinery/power/apc/largecell{
+/obj/structure/sign/departments/security,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
 	dir = 1;
-	name = "largecell apc top";
+	name = "Brig mediumcell apc top";
 	pixel_y = 28
 	},
-/obj/machinery/power/apc/largecell{
-	name = "largecell apc down";
-	pixel_y = -28
-	},
-/obj/machinery/power/apc/largecell{
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
 	dir = 4;
-	name = "largecell apc right";
+	name = "Brig mediumcell apc right";
 	pixel_x = 28
 	},
-/obj/machinery/power/apc/largecell{
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
 	dir = 8;
-	name = "largecell apc left";
+	name = "Brig mediumcell apc left";
 	pixel_x = -28
 	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
+	name = "Brig mediumcell apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 9;
+	icon_state = "redfull"
 	},
 /area/space)
 "YD" = (
@@ -4897,11 +6218,33 @@
 /turf/simulated/floor/engine/cult,
 /area/space)
 "YG" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 6;
-	icon_state = "siding_wood_line"
+/obj/structure/sign/departments/medbay/alt,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "MedBay mediumcell apc top";
+	pixel_y = 28
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "MedBay mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "MedBay mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	name = "MedBay mediumcell apc down";
+	pixel_y = -28
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
 /area/space)
 "YI" = (
 /turf/simulated/floor{
@@ -5306,16 +6649,16 @@ GD
 (6,1,1) = {"
 Hy
 Hy
-wR
+nX
 Hy
 Hy
-LQ
+OS
 Hy
 Hy
-YC
+Dg
 Hy
 Hy
-lC
+pI
 Hy
 Hy
 nL
@@ -5459,16 +6802,16 @@ xC
 (9,1,1) = {"
 Hy
 Hy
-nX
+Sv
 Hy
 Hy
-OS
+Um
 Hy
 Hy
-Dg
+DA
 Hy
 Hy
-pI
+UO
 Hy
 Hy
 uA
@@ -5612,16 +6955,16 @@ kN
 (12,1,1) = {"
 Hy
 Hy
-Sv
+uK
 Hy
 Hy
-Um
+Kq
 Hy
 Hy
-DA
+ZR
 Hy
 Hy
-UO
+ZC
 Hy
 Hy
 uA
@@ -5765,16 +7108,16 @@ Yf
 (15,1,1) = {"
 Hy
 Hy
-uK
+gv
 Hy
 Hy
-Kq
+MO
 Hy
 Hy
-ZR
+IN
 Hy
 Hy
-ZC
+KU
 Hy
 Hy
 yB
@@ -5918,16 +7261,16 @@ QK
 (18,1,1) = {"
 Hy
 Hy
-gv
+uQ
 Hy
 Hy
-MO
+jF
 Hy
 Hy
-IN
+oL
 Hy
 Hy
-KU
+HF
 Hy
 Hy
 wr
@@ -6020,16 +7363,16 @@ RV
 (20,1,1) = {"
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+Lr
 Hy
 Hy
 yt
@@ -6070,18 +7413,18 @@ AA
 "}
 (21,1,1) = {"
 Hy
-Hy
-uQ
-Hy
-Hy
-jF
-Hy
-Hy
 Lr
-Hy
-Hy
-HF
-Hy
+wR
+Lr
+Lr
+LQ
+Lr
+Lr
+ai
+Lr
+Lr
+ap
+Lr
 Hy
 yt
 NT
@@ -6122,16 +7465,16 @@ xh
 (22,1,1) = {"
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
+Lr
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+Lr
 Hy
 Hy
 yt
@@ -6144,45 +7487,45 @@ zo
 SM
 Lj
 dV
-yc
 uR
 uR
 HN
 HN
-yc
-yc
-WJ
-dm
-Tp
+aw
+aw
+aD
+aD
+aK
+aK
+aX
+aX
+bg
+bg
+bk
+bk
 Kl
 Kl
 Kl
-Hy
-Oh
-Xv
-No
-Xs
-Hy
-Hy
-FA
-vX
-SJ
-Ca
-Hy
+bM
+ce
+cq
+cE
+cQ
+cY
 "}
 (23,1,1) = {"
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+OD
 Hy
 Hy
 nL
@@ -6195,46 +7538,46 @@ wG
 wG
 wG
 nL
-yc
 uR
 uR
 HN
 HN
-yc
-yc
-DP
-bX
-Je
+aw
+aw
+aD
+aD
+aK
+aK
+aX
+aX
+bg
+bg
+bk
+bk
 Kl
 yc
 Kl
-jd
-am
-am
-am
-am
-yH
-Hw
-Eh
-Eh
-Eh
-Eh
-NY
+bP
+yc
+cr
+cF
+yc
+da
 "}
 (24,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+OD
+Fd
+OD
+OD
+YC
+OD
+OD
+aj
+OD
+OD
+aq
+OD
 Hy
 nL
 ci
@@ -6246,45 +7589,45 @@ vf
 vf
 vf
 nL
-yc
 wI
 wI
 VC
 VC
-yc
-yc
-oL
-PQ
-YG
+ax
+ax
+aE
+aE
+aP
+aP
+aZ
+aZ
+bh
+bh
+bl
+bl
 Kl
 Kl
 Kl
-bO
-am
-am
-am
-am
-Er
-Gw
-Eh
-Eh
-Eh
-Eh
-ns
+bQ
+cg
+cs
+cG
+cS
+db
 "}
 (25,1,1) = {"
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
+OD
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+OD
 Hy
 Hy
 yp
@@ -6297,45 +7640,45 @@ lv
 Ee
 Zf
 rU
-yc
 wI
 wI
 VC
 VC
-yc
-yc
-yc
-yc
-yc
-yc
-yc
-yc
-pA
-am
-am
-am
-am
-RJ
-az
-Eh
-Eh
-Eh
-Eh
-RD
+ax
+ax
+aE
+aE
+aP
+aP
+aZ
+aZ
+bh
+bh
+bl
+bl
+bq
+by
+bF
+bR
+ch
+ct
+cH
+cT
+dc
 "}
 (26,1,1) = {"
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+yO
 Hy
 Hy
 yp
@@ -6348,46 +7691,46 @@ HS
 nL
 HS
 rU
-yc
 Wf
 Wf
 pM
 pM
+aB
+aB
+aF
+aF
+aQ
+aQ
+ba
+ba
+bi
+bi
+bm
+bm
+br
 yc
+bG
+bS
 yc
+cu
+cI
 yc
-yc
-yc
-yc
-yc
-yc
-jU
-am
-am
-am
-am
-IJ
-ng
-Eh
-Eh
-Eh
-Eh
-bd
+de
 "}
 (27,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+yO
+Je
+yO
+yO
+YG
+yO
+yO
+ak
+yO
+yO
+as
+yO
 Hy
 yp
 Ck
@@ -6399,45 +7742,45 @@ FC
 Ee
 cL
 rU
-yc
 Wf
 Wf
 pM
 pM
-yc
-yc
-yc
-yc
-yc
-yc
-yc
-yc
-Hy
-jH
-zO
-Ij
-kr
-Hy
-Hy
-FO
-Ev
-vH
-ib
-Hy
+aB
+aB
+aF
+aF
+aQ
+aQ
+ba
+ba
+bi
+bi
+bm
+bm
+bs
+bz
+bH
+bT
+cj
+cv
+cK
+cU
+df
 "}
 (28,1,1) = {"
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
+yO
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+yO
 Hy
 Hy
 nL
@@ -6450,45 +7793,45 @@ Lp
 Lp
 Lp
 nL
-yc
 LP
 LP
 ig
 ig
-yc
-yc
-Hy
-hD
-gY
-iL
-vQ
-Hy
-Hy
-tq
-dd
-Ts
-Id
-Hy
-Hy
-PK
-jJ
-Xt
-Sj
-Hy
+aC
+aC
+aH
+aH
+aR
+aR
+bb
+bb
+bh
+bh
+bn
+bn
+bt
+bA
+bJ
+bU
+ck
+cw
+cN
+cW
+dg
 "}
 (29,1,1) = {"
 Hy
 Hy
+DP
 Hy
 Hy
+DP
 Hy
 Hy
+DP
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+DP
 Hy
 Hy
 nL
@@ -6501,46 +7844,46 @@ KS
 KS
 KS
 nL
-yc
 LP
 LP
 ig
 ig
+aC
+aC
+aH
+aH
+aR
+aR
+bb
+bb
+bh
+bh
+bn
+bn
+bw
+bC
+bK
+bV
+cl
+cx
+cO
 yc
-yc
-Tg
-Lr
-Lr
-Lr
-Lr
-lq
-GS
-yc
-yc
-yc
-yc
-Hj
-TD
-An
-An
-An
-An
-ev
+dh
 "}
 (30,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+DP
+PQ
+DP
+DP
+bX
+DP
+DP
+al
+DP
+DP
+at
+DP
 Hy
 YD
 jw
@@ -6552,45 +7895,45 @@ EP
 Zh
 lG
 wJ
-yc
 wS
 wS
 ER
 ER
 fM
 fM
-Yy
-Lr
-Lr
-Lr
-Lr
-ud
-fb
-yc
-yc
-yc
-yc
-tt
-jj
-An
-An
-An
-An
-zU
+aI
+aI
+aT
+aT
+bc
+bc
+bj
+bj
+bp
+bp
+bx
+bD
+bL
+bW
+cm
+cy
+cP
+cX
+dj
 "}
 (31,1,1) = {"
 Hy
 Hy
+DP
 Hy
 Hy
+DP
 Hy
 Hy
+DP
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+DP
 Hy
 Hy
 YD
@@ -6603,45 +7946,45 @@ yf
 nL
 yf
 wJ
-yc
 wS
 wS
 ER
 ER
 fM
 fM
-vd
-Lr
-Lr
-Lr
-Lr
-wC
-Kv
+aI
+aI
+aT
+aT
+bc
+bc
+bj
+bj
+bp
+bp
+uA
+uA
+uA
+bZ
+co
+cz
 yc
 yc
 yc
-yc
-JR
-Es
-An
-An
-An
-An
-FF
 "}
 (32,1,1) = {"
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+ew
 Hy
 Hy
 YD
@@ -6654,46 +7997,46 @@ hn
 Zh
 mu
 wJ
-yc
 yg
 yg
 BM
 BM
 ab
 ab
-ug
-Lr
-Lr
-Lr
-Lr
-JF
-LS
+aJ
+aJ
+aV
+aV
+bf
+bf
+ac
+ac
+AC
+Vx
+eU
+Ad
+uA
+cc
+yc
+cA
 yc
 yc
 yc
-yc
-aG
-ZV
-An
-An
-An
-An
-kI
 "}
 (33,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+ew
+Tp
+ew
+ew
+dm
+ew
+ew
+an
+ew
+ew
+au
+ew
 Hy
 nL
 vZ
@@ -6705,45 +8048,45 @@ yI
 yI
 yI
 nL
+yg
+yg
+BM
+BM
+wv
+wv
+aJ
+aJ
+aV
+aV
+bf
+bf
+ac
+ac
+Tj
+Mv
+vl
+Ad
+uA
+cd
+cp
+cD
 yc
-yg
-yg
-BM
-BM
-wv
-wv
-Hy
-xZ
-Ax
-ux
-Pl
-Hy
-Hy
-va
-zT
-ES
-ht
-Hy
-Hy
-oG
-Rp
-dS
-KA
-Hy
+yc
+yc
 "}
 (34,1,1) = {"
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
+ew
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+ew
 Hy
 Hy
 nL
@@ -6756,7 +8099,6 @@ FZ
 FZ
 FZ
 nL
-yc
 YF
 YF
 iy
@@ -6771,30 +8113,31 @@ xM
 xM
 xT
 xT
-Qj
-Qj
 XO
 XO
 tn
 tn
-ac
-ac
-ae
-ag
+uA
+uA
+uA
+uA
+uA
+uA
+uA
 "}
 (35,1,1) = {"
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+HB
 Hy
 Hy
 kl
@@ -6807,7 +8150,6 @@ Rt
 Tr
 SQ
 Ll
-yc
 YF
 YF
 iy
@@ -6822,31 +8164,32 @@ xM
 xM
 xT
 xT
-Qj
-Qj
 XO
 XO
 tn
 tn
-ac
-ac
-af
-ah
+uA
+uA
+uA
+uA
+uA
+uA
+uA
 "}
 (36,1,1) = {"
 Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
-Hy
-Lr
-Hy
+HB
+WJ
+HB
+HB
+lC
+HB
+HB
+ao
+HB
+HB
+av
+HB
 Hy
 Wq
 jG
@@ -6858,7 +8201,6 @@ zu
 nL
 zu
 Ll
-yc
 DS
 DS
 wN
@@ -6869,34 +8211,35 @@ Sr
 Sr
 ZP
 ZP
-Fd
-Fd
-xT
-xT
-xT
-xT
+ae
+ag
+Qj
+Qj
 zb
 zb
 mp
 mp
-AC
-Vx
-eU
-Ad
+uA
+uA
+uA
+uA
+uA
+uA
+uA
 "}
 (37,1,1) = {"
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
+HB
 Hy
 Hy
-Hy
-Hy
-Hy
-Hy
+HB
 Hy
 Hy
 kl
@@ -6909,7 +8252,6 @@ oi
 Tr
 aS
 Ll
-yc
 DS
 DS
 wN
@@ -6920,20 +8262,21 @@ Sr
 Sr
 ZP
 ZP
-Fd
-Fd
-xT
-xT
-xT
-xT
+af
+ah
+Qj
+Qj
 zb
 zb
 mp
 mp
-Tj
-Mv
-vl
-Ad
+uA
+uA
+uA
+uA
+uA
+uA
+uA
 "}
 (38,1,1) = {"
 Hy
@@ -6985,4 +8328,616 @@ yc
 yc
 yc
 yc
+"}
+(39,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+Hy
+Oh
+Xv
+No
+Xs
+Hy
+Hy
+FA
+vX
+SJ
+Ca
+Hy
+Hy
+hD
+gY
+iL
+vQ
+Hy
+Hy
+tq
+dd
+Ts
+Id
+Hy
+Hy
+PK
+jJ
+Xt
+Sj
+Hy
+"}
+(40,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+jd
+am
+am
+am
+am
+yH
+Hw
+Eh
+Eh
+Eh
+Eh
+NY
+Tg
+Lr
+Lr
+Lr
+Lr
+lq
+GS
+yc
+yc
+yc
+yc
+Hj
+TD
+An
+An
+An
+An
+ev
+"}
+(41,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+bO
+am
+am
+am
+am
+Er
+Gw
+Eh
+Eh
+Eh
+Eh
+ns
+Yy
+Lr
+Lr
+Lr
+Lr
+ud
+fb
+yc
+yc
+yc
+yc
+tt
+jj
+An
+An
+An
+An
+zU
+"}
+(42,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+pA
+am
+am
+am
+am
+RJ
+az
+Eh
+Eh
+Eh
+Eh
+RD
+vd
+Lr
+Lr
+Lr
+Lr
+wC
+Kv
+yc
+yc
+yc
+yc
+JR
+Es
+An
+An
+An
+An
+FF
+"}
+(43,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+jU
+am
+am
+am
+am
+IJ
+ng
+Eh
+Eh
+Eh
+Eh
+bd
+ug
+Lr
+Lr
+Lr
+Lr
+JF
+LS
+yc
+yc
+yc
+yc
+aG
+ZV
+An
+An
+An
+An
+kI
+"}
+(44,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+Hy
+jH
+zO
+Ij
+kr
+Hy
+Hy
+FO
+Ev
+vH
+ib
+Hy
+Hy
+xZ
+Ax
+ux
+Pl
+Hy
+Hy
+va
+zT
+ES
+ht
+Hy
+Hy
+oG
+Rp
+dS
+KA
+Hy
+"}
+(45,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+"}
+(46,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+"}
+(47,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+"}
+(48,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+"}
+(49,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+"}
+(50,1,1) = {"
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
+uA
 "}

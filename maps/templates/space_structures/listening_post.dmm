@@ -66,6 +66,7 @@
 /area/space_structures/listening_post)
 "ak" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "Listening_Post_outer";
 	locked = 1;
@@ -568,6 +569,7 @@
 /area/space_structures/listening_post)
 "aU" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "Listening_Post_inner";
 	locked = 1;
@@ -718,6 +720,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Personal Quarters";
 	req_access = list(150)
 	},

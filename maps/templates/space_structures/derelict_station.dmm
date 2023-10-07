@@ -53,12 +53,14 @@
 /area/space_structures/derelict/solar_control)
 "an" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Air Bridge Access"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
 "ao" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "External Engineering"
 	},
 /turf/simulated/floor/plating,
@@ -161,6 +163,19 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
+"az" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research{
+	dir = 4;
+	name = "Toxins Research";
+	req_access = list(7)
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
 "aA" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -258,6 +273,13 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
+"aK" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
 "aL" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -301,6 +323,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "External Engineering"
 	},
 /turf/simulated/floor/plating,
@@ -358,6 +381,12 @@
 "aW" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/solar/starboard)
+"aX" = (
+/obj/structure/sign/poster/sivtsev{
+	pixel_x = -32
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
 "aY" = (
 /turf/simulated/wall,
 /area/space_structures/derelict/bridge/access)
@@ -484,6 +513,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
+"bp" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
 "bq" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
@@ -523,7 +559,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
 "bx" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "by" = (
@@ -1773,12 +1811,13 @@
 	},
 /area/space_structures/derelict/medical)
 "gd" = (
-/obj/machinery/door/airlock/glass{
-	name = "Med-Sci";
-	req_access = list(9)
+/obj/machinery/door/airlock/engineering{
+	dir = 4;
+	name = "Engineering Access";
+	req_access = list(10)
 	},
 /turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/medical)
+/area/space_structures/derelict/singularity_engine)
 "gf" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor,
@@ -1953,12 +1992,14 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "gB" = (
-/obj/machinery/door/poddoor{
-	id = "derelict_gun";
-	name = "Derelict Mass Driver"
+/obj/machinery/door/airlock/engineering{
+	dir = 4;
+	name = "Engineering Access";
+	req_access = list(10)
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/derelict/medical/chapel)
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/singularity_engine)
 "gC" = (
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/medical/chapel)
@@ -2180,17 +2221,15 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "hf" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/medical{
+	dir = 4;
+	name = "Morgue";
+	req_access = list(6)
 	},
-/obj/machinery/door/airlock/research{
-	name = "Toxins Research";
-	req_access = list(7)
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/floor/airless,
-/area/space_structures/derelict/hallway/primary)
+/area/space_structures/derelict/medical/chapel)
 "hg" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2220,11 +2259,13 @@
 /turf/environment/space,
 /area/space)
 "hk" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+/obj/machinery/door/airlock/glass{
+	dir = 4;
+	name = "Med-Sci";
+	req_access = list(9)
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/derelict/arrival)
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
 "hl" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2982,11 +3023,13 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
 "jF" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+/obj/machinery/door/poddoor{
+	dir = 4;
+	id = "derelict_gun";
+	name = "Derelict Mass Driver"
 	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/hallway/secondary)
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/medical/chapel)
 "jG" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating/airless,
@@ -3390,7 +3433,7 @@ aa
 aa
 aa
 gg
-gB
+jF
 gU
 aa
 aa
@@ -5136,9 +5179,9 @@ eQ
 eQ
 eQ
 eQ
-fv
+hf
 eQ
-fv
+hf
 eQ
 gm
 eQ
@@ -6077,7 +6120,7 @@ dY
 hW
 if
 dY
-dY
+aX
 hx
 dY
 dY
@@ -6684,7 +6727,7 @@ bz
 ab
 ab
 fb
-gd
+hk
 fb
 fb
 dV
@@ -6890,7 +6933,7 @@ bz
 bz
 bz
 fb
-gd
+hk
 fb
 fb
 dV
@@ -6968,8 +7011,8 @@ ac
 ac
 bs
 bz
-bH
-bG
+gB
+gd
 bz
 cy
 bS
@@ -9365,7 +9408,7 @@ er
 eq
 ed
 ed
-hf
+az
 ed
 ed
 ed
@@ -9700,7 +9743,7 @@ iV
 iV
 iV
 iV
-jF
+bp
 iJ
 iJ
 iJ
@@ -11631,7 +11674,7 @@ eH
 eH
 eH
 eH
-hk
+aK
 eH
 eH
 eH
@@ -11837,7 +11880,7 @@ aa
 aa
 aa
 gS
-hk
+aK
 gS
 aa
 aa

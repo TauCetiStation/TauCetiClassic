@@ -1,4 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/broken_breacher)
 "af" = (
 /obj/structure/table/woodentable,
 /obj/machinery/recharger{
@@ -426,7 +432,9 @@
 	},
 /area/space_structures/broken_breacher)
 "po" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -652,7 +660,9 @@
 	},
 /area/space_structures/broken_breacher)
 "xB" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
@@ -676,7 +686,9 @@
 	},
 /area/space_structures/broken_breacher)
 "yw" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/space_structures/broken_breacher)
 "yA" = (
@@ -841,7 +853,9 @@
 	},
 /area/space_structures/broken_breacher)
 "Ff" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
@@ -943,9 +957,12 @@
 	},
 /area/space_structures/broken_breacher)
 "IS" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
 /area/space_structures/broken_breacher)
 "JA" = (
@@ -1194,8 +1211,12 @@
 	},
 /area/space_structures/broken_breacher)
 "Ue" = (
-/obj/machinery/door/airlock/centcom,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/space_structures/broken_breacher)
 "UL" = (
 /obj/machinery/light{
@@ -1262,10 +1283,11 @@
 	},
 /area/space_structures/broken_breacher)
 "Xm" = (
-/obj/machinery/door/airlock/centcom,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
 /area/space_structures/broken_breacher)
 "Xv" = (
@@ -1607,7 +1629,7 @@ sm
 pT
 pT
 pT
-pD
+Xm
 pT
 pT
 or
@@ -1662,7 +1684,7 @@ xB
 pT
 pT
 pT
-IS
+Ue
 pT
 pT
 sm
@@ -1784,7 +1806,7 @@ EV
 pT
 pT
 pT
-pD
+Xm
 pT
 pT
 pT
@@ -1820,7 +1842,7 @@ BO
 BO
 BO
 pT
-Xm
+IS
 pT
 pT
 pT
@@ -2036,7 +2058,7 @@ id
 pT
 pT
 pT
-pD
+Xm
 pT
 pT
 pT
@@ -2166,7 +2188,7 @@ Ff
 pT
 pT
 pT
-Ue
+ab
 pT
 pT
 sh
@@ -2195,7 +2217,7 @@ sh
 pT
 pT
 pT
-pD
+Xm
 pT
 pT
 It

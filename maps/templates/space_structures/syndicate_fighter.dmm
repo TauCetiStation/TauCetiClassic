@@ -61,6 +61,7 @@
 /area/space_structures/syndicate_fighter)
 "h" = (
 /obj/machinery/door/airlock/hatch{
+	dir = 4;
 	id_tag = "syndishiv";
 	locked = 1
 	},
