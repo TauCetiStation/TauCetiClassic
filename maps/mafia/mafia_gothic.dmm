@@ -13,6 +13,14 @@
 "d" = (
 /turf/simulated/floor/plating,
 /area/mafia)
+"e" = (
+/obj/machinery/door/airlock/vault{
+	dir = 4;
+	locked = 1;
+	req_access = list(53)
+	},
+/turf/unsimulated/wall/iron,
+/area/mafia)
 "g" = (
 /obj/mafia_game_board,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -221,9 +229,9 @@ d
 i
 b
 b
-j
+e
 b
-j
+e
 b
 b
 d
@@ -243,7 +251,7 @@ c
 i
 b
 b
-j
+e
 b
 H
 N
@@ -251,7 +259,7 @@ b
 X
 P
 b
-j
+e
 b
 b
 d
@@ -543,7 +551,7 @@ c
 d
 b
 b
-j
+e
 b
 P
 X
@@ -551,7 +559,7 @@ b
 N
 H
 b
-j
+e
 b
 b
 d
@@ -571,9 +579,9 @@ d
 d
 b
 b
-j
+e
 b
-j
+e
 b
 b
 d

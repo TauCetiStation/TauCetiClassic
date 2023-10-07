@@ -389,6 +389,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "alien_der_inner";
 	locked = 1;
@@ -666,6 +667,7 @@
 /area/space)
 "Xw" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "alien_der_outer";
 	locked = 1;

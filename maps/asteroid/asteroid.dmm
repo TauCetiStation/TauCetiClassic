@@ -102,6 +102,24 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
+"as" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "at" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
@@ -547,6 +565,7 @@
 /area/asteroid/research_outpost/hallway)
 "bw" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "rdorm1";
 	name = "Dorm 1"
 	},
@@ -594,11 +613,6 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/sample)
 "bC" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Auxiliary Storage APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -606,6 +620,12 @@
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/maintstore1)
@@ -627,6 +647,7 @@
 /area/asteroid/research_outpost/hallway)
 "bF" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "rdorm2";
 	name = "Dorm 2"
 	},
@@ -732,6 +753,7 @@
 /area/asteroid/research_outpost/spectro)
 "bR" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Spectrometry Lab Sample Preparation";
 	req_access = list(65)
 	},
@@ -921,14 +943,15 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "ck" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Mass Spectrometry APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -956,6 +979,15 @@
 	icon_state = "whitecorner"
 	},
 /area/asteroid/research_outpost/hallway)
+"cn" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Mining Shuttle Airlock";
+	req_access = list(48)
+	},
+/turf/simulated/floor,
+/area/asteroid/mine/production)
 "co" = (
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
@@ -1037,11 +1069,6 @@
 /area/asteroid/research_outpost/maintstore1)
 "cy" = (
 /obj/machinery/meter,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Outpost Atmospherics APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -1050,6 +1077,12 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "cz" = (
@@ -1105,6 +1138,7 @@
 /area/asteroid/research_outpost/hallway)
 "cE" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "rbath";
 	name = "Bathroom"
 	},
@@ -1217,16 +1251,17 @@
 	},
 /area/asteroid/research_outpost/sample)
 "cR" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Sample Preparation APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1475,11 +1510,6 @@
 	},
 /area/asteroid/research_outpost/sample)
 "ds" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Anomalous Materials APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -1490,6 +1520,12 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
@@ -1504,6 +1540,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Anomalous Materials Sample Preparation";
 	req_access = list(65)
 	},
@@ -1635,7 +1672,9 @@
 	},
 /area/shuttle/alien/mine)
 "dH" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
@@ -1815,6 +1854,7 @@
 /area/asteroid/research_outpost/atmos)
 "dZ" = (
 /obj/machinery/door/airlock/atmos{
+	dir = 4;
 	name = "Outpost Atmospherics";
 	req_one_access = list(65,10,24)
 	},
@@ -1916,14 +1956,15 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
 "em" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Outpost Lobby APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
@@ -2335,6 +2376,7 @@
 /area/asteroid/research_outpost/anomaly)
 "eY" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Anomalous Materials";
 	req_access = list(65)
 	},
@@ -2427,6 +2469,7 @@
 /area/asteroid/research_outpost/anomaly)
 "fd" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Anomalous Materials";
 	req_access = list(65)
 	},
@@ -2776,17 +2819,18 @@
 /area/asteroid/research_outpost/hallway)
 "fM" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Outpost Power APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
@@ -2832,6 +2876,7 @@
 /area/asteroid/research_outpost/power)
 "fQ" = (
 /obj/machinery/door/airlock/engineering{
+	dir = 4;
 	name = "Outpost Power";
 	req_one_access = list(65,10,24)
 	},
@@ -3567,6 +3612,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research Shuttle Dock";
 	req_access = list(65)
 	},
@@ -3731,6 +3777,7 @@
 /area/asteroid/research_outpost/med)
 "if" = (
 /obj/machinery/door/airlock/medical/glass{
+	dir = 4;
 	id_tag = "";
 	name = "Medbay";
 	req_one_access = list(65,5)
@@ -3817,6 +3864,7 @@
 /area/asteroid/mine/west_outpost)
 "il" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Temporary Storage";
 	req_access = list(65)
 	},
@@ -4362,11 +4410,6 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "je" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Misc Research APC";
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -4379,6 +4422,12 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4763,25 +4812,27 @@
 "kd" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/machinery/power/apc{
-	name = "Outpost Shuttle Dock APC";
-	pixel_y = -24
-	},
 /obj/item/weapon/newspaper,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	name = "RnD down APC";
+	pixel_y = -27
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
 	},
 /area/asteroid/research_outpost/entry)
 "ke" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Outpost Medbay APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -5127,6 +5178,7 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "kG" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Isolation room 4";
 	req_access = list(65)
 	},
@@ -5282,6 +5334,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Loading Area";
 	req_access = list(65)
 	},
@@ -5354,11 +5407,6 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/iso1)
 "lh" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Temporary Storage APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5368,6 +5416,12 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/tempstorage)
@@ -5488,17 +5542,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Long Term Storage APC";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5585,17 +5640,18 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Expedition Area APC";
-	pixel_x = 26
-	},
 /obj/machinery/camera{
 	c_tag = "Research Outpost Expedition Prep";
 	dir = 8;
 	network = list("Research","SS13")
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
+	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "lJ" = (
@@ -5622,14 +5678,14 @@
 /area/asteroid/research_outpost/maint)
 "lN" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Maintenance APC";
-	pixel_x = 24
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
@@ -5867,6 +5923,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Equipment storage";
 	req_access = list(65)
 	},
@@ -5969,14 +6026,15 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "mJ" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Isolation Room One APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso1)
@@ -6003,11 +6061,6 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/tempstorage)
 "mM" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Isolation Room Two APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -6017,6 +6070,12 @@
 	name = "Door Bolt Control";
 	pixel_y = -25;
 	specialfunctions = 4
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/harvesting)
@@ -6053,17 +6112,18 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "mR" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Isolation Room Three APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -6274,6 +6334,7 @@
 /area/asteroid/research_outpost/longtermstorage)
 "nr" = (
 /obj/machinery/door/airlock/maintenance{
+	dir = 4;
 	req_one_access = list(12,65)
 	},
 /obj/machinery/door/firedoor,
@@ -6573,7 +6634,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
@@ -6947,11 +7010,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Maintenance Storage APC";
-	pixel_x = 24
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -6961,6 +7019,11 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
 "oU" = (
@@ -7039,6 +7102,7 @@
 /area/asteroid/mine/living_quarters)
 "pf" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "miningdorm1";
 	name = "Room 1"
 	},
@@ -7434,6 +7498,7 @@
 /area/asteroid/mine/living_quarters)
 "qc" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "miningdorm3";
 	name = "Room 3"
 	},
@@ -7617,6 +7682,7 @@
 /area/asteroid/mine/abandoned)
 "qD" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Mining Bridge";
 	req_one_access = list(54,65)
 	},
@@ -7767,6 +7833,7 @@
 /area/asteroid/mine/explored)
 "qW" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "miningdorm2";
 	name = "Room 2"
 	},
@@ -8478,7 +8545,9 @@
 	},
 /area/asteroid/mine/living_quarters)
 "sS" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sT" = (
@@ -8500,11 +8569,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /turf/simulated/floor/plating,
@@ -8598,13 +8667,14 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tk" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Dwarf Outpost APC";
-	pixel_x = -32
-	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo left APC";
+	pixel_x = -27
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
 "tl" = (
@@ -8896,10 +8966,10 @@
 	pixel_y = 1
 	},
 /obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
 	dir = 1;
-	name = "Mining Communications APC";
-	pixel_x = 1;
-	pixel_y = 25
+	name = "Cargo top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8966,6 +9036,7 @@
 "uk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_west_outpost_inner";
 	locked = 1;
@@ -9351,6 +9422,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Mining Station EVA";
 	req_access = list(54)
 	},
@@ -9711,6 +9783,7 @@
 "vQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_west_outpost_outer";
 	locked = 1;
@@ -9829,14 +9902,14 @@
 	},
 /area/asteroid/mine/west_outpost)
 "wf" = (
-/obj/machinery/power/apc{
-	name = "Mining West Outpost APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo down APC";
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -10071,6 +10144,7 @@
 /area/asteroid/mine/living_quarters)
 "wH" = (
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Break Room";
 	req_access = list(54)
 	},
@@ -10377,6 +10451,7 @@
 /area/asteroid/mine/living_quarters)
 "xl" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Toilet"
 	},
 /turf/simulated/floor{
@@ -10417,16 +10492,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -10682,6 +10757,7 @@
 "yg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_east_outer";
 	locked = 1;
@@ -10925,6 +11001,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Mining Station Bridge";
 	req_access = list(48)
 	},
@@ -10969,11 +11046,6 @@
 	},
 /area/asteroid/mine/production)
 "zo" = (
-/obj/machinery/power/apc{
-	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/structure/rack,
 /obj/item/device/suit_cooling_unit{
 	pixel_y = -4
@@ -10984,6 +11056,11 @@
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo down APC";
+	pixel_y = -27
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
@@ -11065,6 +11142,7 @@
 "zB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_east_inner";
 	locked = 1;
@@ -11186,6 +11264,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Mining Station Bridge";
 	req_access = list(48)
 	},
@@ -11458,6 +11537,7 @@
 "Az" = (
 /obj/machinery/door/poddoor{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "out_misclab";
 	name = "Test Chamber Blast Doors";
@@ -11539,13 +11619,11 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "AU" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Mining Shuttle Airlock";
-	req_access = list(48)
+/obj/machinery/door/airlock{
+	dir = 4
 	},
 /turf/simulated/floor,
-/area/asteroid/mine/production)
+/area/asteroid/mine/abandoned)
 "AV" = (
 /obj/machinery/mineral/stacking_unit_console,
 /turf/simulated/wall/r_wall,
@@ -11840,22 +11918,16 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "De" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Mining Bridge";
+	req_access = list(54)
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/asteroid/mine/production)
+/area/asteroid/mine/explored)
 "Df" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -12729,24 +12801,22 @@
 /turf/simulated/wall,
 /area/asteroid/research_outpost/entry)
 "Rc" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station External APC";
-	pixel_x = 1;
-	pixel_y = 25
-	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo left APC";
+	pixel_x = -27
 	},
-/turf/simulated/floor/airless{
-	dir = 5;
-	icon_state = "asteroidfloor"
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
 	},
-/area/asteroid/mine/explored)
+/area/asteroid/mine/production)
 "Rd" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -26783,7 +26853,7 @@ qA
 qA
 qA
 ql
-tP
+De
 ql
 lA
 qA
@@ -31823,8 +31893,8 @@ fY
 ei
 ei
 ei
-iR
-iR
+AU
+AU
 ei
 ei
 ei
@@ -34388,7 +34458,7 @@ ei
 bM
 bM
 ei
-iR
+AU
 ei
 bM
 bM
@@ -49163,7 +49233,7 @@ uo
 uo
 uo
 uo
-Rc
+as
 tL
 lA
 rH
@@ -55590,8 +55660,8 @@ aa
 aa
 kc
 Mc
-AU
-AU
+cn
+cn
 kc
 aa
 Be
@@ -56100,7 +56170,7 @@ wg
 Xc
 zd
 Qd
-De
+Rc
 Tj
 zd
 Re
