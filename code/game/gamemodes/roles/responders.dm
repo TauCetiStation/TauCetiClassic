@@ -76,3 +76,24 @@
 
 	logo_state = "soviet"
 	skillset_type = /datum/skillset/soviet
+
+/datum/role/security_responder
+	name = "Security Officer"
+	id = "Security Officer"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/officer
+
+/datum/role/marine_responder
+	name = "Marine"
+	id = "Marine"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/hos
+
+/datum/role/emag_clown
+	name = "Clown That Emags Things"
+	id = "Clown That Emags Things"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/clown

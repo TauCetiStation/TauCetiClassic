@@ -59,7 +59,7 @@
 			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
-				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE deletereason IS NULL AND"
+				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE deletereason IS NULL AND "
 				if(category == "Any")
 					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
