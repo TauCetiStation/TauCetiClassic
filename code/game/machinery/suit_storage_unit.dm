@@ -533,6 +533,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name 			 = "Syndicate Striker Suit Storage Unit"
 	SUIT_TYPE		 = /obj/item/clothing/suit/space/syndicate/elite
+	HELMET 			 = /obj/item/clothing/suit/space/syndicate/elite
 	BOOTS_TYPE  	 = /obj/item/clothing/shoes/magboots/syndie
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
 	name 			 = "Elite Syndicate Hardsuit Storage Unit"
