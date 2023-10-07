@@ -90,14 +90,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space)
-"aq" = (
-/obj/machinery/door/airlock/hatch{
-	dir = 4;
-	name = "Medbay"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/space_structures/iss)
 "ar" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/effect/decal/cleanable/dirt,
@@ -304,7 +296,7 @@
 /area/space_structures/iss)
 "aZ" = (
 /obj/machinery/door/airlock/hatch{
-	dir = 4
+	name = "E.V.A"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -345,24 +337,21 @@
 /area/space_structures/iss)
 "be" = (
 /obj/machinery/door/airlock/hatch{
-	dir = 4;
-	name = "E.V.A"
+	name = "Engineering"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bf" = (
 /obj/machinery/door/airlock/hatch{
-	dir = 4;
-	name = "Engineering"
+	name = "Dormitories"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bg" = (
 /obj/machinery/door/airlock/hatch{
-	dir = 4;
-	name = "Dormitories"
+	name = "Medbay"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -970,7 +959,7 @@ aa
 aa
 aa
 ae
-aZ
+aw
 ae
 aa
 aa
@@ -999,7 +988,7 @@ aa
 aa
 af
 ae
-aZ
+aw
 ae
 aI
 aa
@@ -1017,7 +1006,7 @@ aa
 aa
 af
 ae
-bg
+bf
 ae
 aI
 aa
@@ -1046,7 +1035,7 @@ aa
 aa
 ad
 ae
-aZ
+aw
 ae
 aH
 aa
@@ -1075,7 +1064,7 @@ aa
 ad
 ae
 ae
-be
+aZ
 ae
 ae
 aa
@@ -1093,7 +1082,7 @@ aa
 aa
 ae
 ae
-bg
+bf
 ae
 ae
 aH
@@ -1227,7 +1216,7 @@ aa
 af
 ae
 ae
-bf
+be
 ae
 ae
 aa
@@ -1245,7 +1234,7 @@ aa
 aa
 ae
 ae
-aq
+bg
 ae
 ae
 aI
@@ -1274,7 +1263,7 @@ aa
 aa
 af
 ae
-aZ
+aw
 ae
 aI
 aa
@@ -1303,7 +1292,7 @@ aa
 aa
 ad
 ae
-bf
+be
 ae
 aH
 aa
@@ -1321,7 +1310,7 @@ aa
 aa
 ad
 ae
-aZ
+aw
 ae
 aH
 aa
@@ -1350,7 +1339,7 @@ aa
 aa
 aa
 ae
-aZ
+aw
 ae
 aa
 aa

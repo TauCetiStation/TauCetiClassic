@@ -80,17 +80,6 @@
 	icon_state = "bar"
 	},
 /area/space_structures/export_outpost)
-"ak" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "export"
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/export_outpost)
 "al" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -112,19 +101,6 @@
 	dir = 1;
 	pixel_y = -7
 	})
-"an" = (
-/obj/machinery/door/airlock/security{
-	dir = 4;
-	name = "Security Booth"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "redchecker"
-	},
-/area/space_structures/export_outpost)
 "ao" = (
 /obj/structure/window/fulltile/reinforced{
 	dir = 1;
@@ -427,15 +403,16 @@
 	},
 /area/space_structures/export_outpost)
 "aY" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/door/airlock/security{
+	name = "Security Booth"
 	},
-/obj/machinery/door/poddoor/shutters{
-	dir = 4;
-	id = "export"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
 /area/space_structures/export_outpost)
 "aZ" = (
 /obj/machinery/vending/holy{
@@ -868,9 +845,9 @@ aa
 aa
 ab
 ab
-ak
-ak
-ak
+ad
+ad
+ad
 ab
 ab
 aa
@@ -1069,7 +1046,7 @@ ab
 ab
 ab
 ab
-an
+aY
 ab
 ab
 aM
@@ -1167,9 +1144,9 @@ ab
 ab
 ab
 ab
-aY
-aY
-aY
+ad
+ad
+ad
 ab
 aa
 aa

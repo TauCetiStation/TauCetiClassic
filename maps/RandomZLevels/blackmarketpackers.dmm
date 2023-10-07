@@ -481,9 +481,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship3)
 "bH" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
+/obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship3)
 "bI" = (
@@ -775,8 +773,8 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "apc top";
-	pixel_y = 28
+	locked = 0;
+	req_access = list()
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/BMPship3)
@@ -980,9 +978,7 @@
 	},
 /area/awaymission/BMPship1)
 "dh" = (
-/obj/machinery/door/airlock/silver{
-	dir = 4
-	},
+/obj/machinery/door/airlock/silver,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1141,8 +1137,9 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "apc top";
-	pixel_y = 28
+	environ = 0;
+	locked = 0;
+	req_access = list()
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
@@ -1465,9 +1462,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/BMPship3)
 "eA" = (
-/obj/machinery/door/airlock/silver{
-	dir = 4
-	},
+/obj/machinery/door/airlock/silver,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1515,8 +1510,8 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "apc top";
-	pixel_y = 28
+	locked = 0;
+	req_access = list()
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -1902,9 +1897,7 @@
 /turf/simulated/floor,
 /area/awaymission/BMPship1)
 "fH" = (
-/obj/machinery/door/airlock/silver{
-	dir = 4
-	},
+/obj/machinery/door/airlock/silver,
 /turf/simulated/floor/carpet,
 /area/awaymission/BMPship2)
 "fI" = (

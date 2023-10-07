@@ -678,14 +678,6 @@
 	icon_state = "swall_s6"
 	},
 /area/awaymission/spacebattle/cruiser)
-"bV" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/awaymission/spacebattle/syndicate5)
 "bW" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall14"
@@ -786,20 +778,6 @@
 /mob/living/simple_animal/hostile/syndicate/melee/space,
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
-"cn" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/awaymission/spacebattle/syndicate6)
-"co" = (
-/obj/machinery/door/airlock/phoron{
-	dir = 4
-	},
-/turf/simulated/wall/mineral/phoron,
-/area/awaymission/spacebattle/secret)
 "cs" = (
 /obj/effect/landmark/corpse/engineer{
 	mobname = "Rosen Miller";
@@ -1607,13 +1585,12 @@
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "fl" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
+/obj/machinery/door/poddoor{
+	id = "spacebattlestorage";
+	name = "Secure Storage"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/awaymission/spacebattle/syndicate2)
+/turf/simulated/floor,
+/area/awaymission/spacebattle/cruiser)
 "fm" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/simulated/floor{
@@ -1626,13 +1603,11 @@
 /turf/simulated/shuttle/wall,
 /area/awaymission/spacebattle/cruiser)
 "fp" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
+/obj/machinery/door/airlock/external,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/spacebattle/syndicate3)
+/area/awaymission/spacebattle/syndicate4)
 "fq" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/glasses/material,
@@ -2466,13 +2441,11 @@
 	},
 /area/awaymission/spacebattle/syndicate7)
 "hY" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
+/obj/machinery/door/airlock/external,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/spacebattle/syndicate1)
+/area/awaymission/spacebattle/syndicate7)
 "hZ" = (
 /obj/machinery/shower{
 	dir = 4
@@ -2715,13 +2688,12 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "iJ" = (
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "spacebattlestorage";
-	name = "Secure Storage"
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/airless{
+	dir = 10;
+	icon_state = "floor4"
 	},
-/turf/simulated/floor,
-/area/awaymission/spacebattle/cruiser)
+/area)
 "iK" = (
 /obj/item/stack/rods,
 /turf/simulated/floor/airless{
@@ -2804,13 +2776,11 @@
 /turf/environment/space,
 /area)
 "iX" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
+/obj/machinery/door/airlock/external,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/spacebattle/syndicate4)
+/area/awaymission/spacebattle/syndicate5)
 "iY" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
@@ -2881,14 +2851,11 @@
 	},
 /area/awaymission/spacebattle/syndicate6)
 "jj" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/turf/simulated/floor/airless{
-	dir = 10;
+/obj/machinery/door/airlock/external,
+/turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area)
+/area/awaymission/spacebattle/syndicate6)
 "jk" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
@@ -3009,13 +2976,9 @@
 /turf/simulated/wall/mineral/phoron,
 /area/awaymission/spacebattle/secret)
 "jD" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/awaymission/spacebattle/syndicate7)
+/obj/machinery/door/airlock/phoron,
+/turf/simulated/wall/mineral/phoron,
+/area/awaymission/spacebattle/secret)
 
 (1,1,1) = {"
 aa
@@ -15738,8 +15701,8 @@ ab
 et
 eu
 eu
-iX
-iX
+fp
+fp
 eu
 eu
 gF
@@ -18565,8 +18528,8 @@ ab
 ev
 eu
 eu
-iX
-iX
+fp
+fp
 eu
 eu
 gG
@@ -21312,8 +21275,8 @@ ab
 aP
 aW
 aW
-hY
-hY
+bd
+bd
 aW
 aW
 aW
@@ -21431,8 +21394,8 @@ ab
 iL
 iM
 iM
-bV
-bV
+iX
+iX
 iM
 iM
 iY
@@ -24258,8 +24221,8 @@ ab
 iN
 iM
 iM
-bV
-bV
+iX
+iX
 iM
 iM
 iZ
@@ -25167,8 +25130,8 @@ ab
 aT
 aW
 aW
-hY
-hY
+bd
+bd
 aW
 aW
 aW
@@ -27624,8 +27587,8 @@ ab
 jc
 jd
 jd
-cn
-cn
+jj
+jj
 jd
 jd
 jk
@@ -30129,10 +30092,10 @@ cg
 cg
 cg
 cg
-iJ
-iJ
-iJ
-iJ
+fl
+fl
+fl
+fl
 cg
 gJ
 cg
@@ -30451,8 +30414,8 @@ ab
 je
 jd
 jd
-cn
-cn
+jj
+jj
 jd
 jd
 jl
@@ -36707,8 +36670,8 @@ ab
 ac
 ah
 ah
-fl
-fl
+ak
+ak
 ah
 ah
 ah
@@ -40562,8 +40525,8 @@ ab
 ag
 ah
 ah
-fl
-fl
+ak
+ak
 ah
 ah
 ah
@@ -45838,8 +45801,8 @@ ab
 ab
 iB
 iB
-jj
-jj
+iJ
+iJ
 iD
 iD
 iR
@@ -48665,8 +48628,8 @@ ab
 iE
 iD
 iD
-jj
-jj
+iJ
+iJ
 iD
 iD
 iS
@@ -50089,8 +50052,8 @@ ab
 av
 aB
 aB
-fp
-fp
+aE
+aE
 aB
 aB
 aB
@@ -53944,8 +53907,8 @@ ab
 az
 aB
 aB
-fp
-fp
+aE
+aE
 aB
 aB
 aB
@@ -64064,7 +64027,7 @@ hh
 hq
 hq
 hh
-jD
+hY
 hh
 hq
 hq
@@ -64427,7 +64390,7 @@ jC
 jC
 jC
 jC
-co
+jD
 jC
 jC
 jC
