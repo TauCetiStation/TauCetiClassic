@@ -175,7 +175,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/weapons/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS) == ROUND_ASPECT_REARM_BULLETS)
 		additional_costs *= 5
 
 /datum/supply_pack/pistol
@@ -191,7 +191,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_ENERGY))
 		additional_costs *= 5
 
 /datum/supply_pack/pistol_magazine
@@ -306,7 +306,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/ballistic/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_ENERGY))
 		additional_costs *= 3
 
 /datum/supply_pack/erifle
@@ -325,7 +325,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/erifle/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
 		additional_costs *= 3
 
 /datum/supply_pack/shotgunammo_nonlethal
@@ -403,7 +403,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/m79/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_ENERGY)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_ENERGY))
 		additional_costs *= 3
 
 /datum/supply_pack/ion_rifle
@@ -418,7 +418,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/ion_rifle/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
 		additional_costs *= 3
 
 /datum/supply_pack/expenergy
@@ -437,7 +437,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/expenergy/New()
 	..()
-	if(SSround_aspects.name == ROUND_ASPECT_REARM_BULLETS)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
 		additional_costs *= 5
 
 

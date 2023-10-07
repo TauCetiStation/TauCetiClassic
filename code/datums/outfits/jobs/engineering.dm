@@ -17,7 +17,7 @@
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 /datum/outfit/job/chief_engineer/pre_equip(mob/living/carbon/human/H)
-	if(SSround_aspects.aspect_name == ROUND_ASPECT_HF_AGENT)
+	if(SSround_aspects.has_aspect(ROUND_ASPECT_HF_AGENT))
 		implants += /obj/item/weapon/implant/obedience
 
 // ENGINEER OUTFIT

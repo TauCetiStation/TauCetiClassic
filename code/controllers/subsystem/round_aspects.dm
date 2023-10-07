@@ -23,8 +23,8 @@ SUBSYSTEM_DEF(round_aspects)
 		return
 	for(var/aspect_type in subtypesof(/datum/round_aspect))
 		var/datum/round_aspect/RS = new aspect_type
-		//if(RS.min_players <= player_list.len)
-		//	continue
+		if(RS.min_players <= player_list.len)
+			continue
 		LAZYADD(possible_aspect, RS)
 	aspect = pick(possible_aspect)
 	aspect_name = aspect.name
@@ -34,3 +34,8 @@ SUBSYSTEM_DEF(round_aspects)
 	if(aspect.game_announcement)
 		to_chat(world, aspect.game_announcement)
 
+/datum/controller/subsystem/round_aspects/proc/has_aspect(name)
+	if(aspect_name == name)
+		return TRUE
+	else
+		return FALSE

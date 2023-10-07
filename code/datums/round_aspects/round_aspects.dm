@@ -18,9 +18,7 @@
 	min_players = 0
 
 /datum/round_aspect/rearm_laser/on_start()
-	//var/datum/event/feature/area/replace/station_rearmament_energy/RE
 	new /datum/event/feature/area/replace/station_rearmament_energy
-	//RE.New()
 
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
@@ -28,6 +26,4 @@
 	min_players = 0
 
 /datum/round_aspect/rearm_ballistic/on_start()
-	//var/datum/event/feature/area/replace/station_rearmament_bullets/RB
 	new /datum/event/feature/area/replace/station_rearmament_bullets
-	//RB.New()
