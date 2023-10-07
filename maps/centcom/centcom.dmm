@@ -4974,20 +4974,6 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "amd" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_y = -2
-	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -5580,7 +5566,12 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ang" = (
-/obj/machinery/suit_storage_unit/vox/engine,
+/obj/item/clothing/suit/space/vox/pressure,
+/obj/structure/rack,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/mask/gas/vox,
+/obj/item/clothing/head/helmet/space/vox/pressure,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5779,20 +5770,6 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "anB" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = -2
-	},
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -6475,7 +6452,12 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "apf" = (
-/obj/machinery/suit_storage_unit/vox/stealth,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/vox/stealth,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/mask/gas/vox,
+/obj/item/clothing/head/helmet/space/vox/stealth,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -7391,8 +7373,8 @@
 /obj/structure/glowshroom,
 /obj/structure/rack,
 /obj/item/device/radio/off{
-	pixel_x = -4;
-	pixel_y = 1
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /obj/item/device/radio/off{
 	pixel_x = 6;
@@ -7908,10 +7890,15 @@
 	},
 /area/shuttle/vox/arkship)
 "arW" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/vox/carapace,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/mask/gas/vox,
+/obj/item/clothing/head/helmet/space/vox/carapace,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/vox,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -8877,7 +8864,12 @@
 /turf/simulated/shuttle/plating,
 /area/space)
 "atQ" = (
-/obj/machinery/suit_storage_unit/vox/medic,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/vox/medic,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/mask/gas/vox,
+/obj/item/clothing/head/helmet/space/vox/medic,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -9920,13 +9912,9 @@
 /area/shuttle/vox/arkship)
 "awf" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/nitrogen{
-	pixel_y = 3
-	},
 /obj/item/weapon/tank/jetpack/nitrogen,
-/obj/item/weapon/tank/jetpack/nitrogen{
-	pixel_y = -3
-	},
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/item/weapon/tank/jetpack/nitrogen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -10702,26 +10690,8 @@
 "axH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/device/debugger{
-	pixel_x = 4
-	},
-/obj/item/device/debugger{
-	pixel_x = -4
-	},
-/obj/item/clothing/accessory/storage/black_vest{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/obj/item/clothing/accessory/storage/black_vest{
-	pixel_x = -8
-	},
-/obj/item/clothing/accessory/storage/black_vest{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/clothing/accessory/storage/black_vest{
-	pixel_x = 8
-	},
+/obj/item/device/debugger,
+/obj/item/device/debugger,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "axI" = (
@@ -11643,21 +11613,24 @@
 "azE" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/security,
+/obj/item/clothing/head/helmet/space/rig/ert/security,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/plastique,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/storage/backpack/ert/security,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/plastique,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/clothing/glasses/night{
-	pixel_y = 8
-	},
-/obj/item/clothing/glasses/sunglasses/hud/sechud{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/belt/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/device/flash,
-/obj/item/weapon/storage/backpack/ert/security,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11983,13 +11956,9 @@
 /area/velocity)
 "aAk" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/nitrogen{
-	pixel_y = 3
-	},
 /obj/item/weapon/tank/jetpack/nitrogen,
-/obj/item/weapon/tank/jetpack/nitrogen{
-	pixel_y = -3
-	},
+/obj/item/weapon/tank/jetpack/nitrogen,
+/obj/item/weapon/tank/jetpack/nitrogen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -12584,6 +12553,7 @@
 /area/custom/tophat)
 "aBC" = (
 /obj/structure/rack,
+/obj/item/device/remote_device/ERT,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1441;
@@ -12591,7 +12561,6 @@
 	name = "Spec Ops Intercom";
 	pixel_y = 22
 	},
-/obj/item/device/remote_device/ERT,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -12604,17 +12573,11 @@
 /area/centcom/specops)
 "aBD" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/belt/security,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/item/weapon/storage/backpack/ert/commander,
-/obj/item/clothing/glasses/night{
-	pixel_y = 8
-	},
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/item/clothing/glasses/sunglasses/hud/sechud{
-	pixel_y = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -12646,28 +12609,13 @@
 "aBH" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/head/helmet/space/rig/ert/engineer,
+/obj/item/device/flash,
+/obj/item/device/multitool,
 /obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/glasses/meson,
 /obj/item/weapon/storage/backpack/ert/engineer,
-/obj/item/clothing/glasses/meson{
-	pixel_y = 10
-	},
-/obj/item/device/multitool{
-	pixel_x = -9;
-	pixel_y = -7
-	},
-/obj/item/device/flash{
-	pixel_x = 9;
-	pixel_y = -4
-	},
-/obj/machinery/camera{
-	c_tag = "Spec. Ops. Engineering";
-	dir = 4;
-	network = list("ERT")
-	},
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1441;
@@ -12675,6 +12623,14 @@
 	name = "Spec Ops Intercom";
 	pixel_x = -28;
 	pixel_y = -5
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Engineering";
+	dir = 4;
+	network = list("ERT")
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -12736,13 +12692,8 @@
 /area/custom/wizard_station)
 "aBO" = (
 /obj/structure/rack,
-/obj/item/device/aicard{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/weapon/pinpointer/advpinpointer{
-	pixel_x = 5
-	},
+/obj/item/device/aicard,
+/obj/item/weapon/pinpointer/advpinpointer,
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
@@ -12833,7 +12784,9 @@
 /area/centcom/specops)
 "aBZ" = (
 /obj/structure/rack,
+/obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -14262,29 +14215,22 @@
 "aFr" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/weapon/storage/pill_bottle/inaprovaline{
-	pixel_x = -9;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/pill_bottle/dylovene{
-	pixel_x = -9;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/pill_bottle/bicaridine{
-	pixel_x = -9
-	},
-/obj/item/weapon/storage/pill_bottle/dermaline{
-	pixel_x = -9;
-	pixel_y = -5
-	},
-/obj/item/weapon/storage/pill_bottle/tramadol{
-	pixel_x = 9;
-	pixel_y = -5
-	},
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/melee/baton,
+/obj/item/clothing/head/helmet/space/rig/ert/medical,
 /obj/item/weapon/gun/energy/taser/stunrevolver,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/shockpaddles/standalone,
+/obj/item/weapon/storage/box/autoinjectors,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/pill_bottle/tramadol,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dermaline,
+/obj/item/weapon/storage/pill_bottle/bicaridine,
+/obj/item/weapon/storage/pill_bottle/inaprovaline,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/belt/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -14768,13 +14714,9 @@
 /area/shuttle/syndicate/start)
 "aGt" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_y = 3
-	},
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_y = -3
-	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -15393,20 +15335,6 @@
 	},
 /area/centcom/specops)
 "aHM" = (
-/obj/structure/rack,
-/obj/item/weapon/melee/baton{
-	pixel_y = 6
-	},
-/obj/item/weapon/melee/baton{
-	pixel_y = 3
-	},
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/melee/baton{
-	pixel_y = -3
-	},
-/obj/item/weapon/melee/baton{
-	pixel_y = -6
-	},
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -16862,13 +16790,9 @@
 /area/centcom/control)
 "aLt" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_y = 3
-	},
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_y = -3
-	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -16940,29 +16864,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aLC" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/weapon/gun/energy/taser/stunrevolver,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/box/autoinjectors,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/specops)
 "aLD" = (
 /obj/structure/closet/secure_closet/syndicate,
 /obj/effect/decal/turf_decal/alpha/red{
@@ -17255,24 +17156,27 @@
 "aMl" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/security,
+/obj/item/clothing/head/helmet/space/rig/ert/security,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/plastique,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/storage/backpack/ert/security,
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/plastique,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/clothing/glasses/night{
-	pixel_y = 8
-	},
-/obj/item/clothing/glasses/sunglasses/hud/sechud{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/belt/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/device/flash,
-/obj/item/weapon/storage/backpack/ert/security,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -22632,11 +22536,6 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/adv,
@@ -22878,11 +22777,6 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/shockpaddles/standalone,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -25230,30 +25124,14 @@
 /area/custom/syndicate_mothership/elite_squad)
 "frb" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = -6
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -25597,22 +25475,15 @@
 "gbb" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
+/obj/item/clothing/head/helmet/space/rig/ert/engineer,
+/obj/item/device/flash,
+/obj/item/device/multitool,
+/obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/backpack/ert/engineer,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/item/weapon/storage/belt/utility/full,
-/obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/weapon/storage/backpack/ert/engineer,
-/obj/item/clothing/glasses/meson{
-	pixel_y = 10
-	},
-/obj/item/device/multitool{
-	pixel_x = -9;
-	pixel_y = -7
-	},
-/obj/item/device/flash{
-	pixel_x = 9;
-	pixel_y = -4
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -55466,7 +55337,7 @@ aFr
 aFr
 aFr
 aFr
-aLC
+aFr
 aLv
 aBp
 aBp

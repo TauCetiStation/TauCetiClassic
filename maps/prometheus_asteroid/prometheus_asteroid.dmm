@@ -1923,7 +1923,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1946,7 +1945,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6173,7 +6171,6 @@
 /area/asteroid/research_outpost/harvesting)
 "zz" = (
 /obj/structure/rack,
-/obj/item/device/suit_cooling_unit,
 /obj/item/weapon/pickaxe/drill{
 	pixel_y = 8
 	},
@@ -6781,6 +6778,12 @@
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "Cd" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/globose/mining,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/power/apc/largecell{
 	dir = 4;
 	name = "largecell apc right";
@@ -6793,7 +6796,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9921,10 +9923,11 @@
 	},
 /area/asteroid/mine/eva)
 "Sc" = (
+/obj/item/device/suit_cooling_unit,
+/obj/structure/rack,
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
-/obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitepurple"
@@ -9941,6 +9944,11 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/gearstore)
 "Sj" = (
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/science,
+/obj/structure/rack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
@@ -10025,6 +10033,11 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "SM" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/globose/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/globose/science,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -10034,7 +10047,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10688,8 +10700,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11015,7 +11025,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11058,10 +11067,15 @@
 	},
 /area/asteroid/mine/production)
 "XM" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/globose/mining,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11288,16 +11302,20 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/gearstore)
 "YO" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/globose/science,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/globose/science,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/science/globose,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
