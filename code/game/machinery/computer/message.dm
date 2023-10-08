@@ -33,7 +33,6 @@
 	var/obj/item/device/pda/customrecepient = null
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
-	var/read_only = FALSE
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user)
 	if(isscrewing(O) && emag)
@@ -410,9 +409,6 @@
 
 				//Send message
 				if("Send")
-					if(read_only)
-						to_chat(usr, "<span class='warning'>Этот терминал не авторизован для отправки сообщений.</span>")
-						return
 
 					if(isnull(customsender) || customsender == "")
 						customsender = "UNKNOWN"
