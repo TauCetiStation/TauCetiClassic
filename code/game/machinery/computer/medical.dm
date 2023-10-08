@@ -21,6 +21,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 	var/next_print = 0
 	var/docname
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	var/read_only = FALSE
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -233,6 +234,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			src.temp += "<br><b>Details:</b><br> <A href='?src=\ref[src];field=vir_desc;edit_vir=\ref[v]'>[v.fields["description"]]</A>"
 
 		if (href_list["del_all"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			src.temp = "Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[src];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[src];temp=1'>No</A><br>"
 
 		if (href_list["del_all2"])
@@ -243,6 +247,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			src.temp = "All records deleted."
 
 		if (href_list["field"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			var/a1 = src.active1
 			var/a2 = src.active2
 			switch(href_list["field"]) // TODO: what the fuck is this mess
@@ -275,7 +282,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						for(var/i in global.department_accounts)
 							if(t1 == global.department_accounts[i].account_number)
 								tgui_alert(usr, "This is department account, you can't use it.")
-								return				
+								return
 						if(MA.owner_name != src.active1.fields["name"])
 							tgui_alert(usr, "[src.active1.fields["name"]] is not owner of this money account.")
 							return
@@ -284,7 +291,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						if(R)
 							tgui_alert(usr, "This money account is already used by [R.fields["id"]] record.")
 							return
-						
+
 						for(var/mob/living/carbon/human/H as anything in global.human_list)
 							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
 								continue
@@ -295,10 +302,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Medical", freq = radiochannels["Medical"])
 							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Security", freq = radiochannels["Security"])
 							qdel(announcer)
-						
+
 						if(src.active1.fields["insurance_account_number"] != t1)
 							tgui_alert(usr, "Can't match the 'fingerprint' data, please check this and try again.")
-						
+
 				if("sex")
 					if (istype(src.active1, /datum/data/record))
 						if (src.active1.fields["sex"] == "Male")
@@ -412,6 +419,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 				PDA_Manifest.Cut()
 
 		if (href_list["m_stat"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			if (src.active1)
 				switch(href_list["m_stat"])
 					if("insane")
@@ -425,6 +435,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 
 
 		if (href_list["b_type"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			if (src.active2)
 				switch(href_list["b_type"])
 					if("an")
@@ -446,6 +459,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 
 
 		if (href_list["del_r"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			if (src.active2)
 				src.temp = "Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='?src=\ref[src];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='?src=\ref[src];temp=1'>No</A><br>"
 
@@ -470,6 +486,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			src.screen = 4
 
 		if (href_list["new"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			if ((istype(src.active1, /datum/data/record) && !( istype(src.active2, /datum/data/record) )))
 				var/datum/data/record/R = new /datum/data/record(  )
 				R.fields["name"] = src.active1.fields["name"]
@@ -491,6 +510,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 				src.screen = 4
 
 		if (href_list["add_c"])
+			if(read_only)
+				to_chat(usr, "<span class='warning'>Этот терминал не авторизован для редактирования записей.</span>")
+				return
 			if (!( istype(src.active2, /datum/data/record) ))
 				return
 			var/a2 = src.active2
@@ -592,7 +614,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
 				if(istype(active1.fields["photo_f"], /icon))
 					print_photo(photo, docname)
-				if(istype(active1.fields["photo_s"], /icon))
+				if(istype(active1.fields["phot	o_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
 					print_photo(photo, docname)
 				next_print = world.time + 50

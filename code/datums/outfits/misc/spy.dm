@@ -3,7 +3,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	shoes = /obj/item/clothing/shoes/boots/combat
-	l_ear = /obj/item/device/radio/headset/syndicate/alt
+	l_ear = /obj/item/device/radio/headset/syndicate/alt/locked
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
 	back = /obj/item/weapon/storage/backpack/satchel

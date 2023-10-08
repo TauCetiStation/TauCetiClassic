@@ -66,12 +66,12 @@
 /area/space_structures/listening_post)
 "ak" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "Listening_Post_outer";
 	locked = 1;
 	name = "Listening Post";
-	req_access = list(150);
-	dir = 4
+	req_access = list(150)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
@@ -388,7 +388,8 @@
 	pixel_y = 32
 	},
 /obj/machinery/computer/message_monitor{
-	dir = 4
+	dir = 4;
+	read_only = 1
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -431,6 +432,7 @@
 "aL" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/med_data/laptop{
+	read_only = 1;
 	req_one_access = list(150)
 	},
 /obj/machinery/alarm{
@@ -569,12 +571,12 @@
 /area/space_structures/listening_post)
 "aU" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "Listening_Post_inner";
 	locked = 1;
 	name = "Listening Post";
-	req_access = list(150);
-	dir = 4
+	req_access = list(150)
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
@@ -720,9 +722,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Personal Quarters";
-	req_access = list(150);
-	dir = 4
+	req_access = list(150)
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/listening_post)

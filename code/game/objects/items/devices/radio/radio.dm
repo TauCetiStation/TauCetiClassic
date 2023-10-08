@@ -34,6 +34,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	g_amt = 25
 	m_amt = 75
 	var/const/FREQ_LISTENING = 1
+	var/locked = FALSE
 		//FREQ_BROADCASTING = 2
 
 /obj/item/device/radio
@@ -91,15 +92,17 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
 		dat += "Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
 
-	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				"}
+
+	if(!locked)
+		dat += {"
+					Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+					Frequency:
+					<A href='byond://?src=\ref[src];freq=-10'>-</A>
+					<A href='byond://?src=\ref[src];freq=-2'>-</A>
+					[format_frequency(frequency)]
+					<A href='byond://?src=\ref[src];freq=2'>+</A>
+					<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+					"}
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
