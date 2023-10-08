@@ -34,9 +34,3 @@ SUBSYSTEM_DEF(round_aspects)
 	message_admins("Round Aspect: [aspect_name]")
 	if(aspect.game_announcement)
 		to_chat(world, aspect.game_announcement)
-
-/datum/controller/subsystem/round_aspects/proc/has_aspect(name)
-	if(aspect_name == name)
-		return TRUE
-	else
-		return FALSE

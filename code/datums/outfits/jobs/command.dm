@@ -19,7 +19,7 @@
 		)
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_HF_AGENT))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
 		implants += /obj/item/weapon/implant/obedience
 
 
@@ -36,5 +36,5 @@
 	r_hand_back = /obj/item/weapon/storage/box/ids
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_HF_AGENT))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
 		implants += /obj/item/weapon/implant/obedience

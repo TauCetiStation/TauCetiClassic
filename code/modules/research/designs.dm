@@ -1932,7 +1932,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nuclear_gun/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_URANIUM = 10000)
 
 /datum/design/stunrevolver
@@ -1946,7 +1946,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunrevolver/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		materials = list(MAT_METAL = 20000)
 
 /datum/design/laserrifle
@@ -1960,7 +1960,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/laserrifle/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		materials = list (MAT_METAL = 16000, MAT_GLASS = 5000, MAT_URANIUM = 1000)
 
 /datum/design/lasercannon
@@ -1974,7 +1974,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/lasercannon/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_DIAMOND = 4000, MAT_URANIUM = 1000)
 
 /datum/design/decloner
@@ -2069,7 +2069,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_10_gun/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		materials = list(MAT_METAL = 25000, MAT_GOLD = 12000, MAT_SILVER = 9000, MAT_DIAMOND = 1000, MAT_URANIUM = 2000)
 
 /datum/design/plasma_104_gun
@@ -2083,7 +2083,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_104_gun/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		materials = list(MAT_METAL = 25000, MAT_GOLD = 12000, MAT_SILVER = 15000, MAT_DIAMOND = 15000, MAT_URANIUM = 10000)
 
 /datum/design/plasma_mag
@@ -2106,7 +2106,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smg/New()
 	..()
-	if(SSround_aspects.has_aspect(ROUND_ASPECT_REARM_ENERGY))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		materials = list(MAT_METAL = 16000, MAT_SILVER = 4000, MAT_DIAMOND = 2000)
 
 /datum/design/msmg9mm
