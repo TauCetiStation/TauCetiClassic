@@ -151,8 +151,8 @@
 	name = IMPOSTER
 	id = IMPOSTER
 	required_pref = ROLE_IMPOSTER
-	//No restricts, everyone can be a imposter
-	restricted_jobs = list()
+	//only heads and quartermaster can have imposter role
+	restricted_jobs = list("Chaplain", "Cargo Technician", "Shaft Miner", "Recycler", "Bartender", "Chef", "Botanist", "Janitor", "Barber", "Librarian", "Clown", "Mime", "Station Engineer", "Atmospheric Technician", "Technical Assistant", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychiatrist", "Medical Intern", "Scientist", "Xenoarchaeologist", "Xenobiologist", "Roboticist",  "Research Assistant")
 	//Challenge
 	give_uplink = FALSE
 	telecrystals = 0
