@@ -614,7 +614,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
 				if(istype(active1.fields["photo_f"], /icon))
 					print_photo(photo, docname)
-				if(istype(active1.fields["phot	o_s"], /icon))
+				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
 					print_photo(photo, docname)
 				next_print = world.time + 50
