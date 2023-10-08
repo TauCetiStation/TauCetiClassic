@@ -249,6 +249,7 @@
 				win = FALSE
 			if(count < objectives.objectives.len)
 				text += "<br>"
+			count++
 		if(!faction)
 			if(win)
 				feedback_add_details("[id]_success","SUCCESS")
