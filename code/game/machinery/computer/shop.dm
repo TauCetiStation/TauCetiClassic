@@ -255,8 +255,6 @@
 				MA.shopping_cart -= "[lot_id]"
 				mode = 12
 
-	updateUsrDialog()
-
 /proc/check_cargo_consoles_link(object)
 	if(!global.cargo_consoles)
 		return
