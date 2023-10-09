@@ -1170,12 +1170,12 @@
 			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
 		if("Shop_Change_Per_page")
 			var/number = text2num(href_list["shop_per_page"])
-			if(number)
+			if(number && number in list(5, 10, 15, 20))
 				category_shop_per_page = number
 
 		//Maintain Orders and Offers
 		if("Shop_Add_Order_or_Offer")
-			if(!global.check_cargo_consoles_link(src))
+			if(!global.check_cargo_consoles_operational(src))
 				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
@@ -1188,7 +1188,7 @@
 
 		//Buy Item
 		if("Shop_Order")
-			if(!global.check_cargo_consoles_link(src))
+			if(!global.check_cargo_consoles_operational(src))
 				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
@@ -1221,7 +1221,7 @@
 		if("Shop_Shopping_Cart")
 			mode = 82
 		if("Shop_Mark_As_Delivered")
-			if(!global.check_cargo_consoles_link(src))
+			if(!global.check_cargo_consoles_operational(src))
 				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
