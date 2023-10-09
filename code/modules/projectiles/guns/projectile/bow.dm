@@ -55,7 +55,7 @@
 
 /obj/item/weapon/crossbow/atom_init()
 	. = ..()
-	desc = "Старая классика в стиле [gamestory_start_year+2]. Возьми в руки эту жестянку."
+	desc = "Старая классика в стиле [gamestory_start_year+2]. Подними эту банку!"
 
 /obj/item/weapon/crossbow/attackby(obj/item/I, mob/user, params)
 	if(!arrow)
