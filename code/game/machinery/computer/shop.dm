@@ -187,7 +187,7 @@
 			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
 		if("Shop_Change_Per_page")
 			var/number = text2num(href_list["shop_per_page"])
-			if(number && number in list(5, 10, 15, 20))
+			if(number && (number in list(5, 10, 15, 20)))
 				category_shop_per_page = number
 
 		//Maintain Orders and Offers
