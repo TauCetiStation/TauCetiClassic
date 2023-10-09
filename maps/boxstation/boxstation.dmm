@@ -7322,6 +7322,9 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/item/wallclock{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8751,9 +8754,6 @@
 	department = "Security";
 	dir = 8
 	},
-/obj/item/wallclock{
-	pixel_x = 32
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8872,10 +8872,6 @@
 /area/station/security/lobby)
 "aoP" = (
 /obj/structure/table/woodentable,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
 	pixel_x = 8;
 	pixel_y = 3
@@ -9591,6 +9587,10 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -11934,16 +11934,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aus" = (
-/obj/machinery/computer/shop{
-	pixel_y = 24;
-	department = "Science"
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -13697,9 +13693,6 @@
 	department = "Cargo";
 	pixel_y = 24
 	},
-/obj/item/portrait/captain{
-	pixel_y = 32
-	},
 /obj/item/folder_holder{
 	pixel_y = 12
 	},
@@ -13872,6 +13865,10 @@
 /area/station/rnd/telesci)
 "ayc" = (
 /obj/structure/closet/wardrobe/atmospherics_yellow,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "caution"
@@ -16035,6 +16032,9 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
+	},
+/obj/item/portrait/captain{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -23520,10 +23520,6 @@
 	},
 /obj/item/weapon/storage/secure/briefcase,
 /obj/item/weapon/changeling_test,
-/obj/machinery/computer/shop{
-	pixel_y = 24;
-	department = "Science"
-	},
 /obj/item/portrait/captain{
 	pixel_y = 32
 	},
@@ -23554,6 +23550,10 @@
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Science"
+	},
+/obj/machinery/computer/shop{
+	pixel_y = 24;
+	department = "Science"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -33915,13 +33915,6 @@
 	department = "Engineering";
 	pixel_y = -32
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -39665,6 +39658,10 @@
 	c_tag = "Medbay Storage";
 	dir = 4;
 	network = list("SS13","Medical")
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -50380,10 +50377,6 @@
 	department = "Medical";
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
-	pixel_y = 1
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -57452,10 +57445,6 @@
 	pixel_x = 24;
 	department = "Engineering";
 	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -72587,6 +72576,19 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"hdJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "hga" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
@@ -97010,7 +97012,7 @@ csh
 lUd
 bOy
 vWv
-biV
+hdJ
 baI
 kYI
 prF
