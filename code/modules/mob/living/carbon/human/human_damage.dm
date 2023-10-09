@@ -24,6 +24,11 @@
 
 // =============================================
 
+/mob/living/carbon/human/proc/getTotalLoss()
+	return getOxyLoss() + getFireLoss() + getBruteLoss() + getToxLoss() + getCloneLoss()
+
+// =============================================
+
 /mob/living/carbon/human/getBrainLoss()
 	if(status_flags & GODMODE)
 		return 0

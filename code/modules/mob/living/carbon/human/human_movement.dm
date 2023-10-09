@@ -33,9 +33,8 @@
 		if(embedded_flag)
 			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
 
-		var/health_deficiency = (100 - health + halloss)
-		if(health_deficiency >= 40)
-			tally += health_deficiency / 25
+		tally += (getTotalLoss() / 100) * 2.5 + (getHalLoss() / 100) * 4.5
+		//slowdown per precent of damage on human or pain, pain most effectivy but can be more 100
 
 		var/hungry = 500 - get_satiation()
 		if(hungry >= 350) // Slow down if nutrition <= 150
