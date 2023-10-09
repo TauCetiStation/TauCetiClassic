@@ -13,6 +13,7 @@
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
+	item_state_world = "l_arm_world"
 	part = BP_L_ARM
 	bodypart_type = /obj/item/organ/external/l_arm/robot
 
@@ -20,6 +21,7 @@
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
+	item_state_world = "r_arm_world"
 	part = BP_R_ARM
 	bodypart_type = /obj/item/organ/external/r_arm/robot
 
@@ -27,6 +29,7 @@
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
+	item_state_world = "l_leg_world"
 	part = BP_L_LEG
 	bodypart_type = /obj/item/organ/external/l_leg/robot
 
@@ -34,6 +37,7 @@
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
+	item_state_world = "r_leg_world"
 	part = BP_R_LEG
 	bodypart_type = /obj/item/organ/external/r_leg/robot
 

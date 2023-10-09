@@ -197,6 +197,10 @@
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
 
+/obj/item/clothing/head/helmet/tactical/marinad/leader
+	name = "marine beret"
+	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
+	icon_state = "beret_marinad"
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"

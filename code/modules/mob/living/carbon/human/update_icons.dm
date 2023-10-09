@@ -193,7 +193,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
 		if(Head && !Head.is_stump)
-			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -FACEMASK_LAYER)
+			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -BODY_LAYER)
 			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
 			standing += jaw
 
@@ -796,7 +796,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.open)
-			standing += image("icon" = 'icons/mob/surgery.dmi', "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
+			standing += image("icon" = species.surgery_icobase, "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
 
 	if(standing.len)
 		for(var/image/I in standing)

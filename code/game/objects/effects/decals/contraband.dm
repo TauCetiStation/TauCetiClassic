@@ -44,6 +44,10 @@
 
 	AddElement(/datum/element/beauty, 300)
 
+/obj/item/weapon/poster/calendar/atom_init(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
+	resulting_poster = new /obj/structure/sign/poster/calendar(src)
+
 // The poster sign/structure
 
 /obj/structure/sign/poster
@@ -164,6 +168,16 @@
 	name = "random poster" // could even be ripped
 	icon_state = "random_anything"
 	random_basetype = /obj/structure/sign/poster
+
+/obj/structure/sign/poster/calendar
+	name = "2223 calendar"
+	icon_state = "calendar"
+	desc = "Календарь на 2223-й год."
+
+/obj/structure/sign/poster/sivtsev
+	name = "sivtsev table"
+	icon_state = "sivtsev"
+	desc = "Таблица Сивцева для проверки остроты зрения."
 
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
