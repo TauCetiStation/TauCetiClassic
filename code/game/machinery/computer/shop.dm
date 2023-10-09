@@ -77,8 +77,7 @@
 	data["latest_lots"] = online_shop_lots_latest_frontend
 
 	shop_lots = list()
-	if(mode == 1)
-
+	if(mode == 11)
 		for(var/index in global.online_shop_lots_hashed)
 			var/list/Lots = global.online_shop_lots_hashed[index]
 			for(var/datum/shop_lot/Lot in Lots)
@@ -175,7 +174,9 @@
 		if("Shop_Category")
 			category_shop_page = 1
 			mode = 11
-			category = href_list["categ"]
+			var/categ = href_list["categ"]
+			if(!isnull(global.shop_categories[categ]))
+				category = categ
 		if("Shop_Change_Page")
 			var/page = href_list["shop_change_page"]
 			switch(page)
