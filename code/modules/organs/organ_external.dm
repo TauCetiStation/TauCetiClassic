@@ -125,6 +125,9 @@
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
+	if(owner.species.gender_limb_icons)
+		var/g = (owner.gender == FEMALE ? "f" : "m")
+		icon_state += "_[g]"
 
 	if(parent)
 		parent.children += src

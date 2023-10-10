@@ -455,6 +455,8 @@ var/global/list/preferences_datums = list()
 
 		// create normal bodypart
 		else if(status == null && character.species.has_bodypart[name] && (!BP || BP.controller_type == /datum/bodypart_controller/robot))
+			if(BP)
+				qdel(BP)
 			var/type = character.species.has_bodypart[name]
 			var/obj/item/organ/external/new_BP = new type(null)
 			new_BP.insert_organ(character)
