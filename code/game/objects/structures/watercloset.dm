@@ -360,7 +360,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/machinery/shower
 	name = "shower"
-	desc = "The HS-451. Installed in the [global.gamestory_start_year] by the Nanotrasen Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
@@ -374,6 +373,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/payed_time = 0
 	var/cost_per_activation = 10
+
+/obj/machinery/shower/atom_init()
+  	. = ..()
+  	desc = "The HS-451. Installed in the [global.gamestory_start_year] by the Nanotrasen Hygiene Division."
 
 //add heat controls? when emagged, you can freeze to death in it?
 
