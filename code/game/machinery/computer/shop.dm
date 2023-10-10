@@ -167,10 +167,7 @@
 
 	switch(href_list["choice"])
 		if("Return")//Return
-			if(mode<=9)
-				mode = 1
-			else
-				mode = round(mode/10)
+			mode = 1
 		if("Shop_Category")
 			category_shop_page = 1
 			mode = 11
