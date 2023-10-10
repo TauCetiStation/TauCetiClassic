@@ -112,6 +112,10 @@
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
 
+#define isleftleg(A)  (istype(A, /obj/item/organ/external/l_leg))
+
+#define isrightleg(A) (istype(A, /obj/item/organ/external/r_leg))
+
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define ismachinery(A) (istype(A, /obj/machinery))

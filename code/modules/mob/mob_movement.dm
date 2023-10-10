@@ -62,7 +62,8 @@
 			next_move_dir_add = 0
 			next_move_dir_sub = 0
 
-	if(mob.control_object)	Move_object(direct)
+	if(mob.control_object)
+		Move_object(direct)
 
 	if(isobserver(mob) || isovermind(mob))
 		return mob.Move(n,direct)
@@ -143,7 +144,7 @@
 		//Relaymoves
 		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 			return mob.pulledby.relaymove(mob, direct)
-		
+
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space

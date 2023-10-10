@@ -125,9 +125,6 @@
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
-	if(owner.species.gender_limb_icons)
-		var/g = (owner.gender == FEMALE ? "f" : "m")
-		icon_state += "_[g]"
 
 	if(parent)
 		parent.children += src
@@ -136,7 +133,7 @@
 		check_rejection()
 
 /obj/item/organ/external/proc/recolor()
-	if(!owner)
+	if(!owner || controller_type == /datum/bodypart_controller/robot)
 		return
 	if (owner.species.flags[HAS_SKIN_COLOR])
 		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
@@ -173,6 +170,9 @@
 	else if (status & ORGAN_MUTATED)
 		icon = species.deform
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
+	else if (controller_type == /datum/bodypart_controller/robot)
+		icon = species.prothesis_icobase
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
 	else
 		icon = species.icobase
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
