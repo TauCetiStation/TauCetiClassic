@@ -1,4 +1,4 @@
-#define HAS_ROUND_ASPECT(aspect)  (SSround_aspects.aspect_name ? (SSround_aspects.aspect_name[aspect] ? TRUE : FALSE) : FALSE)
+#define HAS_ROUND_ASPECT(aspect) (SSround_aspects.aspect_name == aspect) ? TRUE : FALSE
 
 #define ROUND_ASPECT_HF_AGENT "Agent Of High Affairs"
 
