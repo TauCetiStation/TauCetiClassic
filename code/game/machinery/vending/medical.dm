@@ -96,9 +96,9 @@
 	icon_state = "omskvend"
 	product_ads = "NORKOMAN SUKA SHTOLE?;STOP NARTCOTICS!; so i heard u liek mudkipz; METRO ZATOPEELO"
 	products = list(
-		/obj/item/weapon/reagent_containers/pill/happy = 20,
-		/obj/item/weapon/reagent_containers/pill/zoom = 20,
-		/obj/item/weapon/reagent_containers/pill/LSD = 20,
+		/obj/item/weapon/reagent_containers/pill/happy = 14,
+		/obj/item/weapon/reagent_containers/pill/zoom = 14,
+		/obj/item/weapon/reagent_containers/pill/LSD = 14,
 		/obj/item/weapon/reagent_containers/syringe = 12,
 		/obj/item/weapon/reagent_containers/glass/bottle/zombiepowder = 4,
 		/obj/item/weapon/reagent_containers/glass/bottle/jenkem = 4,
@@ -112,12 +112,3 @@
 		/obj/item/device/healthanalyzer = 3,
 	)
 	private = TRUE
-
-/obj/item/weapon/reagent_containers/glass/beaker/LSD
-	name = "LSD IV"
-	desc = "Ahaha oh wow."
-
-/obj/item/weapon/reagent_containers/glass/beaker/LSD/atom_init()
-	. = ..()
-	reagents.add_reagent("mindbreaker", 0)
-	update_icon()
