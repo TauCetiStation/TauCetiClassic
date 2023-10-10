@@ -360,7 +360,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/machinery/shower
 	name = "shower"
-	desc = "The HS-451. Installed in the 2210s by the Nanotrasen Hygiene Division."
+	desc = "The HS-451. Installed in the [global.gamestory_start_year] by the Nanotrasen Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
