@@ -72686,7 +72686,6 @@
 	},
 /area/station/rnd/hallway)
 "nRJ" = (
-/obj/item/clothing/head/hardhat,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
