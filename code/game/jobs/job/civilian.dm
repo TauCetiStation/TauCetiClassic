@@ -24,7 +24,7 @@
 	restricted_species = list(TAJARAN, VOX, DIONA)
 
 	department_stocks = list("Cargo" = 40)
-
+	flags = JOB_FLAG_CARGO
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
@@ -44,7 +44,7 @@
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
 
 	department_stocks = list("Cargo" = 20)
-
+	flags = JOB_FLAG_CARGO
 
 /datum/job/mining
 	title = "Shaft Miner"
@@ -64,7 +64,7 @@
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
 
 	department_stocks = list("Cargo" = 10)
-
+	flags = JOB_FLAG_CARGO
 
 /datum/job/recycler
 	title = "Recycler"
@@ -90,7 +90,7 @@
 	*/
 
 	department_stocks = list("Cargo" = 10)
-
+	flags = JOB_FLAG_CARGO
 
 //Food
 /datum/job/bartender
@@ -115,7 +115,7 @@
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/chef
 	title = "Chef"
@@ -139,6 +139,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/hydro
 	title = "Botanist"
@@ -156,7 +157,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
 	skillsets = list("Botanist" = /datum/skillset/botanist)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/janitor
 	title = "Janitor"
@@ -173,7 +174,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
 	skillsets = list("Janitor" = /datum/skillset/janitor)
-
+	flags = JOB_FLAG_CIVIL
 
 //More or less assistants
 /datum/job/barber
@@ -192,7 +193,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
 	skillsets = list("Barber" = /datum/skillset/barber)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/librarian
 	title = "Librarian"
@@ -210,7 +211,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
 	skillsets = list("Librarian" = /datum/skillset/librarian)
-
+	flags = JOB_FLAG_CIVIL
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
 /datum/job/lawyer
@@ -235,7 +236,7 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-
+	flags = JOB_FLAG_CIVIL|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/clown
 	title = "Clown"
@@ -253,6 +254,7 @@
 	outfit = /datum/outfit/job/clown
 	skillsets = list("Clown" = /datum/skillset/clown)
 	restricted_species = list(SKRELL)
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
@@ -274,6 +276,7 @@
 	salary = 20
 	outfit = /datum/outfit/job/mime
 	skillsets = list("Mime" = /datum/skillset/mime)
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)

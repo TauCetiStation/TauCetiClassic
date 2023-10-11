@@ -280,7 +280,7 @@
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		if(C)
 			if(nutrition < (C.maxcharge*0.1))
-				msg += "His indicator of charge blinks red.\n"
+				msg += "[t_His] indicator of charge blinks red.\n"
 		else
 			msg += "[t_He] has no battery!\n"
 
@@ -462,7 +462,7 @@
 
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C.isabsorbing)
+		if(HAS_TRAIT_FROM(src, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 		if(species.name == ABOMINATION)
 			if(C.absorbed_dna.len)
