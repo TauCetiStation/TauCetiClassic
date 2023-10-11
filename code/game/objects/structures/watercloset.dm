@@ -376,7 +376,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/machinery/shower/atom_init()
   	. = ..()
-  	desc = "The HS-451. Installed in the [global.gamestory_start_year] by the Nanotrasen Hygiene Division."
+  	desc = "The HS-451. Installed in the [round(global.gamestory_start_year, 10)]s by the Nanotrasen Hygiene Division."
 
 //add heat controls? when emagged, you can freeze to death in it?
 
