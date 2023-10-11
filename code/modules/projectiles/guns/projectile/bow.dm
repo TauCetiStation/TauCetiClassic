@@ -1,6 +1,7 @@
 /obj/item/weapon/arrow
 
 	name = "bolt"
+    cases = list("болта", "болту", "болт", "болтом", "болте")
 	desc = "У меня есть подсказка для тебя - найди цель"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
@@ -25,6 +26,7 @@
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
+    cases = list("стержня", "стержню", "стержень", "стерженем", "стержне")
 	desc = "Не плачь по мне, Орифена."
 	icon_state = "metal-rod"
 
@@ -37,6 +39,7 @@
 
 /obj/item/weapon/crossbow
 	name = "powered crossbow"
+    cases = list("арбалета", "арбалету", "арбалет", "арбалетом", "арбалете")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
