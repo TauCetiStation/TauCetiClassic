@@ -9,8 +9,10 @@
 			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands)
-		if(add_blood(M.bloody_hands_mob))
-			M.bloody_hands--
+		//check qdeleted human, need rewrite for storing reference of blood, not a ref of human
+		if(!QDELETED(M.bloody_hands_mob))
+			if(add_blood(M.bloody_hands_mob))
+				M.bloody_hands--
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = isitem(src)?1.2:1

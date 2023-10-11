@@ -25,7 +25,6 @@
 	var/changelingID = "Changeling" // flavor ID like Theta/Tau/etc.
 	var/unique_changeling_marker // unique ID like DNA but secret
 	var/geneticdamage = 0
-	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/list/purchasedpowers = list()
 	var/mimicing = ""
