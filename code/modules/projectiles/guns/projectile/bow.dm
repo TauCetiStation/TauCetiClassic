@@ -25,7 +25,6 @@
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
-    cases = list("стержня", "стержню", "стержень", "стерженем", "стержне")
 	desc = "Не плачь по мне, Орифена."
 	icon_state = "metal-rod"
 
