@@ -538,7 +538,7 @@
 		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
 
 		active_power_cost = chargeuse * 150
-	else if(DBP.?brute_dam && charge.charges > 0)
+	else if(DBP?.brute_dam && charge.charges > 0)
 		var/chargeuse = min(charge.charges, 2)
 		DBP.heal_damage(10, 0, 0, 1)
 		charge.charges -= chargeuse
