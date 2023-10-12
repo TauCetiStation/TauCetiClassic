@@ -5,3 +5,5 @@
 #define ROUND_ASPECT_REARM_ENERGY "Station Rearm: Energy"
 
 #define ROUND_ASPECT_REARM_BULLETS "Station Rearm: Ballistic"
+
+#define ROUND_ASPECT_CYBER_STATION "CyberStation 13"

@@ -41,3 +41,6 @@
 
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
 		e.cost *= 5
+
+/datum/round_aspect/cyber_station
+	name = ROUND_ASPECT_CYBER_STATION
