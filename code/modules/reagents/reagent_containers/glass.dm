@@ -168,6 +168,17 @@
 				return
 
 			reagents.add_reagent("nanites2", 1)
+	else if(istype(I, /obj/item/ammo_casing) && !istype(I, /obj/item/ammo_casing/energy) && !istype(I, /obj/item/ammo_casing/magic) && !istype(I, /obj/item/ammo_casing/plasma) && !istype(I, /obj/item/ammo_casing/syringegun))
+		var/obj/item/ammo_casing/Casing = I
+		if(is_open_container() && reagents && Casing.BB)
+			if(reagents.total_volume >= reagents.maximum_volume)
+				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
+				return
+			qdel(Casing.BB)
+			Casing.BB = null
+			Casing.update_icon()
+
+			reagents.add_reagent("gunpowder", 2)
 	else
 		return ..()
 

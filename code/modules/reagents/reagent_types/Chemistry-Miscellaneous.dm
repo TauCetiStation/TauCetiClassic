@@ -116,6 +116,15 @@
 	taste_message = "oil" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
 	custom_metabolism = 0.01
 
+/datum/reagent/gunpowder
+	name = "Gunpowder"
+	id = "gunpowder"
+	description = "Highly flammable powder."
+	reagent_state = SOLID
+	color = "#414257"
+	taste_message = "iron"
+	custom_metabolism = 0.01
+
 /datum/reagent/thermite
 	name = "Thermite"
 	id = "thermite"

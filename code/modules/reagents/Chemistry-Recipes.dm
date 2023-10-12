@@ -1,3 +1,33 @@
+/obj/effect/glass_shrapnel
+	name = ""
+	desc = "you cant read this"
+	invisibility = 101
+	anchored = TRUE
+	density = FALSE
+
+/obj/effect/glass_shrapnel/atom_init(mapload, amount = 1, power = 1)
+	. = ..()
+	for(var/i in 1 to amount)
+		var/obj/item/weapon/shard/S = new(loc)
+		S.throw_at(locate(loc.x + rand(40) - 20, loc.y + rand(40) - 20, loc.z), 81, power)
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/metal_shrapnel
+	name = ""
+	desc = "you cant read this"
+	invisibility = 101
+	anchored = TRUE
+	density = FALSE
+
+/obj/effect/metal_shrapnel/atom_init(mapload, amount = 1, power = 1)
+	. = ..()
+	for(var/i in 1 to amount)
+		var/obj/item/weapon/shard/shrapnel/S = new(loc)
+		S.throw_at(locate(loc.x + rand(40) - 20, loc.y + rand(40) - 20, loc.z), 81, power)
+
+	return INITIALIZE_HINT_QDEL
+
 ///////////////////////////////////////////////////////////////////////////////////
 /datum/chemical_reaction
 	var/name = null
@@ -32,8 +62,18 @@
 
 /datum/chemical_reaction/explosion_potassium/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
+
+	var/gunpowder_amount = holder.get_reagent_amount("gunpowder")
+	var/gunpowder_coefficient = max(100 - (gunpowder_amount/created_volume*100 - 10)**2, 0)/100 + 1
+	var/exp_power = round(created_volume/10 * gunpowder_coefficient)
+
+	if(istype(holder.my_atom, /obj/item/weapon/grenade/chem_grenade/large))
+		new /obj/effect/metal_shrapnel(location, rand(7, 10), exp_power)
+	else if(istype(holder.my_atom, /obj/item/weapon/grenade/chem_grenade))
+		new /obj/effect/metal_shrapnel(location, rand(5, 7), exp_power)
+
 	var/datum/effect/effect/system/reagents_explosion/e = new()
-	e.set_up(round (created_volume/10, 1), location, 0, 0)
+	e.set_up(exp_power, location, 0, 0)
 	e.start()
 	holder.del_reagent(id)
 
@@ -382,8 +422,19 @@
 	result_amount = 2
 
 /datum/chemical_reaction/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+
+	var/gunpowder_amount = holder.get_reagent_amount("gunpowder")
+	var/gunpowder_coefficient = max(100 - (gunpowder_amount/created_volume*100 - 10)**2, 0)/100 + 1
+	var/exp_power = round(created_volume/2 * gunpowder_coefficient)
+
+	if(istype(holder.my_atom, /obj/item/weapon/grenade/chem_grenade/large))
+		new /obj/effect/metal_shrapnel(location, rand(7, 10), exp_power)
+	else if(istype(holder.my_atom, /obj/item/weapon/grenade/chem_grenade))
+		new /obj/effect/metal_shrapnel(location, rand(5, 7), exp_power)
+
 	var/datum/effect/effect/system/reagents_explosion/e = new()
-	e.set_up(round (created_volume/2, 1), holder.my_atom, 0, 0)
+	e.set_up(exp_power, holder.my_atom, 0, 0)
 	e.holder_damage(holder.my_atom)
 	if(isliving(holder.my_atom))
 		e.amount *= 0.5
