@@ -1,6 +1,7 @@
 /obj/item/weapon/arrow
 
 	name = "bolt"
+	cases = list("болта", "болту", "болт", "болтом", "болте")
 	desc = "У меня есть подсказка для тебя - найди цель"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
