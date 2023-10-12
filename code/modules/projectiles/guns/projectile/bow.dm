@@ -37,7 +37,6 @@
 
 /obj/item/weapon/crossbow
 	name = "powered crossbow"
-    cases = list("арбалета", "арбалету", "арбалет", "арбалетом", "арбалете")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
