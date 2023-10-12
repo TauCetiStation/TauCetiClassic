@@ -117,6 +117,12 @@
 			continue
 		if(isanyantag(player))
 			continue
+		if(!(required_pref in player.client.prefs.be_role))
+			continue
+		if(jobban_isbanned(player, required_pref))
+			continue
+		if(role_available_in_minutes(player, required_pref))
+			continue
 		var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
 		if(!J)
 			continue
