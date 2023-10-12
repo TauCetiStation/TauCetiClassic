@@ -26,6 +26,7 @@
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
+	cases = list("стержня", "стержню", "стержень", "стерженем", "стержне")
 	desc = "Не плачь по мне, Орифена."
 	icon_state = "metal-rod"
 
@@ -38,6 +39,7 @@
 
 /obj/item/weapon/crossbow
 	name = "powered crossbow"
+	cases = list("арбалета", "арбалету", "арбалет", "арбалетом", "арбалете")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
