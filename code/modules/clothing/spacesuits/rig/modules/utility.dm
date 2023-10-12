@@ -544,7 +544,7 @@
 		charge.charges -= chargeuse
 
 		active_power_cost = chargeuse * 200
-	else if(DBP.?burn_dam && charge.charges > 0)
+	else if(DBP?.burn_dam && charge.charges > 0)
 		var/chargeuse = min(charge.charges, 2)
 		DBP.heal_damage(0, 10, 0, 1)
 		charge.charges -= chargeuse
