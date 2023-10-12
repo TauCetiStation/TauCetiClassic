@@ -121,7 +121,7 @@
 			continue
 		if(jobban_isbanned(player, required_pref))
 			continue
-		if(role_available_in_minutes(player, required_pref))
+		if(!role_available_in_minutes(player, required_pref))
 			continue
 		var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
 		if(!J)
