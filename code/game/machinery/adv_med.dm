@@ -281,8 +281,8 @@
 					if(!AN && !open && !infected && !imp)
 						AN = "Не обнаружено:"
 					if(!(BP.is_stump))
-						dat += text("<td>[BP.name]</td><td><font color='[]'>[BP.burn_dam]</font></td><td><font color='[]'>[BP.brute_dam]</font></td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "orange" : "blue"), (BP.brute_dam > 0 ? "red" : "blue"))
-						storedinfo += text("<td>[BP.name]</td><td><font color='[]'>[BP.burn_dam]</font></td><td><font color='[]'>[BP.brute_dam]</font></td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "orange" : "blue"), (BP.brute_dam > 0 ? "red" : "blue"))
+						dat += text("<td>[BP.name]</td><td>[]</td><td>[]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "<font color='orange'>[BP.burn_dam]</font>" : "-/-"), (BP.brute_dam > 0 ? "<font color='red'>[BP.brute_dam]</font>" : "-/-"))
+						storedinfo += text("<td>[BP.name]</td><td>[]</td><td>[]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "<font color='orange'>[BP.burn_dam]</font>" : "-/-"), (BP.brute_dam > 0 ? "<font color='red'>[BP.brute_dam]</font>" : "-/-"))
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -334,10 +334,10 @@
 					if(!organ_status && !infection)
 						infection = "Не обнаружено:"
 					dat += "<tr>"
-					dat += text("<td>[IO.name]</td><td>N/A</td><td><font color='[]'>[IO.damage]</font></td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "red" : "blue"))
+					dat += text("<td>[IO.name]</td><td>N/A</td><td>[]</td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "<font color='red'>[IO.damage]</font>" : "-/-"))
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += text("<td>[IO.name]</td><td>N/A</td><td><font color='[]'>[IO.damage]</font></td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "red" : "blue"))
+					storedinfo += text("<td>[IO.name]</td><td>N/A</td><td>[]</td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "<font color='red'>[IO.damage]</font>" : "-/-"))
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"
