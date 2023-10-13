@@ -8,7 +8,7 @@
 
 #define ROUND_ASPECT_CYBER_STATION "CyberStation 13"
 
-#define ROUND_ASPECT_NO_TCOMMS "No Telecommunications"
+#define ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL "No Common Radio Channel"
 
 #define ROUND_ASPECT_HIGH_SPACE_RADIATION "High Level Of Space Radiation"
 
