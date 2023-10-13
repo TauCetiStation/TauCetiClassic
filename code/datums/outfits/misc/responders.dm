@@ -350,6 +350,8 @@
 
 	l_hand = /obj/item/device/megaphone
 
+	back = /obj/item/weapon/storage/backpack/security
+
 	backpack_contents = list(
 	/obj/item/weapon/storage/box/space_suit/soviet,
 	/obj/item/device/flashlight/seclite
@@ -368,14 +370,236 @@
 	H.mind.skills.add_available_skillset(/datum/skillset/soviet_leader)
 	H.mind.skills.maximize_active_skills()
 
+/datum/outfit/responders/security
+	name = "Responders: Security Officer"
+	uniform = /obj/item/clothing/under/rank/security
+	suit = /obj/item/clothing/suit/storage/flak
+	head = /obj/item/clothing/head/helmet
+	mask = /obj/item/clothing/mask/gas/sechailer
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
+	gloves = /obj/item/clothing/gloves/security
+	belt = /obj/item/weapon/storage/belt/security/ert
+	shoes = /obj/item/clothing/shoes/boots
+	l_ear = /obj/item/device/radio/headset/headset_sec
+	back = /obj/item/weapon/storage/backpack/security
+	id = /obj/item/weapon/card/id/sec
+
+	l_pocket = /obj/item/device/flashlight/seclite
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/security
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/security
+	)
+
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
+
+	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/responders/security/post_equip(mob/living/carbon/human/H)
+	if(H.gender == "male")
+		H.real_name = "[pick(global.first_names_male)] [pick(global.last_names)]"
+	else
+		H.real_name = "[pick(global.first_names_female)] [pick(global.last_names)]"
+	H.name = H.real_name
+
+	var/obj/item/clothing/under/rank/security/S = H.w_uniform
+	var/obj/item/clothing/accessory/A = new /obj/item/clothing/accessory/holster/armpit/taser(S)
+	A.on_attached(S, H, TRUE)
+	LAZYADD(S.accessories, A)
+
+	var/random_gun = rand(1, 5)
+	switch(random_gun)
+		if(1)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/shotgun/combat(H), SLOT_S_STORE)
+			H.equip_to_slot_or_del(new /obj/item/ammo_box/eight_shells/buckshot(H), SLOT_IN_BACKPACK)
+			H.equip_to_slot_or_del(new /obj/item/ammo_box/eight_shells/buckshot(H), SLOT_IN_BACKPACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_IN_BACKPACK)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/ionrifle(H), SLOT_S_STORE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_IN_BACKPACK)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/grenade_launcher/m79(H), SLOT_S_STORE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/r4046/rubber(H), SLOT_IN_BACKPACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_IN_BACKPACK)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/laser(H), SLOT_S_STORE)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_IN_BACKPACK)
+		if(5)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/plasma/p104sass(H), SLOT_S_STORE)
+			H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/plasma(H), SLOT_IN_BACKPACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_IN_BACKPACK)
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = "Security Officer"
+	ID.rank = ID.assignment
+	ID.access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
+	H.sec_hud_set_ID()
+
+/datum/outfit/responders/security/leader
+	name = "Responders: Head of Security"
+	uniform = /obj/item/clothing/under/rank/head_of_security
+	suit = /obj/item/clothing/suit/armor/hos
+	head = /obj/item/clothing/accessory/armor/dermal
+	glasses = /obj/item/clothing/glasses/hud/hos_aug
+	belt = /obj/item/weapon/storage/belt/security/ert
+	l_ear = /obj/item/device/radio/headset/heads/hos
+	l_pocket = /obj/item/weapon/melee/telebaton
+	id = /obj/item/weapon/card/id/secGold
+	mask = null
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/hos,
+	/obj/item/weapon/storage/box/handcuffs,
+	/obj/item/weapon/storage/box/flashbangs,
+	/obj/item/weapon/melee/chainofcommand,
+	/obj/item/device/remote_device/captain
+	)
+
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
+
+	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/responders/security/leader/post_equip(mob/living/carbon/human/H)
+	if(H.gender == "male")
+		H.real_name = "[pick(global.first_names_male)] [pick(global.last_names)]"
+	else
+		H.real_name = "[pick(global.first_names_female)] [pick(global.last_names)]"
+	H.name = H.real_name
+
+	var/obj/item/clothing/under/S = H.w_uniform
+	var/obj/item/clothing/accessory/A = new /obj/item/clothing/accessory/holster/armpit/revenant(S)
+	A.on_attached(S, H, TRUE)
+	LAZYADD(S.accessories, A)
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = "Head of Security"
+	ID.rank = ID.assignment
+	ID.access = list(
+		access_security, access_sec_doors, access_brig, access_armory,
+		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
+		access_research, access_mining, access_medical, access_construction,
+		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
+	)
+	H.sec_hud_set_ID()
+
+	H.mind.skills.add_available_skillset(/datum/skillset/hos)
+	H.mind.skills.maximize_active_skills()
+
+/datum/outfit/responders/marines
+	name = "Responders: Marine"
+	uniform = /obj/item/clothing/under/tactical/marinad
+	suit = /obj/item/clothing/suit/marinad
+	suit_store = /obj/item/weapon/gun/projectile/automatic/m41a
+	head = /obj/item/clothing/head/helmet/tactical/marinad
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+	gloves = /obj/item/clothing/gloves/security/marinad
+	belt = /obj/item/weapon/storage/belt/security/tactical/marines
+	shoes = /obj/item/clothing/shoes/boots
+	l_ear = /obj/item/device/radio/headset/headset_sec/marinad
+	back = /obj/item/weapon/storage/backpack/dufflebag/marinad
+
+	id = /obj/item/weapon/card/id/centcom/ert
+
+	l_pocket = /obj/item/weapon/storage/pouch/flare/full
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/marines
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/combat,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	)
+
+	var/list/rank = list("Pvt.", "PFC", "LCpl.", "Cpl.")
+	var/assignment = "Marine"
+
+/datum/outfit/responders/marines/post_equip(mob/living/carbon/human/H)
+	H.real_name = "[pick(rank)] [pick(global.last_names)]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = assignment
+	ID.rank = assignment
+
+	H.sec_hud_set_ID()
+
+	H.mind.skills.add_available_skillset(/datum/skillset/hos) //best fighter there is
+	H.mind.skills.maximize_active_skills()
+
+/datum/outfit/responders/marines/leader
+	name = "Responders: Marine Squad Leader"
+
+	head = /obj/item/clothing/head/helmet/tactical/marinad/leader
+	suit_store = /obj/item/weapon/gun/projectile/automatic/m41a/launcher
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/combat,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light,
+	/obj/item/ammo_casing/r4046/explosive/light
+	)
+
+	rank = list("Sergeant")
+	assignment = "Marine Squad Leader"
+
+/datum/outfit/responders/clown
+	name = "Responders: Clown"
+	uniform = /obj/item/clothing/under/rank/clown
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	l_ear = /obj/item/device/radio/headset
+	back = /obj/item/weapon/storage/backpack/clown
+
+	id = /obj/item/weapon/card/id/clown
+
+	r_hand = /obj/item/weapon/bikehorn
+	l_hand = /obj/item/weapon/card/emag/clown
+
+	r_pocket = /obj/item/weapon/reagent_containers/spray/lube
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/clown,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+	)
+
+/datum/outfit/responders/clown/post_equip(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = "[pick(clown_names)], Clown That Emags Things"
+	H.name = H.real_name
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = "Clown"
+	ID.rank = ID.assignment
+
+	H.sec_hud_set_ID()
+
 /obj/item/weapon/storage/belt/security/ert
 	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
+
+/obj/item/weapon/storage/belt/security/tactical/marines
+	startswith = list(/obj/item/ammo_box/magazine/m41a = 7, /obj/item/ammo_box/magazine/colt = 2)
+
 
 /obj/item/weapon/storage/pouch/pistol_holster/ert
 	startswith = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec)
 
 /obj/item/weapon/storage/pouch/pistol_holster/pirates
 	startswith = list(/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/beanbag)
+
+/obj/item/weapon/storage/pouch/pistol_holster/security
+	startswith = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock)
+
+/obj/item/weapon/storage/pouch/pistol_holster/marines
+	startswith = list(/obj/item/weapon/gun/projectile/automatic/pistol/colt1911/dungeon)
 
 /obj/item/clothing/accessory/storage/black_vest/ert/atom_init()
 	. = ..()
@@ -419,6 +643,12 @@
 		/obj/item/device/healthanalyzer,
 	)
 
+/obj/item/clothing/accessory/holster/armpit/taser
+	holstered = /obj/item/weapon/gun/energy/taser
+
+/obj/item/clothing/accessory/holster/armpit/revenant
+	holstered = /obj/item/weapon/gun/energy/gun/hos
+
 /obj/item/weapon/storage/box/space_suit
 	name = "boxed space suit"
 	desc = "It's a boxed space suit with breathing mask and emergency oxygen tank."
@@ -428,4 +658,31 @@
 	new /obj/item/clothing/head/helmet/space/syndicate/civilian(src)
 	new /obj/item/clothing/suit/space/syndicate/civilian(src)
 	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+
+/obj/item/weapon/storage/box/space_suit/security/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/rig/security(src)
+	new /obj/item/clothing/suit/space/rig/security(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+
+/obj/item/weapon/storage/box/space_suit/hos/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/rig/security/hos(src)
+	new /obj/item/clothing/suit/space/rig/security/hos(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+
+/obj/item/weapon/storage/box/space_suit/combat/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/syndicate/striker(src)
+	new /obj/item/clothing/suit/space/syndicate/striker(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+
+/obj/item/weapon/storage/box/space_suit/clown/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/clown(src)
+	new /obj/item/clothing/suit/space/clown(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
