@@ -56,3 +56,6 @@
 		tcr.materials = list(MAT_GLASS = 10000, MAT_GOLD = 5000, MAT_SILVER = 5000, MAT_DIAMOND = 2000)
 	for(var/datum/design/telecomms_server/tcs in global.all_designs)
 		tcs.materials = list(MAT_GLASS = 10000, MAT_GOLD = 5000, MAT_SILVER = 5000, MAT_DIAMOND = 2000)
+
+/datum/round_aspect/high_space_rad
+	name = ROUND_ASPECT_HIGH_SPACE_RADIATION
