@@ -1652,6 +1652,7 @@
 #include "code\modules\events\roundstart_events\area\replace\deathly_sec.dm"
 #include "code\modules\events\roundstart_events\area\replace\del_cable.dm"
 #include "code\modules\events\roundstart_events\area\replace\del_surgeon_tools.dm"
+#include "code\modules\events\roundstart_events\area\replace\del_tcomms.dm"
 #include "code\modules\events\roundstart_events\area\replace\med_morgue.dm"
 #include "code\modules\events\roundstart_events\area\replace\med_storage.dm"
 #include "code\modules\events\roundstart_events\area\replace\mice_attack.dm"
