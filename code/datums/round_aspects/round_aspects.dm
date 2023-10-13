@@ -48,7 +48,7 @@
 /datum/round_aspect/no_common_rchannel
 	name = ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL
 
-/datum/round_aspect/no_tcoms/on_start()
+/datum/round_aspect/no_common_rchannel/on_start()
 	new /datum/event/feature/area/replace/del_tcomms
 
 /datum/round_aspect/high_space_rad
