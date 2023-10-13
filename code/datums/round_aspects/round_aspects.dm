@@ -44,3 +44,15 @@
 
 /datum/round_aspect/cyber_station
 	name = ROUND_ASPECT_CYBER_STATION
+
+/datum/round_aspect/no_tcoms
+	name = ROUND_ASPECT_NO_TCOMMS
+
+/datum/round_aspect/no_tcoms/on_start()
+	new /datum/event/feature/area/replace/del_tcomms
+	for(var/datum/design/telecomms_hub/tch in global.all_designs)
+		tch.materials = list(MAT_GLASS = 10000, MAT_GOLD = 5000, MAT_SILVER = 5000, MAT_DIAMOND = 2000)
+	for(var/datum/design/telecomms_relay/tcr in global.all_designs)
+		tcr.materials = list(MAT_GLASS = 10000, MAT_GOLD = 5000, MAT_SILVER = 5000, MAT_DIAMOND = 2000)
+	for(var/datum/design/telecomms_server/tcs in global.all_designs)
+		tcs.materials = list(MAT_GLASS = 10000, MAT_GOLD = 5000, MAT_SILVER = 5000, MAT_DIAMOND = 2000)

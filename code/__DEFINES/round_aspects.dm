@@ -7,3 +7,5 @@
 #define ROUND_ASPECT_REARM_BULLETS "Station Rearm: Ballistic"
 
 #define ROUND_ASPECT_CYBER_STATION "CyberStation 13"
+
+#define ROUND_ASPECT_NO_TCOMMS "No Telecommunications"
