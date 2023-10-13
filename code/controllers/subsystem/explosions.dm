@@ -475,27 +475,39 @@ SUBSYSTEM_DEF(explosions)
 			var/throwpower = 1
 			switch(severitypower)
 				if(EXPLODE_LIGHT)
-					throwpower = 10
+					throwpower = 15
 				if(EXPLODE_HEAVY)
-					throwpower = 25
+					throwpower = 30
 				if(EXPLODE_DEVASTATE)
 					throwpower = 50
 
-			var/turf/opposite_to_epicenter
+			var/opposite_to_epicenter
 			var/epicentered = FALSE
 			if((epicenter.x == affected.x) && (epicenter.y == affected.y) && (epicenter.z == affected.z))
 				epicentered = TRUE
 			else
-				opposite_to_epicenter = locate(affected.x - (epicenter.x - affected.x) * throwpower, affected.y - (epicenter.y - affected.y) * throwpower, affected.z) //180 degree to epicenter
+				opposite_to_epicenter = locate(clamp(affected.x - (epicenter.x - affected.x) * throwpower, 0, 255), clamp(affected.y - (epicenter.y - affected.y) * throwpower, 0, 255), affected.z) //180 degree to epicenter
 
 			for(var/atom/movable/I in affected.contents)
 				if(I.anchored || QDELETED(I))
 					continue
 
 				if(epicentered)
-					var/angle = rand(1, 360)
-					var/radius = throwpower * 2
-					opposite_to_epicenter = locate(affected.x + round(radius * cos(angle), 1), affected.y + round(radius * sin(angle), 1), affected.z) //random direction
+					//Self-sacrifice mechanics
+					var/covered = FALSE
+					for(var/atom/movable/Cover in epicenter.contents)
+						if(ishuman(Cover) && prob(50))
+							var/mob/living/carbon/human/H = Cover
+							if(!H.lying)
+								continue
+							opposite_to_epicenter = Cover
+							covered = TRUE
+							break
+
+					if(!covered)
+						var/angle = rand(1, 360)
+						var/radius = throwpower * 2
+						opposite_to_epicenter = locate(affected.x + round(radius * cos(angle), 1), affected.y + round(radius * sin(angle), 1), affected.z) //random direction
 
 				I.throw_at(opposite_to_epicenter, 100, throwpower)
 		cost_throw_turf = MC_AVERAGE(cost_throw_turf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))

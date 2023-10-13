@@ -33,7 +33,7 @@
 /datum/chemical_reaction/explosion_potassium/on_reaction(datum/reagents/holder, created_volume)
 	var/gunpowder_amount = holder.get_reagent_amount("gunpowder")
 	var/gunpowder_coefficient = max(100 - (gunpowder_amount/created_volume*100 - 10)**2, 0)/100 + 1
-	var/exp_power = round(created_volume/10 * gunpowder_coefficient)
+	var/exp_power = round(created_volume/11 * gunpowder_coefficient)
 
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	var/location = get_turf(holder.my_atom)

@@ -261,6 +261,8 @@
 	item_state_base = "shrapnel"
 	desc = "A bunch of tiny bits of shattered metal."
 	on_step_sound = 'sound/effects/metalstep.ogg'
+	force = 10
+	throwforce = 20
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
