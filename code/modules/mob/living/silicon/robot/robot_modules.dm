@@ -5,7 +5,7 @@
 	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
-	var/channels = list()
+	var/list/channels = list()
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
