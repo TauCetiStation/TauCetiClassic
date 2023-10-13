@@ -309,7 +309,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-
 /datum/supply_pack/ballistic/shotgunammo_nonlethal
 	name = "Shotgun shells (non-lethal)"
 	contains = list(/obj/item/ammo_box/eight_shells/beanbag,

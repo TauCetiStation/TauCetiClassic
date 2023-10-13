@@ -438,7 +438,7 @@ var/global/list/tourette_bad_words= list(
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
-		if(HAS_ROUND_ASPECT( ROUND_ASPECT_HIGH_SPACE_RADIATION))
+		if(HAS_ROUND_ASPECT(ROUND_ASPECT_HIGH_SPACE_RADIATION))
 			irradiate_one_mob(src, 5)
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
 			irradiate_one_mob(src, 5)
