@@ -240,7 +240,7 @@
 					var/arterial_bleeding = ""
 					var/rejecting = ""
 					if(BP.status & ORGAN_ARTERY_CUT)
-						arterial_bleeding = "<font color='red'><br><b>Артериальное кровотечение</b><br><font>"
+						arterial_bleeding = "<font color='red'><br><b>Артериальное кровотечение</b><br></font>"
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Наложена шина:"
 					if(BP.status & ORGAN_BLEEDING)
