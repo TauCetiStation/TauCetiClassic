@@ -48,7 +48,7 @@
 
 /obj/machinery/telecomms/hub/preset/atom_init()
 	. = ..()
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_NO_TCOMMS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL))
 		autolinkers -= "common"
 
 /obj/machinery/telecomms/hub/preset_cent
@@ -120,7 +120,7 @@
 /obj/machinery/telecomms/bus/preset_four/atom_init()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_NO_TCOMMS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL))
 		autolinkers -= "common"
 	. = ..()
 
