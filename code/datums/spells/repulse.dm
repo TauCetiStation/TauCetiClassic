@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Репульс"
 	desc = "Заклинание отбрасывает все вещи и людей от вас подальше."
-	charge_max = 200
+	charge_max = 60 SECONDS
 	clothes_req = 1
 	invocation = "GITTAH WEIGH"
 	invocation_type = "shout"
