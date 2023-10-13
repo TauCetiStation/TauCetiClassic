@@ -14,6 +14,7 @@
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 	turf_type = /turf/simulated/floor/light
+	shrapnel_type = /obj/item/weapon/shard
 
 /obj/item/stack/tile/light/atom_init()
 	. = ..()

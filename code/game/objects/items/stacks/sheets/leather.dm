@@ -81,6 +81,7 @@
 	singular_name = "wet leather piece"
 	icon_state = "sheet-wetleather"
 	origin_tech = ""
+	shrapnel_type = null
 	var/wetness = 30 //Reduced when exposed to high temperautres
 	var/drying_threshold_temperature = 500 //Kelvin to start drying
 
@@ -90,6 +91,7 @@
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
+	shrapnel_type = null
 
 
 

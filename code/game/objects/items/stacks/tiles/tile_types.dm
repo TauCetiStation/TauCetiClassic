@@ -28,6 +28,7 @@
 	max_amount = 60
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/grass
+	shrapnel_type = null
 
 /*
  * Wood
@@ -45,6 +46,7 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/wood
+	shrapnel_type = null
 
 /*
  * Carpets
@@ -62,6 +64,7 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/carpet
+	shrapnel_type = null
 	var/carpet_icon_state = "carpet"
 
 /obj/item/stack/tile/carpet/black

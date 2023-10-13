@@ -99,6 +99,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
 	can_be_wall = TRUE
+	shrapnel_type = null
 
 
 /obj/item/stack/sheet/mineral/sandstone/atom_init()
@@ -115,6 +116,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	perunit = 3750
 	sheettype = "diamond"
 	can_be_wall = TRUE
+	shrapnel_type = /obj/item/weapon/shard
 
 
 /obj/item/stack/sheet/mineral/diamond/atom_init()
@@ -148,6 +150,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "phoron"
 	is_fusion_fuel = TRUE
 	can_be_wall = TRUE
+	shrapnel_type = null
 
 
 /obj/item/stack/sheet/mineral/phoron/atom_init()
@@ -162,6 +165,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-plastic"
 	origin_tech = "materials=3"
 	perunit = 2000
+	shrapnel_type = null
 
 /obj/item/stack/sheet/mineral/plastic/cyborg
 	name = "plastic sheets"

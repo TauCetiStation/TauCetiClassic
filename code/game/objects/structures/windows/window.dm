@@ -16,7 +16,7 @@
 
 	can_block_air = TRUE
 
-	var/list/drops = list(/obj/item/weapon/shard)
+	var/list/drops = list(/obj/item/weapon/shard, /obj/item/weapon/shard)
 
 /obj/structure/window/atom_init()
 	update_nearby_tiles()

@@ -14,11 +14,22 @@
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
+	var/shrapnel_max = 25
+
 /obj/item/weapon/grenade/chem_grenade/atom_init()
 	. = ..()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
+
+/obj/item/weapon/grenade/chem_grenade/Destroy()
+	qdel(detonator)
+	detonator = null
+	for(var/obj/item/I in contents)
+		if(I in beakers)
+			qdel(I)
+		I.forceMove(loc)
+	return ..()
 
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)
 	if(!stage || stage==1)
@@ -34,6 +45,8 @@
 				if(istype(B))
 					beakers -= B
 					user.put_in_hands(B)
+			for(var/obj/item/I in contents)
+				I.forceMove(user.loc)
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 
 	if(stage > 1)
@@ -105,6 +118,13 @@
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
 				to_chat(user, "<span class='red'>\the [I] is empty.</span>")
+
+	else if((I.w_class <= SIZE_MINUSCULE) && (!stage || stage == 1) && (path != 2) && (!detonator))
+		if(contents.len >= shrapnel_max)
+			to_chat(user, "<span class='red'>The grenade can not hold more shrapnel.</span>")
+			return
+		user.drop_from_inventory(I, src)
+		to_chat(user, "<span class='notice'>You add some shrapnel the assembly.</span>")
 
 	else
 		return ..()
@@ -195,6 +215,8 @@
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
+	shrapnel_amount = 5
+	shrapnel_max = 35
 
 
 ///////Metalfoam

@@ -19,6 +19,7 @@
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/thin
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)
+	shrapnel_type = /obj/item/weapon/shard
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -171,6 +172,8 @@
 	m_amt = 1875
 	origin_tech = "materials=2"
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)
+
+	shrapnel_type = /obj/item/weapon/shard
 
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"

@@ -10,6 +10,7 @@
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60
+	shrapnel_type = /obj/item/weapon/shard
 
 /obj/item/stack/light_w/attackby(obj/item/I, mob/user, params)
 	if(iscutter(I))

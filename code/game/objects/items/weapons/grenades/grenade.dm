@@ -12,8 +12,14 @@
 	var/active = 0
 	var/det_time = 50
 	var/activate_sound = 'sound/weapons/armbomb.ogg'
+	var/shrapnel_amount = 3
 
 	item_action_types = list(/datum/action/item_action/hands_free/activate_grenade)
+
+/obj/item/weapon/grenade/Destroy()
+	for(var/i in 1 to shrapnel_amount + rand(-2, 2))
+		new /obj/item/weapon/shard/shrapnel(get_turf(loc))
+	return ..()
 
 /datum/action/item_action/hands_free/activate_grenade
 	name = "Activate Grenade"
@@ -91,7 +97,17 @@
 	icon_state = "syndicate"
 	item_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"
+	shrapnel_amount = 7
 
 /obj/item/weapon/grenade/syndieminibomb/prime()
 	explosion(src.loc,1,2,4,5)
+	qdel(src)
+
+/obj/item/weapon/grenade/shrapnel
+	name = "Shrapnel Grenade"
+	desc = "Граната начинённая шрапнелью. Разрушения минимальны."
+	shrapnel_amount = 25
+
+/obj/item/weapon/grenade/shrapnel/prime()
+	explosion(src.loc, 0, 0, 1)
 	qdel(src)

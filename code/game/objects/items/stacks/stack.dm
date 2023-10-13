@@ -21,6 +21,8 @@
 	var/full_w_class = SIZE_SMALL // The weight class the stack should have at amount > 2/3rds max_amount
 	var/is_fusion_fuel
 
+	var/shrapnel_type = /obj/item/weapon/shard/shrapnel
+
 /obj/item/stack/atom_init(mapload, new_amount = null, merge = FALSE)
 	. = ..()
 
@@ -37,6 +39,10 @@
 	update_icon()
 
 /obj/item/stack/Destroy()
+	if(shrapnel_type)
+		for(var/i in 1 to get_amount())
+			new shrapnel_type(loc)
+
 	amount = 0 // lets say anything that wants to use us, that we are empty.
 
 	if (usr && usr.machine == src)

@@ -105,6 +105,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 						break_tile()
 					if(prob(33))
 						new /obj/item/stack/sheet/metal(src)
+					else
+						new /obj/item/weapon/shard/shrapnel(src)
 		if(EXPLODE_LIGHT)
 			if(prob(50))
 				break_tile()

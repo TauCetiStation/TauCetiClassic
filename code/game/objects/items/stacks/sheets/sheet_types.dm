@@ -96,6 +96,16 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/attackby(obj/item/I, mob/user, params)
+	if(iscutter(I))
+		var/list/resources_to_use = list()
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+		new /obj/item/weapon/shard/shrapnel(user.loc)
+	else
+		return ..()
+
 /obj/item/stack/sheet/metal/cyborg
 	name = "metal"
 	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
@@ -161,6 +171,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
+	shrapnel_type = null
 
 /obj/item/stack/sheet/wood/cyborg
 	name = "wooden plank"
@@ -196,6 +207,7 @@ var/global/list/datum/stack_recipe/old_cloth_recipes = list (
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
+	shrapnel_type = null
 
 /obj/item/stack/sheet/cloth/atom_init(mapload, new_amount = null, merge = FALSE, force_old = FALSE, old_chance = 33)
 	recipes = cloth_recipes
@@ -237,6 +249,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
+	shrapnel_type = null
 
 /obj/item/stack/sheet/cardboard/atom_init()
 	recipes = cardboard_recipes

@@ -115,7 +115,7 @@
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	force = 5.0
 	throwforce = 8.0
 	item_state = "shard-glass"

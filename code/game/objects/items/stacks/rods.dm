@@ -16,6 +16,7 @@
 	qualities = list(
 		QUALITY_PRYING = 0.5
 	)
+	shrapnel_type = /obj/item/weapon/shard/shrapnel
 
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()

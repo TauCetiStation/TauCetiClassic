@@ -161,6 +161,17 @@
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/smokebomb(src)
 
+//Shrapnel
+/obj/item/weapon/storage/box/shrapnel
+	name = "box of shrapnel grenades (WARNING)"
+	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause major bleedings, loss of limbs and death.</span>"
+	icon_state = "flashbang_box"
+
+/obj/item/weapon/storage/box/shrapnel/atom_init()
+	. = ..()
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/grenade/shrapnel(src)
+
 /obj/item/weapon/storage/box/r4046
 	name = "box of 40x46mm rubber grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"

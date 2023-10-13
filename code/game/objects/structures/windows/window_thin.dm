@@ -161,7 +161,7 @@
 
 	icon_state = "phoronwindow"
 
-	drops = list(/obj/item/weapon/shard/phoron)
+	drops = list(/obj/item/weapon/shard/phoron, /obj/item/weapon/shard/phoron)
 
 	max_integrity = 120
 
@@ -179,7 +179,7 @@
 
 	icon_state = "rwindow"
 
-	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard)
+	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard, /obj/item/weapon/shard)
 
 	max_integrity = 100
 
@@ -193,7 +193,7 @@
 
 	icon_state = "phoronrwindow"
 
-	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard/phoron)
+	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard/phoron, /obj/item/weapon/shard/phoron)
 
 	max_integrity = 160
 

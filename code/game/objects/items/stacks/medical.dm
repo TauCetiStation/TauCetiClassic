@@ -8,6 +8,7 @@
 	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
+	shrapnel_type = null
 
 	var/self_delay = SKILL_TASK_TOUGH
 	var/other_delay = 40

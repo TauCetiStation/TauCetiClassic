@@ -8,6 +8,8 @@
 	full_w_class = SIZE_SMALL
 	max_amount = 50
 
+	shrapnel_type = /obj/item/weapon/shard
+
 /obj/item/stack/telecrystal/attack(atom/target, mob/user, proximity, params)
 	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		for(var/obj/item/weapon/implant/uplink/I in target)

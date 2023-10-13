@@ -3,6 +3,7 @@
 	icon_state = "emp"
 	item_state = "emp"
 	origin_tech = "materials=2;magnets=3"
+	shrapnel_amount = 2
 
 /obj/item/weapon/grenade/empgrenade/prime()
 	..()

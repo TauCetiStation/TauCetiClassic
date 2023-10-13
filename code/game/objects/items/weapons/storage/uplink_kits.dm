@@ -394,6 +394,7 @@
 	/obj/item/weapon/gun/projectile/automatic/drozd,
 	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
+	/obj/item/weapon/grenade/shrapnel = 3,
 	/obj/item/device/radio/beacon/syndicate_bomb,
 	)
 

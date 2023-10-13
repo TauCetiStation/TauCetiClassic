@@ -6,6 +6,7 @@
 	det_time = 20
 	item_state = "flashbang"
 	slot_flags = SLOT_FLAGS_BELT
+	shrapnel_amount = 2
 	var/datum/effect/effect/system/smoke_spread/bad/smoke
 
 /obj/item/weapon/grenade/smokebomb/atom_init()

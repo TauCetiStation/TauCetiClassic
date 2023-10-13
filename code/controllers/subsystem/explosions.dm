@@ -18,11 +18,13 @@ SUBSYSTEM_DEF(explosions)
 	var/cost_low_mov_atom = 0
 	var/cost_med_mov_atom = 0
 	var/cost_high_mov_atom = 0
+	var/cost_throw_turf = 0
 
 	var/list/lowturf = list()
 	var/list/medturf = list()
 	var/list/highturf = list()
 	var/list/flameturf = list()
+	var/list/throwturf = list()
 
 	var/list/low_mov_atom = list()
 	var/list/med_mov_atom = list()
@@ -47,6 +49,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "LO:[round(cost_low_mov_atom, 1)]|"
 	msg += "MO:[round(cost_med_mov_atom, 1)]|"
 	msg += "HO:[round(cost_high_mov_atom, 1)]|"
+	msg += "TO:[round(cost_throw_turf, 1)]|"
 
 	msg += "} "
 
@@ -55,6 +58,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "MT:[medturf.len]|"
 	msg += "HT:[highturf.len]|"
 	msg += "FT:[flameturf.len]||"
+	msg += "TT:[throwturf.len]||"
 
 	msg += "LO:[low_mov_atom.len]|"
 	msg += "MO:[med_mov_atom.len]|"
@@ -235,6 +239,8 @@ SUBSYSTEM_DEF(explosions)
 				SSexplosions.medturf += explode
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += explode
+
+		SSexplosions.throwturf += list(list(explode, epicenter, severity))
 
 		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
 			flameturf += explode
@@ -427,6 +433,7 @@ SUBSYSTEM_DEF(explosions)
 			Master.laggy_byond_map_update_incoming()
 
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
+		currentpart = SSEXPLOSIONS_THROWS
 
 		timer = TICK_USAGE_REAL
 		var/list/local_high_mov_atom = high_mov_atom
@@ -454,5 +461,43 @@ SUBSYSTEM_DEF(explosions)
 				continue
 			EX_ACT(movable_thing, EXPLODE_LIGHT)
 		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-	
+
+	if(currentpart == SSEXPLOSIONS_THROWS)
+		timer = TICK_USAGE_REAL
+		var/list/local_throwturfs = throwturf
+		throwturf = list()
+
+		for(var/list/throwlist in local_throwturfs)
+			var/turf/affected = throwlist[1]
+			var/turf/epicenter = throwlist[2]
+			var/severitypower = throwlist[3]
+
+			var/throwpower = 1
+			switch(severitypower)
+				if(EXPLODE_LIGHT)
+					throwpower = 10
+				if(EXPLODE_HEAVY)
+					throwpower = 25
+				if(EXPLODE_DEVASTATE)
+					throwpower = 50
+
+			var/turf/opposite_to_epicenter
+			var/epicentered = FALSE
+			if((epicenter.x == affected.x) && (epicenter.y == affected.y) && (epicenter.z == affected.z))
+				epicentered = TRUE
+			else
+				opposite_to_epicenter = locate(affected.x - (epicenter.x - affected.x) * throwpower, affected.y - (epicenter.y - affected.y) * throwpower, affected.z) //180 degree to epicenter
+
+			for(var/atom/movable/I in affected.contents)
+				if(I.anchored || QDELETED(I))
+					continue
+
+				if(epicentered)
+					var/angle = rand(1, 360)
+					var/radius = throwpower * 2
+					opposite_to_epicenter = locate(affected.x + round(radius * cos(angle), 1), affected.y + round(radius * sin(angle), 1), affected.z) //random direction
+
+				I.throw_at(opposite_to_epicenter, 100, throwpower)
+		cost_throw_turf = MC_AVERAGE(cost_throw_turf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
 	currentpart = SSEXPLOSIONS_TURFS
