@@ -281,8 +281,8 @@
 					if(!AN && !open && !infected && !imp)
 						AN = "Не обнаружено:"
 					if(!(BP.is_stump))
-						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						dat += text("<td>[BP.name]</td><td><font color='[]'>[BP.burn_dam]</font></td><td><font color='[]'>[BP.brute_dam]</font></td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "orange" : "blue"), (BP.brute_dam > 0 ? "red" : "blue"))
+						storedinfo += text("<td>[BP.name]</td><td><font color='[]'>[BP.burn_dam]</font></td><td><font color='[]'>[BP.brute_dam]</font></td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "orange" : "blue"), (BP.brute_dam > 0 ? "red" : "blue"))
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -334,10 +334,10 @@
 					if(!organ_status && !infection)
 						infection = "Не обнаружено:"
 					dat += "<tr>"
-					dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					dat += text("<td>[IO.name]</td><td>N/A</td><td><font color='[]'>[IO.damage]</font></td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "red" : "blue"))
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					storedinfo += text("<td>[IO.name]</td><td>N/A</td><td><font color='[]'>[IO.damage]</font></td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "red" : "blue"))
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"
@@ -352,7 +352,7 @@
 	else
 		dat = "<font color='red'> Ошибка: Не подключен сканер тела.</font>"
 
-	var/datum/browser/popup = new(user, "window=scanconsole", src.name, 430, 600, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=scanconsole", src.name, 530, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
