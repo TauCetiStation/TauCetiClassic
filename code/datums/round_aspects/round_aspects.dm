@@ -59,3 +59,10 @@
 
 /datum/round_aspect/high_space_rad
 	name = ROUND_ASPECT_HIGH_SPACE_RADIATION
+
+/datum/round_aspect/ai_trio
+	name = ROUND_ASPECT_AI_TRIO
+	game_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
+
+/datum/round_aspect/ai_trio/on_start()
+	SSticker.triai = TRUE

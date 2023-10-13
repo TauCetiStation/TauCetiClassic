@@ -11,3 +11,5 @@
 #define ROUND_ASPECT_NO_TCOMMS "No Telecommunications"
 
 #define ROUND_ASPECT_HIGH_SPACE_RADIATION "High Level Of Space Radiation"
+
+#define ROUND_ASPECT_AI_TRIO "AI Triumvirate"
