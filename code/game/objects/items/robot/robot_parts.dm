@@ -31,7 +31,7 @@
 	icon_state = "l_leg"
 	item_state_world = "l_leg_world"
 	part = BP_L_LEG
-	bodypart_type = /obj/item/organ/external/l_leg/robot
+	bodypart_type = /obj/item/organ/external/leg/left/robot
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
@@ -39,7 +39,7 @@
 	icon_state = "r_leg"
 	item_state_world = "r_leg_world"
 	part = BP_R_LEG
-	bodypart_type = /obj/item/organ/external/r_leg/robot
+	bodypart_type = /obj/item/organ/external/leg/right/robot
 
 /obj/item/robot_parts/chest
 	name = "robot torso"

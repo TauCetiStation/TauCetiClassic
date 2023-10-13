@@ -1010,7 +1010,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_arm/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
-/obj/item/organ/external/l_leg
+/obj/item/organ/external/leg/left
 	name = "left leg"
 	desc = "Break a leg! Somebody else's leg. With this leg."
 	force = 9
@@ -1024,7 +1024,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
-	limb_layer = LIMB_L_LEG_LAYER
+	limb_layer = LIMB_UPPER_LEG_LAYER
 	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
@@ -1033,15 +1033,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 	w_class = SIZE_SMALL
 	hitsound = list('sound/weapons/genhit1.ogg')
 
-/obj/item/organ/external/l_leg/diona
+/obj/item/organ/external/leg/left/diona
 	name = "left lower tendril"
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
-/obj/item/organ/external/l_leg/diona/podman
+/obj/item/organ/external/leg/left/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
-/obj/item/organ/external/r_leg
+/obj/item/organ/external/leg/right
 	name = "right leg"
 	desc = "The infamous third leg."
 	force = 9
@@ -1056,7 +1056,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG
 	parent_bodypart = BP_GROIN
-	limb_layer = LIMB_R_LEG_LAYER
+	limb_layer = LIMB_LOWER_LEG_LAYER
 	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
@@ -1065,12 +1065,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	w_class = SIZE_SMALL
 	hitsound = list('sound/weapons/genhit1.ogg')
 
-/obj/item/organ/external/r_leg/diona
+/obj/item/organ/external/leg/right/diona
 	name = "right lower tendril"
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
-/obj/item/organ/external/r_leg/diona/podman
+/obj/item/organ/external/leg/right/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
@@ -1082,6 +1082,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			disfigure(BURN)
 
 	return ..()
+
+/obj/item/organ/external/leg/proc/applyLegMask(image_dir = NONE)
 
 /obj/item/organ/external/head/proc/disfigure(type = BRUTE)
 	if (disfigured)
@@ -1200,13 +1202,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
-/obj/item/organ/external/l_leg/homunculus
-/obj/item/organ/external/l_leg/homunculus/atom_init()
+/obj/item/organ/external/leg/left/homunculus
+/obj/item/organ/external/leg/left/homunculus/atom_init()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
-/obj/item/organ/external/r_leg/homunculus
-/obj/item/organ/external/r_leg/homunculus/atom_init()
+/obj/item/organ/external/leg/right/homunculus
+/obj/item/organ/external/leg/right/homunculus/atom_init()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 

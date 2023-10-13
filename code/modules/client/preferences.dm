@@ -447,10 +447,10 @@ var/global/list/preferences_datums = list()
 					var/obj/item/organ/external/r_arm/robot/R = new(null)
 					R.insert_organ(character)
 				if(BP_L_LEG)
-					var/obj/item/organ/external/l_leg/robot/R = new(null)
+					var/obj/item/organ/external/leg/left/robot/R = new(null)
 					R.insert_organ(character)
 				if(BP_R_LEG)
-					var/obj/item/organ/external/r_leg/robot/R = new(null)
+					var/obj/item/organ/external/leg/right/robot/R = new(null)
 					R.insert_organ(character)
 
 		// create normal bodypart
@@ -473,8 +473,8 @@ var/global/list/preferences_datums = list()
 	character.apply_recolor()
 
 	// Wheelchair necessary?
-	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
-	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
+	var/obj/item/organ/external/leg/left = character.bodyparts_by_name[BP_L_LEG]
+	var/obj/item/organ/external/leg/right = character.bodyparts_by_name[BP_R_LEG]
 	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		W.set_dir(character.dir)

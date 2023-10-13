@@ -112,8 +112,8 @@
 		,BP_HEAD   = /obj/item/organ/external/head
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_L_LEG  = /obj/item/organ/external/leg/left
+		,BP_R_LEG  = /obj/item/organ/external/leg/right
 		)
 
 	var/list/has_organ = list(
@@ -763,8 +763,8 @@
 		,BP_HEAD   = /obj/item/organ/external/head/diona
 		,BP_L_ARM  = /obj/item/organ/external/l_arm/diona
 		,BP_R_ARM  = /obj/item/organ/external/r_arm/diona
-		,BP_L_LEG  = /obj/item/organ/external/l_leg/diona
-		,BP_R_LEG  = /obj/item/organ/external/r_leg/diona
+		,BP_L_LEG  = /obj/item/organ/external/leg/left/diona
+		,BP_R_LEG  = /obj/item/organ/external/leg/right/diona
 		)
 
 	has_organ = list(
@@ -898,8 +898,8 @@
 		,BP_HEAD   = /obj/item/organ/external/head/podman
 		,BP_L_ARM  = /obj/item/organ/external/l_arm/diona/podman
 		,BP_R_ARM  = /obj/item/organ/external/r_arm/diona/podman
-		,BP_L_LEG  = /obj/item/organ/external/l_leg/diona/podman
-		,BP_R_LEG  = /obj/item/organ/external/r_leg/diona/podman
+		,BP_L_LEG  = /obj/item/organ/external/leg/left/diona/podman
+		,BP_R_LEG  = /obj/item/organ/external/leg/right/diona/podman
 		)
 
 	has_organ = list(
@@ -993,8 +993,8 @@
 		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
 		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
 		,BP_R_ARM  = /obj/item/organ/external/r_arm/robot/ipc
-		,BP_L_LEG  = /obj/item/organ/external/l_leg/robot/ipc
-		,BP_R_LEG  = /obj/item/organ/external/r_leg/robot/ipc
+		,BP_L_LEG  = /obj/item/organ/external/leg/left/robot/ipc
+		,BP_R_LEG  = /obj/item/organ/external/leg/right/robot/ipc
 		)
 
 	has_organ = list(
@@ -1127,8 +1127,8 @@
 		,BP_HEAD   = /obj/item/organ/external/head/skeleton
 		,BP_L_ARM  = /obj/item/organ/external/l_arm/skeleton
 		,BP_R_ARM  = /obj/item/organ/external/r_arm/skeleton
-		,BP_L_LEG  = /obj/item/organ/external/l_leg/skeleton
-		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
+		,BP_L_LEG  = /obj/item/organ/external/leg/left/skeleton
+		,BP_R_LEG  = /obj/item/organ/external/leg/right/skeleton
 		)
 
 	has_organ = list(
@@ -1664,8 +1664,8 @@
 		,BP_HEAD   = /obj/item/organ/external/head/abomination
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_L_LEG  = /obj/item/organ/external/leg/left
+		,BP_R_LEG  = /obj/item/organ/external/leg/right
 		)
 
 	has_organ = list(
@@ -1703,8 +1703,8 @@
 		,BP_HEAD  = /obj/item/organ/external/head/homunculus
 		,BP_L_ARM = /obj/item/organ/external/l_arm/homunculus
 		,BP_R_ARM = /obj/item/organ/external/r_arm/homunculus
-		,BP_L_LEG = /obj/item/organ/external/l_leg/homunculus
-		,BP_R_LEG = /obj/item/organ/external/r_leg/homunculus
+		,BP_L_LEG = /obj/item/organ/external/leg/left/homunculus
+		,BP_R_LEG = /obj/item/organ/external/leg/right/homunculus
 		)
 
 	flags = list(

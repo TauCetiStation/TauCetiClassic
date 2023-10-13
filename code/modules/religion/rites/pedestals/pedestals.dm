@@ -105,7 +105,7 @@
 	rules = list(
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/stack/sheet/metal = 10,
-		/obj/item/organ/external/l_leg = 1,
+		/obj/item/organ/external/leg/left = 1,
 		/obj/item/weapon/stock_parts/scanning_module = 2,
 		/obj/item/weapon/stock_parts/capacitor = 2,
 		/obj/item/weapon/stock_parts/micro_laser = 2,
@@ -147,8 +147,8 @@
 	rules = list(
 		/obj/item/organ/external/r_arm = 1,
 		/obj/item/organ/external/l_arm = 1,
-		/obj/item/organ/external/l_leg = 1,
-		/obj/item/organ/external/r_leg = 1,
+		/obj/item/organ/external/leg/left = 1,
+		/obj/item/organ/external/leg/right = 1,
 	)
 
 	needed_aspects = list(

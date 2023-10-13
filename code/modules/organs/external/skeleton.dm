@@ -163,24 +163,24 @@
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
 
-/obj/item/organ/external/r_leg/skeleton
+/obj/item/organ/external/leg/right/skeleton
 	name = "skeleton right leg"
 	leaves_stump = FALSE
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
 
-/obj/item/organ/external/r_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
+/obj/item/organ/external/leg/right/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
 
-/obj/item/organ/external/l_leg/skeleton
+/obj/item/organ/external/leg/left/skeleton
 	name = "skeleton left leg"
 	leaves_stump = FALSE
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
 
-/obj/item/organ/external/l_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
+/obj/item/organ/external/leg/left/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()

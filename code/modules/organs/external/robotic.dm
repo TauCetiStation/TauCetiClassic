@@ -119,7 +119,7 @@
 
 	controller_type = /datum/bodypart_controller/robot
 
-/obj/item/organ/external/r_leg/robot
+/obj/item/organ/external/leg/right/robot
 	name = "robotic right leg"
 
 	icon = 'icons/mob/human_races/robotic.dmi'
@@ -127,7 +127,7 @@
 
 	controller_type = /datum/bodypart_controller/robot
 
-/obj/item/organ/external/l_leg/robot
+/obj/item/organ/external/leg/left/robot
 	name = "robotic left leg"
 
 	icon = 'icons/mob/human_races/robotic.dmi'

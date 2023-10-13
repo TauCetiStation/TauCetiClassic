@@ -76,22 +76,22 @@
 	icon_state = "[body_zone]"
 	color = original_color
 
-/obj/item/organ/external/r_leg/robot/ipc
+/obj/item/organ/external/leg/right/robot/ipc
 	name = "right ipc leg"
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
-/obj/item/organ/external/r_leg/robot/ipc/update_sprite()
+/obj/item/organ/external/leg/right/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
 	color = original_color
 
-/obj/item/organ/external/l_leg/robot/ipc
+/obj/item/organ/external/leg/left/robot/ipc
 	name = "left ipc leg"
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
-/obj/item/organ/external/l_leg/robot/ipc/update_sprite()
+/obj/item/organ/external/leg/left/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
 	color = original_color

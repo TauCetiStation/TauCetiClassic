@@ -21,10 +21,10 @@
 	var/obj/item/organ/external/r_arm/robot/RA = new(null)
 	RA.insert_organ(H)
 
-	var/obj/item/organ/external/l_leg/robot/LL = new(null)
+	var/obj/item/organ/external/leg/left/robot/LL = new(null)
 	LL.insert_organ(H)
 
-	var/obj/item/organ/external/r_leg/robot/RL = new(null)
+	var/obj/item/organ/external/leg/right/robot/RL = new(null)
 	RL.insert_organ(H)
 
 	for(var/obj/item/organ/internal/IO in H.organs)
