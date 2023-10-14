@@ -118,6 +118,8 @@
 	w_class = SIZE_MINUSCULE
 	force = 5.0
 	throwforce = 8.0
+	throw_range = 1
+	throw_speed = 1
 	item_state = "shard-glass"
 	g_amt = 3750
 	hitsound = 'sound/weapons/bladeslice.ogg'
