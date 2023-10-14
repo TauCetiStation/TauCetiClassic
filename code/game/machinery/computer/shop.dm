@@ -7,6 +7,8 @@
 
 	light_color = "#b88b2e"
 
+	density = FALSE
+
 	var/lastmode = 0
 	var/ui_tick = 0
 	var/nanoUI[0]

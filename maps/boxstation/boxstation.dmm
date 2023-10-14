@@ -23551,9 +23551,8 @@
 /obj/item/weapon/paper/depacc{
 	department_name = "Science"
 	},
-/obj/machinery/computer/shop{
-	pixel_y = 24;
-	department = "Science"
+/obj/machinery/firealarm{
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -25735,14 +25734,15 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/glasses/welding/superior,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/machinery/computer/shop{
+	department = "Science";
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
