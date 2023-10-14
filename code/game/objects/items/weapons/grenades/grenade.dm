@@ -120,10 +120,10 @@
 /obj/item/weapon/grenade/bolas/atom_init()
 	. = ..()
 	for(var/i in 1 to 5)
-		new /obj/item/weapon/legcuffs/bola/tactical(src)
+		new /obj/item/weapon/legcuffs/bola(src)
 
 /obj/item/weapon/grenade/bolas/Destroy()
-	for(var/obj/item/weapon/legcuffs/bola/tactical/B in contents)
+	for(var/obj/item/weapon/legcuffs/bola/B in contents)
 		B.forceMove(get_turf(loc))
 	return ..()
 
