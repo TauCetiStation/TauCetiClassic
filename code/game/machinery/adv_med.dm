@@ -240,7 +240,7 @@
 					var/arterial_bleeding = ""
 					var/rejecting = ""
 					if(BP.status & ORGAN_ARTERY_CUT)
-						arterial_bleeding = "<font color='red'><br><b>Артериальное кровотечение</b><br></font>"
+						arterial_bleeding = "<span class='red'><br><b>Артериальное кровотечение</b><br></span>"
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Наложена шина:"
 					if(BP.status & ORGAN_BLEEDING)
@@ -281,8 +281,10 @@
 					if(!AN && !open && !infected && !imp)
 						AN = "Не обнаружено:"
 					if(!(BP.is_stump))
-						dat += text("<td>[BP.name]</td><td>[]</td><td>[]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "<font color='orange'>[BP.burn_dam]</font>" : "-/-"), (BP.brute_dam > 0 ? "<font color='red'>[BP.brute_dam]</font>" : "-/-"))
-						storedinfo += text("<td>[BP.name]</td><td>[]</td><td>[]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>", (BP.burn_dam > 0 ? "<font color='orange'>[BP.burn_dam]</font>" : "-/-"), (BP.brute_dam > 0 ? "<font color='red'>[BP.brute_dam]</font>" : "-/-"))
+						var/burnDamText = BP.burn_dam > 0 ? "<span class='orange'>[BP.burn_dam]</span>" : "-/-"
+						var/bruteDamText = BP.brute_dam > 0 ? "<span class='red'>[BP.brute_dam]</span>" : "-/-"
+						dat += "<td>[BP.name]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[BP.name]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -333,11 +335,13 @@
 
 					if(!organ_status && !infection)
 						infection = "Не обнаружено:"
+
+					var/organ_damage_text = IO.damage > 0 ? "<span class='red'>[IO.damage]</span>" : "-/-"
 					dat += "<tr>"
-					dat += text("<td>[IO.name]</td><td>N/A</td><td>[]</td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "<font color='red'>[IO.damage]</font>" : "-/-"))
+					dat += "<td>[IO.name]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += text("<td>[IO.name]</td><td>N/A</td><td>[]</td><td>[infection][organ_status]|[mech]</td><td></td>", (IO.damage > 0 ? "<font color='red'>[IO.damage]</font>" : "-/-"))
+					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"
