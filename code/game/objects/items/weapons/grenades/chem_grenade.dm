@@ -28,7 +28,7 @@
 	for(var/obj/item/I in contents)
 		if(I in beakers)
 			qdel(I)
-		I.forceMove(loc)
+		I.forceMove(get_turf(loc))
 	return ..()
 
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)

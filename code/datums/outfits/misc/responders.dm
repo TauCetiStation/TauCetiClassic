@@ -188,6 +188,7 @@
 	backpack_contents = list(
 		/obj/item/weapon/storage/firstaid/tactical,
 		/obj/item/weapon/storage/box/flashbangs,
+		/obj/item/weapon/storage/box/shrapnel,
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/plastique,
 		/obj/item/weapon/tank/emergency_oxygen/double,
@@ -274,6 +275,7 @@
 		/obj/item/weapon/tank/emergency_oxygen/double,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 		/obj/item/device/flashlight/seclite,
+		/obj/item/weapon/storage/box/bolas,
 		/obj/item/weapon/plastique,
 		/obj/item/weapon/grenade/empgrenade,
 		/obj/item/ammo_box/shotgun/beanbag,

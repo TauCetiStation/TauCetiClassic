@@ -2377,6 +2377,7 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
+/obj/item/weapon/storage/box/bolas,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "aea" = (

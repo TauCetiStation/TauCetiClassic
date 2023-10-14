@@ -111,3 +111,22 @@
 /obj/item/weapon/grenade/shrapnel/prime()
 	explosion(src.loc, 0, 0, 1)
 	qdel(src)
+
+/obj/item/weapon/grenade/bolas
+	name = "knock-over grenade"
+	desc = "Граната, начинённая тактическими боласами. Разрушения минимальны."
+	shrapnel_amount = 0
+
+/obj/item/weapon/grenade/bolas/atom_init()
+	. = ..()
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/legcuffs/bola/tactical(src)
+
+/obj/item/weapon/grenade/bolas/Destroy()
+	for(var/obj/item/weapon/legcuffs/bola/tactical/B in contents)
+		B.forceMove(get_turf(loc))
+	return ..()
+
+/obj/item/weapon/grenade/bolas/prime()
+	explosion(src.loc, 0, 0, 1)
+	qdel(src)
