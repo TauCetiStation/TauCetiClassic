@@ -109,7 +109,7 @@
 	shrapnel_amount = 25
 
 /obj/item/weapon/grenade/shrapnel/prime()
-	explosion(src.loc, 0, 0, 1)
+	explosion(src.loc, 0, 0, 0.1, 0, 0)
 	qdel(src)
 
 /obj/item/weapon/grenade/bolas
@@ -128,5 +128,5 @@
 	return ..()
 
 /obj/item/weapon/grenade/bolas/prime()
-	explosion(src.loc, 0, 0, 1)
+	explosion(src.loc, 0, 0, 0.1, 0, 0)
 	qdel(src)
