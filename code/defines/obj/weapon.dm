@@ -115,7 +115,7 @@
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = SIZE_MINUSCULE
+	w_class = SIZE_MIDGET
 	force = 5.0
 	throwforce = 8.0
 	throw_range = 1

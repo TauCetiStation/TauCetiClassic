@@ -509,7 +509,7 @@ SUBSYSTEM_DEF(explosions)
 						var/radius = throwpower * 2
 						opposite_to_epicenter = locate(affected.x + round(radius * cos(angle), 1), affected.y + round(radius * sin(angle), 1), affected.z) //random direction
 
-				I.throw_at(opposite_to_epicenter, 100, throwpower/I.w_class)
+				I.throw_at(opposite_to_epicenter, 5*throwpower/I.w_class, throwpower/I.w_class)
 		cost_throw_turf = MC_AVERAGE(cost_throw_turf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 	currentpart = SSEXPLOSIONS_TURFS
