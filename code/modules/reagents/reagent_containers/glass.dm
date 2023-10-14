@@ -178,7 +178,7 @@
 			Casing.BB = null
 			Casing.update_icon()
 
-			reagents.add_reagent("gunpowder", 2)
+			reagents.add_reagent("gunpowder", 0.5)
 	else
 		return ..()
 
