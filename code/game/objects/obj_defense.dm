@@ -4,9 +4,9 @@
 	var/throwdamage
 	if(isobj(AM))
 		var/obj/O = AM
-		throwdamage = O.throwforce
+		throwdamage = O.throwforce * throwingdatum.throwmomentum
 	else if(ismob(AM)) // TODO add throwforce to atom movable
-		throwdamage = 10
+		throwdamage = 10 * throwingdatum.throwmomentum
 	//Let everyone know we've been hit!
 	visible_message(
 		"<span class='warning'>[src] was hit by [AM].</span>",

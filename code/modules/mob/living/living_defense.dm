@@ -114,7 +114,7 @@
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
+		var/throw_damage = O.throwforce * throwingdatum.throwmomentum
 
 		var/zone
 		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null

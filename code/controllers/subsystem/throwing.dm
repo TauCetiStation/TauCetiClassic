@@ -1,5 +1,6 @@
 #define MAX_THROWING_DIST 512 // 2 z-levels on default width
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
+#define THROWDAMAGE_FINE_TUNE 1 //Throwdamage multiplier
 
 SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
@@ -51,6 +52,7 @@ SUBSYSTEM_DEF(throwing)
 	var/init_dir
 	var/maxrange
 	var/speed
+	var/throwmomentum
 	var/mob/thrower
 	var/diagonals_first
 	var/dist_travelled = 0
@@ -71,6 +73,7 @@ SUBSYSTEM_DEF(throwing)
 	src.init_dir = init_dir
 	src.maxrange = maxrange
 	src.speed = speed
+	src.throwmomentum = speed * thrownthing.w_class * THROWDAMAGE_FINE_TUNE
 	src.thrower = thrower
 	src.diagonals_first = diagonals_first
 	src.callback = callback
@@ -203,3 +206,5 @@ SUBSYSTEM_DEF(throwing)
 		if (AM.density && !AM.throwpass)
 			finialize(null, AM)
 			return TRUE
+
+#undef THROWDAMAGE_FINE_TUNE

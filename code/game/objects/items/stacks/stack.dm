@@ -39,10 +39,6 @@
 	update_icon()
 
 /obj/item/stack/Destroy()
-	if(shrapnel_type)
-		for(var/i in 1 to get_amount())
-			new shrapnel_type(loc)
-
 	amount = 0 // lets say anything that wants to use us, that we are empty.
 
 	if (usr && usr.machine == src)
@@ -51,6 +47,14 @@
 		recipes = null
 
 	return ..()
+
+/obj/item/stack/ex_act(severity)
+	if(shrapnel_type)
+		for(var/i in 1 to get_amount())
+			if(prob(20))
+				new shrapnel_type(loc)
+
+	..(severity)
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))

@@ -118,8 +118,8 @@
 	w_class = SIZE_MIDGET
 	force = 5.0
 	throwforce = 8.0
-	throw_range = 1
-	throw_speed = 1
+	throw_range = 2
+	throw_speed = 0.5
 	item_state = "shard-glass"
 	g_amt = 3750
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -236,8 +236,8 @@
 /obj/item/weapon/shard/phoron
 	name = "phoron shard"
 	desc = "A shard of phoron glass. Considerably tougher then normal glass shards. Apparently not tough enough to be a window."
-	force = 8.0
-	throwforce = 15.0
+	force = 6
+	throwforce = 9
 	icon_state = "phoronlarge"
 	item_state_world = "phoronlarge_world"
 	item_state_base = "phoron"
@@ -263,7 +263,8 @@
 	item_state_base = "shrapnel"
 	desc = "A bunch of tiny bits of shattered metal."
 	on_step_sound = 'sound/effects/metalstep.ogg'
-	throwforce = 20
+	force = 7
+	throwforce = 10
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
