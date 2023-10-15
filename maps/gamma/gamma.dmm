@@ -12893,6 +12893,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -17383,8 +17384,9 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/device/suit_cooling_unit,
-/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science,
+/obj/item/clothing/mask/breath,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
