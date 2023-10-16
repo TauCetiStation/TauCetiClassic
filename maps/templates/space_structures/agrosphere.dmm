@@ -1413,7 +1413,7 @@
 "cW" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "agro blast";
 	name = "Blast Doors";
 	opacity = 0
@@ -1468,9 +1468,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "agro blast";
-	name = "Blast Doors";
-	dir = 4
+	name = "Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)

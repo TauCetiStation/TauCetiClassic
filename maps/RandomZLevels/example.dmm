@@ -328,7 +328,7 @@
 "aX" = (
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "example";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -540,9 +540,9 @@
 /area/awaymission/example)
 "bE" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Unisex Restrooms";
-	req_access = list(0);
-	dir = 4
+	req_access = list(0)
 	},
 /turf/simulated/floor,
 /area/awaymission/example)

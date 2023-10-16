@@ -231,7 +231,7 @@
 "aL" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "spacebattlepod";
 	name = "Front Hull Door"
 	},

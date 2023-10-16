@@ -1098,7 +1098,7 @@
 /obj/item/weapon/implanter/explosive,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "velocity_hall";
 	name = "Doors";
 	opacity = 0

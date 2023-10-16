@@ -546,7 +546,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -836,7 +836,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -2045,7 +2045,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	opacity = 0
@@ -2347,7 +2347,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -2917,7 +2917,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -3466,7 +3466,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -3691,7 +3691,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "genetic_shutters";
 	name = "Genetic Shutters";
 	opacity = 0
@@ -4548,7 +4548,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "chem_shutters";
 	name = "Chemistry Shutters";
 	opacity = 0
@@ -4726,7 +4726,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bsentry";
 	name = "Blueshield Office Shutters";
 	opacity = 0
@@ -5700,7 +5700,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -5808,7 +5808,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -6488,7 +6488,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -6804,7 +6804,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobiomisc";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -7378,7 +7378,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
@@ -8122,7 +8122,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "CE_private";
 	opacity = 0
 	},
@@ -8168,7 +8168,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
 	opacity = 0
@@ -8909,7 +8909,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -9711,7 +9711,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "lawyer_blast";
 	name = "Internal Affairs";
 	opacity = 0
@@ -9948,7 +9948,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobiomisc";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -10003,7 +10003,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -11157,7 +11157,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "robotic_shutters";
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
@@ -11762,7 +11762,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -12144,7 +12144,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -13290,7 +13290,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
@@ -13416,7 +13416,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "toxin_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -13968,7 +13968,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -14087,7 +14087,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio7";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -15255,7 +15255,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -16053,7 +16053,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -16337,7 +16337,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -17148,7 +17148,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -17191,7 +17191,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -17749,7 +17749,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -17904,7 +17904,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -18386,7 +18386,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_queue";
 	opacity = 0
 	},
@@ -21655,7 +21655,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -21920,7 +21920,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "engi blast";
 	name = "Engineers Blast Doors";
 	opacity = 0
@@ -22187,7 +22187,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "lawyer_blast";
 	name = "Internal Affairs";
 	opacity = 0
@@ -22594,7 +22594,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "engi blast";
 	name = "Engineers Blast Doors";
 	opacity = 0
@@ -23559,7 +23559,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobiomisc";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -23918,7 +23918,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -24093,7 +24093,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -25407,7 +25407,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -25426,7 +25426,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -25519,7 +25519,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "robotic_shutters";
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
@@ -25735,7 +25735,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "scince_lab_shutters";
 	name = "Science Lab Shutters";
 	opacity = 0
@@ -26378,7 +26378,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -26993,7 +26993,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -27953,7 +27953,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -28009,7 +28009,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "lawyer_blast";
 	name = "Internal Affairs";
 	opacity = 0
@@ -29515,7 +29515,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio5";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -29898,7 +29898,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio1";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -30144,7 +30144,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -30565,7 +30565,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -30796,7 +30796,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -30977,7 +30977,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -31011,7 +31011,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -31598,7 +31598,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -31925,7 +31925,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -31966,7 +31966,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Execution_blast";
 	name = "Execution Blast";
 	opacity = 0
@@ -32288,7 +32288,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -32943,7 +32943,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -33887,7 +33887,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "rd_shutters";
 	name = "Research Director Shutters";
 	opacity = 0
@@ -33915,7 +33915,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio1";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -34476,7 +34476,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -35305,7 +35305,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -36087,7 +36087,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -36199,7 +36199,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "minisat blast";
 	name = "MiniSat Blast Doors";
 	opacity = 0
@@ -36221,7 +36221,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -37474,7 +37474,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -38205,7 +38205,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -38824,7 +38824,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -39069,7 +39069,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
@@ -39398,7 +39398,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "genetic_shutters";
 	name = "Genetic Shutters";
 	opacity = 0
@@ -40444,7 +40444,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Detectives Lockdown";
 	name = "Detectives Lockdown";
 	opacity = 0
@@ -40741,7 +40741,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio6";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -41155,7 +41155,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "chem_shutters";
 	name = "Chemistry Shutters";
 	opacity = 0
@@ -41646,7 +41646,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -41994,7 +41994,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "chapel_shutters";
 	name = "Chapel Shutters";
 	opacity = 0
@@ -43643,7 +43643,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -43793,7 +43793,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -43920,7 +43920,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -44629,7 +44629,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -45946,7 +45946,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -46188,7 +46188,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -46573,7 +46573,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
@@ -46730,7 +46730,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -48969,7 +48969,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -49130,7 +49130,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -49314,7 +49314,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -49593,7 +49593,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Corporate_lounge_shutters";
 	name = "Corporate Lounge Shutters";
 	opacity = 0
@@ -49831,7 +49831,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "rd_shutters";
 	name = "Research Director Shutters";
 	opacity = 0
@@ -49903,7 +49903,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -50229,7 +50229,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -50788,7 +50788,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "heads_meeting";
 	name = "Meeting Room Window Shields";
 	opacity = 0
@@ -52348,7 +52348,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Sm";
 	layer = 2.8;
 	name = "Supermatter Shutters";
@@ -52600,7 +52600,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -52716,7 +52716,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -52845,7 +52845,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "genetic_shutters";
 	name = "Genetic Shutters";
 	opacity = 0
@@ -53119,7 +53119,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Execution_blast";
 	name = "Execution Blast";
 	opacity = 0
@@ -53157,7 +53157,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio8";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -53603,7 +53603,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -53733,7 +53733,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -54044,7 +54044,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "minisat blast";
 	name = "MiniSat Blast Doors";
 	opacity = 0
@@ -55124,7 +55124,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "toxin_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -55195,7 +55195,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "chem_shutters";
 	name = "Chemistry Shutters";
 	opacity = 0
@@ -55996,7 +55996,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -56588,7 +56588,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -56716,7 +56716,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "genetic_shutters";
 	name = "Genetic Shutters";
 	opacity = 0
@@ -56871,7 +56871,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Gate";
 	name = "Security Blast Door";
 	opacity = 0
@@ -57166,7 +57166,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Sm";
 	layer = 2.8;
 	name = "Supermatter Shutters";
@@ -57926,7 +57926,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bsentry";
 	name = "Blueshield Office Shutters";
 	opacity = 0
@@ -58636,7 +58636,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "surgery_shutters";
 	name = "Surgery Shutters";
 	opacity = 0
@@ -59147,7 +59147,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -59890,7 +59890,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -60045,7 +60045,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	opacity = 0
@@ -60404,7 +60404,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
 	opacity = 0
@@ -60769,7 +60769,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio3";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -60917,7 +60917,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio6";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -61345,7 +61345,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -61945,7 +61945,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -62331,7 +62331,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -62533,7 +62533,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -63172,7 +63172,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -63818,7 +63818,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -63951,7 +63951,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -64075,7 +64075,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
 	opacity = 0
@@ -64917,7 +64917,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Sm";
 	layer = 2.8;
 	name = "Supermatter Shutters";
@@ -65744,7 +65744,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "surgery_shutters";
 	name = "Surgery Shutters";
 	opacity = 0
@@ -65877,7 +65877,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Corporate_lounge_shutters";
 	name = "Corporate Lounge Shutters";
 	opacity = 0
@@ -66076,7 +66076,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio7";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -66201,7 +66201,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
@@ -66332,7 +66332,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -67365,7 +67365,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -67438,7 +67438,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "chem_shutters";
 	name = "Chemistry Shutters";
 	opacity = 0
@@ -67470,7 +67470,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -67695,7 +67695,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio6";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -67763,7 +67763,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -69026,7 +69026,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -69719,7 +69719,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -69774,7 +69774,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
@@ -70573,7 +70573,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -72097,7 +72097,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -72919,7 +72919,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "robotic_shutters";
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
@@ -73459,7 +73459,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -73768,7 +73768,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "CE_private";
 	opacity = 0
 	},
@@ -74393,7 +74393,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Detectives Lockdown";
 	name = "Detectives Lockdown";
 	opacity = 0
@@ -74778,7 +74778,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -74885,7 +74885,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -74906,7 +74906,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "minisat blast";
 	name = "MiniSat Blast Doors";
 	opacity = 0
@@ -75248,7 +75248,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Sm";
 	layer = 2.8;
 	name = "Supermatter Shutters";
@@ -75539,7 +75539,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -75575,7 +75575,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -76063,7 +76063,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "CE_private";
 	opacity = 0
 	},
@@ -76637,7 +76637,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "toxin_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -76687,7 +76687,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -76871,7 +76871,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -76987,7 +76987,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -77802,7 +77802,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio8";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -78193,7 +78193,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -78338,7 +78338,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
 	opacity = 0
@@ -78426,7 +78426,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
 	opacity = 0
@@ -78528,7 +78528,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio2";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -78925,7 +78925,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "lawyer_blast";
 	name = "Internal Affairs";
 	opacity = 0
@@ -79222,7 +79222,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "cmo_shutters";
 	name = "CMO Shutters";
 	opacity = 0
@@ -79770,7 +79770,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Corporate_lounge_shutters";
 	name = "Corporate Lounge Shutters";
 	opacity = 0
@@ -80379,7 +80379,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -80715,7 +80715,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio1";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -81138,7 +81138,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -81533,7 +81533,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -81561,7 +81561,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio3";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -81812,7 +81812,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -82469,7 +82469,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
@@ -83845,7 +83845,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "chem_shutters";
 	name = "Chemistry Shutters";
 	opacity = 0
@@ -83856,7 +83856,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -83966,7 +83966,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -83998,7 +83998,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio5";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -84237,7 +84237,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -84442,7 +84442,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -84575,7 +84575,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio5";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -85000,7 +85000,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
 	opacity = 0
@@ -85321,7 +85321,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -86312,7 +86312,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio2";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -87654,7 +87654,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "scince_lab_shutters";
 	name = "Science Lab Shutters";
 	opacity = 0
@@ -88216,7 +88216,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -88647,7 +88647,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -89097,7 +89097,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "CE_private";
 	opacity = 0
 	},
@@ -89850,7 +89850,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -90355,7 +90355,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -90845,7 +90845,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -91585,7 +91585,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Gate";
 	name = "Security Blast Door";
 	opacity = 0
@@ -92021,7 +92021,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
 	opacity = 0
@@ -92408,7 +92408,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -92758,7 +92758,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -92832,7 +92832,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
@@ -93721,7 +93721,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -94618,7 +94618,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown Blast Doors";
 	opacity = 0
@@ -95006,7 +95006,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "atmos";
 	name = "Atmos Blast Door";
 	opacity = 0
@@ -96355,7 +96355,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "robotic_shutters";
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
@@ -96633,7 +96633,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "toxin_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -97080,7 +97080,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Corporate_lounge_shutters";
 	name = "Corporate Lounge Shutters";
 	opacity = 0
@@ -97803,7 +97803,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio3";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -97956,7 +97956,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio2";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -98170,7 +98170,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -98300,7 +98300,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Execution_blast";
 	name = "Execution Blast";
 	opacity = 0
@@ -99124,7 +99124,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -99232,7 +99232,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
@@ -99351,7 +99351,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "east_science_hazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -99634,7 +99634,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "genetic_shutters";
 	name = "Genetic Shutters";
 	opacity = 0
@@ -100079,7 +100079,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -100479,7 +100479,7 @@
 "vAJ" = (
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_queue";
 	opacity = 0
 	},
@@ -100509,7 +100509,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 8;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -100930,7 +100930,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio8";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -102464,7 +102464,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "xenobio7";
 	name = "Containment Blast Doors";
 	opacity = 0
@@ -103058,7 +103058,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "scince_lab_shutters";
 	name = "Science Lab Shutters";
 	opacity = 0
@@ -105857,7 +105857,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -105996,7 +105996,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "robotic_shutters";
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
@@ -106379,7 +106379,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Sm";
 	layer = 2.8;
 	name = "Supermatter Shutters";
@@ -106598,7 +106598,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Prison Lockdown";
 	name = "Prison Lockdown";
 	opacity = 0
@@ -107855,7 +107855,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -108546,7 +108546,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Singularity";
 	layer = 2.8;
 	name = "Engine Shutters";
@@ -109082,7 +109082,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "QM Lockdown Blast Doors";
 	name = "QM Lockdown Blast Doors";
 	opacity = 0
@@ -111152,7 +111152,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "scince_lab_shutters";
 	name = "Science Lab Shutters";
 	opacity = 0
@@ -111346,7 +111346,7 @@
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "robotic_shutters";
 	name = "Robotist Biohazard Shutter";
 	opacity = 0
@@ -111691,7 +111691,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
 	opacity = 0
