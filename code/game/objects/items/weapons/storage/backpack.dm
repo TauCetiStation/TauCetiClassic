@@ -10,6 +10,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = SIZE_NORMAL
+	mass = 0.77
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE

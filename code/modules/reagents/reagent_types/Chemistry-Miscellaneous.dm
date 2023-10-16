@@ -5,6 +5,7 @@
 	reagent_state = LIQUID
 	color = "#c80000" // rgb: 200, 0, 0
 	taste_message = "<span class='warning'>blood</span>"
+	density = 1.06
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
@@ -106,6 +107,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "sweetness"
 	custom_metabolism = 0.01
+	density = 1.261
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
@@ -115,6 +117,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "oil" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
 	custom_metabolism = 0.01
+	density = 1.596
 
 /datum/reagent/thermite
 	name = "Thermite"
@@ -122,6 +125,7 @@
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
+	density = 4.175
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
@@ -160,6 +164,7 @@
 	color = "#660000" // rgb: 102, 0, 0
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "motor oil"
+	density = 0.81 // I guess its kerosene
 
 /datum/reagent/fuel/reaction_obj(obj/O, volume)
 	var/turf/the_turf = get_turf(O)
@@ -189,6 +194,7 @@
 	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
+	density = 1.01
 
 /datum/reagent/space_cleaner/on_general_digest(mob/living/M)
 	..()
@@ -284,6 +290,7 @@
 	color = "#181818" // rgb: 24, 24, 24
 	custom_metabolism = 0.005
 	restrict_species = list(IPC, DIONA)
+	density = 1.01
 	var/alert_time = 0
 
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
@@ -414,6 +421,7 @@
 	reagent_state = LIQUID
 	color = "#535e66" //rgb: 83, 94, 102
 	taste_message = "nanomachines, son"
+	density = 5
 
 /datum/reagent/nanobots
 	name = "Nanobots"
@@ -422,6 +430,7 @@
 	reagent_state = LIQUID
 	color = "#3e3959" //rgb: 62, 57, 89
 	taste_message = "nanomachines, son"
+	density = 5
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
 //Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
@@ -432,6 +441,7 @@
 	reagent_state = LIQUID
 	color = "#593948" //rgb: 89, 57, 72
 	custom_metabolism = 0.005
+	density = 5
 	var/spawning_horror = 0
 	var/percent_machine = 0
 	taste_message = "nanomachines, son"
@@ -576,6 +586,7 @@
 	color = "#808080"
 	color_weight = 20
 	taste_message = "strong liquid colour"
+	density = 1.6
 
 /datum/reagent/paint/red
 	name = "Red Paint"

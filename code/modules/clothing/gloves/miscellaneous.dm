@@ -51,6 +51,7 @@
 	desc = "Sterile latex gloves."
 	icon_state = "latex"
 	item_state = "lgloves"
+	mass = 0.1
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	germ_level = 0

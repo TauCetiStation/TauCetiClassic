@@ -38,6 +38,7 @@
 	item_state = "syringe_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	mass = 0.45
 
 //Survival boxes, given by NanoTrasen
 /obj/item/weapon/storage/box/survival

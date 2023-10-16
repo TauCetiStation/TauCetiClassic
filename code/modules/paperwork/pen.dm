@@ -18,6 +18,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_EARS
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
+	mass = 0.01
 	throw_speed = 4
 	throw_range = 15
 	m_amt = 10

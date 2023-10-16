@@ -3,6 +3,7 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
 	item_state = "wjboots"
+	mass = 1.1
 	siemens_coefficient = 0.7
 	var/obj/item/knife
 
@@ -57,6 +58,7 @@
 	desc = "Rubber boots."
 	name = "galoshes"
 	icon_state = "galoshes"
+	mass = 0.8
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	can_get_wet = FALSE

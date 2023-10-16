@@ -5,6 +5,13 @@
 	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "folder_grey"
 	w_class = SIZE_TINY
+	mass = 0.1
+
+/obj/item/wepon/folder/get_mass()
+	var/pages_mass = 0
+	for(var/obj/item/I in contents)
+		pages_mass += I.get_mass()
+	return ..() + pages_mass
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."

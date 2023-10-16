@@ -10,6 +10,12 @@ var/global/const/INGEST = 2
 	var/atom/my_atom = null
 	var/proccessing_reaction_count = 0
 
+/datum/reagents/proc/get_mass()
+	var/reagents_masses = 0
+	for(var/datum/reagent/R in reagent_list)
+		reagents_masses += R.get_mass()
+	return reagents_masses / 1000 //g to kg
+
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 

@@ -10,6 +10,7 @@
 	max_integrity = 100
 	damage_deflection = 15
 	resistance_flags = CAN_BE_HIT
+	mass = 50
 
 	var/icon_closed = "closed"
 	var/icon_opened = "open"

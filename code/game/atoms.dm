@@ -305,21 +305,25 @@
 
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		msg += "<br>It contains:"
+		msg += "<br>Содержит:"
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
+					msg += "<br><span class='info'>[R.volume] мл ([R.name])</span>"
 			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
 				if(length(reagents.reagent_list) == 1)
-					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
+					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] мл ([reagents.reagent_list[1].name])</span>"
 				else
 					for(var/datum/reagent/R in reagents.reagent_list)
-						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
+						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] мл ([R.name])</span>"
 			else
-				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
+				msg += "<br><span class='info'>[reagents.total_volume] мл жидкости.</span>"
 		else
-			msg += "<br>Nothing."
+			msg += "<br>Ничего."
+
+	if(ismovable(src))
+		var/atom/movable/A = src
+		msg += "<br>Весит: [A.get_mass()]кг."
 
 	to_chat(user, msg)
 

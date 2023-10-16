@@ -5,6 +5,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "telecrystal"
 	w_class = SIZE_MINUSCULE
+	mass = 0.05
 	full_w_class = SIZE_SMALL
 	max_amount = 50
 

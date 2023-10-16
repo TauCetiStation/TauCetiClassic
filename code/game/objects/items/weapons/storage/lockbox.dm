@@ -4,6 +4,7 @@
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
 	w_class = SIZE_NORMAL
+	mass = 1.35
 	max_w_class = SIZE_SMALL
 	max_storage_space = 10 //The sum of the w_classes of all the items in this storage item.
 	req_access = list(access_armory)

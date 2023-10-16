@@ -4,6 +4,7 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	icon_state = "rig0-engineering"
 	item_state = "eng_helm"
+	mass = 2
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
 
@@ -61,6 +62,7 @@
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
+	mass = 5
 	slowdown = 0.5
 	var/magpulse = FALSE
 	var/offline_slowdown = 2

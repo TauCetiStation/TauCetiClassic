@@ -147,6 +147,7 @@
 	description = "A highly toxic chemical."
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
+	density = 1.5955
 	toxpwr = 4
 	custom_metabolism = 0.4
 	restrict_species = list(IPC, DIONA)

@@ -14,7 +14,8 @@
 	var/datum/reagents/holder = null
 	var/reagent_state = SOLID
 	var/list/data = null
-	var/volume = 0
+	var/volume = 0 // cm^3
+	var/density = 1 // g/cm^3
 	var/nutriment_factor = 0
 	var/diet_flags = DIET_ALL
 	var/custom_metabolism = REAGENTS_METABOLISM
@@ -44,6 +45,9 @@
 
 	// By how much should mob's permeability be multiplied.
 	var/permeability_multiplier = 1.0
+
+/datum/reagent/proc/get_mass()
+	return density * volume
 
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!isliving(M))

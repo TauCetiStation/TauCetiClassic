@@ -21,6 +21,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = SIZE_MINUSCULE
+	mass = 0.35
 
 
 /********
@@ -32,6 +33,7 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = SIZE_TINY
+	mass = 0.025
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 	var/icon/tiny

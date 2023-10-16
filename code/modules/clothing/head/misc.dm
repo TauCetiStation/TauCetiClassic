@@ -11,6 +11,7 @@
 	icon_state = "hairflower"
 	desc = "Smells nice."
 	item_state = "hairflower"
+	mass = 0.1
 	body_parts_covered = 0
 
 /obj/item/clothing/head/powdered_wig
@@ -152,6 +153,7 @@
 	desc = "A working man's cap."
 	icon_state = "flat_cap"
 	item_state = "detective"
+	mass = 0.25
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/pirate

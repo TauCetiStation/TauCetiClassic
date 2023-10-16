@@ -6,6 +6,7 @@
 	color = "#0064c8" // rgb: 0, 100, 200
 	custom_metabolism = 0.01
 	taste_message = null
+	density = 1
 
 	toxin_absorption = 0.5
 
@@ -97,6 +98,7 @@
 	id = "holywater"
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
+	density = 1.03
 
 	needed_aspects = list(ASPECT_RESCUE = 1)
 
@@ -157,6 +159,7 @@
 	id = "unholywater"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
 	color = "#c80064" // rgb: 200,0, 100
+	density = 0.97
 
 	data = list()
 
@@ -241,6 +244,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
+	density = 0.00143
 
 /datum/reagent/oxygen/on_vox_digest(mob/living/M)
 	..()
@@ -255,6 +259,7 @@
 	color = "#6e3b08" // rgb: 110, 59, 8
 	taste_message = null
 	custom_metabolism = 0.01
+	density = 8.9
 
 /datum/reagent/nitrogen
 	name = "Nitrogen"
@@ -264,6 +269,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
+	density = 0.00125
 
 /datum/reagent/nitrogen/on_diona_digest(mob/living/M)
 	..()
@@ -288,6 +294,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
+	density = 0.00009
 
 /datum/reagent/potassium
 	name = "Potassium"
@@ -297,6 +304,7 @@
 	color = "#a0a0a0" // rgb: 160, 160, 160
 	taste_message = "bad ideas"
 	custom_metabolism = 0.01
+	density = 0.856
 
 /datum/reagent/mercury
 	name = "Mercury"
@@ -307,6 +315,7 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "druggie poison"
 	restrict_species = list(IPC, DIONA)
+	density = 13.6
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
@@ -324,6 +333,7 @@
 	color = "#bf8c00" // rgb: 191, 140, 0
 	taste_message = "impulsive decisions"
 	custom_metabolism = 0.01
+	density = 2.1
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -333,6 +343,7 @@
 	color = "#1c1300" // rgb: 30, 20, 0
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
+	density = 2.25
 
 	toxin_absorption = 2.0
 
@@ -354,6 +365,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "characteristic taste"
+	density = 0.00321
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M)
 	..()
@@ -380,6 +392,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "horrible misjudgement"
 	custom_metabolism = 0.01
+	density = 0.96842
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -389,6 +402,7 @@
 	color = "#832828" // rgb: 131, 40, 40
 	taste_message = "misguided choices"
 	custom_metabolism = 0.01
+	density = 1.83
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M)
 	..()
@@ -408,6 +422,7 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "happiness"
 	restrict_species = list(IPC, DIONA)
+	density = 0.533
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
@@ -424,6 +439,7 @@
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
 	custom_metabolism = 0.5
+	density = 1.587
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
@@ -443,6 +459,7 @@
 	reagent_state = SOLID
 	color = "#c7c7c7" // rgb: 199,199,199
 	taste_message = "bonehurting juice"
+	density = 5.5
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
@@ -479,6 +496,7 @@
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "metal"
+	density = 7.8
 
 /datum/reagent/iron/on_skrell_digest(mob/living/M)
 	if(prob(15))
@@ -494,6 +512,7 @@
 	reagent_state = SOLID
 	color = "#f7c430" // rgb: 247, 196, 48
 	taste_message = "bling"
+	density = 19.3
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
@@ -504,6 +523,7 @@
 	reagent_state = SOLID
 	color = "#d0d0d0" // rgb: 208, 208, 208
 	taste_message = "sub-par bling"
+	density = 10.5
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
@@ -514,6 +534,7 @@
 	reagent_state = SOLID
 	color = "#b8b8c0" // rgb: 184, 184, 192
 	taste_message = "bonehurting juice"
+	density = 19.05
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
@@ -534,6 +555,7 @@
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
 	taste_message = null
+	density = 2.7
 
 /datum/reagent/silicon
 	name = "Silicon"
@@ -542,3 +564,4 @@
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
 	taste_message = "a CPU"
+	density = 2.33

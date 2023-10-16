@@ -276,7 +276,7 @@
 	return ..()
 
 /obj/item/weapon/dumbbell
-	var/mass = 1
+	mass = 1
 	var/max_pumped
 
 /obj/item/weapon/dumbbell/light
@@ -290,7 +290,7 @@
 	throw_range = 3
 	w_class = SIZE_NORMAL
 
-	mass = 1
+	mass = 5
 	max_pumped = 10
 
 /obj/item/weapon/dumbbell/heavy
@@ -305,13 +305,13 @@
 	throw_range = 1
 	w_class = SIZE_NORMAL
 
-	mass = 2
+	mass = 10
 	max_pumped = 25
 
 /obj/item/weapon/dumbbell/attack_self(mob/living/user)
 	if(user.is_busy())
 		return
-	if(!do_after(user, 25 * mass, target = src))
+	if(!do_after(user, 5 * mass, target = src))
 		return
 
 	user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
@@ -324,10 +324,10 @@
 	if(!BP)
 		return
 
-	var/pain_amount = 3 * BP.adjust_pumped(mass, max_pumped)
+	var/pain_amount = 3 * BP.adjust_pumped(mass / 5, max_pumped)
 	H.apply_effect(pain_amount, AGONY, 0)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	H.update_body()
 
-	H.nutrition -= 2 * mass
-	H.overeatduration -= 2 * mass
+	H.nutrition -= 2 * mass / 5
+	H.overeatduration -= 2 * mass / 5

@@ -14,6 +14,12 @@
 	var/screen = 0
 	var/list/pages = list() //Amount of items clipped to the paper
 
+/obj/item/weapon/paper_bundle/get_mass()
+	var/pages_mass = 0
+	for(var/obj/item/I in pages)
+		pages_mass += I.get_mass()
+	return pages_mass
+
 /obj/item/weapon/paper_bundle/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/paper/carbon))
 		var/obj/item/weapon/paper/carbon/C = I

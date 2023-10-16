@@ -13,6 +13,7 @@
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
 	w_class = SIZE_SMALL
+	mass = 1.75
 	force = 5
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	flashbang_protection = TRUE

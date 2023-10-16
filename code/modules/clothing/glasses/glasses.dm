@@ -62,6 +62,7 @@
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+	mass = 0.75
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
@@ -79,6 +80,7 @@
 	toggleable = TRUE
 	sightglassesmod = "sci"
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+	mass = 0.75
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
@@ -97,6 +99,7 @@
 	activation_sound = 'sound/effects/glasses_on.ogg'
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+	mass = 0.75
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
@@ -106,6 +109,7 @@
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 	body_parts_covered = 0
+	mass = 0.3
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -123,6 +127,7 @@
 	toggleable = TRUE
 	vision_flags = SEE_OBJS
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+	mass = 0.75
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
@@ -198,6 +203,7 @@
 	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
 	item_action_types = list(/datum/action/item_action/flip_welding_goggles)
+	mass = 0.75
 
 /datum/action/item_action/flip_welding_goggles
 	name = "Flip Welding Goggles"
@@ -241,6 +247,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
+	mass = 0.3
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white
@@ -321,6 +328,7 @@
 	flash_protection = FLASHES_AMPLIFIER
 	flash_protection_slots = list(SLOT_GLASSES)
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+	mass = 0.75
 
 /obj/item/clothing/glasses/thermal/attack_self(mob/user)
 	. = ..()

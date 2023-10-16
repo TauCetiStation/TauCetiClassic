@@ -4,6 +4,7 @@
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "empty"
 	volume = 200
+	mass = 0.1
 
 	var/blood_type = null
 

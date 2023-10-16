@@ -6,6 +6,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	w_class = SIZE_TINY
+	mass = 0.25
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/list/list_reagents = null

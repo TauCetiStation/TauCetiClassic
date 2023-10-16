@@ -8,6 +8,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = SIZE_NORMAL
+	mass = 0.6
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 

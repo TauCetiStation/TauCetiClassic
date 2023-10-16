@@ -4,6 +4,7 @@
 	max_storage_space = 10
 	icon_state = "wallet"
 	w_class = SIZE_TINY
+	mass = 0.2
 	can_hold = list(
 		/obj/item/weapon/spacecash,
 		/obj/item/weapon/ewallet,

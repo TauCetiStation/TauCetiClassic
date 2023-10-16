@@ -6,6 +6,7 @@
 	color = "#e78108" // rgb: 231, 129, 8
 	custom_metabolism = DRINK_METABOLISM
 	nutriment_factor = 0
+	density = 1.04
 	var/adj_dizzy = 0
 	var/adj_drowsy = 0
 	var/adj_sleepy = 0
@@ -190,6 +191,7 @@
 	color = "#dfdfdf" // rgb: 223, 223, 223
 	taste_message = "milk"
 	diet_flags = DIET_DAIRY
+	density = 1.03
 
 /datum/reagent/consumable/drink/milk/on_general_digest(mob/living/M)
 	..()
@@ -217,6 +219,7 @@
 	color = "#dfd7af" // rgb: 223, 215, 175
 	taste_message = "cream"
 	diet_flags = DIET_DAIRY
+	density = 0.97
 
 /datum/reagent/consumable/drink/grenadine
 	name = "Grenadine Syrup"
@@ -530,6 +533,7 @@
 	color = "#feae00"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	taste_message = "honey"
+	density = 1.35
 
 /datum/reagent/consumable/honey/on_general_digest(mob/living/M)
 	..()
@@ -713,6 +717,7 @@
 	nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 	color = "#404030" // rgb: 64, 64, 48
 	custom_metabolism = DRINK_METABOLISM * 0.4
+	density = 0.7893
 
 	var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
 

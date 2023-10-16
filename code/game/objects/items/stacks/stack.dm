@@ -348,6 +348,9 @@
 	src.fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 
+/obj/item/stack/get_mass()
+	return ..() * amount
+
 /*
  * Recipe datum
  */

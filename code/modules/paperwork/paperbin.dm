@@ -5,11 +5,18 @@
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = SIZE_SMALL
+	mass = 0.35
 	throw_speed = 3
 	throw_range = 7
 	var/amount = 15 // How much paper is in the bin.
 	var/list/papers = list() // List of papers put in the bin for reference.
 	var/static/list/paper_types
+
+/obj/item/weapon/paper_bin/get_mass()
+	var/papers_mass = 0
+	for(var/obj/item/I in papers)
+		papers_mass += I.get_mass()
+	return ..() + papers_mass + (0.05 * amount)
 
 /obj/item/weapon/paper_bin/atom_init()
 	. = ..()

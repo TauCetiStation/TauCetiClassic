@@ -89,6 +89,7 @@
 	color = "#c8a5dc"
 	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
+	density = 1.3
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
 	..()

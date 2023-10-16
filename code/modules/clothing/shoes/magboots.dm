@@ -3,6 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	item_state = "magboots"
+	mass = 2.5
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2

@@ -10,6 +10,7 @@
 	icon_state = "paper"
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
+	mass = 0.005
 	throw_range = 1
 	throw_speed = 1
 	layer = 3.9

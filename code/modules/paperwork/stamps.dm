@@ -6,6 +6,7 @@
 	item_state = "stamp"
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
+	mass = 0.15
 	throw_speed = 4
 	throw_range = 15
 	m_amt = 60

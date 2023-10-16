@@ -18,6 +18,7 @@
 	var/moving_diagonally = 0
 
 	var/w_class = 0
+	var/mass = 1 //kg CANT BE 0!!
 
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -584,3 +585,9 @@
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
 
 #undef GEIGER_RANGE
+
+/atom/movable/proc/get_mass()
+	var/contents_mass = 0
+	for(var/atom/movable/A in contents)
+		contents_mass += A.get_mass()
+	return mass + contents_mass + reagents?.get_mass()

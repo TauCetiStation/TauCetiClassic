@@ -3,6 +3,7 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
+	mass = 0.6
 
 /obj/item/clothing/glasses/proc/enable_hud(mob/living/carbon/human/user)
 	if(!hud_types)

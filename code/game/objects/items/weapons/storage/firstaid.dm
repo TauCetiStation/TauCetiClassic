@@ -116,6 +116,7 @@
 	item_state = "contsolid"
 	flags = NOBLUDGEON
 	w_class = SIZE_TINY
+	mass = 0.1
 	max_storage_space = 21
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1

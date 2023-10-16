@@ -7,6 +7,7 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE
 	w_class = SIZE_TINY
+	mass = 0.2
 
 /obj/item/clothing/mask/balaclava/tactical
 	name = "green balaclava"

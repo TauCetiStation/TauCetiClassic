@@ -11,11 +11,15 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
 	w_class = SIZE_MINUSCULE
+	mass = 0.02
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
+
+/obj/item/ammo_casing/get_mass()
+	return ..() + BB?.get_mass()
 
 /obj/item/ammo_casing/atom_init()
 	. = ..()
@@ -86,6 +90,7 @@
 	m_amt = 500
 	throwforce = 2
 	w_class = SIZE_TINY
+	mass = 0.25
 	throw_speed = 4
 	throw_range = 10
 	var/list/stored_ammo = list()

@@ -38,6 +38,7 @@
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	w_class = SIZE_NORMAL //Bigger than a book because physics
+	mass = 0.35
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/bible, /obj/item/weapon/spellbook)
 
 // -----------------------------

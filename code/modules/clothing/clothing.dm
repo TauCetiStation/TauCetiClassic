@@ -27,6 +27,12 @@
 
 	var/flashbang_protection = FALSE
 
+/obj/item/clothing/get_mass()
+	var/accessories_mass = 0
+	for(var/obj/O in accessories)
+		accessories_mass += O.get_mass()
+	return ..() + accessories_mass
+
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
 
@@ -280,12 +286,14 @@
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
+	mass = 0.2
 
 //Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = SIZE_TINY
+	mass = 0.2
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_FLAGS_EYES
 	var/vision_flags = 0
@@ -320,6 +328,7 @@ BLIND     // can't see anything
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = SIZE_TINY
+	mass = 0.35
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = FALSE
@@ -362,6 +371,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	slot_flags = SLOT_FLAGS_MASK
 	body_parts_covered = FACE|EYES
+	mass = 0.5
 
 	sprite_sheet_slot = SPRITE_SHEET_MASK
 
@@ -373,6 +383,7 @@ BLIND     // can't see anything
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
+	mass = 0.6
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	siemens_coefficient = 0.9
 	body_parts_covered = LEGS
@@ -405,6 +416,7 @@ BLIND     // can't see anything
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
 	w_class = SIZE_SMALL
+	mass = 0.9
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
@@ -436,6 +448,7 @@ BLIND     // can't see anything
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_HEAD)
+	mass = 1.25
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -443,6 +456,7 @@ BLIND     // can't see anything
 	icon_state = "space"
 	item_state = "s_suit"
 	w_class = SIZE_NORMAL//bulky item
+	mass = 2
 	throw_range = 2
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
@@ -499,6 +513,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = SIZE_SMALL
+	mass = 1.2
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
@@ -638,6 +653,7 @@ BLIND     // can't see anything
 	name = "festive paper hat"
 	icon_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
+	mass = 0.1
 	flags_inv = 0
 	body_parts_covered = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)

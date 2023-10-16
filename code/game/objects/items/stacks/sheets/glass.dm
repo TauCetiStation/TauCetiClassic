@@ -15,6 +15,7 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
+	mass = 0.75
 	g_amt = 3750
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/thin

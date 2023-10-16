@@ -10,6 +10,7 @@
 	hitsound = list('sound/items/misc/belt-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
+	mass = 0.5
 
 	// since belt is not considered "clothing", we can't enforce species-bodytype-based restrictions on it. YET. ~Luduk
 	// sprite_sheet_slot = SPRITE_SHEET_BELT

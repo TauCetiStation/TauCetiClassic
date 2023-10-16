@@ -434,6 +434,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	desc = "A coil of power cable."
 	throwforce = 10
 	w_class = SIZE_TINY
+	mass = 0.15
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 50

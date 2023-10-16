@@ -99,6 +99,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	hitsound = list('sound/items/trayhit2.ogg')
 	m_amt = 3750
 	throwforce = 5.0
+	mass = 1
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
@@ -131,6 +132,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	item_state = "sheet-metal"
 	m_amt = 7500
 	throwforce = 7.0
+	mass = 2
 	flags = CONDUCT
 	origin_tech = "materials=2"
 

@@ -5,6 +5,7 @@
 	amount = 5
 	max_amount = 5
 	w_class = SIZE_MINUSCULE
+	mass = 0.25
 	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20

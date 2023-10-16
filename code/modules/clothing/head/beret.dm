@@ -2,6 +2,7 @@
 	name = "beret"
 	icon_state = "" // so we can spot it as a broken item if we see it ingame
 	desc = "A beret, an artists favorite headwear."
+	mass = 0.25
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 

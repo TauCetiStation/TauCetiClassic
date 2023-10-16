@@ -11,6 +11,7 @@
 	throw_range = 7
 
 	w_class = SIZE_NORMAL
+	mass = 0.75
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE + 3 // fits all tools and around 2 extra items
 

@@ -1,4 +1,5 @@
 /obj/item/weapon/storage/food
+	mass = 0.1
 
 /obj/item/weapon/storage/food/atom_init()
 	. = ..()

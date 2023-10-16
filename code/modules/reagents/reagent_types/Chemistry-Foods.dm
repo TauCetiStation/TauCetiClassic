@@ -124,6 +124,7 @@
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
 	diet_flags = DIET_PLANT
+	density = 1.09
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -134,6 +135,7 @@
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
+	density = 1.41
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -455,6 +457,7 @@
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
+	density = 1.1
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -465,6 +468,7 @@
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
+	density = 1.2
 
 /datum/reagent/consumable/beans
 	name = "Refried beans"
@@ -485,3 +489,4 @@
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT
+	density = 1.24

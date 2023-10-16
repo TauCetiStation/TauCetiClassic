@@ -5,6 +5,7 @@
 	icon_state = "rods"
 	flags = CONDUCT
 	w_class = SIZE_SMALL
+	mass = 1.5
 	force = 2.0
 	throwforce = 5.0
 	throw_speed = 3

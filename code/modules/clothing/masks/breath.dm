@@ -6,6 +6,7 @@
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	body_parts_covered = 0
 	w_class = SIZE_TINY
+	mass = 0.1
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	var/hanging = 0

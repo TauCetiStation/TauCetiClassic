@@ -7,6 +7,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES
 	w_class = SIZE_SMALL
+	mass = 0.9
 	item_state = "gas_mask_tc"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01

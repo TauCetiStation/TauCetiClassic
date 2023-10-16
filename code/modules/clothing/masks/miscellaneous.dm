@@ -23,6 +23,7 @@
 	icon_state = "sterile"
 	item_state = "m_mask"
 	w_class = SIZE_TINY
+	mass = 0.1
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
 	gas_transfer_coefficient = 0.90

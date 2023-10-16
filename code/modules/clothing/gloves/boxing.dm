@@ -3,6 +3,7 @@
 	desc = "Because you really needed another excuse to punch your crewmates."
 	icon_state = "boxing"
 	item_state = "boxing"
+	mass = 0.28
 
 	species_restricted = null
 
