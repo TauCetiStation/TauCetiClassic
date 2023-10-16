@@ -20,7 +20,7 @@ jobs:
           # default: .github/component_owners.yml
           config-file: .github/component_owners.yml
           # default: ${{ github.token }}
-          repo-token: ${{ github.token }} 
+          repo-token: ${{ secrets.CODEOWNER_SECRET }} 
           # default: true
           assign-owners: "true"
           # default: true
