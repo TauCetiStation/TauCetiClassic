@@ -10,16 +10,14 @@
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
 	// VARIABLES //
-	var/teles_left	// How many teleports left until it becomes uncalibrated
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
 	var/power_off
-	var/rotation_off
-	var/angle_off
 	var/last_target
+	var/crystal_loss_prob = 0
 
-	var/rotation = 0
-	var/angle = 45
+	var/cord_x = 25
+	var/cord_y = 25
 	var/power = 5
 
 	// Based on the power used
@@ -32,10 +30,6 @@
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
-
-/obj/machinery/computer/telescience/atom_init()
-	. = ..()
-	recalibrate()
 
 /obj/machinery/computer/telescience/atom_init()
 	. = ..()
@@ -124,10 +118,10 @@
 			t += "<span class='disabled'>Eject GPS</span>"
 			t += "<span class='disabled'>Set GPS memory</span>"
 		t += "<div class='Section'>[temp_msg]</div><BR>"
-		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='Section'>[rotation]°</div>"
-		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='Section'>[angle]°</div>"
+		t += "<A href='?src=\ref[src];setx=1'>Set X</A>"
+		t += "<div class='Section'>[cord_x]</div>"
+		t += "<A href='?src=\ref[src];sety=1'>Set Y</A>"
+		t += "<div class='Section'>[cord_y]°</div>"
 		t += "<span class='selected'>Set Power</span>"
 		t += "<div class='Section'>"
 
@@ -145,7 +139,7 @@
 			t += "<BR><span class='disabled'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
 		else
 			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='disabled'>Close Wormhole</span>"
-		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+		t += "<BR><A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
 		t += "<BR><div class='Section'>"
@@ -211,30 +205,22 @@
 		return
 
 	if(telepad)
-		var/truePower = clamp(power + power_off, 1, 1000)
-		var/trueRotation = rotation + rotation_off
-		var/trueAngle = clamp(angle + angle_off, 1, 90)
+		var/failure_radius = 22 - (crystals.len * 5)
+		var/trueCord_x = cord_x + rand(0, failure_radius)
+		var/trueCord_y = cord_y + rand(0, failure_radius)
 
-		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
-		last_tele_data = proj_data
-
-		var/trueX = clamp(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = clamp(round(proj_data.dest_y, 1), 1, world.maxy)
-		var/spawn_time = round(proj_data.time) * 10
-
-		var/turf/target = locate(trueX, trueY, z_co)
+		var/turf/target = locate(trueCord_x, trueCord_y, z_co)
+		var/spawn_time = (crystals.len) * 5
 		last_target = target
 		var/area/A = get_area(target)
 		flick("pad-beam", telepad)
 
-		if(spawn_time > 15) // 1.5 seconds
-			playsound(telepad, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, 25)
-			// Wait depending on the time the projectile took to get there
-			teleporting = 1
-			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
+		playsound(telepad, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, 25)
+		teleporting = 1
+		temp_msg = "Powering up bluespace crystals.<BR>Please wait."
 
 
-		spawn(round(proj_data.time) * 10) // in seconds
+		spawn(spawn_time)
 			teleporting = 0
 			if(!telepad)
 				return
@@ -242,8 +228,10 @@
 				return
 			if(create_wormhole(target))
 				teleport_cooldown = world.time + (power * 2)
-				teles_left -= 1
-
+				if(prob(crystal_loss_prob))
+					crystals --
+					crystal_loss_prob = 0
+				crystal_loss_prob += 105 - power
 				// use a lot of power
 				use_power(power * 1500)
 				set_power_use(ACTIVE_POWER_USE)
@@ -253,11 +241,7 @@
 				s.start()
 
 				temp_msg = "Teleport successful."
-				if(teles_left < 10)
-					temp_msg += "<BR>Calibration required soon."
-				else
-					temp_msg += "<BR>Data printed below."
-				log_investigate("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].",INVESTIGATE_TELESCI)
+				log_investigate("[key_name(usr)]/[user] has teleported with Telescience at [trueCord_x],[trueCord_y],[z_co], in [A ? A.name : "null area"].",INVESTIGATE_TELESCI)
 
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, target)
@@ -278,27 +262,23 @@
 			updateDialog()
 
 /obj/machinery/computer/telescience/proc/prepare_wormhole(mob/user)
-	if(rotation == null || angle == null || z_co == null)
-		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
+	if(cord_x == null || cord_y == null || z_co == null)
+		temp_msg = "ERROR!<BR>Set a x, y coordinates and sector."
 		return
 	if(power <= 0)
 		telefail()
 		temp_msg = "ERROR!<BR>No power selected!"
 		return
-	if(angle < 1 || angle > 90)
-		telefail()
-		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
-		return
 	if(!SSmapping.has_level(z_co) || is_centcom_level(z_co) || is_junkyard_level(z_co)) // Change this to notele trait or something
 		telefail()
 		temp_msg = "ERROR! This sector is unreachable."
 		return
-	if(teles_left > 0)
-		open_wormhole(user)
-	else
+	if(crystals.len <= 0)
 		telefail()
-		temp_msg = "ERROR!<BR>Calibration required."
+		temp_msg = "The device requires crystals to operate the wormhole."
 		return
+	if(crystals.len > 0)
+		open_wormhole()
 	return
 
 /obj/machinery/computer/telescience/proc/eject()
@@ -319,18 +299,17 @@
 	if(telepad.panel_open)
 		temp_msg = "Telepad undergoing physical maintenance operations."
 
-	if(href_list["setrotation"])
-		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
+	if(href_list["setx"])
+		var/new_x = input("Please input x coordinates.", name, cord_x) as num
 		if(!..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = clamp(new_rot, -900, 900)
-		rotation = round(rotation, 0.01)
+		cord_x = new_x
 
-	if(href_list["setangle"])
-		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
+	if(href_list["sety"])
+		var/new_y = input("Please input desired y coordinates.", name, cord_y) as num
 		if(!..())
 			return
-		angle = clamp(round(new_angle, 0.1), 1, 9999)
+		cord_y = new_y
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -361,22 +340,8 @@
 	if(href_list["close_teleport"])
 		close_wormhole(usr)
 
-	if(href_list["recal"])
-		recalibrate()
-		sparks()
-		temp_msg = "NOTICE:<BR>Calibration successful."
-
 	if(href_list["eject"])
 		eject()
 		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
 
 	updateDialog()
-
-/obj/machinery/computer/telescience/proc/recalibrate()
-	if(telepad)
-		teles_left = clamp(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
-	else
-		teles_left = 0
-	angle_off = rand(-25, 25)
-	power_off = rand(-4, 0)
-	rotation_off = rand(-10, 10)
