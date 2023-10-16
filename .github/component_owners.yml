@@ -1,0 +1,53 @@
+# # .github/component_owners.yml
+
+# # Each component identified by its path prefix has a list of owners
+# components:
+#   # Ownership applies recursively to any file in a directory
+#   src/:
+#     - owner1 # owner1 owns all files in src/
+
+#   # Ownership can be assigned as a string
+#   src/index.ts: owner2 owner3
+  
+#   # or a list
+#   src/list-owners.ts:
+#     - owner3
+#     - owner4
+
+#   # Ownership can be assigned based on a file extension
+#   "*.md":
+#     - owner5
+
+# # Optionally ignore some PR authors to reduce spam for your component owners
+# ignored-authors:
+#   - dependabot
+#   - renovate-bot
+
+components:
+  ## Код ##
+  
+  # /code/
+  code/modules/client/preferences_savefile.dm:
+    - volas
+
+  ## Конфиги ##
+  config/:
+    - volas
+
+  ## Иконки ##
+  icons/:
+    TauCetiStation/sprites-department
+
+  ## Карты ##
+  maps/testmap/testmap.dmm: volas
+
+  ## TGUI ##
+  # tgui/: вы
+
+  ## Общее ##
+  "*.py": volas
+  "*.sh": volas
+
+ignored-authors:
+  - dependabot
+  - renovate-bot
