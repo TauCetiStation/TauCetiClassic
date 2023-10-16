@@ -205,9 +205,9 @@
 		return
 
 	if(telepad)
-		var/failure_radius = 22 - (crystals.len * 5)
-		var/trueCord_x = cord_x + rand(0, failure_radius)
-		var/trueCord_y = cord_y + rand(0, failure_radius)
+		var/failure_radius = rand(-5, 20 - (crystals.len * 5))
+		var/trueCord_x = cord_x + failure_radius
+		var/trueCord_y = cord_y + failure_radius
 
 		var/turf/target = locate(trueCord_x, trueCord_y, z_co)
 		var/spawn_time = (crystals.len) * 5
