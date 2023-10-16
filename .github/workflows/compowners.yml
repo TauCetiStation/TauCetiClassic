@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Auto Assign Owners
     steps:
-      - uses: dyladan/component-owners@main
+      - uses: volas/component-owners@main
         with:
           # default: .github/component_owners.yml
           config-file: .github/component_owners.yml
