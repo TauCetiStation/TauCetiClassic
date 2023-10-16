@@ -116,21 +116,22 @@
 		use_power(20)
 	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
-	updateStatus()
+	density = FALSE
 	setStatusOverlay()
+	updateStatus()
 
 /obj/machinery/door/poddoor/do_close()
 	if(hasPower())
 		use_power(20)
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
-	updateStatus()
+	density = TRUE
 	setStatusOverlay()
+	updateStatus()
 	do_afterclose()
 
 /obj/machinery/door/poddoor/proc/updateStatus()
 	sleep(5)
-	density = !density
 	if(!density)
 		explosive_resistance = 0
 		set_opacity(FALSE)
