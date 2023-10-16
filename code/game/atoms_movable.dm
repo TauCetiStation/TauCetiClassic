@@ -590,4 +590,5 @@
 	var/contents_mass = 0
 	for(var/atom/movable/A in contents)
 		contents_mass += A.get_mass()
-	return mass + contents_mass + reagents?.get_mass()
+	var/tell_mass = mass + contents_mass + reagents?.get_mass()
+	return tell_mass ? tell_mass : 0.42

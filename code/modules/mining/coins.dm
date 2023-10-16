@@ -6,7 +6,7 @@
 	force = 0
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
-	mass = 0.01
+	mass = 0
 	var/cmineral = null
 	var/reagent = null
 	var/string_attached
