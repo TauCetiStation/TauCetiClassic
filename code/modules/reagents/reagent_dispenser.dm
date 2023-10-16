@@ -3,6 +3,7 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
+	mass = 7
 	density = TRUE
 	anchored = FALSE
 	flags = OPENCONTAINER

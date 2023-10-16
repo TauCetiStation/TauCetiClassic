@@ -24,6 +24,7 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = SIZE_TINY
+	mass = 0.4
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
@@ -56,6 +57,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	w_class = SIZE_MINUSCULE
+	mass = 0.058
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -103,6 +105,7 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = SIZE_TINY
+	mass = 0.135
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/wirecutters-pinch.ogg')
@@ -155,6 +158,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
+	mass = 2
 	qualities = list(
 		QUALITY_WELDING = 1
 	)
@@ -446,6 +450,7 @@
 	name = "industrial welding tool"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "indwelder"
+	mass = 2.5
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 60
@@ -455,6 +460,7 @@
 	name = "upgraded welding tool"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "hugewelder"
+	mass = 3
 	max_fuel = 80
 	w_class = SIZE_SMALL
 	m_amt = 70
@@ -467,6 +473,7 @@
 	icon_state = "expwelder"
 	max_fuel = 40
 	w_class = SIZE_SMALL
+	mass = 4
 	m_amt = 70
 	g_amt = 120
 	toolspeed = 0.5
@@ -562,6 +569,7 @@
 /obj/item/weapon/multi
 	var/mode = FALSE
 	w_class = SIZE_TINY
+	mass = 1.5
 
 /obj/item/weapon/multi/hand_drill
 	name = "Hand Drill"
