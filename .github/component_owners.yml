@@ -36,9 +36,8 @@ components:
 
   ## Иконки ##
   icons/:
-    volas
-    sprites-department
-    TauCetiStation/sprites-department
+    deahaka
+    /sprites-department
 
   ## Карты ##
   maps/testmap/testmap.dmm: volas
