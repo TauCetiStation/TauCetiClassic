@@ -51,18 +51,21 @@
 /obj/machinery/door/poddoor/proc/setStatusOverlay()
 	cut_overlays()
 	if(!density)
-		if(hasPower() && ("lights_open" in icon_states(icon)))
-			var/image/status_overlay = image(icon_state = "lights_open")
+		if(hasPower() && ("lights_opend" in icon_states(icon)))
+			var/image/status_overlay = image(icon_state = "lights_opend")
 			set_light(BLASTDOOR_LIGHT_RANGE, BLASTDOOR_LIGHT_POWER, COLOR_GREEN)
 			status_overlay.plane = LIGHTING_LAMPS_PLANE
 			add_overlay(status_overlay)
 		else
 			set_light(0)
 	else
-		var/image/status_overlay = image(icon_state = "lights_closed")
-		set_light(BLASTDOOR_LIGHT_RANGE, BLASTDOOR_LIGHT_POWER, COLOR_RED)
-		status_overlay.plane = LIGHTING_LAMPS_PLANE
-		add_overlay(status_overlay)
+		if("lights_closed" in icon_states(icon))
+			var/image/status_overlay = image(icon_state = "lights_closed")
+			set_light(BLASTDOOR_LIGHT_RANGE, BLASTDOOR_LIGHT_POWER, COLOR_RED)
+			status_overlay.plane = LIGHTING_LAMPS_PLANE
+			add_overlay(status_overlay)
+		else
+			set_light(0)
 
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
