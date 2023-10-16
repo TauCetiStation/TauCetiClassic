@@ -22,6 +22,6 @@ jobs:
           # default: ${{ github.token }}
           repo-token: ${{ github.token }} 
           # default: true
-          assign-owners: "false"
+          assign-owners: "true"
           # default: true
           request-owner-reviews: "true"
