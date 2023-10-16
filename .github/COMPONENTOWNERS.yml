@@ -41,7 +41,7 @@ components:
   "*.py": volas
   "*.sh": volas
 
- .github/: /maintainers
+  .github/: /maintainers
 
 ignored-authors:
   - dependabot
