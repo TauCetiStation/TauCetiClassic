@@ -235,7 +235,7 @@
 
 /obj/item/ammo_box/magazine/c20r/hv
 	name = "magazine (.45 HV)"
-	desc = "Магазин, полный скорострельных патронов для пистолета-пулемета."
+	desc = "Магазин, полный высокоскоростных патронов для пистолета-пулемета."
 	icon_state = "c20r_mag_hv"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
@@ -244,7 +244,7 @@
 
 /obj/item/ammo_box/magazine/c20r/imp
 	name = "magazine (.45 IMP)"
-	desc = "Магазин, полный патронов для травматического пистолета-пулемета."
+	desc = "Магазин, полный патронов для ударного пистолета-пулемета."
 	icon_state = "c20r_mag_imp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
