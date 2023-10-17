@@ -1130,10 +1130,7 @@
 		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
 		)
 
-	has_organ = list(
-		 O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
-		)
+	has_organ = list()
 
 	min_age = 1
 	max_age = 1000

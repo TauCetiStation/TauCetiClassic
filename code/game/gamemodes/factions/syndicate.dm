@@ -56,7 +56,7 @@
 	if (!..())
 		return FALSE
 
-	max_roles = clamp((num_players/5), MIN_OPS, MAX_OPS)
+	max_roles = clamp((num_players/7), MIN_OPS, MAX_OPS)
 
 	// Looking for map to nuclear spawn points
 	return length(landmarks_list["Syndicate-Commander"]) > 0 && length(landmarks_list["Syndicate-Spawn"]) > 0
