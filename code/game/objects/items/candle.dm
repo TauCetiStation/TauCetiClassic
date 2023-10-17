@@ -33,7 +33,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 /obj/item/candle/proc/light(flavor_text = "<span class='warning'>[usr] lights the [name].</span>")
 	if(!lit)
 		lit = TRUE
-		//src.damtype = "fire"
+		//src.damtype = BURN
 		visible_message(flavor_text)
 		set_light(CANDLE_LUMINOSITY, 1)
 		START_PROCESSING(SSobj, src)
@@ -52,17 +52,10 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		item_state = "[initial(icon_state)]_lit"
 	else
 		item_state = "[initial(icon_state)]"
-	if(istype(loc, /mob))
-		var/mob/M = loc
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.l_hand == src)
-				M.update_inv_l_hand()
-			if(H.r_hand == src)
-				M.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/candle/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
 			light("<span class='warning'>[user] casually lights the [name] with [I].</span>")
@@ -161,7 +154,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 			var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 			I.override = TRUE
 			M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-			addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), M), 1 SECONDS)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))

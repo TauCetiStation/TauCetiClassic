@@ -5,8 +5,10 @@
 	icon_state = "pdoor1"
 	icon_state_open  = "pdoor0"
 	icon_state_close = "pdoor1"
+	layer = ABOVE_SAFEDOOR_LAYER
+	base_layer = ABOVE_SAFEDOOR_LAYER
 	var/id = 1.0
-	explosion_resistance = 25
+	explosive_resistance = 3
 	block_air_zones = 0
 	door_open_sound  = 'sound/machines/blast_door.ogg'
 	door_close_sound = 'sound/machines/blast_door.ogg'
@@ -20,7 +22,7 @@
 	. = ..()
 	poddoor_list += src
 	if(density)
-		layer = base_layer + PODDOOR_CLOSED_MOD
+		layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 
 /obj/machinery/door/poddoor/Destroy()
 	poddoor_list -= src
@@ -43,7 +45,7 @@
 
 	if(!hasPower())
 		var/can_wedge = FALSE
-		if(iscrowbar(C))
+		if(isprying(C))
 			can_wedge = TRUE
 		else if(istype(C, /obj/item/weapon/fireaxe))
 			var/obj/item/weapon/fireaxe/F = C
@@ -52,7 +54,7 @@
 		if(can_wedge)
 			open(TRUE)
 
-	else if(ismultitool(C) && !density)
+	else if(ispulsing(C) && !density)
 		var/obj/item/device/multitool/M = C
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))
@@ -84,7 +86,7 @@
 	icon_state = icon_state_open
 	SSdemo.mark_dirty(src)
 	sleep(3)
-	explosion_resistance = 0
+	explosive_resistance = 0
 	layer = base_layer
 	density = FALSE
 	set_opacity(FALSE)
@@ -99,8 +101,8 @@
 	icon_state = icon_state_close
 	SSdemo.mark_dirty(src)
 	sleep(3)
-	explosion_resistance = initial(explosion_resistance)
-	layer = base_layer + PODDOOR_CLOSED_MOD
+	explosive_resistance = initial(explosive_resistance)
+	layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 	density = TRUE
 	set_opacity(TRUE)
 	do_afterclose()

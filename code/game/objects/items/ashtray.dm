@@ -35,8 +35,6 @@
 				to_chat(user, "You place [cig] in [src] without even smoking it. Why would you do that?")
 
 		visible_message("[user] places [I] in [src].")
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
 		add_fingerprint(user)
 		if (contents.len == max_butts)
 			icon_state = icon_full
@@ -48,6 +46,8 @@
 		. = ..()
 
 /obj/item/ashtray/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
 	take_damage(3, BRUTE, MELEE)
 	if(contents.len)
 		visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")

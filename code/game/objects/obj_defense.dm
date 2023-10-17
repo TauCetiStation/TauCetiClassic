@@ -1,14 +1,24 @@
 /obj/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	..()
+	if(!(resistance_flags & CAN_BE_HIT))
+		return
+	var/throwdamage
 	if(isobj(AM))
 		var/obj/O = AM
-		take_damage(O.throwforce, BRUTE, MELEE, 1, get_dir(src, AM)) // TODO add throwforce to atom movable
+		throwdamage = O.throwforce
+	else if(ismob(AM)) // TODO add throwforce to atom movable
+		throwdamage = 10
+	//Let everyone know we've been hit!
+	visible_message(
+		"<span class='warning'>[src] was hit by [AM].</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
+	if(!throwdamage)
+		return
+	take_damage(throwdamage, BRUTE, MELEE, 1, get_dir(src, AM))
 
 /obj/ex_act(severity)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-
-	. = ..() //contents explosion
 	if(QDELETED(src))
 		return
 	switch(severity)
@@ -46,7 +56,7 @@
 	)
 	return TRUE
 
-/obj/blob_act(obj/effect/blob/B) // TODO blob to structure
+/obj/blob_act(obj/structure/blob/B)
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
 /obj/attack_alien(mob/living/carbon/xenomorph/humanoid/user)

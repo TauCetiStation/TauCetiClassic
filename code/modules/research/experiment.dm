@@ -14,9 +14,9 @@
 	)
 
 
-	//Determines maximum amount of points that can be earned by certain methods. 
+	//Determines maximum amount of points that can be earned by certain methods.
 	//Total points that can be earned equal highest score multiplied by this number
-	var/cap_coeff = 2 
+	var/cap_coeff = 2
 
 	var/list/tech_points = list(
 		"materials" = 200,
@@ -203,6 +203,8 @@
 
 	channels = list("Science" = 1)
 
+	var/sensitivity_radius = 10
+
 	var/message_scientists = TRUE
 
 	// This thing should be really hard to destroy by any means.
@@ -222,6 +224,8 @@
 /obj/item/device/radio/beacon/interaction_watcher/atom_init()
 	. = ..()
 	global.interaction_watcher_list += src
+	RegisterSignal(SSexplosions, COMSIG_EXPLOSIONS_EXPLODE, PROC_REF(react_explosion))
+	RegisterSignal(SSexplosions, COMSIG_EXPLOSIONS_EMPULSE, PROC_REF(react_empulse))
 
 /obj/item/device/radio/beacon/interaction_watcher/attack_self(mob/living/carbon/human/user)
 	message_scientists = !message_scientists
@@ -247,8 +251,8 @@
 
 /obj/item/device/radio/beacon/interaction_watcher/proc/research_interaction(inter_type, score, new_score_coeff=800, repeat_score_coeff=160)
 	var/calculated_research_points = -1
-	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
-		if(RD.id == 1)
+	for(var/obj/machinery/computer/rdconsole/RD as anything in global.RDcomputer_list)
+		if(RD.id == DEFAULT_SCIENCE_CONSOLE_ID)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
 			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
@@ -268,18 +272,31 @@
 
 	return calculated_research_points
 
-/obj/item/device/radio/beacon/interaction_watcher/proc/react_explosion(turf/epicenter, power)
+/obj/item/device/radio/beacon/interaction_watcher/proc/react_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range)
+
+	if(get_dist(epicenter,get_turf(src)) > sensitivity_radius)
+		return
+
+	// this is part of old explosions before SS, moved here to keep science same:
+	var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
+
 	power = round(power)
-	var/calculated_research_points = research_interaction("Explosion", power, new_score_coeff=800, repeat_score_coeff=160)
+	var/calculated_research_points = research_interaction("Explosion", power, new_score_coeff=1600, repeat_score_coeff=320)
 
 	if(calculated_research_points > 0)
-		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
 	else if (calculated_research_points == 0)
-		autosay("Detected explosion with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
-		autosay("Detected explosion with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
-/obj/item/device/radio/beacon/interaction_watcher/proc/react_empulse(turf/epicenter, power)
+/obj/item/device/radio/beacon/interaction_watcher/proc/react_empulse(datum/source, turf/epicenter, heavy_range, light_range)
+
+	if(get_dist(epicenter,get_turf(src)) > sensitivity_radius)
+		return
+
+	var/power = heavy_range * 2 + light_range
+
 	power = round(power)
 	var/calculated_research_points = research_interaction("Empulse", power, new_score_coeff=600, repeat_score_coeff=120)
 
@@ -300,7 +317,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = SIZE_TINY
-	throw_speed = 5
+	throw_speed = 4
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "engineering=1;biotech=1"

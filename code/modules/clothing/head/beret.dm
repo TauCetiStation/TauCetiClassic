@@ -82,3 +82,8 @@
 	name = "first responder beret"
 	desc = "A beret with the medical insignia emblazoned on it. Noticable beret for paramedics, shows who's saving lives here."
 	icon_state = "beret_fr"
+
+/obj/item/clothing/head/beret/blueshield
+	name = "blueshield officer's beret"
+	desc = "A beret with the blueshield insignia emblazoned on it. It is advised that blueshield officers do NOT wear non-armored headwear during their shift."
+	icon_state = "beret_blueshield"

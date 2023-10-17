@@ -8,7 +8,7 @@
 	//default is 1 energy per second
 	charge_add = _charge_per_tick // SSobj tick is 2 second
 
-	RegisterSignal(parent, list(COMSIG_CELL_CHARGE_CHANGED), .proc/check_status)
+	RegisterSignal(parent, list(COMSIG_CELL_CHARGE_CHANGED), PROC_REF(check_status))
 
 /datum/component/cell_selfrecharge/proc/check_status(datum/source, charge, maxcharge)
 	SIGNAL_HANDLER

@@ -14,29 +14,29 @@
 	var/add_religion_name = TRUE
 
 /// Activates once selected
-/datum/religion_sect/proc/on_select(mob/living/L, datum/religion/R)
+/datum/religion_sect/proc/on_select(mob/L, datum/religion/R)
 	give_binding_rites(L, R)
 	give_aspects(L, R)
 	// I mean, they did choose the sect.
 	on_conversion(L)
 
 // This proc is used to give the religion it's aspects.
-/datum/religion_sect/proc/give_aspects(mob/living/L, datum/religion/R)
+/datum/religion_sect/proc/give_aspects(mob/L, datum/religion/R)
 	return
 
 // This proc is used to give all binding rites once
-/datum/religion_sect/proc/give_binding_rites(mob/living/L, datum/religion/R)
+/datum/religion_sect/proc/give_binding_rites(mob/L, datum/religion/R)
 	R.give_binding_rites()
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
-/datum/religion_sect/proc/on_conversion(mob/living/L)
+/datum/religion_sect/proc/on_conversion(mob/L)
 	to_chat(L, "<span class='notice'>[convert_opener]</span>")
 
 /datum/religion_sect/preset
 	/// An assoc list of form aspect_type = aspect power
 	var/list/datum/aspect/aspect_preset
 
-/datum/religion_sect/preset/give_aspects(mob/living/L, datum/religion/R)
+/datum/religion_sect/preset/give_aspects(mob/L, datum/religion/R)
 	R.add_aspects(aspect_preset)
 
 /********************/
@@ -47,7 +47,7 @@
 /datum/religion_sect/preset/chaplain/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
-	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
+	convert_opener = "Ваша заурядная секта, сохраняйте чистоту. Восхваляйте обыкновенность!"
 	aspect_preset = list(
 		/datum/aspect/rescue = 1,
 		/datum/aspect/lightbending/light = 1,
@@ -57,7 +57,7 @@
 /datum/religion_sect/preset/chaplain/bloodgods
 	name = "The Slaves of "
 	desc = "Anything you need, little demon."
-	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	convert_opener = "Да начнется Великая Жатва! Добудьте больше крови!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
@@ -67,7 +67,7 @@
 /datum/religion_sect/preset/chaplain/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
-	convert_opener = "May you find peace in a metal shell, acolyte."
+	convert_opener = "Обрети покой в металлической оболочке, аколит."
 	aspect_preset = list(
 		/datum/aspect/technology = 1,
 		/datum/aspect/science = 1,
@@ -77,11 +77,21 @@
 /datum/religion_sect/preset/chaplain/clown
 	name = "The Jesters of "
 	desc = "Anything a real clown needs!"
-	convert_opener = "Honk for the Honkmother, slip for the Slippy Joe!"
+	convert_opener = "Веселись во имя Хонкоматери, смейся от души!"
 	aspect_preset = list(
 		/datum/aspect/wacky = 1,
 		/datum/aspect/chaos = 1,
 		/datum/aspect/resources = 1,
+	)
+
+/datum/religion_sect/preset/chaplain/sounds
+	name = "The Artists of "
+	desc = "Bring a Colors to this world!"
+	convert_opener = "Искусство уже близко!"
+	aspect_preset = list(
+		/datum/aspect/rescue = 1,
+		/datum/aspect/lightbending/light = 1,
+		/datum/aspect/mystic = 1,
 	)
 
 /datum/religion_sect/custom/chaplain
@@ -91,7 +101,7 @@
 /datum/religion_sect/custom
 	name = "Custom "
 	desc = "Follow the orders of your god."
-	convert_opener = "I am the first to enter here..."
+	convert_opener = "Я первый, кто встал на этот путь..."
 
 	// How many aspects can a user select.
 	var/aspects_count = 3
@@ -117,7 +127,7 @@
 		. += "[initial(asp.name)] [num2roman(aspect_list[aspect_type])]"
 		first = FALSE
 
-/datum/religion_sect/custom/give_aspects(mob/living/L, datum/religion/R)
+/datum/religion_sect/custom/give_aspects(mob/L, datum/religion/R)
 	var/list/aspects = get_allowed_aspects()
 
 	var/list/aspects_to_add = list()
@@ -142,7 +152,7 @@
 /datum/religion_sect/preset/cult/blood
 	name = "The Cult of Blood"
 	desc = "Anything you need, little demon."
-	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	convert_opener = "Да начнется Великая Жатва! Добудьте больше крови!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
 		/datum/aspect/rescue = 1,
@@ -154,7 +164,7 @@
 /datum/religion_sect/preset/cult/salvation
 	name = "The Cult of Salvation"
 	desc = "Save life of cultists at any cost."
-	convert_opener = "Become immortal!"
+	convert_opener = "Обрети бессмертие!"
 	aspect_preset = list(
 		/datum/aspect/resources = 1,
 		/datum/aspect/rescue = 1,
@@ -166,16 +176,29 @@
 /datum/religion_sect/preset/cult/darkness
 	name = "The Cult of Darkness"
 	desc = "The seizure of territories can be not only aggressive for darkness"
-	convert_opener = "May the Darkness lead your way."
+	convert_opener = "Позволь тьме вести тебя."
 	aspect_preset = list(
 		/datum/aspect/lightbending/darkness = 3,
 		/datum/aspect/weapon = 2,
 		/datum/aspect/technology = 1,
 	)
 
+/datum/religion_sect/preset/cult/songs
+	name = "The Cult of Sound"
+	desc = "Sound can lead the masses, and you will become its source"
+	convert_opener = "И пусть твой путь будет освещен звуком"
+	aspect_preset = list(
+		/datum/aspect/rescue = 1,
+		/datum/aspect/lightbending/light = 1,
+		/datum/aspect/death = 1,
+		/datum/aspect/mystic = 1,
+		/datum/aspect/conjure = 1,
+		/datum/aspect/chaos = 1,
+	)
+
 /datum/religion_sect/custom/cult
 	name = "Custom Cult"
-	convert_opener = "Chaos is power."
+	convert_opener = "Хаос - это сила."
 
 	aspects_count = 6
 

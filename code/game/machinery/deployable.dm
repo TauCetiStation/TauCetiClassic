@@ -39,7 +39,7 @@ for reference:
 	access_cargo = 31
 	access_construction = 32
 	access_chemistry = 33
-	access_cargo_bot = 34
+	access_cargoshop = 34
 	access_hydroponics = 35
 	access_manufacturing = 36
 	access_library = 37
@@ -60,6 +60,7 @@ for reference:
 	density = TRUE
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
+	layer = ABOVE_WINDOW_LAYER
 
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
@@ -105,9 +106,7 @@ for reference:
 		if(EXPLODE_LIGHT)
 			take_damage(16, BRUTE, BOMB)
 
-/obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
-	if(air_group || (height==0))
-		return 1
+/obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
@@ -120,6 +119,7 @@ for reference:
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bubble"
 	max_integrity = 7
+	can_block_air = TRUE
 
 /obj/structure/barricade/bubble/atom_init()
 	. = ..()
@@ -127,10 +127,23 @@ for reference:
 
 /obj/structure/barricade/bubble/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	for(var/mob/living/L in loc) //no need protecc abusers
-		L.bullet_act(Proj, def_zone)
 
-/obj/structure/barricade/bubble/CanPass(atom/movable/mover, turf/target, height=0, air_group=0) //make robots can pass
+	if(. == PROJECTILE_ABSORBED)
+		return
+
+	// to prevent abuses
+	// todo: should be impossible to abuse so we can remove this hack
+	var/list/mobs = list()
+	for(var/mob/living/M in get_turf(loc))
+		if(M in Proj.permutated)
+			continue
+		mobs += M
+
+	if(length(mobs))
+		var/mob/M = pick(mobs)
+		M.bullet_act(Proj, def_zone)
+
+/obj/structure/barricade/bubble/CanPass(atom/movable/mover, turf/target, height=0) //make robots can pass
 	if(isrobot(mover))
 		return TRUE
 	return FALSE
@@ -188,7 +201,7 @@ for reference:
 				visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (iswrench(W))
+	else if (iswrenching(W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (get_integrity() < max_integrity || emagged)
 			update_integrity(max_integrity)
@@ -234,9 +247,7 @@ for reference:
 		anchored = !anchored
 		icon_state = "barrier[src.locked]"
 
-/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
-	if(air_group || (height==0))
-		return 1
+/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else

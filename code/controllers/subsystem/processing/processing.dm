@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(processing)
 	name = "Processing"
 	priority = SS_PRIORITY_PROCESS
-	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
+	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT | SS_SHOW_IN_MC_TAB
 	wait = SS_WAIT_PROCESSING
 
 	var/stat_tag = "P" //Used for logging

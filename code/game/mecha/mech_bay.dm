@@ -1,12 +1,3 @@
-/turf/simulated/floor/mech_bay_recharge_floor               //        Whos idea it was
-	name = "mech bay recharge station"                      //        Recharging turfs
-	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
-	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
-
-/turf/simulated/floor/mech_bay_recharge_floor/airless
-	icon_state = "recharge_floor_asteroid"
-	airless = TRUE
-
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "Charges exosuits. It consumes a lot of energy when working."
@@ -74,7 +65,7 @@
 	default_deconstruction_crowbar(I)
 
 	if(panel_open)
-		if(ismultitool(I))
+		if(ispulsing(I))
 			var/obj/item/device/multitool/MT = I
 			if(istype(MT.buffer, /obj/machinery/computer/mech_bay_power_console))
 				recharge_console = MT.buffer
@@ -97,7 +88,7 @@
 
 /obj/machinery/computer/mech_bay_power_console/attackby(obj/item/I, mob/user)
 	..()
-	if(ismultitool(I))
+	if(ispulsing(I))
 		var/obj/item/device/multitool/MT = I
 		MT.buffer = src
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")

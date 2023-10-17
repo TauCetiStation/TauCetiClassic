@@ -22,8 +22,8 @@ var/global/list/mechtoys = list(
 	icon_state = "plasticflaps"
 	density = FALSE
 	anchored = TRUE
+	can_block_air = TRUE
 	layer = 4
-	explosion_resistance = 5
 
 	resistance_flags = CAN_BE_HIT
 
@@ -40,7 +40,7 @@ var/global/list/mechtoys = list(
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(!istype(A))
-		return
+		return FALSE
 	if(A.checkpass(PASSGLASS)) // for laser projectile
 		return prob(60)
 	if(A.checkpass(PASSTABLE))
@@ -75,22 +75,12 @@ var/global/list/mechtoys = list(
 				return
 	qdel(src)
 
+/obj/structure/plasticflaps/explosion_proof
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return
 
-/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
+/obj/structure/plasticflaps/mining
 	name = "Airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
-
-/obj/structure/plasticflaps/mining/atom_init() //set the turf below the flaps to block air
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = 1
-	. = ..()
-
-/obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
-	var/turf/T = get_turf(loc)
-	if(T)
-		if(isfloorturf(T))
-			T.blocks_air = 0
-	return ..()

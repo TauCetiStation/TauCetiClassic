@@ -7,14 +7,14 @@
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/giant_spider
 	name = "giant spider"
-	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	desc = "Мохнатый и черный с тёмно-красными глазами. У вас бегают мурашки по коже, когда вы смотрите на него."
 	var/butcher_state = 8 // Icon state for dead spider icons
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
 	icon_move = "guard_move"
-	speak_emote = list("chitters")
-	emote_hear = list("chitters")
+	speak_emote = list("шипит")
+	emote_hear = list("шипит")
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
@@ -43,7 +43,7 @@
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
-	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
+	desc = "Мохнатый и черный с зелеными глазами. У вас бегают мурашки по коже, когда вы смотрите на него."
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
@@ -59,7 +59,7 @@
 
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/giant_spider/hunter
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	desc = "Мохнатый и черный с фиолетовыми глазами. У вас бегают мурашки по коже, когда вы смотрите на него."
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
@@ -71,14 +71,14 @@
 	poison_per_bite = 5
 	move_to_delay = 4
 
-/mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/UnarmedAttack(atom/target)
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
 			if(prob(poison_per_bite))
-				to_chat(L, "<span class='warning'>You feel a tiny prick.</span>")
+				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 				L.reagents.add_reagent(poison_type, 5)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
@@ -122,19 +122,19 @@
 						return
 
 				//second, spin a sticky spiderweb on this tile
-				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+				var/obj/structure/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
 					busy = SPINNING_WEB
 					visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 					stop_automated_movement = TRUE
 					spawn(40)
 						if(busy == SPINNING_WEB)
-							new /obj/effect/spider/stickyweb(src.loc)
+							new /obj/structure/spider/stickyweb(src.loc)
 							busy = 0
 							stop_automated_movement = FALSE
 				else
 					//third, lay an egg cluster there
-					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+					var/obj/structure/spider/eggcluster/E = locate() in get_turf(src)
 					if(!E && fed > 0)
 						busy = LAYING_EGGS
 						visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
@@ -143,7 +143,7 @@
 							if(busy == LAYING_EGGS)
 								E = locate() in get_turf(src)
 								if(!E)
-									new /obj/effect/spider/eggcluster(src.loc)
+									new /obj/structure/spider/eggcluster(src.loc)
 									fed--
 								busy = 0
 								stop_automated_movement = FALSE
@@ -171,7 +171,7 @@
 					spawn(50)
 						if(busy == SPINNING_COCOON)
 							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
-								var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
+								var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
 								var/large_cocoon = 0
 								C.pixel_x = cocoon_target.pixel_x
 								C.pixel_y = cocoon_target.pixel_y

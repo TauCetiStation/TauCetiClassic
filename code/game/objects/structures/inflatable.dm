@@ -30,6 +30,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = 0
+	can_block_air = TRUE
 
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"
@@ -40,13 +41,13 @@
 
 /obj/structure/inflatable/atom_init()
 	. = ..()
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/structure/inflatable/Destroy()
 	update_nearby_tiles()
 	return ..()
 
-/obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0)
 	return 0
 
 /obj/structure/inflatable/attack_paw(mob/user)
@@ -136,18 +137,21 @@
 /obj/structure/inflatable/door/attack_hand(mob/user)
 	return TryToSwitchState(user)
 
-/obj/structure/inflatable/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group)
-		return state
+/obj/structure/inflatable/door/c_airblock(turf/other)
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/inflatable/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
 
 /obj/structure/inflatable/door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates) return
+	if(world.time - last_bumped <= 22)
+		return
+	last_bumped = world.time
 	if(ismob(user))
 		var/mob/M = user
-		if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M

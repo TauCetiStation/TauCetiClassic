@@ -62,8 +62,13 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, use_reverb)
 
-//todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
-/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE, use_reverb = TRUE)
+// little helper for timed sounds, because we can't use named arguments in callback and it's hard to track all these null, null, null...
+/mob/proc/playsound_local_timed(delay, turf/turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, repeat, wait, ignore_environment, voluminosity, use_reverb, distance_multiplier)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, playsound_local), turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, repeat, wait, ignore_environment, voluminosity, use_reverb, distance_multiplier), delay)
+
+// todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
+// we have different arguments order compared to tg or other codebases, keep it in mind while porting stuff
+/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE, use_reverb = TRUE, distance_multiplier = 1)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
 
@@ -79,7 +84,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.volume = vol
 	S.environment = SOUND_AREA_DEFAULT // this is the default environment and should not ever be ignored or overwrited (this exact line).
 	S.frequency = 1
-	
+
 	if(frequency)
 		S.frequency = frequency
 	if(playsound_frequency_admin)
@@ -92,9 +97,12 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		var/turf/T = get_turf(src)
 
 		//sound volume falloff with distance
-		var/distance = get_dist(T, turf_source)
+		var/distance = get_dist(T, turf_source) * distance_multiplier
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
+
+		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls 
+			return
 
 		//sound volume falloff with pressure
 		var/pressure_factor = 1.0
@@ -122,9 +130,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		if(voluminosity)
 			var/dx = turf_source.x - T.x // Hearing from the right/left
-			S.x = dx
+			S.x = dx * distance_multiplier
 			var/dz = turf_source.y - T.y // Hearing from infront/behind
-			S.z = dz
+			S.z = dz * distance_multiplier
 			// The y value is for above your head, but there is no ceiling in 2d spessmens.
 			S.y = 1
 			S.falloff = (falloff ? falloff : 0.5)
@@ -142,7 +150,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			else
 				if(isliving(src))
 					var/mob/living/L = src
-					if(L.drunkenness >= DRUNKENNESS_BLUR || druggy > 0)
+					if(L.drunkenness >= DRUNKENNESS_BLUR || druggy > 0 && get_species(L) != SKRELL)
 						S.environment = SOUND_ENVIRONMENT_DRUGGED
 
 		if(use_reverb && S.environment != SOUND_AREA_DEFAULT) // We have reverb, reset our echo setting
@@ -151,7 +159,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 	src << S
 
-/mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE, use_reverb = TRUE, distance_multiplier = 1)
 	if(!host || host.ear_deaf > 0)
 		return
 	return ..()
@@ -172,7 +180,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	but still keep ability to resume admin music on the fly mid position
 	*/
 
-	if(!vol && volume_channel != VOL_ADMIN) 
+	if(!vol && volume_channel != VOL_ADMIN)
 		return
 
 	var/sound/S

@@ -39,7 +39,7 @@
 
 /obj/item/weapon/photo/atom_init()
 	. = ..()
-	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/summon_ectoplasm)
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(summon_ectoplasm))
 
 /obj/item/weapon/photo/Destroy()
 	img = null
@@ -251,7 +251,7 @@
 	name = "Photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
-	item_state = "briefcase"
+	item_state = "book8"
 	can_hold = list(/obj/item/weapon/photo)
 	max_storage_space = DEFAULT_BOX_STORAGE
 
@@ -552,7 +552,7 @@
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	reloaded = FALSE
-	addtimer(CALLBACK(src, .proc/reload), 64)
+	addtimer(CALLBACK(src, PROC_REF(reload)), 64)
 
 /obj/item/device/camera/proc/reload()
 	icon_state = icon_on

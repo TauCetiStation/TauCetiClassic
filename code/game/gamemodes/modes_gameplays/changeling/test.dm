@@ -65,7 +65,7 @@
 
 	update_status()
 
-	addtimer(CALLBACK(src, .proc/announce_result), rand(120, 300) SECONDS) // ~2-5 minutes
+	addtimer(CALLBACK(src, PROC_REF(announce_result)), rand(120, 300) SECONDS) // ~2-5 minutes
 
 /obj/item/weapon/changeling_test/proc/announce_result()
 	test_stage = CHANGELING_TEST_DONE

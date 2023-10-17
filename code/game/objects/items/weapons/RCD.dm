@@ -25,8 +25,10 @@ RCD
 	var/canRwall = 0
 	var/disabled = 0
 
-	action_button_name = "Switch RCD"
+	item_action_types = list(/datum/action/item_action/hands_free/switch_rcd)
 
+/datum/action/item_action/hands_free/switch_rcd
+	name = "Switch RCD"
 
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
@@ -219,8 +221,8 @@ RCD
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "rcd"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rcd_ammo"
 	item_state = "rcdammo"
 	opacity = 0
 	density = FALSE

@@ -93,9 +93,8 @@
 	id = "ntcruiser1";
 	name = "Front Hull Door"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/nt_troopship)
 "gO" = (
 /obj/structure/sign/nanotrasen,
@@ -163,7 +162,7 @@
 /area/space_structures/nt_fighter_skeora)
 "lr" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
@@ -189,13 +188,16 @@
 	},
 /area/space_structures/nt_fighter_skeora)
 "me" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/effect/decal/mecha_wreckage/durand/vindicator,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "mH" = (
@@ -239,7 +241,7 @@
 /area/space_structures/nt_fighter_blaton)
 "pJ" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/shuttle/plating,
@@ -256,7 +258,7 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
-/obj/item/clothing/suit/chef/classic,
+/obj/item/clothing/suit/chef_classic,
 /obj/item/weapon/gun/energy/laser,
 /turf/simulated/floor/plating/airless{
 	icon = 'icons/turf/shuttle.dmi';
@@ -295,13 +297,16 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "ub" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/item/mecha_parts/mecha_equipment/repair_droid,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "um" = (
@@ -401,9 +406,12 @@
 /area/space_structures/nt_fighter_blaton)
 "zU" = (
 /obj/machinery/mech_bay_recharge_port,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ad" = (
@@ -428,10 +436,10 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ax" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater,
@@ -582,7 +590,7 @@
 /area/space_structures/nt_fighter_blaton)
 "Ki" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/shuttle/plating,
@@ -599,9 +607,12 @@
 	name = "Weapons locker"
 	},
 /obj/machinery/light,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/nt_fighter_skeora)
 "Lj" = (
@@ -612,9 +623,12 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "Lp" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Lt" = (
@@ -668,10 +682,10 @@
 	},
 /area/space_structures/nt_fighter_skeora)
 "PC" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
@@ -717,9 +731,12 @@
 /area/space_structures/nt_fighter_blaton)
 "Sg" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warndark"
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/nt_fighter_blaton)
 "Ss" = (

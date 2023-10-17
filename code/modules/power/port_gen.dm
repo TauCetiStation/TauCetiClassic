@@ -176,7 +176,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(iswrench(O))
+		if(iswrenching(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -189,14 +189,14 @@
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-		else if(isscrewdriver(O))
+		else if(isscrewing(O))
 			panel_open = !panel_open
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
-		else if(iscrowbar(O) && panel_open)
+		else if(isprying(O) && panel_open)
 			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)

@@ -13,7 +13,7 @@
 /datum/emote/clickable/add_cloud(mob/user)
 	var/atom/movable/clickable_cloud/bubble = new()
 	bubble.add_to_user(user, duration, cloud)
-	RegisterSignal(bubble, list(COMSIG_CLICK), CALLBACK(src, .proc/on_cloud_click_handler, user))
+	RegisterSignal(bubble, list(COMSIG_CLICK), CALLBACK(src, PROC_REF(on_cloud_click_handler), user))
 
 /datum/emote/clickable/proc/on_cloud_click_handler(target, p, location, control, params, clicker)
 	SIGNAL_HANDLER

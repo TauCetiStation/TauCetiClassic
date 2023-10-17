@@ -74,7 +74,7 @@
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewdriver(W))
+	if (isscrewing(W))
 		if (!open)
 			if(unlocked)
 				unlocked = FALSE
@@ -83,7 +83,7 @@
 				unlocked = TRUE
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (iscrowbar(W))
+	if (isprying(W))
 		if(unlocked)
 			if(open)
 				open = FALSE

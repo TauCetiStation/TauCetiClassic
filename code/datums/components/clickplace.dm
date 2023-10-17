@@ -37,8 +37,8 @@
 	on_place = _on_place
 	on_slam = _on_slam
 
-	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/try_place_click)
-	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), .proc/try_place_drag)
+	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), PROC_REF(try_place_click))
+	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), PROC_REF(try_place_drag))
 
 	var/datum/mechanic_tip/clickplace/clickplace_tip = new
 	parent.AddComponent(/datum/component/mechanic_desc, list(clickplace_tip))
@@ -67,6 +67,8 @@
 	if(I.flags & ABSTRACT)
 		return FALSE
 	if(I.swiping)
+		return FALSE
+	if(I.anchored)
 		return FALSE
 	return TRUE
 
@@ -97,7 +99,7 @@
 		return FALSE
 
 	if(on_place)
-		on_place.Invoke(A, I, user)
+		on_place.Invoke(A, I, user, params)
 
 	A.add_fingerprint(user)
 	// Prevent hitting the thing if we're just putting it.
@@ -137,13 +139,13 @@
 			BP_L_ARM = user.l_hand,
 			BP_R_ARM = user.r_hand
 		)
-		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_arm)
+		check_slot_callback = CALLBACK(user, TYPE_PROC_REF(/mob/living, is_usable_arm))
 	else if(isIAN(user))
 		var/mob/living/carbon/ian/IAN = user
 		slots_to_check = list(
 			BP_HEAD = IAN.mouth
 		)
-		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_head)
+		check_slot_callback = CALLBACK(user, TYPE_PROC_REF(/mob/living, is_usable_head))
 
 	if(!slots_to_check)
 		return
@@ -156,6 +158,9 @@
 			spare_slots--
 
 	if(spare_slots <= 0)
+		return
+
+	if((!user.delay_clothing_unequip(I)))
 		return
 
 	var/atom/old_loc = I.loc
@@ -174,7 +179,7 @@
 
 	if(I.loc == A.loc)
 		if(!isturf(old_loc))
-			INVOKE_ASYNC(I, /atom/movable.proc/do_putdown_animation, A.loc, user)
+			INVOKE_ASYNC(I, TYPE_PROC_REF(/atom/movable, do_putdown_animation), A.loc, user)
 		if(on_place)
 			on_place.Invoke(A, I, user)
 
@@ -217,8 +222,9 @@
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
 	if(G.state >= GRAB_AGGRESSIVE)
-		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc)
+		var/atom/old_loc = victim.loc
 		victim.forceMove(A.loc)
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), A.loc, old_loc)
 		victim.Stun(2)
 		victim.Weaken(5)
 

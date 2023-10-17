@@ -36,3 +36,9 @@
 	if(set_dir)
 		set_dir(set_dir)
 	. = ..()
+
+/obj/effect/temp_visual/dir_setting/ninja
+	name = "ninja shadow"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "uncloak"
+	duration = 9

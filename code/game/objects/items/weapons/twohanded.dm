@@ -7,10 +7,15 @@
 	force = 10
 	sharp = 1
 	edge = 1
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
+	flags_2 = CANT_BE_INSERTED
 	slot_flags = SLOT_FLAGS_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5
+	qualities = list(
+		QUALITY_PRYING = 1,
+		QUALITY_CUTTING = 1
+	)
 
 /obj/item/weapon/fireaxe/atom_init()
 	. = ..()
@@ -20,8 +25,8 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/fireaxe.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/fireaxe, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/fireaxe, can_spin))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -91,9 +96,9 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/dualsaber.proc/can_swipe)
-	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/dualsaber.proc/get_sweep_objs)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/dualsaber, can_swipe))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/dualsaber, can_swipe))
+	SCB.on_get_sweep_objects = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/dualsaber, get_sweep_objs))
 	AddComponent(/datum/component/swiping, SCB)
 
 	var/datum/twohanded_component_builder/TCB = new
@@ -102,18 +107,20 @@
 	TCB.attacksound = hitsound_wielded
 	TCB.force_wielded = 45
 	TCB.force_unwielded = 3
-	TCB.on_wield = CALLBACK(src, .proc/on_wield)
-	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
+	TCB.on_wield = CALLBACK(src, PROC_REF(on_wield))
+	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
 	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
-	w_class = SIZE_BIG
+	w_class = SIZE_SMALL
+	flags_2 |= CANT_BE_INSERTED
 	return FALSE
 
 /obj/item/weapon/dualsaber/proc/on_unwield()
 	slicing = FALSE
 	set_light(0)
+	flags_2 &= ~CANT_BE_INSERTED
 	w_class = initial(w_class)
 	return FALSE
 
@@ -139,7 +146,7 @@
 
 /obj/item/weapon/dualsaber/attack(target, mob/living/user)
 	..()
-	if((CLUMSY in user.mutations) && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(40))
+	if(user.ClumsyProbabilityCheck(40) && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
 		to_chat(user, "<span class='userdanger'> You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
 		user.take_bodypart_damage(20, 25)
 		return
@@ -159,7 +166,7 @@
 	return !slicing && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/dualsaber/attackby(obj/item/I, mob/user, params)
-	if(ismultitool(I))
+	if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")

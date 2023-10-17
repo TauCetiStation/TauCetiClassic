@@ -6,13 +6,14 @@
 		density = TRUE
 		opacity = 0
 		anchored = TRUE
+		can_block_air = TRUE
 		unacidable = 1
 		max_integrity = 200
 
 /obj/machinery/shield/atom_init()
 	set_dir(pick(1,2,3,4))
 	. = ..()
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
@@ -20,9 +21,10 @@
 	update_nearby_tiles()
 	return ..()
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return 0
-	else return ..()
+/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height)
+	if(!height)
+		return FALSE
+	return ..()
 
 /obj/machinery/shield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -39,19 +41,6 @@
 		return
 	opacity = TRUE
 	VARSET_IN(src, opacity, FALSE, 2 SECONDS)
-
-/obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	//Let everyone know we've been hit!
-	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
-
-	//Super realistic, resource-intensive, real-time damage calculations.
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		tforce = AM:throwforce
-
-	take_damage(tforce, BRUTE, MELEE)
 
 /obj/machinery/shieldgen
 	name = "Emergency shield projector"
@@ -142,7 +131,7 @@
 			to_chat(user, "The device must first be secured to the floor.")
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_open)
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
@@ -163,7 +152,7 @@
 			to_chat(user, "<span class='notice'>You repair the [src]!</span>")
 			update_icon()
 
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
@@ -377,7 +366,7 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
@@ -449,6 +438,7 @@
 		icon_state = "energyshield"
 		anchored = TRUE
 		density = TRUE
+		can_block_air = TRUE
 		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3
@@ -522,9 +512,7 @@
 			if(EXPLODE_LIGHT) //lil boom
 				G.storedpower -= 20
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		if(prob(20))
 			if(istype(mover, /obj/item/projectile))

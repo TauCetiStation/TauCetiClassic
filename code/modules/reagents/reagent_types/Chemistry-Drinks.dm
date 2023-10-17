@@ -76,7 +76,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(data["ticks"] - 10))
-				M.disabilities &= ~NEARSIGHTED
+				M.cure_nearsighted(EYE_DAMAGE_TRAIT)
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/berryjuice
@@ -146,6 +146,42 @@
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "puke, you're pretty sure"
+
+/datum/reagent/consumable/drink/gourd_juice
+	name = "Gourd Juice"
+	id = "gourd"
+	description = "Тыквячий сок. Выглядит хорошо, на вкус - не очень."
+	color = "#95ba43" // rgb: 149, 186, 067
+	taste_message = "swamp"
+
+	toxin_absorption = 2.0
+
+/datum/reagent/consumable/drink/gourd_juice/New()
+	. = ..()
+	name = "[get_gourd_name()] juice"
+
+/datum/reagent/consumable/drink/gourd_juice/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+
+	H.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+	if(prob(10))
+		to_chat(H, "<span class='warning'>Any more and you'll probably puke.</span>")
+
+	if(H.reagents.total_volume >= 3)
+		H.invoke_vomit_async()
+
+/datum/reagent/consumable/drink/gourd_juice/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	return FALSE
+
+/datum/reagent/consumable/drink/gourd_juice/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	new /obj/effect/decal/cleanable/gourd(T)
 
 /datum/reagent/consumable/drink/milk
 	name = "Milk"
@@ -219,6 +255,11 @@
 	M.make_jittery(5)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
+
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/C = M
+	C.AdjustClumsyStatus(-2)
 
 /datum/reagent/consumable/drink/coffee/icecoffee
 	name = "Iced Coffee"
@@ -567,20 +608,27 @@
 
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
 	..()
-	M.Stun(3)
-	M.Weaken(3)
-	if(!data["ticks"])
+	if(data["ticks"])
+		data["ticks"]++
+	else
 		data["ticks"] = 1
-	data["ticks"]++
-	M.dizziness += 6
-	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.AdjustStuttering(4)
-	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
-		M.AdjustConfused(3)
-	else if(data["ticks"] >=55)
-		M.adjustDrugginess(5)
-	else if(data["ticks"] >=200)
-		M.adjustToxLoss(2)
+
+	M.make_dizzy(6)
+	switch(data["ticks"])
+		if(1 to 5)
+			M.make_jittery(20)
+			M.Stuttering(4)
+		if(5 to 45)
+			M.Stun(3)
+			M.Weaken(3)
+		if(45 to 200)
+			M.Stun(3)
+			M.Weaken(3)
+			M.adjustDrugginess(5)
+		if(200 to INFINITY)
+			M.Stun(3)
+			M.Weaken(3)
+			M.adjustToxLoss(2)
 
 /datum/reagent/consumable/hippies_delight
 	name = "Hippies' Delight"
@@ -743,6 +791,47 @@
 	M.jitteriness = max(M.jitteriness - 3,0)
 	if(HAS_TRAIT(M, TRAIT_DWARF))
 		M.heal_bodypart_damage(1, 1)
+
+/datum/reagent/consumable/ethanol/gourd_beer
+	name = "Gourd Beer"
+	id = "gourdbeer"
+	description = "Тыквячье пиво. Красивое, но не очень вкусное."
+	color = "#6aa72d" // rgb: 106, 167, 45
+	boozepwr = 1.5
+	nutriment_factor = 1.5
+	taste_message = "swampy beer"
+
+	toxin_absorption = 4.0
+
+/datum/reagent/consumable/ethanol/gourd_beer/New()
+	. = ..()
+	name = "[get_gourd_name()] beer"
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+
+	H.adjust_bodytemperature(-4 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+	if(prob(10))
+		to_chat(H, "<span class='warning'>Any more and you'll probably puke.</span>")
+
+	H.heal_bodypart_damage(1, 1)
+
+	if(H.reagents.total_volume >= 3)
+		H.invoke_vomit_async()
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	M.heal_bodypart_damage(1, 1)
+	return FALSE
+
+/datum/reagent/consumable/ethanol/gourd_beer/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	new /obj/effect/decal/cleanable/gourd(T)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -1129,13 +1218,13 @@
 	description = "Deny drinking this and prepare for THE LAW."
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 4
+	boozepwr = 6
 	taste_message = "THE LAW"
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(10)
+		M.MakeConfused(3)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"

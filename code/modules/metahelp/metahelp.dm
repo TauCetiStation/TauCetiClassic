@@ -72,3 +72,9 @@ var/global/metahelps
 	wiki_page = "Metahelp: Hulk"
 	title = "Как отыгрывать Халка"
 	greeting = "Вы большой и зеленый, что с этим делать?"
+
+/datum/metahelp/replicator/New()
+	id = "replicator"
+	wiki_page = "Replicator"
+	title = "Как играть за Репликатора"
+	greeting = "Нужна помощь в репликации?"

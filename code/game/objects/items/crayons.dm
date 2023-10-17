@@ -19,7 +19,7 @@
 
 /obj/item/toy/crayon/atom_init()
 	. = ..()
-	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), .proc/afterattack_no_params)
+	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), PROC_REF(afterattack_no_params))
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
@@ -348,6 +348,17 @@
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
+	if(istype(target, /obj/machinery/camera))
+		var/obj/machinery/camera/C = target
+		if(do_after(user, 20, target = C))		//can_move = TRUE, when reworking
+			if(C.painted)
+				to_chat(user, "<span class='notice'>[src] already spoiled!</span>")
+				return
+			user.visible_message("<span class='warning'>[user] paints the [C] lens!</span>",
+			"<span class='notice'>You paint over the [C] lens. Respect received.</span>")
+			C.painted = TRUE
+			C.toggle_cam(FALSE)
+			C.color = colour
 	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 	..()
 

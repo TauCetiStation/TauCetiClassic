@@ -61,14 +61,14 @@ var/global/bridge_ooc_colour = "#7b804f"
 		attachment_color = (supporter && prefs.ooccolor) ? prefs.ooccolor : display_colour,
 	)
 
-/proc/send2ooc(msg, name, colour, client/sender, display_name)
+/proc/send2ooc(msg, name, colour, client/sender, display_name, prefix = "OOC")
 	if(sender)
 		log_ooc("[key_name(sender)] : [msg]")
 	else
 		log_ooc("[name]: [msg]")
 
-	var/msg_start = "<span class='ooc'><font[colour ? " color='[colour]'" : ""]><span class='prefix'>OOC"
-	var/msg_end = "</EM> <span class='message emojify linkify'>[msg]</span></font></span>"
+	var/msg_start = "<span class='ooc'><font[colour ? " color='[colour]'" : ""]><span class='prefix'>[prefix]"
+	var/msg_end = "<span class='message emojify linkify'>[msg]</span></font></span>"
 
 	for(var/client/C in clients)
 		// Lobby people can only say in OOC to other lobby people.
@@ -90,7 +90,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			var/chat_suffix = C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""
-			to_chat(C, "[msg_start][chat_suffix]:</span> <EM>[display_name]:[msg_end]")
+			to_chat(C, "[msg_start][chat_suffix]:</span> [display_name?"<EM>[display_name]:</EM> ":""][msg_end]")
 
 /client/proc/set_global_ooc(newColor as color)
 	set name = "Set Global OOC Colour"
@@ -209,3 +209,24 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
 
+/client/verb/show_test_merges()
+	set name = "Show Test Merges"
+	set desc = "Shows a list of all test merges that are currently active"
+	set category = "OOC"
+
+	if(!test_merges)
+		to_chat(src, "<div class='test_merges'>No test merges are currently active</div>")
+		return
+
+	var/joined_text = "[EMBED_TIP("<b>Test merged PRs</b>", "Данные изменения временно залиты на сервер, для теста перед окончательным принятием изменений или сбора отзывов")]<b>:</b><br>"
+	var/is_loading = FALSE
+	for(var/pr in test_merges)
+		if(test_merges[pr])
+			joined_text += "[ENTITY_TAB]<a href='[config.repository_link]/pull/[pr]'>#[pr]</a>: [test_merges[pr]]<br>"
+			if(test_merges[pr] == TEST_MERGE_DEFAULT_TEXT)
+				is_loading = TRUE
+
+	if(is_loading)
+		joined_text += "<br><i>You can use OOC - Show Test Merges a bit later for more information about current test merges.</i>"
+
+	to_chat(src, "<div class='test_merges'>[joined_text]</div>")

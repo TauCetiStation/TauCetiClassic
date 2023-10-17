@@ -8,7 +8,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W) && can_unwrench)
+	if(iswrenching(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -48,9 +48,6 @@
 	light_power = 2
 	light_range = 3
 
-#define CORRUPT_FORBIDDEN 0
-#define CORRUPT_NOT_ALLOWED 1 //We don't know whether we should or not corrupt
-#define CORRUPT_ALLOWED 2
 ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon
 	name = "pylon"
@@ -62,7 +59,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	pass_flags = PASSTABLE
 	max_integrity = 200
 	var/list/validturfs = list()
-	var/should_corrupt = CORRUPT_NOT_ALLOWED
 	var/datum/religion/cult/C
 
 	var/corruption_delay = 50 //Increases currupting delay by 5 each time it procs
@@ -76,7 +72,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon/proc/init_healing()
 	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, \
 	TRAIT_HEALS_FROM_PYLONS,"#960000")
-	START_PROCESSING(SSprocessing, src)
+	if(!is_centcom_level(z))
+		START_PROCESSING(SSobj, src)
 	C = cult_religion
 
 /obj/structure/cult/pylon/deconstruct(disassembled)
@@ -84,7 +81,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		return ..()
 	new /obj/structure/cult/pylon_platform(loc)
 	new /obj/item/stack/sheet/metal(loc)
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSobj, src)
 	validturfs = null
 	return ..()
 
@@ -94,17 +91,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			validturfs = list()
 		return
 
-	//Now we have to decide whether we need to corrupt or not
-	if(should_corrupt == CORRUPT_FORBIDDEN)
-		return
-	else if(should_corrupt == CORRUPT_ALLOWED)
-		if(COOLDOWN_FINISHED(src, corruption))
-			corrupt()
-	else if(should_corrupt == CORRUPT_NOT_ALLOWED)
-		if(is_centcom_level(z))//It is cult' area, after all
-			should_corrupt = CORRUPT_FORBIDDEN
-		else
-			should_corrupt = CORRUPT_ALLOWED
+	if(COOLDOWN_FINISHED(src, corruption))
+		corrupt()
 
 /obj/structure/cult/pylon/proc/corrupt()
 	if(!length(validturfs))
@@ -117,9 +105,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		corruption_delay += 5
 
 	COOLDOWN_START(src, corruption, corruption_delay)
-#undef CORRUPT_FORBIDDEN
-#undef CORRUPT_NOT_ALLOWED
-#undef CORRUPT_ALLOWED
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
@@ -128,10 +113,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	forceMove(charged)
 
 	if(time_to_stop)
-		charged.timer = addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate), time_to_stop, TIMER_STOPPABLE)
+		charged.timer = addtimer(CALLBACK(charged, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, deactivate)), time_to_stop, TIMER_STOPPABLE)
 
 	if(R)
-		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER,  /mob/living/simple_animal/hostile/pylon.proc/add_friend)
+		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, add_friend))
 	return charged
 
 /obj/structure/cult/pylon_platform
@@ -146,9 +131,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	name = "torture table"
 	desc = "For tortures"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "table2-idle"
+	icon_state = "table_surgey_idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
+	flags = NODECONSTRUCT
 
 	var/datum/religion/cult/religion
 	var/charged = FALSE
@@ -178,7 +164,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -194,19 +180,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	else
 		return ..()
 
-/obj/machinery/optable/torture_table/buckle_mob(mob/living/M, mob/user)
-	..()
-	if(M.pixel_x != 0)
-		M.pixel_x = 0
-	if(M.pixel_y != -1)
-		M.pixel_y = -1
-	if(M.dir & (EAST|WEST|NORTH))
-		M.dir = SOUTH
-	add_overlay(belt)
-
-/obj/machinery/optable/torture_table/unbuckle_mob(mob/user)
-	..()
-	cut_overlay(belt)
+/obj/machinery/optable/torture_table/post_buckle_mob(mob/living/M)
+	if(buckled_mob == M)
+		if(M.pixel_x != 0)
+			M.pixel_x = 0
+		if(M.pixel_y != -1)
+			M.pixel_y = -1
+		if(M.dir & (EAST|WEST|NORTH))
+			M.dir = SOUTH
+		add_overlay(belt)
+	else
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
+		cut_overlay(belt)
 
 /obj/machinery/optable/torture_table/attack_hand(mob/living/user)
 	if(user == buckled_mob)
@@ -233,6 +219,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		return FALSE
 
 	return TRUE
+
+/obj/structure/mineral_door/cult/attack_animal(mob/user)
+	if(user.my_religion && user.a_intent != INTENT_HARM && !isSwitchingStates)
+		add_fingerprint(user)
+		SwitchState()
+		return
+	return ..()
 
 /obj/structure/mineral_door/cult/MechChecks(obj/mecha/user)
 	if(!..())
@@ -300,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
-	INVOKE_ASYNC(src, .proc/async_destroying, C)
+	INVOKE_ASYNC(src, PROC_REF(async_destroying), C)
 
 /obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"

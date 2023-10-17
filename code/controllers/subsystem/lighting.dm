@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(lighting)
 		create_all_lighting_objects()
 		initialized = TRUE
 
-	fire(FALSE, TRUE)
+	fire(init_fire = TRUE)
 
 	..()
 
@@ -43,9 +43,9 @@ SUBSYSTEM_DEF(lighting)
 			CHECK_TICK
 		CHECK_TICK
 
-/datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
+/datum/controller/subsystem/lighting/fire(resumed = FALSE, init_fire = FALSE)
 	MC_SPLIT_TICK_INIT(3)
-	if(!init_tick_checks)
+	if(!init_fire)
 		MC_SPLIT_TICK
 
 	while (global.lighting_update_lights.len)
@@ -56,13 +56,13 @@ SUBSYSTEM_DEF(lighting)
 
 		L.needs_update = LIGHTING_NO_UPDATE
 
-		if(init_tick_checks)
+		if(init_fire)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
 			break
 
 
-	if(!init_tick_checks)
+	if(!init_fire)
 		MC_SPLIT_TICK
 
 	var/i = 0
@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(lighting)
 
 		C.update_objects()
 		C.needs_update = FALSE
-		if(init_tick_checks)
+		if(init_fire)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
 			break
@@ -81,7 +81,7 @@ SUBSYSTEM_DEF(lighting)
 		i = 0
 
 
-	if(!init_tick_checks)
+	if(!init_fire)
 		MC_SPLIT_TICK
 
 	for (i in 1 to global.lighting_update_objects.len)
@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(lighting)
 
 		O.update()
 		O.needs_update = FALSE
-		if(init_tick_checks)
+		if(init_fire)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
 			break

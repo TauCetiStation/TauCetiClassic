@@ -28,6 +28,17 @@
 	var/datum/atom_hud/alternate_appearance/basic/see_ghosts/AA = s
 	AA.set_image_layering(GHOST_ILLUSION_PLANE)
 
+//Eminence' arrow
+/obj/effect/decal/point/eminence
+	icon = null
+	icon_state = null
+
+/obj/effect/decal/point/eminence/atom_init(mapload, invisibility = 0)
+	. = ..()
+	var/image/I = image('icons/hud/screen1.dmi', src, "arrow_eminence")
+	I.alpha = 200
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence_point", I, src, cult_religion)
+
 // Used for spray that you spray at walls, tables, hydrovats etc
 /obj/effect/decal/spraystill
 	density = FALSE

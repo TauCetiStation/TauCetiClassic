@@ -213,7 +213,7 @@
 	beakers["output"].reagents.add_reagent("customhairdye", chosen_quantity, list("r_color" = r_t,"g_color" = g_t,"b_color" = b_t))
 	if(isWireCut(COLOR_MIXER_OUTPUT_SAFETY))
 		var/turf/T = get_turf(pick(viewers(2, src)))
-		INVOKE_ASYNC(src, .proc/Spray_at, T)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T)
 
 	use_power(50 * chosen_quantity)
 
@@ -301,19 +301,19 @@ A proc that does all the animations before mix()-ing.
 			updateUsrDialog()
 			update_icon()
 			return
-		else if(isscrewdriver(O))
+		else if(isscrewing(O))
 			panel_open = !panel_open
 			update_icon(beaker_update = FALSE)
 			updateUsrDialog()
 			return
-	else if(isscrewdriver(O))
+	else if(isscrewing(O))
 		to_chat(user, "<span class='notice'>You try to open up the panel, but [beakers["output"]] is in the way.</span>")
 		return
 
 	if(panel_open)
-		if(iswirecutter(O))
+		if(iscutter(O))
 			return attack_hand(user)
-		else if(ismultitool(O))
+		else if(ispulsing(O))
 			return attack_hand(user)
 		else if(issignaler(O))
 			return attack_hand(user)
@@ -483,10 +483,14 @@ A proc that does all the animations before mix()-ing.
 			menustat = href_list["stat"]
 		if("choose_color")
 			var/new_color = input(user, "Choose your desired color.", "Dye Mixer") as color|null
+			if(!can_still_interact_with(usr))
+				return
 			if(new_color)
 				chosen_color = new_color
 		if("choose_quantity")
 			var/new_quantity = input(user, "Choose amount to create.", "Dye Mixer") as num|null
+			if(!can_still_interact_with(usr))
+				return
 			if(new_quantity && new_quantity > 0 && beakers["output"] && new_quantity <= beakers["output"].reagents.maximum_volume)
 				chosen_quantity = new_quantity
 		if("load_tank")

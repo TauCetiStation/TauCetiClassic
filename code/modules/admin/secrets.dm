@@ -27,6 +27,7 @@
 					<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
 					<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
 					<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
+					<A href='?src=\ref[src];secretsadmin=smartlight_set'>Set Smart Light Mode</A><BR>
 					<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
 					<A href='?src=\ref[src];secretsadmin=restore_air'>Restore air in your zone</A><BR>
 					<h4>Bombs</h4>
@@ -323,18 +324,17 @@
 		if("togglebombcap")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
-			switch(MAX_EXPLOSION_RANGE)
-				if(14)	MAX_EXPLOSION_RANGE = 16
-				if(16)	MAX_EXPLOSION_RANGE = 20
-				if(20)	MAX_EXPLOSION_RANGE = 28
-				if(28)	MAX_EXPLOSION_RANGE = 56
-				if(56)	MAX_EXPLOSION_RANGE = 128
-				if(128)	MAX_EXPLOSION_RANGE = 14
-			var/range_dev = MAX_EXPLOSION_RANGE *0.25
-			var/range_high = MAX_EXPLOSION_RANGE *0.5
-			var/range_low = MAX_EXPLOSION_RANGE
-			message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b></span>")
-			log_admin("[key_name(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+			var/new_cap = input("Enter new cap value, up to 128. Default is [SSexplosions.MAX_EX_LIGHT_RANGE].", "Set Cap") as num|null
+			if(isnull(new_cap))
+				return
+			new_cap = clamp(round(new_cap), 0, 128)
+			SSexplosions.MAX_EX_DEVESTATION_RANGE = round(new_cap * 0.25)
+			SSexplosions.MAX_EX_HEAVY_RANGE = round(new_cap * 0.5)
+			SSexplosions.MAX_EX_LIGHT_RANGE = new_cap
+			SSexplosions.MAX_EX_FLASH_RANGE = new_cap
+			//SSexplosions.MAX_EX_FLAME_RANGE = new_cap
+			message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [SSexplosions.MAX_EX_DEVESTATION_RANGE], [SSexplosions.MAX_EX_HEAVY_RANGE], [SSexplosions.MAX_EX_LIGHT_RANGE]</b></span>")
+			log_admin("[key_name(usr)] changed the bomb cap to [new_cap]")
 		// Ghost Mode
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -692,16 +692,35 @@
 			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
-					SSnightshift.can_fire = TRUE
-					SSnightshift.check_nightshift()
+					SSsmartlight.can_fire = TRUE
+					SSsmartlight.check_nightshift()
 				if("On")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(TRUE)
+					SSsmartlight.can_fire = FALSE
+					SSsmartlight.toggle_nightshift(TRUE)
 				if("Off")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(FALSE)
+					SSsmartlight.can_fire = FALSE
+					SSsmartlight.toggle_nightshift(FALSE)
 			if(val)
 				message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'.")
+				log_admin("[key_name(usr)] switched night shift mode to '[val]'.")
+
+		if("smartlight_set")
+			var/val = tgui_alert(usr, "What do you want to set smartlight to?", "Smartlight", list("Force Mode", "Cancel Forced Mode"))
+			var/custom_mode
+			switch(val)
+				if("Force Mode")
+					custom_mode = input("Select new lighting mode. Station will be locked in this mode.", "Force Mode") as null|anything in light_modes_by_name
+					if(custom_mode)
+						SSsmartlight.forced_admin_mode = TRUE
+						SSsmartlight.can_fire = FALSE
+						SSsmartlight.update_mode(light_modes_by_name[custom_mode], TRUE)
+				if("Cancel Forced Mode")
+					SSsmartlight.can_fire = TRUE
+					SSsmartlight.forced_admin_mode = FALSE
+					SSsmartlight.reset_smartlight()
+			if(val)
+				message_admins("[key_name_admin(usr)] switched smartlight mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
+				log_admin("[key_name(usr)] switched smartlight mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
 		// Put everyone to sleep
 		if("mass_sleep")
 			for(var/mob/living/L in global.living_list)

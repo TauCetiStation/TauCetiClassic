@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/parrot
 	name = "Parrot"
-	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
+	desc = "Попугай кричит, \"Это Попугай! РАААА!\""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
@@ -36,9 +36,9 @@
 	w_class = SIZE_TINY
 
 	speak = list("Прривет","Здаррова!","Кррекер?","БВААААА! Джамес Морган дрразнит меня!")
-	speak_emote = list("squawks","says","yells")
-	emote_hear = list("squawks","bawks")
-	emote_see = list("flutters its wings")
+	speak_emote = list("кричит","говорит")
+	emote_hear = list("кричит","бормочет")
+	emote_see = list("машет крыльями")
 
 	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
@@ -103,6 +103,7 @@
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player)
 
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 
 /mob/living/simple_animal/parrot/death()
 	if(held_item)
@@ -480,7 +481,7 @@
 				var/mob/living/carbon/human/H = parrot_interest
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(pick(parrot_dam_zone))]
 
-				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP)
+				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, MELEE), DAM_SHARP)
 				me_emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
 
 			else
@@ -682,8 +683,22 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
-	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!", ":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?", ":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
+	desc = "Попугай Поли. Эксперт по теории квантовых разломов."
+	speak = list(
+		":e Поли хочет кррекер!",
+		":e Прроверьте сингулярность, лоботррясы!",
+		":e Подключайте солнечные панели, ленивые даррмоеды!",
+		":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?",
+		":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!",
+		":e Шеф, вы свой диплом купили или где-то нашли?",
+		":e Нет, черртежи я не прродам.",
+		":e Закажите ящик с перрчатками.",
+		":e Я ЖЕ ГОВОРРИЛ, НЕ ТРРОГАЙТЕ СУПЕРРМАТЕРИЮ РРУКАМИ!",
+		":e Да не нужны СМЕСЫ, мы напррямую подключим.",
+		":e Я много рраз так делал, все норрмально будет.",
+		":e Вы еще шалаш пострройте вокрруг бухломата.",
+		":e Мы - инженерр.",
+	)
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0
@@ -696,16 +711,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	Read_Memory()
 	if(rounds_survived == longest_survival)
 		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
-		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
+		desc += " Старый как грех, и такой же громкий. Утверждал, что выжил [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("Чего же ты ждёшь!?", "Насилие поррождает насилие!", "Крровь! Кровь!", "Убей меня, если посмеешь!")
-		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
+		desc += " В ушах звенят крики [-rounds_survived] мертвых попугаев..."
 		color = "#bb7777"
 	else if(rounds_survived > 0)
 		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
-		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
+		desc += " Более [rounds_survived] смен без \"ужасных\" \"инцидентов\"!"
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
@@ -766,7 +781,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
-	desc = "Doomed to squawk the earth."
+	desc = "Обреченный бродить по Земле."
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE

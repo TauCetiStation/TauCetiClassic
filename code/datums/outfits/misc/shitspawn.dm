@@ -38,17 +38,17 @@
 
 	uniform = /obj/item/clothing/under/det
 	shoes = /obj/item/clothing/shoes/black
-	
+
 	suit = /obj/item/clothing/suit/storage/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	head = /obj/item/clothing/head/det_hat
 
 	r_hand = /obj/item/weapon/gun/projectile
-	l_pocket = /obj/item/ammo_box/a357
+	l_pocket = /obj/item/ammo_box/speedloader/a357
 
 /datum/outfit/tournament_chief
 	name = "Tournament: chef"
-	
+
 	uniform = /obj/item/clothing/under/rank/chef
 	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/chefhat
@@ -60,7 +60,7 @@
 
 /datum/outfit/tournament_janitor
 	name = "Tournament: janitor"
-	
+
 	uniform = /obj/item/clothing/under/rank/janitor
 	shoes = /obj/item/clothing/shoes/black
 	back = /obj/item/weapon/storage/backpack
@@ -98,7 +98,7 @@
 
 /datum/outfit/soviet_soldier
 	name = "soviet soldier"
-		
+
 	uniform = /obj/item/clothing/under/soviet
 	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/ushanka
@@ -121,7 +121,7 @@
 
 /datum/outfit/masked_killer
 	name = "masked killer"
-	
+
 	uniform = /obj/item/clothing/under/overalls
 	shoes = /obj/item/clothing/shoes/white
 	gloves = /obj/item/clothing/gloves/latex
@@ -141,7 +141,7 @@
 
 /datum/outfit/assasin
 	name = "assassin"
-	
+
 	uniform = /obj/item/clothing/under/suit_jacket
 	shoes = /obj/item/clothing/shoes/black
 	gloves = /obj/item/clothing/gloves/black
@@ -164,7 +164,7 @@
 		new /obj/item/weapon/spacecash/c1000,
 		new /obj/item/weapon/gun/energy/crossbow,
 		new /obj/item/weapon/gun/projectile/revolver/mateba,
-		new /obj/item/ammo_box/a357,
+		new /obj/item/ammo_box/speedloader/a357,
 		new /obj/item/weapon/plastique,
 	)
 
@@ -194,41 +194,68 @@
 	back = /obj/item/weapon/storage/backpack/security
 
 	backpack_contents = list(
-		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/a357,
-		/obj/item/weapon/storage/firstaid/regular,
+		/obj/item/weapon/storage/firstaid/tactical,
 		/obj/item/weapon/storage/box/flashbangs,
-		/obj/item/device/flashlight,
+		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/plastique,
+		/obj/item/weapon/tank/emergency_oxygen/double,
+		/obj/item/weapon/shield/energy
 	)
 
 	l_pocket = /obj/item/weapon/melee/energy/sword
-	r_pocket = /obj/item/weapon/grenade/flashbang
-	suit_store = /obj/item/weapon/tank/emergency_oxygen
+	r_pocket = /obj/item/weapon/storage/pouch/ammo
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
-	r_hand = /obj/item/weapon/gun/energy/pulse_rifle
 	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
 	id = /obj/item/weapon/card/id/centcom
 
+/datum/outfit/death_squad/post_equip(mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/pouch/ammo/P = H.r_store
+	for(var/i in 1 to 3)
+		new /obj/item/ammo_box/speedloader/a357(P)
+
+	var/obj/item/clothing/under/color/green/U = H.w_uniform
+	if(istype(U))
+		var/obj/item/clothing/accessory/storage/black_vest/A = new(U)
+		LAZYADD(U.accessories, A)
+		A.on_attached(U, H, TRUE)
+		new /obj/item/weapon/multi/hand_drill(A.hold)
+		new /obj/item/weapon/multi/jaws_of_life(A.hold)
+		new /obj/item/weapon/weldingtool/largetank(A.hold)
+		new /obj/item/device/multitool(A.hold)
+
+	if(prob(50))
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/l6_saw(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/saw(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/saw(H), SLOT_IN_BACKPACK)
+	else if(prob(20))
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/smg(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/smg(H), SLOT_IN_BACKPACK)
+	else
+		H.equip_or_collect(new /obj/item/weapon/gun/energy/pulse_rifle(H), SLOT_S_STORE)
+
 /datum/outfit/death_squad/leader
 	name = "NanoTrasen: death squad leader"
-	
+
+	head = /obj/item/clothing/head/helmet/space/deathsquad/leader
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 
 	backpack_contents = list(
-		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/a357,
-		/obj/item/weapon/storage/firstaid/regular,
+		/obj/item/weapon/storage/firstaid/tactical,
 		/obj/item/weapon/storage/box/flashbangs,
-		/obj/item/device/flashlight,
+		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/pinpointer,
 		/obj/item/weapon/disk/nuclear,
+		/obj/item/weapon/plastique,
+		/obj/item/weapon/shield/energy,
+		/obj/item/weapon/tank/emergency_oxygen/double
 	)
 
 /datum/outfit/syndicate_commando
 	name = "Syndicate: commando"
-	
+
 	l_ear = /obj/item/device/radio/headset/syndicate
 
 	uniform = /obj/item/clothing/under/syndicate
@@ -244,8 +271,8 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/magazine/sm45,
-		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/silenced_pistol,
+		/obj/item/ammo_box/magazine/silenced_pistol,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
 		/obj/item/device/radio/uplink/strike,
@@ -262,18 +289,18 @@
 		var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
 		LAZYADD(US.accessories, SV)
 		SV.on_attached(US, H, TRUE)
-		new /obj/item/weapon/screwdriver/power(SV.hold)
-		new /obj/item/weapon/wirecutters/power(SV.hold)
+		new /obj/item/weapon/multi/hand_drill(SV.hold)
+		new /obj/item/weapon/multi/jaws_of_life(SV.hold)
 		new /obj/item/weapon/weldingtool/largetank(SV.hold)
 		new /obj/item/device/multitool(SV.hold)
 
 /datum/outfit/syndicate_commando/leader
 	name = "Syndicate: commando commander"
-	
+
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/magazine/sm45,
-		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/silenced_pistol,
+		/obj/item/ammo_box/magazine/silenced_pistol,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
 		/obj/item/device/radio/uplink/strike_leader,
@@ -294,7 +321,7 @@
 
 /datum/outfit/nanotrasen/representatives
 	name = "NanoTraset: representative"
-	
+
 	uniform = /obj/item/clothing/under/rank/centcom/representative
 	l_ear = /obj/item/device/radio/headset/heads/hop
 	belt = /obj/item/weapon/clipboard
@@ -384,7 +411,7 @@
 /datum/outfit/velocity/chief
 	name = "Velocity: chief"
 
-	uniform = /obj/item/clothing/under/rank/head_of_security/corp
+	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat
 	l_ear = /obj/item/device/radio/headset/velocity/chief
@@ -536,7 +563,7 @@
 
 /datum/outfit/jolly_gravedigger/surpeme
 	name = "jolly gravedigger supreme"
-		
+
 	head = /obj/item/clothing/head/that
 
 /datum/outfit/jolly_gravedigger/surpeme/post_equip(mob/living/carbon/human/H)

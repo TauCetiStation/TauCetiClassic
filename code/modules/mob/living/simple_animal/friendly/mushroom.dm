@@ -1,6 +1,6 @@
 /mob/living/simple_animal/mushroom
 	name = "walking mushroom"
-	desc = "It's a massive mushroom... with legs?"
+	desc = "Это огромный гриб... на ножках?"
 	icon_state = "mushroom"
 	icon_living = "mushroom"
 	icon_dead = "mushroom_dead"

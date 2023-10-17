@@ -37,6 +37,11 @@
 	canister_color = "redws"
 	gas_type = "sleeping_agent"
 
+/obj/machinery/portable_atmospherics/canister/anesthetic
+	name = "Canister: \[Anesthetic\]"
+	icon_state = "redws"
+	canister_color = "redws"
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
@@ -133,6 +138,10 @@
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	var/list/air_mix = StandardAirMix()
 	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
+
+/obj/machinery/portable_atmospherics/canister/anesthetic/create_gas()
+	var/list/air_mix = StandardAirMix()
+	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "sleeping_agent", air_mix["nitrogen"])
 
 #define HOLDING     1
 #define CONNECTED   2
@@ -267,7 +276,7 @@ update_flag
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != INTENT_HARM && iswelder(W))
+	if(iswelding(W))
 		if(user.is_busy(src))
 			return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -313,15 +322,19 @@ update_flag
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
 
-	stat |= BROKEN
 	density = FALSE
 	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, FALSE, null, -3)
-	update_icon()
 	log_investigate("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
 		holding.forceMove(T)
 		holding = null
+
+/obj/machinery/portable_atmospherics/canister/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT || stat & BROKEN)
+		return ..()
+	atom_break()
+	..()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user)
 	tgui_interact(user)

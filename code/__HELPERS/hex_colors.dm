@@ -48,3 +48,21 @@
 	RGB[2] = clamp(RGB[2]+value,0,255)
 	RGB[3] = clamp(RGB[3]+value,0,255)
 	return rgb(RGB[1],RGB[2],RGB[3])
+
+// make hex color brighter before one value is #ff
+/proc/adjust_to_white(color)
+	var/list/RGB[3]
+	RGB[1] = HEX_VAL_RED(color)
+	RGB[2] = HEX_VAL_GREEN(color)
+	RGB[3] = HEX_VAL_BLUE(color)
+
+	var/min_diff = 255
+	for(var/i in 1 to 3)
+		var/diff = 255 - RGB[i]
+		if(min_diff > diff)
+			min_diff = diff
+
+	for(var/i in 1 to 3)
+		RGB[i] += min_diff
+
+	return rgb(RGB[1],RGB[2],RGB[3])

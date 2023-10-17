@@ -155,7 +155,13 @@
 /obj/item/weapon/extraction_pack/dealer/try_use_fulton(atom/movable/target, mob/user)
 	if(!isgundealer(user))
 		return FALSE
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
+	if(isitem(target))
+		for(var/item in global.lowrisk_objectives_cache)
+			if(item != target.type)
+				continue
+			to_chat(user, "<span class='warning'>Этот предмет нужен одной из банд, мы не можем его принять.</span>")
+			return FALSE
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(give_telecrystal), target.type, user))
 	if(!..())
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		return FALSE
@@ -183,3 +189,41 @@
 
 	guplink.uses += telecrystals
 	S.total_TC += telecrystals
+
+/obj/item/weapon/extraction_pack/pirates
+	del_target = TRUE
+
+/obj/item/weapon/extraction_pack/pirates/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		var/datum/faction/responders/pirates/P = find_faction_by_type(/datum/faction/responders/pirates)
+		if(!P)
+			return
+		to_chat(user, "Plundered treasure: [P.booty] doubloons!")
+
+/obj/item/weapon/extraction_pack/pirates/can_use_to(atom/movable/target)
+	if(!..())
+		return FALSE
+	if(ismob(target) || istype(target, /obj/structure/closet))
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/extraction_pack/pirates/try_use_fulton(atom/movable/target, mob/user)
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(sell), target.type, user))
+	if(!..())
+		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/extraction_pack/pirates/proc/sell(atom/movable/target_type, mob/user)
+	sleep(10 SECONDS) // signals are called async
+	var/datum/faction/responders/pirates/P = find_faction_by_type(/datum/faction/responders/pirates)
+	if(!P)
+		return
+
+	var/obj/O = target_type
+	if(!initial(O.price))
+		return
+
+	P.booty += initial(O.price)
+	to_chat(user, "Plundered [initial(O.price)] doubloons!")

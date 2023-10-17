@@ -317,6 +317,14 @@
 	title = "Supply Crates Official List"
 	wiki_page = "Supply_crates"
 
+/obj/item/weapon/book/manual/wiki/jukebox
+	name = "Jukebox for dummies"
+	icon_state ="bookjukebox"
+	item_state = "book2"
+	author = "NanoTrasenDJ"
+	title = "Jukebox for dummies"
+	wiki_page = "Jukebox"
+
 //Other
 
 /obj/item/weapon/book/manual/wiki/rules

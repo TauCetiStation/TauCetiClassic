@@ -12,8 +12,9 @@
 	pass_flags = PASSBLOB
 	faction = "blob"
 
-	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
+	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/list/blob_mobs = list()
+	var/list/factory_blobs = list()
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
@@ -109,7 +110,7 @@
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = FALSE
-	var/obj/effect/blob/B = locate() in range(3, NewLoc)
+	var/obj/structure/blob/B = locate() in range(3, NewLoc)
 	if(NewLoc && B)
 		loc = NewLoc
 		return TRUE
@@ -119,9 +120,13 @@
 		ghost_sightless_images -= ghostimage
 		QDEL_NULL(ghostimage)
 		updateallghostimages()
-	for(var/BLO as anything in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		if(BM)
-			BM.overmind = null
+
+	for(var/mob/living/simple_animal/hostile/blob/BLO in blob_mobs)
+		BLO.overmind = null
 	blob_mobs = null
+
+	for(var/obj/structure/blob/factory/F in factory_blobs)
+		F.OV = null
+	factory_blobs = null
+
 	return ..()

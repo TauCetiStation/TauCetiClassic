@@ -47,8 +47,6 @@
 	/// A list of being healed to active alerts
 	var/list/current_alerts = list()
 
-	COOLDOWN_DECLARE(last_heal_effect_time)
-
 /datum/component/aura_healing/Initialize(
 	range,
 	requires_visibility = TRUE,
@@ -94,10 +92,6 @@
 	return ..()
 
 /datum/component/aura_healing/process(delta_time)
-	var/should_show_effect = COOLDOWN_FINISHED(src, last_heal_effect_time)
-	if (should_show_effect)
-		COOLDOWN_START(src, last_heal_effect_time, HEAL_EFFECT_COOLDOWN)
-
 	var/list/remove_alerts_from = current_alerts.Copy()
 
 	var/alert_category = "aura_healing_[REF(src)]"
@@ -113,7 +107,7 @@
 			alert.desc = "You are being healed by [parent]."
 			current_alerts += candidate
 
-		if (should_show_effect && candidate.health < candidate.maxHealth)
+		if (candidate.health < candidate.maxHealth)
 			var/obj/effect/temp_visual/heal/H = new(get_turf(candidate))
 			H.color = healing_color
 
@@ -138,7 +132,7 @@
 
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/simple_candidate = candidate
-			simple_candidate.heal_overall_damage(simple_heal * delta_time * 0.5, simple_heal * delta_time * 0.5)
+			simple_candidate.heal_overall_damage(simple_heal * delta_time * 0.2, simple_heal * delta_time * 0.2)
 		candidate.updatehealth()
 
 	for (var/mob/remove_alert_from as anything in remove_alerts_from)

@@ -261,7 +261,7 @@ robot_fabricator
 	to_chat(owner, "<span class='notice'>Machine overloaded. Uses left: [uses]</span>")
 	if(uses <= 0)
 		owner.active_module = null
-	addtimer(CALLBACK(src, .proc/overload_post_action, M), 50)
+	addtimer(CALLBACK(src, PROC_REF(overload_post_action), M), 50)
 	return FALSE
 
 /mob/living/silicon/ai/proc/overload_machine()

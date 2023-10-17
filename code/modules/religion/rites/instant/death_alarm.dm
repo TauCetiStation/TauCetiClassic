@@ -1,15 +1,15 @@
 /datum/religion_rites/instant/chaplain/death_alarm
 	name = "Ангел-хранитель"
 	desc = "Ангел заточенный в колоколе в церкви хоть и не сможет уберечь вас в трудную минуту, но всегда оповестит экипаж о вашей кончине."
-	ritual_length = (50 SECONDS)
+	ritual_length = (10 SECONDS)
 	favor_cost = 200
-	invoke_msg = "Oh, holy angel, intercessor before our Lord for my soul, my body and my life. Save him from encroachment!"
+	invoke_msg = "О, святой ангел, заступник перед нашим Господом за мою душу, мое тело и мою жизнь. Спаси его от посягательств!"
 	can_talismaned = FALSE
 	needed_aspects = list(
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/instant/chaplain/death_alarm/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/chaplain/death_alarm/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 	if(!AOG.buckled_mob)
@@ -23,7 +23,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/instant/chaplain/death_alarm/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/chaplain/death_alarm/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	var/mob/living/carbon/H = AOG.buckled_mob
 	H.AddComponent(/datum/component/bell_death_alarm)

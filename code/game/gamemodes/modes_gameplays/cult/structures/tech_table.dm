@@ -49,7 +49,7 @@
 		var/datum/aspect/A = religion.aspects[name]
 		to_chat(user, "\t<font color='[A.color]'>[name]</font> с силой <font size='[1+A.power]'><i>[A.power]</i></font>")
 
-/obj/structure/cult/tech_table/attack_hand(mob/living/user)
+/obj/structure/cult/tech_table/attack_hand(mob/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
 
@@ -63,6 +63,12 @@
 	if(researching)
 		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] секунд до конца исследования.</span>")
 		return
+
+	var/datum/religion/cult/R = religion
+	if(R)
+		if(R.research_forbidden && !iseminence(user))
+			to_chat(user, "<span class='warning'>По решению Возвышенного последователям запрещено самим исследовать!</span>")
+			return
 
 	if(!aspect_images.len)
 		gen_aspect_images()
@@ -79,7 +85,7 @@
 		if("Уникальные технологии")
 			choose_uniq_tech(user)
 
-/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/living/user)
+/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/user)
 	for(var/datum/building_agent/B in uniq_images)
 		B.name = "[initial(B.name)] [B.get_costs()]"
 
@@ -96,7 +102,7 @@
 
 	current_research = initial(choosed_tech.name)
 	choosed_tech.researching = TRUE
-	start_activity(CALLBACK(src, .proc/research_tech, choosed_tech))
+	start_activity(CALLBACK(src, PROC_REF(research_tech), choosed_tech))
 
 /obj/structure/cult/tech_table/proc/research_tech(datum/building_agent/tech/choosed_tech)
 	religion.add_tech(choosed_tech.building_type)
@@ -107,7 +113,7 @@
 
 	end_activity()
 
-/obj/structure/cult/tech_table/proc/choose_aspect(mob/living/user)
+/obj/structure/cult/tech_table/proc/choose_aspect(mob/user)
 	// Generates a name with the power of an aspect and upgrade cost
 	for(var/datum/aspect/A in aspect_images)
 		var/datum/aspect/in_religion = religion.aspects[initial(A.name)]
@@ -124,7 +130,7 @@
 
 	to_chat(user, "<span class='notice'>Вы начали [in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)].</span>")
 	current_research = "[in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)]"
-	start_activity(CALLBACK(src, .proc/upgrade_aspect, choosed_aspect))
+	start_activity(CALLBACK(src, PROC_REF(upgrade_aspect), choosed_aspect))
 
 /obj/structure/cult/tech_table/proc/upgrade_aspect(datum/aspect/aspect_to_upgrade)
 	if(initial(aspect_to_upgrade.name) in religion)
@@ -150,7 +156,7 @@
 		"Уникальные технологии" = uniq_images[pick(uniq_images)],
 	)
 
-/obj/structure/cult/tech_table/proc/gen_tech_images(mob/living/user)
+/obj/structure/cult/tech_table/proc/gen_tech_images(mob/user)
 	uniq_images = list()
 	for(var/datum/building_agent/tech/BA in religion.available_techs)
 		uniq_images[BA] = image(icon = BA.icon, icon_state = BA.icon_state)

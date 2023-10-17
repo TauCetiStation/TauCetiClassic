@@ -12,7 +12,7 @@
 	favor_cost = 50
 	can_talismaned = FALSE
 
-/datum/religion_rites/instant/cult/sacrifice/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/sacrifice/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -27,7 +27,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/instant/cult/sacrifice/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/sacrifice/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/datum/religion/cult/R = religion
 	var/datum/mind/sacrifice_target = R.mode.sacrifice_target
@@ -36,13 +36,13 @@
 	if(S)
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
+			R.send_message_to_members("<span class='[religion.style_text]'>[pick("Я̔̓̀͝͠͝ п͒̓͋̚̚͝р̀̒̾̒͑̀ѝ̈́͆́͌͝н̐͆͛̿͌͝и̒́͌̀̈́̿м͆͛̈́́͠͝а̽͐͋̽̚ю́̈́͆̕̕ т̒̿͛͑̿͑в̈́͆͊̿̕̕о́́̾͋͒̔ю͊͛̔̚̕͝ ж̓͋̈́̐͑͘е̓͋͘͠͝͝р͆̀̓̚̕͝т͋͛͋͊͝͠в͆͌͊̐̓̚у̾͋̒̈́̔͝", "Я͆̐͛ п͑̐̔р̒͆͘и͐͒̕н͑͘͝ӥ́͋͝м̀͌͌а͛͑̚ю̐͝ ж̓͆͝е̿̿р͊̓̿т̓́͘в̈́̚̚у͌̿͑ о̀̽̔б̈́̓͠р̀̽͊е͛̚͝ч͋̀̕е̾͘͝н̈́̓͠н͑͆о̐͑͝г͋̒͠о͛̚̕", "Ж͆͘͝е͋͑̽р̚͝т̽̓̈́в̿̓͠а̔͑̕ п̈́͒́р̐̈́̚и̚͠н̈́͆̾я̀̈́͘т͐́̽а͆͑͛")]</span>", null, 6, user)
 			R.adjust_favor(300 * divine_power)
 		S.dust()
 	else if(ishuman(AOG.buckled_mob))
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
+			R.send_message_to_members("<span class='[religion.style_text]'>[pick("Я̔̓̀͝͠͝ п͒̓͋̚̚͝р̀̒̾̒͑̀ѝ̈́͆́͌͝н̐͆͛̿͌͝и̒́͌̀̈́̿м͆͛̈́́͠͝а̽͐͋̽̚ю́̈́͆̕̕ т̒̿͛͑̿͑в̈́͆͊̿̕̕о́́̾͋͒̔ю͊͛̔̚̕͝ ж̓͋̈́̐͑͘е̓͋͘͠͝͝р͆̀̓̚̕͝т͋͛͋͊͝͠в͆͌͊̐̓̚у̾͋̒̈́̔͝", "Я͆̐͛ п͑̐̔р̒͆͘и͐͒̕н͑͘͝ӥ́͋͝м̀͌͌а͛͑̚ю̐͝ ж̓͆͝е̿̿р͊̓̿т̓́͘в̈́̚̚у͌̿͑ о̀̽̔б̈́̓͠р̀̽͊е͛̚͝ч͋̀̕е̾͘͝н̈́̓͠н͑͆о̐͑͝г͋̒͠о͛̚̕", "Ж͆͘͝е͋͑̽р̚͝т̽̓̈́в̿̓͠а̔͑̕ п̈́͒́р̐̈́̚и̚͠н̈́͆̾я̀̈́͘т͐́̽а͆͑͛")]</span>", null, 6, user)
 			R.adjust_favor(300 * divine_power)
 		AOG.buckled_mob.gib()
 
@@ -51,7 +51,7 @@
 	playsound(AOG, 'sound/magic/disintegrate.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
-/datum/religion_rites/instant/cult/sacrifice/proc/calc_sacrifice_favor(mob/living/L)
+/datum/religion_rites/instant/cult/sacrifice/proc/calc_sacrifice_favor(mob/L)
 	if(!istype(L))
 		return 0
 
@@ -82,7 +82,7 @@
 	favor_cost = 100
 	can_talismaned = FALSE
 
-/datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/convert/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -96,7 +96,7 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/cult/convert/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/convert/invoke_effect(mob/user, obj/AOG)
 	..()
 
 	if(!AOG.buckled_mob)
@@ -107,6 +107,9 @@
 		return FALSE
 
 	religion.add_member(AOG.buckled_mob, CULT_ROLE_HIGHPRIEST)
+	if(iscarbon(AOG.buckled_mob))
+		var/mob/living/carbon/C = AOG.buckled_mob
+		C.uncuff()
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300 * divine_power)
 	return TRUE
@@ -122,12 +125,12 @@
 		ASPECT_TECH = 2,
 	)
 
-/datum/religion_rites/instant/cult/emp/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/emp/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/turf/turf = get_turf(AOG)
 	playsound(AOG, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 25)
 	turf.hotspot_expose(700, 125)
-	empulse(turf, 3, 5 * divine_power)
+	empulse(turf, 3 * sqrt(divine_power), 5 * divine_power)
 	return TRUE
 
 /datum/religion_rites/instant/cult/drain_torture
@@ -142,24 +145,24 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/instant/cult/drain_torture/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/drain_torture/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.buckled_mob?.stat != DEAD && AOG.buckled_mob.get_species() != HOMUNCULUS)
+		if(table.buckled_mob && table.buckled_mob.stat != DEAD && table.buckled_mob.get_species() != HOMUNCULUS)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
 	return FALSE
 
-/datum/religion_rites/instant/cult/drain_torture/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/drain_torture/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/drain = 0
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || AOG.buckled_mob.get_species() == HOMUNCULUS)
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || table.buckled_mob.get_species() == HOMUNCULUS)
 			continue
 		var/bdrain = rand(10, 25) * divine_power
 		to_chat(table.buckled_mob, "<span class='userdanger'>Вы чувствуете слабость.</span>")
@@ -182,8 +185,9 @@
 				if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 					BP.rejuvenate()
 					to_chat(user, "<span class='[religion.style_text]'>Ты чувствуешь прилив сил в [BP].</span>")
-
-	user.heal_overall_damage(1.2 * drain, drain)
+	if(isliving(user))
+		var/mob/living/L = user
+		L.heal_overall_damage(1.2 * drain, drain)
 	return TRUE
 
 /datum/religion_rites/instant/cult/raise_torture
@@ -199,7 +203,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/instant/cult/raise_torture/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/raise_torture/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -215,7 +219,7 @@
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
 	return FALSE
 
-/datum/religion_rites/instant/cult/raise_torture/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/raise_torture/invoke_effect(mob/user, obj/AOG)
 	..()
 	if(!AOG.buckled_mob || AOG.buckled_mob.stat != DEAD || !ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>На алтаре должен лежать мертвый человек.</span>")
@@ -307,7 +311,7 @@
 		ASPECT_MYSTIC = 1,
 	)
 
-/datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
@@ -350,7 +354,7 @@
 		ASPECT_RESOURCES = 1,
 	)
 
-/datum/religion_rites/instant/cult/summon_acolyt/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/summon_acolyt/invoke_effect(mob/user, obj/AOG)
 	..()
 
 	var/list/cultists = list()
@@ -392,21 +396,21 @@
 		ASPECT_OBSCURE = 2,
 	)
 
-/datum/religion_rites/instant/cult/brainswap/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/brainswap/can_start(mob/user, obj/AOG)
 	if(!..())
+		return FALSE
+
+	if(!isliving(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>На алтаре должно лежать живое существо.</span>")
 		return FALSE
 
 	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
 		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 
-	if(!isliving(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>На алтаре должно лежать существо.</span>")
-		return FALSE
-
 	return TRUE
 
-/datum/religion_rites/instant/cult/brainswap/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/brainswap/invoke_effect(mob/user, obj/AOG)
 	..()
 	if(!isliving(AOG.buckled_mob))
 		return FALSE
@@ -434,7 +438,9 @@
 		return TRUE
 
 	target.adjustBrainLoss(bdam)
-	user.adjustBrainLoss(bdam)
+	if(isliving(user))
+		var/mob/living/L = user
+		L.adjustBrainLoss(bdam)
 	to_chat(user, "<span class='danger'>Ваш разум перемещается в другое тело. Вы чувствуете, как частичка себя теряется в забвенье.</span>")
 	target.logout_reason = LOGOUT_SWAP
 	user.logout_reason = LOGOUT_SWAP
@@ -448,7 +454,7 @@
 
 /datum/religion_rites/instant/cult/give_forcearmor
 	name = "Создание Силовой Ауры"
-	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон."
+	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон. Аспект Хаоса повышает силу щита, а аспект Салютуса - скорость восстановления."
 	ritual_length = (15 SECONDS)
 	invoke_msg = "Защитись же!!"
 	favor_cost = 300
@@ -459,7 +465,7 @@
 		ASPECT_RESCUE = 2,
 	)
 
-/datum/religion_rites/instant/cult/give_forcearmor/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/give_forcearmor/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -481,17 +487,23 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/cult/give_forcearmor/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/give_forcearmor/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/mob/living/carbon/human/H = AOG.buckled_mob
 	if(!H)
 		return FALSE
 
-	user.take_overall_damage(20, 10)
+	if(isliving(user))
+		var/mob/living/L = user
+		L.take_overall_damage(20, 10)
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	H.AddComponent(/datum/component/forcefield, "power aura", 30 * divine_power, 1 MINUTE, 2.5 MINUTE, R, FALSE, TRUE)
+	var/list/diffs = religion.get_aspect_diffs(needed_aspects)
+	var/shield_health = 30 * sqrt(diffs[ASPECT_CHAOS] + 1)
+	var/reactivation_time = 1 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
+	var/recharge_time = 2.5 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
+	H.AddComponent(/datum/component/forcefield, "power aura", shield_health, reactivation_time, recharge_time, R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
@@ -508,7 +520,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/instant/cult/upgrade_tome/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/upgrade_tome/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -520,7 +532,7 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/cult/upgrade_tome/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/upgrade_tome/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/obj/item/weapon/storage/bible/tome/T = locate() in AOG.loc
 	if(!T)
@@ -546,7 +558,7 @@
 		ASPECT_DEATH = 1,
 	)
 
-/datum/religion_rites/instant/impose_blind/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/impose_blind/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -556,7 +568,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/instant/impose_blind/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/impose_blind/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/list/affected = religion.nearest_heretics(AOG, 7)
 	if(length(affected) < 1)
@@ -567,7 +579,7 @@
 		C.blurEyes(blindless_modifier)
 		C.eye_blind += blindless_modifier / 2
 		if(prob(5))
-			C.disabilities |= NEARSIGHTED
+			C.become_nearsighted(GENETIC_MUTATION_TRAIT)
 			if(prob(10))
 				C.sdisabilities |= BLIND
 		C.show_message("<span class='userdanger'>Внезапно вы видите красную вспышку, которая ослепила вас.</span>", SHOWMSG_VISUAL)
@@ -585,7 +597,7 @@
 		ASPECT_MYSTIC = 1,
 	)
 
-/datum/religion_rites/instant/impose_deaf/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/impose_deaf/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -622,7 +634,7 @@
 		ASPECT_OBSCURE = 1,
 	)
 
-/datum/religion_rites/instant/impose_stun/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/impose_stun/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -632,30 +644,34 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/instant/impose_stun/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/impose_stun/invoke_effect(mob/user, obj/AOG)
 	..()
 	var/list/heretics = religion.nearest_heretics(AOG, 2)
 	if(length(heretics) < 1)
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
-	var/stun_modifier = 12 / length(heretics) * divine_power
-	for(var/mob/living/carbon/C in heretics)
-		C.flash_eyes()
-		if(!(HULK in C.mutations))
-			C.Stuttering(1)
-			C.Weaken(stun_modifier)
-			C.Stun(stun_modifier)
-			C.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
+	var/stun_modifier = 12 / length(heretics) * round(sqrt(divine_power))
+	for(var/mob/living/L in heretics)
+		if(!(L.status_flags & CANSTUN)) //Hulks, golems
+			L.Stun(stun_modifier / 2, TRUE)
+			flash_color(L, flash_time = stun_modifier * 5)
+		else
+			L.Stun(stun_modifier * 0.8)
+			flash_color(L, flash_time = stun_modifier SECONDS)
+		if(!(HULK in L.mutations))
+			L.Stuttering(stun_modifier)
+			L.Weaken(stun_modifier)
+			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 	return TRUE
 
 /datum/religion_rites/instant/communicate
 	name = "Общение"
 	desc = "Отправляет телепатическое сообщение всем членам религии!"
-	ritual_length = (5 SECONDS)
+	ritual_length = (1 SECONDS)
 	invoke_msg = "Услышь меня!!!"
 	favor_cost = 50
 
-/datum/religion_rites/instant/communicate/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/communicate/invoke_effect(mob/user, obj/AOG)
 	..()
 	favor_cost = initial(favor_cost) / divine_power
 	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))

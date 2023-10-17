@@ -129,6 +129,24 @@
 		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
+var/global/list/tourette_bad_words= list(
+	HUMAN = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
+ 				 "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+				 "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+				 "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	TAJARAN = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
+ 				   "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+	 			   "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+	 			   "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	UNATHI = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
+				  "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+				  "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+	 			  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	VOX = list("ГОВНО", "СЕДАЛИЩЕ", "ЧКАЛ", "СПАРИВАЛ", "ТВАРЬ",
+	 		   "ГНИЛОЙ", "МРАЗЬ", "ХВОСТ", "НАХВОСТ", "ХВОСТОЛИЗ",
+			   "КЛОАКА", "СКРЯТЬ", "СКАРАПУШ", "САМКА", "СКРЯПЫШ")
+			   )
+
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && !paralysis)
@@ -142,17 +160,21 @@
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(!(get_species() in tourette_bad_words))
+			return
 		speech_problem_flag = 1
-		if (prob(10) && !paralysis)
-			Stun(10)
+		if (prob(10))
 			spawn( 0 )
 				switch(rand(1, 3))
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
+						say(pick(tourette_bad_words[get_species()]))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
+				if(prob(25))
+					shake_camera(src, rand(1, 2), 4)
+					spin(4, 1)
 				pixel_x += rand(-2,2)
 				pixel_y += rand(-1,1)
 				sleep(2)
@@ -210,7 +232,7 @@
 					SetCrawling(TRUE)
 
 			if(13 to 18)
-				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
+				if(getBrainLoss() >= 60 && (!HAS_TRAIT(src, TRAIT_STRONGMIND) || get_species() != SKRELL))
 					switch(rand(1, 3))
 						if(1)
 							say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
@@ -332,7 +354,6 @@
 
 	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
 		internal = null
-		internals?.update_icon(src)
 		return null
 
 	//internal breath sounds
@@ -403,9 +424,8 @@
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
-	var/is_in_space = isspaceturf(get_turf(src))
 
-	if(!is_in_space) //space is not meant to change your body temperature.
+	if(environment.total_moles) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
@@ -419,7 +439,7 @@
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
-			apply_effect(5, IRRADIATE)
+			irradiate_one_mob(src, 5)
 
 	if(status_flags & GODMODE)
 		return 1	//godmode
@@ -473,7 +493,6 @@
 			pressure_alert = -1
 		else
 			pressure_alert = -2
-			apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 	//Check for contaminants before anything else because we don't want to skip it.
@@ -682,28 +701,6 @@
 				update_inv_wear_suit()
 				update_size_class()
 
-	// nutrition decrease
-	if (nutrition > 0 && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		for(var/obj/item/organ/external/BP in bodyparts)
-			met_factor += BP.pumped / 100
-		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-	if (nutrition > 450)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
-			overeatduration++
-	else
-		if(overeatduration > 1)
-			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
-
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
@@ -748,6 +745,8 @@
 					emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
 				adjustOxyLoss(1)*/
+		if(species.flags[IS_SYNTHETIC])
+			hallucination = 0
 
 		if(hallucination)
 			if(hallucination >= 20)
@@ -758,7 +757,7 @@
 
 			if(hallucination <= 2)
 				hallucination = 0
-				halloss = 0
+				setHalLoss(0)
 			else
 				hallucination -= 2
 
@@ -770,16 +769,20 @@
 				//src << "<span class='notice'>You're in too much pain to keep going...</span>"
 				//for(var/mob/O in oviewers(src, null))
 				//	O.show_messageold("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
-				if(prob(3))
-					Paralyse(10)
-				else
-					Stun(5)
-					Weaken(10)
+				var/long_shock_allowed = !HAS_TRAIT_FROM(src, TRAIT_STEEL_NERVES, VIRUS_TRAIT)
+				if(long_shock_allowed)
+					if(prob(3))
+						Paralyse(10)
+					else
+						Stun(5)
+						Weaken(10)
 				setHalLoss(99)
 
 		if(paralysis)
 			blinded = 1
 			stat = UNCONSCIOUS
+			drop_from_inventory(l_hand)
+			drop_from_inventory(r_hand)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else if(IsSleeping())
@@ -809,7 +812,9 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		if(should_have_organ(O_EYES) && !has_organ(O_EYES))
+			blinded = 1
+		else if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -994,21 +999,11 @@
 				get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
 		else
 			get_nutrition_max = NUTRITION_LEVEL_FAT
-		full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+		full_perc = clamp(((get_satiation() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
 		nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
 	//OH cmon...
-	var/nearsighted = 0
 	var/impaired    = 0
-
-	if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		nearsighted = 1
-
-	if(glasses)
-		var/obj/item/clothing/glasses/G = glasses
-		if(G.prescription)
-			nearsighted = 0
-
 	if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 		var/obj/item/clothing/head/welding/O = head
 		if(!O.up && tinted_weldhelh)
@@ -1021,20 +1016,12 @@
 		var/obj/item/clothing/glasses/welding/O = glasses
 		if(!O.up && tinted_weldhelh)
 			impaired = max(impaired, 2)
-
-	if(eye_blurry)
-		update_eye_blur()
-	else
-		update_eye_blur()
-	if(nearsighted)
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-
 	if(impaired)
 		overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
 	else
 		clear_fullscreen("impaired")
+
+	update_eye_blur()
 
 	if(!machine)
 		var/isRemoteObserve = 0
@@ -1160,7 +1147,10 @@
 /mob/living/carbon/human/handle_shock()
 	..()
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(analgesic || (species && species.flags[NO_PAIN])) return // analgesic avoids all traumatic shock temporarily
+	if(species && species.flags[NO_PAIN])
+		return
+	if(analgesic && !reagents.has_reagent("prismaline"))
+		return // analgesic avoids all traumatic shock temporarily
 
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
@@ -1277,6 +1267,20 @@
 				temp = PULSE_NONE
 
 	return temp
+
+/mob/living/carbon/human/handle_nutrition()
+	. = ..()
+	if(nutrition > NUTRITION_LEVEL_WELL_FED)
+		if(overeatduration < 600) //capped so people don't take forever to unfat
+			overeatduration++
+	else
+		if(overeatduration > 1)
+			overeatduration -= 2 //doubled the unfat rate
+
+	if(species.flags[REQUIRE_LIGHT])
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes

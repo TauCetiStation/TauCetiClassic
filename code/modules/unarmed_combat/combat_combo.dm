@@ -239,7 +239,7 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, MELEE)
 		return victim.apply_damage(val, force_dam_type ? force_dam_type : attack_obj["type"],
 			def_zone = zone,
 			blocked = armor_check,
@@ -265,7 +265,7 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, MELEE)
 		return victim.apply_effect(duration, effect, blocked = armor_check)
 	return FALSE
 

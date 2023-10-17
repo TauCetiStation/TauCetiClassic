@@ -26,6 +26,10 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
+/obj/item/organ/Destroy()
+	owner = null
+	return ..()
+
 /obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	loc = null
 	owner = H
@@ -86,7 +90,7 @@
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
 /obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
 	var/weapon_name
-	
+
 	if(isatom(used_weapon))
 		var/atom/weapon = used_weapon
 		weapon_name = initial(weapon.name)
@@ -196,11 +200,11 @@
 	// standing is good
 	if(stance_damage < 2 || (stance_damage < 4 && prob(95)))
 		return
-	
+
 	if(!lying)
 		if(species && !species.flags[NO_PAIN])
 			emote("scream")
-		emote("collapse")
+		Weaken(2)
 
 	if(iszombie(src)) // workaroud for zombie attack without stance
 		if(!crawling)

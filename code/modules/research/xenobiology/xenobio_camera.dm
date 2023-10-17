@@ -69,35 +69,11 @@
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
 
-	if(slime_up_action)
-		slime_up_action.target = src
-		slime_up_action.Grant(user)
-
-	if(slime_place_action)
-		slime_place_action.target = src
-		slime_place_action.Grant(user)
-
-	if(feed_slime_action)
-		feed_slime_action.target = src
-		feed_slime_action.Grant(user)
-
-	if(monkey_recycle_action)
-		monkey_recycle_action.target = src
-		monkey_recycle_action.Grant(user)
-
-	if(scan_action)
-		scan_action.target = src
-		scan_action.Grant(user)
-
-	if(hotkey_help)
-		hotkey_help.target = src
-		hotkey_help.Grant(user)
-
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, PROC_REF(XenoSlimeClickCtrl))
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, PROC_REF(XenoSlimeClickShift))
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, PROC_REF(XenoTurfClickShift))
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, PROC_REF(XenoTurfClickCtrl))
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, PROC_REF(XenoMonkeyClickCtrl))
 
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
@@ -110,7 +86,7 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	. = ..()
-	if(ismultitool(O))
+	if(ispulsing(O))
 		var/obj/item/device/multitool/M = O
 		if(M.buffer && istype(M.buffer,/obj/machinery/monkey_recycler))
 			if(!connected_recycler)

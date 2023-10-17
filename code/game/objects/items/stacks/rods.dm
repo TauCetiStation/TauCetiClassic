@@ -7,7 +7,7 @@
 	w_class = SIZE_SMALL
 	force = 2.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 1875
 	max_amount = 60
@@ -25,7 +25,7 @@
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 
 		if(get_amount() < 2)
@@ -68,22 +68,18 @@
 			G.update_integrity(G.max_integrity)
 			G.density = TRUE
 			G.destroyed = FALSE
-			G.icon_state = "grille"
+			update_icon()
 
 		return FALSE
 
+	try_to_build_grille(user, build_loc)
 
-	if(get_amount() < 2)
-		to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
-		return
-	if(user.is_busy(src))
-		return
+/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc, spawn_unanchored = TRUE)
 	to_chat(usr, "<span class='notice'>Assembling grille...</span>")
-	if (!use_tool(usr, usr, 10))
+	if (!use_tool(src, usr, 20, 2))
 		return
-	if (!use(2))
-		return
-	var/obj/structure/grille/F = new /obj/structure/grille(build_loc)
-	user.try_take(F, build_loc)
-	to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
+
+	var/obj/structure/grille/F = new(build_loc, spawn_unanchored)
+
+	to_chat(usr, "<span class='notice'>You assembled \a [F].</span>")
 	F.add_fingerprint(usr)

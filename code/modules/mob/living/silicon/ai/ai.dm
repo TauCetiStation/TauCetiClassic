@@ -135,6 +135,9 @@ var/global/list/ai_verbs_default = list(
 
 	var/datum/announcement/station/command/ai/announcement = new
 
+	var/legs = FALSE //shitspawn only var
+	var/uses_legs = FALSE //shitspawn only var
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
 
@@ -146,7 +149,7 @@ var/global/list/ai_verbs_default = list(
 	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, MELEE), DAM_SHARP|DAM_EDGE)
 	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
@@ -293,7 +296,10 @@ var/global/list/ai_verbs_default = list(
 
 	gen_radial_cores()
 
-	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
+	var/mob/showing_to = eyeobj
+	if(uses_legs)
+		showing_to = src
+	var/state = show_radial_menu(usr, showing_to, chooses_ai_cores, radius = 50, tooltips = TRUE)
 	if(!state)
 		return
 	icon_state = name_by_state[state]
@@ -824,7 +830,7 @@ var/global/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
@@ -907,3 +913,38 @@ var/global/list/ai_verbs_default = list(
 					"Wipe Core", list("No", "Yes")) != "Yes")
 		return
 	perform_wipe_core()
+
+/mob/living/silicon/ai/proc/allow_walking()
+	legs = !legs
+	if(!legs)
+		verbs -= /mob/living/silicon/ai/proc/toggle_walking
+		to_chat(src, "M.O.V.E. protocol has been disabled.")
+		if(uses_legs)
+			toggle_walking()
+	else
+		verbs += /mob/living/silicon/ai/proc/toggle_walking
+		to_chat(src, "M.O.V.E. protocol has been enabled.")
+
+/mob/living/silicon/ai/proc/toggle_walking()
+	set name = "Toggle Moving"
+	set desc = "Deploy or conceal your hidden mobility threads."
+	set category = "AI Commands"
+
+	if(stat == DEAD)
+		return
+
+	view_core()
+	uses_legs = !uses_legs
+	canmove = !canmove
+	cut_overlays()
+	playsound(src, 'sound/misc/ai_threads.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
+
+	visible_message("<span class='notice'>[src] [uses_legs ? "engages" : "disengages"] it's mobility module!</span>")
+
+	if(uses_legs)
+		var/image/legs = image(icon, src, "threads", MOB_LAYER, pixel_y = -9)
+		legs.plane = plane
+		add_overlay(legs)
+		pixel_y = 8
+	else
+		pixel_y = 0

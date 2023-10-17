@@ -9,6 +9,7 @@
 	anchored = TRUE
 	state_open = 1
 	var/points = 0
+	var/all_points = 0
 	var/list/history = new
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
@@ -162,6 +163,8 @@
 	if(!GlandTest)
 		visible_message("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
+	if(istype(GlandTest, /obj/item/gland/abductor))
+		return "<span class='bad'>Special gland interferes with an experiment!</span>"
 	if(H.mind != null && H.ckey != null)
 		history += H
 		visible_message("Processing specimen...")
@@ -175,22 +178,17 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-
-		var/datum/faction/abductors/req_f
-		for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
-			if(F.team_number == team)
-				req_f = F
-				break
-
-		add_faction_member(req_f, H, TRUE)
+		if(console.gizmo && console.gizmo.marked == H)
+			console.gizmo.marked = null
 		for(var/obj/item/gland/G in H)
 			G.Start()
-			point_reward++
+			point_reward = 1
 		if(point_reward > 0)
 			open_machine()
 			SendBack(H)
 			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-			points += point_reward
+			points++
+			all_points++
 			return "<span class='good'>Experiment successfull! [point_reward] new data-points collected.</span>"
 		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 		return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
@@ -200,16 +198,18 @@
 	return "<span class='bad'>Specimen braindead - disposed</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(16 SECONDS)
+	H.Sleeping(10 SECONDS)
+	qdel(H.handcuffed)
 	var/area/A
-	if(console && console.pad && console.pad.teleport_target)
-		A = console.pad.teleport_target
-	else
+	if(console && console.pad)
+		if(console.pad.precise_teleport_target)
+			H.forceMove(console.pad.precise_teleport_target)
+			return
+		else if(console.pad.teleport_target)
+			A = console.pad.teleport_target
+	if(!A)
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
-	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
-	H.drop_from_inventory(handcuffs)
-	qdel(handcuffs)
 
 /obj/machinery/abductor/experiment/update_icon()
 	if(state_open)

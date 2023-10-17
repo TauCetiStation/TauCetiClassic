@@ -119,10 +119,7 @@
 	// TG calls this a "melee attack chain"
 	if(target.Adjacent(src))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-		var/resolved = target.attackby(src, user, params)
-		if(!resolved && target && src)
-			afterattack(target, user, TRUE, params)
-
+		melee_attack_chain(target, user, params)
 		return
 
 	afterattack(target, user, FALSE, params)
@@ -240,7 +237,7 @@
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
 	focus = target
-	RegisterSignal(focus, COMSIG_PARENT_QDELETING, .proc/on_focus_deletion)
+	RegisterSignal(focus, COMSIG_PARENT_QDELETING, PROC_REF(on_focus_deletion))
 	update_icon()
 	apply_focus_overlay()
 

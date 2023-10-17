@@ -134,7 +134,7 @@
 		turn_on()
 
 /obj/item/device/suit_cooling_unit/attackby(obj/item/I, mob/user, params)
-	if (isscrewdriver(I))
+	if (isscrewing(I))
 		if (cover_open)
 			cover_open = FALSE
 			to_chat(user, "<span class='info'>You screw the panel into place.</span>")

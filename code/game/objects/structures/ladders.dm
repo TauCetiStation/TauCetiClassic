@@ -78,3 +78,18 @@
 
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
+
+/obj/structure/ladder/attack_ghost(mob/dead/observer/user)
+	. = ..()
+	if(up && down)
+		switch(tgui_alert(usr, "Go up or down the ladder?", "Ladder", list("Up", "Down", "Cancel")) )
+			if("Up")
+				user.abstract_move(get_turf(up))
+			if("Down")
+				user.abstract_move(get_turf(down))
+			if("Cancel")
+				return
+	else if(up)
+		user.abstract_move(get_turf(up))
+	else if(down)
+		user.abstract_move(get_turf(down))

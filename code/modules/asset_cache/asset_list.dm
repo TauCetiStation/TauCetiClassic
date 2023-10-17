@@ -88,6 +88,7 @@ var/global/list/asset_datums = list()
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(sprite count, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", sprite index)
+	var/list/items_to_clear = list()
 
 /datum/asset/spritesheet/register()
 	if(!name)
@@ -102,6 +103,8 @@ var/global/list/asset_datums = list()
 	text2file(generate_css(), fname)
 	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
+	for(var/thing in items_to_clear)
+		qdel(thing)
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)

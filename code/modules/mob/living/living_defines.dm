@@ -30,7 +30,6 @@
 	var/now_pushing = null
 
 	var/mob/living/cameraFollow = null
-	var/list/datum/action/actions = list()
 
 	var/tod = null // Time of death
 	var/update_slimes = 1
@@ -71,3 +70,5 @@
 	var/beauty_dead = -100.0
 
 	var/list/spawner_args = null
+
+	COOLDOWN_DECLARE(wc_use_cooldown)

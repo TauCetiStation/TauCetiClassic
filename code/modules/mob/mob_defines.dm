@@ -16,7 +16,6 @@
 
 	var/atom/movable/screen/module_icon = null
 	var/atom/movable/screen/pullin = null
-	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
 	var/atom/movable/screen/complex/gun/gun_setting_icon = null
@@ -43,11 +42,14 @@
 	var/atom/movable/screen/pwr_display = null
 	var/atom/movable/screen/nightvisionicon = null
 
+	var/atom/movable/screen/holomap/holomap_obj
+
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
+	var/last_examined = ""
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -171,9 +173,6 @@
 
 	var/area/lastarea = null
 
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-	var/image/digitaldisguise = null  //what does the AI see instead of them?
-
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
@@ -227,3 +226,14 @@
 
 	// Reason of logout
 	var/logout_reason
+
+	/// List of action hud items the user has
+	var/list/datum/action/actions = list()
+
+	// Used for statistics of death
+	var/last_phrase
+
+	var/can_point = TRUE
+	var/show_examine_log = TRUE
+
+	var/neuter_gender_voice = MALE // for male/female emote sounds but with neuter gender

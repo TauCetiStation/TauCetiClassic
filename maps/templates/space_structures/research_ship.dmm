@@ -1,0 +1,968 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/structure/alien/weeds,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ac" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ad" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien{
+	desc = "It looks like a weird egg";
+	icon_state = "egg";
+	name = "egg"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ae" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"af" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/xenomorph,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ag" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light_construct/small,
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ap" = (
+/obj/structure/alien/weeds,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"aY" = (
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater1"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/space_structures/research_ship)
+"du" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ea" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"eq" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien{
+	desc = "It looks like a weird egg";
+	icon_state = "egg";
+	name = "egg"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"fs" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"gx" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 5;
+	layer = 2.9
+	},
+/obj/structure/alien/weeds,
+/obj/item/weapon/storage/bag/fossils,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "largecell apc left";
+	pixel_x = -28;
+	start_charge = 0
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"gY" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/corpse/scientist,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ie" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/research_ship)
+"ik" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/item/clothing/mask/facehugger{
+	icon_state = "facehugger_dead";
+	stat = 2
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"nL" = (
+/obj/structure/closet/crate/scicrate,
+/obj/item/weapon/fossil/bone,
+/obj/item/weapon/fossil/bone,
+/obj/item/weapon/fossil/plant,
+/obj/item/weapon/fossil/bone,
+/obj/structure/alien/weeds,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"nP" = (
+/obj/item/weapon/shard,
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"of" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ot" = (
+/obj/structure/alien/weeds,
+/obj/structure/closet/crate/freezer{
+	opened = 1
+	},
+/obj/random/foods/donuts,
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
+/obj/item/pizzabox/mushroom,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"pi" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/item/weapon/gun/energy/gun,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"qf" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/research_ship)
+"qn" = (
+/obj/structure/table/reinforced,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/light_construct/small{
+	dir = 8
+	},
+/obj/item/weapon/storage/fancy/donut_box/traitor,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"rS" = (
+/obj/structure/computerframe,
+/obj/structure/alien/weeds,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"sb" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"tt" = (
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"us" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/suit_storage_unit/science,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"uN" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
+"uR" = (
+/obj/structure/alien/weeds,
+/obj/structure/door_assembly/door_assembly_hatch,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"uV" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"vd" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/obj/structure/alien/weeds,
+/obj/machinery/alarm{
+	hidden_from_console = 1;
+	pixel_y = 22
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"wO" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/structure/alien{
+	desc = "It looks like a weird egg";
+	icon_state = "egg";
+	name = "egg"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"xE" = (
+/obj/machinery/door/poddoor,
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/research_ship)
+"xZ" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
+"ya" = (
+/obj/structure/alien/weeds,
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"zF" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/kinetic_accelerator{
+	pixel_x = 3
+	},
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/item/weapon/pickaxe/drill,
+/obj/item/clothing/head/helmet/space/rig/science,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/pickaxe,
+/obj/machinery/alarm{
+	hidden_from_console = 1;
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Af" = (
+/obj/structure/scrap_cube,
+/turf/environment/space,
+/area/space)
+"AC" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"BY" = (
+/obj/structure/alien/weeds,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"DK" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/research_ship)
+"Es" = (
+/obj/structure/alien/weeds,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Ex" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "alien_der_inner";
+	locked = 1;
+	name = "Research Ship External Access";
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/space_structures/research_ship)
+"EU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"EZ" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Fh" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Fu" = (
+/obj/machinery/r_n_d/destructive_analyzer,
+/obj/structure/alien/weeds/node,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"FD" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/research_ship)
+"FL" = (
+/obj/structure/alien/weeds,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"FT" = (
+/obj/effect/landmark/corpse/scientist,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Hd" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light_construct/small,
+/obj/machinery/suit_storage_unit/science,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Ig" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
+"Iz" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/obj/machinery/computer/reconstitutor/animal,
+/obj/structure/alien/weeds,
+/obj/machinery/alarm{
+	hidden_from_console = 1;
+	pixel_x = -28;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Ju" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/item/device/flashlight/seclite{
+	on = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Kb" = (
+/obj/item/weapon/ore/glass,
+/turf/environment/space,
+/area/space)
+"Lj" = (
+/obj/item/weapon/scrap_lump,
+/turf/environment/space,
+/area/space)
+"LF" = (
+/turf/environment/space,
+/area/space)
+"LJ" = (
+/obj/structure/computerframe{
+	dir = 4
+	},
+/obj/item/weapon/disk/research_points,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"NF" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/xenomorph/drone,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"OD" = (
+/obj/structure/alien/weeds,
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "alien_der_airlock";
+	name = "interior access button";
+	pixel_x = 28
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"OL" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "alien_der_airlock";
+	pixel_y = 28;
+	tag_airpump = "alien_der_pump";
+	tag_chamber_sensor = "alien_der_sensor";
+	tag_exterior_door = "alien_der_outer";
+	tag_interior_door = "alien_der_inner"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
+"ON" = (
+/obj/machinery/clonepod,
+/obj/structure/alien/weeds,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Qm" = (
+/obj/structure/computerframe,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Qr" = (
+/obj/structure/table/reinforced,
+/obj/structure/alien/weeds,
+/obj/item/pizzabox/meat,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Qw" = (
+/obj/structure/computerframe,
+/obj/structure/alien/weeds,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Sm" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/environment/space,
+/area/space_structures/research_ship)
+"SX" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor,
+/turf/simulated/floor/plating,
+/area/space_structures/research_ship)
+"TU" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
+"UR" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/light_construct/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"UV" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/xenomorph,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Wq" = (
+/obj/machinery/light_construct/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "alien_der";
+	name = "Research Ship Large Air Vent"
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "alien_der_sensor";
+	layer = 3.3;
+	pixel_x = -28
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
+"WM" = (
+/obj/item/weapon/ore/iron,
+/turf/environment/space,
+/area/space)
+"Xw" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "alien_der_outer";
+	locked = 1;
+	name = "Research Ship External Access";
+	dir = 4
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "alien_der_airlock";
+	name = "exterior access button";
+	pixel_y = 28
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/space_structures/research_ship)
+"Zm" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/research_ship)
+
+(1,1,1) = {"
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+"}
+(2,1,1) = {"
+LF
+LF
+Af
+LF
+LF
+LF
+LF
+Zm
+xZ
+xZ
+xZ
+xZ
+xZ
+ie
+LF
+LF
+"}
+(3,1,1) = {"
+LF
+LF
+Zm
+xZ
+xZ
+xZ
+xZ
+xZ
+xZ
+LJ
+Fu
+xZ
+aY
+Sm
+LF
+LF
+"}
+(4,1,1) = {"
+LF
+LF
+xZ
+xZ
+EU
+UR
+EZ
+SX
+Iz
+FT
+ad
+gx
+aY
+Sm
+LF
+LF
+"}
+(5,1,1) = {"
+LF
+Zm
+xZ
+xZ
+ap
+ON
+uV
+EU
+ik
+NF
+ae
+ag
+xZ
+xZ
+ie
+Kb
+"}
+(6,1,1) = {"
+LF
+xZ
+xZ
+xZ
+wO
+du
+nP
+xE
+ea
+BY
+nL
+xZ
+xZ
+aY
+Sm
+LF
+"}
+(7,1,1) = {"
+LF
+xZ
+xZ
+xZ
+xZ
+xZ
+xZ
+xZ
+xZ
+FL
+xZ
+xZ
+xZ
+aY
+Sm
+LF
+"}
+(8,1,1) = {"
+LF
+xZ
+xZ
+xZ
+Qr
+qn
+ot
+FD
+tt
+ab
+EZ
+zF
+xZ
+xZ
+xZ
+LF
+"}
+(9,1,1) = {"
+LF
+xZ
+xZ
+Qm
+pi
+af
+sb
+ya
+Es
+ac
+uR
+Hd
+xZ
+aY
+Sm
+LF
+"}
+(10,1,1) = {"
+Kb
+xZ
+xZ
+Qw
+of
+AC
+ea
+FD
+OD
+ab
+UV
+us
+xZ
+aY
+Sm
+LF
+"}
+(11,1,1) = {"
+LF
+qf
+xZ
+rS
+Ju
+eq
+gY
+xZ
+xZ
+Ex
+xZ
+xZ
+xZ
+xZ
+DK
+LF
+"}
+(12,1,1) = {"
+LF
+LF
+xZ
+xZ
+vd
+fs
+Fh
+xZ
+xZ
+OL
+Wq
+xZ
+aY
+Sm
+LF
+LF
+"}
+(13,1,1) = {"
+LF
+LF
+qf
+xZ
+xZ
+xZ
+xZ
+xZ
+xZ
+Ig
+uN
+TU
+aY
+Sm
+LF
+LF
+"}
+(14,1,1) = {"
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+qf
+xZ
+Xw
+xZ
+xZ
+xZ
+DK
+Lj
+LF
+"}
+(15,1,1) = {"
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+WM
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+LF
+"}

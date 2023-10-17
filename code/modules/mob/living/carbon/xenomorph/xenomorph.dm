@@ -24,6 +24,7 @@
 	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1
 	var/plasma_rate = 5
+	var/acid_type = /obj/effect/alien/acid
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -33,6 +34,8 @@
 	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 
 	var/list/alien_spells = list()
+
+	show_examine_log = FALSE
 
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
@@ -289,12 +292,6 @@ Hit Procs
 		canmove = FALSE
 	if(density)
 		density = initial(density)
-
-
-/mob/living/carbon/xenomorph/crawl()
-	SetCrawling(!crawling)
-	update_canmove()
-	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
 
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()

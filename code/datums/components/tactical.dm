@@ -10,8 +10,8 @@
 	src.override = override
 
 /datum/component/tactical/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/modify)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unmodify)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
 
 /datum/component/tactical/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))

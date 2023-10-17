@@ -33,7 +33,7 @@ var/global/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
-	explosion_resistance = 15
+	explosive_resistance = 2
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
@@ -126,7 +126,7 @@ var/global/list/airlock_overlays = list()
 				return
 		else if(user.hallucination > 50 && prob(10) && !operating)
 			to_chat(user, "<span class='warning'><B>You feel a powerful shock course through your body!</B></span>")
-			user.halloss += 10
+			user.adjustHalLoss(10)
 			user.AdjustStunned(10)
 			return
 	..(user)
@@ -349,6 +349,22 @@ var/global/list/airlock_overlays = list()
 				if(atom_integrity < (0.75 * max_integrity))
 					. += get_airlock_overlay("sparks_open", overlays_file, TRUE)
 
+	if(hasPower() && unres_sides)
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER)
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_y = 32
+				if (SOUTH)
+					floorlight.pixel_y = -32
+				if (EAST)
+					floorlight.pixel_x = 32
+				if (WEST)
+					floorlight.pixel_x = -32
+			. += floorlight
+
 	cut_overlays()
 	add_overlay(.)
 
@@ -357,7 +373,7 @@ var/global/list/airlock_overlays = list()
 	if(!(. = airlock_overlays[iconkey]))
 		var/mutable_appearance/MA
 		if(light_source)
-			MA = mutable_appearance(icon_file, icon_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+			MA = mutable_appearance(icon_file, icon_state, 1, LIGHTING_LAMPS_PLANE)
 		else
 			MA = mutable_appearance(icon_file, icon_state)
 		. = airlock_overlays[iconkey] = MA
@@ -548,7 +564,7 @@ var/global/list/airlock_overlays = list()
 		return FALSE
 	return TRUE
 
-/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0)
 	if (isElectrified())
 		if (isitem(mover))
 			var/obj/item/i = mover
@@ -609,17 +625,9 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	var/obj/item/weapon/airlock_electronics/ae
-	ae = new/obj/item/weapon/airlock_electronics(loc)
-	if(!req_access)
-		check_access()
-	if(req_access.len)
-		ae.conf_access = req_access
-	else if (req_one_access.len)
-		ae.conf_access = req_one_access
-		ae.one_access = 1
-	ae.loc = da
-	da.electronics = ae
+	electronics.loc = da
+	da.electronics = electronics
+	electronics = null
 
 	qdel(src)
 
@@ -884,21 +892,10 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
-		var/obj/item/weapon/changeling_hammer/W = C
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(W.use_charge(user) && prob(20))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			door_rupture(user)
-		return
-
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
 
-	if(iswelder(C) && !(operating > 0))
+	if(iswelding(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
@@ -914,25 +911,25 @@ var/global/list/airlock_overlays = list()
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	else if(isscrewdriver(C))
+	else if(isscrewing(C))
 		p_open = !p_open
 		update_icon()
-	else if(iswirecutter(C))
+	else if(iscutter(C) && p_open)
 		return attack_hand(user)
-	else if(ismultitool(C))
+	else if(ispulsing(C))
 		return attack_hand(user)
-	else if(issignaler(C))
+	else if(issignaling(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.afterattack(src, user)
-	else if(iscrowbar(C) || istype(C, /obj/item/weapon/fireaxe) )
+	else if(isprying(C))
 		var/beingcrowbarred = null
-		if(iscrowbar(C) )
+		if(isprying(C))
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
-		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
+		if(beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
@@ -977,9 +974,10 @@ var/global/list/airlock_overlays = list()
 	safe = FALSE
 
 	if(close())
-		safe = temp
 		if(bolt_after)
 			bolt()
+
+	safe = temp
 
 /obj/machinery/door/airlock/open_checks()
 	if(..() && !welded && !locked)
@@ -1044,7 +1042,7 @@ var/global/list/airlock_overlays = list()
 	if(autoclose)
 		if(close_timer_id)
 			deltimer(close_timer_id)
-		close_timer_id = addtimer(CALLBACK(src, .proc/do_autoclose), normalspeed ? 150 : 5, TIMER_STOPPABLE)
+		close_timer_id = addtimer(CALLBACK(src, PROC_REF(do_autoclose)), normalspeed ? 150 : 5, TIMER_STOPPABLE)
 
 /obj/machinery/door/airlock/proc/do_autoclose()
 	close_timer_id = null
@@ -1056,15 +1054,12 @@ var/global/list/airlock_overlays = list()
 	bolt()
 	return
 
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!istype(W))
 		to_chat(user, "If you see this, it means airlock/change_paintjob() was called with something other than an airlock painter. Check your code!")
 		return
 
-	if(!W.can_use(user))
+	if(!W.can_use(user, 1))
 		return
 
 	var/list/optionlist
@@ -1074,7 +1069,7 @@ var/global/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!Adjacent(usr) && loc != usr) || !W.use(10))
+	if(!W.use_tool(src, user, 50, 1))
 		return
 	switch(paintjob)
 		if("Public")
@@ -1171,8 +1166,12 @@ var/global/list/airlock_overlays = list()
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 	var/obj/item/weapon/airlock_electronics/ae
-	if(!electronics)
-		ae = new/obj/item/weapon/airlock_electronics(loc)
+	if(electronics)
+		ae = electronics
+		electronics = null
+		ae.loc = loc
+	else
+		ae = new /obj/item/weapon/airlock_electronics(loc)
 		if(!req_access)
 			check_access()
 		if(req_access.len)
@@ -1180,10 +1179,7 @@ var/global/list/airlock_overlays = list()
 		else if (req_one_access.len)
 			ae.conf_access = req_one_access
 			ae.one_access = 1
-	else
-		ae = electronics
-		electronics = null
-		ae.loc = loc
+
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
 		ae.broken = TRUE
@@ -1200,7 +1196,7 @@ var/global/list/airlock_overlays = list()
 
 
 /obj/structure/door_scrap/attackby(obj/item/O, mob/user)
-	if(iswrench(O))
+	if(iswrenching(O))
 		if(ticker >= 300)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)
@@ -1214,8 +1210,8 @@ var/global/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()
-	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = ABOVE_LIGHTING_LAYER)
-	fire_overlay.plane = ABOVE_LIGHTING_PLANE
+	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = 1)
+	fire_overlay.plane = LIGHTING_LAMPS_PLANE
 	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)
 
@@ -1236,3 +1232,47 @@ var/global/list/airlock_overlays = list()
 #undef AIRLOCK_DENY_LIGHT_COLOR
 #undef AIRLOCK_LIGHT_POWER
 #undef AIRLOCK_LIGHT_RANGE
+
+///Mapping helper. Just place it on the map on the airlock and select side, in the round this side will be unrestricted
+/obj/effect/unrestricted_side
+	name = "airlock unrestricted side helper"
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 16
+	pixel_x = 16
+
+/obj/effect/unrestricted_side/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/unrestricted_side/atom_init_late()
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	airlock.unres_sides ^= dir
+	airlock.update_icon()
+	qdel(src)
+
+//Also, you can set the value to 5 (3, 6, 7, etc), and have unrestricted access to both north and east sides, but who cares
+/obj/effect/unrestricted_side/north
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/east
+	icon_state = "unres_4"
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/effect/unrestricted_side/south
+	icon_state = "unres_2"
+	dir = SOUTH
+	pixel_y = -32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/west
+	icon_state = "unres_8"
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0

@@ -135,3 +135,19 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofukabob
+
+/datum/recipe/grill/kefeogeo
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/raw_bacon,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kefeogeo
+
+/datum/recipe/grill/fasqhtongue
+	reagents = list("enzyme" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/fasqhtongue

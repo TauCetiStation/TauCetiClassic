@@ -7,6 +7,8 @@
 	G.fields["sex"] = "Male"
 	G.fields["age"] = "Unknown"
 	G.fields["fingerprint"] = "Unknown"
+	G.fields["insurance_account_number"] = "Unknown"
+	G.fields["insurance_type"] = "Unknown"
 	G.fields["p_stat"] = "Active"
 	G.fields["m_stat"] = "Stable"
 	G.fields["species"] = HUMAN
@@ -16,6 +18,7 @@
 	G.fields["religion"]	= "Unknown"
 	G.fields["photo_f"] = new /icon()
 	G.fields["photo_s"] = new /icon()
+	PDA_Manifest.Cut()
 	data_core.general += G
 	return G
 
@@ -62,7 +65,7 @@
 		if(E.fields["name"] == target_name)
 			record_name = "[E.fields["name"]] ([E.fields["rank"]]) ID=[E.fields["id"]]"
 			possible_records[record_name] = E.fields["id"]
-	if(!possible_records)
+	if(!possible_records.len)
 		return null
 	if(possible_records.len > 1)
 		var/choice = input(user, "В базе данных найдено несколько человек с таким именем.", "Сделайте выбор", null) in possible_records

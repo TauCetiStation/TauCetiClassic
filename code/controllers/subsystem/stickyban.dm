@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(stickyban)
 	name = "PRISM"
 
 	init_order = SS_INIT_STICKY_BAN
-	flags = SS_NO_FIRE
+	flags = SS_NO_FIRE | SS_SHOW_IN_MC_TAB
 
 	msg_lobby = "Сверяем списки космопреступников..."
 

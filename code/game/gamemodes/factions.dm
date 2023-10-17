@@ -37,6 +37,9 @@
 	// Type for collector of statistics by this faction
 	var/datum/stat/faction/stat_type = /datum/stat/faction
 
+	// Whether the faction should be printed to the scoreboard even if it has 0 members.
+	var/always_print = FALSE
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()
@@ -100,6 +103,9 @@
 		return TRUE
 	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref) || jobban_isbanned(P, "Syndicate"))
 		return FALSE
+	return TRUE
+
+/datum/faction/proc/can_latespawn_mob(mob/P)
 	return TRUE
 
 // Basically, they are members of the new faction
@@ -393,3 +399,21 @@
 	for(var/datum/role/R in members)
 		if(R.antag == M)
 			return R
+
+/datum/faction/proc/get_member_by_ckey(ckey)
+	for(var/datum/role/R in members)
+		if(R.antag && ckey(R.antag.key) == ckey)
+			return R
+
+/datum/faction/proc/check_crew()
+	var/total_human = 0
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		var/turf/human_loc = get_turf(H)
+		if(!human_loc || !is_station_level(human_loc.z))
+			continue
+		if(H.stat == DEAD)
+			continue
+		if(!H.mind || !H.client)
+			continue
+		total_human++
+	return total_human

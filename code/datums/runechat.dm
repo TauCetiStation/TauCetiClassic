@@ -11,7 +11,7 @@
 /// Approximate height in pixels of an 'average' line, used for height decay
 #define RUNECHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define RUNECHAT_MESSAGE_WIDTH 96
+#define RUNECHAT_MESSAGE_WIDTH 100
 /// Max length of chat message in characters
 #define RUNECHAT_MESSAGE_MAX_LENGTH 110
 
@@ -69,7 +69,7 @@
 		var/additional_info = "owner: [owner] owner_type: [owner.type] owner_client: [owner.client] owner_loc: [owner.loc] owner_is_qdeleted: [QDELETED(owner)]"
 		qdel(src)
 		CRASH(crash_msg + additional_info)
-	INVOKE_ASYNC(src, .proc/generate_image, text, target, owner, language, extra_classes, lifespan)
+	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
 
 /datum/runechat/Destroy()
 	if (owned_by)
@@ -105,7 +105,7 @@
 		return
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_parent_qdel)
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Clip message
 	var/maxlen = RUNECHAT_MESSAGE_MAX_LENGTH
@@ -175,7 +175,7 @@
 				var/remaining_time = (sched_remaining) * (RUNECHAT_MESSAGE_EXP_DECAY ** idx++) * (RUNECHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 				if (remaining_time)
 					deltimer(m.fadertimer, SSrunechat)
-					m.fadertimer = addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_STOPPABLE, SSrunechat)
+					m.fadertimer = addtimer(CALLBACK(m, PROC_REF(end_of_life)), remaining_time, TIMER_STOPPABLE, SSrunechat)
 				else
 					m.end_of_life()
 
@@ -201,7 +201,7 @@
 
 	// Register with the runechat SS to handle EOL and destruction
 	var/duration = lifespan - RUNECHAT_MESSAGE_EOL_FADE
-	fadertimer = addtimer(CALLBACK(src, .proc/end_of_life), duration, TIMER_STOPPABLE, SSrunechat)
+	fadertimer = addtimer(CALLBACK(src, PROC_REF(end_of_life)), duration, TIMER_STOPPABLE, SSrunechat)
 
 /**
  * Applies final animations to overlay RUNECHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion
@@ -209,7 +209,7 @@
 /datum/runechat/proc/end_of_life(fadetime = RUNECHAT_MESSAGE_EOL_FADE)
 	isFading = TRUE
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), fadetime, TIMER_STOPPABLE, SSrunechat)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src), fadetime, TIMER_STOPPABLE, SSrunechat)
 
 /**
  * Creates a message overlay at a defined location for a given speaker
@@ -224,6 +224,12 @@
  */
 /mob/proc/show_runechat_message(atom/movable/speaker, datum/language/language, raw_message, list/spans, runechat_flags = 0, lifespan = RUNECHAT_MESSAGE_LIFESPAN)
 	if(!speaker || isobserver(speaker))
+		return
+
+	if(!client || !client.prefs.show_runechat)
+		return
+
+	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
 		return
 
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us

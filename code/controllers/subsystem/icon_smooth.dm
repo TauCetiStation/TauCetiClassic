@@ -5,13 +5,13 @@ SUBSYSTEM_DEF(icon_smooth)
 	init_order = SS_INIT_ICON_SMOOTH
 	wait = SS_WAIT_ICON_SMOOTH
 	priority = SS_PRIOTITY_ICON_SMOOTH
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 	msg_lobby = "Достраиваем станцию..."
 
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
 
-/datum/controller/subsystem/icon_smooth/fire()
+/datum/controller/subsystem/icon_smooth/fire(resumed = FALSE, init_fire = FALSE)
 	var/list/cached = smooth_queue
 	while(cached.len)
 		var/atom/A = cached[cached.len]
@@ -20,8 +20,11 @@ SUBSYSTEM_DEF(icon_smooth)
 			smooth_icon(A)
 		else
 			deferred += A
-		if (MC_TICK_CHECK)
-			return
+
+		if(init_fire)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
 
 	if (!cached.len)
 		if (deferred.len)
@@ -31,40 +34,27 @@ SUBSYSTEM_DEF(icon_smooth)
 			can_fire = FALSE
 
 /datum/controller/subsystem/icon_smooth/Initialize()
-	for(var/zlevel in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_CENTCOM, ZTRAIT_MINING, ZTRAIT_SPACE_RUINS)))
-		smooth_zlevel(zlevel, TRUE)
-	var/queue = smooth_queue
-	smooth_queue = list()
-	for(var/V in queue)
-		var/atom/A = V
-		if(!A)
-			continue
-		smooth_icon(A)
-		CHECK_TICK
-
+	fire(init_fire = TRUE)
 	return ..()
+
+/datum/controller/subsystem/icon_smooth/stat_entry()
+	..("B:[length(global.baked_smooth_icons)]")
 
 #ifdef MANUAL_ICON_SMOOTH
 /mob/verb/ChooseDMI(dmi as file)
-	var/dmifile = file(dmi)
 	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
-		SliceNDice(dmifile)
+		SliceNDice(icon(dmifile))
 	else
 		to_chat(world, "<span class='warning'>Bad DMI file '[dmifile]'</span>")
 
-/atom/proc/SliceNDice(dmifile as file)
+/atom/proc/SliceNDice(icon/sourceIcon as file)
 	var/font_size = 32
 #else
-/atom/proc/SliceNDice(dmifile)
+/atom/proc/SliceNDice(icon/sourceIcon, create_false_wall_animations = FALSE)
 #endif
-
 	var/STATE_COUNT_NORMAL = 4
 	var/STATE_COUNT_DIAGONAL = 7
 
-	if(!isfile(dmifile) || (copytext("[dmifile]",-4) != ".dmi"))
-		CRASH("Bad DMI file '[dmifile]'")
-
-	var/icon/sourceIcon = icon(dmifile)
 	var/list/SourceIconStates = sourceIcon.IconStates()
 	var/list/states = list("box", "line", "line_v", "line_h", "center_4", "center_8", "diag", "diag_corner_a", "diag_corner_b")
 	var/list/ExcludedMiscIconStates = SourceIconStates - states // any states that are not related to smooth states, will be added as is in the end
@@ -76,9 +66,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		STATE_COUNT_DIAGONAL = 8
 
 #ifdef MANUAL_ICON_SMOOTH
-	var/create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
-#else
-	var/create_false_wall_animations = findtext("[dmifile]", "has_false_walls") ? TRUE : FALSE
+	create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 #endif
 
 	for(var/state in states) // exclude states that doesn't exist
@@ -86,7 +74,7 @@ SUBSYSTEM_DEF(icon_smooth)
 			states -= state
 
 #ifdef MANUAL_ICON_SMOOTH
-	to_chat(world, "<B>[dmifile] - states: [states.len]</B>")
+	to_chat(world, "<B>dmi file states: [states.len]</B>")
 #endif
 
 	var/sourceIconWidth = sourceIcon.Width() // x
@@ -114,11 +102,11 @@ SUBSYSTEM_DEF(icon_smooth)
 
 	var/icon/outputIcon = new /icon()
 
-	var/filename_temp = "[copytext("[dmifile]", 1, -4)]-smooth_temp.dmi"
+	var/filename_temp = "cache/smooth_temp_[rand(1, 99999)].dmi"
 
 	for(var/state in states)
 		var/statename = lowertext(state)
-		outputIcon = icon(filename_temp) //open the icon again each iteration, to work around byond memory limits
+		outputIcon = icon(filename_temp) //open the icon again each iteration, to work around byond memory limits (what limits?)
 
 		switch(statename)
 			if("box")
@@ -475,7 +463,7 @@ SUBSYSTEM_DEF(icon_smooth)
 			master.Insert(icon(sourceIcon, state), state)
 
 #ifdef MANUAL_ICON_SMOOTH
-	world << ftp(master, "[copytext("[dmifile]", 1, -4)]-smooth.dmi")
+	world << ftp(master, "smooth_icon.dmi")
 #else
 	return master
 #endif

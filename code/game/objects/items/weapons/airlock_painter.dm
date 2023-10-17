@@ -1,4 +1,4 @@
-/obj/item/weapon/airlock_painter
+/obj/item/weapon/airlock_painter // todo: rename
 	name = "universal painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks, windows and pipes. Use it on an airlock during or after construction to change the paintjob, or on window or pipe."
 	icon_state = "paint sprayer"
@@ -12,6 +12,8 @@
 
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
+
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	var/static/list/modes // used to dye pipes, contains pipe colors.
 	var/obj/item/device/toner/ink

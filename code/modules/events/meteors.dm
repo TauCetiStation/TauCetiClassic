@@ -1,3 +1,4 @@
+#define MAP_EDGE_PAD 5
 
 // Meteors probability of spawning during a given wave
 // for normal meteor event
@@ -72,6 +73,12 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
+/proc/get_random_station_turf()
+	var/area/A = get_area_by_type(pick(global.the_station_areas))
+	var/list/turfs = get_area_turfs(A)
+	if(turfs.len)
+		return pick(turfs)
+
 /proc/spawn_meteors(number = 10, list/meteortypes = meteors_normal)
 	for(var/i in 1 to number)
 		spawn_meteor(meteortypes)
@@ -101,17 +108,17 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	var/startx
 	switch(startSide)
 		if(NORTH)
-			starty = world.maxy - (TRANSITIONEDGE + 1)
-			startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
+			starty = world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD)
+			startx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
-			startx = world.maxx - (TRANSITIONEDGE + 1)
+			starty = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD)
 		if(SOUTH)
-			starty = (TRANSITIONEDGE + 1)
-			startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
+			starty = TRANSITIONEDGE + MAP_EDGE_PAD
+			startx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
-			startx = (TRANSITIONEDGE + 1)
+			starty = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = TRANSITIONEDGE + MAP_EDGE_PAD
 	return locate(startx, starty, Z)
 
 /proc/spaceDebrisFinishLoc(startSide, Z)
@@ -119,17 +126,17 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	var/endx
 	switch(startSide)
 		if(NORTH)
-			endy = TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+			endy = TRANSITIONEDGE + MAP_EDGE_PAD
+			endx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
-			endx = TRANSITIONEDGE
+			endy = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			endx = TRANSITIONEDGE + MAP_EDGE_PAD
 		if(SOUTH)
-			endy = world.maxy - TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+			endy = world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD)
+			endx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
-			endx = world.maxx - TRANSITIONEDGE
+			endy = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			endx = world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD)
 	return locate(endx, endy, Z)
 
 ///////////////////////
@@ -264,7 +271,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(src.loc, 0, 1, 2, 3, adminlog = FALSE)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -276,4 +283,6 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(src.loc, 1, 2, 3, 4, adminlog = FALSE)
+
+#undef MAP_EDGE_PAD

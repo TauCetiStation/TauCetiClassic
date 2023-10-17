@@ -42,9 +42,9 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "al" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -53,13 +53,15 @@
 /area/space_structures/derelict/solar_control)
 "an" = (
 /obj/machinery/door/airlock/external{
-	name = "Air Bridge Access"
+	name = "Air Bridge Access";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
 "ao" = (
 /obj/machinery/door/airlock/external{
-	name = "External Engineering"
+	name = "External Engineering";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -156,20 +158,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/space_structures/derelict/solar_control)
-"az" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
 "aA" = (
 /obj/structure/cable{
@@ -219,7 +211,7 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aE" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -268,17 +260,6 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
-"aK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/space_structures/derelict/solar_control)
 "aL" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -293,18 +274,18 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aN" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aO" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aP" = (
@@ -322,7 +303,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Engineering"
+	name = "External Engineering";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -379,19 +361,6 @@
 "aW" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/solar/starboard)
-"aX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/derelict/solar_control)
 "aY" = (
 /turf/simulated/wall,
 /area/space_structures/derelict/bridge/access)
@@ -500,34 +469,21 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
 "bo" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/derelict/bridge/access)
-"bp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
@@ -570,7 +526,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
 "bx" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "by" = (
@@ -581,7 +539,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/singularity_engine)
 "bA" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bB" = (
@@ -594,7 +552,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bD" = (
@@ -620,9 +578,8 @@
 	name = "Engineering Access";
 	req_access = list(10)
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "bI" = (
 /obj/structure/sign/warning/securearea{
@@ -631,7 +588,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/singularity_engine)
 "bJ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -682,34 +639,22 @@
 "bR" = (
 /obj/item/weapon/grenade/empgrenade,
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "bS" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/space_structures/derelict/singularity_engine)
-"bT" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
-/area/space_structures/derelict/singularity_engine)
-"bU" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "bV" = (
 /obj/item/stack/cable_coil/cut/red,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "bW" = (
 /turf/simulated/floor/plating/airless,
@@ -734,51 +679,35 @@
 /area/space_structures/derelict/bridge)
 "cc" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cd" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/portable_atmospherics/canister/phoron,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "ce" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
-/area/space_structures/derelict/singularity_engine)
-"cf" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/structure/window/thin/reinforced,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "cg" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/weapon/table_parts/reinforced,
 /obj/item/weapon/table_parts/reinforced,
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
-/area/space_structures/derelict/singularity_engine)
-"ch" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "ci" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "cj" = (
 /obj/machinery/power/emitter{
@@ -797,17 +726,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "cm" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
+/obj/structure/window/fulltile/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "cn" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -818,32 +745,15 @@
 /area/space)
 "cp" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "cq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
-"cr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
-"cs" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
 /area/space_structures/derelict/singularity_engine)
 "cu" = (
 /obj/machinery/door/window/eastleft{
@@ -864,16 +774,15 @@
 "cx" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cy" = (
 /obj/item/stack/cable_coil/cut/red,
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "cz" = (
 /obj/structure/cable{
@@ -897,7 +806,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
 "cC" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -928,12 +837,11 @@
 	info = "<b>Objective #1</b>: Destroy the station with a nuclear device.";
 	name = "Objectives of a Nuclear Operative"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "cH" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -958,7 +866,7 @@
 "cL" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -967,16 +875,6 @@
 /obj/item/stack/rods,
 /turf/environment/space,
 /area/space)
-"cN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
 "cO" = (
 /obj/item/weapon/shard,
 /obj/structure/grille{
@@ -986,9 +884,8 @@
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	name = "Syndicate agent remains"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "cP" = (
 /obj/item/clothing/suit/space/syndicate,
@@ -1000,9 +897,8 @@
 /area/space_structures/derelict/singularity_engine)
 "cR" = (
 /obj/item/weapon/shard,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "cS" = (
 /obj/structure/grille,
@@ -1010,18 +906,8 @@
 /area/space_structures/derelict/singularity_engine)
 "cT" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
-"cU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -1032,11 +918,11 @@
 /area/space_structures/derelict/bridge)
 "cW" = (
 /obj/structure/table,
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cX" = (
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cY" = (
@@ -1054,12 +940,11 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "da" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "db" = (
 /obj/item/clothing/head/helmet/swat,
@@ -1072,16 +957,16 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "dd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "de" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -1108,24 +993,23 @@
 /area/space_structures/derelict/bridge)
 "di" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "dj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dk" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -1135,16 +1019,10 @@
 /area/space_structures/derelict/singularity_engine)
 "dl" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
-"dm" = (
-/obj/item/stack/cable_coil/cut/red,
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
 /area/space_structures/derelict/singularity_engine)
 "dn" = (
 /turf/simulated/floor/airless,
@@ -1195,7 +1073,7 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "dv" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -1247,35 +1125,13 @@
 	},
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/access)
-"dB" = (
-/obj/item/stack/cable_coil/cut/red,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/space_structures/derelict/singularity_engine)
-"dC" = (
-/obj/item/stack/cable_coil/cut/red,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/singularity_engine)
 "dD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/singularity_engine)
-"dE" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dF" = (
 /obj/item/stack/rods,
@@ -1288,9 +1144,8 @@
 /area/space_structures/derelict/bridge/access)
 "dI" = (
 /obj/structure/table,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dJ" = (
 /obj/item/weapon/shard{
@@ -1302,23 +1157,13 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dL" = (
 /obj/structure/grille,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/space_structures/derelict/singularity_engine)
-"dM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dN" = (
 /obj/machinery/door/airlock/maintenance{
@@ -1328,11 +1173,10 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/access)
 "dO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/bridge/access)
 "dP" = (
@@ -1344,12 +1188,11 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/access)
 "dQ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dR" = (
 /obj/item/weapon/screwdriver,
@@ -1357,9 +1200,8 @@
 /area/space_structures/derelict/singularity_engine)
 "dS" = (
 /obj/item/stack/rods,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dT" = (
 /obj/item/weapon/shard{
@@ -1373,9 +1215,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "dV" = (
 /turf/simulated/wall,
@@ -1386,23 +1227,20 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "dX" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "dY" = (
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "dZ" = (
 /obj/item/weapon/table_parts/reinforced,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "ea" = (
 /obj/item/weapon/ore/slag,
@@ -1413,7 +1251,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "ec" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -1429,48 +1267,19 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
-"ef" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/space_structures/derelict/hallway/primary)
 "eg" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
-"eh" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/singularity_engine)
 "ei" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
-"ej" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -1496,14 +1305,12 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "en" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "eo" = (
 /obj/machinery/light/small,
@@ -1511,48 +1318,23 @@
 /area/space_structures/derelict/hallway/primary)
 "ep" = (
 /obj/structure/grille,
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "eq" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/space)
 "er" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space)
-"es" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
 "et" = (
 /obj/machinery/door/window,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
-"eu" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
-/area/space)
-"ev" = (
-/obj/item/weapon/shard{
-	icon_state = "medium"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/singularity_engine)
 "ew" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -1563,9 +1345,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "ey" = (
 /turf/simulated/floor/plating/airless,
@@ -1578,11 +1359,6 @@
 /obj/structure/grille,
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
-"eB" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
-/area/space)
 "eC" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -1593,18 +1369,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "eD" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
-"eE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "eF" = (
@@ -1621,24 +1386,13 @@
 "eH" = (
 /turf/simulated/wall,
 /area/space_structures/derelict/arrival)
-"eI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/singularity_engine)
 "eJ" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "eK" = (
-/obj/structure/window/basic{
-	dir = 5
-	},
+/obj/structure/window/fulltile,
 /turf/environment/space,
 /area/space)
 "eL" = (
@@ -1675,29 +1429,21 @@
 /obj/structure/grille,
 /turf/environment/space,
 /area/space_structures/derelict/singularity_engine)
-"eT" = (
-/obj/item/weapon/shard,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/singularity_engine)
 "eU" = (
 /obj/structure/lattice,
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /turf/environment/space,
 /area/space)
 "eV" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched2"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/arrival)
 "eW" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/arrival)
 "eX" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/arrival)
 "eY" = (
 /turf/simulated/floor{
@@ -1722,16 +1468,15 @@
 /turf/simulated/wall,
 /area/space_structures/derelict/medical)
 "fc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/medical)
 "fd" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -1762,11 +1507,6 @@
 /obj/structure/grille,
 /turf/environment/space,
 /area/space)
-"fj" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
-/area/space_structures/derelict/hallway/primary)
 "fk" = (
 /obj/machinery/door/window{
 	dir = 8
@@ -1785,14 +1525,8 @@
 	},
 /area/space_structures/derelict/medical)
 "fn" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/medical)
-"fo" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/medical)
 "fp" = (
 /obj/machinery/light{
@@ -1802,19 +1536,18 @@
 /area/space_structures/derelict/medical)
 "fq" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/singularity_engine)
 "fs" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
 "ft" = (
 /obj/structure/lattice,
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /turf/environment/space,
@@ -1845,14 +1578,9 @@
 	icon_state = "white"
 	},
 /area/space_structures/derelict/medical)
-"fy" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
-/area/space)
 "fz" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -1877,11 +1605,6 @@
 /obj/item/weapon/disk/data/demo,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"fE" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
-/area/space)
 "fF" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -1889,7 +1612,7 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "fG" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -1914,7 +1637,7 @@
 /area/space_structures/derelict/medical/chapel)
 "fJ" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -1922,57 +1645,56 @@
 	},
 /area/space_structures/derelict/medical)
 "fK" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "fL" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/airless{
 	icon_state = "white"
 	},
 /area/space)
-"fM" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/space_structures/derelict/hallway/primary)
 "fN" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "fO" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area/space)
 "fP" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fQ" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fR" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fS" = (
@@ -1985,15 +1707,13 @@
 /area/space_structures/derelict/medical)
 "fT" = (
 /obj/item/stack/medical/bruise_pack,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/medical)
 "fU" = (
 /obj/item/stack/medical/ointment,
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/medical)
 "fV" = (
 /obj/machinery/light{
@@ -2002,7 +1722,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/medical)
 "fW" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2015,27 +1735,36 @@
 /area/space)
 "fY" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "fZ" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
 /turf/simulated/floor{
-	icon_state = "chapel"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "ga" = (
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -2051,7 +1780,8 @@
 "gd" = (
 /obj/machinery/door/airlock/glass{
 	name = "Med-Sci";
-	req_access = list(9)
+	req_access = list(9);
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/medical)
@@ -2060,39 +1790,48 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "gg" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/space)
 "gh" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/space)
 "gi" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor{
+/obj/structure/window/thin/reinforced,
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gj" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor{
+/obj/structure/window/thin/reinforced,
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gk" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor{
+/obj/structure/window/thin/reinforced,
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gl" = (
@@ -2155,7 +1894,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -2168,9 +1907,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/medical)
 "gt" = (
 /obj/structure/closet/wardrobe/genetics_white,
@@ -2179,10 +1917,10 @@
 	},
 /area/space_structures/derelict/medical)
 "gu" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2223,7 +1961,8 @@
 "gB" = (
 /obj/machinery/door/poddoor{
 	id = "derelict_gun";
-	name = "Derelict Mass Driver"
+	name = "Derelict Mass Driver";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/medical/chapel)
@@ -2307,17 +2046,17 @@
 	},
 /area/space_structures/derelict/medical)
 "gN" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "gO" = (
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /turf/environment/space,
 /area/space)
 "gP" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/environment/space,
@@ -2335,68 +2074,65 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "gS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/derelict/arrival)
-"gT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
 "gU" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "gV" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "gW" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gX" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gY" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gZ" = (
@@ -2447,9 +2183,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "hf" = (
 /obj/structure/cable{
@@ -2459,7 +2194,8 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access = list(7)
+	req_access = list(7);
+	dir = 4
 	},
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
@@ -2480,10 +2216,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hi" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 8
 	},
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /turf/environment/space,
 /area/space)
 "hj" = (
@@ -2493,7 +2229,8 @@
 /area/space)
 "hk" = (
 /obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
@@ -2520,7 +2257,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "ho" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -2549,7 +2286,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "hr" = (
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2595,9 +2332,12 @@
 /area/space_structures/derelict/arrival)
 "hw" = (
 /obj/machinery/light/small,
-/turf/simulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "chapel"
+	icon_state = "mosaic_1"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "hx" = (
@@ -2635,26 +2375,24 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "hB" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "hC" = (
-/obj/structure/window/basic{
-	dir = 5
-	},
+/obj/structure/window/fulltile,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hD" = (
 /obj/structure/grille,
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "hE" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2678,8 +2416,11 @@
 	name = "ProComp IIe";
 	pixel_y = 7
 	},
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
 /turf/simulated/floor{
-	icon_state = "chapel"
+	icon_state = "vaultfull"
 	},
 /area/space_structures/derelict/medical/chapel)
 "hI" = (
@@ -2771,14 +2512,14 @@
 /area/space_structures/derelict/hallway/primary)
 "hT" = (
 /obj/structure/lattice,
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/environment/space,
 /area/space)
 "hU" = (
 /obj/structure/girder,
-/obj/structure/window/basic,
+/obj/structure/window/thin,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/arrival)
 "hV" = (
@@ -2786,32 +2527,9 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "hW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/hallway/primary)
-"hX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/hallway/primary)
-"hY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
@@ -2827,7 +2545,7 @@
 /turf/environment/space,
 /area/space)
 "ib" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -2864,7 +2582,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "ii" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless,
@@ -2902,7 +2620,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "ip" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/environment/space,
@@ -2915,32 +2633,23 @@
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
-"is" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorscorched1"
-	},
-/area/space_structures/derelict/hallway/primary)
 "it" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/airless,
 /area/space)
 "iu" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/airless,
 /area/space)
 "iv" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -2955,51 +2664,17 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "iy" = (
-/turf/simulated/floor/airless{
-	icon_state = "floorgrime"
-	},
-/area/space_structures/derelict/hallway/primary)
-"iz" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "iA" = (
 /obj/structure/table,
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
-"iB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "iC" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/simulated/floor,
-/area/space_structures/derelict/arrival)
-"iD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"iE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
 "iF" = (
 /obj/machinery/door/airlock/external{
@@ -3026,7 +2701,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/hallway/secondary)
 "iK" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -3056,7 +2731,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/hallway/secondary)
 "iO" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -3071,13 +2746,6 @@
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
 	icon_state = "medium"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"iQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -3110,12 +2778,9 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "iV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
@@ -3166,19 +2831,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
-"jd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/hallway/secondary)
 "je" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
@@ -3189,50 +2841,58 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jg" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict9"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_9"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jh" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "derelict10"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_10"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "ji" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict11"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_11"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jj" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict12"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_12"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jk" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict13"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_13"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jl" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict14"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_14"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jm" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict15"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_15"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jn" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "derelict16"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_16"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jo" = (
 /obj/structure/cable{
@@ -3259,44 +2919,52 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jr" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict1"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_1"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "js" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict2"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_2"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jt" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict3"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_3"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "ju" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict4"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_4"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jv" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict5"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_5"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jw" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict6"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_6"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jx" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict7"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_7"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jy" = (
-/turf/simulated/floor/airless{
-	icon_state = "derelict8"
+/obj/effect/decal/turf_decal{
+	icon_state = "derelict_8"
 	},
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jz" = (
 /obj/structure/lattice,
@@ -3304,26 +2972,7 @@
 /area/space_structures/derelict/hallway/secondary)
 "jA" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/hallway/secondary)
-"jB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/space_structures/derelict/hallway/secondary)
-"jC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jD" = (
@@ -3343,7 +2992,8 @@
 /area/space_structures/derelict/bridge/ai_upload)
 "jF" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
@@ -3352,13 +3002,13 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jH" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jI" = (
-/obj/structure/window/basic{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -3378,7 +3028,7 @@
 /area/space_structures/derelict/hallway/secondary)
 "jL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -3417,10 +3067,9 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
 "jP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/bridge/ai_upload)
@@ -3442,9 +3091,8 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
 "jT" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
 "jU" = (
 /turf/simulated/floor/airless,
@@ -3493,9 +3141,8 @@
 	info = "The Syndicate have cunningly disguised a Syndicate Uplink as your PDA. Simply enter the code \"678 Bravo\" into the ringtone select to unlock its hidden features. <br><br><b>Objective #1</b>. Kill the God damn AI in a fire blast that it rocks the station. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>";
 	name = "Mission Objectives"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
 "ka" = (
 /obj/machinery/light/small{
@@ -3697,6 +3344,39 @@
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
+"kV" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access = list(10);
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/singularity_engine)
+"GB" = (
+/obj/machinery/door/airlock/medical{
+	name = "Morgue";
+	req_access = list(6);
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"Mo" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access = list(10);
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"MW" = (
+/obj/structure/sign/poster/sivtsev{
+	pixel_x = -32
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
 
 (1,1,1) = {"
 aa
@@ -5499,9 +5179,9 @@ eQ
 eQ
 eQ
 eQ
-fv
+GB
 eQ
-fv
+GB
 eQ
 gm
 eQ
@@ -5926,7 +5606,7 @@ dV
 dV
 dV
 dY
-is
+en
 ey
 aa
 ab
@@ -6028,7 +5708,7 @@ dV
 hV
 id
 dV
-is
+en
 iy
 ey
 ey
@@ -6133,7 +5813,7 @@ dY
 dV
 ey
 dY
-is
+en
 ey
 ab
 ab
@@ -6218,7 +5898,7 @@ ab
 aa
 aa
 fe
-fo
+fn
 fn
 fn
 fl
@@ -6234,8 +5914,8 @@ hN
 dY
 id
 dV
-is
-iz
+en
+dX
 dY
 ey
 ey
@@ -6310,11 +5990,11 @@ ab
 ab
 bz
 bz
-cs
 bS
-bU
-cs
-cs
+bS
+bS
+bS
+bS
 bz
 bz
 ab
@@ -6322,8 +6002,8 @@ aa
 eR
 ff
 ff
-fo
-fo
+fn
+fn
 fn
 fT
 gc
@@ -6413,11 +6093,11 @@ bz
 bz
 bz
 bz
-dB
+cy
 dv
 dQ
 dQ
-eh
+dQ
 bz
 bz
 bz
@@ -6427,7 +6107,7 @@ fg
 ff
 ff
 ff
-fo
+fn
 fn
 fl
 go
@@ -6440,7 +6120,7 @@ dY
 hW
 if
 dY
-dY
+MW
 hx
 dY
 dY
@@ -6516,8 +6196,8 @@ bz
 bz
 bz
 bz
-dC
-cU
+cy
+cq
 dl
 dl
 cq
@@ -6614,19 +6294,19 @@ bz
 cd
 cp
 bW
-cs
 bS
-cs
-cs
-cs
-cs
-cs
-bT
-cs
 bS
-cs
 bS
-bU
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
 bW
 bW
 fh
@@ -6634,7 +6314,7 @@ ab
 ff
 ff
 ff
-fo
+fn
 fn
 gs
 gL
@@ -6652,8 +6332,8 @@ id
 im
 dY
 dV
-fj
-ef
+dX
+dX
 ey
 ey
 ey
@@ -6663,7 +6343,7 @@ ey
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -6716,20 +6396,20 @@ bz
 bz
 ce
 cp
-cs
-bT
-bU
 bS
-cs
-cs
-cs
-bT
-bT
-bU
-bT
-cs
-ev
-bT
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+bS
+dK
+bS
 bX
 eS
 ab
@@ -6738,15 +6418,15 @@ ff
 ff
 ff
 ff
-fo
-fo
+fn
+fn
 fl
 hb
 dY
 dY
 dY
 hd
-hX
+hW
 dY
 im
 id
@@ -6766,7 +6446,7 @@ ey
 iH
 jf
 iY
-jB
+iV
 ap
 aa
 aa
@@ -6817,17 +6497,17 @@ bt
 bz
 bz
 bS
-cf
+ce
 cp
-cs
-bU
 bS
-cN
+bS
+bS
+cq
 di
 di
 dD
-cs
-bT
+bS
+bS
 cQ
 ei
 di
@@ -6842,7 +6522,7 @@ aa
 aa
 ff
 ff
-fo
+fn
 fb
 dV
 dY
@@ -6863,13 +6543,13 @@ dY
 ey
 dY
 dV
-ef
+dX
 ey
-ef
+dX
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -6919,18 +6599,18 @@ aa
 ab
 bz
 bz
-bT
+bS
 cg
 cp
-cs
 bS
-cN
+bS
+cq
 da
 dj
 da
-dE
+da
 bW
-bU
+bS
 ea
 ec
 bW
@@ -6945,14 +6625,14 @@ ab
 aa
 fV
 ff
-fo
+fn
 fb
 dV
 dY
 gz
 dY
 hd
-hY
+hW
 dY
 dY
 dY
@@ -6961,10 +6641,10 @@ dY
 dY
 dY
 dV
-iz
+dX
 dY
 dY
-ef
+dX
 dV
 dY
 dX
@@ -7022,15 +6702,15 @@ aa
 ab
 bz
 bE
-bU
-cf
+bS
+ce
 cq
-cs
+bS
 cG
 cO
 db
-bT
-bT
+bS
+bS
 bW
 bW
 bW
@@ -7041,7 +6721,7 @@ bS
 bW
 ew
 bW
-cs
+bS
 bz
 bz
 ab
@@ -7075,7 +6755,7 @@ dV
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -7128,7 +6808,7 @@ bz
 bV
 bS
 bW
-bT
+bS
 bS
 cP
 dc
@@ -7140,11 +6820,11 @@ du
 du
 du
 bS
-bU
+bS
 bS
 cS
-eT
-cs
+cR
+bS
 bz
 bz
 bz
@@ -7178,7 +6858,7 @@ aa
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -7229,10 +6909,10 @@ ac
 ac
 bF
 bS
-ch
-cr
+ce
+cq
 bS
-bU
+bS
 cQ
 bW
 bW
@@ -7246,9 +6926,9 @@ du
 bW
 eD
 dl
-cs
 bS
-cs
+bS
+bS
 bz
 bz
 bz
@@ -7281,7 +6961,7 @@ aa
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -7331,8 +7011,8 @@ ac
 ac
 bs
 bz
-bH
-bG
+kV
+Mo
 bz
 cy
 bS
@@ -7348,16 +7028,16 @@ aa
 du
 bW
 bS
-cs
 bS
-bT
+bS
+bS
 fq
 bz
 fC
 bz
 fb
 ac
-eB
+er
 gM
 dV
 dY
@@ -7384,7 +7064,7 @@ aq
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -7437,7 +7117,7 @@ bG
 bW
 bW
 bX
-cs
+bS
 bW
 cR
 bW
@@ -7450,11 +7130,11 @@ aa
 aa
 du
 bW
-bT
-cs
 bS
-bT
-bU
+bS
+bS
+bS
+bS
 bW
 bW
 bz
@@ -7487,7 +7167,7 @@ ab
 iH
 jg
 jr
-jB
+iV
 ap
 aa
 aa
@@ -7552,11 +7232,11 @@ aa
 aa
 aa
 du
-bT
-bU
-cs
+bS
+bS
+bS
 dS
-bT
+bS
 bS
 bz
 bW
@@ -7564,7 +7244,7 @@ bz
 fW
 ac
 ac
-eB
+er
 dV
 dY
 dY
@@ -7643,8 +7323,8 @@ bI
 bX
 bX
 bz
-cs
-cs
+bS
+bS
 bW
 bW
 bW
@@ -7656,11 +7336,11 @@ aa
 aa
 du
 bS
-cf
-eI
-cs
+ce
+cq
 bS
-cs
+bS
+bS
 bz
 bz
 bz
@@ -7693,7 +7373,7 @@ ab
 iH
 ji
 jt
-jB
+iV
 ap
 aa
 aa
@@ -7746,7 +7426,7 @@ bz
 bW
 ci
 bW
-cs
+bS
 bS
 cS
 dd
@@ -7759,10 +7439,10 @@ du
 du
 bW
 bW
-ch
+ce
 cp
-cs
-cs
+bS
+bS
 bz
 bz
 bz
@@ -7796,7 +7476,7 @@ ab
 jb
 jj
 ju
-jB
+iV
 ap
 aa
 aa
@@ -7848,7 +7528,7 @@ bz
 bz
 bS
 bS
-cs
+bS
 bS
 bS
 cT
@@ -7862,10 +7542,10 @@ bW
 bW
 bW
 bW
-cf
+ce
 cp
 bS
-cs
+bS
 bz
 bz
 ab
@@ -7899,7 +7579,7 @@ aa
 iH
 jk
 jv
-jB
+iV
 ap
 aa
 aa
@@ -7949,12 +7629,12 @@ aa
 ab
 bz
 bz
-bU
 bS
-bU
-bT
 bS
-cU
+bS
+bS
+bS
+cq
 de
 dk
 dv
@@ -7967,7 +7647,7 @@ bW
 ex
 eD
 cq
-bT
+bS
 bS
 bz
 bz
@@ -8002,7 +7682,7 @@ aa
 iH
 jl
 jw
-jB
+iV
 ap
 aa
 aa
@@ -8054,24 +7734,24 @@ bz
 bz
 bS
 bS
-cs
-bT
 bS
-cs
-cU
+bS
+bS
+bS
+cq
 dl
 dl
 cq
 bW
 bW
 eb
-ej
-es
-es
-eE
+cq
+cq
+cq
+cq
 bS
-bU
-bT
+bS
+bS
 bz
 bz
 ab
@@ -8105,7 +7785,7 @@ aa
 iH
 jm
 jx
-jB
+iV
 ap
 aa
 aa
@@ -8157,23 +7837,23 @@ ab
 bz
 bz
 cj
-cs
-cs
-bU
-bT
 bS
-cs
-bW
-bW
-cs
-cs
-bW
-cs
-bT
-bU
-bT
 bS
-cs
+bS
+bS
+bS
+bS
+bW
+bW
+bS
+bS
+bW
+bS
+bS
+bS
+bS
+bS
+bS
 bz
 bz
 ab
@@ -8261,22 +7941,22 @@ bz
 bz
 ck
 bW
-cs
 bS
-bU
-bT
-dm
-cs
-cs
+bS
+bS
+bS
+cy
+bS
+bS
 dK
 dS
-cs
-cs
-bT
-cs
-bT
-cs
-cs
+bS
+bS
+bS
+bS
+bS
+bS
+bS
 bz
 bz
 aa
@@ -8285,7 +7965,7 @@ fK
 aa
 aa
 gw
-eB
+er
 er
 dV
 dY
@@ -8311,7 +7991,7 @@ ab
 iH
 iY
 iY
-jB
+iV
 co
 aa
 aa
@@ -8414,7 +8094,7 @@ ab
 iH
 iY
 iY
-jB
+iV
 co
 aa
 aa
@@ -8473,11 +8153,11 @@ ae
 ae
 ae
 bz
-cs
-dM
-dM
+bS
+da
+da
 ec
-dE
+da
 bz
 bz
 bz
@@ -8517,7 +8197,7 @@ aa
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -8579,8 +8259,8 @@ bz
 bW
 bS
 bS
-bU
-cs
+bS
+bS
 bz
 bz
 aa
@@ -8589,7 +8269,7 @@ aa
 aa
 ey
 ey
-ef
+dX
 dX
 dV
 dY
@@ -8620,7 +8300,7 @@ aa
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -8680,7 +8360,7 @@ ab
 ab
 bz
 bz
-cs
+bS
 dU
 dZ
 bz
@@ -8693,8 +8373,8 @@ ee
 ee
 dW
 dW
-fM
-fM
+dW
+dW
 gy
 gy
 gy
@@ -8723,7 +8403,7 @@ aa
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 aa
@@ -8792,8 +8472,8 @@ ab
 ek
 eF
 ey
-ef
-ef
+dX
+dX
 dX
 dX
 dX
@@ -8893,8 +8573,8 @@ ek
 ee
 ee
 eF
-ef
-ef
+dX
+dX
 dX
 dX
 dX
@@ -8929,14 +8609,14 @@ aa
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 ac
 ab
 ac
 ac
-eB
+er
 ad
 aa
 aa
@@ -9032,13 +8712,13 @@ ac
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 ac
 ac
 ac
-eB
+er
 kc
 ad
 jD
@@ -9119,8 +8799,8 @@ ad
 ae
 ae
 iv
-iB
-iD
+iv
+iv
 ad
 iM
 ac
@@ -9135,7 +8815,7 @@ ad
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 jD
@@ -9197,7 +8877,7 @@ dx
 dn
 dN
 dX
-ef
+dX
 en
 dV
 ey
@@ -9238,7 +8918,7 @@ ad
 iH
 iY
 iY
-jB
+iV
 ap
 aa
 jM
@@ -9617,12 +9297,12 @@ dY
 dY
 dV
 en
-fj
+dX
 ed
-eB
+er
 eq
 eq
-fE
+er
 ed
 dY
 hd
@@ -9723,8 +9403,8 @@ en
 en
 ed
 eq
-fE
-fy
+er
+er
 eq
 ed
 ed
@@ -9822,10 +9502,10 @@ eA
 dV
 dV
 dV
-fj
+dX
 ey
 ed
-eB
+er
 eq
 aa
 aa
@@ -9928,7 +9608,7 @@ dV
 en
 fs
 ed
-fE
+er
 eq
 aa
 aa
@@ -10059,10 +9739,10 @@ aa
 aa
 aa
 aa
-jd
 iV
 iV
-jC
+iV
+iV
 jF
 iJ
 iJ
@@ -10210,7 +9890,7 @@ aY
 bd
 bg
 bb
-bp
+bn
 bb
 bb
 bA
@@ -10648,7 +10328,7 @@ eH
 eV
 eW
 eG
-fy
+er
 aa
 aa
 aa
@@ -10854,8 +10534,8 @@ eH
 eW
 eX
 eG
-fy
-fy
+er
+er
 aa
 aa
 aa
@@ -10959,7 +10639,7 @@ eX
 eG
 ac
 ab
-fE
+er
 aa
 aa
 ab
@@ -11061,9 +10741,9 @@ eX
 eW
 eG
 bs
-fE
+er
 ab
-eB
+er
 eG
 ac
 aa
@@ -11231,11 +10911,11 @@ ai
 ao
 ai
 ai
-az
-az
-aK
+al
+al
+al
 aQ
-aX
+al
 aY
 aY
 aY
@@ -11283,7 +10963,7 @@ il
 iq
 iq
 iq
-iE
+gS
 iK
 iP
 iT
@@ -11465,7 +11145,7 @@ ac
 ac
 ac
 ac
-eu
+eq
 er
 eG
 eN
@@ -11489,9 +11169,9 @@ eN
 eN
 eN
 eN
-iE
+gS
 gN
-iQ
+iv
 aa
 aa
 aa
@@ -11569,7 +11249,7 @@ ac
 ad
 eq
 ad
-eB
+er
 eG
 eO
 eN
@@ -12199,9 +11879,9 @@ aa
 aa
 aa
 aa
-gT
+gS
 hk
-gT
+gS
 aa
 aa
 aa

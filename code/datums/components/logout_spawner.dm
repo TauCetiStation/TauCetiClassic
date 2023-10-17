@@ -12,8 +12,8 @@
 	wait_logout = logout_timeout
 	wait_ghost = ghost_timeout
 
-	RegisterSignal(parent, list(COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/del_timer)
-	RegisterSignal(parent, COMSIG_LOGOUT, .proc/logout)
+	RegisterSignal(parent, list(COMSIG_LOGIN, COMSIG_MOB_DIED), PROC_REF(del_timer))
+	RegisterSignal(parent, COMSIG_LOGOUT, PROC_REF(logout))
 
 /datum/component/logout_spawner/proc/del_timer()
 	SIGNAL_HANDLER
@@ -41,7 +41,7 @@
 			wait = wait_ghost
 
 	if(wait > 0)
-		timer_id = addtimer(CALLBACK(src, .proc/setup_spawner), wait, TIMER_STOPPABLE)
+		timer_id = addtimer(CALLBACK(src, PROC_REF(setup_spawner)), wait, TIMER_STOPPABLE)
 	else if(wait == 0)
 		setup_spawner()
 

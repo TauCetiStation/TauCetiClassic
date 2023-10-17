@@ -15,7 +15,7 @@
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag)
 	siemens_coefficient = 3.0
 
 	var/lasertag_color = "none"
@@ -25,7 +25,7 @@
 	desc = "Blue Pride, Station Wide."
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/clothing/suit/lasertag/redtag
@@ -33,7 +33,7 @@
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag)
 	lasertag_color = "red"
 
 /*
@@ -490,7 +490,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	name = "field jacket desert"
@@ -600,7 +600,7 @@
 	else
 		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/hooded/carp_costume
 	name = "carp costume"
@@ -631,23 +631,19 @@
 	name = "Student Jacket"
 	desc = "A Student's jacket from the eighties."
 	icon_state = "student_jacket"
-	action_button_name = "To Fasten"
+	item_action_types = list(/datum/action/item_action/hands_free/to_fasten)
 	var/fastened = TRUE
+/datum/action/item_action/hands_free/to_fasten
+	name = "To Fasten"
 
-/obj/item/clothing/suit/student_jacket/ui_action_click()
-	if(fastened)
-		icon_state = "student_jacket_open"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
+/datum/action/item_action/hands_free/to_fasten/Activate()
+	var/obj/item/clothing/suit/student_jacket/S = target
+	if(S.fastened)
+		S.icon_state = "student_jacket_open"
 	else
-		icon_state = "student_jacket"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
-	fastened = !fastened
+		S.icon_state = "student_jacket"
+	S.update_inv_mob()
+	S.fastened = !S.fastened
 
 /obj/item/clothing/suit/atlas_jacket
 	name = "atlas jacket"
@@ -707,3 +703,13 @@
 	icon_state = "kung_jacket"
 	item_state = "kung_jacket"
 	w_class = SIZE_SMALL
+
+/obj/item/clothing/suit/storage/comissar
+	name = "comissar's coat"
+	desc = "Red and black will never go out of fashion."
+	icon_state = "comissar"
+	item_state = "comissar"
+	blood_overlay_type = "coat"
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	body_parts_covered = UPPER_TORSO|ARMS
+	armor = list(melee = 50, bullet = 40, laser = 40, energy = 30, bomb = 0, bio = 0, rad = 0)

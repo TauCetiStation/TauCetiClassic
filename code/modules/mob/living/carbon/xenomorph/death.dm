@@ -39,29 +39,16 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/xenomorph/gib()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = TRUE
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("gibbed-a", animation)
+/mob/living/carbon/xenomorph/spawn_gibs()
 	xgibs(loc)
-	dead_mob_list -= src
 
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+/mob/living/carbon/xenomorph/gib()
+	var/atom/movable/overlay/animation = new(loc)
+	flick(icon('icons/mob/mob.dmi', "gibbed-a"), animation)
+	..()
+	QDEL_IN(animation, 2 SECONDS)
 
 /mob/living/carbon/xenomorph/dust()
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/xeno/burned(loc)
-	dead_mob_list -= src
+	dust_process()

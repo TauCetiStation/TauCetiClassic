@@ -128,7 +128,7 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	centcomm_cancast = 0 //prevent people from getting to centcomm
+	centcomm_cancast = FALSE //prevent people from getting to centcomm
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Телепорт"
@@ -250,10 +250,10 @@
 	invocation_type = "shout"
 	range = 3
 	summon_type = list(
-		/obj/structure/trap/stun,
-		/obj/structure/trap/fire,
-		/obj/structure/trap/chill,
-		/obj/structure/trap/damage,
+		/obj/structure/trap/wizard/stun,
+		/obj/structure/trap/wizard/fire,
+		/obj/structure/trap/wizard/chill,
+		/obj/structure/trap/wizard/damage,
 					)
 	summon_lifespan = 3000
 	summon_amt = 5
@@ -282,7 +282,7 @@
 	proj_step_delay = 1
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
-	explosion(T, -1, 1, 2, 3)
+	explosion(T, 0, 0, 1, adminlog = FALSE)
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/fireball
@@ -317,7 +317,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
 
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
@@ -333,10 +333,26 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
 
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/door
+	name = "Возвести Ворота"
+	desc = "Это заклинание создает Врата."
+
+	action_icon_state = "cult_door"
+	action_background_icon_state = "bg_cult"
+
+	school = "conjuration"
+	charge_max = 400
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+	summon_type = list(/obj/structure/mineral_door/cult)
+	centcomm_cancast = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Создание камня души"
@@ -400,7 +416,10 @@
 		if(isobserver(M))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
 		if(user.my_religion.is_member(M))
-			to_chat(M, text)
+			if(iseminence(M))
+				to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
+			else
+				to_chat(M, text)
 
 	playsound(user, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER, extrarange = -6) // radius 3
 

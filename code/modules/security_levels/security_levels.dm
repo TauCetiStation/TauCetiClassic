@@ -67,7 +67,7 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
 				if(!delta_timer_id)
 					delta_alarm()
-		SSnightshift.check_nightshift() // Night shift mode turns off if security level is raised to red or above
+		SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 		code_announce.play()
 	else
 		return
@@ -76,7 +76,7 @@ var/global/list/loud_alarm_areas = typecacheof(typesof(/area/station))
 var/global/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenance) + typesof(/area/station/storage))
 
 /proc/delta_alarm()
-    delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/delta_alarm, FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+    delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delta_alarm), FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
     for(var/mob/M in player_list)
         if (is_station_level(M.z))
             var/area/A = get_area(M)

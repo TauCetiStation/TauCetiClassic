@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 	wait = SS_WAIT_DEMO
 	priority = SS_PRIORITY_DEMO
 	init_order = SS_INIT_DEMO
@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(demo)
 	var/last_completed = 0
 
 /datum/controller/subsystem/demo/proc/write_time()
-	if(!config.record_replays)
+	if(!can_fire)
 		return
 	var/new_time = world.time
 	if(last_written_time != new_time)
@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(demo)
 	last_written_time = new_time
 
 /datum/controller/subsystem/demo/proc/write_event_line(line)
-	if(!config.record_replays)
+	if(!can_fire)
 		return
 	write_time()
 	if(initialized)
@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(demo)
 		pre_init_lines += line
 
 /datum/controller/subsystem/demo/proc/write_chat(target, text)
-	if(!config.record_replays)
+	if(!can_fire)
 		return
 	var/target_text = ""
 	if(target == clients)
@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(demo)
 
 /datum/controller/subsystem/demo/Initialize()
 	if(!config.record_replays)
-		can_fire = FALSE
+		stop_demo() // todo: lagswith should have higher priority to be able to stop demo initialization
 		return ..()
 	demo_file = file("[global.log_directory]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
@@ -413,11 +413,15 @@ SUBSYSTEM_DEF(demo)
 	..(msg)
 
 /datum/controller/subsystem/demo/proc/mark_turf(turf/T)
+	if(!can_fire)
+		return
 	if(!isturf(T) || T.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	marked_turfs[T] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
+	if(!can_fire)
+		return
 	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
@@ -428,6 +432,8 @@ SUBSYSTEM_DEF(demo)
 
 // I can't wait for when TG ports this and they make this a #define macro.
 /datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
+	if(!can_fire)
+		return
 	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
@@ -436,6 +442,8 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty[M] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+	if(!can_fire)
+		return
 	if(!isobj(M) && !ismob(M))
 		return
 	if(marked_new[M])
@@ -444,3 +452,14 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty -= M
 	if(initialized)
 		del_list["\ref[M]"] = 1
+
+/datum/controller/subsystem/demo/proc/stop_demo(source)
+	if(source)
+		var/blame_note = "<span class='warning big'>!!Demo recording interrupted by [source]!!</span>"
+		write_event_line("chat world [json_encode(blame_note)]")
+	flags |= SS_NO_FIRE
+	can_fire = FALSE
+	marked_dirty.Cut()
+	marked_new.Cut()
+	marked_turfs.Cut()
+	del_list.Cut()

@@ -14,7 +14,7 @@
 	var/list/req_access = list(access_robotics) //Access needed to pop out the brain.
 
 	name = "Spider-bot"
-	desc = "A skittering robotic friend!"
+	desc = "Ползучий друг-робот!"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
@@ -39,7 +39,7 @@
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
 	w_class = SIZE_MINUSCULE
-	speak_emote = list("beeps","clicks","chirps")
+	speak_emote = list("гудит","жужит","пищит")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
 
@@ -79,7 +79,7 @@
 		update_icon()
 		return 1
 
-	if (iswelder(O))
+	if (iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (WT.use(0))

@@ -93,7 +93,7 @@ var/global/bridge_secret = null
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url = "http://example.org"
+	var/media_base_url
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url
@@ -103,6 +103,9 @@ var/global/bridge_secret = null
 	var/changelog_hash_link = ""
 
 	var/repository_link = ""
+
+	var/github_repository_owner = ""
+	var/github_repository_name = ""
 
 	var/forbid_singulo_possession = 0
 
@@ -122,8 +125,8 @@ var/global/bridge_secret = null
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+	var/run_speed = 3
+	var/walk_speed = 5
 
 	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 	var/human_delay = 0
@@ -168,9 +171,8 @@ var/global/bridge_secret = null
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/enter_allowed = 1
-
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
+	var/github_token = "" // todo: move this to globals for security
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
@@ -204,8 +206,13 @@ var/global/bridge_secret = null
 	var/load_mine = TRUE
 	var/load_space_levels = TRUE
 
+	var/auto_lag_switch_pop = FALSE
+
 	var/record_replays = FALSE
 
+	var/use_persistent_cache = FALSE
+
+	var/reactionary_explosions = TRUE
 
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
@@ -214,6 +221,9 @@ var/global/bridge_secret = null
 	var/secondtopiclimit = 10
 
 	var/deathmatch_arena = TRUE
+
+	var/ghost_max_view = 10 // 21x21
+	var/ghost_max_view_supporter = 13 // 27x27
 
 	var/hard_deletes_overrun_threshold = 0.5
 	var/hard_deletes_overrun_limit = 0
@@ -525,11 +535,20 @@ var/global/bridge_secret = null
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
 
+				if("github_token")
+					config.github_token = value
+
 				if("allow_cult_ghostwriter")
 					config.cult_ghostwriter = 1
 
 				if("req_cult_ghostwriter")
 					config.cult_ghostwriter_req_cultists = text2num(value)
+
+				if("ghost_max_view")
+					config.ghost_max_view = text2num(value)
+
+				if("ghost_max_view_supporter")
+					config.ghost_max_view_supporter = text2num(value)
 
 				if("deathtime_required")
 					config.deathtime_required = text2num(value)
@@ -621,6 +640,11 @@ var/global/bridge_secret = null
 
 				if("repository_link")
 					config.repository_link = value
+					var/repo_path = replacetext(config.repository_link, "https://github.com/", "")
+					if(repo_path != config.repository_link)
+						var/split = splittext(repo_path, "/")
+						config.github_repository_owner = split[1]
+						config.github_repository_name = split[2]
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
@@ -655,11 +679,17 @@ var/global/bridge_secret = null
 				if("no_space_levels")
 					config.load_space_levels = FALSE
 
+				if("auto_lag_switch_pop")
+					config.auto_lag_switch_pop = text2num(value)
+
 				if("record_replays")
 					config.record_replays = TRUE
 
 				if("sandbox")
 					config.sandbox = TRUE
+
+				if("use_persistent_cache")
+					config.use_persistent_cache = TRUE
 
 				if("ooc_round_only")
 					config.ooc_round_only = TRUE

@@ -1,10 +1,3 @@
-/turf/unsimulated/floor/velocity
-	icon = 'icons/locations/centcomm/floor.dmi'
-
-/obj/structure/grille/velocity
-	icon = 'icons/locations/centcomm/grille_velocity.dmi'
-	icon_state = "grille"
-
 /obj/structure/stool/bed/chair/schair/monorail_chair
 	name = "monorail chair"
 	desc = "You sit in this. Either by will or force."
@@ -163,6 +156,7 @@
 	name = "velocity officer's uniform"
 	desc = "A meticulously clean guard uniform belonging to Dock-42, CITS Velocity. The word \"OFFICER OF THE LAW\" is engraved tastefully and professionally in the badge below the number, 42."
 	icon_state = "velocityuniform"
+	item_state = "velocityuniform"
 
 /obj/item/clothing/suit/armor/vest/velocity
 	name = "CITS armored vest"

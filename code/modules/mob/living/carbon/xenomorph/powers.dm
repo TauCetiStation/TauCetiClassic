@@ -221,11 +221,17 @@
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	alien.create_shriekwave()
-	for(var/mob/living/carbon/human/H in targets)
-		if(!ishuman(H))
+	for(var/mob/living/L as anything in targets)
+		if(L.stat == DEAD || isxeno(L) || L.flags & GODMODE)
 			continue
-		if(H.sdisabilities & DEAF || H.stat == DEAD || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-			to_chat(H, "<span class='warning'>You feel strong vibrations and quiet noise...</span>")
+		if(!ishuman(L))
+			to_chat(L, "<span class='danger'>You feel strong vibrations.</span>")
+			L.Stun(2)
+			continue
+		var/mob/living/carbon/human/H = L
+		if(H.sdisabilities & DEAF || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+			to_chat(H, "<span class='danger'>You feel strong vibrations and quiet noise...</span>")
+			H.Stun(2)
 			continue
 		if(H.species.flags[NO_BREATHE] || H.species.flags[NO_PAIN]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
 			to_chat(H, "<span class='danger'>You feel strong vibrations and loud noise, but you're strong enough to stand it!</span>")
@@ -386,6 +392,12 @@
 	var/mob/living/carbon/xenomorph/humanoid/queen/new_xeno = new (user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
+
+	var/datum/faction/infestation/F = find_faction_by_type(/datum/faction/infestation)//Buff only for the first queen
+	if(F.start_help)
+		new_xeno.apply_status_effect(/datum/status_effect/young_queen_buff)
+		F.start_help = FALSE
+
 	qdel(alien)
 
 //----------------------------------------------

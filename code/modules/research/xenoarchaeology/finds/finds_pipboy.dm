@@ -7,7 +7,7 @@
 	icon_state = "pipboy3000"
 	item_state = "pipboy3000"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_GLOVES
-	action_button_name = "Toggle Pip-Boy"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pip_boy)
 	species_restricted = null
 	protect_fingers = FALSE
 	clipped = TRUE
@@ -24,6 +24,13 @@
 
 	var/health_analyze_mode = FALSE
 	var/output_to_chat = TRUE
+
+/datum/action/item_action/hands_free/toggle_pip_boy
+	name = "Toggle Pip-Boy"
+
+/datum/action/item_action/hands_free/toggle_pip_boy/Activate()
+	var/obj/item/clothing/gloves/pipboy/S = target
+	S.open_interface()
 
 /obj/item/clothing/gloves/pipboy/atom_init()
 	. = ..()
@@ -47,19 +54,17 @@
 		if(alarm_playing != 1)
 			visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 			alarm_playing = 1
-		addtimer(CALLBACK(src, .proc/alarm_stop), 60)
+		addtimer(CALLBACK(src, PROC_REF(alarm_stop)), 60)
 
 /obj/item/clothing/gloves/pipboy/proc/alarm_stop()
 	alarm_playing = 0
 	return
 
 /obj/item/clothing/gloves/pipboy/attackby(obj/item/I, mob/user, params)
-	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iswirecutter(I) || istype(I, /obj/item/weapon/scalpel))
+	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iscutter(I) || istype(I, /obj/item/weapon/scalpel))
 		return
 	return ..()
 
-/obj/item/clothing/gloves/pipboy/ui_action_click()
-	open_interface()
 
 /obj/item/clothing/gloves/pipboy/verb/open_interface()
 	set name = "Open Interface"

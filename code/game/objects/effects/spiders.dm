@@ -1,5 +1,5 @@
 //generic procs copied from obj/effect/alien
-/obj/effect/spider
+/obj/structure/spider
 	name = "web"
 	desc = "It's stringy and sticky."
 	icon = 'icons/effects/effects.dmi'
@@ -12,20 +12,19 @@
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/effect/spider/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/spider/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		take_damage(5, BURN, FIRE)
 
-/obj/effect/spider/stickyweb
+/obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
 
-/obj/effect/spider/stickyweb/atom_init()
+/obj/structure/spider/stickyweb/atom_init()
 	. = ..()
 	if(prob(50))
 		icon_state = "stickyweb2"
 
-/obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return 1
 	else if(isliving(mover))
@@ -36,27 +35,27 @@
 		return prob(30)
 	return 1
 
-/obj/effect/spider/eggcluster
+/obj/structure/spider/eggcluster
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
 	var/amount_grown = 0
 
-/obj/effect/spider/eggcluster/atom_init()
+/obj/structure/spider/eggcluster/atom_init()
 	. = ..()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/spider/eggcluster/process()
+/obj/structure/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
 		var/num = rand(6,24)
 		for(var/i=0, i<num, i++)
-			new /obj/effect/spider/spiderling(src.loc)
+			new /obj/structure/spider/spiderling(src.loc)
 		qdel(src)
 
-/obj/effect/spider/spiderling
+/obj/structure/spider/spiderling
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
@@ -68,7 +67,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 
-/obj/effect/spider/spiderling/atom_init()
+/obj/structure/spider/spiderling/atom_init()
 	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
@@ -77,13 +76,13 @@
 	if(prob(50))
 		amount_grown = 1
 
-/obj/effect/spider/spiderling/Bump(atom/user)
+/obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		forceMove(user.loc)
 	else
 		..()
 
-/obj/effect/spider/spiderling/attack_hand(mob/living/user)
+/obj/structure/spider/spiderling/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You touch [src]!</span>")
@@ -93,28 +92,28 @@
 	var/list/damObj = user.get_unarmed_attack()
 	take_damage(damObj["damage"], damObj["type"], MELEE)
 
-/obj/effect/spider/spiderling/deconstruct(disassembled)
+/obj/structure/spider/spiderling/deconstruct(disassembled)
 	visible_message("<span class='alert'>[src] dies!</span>")
 	new /obj/effect/decal/cleanable/spiderling_remains(get_turf(src))
 	..()
 
-/obj/effect/spider/spiderling/proc/cancel_vent_move()
+/obj/structure/spider/spiderling/proc/cancel_vent_move()
 	if(!entry_vent)
 		forceMove(get_turf(src))
 		return
 	forceMove(entry_vent.loc)
 	entry_vent = null
 
-/obj/effect/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+/obj/structure/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
 	if(QDELETED(exit_vent) || exit_vent.welded)
 		cancel_vent_move()
 		return
 
 	forceMove(exit_vent.loc)
 	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
+	addtimer(CALLBACK(src, PROC_REF(do_vent_move), exit_vent, travel_time), travel_time)
 
-/obj/effect/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
+/obj/structure/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
 	if(QDELETED(exit_vent) || exit_vent.welded)
 		cancel_vent_move()
 		return
@@ -122,16 +121,16 @@
 	if(prob(50))
 		audible_message("<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
+	addtimer(CALLBACK(src, PROC_REF(finish_vent_move), exit_vent), travel_time)
 
-/obj/effect/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+/obj/structure/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
 	if(QDELETED(exit_vent) || exit_vent.welded)
 		cancel_vent_move()
 		return
 	forceMove(exit_vent.loc)
 	entry_vent = null
 
-/obj/effect/spider/spiderling/process()
+/obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
 		if(isturf(loc))
 			travelling_in_vent = 0
@@ -150,7 +149,7 @@
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
 							"<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(15,30))
+			addtimer(CALLBACK(src, PROC_REF(vent_move), exit_vent), rand(15,30))
 
 	//=================
 
@@ -181,17 +180,17 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenshatter"
 
-/obj/effect/spider/cocoon
+/obj/structure/spider/cocoon
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web."
 	icon_state = "cocoon1"
 	max_integrity = 60
 
-/obj/effect/spider/cocoon/atom_init()
+/obj/structure/spider/cocoon/atom_init()
 	. = ..()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 
-/obj/effect/spider/cocoon/container_resist()
+/obj/structure/spider/cocoon/container_resist()
 	var/mob/living/user = usr
 	if(user.is_busy()) return
 	var/breakout_time = 2
@@ -204,7 +203,7 @@
 			return
 		qdel(src)
 
-/obj/effect/spider/cocoon/Destroy()
+/obj/structure/spider/cocoon/Destroy()
 	visible_message("<span class='warning'>\the [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc

@@ -27,12 +27,12 @@
 			new /obj/item/device/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/clothing/gloves/yellow(src)
+			new /obj/item/clothing/gloves/insulated(src)
 			new /obj/item/weapon/plastique(src)
 
 		if("guns")
 			new /obj/item/weapon/gun/projectile/revolver/syndie(src)
-			new /obj/item/ammo_box/a357(src)
+			new /obj/item/ammo_box/speedloader/a357(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/plastique(src)
@@ -53,9 +53,9 @@
 			new /obj/item/device/flashlight/emp(src)
 
 		if("smoothoperator")
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/projectile/automatic/pistol/stechkin(src)
 			new /obj/item/weapon/silencer(src)
-			new /obj/item/ammo_box/magazine/m9mm(src)
+			new /obj/item/ammo_box/magazine/stechkin(src)
 			new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
 			new /obj/item/weapon/storage/bag/trash(src)
 			new /obj/item/bodybag(src)
@@ -71,6 +71,8 @@
 			new /obj/item/weapon/reagent_containers/glass/bottle/chefspecial(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/sanguisacid(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/bonebreaker(src)
 			new /obj/item/weapon/reagent_containers/syringe(src)
 			new /obj/item/weapon/gun/syringe/syndicate(src)
 
@@ -88,7 +90,7 @@
 			new /obj/item/weapon/storage/backpack/satchel/flat(src)
 
 		if("gadgets")
-			new /obj/item/clothing/gloves/yellow(src)
+			new /obj/item/clothing/gloves/power(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/device/flashlight/emp(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
@@ -299,15 +301,38 @@
 	rc_glasses.slave = new /mob/living/silicon/robot/drone/syndi(drone_holder)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/syndie_kit/revolution/posters
+	name = "box (RP)"
+	desc = "Box containing some provocative posters."
+	icon_state = "rev_box"
+
+/obj/item/weapon/storage/box/syndie_kit/revolution/posters/atom_init()
+	. = ..()
+	for(var/i in 0 to 3)
+		new /obj/item/weapon/poster/revolution(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/revolution/armor
+	name = "box (RA)"
+	desc = "Box containing a set of surplus military armor."
+	icon_state = "rev_box"
+
+/obj/item/weapon/storage/box/syndie_kit/revolution/armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/vest/surplus(src)
+	new /obj/item/clothing/head/helmet/surplus(src)
+	new /obj/item/clothing/mask/balaclava(src)
+	make_exact_fit()
+
 //loadouts
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/scout
 	name = "scout kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m12mm/hv,
-	/obj/item/ammo_box/magazine/m12mm/hp,
-	/obj/item/ammo_box/magazine/m12mm/imp,
-	/obj/item/ammo_box/magazine/m12mm = 3,
+	/obj/item/ammo_box/magazine/c20r/hv,
+	/obj/item/ammo_box/magazine/c20r/hp,
+	/obj/item/ammo_box/magazine/c20r/imp,
+	/obj/item/ammo_box/magazine/c20r = 3,
 	/obj/item/weapon/gun/projectile/automatic/c20r,
 	/obj/item/weapon/implanter/adrenaline,
 	/obj/item/weapon/reagent_containers/hypospray/combat,
@@ -318,7 +343,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman
 	name = "assaultman kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/a74mm = 3,
+	/obj/item/ammo_box/magazine/a74 = 3,
 	/obj/item/weapon/gun/projectile/automatic/a74,
 	/obj/item/weapon/shield/energy,
 	/obj/item/weapon/grenade/flashbang = 4,
@@ -328,8 +353,8 @@
 
 /obj/item/weapon/storage/belt/utility/hacker
 	startswith = list(
-	/obj/item/weapon/wrench/power,
-	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/multi/hand_drill,
+	/obj/item/weapon/multi/jaws_of_life,
 	/obj/item/weapon/weldingtool/largetank,
 	/obj/item/device/multitool,
 	/obj/item/device/flashlight/emp,)
@@ -337,9 +362,9 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
 	name = "hacker kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m12g = 4,
-	/obj/item/ammo_box/magazine/m12g/stun,
-	/obj/item/ammo_box/magazine/m12g/incendiary,
+	/obj/item/ammo_box/magazine/bulldog = 4,
+	/obj/item/ammo_box/magazine/bulldog/stun,
+	/obj/item/ammo_box/magazine/bulldog/incendiary,
 	/obj/item/weapon/gun/projectile/automatic/bulldog,
 	/obj/item/weapon/aiModule/freeform/syndicate,
 	/obj/item/weapon/grenade/spawnergrenade/manhacks,
@@ -365,7 +390,7 @@
 	startswith = list(
 	/obj/item/ammo_casing/r4046/explosive = 3,
 	/obj/item/ammo_casing/r4046/chem/EMP = 3,
-	/obj/item/ammo_box/magazine/drozd127,
+	/obj/item/ammo_box/magazine/drozd,
 	/obj/item/weapon/gun/projectile/automatic/drozd,
 	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
@@ -388,7 +413,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner
 	name = "heavy machine gunner kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m762 = 3,
+	/obj/item/ammo_box/magazine/saw = 3,
 	/obj/item/weapon/gun/projectile/automatic/l6_saw,
 	)
 
@@ -400,6 +425,7 @@
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
+	/obj/item/clothing/gloves/power,
 	)
 
 
@@ -407,9 +433,9 @@
 	name = "chemical fighter kit"
 	startswith = list(
 	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
-	/obj/item/weapon/lighter/zippo,
+	/obj/item/weapon/lighter/zippo/syndi,
 	/obj/item/weapon/gun/projectile/revolver/syndie,
-	/obj/item/ammo_box/a357 = 2,
+	/obj/item/ammo_box/speedloader/a357 = 2,
 	/obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,
 	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,

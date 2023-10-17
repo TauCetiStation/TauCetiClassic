@@ -23,7 +23,7 @@
 		keyslot1 = new ks1type(src)
 	if(ks2type)
 		keyslot2 = new ks2type(src)
-	INVOKE_ASYNC(src, .proc/recalculateChannels)
+	INVOKE_ASYNC(src, PROC_REF(recalculateChannels))
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)
@@ -99,6 +99,11 @@
 	icon_state = "int_headset"
 	item_state = "int_headset"
 	ks2type = /obj/item/device/encryptionkey/headset_int
+
+/obj/item/device/radio/headset/headset_int/blueshield
+	name = "blueshield radio headset"
+	icon_state = "blueshield"
+	desc = "Headset of the guy that for some reason follows our heads of staff... To access the security channel, use :s. For command, use :c."
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -276,7 +281,7 @@
 		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
 
-	else if(iswirecutter(I))
+	else if(iscutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
@@ -285,7 +290,7 @@
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
 			return

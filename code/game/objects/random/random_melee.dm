@@ -9,7 +9,6 @@
 						prob(40);/obj/item/weapon/kitchenknife/butch,\
 						prob(40);/obj/item/weapon/kitchen/rollingpin,\
 						prob(40);/obj/item/weapon/melee/baton,\
-						prob(40);/obj/item/weapon/melee/classic_baton,\
 						prob(40);/obj/item/weapon/kitchenknife,\
 						prob(40);/obj/item/weapon/melee/telebaton,\
 						prob(40);/obj/item/weapon/melee/chainofcommand,\

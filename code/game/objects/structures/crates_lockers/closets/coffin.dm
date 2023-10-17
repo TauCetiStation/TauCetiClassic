@@ -93,21 +93,18 @@
 		cut_overlay(coffin_side)
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
-	if(opened && iscrowbar(I))
+	if(opened && isprying(I))
 		new /obj/item/stack/sheet/wood(loc, 5)
 		visible_message("<span class='notice'>\The [src] has been disassembled apart by [user] with \the [I].</span>",
 						"<span class='notice'>You hear splitting wood.</span>")
 		qdel(src)
 		return TRUE
-	else if(!opened && isscrewdriver(I))
+	else if(!opened && isscrewing(I))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		welded = !welded
 		visible_message("<span class='warning'>[src] has been [welded?"screwed":"unscrewed"] by [user].</span>",
 						"<span class='warning'>You hear screwing.</span>")
 		return TRUE
-
-/obj/structure/closet/coffin/correct_pixel_shift(mob/living/M)
-	return
 
 /obj/structure/closet/coffin/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)

@@ -44,7 +44,7 @@ var/global/list/nightmares = list(
 	return TRUE
 
 /mob/living/carbon/proc/dream_sequence(segments)
-	if(stat != UNCONSCIOUS || paralysis <= 0)
+	if(stat != UNCONSCIOUS)
 		dreaming = NOT_DREAMING
 		return
 
@@ -57,12 +57,12 @@ var/global/list/nightmares = list(
 		to_chat(src, "<span class='notice italic'>... [pick(dreams)] ...</span>")
 
 	if(segments)
-		addtimer(CALLBACK(src, .proc/dream_sequence, segments), rand(10,30))
+		addtimer(CALLBACK(src, PROC_REF(dream_sequence), segments), rand(10,30))
 	else
 		dreaming = NOT_DREAMING
 
 /mob/living/carbon/proc/handle_dreams()
-	if(client && !dreaming && prob(10))
+	if(client && !dreaming && prob(50))
 		dream()
 
 /mob/living/carbon/var/dreaming = NOT_DREAMING

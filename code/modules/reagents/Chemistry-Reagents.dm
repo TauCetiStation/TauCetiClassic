@@ -23,7 +23,7 @@
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 	var/list/flags = list()
 
-	var/overdose = 0
+	var/overdose = 0 // if var/overdose = 0, reagent has no overdose
 	var/overdose_dam = 1
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1
@@ -39,6 +39,11 @@
 	var/list/needed_aspects
 
 	var/datum/religion/religion
+
+	var/toxin_absorption = 0.0
+
+	// By how much should mob's permeability be multiplied.
+	var/permeability_multiplier = 1.0
 
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!isliving(M))
@@ -85,7 +90,7 @@
 	if(block)
 		return
 
-	chance = chance * 100
+	chance = self.permeability_multiplier * chance * 100
 
 	if(!prob(chance))
 		return
@@ -93,7 +98,6 @@
 	if(self.allergen && self.allergen[ALLERGY_SKIN] && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.trigger_allergy(self.id, self.volume)
-		return
 
 	M.reagents.add_reagent(self.id, self.volume * 0.5)
 

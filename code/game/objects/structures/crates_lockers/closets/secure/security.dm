@@ -221,6 +221,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	icon_opened = "secopen"
 	icon_broken = "secbroken"
 	icon_off = "secoff"
+	damage_deflection = 15
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))
@@ -293,13 +294,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
 	if(prob(50))
-		new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
+		new /obj/item/weapon/gun/projectile/automatic/pistol/colt1911(src)
 		for (var/i in 1 to 2)
-			new /obj/item/ammo_box/magazine/c45r(src)
+			new /obj/item/ammo_box/magazine/colt/rubber(src)
 	else
 		new /obj/item/weapon/gun/projectile/revolver/detective(src)
 		for (var/i in 1 to 2)
-			new /obj/item/ammo_box/c38(src)
+			new /obj/item/ammo_box/speedloader/c38(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
@@ -386,11 +387,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/forensics/PopulateContents()
 	new /obj/item/clothing/under/rank/forensic_technician(src)
+	new /obj/item/clothing/under/rank/forensic_technician/black(src)
 	new /obj/item/clothing/suit/storage/labcoat(src)
 	new /obj/item/clothing/suit/storage/forensics/blue(src)
 	new /obj/item/clothing/suit/storage/forensics/red(src)
 	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/clothing/shoes/red(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
@@ -409,11 +411,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/weapon/gun/projectile/glock(src)
+		new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
 
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"
-	req_access = list(access_keycard_auth)	
+	req_access = list(access_keycard_auth)
 
 /obj/structure/closet/secure_closet/usp_cartridges/PopulateContents()
 	new /obj/item/weapon/skill_cartridge/usp7(src)
@@ -422,3 +424,50 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/skill_cartridge/usp5(src)
 	new /obj/item/weapon/skill_cartridge/usp5(src)
 	new /obj/item/weapon/skill_cartridge/usp5(src)
+
+/obj/structure/closet/blueshield
+	name = "Blueshield Officer's Wardrobe"
+	icon_state = "blueshield"
+	icon_closed = "blueshield"
+	icon_opened = "blueshieldopen"
+
+/obj/structure/closet/blueshield/PopulateContents()
+	new /obj/item/clothing/head/beret/blueshield(src)
+	new /obj/item/clothing/head/soft/blueshield(src)
+	new /obj/item/clothing/under/rank/blueshield(src)
+	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/suit/storage/flak(src)
+	if(prob(50))
+		new /obj/item/weapon/storage/backpack(src)
+	else
+		new /obj/item/weapon/storage/backpack/satchel/norm(src)
+
+/obj/structure/closet/secure_closet/blueshield
+	name = "Blueshield Officer's Equipment Locker"
+	req_access = list(access_blueshield)
+	icon_state = "blueshieldsecure1"
+	icon_closed = "blueshieldsecure"
+	icon_locked = "blueshieldsecure1"
+	icon_opened = "blueshieldsecureopen"
+	icon_broken = "blueshieldsecurebroken"
+	icon_off = "blueshieldsecureoff"
+
+/obj/structure/closet/secure_closet/blueshield/PopulateContents()
+	new /obj/item/clothing/head/helmet/blueshield(src)
+	new /obj/item/clothing/suit/storage/flak/blueshield(src)
+
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(src)
+	for (var/i in 1 to 4)
+		new /obj/item/ammo_box/magazine/glock/extended/rubber(src)
+	for (var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/glock/extended(src)
+	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/storage/belt/security(src)
+
+	new /obj/item/device/radio/headset/headset_int/blueshield(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
+	new /obj/item/device/flash(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)

@@ -59,3 +59,13 @@
 		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
 		/datum/skill/melee = SKILL_LEVEL_TRAINED,
 	)
+
+/datum/skillset/blueshield
+	name = "Blueshield Officer"
+	initial_skills = list(
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_TRAINED,
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+	)

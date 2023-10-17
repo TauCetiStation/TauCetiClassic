@@ -13,13 +13,13 @@
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
-		var/fake_pick = pick("oxy", "tox", "clone")
+		var/fake_pick = pick(OXY, TOX, CLONE)
 		switch(fake_pick)
-			if("oxy")
+			if(OXY)
 				user.adjustOxyLoss(rand(200,300))
-			if("tox")
+			if(TOX)
 				user.adjustToxLoss(rand(200,300))
-			if("clone")
+			if(CLONE)
 				user.adjustCloneLoss(rand(200,300))
 
 	if(NOCLONE in user.mutations)
@@ -29,7 +29,7 @@
 		user.fake_death = FALSE
 		return FALSE
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
-	addtimer(CALLBACK(src, .proc/give_revive_ability, user), rand(800, 2000))
+	addtimer(CALLBACK(src, PROC_REF(give_revive_ability), user), rand(800, 2000))
 
 	feedback_add_details("changeling_powers","FD")
 	return TRUE

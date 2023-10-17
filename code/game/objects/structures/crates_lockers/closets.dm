@@ -46,7 +46,7 @@
 /obj/structure/closet/alter_health()
 	return get_turf(src)
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
 	if(wall_mounted)
 		return TRUE
 	return ..()
@@ -67,12 +67,12 @@
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.forceMove(src.loc)
 
-	for(var/obj/I in src)
-		I.forceMove(src.loc)
-
 	for(var/mob/M in src)
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
+
+	for(var/obj/I in src)
+		I.forceMove(src.loc)
 
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
@@ -91,11 +91,9 @@
 			I.forceMove(src)
 			itemcount++
 
-	for(var/mob/M in src.loc)
+	for(var/mob/living/M in loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
-			continue
 		if(M.buckled)
 			continue
 
@@ -155,8 +153,14 @@
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
-	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-		A.ex_act(severity++)
+	for(var/atom/A in src)//pulls everything out of the locker and hits it with an explosion
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	dump_contents()
 	qdel(src)
 
@@ -171,11 +175,14 @@
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 
+	else if(istagger(W))
+		return
+
 	else
 		attack_hand(user)
 
 /obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())
@@ -185,7 +192,7 @@
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
-				qdel(src)
+				deconstruct(TRUE)
 				return TRUE
 			else
 				src.welded = !src.welded
@@ -274,10 +281,10 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.SetNextMove(100)
 	user.last_special = world.time + 100
-	user.visible_message(
-		"<span class='warning'>[src] begins to shake violently!</span>",
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	visible_message(
+		"<span class='warning'>[src] begins to shake violently!</span>"
 	)
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 
 	if(do_after(user, (breakout_time MINUTES), target=src))
 		if(!user || user.loc != src || opened || (!locked && !welded))

@@ -18,15 +18,18 @@
 	var/safety = FALSE
 	var/triple_shot = FALSE
 
-	action_button_name = "Switch Spray"
-
 	var/chempuff_dense = TRUE // Whether the chempuff can pass through closets and such(and it should).
 
 	var/spray_sound = 'sound/effects/spray2.ogg'
 	var/volume_modifier = -6
+	var/space_cleaner = "cleaner"
 
 	var/spray_cloud_move_delay = 3
 	var/spray_cloud_react_delay = 2
+	item_action_types = list(/datum/action/item_action/hands_free/switch_spray)
+
+/datum/action/item_action/hands_free/switch_spray
+	name = "Switch Spray"
 
 /obj/item/weapon/reagent_containers/spray/atom_init()
 	. = ..()
@@ -92,13 +95,13 @@
 		var/turf/T1 = get_step(T, turn(direction, 90))
 		var/turf/T2 = get_step(T, turn(direction, -90))
 
-		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
-		INVOKE_ASYNC(src, .proc/Spray_at, T1_start, T1)
-		INVOKE_ASYNC(src, .proc/Spray_at, T2_start, T2)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T1_start, T1)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T2_start, T2)
 	else
-		INVOKE_ASYNC(src, .proc/Spray_at, T_start, T)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
 
-	INVOKE_ASYNC(src, .proc/on_spray, T, user) // A proc where we do all the dirty chair riding stuff.
+	INVOKE_ASYNC(src, PROC_REF(on_spray), T, user) // A proc where we do all the dirty chair riding stuff.
 	return TRUE
 
 /obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
@@ -224,10 +227,7 @@
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_mob()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible
@@ -334,7 +334,7 @@
 
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/I, mob/user, params)
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(iswelder(I))
+		if(iswelding(I))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.isOn())
 				light(user, "casually lights")
@@ -390,9 +390,39 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	volume = 50
 
+
 /obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
 	. = ..()
-	reagents.add_reagent("cleaner", volume)
+	reagents.add_reagent(space_cleaner, volume)
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg //Credit @Deahaka for rechargable extinguisher
+	name = "Cyborg cleaner"
+	desc = "Self-recharging cleaner spray."
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone
+	name = "Drone cleaner"
+	desc = "Self-recharging cleaner spray."
+	volume = 50
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/attackby(obj/item/I, mob/user, params)
+	to_chat(user, "<span class='notice'>[src] reagents are under pressure, don't open.</span>")
+	return TRUE
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/afterattack(atom/target, mob/user, proximity, params)
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			R.cell.use(amount_per_transfer_from_this)
+	if(reagents.total_volume < reagents.maximum_volume)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/process()
+	if(reagents.total_volume == reagents.maximum_volume)
+		STOP_PROCESSING(SSobj, src)
+		return
+	// 5/250 cleaner per 2 seconds
+	reagents.add_reagent(space_cleaner, reagents.maximum_volume / 50)
+
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper

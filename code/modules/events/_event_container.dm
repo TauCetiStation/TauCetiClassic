@@ -145,6 +145,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Medical Mess",            /datum/event/feature/area/mess/med_storage,                   10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "MineField",               /datum/event/feature/area/minefield,                          5,  list(ASSIGNMENT_MEDICAL = 2), , list(ASSIGNMENT_SECURITY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Lasertag ED-209",         /datum/event/feature/area/lasertag_ed,                        10),list(ASSIGNMENT_ANY = 2),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Station Rearm: Bullets",  /datum/event/feature/area/replace/station_rearmament_bullets, 10, list(ASSIGNMENT_SECURITY = 3)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Station Rearm: Energy",   /datum/event/feature/area/replace/station_rearmament_energy,  10, list(ASSIGNMENT_SECURITY = 3)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen Weapon",           /datum/event/feature/area/replace/sec_weapons,                10, list(ASSIGNMENT_SECURITY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen First AID",        /datum/event/feature/area/replace/med_storage,                20, list(ASSIGNMENT_MEDICAL = 1)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Old Morgue",              /datum/event/feature/area/replace/med_morgue,                 10),
@@ -179,15 +181,16 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 /datum/event_container/mundane
 	severity = EVENT_LEVEL_MUNDANE
 	available_events = list(
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",           /datum/event/nothing,           1100),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",          /datum/event/pda_spam,          0,    list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",       /datum/event/money_lotto,       0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",      /datum/event/money_hacker,      0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 1, 0, 10, 25),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Economic Event",    /datum/event/economic_event,    300),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Trivial News",      /datum/event/trivial_news,      400),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Mundane News",      /datum/event/mundane_news,      300),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Vermin Infestation",/datum/event/infestation,       100,  list(ASSIGNMENT_JANITOR = 100)),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",           /datum/event/wallrot,           0,    list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",            /datum/event/nothing,                                 1100),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",           /datum/event/pda_spam,                                0,    list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",        /datum/event/money_lotto,                             0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",       /datum/event/money_hacker,                            0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 1, 0, 10, 25),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Economic Event",     /datum/event/economic_event,                          300),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Trivial News",       /datum/event/trivial_news,                            400),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Mundane News",       /datum/event/mundane_news,                            300),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Vermin Infestation", /datum/event/infestation,                             100,  list(ASSIGNMENT_JANITOR = 100)),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",            /datum/event/wallrot,                                 0,    list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Xenohive",           /datum/event/feature/area/maintenance_spawn/xenohive, 300),
 	)
 
 /datum/event_container/moderate
@@ -219,6 +222,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Flux Anomaly",            /datum/event/anomaly/anomaly_flux,      75,    list(ASSIGNMENT_ENGINEER = 50)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravitational Anomaly",   /datum/event/anomaly/anomaly_grav,      200),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Viral Infection",         /datum/event/viral_infection,           0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Wormholes",               /datum/event/wormholes,                 50,    list(ASSIGNMENT_MEDICAL = 50),  ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Sandstorm",               /datum/event/sandstorm,                 0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal of Cult",          /datum/event/anomaly/cult_portal,       60,    list(ASSIGNMENT_SECURITY = 40), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Heist",                   /datum/event/heist,                     40,    list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_ENGINEER = 15), ONESHOT),
@@ -232,6 +236,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Carp Migration",          /datum/event/carp_migration,    0, list(ASSIGNMENT_SECURITY = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT, 1, 25),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Lone Syndicate Agent",    /datum/event/lone_op,         100, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Abduction",               /datum/event/abduction,         0, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 	)
 
 #undef ASSIGNMENT_ANY

@@ -31,27 +31,27 @@
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = 50//of 138
+	charges = 138//of 138
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "hot drinks"
 	icon_state = "refill_joe"
-	charges = 30//of 85
+	charges = 85//of 85
 
 /obj/item/weapon/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
 	icon_state = "refill_snack"
-	charges = 15//of 48
+	charges = 48//of 48
 
 /obj/item/weapon/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	charges = 20//of 65
+	charges = 65//of 65
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "cigarette"
 	icon_state = "refill_smoke"
-	charges = 10// of 30
+	charges = 30// of 30
 /*
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
@@ -62,55 +62,55 @@
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = 16// of 48
+	charges = 48// of 48
 
 /obj/item/weapon/vending_refill/barbervend
 	machine_name = "BarberVend"
-	charges =  25// of 73
+	charges =  73// of 73
 
 /obj/item/weapon/vending_refill/hydroseeds
 	machine_name = "MegaSeed Servitor"
-	charges =  30// of 90
+	charges =  90// of 90
 
 /obj/item/weapon/vending_refill/hydronutrients
 	machine_name = "NutriMax"
-	charges =  38// of 115
+	charges =  115// of 115
 
 /obj/item/weapon/vending_refill/medical
 	machine_name = "NanoMed Plus"
-	charges =  17// of 51
+	charges =  51// of 51
 
 /obj/item/weapon/vending_refill/chinese
 	machine_name = "Mr. Chang"
 	icon_state = "refill_snack"
-	charges =  16// of 48
+	charges =  48// of 48
 
 /obj/item/weapon/vending_refill/tool
 	machine_name = "YouTool"
-	charges =  15// of 43
+	charges =  43// of 43
 
 /obj/item/weapon/vending_refill/engivend
 	machine_name = "Engi-Vend"
-	charges =  15// of 46
+	charges =  46// of 46
 
 /obj/item/weapon/vending_refill/blood
 	machine_name = "Blood'O'Matic"
-	charges =  10// of 28
+	charges =  28// of 28
 
 /obj/item/weapon/vending_refill/junkfood
 	machine_name = "McNuffin's Fast Food"
 	icon_state = "refill_snack"
-	charges =  14// of 40
+	charges =  40// of 40
 
 /obj/item/weapon/vending_refill/donut
 	machine_name = "Monkin' Donuts"
 	icon_state = "refill_donut"
-	charges =  10// of 30
+	charges =  30// of 30
 
 /obj/item/weapon/vending_refill/assist
 	machine_name = "Vendomat"
-	charges =  6// of 17
+	charges =  17// of 17
 
 /obj/item/weapon/vending_refill/dinnerware
 	machine_name = "Dinnerware"
-	charges =  12// of 35
+	charges =  35// of 35

@@ -70,13 +70,8 @@ var/global/sent_syndicate_strike_team = FALSE
 		return
 
 	syndicate_commando_leader = TRUE
-	var/list/landmarkpos = list()
-	var/obj/effect/landmark/SCP = null
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if (L.name == "Syndicate-Commando")
-			landmarkpos += L
-		if(L.name == "Syndicate-Commando-Paper")
-			SCP = L
+	var/list/landmarkpos = landmarks_list["Syndicate-Commando"]
+	var/obj/effect/landmark/SCP = locate("landmark*Syndicate-Commando-Paper")
 
 	var/datum/faction/strike_team/syndiesquad/S = create_faction(/datum/faction/strike_team/syndiesquad, FALSE, FALSE)
 	S.forgeObjectives(mission)
@@ -85,7 +80,6 @@ var/global/sent_syndicate_strike_team = FALSE
 		new_syndicate_commando.key = commandos[i]
 		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader)
 		new_syndicate_commando.internal = new_syndicate_commando.s_store
-		new_syndicate_commando.internals.icon_state = "internal1"
 
 		//So they don't forget their code or mission.
 		if(nuke_code)
@@ -102,7 +96,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(syndicate_commando_leader)
 			syndicate_commando_leader = FALSE
 
-	for(var/obj/effect/landmark/L in landmarkpos)
+	for(var/obj/effect/landmark/L as anything in landmarkpos)
 		qdel(L)
 
 	if(paper_text)

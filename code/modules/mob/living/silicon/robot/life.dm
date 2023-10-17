@@ -11,7 +11,6 @@
 	clamp_values()
 	handle_fire()
 	handle_regular_status_updates()
-	handle_actions()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -143,6 +142,9 @@
 /mob/living/silicon/robot/update_sight()
 	if(!..())
 		return FALSE
+
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)

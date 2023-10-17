@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 4
+#define STAT_OUTPUT_VERSION 8
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:
@@ -39,6 +39,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/mode
 	// string, ["win", "lose"], shows whether all objectives of all antagonists' are completed
 	var/mode_result
+	// string, pool in ./code/game/gamemodes/modesbundle.dm in var name
+	var/bundle
 	// string, pool in ./maps/ directory in json files in var map_name
 	var/map
 	// You can get the nanoui map using
@@ -51,6 +53,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/base_commit_sha
 	// string, ["#pr_id #pr_id..."]
 	var/test_merges
+	// object
+	var/datum/stat/rating/rating = new /datum/stat/rating
 
 	// string, html page
 	var/completion_html
@@ -75,6 +79,10 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/role/orphaned_roles = list()
 	// array of objects
 	var/list/datum/stat/faction/factions = list()
+	// array of objects
+	var/list/datum/stat/emp_stat/emps = list()
+	// array of objects
+	var/list/datum/stat/vote/completed_votes = list()
 
 /datum/stat_collector/New()
 	var/datum/default_datum = new
@@ -89,11 +97,9 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	do_post_round_checks()
 
-	var/start_time = world.realtime
 	statfile << datum2json(src)
-	to_chat(stealth ? usr : world, "<span class='info'>Статистика была записана в файл за [(start_time - world.realtime)/10] секунд. </span>")
 
-	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступа по ссылке [generate_url()]</span>")
+	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступна по ссылке [generate_url()]</span>")
 
 /datum/stat_collector/proc/generate_url()
 	var/root = "https://stat.taucetistation.org/html"
@@ -107,15 +113,38 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	duration = roundduration2text()
 	mode = SSticker.mode.name
 	mode_result = SSticker.mode.get_mode_result()
+	bundle = SSticker.bundle?.name
 	map = SSmapping.config.map_name
 	minimap_image = "nano/images/nanomap_[SSmapping.station_image]_1.png"
 	server_address = BYOND_SERVER_ADDRESS
 	base_commit_sha = global.base_commit_sha
-	test_merges = global.test_merges
+	if(global.test_merges)
+		test_merges = "#" + jointext(global.test_merges, "# ")
 	completion_html = SSticker.mode.completition_text
 
-	for(var/datum/mind/M in SSticker.minds)
-		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
+	save_manifest_entries()
 
 	for(var/ckey in global.disconnected_ckey_by_stat)
 		leave_stats += global.disconnected_ckey_by_stat[ckey]
+
+/datum/stat_collector/proc/save_manifest_entries()
+	var/list/white_assigned_roles = get_all_jobs_with_silicons() + get_all_centcom_jobs() + get_all_velocity_jobs()
+	white_assigned_roles += "MODE" // non station roles
+	var/list/white_special_roles = get_roles_with_interesting_names() // roles with interesting names, like xenomorphs and blobs
+	var/regex/is_drone = regex(@"maintenance drone \(\d+\)")
+
+	for(var/datum/mind/M in SSticker.minds)
+		if(M.assigned_role == "" || M.name == "") // wtf
+			continue
+		if(M.name == "unknown") // useless data
+			continue
+		if(!(M.assigned_role in white_assigned_roles))
+			continue
+		if(M.special_role && !(M.special_role in white_special_roles))
+			continue
+		if(M.assigned_role == "default" && M.special_role == "") // admin shit
+			continue
+		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name)) // useless data
+			continue
+		var/my_mob = M.original ? M.original : M.current
+		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles, my_mob)

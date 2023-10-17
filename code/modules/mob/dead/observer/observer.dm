@@ -15,6 +15,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	see_in_dark = 100
 	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
+	show_examine_log = FALSE
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -35,6 +36,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
+
+	var/image/body_icon
 
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
@@ -57,6 +60,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 			copy_overlays(body)
 
 		cut_overlay(list(body.typing_indicator, body.stat_indicator))
+
+		// copy for future use
+		body_icon = image(icon, icon_state)
+		body_icon.copy_overlays(body)
 
 		alpha = 127
 
@@ -91,7 +98,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	observer_list += src
 
-	var/image/I = image(icon, src, "ghost")
+	var/image/I = image(initial(icon), src, "ghost")
 	I.plane = GHOST_ILLUSION_PLANE
 	I.alpha = 200
 	// s = short buffer
@@ -127,8 +134,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		return
 
 	if(href_list["track"])
-		var/mob/target = locate(href_list["track"]) in mob_list
-		if(istype(target) && (target != src))
+		var/atom/target = locate(href_list["track"])
+		if(target != src)
 			ManualFollow(target)
 			return
 
@@ -149,8 +156,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/turf/T = get_turf(target)
 		forceMove(T)
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	return 1
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+	return TRUE
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(!key)
@@ -211,7 +218,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/robot = usr
 			robot.set_all_components(FALSE)
-		else
+		else if(!immune_to_ssd)
 			SetCrawling(TRUE)
 			Sleeping(2 SECONDS)
 
@@ -412,6 +419,44 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
+
+/mob/dead/observer/verb/toggle_icon()
+	set category = "Ghost"
+	set name = "Toggle Ghost Icon"
+	set desc = "Choise ghost icon."
+
+	var/list/custom_sprites = get_accepted_custom_items_by_type(ckey, FLUFF_TYPE_GHOST)
+
+	if(!length(custom_sprites))
+		if(config.customitems_info_url)
+			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
+		else
+			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites.</span>")
+
+	if(body_icon)
+		custom_sprites += "--body--"
+
+	custom_sprites += "--ghost--"
+
+	var/select = input("Select icon.", "Select") as null|anything in custom_sprites
+
+	if(!select)
+		return
+
+	cut_overlays()
+
+	if(select == "--body--")
+		icon = body_icon.icon
+		icon_state = body_icon.icon_state
+		copy_overlays(body_icon)
+	else if (select == "--ghost--")
+		icon = initial(icon)
+		icon_state = "ghost"
+	else
+		var/datum/custom_item/custom = select
+		icon = custom.icon
+		icon_state = custom.icon_state
+
 
 /*
 /mob/dead/observer/verb/boo()
@@ -666,3 +711,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
+
+/mob/dead/observer/verb/change_view_range()
+	set name = "Change View Range"
+	set desc = "Change your view range"
+	set category = "Ghost"
+
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
+		to_chat(usr, "<span class='warning'>That verb is currently globally disabled.</span>")
+		return
+
+	var/max_view_range = client.supporter ? config.ghost_max_view_supporter : config.ghost_max_view
+
+	var/viewx = clamp(input("Enter view width ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
+	var/viewy = clamp(input("Enter view height ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
+
+	if(!client)
+		return
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
+		return
+
+	client.change_view("[viewx]x[viewy]")
+	if(client.prefs.auto_fit_viewport)
+		client.fit_viewport()

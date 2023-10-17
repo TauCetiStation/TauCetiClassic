@@ -76,6 +76,9 @@
 	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
 		germ_level += GERM_LEVEL_AMBIENT * 0.25
 
+	if(HAS_TRAIT(tool, TRAIT_XENO_FUR))
+		germ_level += GERM_LEVEL_AMBIENT * 0.25
+
 	if(ishuman(user) && !user.is_skip_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
 		germ_level += user.germ_level * 0.25
 
@@ -154,6 +157,13 @@
 			var/step_duration = rand(S.min_duration, S.max_duration)
 
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!H.species.flags[NO_PAIN] && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
+					H.adjustHalLoss(25)
+				if(prob(H.halloss) && !H.incapacitated(NONE))
+					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
+					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
 			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)

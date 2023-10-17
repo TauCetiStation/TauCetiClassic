@@ -1,9 +1,7 @@
 var/global/list/empty_playable_ai_cores = list()
 
 /proc/spawn_empty_ai()
-	for(var/obj/effect/landmark/start/S in landmarks_list)
-		if(S.name != "AI")
-			continue
+	for(var/obj/effect/landmark/start/S as anything in landmarks_list["AI"])
 		if(locate(/mob/living) in S.loc)
 			continue
 		empty_playable_ai_cores += new /obj/structure/AIcore/deactivated(get_turf(S))
