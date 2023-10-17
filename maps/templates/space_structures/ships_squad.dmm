@@ -22,7 +22,7 @@
 "aG" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "ntcruiser1";
 	name = "Front Hull Door"
 	},
@@ -89,7 +89,7 @@
 "gE" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "ntcruiser1";
 	name = "Front Hull Door"
 	},

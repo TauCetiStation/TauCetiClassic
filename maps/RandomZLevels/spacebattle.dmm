@@ -760,7 +760,7 @@
 "ck" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "spacebattlepod";
 	name = "Front Hull Door"
 	},
@@ -1050,7 +1050,7 @@
 "dt" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "spacebattlepod2";
 	name = "Front Hull Door"
 	},
@@ -1586,9 +1586,9 @@
 /area/awaymission/spacebattle/cruiser)
 "fl" = (
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "spacebattlestorage";
-	name = "Secure Storage";
-	dir = 4
+	name = "Secure Storage"
 	},
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)

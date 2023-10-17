@@ -625,7 +625,7 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	electronics.loc = da
+	electronics?.loc = da
 	da.electronics = electronics
 	electronics = null
 

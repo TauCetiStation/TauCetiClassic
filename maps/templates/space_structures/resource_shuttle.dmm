@@ -68,7 +68,7 @@
 "rr" = (
 /obj/machinery/door/poddoor/cargo{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	opacity = 0
 	},
 /obj/effect/decal/turf_decal/set_burned,

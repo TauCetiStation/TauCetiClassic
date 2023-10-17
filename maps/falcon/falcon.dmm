@@ -334,10 +334,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "MedBay";
-	name = "Medbay right APC"
+	dir = 4;
+	name = "Medbay right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/station/medical/surgery)
@@ -374,9 +374,9 @@
 /area/station/medical/surgeryobs)
 "aaH" = (
 /obj/machinery/door/airlock/maintenance{
+	dir = 4;
 	name = "Surgery Maintenance";
-	req_access = list(45);
-	dir = 4
+	req_access = list(45)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -466,11 +466,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	dir = 4;
+	icon_state = "shutter_opend";
 	id = "Medical_Surgery1";
 	name = "Surgery Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -603,9 +603,9 @@
 /area/station/maintenance/escape)
 "aaZ" = (
 /obj/machinery/door/airlock/medical{
+	dir = 4;
 	name = "Operating Theatre 1";
-	req_access = list(45);
-	dir = 4
+	req_access = list(45)
 	},
 /obj/machinery/holosign/surgery{
 	id = "op1"
@@ -796,9 +796,9 @@
 /area/station/maintenance/cargo)
 "abs" = (
 /obj/machinery/door/airlock/maintenance{
+	dir = 4;
 	name = "Cargo Bay Maintenance";
-	req_access = list(50);
-	dir = 4
+	req_access = list(50)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -1301,9 +1301,9 @@
 /area/station/cargo/recycler)
 "acs" = (
 /obj/machinery/door/airlock/engineering{
+	dir = 4;
 	name = "Drone Fabrication";
-	req_access = list(32);
-	dir = 4
+	req_access = list(32)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1896,10 +1896,10 @@
 	},
 /obj/effect/decal/turf_decal/set_burned,
 /obj/machinery/power/apc{
-	pixel_y = 27;
-	name = "Cargo top APC";
 	custom_smartlight_preset = "Cargo";
-	dir = 1
+	dir = 1;
+	name = "Cargo top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -1949,10 +1949,10 @@
 	pixel_x = 28
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -1975,7 +1975,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	opacity = 0
@@ -2247,7 +2247,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	opacity = 0
@@ -2388,16 +2388,16 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	opacity = 0
 	},
 /obj/machinery/door/airlock/highsecurity{
+	dir = 4;
 	locked = 1;
 	name = "AI Chamber";
-	req_access = list(16);
-	dir = 4
+	req_access = list(16)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -3015,10 +3015,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27;
-	dir = 4
+	dir = 4;
+	name = "Engineering right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
@@ -3172,10 +3172,10 @@
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/book/manual/wiki/possible_threats,
 /obj/machinery/power/apc{
-	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27;
-	dir = 4
+	dir = 4;
+	name = "Engineering right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3551,7 +3551,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -3733,7 +3733,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Security_private";
 	opacity = 0
 	},
@@ -4092,10 +4092,10 @@
 	},
 /obj/structure/closet/wardrobe/red,
 /obj/machinery/power/apc{
-	pixel_x = -27;
+	custom_smartlight_preset = "Brig";
 	dir = 8;
 	name = "Brig left APC";
-	custom_smartlight_preset = "Brig"
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4656,8 +4656,8 @@
 /area/station/hallway/secondary/exit)
 "aip" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall";
-	dir = 4
+	dir = 4;
+	name = "Escape Hall"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4947,8 +4947,8 @@
 /area/station/hallway/secondary/exit)
 "aiQ" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall";
-	dir = 4
+	dir = 4;
+	name = "Escape Hall"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -5238,9 +5238,9 @@
 	pixel_y = -21
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
 	dir = 8;
 	name = "Brig largecell apc left";
-	custom_smartlight_preset = "Brig";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -5985,10 +5985,10 @@
 "alh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	locked = 1;
 	name = "Assembly Line (KEEP OUT)";
-	req_access = list(32);
-	dir = 4
+	req_access = list(32)
 	},
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
@@ -5996,15 +5996,15 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "RnD";
 	name = "Rnd Shutters";
 	opacity = 0
@@ -6378,15 +6378,15 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "RnD";
 	name = "Rnd Shutters";
 	opacity = 0
@@ -6677,9 +6677,9 @@
 	pixel_y = 32
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 8;
 	name = "Engineering largecell apc left";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -7629,9 +7629,9 @@
 /area/station/maintenance/cargo)
 "aoF" = (
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "teles_blast2";
-	name = "Test Chamber Blast Doors";
-	dir = 4
+	name = "Test Chamber Blast Doors"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -7761,10 +7761,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7847,8 +7847,8 @@
 /area/station/tcommsat/chamber)
 "apb" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -7880,10 +7880,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	pixel_x = -27;
-	dir = 8;
 	custom_smartlight_preset = "RnD";
-	name = "RnD left APC"
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurple"
@@ -8127,10 +8127,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -8557,10 +8557,10 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD largecell apc top";
-	pixel_y = 27;
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8588,10 +8588,10 @@
 "aqr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	locked = 1;
 	name = "Assembly Line (KEEP OUT)";
-	req_access = list(32);
-	dir = 4
+	req_access = list(32)
 	},
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
@@ -8648,8 +8648,8 @@
 /area/station/rnd/lab)
 "aqw" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	dir = 4
+	dir = 4;
+	name = "Escape Airlock"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -8678,10 +8678,10 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/device/gps/engineering,
 /obj/machinery/power/apc{
-	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27;
-	dir = 8
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -8742,10 +8742,10 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -8765,9 +8765,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
 	dir = 8;
 	name = "Cargo largecell apc left";
-	custom_smartlight_preset = "Cargo";
 	pixel_x = -27
 	},
 /turf/simulated/floor,
@@ -10721,9 +10721,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
-	req_access = list(10);
-	dir = 4
+	req_access = list(10)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -10859,7 +10859,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -10922,10 +10922,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	name = "Engineering right APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = 27;
-	dir = 4
+	dir = 4;
+	name = "Engineering right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -11470,7 +11470,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -11735,11 +11735,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -11796,9 +11796,9 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "cqW" = (
 /obj/machinery/door/airlock/command{
+	dir = 4;
 	name = "Head of Personnel";
-	req_access = list(57);
-	dir = 4
+	req_access = list(57)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11834,11 +11834,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/item/weapon/paper_bin{
 	pixel_x = -5
@@ -11856,7 +11856,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "RnD";
 	name = "Rnd Shutters";
 	opacity = 0
@@ -11975,8 +11975,8 @@
 /area/asteroid/mine/dwarf)
 "cBi" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -12181,8 +12181,8 @@
 /area/station/bridge/teleporter)
 "cPE" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -12414,8 +12414,8 @@
 /area/station/aisat/ai_chamber)
 "cYF" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -12471,7 +12471,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -12709,10 +12709,10 @@
 /area/station/bridge/server)
 "dpV" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	dock_tag = "arrival_escape";
 	locked = 1;
-	name = "Escape Airlock";
-	dir = 4
+	name = "Escape Airlock"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -12816,9 +12816,9 @@
 /area/station/maintenance/dormitory)
 "due" = (
 /obj/machinery/door/airlock/medical{
+	dir = 4;
 	name = "Morgue";
-	req_access = list(5);
-	dir = 4
+	req_access = list(5)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -12902,9 +12902,9 @@
 /area/station/security/main)
 "dxg" = (
 /obj/machinery/door/airlock/command{
+	dir = 4;
 	name = "Captain's Quarters";
-	req_access = list(20);
-	dir = 4
+	req_access = list(20)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -13211,10 +13211,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
+	dir = 4;
 	id_tag = "prisonentry";
 	name = "Brig Entry";
-	req_access = list(2);
-	dir = 4
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -13373,11 +13373,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -13753,11 +13753,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -13797,7 +13797,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "HoP_blast";
 	name = "HoP Blast Doors";
 	opacity = 0
@@ -13903,16 +13903,16 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/airlock/security/glass{
+	dir = 4;
 	name = "Security Office";
-	req_one_access = list(1,4);
-	dir = 4
+	req_one_access = list(1,4)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -14040,8 +14040,8 @@
 /area/asteroid/mine/dwarf)
 "eBO" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(22,12);
-	dir = 4
+	dir = 4;
+	req_one_access = list(22,12)
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal/set_burned,
@@ -14095,9 +14095,9 @@
 /area/station/maintenance/dormitory)
 "eEz" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Anomalous Materials";
-	req_access = list(7);
-	dir = 4
+	req_access = list(7)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -14292,11 +14292,11 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -14539,10 +14539,10 @@
 	network = list("SS13","Security")
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "Brig";
 	dir = 1;
 	name = "Brig top APC";
-	custom_smartlight_preset = "Brig"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -14618,8 +14618,8 @@
 /area/station/engineering/atmos)
 "ffx" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -14655,11 +14655,11 @@
 "fgW" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "teles_blast1";
 	name = "Test Chamber Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -14925,7 +14925,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -14970,9 +14970,9 @@
 /area/station/hallway/primary/central)
 "fDS" = (
 /obj/machinery/door/airlock/maintenance{
+	dir = 4;
 	name = "Medbay Maintenance";
-	req_access = list(72);
-	dir = 4
+	req_access = list(72)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -14981,7 +14981,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -15295,11 +15295,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	dir = 4;
+	icon_state = "shutter_opend";
 	id = "chapel";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -15596,8 +15596,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/glass{
-	name = "Cryogenic Storage";
-	dir = 4
+	dir = 4;
+	name = "Cryogenic Storage"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -15865,7 +15865,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -16529,10 +16529,10 @@
 	pixel_y = 28
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
+	custom_smartlight_preset = "Brig";
 	dir = 4;
 	name = "Brig right APC";
-	custom_smartlight_preset = "Brig"
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -16648,10 +16648,10 @@
 	pixel_y = -24
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "MedBay";
-	name = "Medbay right APC"
+	dir = 4;
+	name = "Medbay right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -16700,11 +16700,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
@@ -16719,8 +16719,8 @@
 /area/station/medical/storage)
 "hkb" = (
 /obj/machinery/door/airlock/glass{
-	name = "Hydroponics";
-	dir = 4
+	dir = 4;
+	name = "Hydroponics"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -17059,11 +17059,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -17231,12 +17231,12 @@
 /area/station/maintenance/auxsolarport)
 "hWZ" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "virology_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_one_access = list(13,45,1);
-	dir = 4
+	req_one_access = list(13,45,1)
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/medbay)
@@ -17260,10 +17260,10 @@
 /area/station/aisat/teleport)
 "hXm" = (
 /obj/machinery/door/airlock/command/glass{
+	dir = 4;
 	id_tag = null;
 	name = "Chief Medical Officer";
-	req_access = list(40);
-	dir = 4
+	req_access = list(40)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -17373,11 +17373,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	dir = 4;
+	icon_state = "shutter_opend";
 	id = "RD-shutters";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable,
 /obj/structure/window/fulltile/reinforced{
@@ -17394,8 +17394,8 @@
 /area/shuttle/supply/station)
 "ibz" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -17687,9 +17687,9 @@
 /area/station/engineering/break_room)
 "iqG" = (
 /obj/machinery/door/airlock/highsecurity{
+	dir = 4;
 	name = "Messaging Server";
-	req_access = list(19);
-	dir = 4
+	req_access = list(19)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -17773,7 +17773,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -18671,9 +18671,9 @@
 /area/shuttle/supply/station)
 "juY" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Kitchen Cold Room";
-	req_access = list(28);
-	dir = 4
+	req_access = list(28)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -18806,9 +18806,9 @@
 /area/station/engineering/atmos)
 "jzF" = (
 /obj/machinery/door/airlock/command{
+	dir = 4;
 	name = "Captain's Office";
-	req_access = list(20);
-	dir = 4
+	req_access = list(20)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -19093,9 +19093,9 @@
 /area/asteroid/mine/dwarf)
 "jIp" = (
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Hydroponics Pasture";
-	req_access = list(28);
-	dir = 4
+	req_access = list(28)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -19448,9 +19448,9 @@
 /area/station/hallway/primary/central)
 "jVo" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Anomalous Materials Loading";
-	req_access = list(7);
-	dir = 4
+	req_access = list(7)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -19693,8 +19693,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Captain_private";
-	dir = 8
+	dir = 8;
+	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -19784,8 +19784,8 @@
 /area/station/bridge/captain_quarters)
 "knb" = (
 /obj/machinery/door/airlock/glass{
-	name = "Gym";
-	dir = 4
+	dir = 4;
+	name = "Gym"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -19865,7 +19865,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -20252,12 +20252,12 @@
 /area/station/maintenance/science)
 "kLg" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "recycler_inner";
 	locked = 1;
 	name = "Recycler External Access";
-	req_access = list(67);
-	dir = 4
+	req_access = list(67)
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
@@ -20345,8 +20345,8 @@
 /area/shuttle/supply/station)
 "kPA" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -20452,10 +20452,10 @@
 	},
 /obj/structure/closet/l3closet/general,
 /obj/machinery/power/apc{
-	pixel_y = 27;
-	name = "Medbay top APC";
 	custom_smartlight_preset = "MedBay";
-	dir = 1
+	dir = 1;
+	name = "Medbay top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "whitehall"
@@ -20712,11 +20712,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -20819,9 +20819,9 @@
 /area/station/civilian/kitchen)
 "lnc" = (
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Kitchen";
-	req_access = list(28);
-	dir = 4
+	req_access = list(28)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -20904,11 +20904,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -21118,8 +21118,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -21173,9 +21173,9 @@
 /area/station/hallway/primary/central)
 "lDV" = (
 /obj/machinery/door/airlock/security{
+	dir = 4;
 	name = "Security Checkpoint";
-	req_access = list(1);
-	dir = 4
+	req_access = list(1)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -21745,7 +21745,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -21806,8 +21806,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Captain_private";
-	dir = 8
+	dir = 8;
+	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/sign/warning/securearea{
@@ -21910,11 +21910,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -22071,7 +22071,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -22336,9 +22336,9 @@
 "mQs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Escape Airlock";
-	req_access = list(1);
-	dir = 4
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
@@ -22626,9 +22626,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "Cargo";
 	name = "Cargo down APC";
-	custom_smartlight_preset = "Cargo"
+	pixel_y = -27
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
@@ -22858,11 +22858,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/sign/plaques/golden,
 /obj/structure/cable,
@@ -22886,9 +22886,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/medical/glass{
+	dir = 4;
 	name = "Medical Supplies";
-	req_access = list(72);
-	dir = 4
+	req_access = list(72)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -22995,11 +22995,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 6
@@ -23051,7 +23051,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
@@ -23982,12 +23982,12 @@
 /area/asteroid/mine/dwarf)
 "onq" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "research_outer";
 	locked = 1;
 	name = "Research Outpost External Access";
-	req_access = list(10,13);
-	dir = 4
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hallway)
@@ -24230,9 +24230,9 @@
 /area/station/medical/storage)
 "oAf" = (
 /obj/machinery/door/airlock/maintenance_hatch{
+	dir = 4;
 	name = "Telecoms Server Access";
-	req_access = list(10);
-	dir = 4
+	req_access = list(10)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -24342,9 +24342,9 @@
 /area/station/bridge/teleporter)
 "oDH" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(7);
-	dir = 4
+	req_access = list(7)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -24369,7 +24369,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -24516,9 +24516,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay down APC";
-	custom_smartlight_preset = "MedBay"
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	icon_state = "blue"
@@ -24832,7 +24832,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "HoP_blast";
 	name = "HoP Blast Doors";
 	opacity = 0
@@ -25052,8 +25052,8 @@
 /area/space)
 "piy" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "pod1";
-	dir = 4
+	dir = 4;
+	dock_tag = "pod1"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -25458,8 +25458,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	dir = 4
+	dir = 4;
+	name = "Unisex Restrooms"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -25557,9 +25557,9 @@
 	pixel_y = -32
 	},
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
-	req_access = list(10);
-	dir = 4
+	req_access = list(10)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -25953,9 +25953,9 @@
 /obj/machinery/light/smart,
 /obj/machinery/life_assist/artificial_ventilation,
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
 	name = "MedBay largecell apc down";
-	pixel_y = -27;
-	custom_smartlight_preset = "MedBay"
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -26616,16 +26616,16 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "hos_blast";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/airlock/command/glass{
+	dir = 4;
 	name = "Head of Security";
-	req_access = list(58);
-	dir = 4
+	req_access = list(58)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -26691,11 +26691,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	dir = 4;
+	icon_state = "shutter_opend";
 	id = "chapel";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -26968,9 +26968,9 @@
 /obj/structure/table/glass,
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "MedBay";
 	name = "Medbay down APC";
-	custom_smartlight_preset = "MedBay"
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -27037,16 +27037,16 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/airlock/security/glass{
+	dir = 4;
 	name = "Brig";
-	req_access = list(63);
-	dir = 4
+	req_access = list(63)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -27183,7 +27183,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "Security_private";
 	opacity = 0
 	},
@@ -27479,9 +27479,9 @@
 /area/station/engineering/atmos)
 "ror" = (
 /obj/machinery/door/airlock/maintenance{
+	dir = 4;
 	name = "Hydroponics Maintenance";
-	req_one_access = list(12);
-	dir = 4
+	req_one_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -27570,7 +27570,7 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -27869,11 +27869,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
@@ -28115,9 +28115,9 @@
 /area/station/engineering/break_room)
 "rSa" = (
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "chapelgun";
-	name = "Chapel Launcher Door";
-	dir = 4
+	name = "Chapel Launcher Door"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -28463,16 +28463,16 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	dir = 4;
+	icon_state = "shutter_opend";
 	id = "RD-shutters";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/airlock/command/glass{
+	dir = 4;
 	name = "Research Director";
-	req_access = list(30);
-	dir = 4
+	req_access = list(30)
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -28899,10 +28899,10 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -29130,9 +29130,9 @@
 "sWo" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "Engineering";
 	name = "Engineering down APC";
-	custom_smartlight_preset = "Engineering"
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -29150,17 +29150,17 @@
 /area/station/medical/morgue)
 "sYw" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	dock_tag = "pod4";
-	name = "Escape Pod 4";
-	dir = 4
+	name = "Escape Pod 4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "tav" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Telescience Research Room";
-	req_access = list(7);
-	dir = 4
+	req_access = list(7)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -29196,9 +29196,9 @@
 /area/station/maintenance/cargo)
 "tcD" = (
 /obj/machinery/door/airlock/command{
+	dir = 4;
 	name = "Head of Personnel";
-	req_access = list(57);
-	dir = 4
+	req_access = list(57)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -29212,7 +29212,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
@@ -29693,9 +29693,9 @@
 /area/station/medical/cmo)
 "tFF" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Honk Office";
-	req_access = list(46);
-	dir = 4
+	req_access = list(46)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -29714,11 +29714,11 @@
 "tFK" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Prison Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -30289,10 +30289,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
-	name = "Medbay top APC";
 	custom_smartlight_preset = "MedBay";
-	dir = 1
+	dir = 1;
+	name = "Medbay top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -30494,11 +30494,11 @@
 "uoj" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "out_misclab";
 	name = "Test Chamber Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -30521,8 +30521,8 @@
 /area/station/civilian/cold_room)
 "uph" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod 5";
-	dir = 4
+	dir = 4;
+	name = "Escape Pod 5"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -30573,10 +30573,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "MedBay";
-	name = "Medbay right APC"
+	dir = 4;
+	name = "Medbay right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -30860,7 +30860,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -30947,9 +30947,9 @@
 /area/shuttle/supply/station)
 "uMa" = (
 /obj/machinery/door/airlock/command{
+	dir = 4;
 	name = "Server Room";
-	req_access = list(30);
-	dir = 4
+	req_access = list(30)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -31035,11 +31035,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	dir = 4;
+	icon_state = "shutter_opend";
 	id = "RD-shutters";
 	name = "Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable,
 /obj/structure/cable{
@@ -31178,11 +31178,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -31385,7 +31385,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
 	opacity = 0
@@ -31506,11 +31506,11 @@
 /area/station/civilian/bar)
 "vob" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	dock_tag = "arrival_escape";
 	locked = 1;
 	name = "Escape Airlock";
-	req_access = list(1);
-	dir = 4
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
@@ -31655,15 +31655,15 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "chapel";
 	name = "Privacy Shutters";
 	opacity = 0
 	},
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Chapel Office";
-	req_access = list(22);
-	dir = 4
+	req_access = list(22)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -32250,9 +32250,9 @@
 /area/station/engineering/break_room)
 "wgg" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Bar Backroom";
-	req_access = list(25);
-	dir = 4
+	req_access = list(25)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -32296,8 +32296,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	name = "Bar apc down";
 	custom_smartlight_preset = "bar";
+	name = "Bar apc down";
 	pixel_y = -27
 	},
 /turf/simulated/floor{
@@ -32371,9 +32371,9 @@
 /area/station/tcommsat/chamber)
 "wjy" = (
 /obj/machinery/door/airlock/maintenance{
+	dir = 4;
 	name = "Hydroponics Maintenance";
-	req_one_access = list(35,28);
-	dir = 4
+	req_one_access = list(35,28)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -32419,7 +32419,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	icon_state = "shutter0";
+	icon_state = "shutter_opend";
 	id = "HoP_private";
 	opacity = 0
 	},
@@ -32466,11 +32466,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Engineering";
 	name = "Engineering Security Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
@@ -32588,11 +32588,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -32916,11 +32916,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Secure Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -33584,7 +33584,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	icon_state = "bdoor_opend";
 	id = "HoP_blast";
 	name = "HoP Blast Doors";
 	opacity = 0
@@ -33693,11 +33693,11 @@
 "xwr" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Prison Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -33769,10 +33769,10 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -33798,11 +33798,11 @@
 "xze" = (
 /obj/machinery/door/poddoor{
 	density = 0;
-	icon_state = "pdoor0";
+	dir = 4;
+	icon_state = "bdoor_opend";
 	id = "Prison Gate";
 	name = "Security Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -34264,10 +34264,10 @@
 	},
 /obj/item/stack/cable_coil/random,
 /obj/machinery/power/apc{
-	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27;
-	dir = 8
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
@@ -34562,9 +34562,9 @@
 /area/station/civilian/bar)
 "yij" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Honk Office";
-	req_access = list(46);
-	dir = 4
+	req_access = list(46)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
