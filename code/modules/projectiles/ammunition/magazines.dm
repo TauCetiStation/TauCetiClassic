@@ -244,7 +244,7 @@
 
 /obj/item/ammo_box/magazine/c20r/imp
 	name = "magazine (.45 IMP)"
-	desc = "Магазин, полный патронов для ударного пистолета-пулемета."
+	desc = "Магазин, полный импульсных патронов для пистолета-пулемета."
 	icon_state = "c20r_mag_imp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
