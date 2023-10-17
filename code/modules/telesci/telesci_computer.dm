@@ -273,7 +273,7 @@
 		telefail()
 		temp_msg = "ERROR! This sector is unreachable."
 		return
-	if(crystals.len <= 0)
+	if(!crystals.len)
 		telefail()
 		temp_msg = "The device requires crystals to operate the wormhole."
 		return
