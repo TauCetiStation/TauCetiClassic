@@ -169,7 +169,7 @@
 		return 0
 
 /obj/item/ammo_casing/caseless/a75
-	desc = "Гильза от пули калибра 75мм."
+	desc = "Гильза от пули калибра .75."
 	caliber = "75"
 	projectile_type = /obj/item/projectile/bullet/gyro
 
@@ -205,7 +205,7 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
 /obj/item/ammo_casing/c38m
-	desc = "Гильза от пули калибра 38мм."
+	desc = "Гильза от пули калибра .38."
 	icon_state = "casing_38"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
