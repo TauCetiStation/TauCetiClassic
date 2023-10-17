@@ -98,6 +98,7 @@
 #define LIGHT_COLOR_PLASMA       "#2be4b8" // Used in plasma gun. rgb(43, 228, 184)
 #define LIGHT_COLOR_PLASMA_OC    "#e88893" // Used in plasma gun overcharge mode. rgb(232, 136, 147)
 #define LIGHT_COLOR_LIGHTNING	 "#5eacb6" // Used in lightning bolt projectiles
+#define LIGHT_COLOR_NUKE_OPS      "#00f397" // Used in nuclear operatives related things
 
 //Human organ color mods
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human

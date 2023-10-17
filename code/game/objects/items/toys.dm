@@ -349,7 +349,7 @@
 
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
-	desc = "A weapon favored by many overactive children. Ages 8 and up."
+	desc = "Оружие, любимое многими гиперактивными детьми. Возрастной рейтинг 8+."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
@@ -464,24 +464,48 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
-	var/active = 0.0
+	var/active = FALSE
 	w_class = SIZE_TINY
 	attack_verb = list("attacked", "struck", "hit")
+	var/blade_color = "blue"
+
+/obj/item/toy/sword/atom_init()
+	. = ..()
+	blade_color = pick("red", "blue", "green", "purple", "yellow", "pink", "black")
+	switch(blade_color)
+		if("red")
+			light_color = COLOR_RED
+		if("blue")
+			light_color = COLOR_BLUE
+		if("green")
+			light_color = COLOR_GREEN
+		if("purple")
+			light_color = COLOR_PURPLE
+		if("yellow")
+			light_color = COLOR_YELLOW
+		if("pink")
+			light_color = COLOR_PINK
+		if("black")
+			light_color = COLOR_GRAY
 
 /obj/item/toy/sword/attack_self(mob/user)
-	src.active = !( src.active )
-	if (src.active)
+	active = !active
+	if (active)
 		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
-		src.icon_state = "swordblue"
-		src.item_state = "swordblue"
-		src.w_class = SIZE_NORMAL
+		icon_state = "sword[blade_color]"
+		item_state = icon_state
+		w_class = SIZE_NORMAL
+		hitsound = list('sound/weapons/blade1.ogg')
+		set_light(2)
 	else
 		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
-		src.icon_state = "sword0"
-		src.item_state = "sword0"
-		src.w_class = SIZE_TINY
+		icon_state = "sword0"
+		item_state = "sword0"
+		w_class = SIZE_TINY
+		hitsound = initial(hitsound)
+		set_light(0)
 
 	update_inv_mob()
 

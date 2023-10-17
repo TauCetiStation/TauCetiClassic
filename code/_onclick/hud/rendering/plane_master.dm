@@ -22,6 +22,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!isnull(render_relay_plane))
 		relay_render_to_plane(mymob, render_relay_plane)
+	apply_effects(mymob)
+
+//For filters and other effects
+/atom/movable/screen/plane_master/proc/apply_effects(mob/mymob)
+	return
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -39,8 +44,7 @@
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/game_world/backdrop(mob/mymob)
-	. = ..()
+/atom/movable/screen/plane_master/game_world/apply_effects(mob/mymob)
 	remove_filter("AO")
 	if(istype(mymob) && mymob?.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
@@ -65,8 +69,7 @@
 	plane = GHOST_ILLUSION_PLANE
 	render_relay_plane = RENDER_PLANE_ABOVE_GAME
 
-/atom/movable/screen/plane_master/ghost_illusion/backdrop(mob/mymob)
-	. = ..()
+/atom/movable/screen/plane_master/ghost_illusion/apply_effects(mob/mymob)
 	remove_filter("ghost_illusion")
 	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
 
@@ -108,12 +111,18 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/exposure/backdrop(mob/mymob) // todo: prefs
-	. = ..()
+/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob) // todo: prefs
 	remove_filter("blur_exposure")
-	if(istype(mymob) && mymob?.client?.prefs?.old_lighting)
+	if(!istype(mymob))
 		return
-	add_filter("blur_exposure", 1, gauss_blur_filter(size = 20)) // by refs such blur is heavy, but tests were okay and this allow us more flexibility with setup
+
+	var/enabled = mymob?.client?.prefs?.lampsexposure || FALSE
+
+	if(enabled)
+		alpha = 255
+		add_filter("blur_exposure", 1, gauss_blur_filter(size = 20)) // by refs such blur is heavy, but tests were okay and this allow us more flexibility with setup. Possible point for improvements
+	else
+		alpha = 0
 
 /atom/movable/screen/plane_master/lamps_selfglow
 	name = "lamps selfglow plane master"
@@ -124,29 +133,32 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_selfglow/backdrop(mob/mymob) // todo: prefs
-	. = ..()
+/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob)
 	remove_filter("add_lamps_to_selfglow")
 	remove_filter("lamps_selfglow_bloom")
 
 	if(!istype(mymob))
 		return
-	if(mymob?.client?.prefs?.old_lighting)
+
+	var/level = mymob?.client?.prefs?.glowlevel || FALSE
+
+	if(isnull(level))
 		return
+
 	var/bloomsize = 0
 	var/bloomoffset = 0
-	switch(mymob?.client?.prefs?.bloomlevel)
-		if(BLOOM_DISABLE)
-			return
-		if(BLOOM_LOW)
+	switch(level)
+		if(GLOW_LOW)
 			bloomsize = 2
 			bloomoffset = 1
-		if(BLOOM_MED)
+		if(GLOW_MED)
 			bloomsize = 3
 			bloomoffset = 2
-		if(BLOOM_HIGH)
+		if(GLOW_HIGH)
 			bloomsize = 5
 			bloomoffset = 3
+		else
+			return
 
 	add_filter("add_lamps_to_selfglow", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
 	add_filter("lamps_selfglow_bloom", 1, bloom_filter(threshold = "#aaaaaa", size = bloomsize, offset = bloomoffset, alpha = 100))
@@ -170,14 +182,18 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_glare/backdrop(mob/mymob)
-	. = ..()
+/atom/movable/screen/plane_master/lamps_glare/apply_effects(mob/mymob)
 	remove_filter("add_lamps_to_glare")
 	remove_filter("lamps_glare")
-	if(istype(mymob) && mymob?.client?.prefs?.old_lighting || !mymob?.client?.prefs?.lampsglare)
+
+	if(!istype(mymob))
 		return
-	add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
-	add_filter("lamps_glare", 1, radial_blur_filter(size = 0.05))
+
+	var/enabled = mymob?.client?.prefs?.lampsglare || FALSE
+
+	if(enabled)
+		add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
+		add_filter("lamps_glare", 1, radial_blur_filter(size = 0.05))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "above lighting plane master"
