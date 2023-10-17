@@ -29,7 +29,7 @@ components:
   maps/boxstation/: /maps-department
   #maps/delta/: Deahaka
   #maps/falcon/: Tap0r
-  maps/gamma/: AgRevol
+  #maps/gamma/: AgRevol
   #maps/prometheus/: Tap0r
   #maps/stroechka/: Tap0r
   maps/testmap/: volas
