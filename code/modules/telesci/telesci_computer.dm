@@ -229,7 +229,7 @@
 			if(create_wormhole(target))
 				teleport_cooldown = world.time + (power * 2)
 				if(prob(crystal_loss_prob))
-					crystals--
+					crystals.Remove()
 					crystal_loss_prob = 0
 				crystal_loss_prob += 105 - power
 				// use a lot of power
