@@ -5542,6 +5542,7 @@
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/science,
+/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/light/smart{
 	dir = 1
@@ -5798,6 +5799,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -11725,6 +11727,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/device/radio/intercom{
@@ -11921,6 +11924,7 @@
 /area/asteroid/research_outpost/longtermstorage)
 "Dh" = (
 /obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science,
