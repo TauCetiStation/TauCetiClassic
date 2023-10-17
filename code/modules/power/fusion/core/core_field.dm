@@ -11,7 +11,7 @@
 	alpha = 50
 	layer = 4
 	light_color = COLOR_BLUE
-
+	anchored = TRUE
 	var/size = 1
 	var/energy = 0
 	var/plasma_temperature = 0
