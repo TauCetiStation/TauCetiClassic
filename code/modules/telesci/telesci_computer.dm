@@ -230,6 +230,7 @@
 				teleport_cooldown = world.time + (power * 2)
 				if(prob(crystal_loss_prob))
 					crystals.Cut(0, crystals.len - 1)
+					crystal_loss_prob = 0
 				crystal_loss_prob += 105 - power
 				// use a lot of power
 				use_power(power * 1500)
