@@ -11,18 +11,17 @@
 
 /datum/round_aspect/rearm_energy
 	name = ROUND_ASPECT_REARM_ENERGY
-	game_announcement = "<span class='warning'>Руководство НаноТрейзен решило, что баллистическое оружие является слишком негуманным. Поэтому всё баллистическое оружие на всех станциях заменили на энергетическое.</span>"
 
 /datum/round_aspect/rearm_energy/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 	for(var/datum/design/smg/smg in global.all_designs)
 		smg.materials = list(MAT_METAL = 16000, MAT_SILVER = 4000, MAT_DIAMOND = 2000)
+
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 5
 
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
-	game_announcement = "<span class='warning'>Руководство НаноТрейзен решило, что энергетическое оружие является слишком дорогим и неэффективным. Поэтому всё энергооружие на всех станциях заменили на баллистическое.</span>"
 
 /datum/round_aspect/rearm_ballistic/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_bullets
