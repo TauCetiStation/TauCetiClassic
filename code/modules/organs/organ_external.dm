@@ -344,11 +344,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	for(var/obj/item/organ/internal/IO in bodypart_organs)
-		owner.organs -= IO
-		owner.organs_by_name -= IO.organ_tag
-		IO.owner = null
-
 	if(parent && !(parent.is_stump) && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
@@ -452,6 +447,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(vital)
 		owner.death()
+
+	for(var/obj/item/organ/internal/IO in bodypart_organs)
+		owner.organs -= IO
+		owner.organs_by_name -= IO.organ_tag
+		IO.owner = null
 
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
