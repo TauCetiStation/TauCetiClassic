@@ -416,7 +416,7 @@
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 
-/datum/reagent/sugar
+/datum/reagent/consumable/sugar
 	name = "Sugar"
 	id = "sugar"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."

@@ -2088,3 +2088,116 @@ TODO: Convert everything to custom hair dye,
 	result = "metatrombine"
 	required_reagents = list("bicaridine" = 1, "nitrogen" = 1, "potassium" = 1)
 	result_amount = 3
+
+
+// Barrel recipes
+/datum/chemical_reaction/alcohol
+	required_catalysts = list("agium" = 1)
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
+
+
+/datum/chemical_reaction/alcohol/moonshine
+	name = "Moonshine"
+	id = "moonshine"
+	required_reagents = list("nutriment" = 2, "sugar" = 1)
+	result = "moonshine"
+
+/datum/chemical_reaction/alcohol/grenadine
+	name = "Grenadine"
+	id = "grenadine"
+	required_reagents = list("berryjuice" = 2, "sugar" = 1)
+	result = "grenadine"
+
+/datum/chemical_reaction/alcohol/wine
+	name = "Wine"
+	id = "wine"
+	required_reagents = list("grapejuice" = 2, "sugar" = 1)
+	result = "wine"
+
+/datum/chemical_reaction/alcohol/pwine
+	name = "Pwine"
+	id = "pwine"
+	required_reagents = list("poisonberryjuice" = 2, "sugar" = 1)
+	result = "pwine"
+
+/datum/chemical_reaction/alcohol/melonliquor
+	name = "Melonliquor"
+	id = "melonliquor"
+	required_reagents = list("watermelonjuice" = 2, "sugar" = 1)
+	result = "melonliquor"
+
+/datum/chemical_reaction/alcohol/bluecuracao
+	name = "Bluecuracao"
+	id = "bluecuracao"
+	required_reagents = list("orangejuice" = 2, "sugar" = 1)
+	result = "bluecuracao"
+
+/datum/chemical_reaction/alcohol/beer
+	name = "Beer"
+	id = "beer"
+	required_reagents = list("cornoil" = 2, "sugar" = 1)
+	result = "beer"
+
+/datum/chemical_reaction/alcohol/gourdbeer
+	name = "Gourdbeer"
+	id = "gourdbeer"
+	required_reagents = list("gourd" = 2, "sugar" = 1)
+	result = "gourdbeer"
+
+/datum/chemical_reaction/alcohol/vodka
+	name = "Vodka"
+	id = "vodka"
+	required_reagents = list("potato" = 2, "sugar" = 1)
+	result = "vodka"
+
+/datum/chemical_reaction/alcohol/sake
+	name = "Sake"
+	id = "sake"
+	required_reagents = list("rice" = 2, "sugar" = 1)
+	result = "sake"
+
+/datum/chemical_reaction/alcohol/mead
+	name = "Mead"
+	id = "mead"
+	required_reagents = list("honey" = 2, "sugar" = 1)
+	result = "mead"
+
+/datum/chemical_reaction/alcohol/kahlua
+	name = "Kahlua"
+	id = "kahlua"
+	required_reagents = list("coffee" = 2, "sugar" = 1)
+	result = "kahlua"
+
+// I want it to be special but i have no time.
+/datum/chemical_reaction/cheese
+	name = "Cheese"
+	id = "cheese"
+	required_reagents = list("milk" = 40, "vinegar" = 10)
+	required_catalysts = list("agium" = 1)
+	result = null
+	result_amount = 1
+
+/datum/chemical_reaction/cheese/on_reaction(datum/reagents/holder, created_volume)
+	var/spawnloc = holder.my_atom
+	if(!istype(spawnloc, /obj/structure/preservation_barrel))
+		spawnloc = get_turf(spawnloc)
+	for(var/i in 1 to created_volume)
+		new /obj/item/weapon/reagent_containers/food/snacks/unfinished_cheese(spawnloc)
+
+// Regular cheese.
+/datum/chemical_reaction/cheese
+	name = "Cheese"
+	id = "cheese"
+	required_reagents = list("milk" = 40, "lemonjuice" = 40)
+	required_catalysts = list("agium" = 1)
+	result = null
+	result_amount = 1
+
+/datum/chemical_reaction/cheese/on_reaction(datum/reagents/holder, created_volume)
+	var/spawnloc = holder.my_atom
+	if(!istype(spawnloc, /obj/structure/preservation_barrel))
+		spawnloc = get_turf(spawnloc)
+	for(var/i in 1 to created_volume)
+		new /obj/item/weapon/reagent_containers/food/snacks/unfinished_cheese(spawnloc)
+

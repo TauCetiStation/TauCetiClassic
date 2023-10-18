@@ -371,6 +371,13 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
+/datum/reagent/consumable/vinegar
+	name = "Vinegar"
+	id = "vinegar"
+	description = "Уксус."
+	color = "#555555"
+	taste_message = "vinegar"
+
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	id = "dry_ramen"

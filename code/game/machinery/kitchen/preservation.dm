@@ -24,27 +24,25 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 /obj/structure/preservation_barrel/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(200)
-	reagents = R
-	R.my_atom = src
+	create_reagents(200)
 
 	save_id = global.preservation_barrels.Find(src)
 	AddComponent(/datum/component/roundstart_roundend, CALLBACK(src, PROC_REF(read_data)), CALLBACK(src, PROC_REF(write_data)), CALLBACK(src, PROC_REF(erase_data)))
 
 /obj/structure/preservation_barrel/proc/process_recipes()
-	for(var/RecType in subtypesof(/datum/barrelrecipe))
-		var/datum/barrelrecipe/Rec = new RecType
-		var/list/checkreagents = Rec.ingredients.Copy()
+	reagents.maximum_volume++
+	reagents.add_reagent("agium", 1)
 
-		while(check_reagents_for_recipe(checkreagents))
-			for(var/ing in checkreagents)
-				reagents.remove_reagent(ing, checkreagents[ing])
+	addtimer(CALLBACK(src, PROC_REF(stop_processing_recipes)), 2 SECONDS)
 
-			for(var/thing in Rec.results)
-				if(ispath(thing))
-					new thing(src)
-					continue
-				reagents.add_reagent(thing, Rec.results[thing])
+/obj/structure/preservation_barrel/proc/stop_processing_recipes()
+	reagents.del_reagent("agium")
+	reagents.maximum_volume--
+
+	for(var/datum/reagent/consumable/ethanol/R in reagents)
+		reagents.remove_reagent(R.id, 5)
+		reagents.add_reagent("vinegar", 5)
+
 
 /obj/structure/preservation_barrel/proc/check_reagents_for_recipe(list/checkreagents)
 	for(var/ing in checkreagents)
@@ -67,36 +65,33 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 		transfer_amount = G.amount_per_transfer_from_this
 
 	var/list/liquids = list()
-	var/static/radial_pour_in = image(icon = 'icons/hud/radial.dmi', icon_state = "drop")
+	var/static/radial_pour_in = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_increase")
+	var/static/radial_pour_out = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_decrease")
 	liquids["Влить"] = radial_pour_in
-	for(var/datum/reagent/R in reagents.reagent_list)
-		var/image/holder = image(icon = 'icons/hud/radial.dmi', icon_state = "colored_drop")
-		holder.color = R.color
-		liquids[R] = holder
-
+	liquids["Слить"] = radial_pour_out
 
 	var/selection = show_radial_menu(user, src, liquids, require_near = TRUE, tooltips = TRUE)
 
 	if(!selection)
 		return
 
-	if(istype(selection, /datum/reagent))
-		var/datum/reagent/Reag = selection
-		if(I.reagents.total_volume >= I.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>[I] is full.</span>")
-			return
-		if(!reagents.total_volume && reagents)
-			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
-			return
-		reagents.trans_id_to(I, Reag.id, 5)
-	else
-		if(src.reagents.total_volume >= src.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
-			return
-		if(!I.reagents.total_volume && I.reagents)
-			to_chat(user, "<span class = 'rose'>[I] is empty.</span>")
-			return
-		I.reagents.trans_to(src, transfer_amount)
+	switch(selection)
+		if("Слить")
+			if(I.reagents.total_volume >= I.reagents.maximum_volume)
+				to_chat(user, "<span class = 'rose'>[I] is full.</span>")
+				return
+			if(!reagents.total_volume && reagents)
+				to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
+				return
+			reagents.trans_to(I, transfer_amount)
+		if("Влить")
+			if(src.reagents.total_volume >= src.reagents.maximum_volume)
+				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
+				return
+			if(!I.reagents.total_volume && I.reagents)
+				to_chat(user, "<span class = 'rose'>[I] is empty.</span>")
+				return
+			I.reagents.trans_to(src, transfer_amount)
 
 /obj/structure/preservation_barrel/attack_hand(mob/user)
 	if(!contents.len)

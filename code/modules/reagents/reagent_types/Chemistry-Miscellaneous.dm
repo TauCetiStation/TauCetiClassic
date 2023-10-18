@@ -919,3 +919,10 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/oldschoolium
+	name = "Aging Catalyst"
+	id = "agium"
+	description = "Концентрированное старение."
+	color = "#111111"
+	taste_message = "sand"
