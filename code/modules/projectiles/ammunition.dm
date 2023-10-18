@@ -176,7 +176,7 @@
 
 /obj/item/ammo_box/proc/get_ammo_count_description(message)
 	if(stored_ammo.len == max_ammo)
-		message = "Кажется магазин полон"
+		message = "Кажется, магазин полон"
 	if(stored_ammo.len < max_ammo)
 		message = "Кажется магазин почти полностью полон"
 	if(stored_ammo.len <= max_ammo*0.5)
