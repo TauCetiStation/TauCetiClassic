@@ -32,20 +32,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	AddComponent(/datum/component/roundstart_roundend, CALLBACK(src, PROC_REF(read_data)), CALLBACK(src, PROC_REF(write_data)), CALLBACK(src, PROC_REF(erase_data)))
 
 /obj/structure/preservation_barrel/proc/process_recipes()
-	finding_recipe:
-		for(var/RecType in subtypesof(/datum/barrelrecipe))
-			var/datum/barrelrecipe/Rec = new RecType
-			var/list/checkreagents = Rec.ingredients.Copy()
+	for(var/RecType in subtypesof(/datum/barrelrecipe))
+		var/datum/barrelrecipe/Rec = new RecType
+		var/list/checkreagents = Rec.ingredients.Copy()
 
-			while(check_reagents_for_recipe(checkreagents))
-				for(var/ing in checkreagents)
-					reagents.remove_reagent(ing, checkreagents[ing])
+		while(check_reagents_for_recipe(checkreagents))
+			for(var/ing in checkreagents)
+				reagents.remove_reagent(ing, checkreagents[ing])
 
-				for(var/thing in Rec.results)
-					if(ispath(thing))
-						new thing(src)
-						continue
-					reagents.add_reagent(thing, Rec.results[thing])
+			for(var/thing in Rec.results)
+				if(ispath(thing))
+					new thing(src)
+					continue
+				reagents.add_reagent(thing, Rec.results[thing])
 
 /obj/structure/preservation_barrel/proc/check_reagents_for_recipe(list/checkreagents)
 	for(var/ing in checkreagents)
@@ -82,13 +81,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 		return
 
 	if(istype(selection, /datum/reagent))
+		var/datum/reagent/Reag = selection
 		if(I.reagents.total_volume >= I.reagents.maximum_volume)
 			to_chat(user, "<span class = 'rose'>[I] is full.</span>")
 			return
 		if(!reagents.total_volume && reagents)
 			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
 			return
-		reagents.trans_to(I, 5)
+		reagents.trans_id_to(I, Reag.id, 5)
 	else
 		if(src.reagents.total_volume >= src.reagents.maximum_volume)
 			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
