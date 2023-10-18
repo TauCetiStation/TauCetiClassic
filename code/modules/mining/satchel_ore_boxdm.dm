@@ -13,7 +13,7 @@
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)
-		updateDialog()
+		updateUsrDialog()
 
 	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
@@ -30,7 +30,7 @@
 			playsound(src, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='warning'>There is no ore to unload here!</span>")
-		updateDialog()
+		updateUsrDialog()
 
 
 /obj/structure/ore_box/proc/dump_box_contents()
