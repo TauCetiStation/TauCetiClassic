@@ -9,7 +9,7 @@ var/global/list/preservation_boxes = list()
 ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 /obj/structure/preservation_barrel
 	name = "wooden barrel"
-	desc = "Для заготовления жидкостей."
+	desc = "Р”Р»СЏ Р·Р°РіРѕС‚РѕРІР»РµРЅРёСЏ Р¶РёРґРєРѕСЃС‚РµР№."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "preservation_barrel"
 
@@ -70,7 +70,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 	var/list/liquids = list()
 	var/static/radial_pour_in = image(icon = 'icons/hud/radial.dmi', icon_state = "drop")
-	liquids["Влить"] = radial_pour_in
+	liquids["Р’Р»РёС‚СЊ"] = radial_pour_in
 	for(var/datum/reagent/R in reagents.reagent_list)
 		var/image/holder = image(icon = 'icons/hud/radial.dmi', icon_state = "colored_drop")
 		holder.color = R.color
@@ -161,7 +161,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 /obj/structure/preservation_table
 	name = "preservation table"
-	desc = "Для заготовления еды."
+	desc = "Р”Р»СЏ Р·Р°РіРѕС‚РѕРІР»РµРЅРёСЏ РµРґС‹."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "preservation_table"
 
@@ -199,7 +199,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 		user.drop_from_inventory(I, src)
 		update_icon()
 	else
-		to_chat(user, "<span class='notice'>Стол полон.</span>")
+		to_chat(user, "<span class='notice'>РЎС‚РѕР» РїРѕР»РѕРЅ.</span>")
 
 		return ..()
 
@@ -282,7 +282,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 /obj/structure/preservation_box
 	name = "preservation box"
-	desc = "Для заготовления овощей."
+	desc = "Р”Р»СЏ Р·Р°РіРѕС‚РѕРІР»РµРЅРёСЏ РѕРІРѕС‰РµР№."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "preservation_box"
 
@@ -306,7 +306,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 		user.drop_from_inventory(I, src)
 		update_icon()
 	else
-		to_chat(user, "<span class='notice'>Короб полон.</span>")
+		to_chat(user, "<span class='notice'>РљРѕСЂРѕР± РїРѕР»РѕРЅ.</span>")
 
 		return ..()
 
