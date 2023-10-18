@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(ticker)
 
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+				SEND_SIGNAL(src, COMSIG_TICKER_ROUND_ENDING)
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)

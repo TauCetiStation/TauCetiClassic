@@ -1192,19 +1192,6 @@
 	required_reagents = list("soymilk" = 4, "sacid" = 1)
 	result_amount = 5
 
-/datum/chemical_reaction/cheesewheel
-	name = "Cheesewheel"
-	id = "cheesewheel"
-	result = null
-	required_reagents = list("milk" = 40)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 1
-
-/datum/chemical_reaction/cheesewheel/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
-	return
-
 /datum/chemical_reaction/syntiflesh
 	name = "Syntiflesh"
 	id = "syntiflesh"
@@ -1282,93 +1269,6 @@
 	result = "nuka_cola"
 	required_reagents = list("uranium" = 1, "cola" = 6)
 	result_amount = 6
-
-/datum/chemical_reaction/moonshine
-	name = "Moonshine"
-	id = "moonshine"
-	result = "moonshine"
-	required_reagents = list("nutriment" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/grenadine
-	name = "Grenadine Syrup"
-	id = "grenadine"
-	result = "grenadine"
-	required_reagents = list("berryjuice" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/wine
-	name = "Wine"
-	id = "wine"
-	result = "wine"
-	required_reagents = list("grapejuice" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/pwine
-	name = "Poison Wine"
-	id = "pwine"
-	result = "pwine"
-	required_reagents = list("poisonberryjuice" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/melonliquor
-	name = "Melon Liquor"
-	id = "melonliquor"
-	result = "melonliquor"
-	required_reagents = list("watermelonjuice" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/bluecuracao
-	name = "Blue Curacao"
-	id = "bluecuracao"
-	result = "bluecuracao"
-	required_reagents = list("orangejuice" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/spacebeer
-	name = "Space Beer"
-	id = "spacebeer"
-	result = "beer"
-	required_reagents = list("cornoil" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/gourdbeer
-	name = "Gourd Beer"
-	id = "gourdbeer"
-	result = "gourdbeer"
-	required_reagents = list("gourd" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/vodka
-	name = "Vodka"
-	id = "vodka"
-	result = "vodka"
-	required_reagents = list("potato" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-/datum/chemical_reaction/sake
-	name = "Sake"
-	id = "sake"
-	result = "sake"
-	required_reagents = list("rice" = 10)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 10
-
-/datum/chemical_reaction/kahlua
-	name = "Kahlua"
-	id = "kahlua"
-	result = "kahlua"
-	required_reagents = list("coffee" = 5, "sugar" = 5)
-	required_catalysts = list("enzyme" = 5)
-	result_amount = 5
 
 /datum/chemical_reaction/gin_tonic
 	name = "Gin and Tonic"
@@ -1652,14 +1552,6 @@
 	id = "red_mead"
 	result = "red_mead"
 	required_reagents = list("blood" = 1, "mead" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/mead
-	name = "Mead"
-	id = "mead"
-	result = "mead"
-	required_reagents = list("sugar" = 1, "water" = 1)
-	required_catalysts = list("enzyme" = 5)
 	result_amount = 2
 
 /datum/chemical_reaction/iced_beer

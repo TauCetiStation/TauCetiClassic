@@ -15535,7 +15535,9 @@
 	dir = 2;
 	icon_state = "spline_plain"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "cwt" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -30105,7 +30107,14 @@
 	dir = 2;
 	icon_state = "spline_plain"
 	},
-/turf/simulated/floor,
+/obj/structure/preservation_barrel,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "fqR" = (
 /obj/structure/window/thin/reinforced{
@@ -33513,6 +33522,8 @@
 /area/station/maintenance/medbay)
 "fXG" = (
 /obj/structure/flora/ausbushes/grassybush,
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "fXR" = (
@@ -38922,12 +38933,18 @@
 	},
 /area/station/civilian/garden)
 "gZx" = (
-/obj/structure/stool,
 /obj/effect/decal/turf_decal/metal{
 	dir = 2;
 	icon_state = "spline_plain"
 	},
-/turf/simulated/floor,
+/obj/structure/preservation_box,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "gZB" = (
 /obj/machinery/mech_bay_recharge_port,
@@ -69103,9 +69120,14 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "nfy" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor,
+/obj/structure/preservation_table,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "nfA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -74310,8 +74332,13 @@
 	},
 /area/station/hallway/primary/central)
 "ohm" = (
-/obj/structure/stool,
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "oht" = (
 /obj/structure/cable/white{
@@ -83021,7 +83048,9 @@
 	dir = 2;
 	icon_state = "spline_plain"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "pWm" = (
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
@@ -91417,7 +91446,13 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "rGo" = (
 /obj/machinery/door/firedoor{
@@ -123216,8 +123251,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "yds" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor,
+/obj/structure/preservation_barrel,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 9;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
 /area/station/civilian/hydroponics)
 "ydx" = (
 /turf/simulated/floor/carpet/blue2,

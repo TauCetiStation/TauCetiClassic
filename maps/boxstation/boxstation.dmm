@@ -43076,8 +43076,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/cold_room)
 "bzy" = (
@@ -45714,21 +45714,21 @@
 	},
 /area/station/rnd/hor)
 "bEp" = (
-/obj/structure/kitchenspike,
-/obj/machinery/light/smart{
-	dir = 1
+/obj/structure/preservation_table,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/cold_room)
 "bEq" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/obj/machinery/icecream_vat,
-/obj/machinery/camera{
-	c_tag = "Kitchen Cold Room"
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -47554,12 +47554,17 @@
 /turf/simulated/floor,
 /area/station/cargo/miningoffice)
 "bHC" = (
-/obj/structure/dryer{
-	dir = 4;
-	pixel_x = -6
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/structure/preservation_box,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/cold_room)
 "bHD" = (
@@ -47633,6 +47638,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -48240,17 +48249,28 @@
 	},
 /area/station/medical/hallway)
 "bIJ" = (
-/obj/structure/kitchenspike,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/machinery/camera{
+	c_tag = "Kitchen Cold Room";
+	dir = 6
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 1
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/cold_room)
 "bIK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -48264,12 +48284,16 @@
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "bIM" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo";
-	pixel_x = -5
+/obj/structure/preservation_barrel,
+/obj/machinery/light/smart{
+	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/cold_room)
 "bIN" = (
@@ -48406,7 +48430,11 @@
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
 "bJa" = (
-/obj/machinery/gibber,
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/dryer{
+	dir = 8;
+	pixel_x = 6
+	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -48850,19 +48878,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJX" = (
-/obj/structure/closet/crate/freezer,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+/obj/structure/preservation_barrel,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 10
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/turf/simulated/floor,
 /area/station/civilian/cold_room)
 "bJY" = (
 /obj/machinery/hologram/holopad,
@@ -48946,15 +48969,13 @@
 	},
 /area/station/medical/hallway)
 "bKh" = (
-/obj/structure/closet/secure_closet/freezer/meat,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
 	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
 	},
-/turf/simulated/floor,
 /area/station/civilian/cold_room)
 "bKi" = (
 /obj/structure/stool,
@@ -70086,6 +70107,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)
+"erE" = (
+/obj/structure/kitchenspike,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/station/civilian/cold_room)
 "etF" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -71902,6 +71929,18 @@
 	icon_state = "darkyellow"
 	},
 /area/station/engineering/chiefs_office)
+"gAr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "gBb" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/mask/gas/coloured,
@@ -72503,6 +72542,13 @@
 	icon_state = "2-3"
 	},
 /area/shuttle/mining/station)
+"hgv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
+/area/station/civilian/cold_room)
 "hgJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -75854,6 +75900,16 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
+"kDH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
+	},
+/area/station/civilian/cold_room)
 "kDT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/visible,
@@ -78241,6 +78297,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"ntt" = (
+/obj/machinery/gibber,
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/station/civilian/cold_room)
 "nub" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -83442,6 +83507,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "tEw" = (
+/obj/structure/disposalpipe/segment,
 /obj/effect/decal/remains/robot,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -84224,6 +84290,14 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"vbL" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/machinery/icecream_vat,
+/turf/simulated/floor,
+/area/station/civilian/cold_room)
 "vbU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -84350,6 +84424,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"vAZ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/structure/closet/crate/freezer,
+/turf/simulated/floor,
+/area/station/civilian/cold_room)
 "vBO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -84394,6 +84479,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"vGZ" = (
+/turf/simulated/floor,
+/area/station/civilian/cold_room)
 "vIi" = (
 /obj/structure/closet/crate/freezer,
 /obj/random/foods/drink_can,
@@ -85153,9 +85241,15 @@
 	},
 /area/station/civilian/toilet)
 "wZc" = (
-/obj/effect/decal/cleanable/generic,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/civilian/cold_room)
 "xat" = (
 /obj/structure/stool/bed/chair/pew/right,
 /obj/effect/decal/cleanable/dirt,
@@ -106146,7 +106240,7 @@ bDp
 bDp
 bDp
 bDp
-qcd
+bDp
 bDk
 bNk
 mTP
@@ -106401,9 +106495,9 @@ bEp
 bHC
 bIM
 bJX
+vAZ
 rnx
 bDp
-usn
 tgJ
 bNk
 bsT
@@ -106656,11 +106750,11 @@ aYC
 bDp
 bIJ
 bzx
-bIK
+hgv
+kDH
 ajV
 atK
 atk
-wNf
 bmR
 bNk
 bsZ
@@ -106913,12 +107007,12 @@ aYv
 bEV
 bIK
 bHI
-bIY
 bKh
-asp
-avr
+bKh
 wZc
-bDk
+vGZ
+bDp
+gAr
 bNk
 btH
 lqO
@@ -107169,12 +107263,12 @@ aLK
 aYy
 bDp
 bEq
-bHO
-bJa
-bDp
-bDp
-bDp
-bEW
+erE
+bIY
+erE
+vbL
+asp
+avr
 fDx
 bNk
 bNk
@@ -107426,12 +107520,12 @@ aNi
 aNi
 bDp
 bDp
+bJa
+bHO
+ntt
 bDp
 bDp
 bDp
-gYZ
-bEW
-bEW
 bDk
 bNk
 gib
@@ -107682,12 +107776,12 @@ bwJ
 owK
 byR
 bEW
-bEW
-tEw
-bEW
-aSM
-aSM
-bEW
+bDp
+bDp
+bDp
+bDp
+bDp
+gYZ
 moP
 fDx
 bNk
@@ -107940,7 +108034,7 @@ dSI
 bBq
 ikq
 ikq
-ikq
+tEw
 eUl
 oUI
 oUI

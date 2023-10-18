@@ -19,6 +19,9 @@
 /// Called when the round has started, but before GAME_STATE_PLAYING.
 #define COMSIG_TICKER_ROUND_STARTING "comsig_ticker_round_starting"
 
+/// Called when the round has started, but before GAME_STATE_PLAYING.
+#define COMSIG_TICKER_ROUND_ENDING "comsig_ticker_round_ending"
+
 /// SSexplosions from base of /datum/controller/subsystem/explosions/proc/propagate_blastwave: (turf/epicenter, devastation_range, heavy_impact_range, light_impact_range)
 #define COMSIG_EXPLOSIONS_EXPLODE "comsig_explosions_explode"
 
