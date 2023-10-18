@@ -32,7 +32,7 @@
 
 /obj/item/ammo_casing/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][BB ? "" : "-использована"]"
+	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
 	desc = "[initial(desc)][BB ? "" : " Эта пуля использована."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
