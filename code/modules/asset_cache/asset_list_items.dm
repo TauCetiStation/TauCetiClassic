@@ -226,6 +226,7 @@
 		insert_icon_in_list(imgid, I)
 	return ..()
 
+/datum/asset/spritesheet/orebox
 	name = "orebox"
 
 /datum/asset/spritesheet/orebox/register()
