@@ -90,7 +90,7 @@
 	var/dat = ""
 	for(var/ore_type in stored_ore)
 		var/obj/item/weapon/ore/ore = ore_type
-		dat += "<B>x[stored_ore[ore_type]]</B></span> [initial(ore.name)]<br>"
+		dat += "<B>x[stored_ore[ore_type]]</B> [initial(ore.name)]<br>"
 	to_chat(user, dat)
 
 /obj/structure/ore_box/Topic(href, href_list)
