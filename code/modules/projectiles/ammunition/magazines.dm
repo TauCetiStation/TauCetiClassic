@@ -507,7 +507,7 @@
 /obj/item/ammo_box/magazine/plasma/examine(mob/user)
 	. = ..(user, 1)
 	if(.)
-		to_chat(user, "<span class='notice'>Вы видите измеритель заряда, он показывает: [power_supply ? round(power_supply.charge * 100 / power_supply.maxcharge) : "nan"]%.</span>")
+		to_chat(user, "<span class='notice'>Вы видите индикатор заряда, он показывает: [power_supply ? round(power_supply.charge * 100 / power_supply.maxcharge) : "nan"]%.</span>")
 
 /obj/item/ammo_box/magazine/plasma/attack_self(mob/user) // check parent proc before adding ..() or removing this one.
 	return
@@ -549,7 +549,7 @@
 
 /obj/item/ammo_box/magazine/m41a
 	name = "M41A magazine (10x24 Caseless)"
-	desc = "99-гранная рукоятка судьбы."
+	desc = "99-и зарядная палочка смерти"
 	icon_state = "M41A"
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/pulserifle
@@ -573,7 +573,7 @@
 
 /obj/item/ammo_box/speedloader/c38
 	name = "speedloader (.38 rubber)"
-	desc = "Спидлодер под 38-й калибр"
+	desc = "Спидлоадер под 38-й калибр"
 	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
@@ -588,7 +588,7 @@
 
 /obj/item/ammo_box/speedloader/c45rubber
 	name = "speedloader (.45 rubber)"
-	desc = "Спидлодер под 45-й калибр"
+	desc = "Спидлоадер под 45-й калибр"
 	caliber = ".45"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c45r

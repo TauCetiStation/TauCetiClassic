@@ -1,13 +1,13 @@
 /obj/item/ammo_casing/a357
 	name = "357. bullet"
 	icon_state = "casing_357"
-	desc = "Гильза от пули калибра .357."
+	desc = "Патрон от пули калибра .357."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
 	m_amt = 1000
 
 /obj/item/ammo_casing/a50
-	desc = "Гильза от пули калибра .50АЕ."
+	desc = "Патрон от пули калибра .50АЕ."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet
 
@@ -15,61 +15,61 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
 /obj/item/ammo_casing/c38
-	desc = "Гильза от пули 38-го калибра."
+	desc = "Патрон от пули 38-го калибра."
 	icon_state = "casing_38_rubber"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
 	m_amt = 200
 
 /obj/item/ammo_casing/c9mm
-	desc = "Гильза от пули калибра 9мм."
+	desc = "Патрон от пули калибра 9мм."
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 300
 
 /obj/item/ammo_casing/c9mmr
-	desc = "Гильза от резиновой пули калибра 9мм."
+	desc = "Патрон от резиновой пули калибра 9мм."
 	icon_state = "casing_rubber"
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 100
 
 /obj/item/ammo_casing/c45
-	desc = "Гильза от пули 45-го калибра."
+	desc = "Патрон от пули 45-го калибра."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg
 	m_amt = 400
 
 /obj/item/ammo_casing/c45hp
-	desc = "Гильза от пули калибра .45 HP."
+	desc = "Патрон от пули калибра .45 HP."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hp
 
 /obj/item/ammo_casing/c45hv
-	desc = "Гильза от пули калибра .45 HV."
+	desc = "Патрон от пули калибра .45 HV."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hv
 
 /obj/item/ammo_casing/c45imp
-	desc = "Гильза от пули калибра .45 IMP."
+	desc = "Патрон от пули калибра .45 IMP."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_imp
 
 /obj/item/ammo_casing/c45r
-	desc = "Гильза от резиновой пули 45-го калибра."
+	desc = "Патрон от резиновой пули 45-го калибра."
 	icon_state = "st-casing"
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 200
 
 /obj/item/ammo_casing/a12mm
-	desc = "Гильза от пули калибра 12мм."
+	desc = "Патрон от пули калибра 12мм."
 	caliber = "12mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "Гильза от 12-го калибра типа пуля."
+	desc = "Патрон от 12-го калибра типа пуля."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
@@ -77,21 +77,21 @@
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
-	desc = "Гильза от 12-го калибра типа картечь."
+	desc = "Патрон от 12-го калибра типа картечь."
 	icon_state = "gshell"
 	pellets = 7
 	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
-	desc = "Гильза от 12-го калибра типа травматический."
+	desc = "Патрон от 12-го калибра типа травматический."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
 	m_amt = 300
 
 /obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
-	desc = "Гильза от 12-го калибра типа электрошок."
+	desc = "Патрон от 12-го калибра типа электрошок."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
 	pellets = 5
@@ -99,25 +99,25 @@
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "Гильза от 12-го калибра типа зажигательный."
+	desc = "Патрон от 12-го калибра типа зажигательный."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
 	pellets = 12
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
-	desc = "Гильза от 12-го калибра типа дротик."
+	desc = "Патрон от 12-го калибра типа дротик."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/energy/dart
 	m_amt = 2500
 
 /obj/item/ammo_casing/a762
-	desc = "Гильза пули калибра 7.62мм."
+	desc = "Патрон пули калибра 7.62мм."
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet/a762
 
 /obj/item/ammo_casing/a145
-	desc = "Гильза пули 14,5мм."
+	desc = "Патрон пули 14,5мм."
 	icon_state = "lcasing"
 	caliber = "14.5mm"
 	projectile_type = /obj/item/projectile/bullet/heavy/a145
@@ -169,13 +169,13 @@
 		return 0
 
 /obj/item/ammo_casing/caseless/a75
-	desc = "Гильза от пули калибра .75."
+	desc = "Патрон от пули калибра .75."
 	caliber = "75"
 	projectile_type = /obj/item/projectile/bullet/gyro
 
 /obj/item/ammo_casing/caseless/rocket
 	name = "HE rocket shell"
-	desc = "Взрывчатка, предназначенная для стрельбы из пусковой установки."
+	desc = "Ракета, предназначенная для стрельбы из пусковой установки."
 	icon_state = "rocket-he"
 	projectile_type = /obj/item/projectile/missile
 	caliber = "rocket"
@@ -200,40 +200,40 @@
 	caliber = ".45"
 
 /obj/item/ammo_casing/a3006
-	desc = "Гильза от пули калибра 30-06мм."
+	desc = "Патрон от пули калибра 30-06мм."
 	caliber = "a3006"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
 /obj/item/ammo_casing/c38m
-	desc = "Гильза от пули калибра .38."
+	desc = "Патрон от пули калибра .38."
 	icon_state = "casing_38"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 400
 
 /obj/item/ammo_casing/a556
-	desc = "Гильза от пули калибра 5.56мм."
+	desc = "Патрон от пули калибра 5.56мм."
 	caliber = "5.56mm"
 	projectile_type = /obj/item/projectile/bullet/rifle2
 
 /obj/item/ammo_casing/a556i
-	desc = "Гильза для зажигательной пули калибра 5.56 мм."
+	desc = "Патрон для зажигательной пули калибра 5.56 мм."
 	caliber = "5.56mm"
 	icon_state = "casing_incendiary"
 	projectile_type = /obj/item/projectile/bullet/incendiary
 
 /obj/item/ammo_casing/a74
-	desc = "Гильза от пули калибра 7.74мм."
+	desc = "Патрон от пули калибра 7.74мм."
 	caliber = "7.74mm"
 	projectile_type = /obj/item/projectile/bullet/rifle3
 
 /obj/item/ammo_casing/drozd127
-	desc = "Гильза от пули калибра 12.7мм."
+	desc = "Патрон от пули калибра 12.7мм."
 	caliber = "12.7mm"
 	projectile_type = /obj/item/projectile/bullet/rifle2
 
 /obj/item/ammo_casing/pulserifle
-	desc = "Гильза от пули калибра 10х24."
+	desc = "Патрон от пули калибра 10х24."
 	caliber = "10x24"
 	icon_state = "casing_1024"
 	projectile_type = /obj/item/projectile/bullet/pulserifle
