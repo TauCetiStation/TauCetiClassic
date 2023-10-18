@@ -43,7 +43,7 @@
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		if(BB)
-			if(initial(BB.name) == "пуля")
+			if(initial(BB.name) == "bullet")
 				var/label_text = sanitize_safe(input(user, "Нанести надпись на [initial(BB.name)]","Надпись"), MAX_NAME_LEN)
 				if(length(label_text) > 20)
 					to_chat(user, "<span class='warning'>Надпись может состоять не более чем из 20 символов.</span>")
