@@ -565,7 +565,7 @@
 
 /obj/item/ammo_box/speedloader/a357
 	name = "speedloader (.357)"
-	desc = "Спидлодер под 357-й калибр."
+	desc = "Спидлоадер под 357-й калибр."
 	caliber = "357"
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
