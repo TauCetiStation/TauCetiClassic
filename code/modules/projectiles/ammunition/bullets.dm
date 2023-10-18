@@ -132,19 +132,19 @@
 
 
 /obj/item/ammo_casing/r4046/explosive
-	desc = "Граната калибра 40х46мм (Взрывные)."
+	desc = "Граната калибра 40х46мм (Взрывная)."
 	icon_state = "expl40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/explosive
 
 /obj/item/ammo_casing/r4046/explosive/light
 	name = "30mm grenade"
-	desc = "Граната калибра 30мм (Взрывные)."
+	desc = "Граната калибра 30мм (Взрывная)."
 	icon_state = "expl30"
 	caliber = "30"
 	projectile_type = /obj/item/projectile/bullet/grenade/explosive/light
 
 /obj/item/ammo_casing/r4046/chem/teargas
-	desc = "Граната калибра 40х46мм (слезоточивая)."
+	desc = "Граната калибра 40х46мм (Слезоточивая)."
 	icon_state = "gas40x46"
 	projectile_type = /obj/item/projectile/bullet/chem/teargas
 
