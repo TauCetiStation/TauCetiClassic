@@ -213,12 +213,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 	var/obj/item/selection = show_radial_menu(user, src, foods, require_near = TRUE, tooltips = TRUE)
 
-	if(selection)
-		if(ishuman(user))
-			user.put_in_hands(selection)
-		else
-			selection.forceMove(get_turf(src))
-		update_icon()
+	if(!selection)
+		return
+
+	if(ishuman(user))
+		user.put_in_hands(selection)
+	else
+		selection.forceMove(get_turf(src))
+	update_icon()
 
 /obj/structure/preservation_table/update_icon()
 	cut_overlay(foods_inside)
@@ -320,12 +322,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 	var/obj/item/selection = show_radial_menu(user, src, vegs, require_near = TRUE, tooltips = TRUE)
 
-	if(selection)
-		if(ishuman(user))
-			user.put_in_hands(selection)
-		else
-			selection.forceMove(get_turf(src))
-		update_icon()
+	if(!selection)
+		return
+
+	if(ishuman(user))
+		user.put_in_hands(selection)
+	else
+		selection.forceMove(get_turf(src))
+	update_icon()
 
 /obj/structure/preservation_box/update_icon()
 	cut_overlay(vegs_inside)
