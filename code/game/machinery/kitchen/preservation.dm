@@ -46,7 +46,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 						new thing(src)
 						continue
 					reagents.add_reagent(thing, Rec.results[thing])
-			continue finding_recipe
 
 /obj/structure/preservation_barrel/proc/check_reagents_for_recipe(list/checkreagents)
 	for(var/ing in checkreagents)
@@ -98,21 +97,20 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 			I.reagents.trans_to(src, transfer_amount)
 
 /obj/structure/preservation_barrel/attack_hand(mob/user)
-	if(contents.len)
-		var/list/foods = list()
-		for(var/obj/item/F in contents)
-			foods[F] = F.appearance
-
-		var/obj/item/selection = show_radial_menu(user, src, foods, require_near = TRUE, tooltips = TRUE)
-
-		if(selection)
-			if(ishuman(user))
-				user.put_in_hands(selection)
-			else
-				selection.forceMove(get_turf(src))
-
-	else
+	if(!contents.len)
 		..()
+
+	var/list/foods = list()
+	for(var/obj/item/F in contents)
+		foods[F] = F.appearance
+
+	var/obj/item/selection = show_radial_menu(user, src, foods, require_near = TRUE, tooltips = TRUE)
+
+	if(selection)
+		if(ishuman(user))
+			user.put_in_hands(selection)
+		else
+			selection.forceMove(get_turf(src))
 
 
 
@@ -204,21 +202,21 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 		return ..()
 
 /obj/structure/preservation_table/attack_hand(mob/user)
-	if(contents.len)
-		var/list/foods = list()
-		for(var/obj/item/F in contents)
-			foods[F] = F.appearance
-
-		var/obj/item/selection = show_radial_menu(user, src, foods, require_near = TRUE, tooltips = TRUE)
-
-		if(selection)
-			if(ishuman(user))
-				user.put_in_hands(selection)
-			else
-				selection.forceMove(get_turf(src))
-			update_icon()
-	else
+	if(!contents.len)
 		..()
+
+	var/list/foods = list()
+	for(var/obj/item/F in contents)
+		foods[F] = F.appearance
+
+	var/obj/item/selection = show_radial_menu(user, src, foods, require_near = TRUE, tooltips = TRUE)
+
+	if(selection)
+		if(ishuman(user))
+			user.put_in_hands(selection)
+		else
+			selection.forceMove(get_turf(src))
+		update_icon()
 
 /obj/structure/preservation_table/update_icon()
 	cut_overlay(foods_inside)
@@ -311,21 +309,21 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 		return ..()
 
 /obj/structure/preservation_box/attack_hand(mob/user)
-	if(contents.len)
-		var/list/vegs = list()
-		for(var/obj/item/V in contents)
-			vegs[V] = V.appearance
-
-		var/obj/item/selection = show_radial_menu(user, src, vegs, require_near = TRUE, tooltips = TRUE)
-
-		if(selection)
-			if(ishuman(user))
-				user.put_in_hands(selection)
-			else
-				selection.forceMove(get_turf(src))
-			update_icon()
-	else
+	if(!contents.len)
 		..()
+
+	var/list/vegs = list()
+	for(var/obj/item/V in contents)
+		vegs[V] = V.appearance
+
+	var/obj/item/selection = show_radial_menu(user, src, vegs, require_near = TRUE, tooltips = TRUE)
+
+	if(selection)
+		if(ishuman(user))
+			user.put_in_hands(selection)
+		else
+			selection.forceMove(get_turf(src))
+		update_icon()
 
 /obj/structure/preservation_box/update_icon()
 	cut_overlay(vegs_inside)
