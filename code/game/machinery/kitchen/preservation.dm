@@ -179,10 +179,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 /obj/structure/preservation_table/atom_init()
 	. = ..()
 
-	var/datum/reagents/R = new/datum/reagents(0)
-	reagents = R
-	R.my_atom = src
-
 	save_id = global.preservation_tables.Find(src)
 	AddComponent(/datum/component/roundstart_roundend, CALLBACK(src, PROC_REF(read_data)), CALLBACK(src, PROC_REF(write_data)), CALLBACK(src, PROC_REF(erase_data)))
 
