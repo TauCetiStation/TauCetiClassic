@@ -28082,6 +28082,7 @@
 	pixel_x = 24
 	},
 /obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/preservation_box,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYz" = (
@@ -47558,11 +47559,11 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/preservation_box,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
+/obj/structure/preservation_table,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},

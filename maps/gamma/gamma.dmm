@@ -1250,21 +1250,15 @@
 	},
 /area/station/bridge/ai_upload)
 "acc" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/freezer{
-	name = "Kitchen Freezer";
-	req_access = list(28)
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitehall"
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/kitchen)
 "acd" = (
@@ -1284,6 +1278,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
@@ -14413,6 +14411,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Pasture"
 	},
+/obj/structure/preservation_box,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "ckE" = (
@@ -15528,15 +15527,14 @@
 	},
 /area/station/hallway/primary/central)
 "cwp" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal/metal{
-	dir = 2;
-	icon_state = "spline_plain"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood9"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
 	},
 /area/station/civilian/hydroponics)
 "cwt" = (
@@ -27973,6 +27971,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"eUE" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile,
+/turf/simulated/floor/plating,
+/area/station/civilian/kitchen)
 "eVb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -30100,22 +30105,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "fqL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/metal{
-	dir = 2;
-	icon_state = "spline_plain"
-	},
-/obj/structure/preservation_barrel,
+/obj/structure/preservation_table,
 /obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
-/area/station/civilian/hydroponics)
+/area/station/civilian/kitchen)
 "fqR" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -34514,12 +34512,8 @@
 	},
 /area/station/maintenance/science)
 "ghc" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/simulated/floor{
-	icon_state = "white"
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/kitchen)
 "ghd" = (
@@ -38933,19 +38927,11 @@
 	},
 /area/station/civilian/garden)
 "gZx" = (
-/obj/effect/decal/turf_decal/metal{
-	dir = 2;
-	icon_state = "spline_plain"
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
 	},
-/obj/structure/preservation_box,
-/obj/effect/decal/turf_decal/wood/dark{
-	dir = 4;
-	icon_state = "siding_wood_line"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood9"
-	},
-/area/station/civilian/hydroponics)
+/area/station/civilian/kitchen)
 "gZB" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -40565,6 +40551,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -40914,6 +40903,9 @@
 	},
 /obj/machinery/requests_console/kitchen{
 	pixel_x = -32
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -52828,9 +52820,13 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)
 "jNf" = (
-/obj/structure/closet/crate/freezer,
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/structure/preservation_barrel,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/kitchen)
 "jNz" = (
@@ -62368,8 +62364,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/kitchen)
 "lLW" = (
@@ -62492,6 +62488,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -67499,10 +67498,6 @@
 /area/station/security/prison)
 "mPH" = (
 /obj/machinery/processor,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -69120,15 +69115,15 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "nfy" = (
-/obj/structure/preservation_table,
+/obj/structure/preservation_barrel,
 /obj/effect/decal/turf_decal/wood/dark{
-	dir = 5;
+	dir = 6;
 	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
-/area/station/civilian/hydroponics)
+/area/station/civilian/kitchen)
 "nfA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet,
@@ -74333,13 +74328,16 @@
 /area/station/hallway/primary/central)
 "ohm" = (
 /obj/effect/decal/turf_decal/wood/dark{
-	dir = 1;
 	icon_state = "siding_wood_line"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
-/area/station/civilian/hydroponics)
+/area/station/civilian/kitchen)
 "oht" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -83033,23 +83031,21 @@
 	},
 /area/station/civilian/kitchen)
 "pWj" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/turf_decal/metal{
-	dir = 2;
-	icon_state = "spline_plain"
+/obj/machinery/door/airlock/freezer{
+	name = "Kitchen Freezer";
+	req_access = list(28)
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood9"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitehall"
 	},
 /area/station/civilian/hydroponics)
 "pWm" = (
@@ -91447,13 +91443,12 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/wood/dark{
-	dir = 1;
 	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
-/area/station/civilian/hydroponics)
+/area/station/civilian/kitchen)
 "rGo" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -107835,7 +107830,6 @@
 	},
 /area/station/ai_monitored/eva)
 "uRf" = (
-/obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -107850,6 +107844,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "dark"
@@ -112238,12 +112233,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "vMB" = (
-/obj/machinery/kitchen_machine/oven,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/station/civilian/kitchen)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/hydroponics)
 "vME" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -121913,8 +121914,12 @@
 /area/station/engineering/drone_fabrication)
 "xOz" = (
 /obj/machinery/icecream_vat,
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood9"
 	},
 /area/station/civilian/kitchen)
 "xOU" = (
@@ -123251,15 +123256,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "yds" = (
-/obj/structure/preservation_barrel,
+/obj/structure/preservation_table,
 /obj/effect/decal/turf_decal/wood/dark{
-	dir = 9;
+	dir = 10;
 	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
-/area/station/civilian/hydroponics)
+/area/station/civilian/kitchen)
 "ydx" = (
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
@@ -145540,7 +145545,7 @@ aPB
 qzc
 qzc
 qzc
-mOQ
+qzc
 mOQ
 ckx
 npA
@@ -145796,9 +145801,9 @@ bKy
 gvA
 hvu
 xOz
-qzc
-yds
 fqL
+yds
+mOQ
 lVM
 bBP
 bBP
@@ -146057,9 +146062,9 @@ acc
 rGe
 pWj
 ace
-ace
-ace
-ace
+cwp
+cwp
+vMB
 ahD
 iZV
 uQv
@@ -146310,9 +146315,9 @@ wsQ
 sQl
 lNH
 ghc
-qzc
+ghc
 ohm
-cwp
+mOQ
 wAw
 mBz
 wAw
@@ -146562,14 +146567,14 @@ qHr
 nJA
 qzc
 pWi
-wsQ
+gZx
 pWi
 nSP
 lNH
 jNf
-qzc
+jNf
 nfy
-gZx
+mOQ
 grt
 qiR
 gQt
@@ -146826,8 +146831,8 @@ wEq
 qzc
 qzc
 qzc
-jEK
 qzc
+eUE
 qzc
 mOQ
 mOQ
@@ -147083,7 +147088,7 @@ mPZ
 pgO
 bqx
 tSf
-vMB
+eTc
 mPH
 qzc
 idB
