@@ -3,6 +3,8 @@
 	// Game announcement after initialization of the subsystem and selection of aspect. Leave blank if you don't want anything.
 	var/game_announcement
 
+	var/ic_announcement //announcement after character spawn
+
 /datum/round_aspect/proc/on_start()
 	return
 
@@ -43,6 +45,7 @@
 
 /datum/round_aspect/cyber_station
 	name = ROUND_ASPECT_CYBER_STATION
+	ic_announcement = "<span class='warning'>НаноТрейзен решило отправить на эту станцию людей только с полностью механизированными конечностями и органами.</span>"
 
 /datum/round_aspect/no_common_rchannel
 	name = ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL
@@ -52,6 +55,7 @@
 
 /datum/round_aspect/high_space_rad
 	name = ROUND_ASPECT_HIGH_SPACE_RADIATION
+	ic_announcement = "<span class='warning'>Перед началом смены вас оповестили о том что станция находится в секторе с повышенным уровнем радиации.</span>"
 
 /datum/round_aspect/ai_trio
 	name = ROUND_ASPECT_AI_TRIO
