@@ -78,23 +78,25 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 	var/selection = show_radial_menu(user, src, liquids, require_near = TRUE, tooltips = TRUE)
 
-	if(selection)
-		if(istype(selection, /datum/reagent))
-			if(I.reagents.total_volume >= I.reagents.maximum_volume)
-				to_chat(user, "<span class = 'rose'>[I] is full.</span>")
-				return
-			if(!reagents.total_volume && reagents)
-				to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
-				return
-			reagents.trans_to(I, 5)
-		else
-			if(src.reagents.total_volume >= src.reagents.maximum_volume)
-				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
-				return
-			if(!I.reagents.total_volume && I.reagents)
-				to_chat(user, "<span class = 'rose'>[I] is empty.</span>")
-				return
-			I.reagents.trans_to(src, transfer_amount)
+	if(!selection)
+		return
+
+	if(istype(selection, /datum/reagent))
+		if(I.reagents.total_volume >= I.reagents.maximum_volume)
+			to_chat(user, "<span class = 'rose'>[I] is full.</span>")
+			return
+		if(!reagents.total_volume && reagents)
+			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
+			return
+		reagents.trans_to(I, 5)
+	else
+		if(src.reagents.total_volume >= src.reagents.maximum_volume)
+			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
+			return
+		if(!I.reagents.total_volume && I.reagents)
+			to_chat(user, "<span class = 'rose'>[I] is empty.</span>")
+			return
+		I.reagents.trans_to(src, transfer_amount)
 
 /obj/structure/preservation_barrel/attack_hand(mob/user)
 	if(!contents.len)
