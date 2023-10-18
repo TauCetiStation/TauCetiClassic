@@ -13,7 +13,7 @@
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)
-		updateUsrDialog()
+		updateDialog()
 
 	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
@@ -30,11 +30,11 @@
 			playsound(src, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='warning'>There is no ore to unload here!</span>")
-		updateUsrDialog()
+		updateDialog()
 
 
 /obj/structure/ore_box/proc/dump_box_contents()
-	for (var/obj/item/weapon/ore/O as anything in contents)
+	for(var/obj/item/weapon/ore/O as anything in contents)
 		O.Move(loc)
 
 /obj/structure/ore_box/deconstruct(disassembled)
@@ -46,16 +46,11 @@
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		// stored ore is association list: ore name -> list(ore_amt, ore_icon)
-		if(!stored_ore[ORE.name])
-			stored_ore[ORE.name] = list(1, bicon(ORE))
-		else
-			stored_ore[ORE.name][1]++
-
+		stored_ore[ORE.type]++
 
 /obj/structure/ore_box/Exited(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		stored_ore[ORE.name][1]--
+		stored_ore[ORE.type]--
 	if(!contents.len)
 		stored_ore = list()
 
@@ -63,14 +58,15 @@
 	var/dat = ""
 
 	if(length(contents))
-		for(var/ore in stored_ore)
-			dat += "[stored_ore[ore][2]] <span style='vertical-align: super'><span class='orange'><B>x[stored_ore[ore][1]]</B></span> [ore]</span><br>"
-
+		for(var/ore_type in stored_ore)
+			var/obj/item/weapon/ore/ore = ore_type
+			dat += {"<span class="orebox32x32 [replacetext(replacetext("[ore_type]", "[/obj/item]/", ""), "/", "-")]"></span><span style='position: relative; top: -10px;'><span class='orange'><B>x[stored_ore[ore_type]]</B></span> [initial(ore.name)]</span><br>"}
 		dat += "<br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
 	else
 		dat += "The box is empty"
 
 	var/datum/browser/popup = new(user, "orebox", "The contents of the ore box reveal...", 280, 400)
+	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/orebox))
 	popup.set_content(dat)
 	popup.open()
 
@@ -92,10 +88,10 @@
 
 	to_chat(user, "It holds:")
 	var/dat = ""
-	for(var/ore in stored_ore)
-		dat += "[stored_ore[ore][2]] <B>x[stored_ore[ore][1]]</B> [ore]<br>"
+	for(var/ore_type in stored_ore)
+		var/obj/item/weapon/ore/ore = ore_type
+		dat += "<B>x[stored_ore[ore_type]]</B></span> [initial(ore.name)]<br>"
 	to_chat(user, dat)
-
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
