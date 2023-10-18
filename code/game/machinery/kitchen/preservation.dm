@@ -6,7 +6,7 @@ var/global/list/preservation_barrels = list()
 var/global/list/preservation_tables = list()
 var/global/list/preservation_boxes = list()
 
-ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, global.preservation_barrels)
+ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 /obj/structure/preservation_barrel
 	name = "wooden barrel"
 	desc = "Для заготовления жидкостей."
@@ -158,7 +158,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, global.preservation_barre
 
 
 
-ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, global.preservation_tables)
+ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 /obj/structure/preservation_table
 	name = "preservation table"
 	desc = "Для заготовления еды."
@@ -279,7 +279,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, global.preservation_tables
 
 
 
-ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, global.preservation_boxes)
+ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 /obj/structure/preservation_box
 	name = "preservation box"
 	desc = "Для заготовления овощей."
