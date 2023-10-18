@@ -85,8 +85,7 @@
 	if(usr.incapacitated())
 		return
 
-	set_dir(turn(src.dir, 90))
-	return
+	set_dir(turn(dir, 90))
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
 	if (isscrewing(W))
