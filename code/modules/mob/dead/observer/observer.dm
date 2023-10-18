@@ -42,6 +42,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
 
+	if(SSholiday.holidays[HALLOWEEN])
+		verbs += /mob/dead/observer/proc/join_ghost_bar
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	updateallghostimages()
@@ -734,3 +736,37 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.change_view("[viewx]x[viewy]")
 	if(client.prefs.auto_fit_viewport)
 		client.fit_viewport()
+
+var/global/list/banished_from_bar = list()
+/mob/dead/observer/proc/join_ghost_bar()
+	set name = "Become Ghostly Customer"
+	set category = "Ghost"
+
+	if(!SSticker.mode)
+		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
+		return
+
+	if(!can_reenter_corpse)
+		to_chat(src, "<span class='warning'>Ваша душа или слишком слаба (вы нажали Observe в лобби), или привязана к живому телу (вы не умерли).</span>")
+		return
+
+	var/turf/T = get_turf(loc)
+	if(!istype(T.loc, /area/station/civilian/bar))
+		to_chat(src, "<span class='warning'>Чтобы посетить бар - нужно быть в баре!</span>")
+		return
+
+	if(key in global.banished_from_bar)
+		to_chat(src, "<span class='warning'>Вас изгнали из мира живых!</span>")
+		return
+
+	var/response = tgui_alert(src, "Хочешь снова посетить бар живых?","Выпить не выйдет...", list("Да","Нет"))
+	if(response != "Да")
+		return
+	var/mob/living/simple_animal/shade/ghost_bar_customer/S = new(loc)
+	S.name = real_name
+	S.real_name = real_name
+	S.icon = body_icon.icon
+	S.icon_state = body_icon.icon_state
+	S.copy_overlays(body_icon)
+	S.alpha = 127
+	S.key = key

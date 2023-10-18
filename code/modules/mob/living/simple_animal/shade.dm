@@ -31,6 +31,11 @@
 	has_head = TRUE
 	has_arm = TRUE
 
+/mob/living/simple_animal/shade/ghostize(can_reenter_corpse, bancheck)
+	if(!QDELETED(src) && key && ckey)
+		qdel(src)
+	. = ..()
+
 /mob/living/simple_animal/shade/Life()
 	..()
 	if(stat == DEAD)
@@ -45,17 +50,7 @@
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/S = O
 		S.transfer_soul(SOULSTONE_SHADE, src, user)
-	else
-		if(O.force)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			health -= damage
-			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
-		else
-			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
-	return
+	..()
 
 /mob/living/simple_animal/shade/god
 	name = "Unbelievable God"
@@ -241,3 +236,25 @@
 	global.wizard_shades_count--
 	return ..()
 
+/mob/living/simple_animal/shade/ghost_bar_customer
+	desc = "Выглядит знакомым..."
+	status_flags = GODMODE
+	melee_damage = 0
+	alpha = 127
+
+/mob/living/simple_animal/shade/ghost_bar_customer/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/weapon/nullrod))
+		to_chat(src, "<span class='warning'>Вас изгнали из мира живых!</span>")
+		if(key)
+			global.banished_from_bar += key
+		playsound(src, 'sound/effects/ghost2.ogg', VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc)
+		ghostize(FALSE)
+	..()
+
+/mob/living/simple_animal/shade/ghost_bar_customer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	var/turf/T = NewLoc
+	if(!istype(T.loc, /area/station/civilian/bar))
+		ghostize(FALSE)
+		return FALSE
+	return ..()
