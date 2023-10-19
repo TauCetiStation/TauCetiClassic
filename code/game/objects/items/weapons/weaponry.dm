@@ -121,3 +121,15 @@
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS)
+
+/obj/item/weapon/nullrod/egyptian
+	name = "egyptian staff"
+	desc = "A tutorial in mummification is carved into the staff. You could probably follow the steps yourself if you had some bandages."
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	icon_state = "pharoah_sceptre"
+	item_state = "pharoah_sceptre"
+	lefthand_file = 'icons/mob/halloween_items_lefthand.dmi'
+	righthand_file = 'icons/mob/halloween_items_righthand.dmi'
+	attack_verb = list("bashes", "smacks", "whacks")
+	slot_flags = 0
+	w_class = SIZE_SMALL
