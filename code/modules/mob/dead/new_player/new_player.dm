@@ -438,7 +438,8 @@
 	new_character.dna.original_character_name = new_character.real_name
 	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
 	var/old_base_metabolism = new_character.get_metabolism_factor()
-	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
+	new_character.metabolism_factor.set_parameter("base_value", old_base_metabolism * rand(9, 11) * 0.1)
+	new_character.metabolism_factor.update()
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

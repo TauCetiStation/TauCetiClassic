@@ -45,8 +45,8 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor.Set(species.metabolism_mod)
-		metabolism_factor.AddModifier("NeedHeart", multiple=-1)
+		metabolism_factor.set_parameter("base_value", species.metabolism_mod)
+		metabolism_factor.set_increase_parameters("NeedHeart", list("multiple"=-1.0))
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name

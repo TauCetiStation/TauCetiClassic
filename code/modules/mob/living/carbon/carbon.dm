@@ -1,4 +1,5 @@
 /mob/living/carbon/atom_init()
+	metabolism_factor = CreateBaseValueStat(METABOLISM_FACTOR)
 	. = ..()
 	carbon_list += src
 
@@ -982,7 +983,7 @@
 				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	var/met = metabolism_factor.Get()
+	var/met = metabolism_factor.get()
 	if(met < 0)
 		met = 0
 	return met
