@@ -665,3 +665,14 @@ BLIND     // can't see anything
 	flags = HEADCOVERSEYES
 	icon_state = "skull"
 	icon = 'icons/obj/clothing/halloween_scaryhat.dmi'
+
+/obj/item/clothing/head/helmet/skull/drake
+	name = "drake helmet"
+	icon_state = "dragon"
+	desc = "The skull of a dragon."
+	armor = list(melee = 65, bullet = 15, laser = 40,energy = 40, bomb = 70, bio = 0, rad = 0)
+	cold_protection = HEAD
+	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	resistance_flags = FIRE_PROOF
