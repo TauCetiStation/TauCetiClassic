@@ -153,3 +153,17 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+
+/obj/item/weapon/nullrod/honkstaff
+	name = "staff of the honkmother"
+	desc = "Honk."
+	icon_state = "honker"
+	item_state = "honker"
+	icon = 'icons/obj/clothing/halloween_scaryitem.dmi'
+	lefthand_file = 'icons/mob/halloween_items_lefthand.dmi'
+	righthand_file = 'icons/mob/halloween_items_righthand.dmi'
+	attack_verb = list("bashes", "smacks", "whacks")
+	slot_flags = 0
+	w_class = SIZE_SMALL
+	//without replacing by attack_self()
+	tried_replacing = TRUE
