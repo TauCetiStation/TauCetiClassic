@@ -133,6 +133,8 @@
 	attack_verb = list("bashes", "smacks", "whacks")
 	slot_flags = 0
 	w_class = SIZE_SMALL
+	//without replacing by attack_self()
+	tried_replacing = TRUE
 
 /obj/item/weapon/melee/hook
 	name = "hook"
