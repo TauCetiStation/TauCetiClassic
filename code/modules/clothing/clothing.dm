@@ -647,6 +647,7 @@ BLIND     // can't see anything
 	desc = "contains shadows that dissolve flesh"
 	icon_state = "plasmaman_helmet1-plasma"
 	item_state = "plasmaman_helmet1-plasma"
+	icon = 'icons/obj/clothing/halloween_scaryhat.dmi'
 
 /obj/item/clothing/head/bio_hood/particle_protection/skull/equipped(mob/living/user, slot)
 	. = ..()

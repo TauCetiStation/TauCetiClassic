@@ -141,6 +141,7 @@
 	desc = "Mid or feed."
 	icon_state = "hook"
 	item_state = "hook"
+	icon = 'icons/obj/clothing/halloween_scaryitem.dmi'
 	lefthand_file = 'icons/mob/halloween_items_lefthand.dmi'
 	righthand_file = 'icons/mob/halloween_items_righthand.dmi'
 	flags = CONDUCT | NOBLUDGEON
