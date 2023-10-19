@@ -143,7 +143,6 @@
 	item_state = "hook"
 	lefthand_file = 'icons/mob/halloween_items_lefthand.dmi'
 	righthand_file = 'icons/mob/halloween_items_righthand.dmi'
-	fire_sound = 'sound/weapons/batonextend.ogg'
 	flags = CONDUCT | NOBLUDGEON
 	sharp = TRUE
 	force = 18
