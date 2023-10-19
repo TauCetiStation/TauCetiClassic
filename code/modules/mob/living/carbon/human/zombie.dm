@@ -238,7 +238,7 @@
 		var/datum/disease2/disease/V = virus2[ID]
 		for(var/datum/disease2/effectholder/e in V.effects)
 			if(istype(e.effect, /datum/disease2/effect/zombie)) //Already infected
-				e.chance = min(100, e.chance + 10) //Make virus develop faster
+				e.chance = min(80, e.chance + 10) //Make virus develop faster
 				V.cooldown_mul = min(3, V.cooldown_mul + 1)
 				return
 
@@ -253,7 +253,7 @@
 		holder.chance = 100
 	D.addeffect(holder)
 	D.uniqueID = rand(0,10000)
-	D.infectionchance = 100
+	D.infectionchance = 80
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
