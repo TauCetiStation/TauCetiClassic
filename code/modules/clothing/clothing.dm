@@ -656,3 +656,11 @@ BLIND     // can't see anything
 			return
 		var/obj/item/organ/external/O = new /obj/item/organ/external/head/skeleton(null)
 		O.insert_organ(H, FALSE, src)
+
+/obj/item/clothing/head/helmet/skull
+	name = "skull helmet"
+	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags = HEADCOVERSEYES
+	icon_state = "skull"
+	icon = 'icons/obj/clothing/halloween_scaryhat.dmi'
