@@ -1552,9 +1552,9 @@
 	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
 	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
 
-	brute_mod = 1.6
-	burn_mod = 0.90
-	speed_mod = -0.2
+	brute_mod = 0.9
+	burn_mod = 1.3
+	speed_mod = -0.4
 
 	tail = "unathi_zombie"
 
