@@ -123,7 +123,6 @@
 		if (!(speaking && (speaking.flags & SIGNLANG)))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
-
 	if (speaking && (speaking.flags & SIGNLANG))
 		var/obj/item/organ/external/LH = get_bodypart(BP_L_ARM)
 		var/obj/item/organ/external/RH = get_bodypart(BP_R_ARM)
@@ -191,7 +190,9 @@
 
 	if(!message || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
-
+	if(HAS_TRAIT(src, TRAIT_WHISPERER))
+		whisper_say(message, speaking, alt_name)
+		return
 	var/list/obj/item/used_radios = new
 
 	switch (message_mode)

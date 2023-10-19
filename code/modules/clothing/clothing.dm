@@ -676,3 +676,23 @@ BLIND     // can't see anything
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	resistance_flags = FIRE_PROOF
+
+#define TRAIT_WHISPERER "whisperer"
+
+/obj/item/clothing/mask/gas/fawkes/mad
+	name = "Abyssal Mask"
+	desc = "A mask created from the suffering of existence. Looking down it's eyes, you notice something gazing back at you."
+	icon_state = "mad_mask"
+	icon = 'icons/obj/clothing/halloween_scarymasks.dmi'
+
+/obj/item/clothing/mask/gas/fawkes/mad/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_MASK)
+		user.emote("scream")
+		ADD_TRAIT(user, TRAIT_WHISPERER, GENERIC_TRAIT)
+
+/obj/item/clothing/mask/gas/fawkes/mad/dropped(mob/living/user)
+	. = ..()
+	if(slot_equipped == SLOT_WEAR_MASK)
+		user.emote("scream")
+		REMOVE_TRAIT(user, TRAIT_WHISPERER, GENERIC_TRAIT)
