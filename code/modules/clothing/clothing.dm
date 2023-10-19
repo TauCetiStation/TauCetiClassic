@@ -641,3 +641,18 @@ BLIND     // can't see anything
 	flags_inv = 0
 	body_parts_covered = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/bio_hood/particle_protection/skull
+	name = "spooky hood"
+	desc = "contains shadows that dissolve flesh"
+	icon_state = "plasmaman_helmet1-plasma"
+	item_state = "plasmaman_helmet1-plasma"
+
+/obj/item/clothing/head/bio_hood/particle_protection/skull/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD && ishuman(user) && user.stat != DEAD)
+		var/mob/living/carbon/human/H = user
+		if(!H.get_bodypart(BP_HEAD) || !H.species || H.species.flags & NO_BLOOD)
+			return
+		var/obj/item/organ/external/O = new /obj/item/organ/external/head/skeleton(null)
+		O.insert_organ(H, FALSE, src)
