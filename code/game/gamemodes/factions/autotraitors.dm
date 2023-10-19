@@ -97,6 +97,7 @@
 	initroletype = /datum/role/traitor/imposter
 	//latespawned human can be imposter
 	accept_latejoiners = TRUE
+	rounstart_populate = FALSE
 	//abstract variable which helps decide how much imposters we need
 	var/antag_counting = 0
 

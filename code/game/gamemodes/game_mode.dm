@@ -132,10 +132,10 @@
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
 		for(var/mob/dead/new_player/P in available_players)
-			if(!F.max_roles)
-				log_mode("[F] max_roles <= 0.")
+			if(!F.rounstart_populate)
+				log_mode("[F] without roundstart populating.")
 				break
-			if(F.max_roles && F.members.len >= F.max_roles)
+			if(F.max_roles != 0 && F.members.len >= F.max_roles)
 				break
 			if(!F.can_join_faction(P))
 				log_mode("[P] failed [F] can_join_faction!")
