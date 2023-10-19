@@ -727,3 +727,15 @@ BLIND     // can't see anything
 	icon_state = "mummy"
 	icon = 'icons/obj/clothing/halloween_egypt.dmi'
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/head/pharaoh
+	name = "pharaoh hat"
+	desc = "Walk like an Egyptian."
+	icon_state = "pharoah_hat"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+
+/obj/item/clothing/head/nemes
+	name = "headdress of Nemes"
+	desc = "Lavish space tomb not included."
+	icon_state = "nemes_headdress"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
