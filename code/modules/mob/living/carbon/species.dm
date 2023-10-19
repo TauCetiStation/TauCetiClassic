@@ -1501,9 +1501,9 @@
 	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 
-	brute_mod = 2
-	burn_mod = 1.2
-	speed_mod = -0.8
+	brute_mod = 0.7
+	burn_mod = 1.7
+	speed_mod = -0.9
 
 	tail = "tajaran_zombie"
 
