@@ -242,3 +242,7 @@
 #define TRAIT_ARIBORN_AIRFLOW "trait_ariborn_airflow" // from atmos
 #define TRAIT_ARIBORN_THROWN "trait_ariborn_trown" // if someone thrown it
 //#define TRAIT_ARIBORN_NO_GRAVITY "trait_ariborn_no_gravity" // todo?
+
+//Halloween temporary traits
+#define TRAIT_WHISPERER "whisperer"
+#define TRAIT_BROOMER "broomer"
