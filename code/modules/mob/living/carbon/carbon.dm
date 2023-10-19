@@ -1,5 +1,8 @@
-/mob/living/carbon/atom_init()
+/mob/living/carbon/New()
 	metabolism_factor = CreateBaseValueStat(METABOLISM_FACTOR)
+	return ..()
+
+/mob/living/carbon/atom_init()
 	. = ..()
 	carbon_list += src
 
