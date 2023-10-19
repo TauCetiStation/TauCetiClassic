@@ -7,7 +7,7 @@
 	flags = NODROP | ABSTRACT | DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
-	force = 16
+	force = 20
 	w_class = SIZE_BIG
 	throwforce = 0
 	throw_range = 0
