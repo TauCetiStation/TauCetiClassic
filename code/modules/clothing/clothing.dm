@@ -713,3 +713,17 @@ BLIND     // can't see anything
 	if(slot_equipped == SLOT_WEAR_MASK)
 		user.emote("laugh")
 		REMOVE_TRAIT(user, TRAIT_BROOMER, GENERIC_TRAIT)
+
+/obj/item/clothing/mask/mummy
+	name = "mummy mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/under/mummy
+	name = "mummy wrapping"
+	desc = "Return the slab or suffer my stale references."
+	icon_state = "mummy"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
