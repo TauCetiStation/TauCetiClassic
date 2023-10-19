@@ -746,3 +746,19 @@ BLIND     // can't see anything
 	icon_state = "pharoah"
 	icon = 'icons/obj/clothing/halloween_egypt.dmi'
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/head/snowman
+	name = "snowman head"
+	desc = "A ball of white styrofoam. So festive."
+	icon_state = "snowman_h"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	flags = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+
+/obj/item/clothing/suit/snowman
+	name = "snowman outfit"
+	desc = "Two white spheres covered in white glitter. 'Tis the season."
+	icon_state = "snowman"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	flags_inv = HIDEJUMPSUIT
