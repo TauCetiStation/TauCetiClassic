@@ -372,7 +372,7 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/tgui_act(action, params)
 	. = ..()
-	if(. || issilicon(usr))
+	if(. || isAI(usr))
 		return
 	switch(action)
 		if("relabel")
