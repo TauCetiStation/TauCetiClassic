@@ -158,7 +158,7 @@
 						ghost.reenter_corpse()
 
 		H.visible_message("<span class='danger'>[H]'s body starts to move!</span>")
-		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 40)
+		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 60)
 
 /proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
