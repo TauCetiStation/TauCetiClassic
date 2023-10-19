@@ -39,7 +39,7 @@
 	var/change_to_maximum_skills = TRUE
 
 	// Type for collector of statistics by this role
-	var/datum/stat/role/stat_type = /datum/stat/role
+	var/datum/statistic_dto/role/stat_type = /datum/statistic_dto/role
 
 	var/moveset_type
 

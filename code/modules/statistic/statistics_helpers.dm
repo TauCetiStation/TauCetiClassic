@@ -1,5 +1,5 @@
 /datum/stat_collector/proc/add_communication_log(type, title, author, content, time = roundduration2text())
-	var/datum/stat/communication_log/stat = new
+	var/datum/statistic_dto/communication_log/stat = new
 	stat.__type = type
 	stat.title = title
 	stat.author = author
@@ -8,7 +8,7 @@
 	communication_logs += stat
 
 /datum/stat_collector/proc/add_achievement(key, name, title, desc)
-	var/datum/stat/achievement/stat = new
+	var/datum/statistic_dto/achievement/stat = new
 	stat.key = key
 	stat.name = name
 	stat.title = title
@@ -23,7 +23,7 @@
 	if(!H.mind)
 		return
 
-	var/datum/stat/death_stat/stat = new
+	var/datum/statistic_dto/death_stat/stat = new
 	stat.time_of_death = roundtimestamp(world.time)
 	stat.from_suicide = H.suiciding
 	stat.mob_type = H.type
@@ -56,7 +56,7 @@
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 
-	var/datum/stat/explosion_stat/stat = new
+	var/datum/statistic_dto/explosion_stat/stat = new
 	stat.epicenter_x = epicenter.x
 	stat.epicenter_y = epicenter.y
 	stat.epicenter_z = epicenter.z
@@ -73,7 +73,7 @@
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 
-	var/datum/stat/emp_stat/stat = new
+	var/datum/statistic_dto/emp_stat/stat = new
 	stat.epicenter_x = epicenter.x
 	stat.epicenter_y = epicenter.y
 	stat.epicenter_z = epicenter.z
@@ -84,7 +84,7 @@
 	emps += stat
 
 /datum/stat_collector/proc/add_manifest_entry(key, name, assigned_role, special_role, list/antag_roles, mob/controlled_mob)
-	var/datum/stat/manifest_entry/stat = new
+	var/datum/statistic_dto/manifest_entry/stat = new
 	stat.name = STRIP_NEWLINE(name)
 	stat.assigned_role = STRIP_NEWLINE(assigned_role)
 	stat.special_role = STRIP_NEWLINE(special_role)
@@ -104,7 +104,7 @@
 	manifest_entries += stat
 
 /datum/stat_collector/proc/get_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
-	var/datum/stat/leave_stat/stat = new
+	var/datum/statistic_dto/leave_stat/stat = new
 	stat.name = STRIP_NEWLINE(M.name)
 	stat.assigned_role = STRIP_NEWLINE(M.assigned_role)
 	stat.special_role = STRIP_NEWLINE(M.special_role)
@@ -121,11 +121,11 @@
 	return stat
 
 /datum/stat_collector/proc/add_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
-	var/datum/stat/leave_stat/stat = get_leave_stat(M, leave_type, leave_time)
+	var/datum/statistic_dto/leave_stat/stat = get_leave_stat(M, leave_type, leave_time)
 	leave_stats += stat
 
 /datum/stat_collector/proc/get_objective_stat(datum/objective/O)
-	var/datum/stat/objective/stat = new
+	var/datum/statistic_dto/objective/stat = new
 	stat.explanation_text = O.explanation_text
 	stat.completed = O.completion_to_string(tags = FALSE)
 	stat.__type = O.type
@@ -144,7 +144,7 @@
 	return stat
 
 /datum/stat_collector/proc/get_role_stat(datum/role/R)
-	var/datum/stat/role/stat = new R.stat_type
+	var/datum/statistic_dto/role/stat = new R.stat_type
 	stat.name = R.name
 	stat.id = R.id
 	stat.__type = R.type
@@ -171,7 +171,7 @@
 	orphaned_roles += get_role_stat(R)
 
 /datum/stat_collector/proc/add_faction(datum/faction/F)
-	var/datum/stat/faction/stat = new F.stat_type
+	var/datum/statistic_dto/faction/stat = new F.stat_type
 
 	stat.name = F.name
 	stat.id = F.ID
@@ -194,7 +194,7 @@
 	factions += stat
 
 /datum/stat_collector/proc/add_vote(datum/poll/poll)
-	var/datum/stat/vote/stat = new
+	var/datum/statistic_dto/vote/stat = new
 	stat.name = poll.name
 	stat.total_votes = poll.total_votes()
 	stat.total_voters = poll.total_voters()

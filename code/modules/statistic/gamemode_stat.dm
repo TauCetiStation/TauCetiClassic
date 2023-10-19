@@ -1,4 +1,4 @@
-/datum/stat/objective
+/datum/statistic_dto/objective
 	// string, anything, faction or mind.name
 	var/owner
 	// string, anything
@@ -15,7 +15,7 @@
 	// string, anything
 	var/target_special_role
 
-/datum/stat/faction
+/datum/statistic_dto/faction
 	// Default stats
 	// string, pool in ./code/game/gamemodes/factions in var name
 	var/name
@@ -30,19 +30,19 @@
 	var/minor_victory
 
 	// array of objects
-	var/list/datum/stat/objective/objectives = null
+	var/list/datum/statistic_dto/objective/objectives = null
 	// array of objects
-	var/list/datum/stat/role/members = null
+	var/list/datum/statistic_dto/role/members = null
 
 	// Other factions stats
 	// object
-	var/datum/stat/cult_info/cult_info = null
+	var/datum/statistic_dto/cult_info/cult_info = null
 
-/datum/stat/faction/proc/set_custom_stat(datum/faction/F)
+/datum/statistic_dto/faction/proc/set_custom_stat(datum/faction/F)
 	return
 
-/datum/stat/faction/cult/set_custom_stat(datum/faction/cult/F)
-	var/datum/stat/cult_info/stat = new
+/datum/statistic_dto/faction/cult/set_custom_stat(datum/faction/cult/F)
+	var/datum/statistic_dto/cult_info/stat = new
 
 	stat.real_number_members = F.religion.members.len
 	stat.captured_areas = F.religion.captured_areas.len - F.religion.area_types.len
@@ -74,7 +74,7 @@
 
 	cult_info = stat
 
-/datum/stat/cult_info
+/datum/statistic_dto/cult_info
 	// int, [0...]
 	var/real_number_members
 	// int, [0...]
@@ -93,15 +93,15 @@
 	// object, where key is rine name and value is int, [0...]
 	var/list/ritename_by_count
 
-/datum/stat/uplink_info
+/datum/statistic_dto/uplink_info
 	// int, [0...]
 	var/total_TC
 	// int, [0...]
 	var/spent_TC
 	// array of objects
-	var/list/datum/stat/uplink_purchase/uplink_purchases
+	var/list/datum/statistic_dto/uplink_purchase/uplink_purchases
 
-/datum/stat/uplink_purchase
+/datum/statistic_dto/uplink_purchase
 	// string, anything
 	var/bundlename
 	// int, [0...]
@@ -109,13 +109,13 @@
 	// string, byond_type
 	var/item_type
 
-/datum/stat/changeling_info
+/datum/statistic_dto/changeling_info
 	// int, [0...]. victims
 	var/victims_number
 	// array of objects
-	var/list/datum/stat/changeling_purchase/changeling_purchase
+	var/list/datum/statistic_dto/changeling_purchase/changeling_purchase
 
-/datum/stat/changeling_purchase
+/datum/statistic_dto/changeling_purchase
 	// string, byond_type
 	var/power_type
 	// string, anything
@@ -123,11 +123,11 @@
 	// int, [0...]
 	var/cost
 
-/datum/stat/wizard_info
+/datum/statistic_dto/wizard_info
 	// array of objects
-	var/list/datum/stat/book_purchase/book_purchases
+	var/list/datum/statistic_dto/book_purchase/book_purchases
 
-/datum/stat/book_purchase
+/datum/statistic_dto/book_purchase
 	// string, byond_type
 	var/power_type
 	// string, anything
@@ -135,7 +135,7 @@
 	// int, [0...]
 	var/cost
 
-/datum/stat/role
+/datum/statistic_dto/role
 	// Default stats
 	// string, pool in ./code/game/gamemodes/roles in var name
 	var/name
@@ -157,18 +157,18 @@
 	var/victory
 
 	// array of objects
-	var/list/datum/stat/objective/objectives = null
+	var/list/datum/statistic_dto/objective/objectives = null
 
 	// Other roles stats
 	// object
-	var/datum/stat/uplink_info/uplink_info = null
+	var/datum/statistic_dto/uplink_info/uplink_info = null
 	// object
-	var/datum/stat/changeling_info/changeling_info = null
+	var/datum/statistic_dto/changeling_info/changeling_info = null
 	// object
-	var/datum/stat/wizard_info/wizard_info = null
+	var/datum/statistic_dto/wizard_info/wizard_info = null
 
 
-/datum/stat/role/proc/set_custom_stat(datum/role/R)
+/datum/statistic_dto/role/proc/set_custom_stat(datum/role/R)
 	var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
 	if(S)
 		uplink_info = new
@@ -176,15 +176,15 @@
 		uplink_info.spent_TC = S.spent_TC
 		uplink_info.uplink_purchases = S.uplink_purchases
 
-/datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
-	var/datum/stat/changeling_info/_changeling_info = new
+/datum/statistic_dto/role/changeling/set_custom_stat(datum/role/changeling/C)
+	var/datum/statistic_dto/changeling_info/_changeling_info = new
 	_changeling_info.victims_number = C.absorbedamount
 
 	_changeling_info.changeling_purchase = list()
 	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
 		if(P.genomecost <= 0)
 			continue
-		var/datum/stat/changeling_purchase/stat = new
+		var/datum/statistic_dto/changeling_purchase/stat = new
 		stat.power_name = P.name
 		stat.power_type = P.type
 		stat.cost = P.genomecost
@@ -193,11 +193,11 @@
 
 	changeling_info = _changeling_info
 
-/datum/stat/role/wizard/set_custom_stat(datum/role/wizard/W)
-	var/datum/stat/wizard_info/_wizard_info = new
+/datum/statistic_dto/role/wizard/set_custom_stat(datum/role/wizard/W)
+	var/datum/statistic_dto/wizard_info/_wizard_info = new
 
 	_wizard_info.book_purchases = list()
-	for(var/datum/stat/book_purchase/book_stat in W.list_of_purchases)
+	for(var/datum/statistic_dto/book_purchase/book_stat in W.list_of_purchases)
 		_wizard_info.book_purchases += book_stat
 
 	wizard_info = _wizard_info

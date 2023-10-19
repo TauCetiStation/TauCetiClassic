@@ -8,7 +8,7 @@
 
 	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
-	var/list/datum/stat/uplink_purchase/uplink_purchases = list()
+	var/list/datum/statistic_dto/uplink_purchase/uplink_purchases = list()
 
 /datum/component/gamemode/syndicate/Initialize(crystals, type)
 	..()

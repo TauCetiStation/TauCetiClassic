@@ -35,7 +35,7 @@
 	var/datum/objective_holder/objective_holder
 
 	// Type for collector of statistics by this faction
-	var/datum/stat/faction/stat_type = /datum/stat/faction
+	var/datum/statistic_dto/faction/stat_type = /datum/statistic_dto/faction
 
 	// Whether the faction should be printed to the scoreboard even if it has 0 members.
 	var/always_print = FALSE

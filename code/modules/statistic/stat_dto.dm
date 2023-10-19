@@ -1,12 +1,12 @@
 // DTO aka Data Transfer Object, this means that you dont create any logic for these types
-/datum/stat
+/datum/statistic_dto
 	// Hello. Nothing to see here.
 
 // Documentation rules:
 //  * First write the type of data
 //  * Then write the format of data in square brackets or data pool in square brackets or comments
 //  * At the end, write any comment about the variable
-/datum/stat/communication_log
+/datum/statistic_dto/communication_log
 	// string, byond_type
 	var/__type
 	// string, anything
@@ -18,7 +18,7 @@
 	// string, anything
 	var/content
 
-/datum/stat/achievement
+/datum/statistic_dto/achievement
 	// string, anything
 	var/key
 	// string, anything
@@ -28,7 +28,7 @@
 	// string, anything
 	var/desc
 
-/datum/stat/score
+/datum/statistic_dto/score
 	// int, [0...]
 	var/crewscore      = 0 // this is the overall var/score for the whole round
 	// string, pool in ./code/game/gamemodes/scoreboard.dm near switch(SSStatistics.score.crewscore)
@@ -112,7 +112,7 @@
 	// string, anything
 	var/dmgestkey     = ""
 
-/datum/stat/death_stat
+/datum/statistic_dto/death_stat
 	// int, [0...]
 	var/death_x
 	// int, [0...]
@@ -151,7 +151,7 @@
 		"BRAIN" = 0,
 	)
 
-/datum/stat/explosion_stat
+/datum/statistic_dto/explosion_stat
 	// int, [0...]
 	var/epicenter_x = 0
 	// int, [0...]
@@ -171,7 +171,7 @@
 	// string, [hh:mm]
 	var/occurred_time
 
-/datum/stat/manifest_entry
+/datum/statistic_dto/manifest_entry
 	// string, anything
 	var/name
 	// string, anything
@@ -189,7 +189,7 @@
 	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
 
-/datum/stat/leave_stat
+/datum/statistic_dto/leave_stat
 	// string, anything
 	var/name
 	// string, anything
@@ -206,7 +206,7 @@
 	// string, [hh:mm]
 	var/leave_time
 
-/datum/stat/emp_stat
+/datum/statistic_dto/emp_stat
 	// int, [0...]
 	var/epicenter_x = 0
 	// int, [0...]
@@ -222,11 +222,11 @@
 	// string, [hh:mm]
 	var/occurred_time
 
-/datum/stat/rating
+/datum/statistic_dto/rating
 	// map of [string, float] where float is [0..5]
 	var/list/ratings = list()
 
-/datum/stat/vote
+/datum/statistic_dto/vote
 	// string from /datum/poll name
 	var/name
 	// int, [0...]

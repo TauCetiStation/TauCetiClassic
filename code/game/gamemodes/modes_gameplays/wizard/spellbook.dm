@@ -17,7 +17,7 @@
 	return TRUE
 
 /datum/spellbook_entry/proc/RecordPurchase(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	var/datum/stat/book_purchase/stat = new
+	var/datum/statistic_dto/book_purchase/stat = new
 	stat.power_type = spell_type
 	stat.power_name = name
 	stat.cost = cost
@@ -28,7 +28,7 @@
 /datum/spellbook_entry/proc/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
 	if(wiz_role)
-		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
+		for(var/datum/statistic_dto/book_purchase/stat in wiz_role.list_of_purchases)
 			if(stat.power_type == spell_type)
 				wiz_role.list_of_purchases -= stat
 
@@ -283,7 +283,7 @@
 	var/item_path= null
 
 /datum/spellbook_entry/item/RecordPurchase(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	var/datum/stat/book_purchase/stat = new
+	var/datum/statistic_dto/book_purchase/stat = new
 	stat.power_type = item_path
 	stat.power_name = name
 	stat.cost = cost
@@ -294,7 +294,7 @@
 /datum/spellbook_entry/item/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
 	if(wiz_role)
-		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
+		for(var/datum/statistic_dto/book_purchase/stat in wiz_role.list_of_purchases)
 			if(stat.power_type == item_path)
 				wiz_role.list_of_purchases -= stat
 

@@ -54,35 +54,35 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	// string, ["#pr_id #pr_id..."]
 	var/test_merges
 	// object
-	var/datum/stat/rating/rating = new /datum/stat/rating
+	var/datum/statistic_dto/rating/rating = new /datum/statistic_dto/rating
 
 	// string, html page
 	var/completion_html
 
 	// object
-	var/datum/stat/score/score = new /datum/stat/score
+	var/datum/statistic_dto/score/score = new /datum/statistic_dto/score
 	// array of objects
-	var/list/datum/stat/achievement/achievements = list()
+	var/list/datum/statistic_dto/achievement/achievements = list()
 	// array of objects
-	var/list/datum/stat/communication_log/communication_logs = list()
+	var/list/datum/statistic_dto/communication_log/communication_logs = list()
 
 	// New data
 	// array of objects
-	var/list/datum/stat/death_stat/deaths = list()
+	var/list/datum/statistic_dto/death_stat/deaths = list()
 	// array of objects
-	var/list/datum/stat/explosion_stat/explosions = list()
+	var/list/datum/statistic_dto/explosion_stat/explosions = list()
 	// array of objects
-	var/list/datum/stat/manifest_entry/manifest_entries = list()
+	var/list/datum/statistic_dto/manifest_entry/manifest_entries = list()
 	// array of objects
-	var/list/datum/stat/leave_stat/leave_stats = list()
+	var/list/datum/statistic_dto/leave_stat/leave_stats = list()
 	// array of objects
-	var/list/datum/stat/role/orphaned_roles = list()
+	var/list/datum/statistic_dto/role/orphaned_roles = list()
 	// array of objects
-	var/list/datum/stat/faction/factions = list()
+	var/list/datum/statistic_dto/faction/factions = list()
 	// array of objects
-	var/list/datum/stat/emp_stat/emps = list()
+	var/list/datum/statistic_dto/emp_stat/emps = list()
 	// array of objects
-	var/list/datum/stat/vote/completed_votes = list()
+	var/list/datum/statistic_dto/vote/completed_votes = list()
 
 /datum/stat_collector/New()
 	var/datum/default_datum = new

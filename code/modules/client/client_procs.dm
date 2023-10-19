@@ -836,7 +836,7 @@ var/global/list/disconnected_ckey_by_stat = list()
 /client/proc/handle_connect()
 	if(!global.disconnected_ckey_by_stat[ckey])
 		return
-	var/datum/stat/leave_stat/stat = global.disconnected_ckey_by_stat[ckey]
+	var/datum/statistic_dto/leave_stat/stat = global.disconnected_ckey_by_stat[ckey]
 	qdel(stat)
 	global.disconnected_ckey_by_stat -= ckey
 
@@ -845,7 +845,7 @@ var/global/list/disconnected_ckey_by_stat = list()
 		return
 	if(istype(mob.loc, /obj/machinery/cryopod))
 		return
-	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
+	var/datum/statistic_dto/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
 
 	global.disconnected_ckey_by_stat[ckey] = stat
 

@@ -99,7 +99,7 @@
 			else
 				S.uplink_items_bought += {"[name] for [cost] TC."}
 
-			var/datum/stat/uplink_purchase/stat = new
+			var/datum/statistic_dto/uplink_purchase/stat = new
 			stat.bundlename = name
 			stat.cost = cost
 			stat.item_type = item

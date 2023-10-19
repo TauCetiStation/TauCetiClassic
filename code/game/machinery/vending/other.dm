@@ -215,7 +215,7 @@
 		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,		
+		/obj/item/weapon/kitchenknife/butch = 2,
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
@@ -346,7 +346,7 @@
 		else
 			S.uplink_items_bought += {"[bought.name] for 1 voucher."}
 
-		var/datum/stat/uplink_purchase/stat = new
+		var/datum/statistic_dto/uplink_purchase/stat = new
 		stat.bundlename = bought.name
 		stat.cost = 1
 		S.uplink_purchases += stat
@@ -377,7 +377,7 @@
 		else
 			S.uplink_items_bought += {"[bought.name] for 1 voucher."}
 
-		var/datum/stat/uplink_purchase/stat = new
+		var/datum/statistic_dto/uplink_purchase/stat = new
 		stat.bundlename = bought.name
 		stat.cost = 1
 		S.uplink_purchases += stat

@@ -10,7 +10,7 @@
 	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
-	stat_type = /datum/stat/role/changeling
+	stat_type = /datum/statistic_dto/role/changeling
 	moveset_type = /datum/combat_moveset/changeling
 
 	var/list/absorbed_dna = list()
