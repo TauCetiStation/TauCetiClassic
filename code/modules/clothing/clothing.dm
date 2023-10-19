@@ -739,3 +739,10 @@ BLIND     // can't see anything
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+
+/obj/item/clothing/suit/nemes
+	name = "pharoah tunic"
+	desc = "Lavish space tomb not included."
+	icon_state = "pharoah"
+	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
