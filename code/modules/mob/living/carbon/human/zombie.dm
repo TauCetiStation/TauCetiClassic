@@ -71,7 +71,7 @@
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
 				if(A && A.density && user.Adjacent(A))
-					if(attempts >= 2 && prob(attempts*5))
+					if(attempts >= 1 && prob(attempts * 3))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
 											 "<span class='warning'>You break the airlock.</span>",\
 											 "<span class='warning'>You hear a metal screeching sound.</span>")
