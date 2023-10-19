@@ -141,7 +141,7 @@
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
 	if(!gibbed)
-		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(1000,1200))
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
