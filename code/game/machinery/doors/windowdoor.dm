@@ -5,7 +5,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
-	visible = 0.0
+	always_transparent = TRUE
 	flags = ON_BORDER
 	opacity = 0
 	explosive_resistance = 0
