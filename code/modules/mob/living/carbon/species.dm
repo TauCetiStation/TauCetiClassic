@@ -1094,7 +1094,6 @@
 	dietflags = DIET_ALL
 	flesh_color = "#c0c0c0"
 
-	brute_mod = 2
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0
@@ -1140,9 +1139,11 @@
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
+	ADD_TRAIT(H, TRAIT_SKELETON_LIMBS, GENERIC_TRAIT)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
+	REMOVE_TRAIT(H, TRAIT_SKELETON_LIMBS, GENERIC_TRAIT)
 	..()
 
 /datum/species/skeleton/regen(mob/living/carbon/human/H)
