@@ -26,6 +26,24 @@
 	icon_broken = "cabinetdetective_broken"
 	icon_off = "cabinetdetective_broken"
 
+/obj/structure/closet/secure_closet/personal/cabinet/atom_init()
+	. = ..()
+	// Temporary spawn costumes for Halloween
+	var/list/halloween_crate_spawn_turfs = list()
+	for(var/turf/T in range(src, 1))
+		var/clear = TRUE
+		if(T.density)
+			continue
+		for(var/obj/O in T)
+			if(O.density)
+				clear = FALSE
+				break
+		if(!clear)
+			continue
+		halloween_crate_spawn_turfs += T
+	if(halloween_crate_spawn_turfs.len)
+		new /obj/structure/closet/crate/halloween(pick(halloween_crate_spawn_turfs))
+
 /obj/structure/closet/secure_closet/personal/cabinet/update_icon()
 	if(broken)
 		icon_state = icon_broken
