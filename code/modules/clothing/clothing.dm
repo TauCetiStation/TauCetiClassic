@@ -653,10 +653,10 @@ BLIND     // can't see anything
 	. = ..()
 	if(slot == SLOT_HEAD && ishuman(user) && user.stat != DEAD)
 		var/mob/living/carbon/human/H = user
-		if(!H.get_bodypart(BP_HEAD) || !H.species || H.species.flags & NO_BLOOD)
+		if(!H.get_bodypart(BP_HEAD) || !H.species || H.species.flags[NO_BLOOD])
 			return
-		var/obj/item/organ/external/O = new /obj/item/organ/external/head/skeleton(null)
-		O.insert_organ(H, FALSE, src)
+		ADD_TRAIT(user, TRAIT_SKELETON_HEAD, GENERIC_TRAIT)
+		H.regenerate_icons()
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
