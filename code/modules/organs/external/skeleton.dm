@@ -103,6 +103,7 @@
 	force = 8
 	min_broken_damage = 15
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 // Temporary can't pickup
 /obj/item/organ/external/chest/skeleton/mob_pickup(mob/user, hand_index=null)
@@ -123,6 +124,7 @@
 	force = 8
 	min_broken_damage = 20
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 // Temporary can't pickup
 /obj/item/organ/external/head/skeleton/mob_pickup(mob/user, hand_index=null)
@@ -150,6 +152,7 @@
 	force = 8
 	min_broken_damage = 15
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 	cannot_amputate = FALSE
 	vital = FALSE
@@ -172,6 +175,7 @@
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 // Temporary can't pickup
 /obj/item/organ/external/l_arm/skeleton/mob_pickup(mob/user, hand_index=null)
@@ -191,6 +195,7 @@
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 // Temporary can't pickup
 /obj/item/organ/external/r_arm/skeleton/mob_pickup(mob/user, hand_index=null)
@@ -210,6 +215,7 @@
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 // Temporary can't pickup
 /obj/item/organ/external/r_leg/skeleton/mob_pickup(mob/user, hand_index=null)
@@ -229,6 +235,7 @@
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
+	can_be_pulled = FALSE
 
 // Temporary can't pickup
 /obj/item/organ/external/l_leg/skeleton/mob_pickup(mob/user, hand_index=null)
