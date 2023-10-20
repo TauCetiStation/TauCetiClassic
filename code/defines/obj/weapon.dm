@@ -318,13 +318,13 @@
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/staff/broom/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/staff/broom/attack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(!ismob(target))
 		return
 	var/mob/M = target
-	if(!(HAS_TRAIT(M, TRAIT_BROOMER)))
+	if(!HAS_TRAIT(user, TRAIT_BROOMER))
 		return
 	var/turf/throw_target = get_edge_target_turf(user, get_dir(user, M))
 	M.throw_at(throw_target, 4, 1, user)
