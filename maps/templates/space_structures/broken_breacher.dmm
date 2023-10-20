@@ -149,6 +149,14 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/broken_breacher)
+"ff" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/space_structures/broken_breacher)
 "fD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -426,7 +434,9 @@
 	},
 /area/space_structures/broken_breacher)
 "po" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -652,7 +662,9 @@
 	},
 /area/space_structures/broken_breacher)
 "xB" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
@@ -676,7 +688,9 @@
 	},
 /area/space_structures/broken_breacher)
 "yw" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/space_structures/broken_breacher)
 "yA" = (
@@ -841,7 +855,9 @@
 	},
 /area/space_structures/broken_breacher)
 "Ff" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
@@ -943,7 +959,9 @@
 	},
 /area/space_structures/broken_breacher)
 "IS" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1194,7 +1212,9 @@
 	},
 /area/space_structures/broken_breacher)
 "Ue" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "UL" = (
@@ -1262,7 +1282,9 @@
 	},
 /area/space_structures/broken_breacher)
 "Xm" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -1607,7 +1629,7 @@ sm
 pT
 pT
 pT
-pD
+ff
 pT
 pT
 or
@@ -1784,7 +1806,7 @@ EV
 pT
 pT
 pT
-pD
+ff
 pT
 pT
 pT
@@ -2036,7 +2058,7 @@ id
 pT
 pT
 pT
-pD
+ff
 pT
 pT
 pT
@@ -2195,7 +2217,7 @@ sh
 pT
 pT
 pT
-pD
+ff
 pT
 pT
 It

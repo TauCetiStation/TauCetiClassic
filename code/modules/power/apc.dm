@@ -1312,8 +1312,6 @@
 	if(custom_smartlight_preset)
 		var/type = smartlight_presets[custom_smartlight_preset]
 		smartlight_preset = new type
-	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist))
-		smartlight_preset = new /datum/smartlight_preset/hardlight_nightshift
 	else
 		smartlight_preset = new
 

@@ -13,6 +13,12 @@
 		"Gys14Segment.ttf" = 'html/custom-fonts/Gys14Segment.ttf',
 		"Gys14Segment.eot" = 'html/custom-fonts/Gys14Segment.eot',
 		"Gys14Segment.woff" = 'html/custom-fonts/Gys14Segment.woff',
+		"TINIESTONE.ttf" = 'html/custom-fonts/TINIESTONE.ttf',
+		"TINIESTONE.eot" = 'html/custom-fonts/TINIESTONE.eot',
+		"TINIESTONE.woff" = 'html/custom-fonts/TINIESTONE.woff',
+		"StatusDisplays.ttf" = 'html/custom-fonts/StatusDisplays.ttf',
+		"StatusDisplays.eot" = 'html/custom-fonts/StatusDisplays.eot',
+		"StatusDisplays.woff" = 'html/custom-fonts/StatusDisplays.woff',
 		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 

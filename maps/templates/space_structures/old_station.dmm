@@ -61,7 +61,8 @@
 "au" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -197,7 +198,8 @@
 /area/space_structures/old_station/right/rnd)
 "ba" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access"
+	name = "Central Access";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
@@ -235,7 +237,8 @@
 	id_tag = "InnerBrig";
 	layer = 2.8;
 	name = "Brig";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/snacks/donut/banana,
 /turf/simulated/floor{
@@ -649,7 +652,8 @@
 	id_tag = "InnerBrig";
 	layer = 2.8;
 	name = "Brig";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -877,7 +881,8 @@
 "fq" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -1059,7 +1064,8 @@
 	id_tag = "virology_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_one_access = list(13,45,1)
+	req_one_access = list(13,45,1);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -1310,7 +1316,8 @@
 "hZ" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(7)
+	req_access = list(7);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
@@ -1321,7 +1328,8 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -1345,7 +1353,8 @@
 /area/space_structures/old_station/central)
 "ie" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -1556,7 +1565,8 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -1849,7 +1859,8 @@
 /area/space)
 "le" = (
 /obj/machinery/door/airlock/glass{
-	name = "Primary Tool Storage"
+	name = "Primary Tool Storage";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
@@ -2013,7 +2024,8 @@
 "mA" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -2676,7 +2688,9 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "qS" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole{
+	sabotagable = 0
+	},
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "rb" = (
@@ -2735,7 +2749,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_access = list(5)
+	req_access = list(5);
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left/med)
@@ -3206,7 +3221,8 @@
 "uR" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -3578,7 +3594,8 @@
 "wV" = (
 /obj/machinery/door/airlock/research{
 	name = "Miscellaneous Research";
-	req_access = list(47)
+	req_access = list(47);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -3949,7 +3966,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "zj" = (
-/obj/machinery/door/airlock/highsecurity,
+/obj/machinery/door/airlock/highsecurity{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4336,7 +4355,8 @@
 "BL" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Armoury Section";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4490,7 +4510,8 @@
 "Cq" = (
 /obj/machinery/door/airlock/glass{
 	name = "Hydroponics";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4775,7 +4796,8 @@
 "DW" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4913,7 +4935,8 @@
 /obj/machinery/door/airlock/highsecurity{
 	locked = 1;
 	name = "AI Chamber";
-	req_access = list(16)
+	req_access = list(16);
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5614,7 +5637,8 @@
 /area/space_structures/old_station/central/hydro)
 "IE" = (
 /obj/machinery/door/airlock{
-	name = "Dorm"
+	name = "Dorm";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
@@ -5782,7 +5806,8 @@
 "JI" = (
 /obj/machinery/door/airlock/glass{
 	name = "Kitchen";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6191,6 +6216,14 @@
 /obj/structure/sign/warning/server_room,
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/satellite)
+"Mo" = (
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics";
+	req_access = list(73);
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/old_station/central/hydro)
 "Mp" = (
 /turf/simulated/floor/carpet/blue,
 /area/space_structures/old_station/central)
@@ -7093,7 +7126,8 @@
 "Sf" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Chemistry Lab";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -7199,7 +7233,8 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -7226,7 +7261,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -7602,7 +7638,8 @@
 "UW" = (
 /obj/machinery/door/airlock{
 	name = "Custodial Closet";
-	req_access = list(73)
+	req_access = list(73);
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/right)
@@ -7740,7 +7777,8 @@
 /area/space_structures/old_station/right)
 "VI" = (
 /obj/structure/door_assembly/door_assembly_ext{
-	name = "Broken External Airlock"
+	name = "Broken External Airlock";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -8162,7 +8200,8 @@
 /area/space_structures/old_station/central)
 "YI" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access"
+	name = "Central Access";
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
@@ -8322,7 +8361,8 @@
 /area/space_structures/old_station/central/kitchen)
 "ZD" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access"
+	name = "Central Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -10601,7 +10641,7 @@ BT
 Zp
 sO
 EB
-jY
+Mo
 Zp
 aK
 MV

@@ -251,12 +251,13 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information)
+	var/message = ""
 	var/insurance_type
+
 	if(ishuman(M))
 		insurance_type = get_insurance_type(M)
 
-	var/message = ""
 	if(!output_to_chat)
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
@@ -295,6 +296,12 @@
 				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
+
+	if(hide_advanced_information)
+		if(!output_to_chat)
+			message += "</BODY></HTML>"
+
+		return message
 
 	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
 	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
@@ -370,7 +377,17 @@
 
 	if(insurance_type)
 		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"
-		
+
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
+
 	return message
+
+/proc/get_sound_by_voice(mob/user, male_sounds, female_sounds)
+	if(user.gender == FEMALE)
+		return pick(female_sounds)
+
+	else if(user.gender == NEUTER)
+		return pick(user.neuter_gender_voice == MALE ? male_sounds : female_sounds)
+
+	return pick(male_sounds)

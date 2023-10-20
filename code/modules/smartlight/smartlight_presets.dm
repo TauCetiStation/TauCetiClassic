@@ -56,7 +56,10 @@ var/global/list/smartlight_presets
 	name = "default"
 
 	default_mode = /datum/light_mode/default
-	nightshift_mode = /datum/light_mode/soft
+	//nightshift_mode = /datum/light_mode/soft
+
+	nightshift_mode = /datum/light_mode/default
+	no_nightshift_mode = TRUE
 
 	available_modes = list(
 		/datum/light_mode/default,
@@ -96,10 +99,101 @@ var/global/list/smartlight_presets
 	)
 
 // todo: maybe need to be replaced with custom_smartlight_preset for APC in areas
-var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))
+/*var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))
 
 /datum/smartlight_preset/hardlight_nightshift
 	name = "operating nightshift"
 
 	nightshift_mode = /datum/light_mode/hard
-	available_modes = list(/datum/light_mode/hard)
+	available_modes = list(/datum/light_mode/hard)*/
+
+/datum/smartlight_preset/rnd
+	name = "RnD"
+
+	default_mode = /datum/light_mode/rnd
+	no_nightshift_mode = TRUE
+
+	available_modes = list(/datum/light_mode/rnd)
+
+/datum/smartlight_preset/medbay
+	name = "MedBay"
+
+	default_mode = /datum/light_mode/medbay
+	no_nightshift_mode = TRUE
+
+	available_modes = list(/datum/light_mode/medbay)
+
+/datum/smartlight_preset/brig
+	name = "Brig"
+
+	default_mode = /datum/light_mode/brig
+	no_nightshift_mode = TRUE
+
+	available_modes = list(
+							/datum/light_mode/brig,
+							/datum/light_mode/brig/dark,
+	)
+
+/datum/smartlight_preset/brig/dark
+	name = "Dark Brig"
+
+	default_mode = /datum/light_mode/brig/dark
+	no_nightshift_mode = TRUE
+
+	available_modes = list(
+							/datum/light_mode/brig,
+							/datum/light_mode/brig/dark,
+	)
+
+/datum/smartlight_preset/engineering
+	name = "Engineering"
+
+	default_mode = /datum/light_mode/engineering
+	no_nightshift_mode = TRUE
+
+	available_modes = list(/datum/light_mode/engineering)
+
+/datum/smartlight_preset/cargo
+	name = "Cargo"
+
+	default_mode = /datum/light_mode/cargo
+	no_nightshift_mode = TRUE
+
+	available_modes = list(/datum/light_mode/cargo)
+
+/datum/smartlight_preset/k3000
+    name = "default 3000k"
+    default_mode = /datum/light_mode/k3000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k3000)
+
+/datum/smartlight_preset/k4000
+    name = "default 4000k"
+    default_mode = /datum/light_mode/k4000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k4000)
+
+/datum/smartlight_preset/k5000
+    name = "default 5000k"
+    default_mode = /datum/light_mode/k5000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k5000)
+
+/datum/smartlight_preset/k6000
+    name = "default 6000k"
+    no_nightshift_mode = TRUE
+    default_mode = /datum/light_mode/k6000
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/k6000)
+
+/datum/smartlight_preset/soft
+    name = "soft"
+    default_mode = /datum/light_mode/soft
+    no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/soft)
+
+/datum/smartlight_preset/hard
+    name = "hard"
+   	default_mode = /datum/light_mode/hard
+   	no_nightshift_mode = TRUE
+    available_modes = list(/datum/light_mode/hard)

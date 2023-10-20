@@ -224,7 +224,8 @@
 /area/space_structures/djstation)
 "aO" = (
 /obj/machinery/door/airlock/glass{
-	name = "Kitchen"
+	name = "Kitchen";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -252,7 +253,8 @@
 /area/space_structures/djstation)
 "aR" = (
 /obj/machinery/door/airlock/glass{
-	name = "Cabin"
+	name = "Cabin";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;

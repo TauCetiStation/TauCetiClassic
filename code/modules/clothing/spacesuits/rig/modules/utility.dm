@@ -359,6 +359,11 @@
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
+/obj/item/rig_module/cooling_unit/advanced
+	name = "advanced hardsuit mounted cooling unit"
+	charge_consumption = 20
+	interface_name = "advanced mounted cooling unit"
+
 /obj/item/rig_module/emp_shield
 	name = "hardsuit EMP shield"
 	icon_state = "powersink"
