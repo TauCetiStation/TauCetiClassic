@@ -106,6 +106,10 @@
 	min_broken_damage = 15
 	controller_type = /datum/bodypart_controller/skeleton
 
+// Temporary can't pickup
+/obj/item/organ/external/chest/skeleton/mob_pickup(mob/user, hand_index=null)
+	return
+
 /obj/item/organ/external/chest/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -118,6 +122,11 @@
 	force = 8
 	min_broken_damage = 20
 	controller_type = /datum/bodypart_controller/skeleton
+
+// Temporary can't pickup
+/obj/item/organ/external/head/skeleton/mob_pickup(mob/user, hand_index=null)
+	if(isskeleton(user))
+		return ..()
 
 /obj/item/organ/external/head/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -141,6 +150,11 @@
 	cannot_amputate = FALSE
 	vital = FALSE
 
+// Temporary can't pickup
+/obj/item/organ/external/groin/skeleton/mob_pickup(mob/user, hand_index=null)
+	if(isskeleton(user))
+		return ..()
+
 /obj/item/organ/external/groin/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -151,6 +165,11 @@
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
+
+// Temporary can't pickup
+/obj/item/organ/external/l_arm/skeleton/mob_pickup(mob/user, hand_index=null)
+	if(isskeleton(user))
+		return ..()
 
 /obj/item/organ/external/l_arm/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -163,6 +182,11 @@
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
 
+// Temporary can't pickup
+/obj/item/organ/external/r_arm/skeleton/mob_pickup(mob/user, hand_index=null)
+	if(isskeleton(user))
+		return ..()
+
 /obj/item/organ/external/r_arm/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -174,6 +198,11 @@
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
 
+// Temporary can't pickup
+/obj/item/organ/external/r_leg/skeleton/mob_pickup(mob/user, hand_index=null)
+	if(isskeleton(user))
+		return ..()
+
 /obj/item/organ/external/r_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -184,6 +213,11 @@
 	force = 8
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
+
+// Temporary can't pickup
+/obj/item/organ/external/l_leg/skeleton/mob_pickup(mob/user, hand_index=null)
+	if(isskeleton(user))
+		return ..()
 
 /obj/item/organ/external/l_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
