@@ -45,9 +45,6 @@
 /datum/bodypart_controller/skeleton/need_process()
 	return FALSE
 
-/datum/bodypart_controller/skeleton/process()
-	return
-
 /datum/bodypart_controller/skeleton/update_damages()
 	return
 
@@ -57,11 +54,12 @@
 /datum/bodypart_controller/skeleton/fracture()
 	return
 
-/datum/bodypart_controller/skeleton/handle_cut()
-	return
-
 /datum/bodypart_controller/skeleton/process_outside()
-	return
+	var/turf/T = get_step(BP, get_dir(BP, BP.owner))
+	if(BP.owner in T)
+		skeleton_insert_bodypart(BP.owner, BP)
+	else
+		BP.forceMove(T)
 
 // If you attach these bones to any other species they just won't work, because magic
 /datum/bodypart_controller/skeleton/check_rejection()
@@ -83,8 +81,8 @@
 		return
 	if(BP.parent_bodypart && !H.bodyparts_by_name[BP.parent_bodypart])
 		return
-
-	usr.remove_from_mob(BP)
+	if(usr)
+		usr.remove_from_mob(BP)
 	BP.insert_organ(H)
 	H.update_body()
 	H.updatehealth()
@@ -110,6 +108,9 @@
 /obj/item/organ/external/chest/skeleton/mob_pickup(mob/user, hand_index=null)
 	return
 
+/obj/item/organ/external/chest/skeleton/is_attached()
+	return (loc == owner)
+
 /obj/item/organ/external/chest/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -127,6 +128,9 @@
 /obj/item/organ/external/head/skeleton/mob_pickup(mob/user, hand_index=null)
 	if(isskeleton(user))
 		return ..()
+
+/obj/item/organ/external/head/skeleton/is_attached()
+	return (loc == owner)
 
 /obj/item/organ/external/head/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -155,6 +159,9 @@
 	if(isskeleton(user))
 		return ..()
 
+/obj/item/organ/external/groin/skeleton/is_attached()
+	return (loc == owner)
+
 /obj/item/organ/external/groin/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -170,6 +177,9 @@
 /obj/item/organ/external/l_arm/skeleton/mob_pickup(mob/user, hand_index=null)
 	if(isskeleton(user))
 		return ..()
+
+/obj/item/organ/external/l_arm/skeleton/is_attached()
+	return (loc == owner)
 
 /obj/item/organ/external/l_arm/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -187,6 +197,9 @@
 	if(isskeleton(user))
 		return ..()
 
+/obj/item/organ/external/r_arm/skeleton/is_attached()
+	return (loc == owner)
+
 /obj/item/organ/external/r_arm/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -203,6 +216,9 @@
 	if(isskeleton(user))
 		return ..()
 
+/obj/item/organ/external/r_leg/skeleton/is_attached()
+	return (loc == owner)
+
 /obj/item/organ/external/r_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
@@ -218,6 +234,9 @@
 /obj/item/organ/external/l_leg/skeleton/mob_pickup(mob/user, hand_index=null)
 	if(isskeleton(user))
 		return ..()
+
+/obj/item/organ/external/l_leg/skeleton/is_attached()
+	return (loc == owner)
 
 /obj/item/organ/external/l_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
