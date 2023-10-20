@@ -246,3 +246,4 @@
 //Halloween temporary traits
 #define TRAIT_WHISPERER "whisperer"
 #define TRAIT_BROOMER "broomer"
+#define TRAIT_SKELETON_HEAD "skeleton_head"
