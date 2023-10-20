@@ -584,3 +584,41 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+
+/obj/structure/closet/crate/halloween
+	name = "Halloween Crate"
+	icon_state = "coffincrate"
+	icon_opened = "coffincrateopen"
+	icon_closed = "coffincrate"
+
+/obj/structure/closet/crate/halloween/PopulateContents()
+	var/random_costume = rand(1, 10)
+	switch(random_costume)
+		if(1)
+			new /obj/item/clothing/mask/mummy(src)
+			new /obj/item/clothing/under/mummy(src)
+		if(2)
+			new /obj/item/clothing/mask/scarecrow(src)
+			new /obj/item/weapon/staff/broom(src)
+		if(3)
+			new /obj/item/clothing/head/pharaoh(src)
+			new /obj/item/clothing/suit/nemes(src)
+			new /obj/item/weapon/nullrod/egyptian(src)
+		if(4)
+			new /obj/item/clothing/head/nemes(src)
+			new /obj/item/clothing/suit/nemes(src) //x2
+			new /obj/item/weapon/nullrod/egyptian(src)
+		if(5)
+			new /obj/item/clothing/suit/snowman(src)
+			new /obj/item/clothing/head/snowman(src)
+		if(6)
+			new /obj/item/clothing/mask/gas/fawkes/mad(src)
+			new /obj/item/weapon/melee/hook(src)
+		if(7)
+			new /obj/item/clothing/head/helmet/skull/drake(src)
+		if(8)
+			new /obj/item/clothing/head/helmet/skull(src)
+		if(9)
+			new /obj/item/clothing/head/bio_hood/particle_protection/skull(src)
+		else
+			new /obj/item/weapon/nullrod/honkstaff(src)
