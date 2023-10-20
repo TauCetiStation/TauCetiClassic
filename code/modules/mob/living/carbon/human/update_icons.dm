@@ -402,6 +402,9 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
+		// Halloween temporary overriding path
+		if(istype(U, /obj/item/clothing/under/mummy))
+			default_path = 'icons/mob/halloween_egypt.dmi'
 		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
@@ -558,6 +561,13 @@ Please contact me on #coderbus IRC. ~Carn x
 				var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
 				bloodsies.color = K.dirt_overlay.color
 				standing.overlays += bloodsies
+		// Halloween temporary overriding path
+		else if(istype(head, /obj/item/clothing/head/snowman))
+			standing = head.get_standing_overlay(src, 'icons/mob/halloween_snow.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
+		else if(istype(head, /obj/item/clothing/head/nemes) || istype(head, /obj/item/clothing/head/pharaoh))
+			standing = head.get_standing_overlay(src, 'icons/mob/halloween_egypt.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
+		else if(istype(head, /obj/item/clothing/head/helmet/skull) || istype(head, /obj/item/clothing/head/bio_hood/particle_protection/skull))
+			standing = head.get_standing_overlay(src, 'icons/mob/halloween_scaryhat.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
 		else
 			standing = head.get_standing_overlay(src, 'icons/mob/head.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
 
@@ -602,7 +612,11 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
 				drop_from_inventory(wear_suit)
 				return
-
+		// Halloween temporary overriding path
+		if(istype(S, /obj/item/clothing/suit/nemes))
+			default_path = 'icons/mob/halloween_egypt.dmi'
+		if(istype(S, /obj/item/clothing/suit/snowman))
+			default_path = 'icons/mob/halloween_snow.dmi'
 		var/image/standing = S.get_standing_overlay(src, default_path, suit_sheet, -SUIT_LAYER, "[S.blood_overlay_type]blood")
 		standing = update_height(standing)
 		overlays_standing[SUIT_LAYER] = standing
@@ -650,8 +664,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				wear_mask.screen_loc = ui_mask		//...draw the item in the inventory screen
 			client.screen += wear_mask				//Either way, add the item to the HUD
-
-		var/image/standing = wear_mask.get_standing_overlay(src, 'icons/mob/mask.dmi', SPRITE_SHEET_MASK, -FACEMASK_LAYER, "maskblood")
+		var/default_path = 'icons/mob/mask.dmi'
+		// Halloween temporary overriding path
+		if(istype(wear_mask, /obj/item/clothing/mask/gas/fawkes/mad) || istype(wear_mask, /obj/item/clothing/mask/scarecrow))
+			default_path = 'icons/mob/halloween_scarymasks.dmi'
+		if(istype(wear_mask, /obj/item/clothing/mask/mummy))
+			default_path = 'icons/mob/halloween_egypt.dmi'
+		var/image/standing = wear_mask.get_standing_overlay(src, default_path, SPRITE_SHEET_MASK, -FACEMASK_LAYER, "maskblood")
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[FACEMASK_LAYER]	= standing
 
