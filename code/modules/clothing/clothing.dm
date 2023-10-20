@@ -700,13 +700,25 @@ BLIND     // can't see anything
 	desc = "A burlap sack with eyeholes."
 	icon_state = "scarecrow_sack"
 	icon = 'icons/obj/clothing/halloween_scarymasks.dmi'
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/mask/scarecrow/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_MASK)
-		user.emote("laugh")
+		var/random_effect = rand(1,100)
+		switch(random_effect)
+			if(1 to 60)
+				user.emote("laugh")
+			if(61 to 70)
+				user.say("Reap and sow. Reap and sow")
+			if(71 to 80)
+				user.say("Hungry...")
+			if(81 to 90)
+				user.say("There is something in the field")
+			if(91 to 100)
+				user.say("Run!")
 		ADD_TRAIT(user, TRAIT_BROOMER, GENERIC_TRAIT)
+		to_chat(user, "<span class='notice'>Find a big broom and try to spook someone!</span>")
 
 /obj/item/clothing/mask/scarecrow/dropped(mob/living/user)
 	. = ..()
@@ -719,7 +731,7 @@ BLIND     // can't see anything
 	desc = "Ancient bandages."
 	icon_state = "mummy_mask"
 	icon = 'icons/obj/clothing/halloween_egypt.dmi'
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/under/mummy
 	name = "mummy wrapping"
@@ -751,7 +763,7 @@ BLIND     // can't see anything
 	name = "snowman head"
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
-	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	icon = 'icons/obj/clothing/halloween_snow.dmi'
 	flags = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
@@ -759,6 +771,6 @@ BLIND     // can't see anything
 	name = "snowman outfit"
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
 	icon_state = "snowman"
-	icon = 'icons/obj/clothing/halloween_egypt.dmi'
+	icon = 'icons/obj/clothing/halloween_snow.dmi'
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
