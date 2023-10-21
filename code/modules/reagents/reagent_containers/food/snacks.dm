@@ -642,6 +642,20 @@
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
+/obj/item/weapon/reagent_containers/food/snacks/ghostburger/attack_ghost(mob/dead/observer/user)
+	if(loc != get_turf(user))
+		return ..()
+	user.visible_message("<span class ='notice'><b>[user]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
+	reagents.remove_any(0.5 * bitesize)
+	if(reagents.total_volume <= 0)
+		var/mob/living/simple_animal/shade/G = new(get_turf(src))
+		G.key = user.key
+		G.name = user.name
+		G.warp = new(G)
+		G.vis_contents += G.warp
+		G.visible_message("<span class='notice'><b>[G]</b> just ate \the [src]!</span>", "<span class='notice'>You just ate \the [src], [pick("delicious", "wonderful", "smooth", "disgusting")]!</span>")
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/human
 	var/hname = ""
 	var/job = null
