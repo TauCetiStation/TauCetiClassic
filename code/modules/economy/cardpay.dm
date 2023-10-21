@@ -27,8 +27,10 @@
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
 
-	if(mapload && locate(/obj/structure/table, get_turf(src)))
+	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
+	if(mapload && Table)
 		anchored = TRUE
+		RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 
 	holoprice = image('icons/effects/32x32.dmi', "blank")
 	holoprice.layer = INDICATOR_LAYER

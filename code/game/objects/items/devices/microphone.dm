@@ -19,7 +19,7 @@
 
 	desc += "([department])."
 
-/obj/item/device/cardpay/proc/unwrench()
+/obj/item/device/microphone/proc/unwrench()
 	anchored = FALSE
 
 /obj/item/device/microphone/attackby(obj/item/weapon/O, mob/user)
