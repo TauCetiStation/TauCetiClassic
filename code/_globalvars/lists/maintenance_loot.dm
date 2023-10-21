@@ -193,6 +193,7 @@ var/global/list/uncommon_loot = list(
 	list(
 		/obj/item/weapon/storage/box/donkpockets = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/ghostburger = 1,
 		) = 8,
 
 	list(
