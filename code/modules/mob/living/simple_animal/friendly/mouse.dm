@@ -116,8 +116,8 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Mouse"
 
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
+	if (layer != TURF_LAYER-0.1)
+		layer = TURF_LAYER-0.1
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
@@ -219,6 +219,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/rat/atom_init()
 	. = ..()
 	AddComponent(/datum/component/gnawing)
+
+/mob/living/simple_animal/mouse/rat/Login()
+	. = ..()
+	to_chat(src, "<span class='warning'>You can now pass through the walls</span>")
 
 /mob/living/simple_animal/mouse/nuke
 	name = "nuclear mousperative"
