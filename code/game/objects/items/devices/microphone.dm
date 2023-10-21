@@ -10,7 +10,7 @@
 	var/department_genitive = "Nothing's"
 	var/datum/announcement/station/command/department/announcement = new
 
-	var/last_announce
+	var/last_announce = 0
 	var/announce_cooldown = 10 SECONDS
 
 /obj/item/device/microphone/atom_init(mapload)
