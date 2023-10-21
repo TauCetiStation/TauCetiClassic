@@ -35,6 +35,34 @@
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 	smooth = SMOOTH_TRUE
 
+/turf/simulated/wall/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover,/mob/living/simple_animal/mouse/rat))
+		INVOKE_ASYNC(src, PROC_REF(rat_in_wall))
+		return TRUE
+	return ..()
+
+/turf/simulated/wall/proc/rat_in_wall()
+	var/random_message_pick = pick("None", "From wall", "From object")
+	if(random_message_pick == "From wall" && prob(15))
+		visible_message("<span class='shadowling'>You can hear the verminous slithering of ravenous, gigantic rats inside [src]</span>")
+	for(var/obj/i in range(1, src))
+		var/static/list/messagesfromrats = list(
+			"You can hear a low, distinct scurrying as of rats or mice",
+			"You can hear a rat scampering and milling",
+			"You can hear a rat scuffling",
+			"You can hear the babel of scurrying rats"
+		)
+		if(random_message_pick == "From object" && prob(5))
+			i.visible_message("<span class='shadowling'>[messagesfromrats[pick(1,2,3,4)]]</span>")
+		var/original_pixelsX = i.pixel_x
+		var/original_pixelxY = i.pixel_y
+		for(var/z in 1 to 4)
+			i.pixel_x += rand(-1, 1)
+			i.pixel_y += rand(-1/3, 1/3)
+			sleep(1)
+		i.pixel_x = original_pixelsX
+		i.pixel_y = original_pixelxY
+
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
