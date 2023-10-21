@@ -10,6 +10,9 @@
 	var/department_genitive = "Nothing's"
 	var/datum/announcement/station/command/department/announcement = new
 
+	var/last_announce
+	var/announce_cooldown = 10 SECONDS
+
 /obj/item/device/microphone/atom_init(mapload)
 	. = ..()
 	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
@@ -44,7 +47,18 @@
 
 /obj/item/device/microphone/attack_hand(mob/user)
 	. = ..()
-	if(!isturf(loc))
+	if(!isturf(loc) || !is_station_level(z))
+		return
+
+	if(!ishuman(user))
+		to_chat(user, "<span class='warning'>Вы не знаете как этим пользоваться!</span>")
+		return
+
+	if(user.silent || isabductor(user) || HAS_TRAIT(user, TRAIT_MUTE))
+		to_chat(user, "<span class='userdange'>Вы немы.</span>")
+		return
+
+	if(last_announce + announce_cooldown > world.time)
 		return
 
 	playsound(src, 'sound/items/megaphone.ogg', VOL_EFFECTS_MASTER)
@@ -52,6 +66,7 @@
 	if(user.incapacitated() || !Adjacent(user) || !length(new_message))
 		return
 
+	last_announce = world.time
 	announcement.play(department_genitive, new_message)
 	message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
