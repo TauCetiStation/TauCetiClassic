@@ -31011,8 +31011,10 @@
 /area/station/hallway/primary/port)
 "bdL" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/skill_cartridge/usp10,
+/obj/item/device/microphone/cap,
+/obj/item/weapon/folder/blue{
+	pixel_x = -13
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bdM" = (
@@ -31133,6 +31135,9 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/hand_tele,
 /obj/machinery/computer/skills,
+/obj/item/weapon/skill_cartridge/usp10{
+	pixel_x = 14
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bdX" = (
@@ -43243,6 +43248,9 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/pen/blue,
 /obj/item/weapon/pen/red,
+/obj/item/device/microphone/hop{
+	pixel_x = -8
+	},
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "bzM" = (
@@ -46422,6 +46430,10 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/device/megaphone,
+/obj/item/device/microphone/rd{
+	pixel_x = -16;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -68623,6 +68635,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/item/device/microphone/hos{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "cNc" = (
@@ -71781,13 +71796,22 @@
 /area/station/engineering/chiefs_office)
 "gtb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/stamp/ce,
+/obj/item/weapon/paper_bin{
+	pixel_x = 14
+	},
+/obj/item/weapon/pen{
+	pixel_x = -12
+	},
+/obj/item/weapon/stamp/ce{
+	pixel_x = -12
+	},
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/item/device/microphone/ce{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -77063,10 +77087,15 @@
 	pixel_y = 16
 	},
 /obj/item/newtons_pendulum{
-	pixel_y = -7
+	pixel_y = -7;
+	pixel_x = -6
 	},
 /obj/item/weapon/pen/blue,
 /obj/item/weapon/pen/red,
+/obj/item/device/microphone/cmo{
+	pixel_x = 7;
+	pixel_y = -13
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
