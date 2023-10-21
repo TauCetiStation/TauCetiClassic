@@ -1,6 +1,6 @@
 /obj/item/device/microphone
 	name = "Microphone"
-	desc = "Микрофон для озвучивания объявлений отдела "
+	desc = "РњРёРєСЂРѕС„РѕРЅ РґР»СЏ РѕР·РІСѓС‡РёРІР°РЅРёСЏ РѕР±СЉСЏРІР»РµРЅРёР№ РѕС‚РґРµР»Р° "
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "soyuz_heads"
 	w_class = SIZE_SMALL
@@ -31,13 +31,13 @@
 			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
 			if(!anchored)
 				if(!Table)
-					to_chat(user, "<span class='warning'>Микрофон можно прикрутить только к столу.</span>")
+					to_chat(user, "<span class='warning'>РњРёРєСЂРѕС„РѕРЅ РјРѕР¶РЅРѕ РїСЂРёРєСЂСѓС‚РёС‚СЊ С‚РѕР»СЊРєРѕ Рє СЃС‚РѕР»Сѓ.</span>")
 					return
-				to_chat(user, "<span class='warning'>Микрофон прикручен.</span>")
+				to_chat(user, "<span class='warning'>РњРёРєСЂРѕС„РѕРЅ РїСЂРёРєСЂСѓС‡РµРЅ.</span>")
 				anchored = TRUE
 				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 				return
-			to_chat(user, "<span class='notice'>Микрофон откручен.</span>")
+			to_chat(user, "<span class='notice'>РњРёРєСЂРѕС„РѕРЅ РѕС‚РєСЂСѓС‡РµРЅ.</span>")
 			anchored = FALSE
 
 	return ..()
@@ -48,7 +48,7 @@
 		return
 
 	playsound(src, 'sound/items/megaphone.ogg', VOL_EFFECTS_MASTER)
-	var/new_message = sanitize(input(usr, "Объявление:", "[name]", "") as null|message)
+	var/new_message = sanitize(input(usr, "РћР±СЉСЏРІР»РµРЅРёРµ:", "[name]", "") as null|message)
 	if(user.incapacitated() || !Adjacent(user) || !length(new_message))
 		return
 
@@ -58,36 +58,36 @@
 // Heads
 /obj/item/device/microphone/cap
 	name = "Captain's Microphone"
-	department = "Кабинет Капитана"
-	department_genitive = "Кабинета Капитана"
+	department = "РљР°Р±РёРЅРµС‚ РљР°РїРёС‚Р°РЅР°"
+	department_genitive = "РљР°Р±РёРЅРµС‚Р° РљР°РїРёС‚Р°РЅР°"
 	announcement = new /datum/announcement/station/command/department/captain
 
 /obj/item/device/microphone/hop
 	name = "Head of Personnel's Microphone"
-	department = "Кабинет ГП"
-	department_genitive = "Кабинета ГП"
+	department = "РљР°Р±РёРЅРµС‚ Р“Рџ"
+	department_genitive = "РљР°Р±РёРЅРµС‚Р° Р“Рџ"
 	announcement = new /datum/announcement/station/command/department/hop
 
 /obj/item/device/microphone/hos
 	name = "Head of Security's Microphone"
-	department =  "Кабинет ГСБ"
-	department_genitive = "Кабинета ГСБ"
+	department =  "РљР°Р±РёРЅРµС‚ Р“РЎР‘"
+	department_genitive = "РљР°Р±РёРЅРµС‚Р° Р“РЎР‘"
 	announcement = new /datum/announcement/station/command/department/hos
 
 /obj/item/device/microphone/rd
 	name = "Research Director's Microphone"
-	department = "Кабинет ДИР"
-	department_genitive = "Кабинета ДИР"
+	department = "РљР°Р±РёРЅРµС‚ Р”РР "
+	department_genitive = "РљР°Р±РёРЅРµС‚Р° Р”РР "
 	announcement = new /datum/announcement/station/command/department/rd
 
 /obj/item/device/microphone/cmo
 	name = "Chief Medical Officer's Microphone"
-	department = "Кабинет Главврача"
-	department_genitive = "Кабинета Главврача"
+	department = "РљР°Р±РёРЅРµС‚ Р“Р»Р°РІРІСЂР°С‡Р°"
+	department_genitive = "РљР°Р±РёРЅРµС‚Р° Р“Р»Р°РІРІСЂР°С‡Р°"
 	announcement = new /datum/announcement/station/command/department/cmo
 
 /obj/item/device/microphone/ce
 	name = "Chief Engineer's Microphone"
-	department = "Кабинет СИ"
-	department_genitive = "Кабинета СИ"
+	department = "РљР°Р±РёРЅРµС‚ РЎР"
+	department_genitive = "РљР°Р±РёРЅРµС‚Р° РЎР"
 	announcement = new /datum/announcement/station/command/department/ce
