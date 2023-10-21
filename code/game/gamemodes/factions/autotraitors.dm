@@ -70,18 +70,18 @@
 			add_faction_member(src, newtraitor, TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), global.autotraitors_spawn_cd)
 
-/datum/faction/traitor/auto/proc/sort_possible_traitors(list/players_list)
-	for(var/mob/living/player in players_list)
+/datum/faction/traitor/auto/proc/sort_possible_traitors(list/sorting_list)
+	for(var/mob/living/player in sorting_list)
 		if(player.ismindprotect())
-			players_list -= player
+			sorting_list -= player
 			continue
 		if(!player.mind || !player.client)
-			players_list -= player
+			sorting_list -= player
 			continue
 		for(var/job in list("Cyborg", "Security Officer", "Security Cadet", "Warden", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
 			if(player.mind.assigned_role == job)
-				players_list -= player
-	return player_list
+				sorting_list -= player
+	return sorting_list
 
 /datum/faction/traitor/auto/proc/get_max_traitors(playercount)
 	return round(playercount / 10) + 1
@@ -125,9 +125,10 @@
 		if(player.mind.assigned_role in imposter_prioritize_list)
 			mindprotected_list += player
 	log_mode("IMPOSTERS: First addition list has [mindprotected_list.len] lenght")
-	var/mob/M = pick(mindprotected_list)
-	add_faction_member(src, M)
-	antag_counting++
+	if(mindprotected_list.len)
+		var/mob/M = pick(mindprotected_list)
+		add_faction_member(src, M)
+		antag_counting++
 
 /datum/faction/traitor/auto/imposter/get_max_traitors(playercount)
 	return antag_counting
@@ -171,14 +172,14 @@
 		return TRUE
 	log_mode("IMPOSTERS: Members ([members.len]) has enough people for current players amount ([player_list.len])")
 
-/datum/faction/traitor/auto/imposter/sort_possible_traitors(list/players_list)
-	for(var/mob/living/player in players_list)
+/datum/faction/traitor/auto/imposter/sort_possible_traitors(list/sorting_list)
+	for(var/mob/living/player in sorting_list)
 		if(!player.mind || !player.client)
-			players_list -= player
+			sorting_list -= player
 			continue
 		for(var/job in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
 			if(player.mind.assigned_role == job)
-				players_list -= player
-	return player_list
+				sorting_list -= player
+	return sorting_list
 
 #undef FIRST_ADDITION_IMPOSTER_CD

@@ -516,6 +516,7 @@
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
 	has_gendered_icons = FALSE
+	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -1129,10 +1130,7 @@
 		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
 		)
 
-	has_organ = list(
-		 O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
-		)
+	has_organ = list()
 
 	min_age = 1
 	max_age = 1000

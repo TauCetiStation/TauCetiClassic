@@ -55,6 +55,9 @@
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	qdel(src)
 
+/obj/item/weapon/card/emag/clown
+	uses = 50
+
 /*
  * DATA CARDS - Used for the teleporter
  */

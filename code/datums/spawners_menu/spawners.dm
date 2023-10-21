@@ -94,7 +94,6 @@ var/global/list/datum/spawners_cooldown = list()
 			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
 			to_chat(ghost, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
-
 	return TRUE
 
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
@@ -775,4 +774,4 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 
-	create_and_setup_role(/datum/role/operative/lone, H, TRUE)
+	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)

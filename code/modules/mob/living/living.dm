@@ -520,6 +520,9 @@
 /mob/living/proc/restore_all_bodyparts()
 	return
 
+/mob/living/proc/restore_all_organs()
+	return
+
 /mob/living/proc/revive()
 	rejuvenate()
 	if(buckled)
@@ -585,6 +588,7 @@
 			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
+	restore_all_organs()
 	cure_all_viruses()
 
 	// remove the character from the list of the dead
