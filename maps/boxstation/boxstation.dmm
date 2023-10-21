@@ -3132,11 +3132,9 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/solitary_confinement)
 "afr" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/structure/closet/secure_closet/warden,
-/obj/machinery/firealarm{
+/obj/machinery/computer/shop{
+	department = "Security";
 	pixel_y = 24
 	},
 /turf/simulated/floor{
@@ -3874,6 +3872,9 @@
 	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5480,10 +5481,12 @@
 /obj/machinery/computer/security{
 	dir = 4
 	},
-/obj/machinery/computer/shop{
-	pixel_x = -24;
-	department = "Security";
-	dir = 4
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5974,16 +5977,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "akc" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engineering Department.";
-	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
-	pixel_y = 30
-	},
 /mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellow"
+	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
 "akd" = (
@@ -15437,24 +15433,22 @@
 	},
 /area/station/security/lobby)
 "aAZ" = (
-/obj/structure/closet/secure_closet/engineering_chief,
-/obj/item/clothing/glasses/meson{
-	pixel_y = 4
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/engineering/chief,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -25
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
-/obj/machinery/computer/shop{
-	pixel_x = -24;
-	department = "Engineering";
-	dir = 4
-	},
-/obj/item/portrait/captain{
-	pixel_x = -32
+/obj/machinery/camera{
+	c_tag = "Chief Engineer's Office";
+	dir = 4;
+	network = list("SS13","Engineering")
 	},
 /turf/simulated/floor{
-	dir = 9;
+	dir = 8;
 	icon_state = "darkyellow"
 	},
 /area/station/engineering/chiefs_office)
@@ -38041,9 +38035,6 @@
 /area/station/rnd/lab)
 "bqC" = (
 /obj/item/weapon/pen,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/item/taperoll/science,
 /obj/item/taperoll/science,
 /obj/item/weapon/packageWrap,
@@ -38071,6 +38062,9 @@
 	dir = 1;
 	name = "RnD top APC";
 	custom_smartlight_preset = "RnD"
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -70124,11 +70118,6 @@
 /area/station/civilian/chapel)
 "epb" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/computer/shop{
-	pixel_x = 24;
-	department = "Command";
-	dir = 8
-	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "epm" = (
@@ -71807,19 +71796,10 @@
 	},
 /area/station/security/main)
 "gqb" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/rig/engineering/chief,
-/obj/item/clothing/head/helmet/space/rig/engineering/chief,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -25
-	},
-/obj/machinery/camera{
-	c_tag = "Chief Engineer's Office";
-	dir = 4;
-	network = list("SS13","Engineering")
+/obj/machinery/computer/shop{
+	pixel_x = -24;
+	department = "Engineering";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -71860,8 +71840,8 @@
 /area/station/engineering/break_room)
 "grb" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellow"
+	dir = 4;
+	icon_state = "darkyellowcorners"
 	},
 /area/station/engineering/chiefs_office)
 "grp" = (
@@ -71992,13 +71972,6 @@
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(56);
-	dir = 8
-	},
-/obj/item/weapon/paper/depacc{
-	department_name = "Engineering"
 	},
 /obj/machinery/power/apc{
 	name = "Engineering right APC";
@@ -72796,10 +72769,21 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "hqc" = (
-/obj/item/clothing/suit/nerdshirt,
-/obj/item/weapon/beach_ball/holoball,
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering","Engineering Robots");
+	pixel_y = 30
+	},
+/obj/structure/closet/secure_closet/engineering_chief,
+/obj/item/clothing/glasses/meson{
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "hrb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Library Maintenance";
@@ -77372,6 +77356,25 @@
 	icon_state = "white"
 	},
 /area/station/medical/reception)
+"mih" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
+	},
+/obj/item/portrait/captain{
+	pixel_x = -32
+	},
+/obj/structure/filingcabinet/chestdrawer/black{
+	req_access = list(56)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Engineering"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
 "mjb" = (
 /obj/machinery/door/airlock{
 	name = "Unit 2"
@@ -79956,6 +79959,14 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"pye" = (
+/obj/machinery/computer/shop{
+	pixel_x = -24;
+	department = "Command";
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/bridge/meeting_room)
 "pzb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -112451,8 +112462,8 @@ aGs
 bbo
 bbo
 bbo
-ciW
 bbo
+ciW
 blS
 bXt
 oMb
@@ -112965,7 +112976,7 @@ bDt
 bft
 bgG
 bhx
-bfu
+pye
 bkk
 bcI
 bnO
@@ -115321,8 +115332,8 @@ jal
 chV
 chV
 bJc
-bIZ
-cAW
+bQl
+crK
 crK
 crK
 crK
@@ -115578,9 +115589,9 @@ lJF
 iDo
 bIZ
 bJc
-bIZ
-hqc
+bQl
 crK
+mih
 aAZ
 gqb
 eDP
@@ -115837,7 +115848,7 @@ bIZ
 bNi
 bIZ
 crK
-crK
+hqc
 akc
 cXC
 gwb
