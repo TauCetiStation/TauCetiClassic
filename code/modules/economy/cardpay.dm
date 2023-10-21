@@ -78,7 +78,7 @@
 				display_numbers = Wallet.account_number
 				set_account()
 
-	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
+	else if(iswrenching(I) && isturf(src.loc))
 		var/obj/item/weapon/wrench/Tool = I
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
