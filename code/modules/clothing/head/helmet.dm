@@ -197,6 +197,10 @@
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
 
+/obj/item/clothing/head/helmet/tactical/marinad/leader
+	name = "marine beret"
+	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
+	icon_state = "beret_marinad"
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
@@ -246,13 +250,6 @@
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 	icon_state = "M35_Helmet"
-	item_state = "helmet"
-
-/obj/item/clothing/head/helmet/Waffen_SS_Helmet
-	name = "Waffen SS Helmet"
-	desc = "A helmet from SS uniform set."
-
-	icon_state = "SS_Helmet"
 	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/syndilight

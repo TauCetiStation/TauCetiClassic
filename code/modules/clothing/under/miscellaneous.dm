@@ -666,13 +666,6 @@
 	item_state = "M35_Filde_Jacket_Officer"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 
-/obj/item/clothing/under/Waffen_SS_Form
-	name = "Waffen SS Form"
-	desc = "A special uniform for the SS."
-	icon_state = "SS_Form"
-	item_state = "SS_Form"
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
-
 /obj/item/clothing/under/jackbros
 	name = "jack bros outfit"
 	desc = "For when it's time to hee some hos."

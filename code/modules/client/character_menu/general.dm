@@ -12,8 +12,11 @@
 	. += 						"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
 	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</a>)"
 	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+	if(!specie_obj.flags[NO_GENDERS])
+		. += 					"<br><b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
+	if(species == IPC)  // only ipc can change their voice at this moment
+		. += 					"<br><b>Voice:</b> <a href='?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
@@ -292,13 +295,19 @@
 						new_species = whitelisted_species
 
 					species = input("Please select a species", "Character Generation", prev_species) in new_species
+					specie_obj = all_species[species]
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species, ipc_head)
+						neuter_gender_voice = MALE
+						age = rand(specie_obj.min_age, specie_obj.max_age)
 						ResetJobs()
 						UpdateAllowedQuirks()
 						ResetQuirks()
+						gender = MALE
+						if(specie_obj.flags[NO_GENDERS])
+							gender = NEUTER
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_speak))
@@ -314,10 +323,10 @@
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages
 
-				
+
 				if("insurance")
 					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
-					
+
 
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])
@@ -590,6 +599,9 @@
 		else
 			switch(href_list["preference"])
 				if("gender")
+					if(specie_obj.flags[NO_GENDERS])
+						gender = NEUTER
+						return
 					if(gender == MALE)
 						gender = FEMALE
 					else
@@ -597,6 +609,9 @@
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
+
+				if("gendervoice")
+					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
 
 				if("randomslot")
 					randomslot = !randomslot

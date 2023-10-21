@@ -80,8 +80,9 @@ var/global/list/preferences_datums = list()
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
+	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
-	var/height = HUMANHEIGHT_MEDIUM			//height of character
+	var/height = HUMANHEIGHT_MEDIUM		//height of character
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
@@ -363,6 +364,7 @@ var/global/list/preferences_datums = list()
 	character.gen_record = gen_record
 
 	character.gender = gender
+	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
 	character.b_type = b_type
@@ -387,6 +389,8 @@ var/global/list/preferences_datums = list()
 			if("Human")
 				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
 				H.insert_organ(character)
+		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
+		IO.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -493,12 +497,6 @@ var/global/list/preferences_datums = list()
 		backbag = 1 //Same as above
 	character.backbag = backbag
 	character.use_skirt = use_skirt
-
-	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
-			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
 
 	if(icon_updates)
 		character.update_body()
