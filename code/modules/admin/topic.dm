@@ -1769,6 +1769,10 @@
 			return
 		show_skills_panel(M)
 
+	else if(href_list["show_raspect"])
+		if(!SSround_aspects.aspect_name)	return
+		return SSround_aspects.announce_aspect()
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
 		return create_object(usr)
