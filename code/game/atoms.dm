@@ -307,7 +307,7 @@
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		msg += "<br>It contains:"
 		if(reagents.reagent_list.len)
-			if(istype(src, /obj/structure/reagent_dispensers) || istype(src, /obj/structure/preservation_barrel)) //watertanks, fueltanks, fermenting barrel
+			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks, fermenting barrel
 				for(var/datum/reagent/R in reagents.reagent_list)
 					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
 			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
@@ -802,3 +802,9 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/atom/proc/continuity_read(list/arguments)
+	return
+
+/atom/proc/continuity_write()
+	return ""

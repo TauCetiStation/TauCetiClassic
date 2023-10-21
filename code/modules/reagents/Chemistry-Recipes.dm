@@ -2179,9 +2179,11 @@ TODO: Convert everything to custom hair dye,
 	result_amount = 1
 
 /datum/chemical_reaction/cheese/on_reaction(datum/reagents/holder, created_volume)
-	var/spawnloc = holder.my_atom
-	if(!istype(spawnloc, /obj/structure/preservation_barrel))
-		spawnloc = get_turf(spawnloc)
+	var/spawnloc = get_turf(holder.my_atom)
+	if(istype(holder.my_atom, /obj/structure/preservation_barrel))
+		var/obj/structure/preservation_barrel/Barrel = holder.my_atom
+		spawnloc = Barrel.internal_storage
+
 	for(var/i in 1 to created_volume)
 		new /obj/item/weapon/reagent_containers/food/snacks/unfinished_cheese(spawnloc)
 
@@ -2195,9 +2197,11 @@ TODO: Convert everything to custom hair dye,
 	result_amount = 1
 
 /datum/chemical_reaction/cheese/on_reaction(datum/reagents/holder, created_volume)
-	var/spawnloc = holder.my_atom
-	if(!istype(spawnloc, /obj/structure/preservation_barrel))
-		spawnloc = get_turf(spawnloc)
+	var/spawnloc = get_turf(holder.my_atom)
+	if(istype(holder.my_atom, /obj/structure/preservation_barrel))
+		var/obj/structure/preservation_barrel/Barrel = holder.my_atom
+		spawnloc = Barrel.internal_storage
+
 	for(var/i in 1 to created_volume)
 		new /obj/item/weapon/reagent_containers/food/snacks/unfinished_cheese(spawnloc)
 

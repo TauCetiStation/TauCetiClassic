@@ -11188,6 +11188,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
+/obj/effect/landmark/maintenance_barrel_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "atg" = (
@@ -17845,10 +17846,6 @@
 	},
 /area/station/medical/genetics_cloning)
 "aFO" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/structure/sign/monkey_painting{
 	pixel_y = 32
 	},
@@ -17856,7 +17853,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/mob/living/carbon/monkey/punpun,
+/obj/structure/preservation_barrel/bar,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aFP" = (
@@ -18526,6 +18523,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/landmark/maintenance_barrel_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aHf" = (
@@ -22770,6 +22768,7 @@
 	pixel_x = 3;
 	pixel_y = -7
 	},
+/obj/effect/landmark/maintenance_barrel_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aPe" = (
@@ -25106,6 +25105,9 @@
 	pixel_x = -25
 	},
 /obj/item/device/tagger/shop,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aTq" = (
@@ -25152,7 +25154,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
 "aTu" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/preservation_barrel/church,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -35531,9 +35533,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/machinery/light/smart{
-	dir = 1
+/obj/structure/sink{
+	pixel_y = 24
 	},
+/mob/living/carbon/monkey/punpun,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "blY" = (
@@ -45714,11 +45717,11 @@
 	},
 /area/station/rnd/hor)
 "bEp" = (
-/obj/structure/preservation_table,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 9
 	},
+/obj/structure/preservation_table/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -47558,11 +47561,11 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/preservation_box,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
+/obj/structure/preservation_box/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -48284,7 +48287,6 @@
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "bIM" = (
-/obj/structure/preservation_barrel,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -48292,6 +48294,7 @@
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
+/obj/structure/preservation_barrel/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -48878,11 +48881,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJX" = (
-/obj/structure/preservation_barrel,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 10
 	},
+/obj/structure/preservation_barrel/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -62795,6 +62798,7 @@
 /area/station/maintenance/engineering)
 "cua" = (
 /obj/item/weapon/cigbutt/cigarbutt,
+/obj/effect/landmark/maintenance_barrel_spawn,
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "cub" = (
@@ -70288,6 +70292,10 @@
 	icon_state = "blue"
 	},
 /area/station/medical/genetics)
+"eFM" = (
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "eGb" = (
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
@@ -83640,6 +83648,11 @@
 /obj/machinery/atmospherics/components/binary/pump/on,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
+"tOD" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/wood,
+/area/station/maintenance/chapel)
 "tPb" = (
 /obj/machinery/status_display,
 /turf/simulated/wall,
@@ -84454,6 +84467,7 @@
 /area/station/civilian/toilet)
 "vDF" = (
 /obj/item/clothing/under/rainbow,
+/obj/effect/landmark/maintenance_barrel_spawn,
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
 "vFj" = (
@@ -85774,6 +85788,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"yhl" = (
+/obj/effect/decal/turf_decal/set_burned,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "yji" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -112173,7 +112192,7 @@ bIZ
 bVq
 bVk
 bIZ
-mnb
+yhl
 bWW
 bQl
 bKj
@@ -130931,7 +130950,7 @@ bFo
 bFo
 jGb
 mKb
-cak
+eFM
 bFo
 ubb
 baG
@@ -133193,7 +133212,7 @@ aup
 aDA
 aIK
 aAS
-aNZ
+tOD
 aup
 aOS
 aKv

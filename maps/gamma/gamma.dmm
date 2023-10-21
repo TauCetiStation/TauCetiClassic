@@ -12473,11 +12473,10 @@
 	},
 /area/station/security/checkpoint)
 "bSl" = (
-/obj/structure/stool/bed/chair/comfy/brown,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/landmark/start/bartender,
+/obj/structure/preservation_barrel/bar,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
 	},
@@ -22733,7 +22732,7 @@
 /obj/machinery/requests_console/chapel{
 	pixel_y = 30
 	},
-/obj/structure/closet/wardrobe/chaplain_black,
+/obj/structure/preservation_barrel/church,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -30107,11 +30106,11 @@
 	dir = 2;
 	icon_state = "spline_plain"
 	},
-/obj/structure/preservation_barrel,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 8
 	},
+/obj/structure/preservation_barrel/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -38937,11 +38936,11 @@
 	dir = 2;
 	icon_state = "spline_plain"
 	},
-/obj/structure/preservation_box,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 4;
 	icon_state = "siding_wood_line"
 	},
+/obj/structure/preservation_box/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -50702,6 +50701,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"jtQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/maintenance/outerlabs)
 "jtR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -51234,6 +51240,11 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
+"jye" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/science)
 "jyk" = (
 /obj/structure/table/glass,
 /obj/effect/decal/cleanable/cobweb,
@@ -55679,6 +55690,7 @@
 	dir = 1;
 	icon_state = "spline_plain"
 	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57098,6 +57110,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/closet/wardrobe/chaplain_black,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -69120,11 +69133,11 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "nfy" = (
-/obj/structure/preservation_table,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 5;
 	icon_state = "siding_wood_line"
 	},
+/obj/structure/preservation_table/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -72770,6 +72783,11 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/miningoffice)
+"nRW" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/wood,
+/area/station/maintenance/bridge)
 "nRY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -77027,6 +77045,11 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/market)
+"oLd" = (
+/obj/structure/spider/stickyweb,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "oLi" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -83823,9 +83846,8 @@
 /obj/machinery/requests_console/bar{
 	pixel_y = 30
 	},
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/preservation_barrel/bar,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
 	},
@@ -88966,6 +88988,7 @@
 "reo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/landmark/maintenance_barrel_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "rev" = (
@@ -91486,6 +91509,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/structure/stool/bed/chair/comfy/brown,
+/obj/effect/landmark/start/bartender,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
 	},
@@ -119121,6 +119146,12 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/equip)
+"xig" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/landmark/maintenance_barrel_spawn,
+/turf/simulated/floor/wood,
+/area/station/maintenance/brig)
 "xim" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile{
@@ -123251,11 +123282,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "yds" = (
-/obj/structure/preservation_barrel,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 9;
 	icon_state = "siding_wood_line"
 	},
+/obj/structure/preservation_barrel/kitchen,
 /turf/simulated/floor/wood{
 	icon_state = "wood9"
 	},
@@ -140320,7 +140351,7 @@ eLx
 cvX
 xEG
 tda
-bKn
+jtQ
 tEC
 acC
 eSG
@@ -144042,7 +144073,7 @@ fjj
 fjj
 fjj
 fjj
-ijk
+oLd
 cHE
 fjj
 eeG
@@ -150346,7 +150377,7 @@ kHU
 mRW
 mRW
 mRW
-eHc
+xig
 mRW
 mRW
 mRW
@@ -169435,7 +169466,7 @@ xqs
 jIl
 hND
 fGv
-sHN
+nRW
 jIl
 kHU
 plf
@@ -172849,7 +172880,7 @@ gLm
 oPj
 xeB
 eha
-fgF
+jye
 pCa
 xLL
 oHE

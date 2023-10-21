@@ -2,6 +2,7 @@
 //Types that use this should consider overriding emp_act() and hear_talk(), unless they shield their contents somehow.
 /obj/item/weapon/storage/internal
 	var/obj/item/master_item
+	var/visible = FALSE
 
 /obj/item/weapon/storage/internal/atom_init()
 	master_item = loc
@@ -40,7 +41,7 @@
 
 		if(try_open(user)) // this must come before the screen objects only block
 			return FALSE
-		
+
 		return TRUE
 	return FALSE
 
@@ -80,11 +81,22 @@
 /obj/item/weapon/storage/internal/Adjacent(atom/neighbor)
 	return master_item.Adjacent(neighbor)
 
+/obj/item/weapon/storage/internal/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
+	. = ..()
+	if(visible)
+		master_item.update_icon()
+
+/obj/item/weapon/storage/internal/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..()
+	if(visible)
+		master_item.update_icon()
+
 // Used by webbings, coat pockets, etc
-/obj/item/weapon/storage/internal/proc/set_slots(slots, slot_size)
+/obj/item/weapon/storage/internal/proc/set_slots(slots, slot_size, visible = FALSE)
 	storage_slots = slots
 	max_w_class = slot_size
 	max_storage_space = storage_slots * base_storage_cost(max_w_class)
+	src.visible = visible
 
 /obj/item/weapon/storage/internal/proc/set_space(storage_space)
 	max_storage_space = storage_space

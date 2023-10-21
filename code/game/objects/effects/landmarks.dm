@@ -536,3 +536,11 @@
 	..()
 	global.loneopstart += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/maintenance_barrel_spawn
+	name = "Maintenance Barrel"
+
+/obj/effect/landmark/maintenance_barrel_spawn/atom_init(mapload)
+	..()
+	global.maintenance_barrels += loc
+	return INITIALIZE_HINT_QDEL

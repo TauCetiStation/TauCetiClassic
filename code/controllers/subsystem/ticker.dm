@@ -260,6 +260,8 @@ SUBSYSTEM_DEF(ticker)
 
 	setup_economy()
 
+	SScontinuity.read_files()
+
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
@@ -589,6 +591,8 @@ SUBSYSTEM_DEF(ticker)
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
+
+	SScontinuity.write_files()
 
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()
