@@ -30,6 +30,7 @@
 	animalistic = FALSE
 	has_head = TRUE
 	has_arm = TRUE
+	var/atom/movable/warp_effect/warp
 
 /mob/living/simple_animal/shade/Life()
 	..()
@@ -56,6 +57,11 @@
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 	return
+
+/mob/living/simple_animal/shade/Destroy()
+	vis_contents -= warp
+	QDEL_NULL(warp)
+	return ..()
 
 /mob/living/simple_animal/shade/god
 	name = "Unbelievable God"
