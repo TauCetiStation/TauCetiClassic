@@ -344,6 +344,8 @@
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
 /// from /mob/living/carbon/proc/finish_humanize(): (species)
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
+/// from /mob/verb/a_intent_change(): (intent as text)
+#define COMSIG_LIVING_INTENT_CHANGE "living_intent_change"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/UnarmedAttack(): (atom/target)

@@ -1939,6 +1939,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
 /obj/structure/cable{
 	d2 = 2;
@@ -4034,6 +4035,7 @@
 	network = list("SS13","Research")
 	},
 /obj/item/clothing/suit/space/rig/science,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science,
 /obj/machinery/light_switch{
 	pixel_y = 28
