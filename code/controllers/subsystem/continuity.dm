@@ -5,9 +5,13 @@ SUBSYSTEM_DEF(continuity)
 
 /datum/controller/subsystem/continuity/proc/read_files()
 	read_barrels()
+	read_tables()
+	read_boxes()
 
 /datum/controller/subsystem/continuity/proc/write_files()
 	write_barrels()
+	write_tables()
+	write_boxes()
 
 
 /datum/controller/subsystem/continuity/proc/spawn_maintenance_barrel()
