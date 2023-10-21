@@ -54,7 +54,9 @@
 		to_chat(user, "<span class='warning'>Вы не знаете как этим пользоваться!</span>")
 		return
 
-	if(user.silent || isabductor(user) || HAS_TRAIT(user, TRAIT_MUTE))
+	var/mob/living/carbon/human/H = user
+
+	if(H.silent || isabductor(H) || HAS_TRAIT(H, TRAIT_MUTE))
 		to_chat(user, "<span class='userdange'>Вы немы.</span>")
 		return
 
