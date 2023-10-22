@@ -162,7 +162,7 @@
 
 /obj/item/weapon/gripper/science
 	name = "science gripper"
-	desc = "A complex grasping tool for science work.
+	desc = "A complex grasping tool for science work."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
