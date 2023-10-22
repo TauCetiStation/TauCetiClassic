@@ -386,6 +386,7 @@ What a mess.*/
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
+				photo.fields["image"].Blend(mugshot,ICON_UNDERLAY,1,1)
 				docname = "Security Record's photo"
 				photo.fields["author"] = usr
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
@@ -394,6 +395,7 @@ What a mess.*/
 					print_photo(photo, docname)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
+					photo.fields["image"].Blend(mugshot,ICON_UNDERLAY,1,1)
 					print_photo(photo, docname)
 				next_print = world.time + 50
 

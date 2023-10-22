@@ -152,6 +152,19 @@ var/global/list/huds = list(
 			for(var/atom/A in hud.hudatoms)
 				hud.add_to_single_hud(src, A)
 
+/mob/proc/hide_all_huds()
+	var/list/hidden_huds = list()
+	for(var/datum/atom_hud/hud in global.all_huds)
+		if(hud && hud.hudusers[src])
+			hidden_huds += hud
+			hud.remove_hud_from(src)
+	return hidden_huds
+
+/mob/proc/unhide_all_huds(list/hidden_huds)
+	for(var/datum/atom_hud/hud in hidden_huds)
+		if(hud && !hud.hudusers[src])
+			hud.add_hud_to(src)
+
 /mob/dead/new_player/reload_huds()
 	return
 

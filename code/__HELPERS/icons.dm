@@ -894,9 +894,12 @@ var/global/list/humanoid_icon_cache = list()
 		for(var/D in showDirs)
 			body.set_dir(D)
 			COMPILE_OVERLAYS(body)
+			var/list/hidden_huds = C.mob.hide_all_huds()
 			var/icon/partial = C ? C.RenderIcon(body) : getFlatIcon(body)
-			partial.Crop(1,1,32,32)
+			C.mob.unhide_all_huds(hidden_huds)
 			out_icon.Insert(partial,dir=D)
+
+		out_icon.Crop(1,1,32,32)
 
 		humanoid_icon_cache[icon_id] = out_icon
 		dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)

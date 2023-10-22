@@ -174,7 +174,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	icon_state = "portrait_empty"
 
 /proc/update_station_head_portraits()
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES) //Try find Cap/Hop/Hos again later
 	var/image/Heads_photo
 
 	var/newdesc
@@ -191,10 +191,12 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	else if(HOS)
 		Heads_photo = image(HOS.fields["photo_f"])
 		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности станции Исход."
+	else
+		return
 
 	if(Heads_photo)
 		Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
-		Heads_photo.pixel_y = -3
+		Heads_photo.pixel_y = -2
 
 		for(var/obj/item/portrait/captain/Portrait in global.station_head_portraits)
 			Portrait.cut_overlays()

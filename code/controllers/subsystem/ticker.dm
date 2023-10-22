@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
-	update_station_head_portraits()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 15 SECONDS)
 
 	CHECK_TICK
 

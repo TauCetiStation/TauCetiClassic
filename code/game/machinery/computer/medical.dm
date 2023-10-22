@@ -586,6 +586,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
 				var/datum/data/record/photo = active1
 				photo.fields["image"] = photo.fields["photo_f"]
+				photo.fields["image"].Blend(mugshot,ICON_UNDERLAY,1,1)
 				docname = "Medical Record's photo"
 				photo.fields["author"] = usr
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
@@ -594,6 +595,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 					print_photo(photo, docname)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
+					photo.fields["image"].Blend(mugshot,ICON_UNDERLAY,1,1)
 					print_photo(photo, docname)
 				next_print = world.time + 50
 	updateUsrDialog()
