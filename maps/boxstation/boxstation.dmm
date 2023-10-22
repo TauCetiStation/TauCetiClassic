@@ -36836,7 +36836,9 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/item/weapon/bell,
+/obj/item/weapon/bell{
+	pixel_y = -8
+	},
 /obj/item/device/cardpay{
 	dir = 8;
 	pixel_x = -3;
@@ -50122,6 +50124,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/bell,
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "bMs" = (
@@ -63238,13 +63241,6 @@
 /area/station/bridge/hop_office)
 "cvn" = (
 /obj/structure/table,
-/obj/machinery/door_control{
-	id = "HoP_queue";
-	name = "Queue shutters";
-	pixel_x = -7;
-	pixel_y = -5;
-	req_access = list(57)
-	},
 /obj/machinery/door_control{
 	id = "HoP_private";
 	name = "Security Shutters";

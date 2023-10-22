@@ -35,9 +35,10 @@ var/global/ticket_machine_number = 0
 		return
 
 	flick("ticket_machine_printing", src)
-	addtimer(CALLBACK(src, PROC_REF(print), selection), 1 SECOND)
+	playsound(src, 'sound/machines/ticket_printing.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+	addtimer(CALLBACK(src, PROC_REF(print), selection, user), 1 SECOND)
 
-/obj/machinery/ticket_machine/proc/print(datum/form/F)
+/obj/machinery/ticket_machine/proc/print(datum/form/F, mob/user)
 	var/obj/item/weapon/paper/Paper = new(loc)
 
 	var/form_content = Paper.parsepencode(F.content, Pen)
@@ -47,4 +48,8 @@ var/global/ticket_machine_number = 0
 	Paper.update_icon()
 
 	global.ticket_machine_number++
-	new /obj/item/weapon/card/ticket(loc, global.ticket_machine_number)
+	var/obj/item/I = new /obj/item/weapon/card/ticket(loc, global.ticket_machine_number)
+
+	if(Adjacent(user))
+		user.put_in_hands(I)
+		user.put_in_hands(Paper)

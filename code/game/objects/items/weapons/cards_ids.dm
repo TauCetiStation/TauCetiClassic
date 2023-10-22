@@ -22,12 +22,19 @@
 	desc = "Билет №"
 	icon = 'icons/obj/card.dmi'
 	icon_state = "ticket"
-	item_state_world = null
+	item_state_world = "ticket_world"
 
 	maptext_x = 1
 	maptext_y = 3
 
 	var/number = 0
+
+/obj/item/weapon/card/ticket/update_world_icon()
+	. = ..()
+	if(icon_state == initial(icon_state))
+		maptext = {"<div style="font-size:3;color:#595757;font-family:'StatusDisplays';text-align:center;" valign="middle">[number]</div>"}
+	else
+		maptext = ""
 
 /obj/item/weapon/card/ticket/atom_init(mapload, newnumber)
 	. = ..()
