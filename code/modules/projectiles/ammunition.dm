@@ -33,7 +33,7 @@
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
-	desc = "[initial(desc)][BB ? "" : " Эта пуля использована."]"
+	desc = "[initial(desc)][BB ? "" : "Этот патрон использован."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
 	if (!BB)
@@ -165,7 +165,7 @@
 	switch(multiple_sprites)
 		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-			desc = "[initial(desc)] Осталось снярярдов: [stored_ammo.len]"
+			desc = "[initial(desc)] Осталось снярядов: [stored_ammo.len]"
 		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
 			desc = "[initial(desc)] [get_ammo_count_description()]."
@@ -178,11 +178,11 @@
 	if(stored_ammo.len == max_ammo)
 		message = "Кажется, магазин полон"
 	if(stored_ammo.len < max_ammo)
-		message = "Кажется магазин почти полностью полон"
+		message = "Кажется магазин почти полон"
 	if(stored_ammo.len <= max_ammo*0.5)
 		message = "Кажется магазин наполовину полон"
 	if(stored_ammo.len <= max_ammo*0.25)
-		message = "Кажется магазин почти полностью пуст"
+		message = "Кажется магазин почти пуст"
 	if(!stored_ammo.len)
 		message = "Магазин пуст"
 	return (message)

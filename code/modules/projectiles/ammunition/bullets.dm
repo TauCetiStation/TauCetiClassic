@@ -195,7 +195,7 @@
 
 /obj/item/ammo_casing/chameleon
 	name = "chameleon bullets"
-	desc = "Набор пуль для пистолета-хамелеона."
+	desc = "Патроны для пистолета-хамелеона."
 	projectile_type = /obj/item/projectile/bullet/chameleon
 	caliber = ".45"
 
