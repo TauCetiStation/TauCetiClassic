@@ -7301,26 +7301,16 @@
 "amj" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/wooden_tv,
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -32
-	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "amk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/machinery/vending/coffee,
-/obj/machinery/camera{
-	c_tag = "Brig Observation";
-	dir = 8;
-	network = list("SS13","Security")
-	},
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/obj/item/wallclock{
-	pixel_x = 32
+/obj/machinery/computer/shop{
+	pixel_x = 24;
+	department = "Security";
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7792,6 +7782,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/machinery/camera{
+	c_tag = "Brig Observation";
+	dir = 9;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -8746,10 +8741,11 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/computer/shop{
-	pixel_x = 24;
-	department = "Security";
-	dir = 8
+/obj/item/wallclock{
+	pixel_x = 32
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8876,6 +8872,9 @@
 /obj/item/newtons_pendulum{
 	pixel_x = -5
 	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "aoQ" = (
@@ -8892,6 +8891,10 @@
 /obj/item/device/cardpay{
 	pixel_x = -10
 	},
+/obj/item/weapon/paper_bin{
+	pixel_x = 7
+	},
+/obj/item/weapon/pen,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9332,10 +9335,7 @@
 	},
 /area/station/cargo/office)
 "apF" = (
-/obj/structure/table,
-/obj/item/weapon/newspaper,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
