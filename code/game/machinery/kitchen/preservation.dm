@@ -128,11 +128,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	var/list/barrel_record = list("items" = list(), "reagents" = list())
 
 	for(var/obj/item/F in internal_storage.contents)
-		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/grown) || F.type in can_also_preserve["items"])
+		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/grown) || (F.type in can_also_preserve["items"]))
 			barrel_record["items"] += F.type
 
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(istype(R, /datum/reagent/consumable) || R.type in can_also_preserve["reagents"])
+		if(istype(R, /datum/reagent/consumable) || (R.type in can_also_preserve["reagents"]))
 			barrel_record["reagents"] += list("[R.id]" = "[R.volume]")
 
 	barrel_record["items"] = list2params(barrel_record["items"])
