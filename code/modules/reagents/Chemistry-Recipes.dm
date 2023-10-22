@@ -2091,83 +2091,113 @@ TODO: Convert everything to custom hair dye,
 
 
 // Barrel recipes
-/datum/chemical_reaction/alcohol
-	required_catalysts = list("agium" = 1)
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-
 /datum/chemical_reaction/alcohol/moonshine
 	name = "Moonshine"
 	id = "moonshine"
 	required_reagents = list("nutriment" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "moonshine"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/grenadine
 	name = "Grenadine"
 	id = "grenadine"
 	required_reagents = list("berryjuice" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "grenadine"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/wine
 	name = "Wine"
 	id = "wine"
 	required_reagents = list("grapejuice" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "wine"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/pwine
 	name = "Pwine"
 	id = "pwine"
 	required_reagents = list("poisonberryjuice" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "pwine"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/melonliquor
 	name = "Melonliquor"
 	id = "melonliquor"
 	required_reagents = list("watermelonjuice" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "melonliquor"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/bluecuracao
 	name = "Bluecuracao"
 	id = "bluecuracao"
 	required_reagents = list("orangejuice" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "bluecuracao"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/beer
 	name = "Beer"
 	id = "beer"
 	required_reagents = list("cornoil" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "beer"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/gourdbeer
 	name = "Gourdbeer"
 	id = "gourdbeer"
 	required_reagents = list("gourd" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "gourdbeer"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/vodka
 	name = "Vodka"
 	id = "vodka"
 	required_reagents = list("potato" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "vodka"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/sake
 	name = "Sake"
 	id = "sake"
 	required_reagents = list("rice" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "sake"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/mead
 	name = "Mead"
 	id = "mead"
 	required_reagents = list("honey" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "mead"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 /datum/chemical_reaction/alcohol/kahlua
 	name = "Kahlua"
 	id = "kahlua"
 	required_reagents = list("coffee" = 2, "sugar" = 1)
+	required_catalysts = list("agium" = 1)
 	result = "kahlua"
+	result_amount = 3
+	secondary_results = list("ethanol" = 0.25)
 
 // I want it to be special but i have no time.
 /datum/chemical_reaction/cheese

@@ -20,6 +20,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 	var/save_id = 0
 
+	var/list/can_also_preserve = list("items" = list(), "reagents" = list(/datum/reagent/sugar))
+
 /obj/structure/preservation_barrel/kitchen
 	save_id = "kitchen"
 
@@ -45,7 +47,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	internal_storage = new(src)
 	internal_storage.set_slots(slots = 1, slot_size = SIZE_BIG)
 
-/obj/structure/preservation_barrel/proc/process_recipes()
+/obj/structure/preservation_barrel/proc/start_processing_recipes()
 	if(reagents.total_volume == reagents.maximum_volume)
 		reagents.remove_any(1)
 	reagents.add_reagent("agium", 1)
@@ -54,10 +56,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 /obj/structure/preservation_barrel/proc/stop_processing_recipes()
 	reagents.del_reagent("agium")
-	var/vinegar_multiplier = reagents.get_reagent_amount("vinegar")
+	var/vinegar_amount = reagents.get_reagent_amount("vinegar")
 	for(var/datum/reagent/consumable/ethanol/R in reagents.reagent_list)
-		reagents.remove_reagent(R.id, min(5, vinegar_multiplier))
-		reagents.add_reagent("vinegar", min(5, vinegar_multiplier))
+		reagents.remove_reagent(R.id, min(5, vinegar_amount))
+		reagents.add_reagent("vinegar", min(5, vinegar_amount))
 
 /obj/structure/preservation_barrel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers))
@@ -119,17 +121,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	for(var/reagentid in reagentslist)
 		reagents.add_reagent("[reagentid]", text2num(reagentslist[reagentid]))
 
-	process_recipes()
+	start_processing_recipes()
 	update_icon()
 
 /obj/structure/preservation_barrel/continuity_write()
 	var/list/barrel_record = list("items" = list(), "reagents" = list())
 
-	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/F in internal_storage.contents)
-		barrel_record["items"] += F.type
+	for(var/obj/item/F in internal_storage.contents)
+		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/grown) || F.type in can_also_preserve["items"])
+			barrel_record["items"] += F.type
 
-	for(var/datum/reagent/consumable/R in reagents.reagent_list)
-		barrel_record["reagents"] += list("[R.id]" = "[R.volume]")
+	for(var/datum/reagent/R in reagents.reagent_list)
+		if(istype(R, /datum/reagent/consumable) || R.type in can_also_preserve["reagents"])
+			barrel_record["reagents"] += list("[R.id]" = "[R.volume]")
 
 	barrel_record["items"] = list2params(barrel_record["items"])
 	barrel_record["reagents"] = list2params(barrel_record["reagents"])
@@ -171,7 +175,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 	return ..()
 
-/obj/structure/preservation_table/proc/process_recipes()
+/obj/structure/preservation_table/proc/start_processing_recipes()
 	for(var/obj/item/I in internal_storage.contents)
 		for(var/RecType in subtypesof(/datum/preservation_recipe))
 			var/datum/preservation_recipe/Rec = new RecType
@@ -202,7 +206,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 	for(var/itemtype in table_record)
 		new itemtype(internal_storage)
 
-	process_recipes()
+	start_processing_recipes()
 	update_icon()
 
 /obj/structure/preservation_table/continuity_write()

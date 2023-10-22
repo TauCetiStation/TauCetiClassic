@@ -307,7 +307,7 @@
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		msg += "<br>It contains:"
 		if(reagents.reagent_list.len)
-			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks, fermenting barrel
+			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
 			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))

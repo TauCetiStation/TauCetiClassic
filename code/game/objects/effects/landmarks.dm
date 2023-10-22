@@ -542,5 +542,5 @@
 
 /obj/effect/landmark/maintenance_barrel_spawn/atom_init(mapload)
 	..()
-	global.maintenance_barrels += loc
+	global.maintenance_barrels_landmarks += loc
 	return INITIALIZE_HINT_QDEL
