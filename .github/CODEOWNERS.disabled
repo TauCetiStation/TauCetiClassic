@@ -22,7 +22,7 @@
 /config/ @volas
 
 ## Иконки ##
-/icons/ @TauCetiStation/sprites-department 
+/icons/ sprites-department 
 
 ## Карты ##
 # Если вы хотите проверять все карты, раскоментируйте и добавьте себя:
