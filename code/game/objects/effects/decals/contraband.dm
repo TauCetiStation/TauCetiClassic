@@ -44,6 +44,10 @@
 
 	AddElement(/datum/element/beauty, 300)
 
+/obj/item/weapon/poster/calendar/atom_init(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
+	resulting_poster = new /obj/structure/sign/poster/calendar(src)
+
 // The poster sign/structure
 
 /obj/structure/sign/poster
