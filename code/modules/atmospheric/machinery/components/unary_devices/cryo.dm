@@ -5,11 +5,11 @@
 
 	layer = ABOVE_WINDOW_LAYER
 	light_color = "#ffffff"
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
-	state_open = 0
+	state_open = TRUE
 
-	var/on = 0
+	var/on = FALSE
 	var/current_heat_capacity = 50
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -48,10 +48,6 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
-
-	if(!on)
-		updateUsrDialog()
-		return
 
 	var/datum/gas_mixture/air1 = AIR1
 
@@ -94,7 +90,6 @@
 						beaker.reagents.trans_id_to(occupant, R.id, transfer_amt)
 				beaker.reagents.reaction(occupant)
 
-	updateUsrDialog()
 	return 1
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
@@ -179,34 +174,58 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Кто-то внутри криокамеры!")
-		else
 			to_chat(user, "Вы едва можете различить форму того, что плавает в криокамере.")
+		else
+			to_chat(user, "Кто-то внутри криокамеры!")
 	else
 		to_chat(user, "Криокамера выглядит пустой.")
 
- /**
-  * The ui_interact proc is used to open and update Nano UIs
-  * If ui_interact is not used then the UI will not update correctly
-  * ui_interact is currently defined for /atom/movable (which is inherited by /obj and /mob)
-  *
-  * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
-  * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
-  *
-  * @return nothing
-  */
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || (user.stat != CONSCIOUS && !isobserver(user)) || panel_open)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, datum/tgui/ui)
+	tgui_interact(user)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Cryo", "Cryo Cell")
+		ui.open()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/tgui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+	if(occupant == usr)
 		return
 
-	// this is the data which will be sent to the ui
-	var/data[0]
-	data["isOperating"] = on
-	data["hasOccupant"] = occupant ? 1 : 0
+	switch(action)
+		if("switchOn")
+			on = state_open ? on : TRUE
 
-	var/occupantData[0]
-	if (occupant)
+		if("switchOff")
+			on = FALSE
+
+		if("open")
+			open_machine()
+
+		if("close")
+			close_machine()
+
+		if("ejectBeaker")
+			if(!beaker)
+				return
+			if(!usr.put_in_active_hand(beaker))
+				beaker.forceMove(get_step(loc, dir))
+			beaker = null
+
+	update_icon()
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/tgui_data(mob/user)
+	var/list/data = list()
+	data["isOperating"] = on
+	data["hasOccupant"] = occupant ? TRUE : FALSE
+
+	var/list/occupantData = list()
+	if(occupant)
 		occupantData["name"] = occupant.name
 		occupantData["stat"] = occupant.stat
 		occupantData["health"] = occupant.health
@@ -216,42 +235,32 @@
 		occupantData["oxyLoss"] = occupant.getOxyLoss()
 		occupantData["toxLoss"] = occupant.getToxLoss()
 		occupantData["fireLoss"] = occupant.getFireLoss()
+		occupantData["cloneLoss"] = occupant.getCloneLoss()
 		occupantData["bodyTemperature"] = occupant.bodytemperature
 	data["occupant"] = occupantData;
 
 	data["isOpen"] = state_open
 
 	var/datum/gas_mixture/air1 = AIR1
-	data["cellTemperature"] = round(air1.temperature)
-	data["cellTemperatureStatus"] = "good"
-	if(air1.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
-		data["cellTemperatureStatus"] = "bad"
-	else if(air1.temperature > 225)
-		data["cellTemperatureStatus"] = "average"
+	data["hasAir"] = TRUE
+	if(!NODE1 || !AIR1 || !air1.gas.len || air1.gas["oxygen"] < 5)
+		data["hasAir"] = FALSE
+	else
+		data["cellTemperature"] = round(air1.temperature)
+		data["cellTemperatureStatus"] = "good"
+		if(air1.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+			data["cellTemperatureStatus"] = "bad"
+		else if(air1.temperature > 170)
+			data["cellTemperatureStatus"] = "average"
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["beakerLabel"] = null
+	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	data["beakerVolume"] = 0
 	if(beaker)
-		data["beakerLabel"] = beaker.label_text ? beaker.label_text : null
-		if (beaker.reagents && beaker.reagents.reagent_list.len)
+		if(beaker.reagents && beaker.reagents.reagent_list.len)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				data["beakerVolume"] += R.volume
 
-
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
-	if(!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
+	return data
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -261,12 +270,14 @@
 	if(user == occupant)
 		return
 
-	if(!user.incapacitated() && Adjacent(user))
-		if(!state_open)
-			if(!do_skill_checks(user))
-				return
-			on = !on
-			update_icon()
+	if(user.incapacitated() || !Adjacent(user))
+		return
+
+	if(!do_skill_checks(user))
+		return
+
+	on = !on
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -276,43 +287,16 @@
 	if(user == occupant)
 		return
 
-	if(!user.incapacitated() && Adjacent(user))
-		if(state_open)
-			if(!do_skill_checks(user))
-				return
-			close_machine()
-		else
-			if(!do_skill_checks(user))
-				return
-			open_machine()
+	if(user.incapacitated() || !Adjacent(user))
+		return
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
-	. = ..()
-	if(!. || usr == occupant || panel_open)
-		return FALSE // don't update UIs attached to this object
+	if(!do_skill_checks(user))
+		return
 
-	if(href_list["switchOn"])
-		if(!state_open)
-			on = 1
-
-	if(href_list["open"])
-		on = 0
+	if(state_open)
+		close_machine()
+	else
 		open_machine()
-
-	if(href_list["close"])
-		if(close_machine() == usr)
-			var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
-			ui.close()
-			on = 1
-	if(href_list["switchOff"])
-		on = 0
-
-	if(href_list["ejectBeaker"])
-		if(beaker)
-			beaker.loc = get_step(loc, dir)
-			beaker = null
-
-	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))

@@ -22,7 +22,6 @@
 		/atom/movable/screen/inventory/suit_storage,
 		/atom/movable/screen/inventory/belt,
 		/atom/movable/screen/complex/gun,
-		/atom/movable/screen/internal,
 		/atom/movable/screen/health,
 		/atom/movable/screen/health_doll,
 		/atom/movable/screen/nutrition,

@@ -68,7 +68,7 @@
 	create_random_account_and_store_in_mind(M)
 
 	if(R)
-		add_faction_member(R, M, FALSE)
+		add_faction_member(R, M, FALSE, TRUE)
 	post_spawn(M)
 
 	to_chat(M, "Ты почти у цели...")
@@ -140,3 +140,30 @@
 	fluff_text = "Ты - солдат разведвзвода СССП! Чертовы капиталисты отправили сигнал бедствия и скоро об этом пожалеют! Буржуев-глав - к стенке, а их работникам нечего терять, кроме цепей!"
 	faction = /datum/faction/responders/soviet
 	id = "ert_soviet"
+
+/datum/spawner/responders/security
+	outfit = /datum/outfit/responders/security
+	leader_outfit = /datum/outfit/responders/security/leader
+	id = "ert_security"
+
+/datum/spawner/responders/security/New()
+	. = ..()
+	var/reason = pick("была уничтожена ядерным взрывом", "была поглощена блобом", "была переработана репликаторами", "загадочным образом исчезла")
+	leader_text = "Ты - <B>глава</B> отдела СБ с КСН \"■■■■■■■\"!  После  того, как твоя станция [reason], командование направило тебя и твой отдел на помощь другой станции!"
+	fluff_text = "Ты - офицер отдела СБ с КСН \"■■■■■■■\"!  После  того, как твоя станция и[reason], командование направило тебя и твой отдел на помощь другой станции! Во всём подчиняйся своему начальнику и главам станции."
+
+/datum/spawner/responders/marines
+	outfit = /datum/outfit/responders/marines
+	leader_outfit = /datum/outfit/responders/marines/leader
+	leader_text = "Ты - <B>сержант</B> отряда Колониальной Пехоты Нанотрейзен! Возвращаясь с очередного патруля, вы получили сигнал о помощи и поспешили помочь гражданским."
+	fluff_text = "Ты - солдат отряда Колониальной Пехоты Нанотрейзен! Возвращаясь с очередного патруля, вы получили сигнал о помощи и поспешили помочь гражданским."
+	faction = /datum/faction/responders/marines
+	id = "ert_marines"
+
+/datum/spawner/responders/clowns
+	outfit = /datum/outfit/responders/clown
+	leader_outfit = /datum/outfit/responders/clown
+	leader_text = "Ты - клоун из космического цирка! Недавно ваша труппа получила кое-какие игрушки от партнеров из Синдиката, и сегодня вы намерены поразвлечься и поразвлечь!"
+	fluff_text = "Ты - клоун из космического цирка! Недавно ваша труппа получила кое-какие игрушки от партнеров из Синдиката, и сегодня вы намерены поразвлечься и поразвлечь!"
+	faction = /datum/faction/responders/clowns
+	id = "ert_clowns"
