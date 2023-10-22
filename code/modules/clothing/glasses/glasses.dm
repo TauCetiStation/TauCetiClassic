@@ -285,7 +285,7 @@
 	toggleable = TRUE
 	active = TRUE
 	activation_sound = 'sound/effects/glasses_switch.ogg'
-	sightglassesmod  = "sepia"
+	sightglassesmod  = "hos"
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	flash_protection = FLASHES_AMPLIFIER

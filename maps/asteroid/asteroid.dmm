@@ -3314,12 +3314,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault";
-	name = "Mainframe floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "hd" = (
@@ -5547,6 +5542,7 @@
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/science,
+/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/light/smart{
 	dir = 1
@@ -5803,6 +5799,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -8195,7 +8192,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "circuit"
+	icon_state = "wood"
 	},
 /area/asteroid/mine/explored)
 "rZ" = (
@@ -11730,6 +11727,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/device/radio/intercom{
@@ -11926,6 +11924,7 @@
 /area/asteroid/research_outpost/longtermstorage)
 "Dh" = (
 /obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science,

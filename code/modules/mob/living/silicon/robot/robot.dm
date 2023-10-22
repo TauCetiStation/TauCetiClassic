@@ -337,6 +337,7 @@
 		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
+	radio.recalculateChannels()
 
 /mob/living/silicon/robot/proc/build_combat_borg()
 	var/mob/living/silicon/robot/combat/C = new(get_turf(src))

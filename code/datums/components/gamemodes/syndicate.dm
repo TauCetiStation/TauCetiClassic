@@ -189,9 +189,6 @@
 			guplink.uses = uplink_uses
 			total_TC = uplink_uses
 
-	var/datum/role/R = parent
-	for(var/datum/objective/O in R.objectives.GetObjectives())
-		O.give_required_equipment()
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)

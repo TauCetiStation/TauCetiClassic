@@ -336,6 +336,7 @@
 ///from ai_actual_track(): (mob/living)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+#define COMSIG_LIVING_BUMPED "living_bumped"
 
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
@@ -343,6 +344,8 @@
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
 /// from /mob/living/carbon/proc/finish_humanize(): (species)
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
+/// from /mob/verb/a_intent_change(): (intent as text)
+#define COMSIG_LIVING_INTENT_CHANGE "living_intent_change"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/UnarmedAttack(): (atom/target)

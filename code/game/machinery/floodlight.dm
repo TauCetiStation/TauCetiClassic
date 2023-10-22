@@ -38,7 +38,6 @@
 			visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
-
 /obj/machinery/floodlight/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -72,6 +71,21 @@
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/floodlight/verb/rotate()
+	set name = "Rotate Floodlight"
+	set category = "Object"
+	set src in oview(1)
+
+	if(!config.ghost_interaction && isobserver(usr))
+		return
+	if(ismouse(usr))
+		return
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.incapacitated())
+		return
+
+	set_dir(turn(dir, 90))
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
 	if (isscrewing(W))
