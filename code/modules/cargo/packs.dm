@@ -1602,6 +1602,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Food crate"
 	group = "Supply"
 
+/datum/supply_pack/cheese
+	name = "Cheese supply crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel,
+					/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel,
+					/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel)
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Cheese crate"
+	group = "Supply"
+
 /datum/supply_pack/condiments
 	name = "Condiment supply crate"
 	contains = list(/obj/item/weapon/reagent_containers/food/condiment/sugar,
