@@ -82,6 +82,22 @@
 	idle_vision_range = 2
 	loot_list = list(/obj/item/weapon/ore/diamond = 5)
 
+/obj/item/projectile/changeling_whip/halloween
+	damage = 15
+	weaken = 1
+
+/obj/item/projectile/temp/hot/halloween
+	icon_state = "laser"
+	//heat_level 3 * 2
+	temperature = 2000
+	nodamage = FALSE
+	damage = 15
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/halloween
+	projectiletype = /obj/item/projectile/temp/hot/halloween
+	icon = 'icons/mob/lavaland_basilisk.dmi'
+	move_to_delay = 10
+
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
@@ -438,6 +454,36 @@
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
 
+/mob/living/simple_animal/hostile/asteroid/goliath/halloween
+	icon = 'icons/mob/lavaland_goliath.dmi'
+	pixel_x = -12
+	speed = 0
+	move_to_delay = 5
+	melee_damage = 5
+
+/mob/living/simple_animal/hostile/asteroid/goliath/halloween/OpenFire()
+	var/tturf = get_turf(target)
+	if(get_dist(src, target) <= 9)//Screen range check, so you can't get tentacle'd offscreen
+		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+		new /obj/effect/goliath_tentacle/original/halloween(tturf, melee_damage * 5)
+		ranged_cooldown = ranged_cooldown_cap
+		icon_state = icon_aggro
+		pre_attack = 0
+
+/obj/effect/goliath_tentacle/original/halloween
+	icon = 'icons/mob/lavaland_monsters.dmi'
+
+/obj/effect/goliath_tentacle/halloween
+	icon = 'icons/mob/lavaland_monsters.dmi'
+
+/obj/effect/goliath_tentacle/original/halloween/spawn_copies()
+	var/list/directions = cardinal.Copy()
+	for (var/i in 1 to 3)
+		var/spawndir = pick(directions)
+		directions -= spawndir
+		var/turf/T = get_step(src, spawndir)
+		new /obj/effect/goliath_tentacle/halloween(T, strength)
+
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
@@ -458,14 +504,17 @@
 
 /obj/effect/goliath_tentacle/original
 
-/obj/effect/goliath_tentacle/original/atom_init()
-	. = ..()
+/obj/effect/goliath_tentacle/original/proc/spawn_copies()
 	var/list/directions = cardinal.Copy()
 	for (var/i in 1 to 3)
 		var/spawndir = pick(directions)
 		directions -= spawndir
 		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle(T, strength)
+
+/obj/effect/goliath_tentacle/original/atom_init()
+	. = ..()
+	spawn_copies()
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
