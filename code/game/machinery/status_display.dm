@@ -227,6 +227,7 @@
 				mode = 6
 				if(queue_number < global.ticket_machine_number)
 					queue_number++
+					playsound(src, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 
 
 	update()
