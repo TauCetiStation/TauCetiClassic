@@ -913,6 +913,10 @@
 	regen_mod = 0.5
 	regen_limbs = FALSE
 
+/datum/species/diona/podman/halloween
+	name = PODMAN_HALLOWEEN
+	icobase = 'icons/mob/human_races/r_podman_halloween.dmi'
+
 /datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
 	. = ..()
 	H.AddComponent(/datum/component/logout_spawner, /datum/spawner/living/podman)

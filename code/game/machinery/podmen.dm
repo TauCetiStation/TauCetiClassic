@@ -124,31 +124,37 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	var/obj/machinery/hydroponics/pod = loc
 
-	var/mob/living/carbon/monkey/diona/D = new product_type(pod.loc)
+	var/mob/living/carbon/human/adult = new(get_turf(pod))
+
+	adult.set_species(PODMAN_HALLOWEEN)
 
 	if(copycat_replica && replicant_dna)
-		D.dna = replicant_dna.Clone()
-		D.real_name = D.dna.real_name
-		D.name = D.real_name
+		adult.dna = replicant_dna.Clone()
+		adult.real_name = adult.dna.real_name
+		adult.name = adult.real_name
 
 		for(var/language in replicant_languages)
-			D.add_language(language)
+			adult.add_language(language)
 
-		D.saved_quirks = replicant_quirks.Copy()
+	else
+		adult.name = user.name
+		adult.real_name = adult.name
 
 	if(copycat_replica && priveleged_player && priveleged_player.current == blood_source && blood_source.stat == DEAD)
-		D.key = blood_source.key
+		adult.key = blood_source.key
 
-		D.mind.memory = replicant_memory
+		adult.mind.memory = replicant_memory
 
 		var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 		msg += "<B>You are alive. Again. But you are not you. You are a mere Podmen, a husk of what you should have been. Neither of humans, nor of them. A hollow shell, filled with disease.</B><BR>"
 		msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-		to_chat(D, msg)
+		to_chat(adult, msg)
 		return
-
 	else
-		create_spawner(spawner_type, D, replicant_memory)
+		create_spawner(spawner_type, adult, replicant_memory)
+
+	adult.UpdateAppearance()
+	adult.regenerate_icons()
 
 	user.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	qdel(src)
