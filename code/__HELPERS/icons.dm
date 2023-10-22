@@ -873,7 +873,7 @@ The _flatIcons list is a cache for generated icon files.
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, dummy_key, showDirs = cardinal)
+/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, dummy_key, showDirs = cardinal, client/C)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key, prefs?.species)
 
@@ -894,7 +894,8 @@ var/global/list/humanoid_icon_cache = list()
 		for(var/D in showDirs)
 			body.set_dir(D)
 			COMPILE_OVERLAYS(body)
-			var/icon/partial = getFlatIcon(body)
+			var/icon/partial = C ? C.RenderIcon(body) : getFlatIcon(body)
+			partial.Crop(1,1,32,32)
 			out_icon.Insert(partial,dir=D)
 
 		humanoid_icon_cache[icon_id] = out_icon

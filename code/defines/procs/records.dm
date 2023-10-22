@@ -41,7 +41,7 @@
 	if(!C)
 		C = H.client
 	var/datum/preferences/P = C?.prefs
-	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions, C)
 
 /proc/find_general_record(field, value)
 	return find_record(field, value, data_core.general)

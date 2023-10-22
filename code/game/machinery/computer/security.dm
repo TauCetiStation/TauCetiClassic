@@ -101,11 +101,11 @@
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						if(istype(active1.fields["photo_f"], /icon))
-							var/icon/front = active1.fields["photo_f"]
+							var/icon/front = new(active1.fields["photo_f"])
 							front.Blend(mugshot,ICON_UNDERLAY,1,1)
 							user << browse_rsc(front, "front.png")
 						if(istype(active1.fields["photo_s"], /icon))
-							var/icon/side = active1.fields["photo_s"]
+							var/icon/side = new(active1.fields["photo_s"])
 							side.Blend(mugshot,ICON_UNDERLAY,1,1)
 							user << browse_rsc(side, "side.png")
 						dat += "<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>	\
