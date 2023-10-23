@@ -82,10 +82,6 @@
 	idle_vision_range = 2
 	loot_list = list(/obj/item/weapon/ore/diamond = 5)
 
-/obj/item/projectile/changeling_whip/halloween
-	damage = 15
-	weaken = 1
-
 /obj/item/projectile/temp/hot/halloween
 	icon_state = "laser"
 	//heat_level 3 * 2
@@ -454,7 +450,49 @@
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
 
+/mob/living/simple_animal/hostile/asteroid/goliath/ancient_halloween
+	name = "Ancient monster"
+	icon = 'icons/mob/lavaland_acient_g.dmi'
+	projectiletype = /obj/item/projectile/changeling_whip/halloween
+	projectilesound = 'sound/weapons/pierce.ogg'
+	pixel_x = -12
+	speed = 1
+
+/obj/item/projectile/changeling_whip/halloween
+	damage = 20
+	weaken = 1
+
+/mob/living/simple_animal/hostile/asteroid/goliath/ancient_halloween/OpenFire()
+	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
+	INVOKE_ASYNC(src, PROC_REF(start_shoot), target)
+	ranged_cooldown = ranged_cooldown_cap
+
+/mob/living/simple_animal/hostile/asteroid/goliath/broodmother_halloween
+	name = "Broodmother"
+	icon = 'icons/mob/lavaland_monsters.dmi'
+	pixel_x = -16
+	projectiletype = /obj/item/projectile/changeling_whip/halloween/grabber
+	projectilesound = 'sound/weapons/pierce.ogg'
+	ranged_cooldown_cap = 2
+	melee_damage = 30
+
+/obj/item/projectile/changeling_whip/halloween/grabber
+	damage = 5
+	weaken = 2
+	grabber = TRUE
+
+/obj/item/projectile/changeling_whip/halloween/grabber/atom_init()
+	. = ..()
+	// Working with host-turf, so why not
+	host = loc
+
+/mob/living/simple_animal/hostile/asteroid/goliath/broodmother_halloween/OpenFire()
+	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
+	INVOKE_ASYNC(src, PROC_REF(start_shoot), target)
+	ranged_cooldown = ranged_cooldown_cap
+
 /mob/living/simple_animal/hostile/asteroid/goliath/halloween
+	name = "Monster"
 	icon = 'icons/mob/lavaland_goliath.dmi'
 	pixel_x = -12
 	speed = 0

@@ -78,6 +78,8 @@
 	return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
+	if(!iscarbon(host))
+		return
 	if(T.Adjacent(host) && !host.get_inactive_hand())
 		if(iscarbon(T))
 			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
