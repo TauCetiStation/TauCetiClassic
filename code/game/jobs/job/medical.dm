@@ -155,7 +155,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN)
+	restricted_species = list(UNATHI)
 
 	department_stocks = list("Medical" = 10)
 	flags = JOB_FLAG_MEDBAY

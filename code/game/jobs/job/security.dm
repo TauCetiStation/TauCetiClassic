@@ -77,7 +77,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA, IPC, TAJARAN)
+	restricted_species = list(DIONA, IPC)
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/officer
