@@ -5373,7 +5373,8 @@
 /area/station/security/interrogation)
 "ajf" = (
 /obj/structure/filingcabinet{
-	req_access = list(58)
+	req_access = list(58);
+	dir = 8
 	},
 /obj/machinery/keycard_auth{
 	pixel_x = 26
@@ -23485,6 +23486,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
 /turf/simulated/floor{
 	dir = 5;
@@ -23496,7 +23498,8 @@
 	pixel_x = 32
 	},
 /obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(30)
+	req_access = list(30);
+	dir = 8
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Science"
@@ -32979,7 +32982,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "bhe" = (
-/obj/structure/filingcabinet/chestdrawer/black,
+/obj/structure/filingcabinet/chestdrawer/black{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bhf" = (
@@ -34494,7 +34499,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "bkq" = (
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet{
+	dir = 8
+	},
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
@@ -34546,7 +34553,9 @@
 /obj/machinery/requests_console/captain{
 	pixel_x = -30
 	},
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkw" = (
@@ -34680,7 +34689,9 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/filingcabinet{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -37239,6 +37250,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science,
 /turf/simulated/floor{
 	dir = 4;
@@ -39784,7 +39796,9 @@
 	},
 /area/station/hallway/primary/central)
 "btP" = (
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -40923,7 +40937,8 @@
 	pixel_x = -28
 	},
 /obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(57)
+	req_access = list(57);
+	dir = 4
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Civilian"
@@ -44056,11 +44071,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
-"bBm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
-/area/station/cargo/storage)
 "bBn" = (
 /obj/machinery/door_control{
 	id = "bridge blast";
@@ -47070,7 +47080,9 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bGJ" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/chestdrawer{
+	dir = 8
+	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -49638,7 +49650,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/filingcabinet/chestdrawer/black,
+/obj/structure/filingcabinet/chestdrawer/black{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62746,7 +62760,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "ctY" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/chestdrawer{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "ctZ" = (
@@ -71869,7 +71885,8 @@
 	icon_state = "0-8"
 	},
 /obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(56)
+	req_access = list(56);
+	dir = 8
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Engineering"
@@ -82847,7 +82864,9 @@
 	},
 /area/station/cargo/office)
 "sNb" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/chestdrawer{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
@@ -83670,7 +83689,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "ucb" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/chestdrawer{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -101752,7 +101773,7 @@ qAF
 vdm
 aFg
 bcf
-bBm
+bxz
 bba
 vIi
 pal
