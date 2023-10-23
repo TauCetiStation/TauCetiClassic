@@ -25,6 +25,7 @@
 
 /datum/event/feature/area/maintenance_spawn/invasion
 	possible_types = list(
+		/mob/living/simple_animal/hostile/asteroid/basilisk/halloween,
 		/mob/living/simple_animal/hostile/asteroid/goliath/broodmother_halloween,
 		/mob/living/simple_animal/hostile/asteroid/goliath/ancient_halloween,
 		/mob/living/simple_animal/hostile/asteroid/goliath/halloween,

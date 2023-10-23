@@ -90,9 +90,11 @@
 	damage = 15
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/halloween
+	name = "Crystal monster"
 	projectiletype = /obj/item/projectile/temp/hot/halloween
 	icon = 'icons/mob/lavaland_basilisk.dmi'
 	move_to_delay = 10
+	loot_list = list(/obj/item/weapon/reagent_containers/food/condiment/hotsauce = 5)
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -457,6 +459,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	pixel_x = -12
 	speed = 1
+	loot_list = list(/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat = 10)
 
 /obj/item/projectile/changeling_whip/halloween
 	damage = 20
@@ -475,6 +478,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged_cooldown_cap = 2
 	melee_damage = 30
+	loot_list = list(/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat = 15)
 
 /obj/item/projectile/changeling_whip/halloween/grabber
 	damage = 5
@@ -498,6 +502,7 @@
 	speed = 0
 	move_to_delay = 5
 	melee_damage = 5
+	loot_list = list(/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat = 5)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/halloween/OpenFire()
 	var/tturf = get_turf(target)
