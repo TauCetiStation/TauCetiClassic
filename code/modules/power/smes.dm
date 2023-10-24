@@ -105,6 +105,8 @@
 	..()
 
 /obj/machinery/power/smes/RefreshParts()
+	..()
+
 	var/IO = 0
 	var/C = 0
 	var/c = 0

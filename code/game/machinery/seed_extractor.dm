@@ -17,6 +17,8 @@
 	RefreshParts()
 
 /obj/machinery/seed_extractor/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_seeds = 1000 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
