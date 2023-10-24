@@ -33,7 +33,7 @@
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
-	desc = "[initial(desc)][BB ? "" : "Этот патрон использован."]"
+	desc = "[initial(desc)][BB ? "" : " Этот патрон использован."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
 	if (!BB)
