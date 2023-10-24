@@ -561,9 +561,14 @@
 						to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
 						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) [ADMIN_JMP(H)]")
 						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
-						new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
+						var/mob/living/simple_animal/hostile/cyber_horror/CH = new(H.loc)
 						spawning_horror = 0
+						var/client/chelik = H.client
 						H.gib()
+						var/answer = tgui_alert(chelik,"Ты хочешь стать кибер хоррором? Потом ты не сможешь вернуться в свою голову.","Кибер хоррор", list("Да","Нет"))
+						if(answer == "Да")
+							CH.key = chelik.key
+							to_chat(CH, "Теперь ты кибер хоррор! Кусай людей пока они не превратятся в твоих сородичей. Чем больше вас - тем вы сильнее!")
 	else
 		holder.del_reagent(id)
 
