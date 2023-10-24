@@ -25,7 +25,6 @@
 
 	playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 
-	user.nutrition -= 6
 	user.overeatduration -= 8
 
 	var/obj/item/organ/external/chest/C = user.get_bodypart(BP_CHEST)
@@ -134,7 +133,6 @@
 	if(user.is_busy() || !do_after(user, 3, TRUE, src, progress=FALSE))
 		return
 
-	user.nutrition -= 12
 	user.overeatduration -= 16
 
 	var/obj/item/organ/external/l_arm/LA = user.get_bodypart(BP_L_ARM)
@@ -329,5 +327,4 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	H.update_body()
 
-	H.nutrition -= 2 * mass
 	H.overeatduration -= 2 * mass
