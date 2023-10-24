@@ -50,6 +50,8 @@ var/global/const/HOLOPAD_MODE = 0
 	RefreshParts()
 
 /obj/machinery/hologram/holopad/RefreshParts()
+	..()
+
 	var/holograph_range = 4
 	for(var/obj/item/weapon/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
