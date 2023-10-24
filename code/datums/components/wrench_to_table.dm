@@ -34,7 +34,7 @@
 
 	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(parent))
 	if(!Table)
-		to_chat(user, "<span class='warning'>[Par.name] можно прикрутить только к столу.</span>")
+		to_chat(user, "<span class='warning'>[Par.name] РјРѕР¶РЅРѕ РїСЂРёРєСЂСѓС‚РёС‚СЊ С‚РѕР»СЊРєРѕ Рє СЃС‚РѕР»Сѓ.</span>")
 		return
 	Wrenched_To = Table
 
@@ -43,10 +43,10 @@
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!Par.anchored)
-			to_chat(user, "<span class='warning'>[Par.name] прикручен.</span>")
+			to_chat(user, "<span class='warning'>[Par.name] РїСЂРёРєСЂСѓС‡РµРЅ.</span>")
 			wrench()
 			return
-		to_chat(user, "<span class='notice'>[Par.name] откручен.</span>")
+		to_chat(user, "<span class='notice'>[Par.name] РѕС‚РєСЂСѓС‡РµРЅ.</span>")
 		unwrench()
 
 /datum/component/wrench_to_table/proc/wrench()
