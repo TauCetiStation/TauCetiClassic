@@ -329,12 +329,19 @@
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 
-	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
-					50; /mob/living/simple_animal/construct/wraith,\
-					30; /mob/living/simple_animal/construct/armoured,\
-					40; /mob/living/simple_animal/construct/proteon,\
-					50; /mob/living/simple_animal/construct/builder,\
-					1;  /mob/living/simple_animal/construct/behemoth)
+	var/type = pick(
+					50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+					45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+					40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+					30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+					25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+					20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+					35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+					40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+					)
 	create_shell(user, type)
 	next_spawn = world.time + spawn_cd
 	spawns -= 1
