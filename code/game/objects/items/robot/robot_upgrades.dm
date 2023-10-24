@@ -24,9 +24,12 @@
 	require_module = 1
 
 /obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return 0
+
 	R.uneq_all()
 	R.icon_state = "robot"
+	clearlist(R.module.channels)
 	qdel(R.module)
 	R.module = null
 	R.module_icon.update_icon(R)
