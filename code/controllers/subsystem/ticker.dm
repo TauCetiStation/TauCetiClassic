@@ -47,9 +47,11 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
+	/*
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\
+	'sound/music/title1.ogg',\	//disgusting
+	*/
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
