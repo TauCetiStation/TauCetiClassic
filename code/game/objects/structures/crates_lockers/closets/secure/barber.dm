@@ -1,12 +1,10 @@
 /obj/structure/closet/secure_closet/barber
 	name = "Barber's locker"
 	req_access = list(access_barber)
-	icon_state = "barbersecure1"
+
+	icon_state = "barbersecure"
 	icon_closed = "barbersecure"
-	icon_locked = "barbersecure1"
-	icon_opened = "barbersecureopen"
-	icon_broken = "barbersecurebroken"
-	icon_off = "barbersecureoff"
+	icon_opened = "barbersecure_open"
 
 /obj/structure/closet/secure_closet/barber/PopulateContents()
 	new /obj/item/clothing/mask/surgical(src) // These three are here, so the barber can pick and choose what he's painting.
