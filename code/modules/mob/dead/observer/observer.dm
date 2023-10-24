@@ -429,11 +429,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!length(custom_sprites))
 		if(config.customitems_info_url)
-			to_chat(src, "<span class='notice'>You don't have any ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
+			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
 		else
-			to_chat(src, "<span class='notice'>You don't have any ghost sprites.</span>")
-
-		return
+			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites.</span>")
 
 	if(body_icon)
 		custom_sprites += "--body--"
