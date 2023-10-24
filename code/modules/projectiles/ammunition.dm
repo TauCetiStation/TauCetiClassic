@@ -178,11 +178,11 @@
 	if(stored_ammo.len == max_ammo)
 		message = "Кажется, магазин полон"
 	if(stored_ammo.len < max_ammo)
-		message = "Кажется магазин почти полон"
+		message = "Кажется, магазин почти полон"
 	if(stored_ammo.len <= max_ammo*0.5)
-		message = "Кажется магазин наполовину полон"
+		message = "Кажется, магазин наполовину полон"
 	if(stored_ammo.len <= max_ammo*0.25)
-		message = "Кажется магазин почти пуст"
+		message = "Кажется, магазин почти пуст"
 	if(!stored_ammo.len)
 		message = "Магазин пуст"
 	return (message)
