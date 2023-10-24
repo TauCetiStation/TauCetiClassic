@@ -1,6 +1,6 @@
 /obj/item/device/microphone
 	name = "Microphone"
-	desc = "Микрофон для озвучивания объявлений отдела "
+	desc = "Микрофон для озвучивания объявлений отдела"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "soyuz_heads"
 	w_class = SIZE_SMALL
@@ -17,7 +17,7 @@
 	. = ..()
 	AddComponent(/datum/component/wrench_to_table)
 
-	desc += "([department])."
+	desc += " ([department])."
 
 /obj/item/device/microphone/proc/can_use(mob/user)
 	if(!anchored || !isturf(loc) || !is_station_level(z))
