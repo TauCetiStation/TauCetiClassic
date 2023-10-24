@@ -21,7 +21,8 @@
 
 /datum/component/wrench_to_table/Destroy()
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_QDELETING))
-	UnregisterSignal(Wrenched_To, list(COMSIG_PARENT_QDELETING))
+	if(Wrenched_To)
+		UnregisterSignal(Wrenched_To, list(COMSIG_PARENT_QDELETING))
 
 	QDEL_NULL(on_wrenched)
 	QDEL_NULL(on_unwrenched)
@@ -34,7 +35,7 @@
 
 	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(parent))
 	if(!Table)
-		to_chat(user, "<span class='warning'>[Par.name] РјРѕР¶РЅРѕ РїСЂРёРєСЂСѓС‚РёС‚СЊ С‚РѕР»СЊРєРѕ Рє СЃС‚РѕР»Сѓ.</span>")
+		to_chat(user, "<span class='warning'>[Par.name] можно прикрутить только к столу.</span>")
 		return
 	Wrenched_To = Table
 
@@ -43,10 +44,10 @@
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!Par.anchored)
-			to_chat(user, "<span class='warning'>[Par.name] РїСЂРёРєСЂСѓС‡РµРЅ.</span>")
+			to_chat(user, "<span class='warning'>[Par.name] прикручен.</span>")
 			wrench()
 			return
-		to_chat(user, "<span class='notice'>[Par.name] РѕС‚РєСЂСѓС‡РµРЅ.</span>")
+		to_chat(user, "<span class='notice'>[Par.name] откручен.</span>")
 		unwrench()
 
 /datum/component/wrench_to_table/proc/wrench()
@@ -60,7 +61,8 @@
 /datum/component/wrench_to_table/proc/unwrench()
 	var/obj/item/Par = parent
 	Par.anchored = FALSE
-	UnregisterSignal(Wrenched_To, list(COMSIG_PARENT_QDELETING))
+	if(Wrenched_To)
+		UnregisterSignal(Wrenched_To, list(COMSIG_PARENT_QDELETING))
 
 	if(on_unwrenched)
 		on_unwrenched.Invoke()
