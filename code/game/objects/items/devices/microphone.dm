@@ -15,57 +15,42 @@
 
 /obj/item/device/microphone/atom_init(mapload)
 	. = ..()
-	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
-	if(mapload && Table)
-		anchored = TRUE
-		RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
+	AddComponent(/datum/component/wrench_to_table)
 
 	desc += "([department])."
 
-/obj/item/device/microphone/proc/unwrench()
-	anchored = FALSE
+/obj/item/device/microphone/proc/can_use(mob/user)
+	if(!anchored || !isturf(loc) || !is_station_level(z))
+		return FALSE
 
-/obj/item/device/microphone/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W) && isturf(src.loc))
-		var/obj/item/weapon/wrench/Tool = W
-		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
-			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			user.SetNextMove(CLICK_CD_INTERACT)
-			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
-			if(!anchored)
-				if(!Table)
-					to_chat(user, "<span class='warning'>Микрофон можно прикрутить только к столу.</span>")
-					return
-				to_chat(user, "<span class='warning'>Микрофон прикручен.</span>")
-				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
-				return
-			to_chat(user, "<span class='notice'>Микрофон откручен.</span>")
-			anchored = FALSE
-
-	return ..()
-
-/obj/item/device/microphone/attack_hand(mob/user)
-	. = ..()
-	if(!isturf(loc) || !is_station_level(z))
-		return
+	if(user.incapacitated() || !Adjacent(user))
+		return FALSE
 
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>Вы не знаете как этим пользоваться!</span>")
-		return
+		return FALSE
 
 	var/mob/living/carbon/human/H = user
 
 	if(H.silent || isabductor(H) || HAS_TRAIT(H, TRAIT_MUTE))
 		to_chat(user, "<span class='userdange'>Вы немы.</span>")
-		return
+		return FALSE
 
 	if(last_announce + announce_cooldown > world.time)
+		to_chat(user, "<span class='userdange'>Микрофон перезаряжается.</span>")
+		return FALSE
+
+	return TRUE
+
+/obj/item/device/microphone/attack_hand(mob/user)
+	. = ..()
+
+	if(!can_use(user))
 		return
 
 	playsound(src, 'sound/items/megaphone.ogg', VOL_EFFECTS_MASTER)
 	var/new_message = sanitize(input(usr, "Объявление:", "[name]", "") as null|message)
-	if(user.incapacitated() || !Adjacent(user) || !length(new_message))
+	if(!can_use(user) || !length(new_message))
 		return
 
 	last_announce = world.time

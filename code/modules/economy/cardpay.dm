@@ -26,11 +26,7 @@
 
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
-
-	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
-	if(mapload && Table)
-		anchored = TRUE
-		RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
+	AddComponent(/datum/component/wrench_to_table, , CALLBACK(src, PROC_REF(on_unwrenched)))
 
 	holoprice = image('icons/effects/32x32.dmi', "blank")
 	holoprice.layer = INDICATOR_LAYER
@@ -40,6 +36,10 @@
 	holoprice.maptext_x = -4
 
 	add_overlay(holoprice)
+
+/obj/item/device/cardpay/proc/on_unwrenched()
+	SStgui.close_uis(src)
+	reset_anything()
 
 /obj/item/device/cardpay/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -77,31 +77,8 @@
 			if(CARDPAY_ACCOUNTMODE)
 				display_numbers = Wallet.account_number
 				set_account()
-
-	else if(iswrenching(I) && isturf(src.loc))
-		var/obj/item/weapon/wrench/Tool = I
-		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
-			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			user.SetNextMove(CLICK_CD_INTERACT)
-			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
-			if(!anchored)
-				if(!Table)
-					to_chat(user, "<span class='warning'>Сканер можно прикрутить только к столу.</span>")
-					return
-				to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
-				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
-				return
-			to_chat(user, "<span class='notice'>Сканер откручен.</span>")
-			anchored = FALSE
-			UnregisterSignal(Table, list(COMSIG_PARENT_QDELETING))
-			reset_anything()
-			SStgui.close_uis(src)
 	else
 		return ..()
-
-/obj/item/device/cardpay/proc/unwrench()
-	anchored = FALSE
 
 /obj/item/device/cardpay/attack_self(mob/living/user)
 	. = ..()
