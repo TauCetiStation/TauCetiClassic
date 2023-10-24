@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(ticker)
 	login_music = pick(\
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\ //gusting
+	'sound/music/title1.ogg',\
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
