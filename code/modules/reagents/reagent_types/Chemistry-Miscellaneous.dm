@@ -563,11 +563,11 @@
 						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
 						var/mob/living/simple_animal/hostile/cyber_horror/CH = new(H.loc)
 						spawning_horror = 0
-						var/client/chelik = H.client
+						var/client/player = H.client
 						H.gib()
-						var/answer = tgui_alert(chelik,"Ты хочешь стать кибер хоррором? Потом ты не сможешь вернуться в свою голову.","Кибер хоррор", list("Да","Нет"))
+						var/answer = tgui_alert(player,"Ты хочешь стать кибер хоррором? Потом ты не сможешь вернуться в свою голову.","Кибер хоррор", list("Да","Нет"))
 						if(answer == "Да")
-							CH.key = chelik.key
+							CH.key = player.key
 							to_chat(CH, "Теперь ты кибер хоррор! Кусай людей пока они не превратятся в твоих сородичей. Чем больше вас - тем вы сильнее!")
 	else
 		holder.del_reagent(id)
