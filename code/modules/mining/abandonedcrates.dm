@@ -1,5 +1,5 @@
 /obj/structure/closet/crate/secure/loot
-	name = "заброшенный ящик"
+	name = "Abandoned crate"
 	desc = "Что же может оказаться внутри?"
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"

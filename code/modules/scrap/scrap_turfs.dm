@@ -103,28 +103,18 @@
 		if(prob(1))
 			new /obj/effect/landmark/junkyard_bum(src)
 			return
-		if(prob(1))
-			new /obj/random/mobs/peacefull(src)
-
 
 /turf/simulated/floor/plating/ironsand/junkyard/challenging/surround_by_scrap()
 	if(..())
 		if(prob(1))
 			new /obj/effect/scrap_pile_generator(src, 2)
 			return
-		if(prob(1) && prob(30))
-			new /obj/random/mobs/moderate(src)
 
 /turf/simulated/floor/plating/ironsand/junkyard/dangerous/surround_by_scrap()
 	if(..())
 		if(prob(1))
 			new /obj/effect/scrap_pile_generator(src, 3)
 			return
-		if(prob(1))
-			new /obj/random/mobs/dangerous(src)
-			if(prob(10))
-				new /obj/random/mobs/peacefull(src)
-
 
 /turf/simulated/floor/plating/ironsand/junkyard/attackby(obj/item/weapon/W, mob/user)
 	if(!W || !user)

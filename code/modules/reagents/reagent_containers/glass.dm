@@ -12,7 +12,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50)
 	volume = 50
 	flags = OPENCONTAINER
-	action_button_name = "Switch Lid"
+	item_action_types = list(/datum/action/item_action/hands_free/switch_lid)
 	var/label_text = ""
 	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
 	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
@@ -46,6 +46,9 @@
 		/obj/machinery/constructable_frame,
 		/obj/item/clothing/suit/space/rig)
 
+/datum/action/item_action/hands_free/switch_lid
+	name = "Switch Lid"
+
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()
 	base_name = name
@@ -64,6 +67,7 @@
 		to_chat(usr, "<span class = 'notice'>You take the lid off \the [src].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
+	update_item_actions()
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 

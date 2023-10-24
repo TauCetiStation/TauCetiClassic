@@ -17,6 +17,8 @@
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
 
+#define iswaterturf(A) (istype(A, /turf/simulated/floor/beach/water) || istype(A, /turf/unsimulated/beach/water) || istype(A, /turf/unsimulated/jungle/water))
+
 // HUMAN
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -196,6 +198,8 @@
 #define isrevhead(H) isrole(HEADREV, H)
 
 #define istraitor(H) isrole(TRAITOR, H)
+
+#define isimposter(H) isrole(IMPOSTER, H)
 
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 

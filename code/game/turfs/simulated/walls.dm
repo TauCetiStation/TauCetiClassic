@@ -208,8 +208,9 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
-	F.burn_tile()
-	F.icon_state = "wall_thermite"
+	F.burnt = TRUE
+	F.add_scorched_overlay("thermite")
+
 	to_chat(user, "<span class='warning'>Термит начинает плавить стену.</span>")
 
 	spawn(seconds_to_melt * 10)
@@ -459,6 +460,13 @@
 		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
 		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
 		return
+	else if((istype(W, /obj/item/wallclock) || istype(W, /obj/item/portrait)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(32, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(32, get_dir(user, src))
+		W.anchored = TRUE
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
 	else
 		return attack_hand(user)
 
@@ -501,8 +509,11 @@
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
 
-/turf/simulated/wall/proc/tied_object_reset_pixel_offset(obj/O)
+/turf/simulated/wall/proc/tied_object_reset_pixel_offset(obj/O, unanchor = FALSE)
 	O.pixel_y = rand(-8, 8)
 	O.pixel_x = rand(-9, 9)
 	UnregisterSignal(O, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(O, COMSIG_PARENT_QDELETING)
+
+	if(unanchor)
+		O.anchored = FALSE

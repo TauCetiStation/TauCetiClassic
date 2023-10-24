@@ -12,6 +12,8 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor
 
+	
+
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()
 	pixel_x = rand(1, 14)

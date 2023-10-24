@@ -18,8 +18,6 @@
 	var/safety = FALSE
 	var/triple_shot = FALSE
 
-	action_button_name = "Switch Spray"
-
 	var/chempuff_dense = TRUE // Whether the chempuff can pass through closets and such(and it should).
 
 	var/spray_sound = 'sound/effects/spray2.ogg'
@@ -28,6 +26,10 @@
 
 	var/spray_cloud_move_delay = 3
 	var/spray_cloud_react_delay = 2
+	item_action_types = list(/datum/action/item_action/hands_free/switch_spray)
+
+/datum/action/item_action/hands_free/switch_spray
+	name = "Switch Spray"
 
 /obj/item/weapon/reagent_containers/spray/atom_init()
 	. = ..()

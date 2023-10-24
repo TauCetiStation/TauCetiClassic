@@ -175,7 +175,7 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL))
+	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL) || HAS_TRAIT(src, TRAIT_FAKELOYAL_VISUAL))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
@@ -215,7 +215,7 @@
 					holder.icon_state = "hudwanted"
 					return
 				if("Incarcerated")
-					holder.icon_state = "hudprisoner"
+					holder.icon_state = "hudincarcerated"
 					return
 				if("Paroled")
 					holder.icon_state = "hudparolled"

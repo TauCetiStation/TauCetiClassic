@@ -40,13 +40,12 @@
 	plane = RENDER_PLANE_GAME
 	render_relay_plane = RENDER_PLANE_MASTER
 
-/atom/movable/screen/plane_master/rendering_plate/game_world/atom_init(mapload, ...)
-	. = ..()
-	apply_singularity_effects()
-
-	add_filter("anomaly", 5, displacement_map_filter(render_source = ANOMALY_RENDER_TARGET, size = 10))
-
-/atom/movable/screen/plane_master/rendering_plate/game_world/proc/apply_singularity_effects()
+/atom/movable/screen/plane_master/rendering_plate/game_world/apply_effects(mob/mymob)
+	// singularity
+	remove_filter("singularity_0")
+	remove_filter("singularity_1")
+	remove_filter("singularity_2")
+	remove_filter("singularity_3")
 	add_filter("singularity_0", 1, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_0, size = -40))
 	add_filter("singularity_1", 2, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_1, size = 75))
 	add_filter("singularity_2", 3, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_2, size = 400))
@@ -63,6 +62,10 @@
 
 	animate(get_filter("singularity_3"), size = 750, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(size = 600, time = 10, easing = LINEAR_EASING, loop = -1)
+
+	// anomalys: gravity pulse, maybe something else
+	remove_filter("anomaly")
+	add_filter("anomaly", 5, displacement_map_filter(render_source = ANOMALY_RENDER_TARGET, size = 10))
 
 ///everything that should be above game world. (for example, singularity, nar-si)
 /atom/movable/screen/plane_master/rendering_plate/above_game_world

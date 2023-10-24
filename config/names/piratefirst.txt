@@ -1,0 +1,10 @@
+Comet
+Ion
+Laser
+Oort
+Plasma
+Pulsar
+Solar
+Space
+Star
+Void

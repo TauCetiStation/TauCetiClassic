@@ -12,6 +12,5 @@
 		/atom/movable/screen/inventory/mask/monkey,
 		/atom/movable/screen/inventory/back,
 		/atom/movable/screen/complex/gun,
-		/atom/movable/screen/internal,
 		/atom/movable/screen/health
 	))

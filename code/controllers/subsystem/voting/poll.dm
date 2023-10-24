@@ -4,9 +4,9 @@
 	If you are an antag or a head of staff, you get 2 votes
 */
 #define VOTE_WEIGHT_NONE   0
-#define VOTE_WEIGHT_LOW    0.3
+#define VOTE_WEIGHT_LOW    0.5
 #define VOTE_WEIGHT_NORMAL 1
-#define VOTE_WEIGHT_HIGH   2
+#define VOTE_WEIGHT_HIGH   1.5
 #define MINIMUM_VOTE_LIFETIME 15 MINUTES
 
 

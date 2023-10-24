@@ -207,7 +207,7 @@ var/global/list/oddity_loot = list(
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/head/helmet/helmet_of_justice = 1,
 		/obj/item/clothing/suit/space/clown = 1,
-		/obj/item/clothing/suit/armor/reactive = 1,
+		/obj/item/clothing/suit/armor/vest/reactive = 1,
 		/obj/item/weapon/storage/pouch/medium_generic = 1,
 		/obj/item/weapon/storage/pouch/small_generic = 1,
 	)

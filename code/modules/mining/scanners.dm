@@ -55,12 +55,14 @@
 	item_state = "glasses"
 	icon_state = "mesonmininghud"
 	icon_custom = null
-	action_button_name = "Toggle Goggles"
 	toggleable = TRUE
 	sightglassesmod = "sepia"
 	hud_types = list(DATA_HUD_MINER)
 	vision_flags = SEE_TURFS
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"
 	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."
