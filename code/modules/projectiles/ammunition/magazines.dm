@@ -325,7 +325,7 @@
 
 /obj/item/ammo_box/magazine/l13
 	name = "magazine (.38 rubber)"
-	icon_state = "l13_mag"
+	icon_state = "l13_mag_rubber"
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
@@ -336,6 +336,7 @@
 /obj/item/ammo_box/magazine/l13/lethal
 	name = "magazine (.38)"
 	origin_tech = "combat=2"
+	icon_state = "l13_mag"
 	ammo_type = /obj/item/ammo_casing/c38m
 
 /obj/item/ammo_box/magazine/internal/repeater
