@@ -165,7 +165,7 @@
 	switch(multiple_sprites)
 		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-			desc = "[initial(desc)] Осталось снярядов: [stored_ammo.len]"
+			desc = "[initial(desc)] Осталось снарядов: [stored_ammo.len]"
 		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
 			desc = "[initial(desc)] [get_ammo_count_description()]."
