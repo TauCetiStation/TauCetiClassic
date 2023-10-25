@@ -13317,6 +13317,19 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"XC" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost)
 "XD" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -13418,6 +13431,17 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
+"Zn" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/eva)
 "Zz" = (
 /turf/simulated/mineral/random/low_chance,
 /area/asteroid/mine/unexplored/safe)
@@ -30821,7 +30845,7 @@ rc
 vR
 qZ
 uU
-kR
+XC
 uU
 ys
 lA
@@ -57034,9 +57058,9 @@ vC
 uD
 uD
 vC
-yC
+Zn
 vd
-yC
+Zn
 yP
 zh
 ws
