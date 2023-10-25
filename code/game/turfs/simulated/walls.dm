@@ -53,7 +53,7 @@
 			"You can hear the babel of scurrying rats"
 		)
 		if(random_message_pick == "From object" && prob(5))
-			i.visible_message("<span class='shadowling'>[messagesfromrats[pick(1,2,3,4)]]</span>")
+			i.visible_message("<span class='shadowling'>[pick(messagesfromrats)]</span>")
 		var/original_pixelsX = i.pixel_x
 		var/original_pixelxY = i.pixel_y
 		for(var/z in 1 to 4)
