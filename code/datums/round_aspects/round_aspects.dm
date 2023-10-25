@@ -17,31 +17,32 @@
 /datum/round_aspect/rearm_energy/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 	for(var/datum/design/smg/smg in global.all_designs)
-		smg.materials = list(MAT_METAL = 16000, MAT_SILVER = 4000, MAT_DIAMOND = 2000)
+		smg.materials = list(MAT_METAL = 160000, MAT_SILVER = 40000, MAT_DIAMOND = 20000)
 
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
-		b.cost *= 5
+		b.cost *= 50
 
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
 
+
 /datum/round_aspect/rearm_ballistic/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_bullets
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
-		ng.materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_URANIUM = 10000)
+		ng.materials = list(MAT_METAL = 150000, MAT_GLASS = 50000, MAT_URANIUM = 100000)
 	for(var/datum/design/stunrevolver/sr in global.all_designs)
-		sr.materials = list(MAT_METAL = 20000)
+		sr.materials = list(MAT_METAL = 200000)
 	for(var/datum/design/lasercannon/lc in global.all_designs)
-		lc.materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_DIAMOND = 4000, MAT_URANIUM = 1000)
+		lc.materials = list(MAT_METAL = 200000, MAT_GLASS = 20000, MAT_DIAMOND = 40000, MAT_URANIUM = 10000)
 	for(var/datum/design/laserrifle/lr in global.all_designs)
-		lr.materials = list (MAT_METAL = 16000, MAT_GLASS = 5000, MAT_URANIUM = 1000)
+		lr.materials = list (MAT_METAL = 160000, MAT_GLASS = 50000, MAT_URANIUM = 10000)
 	for(var/datum/design/plasma_10_gun/plsm in global.all_designs)
-		plsm.materials = list(MAT_METAL = 25000, MAT_GOLD = 12000, MAT_SILVER = 9000, MAT_DIAMOND = 1000, MAT_URANIUM = 2000)
+		plsm.materials = list(MAT_METAL = 250000, MAT_GOLD = 120000, MAT_SILVER = 90000, MAT_DIAMOND = 10000, MAT_URANIUM = 20000)
 	for(var/datum/design/plasma_104_gun/plsmsh in global.all_designs)
-		plsmsh.materials = list(MAT_METAL = 25000, MAT_GOLD = 12000, MAT_SILVER = 15000, MAT_DIAMOND = 15000, MAT_URANIUM = 10000)
+		plsmsh.materials = list(MAT_METAL = 250000, MAT_GOLD = 120000, MAT_SILVER = 150000, MAT_DIAMOND = 150000, MAT_URANIUM = 100000)
 
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
-		e.cost *= 5
+		e.cost *= 50
 
 /datum/round_aspect/cyber_station
 	name = ROUND_ASPECT_CYBER_STATION
