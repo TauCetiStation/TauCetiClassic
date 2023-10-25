@@ -25,6 +25,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	..()
+
 	var/cap_rating = 0
 	var/man_rating = 0
 	var/bin_rating = 0

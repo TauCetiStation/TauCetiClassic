@@ -56,6 +56,8 @@
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/sleeper/RefreshParts()
+	..()
+
 	var/E
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		E += B.rating

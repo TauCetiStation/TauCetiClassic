@@ -1,12 +1,9 @@
 /obj/structure/closet/secure_closet/hydroponics
 	name = "Botanist's locker"
 	req_access = list(access_hydroponics)
-	icon_state = "hydrosecure1"
+	icon_state = "hydrosecure"
 	icon_closed = "hydrosecure"
-	icon_locked = "hydrosecure1"
-	icon_opened = "hydrosecureopen"
-	icon_broken = "hydrosecurebroken"
-	icon_off = "hydrosecureoff"
+	icon_opened = "hydrosecure_open"
 
 /obj/structure/closet/secure_closet/hydroponics/PopulateContents()
 	switch(rand(1,2))
