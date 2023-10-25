@@ -25,7 +25,6 @@
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
 
-
 /datum/round_aspect/rearm_ballistic/on_start()
 	new /datum/event/feature/area/replace/station_rearmament_bullets
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
