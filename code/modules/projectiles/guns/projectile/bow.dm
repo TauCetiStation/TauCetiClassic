@@ -77,10 +77,10 @@
 			arrow.fingerprintslast = src.fingerprintslast
 			arrow.forceMove(src)
 			icon_state = "crossbow-nocked"
-			user.visible_message("[user] хаотично вставляет болт в арбалет.","Вы хаотично вставляете болт в арбалет.")
+			user.visible_message("[user] хаотично вставляет [CASE(arrow, ACCUSATIVE_CASE)] в арбалет.","Вы хаотично вставляете [CASE(arrow, ACCUSATIVE_CASE)] в арбалет.")
 			if(cell)
 				if(cell.charge >= 500)
-					to_chat(user, "<span class='notice'>В результате болт начинает раскаляться докрасна.</span>")
+					to_chat(user, "<span class='notice'>В результате [CASE(arrow, ACCUSATIVE_CASE)] начинает раскаляться докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
@@ -115,7 +115,7 @@
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
-			user.visible_message("[user] ослабляет натяжение тетивы арбалета и вытаскивает болт.","Вы ослабляете натяжение тетивы арбалета и вытаскиваете болт.")
+			user.visible_message("[user] ослабляет натяжение тетивы арбалета и вытаскивает [CASE(arrow, ACCUSATIVE_CASE)].","Вы ослабляете натяжение тетивы арбалета и вытаскиваете [CASE(arrow, ACCUSATIVE_CASE)].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
 			A.removed(user)
@@ -170,7 +170,7 @@
 		return
 
 	if(!tension)
-		to_chat(user, "Вы не натянули болт на тетиву!")
+		to_chat(user, "Вы не натянули [CASE(arrow, ACCUSATIVE_CASE)] на тетиву!")
 		return 0
 
 	if (!arrow)
@@ -193,7 +193,7 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	user.visible_message("<span class='danger'>[user] стреляет из арбалета и болт летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете тетиву арбалета и отправляете в полёт болт несущуюся навстречу [target]!</span>")
+	user.visible_message("<span class='danger'>[user] стреляет из арбалета и болт летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете тетиву арбалета и отправляете в полёт [CASE(arrow, ACCUSATIVE_CASE)] несущийся навстречу [target]!</span>")
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
