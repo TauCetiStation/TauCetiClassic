@@ -12682,6 +12682,12 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
+"NN" = (
+/obj/structure/transit_tube{
+	icon_state = "D-SE"
+	},
+/turf/simulated/wall,
+/area/asteroid/research_outpost/entry)
 "NR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -49717,7 +49723,7 @@ HX
 Lq
 zy
 Kc
-hp
+NN
 nB
 aa
 aa
