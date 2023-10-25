@@ -42,6 +42,7 @@
 
 /obj/item/ammo_box/shotgun
 	name = "shotgun shells box (buckshot)"
+	desc = "Коробка для патронов (Картечь) 12 калибра."
 	caliber = "shotgun"
 	icon_state = "pellet_box"
 	w_class = SIZE_SMALL
@@ -61,11 +62,13 @@
 
 /obj/item/ammo_box/shotgun/beanbag
 	name = "shotgun shells box (beanbag)"
+	desc = "Коробка для патронов (Травматический) 12 калибра."
 	icon_state = "beanbag_box"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
 /obj/item/ammo_box/eight_shells
 	name = "shotgun shells box (slug)"
+	desc = "Коробка для патронов (Пуля) 12 калибра."
 	icon_state = "blushellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	caliber = "shotgun"
@@ -74,25 +77,30 @@
 
 /obj/item/ammo_box/eight_shells/buckshot
 	name = "shotgun shells box (buckshot)"
+	desc = "Коробка для патронов (Картечь) 12 калибра."
 	icon_state = "redshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/eight_shells/beanbag
 	name = "shotgun shells box (beanbag)"
+	desc = "Коробка для патронов (Травматический) 12 калибра."
 	icon_state = "greenshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
 /obj/item/ammo_box/eight_shells/incendiary
 	name = "shotgun shells box (incendiary)"
+	desc = "Коробка для патронов (Зажигательный) 12 калибра."
 	icon_state = "orangeshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
 
 /obj/item/ammo_box/eight_shells/dart
 	name = "shotgun shells box (dart)"
+	desc = "Коробка для патронов (Дротик) 12 калибра."
 	icon_state = "purpleshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart
 
 /obj/item/ammo_box/eight_shells/stunshot
 	name = "shotgun shells box (stunshot)"
+	desc = "Коробка для патронов (Электрошок) 12 калибра."
 	icon_state = "stanshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunshot

@@ -228,9 +228,9 @@
 /obj/structure/closet/medical_wall //wall mounted medical closet
 	name = "first-aid closet"
 	desc = "It's wall-mounted storage unit for first aid supplies."
-	icon_state = "medical_wall"
-	icon_closed = "medical_wall"
-	icon_opened = "medical_wall_open"
+	icon_state = "medicalwall"
+	icon_closed = "medicalwall"
+	icon_opened = "medicalwall_open"
 	anchored = TRUE
 	density = FALSE
 	wall_mounted = TRUE

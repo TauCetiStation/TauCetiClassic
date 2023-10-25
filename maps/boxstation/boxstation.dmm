@@ -3899,14 +3899,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "agH" = (
-/obj/structure/table/reinforced{
-	icon_state = "table"
-	},
 /obj/item/device/flashlight/lamp,
 /obj/item/device/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

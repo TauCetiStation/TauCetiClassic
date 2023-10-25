@@ -31,6 +31,8 @@
 	return ..()
 
 /obj/machinery/r_n_d/server/RefreshParts()
+	..()
+
 	var/tot_rating = 0
 	for(var/obj/item/weapon/stock_parts/SP in src)
 		tot_rating += SP.rating
