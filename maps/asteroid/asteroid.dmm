@@ -11114,6 +11114,19 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
+"zy" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube{
+	icon_state = "D-NE"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "zz" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_east_sensor";
@@ -12217,6 +12230,19 @@
 "Hg" = (
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"HX" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "Ib" = (
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = -32
@@ -12483,6 +12509,19 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
+"Lq" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube{
+	icon_state = "NW-SE"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "Lz" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Bridge";
@@ -12751,6 +12790,17 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
+"Pu" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/hallway)
 "Py" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -49663,9 +49713,9 @@ mo
 mo
 mo
 hp
-Kc
-Kc
-Kc
+HX
+Lq
+zy
 Kc
 hp
 nB
@@ -57100,7 +57150,7 @@ aa
 aa
 aa
 aR
-aB
+Pu
 aR
 bh
 bw
@@ -57871,7 +57921,7 @@ aa
 aa
 aa
 aR
-aB
+Pu
 aR
 bh
 bF
