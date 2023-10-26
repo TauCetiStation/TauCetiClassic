@@ -1,14 +1,26 @@
+/*
+ * Aspect is a unique trait for a round.
+ *
+ * The main purpose of the aspect is to diversify the round and make it more unique.
+ *
+ * It is desirable that the aspect influences the round from beginning to end. This shouldn't be like a roundstart event.
+ *
+ */
 /datum/round_aspect
 
 	var/name
 
-	// OOC announcement after initialization of the subsystem and selection of aspect. Leave blank if you don't want anything.
+	//OOC announcement after initialization of the subsystem and selection of aspect.
+	//Write a description here if it requires preliminary preparation, for example, choosing a role in setup.
+	//You shouldn't write a description here if you think it will scare away players, use IC announcement for this.
 	var/OOC_announcement
 
-	//Message after character spawn
+	//Message after character spawn.
+	//Write here the IC description of the aspect if it is dangerous or if it needs to be noticed.
 	var/IC_announcement
 
 	//Description of the aspect for admins.
+	//Briefly write down here what the aspect does.
 	var/desc
 
 /datum/round_aspect/proc/on_start()
