@@ -864,6 +864,7 @@
 #include "code\game\machinery\computer\prisoner.dm"
 #include "code\game\machinery\computer\robot.dm"
 #include "code\game\machinery\computer\security.dm"
+#include "code\game\machinery\computer\shop.dm"
 #include "code\game\machinery\computer\shuttle.dm"
 #include "code\game\machinery\computer\skills.dm"
 #include "code\game\machinery\computer\smartlight_console.dm"
