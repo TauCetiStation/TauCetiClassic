@@ -1773,7 +1773,7 @@
 		if(!SSround_aspects.aspect_name)
 			message_admins("Round Aspect: Absent.")
 			return
-		message_admins("Round Aspect: [aspect_name]. [aspect.desc]")
+		message_admins("Round Aspect: [SSround_aspects.aspect_name]. [SSround_aspects.aspect.desc]")
 		return
 
 	else if(href_list["create_object"])
