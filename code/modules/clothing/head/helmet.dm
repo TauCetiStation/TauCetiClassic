@@ -252,13 +252,6 @@
 	icon_state = "M35_Helmet"
 	item_state = "helmet"
 
-/obj/item/clothing/head/helmet/Waffen_SS_Helmet
-	name = "Waffen SS Helmet"
-	desc = "A helmet from SS uniform set."
-
-	icon_state = "SS_Helmet"
-	item_state = "helmet"
-
 /obj/item/clothing/head/helmet/syndilight
 	name = "light helmet"
 	desc = "Light and far less armored than it's assault counterpart, this helmet is used by stealthy operators."
