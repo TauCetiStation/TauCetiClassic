@@ -999,7 +999,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(sent_name == "Cancel")
 		return
 
-	var/list/departments = alldepartments.Copy()
+	var/list/departments = allfaxdepartments.Copy()
 	departments += "All"
 	var/department = input(usr, "Please, choose the destination department.") as null|anything in departments
 	if(!department)

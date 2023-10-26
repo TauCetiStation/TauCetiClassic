@@ -21,6 +21,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
 
+	var/printer_id = ""
+	var/map_printer_id = ""
+
 /obj/machinery/computer/cargo/request
 	name = "Supply request console"
 	desc = "Used to request supplies from cargo."
@@ -32,10 +35,23 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/atom_init()
-	. = ..()
+	..()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/cargo/atom_init_late()
+	if(!istype(src, /obj/machinery/computer/cargo/request))
+		if(map_printer_id)
+			for(var/obj/machinery/printer/Printer in global.printers)
+				if(Printer.map_printer_id != map_printer_id)
+					continue
+				printer_id = Printer.printer_id
+				if(!global.online_shop_printer_id)
+					global.online_shop_printer_id = printer_id
+				break
 
 /obj/machinery/computer/cargo/ui_interact(mob/user)
 	var/dat
@@ -49,7 +65,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]$<BR>"
 			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
 			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
-			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
+			dat += "<HR>'[CARGOSHOPNAME]' printer id: <A href='?src=\ref[src];online_shop_printer_id=1'>[global.online_shop_printer_id]</A><BR>\n<BR>"
+			dat += "'[CARGOSHOPNAME]' delivery cost: <A href='?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
 			dat += "'[CARGOSHOPNAME]' discount: <A href='?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
 			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
 		else
@@ -63,6 +80,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>"}
 		if(!requestonly)
 			dat += "<A href='?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
+			dat += "Printer id: <A href='?src=\ref[src];printer_id=1'>[printer_id]</A><BR>\n<BR>"
 
 
 	var/datum/browser/popup = new(user, "computer", name, 500, 600)
@@ -176,7 +194,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		//make our supply_order datum
 		var/datum/supply_order/O = new /datum/supply_order(P, idname, idrank, usr.ckey, reason)
 		SSshuttle.requestlist += O
-		O.generateRequisition(loc) //print supply request
+		if(printer_id)
+			O.printRequisition(printer_id) //print supply request on printer
+		else
+			O.generateRequisition(loc) //print supply request by console
 
 		if(requestonly)
 			temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
@@ -218,6 +239,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		discount = round(clamp(discount, 0, 100))
 
 		global.online_shop_discount = discount/100
+
+	if(href_list["online_shop_printer_id"])
+		var/newid = sanitize(input("Введите ИН принтера", "Консоль", global.online_shop_printer_id) as text|null, 24)
+		if(!newid)
+			return
+		global.online_shop_printer_id = newid
 
 	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
@@ -265,6 +292,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		else
 			temp += "Can not find any messages from Centcom. <BR><BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+
+	if(href_list["printer_id"])
+		var/newid = sanitize(input("Введите ИН принтера", "Консоль", printer_id) as text|null, 24)
+		if(!newid)
+			return
+		printer_id = newid
 
 	if(href_list["mainmenu"])
 		temp = null

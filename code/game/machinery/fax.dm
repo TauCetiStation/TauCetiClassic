@@ -1,5 +1,5 @@
 var/global/list/obj/machinery/faxmachine/allfaxes = list()
-var/global/list/alldepartments = list("Central Command")
+var/global/list/allfaxdepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
@@ -22,7 +22,8 @@ var/global/list/alldepartments = list("Central Command")
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
 	var/department = "Unknown" // our department
-	var/dptdest = "Central Command" // the department we're sending to
+	var/dptdest = "Nothing" // the department we're sending to
+	var/bluespace = TRUE
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
 
 
@@ -30,8 +31,11 @@ var/global/list/alldepartments = list("Central Command")
 	. = ..()
 	allfaxes += src
 
-	if( !("[department]" in alldepartments) )
-		alldepartments += department
+	if( !("[department]" in allfaxdepartments) )
+		allfaxdepartments += department
+
+	if(bluespace)
+		add_overlay(icon(icon, "fax_cc"))
 
 /obj/machinery/faxmachine/Destroy()
 	allfaxes -= src
@@ -101,7 +105,7 @@ var/global/list/alldepartments = list("Central Command")
 			return
 
 		if(tofax)
-			if(dptdest == "Central Command")
+			if(dptdest == "Central Command" && bluespace)
 				sendcooldown = 1800
 				centcomm_fax(usr, tofax, src)
 			else
@@ -141,7 +145,7 @@ var/global/list/alldepartments = list("Central Command")
 		authenticated = 0
 
 	if(href_list["dept"])
-		var/new_dep_dest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
+		var/new_dep_dest = input(usr, "Which department?", "Choose a department", "") as null|anything in bluespace ? allfaxdepartments : allfaxdepartments - "Central Command"
 		if(!new_dep_dest || !can_still_interact_with(usr))
 			return
 		dptdest = new_dep_dest

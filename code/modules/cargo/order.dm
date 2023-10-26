@@ -56,6 +56,23 @@
 	P.update_icon()
 	return P
 
+/datum/supply_order/proc/printRequisition(printer_id)
+	var/datum/e_paper/Paper = new
+
+	Paper.name = "Requisition Form - #[id] ([object.name])"
+	Paper.text += "<h3>[station_name()] Supply Requisition Form</h3><hr>"
+	Paper.text += "Order #[id]<br>"
+	Paper.text += "Item: [object.name]<br>"
+	Paper.text += "Access Restrictions: [get_access_desc(object.access)]<br>"
+	Paper.text += "Requested by: [orderer]<br>"
+	Paper.text += "Rank: [orderer_rank]<br>"
+	Paper.text += "Contents:<br>"
+	Paper.text += object.true_manifest
+	Paper.text += "Comment: [reason]<br>"
+	Paper.text += "<hr>"
+	Paper.text += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
+	print_on_printer(printer_id, Paper, FALSE)
+
 /datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C)
 	var/obj/item/weapon/paper/manifest/P = new(C, id, object.cost)
 

@@ -2073,6 +2073,7 @@
 #include "code\modules\paperwork\photography.dm"
 #include "code\modules\paperwork\picture_frame.dm"
 #include "code\modules\paperwork\predefined_forms.dm"
+#include "code\modules\paperwork\printer.dm"
 #include "code\modules\paperwork\silicon_photography.dm"
 #include "code\modules\paperwork\stamps.dm"
 #include "code\modules\persistent_cache\persistent_cache.dm"

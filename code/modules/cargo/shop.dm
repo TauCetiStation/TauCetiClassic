@@ -12,6 +12,8 @@ var/global/online_shop_discount = 0
 var/global/online_shop_delivery_cost = 0.15
 var/global/online_shop_profits = 0
 
+var/global/online_shop_printer_id = ""
+
 /datum/shop_lot
 	var/name = "Лот"
 	var/description = "Описание лота"
@@ -134,11 +136,7 @@ var/global/online_shop_profits = 0
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
 	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
 
-	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
-		if(istype(Console, /obj/machinery/computer/cargo/request))
-			continue
-
-		var/static/list/category2color = list(
+	var/static/list/category2color = list(
 			"Еда" = "orange",
 			"Одежда" = "green",
 			"Устройства" = "purple",
@@ -148,31 +146,45 @@ var/global/online_shop_profits = 0
 			// "Разное" = no colour,
 		)
 
-		var/color_string = ""
-		if(category2color[Lot.category])
-			color_string = " ([category2color[Lot.category]])"
+	var/color_string = " (Can't define color)"
+	if(category2color[Lot.category])
+		color_string = " ([category2color[Lot.category]])"
 
-		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
+	var/order_name = "Заказ предмета №[Lot.number] из магазина"
+	var/order_text = "Посылка номер №[Lot.number]<br>"
+	order_text += "Наименование: [Lot.name]<br>"
+	order_text += "Цена: [Lot.price]$<br>"
+	order_text += "Категория: [Lot.category][color_string]<br>"
+	order_text += "Время заказа: [worldtime2text()]<br>"
+	order_text += "Заказал: [orderer_name ? orderer_name : "Unknown"]<br>"
+	order_text += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
+	order_text += "Комментарий: [destination]<br>"
+	order_text += "<hr>"
+	order_text += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
 
-		P.name = "Заказ предмета №[Lot.number] из магазина"
-		P.info += "Посылка номер №[Lot.number]<br>"
-		P.info += "Наименование: [Lot.name]<br>"
-		P.info += "Цена: [Lot.price]$<br>"
-		P.info += "Категория: [Lot.category][color_string]<br>"
-		P.info += "Время заказа: [worldtime2text()]<br>"
-		P.info += "Заказал: [orderer_name ? orderer_name : "Unknown"]<br>"
-		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
-		P.info += "Комментарий: [destination]<br>"
-		P.info += "<hr>"
-		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
+	if(global.online_shop_printer_id)
+		var/datum/e_paper/Paper = new
 
-		var/obj/item/weapon/pen/Pen = new
+		Paper.name = order_name
+		Paper.text = order_text
 
-		P.parsepencode(P.info, Pen)
-		P.updateinfolinks()
-		qdel(Pen)
+		print_on_printer(global.online_shop_printer_id, Paper, FALSE)
+	else
+		for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
+			if(istype(Console, /obj/machinery/computer/cargo/request))
+				continue
 
-		P.update_icon()
+			var/obj/item/weapon/paper/Paper = new
+
+			Paper.name = order_name
+			Paper.info = order_text
+
+			var/obj/item/weapon/pen/Pen = new
+			Paper.parsepencode(Paper.info, Pen)
+			Paper.updateinfolinks()
+			qdel(Pen)
+
+			Paper.update_icon()
 	return TRUE
 
 /proc/onlineshop_mark_as_delivered(mob/user, id, account_number, postpayment)
