@@ -52,11 +52,6 @@
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
 		e.cost *= 50
 
-/datum/round_aspect/cyber_station
-	name = ROUND_ASPECT_CYBER_STATION
-	IC_announcement = "<span class='warning'>НаноТрейзен решило отправить на эту станцию людей только с полностью механизированными конечностями и органами.</span>"
-	desc = "У всех существ органические конечности и органы были заменены на протезы."
-
 /datum/round_aspect/no_common_rchannel
 	name = ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL
 

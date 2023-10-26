@@ -289,26 +289,6 @@
 			pda.assign(H.real_name)
 
 	H.sec_hud_set_ID()
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_CYBER_STATION))
-		qdel(H.bodyparts_by_name[BP_L_LEG])
-		qdel(H.bodyparts_by_name[BP_R_LEG])
-		qdel(H.bodyparts_by_name[BP_L_ARM])
-		qdel(H.bodyparts_by_name[BP_R_ARM])
-
-		var/obj/item/organ/external/l_arm/robot/LA = new(null)
-		LA.insert_organ(H)
-
-		var/obj/item/organ/external/r_arm/robot/RA = new(null)
-		RA.insert_organ(H)
-
-		var/obj/item/organ/external/l_leg/robot/LL = new(null)
-		LL.insert_organ(H)
-
-		var/obj/item/organ/external/r_leg/robot/RL = new(null)
-		RL.insert_organ(H)
-
-		for(var/obj/item/organ/internal/IO in H.organs)
-			IO.mechanize()
 
 	H.update_body()
 	return TRUE
