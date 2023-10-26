@@ -320,4 +320,4 @@ var/global/list/allergen_reagents_list
 		//60 for nasty airlock-bumping, make a light effect for latespawning humans
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
 		return
-	H.adjustBrainLoss(rand(60, 99))
+	H.adjustBrainLoss(60)
