@@ -66,6 +66,7 @@
 
 /datum/round_aspect/no_common_rchannel
 	name = ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL
+	desc = "Убран общий канал радиосвязи."
 
 /datum/round_aspect/no_common_rchannel/on_start()
 	new /datum/event/feature/area/replace/del_tcomms
