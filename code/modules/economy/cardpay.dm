@@ -26,7 +26,7 @@
 
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
-	AddComponent(/datum/component/wrench_to_table, , CALLBACK(src, PROC_REF(on_unwrenched)))
+	AddComponent(/datum/component/wrench_to_table, null, CALLBACK(src, PROC_REF(on_unwrenched)))
 
 	holoprice = image('icons/effects/32x32.dmi', "blank")
 	holoprice.layer = INDICATOR_LAYER
