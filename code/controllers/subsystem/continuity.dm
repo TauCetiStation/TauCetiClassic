@@ -4,13 +4,13 @@ SUBSYSTEM_DEF(continuity)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/continuity/proc/read_files()
-	var/savefile/S = new /savefile("data/obj_saves/Preservations.sav")
+	var/savefile/S = new /savefile("[PERSISTENT_CACHE_FOLDER]/Preservations.sav")
 	read_barrels(S)
 	read_tables(S)
 	read_boxes(S)
 
 /datum/controller/subsystem/continuity/proc/write_files()
-	var/savefile/S = new /savefile("data/obj_saves/Preservations.sav")
+	var/savefile/S = new /savefile("[PERSISTENT_CACHE_FOLDER]/Preservations.sav")
 	write_barrels(S)
 	write_tables(S)
 	write_boxes(S)
