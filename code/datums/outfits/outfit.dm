@@ -289,7 +289,6 @@
 			pda.assign(H.real_name)
 
 	H.sec_hud_set_ID()
-
 	H.update_body()
 	return TRUE
 
