@@ -69,6 +69,8 @@ Note: Must be placed west/left of and R&D console to function.
 	return am
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
+	..()
+
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating

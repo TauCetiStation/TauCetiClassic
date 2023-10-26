@@ -389,6 +389,8 @@ var/global/list/preferences_datums = list()
 			if("Human")
 				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
 				H.insert_organ(character)
+		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
+		IO.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes

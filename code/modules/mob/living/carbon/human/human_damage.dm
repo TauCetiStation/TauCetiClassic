@@ -352,6 +352,14 @@ This function restores all bodyparts.
 			var/obj/item/organ/external/E = new path(null)
 			E.insert_organ(src)
 
+/mob/living/carbon/human/restore_all_organs()
+	for(var/organ_tag in species.has_organ)
+		var/obj/item/organ/O = organs_by_name[organ_tag]
+		if(!O)
+			O = species.has_organ[organ_tag]
+			O = new O(null)
+			O.insert_organ(src)
+
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
 	if(isbodypart(BP))
