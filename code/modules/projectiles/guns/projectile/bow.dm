@@ -65,7 +65,7 @@
 		if(istype(I, /obj/item/weapon/arrow))
 			user.drop_from_inventory(I, src)
 			arrow = I
-			user.visible_message("[user] вставляет болт в арбалет.","Вы вставляете болт в арбалет.")
+			user.visible_message("[user] вставляет [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].","Вы вставляете [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].")
 			icon_state = "crossbow-nocked"
 			return
 
@@ -90,24 +90,24 @@
 		if(!cell)
 			user.drop_from_inventory(I, src)
 			cell = I
-			to_chat(user, "<span class='notice'>Вы вставляете батарейку в арбалет и подключаете его к катушке зажигания.</span>")
+			to_chat(user, "<span class='notice'>Вы вставляете батарейку в [CASE(src, ACCUSATIVE_CASE)] и подключаете его к катушке зажигания.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					to_chat(user, "<span class='notice'>Болт мерцает и трещит, раскаляясь докрасна.</span>")
+					to_chat(user, "<span class='notice'>[CASE(arrow, ACCUSATIVE_CASE)] мерцает и трещит, раскаляясь докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
 		else
-			to_chat(user, "<span class='notice'>Батарейка уже установлена в арбалет</span>")
+			to_chat(user, "<span class='notice'>Батарейка уже установлена в [CASE(src, ACCUSATIVE_CASE)]</span>")
 
 	else if(isscrewing(I))
 		if(cell)
 			var/obj/item/C = cell
 			C.forceMove(get_turf(user))
 			cell = null
-			to_chat(user, "<span class='notice'>Вы вынимаете батарейку из арбалета [I].</span>")
+			to_chat(user, "<span class='notice'>Вы вынимаете батарейку из [CASE(src, GENITIVE_CASE)] [I].</span>")
 		else
-			to_chat(user, "<span class='notice'>Арбалет не имеет батарейки внутри.</span>")
+			to_chat(user, "<span class='notice'>[CASE(src, ACCUSATIVE_CASE)] не имеет батарейки внутри.</span>")
 
 	else
 		return ..()
@@ -115,13 +115,13 @@
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
-			user.visible_message("[user] ослабляет натяжение тетивы арбалета и вытаскивает [CASE(arrow, ACCUSATIVE_CASE)].","Вы ослабляете натяжение тетивы арбалета и вытаскиваете [CASE(arrow, ACCUSATIVE_CASE)].")
+			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскивает [CASE(arrow, ACCUSATIVE_CASE)].","Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскиваете [CASE(arrow, ACCUSATIVE_CASE)].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
 			A.removed(user)
 			arrow = null
 		else
-			user.visible_message("[user] ослабляет натяжение тетивы арбалета.", "Вы ослабляете натяжение тетивы арбалета.")
+			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)].", "Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)].")
 		tension = 0
 		flags_2 &= ~CANT_BE_INSERTED
 		icon_state = "crossbow"
@@ -131,7 +131,7 @@
 /obj/item/weapon/crossbow/proc/draw(mob/user)
 
 	if(!arrow)
-		to_chat(user, "У вас нет стрелы в арбалете.")
+		to_chat(user, "У вас нет стрелы в [CASE(src, PREPOSITIONAL_CASE)].")
 		return
 
 	if(user.restrained())
@@ -139,7 +139,7 @@
 
 	current_user = user
 
-	user.visible_message("[user] начинает натягивать тетиву арбалета.","Вы начинаете натягивать тетиву арбалета.")
+	user.visible_message("[user] начинает натягивать тетиву [CASE(src, GENITIVE_CASE)].","Вы начинаете натягивать тетиву [CASE(src, GENITIVE_CASE)].")
 	tension = 1
 	flags_2 |= CANT_BE_INSERTED
 	spawn(25) increase_tension(user)
@@ -154,9 +154,9 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		to_chat(user, "арбалет лязгает, когда вы натягиваете тетиву до максимального натяжения!")
+		to_chat(user, "[CASE(src, ACCUSATIVE_CASE)] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
 	else
-		user.visible_message("[user] натягивает тетиву арбалета!", "Вы продолжаете натягивать тетиву арбалета!")
+		user.visible_message("[user] натягивает тетиву [CASE(src, GENITIVE_CASE)]!", "Вы продолжаете натягивать тетиву [CASE(src, GENITIVE_CASE)]!")
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
@@ -174,7 +174,7 @@
 		return 0
 
 	if (!arrow)
-		to_chat(user, "Болт отсутствует в арбалете!")
+		to_chat(user, "[CASE(arrow, ACCUSATIVE_CASE)] отсутствует в арбалете!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
@@ -193,7 +193,7 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	user.visible_message("<span class='danger'>[user] стреляет из арбалета и болт летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете тетиву арбалета и отправляете в полёт [CASE(arrow, ACCUSATIVE_CASE)] несущийся навстречу [target]!</span>")
+	user.visible_message("<span class='danger'>[user] стреляет из [CASE(src, GENITIVE_CASE)] и болт летит в направлении [target]!</span>","<span class='danger'>Вы отпускаете тетиву [CASE(src, GENITIVE_CASE)] и отправляете в полёт [CASE(arrow, ACCUSATIVE_CASE)] навстречу [target]!</span>")
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
