@@ -262,15 +262,15 @@
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
 	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
-		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
-		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
+		user.visible_message("<span class='warning'>[user] просканировал жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
+		message += "<span class='notice'>Результаты сканирования пола:\n&emsp; Общее состояние: здоров</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
 		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
-		message += "<span class='notice'>Body Temperature: ???</span>"
+		message += "<span class='notice'>Температура тела: ???</span>"
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
+	user.visible_message("<span class='notice'>[user] просканировал жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
@@ -279,14 +279,14 @@
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
-		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
+		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: мёртв</span><br>"
 	else
-		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
+		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "[M.health - M.halloss]% healthy"]</span><br>"
 	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
 	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
-	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+	message += "<span class='notice'>Температура тела: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
+		message += "<span class='notice'>Время смерти: [M.tod]</span><br>"
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
