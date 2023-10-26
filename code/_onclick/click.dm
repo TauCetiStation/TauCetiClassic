@@ -129,6 +129,12 @@
 		if(P.pda_paymod)
 			P.click_to_pay(A) //Click on someone to pay
 			return
+		if(P.pda_scanermode)
+			P.click_to_scan(A) //Click on scaner to scan
+			return
+		if(P.pda_printermode)
+			P.click_to_printer(A) //Click on printer to save it
+			return
 
 	var/sdepth = A.storage_depth(src)
 	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= MAX_STORAGE_DEEP_LEVEL))

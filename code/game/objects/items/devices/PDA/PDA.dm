@@ -77,6 +77,12 @@
 	var/category_shop_page = 1
 	var/category_shop_per_page = 5
 
+	var/list/files = list()
+	var/list/printer_ids = list()
+	var/pda_scanermode = FALSE // if TRUE, click on scaner to save paper
+	var/pda_printermode = FALSE // if TRUE, click on printer to save printer
+	var/selected_file
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_pda_light)
@@ -760,6 +766,18 @@
 
 		data["shopping_cart_amount"] = shopping_cart_frontend.len
 
+	if(mode == 9 || mode == 91)
+		var/list/files_frontend = list()
+
+		for(var/datum/e_paper/File in files)
+			files_frontend += list(list("id" = num2text(files.Find(File)), "name" = File.name))
+		data["files"] = files_frontend
+
+	if(mode == 91)
+		var/list/printers_to_front = list()
+		for(var/printer_id in printer_ids)
+			printers_to_front += list(list("id" = printer_ids.Find(printer_id), "name" = printer_id))
+		data["saved_printers"] = printers_to_front
 	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
 	if(ui)
@@ -1233,6 +1251,43 @@
 			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, MA.shopping_cart["[lot_id]"]["postpayment"]))
 				MA.shopping_cart -= "[lot_id]"
 				mode = 82
+
+//FILESYSTEM=========================================================================================================
+		if("Filesystem")
+			mode = 9
+			selected_file = null
+
+		if("Scan_Printer")
+			ui.close()
+			to_chat(U, "[bicon(src)]<span class='notice'>Приложите к принтеру чтобы сохранить.</span>")
+			pda_printermode = TRUE
+
+		if("Scan_Scaner")
+			ui.close()
+			to_chat(U, "[bicon(src)]<span class='notice'>Приложите к сканеру чтобы скачать файл.</span>")
+			pda_scanermode = TRUE
+
+		if("Open_File")
+			mode = 91
+			var/file_id = sanitize(href_list["file_id"], 5)
+			if(file_id && text2num(file_id))
+				selected_file = file_id
+
+		if("Delete_File")
+			mode = 9
+			var/file_id = sanitize(href_list["file_id"], 5)
+			if(file_id && text2num(file_id))
+				var/datum/e_paper/File = files[text2num(file_id)]
+				files -= File
+				qdel(File)
+
+		if("Print_File")
+			var/selected_id = sanitize(href_list["printer_id"], 5)
+			var/printer_id = printer_ids[text2num(selected_id)]
+			var/datum/e_paper/File = files[text2num(selected_file)]
+			if(printer_id && File)
+				print_on_printer(printer_id, File)
+			mode = 9
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1851,6 +1906,44 @@
 	pda_paymod = FALSE
 	ui_interact(usr)
 	to_chat(usr, "[bicon(src)]<span class='info'>Target account number is set to [target_account].</span>")
+
+/obj/item/device/pda/proc/click_to_scan(atom/target)
+	if(!Adjacent(target))
+		to_chat(usr, "[bicon(src)]<span class='warning'>Слишком далеко.</span>")
+		return
+
+	if(!istype(target, /obj/machinery/scaner))
+		to_chat(usr, "[bicon(src)]<span class='warning'>Невозможно найти сканер.</span>")
+		pda_scanermode = FALSE
+		return
+
+	var/obj/machinery/scaner/Scaner = target
+
+	var/datum/e_paper/File = Scaner.scan_item()
+	if(File)
+		to_chat(usr, "[bicon(src)]<span class='info'>Новый файл получен.</span>")
+		files.Add(File)
+	mode = 9
+	pda_scanermode = FALSE
+	ui_interact(usr)
+
+/obj/item/device/pda/proc/click_to_printer(atom/target)
+	if(!Adjacent(target))
+		to_chat(usr, "[bicon(src)]<span class='warning'>Слишком далеко.</span>")
+		return
+
+	if(!istype(target, /obj/machinery/printer))
+		to_chat(usr, "[bicon(src)]<span class='warning'>Невозможно найти принтер.</span>")
+		pda_printermode = FALSE
+		return
+
+	var/obj/machinery/printer/Printer = target
+	if(!(Printer.printer_id in printer_ids))
+		to_chat(usr, "[bicon(src)]<span class='info'>Принтер сохранён.</span>")
+		printer_ids.Add(Printer.printer_id)
+	mode = 9
+	pda_printermode = FALSE
+	ui_interact(usr)
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(owner_account == 0)

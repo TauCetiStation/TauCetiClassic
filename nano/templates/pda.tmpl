@@ -77,7 +77,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 <b>General</b>:
             </div>
             <div class="itemContent">
-                {{:helper.link('Notekeeper', 'note', {'choice' : "1"}, null, 'fixedLeftWide')}}
+                {{:helper.link('Filesystem', 'note', {'choice' : "Filesystem"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Messenger', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Crew Manifest', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
 				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
@@ -1201,6 +1201,32 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			<tr><td><center><H4>Нет предметов в корзине</H4></center></td></tr>
         {{/for}}
 		</tbody></table></center>
+
+
+    {{else data.mode == 9}} <!-- Filesystem -->
+        <div class="itemGroup">
+            <div class="item">
+                {{:helper.link('Подключить принтер', 'print', {'choice' : "Scan_Printer"}, null, 'fixedLeftWide')}}{{:helper.link('Сохранить документ', 'copy', {'choice' : "Scan_Scaner"}, null, 'fixedLeftWide')}}
+            </div>
+        </div>
+        <div class="item">
+            <center><H2>Файлы:</H2></center>
+        </div>
+        {{for data.files}}
+            {{:helper.link(value.name, 'document', {'choice' : "Open_File", 'file_id' : value.id}, null, 'itemContentWide')}}<span class="bad">{{:helper.link('Удалить', 'trash', {'choice' : "Delete_File", 'file_id' : value.id}, null, 'fixedLeft')}}</span>
+	    {{empty}}
+		    <center><div class="notice"><H4>Карта памяти пуста.</H4></div></center>
+        {{/for}}
+    {{else data.mode == 91}} <!-- Choose printer -->
+        <div class="item">
+            <center><H2>Выберите принтер:</H2></center>
+        </div>
+        {{for data.saved_printers}}
+            {{:helper.link(value.name, 'document', {'choice' : "Print_File", 'printer_id' : value.id}, null, 'itemLabelWidest')}}
+		{{empty}}
+			<tr><td><center><H4>Нет сохранённых принтеров.</H4></center></td></tr>
+        {{/for}}
+
     {{/if}}
 {{else}}
     <div class="wholeScreen">

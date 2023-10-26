@@ -130,12 +130,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/printer, printers)
 			if(!open)
 				return
 			open = FALSE
+			playsound(src, 'sound/machines/printer_close.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			update_icon()
 
 		if("Открыть")
 			if(open)
 				return
 			open = TRUE
+			playsound(src, 'sound/machines/printer_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			update_icon()
 
 		if("Печать")
@@ -247,12 +249,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/printer, printers)
 			if(!open)
 				return
 			open = FALSE
+			playsound(src, 'sound/machines/printer_close.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			update_icon()
 
 		if("Открыть")
 			if(open)
 				return
 			open = TRUE
+			playsound(src, 'sound/machines/printer_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			update_icon()
 
 		if("Печать")
@@ -268,8 +272,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/printer, printers)
 				return
 
 			scaning = TRUE
-			flick("scaner_scanning", src)
-			addtimer(CALLBACK(src, PROC_REF(scan_item)), 0.5 SECONDS)
+			var/datum/e_paper/File = scan_item()
+			addtimer(CALLBACK(src, PROC_REF(print_item), File), 0.5 SECONDS)
 
 		if("Изменить ИН принтера")
 			var/newid = sanitize(input(user, "Введите ИН принтера для подключения", "Сканер", printer_id) as text|null, 24)
@@ -286,10 +290,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/printer, printers)
 		item_inside = I
 		update_icon()
 
+/obj/machinery/scaner/proc/print_item(datum/e_paper/File)
+	print_on_printer(printer_id, File, FALSE)
+	scaning = FALSE
+
 /obj/machinery/scaner/proc/scan_item()
 	if(!item_inside)
 		return
 
+	flick("scaner_scanning", src)
 	var/datum/e_paper/File = new
 
 	var/filename = ""
@@ -302,5 +311,4 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/printer, printers)
 	File.name = filename
 	File.text = filetext
 
-	print_on_printer(printer_id, File, FALSE)
-	scaning = FALSE
+	return File

@@ -104,7 +104,7 @@ var/global/list/allfaxdepartments = list("Central Command")
 		if(sendcooldown)
 			return
 
-		if(tofax)
+		if(tofax && (dptdest != "Nothing"))
 			if(dptdest == "Central Command" && bluespace)
 				sendcooldown = 1800
 				centcomm_fax(usr, tofax, src)
@@ -113,6 +113,7 @@ var/global/list/allfaxdepartments = list("Central Command")
 				send_fax(usr, tofax, dptdest)
 
 			audible_message("Message transmitted successfully.")
+			playsound(src, "sound/machines/fax_sending.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
@@ -225,6 +226,7 @@ var/global/list/allfaxdepartments = list("Central Command")
 /obj/machinery/faxmachine/proc/print_fax(obj/item/weapon/paper/P)
 	set waitfor = FALSE
 
+	playsound(src, "sound/machines/fax_ring.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 	playsound(src, "sound/items/polaroid1.ogg", VOL_EFFECTS_MASTER)
 	flick("faxreceive", src)
 
