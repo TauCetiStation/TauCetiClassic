@@ -189,8 +189,8 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 
 	// Discuss your stuff after the round ends.
-	if(config.ooc_round_only)
-		to_chat(world, "<span class='warning bold'>The OOC channel has been globally disabled for the duration of the round!</span>")
+	if(config.ooc_round_autotoggle)
+		to_chat(world, "<span class='warning bold'>The OOC channel for IC clients has been globally disabled for the duration of the round!</span>")
 		ooc_allowed = FALSE
 
 	var/init_start = world.timeofday
@@ -524,7 +524,7 @@ SUBSYSTEM_DEF(ticker)
 //cursed code
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
-	if(config.ooc_round_only)
+	if(config.ooc_round_autotoggle)
 		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
 		ooc_allowed = TRUE
 
