@@ -894,9 +894,13 @@ var/global/list/humanoid_icon_cache = list()
 		for(var/D in showDirs)
 			body.set_dir(D)
 			COMPILE_OVERLAYS(body)
-			var/list/hidden_huds = render_client.mob.hide_all_huds()
-			var/icon/partial = render_client ? render_client.RenderIcon(body) : getFlatIcon(body)
-			render_client.mob.unhide_all_huds(hidden_huds)
+			var/icon/partial
+			if(render_client) // try to render this on client side if we got render_client, else fallback to old server side getFlatIcon
+				var/list/hidden_huds = render_client.mob.hide_all_huds()
+				partial = render_client ? render_client.RenderIcon(body) : getFlatIcon(body)
+				render_client.mob.unhide_all_huds(hidden_huds)
+			else
+				partial = getFlatIcon(body)
 			out_icon.Insert(partial,dir=D)
 
 		out_icon.Crop(1,1,32,32)
