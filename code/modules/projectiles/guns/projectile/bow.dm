@@ -77,7 +77,7 @@
 			arrow.fingerprintslast = src.fingerprintslast
 			arrow.forceMove(src)
 			icon_state = "crossbow-nocked"
-			user.visible_message("[user] хаотично вставляет [CASE(arrow, ACCUSATIVE_CASE)] в арбалет.","Вы хаотично вставляете [CASE(arrow, ACCUSATIVE_CASE)] в арбалет.")
+			user.visible_message("[user] хаотично вставляет [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].","Вы хаотично вставляете [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].")
 			if(cell)
 				if(cell.charge >= 500)
 					to_chat(user, "<span class='notice'>В результате [CASE(arrow, ACCUSATIVE_CASE)] начинает раскаляться докрасна.</span>")
