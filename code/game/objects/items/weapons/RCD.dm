@@ -230,3 +230,4 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+	w_class = SIZE_TINY

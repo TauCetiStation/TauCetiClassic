@@ -226,6 +226,21 @@
 		insert_icon_in_list(imgid, I)
 	return ..()
 
+/datum/asset/spritesheet/orebox
+	name = "orebox"
+
+/datum/asset/spritesheet/orebox/register()
+	for(var/k in subtypesof(/obj/item/weapon/ore))
+		var/atom/item = k
+		if (!ispath(item, /atom))
+			continue
+		var/obj/product = new item
+		items_to_clear += product
+		var/icon/I = getFlatIcon(product)
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
 /datum/asset/spritesheet/cargo
 	name = "cargo"
 

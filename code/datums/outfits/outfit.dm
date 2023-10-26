@@ -116,6 +116,9 @@
 /datum/outfit/proc/skrell_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
+/datum/outfit/proc/ipc_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
 /datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
