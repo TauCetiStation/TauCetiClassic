@@ -1770,8 +1770,11 @@
 		show_skills_panel(M)
 
 	else if(href_list["show_raspect"])
-		if(!SSround_aspects.aspect_name)	return
-		return SSround_aspects.announce_aspect()
+		if(!SSround_aspects.aspect_name)
+			message_admins("Round Aspect: Absent.")
+			return
+		message_admins("Round Aspect: [aspect_name]. [aspect.desc]")
+		return
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
