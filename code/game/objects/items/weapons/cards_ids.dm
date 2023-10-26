@@ -19,7 +19,7 @@
 
 /obj/item/weapon/card/ticket // tickets for ticket machine
 	name = "ticket"
-	desc = "Билет №"
+	desc = "Билет"
 	icon = 'icons/obj/card.dmi'
 	icon_state = "ticket"
 	item_state_world = "ticket_world"
