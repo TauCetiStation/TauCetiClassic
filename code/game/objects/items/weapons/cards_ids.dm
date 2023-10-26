@@ -42,7 +42,7 @@
 	number = newnumber
 
 	maptext = {"<div style="font-size:3;color:#595757;font-family:'StatusDisplays';text-align:center;" valign="middle">[number]</div>"}
-	desc += "[number]."
+	desc += " №[number]."
 
 /obj/item/weapon/card/emag_broken
 	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
