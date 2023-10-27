@@ -264,7 +264,7 @@
 	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
 		user.visible_message("<span class='warning'>[user] просканировал жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
 		message += "<span class='notice'>Результаты сканирования пола:\n&emsp; Общее состояние: здоров</span><br>"
-		message += "<span class='notice'>&emsp; Специфические повреждения: [0]-[0]-[0]-[0]</span><br>"
+		message += "<span class='notice'>&emsp; Специфика повреждений: [0]-[0]-[0]-[0]</span><br>"
 		message += "<span class='notice'>Типы: Асфиксия/Интоксикация/Термические/Механические</span><br>"
 		message += "<span class='notice'>Температура тела: ???</span>"
 		if(!output_to_chat)
@@ -283,7 +283,7 @@
 	else
 		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "Здоровье: [M.health - M.halloss]%"]</span><br>"
 	message += "&emsp; Типы: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
-	message += "&emsp; Специфические повреждения: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
+	message += "&emsp; Специфика повреждений: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
 	message += "<span class='notice'>Температура тела: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<span class='notice'>Время смерти: [M.tod]</span><br>"
@@ -305,8 +305,8 @@
 
 	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Обнаружено сильное кислородное голодание</b></font>" : "Уровень кислорода в крови субъекта в норме"
 	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Обнаружено опасное количество токсинов</b></font>" : "Уровень токсинов в крови субъекта минимальный"
-	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Обнаружены серьезные ожоговые повреждения</b></font>" : "Термических повреждений не обнаружено"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Обнаружено серьезное анатомическое повреждение</b></font>" : "Механических повреждений не обнаружено"
+	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Обнаружена серьезная ожоговая травма</b></font>" : "Термических травм не обнаружено"
+	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Обнаружена серьезная анатомическая травма/b></font>" : "Механических травм не обнаружено"
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Обнаружено сильное кислородное голодание</span>" : "Уровень кислорода в крови субъекта в норме"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
@@ -354,7 +354,7 @@
 		if(found_bleed)
 			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется сканер тела.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'>Обнаружены переломы костей. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется сканер тела.</span><br>"
 
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
