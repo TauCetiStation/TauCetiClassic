@@ -2,7 +2,7 @@
 	name = "Health Analyzer"
 	icon_state = "health"
 	item_state = "healthanalyzer"
-	desc = "Ручной сканер тела, способный просканировать жизненные показатели пациента."
+	desc = "Ручной сканер тела, способный проанализировать жизненные показатели пациента."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
@@ -21,9 +21,9 @@
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
 			var/message = ""
-			message += "<span class = 'notice'>Результаты сканирования ОШИБКА:\n&emsp; Общее состояние: ОШИБКА</span><br>"
+			message += "<span class = 'notice'>Результаты сканирования: ОШИБКА\n&emsp; Общее состояние: ОШИБКА</span><br>"
 			message += "&emsp; Key: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
-			message += "&emsp; Специфические повреждения: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
+			message += "&emsp; Специфика повреждений: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
 			message += "<span class = 'notice'>Температура тела: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 			message += "<span class = 'warning bold'>Внимание: Уровень крови ОШИБКА: --% --cl.</span><span class = 'notice bold'>Группа крови: ОШИБКА</span><br>"
 			message += "<span class = 'notice'>Пульс пациента:</span><font color='red'>-- bpm.</font><br>"

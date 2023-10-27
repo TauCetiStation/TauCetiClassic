@@ -325,7 +325,7 @@
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Объект, по-видимому, был некачественно клонирован.</span>")
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		message += "<span class='notice'>Анализ крови, обнаружил [M.reagents:get_reagent_amount("inaprovaline")] юнитов для регенерации.</span><br>"
+		message += "<span class='notice'>Анализ крови обнаружил [M.reagents:get_reagent_amount("inaprovaline")] юнитов для регенерации.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Объект страдает от аномальной активности мозга. Рекомендуется дополнительное сканирование.</span><br>"
 	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
@@ -372,7 +372,7 @@
 				if(HEART_FAILURE)
 					message += "<span class='notice'><font color='red'>Внимание! Остановка сердца!</font></span><br>"
 				if(HEART_FIBR)
-					message += "<span class='notice'>Состояние сердца: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
+					message += "<span class='notice'>Состояние сердца пациента: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
 			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(insurance_type)
