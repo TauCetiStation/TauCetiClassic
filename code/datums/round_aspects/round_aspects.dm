@@ -12,12 +12,12 @@
 
 	//OOC announcement after initialization of the subsystem and selection of aspect.
 	//Write a description here if it requires preliminary preparation, for example, choosing a role in setup.
-	//You shouldn't write a description here if you think it will scare away players, use IC announcement for this.
-	var/OOC_announcement
+	//You shouldn't write a description here if you think it will scare away players, use afterspawn IC announcement for this.
+	var/OOC_init_announcement
 
 	//Message after character spawn.
 	//Write here the IC description of the aspect if it is dangerous or if it needs to be noticed.
-	var/IC_announcement
+	var/afterspawn_IC_announcement
 
 	//Description of the aspect for admins.
 	//Briefly write down here what the aspect does.
@@ -73,12 +73,12 @@
 
 /datum/round_aspect/high_space_rad
 	name = ROUND_ASPECT_HIGH_SPACE_RADIATION
-	IC_announcement = "<span class='warning'>Перед началом смены вас оповестили о том что станция находится в секторе с повышенным уровнем радиации.</span>"
+	afterspawn_IC_announcement = "<span class='warning'>Перед началом смены вас оповестили о том что станция находится в секторе с повышенным уровнем радиации.</span>"
 	desc = "Космическая радиация наносит урон людям в скафандрах."
 
 /datum/round_aspect/ai_trio
 	name = ROUND_ASPECT_AI_TRIO
-	OOC_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
+	OOC_init_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
 	desc = "Увеличено количество слотов ИИ до трёх."
 
 /datum/round_aspect/ai_trio/on_start()

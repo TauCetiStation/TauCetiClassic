@@ -555,8 +555,8 @@ SUBSYSTEM_DEF(job)
 	if(job.req_admin_notify)
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
-	if(SSround_aspects.aspect_name && SSround_aspects.aspect.IC_announcement)
-		to_chat(H, SSround_aspects.aspect.IC_announcement)
+	if(SSround_aspects.aspect_name && SSround_aspects.aspect.afterspawn_IC_announcement)
+		to_chat(H, SSround_aspects.aspect.afterspawn_IC_announcement)
 
 	spawnId(H, rank, alt_title)
 

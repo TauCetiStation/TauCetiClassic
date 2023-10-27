@@ -32,6 +32,6 @@ SUBSYSTEM_DEF(round_aspects)
 
 /datum/controller/subsystem/round_aspects/proc/announce_aspect()
 	message_admins("Round Aspect: [aspect_name]. [aspect.desc]")
-	if(aspect.OOC_announcement)
-		global_ooc_info("[SSround_aspects.aspect.OOC_announcement]")
+	if(aspect.OOC_init_announcement)
+		global_ooc_info("[SSround_aspects.aspect.OOC_init_announcement]")
 
