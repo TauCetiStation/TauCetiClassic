@@ -1,21 +1,6 @@
-#define IS_EPILEPTIC_MOB (1<<0)
-#define IS_EPILEPTIC_NOT_IN_PARALYSIS (1<<1)
-
-#define EPILEPSY_PARALYSE_EFFECT (1<<0)
-#define EPILEPSY_JITTERY_EFFECT (1<<1)
-
-#define COMSIG_TRIGGER_EPILEPSY "trigger_epilepsy"
-#define COMSIG_ADJUST_DELAY_EPILEPSY "adjust_delay_epilepsy"
-#define COMSIG_REMOVE_EPILEPSY "remove_epilepsy"
-#define COMSIG_MAKE_EPILEPSY_DANGEROUS "make_epilepsy_dangerous"
-#define COMSIG_MAKE_EPILEPSY_LESS_DANGEROUS "make_epilepsy_less_dangerous"
-
 //Like sources
 #define QUIRK_TYPE_EPILEPSY "quirk_type_epilepsy"
 #define GENE_TYPE_EPILEPSY "gene_type_epilepsy"
-
-#define ALCOHOL_TOLERANCE_EPILEPSY (1<<0)
-#define WATER_CHOKE_EPILEPSY (1<<1)
 
 /datum/component/epilepsy
 	var/epilepsy_conditions = 0

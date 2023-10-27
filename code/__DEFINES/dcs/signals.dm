@@ -385,3 +385,14 @@
 
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+
+// send this signal to try enable epilepsy effects in /datum/component/epilepsy: ()
+#define COMSIG_TRIGGER_EPILEPSY "trigger_epilepsy"
+// send this signal to add protecting delay from epilepsy effects in /datum/component/epilepsy: (amount_times_protect as num, higher_border as num)
+#define COMSIG_ADJUST_DELAY_EPILEPSY "adjust_delay_epilepsy"
+// send this signal to qdel epilepsy with tranmitted type_string in /datum/component/epilepsy: (type as string)
+#define COMSIG_REMOVE_EPILEPSY "remove_epilepsy"
+// send this signal to add bitflags of dangerous factors in /datum/component/epilepsy: (factor as bitflag)
+#define COMSIG_MAKE_EPILEPSY_DANGEROUS "make_epilepsy_dangerous"
+// send this signal to remove bitflags of dangerous factors in /datum/component/epilepsy: (factor as bitflag)
+#define COMSIG_MAKE_EPILEPSY_LESS_DANGEROUS "make_epilepsy_less_dangerous"
