@@ -148,7 +148,7 @@ var/global/list/tourette_bad_words= list(
 			   )
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if(prob(50))
+	if(prob(1))
 		SEND_SIGNAL(src, COMSIG_TRIGGER_EPILEPSY)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if (prob(5) && !paralysis)
