@@ -33,6 +33,8 @@
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
+	var/list/forms = list()
+	var/list/files = list()
 
 /obj/item/weapon/cartridge/Destroy()
 	QDEL_NULL(radio)
@@ -42,26 +44,52 @@
 	name = "Power-ON Cartridge"
 	icon_state = "cart-e"
 	access_engine = 1
+	forms = list(/datum/form/eng/maintentance)
 
 /obj/item/weapon/cartridge/atmos
 	name = "BreatheDeep Cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+	forms = list(/datum/form/eng/maintentance)
 
 /obj/item/weapon/cartridge/medical
 	name = "Med-U Cartridge"
 	icon_state = "cart-m"
 	access_medical = 1
+	forms = list(
+				/datum/form/med/prescription,
+				/datum/form/med/surgery,
+				/datum/form/med/autopsy,
+				/datum/form/med/chem_tracking,
+				/datum/form/med/work_incapacity,
+				/datum/form/med/chem_request
+			)
 
 /obj/item/weapon/cartridge/chemistry
 	name = "ChemWhiz Cartridge"
 	icon_state = "cart-chem"
 	access_reagent_scanner = 1
+	forms = list(
+				/datum/form/med/prescription,
+				/datum/form/med/chem_tracking,
+				/datum/form/med/chem_request
+			)
 
 /obj/item/weapon/cartridge/security
 	name = "R.O.B.U.S.T. Cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	forms = list(
+				/datum/form/sec/investigation,
+				/datum/form/sec/raport,
+				/datum/form/sec/search_warrant,
+				/datum/form/sec/witness,
+				/datum/form/sec/weapon_permission,
+				/datum/form/sec/execution,
+				/datum/form/sec/loyal_voluntary,
+				/datum/form/sec/test_subject_transfer,
+				/datum/form/sec/loyalty_force
+			)
 
 /obj/item/weapon/cartridge/security/atom_init()
 	. = ..()
@@ -72,6 +100,17 @@
 	icon_state = "cart-s"
 	access_security = 1
 	access_medical = 1
+	forms = list(
+				/datum/form/sec/investigation,
+				/datum/form/sec/raport,
+				/datum/form/sec/search_warrant,
+				/datum/form/sec/witness,
+				/datum/form/sec/weapon_permission,
+				/datum/form/sec/execution,
+				/datum/form/sec/loyal_voluntary,
+				/datum/form/sec/test_subject_transfer,
+				/datum/form/sec/loyalty_force
+			)
 
 
 /obj/item/weapon/cartridge/janitor
@@ -113,6 +152,23 @@
 	icon_state = "cart-tox"
 	access_reagent_scanner = 1
 	access_atmos = 1
+	forms = list(
+				/datum/form/rnd/experiment,
+				/datum/form/rnd/genetics,
+				/datum/form/rnd/cybernetics,
+				/datum/form/rnd/prototype,
+				/datum/form/rnd/exosuit,
+				/datum/form/rnd/research_object,
+				/datum/form/rnd/transport,
+				/datum/form/rnd/exosuit_request,
+				/datum/form/rnd/exosuit_permission,
+				/datum/form/rnd/bomb_test,
+				/datum/form/rnd/research,
+				/datum/form/rnd/scan,
+				/datum/form/rnd/derelict,
+				/datum/form/rnd/protype_creation,
+				/datum/form/rnd/exosuit_creation
+			)
 
 /obj/item/weapon/cartridge/signal/atom_init()
 	. = ..()
@@ -123,6 +179,13 @@
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
 	access_quartermaster = 1
+	forms = list(
+				/datum/form/cargo/request_non_standart,
+				/datum/form/cargo/request_resources,
+				/datum/form/cargo/delivery,
+				/datum/form/cargo/bay_items,
+				/datum/form/cargo/miner_bill
+			)
 
 /obj/item/weapon/cartridge/quartermaster/atom_init()
 	. = ..()
@@ -132,6 +195,13 @@
 	name = "Easy-Record DELUXE"
 	icon_state = "cart-h"
 	access_status_display = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report
+			)
 
 /obj/item/weapon/cartridge/hop
 	name = "HumanResources9001"
@@ -140,6 +210,20 @@
 	access_quartermaster = 1
 	access_janitor = 1
 	access_security = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report,
+				/datum/form/hr/temp_access,
+				/datum/form/hr/const_access,
+				/datum/form/hr/fire,
+				/datum/form/hr/certificate_additional_access,
+				/datum/form/hr/job_change,
+				/datum/form/hr/test_subject_request,
+				/datum/form/hr/new_id
+			)
 
 /obj/item/weapon/cartridge/hop/atom_init()
 	. = ..()
@@ -150,6 +234,22 @@
 	icon_state = "cart-hos"
 	access_status_display = 1
 	access_security = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report,
+				/datum/form/sec/investigation,
+				/datum/form/sec/raport,
+				/datum/form/sec/search_warrant,
+				/datum/form/sec/witness,
+				/datum/form/sec/weapon_permission,
+				/datum/form/sec/execution,
+				/datum/form/sec/loyal_voluntary,
+				/datum/form/sec/test_subject_transfer,
+				/datum/form/sec/loyalty_force
+			)
 
 /obj/item/weapon/cartridge/hos/atom_init()
 	. = ..()
@@ -161,6 +261,14 @@
 	access_status_display = 1
 	access_engine = 1
 	access_atmos = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report,
+				/datum/form/eng/maintentance
+			)
 
 /obj/item/weapon/cartridge/cmo
 	name = "Med-U DELUXE"
@@ -168,6 +276,19 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_medical = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report,
+				/datum/form/med/prescription,
+				/datum/form/med/surgery,
+				/datum/form/med/autopsy,
+				/datum/form/med/chem_tracking,
+				/datum/form/med/work_incapacity,
+				/datum/form/med/chem_request
+			)
 
 /obj/item/weapon/cartridge/rd
 	name = "Signal Ace DELUXE"
@@ -175,6 +296,28 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report,
+				/datum/form/rnd/experiment,
+				/datum/form/rnd/genetics,
+				/datum/form/rnd/cybernetics,
+				/datum/form/rnd/prototype,
+				/datum/form/rnd/exosuit,
+				/datum/form/rnd/research_object,
+				/datum/form/rnd/transport,
+				/datum/form/rnd/exosuit_request,
+				/datum/form/rnd/exosuit_permission,
+				/datum/form/rnd/bomb_test,
+				/datum/form/rnd/research,
+				/datum/form/rnd/scan,
+				/datum/form/rnd/derelict,
+				/datum/form/rnd/protype_creation,
+				/datum/form/rnd/exosuit_creation
+			)
 
 /obj/item/weapon/cartridge/rd/atom_init()
 	. = ..()
@@ -192,6 +335,13 @@
 	access_reagent_scanner = 1
 	access_status_display = 1
 	access_atmos = 1
+	forms = list(
+				/datum/form/command/shuttle,
+				/datum/form/command/ert,
+				/datum/form/command/delta,
+				/datum/form/command/incident_report,
+				/datum/form/command/internal_affairs_report
+			)
 
 /obj/item/weapon/cartridge/syndicate
 	name = "Detomatix Cartridge"

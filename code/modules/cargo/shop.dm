@@ -177,10 +177,9 @@ var/global/online_shop_printer_id = ""
 			var/obj/item/weapon/paper/Paper = new
 
 			Paper.name = order_name
-			Paper.info = order_text
 
 			var/obj/item/weapon/pen/Pen = new
-			Paper.parsepencode(Paper.info, Pen)
+			Paper.info = Paper.parsepencode(order_text, Pen)
 			Paper.updateinfolinks()
 			qdel(Pen)
 

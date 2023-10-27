@@ -771,6 +771,7 @@
 
 		for(var/datum/e_paper/File in files)
 			files_frontend += list(list("id" = num2text(files.Find(File)), "name" = File.name))
+
 		data["files"] = files_frontend
 
 	if(mode == 91)
@@ -1266,6 +1267,17 @@
 			ui.close()
 			to_chat(U, "[bicon(src)]<span class='notice'>Приложите к сканеру чтобы скачать файл.</span>")
 			pda_scanermode = TRUE
+
+		if("Download_from_cartridge")
+			if(!cartridge)
+				return
+			for(var/Formtype in cartridge.forms)
+				var/datum/form/F = new Formtype
+				var/datum/e_paper/Pap = new
+				Pap.name = F.name
+				Pap.text = F.content
+				files.Add(Pap)
+				qdel(F)
 
 		if("Open_File")
 			mode = 91

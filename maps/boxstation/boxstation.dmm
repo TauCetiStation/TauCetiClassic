@@ -41028,12 +41028,10 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
-/obj/structure/filingcabinet/chestdrawer/black{
-	req_access = list(57);
-	dir = 4
-	},
-/obj/item/weapon/paper/depacc{
-	department_name = "Civilian"
+/obj/structure/table,
+/obj/machinery/faxmachine{
+	department = "HOP Office";
+	bluespace = 0
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -43327,7 +43325,6 @@
 	pixel_y = 12;
 	pixel_x = -9
 	},
-/obj/item/weapon/paper/cmf_manual,
 /obj/item/pens_bin{
 	pixel_y = 16;
 	pixel_x = 8
@@ -63245,11 +63242,14 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_y = -30
 	},
-/obj/structure/table,
-/obj/machinery/faxmachine{
-	department = "HOP Office";
-	bluespace = 0
+/obj/structure/filingcabinet/chestdrawer/black{
+	req_access = list(57);
+	dir = 1
 	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Civilian"
+	},
+/obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor{
 	dir = 0;
 	icon_state = "blue"

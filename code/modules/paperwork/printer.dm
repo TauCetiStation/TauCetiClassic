@@ -84,8 +84,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/printer, printers)
 	var/obj/item/weapon/paper/Paper = new(loc)
 
 	Paper.name = File.name
-	Paper.parsepencode(File.text, Pen)
-	Paper.info = File.text
+	Paper.info = Paper.parsepencode(File.text, Pen)
 	Paper.updateinfolinks()
 	Paper.update_icon()
 
