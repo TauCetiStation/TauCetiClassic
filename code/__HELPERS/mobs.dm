@@ -341,7 +341,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Обнаружен незафиксированный перелом у [BP.name]. При транспортировке рекомендуется наложение шин.</span><br>"
+					message += "<span class='warning'>Обнаружен незафиксированный перелом в [BP.name]. При транспортировке рекомендуется наложение шины.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
@@ -349,7 +349,7 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				message += "<span class='warning'>Обнаружена инфекция у [BP.name]. Рекомендуется дезинфекция.</span><br>"
+				message += "<span class='warning'>Обнаружена инфекция в [BP.name]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
 			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется сканер тела.</span><br>"
@@ -360,11 +360,11 @@
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
 		var/blood_type = H.dna.b_type
 		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Группа крови : [blood_type]</span><br>"
+			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови : [blood_type]</span><br>"
 		else if(blood_volume <= BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Внимание: Уровень крови КРИТИЧЕСКИЙ: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Группа крови: [blood_type]</span><br>"
+			message += "<span class='warning bold'>Внимание: Уровень крови КРИТИЧЕСКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice bold'>Группа крови: [blood_type]</span><br>"
 		else
-			message += "<span class='notice'>Уровень крови нормальный: [blood_percent]% [blood_volume]cl. Группа крови: [blood_type]</span><br>"
+			message += "<span class='notice'>Уровень крови нормальный: [blood_percent]% [blood_volume]сл. Группа крови: [blood_type]</span><br>"
 
 		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 		if(Heart)
@@ -373,7 +373,7 @@
 					message += "<span class='notice'><font color='red'>Внимание! Остановка сердца!</font></span><br>"
 				if(HEART_FIBR)
 					message += "<span class='notice'>Состояние сердца пациента: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
-			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
+			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] уд/мин.</font></span><br>"
 
 	if(insurance_type)
 		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"
