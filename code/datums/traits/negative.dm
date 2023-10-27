@@ -54,7 +54,10 @@
 		NO_EMOTION = FALSE,
 	)
 
-
+/datum/quirk/epileptic/on_spawn()
+	if(!istype(quirk_holder))
+		return
+	quirk_holder.AddComponent(/datum/component/epilepsy, (IS_EPILEPTIC_MOB | IS_EPILEPTIC_NOT_IN_PARALYSIS), (EPILEPSY_PARALYSE_EFFECT | EPILEPSY_JITTERY_EFFECT), QUIRK_TYPE_EPILEPSY)
 
 /datum/quirk/fatness
 	name = QUIRK_FATNESS
