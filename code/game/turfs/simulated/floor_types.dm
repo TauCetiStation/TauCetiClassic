@@ -258,6 +258,7 @@
 
 /mob/living/carbon/human/exited_water_turf()
 	if(get_species() != SKRELL)
+		SEND_SIGNAL(src, COMSIG_MAKE_EPILEPSY_LESS_DANGEROUS, WATER_CHOKE_EPILEPSY)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 
@@ -274,6 +275,7 @@
 
 /mob/living/carbon/human/entered_water_turf()
 	if(get_species() != SKRELL)
+		SEND_SIGNAL(src, COMSIG_MAKE_EPILEPSY_DANGEROUS, WATER_CHOKE_EPILEPSY)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	wear_suit?.make_wet()
