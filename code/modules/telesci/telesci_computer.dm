@@ -10,14 +10,18 @@
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
 	// VARIABLES //
+	var/teles_left	// How many teleports left until it becomes uncalibrated
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
 	var/power_off
 	var/last_target
-	var/crystal_loss_prob = 0
 
 	var/cord_x = 25
 	var/cord_y = 25
+	var/Xscatter = 0
+	var/Yscatter = 0
+	var/trueCord_x
+	var/trueCord_y
 	var/power = 5
 
 	// Based on the power used
@@ -33,6 +37,7 @@
 
 /obj/machinery/computer/telescience/atom_init()
 	. = ..()
+	recalibrate()
 	for(var/i = 1; i <= starting_crystals; i++)
 		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
@@ -139,7 +144,7 @@
 			t += "<BR><span class='disabled'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
 		else
 			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='disabled'>Close Wormhole</span>"
-		t += "<BR><A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
 		t += "<BR><div class='Section'>"
@@ -205,9 +210,11 @@
 		return
 
 	if(telepad)
-		var/failure_radius = rand(-5, 20 - (crystals.len * 5))
-		var/trueCord_x = cord_x + failure_radius
-		var/trueCord_y = cord_y + failure_radius
+		trueCord_x += cord_x + Xscatter
+		trueCord_y += cord_y + Yscatter
+		if(!prob(power))
+			trueCord_x += rand(-15, 15)
+			trueCord_y += rand(-15, 15)
 
 		var/turf/target = locate(trueCord_x, trueCord_y, z_co)
 		var/spawn_time = (crystals.len) * 5
@@ -227,11 +234,8 @@
 			if(telepad.stat & NOPOWER)
 				return
 			if(create_wormhole(target))
+				teles_left -= 1
 				teleport_cooldown = world.time + (power * 2)
-				if(prob(crystal_loss_prob))
-					crystals.Remove(pick(crystals))
-					crystal_loss_prob = 0
-				crystal_loss_prob += 105 - power
 				// use a lot of power
 				use_power(power * 1500)
 				set_power_use(ACTIVE_POWER_USE)
@@ -249,6 +253,8 @@
 
 				flick("pad-beam", telepad)
 				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
+				trueCord_x = 0
+				trueCord_y = 0
 
 			else
 				use_power(power * 1500)
@@ -259,6 +265,8 @@
 				flick("pad-beam", telepad)
 				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 				temp_msg = "Error!<BR>Something wrong with the navigation data."
+				trueCord_x = 0
+				trueCord_y = 0
 			updateDialog()
 
 /obj/machinery/computer/telescience/proc/prepare_wormhole(mob/user)
@@ -273,12 +281,12 @@
 		telefail()
 		temp_msg = "ERROR! This sector is unreachable."
 		return
-	if(!crystals.len)
-		telefail()
-		temp_msg = "The device requires crystals to operate the wormhole."
-		return
-	if(crystals.len > 0)
+	if(teles_left > 0)
 		open_wormhole()
+	else
+		temp_msg = "ERROR!<BR>Calibration required."
+		telefail()
+		return
 	return
 
 /obj/machinery/computer/telescience/proc/eject()
@@ -344,4 +352,18 @@
 		eject()
 		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
 
+	if(href_list["recal"])
+		recalibrate()
+		sparks()
+		temp_msg = "NOTICE:<BR>Calibration successful."
+
 	updateDialog()
+
+/obj/machinery/computer/telescience/proc/recalibrate()
+	if(telepad && crystals.len > 0)
+		teles_left = round(3 + telepad.efficiency * 4 + rand(-1, 1))
+		crystals.Remove(pick(crystals))
+	else
+		teles_left = 0
+	Xscatter = rand(-10, 10)
+	Yscatter = rand(-10, 10)
