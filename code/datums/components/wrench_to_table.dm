@@ -28,9 +28,11 @@
 	QDEL_NULL(on_unwrenched)
 	return ..()
 
-/datum/component/wrench_to_table/proc/try_wrench(datum/source, obj/item/I,  mob/living/user, params)
+/datum/component/wrench_to_table/proc/try_wrench(datum/source, obj/item/Tool,  mob/living/user, params)
 	var/obj/item/Parent_Item = parent
-	if(!isturf(Parent_Item.loc) || !iswrenching(I))
+	if(!isturf(Parent_Item.loc) || !iswrenching(Tool))
+		return
+	if(user.is_busy(Parent_Item))
 		return
 
 	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(parent))
@@ -39,9 +41,7 @@
 		return
 	Wrenched_To = Table
 
-	if(iswrenching(I) && I.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		user.SetNextMove(CLICK_CD_INTERACT)
+	if(Tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
 		if(!Parent_Item.anchored)
 			to_chat(user, "<span class='warning'>[Parent_Item.name] прикручен.</span>")
 			wrench()
