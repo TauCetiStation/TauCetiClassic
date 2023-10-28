@@ -39,8 +39,7 @@
 		return
 	Wrenched_To = Table
 
-	var/obj/item/weapon/wrench/Tool = I
-	if(Tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
+	if(iswrenching(I) && I.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!Parent_Item.anchored)
