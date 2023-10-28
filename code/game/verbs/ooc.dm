@@ -169,7 +169,17 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	log_ooc("(LOCAL) [key_name(mob)] : [msg]")
 
-	var/list/heard = get_mobs_in_view(7, src.mob)
+	var/list/heard
+	var/prefix = "LOOC"
+
+	// mobs_in_view doesn't work for lobby mobs and i don't know why, already spend to much time on it
+	// so currently admins can't jump to lobby location for lobby looc
+	if(isnewplayer(mob))
+		heard = new_player_list
+		prefix = "(LOBBY)[prefix]"
+	else
+		heard = get_mobs_in_view(7, src.mob)
+
 	for(var/mob/M in heard)
 
 		if(!M.client)
@@ -181,16 +191,15 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			if(is_fake_key && C.holder)
 				display_name = "[holder.fakekey]/([key])"
-			to_chat(C, "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
+			to_chat(C, "<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/track = ""
-			if(isobserver(C.mob))
+			if(isobserver(C.mob) && !isnewplayer(mob))
 				track = FOLLOW_LINK(C.mob, mob)
-			var/prefix = "(R)LOOC"
-			if (C.mob in heard)
-				prefix = "LOOC"
+			if (!(C.mob in heard))
+				prefix = "(R)[prefix]"
 			to_chat(C, "[track]<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 /client/verb/fix_ui()
